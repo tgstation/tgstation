@@ -17,6 +17,7 @@ As with the style guide, you are expected to follow these specifications in orde
 As BYOND's Dream Maker (henceforth "DM") is an object-oriented language, code must be object-oriented when possible in order to be more flexible when adding content to it. If you don't know what "object-oriented" means, we highly recommend you do some light research to grasp the basics.
 
 ### Avoid hacky code
+
 Hacky code, such as adding specific checks, is highly discouraged and only allowed when there is ***no*** other option. (Protip: "I couldn't immediately think of a proper way so thus there must be no other option" is not gonna cut it here! If you can't think of anything else, say that outright and admit that you need help with it. Maintainers exist for exactly that reason.)
 
 You can avoid hacky code by using object-oriented methodologies, such as overriding a function (called "procs" in DM) or sectioning code into functions and then overriding them as required.
@@ -79,14 +80,16 @@ var/path_type = "/obj/item/baseball_bat"
 * The dlls section of tgs3.json is not designed for dlls that are purely `call()()`ed since those handles are closed between world reboots. Only put in dlls that may have to exist between world reboots.
 
 ## Structural
+
 ### No duplicated code (Don't repeat yourself)
+
 Copying code from one place to another may be suitable for small, short-time projects, but /tg/station is a long-term project and highly discourages this.
 
 Instead you can use object orientation, or simply placing repeated code in a function, to obey this specification easily.
 
 ### Prefer `Initialize()` over `New()` for atoms
 
-Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: https://github.com/tgstation/tgstation/blob/34775d42a2db4e0f6734560baadcfcf5f5540910/code/game/atoms.dm#L166
+Our game controller is pretty good at handling long operations and lag, but it can't control what happens when the map is loaded, which calls `New` for all atoms on the map. If you're creating a new atom, use the `Initialize` proc to do what you would normally do in `New`. This cuts down on the number of proc calls needed when the world is loaded. See here for details on `Initialize`: <https://github.com/tgstation/tgstation/blob/34775d42a2db4e0f6734560baadcfcf5f5540910/code/game/atoms.dm#L166>
 While we normally encourage (and in some cases, even require) bringing out of date code up to date when you make unrelated changes near the out of date code, that is not the case for `New` -> `Initialize` conversions. These systems are generally more dependent on parent and children procs so unrelated random conversions of existing things can cause bugs that take months to figure out.
 
 ### Files
@@ -102,11 +105,13 @@ While we normally encourage (and in some cases, even require) bringing out of da
 #### Signal Handlers
 
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
-```
+
+```DM
 /type/path/proc/signal_callback()
 	SIGNAL_HANDLER
 	// rest of the code
 ```
+
 This is to ensure that it is clear the proc handles signals and turns on a lint to ensure it does not sleep.
 
 Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc must be called asynchronously (e.g. with `INVOKE_ASYNC()`) or be redone to work asynchronously. 
@@ -124,12 +129,14 @@ If you decide to do this, you should make it clear with a comment explaining why
 ### Enforcing parent calling
 
 When adding new signals to root level procs, eg;
-```
+
+```DM
 /atom/proc/setDir(newdir)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 ```
+
 The `SHOULD_CALL_PARENT(TRUE)` lint should be added to ensure that overrides/child procs call the parent chain and ensure the signal is sent.
 
 ### Avoid unnecessary type checks and obscuring nulls in lists
@@ -141,6 +148,7 @@ If we know the list is supposed to only contain the desired type then we want to
 Nulls in lists tend to point to improperly-handled references, making hard deletes hard to debug. Generating a runtime in those cases is more often than not positive.
 
 This is bad:
+
 ```DM
 var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
 var/highest_alpha = 0
@@ -151,6 +159,7 @@ for(var/atom/thing in bag_of_atoms)
 ```
 
 This is good:
+
 ```DM
 var/list/bag_of_atoms = list(new /obj, new /mob, new /atom, new /atom/movable, new /atom/movable)
 var/highest_alpha = 0
@@ -193,6 +202,7 @@ In the above example, we made our health_loss variable a per second value rather
 For example, if SSmobs is set to run once every 4 seconds, it would call process once every 4 seconds and multiply your health_loss var by 4 before subtracting it. Ensuring that your code is frame independent.
 
 ## Optimization
+
 ### Startup/Runtime tradeoffs with lists and the "hidden" init proc
 
 First, read the comments in [this BYOND thread](http://www.byond.com/forum/?post=2086980&page=2#comment19776775), starting where the link takes you.
@@ -211,8 +221,8 @@ BYOND will allow you to use a raw icon file or even an icon datum for underlays,
 
 Converting them yourself to appearances and storing this converted value will ensure this process only has to happen once for the lifetime of the round. Helper functions exist to do most of the work for you.
 
-
 Bad:
+
 ```dm
 /obj/machine/update_overlays(blah)
 	if (stat & broken)
@@ -225,6 +235,7 @@ Bad:
 ```
 
 Good:
+
 ```dm
 /obj/machine/update_overlays(var/blah)
 	var/static/on_overlay
@@ -246,13 +257,12 @@ Good:
 
 Note: images are appearances with extra steps, and don't incur the overhead in conversion.
 
-
-### Do not abuse associated lists.
+### Do not abuse associated lists
 
 Associated lists that could instead be variables or statically defined number indexed lists will use more memory, as associated lists have a 24 bytes per item overhead (vs 8 for lists and most vars), and are slower to search compared to static/global variables and lists with known indexes.
 
-
 Bad:
+
 ```dm
 /obj/machine/update_overlays(var/blah)
 	var/static/our_overlays
@@ -265,6 +275,7 @@ Bad:
 ```
 
 Good:
+
 ```dm
 #define OUR_ON_OVERLAY 1
 #define OUR_OFF_OVERLAY 2
@@ -283,9 +294,11 @@ Good:
 #undef OUR_OFF_OVERLAY
 #undef OUR_BROKEN_OVERLAY
 ```
+
 Storing these in a flat (non-associated) list saves on memory, and using defines to reference locations in the list saves CPU time searching the list.
 
 Also good:
+
 ```dm
 /obj/machine/update_overlays(var/blah)
 	var/static/on_overlay
@@ -300,6 +313,7 @@ Also good:
 		return
 	...
 ```
+
 Proc variables, static variables, and global variables are resolved at compile time, so the above is equivalent to the second example, but is easier to read, and avoids the need to store a list.
 
 Note: While there has historically been a strong impulse to use associated lists for caching of computed values, this is the easy way out and leaves a lot of hidden overhead. Please keep this in mind when designing core/root systems that are intended for use by other code/coders. It's normally better for consumers of such systems to handle their own caching using vars and number indexed lists, than for you to do it using associated lists.
@@ -309,6 +323,7 @@ Note: While there has historically been a strong impulse to use associated lists
 Like all languages, Dream Maker has its quirks, some of them are beneficial to us, some are harmful.
 
 ### Loops
+
 #### In-To for-loops
 
 `for(var/i = 1, i <= some_value, i++)` is a fairly standard way to write an incremental for loop in most languages (especially those in the C family), but DM's `for(var/i in 1 to some_value)` syntax is oddly faster than its implementation of the former syntax; where possible, it's advised to use DM's syntax. (Note, the `to` keyword is inclusive, so it automatically defaults to replacing `<=`; if you want `<` then you should write it as `1 to some_value-1`).
@@ -318,9 +333,9 @@ HOWEVER, if either `some_value` or `i` changes within the body of the for (under
 #### `for(var/A in list)` versus `for(var/i in 1 to list.len)`
 
 The former is faster than the latter, as shown by the following profile results:
-https://file.house/zy7H.png
+<https://file.house/zy7H.png>
 Code used for the test in a readable format:
-https://pastebin.com/w50uERkG
+<https://pastebin.com/w50uERkG>
 
 ### Dot variable (`.`)
 
@@ -423,7 +438,7 @@ Meaning:
 	to_chat(world, uh_oh())
 ```
 
-...will print `woah!`. 
+...will print `woah!`.
 
 For this reason, it is acceptable for `.` to be used in places where consumers can reasonably continue in the event of a runtime.
 
