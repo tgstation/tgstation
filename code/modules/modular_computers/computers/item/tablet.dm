@@ -378,7 +378,7 @@
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
 	var/obj/item/computer_hardware/card_slot/card = all_components[MC_CARD]
-	if(card && card.stored_card)
+	if(card?.stored_card)
 		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
 		. += mutable_appearance(initial(icon), "light_overlay")
