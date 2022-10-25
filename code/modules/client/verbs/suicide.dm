@@ -51,7 +51,7 @@
 					return
 
 				suicide_log()
-				held_item.AddComponent(/datum/component/suicide_count)  // fills in a counter if it doesnt have
+				held_item.AddComponent(/datum/component/suicide_count, SUICIDE_VIS_NONE)  // fills in a counter if it doesnt have
 				SEND_SIGNAL(held_item, COMSIG_HUMAN_SUICIDE_COMPLETE, src)
 
 				var/damage_mod = 0

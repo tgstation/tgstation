@@ -12,12 +12,14 @@
 	var/view_mode
 	var/last_person
 	var/count = 0
+	var/datum/callback/on_die
 
-/datum/component/suicide_count/Initialize(view_mode = SUICIDE_VIS_ALL)
+/datum/component/suicide_count/Initialize(view_mode, datum/callback/on_die = null)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.view_mode = view_mode
+	src.on_die = on_die
 
 /datum/component/suicide_count/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_HUMAN_SUICIDE_COMPLETE, .proc/on_suicide)
@@ -37,6 +39,7 @@
 
 	last_person = user.real_name
 	count++
+	on_die.Invoke(count, last_person)
 
 /datum/component/suicide_count/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
