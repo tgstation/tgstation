@@ -284,7 +284,8 @@ LINEN BINS
 				spawn_list += sheet
 		LAZYSET(bedsheet_list, spawn_type, spawn_list)
 	var/chosen_type = pick(bedsheet_list[spawn_type])
-	new chosen_type(loc)
+	var/obj/item/bedsheet = new chosen_type(loc)
+	bedsheet.dir = dir
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/bedsheet/random/double
