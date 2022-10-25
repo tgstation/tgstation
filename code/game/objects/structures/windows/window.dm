@@ -52,6 +52,8 @@
 		setDir()
 		update_icon_state()
 		AddElement(/datum/element/can_barricade)
+	else
+		AddElement(/datum/element/render_over_keep_hitbox)
 
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
