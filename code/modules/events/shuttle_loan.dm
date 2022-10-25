@@ -7,6 +7,7 @@
 #define ITS_HIP_TO 7
 #define MY_GOD_JC 8
 
+GLOBAL_LIST_INIT(shuttle_loan_events, list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC))
 
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
@@ -27,8 +28,12 @@
 	if(!check_rights(R_FUN))
 		return ADMIN_CANCEL_EVENT
 
-	for(var/datum/round_event/running_event in SSevents.running)
-		running_event.kill() //Replace the old event with the new one!
+	if(!length(GLOB.shuttle_loan_events))
+		message_admins("The station has already recieved all possible loans!") //Change this to a list of options later
+		return ADMIN_CANCEL_EVENT
+
+	for(var/datum/round_event/shuttle_loan/loan_event in SSevents.running)
+		loan_event.kill() //Replace the old event with the new one!
 
 /datum/round_event/shuttle_loan
 	announce_when = 1
@@ -40,7 +45,7 @@
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
+	dispatch_type = pick_n_take(GLOB.shuttle_loan_events)
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
