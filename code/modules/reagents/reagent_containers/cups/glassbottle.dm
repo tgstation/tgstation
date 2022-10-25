@@ -556,7 +556,7 @@
 	spillable = TRUE
 	update_appearance()
 	var/obj/projectile/bullet/reusable/cork_to_fire = sabraged ? /obj/projectile/bullet/reusable/champagne_cork/sabrage : /obj/projectile/bullet/reusable/champagne_cork
-	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new cork_to_fire (get_turf(src))
+	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new cork_to_fire (drop_location())
 	popped_cork.firer = user
 	popped_cork.fired_from = src
 	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
