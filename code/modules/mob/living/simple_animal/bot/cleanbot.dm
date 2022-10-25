@@ -155,7 +155,6 @@
 			icon_state = "[base_icon]-c"
 		else
 			icon_state = "[base_icon][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
-	update_greyscale()
 
 /mob/living/simple_animal/bot/cleanbot/vv_edit_var(var_name, var_value)
 	. = ..()
