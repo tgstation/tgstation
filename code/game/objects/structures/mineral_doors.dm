@@ -76,13 +76,11 @@
 	if(isSwitchingStates || !anchored)
 		return
 	if(isliving(user))
-		var/mob/living/M = user
-		if(world.time - M.last_bumped <= 60)
-			return //NOTE do we really need that?
-		if(M.client)
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(!C.handcuffed)
+		var/mob/living/matters = user
+		if(matters.client)
+			if(iscarbon(matters))
+				var/mob/living/carbon/carbon_user = matters
+				if(!carbon_user.handcuffed)
 					SwitchState()
 			else
 				SwitchState()
@@ -100,7 +98,7 @@
 	playsound(src, openSound, 100, TRUE)
 	set_opacity(FALSE)
 	flick("[initial(icon_state)]opening",src)
-	sleep(10)
+	sleep(1 SECONDS)
 	set_density(FALSE)
 	door_opened = TRUE
 	layer = OPEN_DOOR_LAYER
@@ -120,7 +118,7 @@
 	isSwitchingStates = TRUE
 	playsound(src, closeSound, 100, TRUE)
 	flick("[initial(icon_state)]closing",src)
-	sleep(10)
+	sleep(1 SECONDS)
 	set_density(TRUE)
 	set_opacity(TRUE)
 	door_opened = FALSE

@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed revenant Malfunction ability not affecting firedoors."
-  - spellcheck: "Emag charge time will now be presented as (2 minutes and 31.1 seconds) instead of (152.95s)"

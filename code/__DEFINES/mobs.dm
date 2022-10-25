@@ -367,14 +367,6 @@
 #define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
 
-//Secbot and ED209 judgement criteria bitflag values
-#define JUDGE_EMAGGED (1<<0)
-#define JUDGE_IDCHECK (1<<1)
-#define JUDGE_WEAPONCHECK (1<<2)
-#define JUDGE_RECORDCHECK (1<<3)
-//ED209's ignore monkeys
-#define JUDGE_IGNOREMONKEYS (1<<4)
-
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
 
 #define COOLDOWN_UPDATE_SET_MELEE "set_melee"
@@ -603,13 +595,6 @@
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
-/// Sign Language defines
-#define SIGN_ONE_HAND 0
-#define SIGN_HANDS_FULL 1
-#define SIGN_ARMLESS 2
-#define SIGN_TRAIT_BLOCKED 3
-#define SIGN_CUFFED 4
-
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
 #define TOTAL_LAYERS 32 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
@@ -701,16 +686,6 @@
 #define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
-
-//used by canUseTopic()
-/// If silicons need to be next to the atom to use this
-#define BE_CLOSE TRUE
-/// If other mobs (monkeys, aliens, etc) can use this
-#define NO_DEXTERITY TRUE // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
-// If telekinesis you can use it from a distance
-#define NO_TK TRUE
-/// If mobs can use this while resting
-#define FLOOR_OKAY TRUE
 
 /// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
 #define RESIZE_DEFAULT_SIZE 1

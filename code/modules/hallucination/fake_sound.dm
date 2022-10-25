@@ -274,3 +274,15 @@
 		'sound/voice/hiss3.ogg',
 		'sound/voice/hiss4.ogg',
 	)
+
+/datum/hallucination/fake_sound/weird/radio_static
+	volume = 75
+	no_source = TRUE
+	sound_vary = FALSE
+	sound_type = 'sound/hallucinations/radio_static.ogg'
+
+/datum/hallucination/fake_sound/weird/ice_crack
+	random_hallucination_weight = 2
+	volume = 100
+	no_source = TRUE
+	sound_type = 'sound/effects/ice_shovel.ogg'

@@ -42,10 +42,12 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		var/datum/pipeline/parent1 = parents[1]
 		parent1.reconcile_air()
 		investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+		balloon_alert_to_viewers("valve opened")
 		vent_movement |= VENTCRAWL_ALLOWED
 	else
 		update_icon_nopipes()
 		investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
+		balloon_alert_to_viewers("valve closed")
 		vent_movement &= ~VENTCRAWL_ALLOWED
 
 

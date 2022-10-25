@@ -226,6 +226,11 @@
 	getlinked()
 
 /obj/structure/disposalpipe/trunk/Destroy()
+	null_linked_ref_to_us()
+	linked = null
+	return ..()
+
+/obj/structure/disposalpipe/trunk/proc/null_linked_ref_to_us()
 	if(linked)
 		if(istype(linked, /obj/structure/disposaloutlet))
 			var/obj/structure/disposaloutlet/D = linked
@@ -233,20 +238,21 @@
 		else if(istype(linked, /obj/machinery/disposal))
 			var/obj/machinery/disposal/D = linked
 			D.trunk = null
-	return ..()
+
+/obj/structure/disposalpipe/trunk/proc/set_linked(obj/to_link)
+	null_linked_ref_to_us()
+	linked = to_link
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
+	null_linked_ref_to_us()
 	linked = null
 	var/turf/T = get_turf(src)
 	var/obj/machinery/disposal/D = locate() in T
 	if(D)
-		linked = D
-		if (!D.trunk)
-			D.trunk = src
-
+		set_linked(D)
 	var/obj/structure/disposaloutlet/O = locate() in T
 	if(O)
-		linked = O
+		set_linked(O)
 
 
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)

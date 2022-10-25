@@ -1,7 +1,0 @@
-author: "KirbyDaMaster"
-delete-after: True
-changes: 
-  - rscadd: "-6 Quirk for all prosthetics named \"Quadruple Amputee\"
-change: prosthetic arm changed from -4 to -3"
-  - rscadd: "SVG icon tutorial readme to tgui tgfont folder
-change: Minor spelling issues in negative quirks tab"

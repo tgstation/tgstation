@@ -176,6 +176,16 @@
 			C.emote("gasp")
 	..()
 
+/datum/reagent/toxin/lexorin/on_mob_metabolize(mob/living/L)
+	RegisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, .proc/block_breath)
+
+/datum/reagent/toxin/lexorin/on_mob_end_metabolize(mob/living/L)
+	UnregisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, .proc/block_breath)
+
+/datum/reagent/toxin/lexorin/proc/block_breath(mob/living/source)
+	SIGNAL_HANDLER
+	return COMSIG_CARBON_BLOCK_BREATH
+
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
@@ -309,11 +319,11 @@
 
 /datum/reagent/toxin/mindbreaker/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()
-	ADD_TRAIT(metabolizer, TRAIT_HALLUCINATION_SUPPRESSED, type)
+	ADD_TRAIT(metabolizer, TRAIT_RDS_SUPPRESSED, type)
 
 /datum/reagent/toxin/mindbreaker/on_mob_end_metabolize(mob/living/metabolizer)
 	. = ..()
-	REMOVE_TRAIT(metabolizer, TRAIT_HALLUCINATION_SUPPRESSED, type)
+	REMOVE_TRAIT(metabolizer, TRAIT_RDS_SUPPRESSED, type)
 
 /datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	// mindbreaker toxin assuages hallucinations in those plagued with it, mentally
@@ -475,7 +485,7 @@
 	..()
 
 /datum/reagent/toxin/fakebeer //disguised as normal beer for use by emagged brobots
-	name = "Beer...?"
+	name = "B33r"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -537,7 +547,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.silent = max(M.silent, 3 * REM * normalise_creation_purity() * delta_time)
+	// Gain approximately 12 seconds * creation purity seconds of silence every metabolism tick.
+	M.set_silence_if_lower(6 SECONDS * REM * normalise_creation_purity() * delta_time)
 	..()
 
 /datum/reagent/toxin/staminatoxin
@@ -981,16 +992,16 @@
 			var/atom/movable/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
-			for(var/key in pm_controller.controlled_planes)
-				animate(pm_controller.controlled_planes[key], transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
+			for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
+				animate(plane, transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 	return ..()
 
 /datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
 	if(M?.hud_used)
 		var/atom/movable/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-		for(var/key in pm_controller.controlled_planes)
-			animate(pm_controller.controlled_planes[key], transform = matrix(), time = 5, easing = QUAD_EASING)
+		for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
+			animate(plane, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
 
 /datum/reagent/toxin/anacea
@@ -1238,5 +1249,5 @@
 	health_required = 10
 
 /datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.hallucination += 5 * REM * delta_time
+	M.adjust_hallucinations(10 SECONDS * REM * delta_time)
 	return ..()

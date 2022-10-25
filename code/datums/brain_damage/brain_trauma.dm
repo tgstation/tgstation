@@ -16,12 +16,11 @@
 	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
 
 /datum/brain_trauma/Destroy()
-	if(brain?.traumas)
-		brain.traumas -= src
+	// Handles our references with our brain
+	brain?.remove_trauma_from_traumas(src)
 	if(owner)
 		on_lose()
-	brain = null
-	owner = null
+		owner = null
 	return ..()
 
 //Called on life ticks

@@ -76,7 +76,7 @@
 		return
 
 	var/mob/living/carbon/carbon_target = target
-	carbon_target.silent += 5
+	carbon_target.adjust_silence(10 SECONDS)
 	carbon_target.apply_status_effect(/datum/status_effect/void_chill)
 
 /datum/heretic_knowledge/cold_snap
@@ -222,7 +222,7 @@
 	for(var/mob/living/carbon/close_carbon in view(5, source))
 		if(IS_HERETIC_OR_MONSTER(close_carbon))
 			continue
-		close_carbon.silent += 1
+		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
 
 	// Telegraph the storm in every area on the station.
 	var/list/station_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)

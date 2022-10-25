@@ -122,6 +122,7 @@
 
 	if(living_pawn.health >= MONKEY_FLEE_HEALTH)
 		finish_action(controller, TRUE) //we're back in bussiness
+		return
 
 	var/mob/living/target = null
 
@@ -153,6 +154,7 @@
 
 	if(!target || target.stat != CONSCIOUS)
 		finish_action(controller, TRUE) //Target == owned
+		return
 
 	if(isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
 		// check if target has a weapon
@@ -259,6 +261,10 @@
 
 	controller.current_movement_target = target
 
+	if(!target)
+		finish_action(controller, FALSE)
+		return
+
 	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
 			target.grabbedby(living_pawn)
@@ -267,6 +273,10 @@
 	var/datum/weakref/disposal_ref = controller.blackboard[disposal_target_key]
 	var/obj/machinery/disposal/disposal = disposal_ref.resolve()
 	controller.current_movement_target = disposal
+
+	if(!disposal)
+		finish_action(controller, FALSE)
+		return
 
 	if(living_pawn.Adjacent(disposal))
 		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller, attack_target_key, disposal_target_key) //put him in!

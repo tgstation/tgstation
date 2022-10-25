@@ -16,7 +16,7 @@
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
 	if(old_limb)
 		qdel(old_limb)
-	new_limb.attach_limb(src, special = special)
+	new_limb.try_attach_limb(src, special = special)
 
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(!i)
@@ -143,7 +143,7 @@
 			new_bodypart = new /obj/item/bodypart/chest/larva()
 	. = new_bodypart
 
-/mob/living/carbon/alien/humanoid/newBodyPart(zone)
+/mob/living/carbon/alien/adult/newBodyPart(zone)
 	var/obj/item/bodypart/new_bodypart
 	switch(zone)
 		if(BODY_ZONE_L_ARM)
