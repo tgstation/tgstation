@@ -28,7 +28,7 @@
 
 /obj/item/pillow/Destroy(force)
 	. = ..()
-	pillow_trophy = null
+	QDEL_NULL(pillow_trophy)
 
 /obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, params)
 	. = ..()
