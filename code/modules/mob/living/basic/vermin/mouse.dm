@@ -368,11 +368,4 @@
 	action_cooldown = 2 SECONDS
 
 /datum/targetting_datum/basic/rat
-
-/datum/targetting_datum/basic/rat/can_attack(mob/living/living_mob, atom/the_target)
-	if(isliving(the_target))
-		var/mob/living/living_target = the_target
-		if(living_target.faction_check_mob(living_mob, TRUE))
-			return FALSE
-
-	return ..()
+	check_factions_exactly = TRUE
