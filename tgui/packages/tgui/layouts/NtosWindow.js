@@ -18,7 +18,8 @@ export const NtosWindow = (props, context) => {
     PC_showbatteryicon,
     PC_batterypercent,
     PC_ntneticon,
-    PC_stationdateandtime,
+    PC_stationdate,
+    PC_stationtime,
     PC_programheaders = [],
     PC_showexitprogram,
   } = data;
@@ -28,7 +29,16 @@ export const NtosWindow = (props, context) => {
         <div className="NtosWindow__header NtosHeader">
           <div className="NtosHeader__left">
             <Box inline bold mr={2}>
-              {PC_stationdateandtime}
+              <Button
+                width="26px"
+                lineHeight="22px"
+                textAlign="left"
+                tooltip={PC_stationdate}
+                color="transparent"
+                icon="calendar"
+                tooltipPosition="bottom"
+              />
+              {PC_stationtime}
             </Box>
             <Box inline italic mr={2} opacity={0.33}>
               {PC_device_theme === 'ntos' && 'NtOS'}
