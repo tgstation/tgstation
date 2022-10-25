@@ -69,9 +69,9 @@
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
 
-/// Attempts to toggle the mob's internals on or off using this tank.
+/// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
 /obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
-	mob_target.toggle_internals(src)
+	return mob_target.toggle_internals(src)
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)

@@ -291,23 +291,19 @@
 	// Just close the tank if it's the one the mob already has open.
 	var/obj/item/existing_tank = is_external ? external : internal
 	if(tank == existing_tank)
-		toggle_close_internals(tank, is_external)
-		return TRUE
+		return toggle_close_internals(is_external)
 	// Use breathing tube regardless of mask.
 	if(can_breathe_tube())
-		toggle_open_internals(tank, is_external)
-		return TRUE
+		return toggle_open_internals(tank, is_external)
 	// Use mask in absence of tube.
 	if(isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
 		// Adjust dishevelled breathing mask back onto face.
 		if (wear_mask.mask_adjusted)
 			wear_mask.adjustmask(src)
-		toggle_open_internals(tank, is_external)
-		return TRUE
+		return toggle_open_internals(tank, is_external)
 	// Use helmet in absence of tube or valid mask.
 	if(can_breathe_helmet())
-		toggle_open_internals(tank, is_external)
-		return TRUE
+		return toggle_open_internals(tank, is_external)
 	// Invalid helmet and missing mask.
 	// Don't show the "isn't sealed" message for non-helmet headgear, such as hats.
 	if (head && (istype(head, /obj/item/clothing/head/mod) || istype(head, /obj/item/clothing/head/helmet)))
