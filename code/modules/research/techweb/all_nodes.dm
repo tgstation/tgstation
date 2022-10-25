@@ -408,7 +408,6 @@
 	design_ids = list(
 		"crewpinpointer",
 		"defibrillator_compact",
-		"detective_scanner",
 		"harvester",
 		"healthanalyzer_advanced",
 		"holobarrier_med",
