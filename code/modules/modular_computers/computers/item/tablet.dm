@@ -65,9 +65,14 @@
 /obj/item/modular_computer/tablet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
+	if(inserted_item)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove [inserted_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(istype(held_item) && is_type_in_list(held_item, contained_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert [held_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
 
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
@@ -77,11 +82,11 @@
 			user.balloon_alert(user, "too big!")
 			return
 		if(inserted_item)
-			to_chat(user, span_warning("There is already \a [inserted_item] in \the [src]!"))
+			balloon_alert(user, "no room!")
 		else
 			if(!user.transferItemToLoc(W, src))
 				return
-			to_chat(user, span_notice("You insert \the [W] into \the [src]."))
+			balloon_alert(user, "inserted [W]")
 			inserted_item = W
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
@@ -120,13 +125,13 @@
 		return
 
 	if(inserted_item)
-		to_chat(user, span_notice("You remove [inserted_item] from [src]."))
+		balloon_alert(user, "removed [inserted_item]")
 		user.put_in_hands(inserted_item)
 		inserted_item = null
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
-		to_chat(user, span_warning("This tablet does not have a pen in it!"))
+		balloon_alert(user, "nothing to remove!")
 
 // Tablet 'splosion..
 
