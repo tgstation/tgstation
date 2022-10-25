@@ -51,6 +51,8 @@
 					return
 
 				suicide_log()
+				held_item.AddComponent(/datum/component/suicide_count)  // fills in a counter if it doesnt have
+				SEND_SIGNAL(held_item, COMSIG_HUMAN_SUICIDE_COMPLETE, src)
 
 				var/damage_mod = 0
 				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
@@ -79,7 +81,6 @@
 
 				death(FALSE)
 				ghostize(FALSE) // Disallows reentering body and disassociates mind
-				SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_COMPLETE)
 
 				return
 

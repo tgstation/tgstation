@@ -132,5 +132,5 @@
 
 ///From mob/living/carbon/human/suicide()
 #define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"
-///Called when a suicide is triggered, excluding MANUAL_SUICIDE's and SHAME types
+///Called when a suicide is triggered, excluding nonlethals (MANUAL_SUICIDE_NONLETHAL / SHAME)
 #define COMSIG_HUMAN_SUICIDE_COMPLETE "human_suicide_complete"

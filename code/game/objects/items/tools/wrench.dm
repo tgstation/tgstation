@@ -51,10 +51,9 @@
 	///var to hold the name of the person who suicided
 	var/suicider
 
-/obj/item/wrench/medical/examine(mob/user)
+/obj/item/wrench/medical/Initialize(mapload)
 	. = ..()
-	if(suicider)
-		. += span_notice("For some reason, it reminds you of [suicider].")
+	AddComponent(/datum/component/suicide_count, SUICIDE_VIS_ALL)
 
 /obj/item/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -71,7 +70,6 @@
 		return
 	for(var/obj/item/suicide_wrench in user)
 		user.dropItemToGround(suicide_wrench)
-	suicider = user.real_name
 	user.dust()
 	return OXYLOSS
 

@@ -1,11 +1,10 @@
 /*
 
 	A component designed to log and count who has suicided with the attached item.
+	It can either be attached to an item like usual, or will be added automatically with NONE when someone suicides.
 	If view_mode is HOLY, then only those spiritual enough are able to detect the ghosts' spirits.
 	If it's ALL, any old folk can come and examine for the suicide information.
 	Forensics scanners can always detect an item's suicide counts. (not implemented yet todo)
-	You may also specify a on_die callback, which could be used to update various other aspects with the number of suicides.
-
 */
 
 /datum/component/suicide_count
@@ -13,14 +12,12 @@
 	var/view_mode
 	var/last_person
 	var/count = 0
-	var/datum/callback/on_die
 
-/datum/component/suicide_count/Initialize(view_mode = SUICIDE_VIS_HOLY, datum/callback/on_die)
+/datum/component/suicide_count/Initialize(view_mode = SUICIDE_VIS_ALL)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.view_mode = view_mode
-	src.on_die = on_die
 
 /datum/component/suicide_count/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_HUMAN_SUICIDE_COMPLETE, .proc/on_suicide)
@@ -29,12 +26,16 @@
 /datum/component/suicide_count/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_HUMAN_SUICIDE_COMPLETE, COMSIG_PARENT_EXAMINE))
 
-/datum/component/suicide_count/on_suicide(mob/living/source)
+/datum/component/suicide_count/InheritComponent(datum/component/C, i_am_original, view_mode)
+	if(view_mode >= src.view_mode)  // upgrading it
+		src.view_mode = view_mode
+
+/datum/component/suicide_count/on_suicide(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	if(!istype(source))
+	if(!istype(user))
 		return
 
-	last_person = source.real_name
+	last_person = user.real_name
 	count++
 
 /datum/component/suicide_count/on_examine(atom/source, mob/user, list/examine_list)
