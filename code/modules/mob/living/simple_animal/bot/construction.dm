@@ -58,6 +58,8 @@
 
 /obj/item/bot_assembly/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
+		if(bucket_obj && bucket_obj != arrived)
+			qdel(bucket_obj)
 		bucket_obj = arrived
 		set_greyscale(bucket_obj.greyscale_colors)
 	return ..()
