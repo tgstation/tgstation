@@ -1,4 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes: 
-  - bugfix: "The underground mining site ruin no longer has a ceiling of snow, it is once again an open pit. Don't fall in!"
