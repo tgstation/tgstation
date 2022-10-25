@@ -61,7 +61,7 @@
 		one dog from the millions of Ian's noble bloodline. Comes with a cute collar!"
 	cost = CARGO_CRATE_VALUE * 10
 	access_view = ACCESS_HOP
-	contains = list(/mob/living/simple_animal/pet/dog/corgi,
+	contains = list(/mob/living/basic/pet/dog/corgi,
 					/obj/item/clothing/neck/petcollar,
 				)
 	crate_name = "corgi crate"
@@ -69,10 +69,10 @@
 /datum/supply_pack/critter/corgi/generate()
 	. = ..()
 	if(prob(50))
-		var/mob/living/simple_animal/pet/dog/corgi/D = locate() in .
+		var/mob/living/basic/pet/dog/corgi/D = locate() in .
 		if(D.gender == FEMALE)
 			qdel(D)
-			new /mob/living/simple_animal/pet/dog/corgi/lisa(.)
+			new /mob/living/basic/pet/dog/corgi/lisa(.)
 
 /datum/supply_pack/critter/cow
 	name = "Cow Crate"
@@ -123,7 +123,7 @@
 	desc = "Corgi fit for a king, this corgi comes in a unique color to signify their superiority. \
 		Comes with a cute collar!"
 	cost = CARGO_CRATE_VALUE * 11
-	contains = list(/mob/living/simple_animal/pet/dog/corgi/exoticcorgi,
+	contains = list(/mob/living/basic/pet/dog/corgi/exoticcorgi,
 					/obj/item/clothing/neck/petcollar,
 				)
 	crate_name = "exotic corgi crate"
@@ -166,7 +166,7 @@
 	name = "Pug Crate"
 	desc = "Like a normal dog, but... squished. Contains one pug. Comes with a nice collar!"
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/mob/living/simple_animal/pet/dog/pug,
+	contains = list(/mob/living/basic/pet/dog/pug,
 					/obj/item/clothing/neck/petcollar,
 				)
 	crate_name = "pug crate"
@@ -176,7 +176,7 @@
 	desc = "Like a normal dog, but with a head the shape of an egg. Contains one bull terrier. \
 		Comes with a nice collar!"
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/mob/living/simple_animal/pet/dog/bullterrier,
+	contains = list(/mob/living/basic/pet/dog/bullterrier,
 					/obj/item/clothing/neck/petcollar,
 				)
 	crate_name = "bull terrier crate"

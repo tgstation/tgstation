@@ -275,6 +275,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	washer.bloody_mess = TRUE
 	gib()
 
+/mob/living/basic/pet/machine_wash(obj/machinery/washing_machine/washer)
+	washer.bloody_mess = TRUE
+	gib()
+
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
 	if(washer.color_source)
 		dye_item(washer.color_source.dye_color)
@@ -373,7 +377,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(L.buckled || L.has_buckled_mobs())
 			return
 		if(state_open)
-			if(istype(L, /mob/living/simple_animal/pet))
+			if(istype(L, /mob/living/simple_animal/pet) || istype(L, /mob/living/basic/pet))
 				L.forceMove(src)
 				update_appearance()
 		return

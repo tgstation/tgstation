@@ -4498,7 +4498,7 @@
 	dir = 4
 	},
 /obj/structure/bed/dogbed/mcgriff,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/mob/living/basic/pet/dog/pug/mcgriff,
 /turf/open/floor/glass/reinforced,
 /area/station/security/warden)
 "bMb" = (
@@ -22338,7 +22338,7 @@
 /obj/structure/bed/dogbed/ian,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/machinery/firealarm/directional/east,
-/mob/living/simple_animal/pet/dog/corgi/ian,
+/mob/living/basic/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "ibg" = (
@@ -40317,7 +40317,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
 	},
-/mob/living/simple_animal/pet/dog/pug{
+/mob/living/basic/pet/dog/pug{
 	desc = "A pug with an insatiable appetite for pasta and pasta-adjacent piping.";
 	name = "Spaghetti"
 	},

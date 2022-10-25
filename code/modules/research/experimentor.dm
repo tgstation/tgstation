@@ -77,7 +77,7 @@
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
 
-	tracked_ian_ref = WEAKREF(locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list)
+	tracked_ian_ref = WEAKREF(locate(/mob/living/basic/pet/dog/corgi/ian) in GLOB.mob_living_list)
 	tracked_runtime_ref = WEAKREF(locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list)
 	SetTypeReactions()
 
@@ -481,7 +481,7 @@
 				tracked_ian.forceMove(loc)
 				investigate_log("Experimentor has stolen Ian!", INVESTIGATE_EXPERIMENTOR) //...if anyone ever fixes it...
 			else
-				new /mob/living/simple_animal/pet/dog/corgi(loc)
+				new /mob/living/basic/pet/dog/corgi(loc)
 				investigate_log("Experimentor has spawned a new corgi.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
 		if(globalMalf > 36 && globalMalf < 50)
@@ -599,7 +599,7 @@
 
 /obj/item/relic/proc/corgicannon(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
+	var/mob/living/basic/pet/dog/corgi/C = new/mob/living/basic/pet/dog/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .proc/throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
@@ -621,7 +621,7 @@
 	visible_message(message)
 	to_chat(user, message)
 
-	var/list/valid_animals = list(/mob/living/simple_animal/parrot/natural, /mob/living/simple_animal/butterfly, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/crab, /mob/living/simple_animal/pet/fox, /mob/living/simple_animal/hostile/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/dog/pug, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/bee, /mob/living/simple_animal/hostile/carp)
+	var/list/valid_animals = list(/mob/living/simple_animal/parrot/natural, /mob/living/simple_animal/butterfly, /mob/living/simple_animal/pet/cat, /mob/living/basic/pet/dog/corgi, /mob/living/simple_animal/crab, /mob/living/simple_animal/pet/fox, /mob/living/simple_animal/hostile/lizard, /mob/living/simple_animal/mouse, /mob/living/basic/pet/dog/pug, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/bee, /mob/living/simple_animal/hostile/carp)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))
