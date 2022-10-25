@@ -887,3 +887,38 @@
   - refactor: removed prison_radio var
   lizardqueenlexi:
   - bugfix: Fixed a minor error causing the H.O.N.K. to be impossible to construct.
+2022-10-24:
+  ArcaneMusic:
+  - bugfix: The black market uplink now properly uses the correct item path and description.
+  Melbert:
+  - bugfix: Streaks of blood from gibs will now all be infective with diseases, instead
+      of only the parent gib
+  - bugfix: Fixes an edge case runtime with heretic sacrificing
+  Rhials:
+  - bugfix: headpikes now drop their mounted head on destruction.
+  Vishenka0704:
+  - admin: separate antagonists from living player, and add another field with security
+      info
+2022-10-25:
+  ArcaneMusic:
+  - bugfix: Paper hats now display properly when worn.
+  GoblinBackwards:
+  - bugfix: Fixed an exploit that let you make infinite bloody bastard swords
+  Profakos:
+  - bugfix: Ian once again celebrates his birthday on Kilo, and new year on Icebox
+  - bugfix: On tramstation, jobs that have morgue access should be able to access
+      it
+  - bugfix: In general, morgue access does not let you sneak into medbay
+  Sealed101:
+  - bugfix: The goliath that you may encounter outside of a Survival Pod ruin on Lavaland
+      is now properly a carcass.
+  ShizCalev:
+  - bugfix: Fixed a minor runtime when regal rats attacked power cables.
+  VexingRaven:
+  - bugfix: The underground mining site ruin no longer has a ceiling of snow, it is
+      once again an open pit. Don't fall in!
+  ZephyrTFA:
+  - bugfix: The SpiderClan have resolved an issue where the Ninja Suit would terminate
+      the AI inside during standard usage
+  exymian:
+  - bugfix: Fixed 2 unconnected pipes in Tramstation atmos
