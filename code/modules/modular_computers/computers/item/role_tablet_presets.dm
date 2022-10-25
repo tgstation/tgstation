@@ -334,6 +334,9 @@
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
 	inserted_item = /obj/item/toy/crayon/mime
+	starting_programs = list(
+		/datum/computer_file/program/emojipedia,
+	)
 
 /obj/item/modular_computer/tablet/pda/mime/Initialize(mapload)
 	. = ..()
@@ -351,6 +354,7 @@
 	inserted_item = /obj/item/pen/fountain
 	long_ranged = TRUE
 	starting_programs = list(
+		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
 	)
 

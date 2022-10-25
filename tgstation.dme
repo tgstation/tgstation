@@ -3893,6 +3893,7 @@
 #include "code\modules\modular_computers\file_system\programs\cargoship.dm"
 #include "code\modules\modular_computers\file_system\programs\configurator.dm"
 #include "code\modules\modular_computers\file_system\programs\crewmanifest.dm"
+#include "code\modules\modular_computers\file_system\programs\emojipedia.dm"
 #include "code\modules\modular_computers\file_system\programs\file_browser.dm"
 #include "code\modules\modular_computers\file_system\programs\frontier.dm"
 #include "code\modules\modular_computers\file_system\programs\jobmanagement.dm"
