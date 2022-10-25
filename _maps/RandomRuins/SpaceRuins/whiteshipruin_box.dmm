@@ -147,7 +147,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "uG" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -186,7 +186,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/space/has_grav/whiteship/box)
 "CC" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -265,7 +265,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "VQ" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -274,7 +274,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Xp" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

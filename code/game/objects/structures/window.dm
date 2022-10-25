@@ -221,7 +221,7 @@
 					set_anchored(FALSE)
 					to_chat(user, span_notice("You unfasten the frame from the floor."))
 			else
-				to_chat(user, span_notice("You begin to screw the frame from to floor..."))
+				to_chat(user, span_notice("You begin to screw the frame to the floor..."))
 				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 					set_anchored(TRUE)
 					to_chat(user, span_notice("You fasten the frame to the floor."))
@@ -347,6 +347,20 @@
 		set_opacity(255)
 	else
 		set_opacity(initial(opacity))
+
+/obj/structure/window/wash(clean_types)
+	. = ..()
+	if(!(clean_types & CLEAN_SCRUB))
+		return
+	set_opacity(initial(opacity))
+	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	for(var/atom/movable/cleanables as anything in src)
+		if(cleanables == src)
+			continue 
+		if(!cleanables.wash(clean_types))
+			continue
+		vis_contents -= cleanables
+	bloodied = FALSE
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)

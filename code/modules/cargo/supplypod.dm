@@ -255,14 +255,14 @@
 					organ_to_yeet.Remove(carbon_target_mob) //Note that this isn't the same proc as for lists
 					organ_to_yeet.forceMove(turf_underneath) //Move the organ outta the body
 					organ_to_yeet.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
-					sleep(1)
+					sleep(0.1 SECONDS)
 				for (var/bp in carbon_target_mob.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
 					var/obj/item/bodypart/bodypart = bp
 					var/destination = get_edge_target_turf(turf_underneath, pick(GLOB.alldirs))
 					if (bodypart.dismemberable)
 						bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!
 						bodypart.throw_at(destination, 2, 3)
-						sleep(1)
+						sleep(0.1 SECONDS)
 
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
 			target_living.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
@@ -463,8 +463,14 @@
 	glow_effect.icon_state = "pod_glow_" + GLOB.podstyles[style][POD_GLOW]
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
-	glow_effect.plane = ABOVE_GAME_PLANE
+	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
+
+/obj/structure/closet/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
@@ -629,7 +635,7 @@
 	setupSmoke(rotation)
 	pod.transform = matrix().Turn(rotation)
 	pod.layer = FLY_LAYER
-	pod.plane = ABOVE_GAME_PLANE
+	SET_PLANE_EXPLICIT(pod, ABOVE_GAME_PLANE, src)
 	if (pod.style != STYLE_INVISIBLE)
 		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
@@ -637,11 +643,12 @@
 /obj/effect/pod_landingzone/proc/setupSmoke(rotation)
 	if (pod.style == STYLE_INVISIBLE || pod.style == STYLE_SEETHROUGH)
 		return
+	var/turf/our_turf = get_turf(drop_location())
 	for ( var/i in 1 to length(smoke_effects))
 		var/obj/effect/supplypod_smoke/smoke_part = new (drop_location())
 		if (i == 1)
 			smoke_part.layer = FLY_LAYER
-			smoke_part.plane = ABOVE_GAME_PLANE
+			SET_PLANE(smoke_part, ABOVE_GAME_PLANE, our_turf)
 			smoke_part.icon_state = "smoke_start"
 		smoke_part.transform = matrix().Turn(rotation)
 		smoke_effects[i] = smoke_part
@@ -660,9 +667,10 @@
 		animate(smoke_part.get_filter("smoke_blur"), size = 6, time = 15, easing = CUBIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /obj/effect/pod_landingzone/proc/endLaunch()
+	var/turf/our_turf = get_turf(drop_location())
 	pod.tryMakeRubble(drop_location())
 	pod.layer = initial(pod.layer)
-	pod.plane = initial(pod.plane)
+	SET_PLANE(pod, initial(pod.plane), our_turf)
 	pod.endGlow()
 	QDEL_NULL(helper)
 	pod.preOpen() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place

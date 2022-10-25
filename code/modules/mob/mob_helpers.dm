@@ -211,11 +211,6 @@
 	SHOULD_BE_PURE(TRUE)
 	return eye_blind ? TRUE : HAS_TRAIT(src, TRAIT_BLIND)
 
-///Is the mob hallucinating?
-/mob/proc/hallucinating()
-	return FALSE
-
-
 // moved out of admins.dm because things other than admin procs were calling this.
 /// Returns TRUE if the game has started and we're either an AI with a 0th law, or we're someone with a special role/antag datum
 /proc/is_special_character(mob/M)

@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		var/t = tgui_input_text(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_held_item() != P)
 			return
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 		if (t)
 			name = text("[]- '[]'", initial(name), t)
@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
 			new/obj/effect/decal/cleanable/ash/crematorium(src)
 
-		sleep(30)
+		sleep(3 SECONDS)
 
 		if(!QDELETED(src))
 			locked = FALSE

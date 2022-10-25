@@ -1,0 +1,5 @@
+author: "Profakos"
+delete-after: True
+changes: 
+  - bugfix: "On tramstation, jobs that have morgue access should be able to access it"
+  - bugfix: "In general, morgue access does not let you sneak into medbay"

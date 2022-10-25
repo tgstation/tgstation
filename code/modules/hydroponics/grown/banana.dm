@@ -21,7 +21,7 @@
 	name = "banana"
 	desc = "It's an excellent prop for a clown."
 	icon_state = "banana"
-	inhand_icon_state = "banana"
+	inhand_icon_state = "banana_peel"
 	trash_type = /obj/item/grown/bananapeel
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
@@ -44,11 +44,11 @@
 /obj/item/food/grown/banana/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
-	sleep(25)
+	sleep(2.5 SECONDS)
 	if(!user)
 		return (OXYLOSS)
 	user.say("BANG!", forced = /datum/reagent/consumable/banana)
-	sleep(25)
+	sleep(2.5 SECONDS)
 	if(!user)
 		return (OXYLOSS)
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
@@ -141,6 +141,7 @@
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
 	icon_state = "bluenana_peel"
+	inhand_icon_state = "bluespace_peel"
 
 // Other
 /obj/item/grown/bananapeel/specialpeel //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes

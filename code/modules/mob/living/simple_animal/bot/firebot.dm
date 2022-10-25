@@ -89,7 +89,6 @@
 	..()
 	target_fire = null
 	old_target_fire = null
-	ignore_list = list()
 	set_anchored(FALSE)
 	update_appearance()
 
@@ -250,19 +249,16 @@
 
 //Look for burning people or turfs around the bot
 /mob/living/simple_animal/bot/firebot/process_scan(atom/scan_target)
-	var/result
-
 	if(scan_target == src)
-		return result
+		return src
+	if(!is_burning(scan_target))
+		return null
 
-	if(is_burning(scan_target))
-		if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
-			speak("Fire detected!")
-			playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
-			detected_cooldown = world.time
-		result = scan_target
-
-	return result
+	if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
+		speak("Fire detected!")
+		playsound(src, 'sound/voice/firebot/detected.ogg', 50, FALSE)
+		detected_cooldown = world.time
+		return scan_target
 
 /mob/living/simple_animal/bot/firebot/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + 200 || exposed_temperature < BODYTEMP_COLD_DAMAGE_LIMIT)
@@ -294,7 +290,7 @@
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
-	new /obj/item/clothing/head/hardhat/red(Tsec)
+	new /obj/item/clothing/head/utility/hardhat/red(Tsec)
 
 	var/turf/T = get_turf(Tsec)
 

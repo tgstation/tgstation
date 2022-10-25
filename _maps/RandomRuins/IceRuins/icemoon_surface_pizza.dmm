@@ -936,7 +936,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/pizzeria/kitchen)
 "Fe" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/toilet{
 	dir = 8
 	},
@@ -1008,9 +1008,7 @@
 /obj/structure/closet/crate/trashcart,
 /obj/item/toy/crayon/spraycan,
 /obj/item/camera,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/spawner/random/trash/botanical_waste,
 /obj/item/seeds/tomato,
 /obj/item/seeds/wheat,

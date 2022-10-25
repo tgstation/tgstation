@@ -154,7 +154,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox5"
 	base_icon_state = "candlebox"
-	inhand_icon_state = "candlebox5"
+	inhand_icon_state = null
 	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
@@ -480,11 +480,11 @@
 	SHOULD_CALL_PARENT(FALSE)
 	if(!contents.len)
 		icon_state = "[base_icon_state]_empty"
-	else 
+	else
 		if(contents.len < 5)
 			icon_state = "[base_icon_state]_[contents.len]"
-		else	
+		else
 			icon_state = base_icon_state
 	return
 
-	
+

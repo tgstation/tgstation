@@ -56,9 +56,24 @@ SUBSYSTEM_DEF(verb_manager)
  * returns TRUE if the queuing was successful, FALSE otherwise.
  */
 /proc/_queue_verb(datum/callback/verb_callback/incoming_callback, tick_check, datum/controller/subsystem/verb_manager/subsystem_to_use = SSverb_manager, ...)
-	if(QDELETED(incoming_callback) \
-	|| QDELETED(incoming_callback.object))
-		stack_trace("_queue_verb() returned false because it was given an invalid callback!")
+	if(QDELETED(incoming_callback))
+		var/destroyed_string
+		if(!incoming_callback)
+			destroyed_string = "callback is null."
+		else
+			destroyed_string = "callback was deleted [DS2TICKS(world.time - incoming_callback.gc_destroyed)] ticks ago. callback was created [DS2TICKS(world.time) - incoming_callback.creation_time] ticks ago."
+
+		stack_trace("_queue_verb() returned false because it was given a deleted callback! [destroyed_string]")
+		return FALSE
+
+	if(!istext(incoming_callback.object) && QDELETED(incoming_callback.object)) //just in case the object is GLOBAL_PROC
+		var/destroyed_string
+		if(!incoming_callback.object)
+			destroyed_string = "callback.object is null."
+		else
+			destroyed_string = "callback.object was deleted [DS2TICKS(world.time - incoming_callback.object.gc_destroyed)] ticks ago. callback was created [DS2TICKS(world.time) - incoming_callback.creation_time] ticks ago."
+
+		stack_trace("_queue_verb() returned false because it was given a callback acting on a qdeleted object! [destroyed_string]")
 		return FALSE
 
 	//we want unit tests to be able to directly call verbs that attempt to queue, and since unit tests should test internal behavior, we want the queue

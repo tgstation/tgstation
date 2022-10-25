@@ -100,6 +100,10 @@
 	if(active)
 		if(sword_color_icon)
 			icon_state = "[icon_state]_[sword_color_icon]"
+			inhand_icon_state = "[inhand_icon_state]_[sword_color_icon]"
+			if(ismob(loc))
+				var/mob/loc_mob = loc
+				loc_mob.update_held_items()
 		if(embedding)
 			updateEmbedding()
 		heat = active_heat
@@ -111,7 +115,8 @@
 		STOP_PROCESSING(SSobj, src)
 
 	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
-	balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
+	if(user)
+		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
@@ -121,6 +126,7 @@
 	name = "energy axe"
 	desc = "An energized battle axe."
 	icon_state = "axe"
+	inhand_icon_state = "axe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -158,6 +164,7 @@
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "e_sword"
+	inhand_icon_state = "e_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = SFX_SWING_HIT
@@ -199,7 +206,7 @@
 /obj/item/melee/energy/sword/cyborg/saw //Used by medical Syndicate cyborgs
 	name = "energy saw"
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
-	icon = 'icons/obj/medical/organs/organs.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "esaw"
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	force = 18
@@ -218,8 +225,8 @@
 
 // The colored energy swords we all know and love.
 /obj/item/melee/energy/sword/saber
-	/// Assoc list of all possible saber colors to color define.
-	var/list/possible_colors = list(
+	/// Assoc list of all possible saber colors to color define. If you add a new color, make sure to update /obj/item/toy/sword too!
+	var/list/possible_sword_colors = list(
 		"red" = COLOR_SOFT_RED,
 		"blue" = LIGHT_COLOR_LIGHT_CYAN,
 		"green" = LIGHT_COLOR_GREEN,
@@ -227,19 +234,30 @@
 		)
 	/// Whether this saber has been multitooled.
 	var/hacked = FALSE
+	var/hacked_color
 
 /obj/item/melee/energy/sword/saber/Initialize(mapload)
 	. = ..()
-	if(!sword_color_icon && LAZYLEN(possible_colors))
-		sword_color_icon = pick(possible_colors)
+	if(!sword_color_icon && LAZYLEN(possible_sword_colors))
+		sword_color_icon = pick(possible_sword_colors)
 
 	if(sword_color_icon)
-		set_light_color(possible_colors[sword_color_icon])
+		set_light_color(possible_sword_colors[sword_color_icon])
 
 /obj/item/melee/energy/sword/saber/process()
 	. = ..()
-	if(hacked)
-		set_light_color(possible_colors[pick(possible_colors)])
+	if(blade_active && hacked)
+		if(!LAZYLEN(possible_sword_colors))
+			possible_sword_colors = list(
+				"red" = COLOR_SOFT_RED,
+				"blue" = LIGHT_COLOR_LIGHT_CYAN,
+				"green" = LIGHT_COLOR_GREEN,
+				"purple" = LIGHT_COLOR_LAVENDER,
+				)
+			possible_sword_colors -= hacked_color
+		hacked_color = pick(possible_sword_colors)
+		set_light_color(possible_sword_colors[hacked_color])
+		possible_sword_colors -= hacked_color
 
 /obj/item/melee/energy/sword/saber/red
 	sword_color_icon = "red"
@@ -262,12 +280,14 @@
 	to_chat(user, span_warning("RNBW_ENGAGE"))
 	if(force >= active_force)
 		icon_state = "[initial(icon_state)]_on_rainbow"
+		inhand_icon_state = "[initial(inhand_icon_state)]_on_rainbow"
 		user.update_held_items()
 
 /obj/item/melee/energy/sword/pirate
 	name = "energy cutlass"
 	desc = "Arrrr matey."
 	icon_state = "e_cutlass"
+	inhand_icon_state = "e_cutlass"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	light_color = COLOR_RED

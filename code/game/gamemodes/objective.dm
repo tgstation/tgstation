@@ -684,7 +684,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
-	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
+	for(var/mob/living/carbon/alien/adult/M in A)//Aliens are worth twice as much as humans.
 		if(isalienqueen(M))//Queens are worth three times as much as humans.
 			if(M.stat == DEAD)
 				captured_amount+=1.5
@@ -794,20 +794,19 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb_changeling/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/M in owners)
-		if(!M)
-			continue
-		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+	for(var/datum/mind/ling_mind as anything in owners)
+		var/datum/antagonist/changeling/changeling = ling_mind.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling)
 			continue
-		var/total_genetic_points = changeling.genetic_points
 
-		for(var/datum/action/changeling/p in changeling.purchased_powers)
-			total_genetic_points += p.dna_cost
+		var/total_genetic_points = changeling.genetic_points
+		for(var/power_path in changeling.purchased_powers)
+			var/datum/action/changeling/power = changeling.purchased_powers[power_path]
+			total_genetic_points += power.dna_cost
 
 		if(total_genetic_points > initial(changeling.genetic_points))
 			return TRUE
-	return FALSE
+	return completed
 
 //End Changeling Objectives
 

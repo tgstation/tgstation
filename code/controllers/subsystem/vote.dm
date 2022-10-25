@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote"
 	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING
+	init_order = INIT_ORDER_VOTE
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	/// A list of all generated action buttons
@@ -48,12 +49,7 @@ SUBSYSTEM_DEF(vote)
 	current_vote?.reset()
 	current_vote = null
 
-	for(var/datum/action/vote/voting_action as anything in generated_actions)
-		if(QDELETED(voting_action))
-			continue
-		voting_action.Remove(voting_action.owner)
-
-	generated_actions.Cut()
+	QDEL_LIST(generated_actions)
 
 	SStgui.update_uis(src)
 

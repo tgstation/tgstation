@@ -45,7 +45,7 @@
 #define COMSIG_MOVABLE_POST_THROW "movable_post_throw"
 ///from base of datum/thrownthing/finalize(): (obj/thrown_object, datum/thrownthing) used for when a throw is finished
 #define COMSIG_MOVABLE_THROW_LANDED "movable_throw_landed"
-///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf)
+///from base of atom/movable/on_changed_z_level(): (turf/old_turf, turf/new_turf, same_z_layer)
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
 ///called when the movable is placed in an unaccessible area, used for stationloving: ()
 #define COMSIG_MOVABLE_SECLUDED_LOCATION "movable_secluded"
@@ -90,3 +90,8 @@
 /// from base of atom/movable/Process_Spacemove(): (movement_dir, continuous_move)
 #define COMSIG_MOVABLE_SPACEMOVE "spacemove"
 	#define COMSIG_MOVABLE_STOP_SPACEMOVE (1<<0)
+
+/// Sent from /obj/item/radio/talk_into(): (obj/item/radio/used_radio)
+#define COMSIG_MOVABLE_USING_RADIO "movable_radio"
+	/// Return to prevent the movable from talking into the radio.
+	#define COMPONENT_CANNOT_USE_RADIO (1<<0)

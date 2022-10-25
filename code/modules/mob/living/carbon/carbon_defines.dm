@@ -19,8 +19,6 @@
 	var/list/obj/item/organ/external/external_organs = list()
 	///Same as [above][/mob/living/carbon/var/external_organs], but stores "ID" = "organ" pairs.
 	var/list/external_organs_slot = list()
-	///Can't talk. Value goes down every life proc. NOTE TO FUTURE CODERS: DO NOT INITIALIZE NUMERICAL VARS AS NULL OR I WILL MURDER YOU.
-	var/silent = 0
 	///How many dream images we have left to send
 	var/dreaming = 0
 
@@ -76,7 +74,7 @@
 		/obj/item/bodypart/r_arm,
 		/obj/item/bodypart/r_leg,
 		/obj/item/bodypart/l_leg,
-		)
+	)
 
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)
 	var/list/hand_bodyparts = list()
@@ -85,9 +83,10 @@
 	var/list/icon_render_keys = list()
 	var/static/list/limb_icon_cache = list()
 
-	//halucination vars
-	var/hal_screwyhud = SCREWYHUD_NONE
-	var/next_hallucination = 0
+	/// Used to temporarily increase severity of / apply a new damage overlay (the red ring around the ui / screen).
+	/// This number will translate to equivalent brute or burn damage taken. Handled in [mob/living/proc/update_damage_hud].
+	/// (For example, setting damageoverlaytemp = 20 will add 20 "damage" to the overlay the next time it updates.)
+	/// This number is also reset to 0 every tick of carbon Life(). Pain.
 	var/damageoverlaytemp = 0
 
 	///used to halt stamina regen temporarily

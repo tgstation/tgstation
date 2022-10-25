@@ -4457,7 +4457,7 @@
 "ky" = (
 /obj/structure/table,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/structure/sign/warning/biohazard/directional/north,
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,

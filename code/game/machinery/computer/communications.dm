@@ -323,6 +323,20 @@
 			if (!message)
 				return
 
+			SScommunications.soft_filtering = FALSE
+			var/list/hard_filter_result = is_ic_filtered(message)
+			if(hard_filter_result)
+				tgui_alert(usr, "Your message contains: (\"[hard_filter_result[CHAT_FILTER_INDEX_WORD]]\"), which is not allowed on this server.")
+				return
+
+			var/list/soft_filter_result = is_soft_ooc_filtered(message)
+			if(soft_filter_result)
+				if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+					return
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
+				log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
+				SScommunications.soft_filtering = TRUE
+
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
 			var/destination = params["destination"]
@@ -332,13 +346,13 @@
 				GLOB.admins,
 				span_adminnotice( \
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(usr)] is about to send \
-					the following message to <b>[destination]</b> (will autoapprove in [DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+					the following message to <b>[destination]</b> (will autoapprove in [SScommunications.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
 					<b><a href='?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
 					[html_encode(message)]" \
 				)
 			)
 
-			send_cross_comms_message_timer = addtimer(CALLBACK(src, .proc/send_cross_comms_message, usr, destination, message), CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+			send_cross_comms_message_timer = addtimer(CALLBACK(src, .proc/send_cross_comms_message, usr, destination, message), SScommunications.soft_filtering ? EXTENDED_CROSS_SECTOR_CANCEL_TIME : CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
 
 			COOLDOWN_START(src, important_action_cooldown, IMPORTANT_ACTION_COOLDOWN)
 		if ("setState")
@@ -457,16 +471,19 @@
 
 	var/list/payload = list()
 
-	var/network_name = CONFIG_GET(string/cross_comms_network)
-	if (network_name)
-		payload["network"] = network_name
 	payload["sender_ckey"] = usr.ckey
+	var/network_name = CONFIG_GET(string/cross_comms_network)
+	if(network_name)
+		payload["network"] = network_name
+	if(SScommunications.soft_filtering)
+		payload["is_filtered"] = TRUE
 
 	send2otherserver(html_decode(station_name()), message, "Comms_Console", destination == "all" ? null : list(destination), additional_data = payload)
 	minor_announce(message, title = "Outgoing message to allied station")
 	usr.log_talk(message, LOG_SAY, tag = "message to the other server")
 	message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server\[s].")
 	deadchat_broadcast(" has sent an outgoing message to the other station(s).</span>", "<span class='bold'>[usr.real_name]", usr, message_type = DEADCHAT_ANNOUNCEMENT)
+	SScommunications.soft_filtering = FALSE // set it to false at the end of the proc to ensure that everything prior reads as intended
 
 /obj/machinery/computer/communications/ui_data(mob/user)
 	var/list/data = list(
@@ -624,6 +641,7 @@
 			return
 
 		deltimer(send_cross_comms_message_timer)
+		SScommunications.soft_filtering = FALSE
 		send_cross_comms_message_timer = null
 
 		log_admin("[key_name(usr)] has cancelled the outgoing cross-comms message.")
@@ -719,11 +737,19 @@
 	var/input = tgui_input_text(user, "Message to announce to the station crew", "Announcement")
 	if(!input || !user.canUseTopic(src, !issilicon(usr)))
 		return
-	if(!(user.can_speak())) //No more cheating, mime/random mute guy!
-		input = "..."
-		to_chat(user, span_warning("You find yourself unable to speak."))
+	if(user.try_speak(input))
+		//Adds slurs and so on. Someone should make this use languages too.
+		input = user.treat_message(input)
 	else
-		input = user.treat_message(input) //Adds slurs and so on. Someone should make this use languages too.
+		//No cheating, mime/random mute guy!
+		input = "..."
+		user.visible_message(
+			span_notice("You leave the mic on in awkward silence..."),
+			span_notice("[user] holds down [src]'s announcement button, leaving the mic on in awkward silence."),
+			span_hear("You hear an awkward silence, somehow."),
+			vision_distance = 4,
+		)
+
 	var/list/players = get_communication_players()
 	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
 	deadchat_broadcast(" made a priority announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
@@ -776,21 +802,27 @@
 
 /// Begin the process of hacking into the comms console to call in a threat.
 /obj/machinery/computer/communications/proc/try_hack_console(mob/living/hacker, duration = 30 SECONDS)
-	if(!can_hack())
+	if(!can_hack(hacker, feedback = TRUE))
 		return FALSE
 
 	AI_notify_hack()
-	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack)))
+	if(!do_after(hacker, duration, src, extra_checks = CALLBACK(src, .proc/can_hack, hacker)))
 		return FALSE
 
 	hack_console(hacker)
 	return TRUE
 
 /// Checks if this console is hackable. Used as a callback during try_hack_console's doafter as well.
-/obj/machinery/computer/communications/proc/can_hack()
+/obj/machinery/computer/communications/proc/can_hack(mob/living/hacker, feedback = FALSE)
 	if(machine_stat & (NOPOWER|BROKEN))
+		if(feedback && hacker)
+			balloon_alert(hacker, "can't hack!")
 		return FALSE
-
+	var/area/console_area = get_area(src)
+	if(!console_area || !(console_area.area_flags & VALID_TERRITORY))
+		if(feedback && hacker)
+			balloon_alert(hacker, "signal too weak!")
+		return FALSE
 	return TRUE
 
 /**

@@ -93,7 +93,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
-	log_mob_tag("\[[tag]\] CREATED: [key_name(src)]")
+	log_mob_tag("CREATED: [key_name(src)] \[[type]\]")
 
 /**
  * Generate the tag for this mob
@@ -407,7 +407,7 @@
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE, initial = FALSE)
 	if(!istype(W) || QDELETED(W)) //This qdeleted is to prevent stupid behavior with things that qdel during init, like say stacks
 		return FALSE
-	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
+	if(!W.mob_can_equip(src, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
 			qdel(W)
 		else if(!disable_warning)
@@ -477,6 +477,7 @@
  * reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
  */
 /mob/proc/reset_perspective(atom/new_eye)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!client)
 		return
 
@@ -485,29 +486,29 @@
 			//Set the new eye unless it's us
 			if(new_eye != src)
 				client.perspective = EYE_PERSPECTIVE
-				client.eye = new_eye
+				client.set_eye(new_eye)
 			else
-				client.eye = client.mob
+				client.set_eye(client.mob)
 				client.perspective = MOB_PERSPECTIVE
 
 		else if(isturf(new_eye))
 			//Set to the turf unless it's our current turf
 			if(new_eye != loc)
 				client.perspective = EYE_PERSPECTIVE
-				client.eye = new_eye
+				client.set_eye(new_eye)
 			else
-				client.eye = client.mob
+				client.set_eye(client.mob)
 				client.perspective = MOB_PERSPECTIVE
 		else
 			return TRUE //no setting eye to stupid things like areas or whatever
 	else
 		//Reset to common defaults: mob if on turf, otherwise current loc
 		if(isturf(loc))
-			client.eye = client.mob
+			client.set_eye(client.mob)
 			client.perspective = MOB_PERSPECTIVE
 		else
 			client.perspective = EYE_PERSPECTIVE
-			client.eye = loc
+			client.set_eye(loc)
 	/// Signal sent after the eye has been successfully updated, with the client existing.
 	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 	return TRUE
@@ -971,7 +972,16 @@
 		return FALSE
 	return ISINRANGE(their_turf.x, our_turf.x - interaction_range, our_turf.x + interaction_range) && ISINRANGE(their_turf.y, our_turf.y - interaction_range, our_turf.y + interaction_range)
 
-///Can the mob use Topic to interact with machines
+/**
+ * Whether the mob can use Topic to interact with machines
+ *
+ * Args:
+ * be_close - Whether you need to be next to/on top of M
+ * no_dexterity - Whether you need to be an ADVANCEDTOOLUSER
+ * no_tk - If be_close is TRUE, this will block Telekinesis from bypassing the requirement
+ * need_hands - Whether you need hands to use this
+ * floor_okay - Whether mobility flags should be checked for MOBILITY_UI to use.
+ */
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	return
 
@@ -1053,7 +1063,7 @@
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
-	log_mob_tag("\[[tag]\] RENAMED: [key_name(src)]")
+	log_mob_tag("RENAMED: [key_name(src)]")
 
 	return TRUE
 
@@ -1101,15 +1111,16 @@
 
 ///Update the lighting plane and sight of this mob (sends COMSIG_MOB_UPDATE_SIGHT)
 /mob/proc/update_sight()
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
 	sync_lighting_plane_alpha()
 
 ///Set the lighting plane hud alpha to the mobs lighting_alpha var
 /mob/proc/sync_lighting_plane_alpha()
-	if(hud_used)
-		var/atom/movable/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
-		if (L)
-			L.alpha = lighting_alpha
+	if(!hud_used)
+		return
+	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light_plane in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
+		light_plane.set_alpha(lighting_alpha)
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()
@@ -1187,14 +1198,17 @@
 	var/turf/mob_location = get_turf(src)
 	return mob_location.get_lumcount() > light_amount
 
+
 /// Can this mob read
-/mob/proc/can_read(obj/O, check_for_light = TRUE)
-	if(!is_literate())
-		to_chat(src, span_warning("You try to read [O], but can't comprehend any of it."))
+/mob/proc/can_read(atom/viewed_atom, reading_check_flags = (READING_CHECK_LITERACY|READING_CHECK_LIGHT), silent = FALSE)
+	if((reading_check_flags & READING_CHECK_LITERACY) && !is_literate())
+		if(!silent)
+			to_chat(src, span_warning("You try to read [viewed_atom], but can't comprehend any of it."))
 		return FALSE
 
-	if(check_for_light && !has_light_nearby() && !has_nightvision())
-		to_chat(src, span_warning("It's too dark in here to read!"))
+	if((reading_check_flags & READING_CHECK_LIGHT) && !has_light_nearby() && !has_nightvision())
+		if(!silent)
+			to_chat(src, span_warning("It's too dark in here to read!"))
 		return FALSE
 
 	return TRUE
@@ -1217,6 +1231,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_DIRECT_CONTROL, "Assume Direct Control")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DIRECT_CONTROL, "Give Direct Control")
 	VV_DROPDOWN_OPTION(VV_HK_OFFER_GHOSTS, "Offer Control to Ghosts")
+	VV_DROPDOWN_OPTION(VV_HK_VIEW_PLANES, "View/Edit Planes")
 
 /mob/vv_do_topic(list/href_list)
 	. = ..()
@@ -1268,7 +1283,10 @@
 		if(!check_rights(NONE))
 			return
 		offer_control(src)
-
+	if(href_list[VV_HK_VIEW_PLANES])
+		if(!check_rights(R_DEBUG))
+			return
+		usr.client.edit_plane_masters(src)
 /**
  * extra var handling for the logging var
  */

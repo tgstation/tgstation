@@ -13,7 +13,7 @@
 			ui.close()
 		return
 
-	if(!user.can_read(src, check_for_light = FALSE))
+	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
 	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS) && !allow_chunky)
@@ -40,8 +40,8 @@
 		to_chat(user, span_danger("\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning."))
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
-	if(honkamnt > 0) // EXTRA annoying, huh!
-		honkamnt--
+	if(honkvirus_amount > 0) // EXTRA annoying, huh!
+		honkvirus_amount--
 		playsound(src, 'sound/items/bikehorn.ogg', 30, TRUE)
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -59,21 +59,15 @@
 
 	return data
 
-
-
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
 	data["login"] = list()
 
-	data["disk"] = null
-
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-	data["cardholder"] = FALSE
+	data["cardholder"] = !!cardholder
 
 	if(cardholder)
-		data["cardholder"] = TRUE
-
 		var/stored_name = saved_identification
 		var/stored_title = saved_job
 		if(!stored_name)
@@ -89,24 +83,31 @@
 			IDJob = cardholder.current_job,
 		)
 
+	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
+
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
 		data["removable_media"] += "Eject Disk"
-	var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
-	if(intelliholder?.stored_card)
+	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hard_drive.stored_files
+	if(airestore_app?.stored_card)
 		data["removable_media"] += "intelliCard"
 	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
 	if(secondarycardholder?.stored_card)
 		data["removable_media"] += "secondary RFID card"
 
 	data["programs"] = list()
-	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
 		var/running = FALSE
 		if(P in idle_threads)
 			running = TRUE
 
-		data["programs"] += list(list("name" = P.filename, "desc" = P.filedesc, "running" = running, "icon" = P.program_icon, "alert" = P.alert_pending))
+		data["programs"] += list(list(
+			"name" = P.filename,
+			"desc" = P.filedesc,
+			"running" = running,
+			"icon" = P.program_icon,
+			"alert" = P.alert_pending,
+		))
 
 	data["has_light"] = has_light
 	data["light_on"] = light_on
@@ -156,10 +157,6 @@
 			to_chat(user, span_notice("Program [P.filename].[P.filetype] with PID [rand(100,999)] has been killed."))
 
 		if("PC_runprogram")
-			// only function of the last implementation (?)
-			if(params["is_disk"])
-				return
-
 			open_program(usr, hard_drive.find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
@@ -189,10 +186,10 @@
 						user.put_in_hands(portable_drive)
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("intelliCard")
-					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
-					if(!intelliholder)
+					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hard_drive.stored_files
+					if(!airestore_app)
 						return
-					if(intelliholder.try_eject(user))
+					if(airestore_app.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("ID")
 					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]

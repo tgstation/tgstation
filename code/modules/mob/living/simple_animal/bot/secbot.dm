@@ -149,6 +149,12 @@
 		playsound(src, 'sound/machines/defib_zap.ogg', 50)
 		visible_message(span_warning("[src] shakes and speeds up!"))
 
+/mob/living/simple_animal/bot/secbot/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == weapon)
+		weapon = null
+		update_appearance()
+	return ..()
+
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/secbot/ui_data(mob/user)
 	var/list/data = ..()
@@ -190,8 +196,6 @@
 	var/final = FALSE
 	if(bot_cover_flags & BOT_COVER_EMAGGED)
 		final |= JUDGE_EMAGGED
-	if(bot_type == ADVANCED_SEC_BOT)
-		final |= JUDGE_IGNOREMONKEYS
 	if(security_mode_flags & SECBOT_CHECK_IDS)
 		final |= JUDGE_IDCHECK
 	if(security_mode_flags & SECBOT_CHECK_RECORDS)
@@ -309,23 +313,23 @@
 	if(harm)
 		weapon.attack(current_target, src)
 	if(ishuman(current_target))
-		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+		current_target.set_stutter(10 SECONDS)
 		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
 		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 	else
 		current_target.Paralyze(100)
-		current_target.set_timed_status_effect(10 SECONDS, /datum/status_effect/speech/stutter)
+		current_target.set_stutter(10 SECONDS)
 		threat = current_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
 
-	log_combat(src, target, "stunned")
+	log_combat(src, current_target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
 		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[current_target]</b> in [location].", radio_channel)
 	current_target.visible_message(span_danger("[src] stuns [current_target]!"),\
 							span_userdanger("[src] stuns you!"))
 
-	target_lastloc = target.loc
+	target_lastloc = current_target.loc
 	mode = BOT_PREP_ARREST
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()

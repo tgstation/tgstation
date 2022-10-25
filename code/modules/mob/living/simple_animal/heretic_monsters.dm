@@ -53,7 +53,7 @@
 	melee_damage_upper = 10
 	maxHealth = 65
 	health = 65
-	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
 	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/internal/eyes)
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
@@ -356,7 +356,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/aoe/rust_conversion/small,
 		/datum/action/cooldown/spell/basic_projectile/rust_wave/short,
@@ -396,7 +396,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/pointed/cleave,
@@ -414,7 +414,7 @@
 	health = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_MOBS
+	sight = SEE_MOBS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/shapeshift/eldritch,
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,

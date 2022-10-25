@@ -98,9 +98,9 @@
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
 
-/obj/item/reagent_containers/cup/afterattack(obj/target, mob/living/user, proximity)
+/obj/item/reagent_containers/cup/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if((!proximity) || !check_allowed_items(target,target_self=1))
+	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
 		return
 
 	if(!spillable)
@@ -133,7 +133,7 @@
 	target.update_appearance()
 
 /obj/item/reagent_containers/cup/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if((!proximity_flag) || !check_allowed_items(target,target_self=1))
+	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!spillable)
@@ -204,6 +204,8 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "beaker"
 	inhand_icon_state = "beaker"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
@@ -304,6 +306,7 @@
 	name = "bucket"
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "bucket"
 	inhand_icon_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -356,7 +359,7 @@
 
 /obj/item/reagent_containers/cup/bucket/equipped(mob/user, slot)
 	. = ..()
-	if (slot == ITEM_SLOT_HEAD)
+	if (slot & ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, span_userdanger("[src]'s contents spill all over you!"))
 			reagents.expose(user, TOUCH)
@@ -429,7 +432,8 @@
 							else
 								grinded.on_grind()
 								reagents.add_reagent_list(grinded.grind_results)
-								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
 								QDEL_NULL(grinded)
 								return
@@ -437,7 +441,8 @@
 							if(grinded.grind_results)
 								grinded.on_grind()
 								reagents.add_reagent_list(grinded.grind_results)
-								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You break [grinded] into powder."))
 								QDEL_NULL(grinded)
 								return

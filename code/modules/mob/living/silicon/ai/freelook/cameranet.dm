@@ -3,7 +3,8 @@
 // The datum containing all the chunks.
 
 #define CHUNK_SIZE 16 // Only chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
-
+/// Takes a position, transforms it into a chunk bounded position. Indexes at 1 so it'll land on actual turfs always
+#define GET_CHUNK_COORD(v) (max((FLOOR(v, CHUNK_SIZE)), 1))
 GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 /datum/cameranet
@@ -16,31 +17,44 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/list/chunks = list()
 	var/ready = 0
 
-	///The image cloned by all chunk static images put onto turfs cameras cant see
-	var/image/obscured
+	/// List of images cloned by all chunk static images put onto turfs cameras cant see
+	/// Indexed by the plane offset to use
+	var/list/image/obscured_images
 
 /datum/cameranet/New()
+	obscured_images = list()
+	update_offsets(SSmapping.max_plane_offset)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_growth)
 
-	obscured = new('icons/effects/cameravis.dmi')
-	obscured.plane = CAMERA_STATIC_PLANE
-	obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
-	obscured.override = TRUE
+/datum/cameranet/proc/update_offsets(new_offset)
+	for(var/i in length(obscured_images) to new_offset)
+		var/image/obscured = new('icons/effects/cameravis.dmi')
+		SET_PLANE_W_SCALAR(obscured, CAMERA_STATIC_PLANE, i)
+		obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
+		obscured.override = TRUE
+		obscured_images += obscured
+
+/datum/cameranet/proc/on_offset_growth(datum/source, old_offset, new_offset)
+	SIGNAL_HANDLER
+	update_offsets(new_offset)
 
 /// Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)
-	x &= ~(CHUNK_SIZE - 1)
-	y &= ~(CHUNK_SIZE - 1)
-	return chunks["[x],[y],[z]"]
+	x = GET_CHUNK_COORD(x)
+	y = GET_CHUNK_COORD(y)
+	var/turf/lowest = get_lowest_turf(locate(x, y, z))
+	return chunks["[x],[y],[lowest.z]"]
 
 // Returns the chunk in the x, y, z.
 // If there is no chunk, it creates a new chunk and returns that.
 /datum/cameranet/proc/getCameraChunk(x, y, z)
-	x &= ~(CHUNK_SIZE - 1)
-	y &= ~(CHUNK_SIZE - 1)
-	var/key = "[x],[y],[z]"
+	x = GET_CHUNK_COORD(x)
+	y = GET_CHUNK_COORD(y)
+	var/turf/lowest = get_lowest_turf(locate(x, y, z))
+	var/key = "[x],[y],[lowest.z]"
 	. = chunks[key]
 	if(!.)
-		chunks[key] = . = new /datum/camerachunk(x, y, z)
+		chunks[key] = . = new /datum/camerachunk(x, y, lowest.z)
 
 /// Updates what the aiEye can see. It is recommended you use this when the aiEye moves or it's location is set.
 /datum/cameranet/proc/visibility(list/moved_eyes, client/C, list/other_eyes, use_static = TRUE)
@@ -53,18 +67,18 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 	for(var/mob/camera/ai_eye/eye as anything in moved_eyes)
 		var/list/visibleChunks = list()
+		///Get the eye's turf in case it's located in an object like a mecha
+		var/turf/eye_turf = get_turf(eye)
 		if(eye.loc)
-			// 0xf = 15
 			var/static_range = eye.static_visibility_range
-			var/x1 = max(0, eye.x - static_range) & ~(CHUNK_SIZE - 1)
-			var/y1 = max(0, eye.y - static_range) & ~(CHUNK_SIZE - 1)
-			var/x2 = min(world.maxx, eye.x + static_range) & ~(CHUNK_SIZE - 1)
-			var/y2 = min(world.maxy, eye.y + static_range) & ~(CHUNK_SIZE - 1)
-
+			var/x1 = max(1, eye_turf.x - static_range)
+			var/y1 = max(1, eye_turf.y - static_range)
+			var/x2 = min(world.maxx, eye_turf.x + static_range)
+			var/y2 = min(world.maxy, eye_turf.y + static_range)
 
 			for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 				for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-					visibleChunks |= getCameraChunk(x, y, eye.z)
+					visibleChunks |= getCameraChunk(x, y, eye_turf.z)
 
 		var/list/remove = eye.visibleCameraChunks - visibleChunks
 		var/list/add = visibleChunks - eye.visibleCameraChunks
@@ -114,20 +128,20 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 	var/turf/T = get_turf(c)
 	if(T)
-		var/x1 = max(0, T.x - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
-		var/y1 = max(0, T.y - (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
-		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
-		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
+		var/x1 = max(1, T.x - (CHUNK_SIZE / 2))
+		var/y1 = max(1, T.y - (CHUNK_SIZE / 2))
+		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE / 2))
+		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2))
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
 				var/datum/camerachunk/chunk = chunkGenerated(x, y, T.z)
 				if(chunk)
 					if(choice == 0)
 						// Remove the camera.
-						chunk.cameras -= c
+						chunk.cameras["[T.z]"] -= c
 					else if(choice == 1)
 						// You can't have the same camera in the list twice.
-						chunk.cameras |= c
+						chunk.cameras["[T.z]"] |= c
 					chunk.hasChanged()
 
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.

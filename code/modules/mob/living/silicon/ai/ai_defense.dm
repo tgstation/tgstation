@@ -11,7 +11,7 @@
 		spark_system.start()
 	return ..()
 
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(!SSticker.HasRoundStarted())
 		to_chat(user, "You cannot attack people before the game has started.")
 		return

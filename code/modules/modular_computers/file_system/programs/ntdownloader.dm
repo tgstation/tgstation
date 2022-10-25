@@ -3,7 +3,6 @@
 	filedesc = "NT Software Hub"
 	program_icon_state = "generic"
 	extended_desc = "This program allows downloads of software from official NT repositories"
-	unsendable = TRUE
 	undeletable = TRUE
 	size = 4
 	requires_ntnet = TRUE
@@ -93,7 +92,7 @@
 	download_completion = FALSE
 	ui_header = "downloader_finished.gif"
 
-/datum/computer_file/program/ntnetdownload/process_tick()
+/datum/computer_file/program/ntnetdownload/process_tick(delta_time)
 	if(!downloaded_file)
 		return
 	if(download_completion >= downloaded_file.size)

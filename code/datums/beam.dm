@@ -63,6 +63,7 @@
 	visuals.icon_state = icon_state
 	visuals.color = beam_color
 	visuals.layer = ABOVE_ALL_MOB_LAYER
+	visuals.vis_flags = VIS_INHERIT_PLANE
 	visuals.update_appearance()
 	Draw()
 	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, .proc/redrawing)
@@ -118,8 +119,7 @@
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
 		if(QDELETED(src))
 			break
-		var/obj/effect/ebeam/segment = new beam_type(origin_turf)
-		segment.owner = src
+		var/obj/effect/ebeam/segment = new beam_type(origin_turf, src)
 		elements += segment
 
 		//Assign our single visual ebeam to each ebeam's vis_contents
@@ -165,9 +165,13 @@
 	anchored = TRUE
 	var/datum/beam/owner
 
+/obj/effect/ebeam/Initialize(mapload, beam_owner)
+	owner = beam_owner
+	return ..()
+
 /obj/effect/ebeam/update_overlays()
 	. = ..()
-	var/mutable_appearance/emmisive = emissive_appearance(icon, icon_state)
+	var/mutable_appearance/emmisive = emissive_appearance(icon, icon_state, src)
 	emmisive.transform = transform
 	. += emmisive
 

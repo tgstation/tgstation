@@ -12,6 +12,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "component"
 	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"

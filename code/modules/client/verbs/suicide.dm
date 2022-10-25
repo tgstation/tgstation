@@ -181,7 +181,7 @@
 	else
 		to_chat(src, "Aborting suicide attempt.")
 
-/mob/living/carbon/alien/humanoid/verb/suicide()
+/mob/living/carbon/alien/adult/verb/suicide()
 	set hidden = TRUE
 	if(!canSuicide())
 		return
