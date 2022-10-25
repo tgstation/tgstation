@@ -1,16 +1,24 @@
 /**
  * Begins the dreaming process on a sleeping carbon
  *
- * Longer detailed paragraph about the proc
- * including any relevant detail
- * Arguments:
- * * arg1 - Relevance of this argument
- * * arg2 - Relevance of this argument
+ * Checks a 10% chance and whether or not the carbon this is called on is already dreaming. If
+ * the prob() passes and there are no dream images queued, the carbon begins generating a new dream in dream()
  */
 
 /mob/living/carbon/proc/handle_dreams()
 	if(prob(10) && !dreaming)
 		dream()
+
+/**
+ * Generates a dream sequence to be displayed to the sleeper
+ *
+ *
+ * Generates the "dream" to display to the sleeper. A dream consists of a subject, a verb, and an object, displayed in sequence to the sleeper.
+ * Dreams are generated as a list of strings stored inside dream_fragments, which is passed to and displayed in dream_sequence().
+ * Bedsheets on the sleeper will provide a custom subject for the dream, pulled from the dream_messages on each bedsheet.
+ * When nouns are selected for the subject/object, they may have blanks for adjectives, which are filled in immediately afterwards.
+ *
+ */
 
 /mob/living/carbon/proc/dream()
 	set waitfor = FALSE
