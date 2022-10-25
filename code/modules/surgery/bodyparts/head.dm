@@ -75,6 +75,12 @@
 	var/face_offset_x = 0
 	var/face_offset_y = 0
 
+/obj/item/bodypart/head/set_owner(new_owner)
+	if(owner)
+		UnregisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP)
+	. = ..()
+	if(new_owner)
+		RegisterSignal(new_owner, COMSIG_CARBON_PRE_MISC_HELP, .proc/on_owner_hug)
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -216,7 +222,7 @@
 					facial_overlay.color = facial_hair_color
 					facial_overlay.alpha = hair_alpha
 					. += facial_overlay
-				
+
 			if(!eyes)
 				. += image('icons/mob/species/human/human_face.dmi', "eyes_missing", -BODY_LAYER, SOUTH)
 
@@ -310,6 +316,22 @@
 
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"
+
+///signal that fires when the owner is hugged, for special head pat interactions!
+/obj/item/bodypart/head/proc/on_owner_hug(mob/living/carbon/helped, mob/living/carbon/helper)
+	SIGNAL_HANDLER
+
+	if(check_zone(helper.zone_selected) != BODY_ZONE_HEAD)
+		return
+
+	helper.visible_message(span_notice("[helper] gives [helped] a pat on the head to make [p_them()] feel better!"), \
+				null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, helped))
+	to_chat(helper, span_notice("You give [helped] a pat on the head to make [p_them()] feel better!"))
+	to_chat(helped, span_notice("[helper] gives you a pat on the head to make you feel better! "))
+
+	if(HAS_TRAIT(helped, TRAIT_BADTOUCH))
+		to_chat(helper, span_warning("[helped] looks visibly upset as you pat [p_them()] on the head."))
+	return COMPONENT_SPECIAL_INTERACTION
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/species/monkey/bodyparts.dmi'

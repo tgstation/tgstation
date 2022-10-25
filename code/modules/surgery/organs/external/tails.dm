@@ -26,6 +26,7 @@
 /obj/item/organ/external/tail/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 	if(.)
+		RegisterSignal(reciever, COMSIG_CARBON_PRE_MISC_HELP, .proc/on_owner_hug)
 		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, .proc/wag)
 		original_owner ||= reciever //One and done
 
@@ -41,7 +42,7 @@
 	if(wag_flags & WAG_WAGGING)
 		wag(FALSE)
 	. = ..()
-	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
+	UnregisterSignal(organ_owner, list(COMSIG_CARBON_PRE_MISC_HELP, COMSIG_ORGAN_WAG_TAIL))
 
 	if(type in organ_owner.dna.species.external_organs)
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
@@ -56,7 +57,26 @@
 /obj/item/organ/external/tail/get_global_feature_list()
 	return GLOB.tails_list
 
+///signal that fires when the owner is hugged, for special tail pulling interactions!
+/obj/item/organ/external/tail/proc/on_owner_hug(mob/living/carbon/helped, mob/living/carbon/helper)
+	SIGNAL_HANDLER
+
+	if(helper.zone_selected != BODY_ZONE_PRECISE_GROIN)
+		return
+
+	helper.visible_message(span_notice("[helper] pulls on [helped]'s tail!"), \
+				null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, helped))
+	to_chat(helper, span_notice("You pull on [helped]'s tail!"))
+	to_chat(helped, span_notice("[helper] pulls on your tail!"))
+	if(HAS_TRAIT(helped, TRAIT_BADTOUCH)) //How dare they!
+		to_chat(helper, span_warning("[helped] makes a grumbling noise as you pull on [p_their()] tail."))
+	else
+		helped.add_mood_event("tailpulled", /datum/mood_event/tailpulled)
+	return COMPONENT_SPECIAL_INTERACTION
+
 /obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
+	SIGNAL_HANDLER
+
 	if(!(wag_flags & WAG_ABLE))
 		return
 

@@ -403,51 +403,33 @@
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)
-		return
-
 	if(helper == src)
 		check_self_for_injuries()
 		return
 
-	if(body_position == LYING_DOWN)
-		if(buckled)
-			to_chat(helper, span_warning("You need to unbuckle [src] first to do that!"))
-			return
-		helper.visible_message(span_notice("[helper] shakes [src] trying to get [p_them()] up!"), \
-						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-		to_chat(helper, span_notice("You shake [src] trying to pick [p_them()] up!"))
-		to_chat(src, span_notice("[helper] shakes you to get you up!"))
-	else if(check_zone(helper.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
-		helper.visible_message(span_notice("[helper] gives [src] a pat on the head to make [p_them()] feel better!"), \
-					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-		to_chat(helper, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))
-		to_chat(src, span_notice("[helper] gives you a pat on the head to make you feel better! "))
-
-		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
-			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
-
-	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.getorgan(/obj/item/organ/external/tail)))
-		helper.visible_message(span_notice("[helper] pulls on [src]'s tail!"), \
-					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-		to_chat(helper, span_notice("You pull on [src]'s tail!"))
-		to_chat(src, span_notice("[helper] pulls on your tail!"))
-		if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
-			to_chat(helper, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
+	var/pre_misc_result = SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper)
+	if(pre_misc_result & COMPONENT_BLOCK_MISC_HELP)
+		return
+	if(!(pre_misc_result & COMPONENT_SPECIAL_INTERACTION))
+		if(body_position == LYING_DOWN)
+			if(buckled)
+				to_chat(helper, span_warning("You need to unbuckle [src] first to do that!"))
+				return
+			helper.visible_message(span_notice("[helper] shakes [src] trying to get [p_them()] up!"), \
+							null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+			to_chat(helper, span_notice("You shake [src] trying to pick [p_them()] up!"))
+			to_chat(src, span_notice("[helper] shakes you to get you up!"))
 		else
-			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
-
-	else
-		if (helper.grab_state >= GRAB_AGGRESSIVE)
-			helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
-						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-			to_chat(helper, span_notice("You wrap [src] into a tight bear hug!"))
-			to_chat(src, span_notice("[helper] squeezes you super tightly in a firm bear hug!"))
-		else
-			helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
-						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
-			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
-			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
+			if (helper.grab_state >= GRAB_AGGRESSIVE)
+				helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
+							null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+				to_chat(helper, span_notice("You wrap [src] into a tight bear hug!"))
+				to_chat(src, span_notice("[helper] squeezes you super tightly in a firm bear hug!"))
+			else
+				helper.visible_message(span_notice("[helper] hugs [src] to make [p_them()] feel better!"), \
+							null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+				to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
+				to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
 
 		// Warm them up with hugs
 		share_bodytemperature(helper)

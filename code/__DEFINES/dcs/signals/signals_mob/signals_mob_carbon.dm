@@ -7,6 +7,8 @@
 #define COMSIG_CARBON_PRE_MISC_HELP "carbon_pre_misc_help"
 	/// Stops the rest of help act (hugging, etc) from occuring
 	#define COMPONENT_BLOCK_MISC_HELP (1<<0)
+	/// Stops messages from other hug types (get up, bear hug, etc)
+	#define COMPONENT_SPECIAL_INTERACTION (1<<1)
 
 ///Called from /mob/living/carbon/help_shake_act on the person being helped, after any hugs have ocurred. (mob/living/helper)
 #define COMSIG_CARBON_HELP_ACT "carbon_help"
