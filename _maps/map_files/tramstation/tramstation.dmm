@@ -28822,7 +28822,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kpq" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
+/obj/machinery/atmospherics/pipe/color_adapter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "kpv" = (
@@ -34396,6 +34396,11 @@
 /obj/machinery/meter,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"mmI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/turf,
+/area/station/security/checkpoint/engineering)
 "mmL" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth (Chaplain)";
@@ -101400,7 +101405,7 @@ cMd
 qQD
 jTy
 jGZ
-roB
+mmI
 qaL
 qaL
 roB
