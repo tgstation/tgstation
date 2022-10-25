@@ -298,7 +298,7 @@
 		toggle_open_internals(tank, is_external)
 		return TRUE
 	// Use mask in absence of tube.
-	if(wear_mask && isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
+	if(isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
 		// Adjust dishevelled breathing mask back onto face.
 		if (wear_mask.mask_adjusted)
 			wear_mask.adjustmask(src)

@@ -67,7 +67,7 @@
 		return
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)
-		src.icon_state = initial(icon_state)
+		icon_state = initial(icon_state)
 		clothing_flags |= visor_flags
 		flags_inv |= visor_flags_inv
 		flags_cover |= visor_flags_cover
@@ -81,12 +81,12 @@
 		flags_cover &= ~visor_flags_cover
 		if(adjusted_flags)
 			slot_flags = adjusted_flags
-	if(!user || !istype(user))
+	if(!istype(user))
 		return
 	// Update the mob if it's wearing the mask.
 	if(user.wear_mask == src)
 		user.wear_mask_update(src, toggle_off = mask_adjusted)
-	if(src.loc == user)
+	if(loc == user)
 		// Update action button icon for adjusted mask, if someone is holding it.
 		user.update_action_buttons_icon()
 

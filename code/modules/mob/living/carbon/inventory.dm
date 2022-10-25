@@ -176,13 +176,13 @@
 
 /// Returns TRUE if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
-	if (head && isclothing(head) && (head.clothing_flags & HEADINTERNALS))
+	if (isclothing(head) && (head.clothing_flags & HEADINTERNALS))
 		return TRUE
 	return FALSE
 
 /// Returns TRUE if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
-	if (wear_mask && isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
+	if (isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
 		return TRUE
 	return FALSE
 
