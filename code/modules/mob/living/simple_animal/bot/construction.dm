@@ -51,10 +51,9 @@
 	var/obj/item/reagent_containers/cup/bucket/bucket_obj
 
 /obj/item/bot_assembly/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/new_bucket)
-	if(new_bucket)
-		new_bucket.forceMove(src)
-	else
-		bucket_obj = new(src)
+	if(!new_bucket)
+		new_bucket = new()
+	new_bucket.forceMove(src)
 	return ..()
 
 /obj/item/bot_assembly/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

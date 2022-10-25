@@ -99,11 +99,9 @@
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/bucket_obj)
-	if(bucket_obj)
-		bucket_obj.forceMove(src)
-	else
-		build_bucket = new (src)
-
+	if(!bucket_obj)
+		bucket_obj = new()
+	bucket_obj.forceMove(src)
 
 	. = ..()
 
@@ -122,8 +120,6 @@
 
 /mob/living/simple_animal/bot/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
-		if(build_bucket)
-			qdel(build_bucket)
 		build_bucket = arrived
 		set_greyscale(build_bucket.greyscale_colors)
 	return ..()
@@ -159,6 +155,7 @@
 			icon_state = "[base_icon]-c"
 		else
 			icon_state = "[base_icon][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
+	update_greyscale()
 
 /mob/living/simple_animal/bot/cleanbot/vv_edit_var(var_name, var_value)
 	. = ..()
