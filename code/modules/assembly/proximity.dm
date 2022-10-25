@@ -22,7 +22,7 @@
 /obj/item/assembly/prox_sensor/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(proximity_monitor)
-	. = ..()
+	return ..()
 
 /obj/item/assembly/prox_sensor/examine(mob/user)
 	. = ..()
