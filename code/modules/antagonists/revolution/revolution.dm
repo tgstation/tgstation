@@ -206,9 +206,8 @@
 		to_chat(source, span_warning("[flashed]'s mind is so vacant that it is not susceptible to influence!"))
 		return
 
-	var/holiday_meme_chance = prob(0.01) || SSevents.holidays?[APRIL_FOOLS]
-
-	if(add_revolutionary(flashed.mind, stun = !holiday_meme_chance)) // don't stun if we roll the meme holiday chance
+	var/holiday_meme_chance = SSevents.holidays?[APRIL_FOOLS] && prob(10)prob(10)
+	if(add_revolutionary(flashed.mind, mute = !holiday_meme_chance)) // don't mute if we roll the meme holiday chance
 		if(holiday_meme_chance)
 			INVOKE_ASYNC(src, .proc/_async_holiday_meme_say, flashed)
 		flash.times_used-- // Flashes are less likely to burn out for headrevs, when used for conversion
@@ -270,11 +269,20 @@
 		return FALSE
 	return TRUE
 
-/datum/antagonist/rev/proc/add_revolutionary(datum/mind/rev_mind,stun = TRUE)
+/**
+ * Adds a new mind to our revoltuion
+ *
+ * * rev_mind - the mind we're adding
+ * * stun - If TRUE, we will flash act and apply a long stun when we're applied
+ * * mute - If TRUE, we will apply a mute when we're applied
+ */
+/datum/antagonist/rev/proc/add_revolutionary(datum/mind/rev_mind, stun = TRUE, mute = TRUE)
 	if(!can_be_converted(rev_mind.current))
 		return FALSE
-	if(stun)
+
+	if(mute)
 		rev_mind.current.set_silence_if_lower(10 SECONDS)
+	if(stun)
 		rev_mind.current.flash_act(1, 1)
 		rev_mind.current.Stun(10 SECONDS)
 
