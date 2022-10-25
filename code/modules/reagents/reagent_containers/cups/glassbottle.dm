@@ -495,27 +495,33 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
+
 	if(spillable)
 		return
-	if(attacking_item.get_sharpness())
-		if(attacking_item.force < 5)
-			balloon_alert(user, "not strong enough!")
-			return
-		else
-			playsound(user, 'sound/items/unsheath.ogg', 25, TRUE)
-			balloon_alert(user, "preparing to swing...")
-			if(do_after(user, 2 SECONDS, src)) //takes longer because you are supposed to take the foil off the bottle first
-				//calculate success chance. example: captain's sabre - 15 force = 75% chance
-				if(prob(attacking_item.force * sabrage_success_percentile + \
-				((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
-				((HAS_TRAIT(user, TRAIT_SABRAGE_PRO)) ? 35 : 0)
-				))
-					return pop_cork(user, sabrage = TRUE)
-				else //you dun goofed
-					user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
-						span_danger("You fail your stunt and cut [src] in half, spilling it over you!"))
-					user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
-					return smash(user, user, ranged = FALSE, break_top = TRUE)
+
+	if(!attacking_item.get_sharpness())
+		return
+
+	if(attacking_item.force < 5)
+		balloon_alert(user, "not strong enough!")
+		return
+
+	playsound(user, 'sound/items/unsheath.ogg', 25, TRUE)
+	balloon_alert(user, "preparing to swing...")
+	if(!do_after(user, 2 SECONDS, src)) //takes longer because you are supposed to take the foil off the bottle first
+		return
+
+	//calculate success chance. example: captain's sabre - 15 force = 75% chance
+	if(prob(attacking_item.force * sabrage_success_percentile + \
+		((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
+		((HAS_TRAIT(user, TRAIT_SABRAGE_PRO)) ? 35 : 0)
+		))
+		return pop_cork(user, sabrage = TRUE)
+	else //you dun goofed
+		user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
+			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"))
+		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
+		return smash(user, user, ranged = FALSE, break_top = TRUE)
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
@@ -528,7 +534,10 @@
 		icon_state = base_icon_state
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/proc/pop_cork(mob/living/user, sabrage)
-	if(sabrage)
+	if(!sabrage)
+		user.visible_message(span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."), \
+			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force."))
+	else
 		sabraged = TRUE
 		user.visible_message(span_danger("[user] cleanly slices off the cork of [src], causing it to fly off the bottle with great force."), \
 			span_nicegreen("You elegantly slice the cork off of [src], causing it to fly off the bottle with great force."))
@@ -540,11 +549,8 @@
 			if(stunt_witness == user)
 				stunt_witness.add_mood_event("sabrage_success", /datum/mood_event/sabrage_success)
 				continue
-			else
-				stunt_witness.add_mood_event("sabrage_witness", /datum/mood_event/sabrage_witness)
-	else
-		user.visible_message(span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."), \
-			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force."))
+			stunt_witness.add_mood_event("sabrage_witness", /datum/mood_event/sabrage_witness)
+
 	reagents.flags |= OPENCONTAINER
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
