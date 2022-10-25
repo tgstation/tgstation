@@ -129,7 +129,7 @@
 
 	if (isnull(held_item))
 		if(density)
-			if(isalienhumanoid(living_user) || issilicon(living_user))
+			if(isalienadult(living_user) || issilicon(living_user))
 				context[SCREENTIP_CONTEXT_LMB] = "Open"
 				return CONTEXTUAL_SCREENTIP_SET
 			if(!living_user.combat_mode)

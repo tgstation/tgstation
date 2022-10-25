@@ -444,6 +444,11 @@
 /obj/effect/immortality_talisman/attackby()
 	return
 
+/obj/effect/immortality_talisman/relaymove(mob/living/user, direction)
+	// Won't really come into play since our mob has notransform and cannot move,
+	// but regardless block all relayed moves, becuase no, you cannot move in the void.
+	return
+
 /obj/effect/immortality_talisman/singularity_pull()
 	return
 
@@ -759,7 +764,9 @@
 	// Behead someone, their "glasses" drop on the floor
 	// and thus, the god eye should no longer be sticky
 	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
-	scan_ability.Remove(user)
+	// And remove the scan ability, note that if we're being called from Destroy
+	// that this may already be nulled and removed
+	scan_ability?.Remove(user)
 
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
 	to_chat(victim, span_userdanger("You experience blinding pain, as [src] burrows into your skull."))

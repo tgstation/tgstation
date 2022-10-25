@@ -622,7 +622,7 @@
 	if(istype(I, /obj/item/bikehorn))
 		playsound(parent, 'sound/items/bikehorn.ogg', 50, TRUE)
 		user.balloon_alert_to_viewers("HONK!")
-		return
+		return TRUE
 
 	//TODO: better messages.
 	switch(index)

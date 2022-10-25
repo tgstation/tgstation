@@ -1537,6 +1537,13 @@
 	},
 /turf/closed/wall,
 /area/station/cargo/sorting)
+"aII" = (
+/obj/machinery/button/tram{
+	id = "left_part"
+	},
+/obj/machinery/destination_sign/indicator,
+/turf/closed/wall,
+/area/station/hallway/primary/tram/left)
 "aIT" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
@@ -1699,6 +1706,9 @@
 "aMD" = (
 /obj/machinery/button/tram{
 	id = "left_part"
+	},
+/obj/machinery/destination_sign/indicator{
+	dir = 1
 	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/left)
@@ -7548,11 +7558,10 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/modular_map_root/tramstation{
 	key = "maintenance_uppermedsci"
 	},
+/obj/effect/mapping_helpers/airlock/access/any/medical/morgue,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/medical)
 "cIQ" = (
@@ -10096,6 +10105,13 @@
 "dCd" = (
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/mid)
+"dCf" = (
+/obj/machinery/button/tram{
+	id = "right_part"
+	},
+/obj/machinery/destination_sign/indicator,
+/turf/closed/wall,
+/area/station/hallway/primary/tram/right)
 "dCh" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/solars/port/aft)
@@ -14756,6 +14772,13 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
+"fld" = (
+/obj/machinery/button/tram{
+	id = "middle_part"
+	},
+/obj/machinery/destination_sign/indicator,
+/turf/closed/wall,
+/area/station/hallway/primary/tram/center)
 "fll" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -26690,6 +26713,9 @@
 /obj/machinery/button/tram{
 	id = "middle_part"
 	},
+/obj/machinery/destination_sign/indicator{
+	dir = 1
+	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
 "jEP" = (
@@ -26995,7 +27021,6 @@
 	name = "Morgue External Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
-/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "jKL" = (
@@ -27942,6 +27967,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "kbS" = (
@@ -28796,7 +28822,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "kpq" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/visible,
+/obj/machinery/atmospherics/pipe/color_adapter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "kpv" = (
@@ -34370,6 +34396,11 @@
 /obj/machinery/meter,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"mmI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/turf/closed/wall/r_wall,
+/turf,
+/area/station/security/checkpoint/engineering)
 "mmL" = (
 /obj/machinery/door/morgue{
 	name = "Confession Booth (Chaplain)";
@@ -36728,6 +36759,10 @@
 	icon_state = "plating"
 	},
 /obj/structure/tramwall/titanium,
+/obj/machinery/destination_sign{
+	layer = 3.4;
+	dir = 1
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "nca" = (
@@ -37875,6 +37910,9 @@
 "nwQ" = (
 /obj/machinery/button/tram{
 	id = "right_part"
+	},
+/obj/machinery/destination_sign/indicator{
+	dir = 1
 	},
 /turf/closed/wall,
 /area/station/hallway/primary/tram/right)
@@ -101367,7 +101405,7 @@ cMd
 qQD
 jTy
 jGZ
-roB
+mmI
 qaL
 qaL
 roB
@@ -153513,7 +153551,7 @@ jfp
 fKO
 iuD
 oMZ
-aMD
+aII
 cFs
 lNP
 pcv
@@ -165592,7 +165630,7 @@ sxW
 vyH
 vRL
 tZD
-jEO
+fld
 cEt
 bar
 jWv
@@ -177671,7 +177709,7 @@ qJn
 mkM
 qEp
 lUW
-nwQ
+dCf
 brm
 iOd
 wGd

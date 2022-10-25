@@ -1,6 +1,3 @@
-GLOBAL_DATUM_INIT(cleaning_bubbles_lower, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, GAME_PLANE)) //displays at the top of floor tiles, but under mobs
-GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, ABOVE_GAME_PLANE)) //displays above mobs
-
 /**
  * Component that can be used to clean things.
  * Takes care of duration, cleaning skill and special cleaning interactions.
@@ -93,15 +90,20 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
 	if(!HAS_TRAIT(target, CURRENTLY_CLEANING)) //add the trait and overlay
 		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
-		if(target.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
-			target.add_overlay(GLOB.cleaning_bubbles_higher)
-		else if(target.plane == GLOB.cleaning_bubbles_lower.plane)
-			if(target.layer > GLOB.cleaning_bubbles_lower.layer)
-				target.add_overlay(GLOB.cleaning_bubbles_higher)
+
+		// We need to update our planes on overlay changes
+		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/cleaning_target_moved)
+		var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
+		var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
+		if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
+			target.add_overlay(high_bubble)
+		else if(target.plane == low_bubble.plane)
+			if(target.layer > low_bubble.layer)
+				target.add_overlay(high_bubble)
 			else
-				target.add_overlay(GLOB.cleaning_bubbles_lower)
-		else //(target.plane < GLOB.cleaning_bubbles_lower.plane)
-			target.add_overlay(GLOB.cleaning_bubbles_lower)
+				target.add_overlay(low_bubble)
+		else //(target.plane < low_bubble.plane)
+			target.add_overlay(low_bubble)
 
 	//set the cleaning duration
 	var/cleaning_duration = base_cleaning_duration
@@ -121,6 +123,23 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 		on_cleaned_callback?.Invoke(source, target, user)
 
 	//remove the cleaning overlay
-	target.cut_overlay(GLOB.cleaning_bubbles_lower)
-	target.cut_overlay(GLOB.cleaning_bubbles_higher)
+	var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
+	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
+	target.cut_overlay(low_bubble)
+	target.cut_overlay(high_bubble)
 	REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
+
+/datum/component/cleaner/proc/cleaning_target_moved(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
+	if(same_z_layer)
+		return
+	// First, get rid of the old overlay
+	var/mutable_appearance/old_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, GAME_PLANE)
+	var/mutable_appearance/old_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, ABOVE_GAME_PLANE)
+	source.cut_overlay(old_low_bubble)
+	source.cut_overlay(old_high_bubble)
+
+	// Now, add the new one
+	var/mutable_appearance/new_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, GAME_PLANE)
+	var/mutable_appearance/new_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, ABOVE_GAME_PLANE)
+	source.add_overlay(new_low_bubble)
+	source.add_overlay(new_high_bubble)

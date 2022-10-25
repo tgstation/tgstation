@@ -143,6 +143,8 @@
 			return
 	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
+		if(QDELETED(target))
+			return
 
 	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // check again in case we started interacting
 		return
