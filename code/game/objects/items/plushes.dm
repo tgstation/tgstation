@@ -664,6 +664,7 @@
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
 
 /obj/item/toy/plush/moth/Initialize(mapload)
+	. = ..()
 	AddComponent(/datum/component/suicide_count, SUICIDE_VIS_NONE, \
 	on_die = CALLBACK(src, .proc/suicide_desc))
 
