@@ -171,7 +171,9 @@
 		if(VORTEX_ANOMALY)
 			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
 		if(BIOSCRAMBLER_ANOMALY)
-			new /obj/effect/anomaly/bioscrambler(local_turf, null, FALSE)
+			new /obj/effect/anomaly/bioscrambler(local_turf, null, FALSE, !has_changed_lifespan)
+		if(DIMENSIONAL_ANOMALY)
+			new /obj/effect/anomaly/dimensional(local_turf, null, FALSE, !has_changed_lifespan)
 
 #undef CHANCE_EQUATION_SLOPE
 #undef INTEGRITY_EXPONENTIAL_DEGREE
