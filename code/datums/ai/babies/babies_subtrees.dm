@@ -2,7 +2,7 @@
  * Reproduce with a similar mob.
  */
 /datum/ai_planning_subtree/make_babies
-	var/chance = 25
+	var/chance = 5
 
 /datum/ai_planning_subtree/make_babies/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
