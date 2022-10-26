@@ -43,14 +43,19 @@
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't just call round_event.control, because it hasn't been set to the round_event_control yet
-		var/list/event_list = loan_event_control.shuttle_loan_events
-		var/list/run_events = loan_event_control.run_events
+	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't call control, because it hasn't been set yet
+		var/list/loan_list = list()
+		loan_list += loan_event_control.shuttle_loan_events
+		var/list/run_events = loan_event_control.run_events //Ask the round_event_control which loans have already been offered
 
-		for(var/event in run_events) //Exclude already run events
-			event_list.Remove(event)
+		for(var/event in run_events) //Remove the already offered loans from the candidate list
+			loan_list.Remove(event)
 
-		dispatch_type = pick(event_list)
+		if(!length(loan_list)) //If we somehow run out of loans, they all become available again
+			loan_list = loan_event_control.shuttle_loan_events
+			run_events.Cut()
+
+		dispatch_type = pick(loan_list) //Pick a loan to offer, and add it to the blacklist
 		loan_event_control.run_events += dispatch_type
 
 /datum/round_event/shuttle_loan/announce(fake)
