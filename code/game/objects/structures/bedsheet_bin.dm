@@ -519,11 +519,11 @@ LINEN BINS
 	anchored = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
-	///The number of bedsheets in the bin
+	/// The number of bedsheets in the bin
 	var/amount = 10
-	///A list of actual sheets within the bin
+	/// A list of actual sheets within the bin
 	var/list/sheets = list()
-	///The object hiddin within the bedsheet bin
+	/// The object hiddin within the bedsheet bin
 	var/obj/item/hidden = null
 
 /obj/structure/bedsheetbin/empty
