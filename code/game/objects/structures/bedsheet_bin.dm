@@ -88,15 +88,13 @@ LINEN BINS
 /obj/item/bedsheet/proc/smooth_sheets(mob/living/sleeper)
 	SIGNAL_HANDLER
 
-	if(!QDELETED(user) && isliving(sleeper) && (living_user.body_position == STANDING_UP))
-		return
-	being_held_open = FALSE
-	correct_state()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
-	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
-	if(user)
-		user.balloon_alert_to_viewers("released [src]", "released [src]")
+	layer = initial(layer)
+	SET_PLANE_IMPLICIT(src, initial(plane))
+	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(sleeper, COMSIG_PARENT_QDELETING)
+	if(sleeper)
+		balloon_alert(sleeper, "smoothed sheets")
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
