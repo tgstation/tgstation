@@ -83,7 +83,7 @@
 
 
 /datum/duel/proc/back_to_prep()
-	message_duelists(span_notice("Positions invalid. Please move to valid positions [required_distance] steps away from each other to continue."))
+	message_duelists(span_notice("Positions invalid. Please move to valid positions exactly [required_distance] steps away from each other to continue."))
 	state = DUEL_PREPARATION
 	confirmations.Cut()
 	countdown_step = countdown_length
@@ -128,6 +128,14 @@
 			return FALSE
 	return TRUE
 
+///For each linked gun that still exists, clear its reference to us, then delete.
+/datum/duel/proc/clear_duel()
+	if(gun_A)
+		gun_A.duel = null
+	if(gun_B)
+		gun_B.duel = null
+	qdel(src)
+
 /obj/item/gun/energy/dueling
 	name = "dueling pistol"
 	desc = "High-tech dueling pistol. Launches chaff and projectile according to preset settings."
@@ -159,6 +167,9 @@
 
 /obj/item/gun/energy/dueling/attack_self(mob/living/user)
 	. = ..()
+	if(!check_valid_duel(user))
+		return
+
 	if(duel.state == DUEL_IDLE)
 		duel.try_begin()
 	else
@@ -183,15 +194,13 @@
 
 /obj/item/gun/energy/dueling/Destroy()
 	. = ..()
-	if(duel)
-		if(duel.gun_A == src)
-			duel.gun_A = null
-		if(duel.gun_B == src)
-			duel.gun_B = null
-		duel = null
+	duel.clear_duel()
 
 /obj/item/gun/energy/dueling/can_trigger_gun(mob/living/user)
 	. = ..()
+	if(!check_valid_duel(user))
+		return FALSE
+
 	switch(duel.state)
 		if(DUEL_FIRING)
 			return . && !duel.fired[src]
@@ -209,6 +218,8 @@
 	return TRUE
 
 /obj/item/gun/energy/dueling/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
+	if(!check_valid_duel(user))
+		return
 	if(duel.state == DUEL_READY)
 		duel.confirmations[src] = TRUE
 		to_chat(user,span_notice("You confirm your readiness."))
@@ -223,6 +234,14 @@
 /obj/item/gun/energy/dueling/before_firing(target,user)
 	var/obj/item/ammo_casing/energy/duel/D = chambered
 	D.setting = setting
+
+///Return a boolean of whether or not the pistol has a valid duel datum, if false warn the user
+/obj/item/gun/energy/dueling/proc/check_valid_duel(mob/living/user)
+	if(!duel)
+		to_chat(user,span_warning("[src] is not connected to a partner."))
+		return FALSE
+	else
+		return TRUE
 
 /obj/effect/temp_visual/dueling_chaff
 	icon = 'icons/effects/effects.dmi'
