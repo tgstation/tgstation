@@ -1,8 +1,8 @@
 /**
- * Begins the dreaming process on a sleeping carbon
+ * Begins the dreaming process on a sleeping carbon.
  *
  * Checks a 10% chance and whether or not the carbon this is called on is already dreaming. If
- * the prob() passes and there are no dream images queued, the carbon begins generating a new dream in dream()
+ * the prob() passes and there are no dream images left to display, a new dream is constructed.
  */
 
 /mob/living/carbon/proc/handle_dreams()
@@ -10,13 +10,11 @@
 		dream()
 
 /**
- * Generates a dream sequence to be displayed to the sleeper
- *
+ * Generates a dream sequence to be displayed to the sleeper.
  *
  * Generates the "dream" to display to the sleeper. A dream consists of a subject, a verb, and (most of the time) an object, displayed in sequence to the sleeper.
  * Dreams are generated as a list of strings stored inside dream_fragments, which is passed to and displayed in dream_sequence().
  * Bedsheets on the sleeper will provide a custom subject for the dream, pulled from the dream_messages on each bedsheet.
- * When nouns are selected for the subject/object, they usually have sections for adjectives, which are either replaced or removed.
  */
 
 /mob/living/carbon/proc/dream()
@@ -36,7 +34,7 @@
 	else
 		fragment += pick(GLOB.dream_strings)
 
-	if(prob(50))
+	if(prob(50)) //Replace the adjective space with an adjective, or just get rid of it
 		fragment = replacetext(fragment, "%ADJECTIVE%", pick(GLOB.adjectives))
 	else
 		fragment = replacetext(fragment, "%ADJECTIVE% ", "")
@@ -74,10 +72,10 @@
 	dream_sequence(dream_fragments)
 
 /**
- * Displays the passed list of dream fragments to a sleeping carbon
+ * Displays the passed list of dream fragments to a sleeping carbon.
  *
  * Displays the first string of the passed dream fragments, then either ends the dream sequence
- * or performs a callback on itself depending on if there are any remaining dream fragments to display
+ * or performs a callback on itself depending on if there are any remaining dream fragments to display.
  *
  * Arguments:
  * * dream_fragments - A list of strings, in the order they will be displayed.
