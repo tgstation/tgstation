@@ -105,9 +105,9 @@
 
 /obj/item/clothing/head/helmet/toggleable
 	dog_fashion = null
-	///Message when the visor is toggled down.
+	///to_chat() message when the visor is toggled down.
 	var/toggle_message
-	///Alternative message when the visor is toggled up.
+	///to_chat() message when the visor is toggled up.
 	var/alt_toggle_message
 
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
