@@ -163,7 +163,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	return raw_message
 
-
 /proc/get_radio_span(freq)
 	var/returntext = GLOB.freqtospan["[freq]"]
 	if(returntext)

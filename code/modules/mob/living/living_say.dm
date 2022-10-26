@@ -324,6 +324,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		else
 			create_chat_message(speaker, message_language, raw_message, spans)
 
+	var/is_custom_emote = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
+	if(!is_custom_emote) // we do not translate emotes
+		raw_message = translate_language(src, message_language, raw_message) // translate
+
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
@@ -383,6 +387,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		var/can_listener_hear_whisper = get_dist(source, listening_movable) <= message_range
 		var/is_listener_observer = the_dead[listening_movable] // ghosts can hear all messages clearly
+
 		if(is_speaker_whispering && !can_listener_hear_whisper && !is_listener_observer)
 			listening_movable.Hear(whisper, src, message_language, whisper_raw, null, spans, message_mods)
 		else
