@@ -152,6 +152,7 @@
 			var/mob/pulled_mob = movable_atom
 			if(pulled_mob.mob_negates_gravity())
 				continue //You can't pull someone nailed to the deck
+		movable_atom.balloon_alert_to_viewers("pulled by the crystal!")
 		step_towards(movable_atom,center)
 
 /proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5, has_changed_lifespan = TRUE)
