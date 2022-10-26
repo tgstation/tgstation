@@ -12,7 +12,7 @@
 
 /// PM9 standard HE rocket
 /obj/projectile/bullet/a84mm
-	name ="\improper HE rocket"
+	name = "\improper HE rocket"
 	desc = "Boom."
 	icon_state= "missile"
 	damage = 50
