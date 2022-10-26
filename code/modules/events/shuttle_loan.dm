@@ -14,9 +14,9 @@
 	earliest_start = 7 MINUTES
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
-	///The types of loan events that the crew can recieve.
-	var/list/shuttle_loan_events = list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
-	///The types of loan events already run (and to be excluded if the event naturally triggers).
+	///The types of loan offers that the crew can recieve.
+	var/list/shuttle_loan_offers= list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
+	///The types of loan events already run (and to be excluded if the event triggers).
 	var/list/run_events = list()
 
 /datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
@@ -31,7 +31,7 @@
 		return ADMIN_CANCEL_EVENT
 
 	for(var/datum/round_event/shuttle_loan/loan_event in SSevents.running)
-		loan_event.kill() //Replace the old event with the new one!
+		loan_event.kill() //Force out the old event for a new one to take its place
 
 /datum/round_event/shuttle_loan
 	announce_when = 1
@@ -45,14 +45,14 @@
 /datum/round_event/shuttle_loan/setup()
 	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't call control, because it hasn't been set yet
 		var/list/loan_list = list()
-		loan_list += loan_event_control.shuttle_loan_events
+		loan_list += loan_event_control.shuttle_loan_offers
 		var/list/run_events = loan_event_control.run_events //Ask the round_event_control which loans have already been offered
 
 		for(var/event in run_events) //Remove the already offered loans from the candidate list
 			loan_list.Remove(event)
 
 		if(!length(loan_list)) //If we somehow run out of loans, they all become available again
-			loan_list = loan_event_control.shuttle_loan_events
+			loan_list += loan_event_control.shuttle_loan_offers
 			run_events.Cut()
 
 		dispatch_type = pick(loan_list) //Pick a loan to offer, and add it to the blacklist
