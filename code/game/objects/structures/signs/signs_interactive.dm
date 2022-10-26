@@ -26,12 +26,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
 			. += span_info("[holidayname]")
 
 /**
- * List of delamination and tram collision counter signs on the map.
+ * List of delamination counter signs on the map.
  * Required as persistence subsystem loads after the ones present at mapload.
- * For delams, resets to 0 upon explosion. For the tram, increments every time someone gets smacked.
+ * For delams, resets to 0 upon explosion.
  */
 GLOBAL_LIST_EMPTY(map_delamination_counters)
-GLOBAL_LIST_EMPTY(map_collision_counters)
 
 /obj/structure/sign/delamination_counter
 	name = "delamination counter"
@@ -41,14 +40,6 @@ GLOBAL_LIST_EMPTY(map_collision_counters)
 	is_editable = TRUE
 	var/since_last = 0
 
-/obj/structure/sign/collision_counter
-	name = "incident counter"
-	sign_change_name = "Flip Sign- Tram Incidents"
-	desc = "A pair of flip signs describe many tram related incidents have occured today."
-	icon_state = "days_since_explosion"
-	is_editable = TRUE
-	var/hit_count = 0
-
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 /obj/structure/sign/delamination_counter/Initialize(mapload)
@@ -57,28 +48,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	if (!mapload)
 		update_count(SSpersistence.rounds_since_engine_exploded)
 
-/obj/structure/sign/collision_counter/Initialize(mapload)
-	. = ..()
-	GLOB.map_collision_counters += src
-	RegisterSignal(tram_part, COMSIG_TRAM_COLLISION, .proc/new_hit)
-
-/obj/structure/sign/delamination_counter/Destroy()
-	GLOB.map_delamination_counters -= src
-	return ..()
-
-/obj/structure/sign/collision_counter/Destroy()
-	GLOB.map_collision_counters -= src
-	return ..()
-
 /obj/structure/sign/delamination_counter/proc/update_count(new_count)
 	since_last = min(new_count, 99)
-	update_appearance()
-
-/obj/structure/sign/collision_counter/proc/new_hit()
-	SIGNAL_HANDLER
-
-	hit_count++
-	message_admins("DEBUG: Adding to the tram hit count!")
 	update_appearance()
 
 /obj/structure/sign/delamination_counter/update_overlays()
@@ -90,19 +61,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	. += ones_overlay
 
 	var/tens = (since_last / 10) % 10
-	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]")
-	tens_overlay.pixel_x = -5
-	. += tens_overlay
-
-/obj/structure/sign/collision_counter/update_overlays()
-	. = ..()
-
-	var/ones = hit_count % 10
-	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[ones]")
-	ones_overlay.pixel_x = 4
-	. += ones_overlay
-
-	var/tens = (hit_count / 10) % 10
 	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "days_[tens]")
 	tens_overlay.pixel_x = -5
 	. += tens_overlay
@@ -122,17 +80,74 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 		if(11 to INFINITY)
 			. += span_info("Incredible!")
 
+GLOBAL_LIST_EMPTY(map_collision_counters)
+
+/obj/structure/sign/collision_counter
+	name = "incident counter"
+	sign_change_name = "Indicator board- Tram incidents"
+	desc = "A display that indicates how many tram related incidents have occured today."
+	icon_state = "tram_hits"
+	is_editable = TRUE
+	var/hit_count = 0
+	var/tram_id = TRAM_LIFT_ID
+	var/datum/weakref/tram_ref
+
+/obj/structure/sign/collision_counter/proc/find_tram()
+	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
+		if(tram.lift_id != tram_id)
+			continue
+		tram_ref = WEAKREF(tram)
+		break
+
+/obj/structure/sign/collision_counter/Initialize(mapload)
+	. = ..()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/sign/collision_counter/LateInitialize()
+	. = ..()
+	find_tram()
+	var/obj/structure/industrial_lift/tram/tram = tram_ref?.resolve()
+	GLOB.map_collision_counters += src
+	RegisterSignal(tram, COMSIG_TRAM_COLLISION, .proc/new_hit)
+	update_overlays()
+	update_appearance()
+
+/obj/structure/sign/collision_counter/Destroy()
+	GLOB.map_collision_counters -= src
+	return ..()
+
+/obj/structure/sign/collision_counter/proc/new_hit()
+	SIGNAL_HANDLER
+
+	hit_count++
+	update_overlays()
+	update_appearance()
+
+/obj/structure/sign/collision_counter/update_overlays()
+	. = ..()
+
+	var/ones = hit_count % 10
+	var/mutable_appearance/ones_overlay = mutable_appearance('icons/obj/signs.dmi', "hits_[ones]")
+	ones_overlay.pixel_x = 4
+	. += ones_overlay
+
+	var/tens = (hit_count / 10) % 10
+	var/mutable_appearance/tens_overlay = mutable_appearance('icons/obj/signs.dmi', "hits_[tens]")
+	tens_overlay.pixel_x = -5
+	. += tens_overlay
+
 /obj/structure/sign/collision_counter/examine(mob/user)
 	. = ..()
-	. += span_info("It has been [hit_count] day\s since the last delamination event at a Nanotrasen facility.")
+	. += span_info("The station has had [hit_count] incidents this shift.")
 	switch (hit_count)
-		if (0)
-			. += span_info("In case you didn't notice.")
+		if(0)
+			. += span_info("Fantastic! Champions of safety.")
 		if(1)
-			. += span_info("Let's do better today.")
+			. += span_info("Let's do better tomorrow.")
 		if(2 to 5)
 			. += span_info("There's room for improvement.")
 		if(6 to 10)
-			. += span_info("Good work!")
+			. += span_info("Good work! Nanotrasen's finest!")
 		if(11 to INFINITY)
-			. += span_info("Incredible!")
+			. += span_info("Incredible! You're probably reading this from medbay.")
