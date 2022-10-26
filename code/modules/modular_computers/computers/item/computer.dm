@@ -412,7 +412,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
 		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(all_components[MC_SDD])
+	if(inserted_disk)
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
 		. = CONTEXTUAL_SCREENTIP_SET
 
