@@ -27,8 +27,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
 
 /**
  * List of delamination counter signs on the map.
- * Required as persistence subsystem loads after the ones present at mapload.
- * For delams, resets to 0 upon explosion.
+ * Required as persistence subsystem loads after the ones present at mapload, and to reset to 0 upon explosion.
  */
 GLOBAL_LIST_EMPTY(map_delamination_counters)
 
@@ -47,6 +46,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	GLOB.map_delamination_counters += src
 	if (!mapload)
 		update_count(SSpersistence.rounds_since_engine_exploded)
+
+/obj/structure/sign/delamination_counter/Destroy()
+	GLOB.map_delamination_counters -= src
 
 /obj/structure/sign/delamination_counter/proc/update_count(new_count)
 	since_last = min(new_count, 99)
@@ -90,14 +92,6 @@ GLOBAL_LIST_EMPTY(map_collision_counters)
 	is_editable = TRUE
 	var/hit_count = 0
 	var/tram_id = TRAM_LIFT_ID
-	var/datum/weakref/tram_ref
-
-/obj/structure/sign/collision_counter/proc/find_tram()
-	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
-		if(tram.lift_id != tram_id)
-			continue
-		tram_ref = WEAKREF(tram)
-		break
 
 /obj/structure/sign/collision_counter/Initialize(mapload)
 	. = ..()
@@ -106,12 +100,10 @@ GLOBAL_LIST_EMPTY(map_collision_counters)
 
 /obj/structure/sign/collision_counter/LateInitialize()
 	. = ..()
-	find_tram()
-	var/obj/structure/industrial_lift/tram/tram = tram_ref?.resolve()
-	GLOB.map_collision_counters += src
-	RegisterSignal(tram, COMSIG_TRAM_COLLISION, .proc/new_hit)
-	update_overlays()
-	update_appearance()
+	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
+		GLOB.map_collision_counters += src
+		RegisterSignal(tram, COMSIG_TRAM_COLLISION, .proc/new_hit)
+		update_appearance()
 
 /obj/structure/sign/collision_counter/Destroy()
 	GLOB.map_collision_counters -= src
@@ -121,7 +113,6 @@ GLOBAL_LIST_EMPTY(map_collision_counters)
 	SIGNAL_HANDLER
 
 	hit_count++
-	update_overlays()
 	update_appearance()
 
 /obj/structure/sign/collision_counter/update_overlays()
