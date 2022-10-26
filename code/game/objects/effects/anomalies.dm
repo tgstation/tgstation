@@ -145,7 +145,8 @@
 	. = ..()
 	if(same_z_layer)
 		return
-	SET_PLANE(warp, PLANE_TO_TRUE(warp.plane), new_turf)
+	if(warp)
+		SET_PLANE(warp, PLANE_TO_TRUE(warp.plane), new_turf)
 
 /obj/effect/anomaly/grav/anomalyEffect(delta_time)
 	..()

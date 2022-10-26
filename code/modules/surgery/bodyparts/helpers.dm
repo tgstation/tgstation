@@ -143,7 +143,7 @@
 			new_bodypart = new /obj/item/bodypart/chest/larva()
 	. = new_bodypart
 
-/mob/living/carbon/alien/humanoid/newBodyPart(zone)
+/mob/living/carbon/alien/adult/newBodyPart(zone)
 	var/obj/item/bodypart/new_bodypart
 	switch(zone)
 		if(BODY_ZONE_L_ARM)

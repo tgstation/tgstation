@@ -41,6 +41,10 @@
 	var/datum/weakref/target_ref = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
 	var/mob/living/selected_enemy = target_ref?.resolve()
 
+	if(!selected_enemy)
+		living_pawn.set_combat_mode(FALSE)
+		return
+
 	if(!selected_enemy.stat) //He's up, get him!
 		if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
 			controller.queue_behavior(/datum/ai_behavior/monkey_flee)

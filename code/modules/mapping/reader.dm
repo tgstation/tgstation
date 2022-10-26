@@ -373,7 +373,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		// This is safe because dmm strings will never actually newline
 		// So we can parse things just fine
 		var/list/entries = splittext(model, ",\n")
-		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall and /area/mine/explored)
+		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall)
 		var/list/members = new /list(length(entries))
 		//will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
 		//member attributes are rarish, so we could lazyinit this

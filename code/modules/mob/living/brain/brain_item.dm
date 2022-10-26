@@ -67,10 +67,20 @@
 	else
 		C.set_suicide(suicided)
 
-	for(var/X in traumas)
-		var/datum/brain_trauma/BT = X
-		BT.owner = owner
-		BT.on_gain()
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		if(trauma.owner)
+			if(trauma.owner == owner)
+				// if we're being special replaced, the trauma is already applied, so this is expected
+				// but if we're not... this is likely a bug, and should be reported
+				if(!special)
+					stack_trace("A brain trauma ([trauma]) is being re-applied to its owning mob ([owner])!")
+				continue
+
+			stack_trace("A brain trauma ([trauma]) is being applied to a new mob ([owner]) when it's owned by someone else ([trauma.owner])!")
+			continue
+
+		trauma.owner = owner
+		trauma.on_gain()
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_body_parts()
@@ -282,6 +292,8 @@
 	if(!istype(replacement_brain))
 		return
 
+	// Transfer over skillcips to the new brain
+
 	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
 	if(owner && length(skillchips) && (replacement_brain.type != type))
 		activate_skillchip_failsafe(FALSE)
@@ -307,6 +319,11 @@
 
 	// Any skillchips has been transferred over, time to empty the list.
 	LAZYCLEARLIST(skillchips)
+
+	// Transfer over traumas as well
+	for(var/datum/brain_trauma/trauma as anything in traumas)
+		remove_trauma_from_traumas(trauma)
+		replacement_brain.add_trauma_to_traumas(trauma)
 
 /obj/item/organ/internal/brain/machine_wash(obj/machinery/washing_machine/brainwasher)
 	. = ..()
@@ -408,8 +425,7 @@
 		WARNING("gain_trauma was given an already active trauma.")
 		return FALSE
 
-	traumas += actual_trauma
-	actual_trauma.brain = src
+	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
 		SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma)
@@ -418,6 +434,18 @@
 		actual_trauma.resilience = resilience
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
 	return actual_trauma
+
+/// Adds the passed trauma instance to our list of traumas and links it to our brain.
+/// DOES NOT handle setting up the trauma, that's done by [proc/brain_gain_trauma]!
+/obj/item/organ/internal/brain/proc/add_trauma_to_traumas(datum/brain_trauma/trauma)
+	trauma.brain = src
+	traumas += trauma
+
+/// Removes the passed trauma instance to our list of traumas and links it to our brain
+/// DOES NOT handle removing the trauma's effects, that's done by [/datum/brain_trauma/Destroy()]!
+/obj/item/organ/internal/brain/proc/remove_trauma_from_traumas(datum/brain_trauma/trauma)
+	trauma.brain = null
+	traumas -= trauma
 
 //Add a random trauma of a certain subtype
 /obj/item/organ/internal/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience, natural_gain = FALSE)
