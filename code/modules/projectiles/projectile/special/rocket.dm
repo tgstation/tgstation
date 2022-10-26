@@ -60,7 +60,7 @@
 
 /// PM9 weak rocket - just kind of a failure
 /obj/projectile/bullet/a84mm/weak
-	name ="low-yield rocket"
+	name = "low-yield rocket"
 	desc = "Boom, but less so."
 	damage = 30
 
