@@ -54,10 +54,10 @@
 	var/water_desired = clamp(hydro_parent.maxwater - hydro_parent.waterlevel, 0, MACHINE_REAGENT_TRANSFER)
 	var/nutri_desired = clamp(hydro_parent.maxductnutri - hydro_parent.reagents.total_volume, 0, MACHINE_REAGENT_TRANSFER)
 
-	process_request(water_desired, nutri_desired, dir)
+	process_hydro_request(water_desired, nutri_desired, dir)
 
-/// process_request(water_amt,nutri_amt,dir): pull water and/or nutrients from duct system
-/datum/component/plumbing/hydroponics/process_request(water_amt, nutri_amt, dir)
+/// process_hydro_request(water_amt,nutri_amt,dir): pull water and/or nutrients from duct system
+/datum/component/plumbing/hydroponics/proc/process_hydro_request(water_amt, nutri_amt, dir)
 	dir = num2text(dir)
 	if(!ducts.Find(dir))
 		return // Not connected

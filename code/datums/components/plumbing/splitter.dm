@@ -29,7 +29,7 @@
 	return FALSE
 
 
-/datum/component/plumbing/splitter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/splitter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, disable_round_robin = FALSE)
 	var/direction
 	for(var/A in ducts)
 		if(ducts[A] == net)

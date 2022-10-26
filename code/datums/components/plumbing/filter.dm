@@ -22,7 +22,7 @@
 			if(!can_give_in_direction(direction, reagent))
 				return FALSE
 
-/datum/component/plumbing/filter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/filter/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, disable_round_robin = FALSE)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	var/direction
