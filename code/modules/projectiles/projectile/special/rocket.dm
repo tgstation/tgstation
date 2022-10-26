@@ -73,7 +73,7 @@
 /// SRM-8 Missile - Used by the SRM-8 Exosuit missile rack.
 // Employed by Nuclear Operatives Maulers and Nanotrasen Marauders and Seraphs to kill everything and anyone.
 /obj/projectile/bullet/a84mm/srm
-	name ="\improper short range missile"
+	name = "\improper short range missile"
 	desc = "Today's not your day, pal."
 
 /// PEP-6 Missile - Used by the PEP-6 Exosuit missile rack.
