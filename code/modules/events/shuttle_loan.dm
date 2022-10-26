@@ -7,8 +7,6 @@
 #define ITS_HIP_TO 7
 #define MY_GOD_JC 8
 
-GLOBAL_LIST_INIT(shuttle_loan_events, list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC))
-
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
@@ -16,6 +14,10 @@ GLOBAL_LIST_INIT(shuttle_loan_events, list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GI
 	earliest_start = 7 MINUTES
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
+	///The types of loan events that the crew can recieve.
+	var/list/shuttle_loan_events = list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
+	///The types of loan events already run (and to be excluded if the event naturally triggers).
+	var/list/run_events = list()
 
 /datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
 	. = ..()
@@ -26,10 +28,6 @@ GLOBAL_LIST_INIT(shuttle_loan_events, list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GI
 
 /datum/round_event_control/shuttle_loan/admin_setup()
 	if(!check_rights(R_FUN))
-		return ADMIN_CANCEL_EVENT
-
-	if(!length(GLOB.shuttle_loan_events))
-		message_admins("The station has already recieved all possible loans!") //Change this to a list of options later
 		return ADMIN_CANCEL_EVENT
 
 	for(var/datum/round_event/shuttle_loan/loan_event in SSevents.running)
@@ -45,7 +43,15 @@ GLOBAL_LIST_INIT(shuttle_loan_events, list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GI
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-	dispatch_type = pick_n_take(GLOB.shuttle_loan_events)
+	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't just call round_event.control, because it hasn't been set to the round_event_control yet
+		var/list/event_list = loan_event_control.shuttle_loan_events
+		var/list/run_events = loan_event_control.run_events
+
+		for(var/event in run_events) //Exclude already run events
+			event_list.Remove(event)
+
+		dispatch_type = pick(event_list)
+		loan_event_control.run_events += dispatch_type
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
