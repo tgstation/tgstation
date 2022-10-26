@@ -47,7 +47,7 @@
 
 /// PM9 HEAP rocket - the anti-anything missile you always craved.
 /obj/projectile/bullet/a84mm/heap
-	name ="\improper HEAP rocket"
+	name = "\improper HEAP rocket"
 	desc = "I am become death."
 	icon_state = "84mm-hedp"
 	damage = 80
