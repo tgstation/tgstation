@@ -571,7 +571,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/momentary_power = internal_energy
 	for(var/powergain_type in additive_power)
 		momentary_power += additive_power[powergain_type]
-	if(internal_energy < powerloss_linear_threshold) // Negative numbers
+	if(momentary_power < powerloss_linear_threshold) // Negative numbers
 		additive_power[SM_POWER_POWERLOSS] = -1 * (momentary_power / POWERLOSS_CUBIC_DIVISOR) ** 3
 	else
 		additive_power[SM_POWER_POWERLOSS] = -1 * (momentary_power * POWERLOSS_LINEAR_RATE + powerloss_linear_offset)
