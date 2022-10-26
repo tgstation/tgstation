@@ -49,6 +49,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 /obj/structure/sign/delamination_counter/Destroy()
 	GLOB.map_delamination_counters -= src
+	return ..()
 
 /obj/structure/sign/delamination_counter/proc/update_count(new_count)
 	since_last = min(new_count, 99)
