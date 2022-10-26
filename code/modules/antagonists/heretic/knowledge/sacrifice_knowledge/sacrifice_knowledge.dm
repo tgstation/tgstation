@@ -374,7 +374,10 @@
 	sac_target.adjust_stutter(40 SECONDS)
 
 	// They're already back on the station for some reason, don't bother teleporting
-	if(is_station_level(sac_target.z))
+	var/turf/below_target = get_turf(sac_target)
+	// is_station_level runtimes when passed z = 0, so I'm being very explicit here about checking for nullspace until fixed
+	// otherwise, we really don't want this to runtime error, as it'll get people stuck in hell forever - not ideal!
+	if(below_target && below_target.z != 0 && is_station_level(below_target.z))
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.

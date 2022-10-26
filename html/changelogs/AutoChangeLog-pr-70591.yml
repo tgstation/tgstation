@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - refactor: "Modernized the janicart!"
-  - bugfix: "Fixed janicart examine message not mentioning how to dump it when it was almost empty, but not completely empty."
-  - bugfix: "Fixed varedited janicarts having no caution signs visible when they went over 4 signs."

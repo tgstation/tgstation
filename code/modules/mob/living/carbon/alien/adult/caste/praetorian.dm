@@ -1,11 +1,11 @@
-/mob/living/carbon/alien/humanoid/royal/praetorian
+/mob/living/carbon/alien/adult/royal/praetorian
 	name = "alien praetorian"
 	caste = "p"
 	maxHealth = 250
 	health = 250
 	icon_state = "alienp"
 
-/mob/living/carbon/alien/humanoid/royal/praetorian/Initialize(mapload)
+/mob/living/carbon/alien/adult/royal/praetorian/Initialize(mapload)
 	real_name = name
 
 	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
@@ -16,7 +16,7 @@
 
 	return ..()
 
-/mob/living/carbon/alien/humanoid/royal/praetorian/create_internal_organs()
+/mob/living/carbon/alien/adult/royal/praetorian/create_internal_organs()
 	internal_organs += new /obj/item/organ/internal/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/internal/alien/resinspinner
 	internal_organs += new /obj/item/organ/internal/alien/acid
@@ -37,10 +37,10 @@
 	if(!isturf(owner.loc))
 		return FALSE
 
-	if(get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
+	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen))
 		return FALSE
 
-	var/mob/living/carbon/alien/humanoid/royal/evolver = owner
+	var/mob/living/carbon/alien/adult/royal/evolver = owner
 	var/obj/item/organ/internal/alien/hivenode/node = evolver.getorgan(/obj/item/organ/internal/alien/hivenode)
 	if(!node || node.recent_queen_death)
 		return FALSE
@@ -48,7 +48,7 @@
 	return TRUE
 
 /datum/action/cooldown/alien/evolve_to_queen/Activate(atom/target)
-	var/mob/living/carbon/alien/humanoid/royal/evolver = owner
-	var/mob/living/carbon/alien/humanoid/royal/queen/new_queen = new(owner.loc)
+	var/mob/living/carbon/alien/adult/royal/evolver = owner
+	var/mob/living/carbon/alien/adult/royal/queen/new_queen = new(owner.loc)
 	evolver.alien_evolve(new_queen)
 	return TRUE

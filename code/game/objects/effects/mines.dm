@@ -26,7 +26,7 @@
 /obj/effect/mine/examine(mob/user)
 	. = ..()
 	if(!armed)
-		. += "\t<span class='information'>It appears to be inactive...</span>"
+		. += span_info("\tIt appears to be inactive...")
 
 /// The effect of the mine
 /obj/effect/mine/proc/mineEffect(mob/victim)
