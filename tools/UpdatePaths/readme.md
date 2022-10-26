@@ -41,24 +41,24 @@ Alright, so we've already made the [script](#tried-and-true---part-one). So, let
 
 ```dm
 "a" = (
-	/obj/structure/door/airlock/science/closed/rd{
-		dir = 4;
-		name = "RD Airlock"
-		},
-	/turf/open/floor/iron,
-	/area/science/rd),
+/obj/structure/door/airlock/science/closed/rd{
+	dir = 4;
+	name = "RD Airlock"
+	},
+/turf/open/floor/iron,
+/area/science/rd),
 ```
 
 Now, after you drag and drop your script onto the `Update Paths.bat` file, it will look like this:
 
 ```dm
 "a" = (
-	/obj/structure/door/airlock/science/rd/closed{
-		dir = 4;
-		name = "RD Airlock"
-		},
-	/turf/open/floor/iron,
-	/area/science/rd),
+/obj/structure/door/airlock/science/rd/closed{
+	dir = 4;
+	name = "RD Airlock"
+	},
+/turf/open/floor/iron,
+/area/science/rd),
 ```
 
 It worked! Great!
@@ -78,21 +78,21 @@ On this example map key:
 
 ```dm
 "a" = (
-	/obj/structure/door/airlock/science/rd/closed{
-		dir = 4;
-		name = "RD Airlock"
-		},
-	/turf/open/floor/iron,
-	/area/science/rd),
+/obj/structure/door/airlock/science/rd/closed{
+	dir = 4;
+	name = "RD Airlock"
+	},
+/turf/open/floor/iron,
+/area/science/rd),
 ```
 You will then result the following:
 
 
 ```dm
 "a" = (
-	/obj/structure/door/airlock/science/closed/rd,
-	/turf/open/floor/iron,
-	/area/science/rd),
+/obj/structure/door/airlock/science/closed/rd,
+/turf/open/floor/iron,
+/area/science/rd),
 ```
 
 As expected, all variables were discarded. This is only really useful in certain edgecases, and you shouldn't do something like this trivially in case someone has lovably named a variable special since it'll just nuke it.
@@ -111,23 +111,23 @@ So, now when you have the following example map keys:
 
 ```dm
 "a" = (
-	/turf/open/floor/carpet,
-	/area/meme_zone),
+/turf/open/floor/carpet,
+/area/meme_zone),
 "b" = (
-	/mob/living/deez_nuts{
-		goteem = 1;
-		desc = "these jokes are still funny"
-		},
-	/turf/open/floor/carpet,
-	/area/meme_zone),
+/mob/living/deez_nuts{
+	goteem = 1;
+	desc = "these jokes are still funny"
+	},
+/turf/open/floor/carpet,
+/area/meme_zone),
 ```
 
 And you run the script, you will get the following:
 
 ```dm
 "a" = (
-	/turf/open/floor/carpet,
-	/area/meme_zone),
+/turf/open/floor/carpet,
+/area/meme_zone),
 ```
 
 Presto, like it never existed. Note how both the "a" and "b" files were able to combine into the same dictionary key, since the "b" key was deleted entirely, and since "a" and 'b" now matched, UpdatePaths was able to just clean that up for you. It'll also update the map itself to reflect this as well. Now that is something your Search & Replace tool can't do!
@@ -143,17 +143,17 @@ So, now when you have the following example map keys:
 
 ```dm
 "a" = (
-	/turf/open/floor/iron/i_like_spawning_mobs,
-	/area/station/kitchen),
+/turf/open/floor/iron/i_like_spawning_mobs,
+/area/station/kitchen),
 ```
 
 Running the script will mutate this into:
 
 ```dm
 "a" = (
-	/obj/mob_spawner,
-	/turf/open/floor/iron,
-	/area/station/kitchen),
+/obj/mob_spawner,
+/turf/open/floor/iron,
+/area/station/kitchen),
 ```
 Remember that this is a kind of silly example, but this is one of the things that UpdatePaths was built to do- help coders fix shitty code without having to bug out over how maps don't compile.
 
@@ -169,30 +169,30 @@ So, let's assume we have the following map file:
 
 ```dm
 "a" = (
-	/obj/item/weapon/big_chungus,
-	/obj/item/weapon/big_chungus/funny{
-		name = "funny big chungus"
-		},
-	/obj/item/weapon/big_chungus/really_large{
-		name = "really large big chungus"
-		},
-	/turf/open/floor/iron,
-	/area/station/maintainence/fore/greater),
+/obj/item/weapon/big_chungus,
+/obj/item/weapon/big_chungus/funny{
+	name = "funny big chungus"
+	},
+/obj/item/weapon/big_chungus/really_large{
+	name = "really large big chungus"
+	},
+/turf/open/floor/iron,
+/area/station/maintainence/fore/greater),
 ```
 
 Running the script will update this into:
 
 ```dm
 "a" = (
-	/obj/item/big_chungus,
-	/obj/item/big_chungus/funny{
-		name = "funny big chungus"
-		},
-	/obj/item/big_chungus/really_large{
-		name = "really large big chungus"
-		},
-	/turf/open/floor/iron,
-	/area/station/maintainence/fore/greater),
+/obj/item/big_chungus,
+/obj/item/big_chungus/funny{
+	name = "funny big chungus"
+	},
+/obj/item/big_chungus/really_large{
+	name = "really large big chungus"
+	},
+/turf/open/floor/iron,
+/area/station/maintainence/fore/greater),
 ```
 
 Note how since you kept in `{@OLD}`, it was able to retain the re-named variables of the subtypes.
@@ -215,33 +215,33 @@ In this test example, you already set the name of the Mob to "Tom", so you don't
 
 ```dm
 "a" = (
-	/mob/living/basic/mouse{
-		name = "Tom";
-		desc = "A mouse named Tom";
-		pixel_x = 12
-		},
-	/mob/living/basic/mouse{
-		name = "Tina";
-		pixel_x = -12
-		},
-	/turf/open/floor/iron,
-	/area/station/prison),
+/mob/living/basic/mouse{
+	name = "Tom";
+	desc = "A mouse named Tom";
+	pixel_x = 12
+	},
+/mob/living/basic/mouse{
+	name = "Tina";
+	pixel_x = -12
+	},
+/turf/open/floor/iron,
+/area/station/prison),
 ```
 
 Running the script will update this into:
 
 ```dm
 "a" = (
-	/mob/living/basic/mouse/tom{
-		desc = "A mouse named Tom";
-		pixel_x = 12
-		},
-	/mob/living/basic/mouse{
-		name = "Tina";
-		pixel_x = -12
-		},
-	/turf/open/floor/iron,
-	/area/station/prison),
+/mob/living/basic/mouse/tom{
+	desc = "A mouse named Tom";
+	pixel_x = 12
+	},
+/mob/living/basic/mouse{
+	name = "Tina";
+	pixel_x = -12
+	},
+/turf/open/floor/iron,
+/area/station/prison),
 ```
 
 Notice how since you `@SKIP`'d the name, it doesn't need to re-apply itself, and since you added (the global) `@OLD`, it was able to keep the `desc` and `pixel_x` variable. Also, cute little mouse named Tina goes unfazed through this change.
@@ -265,32 +265,32 @@ So, let's assume we have the following map file:
 
 ```dm
 "a" = (
-	/mob/living/basic/mouse{
-		name = "Tom";
-		desc = "A mouse named Tom";
-		pixel_x = -12
-		},
-	/mob/living/basic/mouse{
-		name = "Tina";
-		pixel_x = 12
-		},
-	/turf/open/floor/iron,
-	/area/station/prison),
+/mob/living/basic/mouse{
+	name = "Tom";
+	desc = "A mouse named Tom";
+	pixel_x = -12
+	},
+/mob/living/basic/mouse{
+	name = "Tina";
+	pixel_x = 12
+	},
+/turf/open/floor/iron,
+/area/station/prison),
 ```
 
 You would then get the following output:
 
 ```dm
 "a" = (
-	/mob/living/basic/mouse/tom{
-		pixel_x = -12
-		},
-	/mob/living/basic/mouse{
-		name = "Tina";
-		pixel_x = 12
-		},
-	/turf/open/floor/iron,
-	/area/station/prison),
+/mob/living/basic/mouse/tom{
+	pixel_x = -12
+	},
+/mob/living/basic/mouse{
+	name = "Tina";
+	pixel_x = 12
+	},
+/turf/open/floor/iron,
+/area/station/prison),
 ```
 
 As you would have wished, only the `pixel_x` variable copied through. This is pretty constraining and might not match up to certain needs of the repository (or other repositories), so recommend using the [first example](#method-open-mind-to-all-possibilities) when possible.
@@ -307,34 +307,34 @@ Okay, let's say that you want to change all instances of `/obj/structure/sink` t
 
 ```dm
 "a" = (
-	/obj/structure/sink,
-	/turf/open/floor/iron,
-	/area/station/bathroom),
+/obj/structure/sink,
+/turf/open/floor/iron,
+/area/station/bathroom),
 "b" = (
-	/obj/structure/sink{
-		dir = 8
-		name = "Money Hole"
-		},
-	/turf/open/floor/iron,
-	/area/station/bathroom),
+/obj/structure/sink{
+	dir = 8
+	name = "Money Hole"
+	},
+/turf/open/floor/iron,
+/area/station/bathroom),
 ```
 
 You would then get the following output:
 
 ```dm
 "a" = (
-	/obj/structure/sink{
-		dir = 1
-		},
-	/turf/open/floor/iron,
-	/area/station/bathroom),
+/obj/structure/sink{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/bathroom),
 "b" = (
-	/obj/structure/sink{
-		dir = 8
-		name = "Money Hole"
-		},
-	/turf/open/floor/iron,
-	/area/station/bathroom),
+/obj/structure/sink{
+	dir = 8
+	name = "Money Hole"
+	},
+/turf/open/floor/iron,
+/area/station/bathroom),
 ```
 
 Note how we keep the "Money Hole" intact, while still managing to extrapolate the `dir` variable to 1 on the sink that had absolutely no variables set on it. This is useful for when you want to change a variable that is not shown in the map editor, but you want to keep the rest of the variables intact.
