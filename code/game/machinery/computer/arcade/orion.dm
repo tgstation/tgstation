@@ -484,7 +484,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		usr.log_message("made it to Orion on an emagged machine and got an explosive toy ship.", LOG_GAME)
 	else
-		prizevend(user)
+		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+		to_chat(user, span_notice("[src] dispenses 2 tickets!"))
 	obj_flags &= ~EMAGGED
 	name = initial(name)
 	desc = initial(desc)

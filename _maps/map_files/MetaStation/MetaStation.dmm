@@ -9924,10 +9924,10 @@
 /obj/item/clipboard,
 /obj/item/paper/monitorkey,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
-/obj/item/computer_hardware/hard_drive/portable/engineering,
-/obj/item/computer_hardware/hard_drive/portable/engineering,
-/obj/item/computer_hardware/hard_drive/portable/engineering,
-/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_disk/engineering,
+/obj/item/computer_disk/engineering,
+/obj/item/computer_disk/engineering,
+/obj/item/computer_disk/atmos,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "dJT" = (
@@ -23271,6 +23271,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "ixP" = (
@@ -23808,9 +23809,9 @@
 /obj/effect/turf_decal/siding{
 	dir = 4
 	},
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/rd)
 "iHf" = (
@@ -31607,9 +31608,9 @@
 	pixel_x = -10;
 	pixel_y = 9
 	},
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "lnH" = (
@@ -40431,11 +40432,11 @@
 /area/station/medical/chemistry)
 "ote" = (
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -40443,7 +40444,7 @@
 	dir = 9
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/item/computer_hardware/hard_drive/portable/ordnance{
+/obj/item/computer_disk/ordnance{
 	pixel_x = 1
 	},
 /turf/open/floor/iron/white,
@@ -49685,9 +49686,9 @@
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/computer_hardware/hard_drive/portable/chemistry,
-/obj/item/computer_hardware/hard_drive/portable/medical,
-/obj/item/computer_hardware/hard_drive/portable/medical,
+/obj/item/computer_disk/chemistry,
+/obj/item/computer_disk/medical,
+/obj/item/computer_disk/medical,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "rHn" = (
@@ -56516,11 +56517,11 @@
 /obj/item/radio/intercom/directional/east,
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = -5;
 	pixel_y = 8
 	},

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - rscadd: "Heretics spawn with a new spell, Shadow Cloak. Using it will hide your identity for 3 minutes or until cancelled, but is fairly obvious otherwise, as it shrouds you in purple smoke."

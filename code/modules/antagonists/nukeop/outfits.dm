@@ -30,7 +30,7 @@
 		return
 	var/obj/item/radio/radio = nukie.ears
 	radio.set_frequency(FREQ_SYNDICATE)
-	radio.freqlock = TRUE
+	radio.freqlock = RADIO_FREQENCY_LOCKED
 	if(command_radio)
 		radio.command = TRUE
 		radio.use_command = TRUE
