@@ -128,6 +128,7 @@
 		var/mob/living/carbon/carbon_user = user
 		carbon_user.head_update(src, forced = TRUE)
 
+///Attempt to toggle the visor. Returns true if it does the thing.
 /obj/item/clothing/head/helmet/toggleable/proc/try_toggle()
 	return TRUE
 
