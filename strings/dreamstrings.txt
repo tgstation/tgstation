@@ -1,41 +1,83 @@
+%A% %ADJECTIVE% admiral
+%A% %ADJECTIVE% airlock
 %A% %ADJECTIVE% alien
 %A% %ADJECTIVE% ally
+%A% %ADJECTIVE% armblade
+%A% %ADJECTIVE% bear
+%A% %ADJECTIVE% bee
+%A% %ADJECTIVE% blob
 %A% %ADJECTIVE% bottle
+%A% %ADJECTIVE% corgi
 %A% %ADJECTIVE% crewmember
+%A% %ADJECTIVE% crowd
+%A% %ADJECTIVE% disguise
 %A% %ADJECTIVE% doctor
+%A% %ADJECTIVE% enemy
 %A% %ADJECTIVE% engineer
+%A% %ADJECTIVE% explosion
 %A% %ADJECTIVE% familiar face
+%A% %ADJECTIVE% foe
 %A% %ADJECTIVE% gun
+%A% %ADJECTIVE% geneticist
 %A% %ADJECTIVE% hat
+%A% %ADJECTIVE% hideout
 %A% %ADJECTIVE% ID card
+%A% %ADJECTIVE% imposter
+%A% %ADJECTIVE% inspector
 %A% %ADJECTIVE% laboratory
 %A% %ADJECTIVE% loved one
+%A% %ADJECTIVE% memory
+%A% %ADJECTIVE% meteor
 %A% %ADJECTIVE% miner
 %A% %ADJECTIVE% monkey
 %A% %ADJECTIVE% monster
+%A% %ADJECTIVE% ocean
 %A% %ADJECTIVE% planet
+%A% %ADJECTIVE% pool
 %A% %ADJECTIVE% scientist
 %A% %ADJECTIVE% security officer
+%A% %ADJECTIVE% shrine
 %A% %ADJECTIVE% shuttle
+%A% %ADJECTIVE% singularity
 %A% %ADJECTIVE% slime
 %A% %ADJECTIVE% toolbox
 %A% %ADJECTIVE% traitor
+%A% %ADJECTIVE% virologist
+%A% %ADJECTIVE% virus
 %ADJECTIVE% blinking lights
 %ADJECTIVE% blood
 %ADJECTIVE% darkness
 %ADJECTIVE% death
 %ADJECTIVE% flames
+%ADJECTIVE% horror
 %ADJECTIVE% light
 %ADJECTIVE% plasma
 %ADJECTIVE% power
 %ADJECTIVE% riches
+%ADJECTIVE% waves
 %ADJECTIVE% wind
+Ian
 Nanotrasen
+Poly
+some %ADJECTIVE% cultists
+some %ADJECTIVE% lovers
 some %ADJECTIVE% melons
+some %ADJECTIVE% strangers
+some %ADJECTIVE% Xenomorphs
+the %ADJECTIVE% bartender
 the %ADJECTIVE% bridge
 the %ADJECTIVE% brig
 the %ADJECTIVE% captain
+the %ADJECTIVE% Icemoon wastes
+the %ADJECTIVE% maintenance tunnels
+the %ADJECTIVE% recycler
+the %ADJECTIVE% sun
+the %ADJECTIVE% Supermatter
+the %ADJECTIVE% void of space
+the bar
 the engine
+the emergency shuttle
+the library
 the medical bay
 the station
 the sun
