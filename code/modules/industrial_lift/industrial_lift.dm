@@ -738,7 +738,7 @@ GLOBAL_LIST_EMPTY(lifts)
 
 	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/can_open_lift_radial, user, starting_position), require_near = TRUE, tooltips = FALSE)
 	if (!can_open_lift_radial(user,starting_position))
-		return  // nice try
+		return	// nice try
 	if(!isnull(result) && result != "Cancel" && lift_master_datum.controls_locked)
 		// Only show this message if they actually wanted to move
 		balloon_alert(user, "elevator controls locked!")
