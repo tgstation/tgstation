@@ -360,13 +360,14 @@
 
 	owner.drop_all_held_items()
 
-	chainsaw = new(get_turf(owner))
-	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
-	owner.put_in_hands(chainsaw, forced = TRUE)
-	chainsaw.attack_self(owner)
+	if(iscarbon(owner))
+		chainsaw = new(get_turf(owner))
+		ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+		owner.put_in_hands(chainsaw, forced = TRUE)
+		chainsaw.attack_self(owner)
+		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
 
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
-	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
 
 	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust)
