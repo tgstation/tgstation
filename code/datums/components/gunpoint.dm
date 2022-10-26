@@ -153,7 +153,7 @@
 	if(weapon.check_botched(shooter))
 		return
 
-	var/fired = weapon.process_fire(target, shooter)
+	var/fired = weapon.fire_gun(target, shooter)
 	if(!fired && weapon.chambered?.loaded_projectile)
 		weapon.chambered.loaded_projectile.damage /= damage_mult
 		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
