@@ -595,7 +595,7 @@
 	integrity_failure = 0.25
 	armor = list(MELEE = 10, BULLET = 30, LASER = 30, ENERGY = 100, BOMB = 20, BIO = 0, FIRE = 80, ACID = 70)
 
-/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/structure/table/reinforced/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
 	if(isnull(held_item))
