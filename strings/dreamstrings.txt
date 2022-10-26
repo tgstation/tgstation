@@ -53,6 +53,7 @@
 %A% %ADJECTIVE% planet
 %A% %ADJECTIVE% plasmaman
 %A% %ADJECTIVE% pool
+%A% %ADJECTIVE% rat
 %A% %ADJECTIVE% scientist
 %A% %ADJECTIVE% security officer
 %A% %ADJECTIVE% shrine
@@ -80,15 +81,18 @@
 %ADJECTIVE% horror
 %ADJECTIVE% light
 %ADJECTIVE% operatives
+%ADJECTIVE% paperwork
 %ADJECTIVE% plasma
 %ADJECTIVE% power
 %ADJECTIVE% riches
 %ADJECTIVE% waves
 %ADJECTIVE% wind
+cigarettes
 Ian
 mutiny
 Nanotrasen
 Poly
+Runtime
 some %ADJECTIVE% cultists
 some %ADJECTIVE% lovers
 some %ADJECTIVE% melons
@@ -109,6 +113,9 @@ the %ADJECTIVE% Supermatter
 the %ADJECTIVE% void of space
 the bar
 the bottom of a chasm
+the chapel
+the curator's back room
+the departure lounge
 the engine
 the emergency shuttle
 the library
