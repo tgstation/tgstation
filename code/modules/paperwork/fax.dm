@@ -251,6 +251,11 @@
 				return
 			var/destination = params["id"]
 			if(send(loaded, destination))
+				if(findtext(destination, "sp_"))
+					var/obj/item/paper/request = loaded
+					request.request_state = TRUE
+					request.loc = null
+					GLOB.requests.fax_request(usr.client, request)
 				log_fax(loaded, destination, params["name"])
 				loaded_item_ref = null
 				update_appearance()
@@ -292,7 +297,8 @@
 			balloon_alert(usr, "destination port jammed")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
-		FAX.receive(loaded, fax_name)
+		if (!findtext(id, "sp_"))
+			FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
 		INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "send"))
 		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)

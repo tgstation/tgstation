@@ -87,6 +87,16 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	request_for_client(C, REQUEST_NUKE, message)
 
 /**
+ * Creates a request for fax answer
+ *
+ * Arguments:
+ * * requester - The client who is sending the request
+ * * message - Paper with text.. some stamps.. and another things.
+ */
+/datum/request_manager/proc/fax_request(client/requester, message)
+	request_for_client(requester, REQUEST_FAX, message)
+
+/**
  * Creates a request and registers the request with all necessary internal tracking lists
  *
  * Arguments:
@@ -192,6 +202,13 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			for(var/obj/machinery/nuclearbomb/selfdestruct/SD in GLOB.nuke_list)
 				SD.r_code = code
 			message_admins("[key_name_admin(usr)] has set the self-destruct code to \"[code]\".")
+			return TRUE
+		if ("show")
+			if(request.req_type != REQUEST_FAX)
+				to_chat(usr, "Request doesn't have a peper to read.", confidential = TRUE)
+				return TRUE
+			var/obj/item/paper/request_message = request.message
+			request_message.ui_interact(usr)
 			return TRUE
 
 /datum/request_manager/ui_data(mob/user)

@@ -67,7 +67,8 @@ export const RequestManager = (props, context) => {
                 </h2>
                 <div className="RequestManager__message">
                   <RequestType requestType={request.req_type} />
-                  {decodeHtmlEntities(request.message)}
+                  {request.req_type !== 'request_fax' &&
+                    decodeHtmlEntities(request.message)}
                 </div>
               </div>
               {request.owner !== null && <RequestControls request={request} />}
@@ -84,6 +85,7 @@ const displayTypeMap = {
   'request_centcom': 'CENTCOM',
   'request_syndicate': 'SYNDICATE',
   'request_nuke': 'NUKE CODE',
+  'request_fax': 'FAX',
 };
 
 const RequestType = (props) => {
@@ -116,6 +118,9 @@ const RequestControls = (props, context) => {
         <Button onClick={() => act('setcode', { id: request.id })}>
           SETCODE
         </Button>
+      )}
+      {request.req_type === 'request_fax' && (
+        <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
       )}
     </div>
   );
