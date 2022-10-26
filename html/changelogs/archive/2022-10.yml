@@ -922,3 +922,46 @@
       the AI inside during standard usage
   exymian:
   - bugfix: Fixed 2 unconnected pipes in Tramstation atmos
+2022-10-26:
+  GoblinBackwards:
+  - bugfix: Fixed getting stuck with blurry vision if your eyes were fixed while you
+      were ghosting
+  GoldenAlpharex:
+  - config: The Generate Job Configuration verb now works as expected when there's
+      at least one job in-game that doesn't exist in the new jobconfig.toml file already.
+  - bugfix: Any value that is set to 0 in jobconfig.toml will no longer default to
+      the codebase's default, and will actually be considered as 0.
+  Melbert:
+  - bugfix: Managing to physically move an atmos holofan will no longer make it's
+      old location permanently unable to have a firedoor close over it
+  - bugfix: Having the Nuke Disk teleport off your person gives you a chat message
+      warning, as was always intended
+  - bugfix: Having the Nuke Disk inside of your backpack when you enter somewhere
+      unreachable will have it teleport away, as was always intended
+  - bugfix: Having the Nuke Disk relocate from your person will no longer keep a ghost
+      image of the disk where it once was, a harrowing reminder of your failures
+  - refactor: Refactored "secluded locations" into a trait
+  Paxilmaniac:
+  - code_imp: The dmi that reagent holders take fill icons from is no longer hard
+      coded as reagentfillings.dmi, and can be changed using the fill_icon variable
+  Rhials:
+  - bugfix: The disease outbreak events will no longer attempt to fire if there are
+      no valid players to infect.
+  - balance: The disease outbreak events now take a fair bit longer to announce themselves
+      to the crew.
+  - balance: The 'classic' disease outbreak has an expanded roster of diseases to
+      be selected from.
+  - admin: Admins can now pick which classic disease they wish to loose upon the crew
+      (BE CAREFUL WITH THESE).
+  - code_imp: The disease outbreak event has been split into two different events
+      -- "Classic" and "Advanced". The code should be a bit easier to read as well.
+  SeigaSeiga:
+  - bugfix: Carrying a null rod no longer disables the ability to use the traitor
+      chef's meat hook
+  Thunder12345:
+  - rscadd: People wearing kitty ears can now have their tails pulled.
+  lizardqueenlexi:
+  - qol: Humans spawned from a ghost by an admin have their quirks assigned
+  timothymtorres:
+  - qol: Add AltClick to remove pAIs for tablets.  Added balloon alerts to tablets
+      for inserting/removing objects.

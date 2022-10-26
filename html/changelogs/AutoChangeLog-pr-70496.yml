@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Managing to physically move an atmos holofan will no longer make it's old location permanently unable to have a firedoor close over it"
-  - bugfix: "Having the Nuke Disk teleport off your person gives you a chat message warning, as was always intended"
-  - bugfix: "Having the Nuke Disk inside of your backpack when you enter somewhere unreachable will have it teleport away, as was always intended"
-  - bugfix: "Having the Nuke Disk relocate from your person will no longer keep a ghost image of the disk where it once was, a harrowing reminder of your failures"
-  - refactor: "Refactored \"secluded locations\" into a trait"

@@ -1,5 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - config: "The Generate Job Configuration verb now works as expected when there's at least one job in-game that doesn't exist in the new jobconfig.toml file already."
-  - bugfix: "Any value that is set to 0 in jobconfig.toml will no longer default to the codebase's default, and will actually be considered as 0."
