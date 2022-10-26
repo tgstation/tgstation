@@ -276,8 +276,8 @@ Key procs
 							/datum/language/slime = list(LANGUAGE_ATOM))
 
 /datum/language_holder/lightbringer
-	understood_languages = list(/datum/language/slime = list(LANGUAGE_ATOM),
-								/datum/language/common = list(LANGUAGE_ATOM))
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/slime = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
 
 /datum/language_holder/lizard
