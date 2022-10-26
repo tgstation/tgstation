@@ -853,7 +853,6 @@
 #include "code\datums\components\palette.dm"
 #include "code\datums\components\payment.dm"
 #include "code\datums\components\pellet_cloud.dm"
-#include "code\datums\components\pet_collar.dm"
 #include "code\datums\components\phylactery.dm"
 #include "code\datums\components\pricetag.dm"
 #include "code\datums\components\punchcooldown.dm"

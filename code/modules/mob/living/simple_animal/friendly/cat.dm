@@ -32,6 +32,7 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_icon_state = "cat"
+	has_collar_resting_icon_state = TRUE
 	can_be_held = TRUE
 	held_state = "cat2"
 	///only for attacking rats
@@ -47,7 +48,6 @@
 /mob/living/simple_animal/pet/cat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "purrs!")
-	GetComponent(/datum/component/pet_collar).has_resting_state = TRUE
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
