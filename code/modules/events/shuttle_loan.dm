@@ -15,7 +15,7 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 	///The types of loan offers that the crew can recieve.
-	var/list/shuttle_loan_offers= list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
+	var/list/shuttle_loan_offers = list(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
 	///The types of loan events already run (and to be excluded if the event triggers).
 	var/list/run_events = list()
 
