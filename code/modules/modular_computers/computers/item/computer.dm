@@ -14,6 +14,25 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
+	///The disk in this PDA. If set, this will be inserted on Initialize.
+	var/obj/item/computer_disk/inserted_disk
+
+	///The amount of storage space the computer starts with.
+	var/max_capacity = 128
+	///The amount of storage space we've got filled
+	var/used_capacity = 0
+	///List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+	var/list/datum/computer_file/stored_files = list()
+
+	///Non-static list of programs the computer should recieve on Initialize.
+	var/list/datum/computer_file/starting_programs = list()
+	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
+	var/static/list/datum/computer_file/default_programs = list(
+		/datum/computer_file/program/computerconfig,
+		/datum/computer_file/program/ntnetdownload,
+		/datum/computer_file/program/filemanager,
+	)
+
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = NONE
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
@@ -73,7 +92,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	///The program currently active on the tablet.
 	var/datum/computer_file/program/active_program
 	///Idle programs on background. They still receive process calls but can't be interacted with.
-	var/list/idle_threads
+	var/list/idle_threads = list()
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 2
 
@@ -105,32 +124,42 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		physical = src
 	set_light_color(comp_light_color)
 	set_light_range(comp_light_luminosity)
-	idle_threads = list()
 	if(looping_sound)
 		soundloop = new(src, enabled)
 	UpdateDisplay()
 	if(has_light)
 		add_item_action(/datum/action/item_action/toggle_computer_light)
+	if(inserted_disk)
+		inserted_disk = new inserted_disk(src)
 
 	update_appearance()
 	register_context()
 	init_network_id(NETWORK_TABLETS)
 	Add_Messenger()
+	install_default_programs()
+
+/obj/item/modular_computer/proc/install_default_programs()
+	SHOULD_CALL_PARENT(FALSE)
+	for(var/programs in default_programs + starting_programs)
+		var/datum/computer_file/program/program_type = new programs
+		store_file(program_type)
 
 /obj/item/modular_computer/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	wipe_program(forced = TRUE)
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
 		idle.kill_program(TRUE)
-	idle_threads?.Cut()
-	STOP_PROCESSING(SSobj, src)
 	for(var/port in all_components)
 		var/obj/item/computer_hardware/component = all_components[port]
 		qdel(component)
 	all_components?.Cut()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
+	QDEL_LIST(stored_files)
 	Remove_Messenger()
 
+	if(istype(inserted_disk))
+		QDEL_NULL(inserted_disk)
 	if(istype(inserted_pai))
 		QDEL_NULL(inserted_pai)
 
@@ -317,8 +346,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return FALSE
 	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
 	var/newemag = FALSE
-	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
-	for(var/datum/computer_file/program/app in drive.stored_files)
+	for(var/datum/computer_file/program/app in stored_files)
 		if(!istype(app))
 			continue
 		if(app.run_emag())
@@ -342,6 +370,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	if(long_ranged)
 		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
+	. += span_notice("It has [max_capacity] GQ of storage capacity.")
 
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
@@ -361,11 +390,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-	if(hdd)
-		for(var/datum/computer_file/app_examine as anything in hdd.stored_files)
-			if(app_examine.on_examine(src, user))
-				. += app_examine.on_examine(src, user)
+	. += "Storage capacity: [used_capacity]/[max_capacity]GQ"
+
+	for(var/datum/computer_file/app_examine as anything in stored_files)
+		if(app_examine.on_examine(src, user))
+			. += app_examine.on_examine(src, user)
 
 	if(Adjacent(user))
 		. += span_notice("Paper level: [stored_paper] / [max_paper].")
@@ -383,7 +412,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
 		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(all_components[MC_SDD])
+	if(inserted_disk)
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
 		. = CONTEXTUAL_SCREENTIP_SET
 
@@ -421,13 +450,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	. = ..()
 	if(.)
 		return
-
-	var/obj/item/computer_hardware/hard_drive/ssd = all_components[MC_SDD]
-	if(!ssd)
+	if(!inserted_disk)
 		return
-	if(uninstall_component(ssd, usr))
-		user.put_in_hands(ssd)
-		playsound(src, 'sound/machines/card_slide.ogg', 50)
+	user.put_in_hands(inserted_disk)
+	inserted_disk = null
+	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
@@ -654,7 +681,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	kill_program(forced = TRUE)
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(forced = TRUE)
-		idle_threads.Remove(P)
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
@@ -726,11 +752,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return
 
 	// Check if any Applications need it
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-	if(hdd)
-		for(var/datum/computer_file/item_holding_app as anything in hdd.stored_files)
-			if(item_holding_app.try_insert(attacking_item, user))
-				return
+	for(var/datum/computer_file/item_holding_app as anything in stored_files)
+		if(item_holding_app.try_insert(attacking_item, user))
+			return
 
 	if(istype(attacking_item, /obj/item/paper))
 		if(stored_paper >= max_paper)
@@ -765,6 +789,14 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		var/obj/item/computer_hardware/H = all_components[h]
 		if(H.try_insert(attacking_item, user))
 			return
+
+	// Insert a data disk
+	if(istype(attacking_item, /obj/item/computer_disk))
+		if(!user.transferItemToLoc(attacking_item, src))
+			return
+		inserted_disk = attacking_item
+		playsound(src, 'sound/machines/card_slide.ogg', 50)
+		return
 
 	// Insert new hardware
 	if(istype(attacking_item, /obj/item/computer_hardware))

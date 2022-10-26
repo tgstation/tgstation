@@ -1129,15 +1129,9 @@
 		"bat_normal",
 		"bat_super",
 		"cardslot",
-		"hdd_advanced",
-		"hdd_basic",
-		"hdd_cluster",
-		"hdd_super",
 		"portadrive_advanced",
 		"portadrive_basic",
 		"portadrive_super",
-		"ssd_micro",
-		"ssd_small",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)  //they are really shitty
 
