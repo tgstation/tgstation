@@ -1,17 +1,19 @@
 /*
 
-	A component designed to log and count who has suicided with the attached item.
-	It can either be attached to an item like usual, or will be added automatically with NONE when someone suicides.
-	If view_mode is HOLY, then only those spiritual enough are able to detect the ghosts' spirits.
-	If it's ALL, any old folk can come and examine for the suicide information.
-	Forensics scanners can always detect an item's suicide counts. (not implemented yet todo)
+	A component for counting up how many times an item has been suicided with.
+	The number can be retrieved from an on_die callback, examining (based on view_mode), or the forensics scanner.
+
 */
 
 /datum/component/suicide_count
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	/// who can view this (reference code/__DEFINES/suicide.dm)
 	var/view_mode
+	/// the last person to have suicided
 	var/last_person
+	/// how many people have suicided
 	var/count = 0
+	/// the callback called when the counter is updated, args are (count, last_person)
 	var/datum/callback/on_die
 
 /datum/component/suicide_count/Initialize(view_mode, datum/callback/on_die = null)
@@ -39,7 +41,8 @@
 
 	last_person = user.real_name
 	count++
-	on_die.Invoke(count, last_person)
+	if(on_die)
+		on_die.Invoke(count, last_person)
 
 /datum/component/suicide_count/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -52,7 +55,7 @@
 		return
 
 	if(last_person)
-		examine_list += span_notice(
+		examine_list += span_notice( \
 			is_holy \
 				? "You can sense a lost spirit, [last_person], who took their life with this." \
 				: "Looking at this somehow reminds you of [last_person]."
@@ -60,7 +63,7 @@
 
 	if(count)
 		var/wrong_guess = max(2, count + rand(-2, 2))
-		examine_list += span_notice(
+		examine_list += span_notice( \
 			is_holy \
 				? "You can sense a collective of [count] lost souls who met the same fate." \
 				: "This item reminds you of [wrong_guess] others, you'd guess."

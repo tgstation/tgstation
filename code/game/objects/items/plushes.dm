@@ -683,10 +683,10 @@
 		return
 
 	if(lives_taken < 3)
-		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
+		desc = "A plushie depicting an unsettling mothperson. After killing [lives_taken] [lives_taken == 1 ? "person" : "people"] it's not looking so huggable now..."
 		return
 
-	desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
+	desc = "A plushie depicting a creepy mothperson. It's killed [lives_taken] people! I don't think I want to hug it any more!"
 	divine = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 
