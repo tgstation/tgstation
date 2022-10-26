@@ -105,7 +105,9 @@
 
 /obj/item/clothing/head/helmet/toggleable
 	dog_fashion = null
+	///Message when the visor is toggled down.
 	var/toggle_message
+	///Alternative message when the visor is toggled up.
 	var/alt_toggle_message
 
 /obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
@@ -144,12 +146,6 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
-/obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
-	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
-		return FALSE
-	COOLDOWN_START(src, visor_toggle_cooldown, 2 SECONDS)
-	return TRUE
-
 /obj/item/clothing/head/helmet/toggleable/justice
 	name = "helmet of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
@@ -158,9 +154,16 @@
 	toggle_message = "You turn off the lights on"
 	alt_toggle_message = "You turn on the lights on"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
+	///Cooldown for toggling the visor.
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
+
+/obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
+	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
+		return FALSE
+	COOLDOWN_START(src, visor_toggle_cooldown, 2 SECONDS)
+	return TRUE
 
 /obj/item/clothing/head/helmet/toggleable/justice/Initialize(mapload)
 	. = ..()
