@@ -28,7 +28,7 @@
 	///Stores the amount of lost quality
 	var/quality_loss = 0
 	///Stores the recipe selected by the user in the GUI
-	var/datum/gas_recipe/selected_recipe = null
+	var/datum/gas_recipe/crystallizer/selected_recipe = null
 	///Stores the total amount of moles needed for the current recipe
 	var/total_recipe_moles = 0
 
@@ -188,6 +188,7 @@
 		if(check_temp_requirements())
 			heat_calculations()
 			progress_bar = min(progress_bar + (MIN_PROGRESS_AMOUNT * 5 / (round(log(10, total_recipe_moles * 0.1), 0.01))), 100)
+			selected_recipe.extra_effects(src, quality_loss)
 		else
 			quality_loss = min(quality_loss + 0.5, 100)
 			progress_bar = max(progress_bar - 1, 0)

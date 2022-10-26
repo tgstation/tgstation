@@ -447,7 +447,6 @@
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
 	aSignal = /obj/item/assembly/signaler/anomaly/bioscrambler
-	immortal = TRUE
 	/// Cooldown for every anomaly pulse
 	COOLDOWN_DECLARE(pulse_cooldown)
 	/// How many seconds between each anomaly pulses
@@ -463,8 +462,10 @@
 	var/static/list/l_legs
 	var/static/list/r_legs
 
-/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core, immortal_anomaly = TRUE)
 	. = ..()
+	if(immortal_anomaly)
+		immortal = TRUE
 	if(!chests)
 		chests = typesof(/obj/item/bodypart/chest)
 	if(!heads)
@@ -566,7 +567,6 @@
 	name = "dimensional anomaly"
 	icon_state = "dimensional"
 	aSignal = /obj/item/assembly/signaler/anomaly/dimensional
-	immortal = TRUE
 	immobile = TRUE
 	/// Range of effect, if left alone anomaly will convert a 2(range)+1 squared area.
 	var/range = 3
@@ -577,9 +577,10 @@
 	/// Effect displaying on the anomaly to represent the theme.
 	var/mutable_appearance/theme_icon
 
-/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core, relocates = TRUE)
 	. = ..()
 	overlays += mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay")
+	immortal = relocates
 
 	animate(src, transform = matrix()*0.85, time = 3, loop = -1)
 	animate(transform = matrix(), time = 3, loop = -1)
@@ -630,6 +631,8 @@
  * Moves the anomaly somewhere else and announces it.
  */
 /obj/effect/anomaly/dimensional/proc/relocate()
+	if(!immortal)
+		return
 	var/datum/anomaly_placer/placer = new()
 	var/area/new_area = placer.findValidArea()
 	var/turf/new_turf = placer.findValidTurf(new_area)

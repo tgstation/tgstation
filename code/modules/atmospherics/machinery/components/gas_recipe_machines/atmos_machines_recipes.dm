@@ -36,6 +36,9 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/crystallizer
 	machine_type = "Crystallizer"
 
+/datum/gas_recipe/crystallizer/proc/extra_effects(turf/location, quality_loss)
+	return
+
 /datum/gas_recipe/crystallizer/hypern_crystalium
 	id = "hyper_crystalium"
 	name = "Hypernoblium Crystal"
@@ -93,12 +96,29 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/crystallizer/shard
 	id = "crystal_shard"
 	name = "Supermatter crystal shard"
-	min_temp = TCMB
-	max_temp = 5
-	energy_release = 150000000
+	min_temp = 0.8 * FUSION_MAXIMUM_TEMPERATURE
+	max_temp = 1.4 * FUSION_MAXIMUM_TEMPERATURE
+	energy_release = -3e11
 	dangerous = TRUE
 	requirements = list(/datum/gas/hypernoblium = 250, /datum/gas/antinoblium = 250, /datum/gas/bz = 200, /datum/gas/plasma = 5000, /datum/gas/oxygen = 4500)
 	products = list(/obj/machinery/power/supermatter_crystal/shard = 1)
+
+///Generates anomalies around the location based on the quality_loss.
+/datum/gas_recipe/crystallizer/shard/extra_effects(turf/location, quality_loss)
+	if(prob(quality_loss / 10))
+		supermatter_anomaly_gen(location, HALLUCINATION_ANOMALY, rand(5, 10))
+	if(prob(max((10 / 9) * (quality_loss - 10), 0) / 10))
+		supermatter_anomaly_gen(location, FLUX_ANOMALY, rand(5, 10))
+	if(prob(max((10 / 9) * (quality_loss - 10), 0) / 10))
+		supermatter_anomaly_gen(location, BIOSCRAMBLER_ANOMALY, rand(5, 10))
+	if(prob(max(1.25 * (quality_loss - 20), 0) / 10))
+		supermatter_anomaly_gen(location, GRAVITATIONAL_ANOMALY, rand(5, 10))
+	if(prob(max((10 / 7) * (quality_loss - 30), 0) / 10))
+		supermatter_anomaly_gen(location, PYRO_ANOMALY, rand(5, 10))
+	if(prob(max((10 / 7) * (quality_loss - 30), 0) / 10))
+		supermatter_anomaly_gen(location, DIMENSIONAL_ANOMALY, rand(5, 10))
+	if(prob(max(2 * (quality_loss - 50), 0) / 10))
+		supermatter_anomaly_gen(location, VORTEX_ANOMALY, rand(5, 10))
 
 /datum/gas_recipe/crystallizer/n2o_crystal
 	id = "n2o_crystal"
