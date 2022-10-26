@@ -109,6 +109,11 @@
 /code/modules/forensics/ @SuperNovaa41
 /code/datums/mood.dm @SuperNovaa41
 
+# tralezab
+/code/__DEFINES/basic_mobs.dm @tralezab
+/code/datums/ai @tralezab
+/code/modules/mob/living/basic/ @tralezab
+
 # Watermelon914
 
 /code/modules/wiremod/ @Watermelon914

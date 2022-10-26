@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - qol: "Add AltClick to remove pAIs for tablets.  Added balloon alerts to tablets for inserting/removing objects."
