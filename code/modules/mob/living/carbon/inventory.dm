@@ -178,19 +178,16 @@
 /mob/living/carbon/proc/can_breathe_helmet()
 	if (isclothing(head) && (head.clothing_flags & HEADINTERNALS))
 		return TRUE
-	return FALSE
 
 /// Returns TRUE if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
 	if (isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
 		return TRUE
-	return FALSE
 
 /// Returns TRUE if a breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_tube()
 	if (getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		return TRUE
-	return FALSE
 
 /// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_internals()
