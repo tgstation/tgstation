@@ -124,14 +124,18 @@
 	else if(reagents.total_volume > 0) //take whatever
 		return TRUE
 
+///returns TRUE if the source's reagents has only one entry
+/datum/component/plumbing/proc/is_pure_source()
+	return reagents.reagent_list.len == 1
+
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
-/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net)
+/datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, disable_round_robin = FALSE)
 	if(!reagents || !target || !target.reagents)
 		return FALSE
 	if(reagent)
 		reagents.trans_id_to(target.recipient_reagents_holder, reagent, amount)
 	else
-		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = TRUE, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
+		reagents.trans_to(target.recipient_reagents_holder, amount, round_robin = !disable_round_robin, methods = methods)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
 /datum/component/plumbing/proc/create_overlays(atom/movable/parent_movable, list/overlays)
