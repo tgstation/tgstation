@@ -262,9 +262,9 @@ Key procs
 							/datum/language/narsie = list(LANGUAGE_ATOM))
 
 /datum/language_holder/drone
-	understood_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/drone = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/drone = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/drone/syndicate
 	blocked_languages = list()
@@ -276,9 +276,9 @@ Key procs
 							/datum/language/slime = list(LANGUAGE_ATOM))
 
 /datum/language_holder/lightbringer
-	understood_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
+	understood_languages = list(/datum/language/slime = list(LANGUAGE_ATOM),
+								/datum/language/common = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/lizard
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
