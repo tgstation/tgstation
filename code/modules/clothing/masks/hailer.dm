@@ -2,8 +2,8 @@
 // **** Security gas mask ****
 
 // Cooldown times
-#define PHRASE_COOLDOWN 3 SECONDS
-#define OVERUSE_COOLDOWN 18 SECONDS
+#define PHRASE_COOLDOWN (3 SECONDS)
+#define OVERUSE_COOLDOWN (18 SECONDS)
 
 // Aggression levels
 #define AGGR_GOOD_COP 1
