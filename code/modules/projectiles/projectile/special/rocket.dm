@@ -79,7 +79,7 @@
 /// PEP-6 Missile - Used by the PEP-6 Exosuit missile rack.
 // Employed by Roboticists out of spite to put down enemy hereteks, mechanized nuclear operatives, the janitor's hot rod, the clown's 'taxi service', uppity borgs, vengeful ais, doors they don't like, the escape shuttle's hull, and more!
 /obj/projectile/bullet/a84mm/pep
-	name ="\improper precise explosive missile"
+	name = "\improper precise explosive missile"
 	desc = "Human friendly, metal unfriendly."
 	damage = 30
 	anti_armour_damage = 80 //Doesn't (probably) kill borgs in one shot, but it will hurt
