@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - qol: "Nanotrasen realized they forget to implement the date function into the new NTos tablets, so they doubled back and added those next to the time."
