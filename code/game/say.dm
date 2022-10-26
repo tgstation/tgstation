@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
 	else
-		messagepart = src.say_quote(raw_message, spans, message_mods)
+		messagepart = speaker.say_quote(raw_message, spans, message_mods)
 
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
 		if(istype(dialect) && dialect.display_icon(src))
