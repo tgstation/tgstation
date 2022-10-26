@@ -81,6 +81,22 @@ LINEN BINS
 	balloon_alert(sleeper, "covered")
 	var/angle = sleeper.lying_prev
 	dir = angle == 90 ? WEST : EAST
+	RegisterSignal(sleeper, COMSIG_MOVABLE_MOVED, .proc/smooth_sheets)
+	RegisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION, .proc/smooth_sheets)
+	RegisterSignal(sleeper, COMSIG_PARENT_QDELETING, .proc/smooth_sheets)
+	
+/obj/item/bedsheet/proc/smooth_sheets(mob/living/sleeper)
+	SIGNAL_HANDLER
+
+	if(!QDELETED(user) && isliving(sleeper) && (living_user.body_position == STANDING_UP))
+		return
+	being_held_open = FALSE
+	correct_state()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+	if(user)
+		user.balloon_alert_to_viewers("released [src]", "released [src]")
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
