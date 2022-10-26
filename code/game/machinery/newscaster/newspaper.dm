@@ -3,6 +3,7 @@
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
+	inhand_icon_state = "newspaper"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -166,7 +167,7 @@
 			var/s = tgui_input_text(user, "Write something", "Newspaper")
 			if (!s)
 				return
-			if(!user.canUseTopic(src, BE_CLOSE))
+			if(!user.canUseTopic(src, be_close = TRUE))
 				return
 			scribble_page = curr_page
 			scribble = s

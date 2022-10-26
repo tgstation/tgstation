@@ -1,0 +1,4 @@
+author: "Vladoricious"
+delete-after: True
+changes: 
+  - bugfix: "Airlock and decal painters no longer mysteriously float around you."

@@ -152,7 +152,7 @@
 	toggle_igniter(user)
 
 /obj/item/flamethrower/AltClick(mob/user)
-	if(ptank && isliving(user) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(ptank && isliving(user) && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		user.put_in_hands(ptank)
 		ptank = null
 		to_chat(user, span_notice("You remove the plasma tank from [src]!"))
@@ -209,7 +209,7 @@
 			igniter.ignite_turf(src,T)
 		else
 			default_ignite(T)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		previousturf = T
 	operating = FALSE
 	for(var/mob/M in viewers(1, loc))

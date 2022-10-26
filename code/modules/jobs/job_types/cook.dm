@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "COOK"
 	var/cooks = 0 //Counts cooks amount
 
 	outfit = /datum/outfit/job/cook
@@ -27,7 +28,7 @@
 	family_heirlooms = list(
 		/obj/item/reagent_containers/condiment/saltshaker,
 		/obj/item/kitchen/rollingpin,
-		/obj/item/clothing/head/chefhat,
+		/obj/item/clothing/head/utility/chefhat,
 	)
 
 	mail_goodies = list(
@@ -68,7 +69,7 @@
 	)
 	belt = /obj/item/modular_computer/tablet/pda/cook
 	ears = /obj/item/radio/headset/headset_srv
-	head = /obj/item/clothing/head/chefhat
+	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 	skillchips = list(/obj/item/skillchip/job/chef)

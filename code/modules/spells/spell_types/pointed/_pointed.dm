@@ -160,6 +160,7 @@
 	for(var/i in 1 to projectiles_per_fire)
 		var/obj/projectile/to_fire = new projectile_type()
 		ready_projectile(to_fire, target, owner, i)
+		SEND_SIGNAL(owner, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
 		to_fire.fire()
 	return TRUE
 

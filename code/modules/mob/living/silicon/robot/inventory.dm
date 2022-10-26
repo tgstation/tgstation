@@ -265,11 +265,9 @@
 	if(module_active)
 		unequip_module_from_slot(module_active, get_selected_module())
 
-/**
- * Unequips all held items.
- */
-/mob/living/silicon/robot/proc/uneq_all()
-	for(var/cyborg_slot in 1 to 3)
+// Technically none of the items are dropped, only unequipped
+/mob/living/silicon/robot/drop_all_held_items()
+	for(var/cyborg_slot in 1 to length(held_items))
 		if(!held_items[cyborg_slot])
 			continue
 		unequip_module_from_slot(held_items[cyborg_slot], cyborg_slot)

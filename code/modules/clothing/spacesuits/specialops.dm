@@ -4,6 +4,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	icon_state = "beret_badge"
+	inhand_icon_state = null
 	greyscale_colors = "#397F3F#FFCE5B"
 
 	flags_inv = 0

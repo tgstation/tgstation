@@ -41,6 +41,11 @@
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
 #define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
 
+/// Logs a noticable message on GitHub, but will not mark as an error.
+/// Use this when something shouldn't happen and is of note, but shouldn't block CI.
+/// Does not mark the test as failed.
+#define TEST_NOTICE(source, message) source.log_for_test((##message), "notice", __FILE__, __LINE__)
+
 /// Constants indicating unit test completion status
 #define UNIT_TEST_PASSED 0
 #define UNIT_TEST_FAILED 1
@@ -48,7 +53,10 @@
 
 #define TEST_PRE 0
 #define TEST_DEFAULT 1
-#define TEST_DEL_WORLD INFINITY
+/// This should be one of the last tests to run, because we run it for a little bit over 30 seconds by design and we want to run all of the tests that take a trivial amount of time to complete beforehand.
+#define TEST_MONKEY_BUSINESS 10
+/// This must be the last test to run due to the inherent nature of the test iterating every single tangible atom in the game and qdeleting all of them (while taking long sleeps to make sure the garbage collector fires properly) taking a large amount of time.
+#define TEST_CREATE_AND_DESTROY INFINITY
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
@@ -66,6 +74,7 @@
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
+#include "ablative_hud.dm"
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
@@ -101,10 +110,12 @@
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
 #include "holidays.dm"
+#include "human_through_recycler.dm"
 #include "hydroponics_extractor_storage.dm"
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
+#include "inhands.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
 #include "limbsanity.dm"
@@ -120,6 +131,8 @@
 #include "mob_spawn.dm"
 #include "modsuit.dm"
 #include "modular_map_loader.dm"
+#include "monkey_business.dm"
+#include "mouse_bite_cable.dm"
 #include "novaflower_burn.dm"
 #include "ntnetwork_tests.dm"
 #include "nuke_cinematic.dm"
@@ -128,6 +141,7 @@
 #include "outfit_sanity.dm"
 #include "paintings.dm"
 #include "pills.dm"
+#include "plane_double_transform.dm"
 #include "plane_dupe_detector.dm"
 #include "plantgrowth_tests.dm"
 #include "preference_species.dm"
@@ -151,11 +165,13 @@
 #include "security_officer_distribution.dm"
 #include "security_levels.dm"
 #include "serving_tray.dm"
+#include "simple_animal_freeze.dm"
 #include "siunit.dm"
 #include "slips.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_change_clothing.dm"
+#include "species_change_organs.dm"
 #include "species_config_sanity.dm"
 #include "species_unique_id.dm"
 #include "species_whitelists.dm"
@@ -163,6 +179,7 @@
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"
+#include "spritesheets.dm"
 #include "stack_singular_name.dm"
 #include "stomach.dm"
 #include "strippable.dm"
@@ -173,6 +190,7 @@
 #include "timer_sanity.dm"
 #include "traitor.dm"
 #include "unit_test.dm"
+#include "verify_config_tags.dm"
 #include "wizard_loadout.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

@@ -561,7 +561,7 @@
 			L.dropItemToGround(I, TRUE)
 
 		L.Unconscious(100)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdome1))
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Team 1)")
@@ -587,7 +587,7 @@
 			L.dropItemToGround(I, TRUE)
 
 		L.Unconscious(100)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdome2))
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Team 2)")
@@ -610,7 +610,7 @@
 		var/mob/living/L = M
 
 		L.Unconscious(100)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdomeadmin))
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Admin.)")
@@ -641,7 +641,7 @@
 			observer.equip_to_slot_or_del(new /obj/item/clothing/neck/tie/black/tied(observer), ITEM_SLOT_NECK)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdomeobserve))
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Observer.)")
@@ -673,7 +673,7 @@
 
 		var/move = TRUE
 		switch(tgui_alert(usr,"Move new AI to AI spawn location?","Move AI?", list("Yes", "No","Cancel")))
-			if("Cancel")
+			if("Cancel", null)
 				return
 			if("No")
 				move = FALSE
@@ -743,7 +743,7 @@
 		var/client/C = usr.client
 		if(!isobserver(usr))
 			C.admin_ghost()
-		sleep(2)
+		sleep(0.2 SECONDS)
 		C.jumptocoord(x,y,z)
 
 	else if(href_list["adminchecklaws"])
@@ -1145,12 +1145,13 @@
 		if(!paths)
 			tgui_alert(usr,"The path list you sent is empty.")
 			return
-		if(length(paths) > 5)
-			tgui_alert(usr,"Select fewer object types, (max 5).")
+
+		var/number = clamp(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
+		if(length(paths) * number > ADMIN_SPAWN_CAP)
+			tgui_alert(usr,"Select fewer object types!")
 			return
 
 		var/list/offset = splittext(href_list["offset"],",")
-		var/number = clamp(text2num(href_list["object_count"]), 1, ADMIN_SPAWN_CAP)
 		var/X = offset.len > 0 ? text2num(offset[1]) : 0
 		var/Y = offset.len > 1 ? text2num(offset[2]) : 0
 		var/Z = offset.len > 2 ? text2num(offset[3]) : 0

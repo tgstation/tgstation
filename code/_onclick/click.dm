@@ -388,7 +388,7 @@
 			human_user.changeNext_move(CLICK_CD_MELEE)
 			return TRUE
 	else if(isalien(user))
-		var/mob/living/carbon/alien/humanoid/alien_boy = user
+		var/mob/living/carbon/alien/adult/alien_boy = user
 		if(alien_boy.grab(src))
 			alien_boy.changeNext_move(CLICK_CD_MELEE)
 			return TRUE

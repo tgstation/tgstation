@@ -4,7 +4,9 @@
 	icon = 'icons/obj/radio.dmi'
 	name = "station bounced radio"
 	icon_state = "walkietalkie"
-	inhand_icon_state = "walkietalkie"
+	inhand_icon_state = "radio"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	worn_icon_state = "radio"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
@@ -41,8 +43,6 @@
 	/// Tracks the number of EMPs currently stacked.
 	var/emped = 0
 
-	/// If true, the transmit wire starts cut.
-	var/prison_radio = FALSE
 	/// Whether wires are accessible. Toggleable by screwdrivering.
 	var/unscrewed = FALSE
 	/// If true, the radio has access to the full spectrum.
@@ -52,7 +52,7 @@
 	/// If true, subspace_transmission can be toggled at will.
 	var/subspace_switchable = FALSE
 	/// Frequency lock to stop the user from untuning specialist radios.
-	var/freqlock = FALSE
+	var/freqlock = RADIO_FREQENCY_UNLOCKED
 	/// If true, broadcasts will be large and BOLD.
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
@@ -76,17 +76,17 @@
 
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = list()
 	. = ..()
 
+	if(ispath(keyslot))
+		keyslot = new keyslot()
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange))
+	set_frequency(sanitize_frequency(frequency, freerange, syndie))
 	set_on(on)
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
@@ -94,7 +94,8 @@
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure
 	QDEL_NULL(wires)
-	QDEL_NULL(keyslot)
+	if(istype(keyslot))
+		QDEL_NULL(keyslot)
 	return ..()
 
 /obj/item/radio/proc/set_frequency(new_frequency)
@@ -141,7 +142,7 @@
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
-	keyslot = new /obj/item/encryptionkey/syndicate
+	keyslot = new /obj/item/encryptionkey/syndicate()
 	syndie = TRUE
 	recalculateChannels()
 
@@ -221,16 +222,9 @@
 		set_listening(FALSE, actual_setting = FALSE)
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
-	if(HAS_TRAIT(talking_movable, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
-		var/mob/living/carbon/mute = talking_movable
-		if(istype(mute))
-			if(!HAS_TRAIT(talking_movable, TRAIT_CAN_SIGN_ON_COMMS))
-				return FALSE
-			switch(mute.check_signables_state())
-				if(SIGN_ONE_HAND) // One hand full
-					message = stars(message)
-				if(SIGN_HANDS_FULL to SIGN_CUFFED)
-					return FALSE
+	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
+		return
+
 	if(!spans)
 		spans = list(talking_movable.speech_span)
 	if(!language)
@@ -245,7 +239,7 @@
 		return
 	if(wires.is_cut(WIRE_TX))  // Permacell and otherwise tampered-with radios
 		return
-	if(!talking_movable.IsVocal())
+	if(!talking_movable.try_speak(message))
 		return
 
 	if(use_command)
@@ -374,7 +368,7 @@
 	data["frequency"] = frequency
 	data["minFrequency"] = freerange ? MIN_FREE_FREQ : MIN_FREQ
 	data["maxFrequency"] = freerange ? MAX_FREE_FREQ : MAX_FREQ
-	data["freqlock"] = freqlock
+	data["freqlock"] = freqlock != RADIO_FREQENCY_UNLOCKED
 	data["channels"] = list()
 	for(var/channel in channels)
 		data["channels"][channel] = channels[channel] & FREQ_LISTENING
@@ -392,7 +386,7 @@
 		return
 	switch(action)
 		if("frequency")
-			if(freqlock)
+			if(freqlock != RADIO_FREQENCY_UNLOCKED)
 				return
 			var/tune = params["tune"]
 			var/adjust = text2num(params["adjust"])
@@ -403,7 +397,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange))
+				set_frequency(sanitize_frequency(tune, freerange, syndie))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE
@@ -469,12 +463,6 @@
 	user.visible_message(span_suicide("[user] starts bouncing [src] off [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/radio/Destroy()
-	remove_radio_all(src) //Just to be sure
-	QDEL_NULL(wires)
-	QDEL_NULL(keyslot)
-	return ..()
-
 /obj/item/radio/proc/end_emp_effect(curremp)
 	if(emped != curremp) //Don't fix it if it's been EMP'd again
 		return FALSE
@@ -503,7 +491,7 @@
 
 /obj/item/radio/borg/syndicate
 	syndie = TRUE
-	keyslot = new /obj/item/encryptionkey/syndicate
+	keyslot = /obj/item/encryptionkey/syndicate
 
 /obj/item/radio/borg/syndicate/Initialize(mapload)
 	. = ..()

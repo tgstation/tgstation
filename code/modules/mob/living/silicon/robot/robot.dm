@@ -368,7 +368,7 @@
 		else
 			add_overlay("ov-opencover -c")
 	if(hat)
-		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head.dmi')
+		var/mutable_appearance/head_overlay = hat.build_worn_icon(default_layer = 20, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
@@ -708,7 +708,7 @@
 
 /mob/living/silicon/robot/proc/ResetModel()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
-	uneq_all()
+	drop_all_held_items()
 	shown_robot_modules = FALSE
 
 	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg

@@ -45,7 +45,7 @@
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
-	offset_change(hud.current_plane_offset)
+	offset_change(hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
 	. = ..()
@@ -138,7 +138,7 @@
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
-	offset_change(hud.current_plane_offset)
+	offset_change(hud?.current_plane_offset || 0)
 	set_alpha(mymob.lighting_alpha)
 
 
@@ -277,10 +277,3 @@
 			return relay
 
 	return null
-
-/// Basically, trigger a full hud rebuild so our relays will be added to the screen
-/// I hate hud code
-/atom/movable/screen/plane_master/proc/rebuild_relays()
-	relays = list()
-	var/datum/hud/hud = home.our_hud
-	hud.show_hud(hud.hud_version)

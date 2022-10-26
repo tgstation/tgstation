@@ -89,9 +89,9 @@
 /mob/living/carbon/proc/refresh_loop(iter_cnt, rebuild = FALSE)
 	for(var/i in 1 to iter_cnt)
 		update_z_overlays(1, rebuild)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		update_z_overlays(0, rebuild)
-		sleep(3)
+		sleep(0.3 SECONDS)
 
 #define NEXT_PARENT_COMMAND "next_parent"
 /// Takes a list of mutable appearances
@@ -402,7 +402,7 @@
 		inv.update_appearance()
 
 	if(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
+		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi')
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)

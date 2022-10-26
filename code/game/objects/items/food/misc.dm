@@ -64,6 +64,23 @@
 	eatverbs = list("bite", "nibble", "gnaw", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/popcorn/salty
+	name = "salty popcorn"
+	icon_state = "salty_popcorn"
+	desc = "Salty popcorn, a classic for all time."
+	trash_type = /obj/item/trash/popcorn/salty
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 2)
+	tastes = list("salt" = 2, "popcorn" = 1)
+
+/obj/item/food/popcorn/caramel
+	name = "caramel popcorn"
+	icon_state = "сaramel_popcorn"
+	desc = "Caramel-covered popcorn. Sweet!"
+	trash_type = /obj/item/trash/popcorn/caramel
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/caramel = 4)
+	tastes = list("caramel" = 2, "popcorn" = 1)
+	foodtypes = JUNKFOOD | SUGAR
+
 /obj/item/food/loadedbakedpotato
 	name = "loaded baked potato"
 	desc = "Totally baked."
@@ -350,6 +367,7 @@
 	name = "Powercrepe"
 	desc = "With great power, comes great crepes.  It looks like a pancake filled with jelly but packs quite a punch."
 	icon_state = "powercrepe"
+	inhand_icon_state = "powercrepe"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/cherryjelly = 5)
 	force = 30
 	throwforce = 15
@@ -367,7 +385,7 @@
 	desc = "A delicious lollipop. Makes for a great Valentine's present."
 	icon = 'icons/obj/food/lollipop.dmi'
 	icon_state = "lollipop_stick"
-	inhand_icon_state = "lollipop_stick"
+	inhand_icon_state = null
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2) //Honk
 	tastes = list("candy" = 1)
 	foodtypes = JUNKFOOD | SUGAR
@@ -402,7 +420,7 @@
 	name = "bubblegum"
 	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
 	icon_state = "bubblegum"
-	inhand_icon_state = "bubblegum"
+	inhand_icon_state = null
 	color = "#E48AB5" // craftable custom gums someday?
 	food_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
@@ -938,3 +956,6 @@
 	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+
+

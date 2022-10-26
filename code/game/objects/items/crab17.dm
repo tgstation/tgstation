@@ -113,17 +113,17 @@
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
 	start_dumping() //The machine doesnt move during this time, giving people close by a small window to grab their funds before it starts running around
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	cut_overlay("flaps")
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	playsound(src, 'sound/machines/click.ogg', 15, TRUE, -3)
 	cut_overlay("hatch")
-	sleep(30)
+	sleep(3 SECONDS)
 	if(QDELETED(src))
 		return
 	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
@@ -136,31 +136,31 @@
 	add_overlay("legs_extending")
 	cut_overlay("legs_retracted")
 	pixel_z += 4
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	add_overlay("legs_extended")
 	cut_overlay("legs_extending")
 	pixel_z += 4
-	sleep(20)
+	sleep(2 SECONDS)
 	if(QDELETED(src))
 		return
 	add_overlay("screen_lines")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	cut_overlay("screen_lines")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	add_overlay("screen_lines")
 	add_overlay("screen")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
 	add_overlay("text")
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	add_overlay("legs")
@@ -200,7 +200,7 @@
 		var/amount = B.account_balance * percentage_lost
 		var/datum/bank_account/account = bogdanoff?.get_bank_account()
 		if (account) // get_bank_account() may return FALSE
-			account.transfer_money(B, amount)
+			account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
 			B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
 	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
 

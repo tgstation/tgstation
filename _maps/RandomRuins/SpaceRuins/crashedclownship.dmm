@@ -52,7 +52,7 @@
 /turf/open/floor/mineral/bananium/airless,
 /area/ruin/unpowered)
 "l" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	color = "#FFFF00";
 	dir = 4
 	},
@@ -65,7 +65,7 @@
 	},
 /area/ruin/unpowered)
 "m" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	color = "#FFFF00";
 	dir = 4
 	},

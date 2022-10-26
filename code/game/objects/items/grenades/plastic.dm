@@ -77,7 +77,7 @@
 
 /obj/item/grenade/c4/attack_self(mob/user)
 	var/newtime = tgui_input_number(user, "Please set the timer", "C4 Timer", minimum_timer, maximum_timer, minimum_timer)
-	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	det_time = newtime
 	to_chat(user, "Timer set for [det_time] seconds.")
@@ -85,6 +85,8 @@
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
 	aim_dir = get_dir(user, bomb_target)
+	if(isdead(bomb_target))
+		return
 	if(!flag)
 		return
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))

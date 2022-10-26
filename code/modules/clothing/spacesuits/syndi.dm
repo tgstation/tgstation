@@ -2,7 +2,7 @@
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
 	icon_state = "syndicate"
-	inhand_icon_state = "syndicate"
+	inhand_icon_state = "space_syndicate"
 	desc = "Has a tag on it: Totally not property of an enemy corporation, honest!"
 	armor = list(MELEE = 40, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 80, ACID = 85)
 
@@ -20,7 +20,7 @@
 /obj/item/clothing/head/helmet/space/syndicate/green
 	name = "green space helmet"
 	icon_state = "syndicate-helm-green"
-	inhand_icon_state = "syndicate-helm-green"
+	inhand_icon_state = "space_helmet_syndicate"
 
 /obj/item/clothing/suit/space/syndicate/green
 	name = "green space suit"
@@ -140,7 +140,7 @@
 	desc = "A specialised black and gold helmet that's more compact than its standard Syndicate counterpart. Can be ultra-compressed into even the tightest of spaces."
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract-helm"
-	inhand_icon_state = "syndicate-contract-helm"
+	inhand_icon_state = "contractor_helmet"
 
 /obj/item/clothing/suit/space/syndicate/contract
 	name = "contractor space suit"
@@ -148,7 +148,7 @@
 	slowdown = 1
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract"
-	inhand_icon_state = "syndicate-contract"
+	inhand_icon_state = null
 
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
