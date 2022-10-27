@@ -306,12 +306,13 @@
 		return toggle_open_internals(tank, is_external)
 	// Invalid helmet and missing mask.
 	// Don't show the "isn't sealed" message for non-helmet headgear, such as hats.
-	if (head && (istype(head, /obj/item/clothing/head/mod) || istype(head, /obj/item/clothing/head/helmet)))
-		to_chat(src, span_warning("[head] isn't sealed, you need a mask!"))
 	// Invalid or missing mask, missing any other apparatus.
-	else if (wear_mask)
+	if (wear_mask)
 		// Invalid mask
 		to_chat(src, span_warning("[wear_mask] can't use [tank]!"))
+	else if (head)
+		// Invalid headgear
+		to_chat(src, span_warning("[head] isn't airtight! You need a mask!"))
 	else
 		// Not wearing any breathing apparatus.
 		to_chat(src, span_warning("You need a mask!"))
