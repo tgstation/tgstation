@@ -35,7 +35,7 @@
 		balloon_alert(user, "no logs!")
 		return
 	if(scanning)
-		balloon_alert(user, "scanner is busy!")
+		balloon_alert(user, "scanner busy!")
 		return
 	scanning = TRUE
 	balloon_alert(user, "printing report...")
@@ -201,7 +201,7 @@
 		balloon_alert(user, "no logs!")
 		return
 	if(scanning)
-		balloon_alert(user, "scanner is busy!")
+		balloon_alert(user, "scanner busy!")
 		return
 	balloon_alert(user, "deleting logs...")
 	if(do_after(user, 3 SECONDS, target = src))
@@ -219,7 +219,7 @@
 		balloon_alert(user, "no logs!")
 		return
 	if(scanning)
-		balloon_alert(user, "scanner is busy!")
+		balloon_alert(user, "scanner busy!")
 		return
 	to_chat(user, span_notice("<B>Scanner Report</B>"))
 	for(var/iterLog in log)
