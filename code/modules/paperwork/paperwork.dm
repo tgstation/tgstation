@@ -228,9 +228,7 @@
 
 	detailed_desc += span_notice("As you search through the dusty mess of papers, you can't recognize a single name, date, or topic mentioned within these papers. How old are these?")
 
-	var/list/paperwork_list = subtypesof(/obj/item/paperwork)
+	var/list/paperwork_list = subtypesof(/obj/item/paperwork) //Transform the ancient paperwork into a functional copy of normal paperwork
 	paperwork_list.Remove(list(/obj/item/paperwork/ancient, /obj/item/paperwork/photocopy)) //Get rid of the uncopiable paperwork pieces
-
 	var/obj/item/paperwork/paperwork_type = pick(paperwork_list)
-
 	copy_stamp_info(paperwork_type)
