@@ -444,18 +444,9 @@
 	icon_state = "[skin]-control[active ? "-sealed" : ""]"
 	return ..()
 
-/// Called when an equipped MOD suit toggles activation.
-/obj/item/mod/control/proc/mod_suit_toggled(datum/source, mob/user)
-	SIGNAL_HANDLER
-	// The MOD helmet becomes unsealed if it's deactivated.
-	// Close internal air tank if MOD helmet was the only breathing apparatus.
-	if (wearer?.invalid_internals())
-		wearer.cutoff_internals()
-
 /obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
 	wearer = user
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
-	RegisterSignal(src, COMSIG_MOD_TOGGLED, .proc/mod_suit_toggled)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 	RegisterSignal(wearer, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 	update_charge_alert()
@@ -466,7 +457,6 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_SPECIES_GAIN))
-	UnregisterSignal(src, COMSIG_MOD_TOGGLED)
 	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
