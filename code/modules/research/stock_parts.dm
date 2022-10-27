@@ -31,7 +31,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		if(!attacked_machinery.component_parts)
 			return ..()
 
-		if(works_from_distance)
+		if(check_range(attacked_machinery, user))
 			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
 		attacked_machinery.exchange_parts(user, src)
 		return TRUE
@@ -41,7 +41,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(!attacked_frame.components)
 		return ..()
 
-	if(works_from_distance)
+	if(check_range(attacked_frame, user))
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
 	attacked_frame.attackby(src, user)
 	return TRUE
@@ -59,7 +59,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		if(!attacked_machinery.component_parts)
 			return ..()
 
-		if(works_from_distance)
+		if(check_range(attacked_machinery, user))
 			user.Beam(attacked_machinery, icon_state = "rped_upgrade", time = 5)
 			attacked_machinery.exchange_parts(user, src)
 		return
@@ -69,9 +69,17 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	if(!attacked_frame.components)
 		return ..()
 
-	if(works_from_distance)
+	if(check_range(attacked_frame, user))
 		user.Beam(attacked_frame, icon_state = "rped_upgrade", time = 5)
 	attacked_frame.attackby(src, user)
+
+/obj/item/storage/part_replacer/proc/check_range(obj/attacked_object, mob/living/user)
+	if(!works_from_distance)
+		return FALSE
+
+	var/list/view_range = getviewsize(user.client.view)
+	if(IN_GIVEN_RANGE(user, attacked_object, view_range[2]))
+		return TRUE
 
 /obj/item/storage/part_replacer/proc/play_rped_sound()
 	//Plays the sound for RPED exhanging or installing parts.
