@@ -153,7 +153,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /// This allows us to mirror any hidden sets from before we were created, no matter how low that chance is
 /atom/movable/screen/plane_master/proc/mirror_parent_hidden()
 	var/mob/our_mob = home?.our_hud?.mymob
-	var/atom/movable/screen/plane_master/true_plane = our_mob?.hud_used.get_plane_master(plane)
+	var/atom/movable/screen/plane_master/true_plane = our_mob?.hud_used?.get_plane_master(plane)
 	if(true_plane == src || !true_plane)
 		return
 
@@ -301,7 +301,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mouse transparent, so you can click through them."
 	plane = SEETHROUGH_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list(GAME_PLANE)
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/game_world_above
@@ -347,7 +347,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	var/datum/hud/hud = home.our_hud
 	if(hud)
 		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
-	offset_change(0, hud.current_plane_offset)
+	offset_change(0, hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/blackness/hide_from(mob/oldmob)
 	. = ..()
@@ -506,14 +506,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	allows_offsetting = FALSE
-
-/atom/movable/screen/plane_master/sound_effect_visual
-	name = "Sound Effect Visuals"
-	documentation = "Holds anything that is a game visual, but is displayed over fullscreen effects. \
-		<br>Displayed over fullscreen effects, but still under runechat and the HUD."
-	plane = SOUND_EFFECT_VISUAL_PLANE
-	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"

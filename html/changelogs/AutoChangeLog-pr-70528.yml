@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - bugfix: "checking a pocket protector's insertable items list no longer lists the names of ALL possible objects."
-  - bugfix: "normal/cosmetology pocket protectors now work again."

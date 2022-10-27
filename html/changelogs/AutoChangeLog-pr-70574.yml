@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "The prompt to commend someone else for their good behavior will now properly be given out randomly, allowing those that late-join to give them out as well."

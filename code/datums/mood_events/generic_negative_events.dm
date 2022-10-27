@@ -154,6 +154,10 @@
 	description = "I'm nervous and on edge and I can't stand still!!"
 	mood_change = -2
 
+/datum/mood_event/choke
+	description = "I CAN'T BREATHE!!!"
+	mood_change = -10
+
 /datum/mood_event/vomit
 	description = "I just threw up. Gross."
 	mood_change = -2
@@ -197,10 +201,10 @@
 	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
 	description = "THEY NEEEEEEED [unhinged]!!"
 
-/datum/mood_event/sapped
-	description = "Some unexplainable sadness is consuming me..."
-	mood_change = -15
-	timeout = 90 SECONDS
+/datum/mood_event/tower_of_babel
+	description = "My ability to communicate is an incoherent babel..."
+	mood_change = -1
+	timeout = 15 SECONDS
 
 /datum/mood_event/back_pain
 	description = "Bags never sit right on my back, this hurts like hell!"
@@ -389,3 +393,8 @@
 	description = "I just got squeezed way too hard."
 	mood_change = -1
 	timeout = 2 MINUTES
+
+/datum/mood_event/rippedtail
+	description = "I ripped their tail right off, what have I done!"
+	mood_change = -5
+	timeout = 30 SECONDS

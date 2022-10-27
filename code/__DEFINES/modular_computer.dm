@@ -1,8 +1,6 @@
 //Modular computer/NTNet defines
 
 //Modular computer part defines
-#define MC_HDD "HDD"
-#define MC_SDD "SDD"
 #define MC_CARD "CARD"
 #define MC_CARD2 "CARD2"
 #define MC_CELL "CELL"

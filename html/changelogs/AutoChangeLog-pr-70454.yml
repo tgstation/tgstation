@@ -1,5 +1,0 @@
-author: "Dalmationer and Profakos"
-delete-after: True
-changes: 
-  - imageadd: "added icons for motorized wheelchairs (regular and fast)"
-  - bugfix: "Wheelchairs can be upgraded more than once"

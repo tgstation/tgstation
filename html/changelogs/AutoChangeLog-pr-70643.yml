@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - code_imp: "Added a unit test to catch items that can be equipped to suit slots have missing textures."

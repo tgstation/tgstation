@@ -27,7 +27,9 @@
 	/// even more wisdom from PDA.dm - "no everyone spamming" (prevents people from spamming the same message over and over)
 	var/last_text_everyone
 	/// Scanned photo for sending purposes.
-	var/datum/picture/picture
+	var/datum/picture/saved_image
+	/// Whether the user is invisible to the message list.
+	var/invisible = FALSE
 	/// Whether or not we allow emojis to be sent by the user.
 	var/allow_emojis = FALSE
 	/// Whether or not we're currently looking at the message list.
@@ -42,8 +44,6 @@
 	/// The path for the current loaded image in rsc
 	var/photo_path
 
-	/// Whether or not this app is loaded on a silicon's tablet.
-	var/is_silicon = FALSE
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
@@ -53,7 +53,7 @@
 	if(!istype(attacking_item, /obj/item/photo))
 		return FALSE
 	var/obj/item/photo/pic = attacking_item
-	computer.saved_image = pic.picture
+	saved_image = pic.picture
 	ProcessPhoto()
 	return TRUE
 
@@ -82,11 +82,8 @@
 		sortmode = /proc/cmp_pdaname_asc
 
 	for(var/obj/item/modular_computer/P in sort_list(GLOB.TabletMessengers, sortmode))
-		var/obj/item/computer_hardware/hard_drive/drive = P.all_components[MC_HDD]
-		if(!drive)
-			continue
-		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-			if(!P.saved_identification || !P.saved_job || P.invisible || app.monitor_hidden)
+		for(var/datum/computer_file/program/messenger/app in P.stored_files)
+			if(!P.saved_identification || !P.saved_job || app.invisible || app.monitor_hidden)
 				continue
 			dictionary += P
 
@@ -96,8 +93,8 @@
 	return "[messenger.saved_identification] ([messenger.saved_job])"
 
 /datum/computer_file/program/messenger/proc/ProcessPhoto()
-	if(computer.saved_image)
-		var/icon/img = computer.saved_image.picture_image
+	if(saved_image)
+		var/icon/img = saved_image.picture_image
 		var/deter_path = "tmp_msg_photo[rand(0, 99999)].png"
 		usr << browse_rsc(img, deter_path) // funny random assignment for now, i'll make an actual key later
 		photo_path = deter_path
@@ -177,24 +174,22 @@
 				to_chat(usr, span_notice("ERROR: User no longer exists."))
 				return
 
-			var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
-
-			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+			for(var/datum/computer_file/program/messenger/app in computer.stored_files)
 				if(!app.sending_and_receiving && !sending_virus)
 					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
 					return
 
 				if(sending_virus)
-					var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
+					var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 					if(istype(disk))
-						disk.send_virus(target, usr)
+						disk.send_virus(src, target, usr)
 						return UI_UPDATE
 
 				send_message(usr, list(target))
 				return UI_UPDATE
 
 		if("PDA_clearPhoto")
-			computer.saved_image = null
+			saved_image = null
 			photo_path = null
 			return UI_UPDATE
 
@@ -202,52 +197,50 @@
 			sending_virus = !sending_virus
 			return UI_UPDATE
 
+/datum/computer_file/program/messenger/ui_static_data(mob/user)
+	var/list/data = ..()
+
+	data["owner"] = computer.saved_identification
+	data["ringer_status"] = ringer_status
+	data["sending_and_receiving"] = sending_and_receiving
+	data["sortByJob"] = sort_by_job
+	data["isSilicon"] = issilicon(user)
+	data["viewing_messages"] = viewing_messages
+
+	return data
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	data["owner"] = computer.saved_identification
 	data["messages"] = messages
-	data["ringer_status"] = ringer_status
-	data["sending_and_receiving"] = sending_and_receiving
 	data["messengers"] = ScrubMessengerList()
-	data["viewing_messages"] = viewing_messages
-	data["sortByJob"] = sort_by_job
-	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
 	data["canSpam"] = spam_mode
 
-	var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
-	if(disk)
-		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/portable/virus)
+	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+	if(disk && istype(disk))
+		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus
 
 	return data
 
-////////////////////////
-// MESSAGE HANDLING
-////////////////////////
+//////////////////////
+// MESSAGE HANDLING //
+//////////////////////
 
-// How I Learned To Stop Being A PDA Bloat Chump And Learn To Embrace The Lightweight
-
-// Gets the input for a message being sent.
-
-/datum/computer_file/program/messenger/proc/msg_input(mob/living/user = usr, target_name = null, rigged = FALSE)
-	var/message = null
-
+///Gets an input message from user and returns the sanitized message.
+/datum/computer_file/program/messenger/proc/msg_input(mob/living/user, target_name, rigged = FALSE)
+	var/input_message
 	if(mime_mode)
-		message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging[target_name ? " ([target_name])" : ""]"))
+		input_message = emoji_sanitize(tgui_input_text(user, "Enter emojis", "NT Messaging[target_name ? " ([target_name])" : ""]"))
 	else
-		message = tgui_input_text(user, "Enter a message", "NT Messaging[target_name ? " ([target_name])" : ""]")
+		input_message = tgui_input_text(user, "Enter a message", "NT Messaging[target_name ? " ([target_name])" : ""]")
 
-	if (!message || !sending_and_receiving)
+	if (!input_message || !sending_and_receiving)
 		return
-
 	if(!user.canUseTopic(computer, be_close = TRUE))
 		return
-
-	return sanitize(message)
-
+	return sanitize(input_message)
 
 /datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	if(!targets.len)
@@ -371,11 +364,11 @@
 	messages += list(message_data)
 
 	var/mob/living/L = null
-	if(holder.holder.loc && isliving(holder.holder.loc))
-		L = holder.holder.loc
+	if(computer.loc && isliving(computer.loc))
+		L = computer.loc
 	//Maybe they are a pAI!
 	else
-		L = get(holder.holder, /mob/living/silicon)
+		L = get(computer, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"

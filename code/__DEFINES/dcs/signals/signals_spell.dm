@@ -33,6 +33,8 @@
 // Spell type signals
 
 // Pointed projectiles
+// Sent from /datum/action/cooldown/spell/pointed/projectile/fire_projectile() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
+#define COMSIG_MOB_SPELL_PROJECTILE "mob_spell_projectile"
 /// Sent from /datum/action/cooldown/spell/pointed/projectile/on_cast_hit: (atom/firer, atom/target, atom/hit, angle, hit_limb)
 #define COMSIG_SPELL_PROJECTILE_HIT "spell_projectile_hit"
 

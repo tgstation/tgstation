@@ -26,8 +26,26 @@
 	var/has_variants = TRUE
 	var/finish_color = null
 
-	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
+	///List of items that can be stored in a PDA
+	var/static/list/contained_item = list(
+		/obj/item/pen,
+		/obj/item/toy/crayon,
+		/obj/item/lipstick,
+		/obj/item/flashlight/pen,
+		/obj/item/clothing/mask/cigarette,
+	)
+
+/obj/item/modular_computer/tablet/Initialize(mapload)
+	. = ..()
+	if(inserted_item)
+		inserted_item = new inserted_item(src)
+
+/obj/item/modular_computer/tablet/Destroy()
+	if(istype(inserted_item))
+		QDEL_NULL(inserted_item)
+	return ..()
 
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants && !bypass_state)
@@ -53,27 +71,32 @@
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
 		explode(usr, from_message_menu = TRUE)
-		return
 
 /obj/item/modular_computer/tablet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
+	if(inserted_item)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove [inserted_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(istype(held_item) && is_type_in_list(held_item, contained_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert [held_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
 
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
 
 	if(is_type_in_list(W, contained_item))
 		if(W.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
+			user.balloon_alert(user, "too big!")
 			return
 		if(inserted_item)
-			to_chat(user, span_warning("There is already \a [inserted_item] in \the [src]!"))
+			balloon_alert(user, "no room!")
 		else
 			if(!user.transferItemToLoc(W, src))
 				return
-			to_chat(user, span_notice("You insert \the [W] into \the [src]."))
+			balloon_alert(user, "inserted [W]")
 			inserted_item = W
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
@@ -95,10 +118,8 @@
 /obj/item/modular_computer/tablet/proc/get_detomatix_difficulty()
 	var/detomatix_difficulty
 
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-	if(hdd)
-		for(var/datum/computer_file/program/downloaded_apps as anything in hdd.stored_files)
-			detomatix_difficulty += downloaded_apps.detomatix_resistance
+	for(var/datum/computer_file/program/downloaded_apps as anything in stored_files)
+		detomatix_difficulty += downloaded_apps.detomatix_resistance
 
 	return detomatix_difficulty
 
@@ -112,13 +133,13 @@
 		return
 
 	if(inserted_item)
-		to_chat(user, span_notice("You remove [inserted_item] from [src]."))
+		balloon_alert(user, "removed [inserted_item]")
 		user.put_in_hands(inserted_item)
 		inserted_item = null
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
-		to_chat(user, span_warning("This tablet does not have a pen in it!"))
+		balloon_alert(user, "nothing to remove!")
 
 // Tablet 'splosion..
 
@@ -140,7 +161,7 @@
 
 	if(T)
 		T.hotspot_expose(700,125)
-		if(istype(all_components[MC_SDD], /obj/item/computer_hardware/hard_drive/portable/virus/deto))
+		if(istype(inserted_disk, /obj/item/computer_disk/virus/detomatix))
 			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
@@ -163,12 +184,7 @@
 	if(!new_ringtone || new_ringtone == MESSENGER_RINGTONE_DEFAULT)
 		return
 
-	var/obj/item/computer_hardware/hard_drive/drive = all_components[MC_HDD]
-
-	if(!drive)
-		return
-
-	for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.ringtone = new_ringtone
 
 
@@ -213,12 +229,24 @@
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
-	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
-	var/mob/living/silicon/silicon_owner
+	inserted_item = null
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+	)
+
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
+	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
+	var/mob/living/silicon/silicon_owner
+
+/obj/item/modular_computer/tablet/integrated/cyborg
+	starting_programs = list(
+		/datum/computer_file/program/computerconfig,
+		/datum/computer_file/program/filemanager,
+		/datum/computer_file/program/robotact,
+	)
 
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()
@@ -226,8 +254,13 @@
 	silicon_owner = loc
 	if(!istype(silicon_owner))
 		silicon_owner = null
-		stack_trace("[type] initialized outside of a borg, deleting.")
+		stack_trace("[type] initialized outside of a silicon, deleting.")
 		return INITIALIZE_HINT_QDEL
+
+/obj/item/modular_computer/tablet/integrated/install_default_programs()
+	for(var/programs in starting_programs)
+		var/datum/computer_file/program/program_type = new programs
+		store_file(program_type)
 
 /obj/item/modular_computer/tablet/integrated/Destroy()
 	silicon_owner = null
@@ -266,22 +299,21 @@
  * RoboTact is supposed to be undeletable, so these will create runtime messages.
  */
 /obj/item/modular_computer/tablet/integrated/proc/get_robotact()
-	if(!silicon_owner)
-		return null
-	if(!robotact)
-		var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-		robotact = hard_drive.find_file_by_name("robotact")
-		if(!robotact)
-			stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
-			robotact = new(hard_drive)
-			if(!hard_drive.store_file(robotact))
-				qdel(robotact)
-				robotact = null
-				CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
-	return robotact
+	if(robotact)
+		return robotact
+	robotact = find_file_by_name("robotact")
+	if(robotact)
+		return robotact
+	stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
+	robotact = new(src)
+	if(store_file(robotact))
+		return robotact
+	qdel(robotact)
+	robotact = null
+	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the light settings reflect the borg's headlamp settings
-/obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
+/obj/item/modular_computer/tablet/integrated/cyborg/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
 	if(iscyborg(silicon_owner))
@@ -329,29 +361,34 @@
 /obj/item/modular_computer/tablet/pda
 	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "pda"
+	worn_icon_state = "pda"
 
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"
 
+	max_capacity = 64
 	bypass_state = TRUE
 	allow_chunky = TRUE
 
-	///All applications this tablet has pre-installed
-	var/list/default_applications = list()
-	///The pre-installed cartridge that comes with the tablet
-	var/loaded_cartridge
+	///Static list of default PDA apps to install on Initialize.
+	var/static/list/datum/computer_file/pda_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/nt_pay,
+		/datum/computer_file/program/notepad,
+	)
+
+/obj/item/modular_computer/tablet/pda/install_default_programs()
+	for(var/programs as anything in (default_programs + pda_programs + starting_programs))
+		var/datum/computer_file/program/program_type = new programs
+		store_file(program_type)
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
 	var/obj/item/computer_hardware/card_slot/card = all_components[MC_CARD]
-	if(!init_icon)
-		return
-	if(card)
-		if(card.stored_card)
-			. += mutable_appearance(init_icon, "id_overlay")
+	if(card?.stored_card)
+		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
-		. += mutable_appearance(init_icon, "light_overlay")
+		. += mutable_appearance(initial(icon), "light_overlay")
 
 /obj/item/modular_computer/tablet/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
@@ -359,18 +396,5 @@
 
 /obj/item/modular_computer/tablet/pda/Initialize(mapload)
 	. = ..()
-	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
 	install_component(new /obj/item/computer_hardware/card_slot)
-
-	if(!isnull(default_applications))
-		var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
-		for(var/datum/computer_file/program/default_programs as anything in default_applications)
-			hard_drive.store_file(new default_programs)
-
-	if(loaded_cartridge)
-		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
-		install_component(disk)
-
-	if(inserted_item)
-		inserted_item = new inserted_item(src)
