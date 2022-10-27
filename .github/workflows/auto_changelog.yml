@@ -9,13 +9,13 @@ on:
 permissions:
   contents: write
 jobs:
-  auto_labeler:
+  auto_changelog:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Run auto labeler
+    - name: Run auto changelog
       uses: actions/github-script@v6
       with:
         script: |
