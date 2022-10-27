@@ -21,7 +21,7 @@ export const NtosEmojipedia = (props, context) => {
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
         <Section
-          title={'Emojipedia V2.2' + (filter ? ` - ${filter}` : '')}
+          title={'Emojipedia V2.2.1-pre' + (filter ? ` - ${filter}` : '')}
           buttons={
             <>
               <Input
@@ -30,7 +30,11 @@ export const NtosEmojipedia = (props, context) => {
                 value={filter}
                 onInput={(_, value) => updatefilter(value)}
               />
-              <Button title={'Click on an emoji to copy its tag!'}>?</Button>
+              <Button
+                tooltip={'Click on an emoji to copy its tag!'}
+                tooltipPosition="bottom"
+                icon="circle-question"
+              />
             </>
           }
           display="grid"
