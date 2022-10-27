@@ -70,7 +70,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(src, span_danger("You have OOC muted."))
 		return
 
-	mob.log_talk(raw_msg, LOG_OOC)
+	new /datum/log_entry/ooc(src, raw_msg)
 
 	var/keyname = key
 	if(prefs.unlock_content)
