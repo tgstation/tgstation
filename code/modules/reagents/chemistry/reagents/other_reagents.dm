@@ -159,12 +159,17 @@
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "water"
-	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
 	glass_name = "glass of water"
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+	/*
+	 * Effectively the specific heat of the water, but only for atmos exposure heat exchange.
+	 * It is extremely high, so that 1u (the amount of water exposed to a turf from a fire extinguisher) of water can cool
+	 * the air to below combustion temperature from 200C assuming the air has a heat capacity of 2.08kJ.
+	 */
+	var/atmos_heat_exchange_specific_heat = 4000
 
 /*
  * Water reaction to turf
@@ -175,20 +180,26 @@
 	if(!istype(exposed_turf))
 		return
 
-	var/cool_temp = cooling_temperature
+	// Water transfer to turf.
 	if(reac_volume >= 5)
 		exposed_turf.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
 
+	// Water application to slimes.
 	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
 		exposed_slime.apply_water()
 
+	// Heat exchange with the air.
+	var/datum/gas_mixture/air = exposed_turf.air
+	if(!istype(air, /datum/gas_mixture/immutable))
+		var/temperature_delta = holder.chem_temp - air.temperature
+		var/air_heat_capacity = air.heat_capacity()
+		var/conduction_energy = CALCULATE_CONDUCTION_ENERGY(temperature_delta, air_heat_capacity, atmos_heat_exchange_specific_heat * reac_volume)
+		air.temperature = air.temperature + conduction_energy / air_heat_capacity
+
+	// Hotspot deletion.
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
-	if(hotspot && !isspaceturf(exposed_turf))
-		if(exposed_turf.air)
-			var/datum/gas_mixture/air = exposed_turf.air
-			air.temperature = max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp),TCMB)
-			air.react(src)
-			qdel(hotspot)
+	if(hotspot)
+		qdel(hotspot)
 
 /*
  * Water reaction to an object

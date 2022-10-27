@@ -121,7 +121,7 @@
 		if (extinguisher.reagents.total_volume < 1)
 			to_chat(user, span_warning("\The [extinguisher] is empty!"))
 			return
-		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
+		var/cooling = -4 * reagents.chem_temp
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool the [name] with the [I]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)

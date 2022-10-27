@@ -103,7 +103,7 @@
 	/// The atom this holder is attached to
 	var/atom/my_atom = null
 	/// Current temp of the holder volume
-	var/chem_temp = 150
+	var/chem_temp = DEFAULT_REAGENT_TEMPERATURE
 	///pH of the whole system
 	var/ph = CHEMICAL_NORMAL_PH
 	/// unused
