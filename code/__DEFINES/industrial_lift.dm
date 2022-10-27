@@ -22,3 +22,5 @@
 // Defines for update_lift_doors
 #define OPEN_DOORS "open"
 #define CLOSE_DOORS "close"
+#define LOCK_DOORS "lock"
+#define UNLOCK_DOORS "unlock"

@@ -114,7 +114,7 @@
 	if(!open())
 		return
 	autoclose = TRUE
-	if(check_access(null))
+	if(check_access(null) && !associated_lift)
 		sleep(5 SECONDS)
 	else //secure doors close faster
 		sleep(2 SECONDS)
@@ -240,6 +240,12 @@
 
 	operating = FALSE
 	return 1
+
+/obj/machinery/door/window/lock()
+	req_access = list("engineering")
+
+/obj/machinery/door/window/unlock()
+	req_access = null
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

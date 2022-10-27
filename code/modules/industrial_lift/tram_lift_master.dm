@@ -105,6 +105,7 @@
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
 	update_tram_doors(CLOSE_DOORS)
+	update_tram_doors(UNLOCK_DOORS)
 	addtimer(CALLBACK(src, .proc/dispatch_tram, to_where), 2 SECONDS)
 
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/to_where)
@@ -123,6 +124,7 @@
 
 /datum/lift_master/tram/process(delta_time)
 	if(!travel_distance)
+		update_tram_doors(LOCK_DOORS)
 		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
 		addtimer(CALLBACK(src, .proc/update_tram_doors, OPEN_DOORS), 1 SECONDS)
 		return PROCESS_KILL
@@ -187,6 +189,12 @@
 		if(tram_door.associated_lift != specific_lift_id)
 			continue
 		switch(action)
+			if(LOCK_DOORS)
+				INVOKE_ASYNC(tram_door, /obj/machinery/door/window.proc/lock)
+
+			if(UNLOCK_DOORS)
+				INVOKE_ASYNC(tram_door, /obj/machinery/door/window.proc/unlock)
+
 			if(OPEN_DOORS)
 				INVOKE_ASYNC(tram_door, /obj/machinery/door/window.proc/open)
 
