@@ -430,7 +430,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/honey = 2)
 	tastes = list("bread" = 1, "sweet" = 1, "stinging" = 1, "viscous" = 1,)
 	slice_type = null
-	foodtypes = BUGS | NUTS | SEAFOOD
+	foodtypes = BUGS | NUTS | SEAFOOD | GORE
 
 /obj/item/food/pizza/zmorgast_flatbread // Name is based off of the sweedish dish Smörgåstårta
 	name = "\improper Zmorgast flatbread"
@@ -447,7 +447,7 @@
 	desc = "Superengine delamination, clown ops, too cold outside, I just want to grill for Tizira's sake!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "fish_flatbread"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/bbqsauce = 2)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/bbqsauce = 2)
 	tastes = list("bread" = 1, "fish" = 1,)
 	slice_type = null
 	foodtypes = SEAFOOD | NUTS
