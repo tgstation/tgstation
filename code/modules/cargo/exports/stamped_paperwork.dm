@@ -1,5 +1,5 @@
 /datum/export/paperwork
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 4
 	unit_name = "paperwork pile"
 	export_types = list(/obj/item/paperwork)
 	exclude_types = list(/obj/item/paperwork/photocopy) //Has its own category
@@ -32,7 +32,7 @@
 		if(sold_paperwork.voided)
 			return 0 //Voided photocopies do nothing
 		else
-			backfire_chance += 25
+			backfire_chance += rand(15,25)
 			if(prob(backfire_chance))
 				backfire_chance = 0
 				backfired = TRUE

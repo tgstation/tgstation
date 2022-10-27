@@ -188,8 +188,8 @@
 	detailed_desc += "[span_info(" The message repeatedly asserts that the engine is functioning 'perfectly fine' and is generating 'buttloads' of power.")]"
 	detailed_desc += "[span_info(" Everything checks out. You should probably stamp this.")]"
 
-//Photocopied paperwork. These are created when paperwork, whether stamped or otherwise, is printed. If it is stamped, it can be sold to cargo at the risk of the paperwork not being accepted (which takes a small fee from cargo)..
-//If it is unstamped it is useless, but can be hit with a VOID stamp to prevent it from losing cargo any money upon being sold
+//Photocopied paperwork. These are created when paperwork, whether stamped or otherwise, is printed. If it is stamped, it can be sold to cargo at the risk of the paperwork not being accepted (which takes a small fee from cargo).
+//If it is unstamped it will lose you money like normal, unless it has been marked with a VOID stamp
 /obj/item/paperwork/photocopy
 	name = "photocopied paperwork documents"
 	desc = "An even more disorganized mess of photocopied documents and paperwork. Did these even copy in the right order?"
@@ -222,10 +222,11 @@
 /obj/item/paperwork/ancient
 	name = "ancient paperwork"
 	desc = "A dusty, ugly mess of papers. It's impossible to really tell how old these are, but Central Command might appreciate them anyways."
-	detailed_desc = "Sifting through the dust mess of papers, you can't recognize a single name, date, or topic mentioned within these papers. How old are these?"
 
 /obj/item/paperwork/ancient/Initialize(mapload)
 	. = ..()
+
+	detailed_desc += span_notice("As you search through the dusty mess of papers, you can't recognize a single name, date, or topic mentioned within these papers. How old are these?")
 
 	var/list/paperwork_list = subtypesof(/obj/item/paperwork)
 	paperwork_list.Remove(list(/obj/item/paperwork/ancient, /obj/item/paperwork/photocopy)) //Get rid of the uncopiable paperwork pieces

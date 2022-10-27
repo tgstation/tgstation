@@ -461,10 +461,13 @@
 		to_chat(user, span_warning("The Blueprint is too large to put into the copier. You need to find something else to record the document."))
 	else if(istype(O, /obj/item/paperwork))
 		if(copier_empty())
-			if(!user.temporarilyRemoveItemFromInventory(O))
-				return
-			paperwork_copy = O
-			do_insertion(O, user)
+			if(istype(O, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
+				to_chat(user, span_warning("The [O] is far too messy to produce a good copy!"))
+			else
+				if(!user.temporarilyRemoveItemFromInventory(O))
+					return
+				paperwork_copy = O
+				do_insertion(O, user)
 		else
 			to_chat(user, span_warning("There is already something in [src]!"))
 		return ..()
