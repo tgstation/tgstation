@@ -344,17 +344,15 @@ GLOBAL_LIST_EMPTY(lifts)
 				do_sparks(2, FALSE, collided_wall)
 				collided_wall.dismantle_wall(devastated = TRUE)
 				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(collided_wall, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
-					if(get_dist(dest_turf, client_mob) <= 8)
-						shake_camera(client_mob, 2, 3)
+					shake_camera(client_mob, duration = 2, strength = 3)
 
 				playsound(collided_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 
 			if(ismineralturf(dest_turf))
-				var/turf/closed/mineral/M = dest_turf
-				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(M, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
-					if(get_dist(dest_turf, client_mob) <= 8)
-						shake_camera(client_mob, 2, 3)
-				M.gets_drilled(give_exp = FALSE)
+				var/turf/closed/mineral/dest_mineral_turf = dest_turf
+				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(dest_mineral_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
+					shake_camera(client_mob, duration = 2, strength = 3)
+				dest_mineral_turf.gets_drilled(give_exp = FALSE)
 
 			for(var/obj/structure/victim_structure in dest_turf.contents)
 				if(QDELING(victim_structure))
