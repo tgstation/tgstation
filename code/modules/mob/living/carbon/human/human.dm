@@ -81,8 +81,8 @@
 
 /mob/living/carbon/human/get_status_tab_items()
 	. = ..()
-	if (external || internal)
-		var/obj/item/tank/target_tank = external ? external : internal
+	var/obj/item/tank/target_tank = internal || external
+	if(target_tank)
 		var/datum/gas_mixture/internal_air = target_tank.return_air()
 		. += ""
 		. += "Internal Atmosphere Info: [target_tank.name]"
