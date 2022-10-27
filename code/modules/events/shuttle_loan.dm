@@ -12,9 +12,8 @@
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
-	max_occurrences = 3
-	earliest_start = 0 //DEBUG CODE PLEASE SET TO 7 MINUTES PLEASE
-	weight = 10000 //DEBUG REMOVE PLS
+	max_occurrences = 1
+	earliest_start = 7 MINUTES
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
 
@@ -29,7 +28,6 @@
 
 /datum/round_event/shuttle_loan/setup()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC, PAPERS_PLEASE)
-	dispatch_type = PAPERS_PLEASE //debug code :)
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
