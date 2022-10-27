@@ -1,31 +1,71 @@
-import { useBackend } from '../backend';
-import { Box, Section } from '../components';
+import { useBackend, useSharedState } from '../backend';
+import { Box, Button, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
+import '../styles/interfaces/Emojipedia.scss';
 
 export const NtosEmojipedia = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const { emoji_list } = data;
+  const [filter, updatefilter] = useSharedState(context, 'filter', '');
+
+  let filtered_emoji_list = filter
+    ? emoji_list.filter((emoji) => {
+      return emoji.name.toLowerCase().includes(filter.toLowerCase());
+    })
+    : emoji_list;
+  if (filtered_emoji_list.length === 0) {
+    filtered_emoji_list = emoji_list;
+  }
 
   return (
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
-        <Section textAlign="center">
-          <i>EmojiPedia 2.0 - All You Could Ever Need!</i>
-        </Section>
-        {emoji_list.map((emoji) => (
-          <Section key={emoji.name}>
+        <Section
+          title={'Emojipedia V2.2' + (filter ? ` - ${filter}` : '')}
+          buttons={
+            <>
+              <Input
+                type="text"
+                placeholder="Search by name"
+                value={filter}
+                onInput={(_, value) => updatefilter(value)}
+              />
+              <Button title={'Click on an emoji to copy its tag!'}>?</Button>
+            </>
+          }
+          display="grid"
+          box-sizing="border-box"
+          margin="0"
+          padding="0"
+          grid-template-columns="repeat(auto-fill, 32px)"
+          grid-template-rows="repeat(auto-fill, 32px)"
+          grid-gap="4em">
+          {filtered_emoji_list.map((emoji) => (
             <Box
+              key={emoji.name}
+              className="Emojipedia__item"
               as="img"
               m={0}
               src={`data:image/jpeg;base64,${emoji.icon64}`}
-              height="100%"
+              title={emoji.name}
               style={{
                 '-ms-interpolation-mode': 'nearest-neighbor',
               }}
-            />
-            {emoji.name}
-          </Section>
-        ))}
+              onClick={() => {
+                new Promise((resolve, _) => {
+                  const input = document.createElement('input');
+                  input.value = emoji.name;
+                  document.body.appendChild(input);
+                  input.select();
+                  document.execCommand('copy');
+                  document.body.removeChild(input);
+                  resolve();
+                });
+              }}>
+              {emoji.name}
+            </Box>
+          ))}
+        </Section>
       </NtosWindow.Content>
     </NtosWindow>
   );
