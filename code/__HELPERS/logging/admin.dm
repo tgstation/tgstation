@@ -22,7 +22,7 @@
 /proc/log_adminsay(text)
 	GLOB.admin_log.Add(text)
 	if (CONFIG_GET(flag/log_adminchat))
-		WRITE_LOG(GLOB.world_game_log, "ADMINPRIVATE: ASAY: [text]")
+		new /datum/log_entry/asay(usr, text)
 
 /// Logging for DeachatSay (DSAY) messages
 /proc/log_dsay(text)
