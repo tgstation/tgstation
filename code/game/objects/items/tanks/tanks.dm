@@ -58,7 +58,7 @@
 /obj/item/tank/equipped(mob/living/user, slot, initial)
 	. = ..(user, slot, initial)
 	// Close open air tank if it was equipped by a mob other than the current user.
-	if (breathing_mob && user != breathing_mob)
+	if (breathing_mob && (user != breathing_mob))
 		breathing_mob.cutoff_internals()
 
 /// Called by carbons after they connect the tank to their breathing apparatus.
@@ -110,8 +110,8 @@
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
 	. = ..()
-	if(istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+	if(istype(loc, /obj/item/assembly))
+		icon = loc
 	if(!in_range(src, user) && !isobserver(user))
 		if(icon == src)
 			. += span_notice("If you want any more information you'll need to get closer.")
@@ -145,21 +145,21 @@
 	return ..()
 
 /obj/item/tank/suicide_act(mob/user)
-	var/mob/living/carbon/human/H = user
+	var/mob/living/carbon/human/human_user = user
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	if(!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
-		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		H.inflate_gib()
+	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= 1000)
+		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		human_user.inflate_gib()
 		return MANUAL_SUICIDE
 	else
 		to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
-/obj/item/tank/attackby(obj/item/W, mob/user, params)
+/obj/item/tank/attackby(obj/item/attacking_item, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/assembly_holder))
-		bomb_assemble(W, user)
+	if(istype(attacking_item, /obj/item/assembly_holder))
+		bomb_assemble(attacking_item, user)
 		return TRUE
 	return ..()
 
@@ -187,10 +187,10 @@
 		"releasePressure" = round(distribute_pressure)
 	)
 
-	var/mob/living/carbon/C = user
-	if(!istype(C))
-		C = loc.loc
-	if(istype(C) && (C.external == src || C.internal == src))
+	var/mob/living/carbon/carbon_user = user
+	if(!istype(carbon_user))
+		carbon_user = loc
+	if(istype(carbon_user) && (carbon_user.external == src || carbon_user.internal == src))
 		.["connected"] = TRUE
 
 /obj/item/tank/ui_act(action, params)
