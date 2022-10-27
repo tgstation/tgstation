@@ -39,13 +39,17 @@ LINEN BINS
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
 	register_item_context()
 
-/obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
-	context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate"
+/obj/item/bedsheet/examine(mob/user)
+	. = ..()
+	. += span_notice("The bedsheet looks like it can be <b>cut</b>.")
+	. += span_notice("The bedsheet can be rotated using AltClick.")
 
+/obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
 	if(isliving(target) && target.body_position == LYING_DOWN)
 		context[SCREENTIP_CONTEXT_LMB] = "Cover"
+		return CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
 /obj/item/bedsheet/attack(mob/living/target, mob/living/user)
 	if(!user.CanReach(target))
@@ -84,7 +88,7 @@ LINEN BINS
 	RegisterSignal(sleeper, COMSIG_MOVABLE_MOVED, .proc/smooth_sheets)
 	RegisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION, .proc/smooth_sheets)
 	RegisterSignal(sleeper, COMSIG_PARENT_QDELETING, .proc/smooth_sheets)
-	
+
 /obj/item/bedsheet/proc/smooth_sheets(mob/living/sleeper)
 	SIGNAL_HANDLER
 
