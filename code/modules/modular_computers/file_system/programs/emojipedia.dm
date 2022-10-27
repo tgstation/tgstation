@@ -2,7 +2,7 @@
 /datum/computer_file/program/emojipedia
 	filename = "emojipedia"
 	filedesc = "EmojiPedia"
-	category = PROGRAM_CATEGORY_CREW // we want everyone to be able to access this application, since they can use it as a reference for posting in OOC (only mimes and curators can send emoji via PDAs right now)
+	category = PROGRAM_CATEGORY_CREW // we want everyone to be able to access this application, since everyone can send emoji via PDA messages
 	program_icon_state = "generic"
 	extended_desc = "This program allows you to view all the emojis you can send via PDA messages."
 	size = 3
