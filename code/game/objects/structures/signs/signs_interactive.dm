@@ -83,8 +83,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 		if(11 to INFINITY)
 			. += span_info("Incredible!")
 
-GLOBAL_LIST_EMPTY(map_collision_counters)
-
 /obj/structure/sign/collision_counter
 	name = "incident counter"
 	sign_change_name = "Indicator board- Tram incidents"
@@ -102,12 +100,10 @@ GLOBAL_LIST_EMPTY(map_collision_counters)
 /obj/structure/sign/collision_counter/LateInitialize()
 	. = ..()
 	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
-		GLOB.map_collision_counters += src
 		RegisterSignal(tram, COMSIG_TRAM_COLLISION, .proc/new_hit)
-		update_appearance()
+	update_appearance()
 
 /obj/structure/sign/collision_counter/Destroy()
-	GLOB.map_collision_counters -= src
 	return ..()
 
 /obj/structure/sign/collision_counter/proc/new_hit()
