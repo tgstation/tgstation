@@ -49,14 +49,14 @@
 
 /// Closes the tank if dropped while open.
 /obj/item/tank/dropped(mob/living/user, silent)
-	. = ..(user, silent)
+	. = ..()
 	// Close open air tank if it got dropped by it's current user.
 	if (breathing_mob && (loc != breathing_mob))
 		breathing_mob.cutoff_internals()
 
 /// Closes the tank if given to another mob while open.
 /obj/item/tank/equipped(mob/living/user, slot, initial)
-	. = ..(user, slot, initial)
+	. = ..()
 	// Close open air tank if it was equipped by a mob other than the current user.
 	if (breathing_mob && (user != breathing_mob))
 		breathing_mob.cutoff_internals()
