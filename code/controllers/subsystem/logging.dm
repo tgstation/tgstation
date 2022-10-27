@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(logging)
 	var/list/data = list()
 	for(var/datum/log_entry/entry as anything in entries)
 		var/entry_text = entry.to_text()
-		var/inspect_text = entry.can_inspect ? "(<a href='?src=[REF(src)];[HrefToken()];inspect=[REF(entry)]'>Inspect</a>) " : ""
+		var/inspect_text = "(<a href='?src=[REF(src)];[HrefToken()];inspect=[REF(entry)]'>Inspect</a>) "
 		data += "[inspect_text][entry_text]"
 	usr << browse(data.Join("<br>"), "window=logs;size=600x400")
 	onclose(usr, "logs")

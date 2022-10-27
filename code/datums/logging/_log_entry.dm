@@ -25,21 +25,16 @@
 	/// The server this log entry was created on.
 	VAR_PRIVATE/server_name
 
-	// required settings
-
-	/// The category this log entry falls under.
+	/// Required. The category this log entry falls under.
 	var/category
-	var/can_inspect = FALSE
-	/// The message this log entry contains.
+	/// Required. The message this log entry contains.
 	var/message
-	/// Whether this log entry is public or not.
+	/// Required but defaults to FALSE. Whether this log entry is public or not.
 	var/private = FALSE
-	/// The location this log entry was created at.
+	/// Optional. The location this log entry was created at.
 	var/list/location
-	/// A lazy list of tags that can be used to filter this log entry.
+	/// Optional but highly recommeneded. A lazy list of tags that can be used to filter this log entry.
 	var/list/tags
-
-	// optional settings
 
 	/// The name of the datum that created this log entry.
 	var/source_name
@@ -61,7 +56,7 @@
 	unix_timestamp = world.realtime
 	world_timestamp = world.time
 	round_id = GLOB.round_id
-	server_name = CONFIG_GET(string/cross_comms_name) || "Unknown"
+	server_name = CONFIG_GET(string/server) || "Unknown"
 	if(!category)
 		CRASH("Log entry created without a category.")
 	if(!message)
@@ -123,11 +118,15 @@
 	extended_data[key] = value
 	return src
 
-/// Construct this log entry into a list, ready for JSON encoding. Add your own data to the list before returning it.
+/// Construct this log entry into a list, ready for JSON encoding. Duplicate keys will be overwritten during json encoding.
 /datum/log_entry/proc/to_list()
 	RETURN_TYPE(/list)
-	SHOULD_CALL_PARENT(TRUE)
-	var/list/json = list(
+	return list()
+
+/datum/log_entry/proc/to_json()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/list/json = to_list()
+	json += list(list(
 		"version" = version,
 		"unix_timestamp" = unix_timestamp,
 		"world_timestamp" = world_timestamp,
@@ -142,11 +141,7 @@
 		"target_name" = target_name,
 		"target_ckey" = target_ckey,
 		"extended_data" = extended_data,
-	)
-	return json
-
-/datum/log_entry/proc/to_json()
-	SHOULD_NOT_OVERRIDE(TRUE)
+	))
 	return json_encode(to_list())
 
 /**
