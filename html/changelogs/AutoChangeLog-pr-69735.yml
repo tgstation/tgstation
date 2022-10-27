@@ -1,6 +1,0 @@
-author: "scriptis"
-delete-after: True
-changes: 
-  - qol: "techfabs, protolathes, circuit imprinters, and exosuit fabricators now automatically r&d sync"
-  - qol: "the full window refresh time is now one second instead of five seconds"
-  - bugfix: "refreshing windows (\"please wait...\") no longer hang for up to twice as long as they should"

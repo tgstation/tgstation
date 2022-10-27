@@ -12,7 +12,7 @@
 	see_in_dark = 15
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	obj_damage = 10
-	butcher_results = list(/obj/item/clothing/head/crown = 1,)
+	butcher_results = list(/obj/item/clothing/head/costume/crown = 1,)
 	response_help_continuous = "glares at"
 	response_help_simple = "glare at"
 	response_disarm_continuous = "skoffs at"
@@ -26,7 +26,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
-	faction = list("rat")
+	faction = list(FACTION_RAT)
 	///Whether or not the regal rat is already opening an airlock
 	var/opening_airlock = FALSE
 	///The spell that the rat uses to generate miasma
@@ -50,7 +50,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/proc/get_player()
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Royal Rat, cheesey be their crown?", ROLE_SENTIENCE, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Regal Rat, cheesey be their crown?", ROLE_SENTIENCE, ROLE_SENTIENCE, 100, POLL_IGNORE_REGAL_RAT)
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
 		key = C.key
@@ -73,6 +73,9 @@
  */
 /mob/living/simple_animal/hostile/regalrat/proc/get_clicked_player(mob/user)
 	if(key || stat)
+		return
+	if(!SSticker.HasRoundStarted())
+		to_chat(user, span_warning("You cannot assume control of this until after the round has started!"))
 		return
 	var/rat_ask = tgui_alert(usr, "Become the Royal Rat?", "Are you sure?", list("Yes", "No"))
 	if(rat_ask != "Yes" || QDELETED(src))
@@ -137,8 +140,11 @@
 		if (do_mob(src, target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, span_notice("You finish licking [target]."))
+			return
 	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
+		if(QDELETED(target))
+			return
 
 	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // check again in case we started interacting
 		return
@@ -295,7 +301,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	faction = list("rat")
+	faction = list(FACTION_RAT)
 
 /mob/living/simple_animal/hostile/rat/Initialize(mapload)
 	. = ..()
@@ -410,9 +416,9 @@
 /datum/reagent/rat_spit/overdose_start(mob/living/M)
 	..()
 	var/mob/living/carbon/victim = M
-	if (istype(victim) && !("rat" in victim.faction))
+	if (istype(victim) && !(FACTION_RAT in victim.faction))
 		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
-		victim.faction |= "rat"
+		victim.faction |= FACTION_RAT
 		victim.vomit()
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 

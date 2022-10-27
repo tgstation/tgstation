@@ -134,7 +134,7 @@
 					qdel(src)
 					return
 				here.PlaceOnTop(/turf/closed/wall)
-				qdel(src)
+				qdel(airlock)
 				return
 			if(9 to 11)
 				airlock.lights = FALSE
@@ -630,7 +630,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			table += thing
 		else if(isopenturf(thing))
 			if(locate(/obj/structure/bed/dogbed/ian) in thing)
-				new /obj/item/clothing/head/festive(thing)
+				new /obj/item/clothing/head/costume/festive(thing)
 				var/obj/item/reagent_containers/cup/glass/bottle/champagne/iandrink = new(thing)
 				iandrink.name = "dog champagne"
 				iandrink.pixel_y += 8

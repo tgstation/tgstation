@@ -10,6 +10,7 @@
 		CHOICE_TO_ROCK,
 		CHOICE_NOT_TO_ROCK,
 	)
+	message = "Override the current map vote."
 	/// The number of times we have rocked the vote thus far.
 	var/rocking_votes = 0
 
@@ -32,35 +33,34 @@
 		return FALSE
 
 	if(!forced && !CONFIG_GET(flag/allow_rock_the_vote))
-		if(by_who)
-			to_chat(by_who, span_warning("Rocking the vote is disabled by this server's configuration settings."))
+		message = "Rocking the vote is disabled by this server's configuration settings."
 		return FALSE
 
 	if(SSticker.current_state == GAME_STATE_FINISHED)
-		if(by_who)
-			to_chat(by_who, span_warning("The game is finished, no map votes can be initiated."))
+		message = "The game is finished, no map votes can be initiated."
 		return FALSE
 
 	if(rocking_votes >= CONFIG_GET(number/max_rocking_votes))
-		if(by_who)
-			to_chat(by_who, span_warning("You have rocked the vote the maximum number of times."))
+		message = "The maximum number of times to rock the vote has been reached."
 		return FALSE
 
 	if(SSmapping.map_vote_rocked)
-		if(by_who)
-			to_chat(by_who, span_warning("The vote has already been rocked! Initiate a map vote!"))
+		message = "The vote has already been rocked! Initiate a map vote!"
 		return FALSE
 
 	if(!SSmapping.map_voted)
-		if(by_who)
-			to_chat(by_who, span_warning("Rocking the vote is disabled because no map has been voted on yet!"))
+		message = "Rocking the vote is disabled because no map has been voted on yet!"
 		return FALSE
 
 	if(SSmapping.map_force_chosen)
-		if(by_who)
-			to_chat(by_who, span_warning("Rocking the vote is disabled because an admin has forcibly set the map!"))
+		message = "Rocking the vote is disabled because an admin has forcibly set the map!"
 		return FALSE
 
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED && SSmapping.map_voted)
+		message = "The emergency shuttle has already left the station and the next map has already been chosen!"
+		return FALSE
+
+	message = initial(message)
 	return TRUE
 
 /datum/vote/rock_the_vote/finalize_vote(winning_option)

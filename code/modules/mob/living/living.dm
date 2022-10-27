@@ -279,6 +279,8 @@
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_TRY_PULL, AM, force) & COMSIG_LIVING_CANCEL_PULL)
 		return FALSE
+	if(SEND_SIGNAL(AM, COMSIG_LIVING_TRYING_TO_PULL, src, force) & COMSIG_LIVING_CANCEL_PULL)
+		return FALSE
 
 	AM.add_fingerprint(src)
 
@@ -832,7 +834,6 @@
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	hallucination = 0
 	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	extinguish_mob()
 	set_drowsyness(0)
@@ -889,7 +890,7 @@
 	else if(direct & WEST)
 		set_lying_angle(270)
 
-/mob/living/carbon/alien/humanoid/lying_angle_on_movement(direct)
+/mob/living/carbon/alien/adult/lying_angle_on_movement(direct)
 	return
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
@@ -1281,12 +1282,12 @@
 
 			if(ckey)
 				picked_xeno_type = pick(
-					/mob/living/carbon/alien/humanoid/hunter,
-					/mob/living/carbon/alien/humanoid/sentinel,
+					/mob/living/carbon/alien/adult/hunter,
+					/mob/living/carbon/alien/adult/sentinel,
 				)
 			else
 				picked_xeno_type = pick(
-					/mob/living/carbon/alien/humanoid/hunter,
+					/mob/living/carbon/alien/adult/hunter,
 					/mob/living/simple_animal/hostile/alien/sentinel,
 				)
 			new_mob = new picked_xeno_type(loc)
@@ -1609,7 +1610,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		else
 			registered_z = null
 
-/mob/living/on_changed_z_level(turf/old_turf, turf/new_turf)
+/mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
 	update_z(new_turf?.z)
 
@@ -1743,6 +1744,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPEECH_IMPEDIMENT, "Impede Speech (Slurring, stuttering, etc)")
 	VV_DROPDOWN_OPTION(VV_HK_ADD_MOOD, "Add Mood Event")
 	VV_DROPDOWN_OPTION(VV_HK_REMOVE_MOOD, "Remove Mood Event")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_HALLUCINATION, "Give Hallucination")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_DELUSION_HALLUCINATION, "Give Delusion Hallucination")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -1755,6 +1758,16 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		admin_add_mood_event(usr)
 	if (href_list[VV_HK_REMOVE_MOOD])
 		admin_remove_mood_event(usr)
+
+	if(href_list[VV_HK_GIVE_HALLUCINATION])
+		if(!check_rights(NONE))
+			return
+		admin_give_hallucination(usr)
+
+	if(href_list[VV_HK_GIVE_DELUSION_HALLUCINATION])
+		if(!check_rights(NONE))
+			return
+		admin_give_delusion(usr)
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list
@@ -2159,7 +2172,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	. = body_position
 	body_position = new_value
-	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION)
+	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION, new_value, .)
 	if(new_value == LYING_DOWN) // From standing to lying down.
 		on_lying_down()
 	else // From lying down to standing up.
@@ -2296,7 +2309,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!isnum(duration) || duration <= 0 || QDELETED(src) || !check_rights(NONE))
 		return
 
-	adjust_timed_status_effect(duration SECONDS, impediments[chosen])
+	adjust_timed_status_effect(duration * 1 SECONDS, impediments[chosen])
 
 /mob/living/proc/admin_add_mood_event(mob/admin)
 	if (!admin || !check_rights(NONE))
@@ -2341,3 +2354,34 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/played_game()
 	. = ..()
 	add_mood_event("gaming", /datum/mood_event/gaming)
+
+/// Admin only proc for making the mob hallucinate a certain thing
+/mob/living/proc/admin_give_hallucination(mob/admin)
+	if(!admin || !check_rights(NONE))
+		return
+
+	var/chosen = select_hallucination_type(admin, "What hallucination do you want to give to [src]?", "Give Hallucination")
+	if(!chosen || QDELETED(src) || !check_rights(NONE))
+		return
+
+	if(!cause_hallucination(chosen, "admin forced by [key_name_admin(admin)]"))
+		to_chat(admin, "That hallucination ([chosen]) could not be run - it may be invalid with this type of mob or has no effects.")
+		return
+
+	message_admins("[key_name_admin(admin)] gave [ADMIN_LOOKUPFLW(src)] a hallucination. (Type: [chosen])")
+	log_admin("[key_name(admin)] gave [src] a hallucination. (Type: [chosen])")
+
+/// Admin only proc for giving the mob a delusion hallucination with specific arguments
+/mob/living/proc/admin_give_delusion(mob/admin)
+	if(!admin || !check_rights(NONE))
+		return
+
+	var/list/delusion_args = create_delusion(admin)
+	if(QDELETED(src) || !check_rights(NONE) || !length(delusion_args))
+		return
+
+	delusion_args[2] = "admin forced"
+	message_admins("[key_name_admin(admin)] gave [ADMIN_LOOKUPFLW(src)] a delusion hallucination. (Type: [delusion_args[1]])")
+	log_admin("[key_name(admin)] gave [src] a delusion hallucination. (Type: [delusion_args[1]])")
+	// Not using the wrapper here because we already have a list / arglist
+	_cause_hallucination(delusion_args)

@@ -225,13 +225,13 @@
 	sac_target.visible_message(span_danger("[sac_target] begins to shudder violenty as dark tendrils begin to drag them into thin air!"))
 	sac_target.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult(sac_target))
 	sac_target.update_handcuffed()
-	
+
 	if(sac_target.legcuffed)
 		sac_target.legcuffed.forceMove(sac_target.drop_location())
 		sac_target.legcuffed.dropped(sac_target)
 		sac_target.legcuffed = null
 		sac_target.update_worn_legcuffs()
-	
+
 	sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
@@ -318,9 +318,9 @@
 
 	sac_target.flash_act()
 	sac_target.blur_eyes(15)
-	sac_target.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-	sac_target.set_timed_status_effect(20 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
-	sac_target.hallucination += 12
+	sac_target.set_jitter_if_lower(20 SECONDS)
+	sac_target.set_dizzy_if_lower(20 SECONDS)
+	sac_target.adjust_hallucinations(24 SECONDS)
 	sac_target.emote("scream")
 
 	to_chat(sac_target, span_reallybig(span_hypnophrase("The grasp of the Mansus reveal themselves to you!")))
@@ -371,10 +371,13 @@
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
-	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+	sac_target.adjust_stutter(40 SECONDS)
 
 	// They're already back on the station for some reason, don't bother teleporting
-	if(is_station_level(sac_target.z))
+	var/turf/below_target = get_turf(sac_target)
+	// is_station_level runtimes when passed z = 0, so I'm being very explicit here about checking for nullspace until fixed
+	// otherwise, we really don't want this to runtime error, as it'll get people stuck in hell forever - not ideal!
+	if(below_target && below_target.z != 0 && is_station_level(below_target.z))
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
@@ -438,10 +441,10 @@
 
 	// Oh god where are we?
 	sac_target.flash_act()
-	sac_target.adjust_timed_status_effect(60 SECONDS, /datum/status_effect/confusion)
-	sac_target.set_timed_status_effect(120 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	sac_target.adjust_confusion(60 SECONDS)
+	sac_target.set_jitter_if_lower(120 SECONDS)
 	sac_target.blur_eyes(50)
-	sac_target.set_timed_status_effect(1 MINUTES, /datum/status_effect/dizziness, only_if_higher = TRUE)
+	sac_target.set_dizzy_if_lower(1 MINUTES)
 	sac_target.AdjustKnockdown(80)
 	sac_target.adjustStaminaLoss(120)
 

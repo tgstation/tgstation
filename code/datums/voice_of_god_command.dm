@@ -46,7 +46,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	for(var/mob/living/candidate in candidates)
 		if(candidate.stat != DEAD && candidate.can_hear())
 			if(candidate.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND, charge_cost = 0))
-				to_chat(span_userdanger("Something's wrong! [candidate] seems to be resisting your commands."))
+				to_chat(user, span_userdanger("Something's wrong! [candidate] seems to be resisting your commands."))
 				continue
 
 			listeners += candidate
@@ -154,15 +154,22 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/silence/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	power_multiplier *= user.mind?.assigned_role?.voice_of_god_silence_power || 1
 	for(var/mob/living/carbon/target in listeners)
-		target.silent += (10 * power_multiplier)
+		target.adjust_silence(20 SECONDS * power_multiplier)
 
 /// This command makes the listeners see others as corgis, carps, skellies etcetera etcetera.
 /datum/voice_of_god_command/hallucinate
 	trigger = "see\\s*the\\s*truth|hallucinate"
 
 /datum/voice_of_god_command/hallucinate/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
-	for(var/mob/living/carbon/target in listeners)
-		new /datum/hallucination/delusion(target, TRUE, null, 150 * power_multiplier, 0)
+	for(var/mob/living/target in listeners)
+		target.cause_hallucination( \
+			get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset), \
+			"voice of god", \
+			duration = 15 SECONDS * power_multiplier, \
+			affects_us = FALSE, \
+			affects_others = TRUE, \
+			skip_nearby = FALSE, \
+		)
 
 /// This command wakes up the listeners.
 /datum/voice_of_god_command/wake_up

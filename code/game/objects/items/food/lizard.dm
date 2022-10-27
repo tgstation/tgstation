@@ -212,7 +212,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "moonfish_demiglace"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment = 2)
-	tastes = list("fish" = 1)
+	tastes = list("fish" = 2, "potatoes" = 1, "carrots" = 1)
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 

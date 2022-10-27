@@ -605,7 +605,7 @@
 			state = "alarm1"
 
 	. += mutable_appearance(icon, state)
-	. += emissive_appearance(icon, state, alpha = src.alpha)
+	. += emissive_appearance(icon, state, src, alpha = src.alpha)
 
 /**
  * main proc for throwing a shitfit if the air isnt right.

@@ -88,6 +88,15 @@
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
+///Simply exists so that you don't keep any alerts from your previous lack of lungs.
+/obj/item/organ/internal/lungs/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_CO2)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_NITRO)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
+	receiver.clear_alert(ALERT_NOT_ENOUGH_N2O)
+	return ..()
+
 /obj/item/organ/internal/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	if(breather.status_flags & GODMODE)
 		breather.failed_last_breath = FALSE //clear oxy issues
@@ -295,7 +304,7 @@
 
 		var/bz_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/bz][MOLES])
 		if(bz_pp > BZ_trip_balls_min)
-			breather.hallucination += 10
+			breather.adjust_hallucinations(20 SECONDS)
 			breather.reagents.add_reagent(/datum/reagent/bz_metabolites,5)
 		if(bz_pp > BZ_brain_damage_min && prob(33))
 			breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
@@ -341,7 +350,8 @@
 			breather.adjustFireLoss(15)
 			if (prob(freon_pp/2))
 				to_chat(breather, span_alert("Your throat closes up!"))
-				breather.silent = max(breather.silent, 3)
+				breather.set_silence_if_lower(6 SECONDS)
+
 		else
 			breather.adjustFireLoss(freon_pp/4)
 		gas_breathed = breath_gases[/datum/gas/freon][MOLES]

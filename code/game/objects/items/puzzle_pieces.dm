@@ -205,7 +205,7 @@
 		if(!light_list[i])
 			continue
 		var/mutable_appearance/lit_image = mutable_appearance('icons/obj/puzzle_small.dmi', "light_lit")
-		var/mutable_appearance/emissive_image = emissive_appearance('icons/obj/puzzle_small.dmi', "light_lit")
+		var/mutable_appearance/emissive_image = emissive_appearance('icons/obj/puzzle_small.dmi', "light_lit", src)
 		lit_image.pixel_x = 8 * ((i % 3 || 3 ) - 1)
 		lit_image.pixel_y = -8 * (ROUND_UP(i / 3) - 1)
 		emissive_image.pixel_x = lit_image.pixel_x

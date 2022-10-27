@@ -286,21 +286,62 @@
 	modifies_speech = TRUE
 	taste_sensitivity = 32
 
+// List of english words that translate to zombie phrases
+GLOBAL_LIST_INIT(english_to_zombie, list())
+
+/obj/item/organ/internal/tongue/zombie/proc/add_word_to_translations(english_word, zombie_word)
+	GLOB.english_to_zombie[english_word] = zombie_word
+	// zombies don't care about grammar (any tense or form is all translated to the same word)
+	GLOB.english_to_zombie[english_word + plural_s(english_word)] = zombie_word
+	GLOB.english_to_zombie[english_word + "ing"] = zombie_word
+	GLOB.english_to_zombie[english_word + "ed"] = zombie_word
+
+/obj/item/organ/internal/tongue/zombie/proc/load_zombie_translations()
+	var/list/zombie_translation = strings("zombie_replacement.json", "zombie")
+	for(var/zombie_word in zombie_translation)
+		// since zombie words are a reverse list, we gotta do this backwards
+		var/list/data = islist(zombie_translation[zombie_word]) ? zombie_translation[zombie_word] : list(zombie_translation[zombie_word])
+		for(var/english_word in data)
+			add_word_to_translations(english_word, zombie_word)
+	GLOB.english_to_zombie = sort_list(GLOB.english_to_zombie) // Alphabetizes the list (for debugging)
+
 /obj/item/organ/internal/tongue/zombie/modify_speech(datum/source, list/speech_args)
-	var/list/message_list = splittext(speech_args[SPEECH_MESSAGE], " ")
-	var/maxchanges = max(round(message_list.len / 1.5), 2)
+	var/message = speech_args[SPEECH_MESSAGE]
+	if(message[1] != "*")
+		// setup the global list for translation if it hasn't already been done
+		if(!length(GLOB.english_to_zombie))
+			load_zombie_translations()
 
-	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
-		var/insertpos = rand(1, message_list.len - 1)
-		var/inserttext = message_list[insertpos]
+		// make a list of all words that can be translated
+		var/list/message_word_list = splittext(message, " ")
+		var/list/translated_word_list = list()
+		for(var/word in message_word_list)
+			word = GLOB.english_to_zombie[lowertext(word)]
+			translated_word_list += word ? word : FALSE
 
-		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
-			message_list[insertpos] = inserttext + "..."
+		// all occurrences of characters "eiou" (case-insensitive) are replaced with "r"
+		message = replacetext(message, regex(@"[eiou]", "ig"), "r")
+		// all characters other than "zhrgbmna .!?-" (case-insensitive) are stripped
+		message = replacetext(message, regex(@"[^zhrgbmna.!?-\s]", "ig"), "")
+		// multiple spaces are replaced with a single (whitespace is trimmed)
+		message = replacetext(message, regex(@"(\s+)", "g"), " ")
 
-		if(prob(20) && message_list.len > 3)
-			message_list.Insert(insertpos, "[pick("BRAINS", "Brains", "Braaaiinnnsss", "BRAAAIIINNSSS")]...")
+		var/list/old_words = splittext(message, " ")
+		var/list/new_words = list()
+		for(var/word in old_words)
+			// lower-case "r" at the end of words replaced with "rh"
+			word = replacetext(word, regex(@"\lr\b"), "rh")
+			// an "a" or "A" by itself will be replaced with "hra"
+			word = replacetext(word, regex(@"\b[Aa]\b"), "hra")
+			new_words += word
 
-	speech_args[SPEECH_MESSAGE] = jointext(message_list, " ")
+		// if words were not translated, then we apply our zombie speech patterns
+		for(var/i in 1 to length(new_words))
+			new_words[i] = translated_word_list[i] ? translated_word_list[i] : new_words[i]
+
+		message = new_words.Join(" ")
+		message = capitalize(message)
+		speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/internal/tongue/alien
 	name = "alien tongue"
@@ -320,6 +361,10 @@
 	languages_possible = languages_possible_alien
 
 /obj/item/organ/internal/tongue/alien/modify_speech(datum/source, list/speech_args)
+	var/datum/saymode/xeno/hivemind = speech_args[SPEECH_SAYMODE]
+	if(hivemind)
+		return
+
 	playsound(owner, SFX_HISS, 25, TRUE, TRUE)
 
 /obj/item/organ/internal/tongue/bone
@@ -434,6 +479,15 @@
 	. = ..()
 	languages_possible = languages_possible_ethereal
 
+/// Defines used to determine whether a sign language user can sign or not, and if not, why they cannot.
+#define SIGN_OKAY 0
+#define SIGN_ONE_HAND 1
+#define SIGN_HANDS_FULL 2
+#define SIGN_ARMLESS 3
+#define SIGN_ARMS_DISABLED 4
+#define SIGN_TRAIT_BLOCKED 5
+#define SIGN_CUFFED 6
+
 //Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/internal/tongue/tied
 	name = "tied tongue"
@@ -455,10 +509,12 @@
 	signer.verb_yell = "emphatically signs"
 	signer.bubble_icon = "signlang"
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
+	RegisterSignal(signer, COMSIG_LIVING_TRY_SPEECH, .proc/on_speech_check)
+	RegisterSignal(signer, COMSIG_LIVING_TREAT_MESSAGE, .proc/on_treat_message)
+	RegisterSignal(signer, COMSIG_MOVABLE_USING_RADIO, .proc/on_use_radio)
 
 /obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
-	..()
+	. = ..()
 	speaker.verb_ask = initial(speaker.verb_ask)
 	speaker.verb_exclaim = initial(speaker.verb_exclaim)
 	speaker.verb_whisper = initial(speaker.verb_whisper)
@@ -466,7 +522,97 @@
 	speaker.verb_yell = initial(speaker.verb_yell)
 	speaker.bubble_icon = initial(speaker.bubble_icon)
 	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
+	UnregisterSignal(speaker, list(COMSIG_LIVING_TRY_SPEECH, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO))
 
+/// Signal proc for [COMSIG_LIVING_TRY_SPEECH]
+/// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)
+/obj/item/organ/internal/tongue/tied/proc/on_speech_check(mob/living/source, message, ignore_spam, forced)
+	SIGNAL_HANDLER
+
+	if(source.mind?.miming)
+		to_chat(source, span_green("You stop yourself from signing in favor of the artform of mimery!"))
+		return COMPONENT_CANNOT_SPEAK
+
+	switch(check_signables_state())
+		if(SIGN_HANDS_FULL) // Full hands
+			source.visible_message("tries to sign, but can't with [source.p_their()] hands full!", visible_message_flags = EMOTE_MESSAGE)
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_CUFFED) // Restrained
+			source.visible_message("tries to sign, but can't with [source.p_their()] hands bound!", visible_message_flags = EMOTE_MESSAGE)
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_ARMLESS) // No arms
+			to_chat(source, span_warning("You can't sign with no hands!"))
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_ARMS_DISABLED) // Arms but they're disabled
+			to_chat(source, span_warning("Your can't sign with your hands right now!"))
+			return COMPONENT_CANNOT_SPEAK
+
+		if(SIGN_TRAIT_BLOCKED) // Hands blocked or emote mute
+			to_chat(source, span_warning("You can't sign at the moment!"))
+			return COMPONENT_CANNOT_SPEAK
+
+	// Assuming none of the above fail, sign language users can speak
+	// regardless of being muzzled or mute toxin'd or whatever.
+	return COMPONENT_CAN_ALWAYS_SPEAK
+
+/// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE] that stars out our message if we only have 1 hand free
+/obj/item/organ/internal/tongue/tied/proc/on_treat_message(mob/living/source, list/message_args)
+	SIGNAL_HANDLER
+
+	if(check_signables_state() == SIGN_ONE_HAND)
+		message_args[TREAT_MESSAGE_MESSAGE] = stars(message_args[TREAT_MESSAGE_MESSAGE])
+
+/// Signal proc for [COMSIG_MOVABLE_USING_RADIO] that disallows us from speaking on comms if we don't have the special trait
+/// Being unable to sign, or having our message be starred out, is handled by the above two signal procs.
+/obj/item/organ/internal/tongue/tied/proc/on_use_radio(atom/movable/source, obj/item/radio/radio)
+	SIGNAL_HANDLER
+
+	return HAS_TRAIT(source, TRAIT_CAN_SIGN_ON_COMMS) ? NONE : COMPONENT_CANNOT_USE_RADIO
+
+/// Checks to see what state this person is in and if they are able to sign or not.
+/obj/item/organ/internal/tongue/tied/proc/check_signables_state()
+	if(!owner)
+		CRASH("[type] called check_signables_state without an owner.")
+
+	// See how many hands we can actually use (this counts disabled / missing limbs for us)
+	var/total_hands = owner.usable_hands
+	// Look ma, no hands!
+	if(total_hands <= 0)
+		// Either our hands are still attached (just disabled) or they're gone entirely
+		return owner.num_hands > 0 ? SIGN_ARMS_DISABLED : SIGN_ARMLESS
+
+	// Now let's see how many of our hands is holding something
+	var/busy_hands = 0
+	// Yes held_items can contain null values, which represents empty hands,
+	// I'm just saving myself a variable cast by using as anything
+	for(var/obj/item/held_item as anything in owner.held_items)
+		// items like slappers/zombie claws/etc. should be ignored
+		if(isnull(held_item) || held_item.item_flags & HAND_ITEM)
+			continue
+
+		busy_hands++
+
+	// Handcuffed or otherwise restrained - can't talk
+	if(HAS_TRAIT(owner, TRAIT_RESTRAINED))
+		return SIGN_CUFFED
+	// Some other trait preventing us from using our hands now
+	else if(HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(owner, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
+
+	// Okay let's compare the total hands to the number of busy hands
+	// to see how many we have left to use for signing right now
+	var/actually_usable_hands = total_hands - busy_hands
+	if(actually_usable_hands <= 0)
+		return SIGN_HANDS_FULL
+	if(actually_usable_hands == 1)
+		return SIGN_ONE_HAND
+
+	return SIGN_OKAY
+
+//Thank you Jwapplephobia for helping me with the literal hellcode below //Shoutout to Jwapplephobia
 /obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
 	// The message we send instead of our normal one
 	var/new_message
@@ -484,16 +630,18 @@
 	speech_args[SPEECH_MESSAGE] = new_message
 
 	// Cut our last overlay before we replace it
-	if(timeleft(tonal_timerid) > 0 && (question_found || exclamation_found))
+	if(timeleft(tonal_timerid) > 0)
 		remove_tonal_indicator()
 		deltimer(tonal_timerid)
-	if(question_found) // Prioritize questions
+	// Prioritize questions
+	if(question_found)
 		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang1", TYPING_LAYER)
 		owner.visible_message(span_notice("[owner] lowers [owner.p_their()] eyebrows."))
 	else if(exclamation_found)
 		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang2", TYPING_LAYER)
 		owner.visible_message(span_notice("[owner] raises [owner.p_their()] eyebrows."))
-	if(!isnull(tonal_indicator) && owner?.client.typing_indicators)
+	// If either an exclamation or question are found
+	if(!isnull(tonal_indicator) && owner.client?.typing_indicators)
 		owner.add_overlay(tonal_indicator)
 		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	else // If we're not gonna use it, just be sure we get rid of it
@@ -504,3 +652,11 @@
 		return
 	owner.cut_overlay(tonal_indicator)
 	tonal_indicator = null
+
+#undef SIGN_OKAY
+#undef SIGN_ONE_HAND
+#undef SIGN_HANDS_FULL
+#undef SIGN_ARMLESS
+#undef SIGN_ARMS_DISABLED
+#undef SIGN_TRAIT_BLOCKED
+#undef SIGN_CUFFED

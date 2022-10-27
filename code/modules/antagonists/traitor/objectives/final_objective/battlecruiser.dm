@@ -1,6 +1,3 @@
-/// The minimum number of ghosts and observers needed before handing out battlecruiser objectives.
-#define MIN_GHOSTS_FOR_BATTLECRUISER 8
-
 /datum/traitor_objective/final/battlecruiser
 	name = "Reveal Station Coordinates to nearby Syndicate Battlecruiser"
 	description = "Use a special upload card on a communications console to send the coordinates \
@@ -18,12 +15,6 @@
 	// There's no empty space to load a battlecruiser in...
 	if(!SSmapping.empty_space)
 		return FALSE
-	// Check how many observers + ghosts (dead players) we have.
-	// If there's not a ton of observers and ghosts to populate the battlecruiser,
-	// We won't bother giving the objective out.
-	var/num_ghosts = length(GLOB.current_observers_list) + length(GLOB.dead_player_list)
-	if(num_ghosts < MIN_GHOSTS_FOR_BATTLECRUISER)
-		return FALSE
 
 	return TRUE
 
@@ -31,7 +22,7 @@
 	. = ..()
 	team = new()
 	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
-	if(nuke.r_code == "ADMIN")
+	if(nuke.r_code == NUKE_CODE_UNSET)
 		nuke.r_code = random_nukecode()
 	team.nuke = nuke
 	team.update_objectives()
@@ -58,5 +49,3 @@
 				"style" = STYLE_SYNDICATE,
 				"spawn" = emag_card,
 			))
-
-#undef MIN_GHOSTS_FOR_BATTLECRUISER

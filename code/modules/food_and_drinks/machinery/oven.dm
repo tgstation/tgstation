@@ -55,7 +55,7 @@
 	else
 		. += mutable_appearance(icon, "oven_lid_closed")
 		if(used_tray?.contents.len)
-			. += emissive_appearance(icon, "oven_light_mask", alpha = src.alpha)
+			. += emissive_appearance(icon, "oven_light_mask", src, alpha = src.alpha)
 
 /obj/machinery/oven/process(delta_time)
 	..()
@@ -101,6 +101,7 @@
 		oven_tray.vis_flags |= VIS_HIDE
 	vis_contents += oven_tray
 	oven_tray.flags_1 |= IS_ONTOP_1
+	oven_tray.vis_flags |= VIS_INHERIT_PLANE
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
 	oven_tray.pixel_x = OVEN_TRAY_X_OFFSET
 
@@ -116,6 +117,7 @@
 /obj/machinery/oven/proc/tray_removed_from_oven(obj/item/oven_tray)
 	SIGNAL_HANDLER
 	oven_tray.flags_1 &= ~IS_ONTOP_1
+	oven_tray.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= oven_tray
 	used_tray = null
 	UnregisterSignal(oven_tray, COMSIG_MOVABLE_MOVED)
@@ -164,15 +166,10 @@
 		if(OVEN_SMOKE_STATE_GOOD)
 			particles = new /particles/smoke/steam/mild
 
-/obj/machinery/oven/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
-		return
-	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
-		return
+/obj/machinery/oven/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool, ignore_panel = TRUE)
 
 /obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	default_unfasten_wrench(user, tool, time = 2 SECONDS)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

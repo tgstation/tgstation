@@ -10,7 +10,7 @@
 /obj/effect/mob_spawn/corpse/human/skeleton,
 /obj/item/clothing/suit/costume/bronze,
 /obj/item/clothing/shoes/bronze,
-/obj/item/clothing/head/bronze,
+/obj/item/clothing/head/costume/bronze,
 /turf/open/floor/bronze{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -34,7 +34,7 @@
 /area/icemoon/surface)
 "B" = (
 /turf/open/genturf,
-/area/mine/unexplored)
+/area/lavaland/surface/outdoors/unexplored)
 "C" = (
 /obj/structure/fluff/clockwork/blind_eye,
 /turf/open/floor/bronze,

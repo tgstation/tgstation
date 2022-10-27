@@ -134,10 +134,10 @@
 
 /obj/item/ammo_casing/shotgun/dart
 	name = "shotgun dart"
-	desc = "A dart for use in shotguns. Can be injected with up to 30 units of any chemical."
+	desc = "A dart for use in shotguns. Can be injected with up to 15 units of any chemical."
 	icon_state = "cshell"
 	projectile_type = /obj/projectile/bullet/dart
-	var/reagent_amount = 30
+	var/reagent_amount = 15
 
 /obj/item/ammo_casing/shotgun/dart/Initialize(mapload)
 	. = ..()
@@ -147,7 +147,8 @@
 	return
 
 /obj/item/ammo_casing/shotgun/dart/bioterror
-	desc = "A shotgun dart filled with deadly toxins."
+	desc = "An improved shotgun dart filled with deadly toxins. Can be injected with up to 30 units of any chemical."
+	reagent_amount = 30
 
 /obj/item/ammo_casing/shotgun/dart/bioterror/Initialize(mapload)
 	. = ..()

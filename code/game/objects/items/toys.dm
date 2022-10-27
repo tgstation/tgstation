@@ -381,6 +381,7 @@
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
+	inhand_icon_state = "e_sword"
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -399,6 +400,14 @@
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Change blade color"
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -407,13 +416,53 @@
  */
 /obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-
-	if(active)
-		icon_state = "[icon_state]_[saber_color]"
-
 	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/toy/sword/examine(mob/user)
+	. = ..()
+	. += span_notice("It has a lighting dial currently set to [saber_color] which looks like it can be turned with a <b>screwdriver</b>.")
+
+/obj/item/toy/sword/screwdriver_act(mob/living/user, obj/item/tool)
+	switch(saber_color)
+		if("red")
+			saber_color = "blue"
+		if("blue")
+			saber_color = "green"
+		if("green")
+			saber_color = "purple"
+		if("purple")
+			saber_color = "red"
+		else
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+	balloon_alert(user, "changed to [saber_color]")
+	update_appearance(UPDATE_ICON)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/toy/sword/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, saber_color))
+		update_appearance(UPDATE_ICON)
+
+/obj/item/toy/sword/update_icon_state()
+	. = ..()
+	var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
+	var/active = transforming_comp?.active
+	var/last_part = active ? "_on[saber_color ? "_[saber_color]" : null]" : null
+	icon_state = "[initial(icon_state)][last_part]"
+	inhand_icon_state = "[initial(inhand_icon_state)][last_part]"
+
+/obj/item/toy/sword/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's already fabulous!"))
+		return
+	hacked = TRUE
+	saber_color = "rainbow"
+	to_chat(user, span_warning("RNBW_ENGAGE"))
+	update_appearance(UPDATE_ICON)
+
 
 // Copied from /obj/item/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
@@ -434,13 +483,6 @@
 			qdel(weapon)
 			qdel(src)
 			user.put_in_hands(new_saber)
-	else if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(hacked)
-			to_chat(user, span_warning("It's already fabulous!"))
-		else
-			hacked = TRUE
-			saber_color = "rainbow"
-			to_chat(user, span_warning("RNBW_ENGAGE"))
 	else
 		return ..()
 
@@ -664,7 +706,7 @@
 /obj/item/toy/talking/proc/do_toy_talk(mob/user)
 	for(var/message in generate_messages())
 		toy_talk(user, message)
-		sleep(10)
+		sleep(1 SECONDS)
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
 	say(message, spans = list(span))
@@ -733,26 +775,26 @@
 	if (obj_flags & EMAGGED && cooldown < world.time)
 		cooldown = world.time + 600
 		user.visible_message(span_hear("You hear the click of a button."), span_notice("You activate [src], it plays a loud noise!"))
-		sleep(5)
+		sleep(0.5 SECONDS)
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(140)
+		sleep(14 SECONDS)
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
 		qdel(src)
 	else if (cooldown < world.time)
 		cooldown = world.time + 600 //1 minute
 		user.visible_message(span_warning("[user] presses a button on [src]."), span_notice("You activate [src], it plays a loud noise!"), span_hear("You hear the click of a button."))
-		sleep(5)
+		sleep(0.5 SECONDS)
 		icon_state = "nuketoy"
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(135)
+		sleep(13.5 SECONDS)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
 		icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
 		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
-		sleep(5)
+		sleep(0.5 SECONDS)
 
 /obj/item/toy/nuke/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
@@ -768,6 +810,7 @@
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "minimeteor"
+	inhand_icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/minimeteor/emag_act(mob/user)
@@ -913,7 +956,7 @@
 		cooldown = (world.time + 50) //5 second cooldown
 		user.visible_message(span_notice("[user] pulls back the string on [src]."))
 		icon_state = "[initial(icon_state)]_used"
-		sleep(5)
+		sleep(0.5 SECONDS)
 		audible_message(span_danger("[icon2html(src, viewers(src))] Hiss!"))
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)

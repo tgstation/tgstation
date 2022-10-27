@@ -63,6 +63,7 @@
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
 		var/obj/projectile/projectile_obj = new projectile(get_turf(src))
+		projectile_obj.log_override = TRUE //we log being fired ourselves a little further down.
 		projectile_obj.firer = chassis
 		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
 		if(source.client && isliving(source)) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
@@ -73,11 +74,13 @@
 			new firing_effect_type(get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
 
+		log_combat(source, target, "fired [projectile_obj] at", src, "from [chassis] at [get_area_name(src, TRUE)]")
+
 		sleep(max(0, projectile_delay))
 
 		if(kickback)
 			chassis.newtonian_move(newtonian_target)
-	chassis.log_message("Fired from [name], targeting [target].", LOG_ATTACK)
+	chassis.log_message("[key_name(source)] fired [src], targeting [target].", LOG_ATTACK)
 
 //Base energy weapon type
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
@@ -223,7 +226,7 @@
 			continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
-		M.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+		M.adjust_stutter(40 SECONDS)
 		var/obj/item/organ/internal/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 		if(ears)
 			ears.adjustEarDamage(0, 30)
@@ -232,7 +235,7 @@
 			M.Stun(200)
 			M.Unconscious(80)
 		else
-			M.set_timed_status_effect(1000 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			M.set_jitter_if_lower(1000 SECONDS)
 
 	log_message("Honked from [src.name]. HONK!", LOG_MECHA)
 	var/turf/T = get_turf(src)
@@ -342,11 +345,13 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LMG
 
+/// Missiles
+/// SRM-8 Missile Rack - Used by Nuclear Operatives - Explodes when it hits anything
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "\improper SRM-8 missile rack"
-	desc = "A weapon for combat exosuits. Launches light explosive missiles."
+	desc = "A weapon for combat exosuits. Launches short range missiles."
 	icon_state = "mecha_missilerack"
-	projectile = /obj/projectile/bullet/a84mm/he
+	projectile = /obj/projectile/bullet/rocket/srm
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 8
 	projectiles_cache = 0
@@ -354,13 +359,14 @@
 	disabledreload = TRUE
 	equip_cooldown = 60
 	harmful = TRUE
-	ammo_type = MECHA_AMMO_MISSILE_HE
+	ammo_type = MECHA_AMMO_MISSILE_SRM
 
+/// PEP-6 Missile Rack - Used by Robotics - Explodes only when it hits dense objects like walls, borgs and mechs
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
-	name = "\improper BRM-6 missile rack"
-	desc = "A weapon for combat exosuits. Launches low-explosive breaching missiles designed to explode only when striking a sturdy target."
+	name = "\improper PEP-6 missile rack"
+	desc = "A weapon for combat exosuits. Launches precision explosive projectiles designed to explode only when striking a structured target, including walls, exosuits and cyborgs."
 	icon_state = "mecha_missilerack_six"
-	projectile = /obj/projectile/bullet/a84mm_br
+	projectile = /obj/projectile/bullet/rocket/pep
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 6
 	projectiles_cache = 0
@@ -368,8 +374,7 @@
 	disabledreload = TRUE
 	equip_cooldown = 60
 	harmful = TRUE
-	ammo_type = MECHA_AMMO_MISSILE_AP
-
+	ammo_type = MECHA_AMMO_MISSILE_PEP
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher
 	var/missile_speed = 2

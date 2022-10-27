@@ -291,7 +291,7 @@
 		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.getorganslot(ORGAN_SLOT_EXTERNAL_TAIL)
 		if(HAS_TRAIT(tackle_target, TRAIT_TACKLING_TAILED_DEFENDER) && !el_tail)
 			defense_mod -= 1
-		if(el_tail.wag_flags & WAG_WAGGING) // lizard tail wagging is robust and can swat away assailants!
+		if(el_tail && (el_tail.wag_flags & WAG_WAGGING)) // lizard tail wagging is robust and can swat away assailants!
 			defense_mod += 1
 
 	// OF-FENSE
@@ -373,7 +373,7 @@
 		var/mob/living/carbon/human/S = user
 		var/head_slot = S.get_item_by_slot(ITEM_SLOT_HEAD)
 		var/suit_slot = S.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
+		if(head_slot && (istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/utility/hardhat)))
 			oopsie_mod -= 6
 		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/armor/riot)))
 			oopsie_mod -= 6
@@ -436,7 +436,7 @@
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
 			user.adjustStaminaLoss(30, updating_health=FALSE)
 			user.adjustBruteLoss(30)
-			user.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/confusion)
+			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8)
@@ -448,7 +448,7 @@
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
 			user.adjustStaminaLoss(30, updating_health=FALSE)
 			user.adjustBruteLoss(10)
-			user.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
+			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(30)
 			shake_camera(user, 3, 4)
 

@@ -124,15 +124,11 @@
 				logfile.stored_text = "[logfile.stored_text][logstring]\[BR\]"
 			logfile.stored_text = "[logfile.stored_text]\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
-			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
-			if(!computer || !hard_drive || !hard_drive.store_file(logfile))
+			if(!computer || !computer.store_file(logfile))
 				if(!computer)
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")
-				if(!hard_drive)
-					computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive connection error\" warning."))
-				else // In 99.9% cases this will mean our HDD is full
-					computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning."))
+				computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning."))
 			return TRUE
 		if("PRG_renamechannel")
 			if(!authed)
@@ -171,7 +167,7 @@
 			channel.ping_user(src, pinged)
 			return TRUE
 
-/datum/computer_file/program/chatclient/process_tick()
+/datum/computer_file/program/chatclient/process_tick(delta_time)
 	. = ..()
 	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
 	if(program_state != PROGRAM_STATE_KILLED)

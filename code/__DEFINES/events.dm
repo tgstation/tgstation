@@ -26,7 +26,12 @@
 #define EVENT_CATEGORY_HOLIDAY "Holiday"
 ///Events with enemy groups with a more complex plan
 #define EVENT_CATEGORY_INVASION "Invasion"
+///Events that make a mess
+#define EVENT_CATEGORY_JANITORIAL "Janitorial"
 ///Events that summon meteors and other debris, and stationwide waves of harmful space weather
 #define EVENT_CATEGORY_SPACE "Space Threats"
 ///Events summoned by a wizard
 #define EVENT_CATEGORY_WIZARD "Wizard"
+
+/// Return from admin setup to stop the event from triggering entirely.
+#define ADMIN_CANCEL_EVENT "cancel event"

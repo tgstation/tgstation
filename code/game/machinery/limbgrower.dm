@@ -156,7 +156,7 @@
 			for(var/reagent_id in consumed_reagents_list)
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
-					audible_message(span_notice("The [src] buzzes."))
+					audible_message(span_notice("[src] buzzes."))
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 

@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(dbcore)
 		if(2)
 			message_admins("Could not get schema version from database")
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/dbcore/stat_entry(msg)
 	msg = "P:[length(all_queries)]|Active:[length(queries_active)]|Standby:[length(queries_standby)]"
@@ -77,7 +77,7 @@ SUBSYSTEM_DEF(dbcore)
 	while(length(processing_queries))
 		var/datum/db_query/query = popleft(processing_queries)
 		if(world.time - query.last_activity_time > (5 MINUTES))
-			message_admins("Found undeleted query, please check the server logs and notify coders.")
+			stack_trace("Found undeleted query, check the sql.log for the undeleted query and add a delete call to the query datum.")
 			log_sql("Undeleted query: \"[query.sql]\" LA: [query.last_activity] LAT: [query.last_activity_time]")
 			qdel(query)
 		if(MC_TICK_CHECK)
@@ -338,7 +338,7 @@ SUBSYSTEM_DEF(dbcore)
 			queries -= query
 			stack_trace("Invalid query passed to QuerySelect: `[query]` [REF(query)]")
 			continue
-		
+
 		if (warn)
 			INVOKE_ASYNC(query, /datum/db_query.proc/warn_execute)
 		else

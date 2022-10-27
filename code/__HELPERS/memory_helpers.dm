@@ -47,7 +47,7 @@
 
 		if(victim == current)
 			story_mood = victim_mood
-		else
+		else if(current.mob_mood)
 			story_mood = current.mob_mood.mood_level
 
 	extra_info[DETAIL_PROTAGONIST_MOOD] = victim_mood

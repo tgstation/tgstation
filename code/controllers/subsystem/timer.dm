@@ -127,7 +127,9 @@ SUBSYSTEM_DEF(timer)
 		ctime_timer.spent = REALTIMEOFDAY
 		callBack.InvokeAsync()
 
-		if(ctime_timer.flags & TIMER_LOOP)
+		if(ctime_timer.flags & TIMER_LOOP) // Re-insert valid looping client timers into the client timer list.
+			if (QDELETED(ctime_timer)) // Don't re-insert timers deleted inside their callbacks.
+				continue
 			ctime_timer.spent = 0
 			ctime_timer.timeToRun = REALTIMEOFDAY + ctime_timer.wait
 			BINARY_INSERT(ctime_timer, clienttime_timers, /datum/timedevent, ctime_timer, timeToRun, COMPARE_KEY)
@@ -173,7 +175,9 @@ SUBSYSTEM_DEF(timer)
 				callBack.InvokeAsync()
 				last_invoke_tick = world.time
 
-			if (timer.flags & TIMER_LOOP) // Prepare looping timers to re-enter the queue
+			if (timer.flags & TIMER_LOOP) // Prepare valid looping timers to re-enter the queue
+				if(QDELETED(timer)) // If a loop is deleted in its callback, we need to avoid re-inserting it.
+					continue
 				timer.spent = 0
 				timer.timeToRun = world.time + timer.wait
 				timer.bucketJoin()
@@ -657,6 +661,32 @@ SUBSYSTEM_DEF(timer)
 	if(!timer || timer.spent)
 		return null
 	return timer.timeToRun - (timer.flags & TIMER_CLIENT_TIME ? REALTIMEOFDAY : world.time)
+
+/**
+ * Update the delay on an existing LOOPING timer
+ * Will come into effect on the next process
+ *
+ * Arguments:
+ * * id a timerid or a /datum/timedevent
+ * * new_wait the new wait to give this looping timer
+ */
+/proc/updatetimedelay(id, new_wait, datum/controller/subsystem/timer/timer_subsystem)
+	if (!id)
+		return
+	if (id == TIMER_ID_NULL)
+		CRASH("Tried to update the wait of null timerid. Use TIMER_STOPPABLE flag")
+	if (istype(id, /datum/timedevent))
+		var/datum/timedevent/timer = id
+		timer.wait = new_wait
+		return
+	timer_subsystem = timer_subsystem || SStimer
+	//id is string
+	var/datum/timedevent/timer = timer_subsystem.timer_id_dict[id]
+	if(!timer || timer.spent)
+		return
+	if(!(timer.flags & TIMER_LOOP))
+		CRASH("Tried to update the wait of a non looping timer. This is not supported")
+	timer.wait = new_wait
 
 #undef BUCKET_LEN
 #undef BUCKET_POS

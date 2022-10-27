@@ -96,7 +96,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate1)
 "YP" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,

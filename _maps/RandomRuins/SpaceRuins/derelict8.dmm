@@ -25,7 +25,7 @@
 /area/template_noop)
 "dS" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/light/broken,
+/obj/machinery/light/broken/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)

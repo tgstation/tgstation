@@ -18,7 +18,7 @@
 		/obj/item/multitool = 1,
 		/obj/item/clothing/glasses/meson = 1,
 		/obj/item/storage/belt/utility = 1,
-		/obj/item/clothing/head/welding = 1,
+		/obj/item/clothing/head/utility/welding = 1,
 	)
 
 /obj/effect/spawner/random/engineering/tool_advanced

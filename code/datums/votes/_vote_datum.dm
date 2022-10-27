@@ -15,6 +15,8 @@
 	var/list/default_choices
 	/// Does the name of this vote contain the word "vote"?
 	var/contains_vote_in_name = FALSE
+	/// What message do we want to pass to the player-side vote panel as a tooltip?
+	var/message = "Click to initiate a vote."
 
 	// Internal values used when tracking ongoing votes.
 	// Don't mess with these, change the above values / override procs for subtypes.
@@ -75,10 +77,10 @@
 	if(started_time)
 		var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
 		if(next_allowed_time > world.time && !forced)
-			if(by_who)
-				to_chat(by_who, span_warning("A vote was initiated recently. You must wait [DisplayTimeText(next_allowed_time - world.time)] before a new vote can be started!"))
+			message = "A vote was initiated recently. You must wait [DisplayTimeText(next_allowed_time - world.time)] before a new vote can be started!"
 			return FALSE
 
+	message = initial(message)
 	return TRUE
 
 /**

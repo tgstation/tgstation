@@ -150,7 +150,7 @@
 //Debug proc used to highlight bounding area
 /obj/docking_port/proc/highlight(_color = "#f00")
 	invisibility = 0
-	plane = GHOST_PLANE
+	SET_PLANE_IMPLICIT(src, GHOST_PLANE)
 	var/list/L = return_coords()
 	var/turf/T0 = locate(L[1],L[2],z)
 	var/turf/T1 = locate(L[3],L[4],z)
@@ -383,7 +383,14 @@
 	///List of all areas our shuttle holds.
 	var/list/shuttle_areas = list()
 	///List of all currently used engines that propels us.
-	var/list/obj/structure/shuttle/engine/engine_list = list()
+	var/list/obj/machinery/power/shuttle_engine/engine_list = list()
+
+	///How fast the shuttle should be, taking engine thrust into account.
+	var/engine_coeff = 1
+	///How much engine power (thrust) the shuttle currently has.
+	var/current_engine_power = 0
+	///How much engine power (thrust) the shuttle starts with at mapload.
+	var/initial_engine_power = 0
 
 	///used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/timer
@@ -411,21 +418,23 @@
 
 	var/launch_status = NOLAUNCH
 
+	var/list/ripples = list()
 	///Whether or not you want your ship to knock people down, and also whether it will throw them several tiles upon launching.
 	var/list/movement_force = list(
 		"KNOCKDOWN" = 3,
 		"THROW" = 0,
 	)
 
-	var/list/ripples = list()
-	var/engine_coeff = 1
-	var/current_engines = 0
-	var/initial_engines = 0
-
 	///if this shuttle can move docking ports other than the one it is docked at
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
 
+/**
+ * Actions to be taken after shuttle is loaded but before it has been moved out of transit z-level to its final location
+ *
+ * Arguments:
+ * * replace - TRUE if this shuttle is replacing an existing one. FALSE by default.
+ */
 /obj/docking_port/mobile/register(replace = FALSE)
 	. = ..()
 	if(!shuttle_id)
@@ -447,6 +456,15 @@
 			SSshuttle.assoc_mobile[shuttle_id] = 1
 
 	SSshuttle.mobile_docking_ports += src
+
+/**
+ * Actions to be taken after shuttle is loaded and has been moved to its final location
+ *
+ * Arguments:
+ * * replace - TRUE if this shuttle is replacing an existing one. FALSE by default.
+ */
+/obj/docking_port/mobile/proc/postregister(replace = FALSE)
+	return
 
 /obj/docking_port/mobile/unregister()
 	. = ..()
@@ -545,32 +563,37 @@
 /obj/docking_port/mobile/proc/transit_failure()
 	message_admins("Shuttle [src] repeatedly failed to create transit zone.")
 
-//call the shuttle to destination S
-/obj/docking_port/mobile/proc/request(obj/docking_port/stationary/S)
-	if(!check_dock(S))
+/**
+ * Calls the shuttle to the destination port, respecting its ignition and call timers
+ *
+ * Arguments:
+ * * destination_port - Stationary docking port to move the shuttle to
+ */
+/obj/docking_port/mobile/proc/request(obj/docking_port/stationary/destination_port)
+	if(!check_dock(destination_port))
 		testing("check_dock failed on request for [src]")
 		return
 
-	if(mode == SHUTTLE_IGNITING && destination == S)
+	if(mode == SHUTTLE_IGNITING && destination == destination_port)
 		return
 
 	switch(mode)
 		if(SHUTTLE_CALL)
-			if(S == destination)
+			if(destination_port == destination)
 				if(timeLeft(1) < callTime * engine_coeff)
 					setTimer(callTime * engine_coeff)
 			else
-				destination = S
+				destination = destination_port
 				setTimer(callTime * engine_coeff)
 		if(SHUTTLE_RECALL)
-			if(S == destination)
+			if(destination_port == destination)
 				setTimer(callTime * engine_coeff - timeLeft(1))
 			else
-				destination = S
+				destination = destination_port
 				setTimer(callTime * engine_coeff)
 			mode = SHUTTLE_CALL
 		if(SHUTTLE_IDLE, SHUTTLE_IGNITING)
-			destination = S
+			destination = destination_port
 			mode = SHUTTLE_IGNITING
 			setTimer(ignitionTime)
 
@@ -641,6 +664,10 @@
 
 	qdel(src, force=TRUE)
 
+/**
+ * Ghosts and marks as escaped (for greentext purposes) all mobs, then deletes the shuttle.
+ * Used by the Shuttle Manipulator
+ */
 /obj/docking_port/mobile/proc/intoTheSunset()
 	// Loop over mobs
 	for(var/turf/turfs as anything in return_turfs())
@@ -901,10 +928,11 @@
 // attempts to locate /obj/machinery/computer/shuttle with matching ID inside the shuttle
 /obj/docking_port/mobile/proc/get_control_console()
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/obj/machinery/computer/shuttle/shuttle_computers as anything in shuttle_area)
-			if(shuttle_computers.shuttleId != shuttle_id)
-				continue
-			return shuttle_computers
+		var/obj/machinery/computer/shuttle/shuttle_computer = locate(/obj/machinery/computer/shuttle) in shuttle_area
+		if(!shuttle_computer)
+			continue
+		if(shuttle_computer.shuttleId == shuttle_id)
+			return shuttle_computer
 	return null
 
 /obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
@@ -945,7 +973,7 @@
 				source = distant_source
 			else
 				var/closest_dist = 10000
-				for(var/obj/structure/shuttle/engine/engines as anything in engine_list)
+				for(var/obj/machinery/power/shuttle_engine/engines as anything in engine_list)
 					var/dist_near = get_dist(zlevel_mobs, engines)
 					if(dist_near < closest_dist)
 						source = engines
@@ -958,8 +986,8 @@
 	if(!mod)
 		return
 	var/old_coeff = engine_coeff
-	engine_coeff = get_engine_coeff(current_engines,mod)
-	current_engines = max(0, current_engines + mod)
+	engine_coeff = get_engine_coeff(mod)
+	current_engine_power = max(0, current_engine_power + mod)
 	if(in_flight())
 		var/delta_coeff = engine_coeff / old_coeff
 		modTimer(delta_coeff)
@@ -967,22 +995,22 @@
 // Double initial engines to get to 0.5 minimum
 // Lose all initial engines to get to 2
 //For 0 engine shuttles like BYOS 5 engines to get to doublespeed
-/obj/docking_port/mobile/proc/get_engine_coeff(current,engine_mod)
-	var/new_value = max(0, current + engine_mod)
-	if(new_value == initial_engines)
+/obj/docking_port/mobile/proc/get_engine_coeff(engine_mod)
+	var/new_value = max(0, current_engine_power + engine_mod)
+	if(new_value == initial_engine_power)
 		return 1
-	if(new_value > initial_engines)
-		var/delta = new_value - initial_engines
+	if(new_value > initial_engine_power)
+		var/delta = new_value - initial_engine_power
 		var/change_per_engine = (1 - ENGINE_COEFF_MIN) / ENGINE_DEFAULT_MAXSPEED_ENGINES // 5 by default
-		if(initial_engines > 0)
-			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engines // or however many it had
-		return clamp(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
-	if(new_value < initial_engines)
-		var/delta = initial_engines - new_value
+		if(initial_engine_power > 0)
+			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engine_power // or however many it had
+		return clamp(1 - delta * change_per_engine,ENGINE_COEFF_MIN, ENGINE_COEFF_MAX)
+	if(new_value < initial_engine_power)
+		var/delta = initial_engine_power - new_value
 		var/change_per_engine = 1 //doesn't really matter should not be happening for 0 engine shuttles
-		if(initial_engines > 0)
-			change_per_engine = (ENGINE_COEFF_MAX - 1) / initial_engines //just linear drop to max delay
-		return clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
+		if(initial_engine_power > 0)
+			change_per_engine = (ENGINE_COEFF_MAX - 1) / initial_engine_power //just linear drop to max delay
+		return clamp(1 + delta * change_per_engine, ENGINE_COEFF_MIN, ENGINE_COEFF_MAX)
 
 
 /obj/docking_port/mobile/proc/in_flight()
