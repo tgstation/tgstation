@@ -350,8 +350,8 @@
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
-			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_l"
-			eye_lights.color = lamp_doom? COLOR_RED : lamp_color
+			set_light_range(lamp_intensity)
+			set_light_color(lamp_doom? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src) //glowy eyes
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
