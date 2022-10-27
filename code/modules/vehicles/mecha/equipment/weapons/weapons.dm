@@ -351,7 +351,7 @@
 	name = "\improper SRM-8 missile rack"
 	desc = "A weapon for combat exosuits. Launches short range missiles."
 	icon_state = "mecha_missilerack"
-	projectile = /obj/projectile/bullet/a84mm/srm
+	projectile = /obj/projectile/bullet/rocket/srm
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 8
 	projectiles_cache = 0
@@ -366,7 +366,7 @@
 	name = "\improper PEP-6 missile rack"
 	desc = "A weapon for combat exosuits. Launches precision explosive projectiles designed to explode only when striking a structured target, including walls, exosuits and cyborgs."
 	icon_state = "mecha_missilerack_six"
-	projectile = /obj/projectile/bullet/a84mm/pep
+	projectile = /obj/projectile/bullet/rocket/pep
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 6
 	projectiles_cache = 0
