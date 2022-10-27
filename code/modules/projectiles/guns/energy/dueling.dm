@@ -18,6 +18,17 @@
 	var/list/fired = list()
 	var/countdown_length = 10
 	var/countdown_step = 0
+	var/pairing_code = ""
+
+/datum/duel/New(new_gun_A, new_gun_B)
+	pairing_code = SSnetworks.assign_random_name()
+
+	gun_A = new_gun_A
+	gun_B = new_gun_B
+	gun_A.duel = src
+	gun_B.duel = src
+
+	. = ..()
 
 /datum/duel/proc/try_begin()
 	//Check if both guns are held and if so begin.
@@ -130,10 +141,8 @@
 
 ///For each linked gun that still exists, clear its reference to us, then delete.
 /datum/duel/proc/clear_duel()
-	if(gun_A)
-		gun_A.duel = null
-	if(gun_B)
-		gun_B.duel = null
+	gun_A?.duel = null
+	gun_B?.duel = null
 	qdel(src)
 
 /obj/item/gun/energy/dueling
@@ -155,6 +164,23 @@
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)
 
+/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/gun/energy/dueling))
+		var/obj/item/gun/energy/dueling/other_gun = W
+
+		if(!check_valid_duel(user, FALSE) && !other_gun.check_valid_duel(user, FALSE))
+			var/datum/duel/D = new(src, other_gun)
+			to_chat(user,span_notice("Pairing established. Pairing code: [D.pairing_code]"))
+
+	. = ..()
+
+/obj/item/gun/energy/dueling/examine_more(mob/user)
+	. = ..()
+	if(check_valid_duel(user, FALSE))
+		. += "The pairing code is: [duel.pairing_code]"
+	else
+		. += "[src] is currently unpaired."
+
 /obj/item/gun/energy/dueling/proc/setting_iconstate()
 	switch(setting)
 		if(DUEL_SETTING_A)
@@ -167,7 +193,7 @@
 
 /obj/item/gun/energy/dueling/attack_self(mob/living/user)
 	. = ..()
-	if(!check_valid_duel(user))
+	if(!check_valid_duel(user, TRUE))
 		return
 
 	if(duel.state == DUEL_IDLE)
@@ -194,11 +220,11 @@
 
 /obj/item/gun/energy/dueling/Destroy()
 	. = ..()
-	duel.clear_duel()
+	duel?.clear_duel()
 
 /obj/item/gun/energy/dueling/can_trigger_gun(mob/living/user)
 	. = ..()
-	if(!check_valid_duel(user))
+	if(!check_valid_duel(user, TRUE))
 		return FALSE
 
 	switch(duel.state)
@@ -218,7 +244,7 @@
 	return TRUE
 
 /obj/item/gun/energy/dueling/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
-	if(!check_valid_duel(user))
+	if(!check_valid_duel(user, TRUE))
 		return
 	if(duel.state == DUEL_READY)
 		duel.confirmations[src] = TRUE
@@ -235,13 +261,13 @@
 	var/obj/item/ammo_casing/energy/duel/D = chambered
 	D.setting = setting
 
-///Return a boolean of whether or not the pistol has a valid duel datum, if false warn the user
-/obj/item/gun/energy/dueling/proc/check_valid_duel(mob/living/user)
+///Return a boolean of whether or not the pistol has a valid duel datum, if false optionally warn the user
+/obj/item/gun/energy/dueling/proc/check_valid_duel(mob/living/user, do_warn)
 	if(!duel)
-		to_chat(user,span_warning("[src] is not connected to a partner."))
+		if(do_warn)
+			to_chat(user,span_warning("[src] is currently unpaired."))
 		return FALSE
-	else
-		return TRUE
+	return TRUE
 
 /obj/effect/temp_visual/dueling_chaff
 	icon = 'icons/effects/effects.dmi'
@@ -356,8 +382,4 @@
 	. = ..()
 	var/obj/item/gun/energy/dueling/gun_A = new(src)
 	var/obj/item/gun/energy/dueling/gun_B = new(src)
-	var/datum/duel/D = new
-	gun_A.duel = D
-	gun_B.duel = D
-	D.gun_A = gun_A
-	D.gun_B = gun_B
+	new /datum/duel(gun_A, gun_B)
