@@ -322,7 +322,7 @@
 		// Return without taking a breath if there is no air tank.
 		return
 	// To differentiate between no internals and active, but empty internals.
-	return . ? . : FALSE
+	return . || FALSE
 
 /mob/living/carbon/proc/handle_blood(delta_time, times_fired)
 	return
