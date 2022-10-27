@@ -241,6 +241,7 @@
 	operating = FALSE
 	return 1
 
+///When the tram is in station, the doors are locked to engineering only.
 /obj/machinery/door/window/lock()
 	req_access = list("engineering")
 
