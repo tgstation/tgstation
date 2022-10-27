@@ -1,4 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - bugfix: "Blind people can see footsteps again when on lower station levels."
