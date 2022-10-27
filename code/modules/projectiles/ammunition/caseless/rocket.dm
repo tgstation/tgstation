@@ -8,7 +8,7 @@
 /obj/item/ammo_casing/caseless/rocket/heap
 	name = "\improper PM-9HEAP"
 	desc = "An 84mm High Explosive All Purpose rocket. For when you just need something to not exist anymore."
-	icon_state = "84mm-hedp"
+	icon_state = "84mm-heap"
 	projectile_type = /obj/projectile/bullet/rocket/heap
 
 /obj/item/ammo_casing/caseless/rocket/weak

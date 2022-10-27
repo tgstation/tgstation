@@ -50,7 +50,7 @@ among other potential differences. This granularity is helpful for things like t
 /obj/projectile/bullet/rocket/heap
 	name = "\improper HEAP rocket"
 	desc = "I am become death."
-	icon_state = "84mm-hedp"
+	icon_state = "84mm-heap"
 	damage = 80
 	armour_penetration = 100
 	dismemberment = 100
