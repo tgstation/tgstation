@@ -110,7 +110,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/splashscreen/examine()
 	desc = pick(strings(SPLASH_FILE, "splashes"))
-	. = ..()
+	return ..()
 
 /turf/closed/indestructible/start_area
 	name = null
