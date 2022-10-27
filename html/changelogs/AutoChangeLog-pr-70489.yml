@@ -1,8 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - bugfix: "The disease outbreak events will no longer attempt to fire if there are no valid players to infect."
-  - balance: "The disease outbreak events now take a fair bit longer to announce themselves to the crew."
-  - balance: "The 'classic' disease outbreak has an expanded roster of diseases to be selected from."
-  - admin: "Admins can now pick which classic disease they wish to loose upon the crew (BE CAREFUL WITH THESE)."
-  - code_imp: "The disease outbreak event has been split into two different events -- \"Classic\" and \"Advanced\". The code should be a bit easier to read as well."

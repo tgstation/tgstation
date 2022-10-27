@@ -1,4 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - code_imp: "The dmi that reagent holders take fill icons from is no longer hard coded as reagentfillings.dmi, and can be changed using the fill_icon variable"

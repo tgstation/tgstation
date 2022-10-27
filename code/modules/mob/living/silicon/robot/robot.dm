@@ -708,7 +708,7 @@
 
 /mob/living/silicon/robot/proc/ResetModel()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
-	uneq_all()
+	drop_all_held_items()
 	shown_robot_modules = FALSE
 
 	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg
