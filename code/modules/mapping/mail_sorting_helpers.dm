@@ -12,7 +12,7 @@
 	if(!mail_sorter)
 		log_mapping("[src] failed to find a mail sorting disposal pipe at [AREACOORD(src)]")
 	else
-		mail_sorter.sortType = sort_type
+		mail_sorter.sortTypes |= sort_type
 	qdel(src)
 
 /obj/effect/mapping_helpers/mail_sorting/supply
