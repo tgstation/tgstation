@@ -420,7 +420,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10)
 	tastes = list("bread" = 1, "meat" = 1,)
 	slice_type = null
-	foodtypes = MEAT | NUTS | RAW
+	foodtypes = MEAT | NUTS | RAW | GORE
 
 /obj/item/food/pizza/stinging_flatbread
 	name = "\improper Stinging flatbread"
