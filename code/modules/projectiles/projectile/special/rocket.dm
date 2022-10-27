@@ -101,7 +101,7 @@ among other potential differences. This granularity is helpful for things like t
 		explosion(target, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 		return
 	if(isstructure(target) || isvehicle (target) || isclosedturf (target) || ismachinery (target)) //if the target is a structure, machine, vehicle or closed turf like a wall, explode that shit
-		if(target.density) //Dense objects get blow up a bit harder
+		if(target.density) //Dense objects get blown up a bit harder
 			explosion(target, heavy_impact_range = 1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
 			return
 		else
