@@ -242,48 +242,75 @@
 	var/hal_type = hal_setting.get_value()
 	var/datum/nanite_extra_setting/hal_detail_setting = extra_settings[NES_HALLUCINATION_DETAIL]
 	var/hal_details = hal_detail_setting.get_value()
+
 	if(comm_message && (hal_type != "Message")) //Triggered via comm remote, but not set to a message hallucination
 		return
+
 	var/sent_message = comm_message //Comm remotes can send custom hallucination messages for the chat hallucination
 	if(!sent_message)
 		sent_message = hal_details
 
-	if(!iscarbon(host_mob))
+	if(hal_type == "Random")
+		host_mob.adjust_hallucinations(1.5 SECONDS)
 		return
-	var/mob/living/carbon/C = host_mob
+
 	if(hal_details == "random")
 		hal_details = null
-	if(hal_type == "Random")
-		C.hallucination += 15
-	else
-		switch(hal_type)
-			if("Message")
-				new /datum/hallucination/chat(C, TRUE, null, sent_message)
-			if("Battle")
-				new /datum/hallucination/battle(C, TRUE, hal_details)
-			if("Sound")
-				new /datum/hallucination/sounds(C, TRUE, hal_details)
-			if("Weird Sound")
-				new /datum/hallucination/weird_sounds(C, TRUE, hal_details)
-			if("Station Message")
-				new /datum/hallucination/stationmessage(C, TRUE, hal_details)
-			if("Health")
-				switch(hal_details)
-					if("critical")
-						hal_details = SCREWYHUD_CRIT
-					if("dead")
-						hal_details = SCREWYHUD_DEAD
-					if("healthy")
-						hal_details = SCREWYHUD_HEALTHY
-				new /datum/hallucination/hudscrew(C, TRUE, hal_details)
-			if("Alert")
-				new /datum/hallucination/fake_alert(C, TRUE, hal_details)
-			if("Fire")
-				new /datum/hallucination/fire(C, TRUE)
-			if("Shock")
-				new /datum/hallucination/shock(C, TRUE)
-			if("Plasma Flood")
-				new /datum/hallucination/fake_flood(C, TRUE)
+
+	switch(hal_type)
+		if("Message")
+			host_mob.cause_hallucination( \
+				/datum/hallucination/chat, \
+				"nanites", \
+				force_radio = TRUE, \
+				specific_message = sent_message, \
+			)
+		if("Battle")
+			host_mob.cause_hallucination( \
+				get_random_valid_hallucination_subtype(/datum/hallucination/battle), \
+				"nanites", \
+			)
+		if("Sound")
+			host_mob.cause_hallucination( \
+				get_random_valid_hallucination_subtype(/datum/hallucination/fake_sound/normal), \
+				"nanites", \
+			)
+		if("Weird Sound")
+			host_mob.cause_hallucination( \
+				get_random_valid_hallucination_subtype(/datum/hallucination/fake_sound/weird), \
+				"nanites", \
+			)
+		if("Station Message")
+			host_mob.cause_hallucination( \
+				get_random_valid_hallucination_subtype(/datum/hallucination/station_message), \
+				"nanites", \
+			)
+		if("Health")
+			host_mob.cause_hallucination( \
+				/datum/hallucination/fake_health_doll, \
+				"nanites", \
+				severity = hal_details, \
+			)
+		if("Alert")
+			host_mob.cause_hallucination( \
+				get_random_valid_hallucination_subtype(/datum/hallucination/fake_alert), \
+				"nanites", \
+			)
+		if("Fire")
+			host_mob.cause_hallucination( \
+				/datum/hallucination/fire, \
+				"nanites", \
+			)
+		if("Shock")
+			host_mob.cause_hallucination( \
+				/datum/hallucination/shock, \
+				"nanites", \
+			)
+		if("Plasma Flood")
+			host_mob.cause_hallucination( \
+				/datum/hallucination/fake_flood, \
+				"nanites", \
+			)
 
 /datum/nanite_program/comm/hallucination/set_extra_setting(setting, value)
 	. = ..()
@@ -291,18 +318,8 @@
 		switch(value)
 			if("Message")
 				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/text("")
-			if("Battle")
-				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","laser","disabler","esword","gun","stunprod","harmbaton","bomb"))
-			if("Sound")
-				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","airlock","airlock pry","console","explosion","far explosion","mech","glass","alarm","beepsky","mech","wall decon","door hack"))
-			if("Weird Sound")
-				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","phone","hallelujah","highlander","laughter","hyperspace","game over","creepy","tesla"))
-			if("Station Message")
-				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","ratvar","shuttle dock","blob alert","malf ai","meteors","supermatter"))
 			if("Health")
 				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","critical","dead","healthy"))
-			if("Alert")
-				extra_settings[NES_HALLUCINATION_DETAIL] = new /datum/nanite_extra_setting/type("random", list("random","not_enough_oxy","not_enough_tox","not_enough_co2","too_much_oxy","too_much_co2","too_much_tox","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure"))
 			else
 				extra_settings.Remove(NES_HALLUCINATION_DETAIL)
 

@@ -87,5 +87,5 @@
 
 /area/station/external
 	name = "External"
-	area_flags = UNIQUE_AREA | NO_ALERTS | AREA_USES_STARLIGHT
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	icon_state = "space_near"

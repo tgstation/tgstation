@@ -72,7 +72,7 @@
 
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/hazardvest
-	head = /obj/item/clothing/head/hardhat
+	head = /obj/item/clothing/head/utility/hardhat
 	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
@@ -81,7 +81,7 @@
 	name = "Atmospheric Technician (Syndicate)"
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/hazardvest
-	head = /obj/item/clothing/head/hardhat
+	head = /obj/item/clothing/head/utility/hardhat
 	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
@@ -92,7 +92,7 @@
 
 	uniform = /obj/item/clothing/under/syndicate
 	accessory = /obj/item/clothing/accessory/armband/cargo
-	head = /obj/item/clothing/head/hardhat/orange
+	head = /obj/item/clothing/head/utility/hardhat/orange
 	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id

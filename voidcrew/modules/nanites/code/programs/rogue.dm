@@ -58,7 +58,7 @@
 
 /datum/nanite_program/brain_decay/active_effect()
 	if(prob(4))
-		host_mob.hallucination = min(15, host_mob.hallucination)
+		host_mob.set_hallucinations_if_lower(1.5 SECONDS)
 	host_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
 
 //Generic brain-affecting programs can also decay into this
@@ -73,7 +73,7 @@
 	if(prob(10))
 		switch(rand(1,4))
 			if(1)
-				host_mob.hallucination += 15
+				host_mob.adjust_hallucinations(1.5 SECONDS)
 			if(2)
 				host_mob.adjust_timed_status_effect(3 SECONDS, /datum/status_effect/confusion)
 			if(3)

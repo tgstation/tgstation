@@ -6,7 +6,7 @@
 
 	uniform = /obj/item/clothing/under/costume/russian_officer
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/pirate/captain
+	head = /obj/item/clothing/head/costume/pirate/captain
 	suit = /obj/item/clothing/suit/costume/pirate
 
 /datum/outfit/job/hop/pirate
@@ -14,7 +14,7 @@
 
 	uniform = /obj/item/clothing/under/costume/russian_officer
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/pirate
+	head = /obj/item/clothing/head/costume/pirate
 	suit = /obj/item/clothing/suit/costume/pirate
 
 /datum/outfit/job/security/pirate
@@ -22,14 +22,14 @@
 
 	uniform = /obj/item/clothing/under/syndicate/camo
 	shoes = /obj/item/clothing/shoes/jackboots
-	head = /obj/item/clothing/head/bandana
+	head = /obj/item/clothing/head/costume/pirate/bandana
 	suit = /obj/item/clothing/suit/armor/vest
 
 /datum/outfit/job/engineer/pirate
 	name = "Station Engineer (Pirate)"
 
 	uniform = /obj/item/clothing/under/costume/sailor
-	head = /obj/item/clothing/head/bandana
+	head = /obj/item/clothing/head/costume/pirate/bandana
 	shoes = /obj/item/clothing/shoes/jackboots
 
 /datum/outfit/job/doctor/pirate
