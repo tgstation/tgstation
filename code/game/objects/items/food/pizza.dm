@@ -363,3 +363,30 @@
 	food_reagents = list(/datum/reagent/ants = 5, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | BUGS
+
+// Ethereal Pizza, for when they want a slice
+/obj/item/food/pizza/energy
+	name = "energy pizza"
+	desc = "You could probably power a RIPLEY with this. You should avoid eating this if you aren't an Ethereal."
+	icon_state ="energypizza"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18, /datum/reagent/consumable/liquidelectricity/enriched = 18)
+	tastes = list("pure electricity" = 4, "pizza" = 2)
+	slice_type = /obj/item/food/pizzaslice/energy
+	foodtypes = TOXIC
+
+/obj/item/food/pizza/energy/raw
+	name = "raw energy pizza"
+	icon_state = "energypizza_raw"
+	foodtypes = TOXIC
+	burns_in_oven = FALSE
+	slice_type = null
+
+/obj/item/food/pizza/energy/raw/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/energy, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+
+/obj/item/food/pizzaslice/energy
+	name = "energy pizza slice"
+	desc = "You're thinking about using this to power your modsuit. You should avoid eating this if you aren't an Ethereal."
+	icon_state ="energypizzaslice"
+	tastes = list("pure electricity" = 4, "pizza" = 2)
+	foodtypes = TOXIC

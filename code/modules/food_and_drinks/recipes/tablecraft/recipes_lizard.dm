@@ -262,6 +262,60 @@
 	result = /obj/item/food/pizza/imperial_flatbread
 	subcategory = CAT_LIZARD
 
+/datum/crafting_recipe/food/rawmeat_flatbread
+	name = "Meatlovers flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+
+	)
+	result = /obj/item/food/pizza/rawmeat_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/stinging_flatbread
+	name = "Stinging flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+
+	)
+	result = /obj/item/food/pizza/stinging_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/zmorgast_flatbread
+	name = "Zmorgast flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+
+	)
+	result = /obj/item/food/pizza/zmorgast_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/fish_flatbread
+	name = "BBQ Fish flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+
+	)
+	result = /obj/item/food/pizza/fish_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/mushroom_flatbread
+	name = "mushroom and tomato flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+
+	)
+	result = /obj/item/food/pizza/mushroom_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/nutty_flatbread
+	name = "nut paste flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+
+	)
+	result = /obj/item/food/pizza/nutty_flatbread
+	subcategory = CAT_LIZARD
+
 /datum/crafting_recipe/food/emperor_roll
 	name = "Emperor roll"
 	reqs = list(
