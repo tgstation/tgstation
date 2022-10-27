@@ -26,6 +26,8 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
 						  /obj/effect/meteor/cluster=20, /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
 
+GLOBAL_LIST_INIT(meteorsE, list(/obj/effect/meteor/sand=1)) //for sandstorm event
+
 ///////////////////////////////
 //Meteor spawning global procs
 ///////////////////////////////
@@ -255,6 +257,14 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 		meteor_effect()
 		qdel(src) //Since we're going to be throwing literally hundreds of these, they shouldn't leave anything behind
 				//Maybe replace this entire thing with just having the meteordrop be an effect??
+
+/obj/effect/meteor/sand/make_debris()
+	return //We drop NOTHING
+
+/obj/effect/meteor/sand/ram_turf(turf/T)
+	if(istype(T, /turf/closed/wall/r_wall))
+		return //sandcels be seething over rwallchads
+	return ..()
 
 //Dust
 /obj/effect/meteor/dust

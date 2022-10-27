@@ -98,4 +98,4 @@
 						damage to external fittings and fixtures.", "Collision Alert")
 
 /datum/round_event/sandstorm/tick()
-	spawn_meteors(15, GLOB.meteorsC, start_side)
+	spawn_meteors(15, GLOB.meteorsE, start_side)
