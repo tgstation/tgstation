@@ -4,6 +4,8 @@
 ///displays the current time into the round, with a lot of extra code just there for ensuring it looks okay after an entire day passes
 #define ROUND_TIME ( "[world.time - SSticker.round_start_time > MIDNIGHT_ROLLOVER ? "[round((world.time - SSticker.round_start_time)/MIDNIGHT_ROLLOVER)]:[worldtime2text()]" : worldtime2text()]" )
 
+/// Define that just has the current in-universe year for use in whatever context you might want to display that in. In-universe, SS13 is set 540 years in the future from the real-world day, hence that number.
+#define CURRENT_STATION_YEAR (GLOB.year_integer + 540)
 
 #define JANUARY 1
 #define FEBRUARY 2
