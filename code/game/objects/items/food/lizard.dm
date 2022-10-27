@@ -434,7 +434,7 @@
 
 /obj/item/food/pizza/zmorgast_flatbread // Name is based off of the sweedish dish Smörgåstårta
 	name = "\improper Zmorgast flatbread"
-	desc = "A Tiziran spin on the original Sweedish sanwdhich cake, the Zmorgast is a common dish at family gatherings."
+	desc = "A Tiziran spin on the original Sweedish sandwich cake, the Zmorgast is a common dish at family gatherings."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "zmorgast_flatbread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 16, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
