@@ -414,10 +414,10 @@
 
 /obj/item/food/pizza/rawmeat_flatbread
 	name = "meatlovers flatbread"
-	desc = "Oddly enough, this Tizaran dish is actually a favorite of some health-minded humans."
+	desc = "Oddly enough, this Tiziran dish is actually a favorite of some health-minded humans."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "rawmeat_flatbread"
-	food_reagents =
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10)
 	tastes = list("bread" = 1, "meat" = 1,)
 	slice_type = null
 	foodtypes = MEAT | NUTS | RAW
@@ -427,27 +427,27 @@
 	desc = "The electric mix of jellyfish and bee larva makes for a flavor sensation that leaves you asking for more!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "stinging_flatbread"
-	food_reagents =
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/honey = 2)
 	tastes = list("bread" = 1, "sweet" = 1, "stinging" = 1, "viscous" = 1,)
 	slice_type = null
 	foodtypes = BUGS | NUTS | SEAFOOD
 
 /obj/item/food/pizza/zmorgast_flatbread // Name is based off of the sweedish dish Smörgåstårta
 	name = "\improper Zmorgast flatbread"
-	desc = "A Tizaran spin on the original Sweedish sanwdhich cake, the Zmorgast is a common dish at family gatherings."
+	desc = "A Tiziran spin on the original Sweedish sanwdhich cake, the Zmorgast is a common dish at family gatherings."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "zmorgast_flatbread"
-	food_reagents =
+	food_reagents = list(/datum/reagent/consumable/nutriment = 16, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("bread" = 1, "liver" = 1, "family" = 1,)
 	slice_type = null
 	foodtypes = VEGETABLES | NUTS | MEAT
 
 /obj/item/food/pizza/fish_flatbread
 	name = "\improper BBQ Fish flatbread"
-	desc = "To the grill all will go and to the grill we will all o"
+	desc = "Superengine delamination, clown ops, too cold outside, I just want to grill for Tizira's sake!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "fish_flatbread"
-	food_reagents =
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/bbqsauce = 2)
 	tastes = list("bread" = 1, "fish" = 1,)
 	slice_type = null
 	foodtypes = SEAFOOD | NUTS
@@ -457,7 +457,7 @@
 	desc = "A simple alternative to the Italic flatbread, for when you've already filled up on meat elsewhere."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "mushroom_flatbread"
-	food_reagents =
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes =  list("bread" = 1, "mushroom" = 1, "tomatoes" = 1,)
 	slice_type = null
 	foodtypes = VEGETABLES | NUTS
@@ -467,8 +467,8 @@
 	desc = "Modern advances in cuisine now allow for a double helping of the delicious taste of Korta Nuts, both as the base and as a topping on this flatbread."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "nutty_flatbread"
-	food_reagents =
-	tastes =  list("bread" = 1, "nuts" = 1,)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
+	tastes =  list("bread" = 1, "nuts" = 2,)
 	slice_type = null
 	foodtypes = NUTS
 

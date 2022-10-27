@@ -266,7 +266,7 @@
 	name = "Meatlovers flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-
+		/obj/item/food/meat/slab/ = 1
 	)
 	result = /obj/item/food/pizza/rawmeat_flatbread
 	subcategory = CAT_LIZARD
@@ -275,7 +275,8 @@
 	name = "Stinging flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-
+		/obj/item/food/larvae = 1,
+		/obj/item/food/canned_jellyfish = 1
 	)
 	result = /obj/item/food/pizza/stinging_flatbread
 	subcategory = CAT_LIZARD
@@ -284,7 +285,9 @@
 	name = "Zmorgast flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-
+		/obj/item/food/grown/cucumber = 2,
+		/obj/item/food/egg = 1,
+		/obj/item/organ/internal/liver = 1
 	)
 	result = /obj/item/food/pizza/zmorgast_flatbread
 	subcategory = CAT_LIZARD
@@ -293,7 +296,8 @@
 	name = "BBQ Fish flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-
+		/obj/item/food/fishmeat = 1,
+		/datum/reagent/consumable/bbqsauce = 5
 	)
 	result = /obj/item/food/pizza/fish_flatbread
 	subcategory = CAT_LIZARD
@@ -302,7 +306,9 @@
 	name = "mushroom and tomato flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/mushroom = 3,
+		/datum/reagent/consumable/quality_oil = 3
 	)
 	result = /obj/item/food/pizza/mushroom_flatbread
 	subcategory = CAT_LIZARD
@@ -311,7 +317,8 @@
 	name = "nut paste flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-
+		/datum/reagent/consumable/korta_flour = 5,
+		/datum/reagent/consumable/korta_milk = 5
 	)
 	result = /obj/item/food/pizza/nutty_flatbread
 	subcategory = CAT_LIZARD
