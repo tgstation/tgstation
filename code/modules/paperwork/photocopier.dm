@@ -329,7 +329,7 @@
  * Handles the copying of documents.
  *
  * Checks first if `paperwork_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
- * Copies the stamped
+ * Copies the stamp from a given piece of paperwork if it is already stamped, allowing for you to sell photocopied paperwork at the risk of losing budget money.
  */
 /obj/machinery/photocopier/proc/make_paperwork_copy()
 	if(!paperwork_copy || !toner_cartridge)
