@@ -33,19 +33,19 @@
 		return
 	var/obj/machinery/hydroponics/constructable/hydro_parent = parent
 	if(hydro_parent.reagents.total_volume < hydro_parent.maxductnutri || hydro_parent.waterlevel < hydro_parent.maxwater)
-		for(var/D in GLOB.cardinals)
-			if(D & demand_connects)
-				send_request(D)
+		for(var/dir in GLOB.cardinals)
+			if(dir & demand_connects)
+				send_request(dir)
 
 /// split_request_across(list/sources,amt,datum/ductnet/net): Request chems selectively from the given sources
 /// Returns: The amount transferred
 /datum/component/plumbing/hydroponics/proc/split_request_across(list/sources, amt, datum/ductnet/net)
-	var/suppliersLeft = sources.len
+	var/suppliers_left = sources.len
 	var/original_volume = reagents.total_volume
 	for(var/datum/component/plumbing/give as anything in sources)
-		var/currentRequest = (amt + original_volume - reagents.total_volume) / suppliersLeft
-		give.transfer_to( src, currentRequest, null, net, disable_round_robin = TRUE )
-		suppliersLeft--
+		var/current_request = (amt + original_volume - reagents.total_volume) / suppliers_left
+		give.transfer_to( src, current_request, null, net, disable_round_robin = TRUE )
+		suppliers_left--
 	return reagents.total_volume - original_volume
 
 /// send_request(dir): calculate needs for the tray, pass to process_request
@@ -69,14 +69,10 @@
 
 	for(var/datum/component/plumbing/supplier as anything in net.suppliers)
 		if(supplier.can_give(1, /datum/reagent/water, net))
-			water_suppliers.len = 1
-			if(supplier.is_pure_source())
-				water_suppliers += supplier
-			else
-				nutri_suppliers.len = 1
+			water_suppliers += supplier
+			if(!supplier.is_pure_source())
 				nutri_suppliers += supplier
 		else if(supplier.can_give(1,null,net))
-			nutri_suppliers.len = 1
 			nutri_suppliers += supplier
 
 	// Reserve some space if we could fill up entirely on water, but want and can get nutrients

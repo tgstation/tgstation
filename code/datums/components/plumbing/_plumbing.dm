@@ -126,7 +126,7 @@
 
 ///returns TRUE if the source's reagents has only one entry
 /datum/component/plumbing/proc/is_pure_source()
-	return reagents.reagent_list.len == 1
+	return length(reagents.reagent_list) == 1
 
 ///this is where the reagent is actually transferred and is thus the finish point of our process()
 /datum/component/plumbing/proc/transfer_to(datum/component/plumbing/target, amount, reagent, datum/ductnet/net, disable_round_robin = FALSE)
