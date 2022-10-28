@@ -382,7 +382,7 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
 		/obj/item/gps,
-		/obj/item/hivelordstabilizer,
+		/obj/item/mining_stabilizer,
 		/obj/item/key/lasso,
 		/obj/item/knife,
 		/obj/item/lighter,
