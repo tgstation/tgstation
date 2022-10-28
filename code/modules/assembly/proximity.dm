@@ -9,7 +9,7 @@
 	var/scanning = FALSE
 	var/timing = FALSE
 	var/time = 20
-	var/sensitivity = 1
+	var/sensitivity = 0
 	var/hearing_range = 3
 	///Proximity monitor associated with this atom, needed for it to work.
 	var/datum/proximity_monitor/proximity_monitor
