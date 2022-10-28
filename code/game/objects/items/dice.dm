@@ -136,7 +136,7 @@
 	desc = "A die with six sides but only three results. Is this a plus or a minus? Your mind is drawing a blank..."
 	sides = 3 //shhh
 	icon_state = "fudge"
-	special_faces = list("minus","blank","plus")
+	special_faces = list("minus","blank" = "You aren't sure how to feel.","plus")
 
 /obj/item/dice/d8
 	name = "d8"
@@ -228,10 +228,13 @@
 		if(result == 1)
 			comment = "Ouch, bad luck."
 	update_appearance()
-	if(initial(icon_state) == "d00")
-		result = (result - 1)*10
+	result = manip_result(result)
 	if(special_faces.len == sides)
+		comment = ""  // its not a number
 		result = special_faces[result]
+		if(!ISINTEGER(x))
+			comment = special_faces[result]  // should be a str now
+
 	if(user != null) //Dice was rolled in someone's hand
 		user.visible_message(span_notice("[user] throws [src]. It lands on [result]. [comment]"), \
 			span_notice("You throw [src]. It lands on [result]. [comment]"), \
