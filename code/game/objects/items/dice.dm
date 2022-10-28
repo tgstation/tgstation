@@ -156,6 +156,9 @@
 	icon_state = "d00"
 	sides = 10
 
+/obj/item/dice/d00/manip_result(original)
+	return (original - 1)*10  // 10, 20, 30, etc
+
 /obj/item/dice/d12
 	name = "d12"
 	desc = "A die with twelve sides. There's an air of neglect about it."
@@ -251,6 +254,10 @@
 		rigged = DICE_BASICALLY_RIGGED
 		rigged_value = result
 	..(M)
+
+/// A proc to modify the displayed result. (Does not affect what the icon_state is passed.)
+/obj/item/dice/proc/manip_result(original)
+	return original
 
 // Die of fate stuff
 /obj/item/dice/d20/fate
