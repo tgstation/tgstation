@@ -1425,7 +1425,7 @@
 	M.adjust_drowsyness(2 * REM * delta_time)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.blood_volume = max(H.blood_volume - (10 * REM * delta_time), 0)
+		H.blood_volume = max(H.blood_volume - (5 * REM * delta_time), 0)
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 2
 		M.adjust_confusion_up_to(2 SECONDS, 5 SECONDS)
