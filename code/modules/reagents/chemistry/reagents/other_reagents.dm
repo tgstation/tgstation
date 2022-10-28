@@ -2711,7 +2711,6 @@
 		"MY GOD THEY'RE INSIDE ME!!",
 		"GET THEM OUT!!"
 		)
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
