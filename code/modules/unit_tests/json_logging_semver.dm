@@ -1,7 +1,7 @@
 /// Currently this only checks for a valid semver string
-/datum/unit_test/json_logging
+/datum/unit_test/json_logging_semver
 
-/datum/unit_test/json_logging/Run()
+/datum/unit_test/json_logging_semver/Run()
 	for(var/datum/log_entry/entry as anything in subtypesof(/datum/log_entry))
 		var/log_version = initial(entry.version)
 		// check for invalid log version
