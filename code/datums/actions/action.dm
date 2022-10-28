@@ -18,7 +18,7 @@
 	var/mob/owner
 	/// If False, the owner of this action does not get a hud and cannot activate it on their own
 	var/owner_has_control = TRUE
-	/// Flags that will determine of the owner / owner of the action can... use the action
+	/// Flags that will determine of the owner / user of the action can... use the action
 	var/check_flags = NONE
 	/// The style the button's tooltips appear to be
 	var/buttontooltipstyle = ""
