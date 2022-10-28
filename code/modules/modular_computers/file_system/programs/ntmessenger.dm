@@ -44,8 +44,6 @@
 	/// The path for the current loaded image in rsc
 	var/photo_path
 
-	/// Whether or not this app is loaded on a silicon's tablet.
-	var/is_silicon = FALSE
 	/// Whether or not we're in a mime PDA.
 	var/mime_mode = FALSE
 	/// Whether this app can send messages to all.
@@ -84,10 +82,7 @@
 		sortmode = /proc/cmp_pdaname_asc
 
 	for(var/obj/item/modular_computer/P in sort_list(GLOB.TabletMessengers, sortmode))
-		var/obj/item/computer_hardware/hard_drive/drive = P.all_components[MC_HDD]
-		if(!drive)
-			continue
-		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+		for(var/datum/computer_file/program/messenger/app in P.stored_files)
 			if(!P.saved_identification || !P.saved_job || app.invisible || app.monitor_hidden)
 				continue
 			dictionary += P
@@ -179,17 +174,15 @@
 				to_chat(usr, span_notice("ERROR: User no longer exists."))
 				return
 
-			var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
-
-			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+			for(var/datum/computer_file/program/messenger/app in computer.stored_files)
 				if(!app.sending_and_receiving && !sending_virus)
 					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
 					return
 
 				if(sending_virus)
-					var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
+					var/obj/item/computer_disk/virus/disk = computer.inserted_disk
 					if(istype(disk))
-						disk.send_virus(target, usr)
+						disk.send_virus(src, target, usr)
 						return UI_UPDATE
 
 				send_message(usr, list(target))
@@ -204,24 +197,29 @@
 			sending_virus = !sending_virus
 			return UI_UPDATE
 
+/datum/computer_file/program/messenger/ui_static_data(mob/user)
+	var/list/data = ..()
+
+	data["owner"] = computer.saved_identification
+	data["ringer_status"] = ringer_status
+	data["sending_and_receiving"] = sending_and_receiving
+	data["sortByJob"] = sort_by_job
+	data["isSilicon"] = issilicon(user)
+	data["viewing_messages"] = viewing_messages
+
+	return data
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	data["owner"] = computer.saved_identification
 	data["messages"] = messages
-	data["ringer_status"] = ringer_status
-	data["sending_and_receiving"] = sending_and_receiving
 	data["messengers"] = ScrubMessengerList()
-	data["viewing_messages"] = viewing_messages
-	data["sortByJob"] = sort_by_job
-	data["isSilicon"] = is_silicon
 	data["photo"] = photo_path
 	data["canSpam"] = spam_mode
 
-	var/obj/item/computer_hardware/hard_drive/portable/virus/disk = computer.all_components[MC_SDD]
-	if(disk)
-		data["virus_attach"] = istype(disk, /obj/item/computer_hardware/hard_drive/portable/virus)
+	var/obj/item/computer_disk/virus/disk = computer.inserted_disk
+	if(disk && istype(disk))
+		data["virus_attach"] = TRUE
 		data["sending_virus"] = sending_virus
 
 	return data
@@ -366,11 +364,11 @@
 	messages += list(message_data)
 
 	var/mob/living/L = null
-	if(holder.holder.loc && isliving(holder.holder.loc))
-		L = holder.holder.loc
+	if(computer.loc && isliving(computer.loc))
+		L = computer.loc
 	//Maybe they are a pAI!
 	else
-		L = get(holder.holder, /mob/living/silicon)
+		L = get(computer, /mob/living/silicon)
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"

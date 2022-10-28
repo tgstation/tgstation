@@ -176,7 +176,7 @@
 /obj/machinery/rnd/server/master
 	max_integrity = 1800 //takes roughly ~15s longer to break then full deconstruction.
 	circuit = null
-	var/obj/item/computer_hardware/hard_drive/cluster/hdd_theft/source_code_hdd
+	var/obj/item/computer_disk/hdd_theft/source_code_hdd
 	var/deconstruction_state = HDD_PANEL_CLOSED
 	var/front_panel_screws = 4
 	var/hdd_wires = 6
@@ -231,7 +231,7 @@
 	return TRUE
 
 /obj/machinery/rnd/server/master/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft))
+	if(istype(attacking_item, /obj/item/computer_disk/hdd_theft))
 		switch(deconstruction_state)
 			if(HDD_PANEL_CLOSED)
 				balloon_alert(user, "you can't find a place to insert it!")

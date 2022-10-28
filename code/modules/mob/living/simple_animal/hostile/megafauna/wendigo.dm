@@ -169,7 +169,7 @@ Difficulty: Hard
 /// Larger but slower ground stomp
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/heavy_stomp()
 	can_move = FALSE
-	wendigo_slam(src, 5, 3 - WENDIGO_ENRAGED, 8)
+	wendigo_slam(5, 3 - WENDIGO_ENRAGED, 8)
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 0 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 0 SECONDS))
 	can_move = TRUE
 
