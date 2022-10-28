@@ -533,7 +533,7 @@ Difficulty: Hard
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
 	icon_state = "hierophant_wall_temp-0"
 	base_icon_state = "hierophant_wall_temp"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_HIERO_WALL)
 	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE

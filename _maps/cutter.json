@@ -1,0 +1,10 @@
+{
+	"version": 1,
+	"map_name": "Cutter Station",
+	"map_path": "map_files/debug",
+	"map_file": "cutter.dmm",
+	"space_ruin_levels": 1,
+	"shuttles": {
+		"cargo": "cargo_delta"
+	}
+}

@@ -145,9 +145,9 @@
 			AddComponent(/datum/component/overlay_lighting)
 		if(MOVABLE_LIGHT_DIRECTIONAL)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
-	// Wallening todo: we should use split vis for this too
-	if(frill_icon)
-		AddElement(/datum/element/frill, frill_icon)
+	// Wallening todo: remove the frill element
+	//if(frill_icon)
+	//	AddElement(/datum/element/frill, frill_icon)
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)

@@ -15,7 +15,7 @@
 
 	flags_ricochet = RICOCHET_HARD
 
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WALLS)
 

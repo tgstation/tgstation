@@ -12,7 +12,7 @@
 	density = TRUE
 	opacity = TRUE
 	max_integrity = 100
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WALLS)
 	can_be_unanchored = FALSE
@@ -66,7 +66,7 @@
 		smoothing_flags = NONE
 		clear_smooth_overlays()
 	else
-		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
 
 /obj/structure/falsewall/update_icon_state()
@@ -153,7 +153,7 @@
 	base_icon_state = "reinforced_wall"
 	walltype = /turf/closed/wall/r_wall
 	mineral = /obj/item/stack/sheet/plasteel
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	frill_icon = 'icons/effects/frills/wall_reinforced_frill.dmi'
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
@@ -170,7 +170,7 @@
 	name = "wall"
 	desc = "A huge chunk of material used to separate rooms."
 	walltype = /turf/closed/wall/material
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MATERIAL_WALLS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_MATERIAL_WALLS)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
@@ -243,7 +243,7 @@
 	base_icon_state = "uranium_wall"
 	mineral = /obj/item/stack/sheet/mineral/uranium
 	walltype = /turf/closed/wall/mineral/uranium
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_URANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_URANIUM_WALLS)
 
@@ -294,7 +294,7 @@
 	base_icon_state = "gold_wall"
 	mineral = /obj/item/stack/sheet/mineral/gold
 	walltype = /turf/closed/wall/mineral/gold
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_GOLD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_GOLD_WALLS)
 
@@ -306,7 +306,7 @@
 	base_icon_state = "silver_wall"
 	mineral = /obj/item/stack/sheet/mineral/silver
 	walltype = /turf/closed/wall/mineral/silver
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SILVER_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SILVER_WALLS)
 
@@ -318,7 +318,7 @@
 	base_icon_state = "diamond_wall"
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	walltype = /turf/closed/wall/mineral/diamond
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_DIAMOND_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_DIAMOND_WALLS)
 	max_integrity = 800
@@ -326,12 +326,12 @@
 /obj/structure/falsewall/material/plasma
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definitely a bad idea."
-// wallening todo:	icon = 'icons/turf/walls/plasma_wall.dmi'
+	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma_wall-0"
 	base_icon_state = "plasma_wall"
 	mineral = /obj/item/stack/sheet/mineral/plasma
 	walltype = /turf/closed/wall/mineral/plasma
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASMA_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASMA_WALLS)
 
@@ -343,7 +343,7 @@
 	base_icon_state = "bananium_wall"
 	mineral = /obj/item/stack/sheet/mineral/bananium
 	walltype = /turf/closed/wall/mineral/bananium
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BANANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_BANANIUM_WALLS)
 
@@ -356,7 +356,7 @@
 	base_icon_state = "sandstone_wall"
 	mineral = /obj/item/stack/sheet/mineral/sandstone
 	walltype = /turf/closed/wall/mineral/sandstone
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SANDSTONE_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SANDSTONE_WALLS)
 
@@ -368,7 +368,7 @@
 	base_icon_state = "wood_wall"
 	mineral = /obj/item/stack/sheet/mineral/wood
 	walltype = /turf/closed/wall/mineral/wood
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
 
@@ -379,7 +379,7 @@
 	icon_state = "bamboo"
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	walltype = /turf/closed/wall/mineral/bamboo
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_BAMBOO_WALLS, SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
 
@@ -390,7 +390,7 @@
 	icon_state = "meat"
 	mineral = /obj/item/stack/sheet/meat
 	walltype = /turf/closed/wall/mineral/meat
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_MEAT_WALLS, SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_MEAT_WALLS)
 
@@ -404,7 +404,7 @@
 	mineral_amount = 5
 	walltype = /turf/closed/wall/mineral/iron
 	base_icon_state = "iron_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
 
@@ -416,7 +416,7 @@
 	base_icon_state = "abductor_wall"
 	mineral = /obj/item/stack/sheet/mineral/abductor
 	walltype = /turf/closed/wall/mineral/abductor
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_ABDUCTOR_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_ABDUCTOR_WALLS)
 
@@ -428,7 +428,7 @@
 	base_icon_state = "shuttle_wall"
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	walltype = /turf/closed/wall/mineral/titanium
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_TITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
@@ -440,6 +440,6 @@
 	base_icon_state = "plastitanium_wall"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	walltype = /turf/closed/wall/mineral/plastitanium
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)

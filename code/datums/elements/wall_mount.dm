@@ -5,21 +5,22 @@
 		return ELEMENT_INCOMPATIBLE
 	. = ..()
 	var/atom/movable/real_target = target
+	// Wallening todo: does this even work?
 	//var/turf/target_to_listen_to = get_step(get_turf(real_target), turn(real_target.dir, 180))
 
 	//These magic offsets are chosen for no particular reason
 	//The wall mount template is made to work with them
 	switch(real_target.dir)
 		if(NORTH)
-			real_target.pixel_y = -8
+			real_target.pixel_z = -8
 		if(SOUTH)
-			real_target.pixel_y = 35
+			real_target.pixel_z = 35
 		if(EAST)
 			real_target.pixel_x = -11
-			real_target.pixel_y = 16
+			real_target.pixel_z = 16
 		if(WEST)
 			real_target.pixel_x = 11
-			real_target.pixel_y = 16
+			real_target.pixel_z = 16
 
 	//target.RegisterSignal(target_to_listen_to, COMSIG_TURF_CHANGE, )
 	RegisterSignal(target, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_changed)
@@ -34,6 +35,7 @@
 	var/atom/movable/real_target = target
 	var/new_plane = OVER_FRILL_PLANE
 	if(newdir == SOUTH)
-		new_plane = WALL_PLANE
+		new_plane = GAME_PLANE
+	real_target.layer = ON_WALL_LAYER
 	SET_PLANE_EXPLICIT(real_target, new_plane, real_target)
 

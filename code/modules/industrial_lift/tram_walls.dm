@@ -215,7 +215,7 @@
 /obj/structure/tramwall/plasma
 	name = "plasma wall"
 	desc = "A wall with plasma plating. This is definitely a bad idea."
-// wallening todo:	icon = 'icons/turf/walls/plasma_wall.dmi'
+	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma_wall-0"
 	base_icon_state = "plasma_wall"
 	mineral = /obj/item/stack/sheet/mineral/plasma

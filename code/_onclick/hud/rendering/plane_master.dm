@@ -251,19 +251,30 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = OVER_TILE_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 
-/atom/movable/screen/plane_master/wall
-	name = "Wall"
-	documentation = "Holds well, walls! Done this way so they don't side_map z fight with anything else."
-	plane = WALL_PLANE
-	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
-
-// RENAME AND REDOC THIS
 /atom/movable/screen/plane_master/game_misc
 	name = "Game Misc"
 	documentation = "Exists to hold anything we want to be a part of the \"game world\" that isn't held by other plane masters that point at the world rendering plate.\
 		<br>This is done partially to support parallaxing, since we can only parallax inputs, but it's also done so sidemap can operate as we'd like"
 	plane = GAME_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+/atom/movable/screen/plane_master/hidden_walls
+	name = "Hidden Walls"
+	documentation = "Holds portions of walls that are not typically visible.\
+		<br>Alpha'd up if that isn't the case, so basically if you have SEE_TURFS or an equivilant"
+	plane = HIDDEN_WALL_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+/atom/movable/screen/plane_master/hidden_walls/show_to(mob/mymob)
+	. = ..()
+	handle_sight(mymob, mymob.sight, NONE)
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, .proc/handle_sight)
+
+/atom/movable/screen/plane_master/hidden_walls/proc/handle_sight(mob/source, new_sight, old_sight)
+	if(new_sight & (SEE_TURFS|SEE_THRU))
+		enable_alpha()
+	else
+		disable_alpha()
 
 //Yes this is currently used for JUST shadows. Need to figure out how I want it to work
 /atom/movable/screen/plane_master/frill_under

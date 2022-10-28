@@ -55,7 +55,7 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
 	icon = 'icons/turf/walls/rock_wall.dmi'
 	base_icon_state = "rock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/mineral/strong/wasteland/drop_ores()
 	if(prob(10))

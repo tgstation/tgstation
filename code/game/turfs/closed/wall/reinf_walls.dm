@@ -7,7 +7,7 @@
 	opacity = TRUE
 	density = TRUE
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
 	sheet_amount = 1
@@ -205,7 +205,7 @@
 		return
 	if (!(updates & UPDATE_SMOOTHING))
 		return
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	QUEUE_SMOOTH(src)
 
@@ -252,7 +252,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	hardness = 25 //plastitanium
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_DIAGONAL_CORNERS
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 
@@ -264,7 +264,7 @@
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle_nd"
 	base_icon_state = "plastitanium_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/wall/r_wall/syndicate/nosmooth
 	icon = 'icons/turf/shuttle.dmi'
@@ -273,5 +273,5 @@
 
 /turf/closed/wall/r_wall/syndicate/overspace
 	icon_state = "map-overspace"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_DIAGONAL_CORNERS
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
 	fixed_underlay = list("space" = TRUE)

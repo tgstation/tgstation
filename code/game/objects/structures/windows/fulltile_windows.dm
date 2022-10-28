@@ -11,6 +11,10 @@
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
 
+/obj/structure/window/fulltile/Initialize(mapload, direct)
+	. = ..()
+	AddComponent(/datum/component/window_smoothing, 'normal_window.dmi')
+
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
 

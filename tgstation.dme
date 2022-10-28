@@ -910,6 +910,7 @@
 #include "code\datums\components\vacuum.dm"
 #include "code\datums\components\wearertargeting.dm"
 #include "code\datums\components\wet_floor.dm"
+#include "code\datums\components\window_smoothing.dm"
 #include "code\datums\components\z_parallax.dm"
 #include "code\datums\components\container_item\container_item.dm"
 #include "code\datums\components\container_item\tank_holder.dm"

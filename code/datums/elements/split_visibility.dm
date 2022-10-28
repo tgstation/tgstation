@@ -15,9 +15,8 @@
 
 GLOBAL_LIST_EMPTY(split_visibility_objects)
 
-/proc/get_splitvis_object(turf/apply_to, icon_path, junction, dir, shadow = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = WALL_PLANE, layer = ABOVE_MOB_LAYER)
-	var/offset = GET_TURF_PLANE_OFFSET(apply_to)
-	var/key = "[icon_path]-[junction]-[dir]-[shadow]-[alpha]-[pixel_x]-[pixel_y]-[plane]-[layer]-[offset]"
+/proc/get_splitvis_object(z_offset, icon_path, junction, dir, shadow = FALSE, alpha = 255, pixel_x = 0, pixel_y = 0, plane = GAME_PLANE, layer = WALL_LAYER)
+	var/key = "[icon_path]-[junction]-[dir]-[shadow]-[alpha]-[pixel_x]-[pixel_y]-[plane]-[layer]-[z_offset]"
 	var/mutable_appearance/split_vis/vis = GLOB.split_visibility_objects[key]
 	if(vis)
 		return vis
@@ -27,11 +26,11 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	var/junc = junction ? junction : "0"
 	vis.icon_state = "[junc]-[dir]"
 	if(shadow)
-		vis.overlays += get_splitvis_object(apply_to, icon_path, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
+		vis.overlays += get_splitvis_object(z_offset, icon_path, junction, dir, FALSE, 120, pixel_x = 0, pixel_y = 0, plane = UNDER_FRILL_PLANE)
 	vis.alpha = alpha
 	vis.pixel_x = pixel_x
 	vis.pixel_y = pixel_y
-	SET_PLANE_W_SCALAR(vis, plane, offset)
+	SET_PLANE_W_SCALAR(vis, plane, z_offset)
 	vis.layer = layer
 
 	GLOB.split_visibility_objects[key] = vis
@@ -49,13 +48,10 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	var/turf/target_turf = target
 	if(!(target_turf.smoothing_flags & SMOOTH_BITMASK))
 		CRASH("We tried to splitvis something without bitmask smoothing. What?")
-	if(!(target_turf.smoothing_flags & SMOOTH_BITMASK_DROP_ICON))
-		CRASH("You're trying to use the split vis element while using someone else's smoothing. ya done fucked up")
 
-	// Temporary stuff to hide that we don't have good "over" sprites
-	target_turf.icon = 'wall_blackness.dmi'
-	target_turf.icon_state = "wall_background"
-	// End temp code
+	target_turf.add_overlay(mutable_appearance('wall_blackness.dmi', "wall_background", UNDER_WALL_LAYER, target_turf, GAME_PLANE))
+	// Ensures when you try to click on a turf, you actually click on the turf, and not the adjacent things holding it
+	target_turf.add_overlay(mutable_appearance('wall_blackness.dmi', "wall_clickcatcher", WALL_CLICKCATCH_LAYER, target_turf, GAME_PLANE))
 
 	src.icon_path = icon_path
 
@@ -79,14 +75,29 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	var/junction = new_junction
 	if(isnull(junction))
 		junction = target_turf.smoothing_junction
-	var/diagonal_connections = junction_to_diag_dir(junction)
+
+	var/offset = GET_Z_PLANE_OFFSET(target_turf.z)
+
+	// Lookup table for diagonal -> junction
+	// This lets us do O(1) logic down later, and ensure logic works as we'd like
+	var/static/list/diagonal_to_junction
+	if(!diagonal_to_junction)
+		// It should be as long as all 4 directions combined, so it can act as a lookup for all of them
+		diagonal_to_junction = new /list(NORTH|SOUTH|EAST|WEST)
+		// Set defaults
+		for(var/i in 1 to length(diagonal_to_junction))
+			diagonal_to_junction[i] = NONE
+		diagonal_to_junction[NORTH|EAST] = NORTHEAST_JUNCTION
+		diagonal_to_junction[SOUTH|EAST] = SOUTHEAST_JUNCTION
+		diagonal_to_junction[SOUTH|WEST] = SOUTHWEST_JUNCTION
+		diagonal_to_junction[NORTH|WEST] = NORTHWEST_JUNCTION
 
 	for(var/direction in GLOB.cardinals)
 		// If we're connected in this direction, please don't draw a wall side
 		if((junction & direction) == direction)
 			continue
 
-		var/active_plane = WALL_PLANE
+		var/active_plane = GAME_PLANE
 		var/uses_shadow = FALSE
 		if(direction & NORTH)
 			active_plane = FRILL_PLANE
@@ -97,16 +108,31 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		if(!operating_turf)
 			continue
 
-		var/mutable_appearance/split_vis/vis = get_splitvis_object(operating_turf, icon_path, junction, direction, uses_shadow, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
 		if(add_to_turfs)
-			operating_turf.overlays += vis
+			var/mutable_appearance/split_vis/vis
+			// If we're trying to draw to something opaque, just draw to yourself, and use the hidden wall plane
+			// Turfs smooth neighbors on opacity change so this is safe
+			if(operating_turf.opacity)
+				vis = get_splitvis_object(offset, icon_path, junction, direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE)
+				target_turf.overlays += vis
+			else
+				vis = get_splitvis_object(offset, icon_path, junction, direction, uses_shadow, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
+				operating_turf.overlays += vis
 		else
+			// I HATE the code duping, but we need to try both to ensure it's properly cleared
+			var/mutable_appearance/split_vis/vis
+			vis = get_splitvis_object(offset, icon_path, junction, direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE)
+			target_turf.overlays -= vis
+			vis = get_splitvis_object(offset, icon_path, junction, direction, uses_shadow, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), active_plane)
 			operating_turf.overlays -= vis
 
 	for(var/direction in GLOB.diagonals)
 		// If we're connected in the two components of this direction
-		// But we aren't drawing anything TO it
-		if((junction & direction) != direction || (diagonal_connections & direction) == direction)
+		if((junction & direction) != direction)
+			continue
+		// AND if we're not connected to anything in the SUM of those directions
+		var/diagonal_junction = diagonal_to_junction[direction]
+		if((junction & diagonal_junction) == diagonal_junction)
 			continue
 
 		var/turf/operating_turf = get_step(target_turf, direction)
@@ -114,11 +140,22 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 		if(!operating_turf)
 			continue
 
-		var/mutable_appearance/split_vis/vis = get_splitvis_object(operating_turf, icon_path, junction, direction, FALSE, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = WALL_OBJ_LAYER)
-
 		if(add_to_turfs)
-			operating_turf.overlays += vis
+			var/mutable_appearance/split_vis/vis
+			// If we're trying to draw to something opaque, just draw to yourself, and use the hidden wall plane
+			// Turfs smooth neighbors on opacity change so this is safe
+			if(operating_turf.opacity)
+				vis = get_splitvis_object(offset, icon_path, "innercorner", direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
+				target_turf.overlays += vis
+			else
+				vis = get_splitvis_object(offset, icon_path, "innercorner", direction, FALSE, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
+				operating_turf.overlays += vis
 		else
+			// I HATE the code duping, but we need to try both to ensure it's properly cleared
+			var/mutable_appearance/split_vis/vis
+			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, FALSE, 255, 0, 0, HIDDEN_WALL_PLANE, ABOVE_WALL_LAYER)
+			target_turf.overlays -= vis
+			vis = get_splitvis_object(offset, icon_path, "innercorner", direction, FALSE, 255, -DIR_TO_PIXEL_X(direction), -DIR_TO_PIXEL_Y(direction), layer = ABOVE_WALL_LAYER)
 			operating_turf.overlays -= vis
 
 /datum/element/split_visibility/Detach(turf/target)

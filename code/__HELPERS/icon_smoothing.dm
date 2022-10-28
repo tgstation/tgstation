@@ -358,8 +358,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, new_junction)
 	. = smoothing_junction
 	smoothing_junction = new_junction
-	if(!(smoothing_flags & SMOOTH_BITMASK_DROP_ICON))
-		icon_state = "[base_icon_state]-[smoothing_junction]"
+	icon_state = "[base_icon_state]-[smoothing_junction]"
 
 
 /turf/closed/set_smoothed_icon_state(new_junction)
@@ -498,19 +497,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 		else
 			return NONE
 
-/// Takes a junction, converts it to a dir representing JUST the diagonal connections
-/// This way we can & with it to extract info about those cheaply
-/proc/junction_to_diag_dir(junction)
-	var/result = NONE
-	if(junction & NORTHWEST_JUNCTION)
-		result |= NORTHWEST
-	if(junction & NORTHEAST_JUNCTION)
-		result |= NORTHEAST
-	if(junction & SOUTHEAST_JUNCTION)
-		result |= SOUTHEAST
-	if(junction & SOUTHWEST_JUNCTION)
-		result |= SOUTHWEST
-	return NONE
 
 //Example smooth wall
 /turf/closed/wall/smooth
@@ -520,15 +506,6 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	smoothing_flags = SMOOTH_CORNERS|SMOOTH_DIAGONAL_CORNERS|SMOOTH_BORDER
 	smoothing_groups = null
 	canSmoothWith = null
-
-#undef NORTH_JUNCTION
-#undef SOUTH_JUNCTION
-#undef EAST_JUNCTION
-#undef WEST_JUNCTION
-#undef NORTHEAST_JUNCTION
-#undef NORTHWEST_JUNCTION
-#undef SOUTHEAST_JUNCTION
-#undef SOUTHWEST_JUNCTION
 
 #undef NO_ADJ_FOUND
 #undef ADJ_FOUND

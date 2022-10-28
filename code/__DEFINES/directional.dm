@@ -21,11 +21,11 @@
 #define INVERT_MAPPING_DIRECTIONAL_HELPERS(path, offset) \
 ##path/directional/north {\
 	dir = SOUTH; \
-	pixel_y = offset; \
+	pixel_z = offset; \
 } \
 ##path/directional/south {\
 	dir = NORTH; \
-	pixel_y = -offset; \
+	pixel_z = -offset; \
 } \
 ##path/directional/east {\
 	dir = WEST; \
@@ -40,11 +40,11 @@
 
 #define MAPPING_DIRECTIONAL_HELPERS(path, offset) ##path/directional/north {\
 	dir = NORTH; \
-	pixel_y = offset; \
+	pixel_z = offset; \
 } \
 ##path/directional/south {\
 	dir = SOUTH; \
-	pixel_y = -offset; \
+	pixel_z = -offset; \
 } \
 ##path/directional/east {\
 	dir = EAST; \

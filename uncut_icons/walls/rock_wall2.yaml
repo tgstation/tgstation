@@ -1,1 +1,7 @@
 template: walls
+mode: !BitmaskDirectionalVis
+  slice_point:
+    west: 4
+    north: 16
+    south: 18
+    east: 28

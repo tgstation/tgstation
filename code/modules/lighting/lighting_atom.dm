@@ -79,6 +79,8 @@
 	if(isnull(.))
 		return
 	recalculate_directional_opacity()
+	// Need this for split vis stuff
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /atom/proc/flash_lighting_fx(_range = FLASH_LIGHT_RANGE, _power = FLASH_LIGHT_POWER, _color = COLOR_WHITE, _duration = FLASH_LIGHT_DURATION)
 	return

@@ -5,7 +5,7 @@
 	icon_state = "cult_wall-0"
 	base_icon_state = "cult_wall"
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	sheet_type = /obj/item/stack/sheet/runed_metal
 	sheet_amount = 1
@@ -70,7 +70,7 @@
 	base_icon_state = "icedmetal_wall"
 	desc = "A wall covered in a thick sheet of ice."
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	canSmoothWith = null
 	rcd_memory = null
 	hardness = 35
@@ -83,7 +83,7 @@
 	icon = 'icons/turf/walls/rusty_wall.dmi'
 	icon_state = "rusty_wall-0"
 	base_icon_state = "rusty_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	hardness = 45
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
@@ -100,7 +100,7 @@
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	icon_state = "rusty_reinforced_wall-0"
 	base_icon_state = "rusty_reinforced_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	hardness = 15
 	//SDMM supports colors, this is simply for easier mapping
 	//and should be removed on initialize
@@ -118,7 +118,7 @@
 	icon_state = "clockwork_wall-0"
 	base_icon_state = "clockwork_wall"
 	turf_flags = IS_SOLID
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 	sheet_type = /obj/item/stack/sheet/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze

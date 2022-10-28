@@ -18,8 +18,8 @@
 #define FLOOR_PLANE -10
 #define FLOOR_PLANE_RENDER_TARGET "*FLOOR_PLANE"
 #define OVER_TILE_PLANE -9
-#define WALL_PLANE -8
-#define GAME_PLANE -7
+#define GAME_PLANE -8
+#define HIDDEN_WALL_PLANE -7
 #define UNDER_FRILL_PLANE -6
 #define UNDER_FRILL_RENDER_TARGET "*UNDER_FRILL_PLANE"
 #define FRILL_PLANE -5
@@ -102,7 +102,7 @@
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (GAME_PLANE) use this.
 #define OPENSPACE_LAYER 600 //Openspace layer over all turfs
 
-// GAME_PLANE layers
+//(Hopefully, double check this wallening todo) OVER_TILE_PLANE layers
 #define CULT_OVERLAY_LAYER 2.01
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
@@ -133,31 +133,42 @@
 // I hate this life of ours
 #define FLOOR_CLEAN_LAYER 2.55
 
-#define BELOW_OPEN_DOOR_LAYER 2.6
-#define BLASTDOOR_LAYER 2.65
-#define OPEN_DOOR_LAYER 2.7
-#define DOOR_ACCESS_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
-#define DOOR_HELPER_LAYER 2.72 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
-#define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
-#define TABLE_LAYER 2.8
-#define GATEWAY_UNDERLAY_LAYER 2.85
-#define BELOW_OBJ_LAYER 2.9
-#define LOW_ITEM_LAYER 2.95
-//#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
-#define CLOSED_DOOR_LAYER 3.1
-#define CLOSED_FIREDOOR_LAYER 3.11
-#define ABOVE_OBJ_LAYER 3.2
-#define CLOSED_BLASTDOOR_LAYER 3.3 // ABOVE WINDOWS AND DOORS
-#define SHUTTER_LAYER 3.3 // HERE BE DRAGONS
-#define ABOVE_WINDOW_LAYER 3.3
-#define SIGN_LAYER 3.4
-#define CORGI_ASS_PIN_LAYER 3.41
-#define NOT_HIGH_OBJ_LAYER 3.5
-#define HIGH_OBJ_LAYER 3.6
-#define BELOW_MOB_LAYER 3.7
+//GAME_PLANE layers
 
-#define LOW_MOB_LAYER 3.75
-#define LYING_MOB_LAYER 3.8
+//Walls draw below
+//We draw them to the game plane so we can take advantage of SIDE_MAP for em
+//Need to cover for the whole "things below us" with position offsetting with pixel_y/z rather just one or the other
+#define UNDER_WALL_LAYER 2.66
+#define WALL_LAYER 2.67
+#define ABOVE_WALL_LAYER 2.68
+#define WALL_CLICKCATCH_LAYER 2.69
+#define ON_WALL_LAYER 2.7
+
+#define BELOW_OPEN_DOOR_LAYER 2.75
+#define BLASTDOOR_LAYER 2.78
+#define OPEN_DOOR_LAYER 2.8
+#define DOOR_ACCESS_HELPER_LAYER 2.83 //keep this above OPEN_DOOR_LAYER, special layer used for /obj/effect/mapping_helpers/airlock/access
+#define DOOR_HELPER_LAYER 2.85 //keep this above DOOR_ACCESS_HELPER_LAYER and OPEN_DOOR_LAYER since the others tend to have tiny sprites that tend to be covered up.
+#define PROJECTILE_HIT_THRESHHOLD_LAYER 2.88 //projectiles won't hit objects at or below this layer if possible
+#define TABLE_LAYER 2.9
+#define GATEWAY_UNDERLAY_LAYER 2.93
+#define BELOW_OBJ_LAYER 2.95
+#define LOW_ITEM_LAYER 2.98
+//#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
+#define CLOSED_DOOR_LAYER 3.55
+#define CLOSED_FIREDOOR_LAYER 3.58
+#define ABOVE_OBJ_LAYER 3.6
+#define CLOSED_BLASTDOOR_LAYER 3.63 // ABOVE WINDOWS AND DOORS
+#define SHUTTER_LAYER 3.65 // HERE BE DRAGONS
+#define ABOVE_WINDOW_LAYER 3.68
+#define SIGN_LAYER 3.7
+#define CORGI_ASS_PIN_LAYER 3.73
+#define NOT_HIGH_OBJ_LAYER 3.75
+#define HIGH_OBJ_LAYER 3.78
+#define BELOW_MOB_LAYER 3.8
+
+#define LOW_MOB_LAYER 3.83
+#define LYING_MOB_LAYER 3.88
 #define VEHICLE_LAYER 3.9
 #define MOB_BELOW_PIGGYBACK_LAYER 3.94
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
@@ -177,7 +188,7 @@
 #define HIGH_BUBBLE_LAYER 5.03
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
-#define RIPPLE_LAYER 5.1
+
 //---------- LIGHTING -------------
 
 #define LIGHTING_PRIMARY_LAYER 15	//The layer for the main lights of the station

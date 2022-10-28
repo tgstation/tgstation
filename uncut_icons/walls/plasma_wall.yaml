@@ -1,4 +1,4 @@
 template: walls
 mode: !BitmaskDirectionalVis
-  prefabs:
-    0: 5
+  delay:
+    - 1

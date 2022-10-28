@@ -6,14 +6,14 @@
 	name = "rock"
 	icon = 'icons/turf/walls/rock_wall.dmi'
 	icon_state = "rock"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MINERAL_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_MINERAL_WALLS)
 	baseturfs = /turf/open/misc/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
 	opacity = TRUE
 	density = TRUE
-	layer = EDGED_TURF_LAYER
+	layer = ABOVE_MOB_LAYER
 	// Wallening todo: why isn't this on the wall plane again
 	plane = GAME_PLANE
 	base_icon_state = "smoothrocks"
@@ -259,7 +259,7 @@
 // wallening todo:	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	defer_change = TRUE
 	turf_type = /turf/open/misc/asteroid/snow/icemoon
@@ -273,7 +273,7 @@
 		icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon_state = "icerock_wall-0"
 		base_icon_state = "icerock_wall"
-		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/random/snow
 	mineralSpawnChanceList = list(
@@ -319,7 +319,7 @@
 // wallening todo:	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	defer_change = TRUE
 	turf_type = /turf/open/misc/asteroid/snow/icemoon
@@ -337,7 +337,7 @@
 		icon = 'icons/turf/walls/icerock_wall.dmi'
 		icon_state = "icerock_wall-0"
 		base_icon_state = "icerock_wall"
-		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+		smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
 /turf/closed/mineral/iron
 	mineralType = /obj/item/stack/ore/iron
@@ -347,7 +347,7 @@
 	icon_state = "icerock_iron"
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	base_icon_state = "icerock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -365,7 +365,7 @@
 	icon_state = "icerock_iron"
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	base_icon_state = "icerock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -402,7 +402,7 @@
 	icon_state = "icerock_plasma"
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	base_icon_state = "icerock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -439,7 +439,7 @@
 	icon = 'icons/turf/walls/rock_wall2.dmi'
 	icon_state = "rock2"
 	base_icon_state = "rock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	baseturfs = /turf/open/misc/ashplanet/wateryrock
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
@@ -452,7 +452,7 @@
 // wallening todo:	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
 	icon_state = "mountainrock"
 	base_icon_state = "mountain_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS)
 	baseturfs = /turf/open/misc/asteroid/snow
 	initial_gas_mix = FROZEN_ATMOS
@@ -470,7 +470,7 @@
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	icon_state = "icerock"
 	base_icon_state = "icerock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	baseturfs = /turf/open/misc/asteroid/snow/ice
 	turf_type = /turf/open/misc/asteroid/snow/ice
 
@@ -613,7 +613,7 @@
 	icon_state = "icerock_Gibtonite"
 	icon = 'icons/turf/walls/icerock_wall.dmi'
 	base_icon_state = "icerock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON | SMOOTH_BORDER
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	turf_type = /turf/open/misc/asteroid/snow/ice
 	baseturfs = /turf/open/misc/asteroid/snow/ice
 	initial_gas_mix = FROZEN_ATMOS
@@ -633,7 +633,7 @@
 	defer_change = 1
 	icon = 'icons/turf/walls/rock_wall2.dmi'
 	base_icon_state = "rock_wall"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BITMASK_DROP_ICON
+	smoothing_flags = SMOOTH_BITMASK
 
 /turf/closed/mineral/strong/attackby(obj/item/I, mob/user, params)
 	if(!ishuman(user))
