@@ -12,6 +12,3 @@
 		if(!version_regex.Find(log_version))
 			TEST_FAIL("[entry] has an invalid log version; it must be a semver version string")
 			continue
-	var/base_log_version = /datum/log_entry:log_version
-	if(base_log_version != "0.0.0")
-		TEST_FAIL("/datum/log_entry has an invalid log version; it must be 0.0.0")
