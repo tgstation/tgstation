@@ -47,7 +47,7 @@
 /datum/admin_pda_panel/ui_static_data(mob/user)
 	var/list/data = list()
 	data["users"] = list()
-	
+
 	for(var/username in available_pdas)
 		data["users"] += username["name"]
 	return data
@@ -69,7 +69,7 @@
 				targets += target["tablet"]
 			
 			if(!length(targets))
-				to_chat(usr, span_warning("ERROR: Target is unavaiable(or not choosed)"))
+				to_chat(usr, span_warning("ERROR: Target is unavaiable(or not choosed)."))
 				return
 
 			var/datum/signal/subspace/messaging/tablet_msg/signal = new(targets[1], list(
@@ -85,5 +85,5 @@
 			))
 
 			signal.send_to_receivers()
-			message_admins("[key_name_admin(usr)] has send custom PDA message to [spam ? "everyone" : params["user"]]")
-			log_admin("[key_name(usr)] has send custom PDA message to [spam ? "everyone" : params["user"]]. Message: [params["message"]]")
+			message_admins("[key_name_admin(usr)] has send custom PDA message to [spam ? "everyone" : params["user"]].")
+			log_admin("[key_name(usr)] has send custom PDA message to [spam ? "everyone" : params["user"]]. Message: [params["message"]].")
