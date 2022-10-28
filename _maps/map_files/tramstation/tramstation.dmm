@@ -66037,8 +66037,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 4;
-	sortType = 4
+	dir = 4
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/mail_sorting/engineering/general,
