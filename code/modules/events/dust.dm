@@ -51,7 +51,8 @@
 	name = "Space Dust: Sandstorm"
 	typepath = /datum/round_event/sandstorm
 	weight = 8
-	max_occurrences = 2
+	max_occurrences = 1
+	min_players = 35
 	earliest_start = 30 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."
@@ -63,11 +64,19 @@
 		return
 
 	if(tgui_alert(usr, "Choose a side to powersand?", "I hate sand.", list("Yes", "No")) == "Yes")
-		start_side = tgui_input_list(usr, "Pick one!","Rough, gets everywhere, coarse, etc.", GLOB.cardinals)
-
+		var/chosen_direction = tgui_input_list(usr, "Pick one!","Rough, gets everywhere, coarse, etc.", list("Up", "Down", "Right", "Left"))
+		switch(chosen_direction)
+			if("Up")
+				start_side = NORTH
+			if("Down")
+				start_side = SOUTH
+			if("Right")
+				start_side = EAST
+			if("Left")
+				start_side = WEST
 /datum/round_event/sandstorm
 	start_when = 60
-	end_when = 120
+	end_when = 90
 	announce_when = 1
 	///Which direction the storm will come from.
 	var/start_side
