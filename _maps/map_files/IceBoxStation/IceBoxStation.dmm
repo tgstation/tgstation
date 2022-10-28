@@ -7663,10 +7663,10 @@
 /area/station/science/explab)
 "cmB" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	sortType = 22
+	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/service/janitor_closet,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "cmJ" = (
@@ -8079,9 +8079,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 5
+	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/engineering/ce_office,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ctM" = (
@@ -9393,9 +9393,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 1;
-	sortType = 28
+	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "cMt" = (
@@ -11592,9 +11592,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 10
+	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/cmo_office,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "dtU" = (
@@ -11707,10 +11707,10 @@
 "dvW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 23
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/mail_sorting/science/genetics,
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "dvY" = (
@@ -14517,9 +14517,9 @@
 /area/station/science/ordnance/office)
 "eqk" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	sortType = 16
+	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/library,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "eqm" = (
@@ -16893,8 +16893,7 @@
 /area/station/command/heads_quarters/rd)
 "faZ" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2;
-	sortType = 26
+	dir = 2
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -16909,6 +16908,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/effect/mapping_helpers/mail_sorting/service/dormitories,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "fbh" = (
@@ -19241,9 +19241,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2;
-	sortType = 17
+	dir = 2
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/chapel,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "fMP" = (
@@ -25135,8 +25135,7 @@
 /area/station/engineering/atmos/storage)
 "hGF" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	sortType = 30
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -25144,6 +25143,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/mail_sorting/security/detectives_office,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "hGH" = (
@@ -27771,9 +27771,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 1;
-	sortType = 13
+	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/rd_office,
 /turf/open/floor/iron/white,
 /area/station/maintenance/aft/greater)
 "iyK" = (
@@ -33135,9 +33135,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 2;
-	sortType = 25
+	dir = 2
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/ordnance,
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "keP" = (
@@ -33659,9 +33659,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 4;
-	sortTypes = list(18,19,20,21)
+	dir = 4
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/theater,
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
+/obj/effect/mapping_helpers/mail_sorting/service/hydroponics,
+/obj/effect/mapping_helpers/mail_sorting/service/kitchen,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "kmQ" = (
@@ -38452,8 +38455,7 @@
 /area/station/science/xenobiology)
 "lMB" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 11
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -38464,6 +38466,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/chemistry,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "lMC" = (
@@ -40609,9 +40612,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 2
+	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "myC" = (
@@ -43167,9 +43170,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	sortType = 18
+	dir = 4
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/theater,
 /turf/open/floor/wood/parquet,
 /area/station/commons/lounge)
 "nmr" = (
@@ -44473,10 +44476,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 4;
-	sortType = 19
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "nGz" = (
@@ -46737,9 +46740,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 4;
-	sortType = 4
+	dir = 4
 	},
+/obj/effect/mapping_helpers/mail_sorting/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "onJ" = (
@@ -56469,12 +56472,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 27
+	dir = 8
 	},
 /obj/effect/turf_decal/box/white{
 	color = "#52B4E9"
 	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "rsC" = (
@@ -58281,9 +58284,9 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 1;
-	sortType = 15
+	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/hop_office,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "rXd" = (
@@ -59795,9 +59798,9 @@
 /area/station/maintenance/port/aft)
 "sut" = (
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 12
+	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/research,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -61714,11 +61717,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 2;
-	sortType = 27
+	dir = 2
 	},
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/effect/mapping_helpers/mail_sorting/medbay/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "taN" = (
@@ -61758,9 +61761,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 7
+	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/security/general,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "tbQ" = (
@@ -62941,9 +62944,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/duct,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	sortType = 6
+	dir = 4
 	},
+/obj/effect/mapping_helpers/mail_sorting/engineering/atmospherics,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "tvv" = (
@@ -65528,11 +65531,11 @@
 "uiZ" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 1
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/mail_sorting/supply/disposals,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "uja" = (
@@ -68521,9 +68524,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 3
+	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/qm_office,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "vip" = (
@@ -69108,9 +69111,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 4;
-	sortType = 14
+	dir = 4
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/robotics,
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "vqi" = (
@@ -69691,10 +69694,10 @@
 /area/station/maintenance/fore)
 "vzm" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	sortType = 9
+	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/medbay/general,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "vzo" = (
@@ -70587,8 +70590,10 @@
 /turf/open/floor/iron,
 /area/mine/production)
 "vOr" = (
-/obj/structure/disposalpipe/junction{
-	dir = 8
+/obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	sortType = 10
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -70851,9 +70856,9 @@
 "vSo" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 8
+	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/security/hos_office,
 /turf/open/floor/iron,
 /area/station/security/brig/upper)
 "vSq" = (
@@ -72311,9 +72316,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	sortType = 21
+	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/hydroponics,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "wnT" = (
@@ -74979,12 +74984,12 @@
 /area/station/engineering/atmos/storage)
 "xbR" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	sortType = 29
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/service/law_office,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "xbV" = (
@@ -75866,9 +75871,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	sortType = 20
+	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/kitchen,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "xpp" = (
@@ -77021,9 +77026,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/sorting/mail{
-	sortTypes = list(12,23)
-	},
+/obj/structure/disposalpipe/sorting/mail,
+/obj/effect/mapping_helpers/mail_sorting/science/genetics,
+/obj/effect/mapping_helpers/mail_sorting/science/research,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/upper)
 "xIz" = (
