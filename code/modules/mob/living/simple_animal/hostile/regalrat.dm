@@ -96,7 +96,7 @@
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
 	if(isliving(the_target))
 		var/mob/living/living_target = the_target
-		return living_target.faction_check_mob(src, exact_match = TRUE)
+		return !living_target.faction_check_mob(src, exact_match = TRUE)
 
 	return ..()
 
