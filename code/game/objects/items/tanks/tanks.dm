@@ -50,8 +50,12 @@
 /// Closes the tank if dropped while open.
 /obj/item/tank/dropped(mob/living/user, silent)
 	. = ..()
+	// Close open air tank if its current user got sent to the shadowrealm.
+	if (QDELETED(breathing_mob))
+		breathing_mob = null
+		return
 	// Close open air tank if it got dropped by it's current user.
-	if (breathing_mob && (loc != breathing_mob))
+	if (loc != breathing_mob)
 		breathing_mob.cutoff_internals()
 
 /// Closes the tank if given to another mob while open.
