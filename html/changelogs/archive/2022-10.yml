@@ -1017,3 +1017,7 @@
   timothymtorres:
   - bugfix: Fix table contextual screentips for tools
   - bugfix: Fix cyborgs dropping items when sent to the arena shuttle
+2022-10-28:
+  ShizCalev:
+  - code_imp: Added a unit test to catch items that can be equipped to suit slots
+      have missing textures.
