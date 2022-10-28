@@ -657,7 +657,7 @@
 		SSticker.show_roundend_report(owner.client)
 
 /datum/action/report/IsAvailable(feedback = FALSE)
-	return 1
+	return TRUE
 
 /datum/action/report/Topic(href,href_list)
 	if(usr != owner)
