@@ -113,6 +113,7 @@
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
 #include "inhands.dm"
+#include "json_logging.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
 #include "limbsanity.dm"
