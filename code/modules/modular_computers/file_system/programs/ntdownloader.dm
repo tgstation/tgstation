@@ -162,7 +162,7 @@
 			"installed" = !!computer.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
-			"access" = emagged && programs.available_on_syndinet ? TRUE : programs.can_run(user,transfer = 1, access = access),
+			"access" = emagged && programs.available_on_syndinet ? TRUE : programs.can_run(user, transfer = TRUE, access = access),
 			"verifiedsource" = programs.available_on_ntnet,
 		))
 

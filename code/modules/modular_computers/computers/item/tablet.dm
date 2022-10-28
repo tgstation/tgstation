@@ -231,7 +231,7 @@
 	has_variants = FALSE
 	inserted_item = null
 	starting_programs = list(
-		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/chatclient,
 	)
 
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
@@ -246,6 +246,7 @@
 		/datum/computer_file/program/computerconfig,
 		/datum/computer_file/program/filemanager,
 		/datum/computer_file/program/robotact,
+		/datum/computer_file/program/chatclient,
 	)
 
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)

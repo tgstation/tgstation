@@ -102,8 +102,8 @@
  *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
  *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
 */
-/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, list/access)
-	if(issilicon(user))
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, list/access, silicon_allowed = TRUE)
+	if(silicon_allowed && issilicon(user))
 		return TRUE
 
 	if(isAdminGhostAI(user))
@@ -163,16 +163,16 @@
  **/
 /datum/computer_file/program/proc/on_start(mob/living/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if(can_run(user, 1))
-		if(requires_ntnet)
-			var/obj/item/card/id/ID
-			var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
-			if(card_holder)
-				ID = card_holder.GetID()
-			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
-		program_state = PROGRAM_STATE_ACTIVE
-		return TRUE
-	return FALSE
+	if(!can_run(user, TRUE))
+		return FALSE
+	if(requires_ntnet)
+		var/obj/item/card/id/ID
+		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+		if(card_holder)
+			ID = card_holder.GetID()
+		generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
+	program_state = PROGRAM_STATE_ACTIVE
+	return TRUE
 
 /**
  *
