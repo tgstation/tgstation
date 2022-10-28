@@ -64,6 +64,23 @@
 	eatverbs = list("bite", "nibble", "gnaw", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/popcorn/salty
+	name = "salty popcorn"
+	icon_state = "salty_popcorn"
+	desc = "Salty popcorn, a classic for all time."
+	trash_type = /obj/item/trash/popcorn/salty
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 2)
+	tastes = list("salt" = 2, "popcorn" = 1)
+
+/obj/item/food/popcorn/caramel
+	name = "caramel popcorn"
+	icon_state = "сaramel_popcorn"
+	desc = "Caramel-covered popcorn. Sweet!"
+	trash_type = /obj/item/trash/popcorn/caramel
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/caramel = 4)
+	tastes = list("caramel" = 2, "popcorn" = 1)
+	foodtypes = JUNKFOOD | SUGAR
+
 /obj/item/food/loadedbakedpotato
 	name = "loaded baked potato"
 	desc = "Totally baked."
@@ -939,3 +956,6 @@
 	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+
+

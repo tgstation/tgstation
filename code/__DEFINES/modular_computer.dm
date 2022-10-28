@@ -1,8 +1,6 @@
 //Modular computer/NTNet defines
 
 //Modular computer part defines
-#define MC_HDD "HDD"
-#define MC_SDD "SDD"
 #define MC_CARD "CARD"
 #define MC_CARD2 "CARD2"
 #define MC_CELL "CELL"
@@ -51,3 +49,8 @@
 #define NTNET_GOOD_SIGNAL 2
 ///Using a Computer, ethernet-connected.
 #define NTNET_ETHERNET_SIGNAL 3
+
+/// The default ringtone of the Messenger app.
+#define MESSENGER_RINGTONE_DEFAULT "beep"
+/// The maximum length of the ringtone of the Messenger app.
+#define MESSENGER_RINGTONE_MAX_LENGTH 20

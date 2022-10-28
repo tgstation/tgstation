@@ -21,7 +21,7 @@
 		/obj/item/storage/backpack/satchel/sec = 3,
 		/obj/item/storage/backpack/duffelbag/sec = 3,
 		/obj/item/clothing/under/rank/security/officer = 3,
-		/obj/item/clothing/shoes/jackboots = 3,
+		/obj/item/clothing/shoes/jackboots/sec = 3,
 		/obj/item/clothing/head/beret/sec = 3,
 		/obj/item/clothing/head/soft/sec = 3,
 		/obj/item/clothing/mask/bandana/striped/security = 3,
@@ -435,6 +435,7 @@
 		/obj/item/clothing/head/chaplain/taqiyah/red = 3,
 		/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 1,
 		/obj/item/clothing/head/rasta = 1,
+		/obj/item/clothing/suit/chaplainsuit/shrinehand = 1,
 		)
 	contraband = list(
 		/obj/item/toy/plush/ratplush = 1,

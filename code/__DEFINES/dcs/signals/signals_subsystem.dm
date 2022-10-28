@@ -15,7 +15,7 @@
 ///Called when the ticker fails to set up the game for start
 #define COMSIG_TICKER_ERROR_SETTING_UP "comsig_ticker_error_setting_up"
 
-/// Called when the round has started, but before GAME_STATE_PLAYING
+/// Called when the round has started, but before GAME_STATE_PLAYING.
 #define COMSIG_TICKER_ROUND_STARTING "comsig_ticker_round_starting"
 
 // Point of interest signals

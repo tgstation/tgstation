@@ -39,14 +39,14 @@
 		return TRUE
 
 /obj/item/clothing/suit/hooded/ablative/ToggleHood()
-	if (hood_up)
-		return ..()
+	. = ..()
+	if (!hood_up)
+		return
 	var/mob/living/carbon/user = loc
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
 	hud.show_to(user)
 	balloon_alert(user, "you put on the hood, and enable the hud")
-	return ..()
 
 /obj/item/clothing/suit/hooded/ablative/RemoveHood()
 	if (!hood_up)

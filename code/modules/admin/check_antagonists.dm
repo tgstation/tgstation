@@ -122,28 +122,39 @@
 	var/observers_connected = 0
 	var/living_players = 0
 	var/living_players_connected = 0
-	var/living_players_antagonist = 0
+	var/antagonists = 0
+	var/antagonists_dead = 0
 	var/brains = 0
 	var/other_players = 0
 	var/living_skipped = 0
 	var/drones = 0
+	var/security = 0
+	var/security_dead = 0
 	for(var/mob/M in GLOB.mob_list)
 		if(M.ckey)
 			if(isnewplayer(M))
 				lobby_players++
 				continue
-			else if(M.stat != DEAD && M.mind && !isbrain(M))
-				if(isdrone(M))
-					drones++
-					continue
-				if(is_centcom_level(M.z))
-					living_skipped++
-					continue
-				living_players++
+			else if(M.mind && !isbrain(M))
+				if(M.stat != DEAD)
+					if(isdrone(M))
+						drones++
+						continue
+					if(is_centcom_level(M.z))
+						living_skipped++
+						continue
+					living_players++
+					if(M.client)
+						living_players_connected++
+
 				if(M.mind.special_role)
-					living_players_antagonist++
-				if(M.client)
-					living_players_connected++
+					antagonists++
+					if(M.stat == DEAD)
+						antagonists_dead++
+				if(M.mind.assigned_role?.departments_list?.Find(/datum/job_department/security))
+					security++
+					if(M.stat == DEAD)
+						security_dead++
 			else if(M.stat == DEAD || isobserver(M))
 				observers++
 				if(M.client)
@@ -153,7 +164,9 @@
 			else
 				other_players++
 	dat += "<BR><b><font color='blue' size='3'>Players:|[connected_players - lobby_players] ingame|[connected_players] connected|[lobby_players] lobby|</font></b>"
-	dat += "<BR><b><font color='green'>Living Players:|[living_players_connected] active|[living_players - living_players_connected] disconnected|[living_players_antagonist] antagonists|</font></b>"
+	dat += "<BR><b><font color='green'>Living Players:|[living_players_connected] active|[living_players - living_players_connected] disconnected|</font></b>"
+	dat += "<BR><b><font color='#e29300'>Antagonists Players:|[antagonists] ingame|[antagonists-antagonists_dead] alive|[antagonists_dead] dead|</font></b>"
+	dat += "<BR><b><font color='#860e03'>Security Players:|[security] ingame|[security-security_dead] alive|[security_dead] dead|</font></b>"
 	dat += "<BR><b><font color='#bf42f4'>SKIPPED \[On centcom Z-level\]: [living_skipped] living players|[drones] living drones|</font></b>"
 	dat += "<BR><b><font color='red'>Dead/Observing players:|[observers_connected] active|[observers - observers_connected] disconnected|[brains] brains|</font></b>"
 	if(other_players)
