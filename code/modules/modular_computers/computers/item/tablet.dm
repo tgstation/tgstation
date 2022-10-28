@@ -257,7 +257,7 @@
 		silicon_owner = null
 		stack_trace("[type] initialized outside of a silicon, deleting.")
 		return INITIALIZE_HINT_QDEL
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
+	var/datum/computer_file/program/chatclient/chatprogram = find_file_by_name("ntnrc_client")
 	chatprogram.username = "Silicon_[rand(100, 999)]"
 
 /obj/item/modular_computer/tablet/integrated/install_default_programs()
