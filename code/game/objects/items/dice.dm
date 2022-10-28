@@ -222,10 +222,11 @@
 
 	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
-	if(sides == 20 && result == 20)
-		comment = "NAT 20!"
-	else if(sides == 20 && result == 1)
-		comment = "Ouch, bad luck."
+	if(sides > 1)  // less comment spam
+		if(result == sides)
+			comment = "NAT [sides]!"
+		if(result == 1)
+			comment = "Ouch, bad luck."
 	update_appearance()
 	if(initial(icon_state) == "d00")
 		result = (result - 1)*10
