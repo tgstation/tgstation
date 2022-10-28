@@ -1,5 +1,5 @@
 /datum/export/paperwork
-	cost = CARGO_CRATE_VALUE * 4
+	cost = CARGO_CRATE_VALUE * 3
 	unit_name = "paperwork pile"
 	export_types = list(/obj/item/paperwork)
 	exclude_types = list(/obj/item/paperwork/photocopy) //Has its own category
@@ -36,7 +36,7 @@
 			if(prob(backfire_chance))
 				backfire_chance = 0
 				backfired = TRUE
-				return -init_cost * 4 //
+				return -init_cost * 4 //too high of an amount to allow for infinite money
 			else
 				return ..()
 
