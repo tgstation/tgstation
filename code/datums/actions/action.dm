@@ -145,10 +145,10 @@
 			owner.balloon_alert(owner, "can't move!")
 		return FALSE
 	if((check_flags & AB_CHECK_LYING) && isliving(owner))
-		if (feedback)
-			owner.balloon_alert(owner, "must stand up!")
 		var/mob/living/action_owner = owner
 		if(action_owner.body_position == LYING_DOWN)
+			if (feedback)
+				owner.balloon_alert(owner, "must stand up!")
 			return FALSE
 	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
 		if (feedback)
