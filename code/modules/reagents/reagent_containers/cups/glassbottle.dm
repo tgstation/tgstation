@@ -106,6 +106,19 @@
 
 	return TRUE
 
+/** proc to make the effect of liquid froth
+ * hi :)
+ *
+ *
+*/
+/obj/item/reagent_containers/cup/glass/bottle/proc/make_froth(mob/user, offset_x, offset_y, intensity)
+	if(!intensity)
+		return
+	var/amount_lost = intensity * 5
+	reagents.remove_any(amount_lost)
+	visible_message(span_warning("[name]'s contents are let loose!"))
+
+
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
 	name = "broken bottle"
@@ -491,7 +504,7 @@
 		return ..()
 	balloon_alert(user, "fiddling with cork...")
 	if(do_after(user, 1 SECONDS, src))
-		return pop_cork(user, sabrage = FALSE)
+		return pop_cork(user, sabrage = FALSE, froth_severity = pick(0, 1))
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/attackby(obj/item/attacking_item, mob/living/user, params)
 	. = ..()
@@ -512,11 +525,26 @@
 		return
 
 	//calculate success chance. example: captain's sabre - 15 force = 75% chance
-	if(prob(attacking_item.force * sabrage_success_percentile + \
+	var/sabrage_chance = attacking_item.force * sabrage_success_percentile + \
 		((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
 		((HAS_TRAIT(user, TRAIT_SABRAGE_PRO)) ? 35 : 0)
-		))
-		return pop_cork(user, sabrage = TRUE)
+
+	to_chat(user, span_boldnotice("Chance = [sabrage_chance]")) //debug, remove me!
+
+	if(prob(sabrage_chance))
+		///Severity of the resulting froth to pass to make_froth()
+		var/severity_to_pass
+		if(sabrage_chance > 100)
+			severity_to_pass = 0
+		else
+			switch(sabrage_chance) //the less likely we were to succeed, the more of the drink will end up wasted
+				if(1 to 33)
+					severity_to_pass = 3
+				if(34 to 66)
+					severity_to_pass = 2
+				if(67 to 99)
+					severity_to_pass = 1
+		return pop_cork(user, sabrage = TRUE, froth_severity = severity_to_pass)
 	else //you dun goofed
 		user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
 			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"))
@@ -533,7 +561,7 @@
 	else
 		icon_state = base_icon_state
 
-/obj/item/reagent_containers/cup/glass/bottle/champagne/proc/pop_cork(mob/living/user, sabrage)
+/obj/item/reagent_containers/cup/glass/bottle/champagne/proc/pop_cork(mob/living/user, sabrage, froth_severity)
 	if(!sabrage)
 		user.visible_message(span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."), \
 			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force."))
@@ -555,6 +583,7 @@
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()
+	make_froth(user, intensity = froth_severity)
 	var/obj/projectile/bullet/reusable/cork_to_fire = sabraged ? /obj/projectile/bullet/reusable/champagne_cork/sabrage : /obj/projectile/bullet/reusable/champagne_cork
 	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new cork_to_fire (drop_location())
 	popped_cork.firer = user
