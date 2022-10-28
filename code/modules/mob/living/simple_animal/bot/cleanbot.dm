@@ -339,7 +339,7 @@
 	if(janitor_mode_flags & CLEANBOT_CLEAN_PESTS)
 		target_types += list(
 			/mob/living/basic/cockroach,
-			/mob/living/simple_animal/mouse,
+			/mob/living/basic/mouse,
 		)
 
 	if(janitor_mode_flags & CLEANBOT_CLEAN_DRAWINGS)

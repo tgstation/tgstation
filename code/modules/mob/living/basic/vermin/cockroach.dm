@@ -57,8 +57,8 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
-		/datum/ai_planning_subtree/find_and_hunt_target
-)
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
+	)
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
@@ -91,7 +91,7 @@
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach, //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
@@ -136,7 +136,7 @@
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach
