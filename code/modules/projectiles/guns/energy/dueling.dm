@@ -171,8 +171,9 @@
 		if(!check_valid_duel(user, FALSE) && !other_gun.check_valid_duel(user, FALSE))
 			var/datum/duel/D = new(src, other_gun)
 			to_chat(user,span_notice("Pairing established. Pairing code: [D.pairing_code]"))
+			return
 
-	. = ..()
+	return ..()
 
 /obj/item/gun/energy/dueling/examine_more(mob/user)
 	. = ..()
