@@ -113,6 +113,7 @@
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
 #include "inhands.dm"
+#include "json_logging_category_unique.dm"
 #include "json_logging_semver.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"

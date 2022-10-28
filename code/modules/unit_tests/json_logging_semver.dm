@@ -3,7 +3,7 @@
 
 /datum/unit_test/json_logging_semver/Run()
 	for(var/datum/log_entry/entry as anything in subtypesof(/datum/log_entry))
-		var/log_version = initial(entry.version)
+		var/log_version = UNLINT(initial(entry.version))
 		// check for invalid log version
 		if(!log_version || log_version == "0.0.0")
 			TEST_FAIL("[entry] has no log version; how did you mess this up?")

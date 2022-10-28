@@ -1,4 +1,5 @@
 /datum/log_entry/asay
+	version = "1.0.0"
 	category = "ASAY"
 	private = TRUE
 

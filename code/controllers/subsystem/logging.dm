@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(logging)
 	name = "Logging"
 	flags = SS_NO_FIRE
 	var/list/entries = list()
+	var/list/entry_dir_map = list()
 
 /datum/controller/subsystem/logging/Initialize()
 	. = ..()
@@ -9,9 +10,13 @@ SUBSYSTEM_DEF(logging)
 		var/entry_category = initial(entry_type.category)
 		if(!entries[entry_category])
 			entries[entry_category] = list()
+			var/log_file = "[GLOB.log_directory]/[lowertext(entry_category)]"
+			entry_dir_map[entry_category] = log_file
 
 /datum/controller/subsystem/logging/proc/append_entry(datum/log_entry/entry)
 	LAZYADDASSOC(entries, entry.category, entry)
+	var/target_file = "log-entry-[length(entries[entry.category])].json"
+	WRITE_LOG("[entry_dir_map[entry.category]]/[target_file]", entry.to_json())
 
 /client/verb/view_logs()
 	SSlogging.view_logs()

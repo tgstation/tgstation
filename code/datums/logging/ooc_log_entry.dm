@@ -1,4 +1,5 @@
 /datum/log_entry/ooc
+	version = "1.0.0"
 	category = "OOC"
 
 /datum/log_entry/ooc/New(client/author, message)

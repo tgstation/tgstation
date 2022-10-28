@@ -15,7 +15,7 @@
 	 * update the PATCH version number. For instance, 1.2.3 -> 1.2.4.
 	 * This is so that in the event your code breaks the logging, automated tooling can isolate it.ted for.
 	 */
-	VAR_PRIVATE/version = "0.0.0"
+	VAR_PROTECTED/version = "0.0.0"
 	/// The unix timestamp this log entry was created.
 	VAR_PRIVATE/unix_timestamp = 0
 	/// The world.time this log entry was created.
@@ -53,16 +53,29 @@
 /datum/log_entry/New(message)
 	..()
 	SHOULD_CALL_PARENT(TRUE)
-	unix_timestamp = world.realtime
+	unix_timestamp = world.realtime + 946702800 // Waiting on rustg update // rustg_unix_timestamp()
 	world_timestamp = world.time
 	round_id = GLOB.round_id
-	server_name = CONFIG_GET(string/server) || "Unknown"
+	server_name = "[world.address]:[world.port]"
 	if(!category)
 		CRASH("Log entry created without a category.")
 	if(!message)
 		CRASH("Log entry created without a message.")
 	src.message = message
 	SSlogging.append_entry(src)
+
+/datum/log_entry/Destroy(force, ...)
+	if(!force)
+		stack_trace("Attempting to Destroy a log entry; this is likely a bug.")
+		if(!(src in SSlogging.entries[category]))
+			// We were attempted to be del'd by Byond because nothing held a reference to us
+			// This is almost guarenteed to be due to a runtime in /New so we will now yell loudly about that
+			SSlogging.append_entry(src)
+			stack_trace("Log entry was not in the logging subsystem's entries list; this is a means that /New failed to append the entry which is a very big issue.")
+		return QDEL_HINT_LETMELIVE
+	// I don't know why we are being force del'd but we will acknowledge it
+	LAZYREMOVEASSOC(SSlogging.entries, category, src)
+	return ..()
 
 /datum/log_entry/proc/as_private()
 	RETURN_TYPE(/datum/log_entry)
