@@ -83,7 +83,7 @@
  * Copies the stamp/job related info of a given paperwork type to the object
  * Used to mutate photocopied/ancient paperwork into behaving like their subtype counterparts without the extra details
  */
-/obj/item/paperwork/proc/copy_stamp_info(var/obj/item/paperwork/paperwork_type)
+/obj/item/paperwork/proc/copy_stamp_info(/obj/item/paperwork/paperwork_type)
 	stamp_requested = initial(paperwork_type.stamp_requested)
 	stamp_job =  initial(paperwork_type.stamp_job)
 	stamp_icon =  initial(paperwork_type.stamp_icon)
