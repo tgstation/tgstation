@@ -27,10 +27,7 @@
 
 /datum/admin_pda_panel/New()
 	for(var/obj/item/modular_computer/computer in GLOB.TabletMessengers)
-		var/obj/item/computer_hardware/hard_drive/drive = computer.all_components[MC_HDD]
-		if(!drive)
-			continue
-		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+		for(var/datum/computer_file/program/messenger/app in computer.stored_files)
 			if(!computer.saved_identification || !computer.saved_job || app.monitor_hidden || app.invisible)
 				continue
 			available_pdas += list(list("tablet" = computer, "name" = computer.saved_identification))
