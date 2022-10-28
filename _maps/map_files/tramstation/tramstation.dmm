@@ -34404,7 +34404,6 @@
 "mmI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/r_wall,
-/turf,
 /area/station/security/checkpoint/engineering)
 "mmL" = (
 /obj/machinery/door/morgue{
