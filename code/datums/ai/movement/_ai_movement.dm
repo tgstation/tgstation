@@ -15,7 +15,11 @@
 /datum/ai_movement/proc/stop_moving_towards(datum/ai_controller/controller)
 	controller.pathing_attempts = 0
 	moving_controllers -= controller
-	SSmove_manager.stop_looping(controller.pawn, SSai_movement)
+	// Qdeleted check is for when our controller's pawn was unassigned
+	// or qdeleted before (or as) we told them to stop moving.
+	// Jet let them handle the stopping of the moveloop instesad.
+	if(!QDELETED(controller.pawn))
+		SSmove_manager.stop_looping(controller.pawn, SSai_movement)
 
 /datum/ai_movement/proc/increment_pathing_failures(datum/ai_controller/controller)
 	controller.pathing_attempts++
