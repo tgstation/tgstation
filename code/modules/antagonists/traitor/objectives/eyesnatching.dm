@@ -10,6 +10,8 @@
 	name = "Steal %TARGET%'s (%JOB TITLE%) eyes"
 	description = "%TARGET% messed with the wrong people. Steal their eyes to teach them a lesson. You will be provided an experimental eyesnatcher device to aid you in your mission."
 
+	progression_minimum = 10 MINUTES
+
 	progression_reward = list(4 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(1, 2)
 
@@ -25,6 +27,8 @@
 	var/heads_of_staff = FALSE
 	/// Have we already spawned an eyesnatcher
 	var/spawned_eyesnatcher = FALSE
+
+	duplicate_type = /datum/traitor_objective/eyesnatching
 
 /datum/traitor_objective/eyesnatching/supported_configuration_changes()
 	. = ..()
@@ -64,6 +68,9 @@
 		if(possible_target.has_antag_datum(/datum/antagonist/traitor))
 			continue
 
+		if(!possible_target.assigned_role)
+			continue
+
 		if(heads_of_staff)
 			if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
 				continue
@@ -99,6 +106,7 @@
 	replace_in_name("%JOB TITLE%", victim_mind.assigned_role.title)
 	RegisterSignal(victim, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal)
 	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = COMSIG_PARENT_QDELETING)
+	return TRUE
 
 /datum/traitor_objective/eyesnatching/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)
 	SIGNAL_HANDLER
@@ -154,7 +162,7 @@
 	if(!eyeballies || victim.is_eyes_covered())
 		return ..()
 
-	if((head && head.eyes != eyeballies) || eyeballies.zone != BODY_ZONE_HEAD)
+	if((head && head.eyes != eyeballies) || eyeballies.zone != BODY_ZONE_PRECISE_EYES)
 		to_chat(user, span_warning("You don't know how to apply [src] to the abomination that [victim] is!"))
 		return ..()
 
