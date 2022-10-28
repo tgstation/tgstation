@@ -98,7 +98,6 @@
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
-
 /**
  * Sets the tablet theme and icon
  *
