@@ -364,6 +364,13 @@
 		return FALSE
 	return TRUE
 
+/mob/living/attack_lightgeist(mob/living/user, list/modifiers)
+	if(stat == DEAD)
+		return
+	heal_overall_damage(user.melee_damage_upper, user.melee_damage_upper)
+	new /obj/effect/temp_visual/heal(get_turf(src), "#80F5FF")
+	user.visible_message(span_notice("[user] mends the wounds of [src]."),span_notice("You mend the wounds of [src]."))
+
 /mob/living/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return FALSE
