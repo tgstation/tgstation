@@ -128,6 +128,8 @@ GLOBAL_VAR_INIT(sc_safecode5, "[rand(0,9)]")
 /obj/item/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/sc_ssafe, 0)
+
 /obj/item/storage/secure/safe/sc_ssafe/Initialize(mapload)
 	. = ..()
 	lock_code = "[GLOB.sc_safecode1][GLOB.sc_safecode2][GLOB.sc_safecode3][GLOB.sc_safecode4][GLOB.sc_safecode5]"

@@ -2,7 +2,7 @@
 /obj/machinery/light_switch
 	name = "light switch"
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light-nopower"
+	icon_state = "light-p"
 	base_icon_state = "light"
 	desc = "Make dark."
 	power_channel = AREA_USAGE_LIGHT

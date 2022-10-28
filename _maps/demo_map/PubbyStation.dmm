@@ -3065,14 +3065,7 @@
 	fax_name = "Head of Security's Office";
 	name = "Head of Security's Fax Machine"
 	},
-/turf/open/floor/iron/dark,
-/area/station/command/heads_quarters/hos)
-"akV" = (
-/obj/item/storage/secure/safe{
-	pixel_x = -22;
-	pixel_y = 32
-	},
-/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/item/storage/secure/safe/hos/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "akW" = (
@@ -7135,11 +7128,8 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "azc" = (
-/obj/item/storage/secure/safe{
-	pixel_x = 35;
-	pixel_y = 5
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/item/storage/secure/safe/directional/east,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "azd" = (
@@ -7163,9 +7153,6 @@
 /turf/open/floor/grass,
 /area/station/medical/medbay/central)
 "azg" = (
-/obj/structure/fireaxecabinet{
-	pixel_y = -32
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -7173,6 +7160,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/structure/fireaxecabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "azh" = (
@@ -7184,10 +7172,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/item/storage/secure/safe/caps_spare{
-	pixel_x = 6;
-	pixel_y = -28
-	},
+/obj/item/storage/secure/safe/caps_spare/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "azj" = (
@@ -7797,10 +7782,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "aBz" = (
-/obj/item/storage/secure/safe{
-	pixel_x = -22;
-	pixel_y = 4
-	},
 /obj/structure/table/wood,
 /obj/item/paper_bin{
 	layer = 2.9
@@ -7808,6 +7789,7 @@
 /obj/item/pen{
 	layer = 4
 	},
+/obj/item/storage/secure/safe/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "aBA" = (
@@ -15698,13 +15680,11 @@
 /obj/structure/table,
 /obj/item/stack/package_wrap,
 /obj/item/hand_labeler,
-/obj/item/storage/secure/safe{
-	pixel_x = -27
-	},
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/storage/secure/safe/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "biL" = (
@@ -25864,15 +25844,13 @@
 /area/space/nearstation)
 "bZT" = (
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/structure/fireaxecabinet{
-	pixel_y = 32
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
+/obj/structure/fireaxecabinet/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "bZU" = (
@@ -33005,9 +32983,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "fhM" = (
-/obj/item/storage/secure/safe{
-	pixel_x = -22
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 8
@@ -33015,6 +32990,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/item/storage/secure/safe/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "fih" = (
@@ -80942,7 +80918,7 @@ dAa
 abI
 ajs
 aka
-akV
+akX
 kNE
 amv
 alJ
