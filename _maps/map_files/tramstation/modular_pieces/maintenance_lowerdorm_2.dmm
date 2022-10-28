@@ -351,12 +351,32 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
+"JP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Ka" = (
 /obj/machinery/plumbing/synthesizer{
 	reagent_id = /datum/reagent/water
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
+"KD" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Lm" = (
@@ -458,6 +478,16 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/crew_quarters/dorms)
+"PP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/crew_quarters/dorms)
 "Rt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/moisture_trap,
@@ -467,6 +497,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/grille,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/department/crew_quarters/dorms)
+"Se" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
 "Sr" = (
 /obj/machinery/duct,
@@ -1905,11 +1943,11 @@ OI
 OI
 OI
 OI
-ML
-ML
-ML
-ML
-ML
+JP
+Se
+Se
+Se
+PP
 Ii
 "}
 (42,1,1) = {"
@@ -1937,9 +1975,9 @@ OI
 OI
 OI
 OI
-ML
-ML
-ML
+JP
+Se
+PP
 Yw
 jb
 gU
@@ -1971,7 +2009,7 @@ OI
 OI
 OI
 OI
-ML
+KD
 gU
 jb
 gU
@@ -2005,7 +2043,7 @@ OI
 OI
 OI
 OI
-ML
+KD
 Ii
 oi
 yt

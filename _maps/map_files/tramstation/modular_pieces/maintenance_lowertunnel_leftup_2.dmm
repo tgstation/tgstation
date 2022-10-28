@@ -11,9 +11,11 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	name = "sorting disposal pipe (Civilan Wing)";
-	sortTypes = list(16,17)
+	name = "sorting disposal pipe (Engineering Wing)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/engineering/atmospherics,
+/obj/effect/mapping_helpers/mail_sorting/engineering/ce_office,
+/obj/effect/mapping_helpers/mail_sorting/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "aO" = (

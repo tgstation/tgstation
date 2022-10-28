@@ -439,9 +439,9 @@
 "aiP" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	name = "sorting disposal pipe (Security)";
-	sortType = 7
+	name = "sorting disposal pipe (Security)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/security/general,
 /turf/open/floor/iron,
 /area/station/security/office)
 "aiQ" = (
@@ -5242,10 +5242,10 @@
 	},
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
-	name = "sorting disposal pipe (Xenobiology)";
-	sortType = 28
+	name = "sorting disposal pipe (Xenobiology)"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "bYa" = (
@@ -7068,10 +7068,10 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	name = "sorting disposal pipe (Toxins)";
-	sortType = 25
+	name = "sorting disposal pipe (Toxins)"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/ordnance,
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "cAz" = (
@@ -9384,9 +9384,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
-	name = "sorting disposal pipe (Hydroponics)";
-	sortType = 21
+	name = "sorting disposal pipe (Hydroponics)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/hydroponics,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "dsj" = (
@@ -12534,10 +12534,9 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail{
-	sortType = 5
-	},
+/obj/structure/disposalpipe/sorting/mail,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/engineering/ce_office,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "evs" = (
@@ -19293,9 +19292,9 @@
 "gTZ" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
-	name = "sorting disposal pipe (Robotics)";
-	sortType = 14
+	name = "sorting disposal pipe (Robotics)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/robotics,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "gUd" = (
@@ -19695,10 +19694,10 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
-	name = "sorting disposal pipe (Library)";
-	sortType = 16
+	name = "sorting disposal pipe (Library)"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/mail_sorting/service/library,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "hbg" = (
@@ -20362,9 +20361,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
-	name = "sorting disposal pipe (Civilian Wing)";
-	sortTypes = list(16,17)
+	name = "sorting disposal pipe (Civilian Wing)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/library,
+/obj/effect/mapping_helpers/mail_sorting/service/chapel,
+/obj/effect/mapping_helpers/mail_sorting/service/dormitories,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "hqi" = (
@@ -22648,10 +22649,14 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/sorting/mail/flip{
-	name = "sorting disposal pipe (Science General)";
-	sortTypes = list(12,13,14,23,28)
+	name = "sorting disposal pipe (Science General)"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/research,
+/obj/effect/mapping_helpers/mail_sorting/science/rd_office,
+/obj/effect/mapping_helpers/mail_sorting/science/robotics,
+/obj/effect/mapping_helpers/mail_sorting/science/genetics,
+/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "igN" = (
@@ -23224,9 +23229,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
-	name = "sorting disposal pipe (Head of Security's Office)";
-	sortType = 8
+	name = "sorting disposal pipe (Head of Security's Office)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/security/hos_office,
 /turf/open/floor/iron,
 /area/station/security/office)
 "irK" = (
@@ -23772,11 +23777,11 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	name = "sorting disposal pipe (Quartermaster's Office)";
-	sortType = 3
+	name = "sorting disposal pipe (Quartermaster's Office)"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/mail_sorting/supply/qm_office,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "iAN" = (
@@ -29487,12 +29492,12 @@
 /obj/machinery/light/directional/east,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
-	name = "sorting disposal pipe (Head of Personnel's Office)";
-	sortType = 15
+	name = "sorting disposal pipe (Head of Personnel's Office)"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/service/hop_office,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "kCB" = (
@@ -32586,9 +32591,9 @@
 /area/station/security/interrogation)
 "lEU" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
-	name = "sorting disposal pipe (Genetics)";
-	sortType = 23
+	name = "sorting disposal pipe (Genetics)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/genetics,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "lEV" = (
@@ -33776,10 +33781,10 @@
 "mdj" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	name = "sorting disposal pipe (Research Director's Office)";
-	sortType = 13
+	name = "sorting disposal pipe (Research Director's Office)"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/rd_office,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "mdp" = (
@@ -39250,10 +39255,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/sorting/mail{
-	sortType = 24
-	},
+/obj/structure/disposalpipe/sorting/mail,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "oam" = (
@@ -39737,9 +39741,9 @@
 	},
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
-	name = "sorting disposal pipe (Lawyer's Office)";
-	sortType = 29
+	name = "sorting disposal pipe (Lawyer's Office)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/law_office,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "oiQ" = (
@@ -40428,12 +40432,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
-	name = "sorting disposal pipe (Xenobiology)";
-	sortType = 28
+	name = "sorting disposal pipe (Xenobiology)"
 	},
-/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "oyg" = (
@@ -41795,9 +41799,11 @@
 "oXk" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 8
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "sorting disposal pipe (Dormitory)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/dormitories,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "oXq" = (
@@ -44682,9 +44688,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
-	name = "sorting disposal pipe (Medical Wing)";
-	sortTypes = list(9,10,11,27)
+	name = "sorting disposal pipe (Medical Wing)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/chemistry,
+/obj/effect/mapping_helpers/mail_sorting/medbay/general,
+/obj/effect/mapping_helpers/mail_sorting/medbay/virology,
+/obj/effect/mapping_helpers/mail_sorting/medbay/cmo_office,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "pWC" = (
@@ -48001,9 +48010,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
-	name = "sorting disposal pipe (Research)";
-	sortType = 12
+	name = "sorting disposal pipe (Research)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/research,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "rdk" = (
@@ -48669,9 +48678,9 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	name = "sorting disposal pipe (Custodial Office)";
-	sortType = 22
+	name = "sorting disposal pipe (Custodial Office)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/janitor_closet,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "rrc" = (
@@ -49590,8 +49599,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	name = "sorting disposal pipe (Lower Research General)";
-	sortTypes = list(24,25)
+	name = "sorting disposal pipe (Lower Research General)"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -49603,6 +49611,8 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
+/obj/effect/mapping_helpers/mail_sorting/science/ordnance,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/right)
 "rGd" = (
@@ -49707,9 +49717,9 @@
 "rHW" = (
 /obj/effect/landmark/start/cargo_technician,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 1
+	dir = 8
 	},
+/obj/effect/mapping_helpers/mail_sorting/supply/disposals,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "rHY" = (
@@ -52531,9 +52541,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
-	name = "sorting disposal pipe (Chemistry)";
-	sortType = 11
+	name = "sorting disposal pipe (Chemistry)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/chemistry,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "sJS" = (
@@ -53200,10 +53210,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	name = "sorting disposal pipe (Atmospherics)";
-	sortType = 6
+	name = "sorting disposal pipe (Atmospherics)"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/engineering/atmospherics,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "sUm" = (
@@ -53229,9 +53239,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
-	name = "sorting disposal pipe (Chapel)";
-	sortType = 17
+	name = "sorting disposal pipe (Chapel)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/chapel,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "sUs" = (
@@ -53877,12 +53887,12 @@
 "thD" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
-	name = "sorting disposal pipe (Medbay)";
-	sortType = 9
+	name = "sorting disposal pipe (Medbay)"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/medbay/general,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "thG" = (
@@ -54629,9 +54639,9 @@
 	},
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 8;
-	name = "sorting disposal pipe (Chief Medical Officer's Office)";
-	sortType = 10
+	name = "sorting disposal pipe (Chief Medical Officer's Office)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/cmo_office,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "tsO" = (
@@ -55122,9 +55132,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail/flip{
-	name = "sorting disposal pipe (Virology)";
-	sortType = 27
+	name = "sorting disposal pipe (Virology)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "tCC" = (
@@ -55990,9 +56000,9 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	name = "sorting disposal pipe (Theatre)";
-	sortType = 18
+	name = "sorting disposal pipe (Theatre)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/theater,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "tUm" = (
@@ -59140,9 +59150,9 @@
 "vaf" = (
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
-	name = "sorting disposal pipe (Kitchen)";
-	sortType = 20
+	name = "sorting disposal pipe (Kitchen)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/service/kitchen,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "vaq" = (
@@ -62314,11 +62324,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	name = "sorting disposal pipe (Detective's Office)";
-	sortType = 30
+	name = "sorting disposal pipe (Detective's Office)"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/security/detectives_office,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "wjp" = (
@@ -62739,10 +62749,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 1;
-	name = "sorting disposal pipe (Cargo)";
-	sortType = 2
+	name = "sorting disposal pipe (Cargo)"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "wsM" = (
@@ -63438,10 +63448,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 1;
-	name = "sorting disposal pipe (Bar)";
-	sortType = 19
+	name = "sorting disposal pipe (Bar)"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
 "wEX" = (
@@ -64661,11 +64671,13 @@
 	},
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
-	name = "sorting disposal pipe (Cantina Staff)";
-	sortTypes = list(18,19,20)
+	name = "sorting disposal pipe (Cantina Staff)"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
+/obj/effect/mapping_helpers/mail_sorting/service/kitchen,
+/obj/effect/mapping_helpers/mail_sorting/service/theater,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "xas" = (
@@ -66030,6 +66042,7 @@
 	sortType = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/engineering/general,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "xyj" = (
@@ -67834,9 +67847,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 8;
-	name = "sorting disposal pipe (General Security Wing)";
-	sortTypes = list(8,7)
+	name = "sorting disposal pipe (General Security Wing)"
 	},
+/obj/effect/mapping_helpers/mail_sorting/security/general,
+/obj/effect/mapping_helpers/mail_sorting/security/hos_office,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "yiH" = (
