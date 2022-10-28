@@ -24,6 +24,9 @@
 
 	if(EMERGENCY_AT_LEAST_DOCKED || istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build))
 		if(tgui_alert(usr, "WARNING: This will unload the currently docked emergency shuttle and anything on it. Proceed anyways?", "How about a REAL catastrophe?", list("Yes", "No")) == "Yes")
+			message_admins("[admin.ckey] has forced a shuttle catastrophe while a shuttle was already docked.") //Just in case
+		else
+			return ADMIN_CANCEL_EVENT
 
 /datum/round_event/shuttle_catastrophe
 	var/datum/map_template/shuttle/new_shuttle
