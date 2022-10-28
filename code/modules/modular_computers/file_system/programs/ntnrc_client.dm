@@ -2,6 +2,8 @@
 #define CHANNELNAME_SIZE 12
 #define MESSAGE_SIZE 2048
 
+#define PING_COOLDOWN_TIME (3 SECONDS)
+
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
 	filedesc = "Chat Client"
@@ -24,6 +26,8 @@
 	var/netadmin_mode = FALSE // Administrator mode (invisible to other users + bypasses passwords)
 	//A list of all the converstations we're a part of
 	var/list/datum/ntnet_conversation/conversations = list()
+	///Cooldown timer between pings.
+	COOLDOWN_DECLARE(ping_cooldown)
 
 /datum/computer_file/program/chatclient/New()
 	username = "DefaultUser[rand(100, 999)]"
@@ -161,10 +165,11 @@
 			channel.mute_user(src, muted)
 			return TRUE
 		if("PRG_ping_user")
-			if(!authed)
+			if(!COOLDOWN_FINISHED(src, ping_cooldown))
 				return
 			var/datum/computer_file/program/chatclient/pinged = locate(params["ref"]) in channel.active_clients + channel.offline_clients
 			channel.ping_user(src, pinged)
+			COOLDOWN_START(src, ping_cooldown, PING_COOLDOWN_TIME)
 			return TRUE
 
 /datum/computer_file/program/chatclient/process_tick(delta_time)
@@ -269,3 +274,5 @@
 #undef USERNAME_SIZE
 #undef CHANNELNAME_SIZE
 #undef MESSAGE_SIZE
+
+#undef PING_COOLDOWN_TIME
