@@ -228,7 +228,7 @@
 
 	detailed_desc += span_notice("It's impossible to really tell how old these are or what they're for, but Central Command might appreciate them anyways.")
 
-	var/list/paperwork_list = subtypesof(/obj/item/paperwork) //Transform the ancient paperwork into a functional copy of normal paperwork
-	paperwork_list.Remove(list(/obj/item/paperwork/ancient, /obj/item/paperwork/photocopy)) //Get rid of the uncopiable paperwork pieces
+	var/list/paperwork_list = subtypesof(/obj/item/paperwork) //Make the ancient paperwork function like one of the main types
+	paperwork_list.Remove(list(/obj/item/paperwork/ancient, /obj/item/paperwork/photocopy)) //Get rid of the uncopiable paperwork types
 	var/obj/item/paperwork/paperwork_type = pick(paperwork_list)
 	copy_stamp_info(paperwork_type)
