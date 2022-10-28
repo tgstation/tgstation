@@ -70592,8 +70592,7 @@
 "vOr" = (
 /obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
 /obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	sortType = 10
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
