@@ -171,13 +171,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		to_chat(user, span_notice("You replace the headlamp bulbs."))
 		return
 
-	if(istype(W, /obj/item/computer_hardware/hard_drive/portable)) //Allows borgs to install new programs with human help
+	if(istype(W, /obj/item/computer_disk)) //Allows borgs to install new programs with human help
 		if(!modularInterface)
 			stack_trace("Cyborg [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 			create_modularInterface()
-		var/obj/item/computer_hardware/hard_drive/portable/floppy = W
-		if(modularInterface.install_component(floppy, user))
-			return
+		var/obj/item/computer_disk/floppy = W
+		floppy.forceMove(modularInterface)
+		modularInterface.inserted_disk = floppy
+		return
 
 	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()

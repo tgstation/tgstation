@@ -366,6 +366,7 @@
 	reqs = list(/obj/item/reagent_containers/cup/bucket = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
+	parts = list(/obj/item/reagent_containers/cup/bucket = 1)
 	time = 4 SECONDS
 	category = CAT_ROBOT
 

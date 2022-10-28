@@ -369,7 +369,7 @@
 			return
 	return ..()
 
-/obj/item/pen/screwdriver/proc/toggle_screwdriver(mob/user, active)
+/obj/item/pen/screwdriver/proc/toggle_screwdriver(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 	extended = active
 	if(user)

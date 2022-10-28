@@ -6,6 +6,8 @@
 		five minutes following application, and it's slippery too! \
 		People seeing or slipping on your graffiti grants progress towards success."
 
+	progression_minimum = 0 MINUTES
+	duplicate_type = /datum/traitor_objective/demoralise/graffiti
 	/// Have we given out a spray can yet?
 	var/obtained_spray = FALSE
 	/// Graffiti 'rune' which we will be drawing

@@ -345,11 +345,13 @@
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LMG
 
+/// Missiles
+/// SRM-8 Missile Rack - Used by Nuclear Operatives - Explodes when it hits anything
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "\improper SRM-8 missile rack"
-	desc = "A weapon for combat exosuits. Launches light explosive missiles."
+	desc = "A weapon for combat exosuits. Launches short range missiles."
 	icon_state = "mecha_missilerack"
-	projectile = /obj/projectile/bullet/a84mm/he
+	projectile = /obj/projectile/bullet/rocket/srm
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 8
 	projectiles_cache = 0
@@ -357,13 +359,14 @@
 	disabledreload = TRUE
 	equip_cooldown = 60
 	harmful = TRUE
-	ammo_type = MECHA_AMMO_MISSILE_HE
+	ammo_type = MECHA_AMMO_MISSILE_SRM
 
+/// PEP-6 Missile Rack - Used by Robotics - Explodes only when it hits dense objects like walls, borgs and mechs
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
-	name = "\improper BRM-6 missile rack"
-	desc = "A weapon for combat exosuits. Launches low-explosive breaching missiles designed to explode only when striking a sturdy target."
+	name = "\improper PEP-6 missile rack"
+	desc = "A weapon for combat exosuits. Launches precision explosive projectiles designed to explode only when striking a structured target, including walls, exosuits and cyborgs."
 	icon_state = "mecha_missilerack_six"
-	projectile = /obj/projectile/bullet/a84mm_br
+	projectile = /obj/projectile/bullet/rocket/pep
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	projectiles = 6
 	projectiles_cache = 0
@@ -371,8 +374,7 @@
 	disabledreload = TRUE
 	equip_cooldown = 60
 	harmful = TRUE
-	ammo_type = MECHA_AMMO_MISSILE_AP
-
+	ammo_type = MECHA_AMMO_MISSILE_PEP
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher
 	var/missile_speed = 2

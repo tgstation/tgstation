@@ -507,14 +507,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	allows_offsetting = FALSE
 
-/atom/movable/screen/plane_master/sound_effect_visual
-	name = "Sound Effect Visuals"
-	documentation = "Holds anything that is a game visual, but is displayed over fullscreen effects. \
-		<br>Displayed over fullscreen effects, but still under runechat and the HUD."
-	plane = SOUND_EFFECT_VISUAL_PLANE
-	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"
 	documentation = "Holds runechat images, that text that pops up when someone say something. Uses a dropshadow to well, look nice."

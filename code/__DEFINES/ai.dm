@@ -68,6 +68,7 @@
 #define BB_MONKEY_CURRENT_PRESS_TARGET "BB_monkey_current_press_target"
 #define BB_MONKEY_CURRENT_GIVE_TARGET "BB_monkey_current_give_target"
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
+#define BB_MONKEY_TARGET_MONKEYS "BB_monkey_target_monkeys"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
 

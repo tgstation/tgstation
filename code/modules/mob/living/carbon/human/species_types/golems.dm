@@ -768,7 +768,7 @@
 	id = SPECIES_GOLEM_CLOTH
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Cloth Golem</span>, you are able to reform yourself after death, provided your remains aren't burned or destroyed. You are, of course, very flammable. \
-	Being made of cloth, your body is magic resistant and faster than that of other golems, but weaker and less resilient."
+	Being made of cloth, your body is immune to spirits of the damned and runic golems. You are faster than that of other golems, but weaker and less resilient."
 	species_traits = list(NOBLOOD,NO_UNDERWEAR) //no mutcolors, and can burn
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
