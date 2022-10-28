@@ -93,8 +93,8 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  * * requester - The client who is sending the request
  * * message - Paper with text.. some stamps.. and another things.
  */
-/datum/request_manager/proc/fax_request(client/requester, message)
-	request_for_client(requester, REQUEST_FAX, message)
+/datum/request_manager/proc/fax_request(client/requester, message, additional_info)
+	request_for_client(requester, REQUEST_FAX, message, additional_info)
 
 /**
  * Creates a request and registers the request with all necessary internal tracking lists
@@ -104,8 +104,8 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
  * * type - The type of request, see defines
  * * message - The message
  */
-/datum/request_manager/proc/request_for_client(client/C, type, message)
-	var/datum/request/request = new(C, type, message)
+/datum/request_manager/proc/request_for_client(client/C, type, message, additional_info)
+	var/datum/request/request = new(C, type, message, additional_info)
 	if (!requests[C.ckey])
 		requests[C.ckey] = list()
 	requests[C.ckey] += request
@@ -224,6 +224,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				"owner_ckey" = request.owner_ckey,
 				"owner_name" = request.owner_name,
 				"message" = request.message,
+				"additional_info" = request.additional_information,
 				"timestamp" = request.timestamp,
 				"timestamp_str" = gameTimestamp(wtime = request.timestamp)
 			)

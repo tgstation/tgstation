@@ -255,7 +255,7 @@
 					var/obj/item/paper/request = loaded
 					request.request_state = TRUE
 					request.loc = null
-					GLOB.requests.fax_request(usr.client, request)
+					GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [special_fax_name(destination)]")
 				log_fax(loaded, destination, params["name"])
 				loaded_item_ref = null
 				update_appearance()
@@ -479,3 +479,9 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return .
+
+/obj/machinery/fax/proc/special_fax_name(id)
+	switch(id)
+		if("sp_cc") return "Central Command"
+		if("sp_sy") return "Syndicate Outpost"
+		else return "Unassigned"
