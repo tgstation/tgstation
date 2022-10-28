@@ -253,6 +253,10 @@
 	circuit = null
 	light_power = 0
 
+/obj/machinery/computer/security/telescreen/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/wall_mount)
+
 /obj/machinery/computer/security/telescreen/update_icon_state()
 	if(machine_stat & BROKEN)
 		icon_state += "b"
@@ -260,11 +264,13 @@
 		icon_state = initial(icon_state)
 	return ..()
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen, 0)
+
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
 	desc = "Damn, they better have the /tg/ channel on these things."
 	icon = 'icons/obj/status_display.dmi'
-	icon_state = "entertainment_blank"
+	icon_state = "entertainment_blank" // wallening todo - Should this be merged back into telescreens or keep using status display icons? Icon needs updating regardless.
 	network = list()
 	density = FALSE
 	circuit = null
@@ -272,7 +278,7 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32) // Wallening todo: Depending on the comment on icon_state, adjust offset. Keep wall_mount element in mind.
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
@@ -368,69 +374,97 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/e
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
 	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test", "toxins")
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/rd, 0)
+
 /obj/machinery/computer/security/telescreen/research
 	name = "research telescreen"
 	desc = "A telescreen with access to the research division's camera network."
 	network = list("rd")
+
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/research, 0)
 
 /obj/machinery/computer/security/telescreen/ce
 	name = "\improper Chief Engineer's telescreen"
 	desc = "Used for watching the engine, telecommunications and the minisat."
 	network = list("engine", "singularity", "tcomms", "minisat")
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ce, 0)
+
 /obj/machinery/computer/security/telescreen/cmo
 	name = "\improper Chief Medical Officer's telescreen"
 	desc = "A telescreen with access to the medbay's camera network."
 	network = list("medbay")
+
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/cmo, 0)
 
 /obj/machinery/computer/security/telescreen/vault
 	name = "vault monitor"
 	desc = "A telescreen that connects to the vault's camera network."
 	network = list("vault")
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/vault, 0)
+
 /obj/machinery/computer/security/telescreen/ordnance
 	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
 	network = list("ordnance")
+
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/ordnance, 0)
 
 /obj/machinery/computer/security/telescreen/engine
 	name = "engine monitor"
 	desc = "A telescreen that connects to the engine's camera network."
 	network = list("engine")
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/engine, 0)
+
 /obj/machinery/computer/security/telescreen/turbine
 	name = "turbine monitor"
 	desc = "A telescreen that connects to the turbine's camera."
 	network = list("turbine")
+
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/turbine, 0)
 
 /obj/machinery/computer/security/telescreen/interrogation
 	name = "interrogation room monitor"
 	desc = "A telescreen that connects to the interrogation room's camera."
 	network = list("interrogation")
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/interrogation, 0)
+
 /obj/machinery/computer/security/telescreen/prison
 	name = "prison monitor"
 	desc = "A telescreen that connects to the permabrig's camera network."
 	network = list("prison")
+
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/prison, 0)
 
 /obj/machinery/computer/security/telescreen/auxbase
 	name = "auxiliary base monitor"
 	desc = "A telescreen that connects to the auxiliary base's camera."
 	network = list("auxbase")
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/auxbase, 0)
+
 /obj/machinery/computer/security/telescreen/minisat
 	name = "minisat monitor"
 	desc = "A telescreen that connects to the minisat's camera network."
 	network = list("minisat")
+
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/minisat, 0)
 
 /obj/machinery/computer/security/telescreen/aiupload
 	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")
 
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/aiupload, 0)
+
 /obj/machinery/computer/security/telescreen/bar
 	name = "bar monitor"
 	desc = "A telescreen that connects to the bar's camera network. Perfect for checking on customers."
 	network = list("bar")
+
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/bar, 0)
 
 #undef DEFAULT_MAP_SIZE

@@ -6028,14 +6028,12 @@
 	c_tag = "Dormitories Fore"
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the monastery.";
-	name = "Monastery Monitor";
-	network = list("monastery");
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
+	},
+/obj/machinery/computer/security/telescreen/directional/north{
+	name = "Monastery Monitor";
+	network = list("monastery")
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -7806,11 +7804,9 @@
 /area/station/command/heads_quarters/hop)
 "aBC" = (
 /obj/structure/closet/secure_closet/hop,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the monastery.";
+/obj/machinery/computer/security/telescreen/directional/north{
 	name = "Monastery Monitor";
-	network = list("monastery");
-	pixel_y = 32
+	network = list("monastery")
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -18271,17 +18267,13 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "buk" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for monitoring medbay to ensure patient safety.";
-	dir = 1;
-	name = "Medbay Monitor";
-	network = list("medbay");
-	pixel_y = -30
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/computer/security/telescreen/cmo/directional/south{
+	name = "Medbay Telescreen"
+	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical)
 "bul" = (
@@ -19709,15 +19701,12 @@
 /area/station/hallway/secondary/entry)
 "bzB" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the monastery.";
-	dir = 8;
-	name = "Monastery Monitor";
-	network = list("monastery");
-	pixel_x = 28
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
+	},
+/obj/machinery/computer/security/telescreen/directional/east{
+	network = list("monastery");
+	name = "Monastery Monitor"
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
@@ -21797,14 +21786,6 @@
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
 "bIN" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
-	dir = 4;
-	layer = 4;
-	name = "Test Chamber Telescreen";
-	network = list("ordnance");
-	pixel_x = -32
-	},
 /obj/structure/table,
 /obj/item/computer_hardware/hard_drive/portable,
 /obj/item/computer_hardware/hard_drive/portable,
@@ -21816,6 +21797,7 @@
 /obj/item/computer_hardware/hard_drive/portable,
 /obj/item/computer_hardware/hard_drive/portable,
 /obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/machinery/computer/security/telescreen/ordnance/directional/west,
 /turf/open/floor/iron,
 /area/station/science/ordnance/testlab)
 "bIP" = (
@@ -24672,16 +24654,10 @@
 	layer = 2.9
 	},
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the engine containment area.";
-	dir = 4;
-	name = "Engine Monitor";
-	network = list("engine");
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/engine/directional/west,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "bUW" = (
@@ -26617,17 +26593,14 @@
 /turf/open/floor/plating,
 /area/station/engineering/transit_tube)
 "ceU" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching telecomms.";
-	layer = 4;
-	name = "Telecomms Telescreen";
-	network = list("tcomms");
-	pixel_y = 28
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/computer/security/telescreen/directional/north{
+	network = list("tcomms");
+	name = "Telecomms Telescreen"
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/transit_tube)
 "ceV" = (
@@ -35177,17 +35150,11 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "hnV" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the turbine vent.";
-	dir = 4;
-	name = "turbine vent monitor";
-	network = list("turbine");
-	pixel_x = -29
-	},
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/computer/security/telescreen/turbine/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "hnY" = (
@@ -41623,13 +41590,17 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "nIm" = (
-/obj/machinery/computer/security/telescreen{
-	dir = 8;
-	name = "Test Chamber Monitor";
-	network = list("xeno");
-	pixel_y = 2
-	},
 /obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "misclab";
+	name = "Test Chamber Blast Doors";
+	pixel_y = -2;
+	req_access = list("xenobiology")
+	},
+/obj/machinery/button/ignition{
+	id = "xenoigniter";
+	pixel_y = 7
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "nIt" = (
@@ -42746,18 +42717,8 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter)
 "oEW" = (
-/obj/machinery/button/door{
-	id = "misclab";
-	name = "Test Chamber Blast Doors";
-	pixel_y = -2;
-	req_access = list("xenobiology")
-	},
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/machinery/button/ignition{
-	id = "xenoigniter";
-	pixel_y = 7
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
@@ -43994,7 +43955,10 @@
 /area/station/service/library/artgallery)
 "pIW" = (
 /obj/structure/closet/l3closet/scientist,
-/obj/structure/sign/warning/no_smoking/directional/north,
+/obj/machinery/computer/security/telescreen/directional/north{
+	name = "Test Chamber Monitor";
+	network = list("xeno")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "pJc" = (
@@ -44381,6 +44345,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
+"qbQ" = (
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/structure/sign/warning/electric_shock/directional/east,
+/obj/structure/cable,
+/obj/structure/sign/warning/no_smoking/directional/north,
+/turf/open/floor/plating,
+/area/station/science/xenobiology)
 "qbZ" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/gas,
@@ -49166,13 +49137,7 @@
 "uco" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the engine containment area.";
-	dir = 1;
-	name = "Engine Monitor";
-	network = list("engine");
-	pixel_y = -32
-	},
+/obj/machinery/computer/security/telescreen/engine/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "ucA" = (
@@ -105647,7 +105612,7 @@ xEI
 bbP
 aaa
 bkF
-dmT
+qbQ
 ltk
 nEb
 pWm
