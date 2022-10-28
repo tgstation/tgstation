@@ -4,7 +4,7 @@
 /datum/unit_test/json_logging_category_unique/Run()
 	var/list/used = list()
 	for(var/datum/log_entry/entry as anything in subtypesof(/datum/log_entry))
-		var/entry_category = UNLINY(initial(entry.category))
+		var/entry_category = UNLINT(initial(entry.category))
 		if(!entry_category)
 			TEST_FAIL("[entry] has no category")
 			continue
