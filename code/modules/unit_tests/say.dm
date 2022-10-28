@@ -104,19 +104,19 @@
 #define NORMAL_HEARING_RANGE 7
 #define WHISPER_HEARING_RANGE 1
 
-/datum/unit_test/speech/proc/conversation(distance = 0)
+/datum/unit_test/speech/proc/conversation(distance = 0, datum/language/language = null)
 	speaker.forceMove(run_loc_floor_bottom_left)
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + distance, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	// speaking
-	speaker.say("The quick brown fox jumps over the lazy dog")
+	speaker.say("The quick brown fox jumps over the lazy dog", language = language)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT_EQUAL(islist(handle_hearing_result), distance <= NORMAL_HEARING_RANGE, "Handle hearing signal was not fired")
 	handle_speech_result = null
 	handle_hearing_result = null
 
 	// whispering
-	speaker.whisper("The quick brown fox jumps over the lazy dog")
+	speaker.whisper("The quick brown fox jumps over the lazy dog", language = language)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT_EQUAL(islist(handle_hearing_result), distance <= WHISPER_HEARING_RANGE, "Handle hearing signal was not fired")
 	handle_speech_result = null

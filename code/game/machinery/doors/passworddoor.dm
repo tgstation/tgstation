@@ -22,7 +22,7 @@
 	if(voice_activated)
 		become_hearing_sensitive()
 
-/obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
+/obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(!density || !voice_activated || radio_freq)
 		return

@@ -242,7 +242,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		radio_message = stars(radio_message)
 		spans |= SPAN_ITALICS
 
-
 	var/radio_return = radio(radio_message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
@@ -271,22 +270,24 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
-/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+/mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
 	if(!client)
 		return
 
 	var/deaf_message
 	var/deaf_type
-	var/avoid_highlight
-	if(istype(speaker, /atom/movable/virtualspeaker))
-		var/atom/movable/virtualspeaker/virt = speaker
-		avoid_highlight = src == virt.source
+
+	if(speaker != src)
+		deaf_type = !radio_freq ? MSG_VISUAL : null
 	else
-		avoid_highlight = src == speaker
+		deaf_type = MSG_AUDIBLE
+
+	var/atom/movable/virtualspeaker/holopad_speaker = speaker
+	var/avoid_highlight = src == (istype(holopad_speaker) ? holopad_speaker.source : speaker))
 
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
 		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
+
 		if(speaker != src)
 			if(!radio_freq) //I'm about 90% sure there's a way to make this less cluttered
 				deaf_type = 1
@@ -303,10 +304,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(is_blind(src))
 			return FALSE
 
-
 		message = deaf_message
 
 		show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+		//SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 		return message
 
 	if(speaker != src)
@@ -328,6 +329,14 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(!is_custom_emote) // we do not translate emotes
 		raw_message = translate_language(src, message_language, raw_message) // translate
 
+	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
+	var/is_speaker_whispering = message_mods[WHISPER_MODE]
+	var/can_hear_whisper = get_dist(speaker, src) <= message_range
+	if(is_speaker_whispering && !can_hear_whisper && !isobserver(src)) // ghosts can hear all messages clearly
+		raw_message = stars(raw_message)
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
@@ -343,7 +352,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		is_speaker_whispering = TRUE
 
 	var/list/listening = get_hearers_in_view(message_range + whisper_range, source)
-	var/list/the_dead = list()
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
@@ -362,36 +370,16 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				else if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 					continue
 			listening |= player_mob
-			the_dead[player_mob] = TRUE
 
 	// this signal ignores whispers or language translations (only used by beetlejuice component)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message_raw)
-
-	var/is_custom_emote = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
-	if(!is_custom_emote) // we do not translate emotes
-		message_raw = translate_language(src, message_language, message_raw) // translate
-
-	// message has been formatted to have all the different <span class> applied to it
-	var/message = compose_message(src, message_language, message_raw, null, spans, message_mods)
-	var/whisper // this whisper is also formatted
-	var/whisper_raw
-	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
-	if(is_speaker_whispering)
-		whisper_raw = stars(message_raw)
-		whisper = compose_message(src, message_language, whisper_raw, null, spans, message_mods)
 
 	for(var/atom/movable/listening_movable as anything in listening)
 		if(!listening_movable)
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
 
-		var/can_listener_hear_whisper = get_dist(source, listening_movable) <= message_range
-		var/is_listener_observer = the_dead[listening_movable] // ghosts can hear all messages clearly
-
-		if(is_speaker_whispering && !can_listener_hear_whisper && !is_listener_observer)
-			listening_movable.Hear(whisper, src, message_language, whisper_raw, null, spans, message_mods)
-		else
-			listening_movable.Hear(message, src, message_language, message_raw, null, spans, message_mods)
+		listening_movable.Hear(null, src, message_language, message_raw, null, spans, message_mods, message_range)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()
