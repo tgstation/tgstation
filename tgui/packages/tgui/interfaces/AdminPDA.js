@@ -1,16 +1,7 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Section, Dropdown, Input, Box, TextArea } from '../components';
 import { Button, ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
-
-let windowSize;
-
-let user;
-let spam = false;
-
-let name, job;
-
-let messageText;
 
 export const AdminPDA = (props, context) => {
   return (
@@ -27,7 +18,9 @@ export const AdminPDA = (props, context) => {
 export const ReceiverChoice = (props, context) => {
   const { act, data } = useBackend(context);
   const receivers = Array.from(data.users).sort();
-  const spam = data.spam;
+
+  const [user, setUser] = useLocalState(context, 'user', '');
+  const [spam, setSpam] = useLocalState(context, 'spam', false);
 
   return (
     <Section title="To Who?" textAlign="center">
@@ -38,37 +31,40 @@ export const ReceiverChoice = (props, context) => {
           width="275px"
           mb={1}
           onSelected={(value) => {
-            user = value;
+            setUser(value);
           }}
         />
       </Box>
       <Box>
-        <ButtonCheckbox checked={spam} fluid onClick={() => act('setSpam')}>
-          Is it spam(send message to all)?
+        <ButtonCheckbox checked={spam} fluid onClick={() => setSpam(!spam)}>
+          Should it be sent to everyone?
         </ButtonCheckbox>
       </Box>
     </Section>
   );
 };
 
-export const SenderInfo = () => {
+export const SenderInfo = (props, context) => {
+  const [name, setName] = useLocalState(context, 'name', '');
+  const [job, setJob] = useLocalState(context, 'job', '');
+
   return (
     <Section title="From Who?" textAlign="center">
       <Box fontSize="14px">
         <Input
-          placeholder="Name of sender"
+          placeholder="Sender name..."
           fluid
           onInput={(e, value) => {
-            name = value;
+            setName(value);
           }}
         />
       </Box>
       <Box fontSize="14px" pt="10px">
         <Input
-          placeholder="Job/rank of sender"
+          placeholder="Sender's job..."
           fluid
           onInput={(e, value) => {
-            job = value;
+            setJob(value);
           }}
         />
       </Box>
@@ -78,31 +74,46 @@ export const SenderInfo = () => {
 
 export const MessageInput = (props, context) => {
   const { act } = useBackend(context);
-  let blocked, reason;
+
+  const [user, setUser] = useLocalState(context, 'user', '');
+  const [name, setName] = useLocalState(context, 'name', '');
+  const [job, setJob] = useLocalState(context, 'job', '');
+  const [messageText, setMessageText] = useLocalState(context, 'message', '');
+  const [spam, setSpam] = useLocalState(context, 'spam', false);
+
+  const tooltipText = function (name, job, message) {
+    let reasonList = [];
+    if (!name) reasonList.push('name');
+    if (!job) reasonList.push('job');
+    if (!message) reasonList.push('message text');
+    return reasonList.join(', ');
+  };
+
+  let blocked;
   if (!name || !job || !messageText) {
     blocked = true;
   }
-  reason =
-    'You must input: ' +
-    (name ? '' : 'name ') +
-    (job ? '' : 'job ') +
-    (messageText ? '' : 'message ');
 
   return (
     <Section title="Message" textAlign="center">
       <Box>
         <TextArea
-          placeholder="Enter a message what you want to send"
+          placeholder="Type the message you want to send..."
           height="200px"
           mb={1}
           onInput={(e, value) => {
-            messageText = value;
+            setMessageText(value);
           }}
         />
       </Box>
       <Box>
         <Button
-          tooltip={blocked ? reason : 'Send message to user(s)'}
+          tooltip={
+            blocked
+              ? 'Fill in the following lines: ' +
+              tooltipText(name, job, messageText)
+              : 'Send message to user(s)'
+          }
           fluid
           disabled={blocked}
           icon="envelope-open-text"
@@ -112,6 +123,7 @@ export const MessageInput = (props, context) => {
               user: user,
               job: job,
               message: messageText,
+              spam: spam,
             })
           }>
           Send Message
