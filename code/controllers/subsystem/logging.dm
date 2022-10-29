@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(logging)
 			entries[entry_category] = list()
 			var/log_file = "[GLOB.log_directory]/[lowertext(entry_category)]"
 			entry_dir_map[entry_category] = log_file
+	process_pending()
 
 /datum/controller/subsystem/logging/Recover()
 	. = ..()
