@@ -190,7 +190,7 @@
 		return
 	mech.balloon_alert(user, "prying open...")
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 10 SECONDS, volume = 0, extra_checks = CALLBACK(src, .proc/extra_checks, mech)))
+	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, .proc/extra_checks, mech)))
 		mech.balloon_alert(user, "interrupted!")
 		return
 	for(var/mob/living/occupant as anything in mech.occupants)
