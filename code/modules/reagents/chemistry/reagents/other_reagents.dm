@@ -189,7 +189,7 @@
 		exposed_slime.apply_water()
 
 	// Heat exchange with the air.
-	var/datum/gas_mixture/air = exposed_turf.air
+	var/datum/gas_mixture/air = exposed_turf.return_air()
 	if(!istype(air, /datum/gas_mixture/immutable))
 		var/temperature_delta = holder.chem_temp - air.temperature
 		var/air_heat_capacity = air.heat_capacity()
