@@ -98,7 +98,7 @@
 						while(AI.stat != DEAD && flush)
 							AI.adjustOxyLoss(5)
 							AI.updatehealth()
-							sleep(5)
+							sleep(0.5 SECONDS)
 						flush = FALSE
 			. = TRUE
 		if("wireless")

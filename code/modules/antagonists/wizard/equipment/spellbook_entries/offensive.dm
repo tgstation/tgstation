@@ -77,6 +77,14 @@
 	spell_type = /datum/action/cooldown/spell/pointed/barnyardcurse
 	category = "Offensive"
 
+/datum/spellbook_entry/splattercasting
+	name = "Splattercasting"
+	desc = "Dramatically lowers the cooldown on all spells, but each one will cost blood, as well as it naturally \
+		draining from you over time. You can replenish it from your victims, specifically their necks."
+	spell_type =  /datum/action/cooldown/spell/splattercasting
+	category = "Offensive"
+	no_coexistance_typecache = list(/datum/action/cooldown/spell/lichdom)
+
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."

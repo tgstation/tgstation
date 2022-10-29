@@ -339,3 +339,53 @@
 	force = 5
 	wound_bonus = 100
 	demolition_mod = 9000
+
+// screwdriver pen!
+
+/obj/item/pen/screwdriver
+	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
+	icon_state = "pendriver"
+	toolspeed = 1.2  // gotta have some downside
+	/// whether the pen is extended
+	var/extended = FALSE
+
+/obj/item/pen/screwdriver/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		throwforce_on = 5, \
+		w_class_on = WEIGHT_CLASS_SMALL, \
+		sharpness_on = TRUE)
+
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/toggle_screwdriver)
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+
+/obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, extended))
+		if(var_value != extended)
+			var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
+			transforming_comp.on_attack_self(src)
+			datum_flags |= DF_VAR_EDITED
+			return
+	return ..()
+
+/obj/item/pen/screwdriver/proc/toggle_screwdriver(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+	extended = active
+	if(user)
+		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
+
+	if(!extended)
+		tool_behaviour = initial(tool_behaviour)
+		RemoveElement(/datum/element/eyestab)
+	else
+		tool_behaviour = TOOL_SCREWDRIVER
+		AddElement(/datum/element/eyestab)
+
+	update_appearance(UPDATE_ICON)
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/pen/screwdriver/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][extended ? "_out":null]"
+	inhand_icon_state = initial(inhand_icon_state) //since transforming component switches the icon.

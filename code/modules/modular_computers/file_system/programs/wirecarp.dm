@@ -52,16 +52,11 @@
 		if("toggle_mass_pda")
 			if(!SSnetworks.station_network)
 				return
-			var/mob/user = ui.user
 
 			var/obj/item/modular_computer/target_tablet = locate(params["ref"]) in GLOB.TabletMessengers
 			if(!istype(target_tablet))
 				return
-			var/obj/item/computer_hardware/hard_drive/drive = target_tablet.all_components[MC_HDD]
-			if(!drive)
-				to_chat(user, span_boldnotice("Target tablet somehow is lacking a hard drive."))
-				return
-			for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+			for(var/datum/computer_file/program/messenger/messenger_app in computer.stored_files)
 				messenger_app.spam_mode = !messenger_app.spam_mode
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
@@ -91,10 +86,7 @@
 	for(var/obj/item/modular_computer/messenger in GetViewableDevices())
 		var/list/tablet_data = list()
 		if(messenger.saved_identification)
-			var/obj/item/computer_hardware/hard_drive/drive = messenger.all_components[MC_HDD]
-			if(!drive)
-				continue
-			for(var/datum/computer_file/program/messenger/messenger_app in drive.stored_files)
+			for(var/datum/computer_file/program/messenger/messenger_app in computer.stored_files)
 				tablet_data["enabled_spam"] += messenger_app.spam_mode
 
 			tablet_data["name"] += messenger.saved_identification
