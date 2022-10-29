@@ -33,33 +33,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		if(atom_integrity < max_integrity)
 			if(!attacking_item.tool_start_check(user, amount = 2))
 				return
-			to_chat(user, span_notice("You begin repairing [src]."))
+			balloon_alert(user, "repairing...")
 			if(attacking_item.use_tool(src, user, 4 SECONDS, volume= 50, amount = 2))
 				repair_damage(max_integrity - get_integrity())
 				update_appearance()
-				to_chat(user, span_notice("You repair [src]."))
+				balloon_alert(user, "repaired")
 		else
-			to_chat(user, span_warning("[src] is already in good condition!"))
+			balloon_alert(user, "already repaired!")
 		return
 	else if(istype(attacking_item, /obj/item/stack/sheet/glass) && broken)
 		var/obj/item/stack/sheet/glass/glass_stack = attacking_item
 		if(glass_stack.get_amount() < 2)
-			to_chat(user, span_warning("You need two glass sheets to fix [src]!"))
+			balloon_alert(user, "need more glass!")
 			return
-		to_chat(user, span_notice("You start fixing [src]..."))
+		balloon_alert(user, "repairing")
 		if(do_after(user, 2 SECONDS, target = src) && glass_stack.use(2))
 			broken = FALSE
-			atom_integrity = max_integrity
+			repair_damage(max_integrity - get_integrity())
 			update_appearance()
 	else if(open || broken)
 		if(istype(attacking_item, item_path) && !held_item)
 			if(HAS_TRAIT(attacking_item, TRAIT_WIELDED))
-				to_chat(user, span_warning("Unwield [attacking_item] first."))
+				balloon_alert(user, "unwield it!")
 				return
 			if(!user.transferItemToLoc(attacking_item, src))
 				return
 			held_item = attacking_item
-			to_chat(user, span_notice("You place [attacking_item] back in [src]."))
 			update_appearance()
 			return
 		else if(!broken)
@@ -116,10 +115,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	if(.)
 		return
 	if((open || broken) && held_item)
-		to_chat(user, span_notice("You take [held_item] from [src]."))
 		user.put_in_hands(held_item)
 		add_fingerprint(user)
 		update_appearance()
+		return
+	toggle_open(user)
 
 /obj/structure/fireaxecabinet/attack_hand_secondary(mob/user, list/modifiers)
 	toggle_open(user)
@@ -134,11 +134,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
-	if(locked)
-		to_chat(user, span_warning("The [name] won't budge!"))
-		return
-	open = !open
-	update_appearance()
+	toggle_open(user)
 
 /obj/structure/fireaxecabinet/update_overlays()
 	. = ..()
@@ -173,7 +169,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/proc/toggle_open(mob/user)
 	if(locked)
-		to_chat(user, span_warning("\The [name] won't budge!"))
+		balloon_alert(user, "won't budge!")
 		return
 	else
 		open = !open
