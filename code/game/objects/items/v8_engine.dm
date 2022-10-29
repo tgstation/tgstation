@@ -53,6 +53,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
+	sharpness = SHARP_EDGED
 	force = 12
 	throwforce = 10
 	throw_range = 5
@@ -82,7 +83,7 @@
 		COOLDOWN_RESET(src, fire_charge_cooldown)
 	else
 		//Lose a fire charge to a min of 0, updates icon_state.
-		fire_charges = clamp((fire_charges - 1), 0, 3)
+		fire_charges = clamp((fire_charges - 1), HOUSE_EDGE_ICONS_MIN, HOUSE_EDGE_ICONS_MAX)
 		icon_state = "house_edge[fire_charges]"
 		do_sparks(number = 0, cardinal_only = TRUE, source = src)
 
