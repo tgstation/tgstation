@@ -31,7 +31,7 @@ SUBSYSTEM_DEF(logging)
 		return
 
 	LAZYADDASSOC(entries, entry.category, entry)
-	var/category_file_id = replace_text(lowertext(entry.category), " ", "_")
+	var/category_file_id = replacetext(lowertext(entry.category), " ", "_")
 	var/target_file = "[category_file_id]-entry-[length(entries[entry.category])].json"
 	rustg_file_write(entry.to_json(), "[entry_dir_map[entry.category]]/[target_file]")
 
