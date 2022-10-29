@@ -121,8 +121,8 @@
 	var/client/client = get_player_client(source)
 	if(client)
 		source_ckey = client.ckey
+		source_name = client.mob.name
 		if(append_client_extended_data)
-			with_extended_data("client_mob_name", client.mob.name)
 			with_extended_data("client_mob_type", client.mob.type)
 			with_extended_data("client_is_observer", isobserver(client.mob))
 			with_extended_data("client_is_admin", is_admin(client.mob))
