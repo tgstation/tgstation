@@ -155,13 +155,13 @@
 		return ..()
 	var/mob/living/simple_animal/hostile/giant_spider/hurt_spider = target
 	if(hurt_spider == src)
-		balloon_alert(src, "can't heal yourself")
+		balloon_alert(src, "can't heal yourself!")
 		return
 	if(hurt_spider.health >= hurt_spider.maxHealth)
-		balloon_alert(src, "nothing to heal")
+		balloon_alert(src, "not hurt!")
 		return
 	if(hurt_spider.stat == DEAD)
-		balloon_alert(src, "they're dead")
+		balloon_alert(src, "they're dead!")
 		return
 	visible_message(
 		span_notice("[src] begins wrapping the wounds of [hurt_spider]."),
@@ -502,7 +502,7 @@
 	var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 	if(eggs)
 		if (feedback)
-			owner.balloon_alert(owner, "eggs here already")
+			owner.balloon_alert(owner, "already eggs here!")
 		return FALSE
 	return TRUE
 
@@ -518,7 +518,7 @@
 	if(do_after(owner, egg_lay_time, target = get_turf(owner), interaction_key = INTERACTION_SPIDER_KEY))
 		var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 		if(eggs)
-			owner.balloon_alert(owner, "eggs here already")
+			owner.balloon_alert(owner, "already eggs here!")
 		else
 			lay_egg()
 		UpdateButtons(TRUE)
@@ -544,7 +544,7 @@
 		return FALSE
 	if (charges <= 0)
 		if (feedback)
-			owner.balloon_alert(owner, "must feed first")
+			owner.balloon_alert(owner, "must feed first!")
 		return FALSE
 	return TRUE
 

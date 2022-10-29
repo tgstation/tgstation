@@ -73,24 +73,28 @@
 	cords = target
 
 /datum/action/item_action/organ_action/colossus/IsAvailable(feedback = FALSE)
-	if(world.time < cords.next_command)
-		return FALSE
 	if(!owner)
+		return FALSE
+	if(world.time < cords.next_command)
+		if (feedback)
+			owner.balloon_alert(owner, "wait [DisplayTimeText(cords.next_command - world.time)]!")
 		return FALSE
 	if(isliving(owner))
 		var/mob/living/living = owner
 		if(!living.can_speak())
+			if (feedback)
+				owner.balloon_alert(owner, "can't speak!")
 			return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
+			if (feedback)
+				owner.balloon_alert(owner, "unconscious!")
 			return FALSE
 	return TRUE
 
 /datum/action/item_action/organ_action/colossus/Trigger(trigger_flags)
 	. = ..()
-	if(!IsAvailable()) // Don't pass feedback = TRUE, because this is already done in ..()
-		if(world.time < cords.next_command)
-			to_chat(owner, span_notice("You must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again."))
+	if(!.)
 		return
 	var/command = tgui_input_text(owner, "Speak with the Voice of God", "Command")
 	if(!command)
