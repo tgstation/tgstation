@@ -83,6 +83,12 @@ export const LogViewer = (props: any, context: any) => {
     setSelectedEntry(null);
     setSelectedCategory(category);
   };
+  const updateFilterType = (type: FilterType) => {
+    if (type === FilterType.None) {
+      setFilterText('');
+    }
+    setFilter(type);
+  };
 
   let filtered_entries: LogEntry[] | null = null;
   let entriesList: LogEntry[] = [];
@@ -134,7 +140,7 @@ export const LogViewer = (props: any, context: any) => {
             type={filterType}
             text={filterText}
             flags={filterFlags}
-            onTypeChange={(type) => setFilter(type)}
+            onTypeChange={(type) => updateFilterType(type)}
             onTextChange={(text) => setFilterText(text)}
             onFlagsChange={(flags) => setFilterFlags(flags)}
           />
@@ -213,14 +219,19 @@ const FilterOptions = (props: FilterOptionsProps, context: any) => {
             onSelected={onTypeChange}
           />
         </Flex.Item>
-        <br />
-        <Flex.Item>
-          <Input
-            value={text}
-            placeholder={flags & FilterFlags.Regex ? 'Regex' : 'Filter'}
-            onInput={(_, value) => onTextChange(value)}
-          />
-        </Flex.Item>
+        {type !== FilterType.None && (
+          <>
+            <br />
+            <Flex.Item>
+              <Input
+                fluid
+                value={text}
+                placeholder={flags & FilterFlags.Regex ? 'Regex' : 'Filter'}
+                onInput={(_, value) => onTextChange(value)}
+              />
+            </Flex.Item>
+          </>
+        )}
       </Flex>
     </Section>
   );
@@ -314,12 +325,16 @@ const filter_entries = (
       return false;
     }
 
-    if (filterFlags & FilterFlags.ExactMatch) {
-      return text === filterText;
+    if (filterFlags & FilterFlags.Regex) {
+      const match = text.match(regex);
+      if (filterFlags & FilterFlags.ExactMatch) {
+        return match && match[0] === text;
+      }
+      return !!match;
     }
 
-    if (filterFlags & FilterFlags.Regex) {
-      return regex.test(text);
+    if (filterFlags & FilterFlags.ExactMatch) {
+      return text === filterText;
     }
 
     return text.includes(filterText);
