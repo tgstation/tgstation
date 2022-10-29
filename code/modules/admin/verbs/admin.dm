@@ -274,3 +274,10 @@
 /proc/mass_immerse(remove=FALSE)
 	for(var/mob/living/carbon/M in GLOB.mob_list)
 		immerse_player(M, toggle=FALSE, remove=remove)
+
+/client/proc/view_logs()
+	set category = "Admin"
+	set name = "View Logs"
+	if(!check_rights(R_ADMIN))
+		return
+	SSlogging.view_logs(src)

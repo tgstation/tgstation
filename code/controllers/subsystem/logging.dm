@@ -42,26 +42,23 @@ SUBSYSTEM_DEF(logging)
 		append_entry(entry)
 	pending_entries = null
 
-/client/verb/view_logs()
-	SSlogging.view_logs()
-
-/datum/controller/subsystem/logging/proc/view_logs()
-	if(IsAdminAdvancedProcCall())
+/datum/controller/subsystem/logging/proc/view_logs(client/user)
+	if(IsAdminAdvancedProcCall() || !check_rights_for(user, R_ADMIN))
 		return
-	var/choice = tgui_input_list(usr, "Select a log category", "View Logs", src.entries)
+	var/choice = tgui_input_list(user, "Select a log category", "View Logs", src.entries)
 	if(!choice)
 		return
 	var/list/entries = src.entries[choice]
 	if(!entries)
-		to_chat(usr, span_warning("No entries found for that category."))
+		to_chat(user, span_warning("No entries found for that category."))
 		return
 	var/list/data = list()
 	for(var/datum/log_entry/entry as anything in entries)
 		var/entry_text = entry.to_text()
 		var/inspect_text = "(<a href='?src=[REF(src)];[HrefToken()];inspect=[REF(entry)]'>Inspect</a>) "
 		data += "[inspect_text][entry_text]"
-	usr << browse(data.Join("<br>"), "window=logs;size=600x400")
-	onclose(usr, "logs")
+	user << browse(data.Join("<br>"), "window=logs;size=600x400")
+	onclose(user, "logs")
 
 /datum/controller/subsystem/logging/Topic(href, href_list)
 	if(href_list["inspect"])

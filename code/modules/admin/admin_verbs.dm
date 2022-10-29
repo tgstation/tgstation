@@ -4,23 +4,24 @@ GLOBAL_LIST_INIT(admin_verbs_default, world.AVerbsDefault())
 GLOBAL_PROTECT(admin_verbs_default)
 /world/proc/AVerbsDefault()
 	return list(
-	/client/proc/deadmin, /*destroys our own admin datum so we can play as a regular player*/
-	/client/proc/cmd_admin_say, /*admin-only ooc chat*/
-	/client/proc/hide_verbs, /*hides all our adminverbs*/
-	/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
-	/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/secrets,
-	/client/proc/reload_admins,
-	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
-	/client/proc/cmd_admin_pm_context, /*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel, /*admin-pm list*/
-	/client/proc/stop_sounds,
-	/client/proc/mark_datum_mapview,
-	/client/proc/tag_datum_mapview,
-	/client/proc/debugstatpanel,
-	/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
-	/client/proc/requests
+		/client/proc/cmd_admin_pm_context, /*right-click adminPM interface*/
+		/client/proc/cmd_admin_pm_panel, /*admin-pm list*/
+		/client/proc/cmd_admin_say, /*admin-only ooc chat*/
+		/client/proc/deadmin, /*destroys our own admin datum so we can play as a regular player*/
+		/client/proc/debug_variables, /*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+		/client/proc/debugstatpanel,
+		/client/proc/dsay, /*talk in deadchat using our ckey/fakekey*/
+		/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
+		/client/proc/hide_verbs, /*hides all our adminverbs*/
+		/client/proc/investigate_show, /*various admintools for investigation. Such as a singulo grief-log*/
+		/client/proc/mark_datum_mapview,
+		/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
+		/client/proc/reload_admins,
+		/client/proc/requests,
+		/client/proc/secrets,
+		/client/proc/stop_sounds,
+		/client/proc/tag_datum_mapview,
+		/client/proc/view_logs, /* view the logs contained by SSlogging */
 	)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
