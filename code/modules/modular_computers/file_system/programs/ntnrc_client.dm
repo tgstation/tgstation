@@ -171,6 +171,8 @@
 		if("PRG_ping_user")
 			if(!COOLDOWN_FINISHED(src, ping_cooldown))
 				return
+			if(src in channel.muted_clients)
+				return
 			var/datum/computer_file/program/chatclient/pinged = locate(params["ref"]) in channel.active_clients + channel.offline_clients
 			channel.ping_user(src, pinged)
 			COOLDOWN_START(src, ping_cooldown, PING_COOLDOWN_TIME)
