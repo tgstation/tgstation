@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "Autodocs dreaming.dm and bedsheet_bin.dm."
+  - code_imp: "Dreams now have an expanded list of subjects to choose from."
