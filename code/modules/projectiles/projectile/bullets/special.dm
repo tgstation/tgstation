@@ -39,31 +39,51 @@
 
 // Marksman Revolver + Ricochet Coin
 
-// marksman
+// *******************
+// ** Marksman Shot **
+// *******************
 /obj/projectile/bullet/marksman
 	name = "nanoshot"
 	hitscan = TRUE
 	tracer_type = /obj/effect/projectile/tracer/solar
 	muzzle_type = /obj/effect/projectile/muzzle/bullet
 	impact_type = /obj/effect/projectile/impact/sniper
+	/// How many ricochets deep this is, for tracer size
+	var/ricoshot_level = 0
 
-/obj/projectile/bullet/marksman/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+/obj/projectile/bullet/marksman/Initialize(mapload, outgoing_ricoshot_level = 0)
 	. = ..()
+	ricoshot_level = outgoing_ricoshot_level
+
+	switch(ricoshot_level)
+		if(0)
+			tracer_type = /obj/effect/projectile/tracer/solar/thinnest
+		if(1)
+			tracer_type = /obj/effect/projectile/tracer/solar/thin
+		if(2 to INFINITY)
+			tracer_type = /obj/effect/projectile/tracer/solar
+
+/obj/projectile/bullet/marksman/scan_moved_turf()
 	var/turf/cur_turf = get_turf(src) // check to see if we're passing over a turf with a coin on it
 	var/obj/projectile/bullet/coin/coin_check = cur_turf ? locate(/obj/projectile/bullet/coin) in cur_turf.contents : null
 
 	if(!coin_check || coin_check.used) // no coin, keep trucking
-		return
+		return ..()
 
-	coin_check.check_splitshot(firer, src)
+	testing("smt type [type]")
+	coin_check.check_splitshot(firer, src, ricoshot_level)
 	Impact(coin_check)
 
-// coin
+// *******************
+// ** Marksman Coin **
+// *******************
 /obj/projectile/bullet/coin
 	name = "marksman coin"
+	icon_state = "coinshot"
 	pixel_speed_multiplier = 0.333
 	speed = 1
 	damage = 5
+	color = "#dbdd4c"
 
 	/// Save the turf we're aiming for for future use
 	var/turf/target_turf
@@ -78,11 +98,18 @@
 	/// The mob who originally flipped this coin, as a matter of convenience, may be able tto be removed
 	var/mob/original_firer
 
+	var/outgoing_ricoshot_level
+
+	var/in_fired_from
+	var/in_firer
+	var/in_damage
+
 /obj/projectile/bullet/coin/Initialize(mapload, turf/the_target, mob/original_firer)
-	. = ..()
 	src.original_firer = original_firer
 	target_turf = the_target
-	range = get_dist(get_turf(original_firer), target_turf) + 1
+	range = (get_dist(original_firer, target_turf) + 3) * 3
+
+	. = ..()
 
 	if(!istype(original_firer) || !original_firer.client)
 		return
@@ -92,62 +119,75 @@
 	firing_client.images += crosshair_indicator
 
 /obj/projectile/bullet/coin/Destroy()
-	if(original_firer?.client && crosshair_indicator)
-		original_firer.client.images -= crosshair_indicator
-	QDEL_NULL(crosshair_indicator)
+	remove_crosshair_indicator()
 	return ..()
 
-// the coin must be within 1 tile of the target turf to be directly targetable
+// the coin must be on the target turf to be directly targetable
 /obj/projectile/bullet/coin/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(!valid && get_dist(loc, target_turf) <= 1)
+	if(!valid && get_dist(loc, target_turf) < 1)
 		original_firer?.playsound_local(src, 'sound/machines/ping.ogg', 30)
 		valid = TRUE
 		if(crosshair_indicator)
 			crosshair_indicator.color = COLOR_YELLOW
+	else if(valid && get_dist(loc, target_turf) > 1)
+		valid = FALSE
+		remove_crosshair_indicator()
+
+/// Remove the crosshair indicator from the original firer if it exists
+/obj/projectile/bullet/coin/proc/remove_crosshair_indicator()
+	if(original_firer?.client && crosshair_indicator)
+		original_firer.client.images -= crosshair_indicator
+	QDEL_NULL(crosshair_indicator)
 
 /// We've been shot by a marksman revolver shot, or the ricochet off another coin, check if we can actually ricochet. The forced var being TRUE means it's a ricochet from another coin
-/obj/projectile/bullet/coin/proc/check_splitshot(mob/living/shooter, obj/projectile/incoming_shot, forced = FALSE)
+/obj/projectile/bullet/coin/proc/check_splitshot(mob/living/shooter, obj/projectile/bullet/marksman/incoming_shot, forced = FALSE)
 	if(!forced && get_dist(src, target_turf) > 1)
 		return FALSE
 
+	outgoing_ricoshot_level = incoming_shot.ricoshot_level + 1
+	in_firer = shooter
+	in_fired_from = incoming_shot.fired_from
+	in_damage = incoming_shot.damage
+
+
+	testing("check splitshot incoming type [incoming_shot] | [incoming_shot.type]")
 	used = TRUE
 	var/turf/cur_tur = get_turf(src)
-	cur_tur.visible_message(span_nicegreen("[incoming_shot] impacts [src]!"))
-	initiate_splitshots(shooter, incoming_shot)
+	cur_tur.visible_message(span_nicegreen("[incoming_shot] impacts [src] and splits!"))
+	iterate__splitshots(shooter, incoming_shot)
 	QDEL_IN(src, 0.25 SECONDS) // may not be needed
 
-/// Now we actually create all the splitshots, loop through however many splits we'll create and find them targets
-/obj/projectile/bullet/coin/proc/initiate_splitshots(mob/living/shooter, obj/projectile/incoming_shot)
+/// Now we actually create all the splitshots, loop through however many splits we'll create and fire them
+/obj/projectile/bullet/coin/proc/iterate__splitshots(mob/living/shooter, obj/projectile/incoming_shot)
 	for(var/i in 1 to num_of_splitshots)
-		var/atom/next_target = find_next_target()
-		fire_splitshot(next_target, incoming_shot)
+		fire_splitshot(incoming_shot)
 
 /// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
-/obj/projectile/bullet/coin/proc/fire_splitshot(atom/target, obj/projectile/incoming_shot)
-	if(!istype(target))
-		return
+/obj/projectile/bullet/coin/proc/fire_splitshot(obj/projectile/bullet/marksman/incoming_shot)
+	var/atom/next_target = find_next_target()
 
-	ADD_TRAIT(target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT)
-	addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT), 0.5 SECONDS)
+	ADD_TRAIT(next_target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(next_target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT), 0.5 SECONDS)
 	var/projectile_type = incoming_shot.type
-	var/obj/projectile/new_splitshot = new projectile_type(get_turf(src))
-
+	testing("Type of new shot: [incoming_shot] | [incoming_shot.type] | [incoming_shot.ricoshot_level] | [outgoing_ricoshot_level]")
+	var/obj/projectile/bullet/marksman/new_splitshot = new /obj/projectile/bullet/marksman(get_turf(src), outgoing_ricoshot_level)
+	testing("new: [new_splitshot] | [new_splitshot.type] | [new_splitshot.damage]")
 	//Shooting Code:
-	new_splitshot.original = target
-	new_splitshot.fired_from = incoming_shot.fired_from
-	new_splitshot.firer = incoming_shot.firer
-	new_splitshot.preparePixelProjectile(target, src)
+	new_splitshot.original = next_target
+	new_splitshot.fired_from = in_fired_from
+	new_splitshot.firer = in_firer
+	new_splitshot.preparePixelProjectile(next_target, get_turf(src))
 	new_splitshot.fire()
-	new_splitshot.damage *= 1.5
+	new_splitshot.damage = 1.5 * in_damage
 
-	if(istype(target, /obj/projectile/bullet/coin)) // handle further splitshot checks
-		var/obj/projectile/bullet/coin/our_coin = target
+	if(istype(next_target, /obj/projectile/bullet/coin)) // handle further splitshot checks
+		var/obj/projectile/bullet/coin/our_coin = next_target
 		our_coin.check_splitshot(incoming_shot.firer, new_splitshot, forced = TRUE)
 
 /// Find what the splitshots will want to target next, with the order roughly based off the UK coin
 /obj/projectile/bullet/coin/proc/find_next_target()
-	var/list/valid_targets = (oview(4, src.loc))
+	var/list/valid_targets = shuffle(oview(4, loc))
 	valid_targets -= firer
 
 	for(var/obj/projectile/bullet/coin/iter_coin in valid_targets)
@@ -157,15 +197,27 @@
 	var/list/possible_victims = list()
 
 	for(var/mob/living/iter_living in valid_targets)
-		if(!HAS_TRAIT(iter_living, TRAIT_RECENTLY_COINED))
-			if(get_dist(src, iter_living) <= 2) // prioritize close mobs
-				return iter_living
-			possible_victims += iter_living
+		if(HAS_TRAIT(iter_living, TRAIT_RECENTLY_COINED) || iter_living.stat != CONSCIOUS)
+			continue
+
+		if(get_dist(src, iter_living) <= 2) // prioritize close mobs
+			return iter_living
+		possible_victims += iter_living
 
 	if(possible_victims.len)
 		return pick(possible_victims)
 
-	// TODO: add a few new classes- fuel tanks, windows, etc
+	var/list/static/prioritized_targets = list(/obj/structure/reagent_dispensers/fueltank, /obj/item/grenade, /obj/structure/window)
+	for(var/iter_type in prioritized_targets)
+		for(var/already_coined_tries in 1 to 3)
+			var/atom/iter_type_check = locate(iter_type) in valid_targets
+			if(iter_type_check)
+				if(HAS_TRAIT(iter_type_check, TRAIT_RECENTLY_COINED))
+					valid_targets -= iter_type_check
+					continue
+				else
+					return iter_type_check
+
 	for(var/atom/last_ditch in valid_targets)
 		if(!HAS_TRAIT(last_ditch, TRAIT_RECENTLY_COINED))
 			return last_ditch
