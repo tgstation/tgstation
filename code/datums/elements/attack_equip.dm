@@ -27,7 +27,7 @@
 	if(!attire.compare_zone_to_item_slot(targeted_zone))
 		return
 
-	if(attire.mob_can_equip(target, user,  attire.slot_flags, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
+	if(attire.mob_can_equip(target, attire.slot_flags, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		INVOKE_ASYNC(src, .proc/equip, attire, sharp_dresser, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
