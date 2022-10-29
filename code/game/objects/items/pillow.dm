@@ -40,7 +40,7 @@
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.apply_damage(5, STAMINA) // when hitting with such force we should prolly be getting tired too
 		hit_sound = 'sound/items/pillow_hit2.ogg'
-	else 
+	else
 		hit_sound = 'sound/items/pillow_hit.ogg'
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
@@ -90,7 +90,6 @@
 	balloon_alert(user, span_notice("tag removed"))
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	update_appearance()
-	
 
 /obj/item/pillow/update_appearance(updates)
 	. = ..()
