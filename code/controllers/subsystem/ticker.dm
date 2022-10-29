@@ -275,7 +275,7 @@ SUBSYSTEM_DEF(ticker)
 	if(length(GLOB.holidays))
 		to_chat(world, span_notice("and..."))
 		for(var/holidayname in GLOB.holidays)
-			var/datum/holiday/holiday = check_holidays(holidayname)
+			var/datum/holiday/holiday = GLOB.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
