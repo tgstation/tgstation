@@ -17,7 +17,8 @@
 	var/last_fighter
 	///for selecting the various sprite variation, defaults to the blank white pillow
 	var/variation = 1
-
+	///for alternating between hard hitting sound vs soft hitting sound
+	var/hit_sound
 
 /obj/item/pillow/Initialize(mapload)
 	. = ..()
@@ -38,8 +39,11 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		user.apply_damage(5, STAMINA) // when hitting with such force we should prolly be getting tired too
+		hit_sound = 'sound/items/pillow_hit2.ogg'
+	else 
+		hit_sound = 'sound/items/pillow_hit.ogg'
 	last_fighter = user
-	playsound(user, 'sound/items/pillow_hit.ogg', 80) //the basic 50 vol is barely audible
+	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
 /obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)
 	. = ..()
