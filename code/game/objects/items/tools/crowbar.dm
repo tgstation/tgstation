@@ -3,6 +3,7 @@
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
+	inhand_icon_state = "crowbar"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
@@ -39,7 +40,6 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	icon_state = "crowbar"
-	inhand_icon_state = "crowbar"
 	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
 
@@ -53,7 +53,6 @@
 	throw_range = 3
 	custom_materials = list(/datum/material/iron=70)
 	icon_state = "crowbar_large"
-	inhand_icon_state = "crowbar"
 	worn_icon_state = "crowbar"
 	toolspeed = 0.7
 
@@ -168,6 +167,7 @@
 	desc = "A... really big crowbar. You're pretty sure it could pry open a mech, but it seems unwieldy otherwise."
 	icon_state = "mechremoval0"
 	base_icon_state = "mechremoval"
+	inhand_icon_state = null
 	icon = 'icons/obj/mechremoval.dmi'
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
@@ -189,7 +189,6 @@
 /obj/item/crowbar/mechremoval/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
-
 
 /obj/item/crowbar/mechremoval/proc/empty_mech(obj/vehicle/sealed/mecha/mech, mob/user)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
