@@ -9,7 +9,7 @@
 			TEST_FAIL("[entry] has no log version; how did you mess this up?")
 			continue
 
-		var/regex/version_regex = regex("^\[0-9\]+\\.\[0-9\]+\\.\[0-9\]+$")
+		var/regex/version_regex = regex(@"^[0-9]+\.[0-9]+\.[0-9]+$")
 		if(!version_regex.Find(log_version))
 			TEST_FAIL("[entry] has invalid log version '[log_version]'; it must be a semver version string")
 			continue
