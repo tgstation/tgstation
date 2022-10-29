@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Being hit by the freezing breath of two (or more) ice whelps will no longer leave you looking like an ice cube for the rest of the round."
