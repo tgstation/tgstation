@@ -49,6 +49,8 @@
 
 	/// extended information about this log entry; associative list
 	var/list/extended_data
+	/// Is this log entry finalized and sent to SSlogging
+	VAR_PRIVATE/finalized = FALSE
 
 /datum/log_entry/New(message)
 	..()
@@ -62,16 +64,21 @@
 	if(!message)
 		CRASH("Log entry created without a message.")
 	src.message = message
+
+/datum/log_entry/proc/finalize()
+	if(finalized)
+		CRASH("[type] finalized twice.")
 	SSlogging.append_entry(src)
+	finalized = TRUE
 
 /datum/log_entry/Destroy(force, ...)
 	if(!force)
 		stack_trace("Attempting to Destroy a log entry; this is likely a bug.")
-		if(!(src in SSlogging.entries[category]))
+		if(!finalized)
 			// We were attempted to be del'd by Byond because nothing held a reference to us
 			// This is almost guarenteed to be due to a runtime in /New so we will now yell loudly about that
-			SSlogging.append_entry(src)
-			stack_trace("Log entry was not in the logging subsystem's entries list; this is a means that /New failed to append the entry which is a very big issue.")
+			finalize()
+			stack_trace("[type] was never finalized. Finalize should be called in /New() of the log entry after all data is set.")
 		return QDEL_HINT_LETMELIVE
 	// I don't know why we are being force del'd but we will acknowledge it
 	LAZYREMOVEASSOC(SSlogging.entries, category, src)
@@ -80,12 +87,16 @@
 /datum/log_entry/proc/as_private()
 	RETURN_TYPE(/datum/log_entry)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(finalized)
+		CRASH("Cannot modify finalized log entry.")
 	private = TRUE
 	return src
 
 /datum/log_entry/proc/with_location(atom/location)
 	RETURN_TYPE(/datum/log_entry)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(finalized)
+		CRASH("Cannot modify finalized log entry.")
 	if(istype(location, /client)) // heathens
 		var/client/client = location
 		location = client.mob
@@ -95,6 +106,8 @@
 /datum/log_entry/proc/with_tags(...)
 	RETURN_TYPE(/datum/log_entry)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(finalized)
+		CRASH("Cannot modify finalized log entry.")
 	LAZYINITLIST(tags)
 	for(var/tag in args)
 		tags += tag
@@ -103,6 +116,8 @@
 /datum/log_entry/proc/with_source(source, append_client_extended_data = TRUE)
 	RETURN_TYPE(/datum/log_entry)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(finalized)
+		CRASH("Cannot modify finalized log entry.")
 	var/client/client = get_player_client(source)
 	if(client)
 		source_ckey = client.ckey
@@ -118,6 +133,8 @@
 /datum/log_entry/proc/with_target(target)
 	RETURN_TYPE(/datum/log_entry)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(finalized)
+		CRASH("Cannot modify finalized log entry.")
 	var/client/client = get_player_client(target)
 	if(client)
 		target_ckey = client.ckey
@@ -127,6 +144,8 @@
 /datum/log_entry/proc/with_extended_data(key, value)
 	RETURN_TYPE(/datum/log_entry)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if(finalized)
+		CRASH("Cannot modify finalized log entry.")
 	LAZYINITLIST(extended_data)
 	extended_data[key] = value
 	return src
@@ -139,22 +158,31 @@
 /datum/log_entry/proc/to_json()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	var/list/json = to_list()
-	json += list(list(
+	// append required entries, we won't get here if they are not set
+	json += list(
 		"version" = version,
 		"unix_timestamp" = unix_timestamp,
 		"world_timestamp" = world_timestamp,
 		"round_id" = round_id,
 		"server_name" = server_name,
 		"category" = category,
+		"message" = message,
 		"private" = private,
-		"location" = location,
-		"tags" = tags,
-		"source_name" = source_name,
-		"source_ckey" = source_ckey,
-		"target_name" = target_name,
-		"target_ckey" = target_ckey,
-		"extended_data" = extended_data,
-	))
+	)
+	if(location)
+		json["location"] = location
+	if(tags)
+		json["tags"] = tags
+	if(source_name)
+		json["source_name"] = source_name
+	if(source_ckey)
+		json["source_ckey"] = source_ckey
+	if(target_name)
+		json["target_name"] = target_name
+	if(target_ckey)
+		json["target_ckey"] = target_ckey
+	if(extended_data)
+		json["extended_data"] = extended_data
 	return json_encode(json)
 
 /**

@@ -7,3 +7,5 @@
 	..(message)
 	with_source(author)
 	with_location(author)
+	finalize()
+
