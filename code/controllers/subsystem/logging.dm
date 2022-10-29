@@ -1,11 +1,15 @@
 SUBSYSTEM_DEF(logging)
 	name = "Logging"
+	init_order = INIT_ORDER_LOGGING
 	flags = SS_NO_FIRE
-	var/list/entries = list()
-	var/list/entry_dir_map = list()
+	var/list/entries
+	var/list/entry_dir_map
+	var/list/pending_entries
 
 /datum/controller/subsystem/logging/Initialize()
 	. = ..()
+	entries = list()
+	entry_dir_map = list()
 	for(var/datum/log_entry/entry_type as anything in subtypesof(/datum/log_entry))
 		var/entry_category = initial(entry_type.category)
 		if(!entries[entry_category])
@@ -13,10 +17,28 @@ SUBSYSTEM_DEF(logging)
 			var/log_file = "[GLOB.log_directory]/[lowertext(entry_category)]"
 			entry_dir_map[entry_category] = log_file
 
+/datum/controller/subsystem/logging/Recover()
+	. = ..()
+	entries = SSlogging.entries
+	entry_dir_map = SSlogging.entry_dir_map
+	pending_entries = SSlogging.pending_entries
+	process_pending()
+
 /datum/controller/subsystem/logging/proc/append_entry(datum/log_entry/entry)
+	if(!entries)
+		LAZYADD(pending_entries, entry)
+		return
+
 	LAZYADDASSOC(entries, entry.category, entry)
 	var/target_file = "log-entry-[length(entries[entry.category])].json"
 	rustg_file_write(entry.to_json(), "[entry_dir_map[entry.category]]/[target_file]")
+
+/datum/controller/subsystem/logging/proc/process_pending()
+	if(!pending_entries)
+		return
+	for(var/datum/log_entry/entry as anything in pending_entries)
+		append_entry(entry)
+	pending_entries = null
 
 /client/verb/view_logs()
 	SSlogging.view_logs()
