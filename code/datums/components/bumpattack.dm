@@ -3,13 +3,15 @@
  * valid_slot: the inventory slot the item could be held in while still bumpattacking with it
  * proxy_weapon: the weapon that will gain this behaviour
  */
-#define COOLDOWN_BUMP_ATTACK "bump_attack"
+#define COOLDOWN_BUMP_ATTACK "bump_attack_cooldown"
 
 /datum/component/bumpattack
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	///inventory slot that the item could be stored while still being able to attack with it
-	var/valid_slots
+	var/list/valid_slots
+	///whether or not the behaviour would be active on the item
 	var/active = FALSE
+	///the mob handling the item
 	var/mob/living/wearer
 	///the item that will gain this behaviour
 	var/obj/item/proxy_weapon
@@ -21,7 +23,6 @@
 		return COMPONENT_INCOMPATIBLE
 	src.valid_slots = valid_slots
 	src.proxy_weapon = proxy_weapon
-
 
 	return ..()
 
@@ -36,7 +37,7 @@
 	SIGNAL_HANDLER
 	if(!user) // iunno, thoroughness
 		return
-	if((slot & valid_slots))
+	if(slot & valid_slots)
 		activate(user)
 	else
 		deactivate()
@@ -62,8 +63,7 @@
 	SIGNAL_HANDLER
 	var/obj/item/our_weapon = proxy_weapon || parent
 	if(!istype(our_weapon))
-		qdel(src)
-		return
+		stack_trace("[our_weapon] somehow failed istype")
 	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BUMP_ATTACK))
 		TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, attack_cooldown)
 		INVOKE_ASYNC(target, /atom.proc/attackby , our_weapon, bumper)
