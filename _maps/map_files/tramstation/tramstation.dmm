@@ -3217,6 +3217,7 @@
 	},
 /obj/item/bedsheet/dorms,
 /obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "bqg" = (
@@ -10100,6 +10101,7 @@
 /obj/item/bedsheet/dorms,
 /obj/effect/landmark/start/assistant,
 /obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "dCd" = (
@@ -13891,6 +13893,7 @@
 /obj/item/bedsheet/dorms,
 /obj/effect/landmark/start/assistant,
 /obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "eUH" = (
@@ -13910,6 +13913,7 @@
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/west,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "eUZ" = (
@@ -16613,6 +16617,7 @@
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/west,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "fWJ" = (
@@ -18114,6 +18119,7 @@
 /obj/item/bedsheet/dorms_double,
 /obj/effect/landmark/start/assistant,
 /obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "gyP" = (
@@ -21081,6 +21087,7 @@
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/south,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "hEz" = (
@@ -25799,6 +25806,7 @@
 /obj/item/bedsheet/dorms_double,
 /obj/effect/landmark/start/hangover,
 /obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "jof" = (
@@ -29431,6 +29439,7 @@
 /obj/item/bedsheet/dorms,
 /obj/effect/landmark/start/hangover,
 /obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "kBo" = (
@@ -29724,6 +29733,7 @@
 	},
 /obj/item/bedsheet/dorms,
 /obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "kFY" = (
@@ -34266,6 +34276,7 @@
 /obj/structure/bed/double,
 /obj/item/bedsheet/dorms_double,
 /obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "mlg" = (
@@ -39148,6 +39159,7 @@
 /obj/item/bedsheet/dorms,
 /obj/effect/landmark/start/hangover,
 /obj/structure/sign/clock/directional/south,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "nYP" = (
@@ -41447,6 +41459,7 @@
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "oRV" = (
@@ -52398,6 +52411,7 @@
 	dir = 4
 	},
 /obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "sGF" = (
@@ -61078,6 +61092,7 @@
 	},
 /obj/effect/landmark/start/assistant,
 /obj/structure/sign/clock/directional/west,
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "vMx" = (
@@ -61978,6 +61993,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"wcj" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "wcr" = (
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
@@ -85484,7 +85507,7 @@ elr
 elr
 elr
 rnD
-eix
+wcj
 apC
 xtu
 dhe
