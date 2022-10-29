@@ -54,9 +54,9 @@
 /obj/item/paperwork/examine_more(mob/user)
 	. = ..()
 
-	if(istype(user, /mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/viewer = user
-		if(istype(viewer?.mind.assigned_role, stamp_job)) //Examining the paperwork as the proper job gets you some bonus details
+		if(istype(viewer.mind?.assigned_role, stamp_job)) //Examining the paperwork as the proper job gets you some bonus details
 			. += detailed_desc
 		else
 			if(stamped)
@@ -85,8 +85,8 @@
  */
 /obj/item/paperwork/proc/copy_stamp_info(/obj/item/paperwork/paperwork_type)
 	stamp_requested = initial(paperwork_type.stamp_requested)
-	stamp_job =  initial(paperwork_type.stamp_job)
-	stamp_icon =  initial(paperwork_type.stamp_icon)
+	stamp_job = initial(paperwork_type.stamp_job)
+	stamp_icon = initial(paperwork_type.stamp_icon)
 
 //HEAD OF STAFF DOCUMENTS
 
