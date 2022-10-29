@@ -135,7 +135,7 @@
 			if(isnewplayer(M))
 				lobby_players++
 				continue
-			else if(M.mind && !isbrain(M))
+			else if(M.mind && !isbrain(M) && !isobserver(M))
 				if(M.stat != DEAD)
 					if(isdrone(M))
 						drones++
@@ -146,6 +146,12 @@
 					living_players++
 					if(M.client)
 						living_players_connected++
+				else if (M.ckey)
+					// This finds all dead mobs that still have a ckey inside them
+					// Ie, they have died, but have not ghosted
+					observers++
+					if (M.client)
+						observers_connected++
 
 				if(M.mind.special_role)
 					antagonists++
