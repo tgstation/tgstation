@@ -26,9 +26,9 @@
 /obj/item/organ/internal/monster_core/regenerative_core/on_life(delta_time, times_fired)
 	. = ..()
 	if (owner.health <= owner.crit_threshold)
-		trigger_interal_action()
+		trigger_organ_action()
 
-/obj/item/organ/internal/monster_core/regenerative_core/trigger_interal_action()
+/obj/item/organ/internal/monster_core/regenerative_core/trigger_organ_action()
 	owner.revive(full_heal = TRUE, admin_revive = FALSE)
 	qdel(src)
 

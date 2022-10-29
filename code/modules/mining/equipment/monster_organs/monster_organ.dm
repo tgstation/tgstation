@@ -34,7 +34,7 @@
 	desc = "All that remains of a monster. This abstract item should not spawn. \
 		It will rapidly decay into uselessness. but don't worry because it's already useless."
 	icon = 'icons/obj/medical/organs/mining_organs.dmi'
-	icon_state = "roro core 2"
+	icon_state = "hivelord_core_2"
 	actions_types = list(/datum/action/cooldown/monster_core_action)
 	visual = FALSE
 	item_flags = NOBLUDGEON
@@ -179,7 +179,7 @@
  * Utility proc to find the associated monster organ action and trigger it.
  * Call this instead of on_triggered_internal() if the action needs to trigger automatically, or the cooldown won't happen.
  */
-/obj/item/organ/internal/monster_core/proc/trigger_interal_action()
+/obj/item/organ/internal/monster_core/proc/trigger_organ_action()
 	var/datum/action/cooldown/monster_core_action/action = locate() in actions
 	action?.Trigger()
 
@@ -198,7 +198,7 @@
 /datum/action/cooldown/monster_core_action
 	check_flags = AB_CHECK_CONSCIOUS
 	icon_icon = 'icons/obj/medical/organs/mining_organs.dmi'
-	button_icon_state = "roro core 2"
+	button_icon_state = "hivelord_core_2"
 	text_cooldown = FALSE //Looks really bad when you have minutes long cooldowns
 
 /datum/action/cooldown/monster_core_action/Activate(trigger_flags)
@@ -208,4 +208,4 @@
 	var/obj/item/organ/internal/monster_core/organ = target
 	if (!istype(organ))
 		return
-	organ.trigger_interal_action()
+	organ.trigger_organ_action()

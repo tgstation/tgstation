@@ -19,9 +19,9 @@
 /obj/item/organ/internal/monster_core/rush_gland/on_life(delta_time, times_fired)
 	. = ..()
 	if (owner.health <= HEALTH_DANGER_ZONE)
-		trigger_interal_action()
+		trigger_organ_action()
 
-/obj/item/organ/internal/monster_core/rush_gland/trigger_interal_action()
+/obj/item/organ/internal/monster_core/rush_gland/trigger_organ_action()
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
 
 /**
