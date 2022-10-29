@@ -20,6 +20,9 @@ SUBSYSTEM_DEF(events)
 			continue //don't want this one! leave it for the garbage collector
 		control += E //add it to the list of all events (controls)
 	reschedule()
+	// Instantiate our holidays list if it hasn't been already
+	if(isnull(GLOB.holidays))
+		fill_holidays()
 	return SS_INIT_SUCCESS
 
 
