@@ -25,6 +25,8 @@
 	/// The server this log entry was created on.
 	VAR_PRIVATE/server_name
 
+	VAR_PRIVATE/key
+
 	/// Required. The category this log entry falls under.
 	var/category
 	/// Required. The message this log entry contains.
@@ -55,6 +57,8 @@
 /datum/log_entry/New(message)
 	..()
 	SHOULD_CALL_PARENT(TRUE)
+	var/static/next_key = 0
+	key = "[next_key++]"
 	unix_timestamp = world.realtime + 946702800 // Waiting on rustg update // rustg_unix_timestamp()
 	world_timestamp = world.time
 	round_id = GLOB.round_id
@@ -154,11 +158,11 @@
 	RETURN_TYPE(/list)
 	return list()
 
-/datum/log_entry/proc/to_json()
-	SHOULD_NOT_OVERRIDE(TRUE)
-	var/list/json = to_list()
-	// append required entries, we won't get here if they are not set
-	json += list(
+/datum/log_entry/proc/final_list()
+	RETURN_TYPE(/list)
+	. = to_list()
+	. += list(
+		"key" = key,
 		"version" = version,
 		"unix_timestamp" = unix_timestamp,
 		"world_timestamp" = world_timestamp,
@@ -167,22 +171,26 @@
 		"category" = category,
 		"message" = message,
 		"private" = private,
+		"text" = to_text(),
 	)
 	if(location)
-		json["location"] = location
+		.["location"] = location
 	if(tags)
-		json["tags"] = tags
+		.["tags"] = tags
 	if(source_name)
-		json["source_name"] = source_name
+		.["source_name"] = source_name
 	if(source_ckey)
-		json["source_ckey"] = source_ckey
+		.["source_ckey"] = source_ckey
 	if(target_name)
-		json["target_name"] = target_name
+		.["target_name"] = target_name
 	if(target_ckey)
-		json["target_ckey"] = target_ckey
+		.["target_ckey"] = target_ckey
 	if(extended_data)
-		json["extended_data"] = extended_data
-	return json_encode(json)
+		.["extended_data"] = extended_data
+
+/datum/log_entry/proc/to_json()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	return json_encode(final_list())
 
 /**
  * Gets the textual representation of this log entry.
@@ -198,7 +206,7 @@
 			source_info = "\[[source_info]\]"
 	if(target_info)
 		target_info = " -> \[[target_info]\]"
-	return "<div title='This is the default to_text implementation'><u>?</u></div>([category])[source_info][target_info]: [message]"
+	return "([category])[source_info][target_info]: [message]"
 
 /**
  * This proc is called when the log entry is inspected in-game by someone viewing the logs.

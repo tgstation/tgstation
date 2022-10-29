@@ -9,3 +9,5 @@
 	with_location(author)
 	finalize()
 
+/datum/log_entry/asay/to_text()
+	return "\[[source_ckey]\]: [message]"
