@@ -29,7 +29,8 @@
 	src.title = title
 	src.strong = strong
 
-	id = ntnrc_uid++
+	id = ntnrc_uid
+	ntnrc_uid++
 	if(id > MAX_CHANNELS)
 		qdel(src)
 		return
