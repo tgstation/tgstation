@@ -3,7 +3,7 @@ import { Button, Dropdown, Flex, Input, Section } from '../components';
 import { Window } from '../layouts';
 
 type LogEntry = {
-  key: number;
+  key: string;
   text: string;
   version: string;
   unix_timestamp: number;
@@ -105,6 +105,12 @@ export const LogViewer = (props: any, context: any) => {
     );
   }
 
+  const [extendedTarget, setExtendedTarget] = useLocalState<string | null>(
+    context,
+    'extendedTarget',
+    null
+  );
+
   return (
     <Window
       width={800}
@@ -150,7 +156,13 @@ export const LogViewer = (props: any, context: any) => {
           selectedCategory={selectedCategory}
           onCategoryChange={updateSelectedCategory}
         />
-        {selectedCategory && <LogViewerContent entries={filtered_entries!} />}
+        {selectedCategory && (
+          <LogViewerContent
+            entries={filtered_entries!}
+            extendedTarget={extendedTarget}
+            setExtendedTarget={setExtendedTarget}
+          />
+        )}
       </Window.Content>
     </Window>
   );
@@ -266,11 +278,13 @@ const LogCategoryBar = (props: LogCategoryBarProps, context: any) => {
 
 type LogViewerContentProps = {
   entries: LogEntry[];
+  extendedTarget: string | null;
+  setExtendedTarget?: (target: string | null) => void;
 };
 
 const LogViewerContent = (props: LogViewerContentProps, context: any) => {
   const { act } = useBackend(context);
-  const { entries } = props;
+  const { entries, extendedTarget, setExtendedTarget } = props;
   return (
     <Section fluid scrollable title={entries.length + ' Entries'}>
       <Flex direction="column">
@@ -283,12 +297,59 @@ const LogViewerContent = (props: LogViewerContentProps, context: any) => {
               color="average"
               onClick={() => act('inspect', { entry: entry.key })}
             />
-            - {entry.text}
-            <br />
+            <Button
+              icon="question"
+              tooltip="More Info"
+              tooltipPosition="bottom"
+              color={extendedTarget === entry.key ? 'good' : 'average'}
+              disabled={
+                !entry.extended_data ||
+                Object.keys(entry.extended_data).length === 0
+              }
+              onClick={() => {
+                if (extendedTarget === entry.key) {
+                  setExtendedTarget!(null);
+                } else {
+                  setExtendedTarget!(entry.key);
+                }
+              }}
+            />
+            &nbsp;{entry.text}
+            {extendedTarget === entry.key && <RecursiveData data={entry} />}
           </Flex.Item>
         ))}
       </Flex>
     </Section>
+  );
+};
+
+const RecursiveData = (props: any, context: any) => {
+  const { data, inner_level } = props;
+  const level = inner_level || 1;
+  const inner = (
+    <Flex direction="column">
+      {Object.entries(data).map(([key, value]) => {
+        if (typeof value === 'object' && value !== null) {
+          return (
+            <Flex.Item key={key}>
+              <b>{key}:</b>
+              <RecursiveData data={value} inner_level={level + 1} />
+            </Flex.Item>
+          );
+        }
+        return (
+          <Flex.Item key={key}>
+            {'-'.repeat(level)}&nbsp;
+            <b>{key}</b>: {value || 'null'}
+          </Flex.Item>
+        );
+      })}
+    </Flex>
+  );
+  return !inner_level ? (
+    <Section title="Extended Data">{inner}</Section>
+  ) : (
+    inner
   );
 };
 
@@ -323,6 +384,11 @@ const filter_entries = (
 
     if (!text) {
       return false;
+    }
+
+    if (!(filterFlags & FilterFlags.CaseSensitive)) {
+      text = text.toLowerCase();
+      filterText = filterText.toLowerCase();
     }
 
     if (filterFlags & FilterFlags.Regex) {
