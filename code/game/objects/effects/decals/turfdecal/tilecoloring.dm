@@ -7,10 +7,10 @@
 #define PRIDE_ALPHA 60
 
 /obj/effect/turf_decal/tile/Initialize(mapload)
-	if (SSevents.check_holidays(APRIL_FOOLS))
+	if (check_holidays(APRIL_FOOLS))
 		color = "#[random_short_color()]"
-	else if (SSevents.check_holidays(PRIDE_WEEK))
-		var/datum/holiday/pride_week/pride_week = SSevents.check_holidays(PRIDE_WEEK)
+	else if (check_holidays(PRIDE_WEEK))
+		var/datum/holiday/pride_week/pride_week = check_holidays(PRIDE_WEEK)
 		color = pride_week.get_floor_tile_color(src)
 
 		// It looks garish at different alphas, and it's not possible to get a
@@ -579,7 +579,7 @@
 	icon_state = "trimline_box"
 
 /obj/effect/turf_decal/trimline/Initialize(mapload)
-	if(SSevents.check_holidays(APRIL_FOOLS))
+	if(check_holidays(APRIL_FOOLS))
 		color = "#[random_short_color()]"
 	. = ..()
 

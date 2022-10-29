@@ -56,9 +56,9 @@
 
 /obj/effect/spawner/xmastree/Initialize(mapload)
 	..()
-	if(SSevents.check_holidays(CHRISTMAS) && christmas_tree)
+	if(check_holidays(CHRISTMAS) && christmas_tree)
 		new christmas_tree(get_turf(src))
-	else if(SSevents.check_holidays(FESTIVE_SEASON) && festive_tree)
+	else if(check_holidays(FESTIVE_SEASON) && festive_tree)
 		new festive_tree(get_turf(src))
 
 	return INITIALIZE_HINT_QDEL
