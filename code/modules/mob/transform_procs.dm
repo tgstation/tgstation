@@ -380,7 +380,7 @@
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/killertomato))
 		return TRUE
-	if(ispath(MP, /mob/living/simple_animal/mouse))
+	if(ispath(MP, /mob/living/basic/mouse))
 		return TRUE
 	if(ispath(MP, /mob/living/simple_animal/hostile/bear))
 		return TRUE

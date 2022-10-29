@@ -1765,7 +1765,7 @@
 /area/awaymission/cabin/caves/mountain)
 "fL" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse{
+/mob/living/basic/mouse{
 	faction = list("sewer")
 	},
 /turf/open/floor/carpet,
@@ -3852,7 +3852,7 @@
 "vD" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown;
+	inserted_disk = /obj/item/computer_disk/virus/clown;
 	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
 	name = "soviet tablet"
 	},
@@ -3999,7 +3999,7 @@
 "yR" = (
 /obj/structure/table/reinforced,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime;
+	inserted_disk = /obj/item/computer_disk/virus/mime;
 	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
 	name = "soviet tablet"
 	},

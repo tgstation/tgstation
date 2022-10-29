@@ -393,3 +393,8 @@
 	description = "I just got squeezed way too hard."
 	mood_change = -1
 	timeout = 2 MINUTES
+
+/datum/mood_event/rippedtail
+	description = "I ripped their tail right off, what have I done!"
+	mood_change = -5
+	timeout = 30 SECONDS

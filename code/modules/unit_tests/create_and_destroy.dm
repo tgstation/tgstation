@@ -1,7 +1,7 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
 	//You absolutely must run last
-	priority = TEST_DEL_WORLD
+	priority = TEST_CREATE_AND_DESTROY
 
 GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()

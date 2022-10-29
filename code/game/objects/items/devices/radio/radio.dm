@@ -52,7 +52,7 @@
 	/// If true, subspace_transmission can be toggled at will.
 	var/subspace_switchable = FALSE
 	/// Frequency lock to stop the user from untuning specialist radios.
-	var/freqlock = FALSE
+	var/freqlock = RADIO_FREQENCY_UNLOCKED
 	/// If true, broadcasts will be large and BOLD.
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
@@ -368,7 +368,7 @@
 	data["frequency"] = frequency
 	data["minFrequency"] = freerange ? MIN_FREE_FREQ : MIN_FREQ
 	data["maxFrequency"] = freerange ? MAX_FREE_FREQ : MAX_FREQ
-	data["freqlock"] = freqlock
+	data["freqlock"] = freqlock != RADIO_FREQENCY_UNLOCKED
 	data["channels"] = list()
 	for(var/channel in channels)
 		data["channels"][channel] = channels[channel] & FREQ_LISTENING
@@ -386,7 +386,7 @@
 		return
 	switch(action)
 		if("frequency")
-			if(freqlock)
+			if(freqlock != RADIO_FREQENCY_UNLOCKED)
 				return
 			var/tune = params["tune"]
 			var/adjust = text2num(params["adjust"])
