@@ -85,8 +85,8 @@
  */
 /obj/item/paperwork/proc/copy_stamp_info(/obj/item/paperwork/paperwork_type)
 	stamp_requested = initial(paperwork_type.stamp_requested)
-	stamp_job = initial(paperwork_type.stamp_job)
-	stamp_icon = initial(paperwork_type.stamp_icon)
+	stamp_job =  initial(paperwork_type.stamp_job)
+	stamp_icon =  initial(paperwork_type.stamp_icon)
 
 //HEAD OF STAFF DOCUMENTS
 
