@@ -1021,3 +1021,32 @@
   ShizCalev:
   - code_imp: Added a unit test to catch items that can be equipped to suit slots
       have missing textures.
+2022-10-29:
+  ArcaneMusic:
+  - qol: The Export Scanner, Sales Tagger, and Price Tagger have been merged together
+      into the Universal Scanner.
+  - qol: Using the Universal Scanner in-hand allows for switching between the three
+      tools functionality on the fly.
+  Melbert:
+  - bugfix: Roaches will actually eat ants
+  - bugfix: Rats can be multicolored now, like mice
+  - bugfix: Rats, when they die, become pick-up-able items like mice
+  - refactor: Refactored mice / rats into basicmobs.
+  ShizCalev:
+  - qol: Converted buckets (and naturally cleanbots) over to GAGs.
+  - bugfix: Cleanbots built with a wooden bucket will now properly drop a wooden bucket
+      when destroyed.
+  Vladoricious:
+  - bugfix: Consciousness Transference potions now tame the target creature, just
+      like Sentience potions.
+  Watermelon914:
+  - refactor: Refactored how duplicates are handled in traitor objective code. This
+      will fix destroy heirloom and eyesnatching objectives from only ever being available
+      once.
+  - bugfix: Fixed destroy heirloom objectives never generating
+  - bugfix: Fixed eyesnatching objectives never generating.
+  - balance: Kidnapping objective can only be taken a maximum of 3 times within 15
+      minutes. This puts it in line with the assassinate and eyesnatching objectives.
+  timothymtorres:
+  - bugfix: Reagent containers playing attack animation when transferring reagents
+      to deep fryers

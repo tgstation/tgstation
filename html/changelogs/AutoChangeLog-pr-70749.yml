@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - qol: "Converted buckets (and naturally cleanbots) over to GAGs."
-  - bugfix: "Cleanbots built with a wooden bucket will now properly drop a wooden bucket when destroyed."
