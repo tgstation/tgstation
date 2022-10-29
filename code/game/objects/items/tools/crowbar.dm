@@ -168,10 +168,14 @@
 	desc = "A... really big crowbar. You're pretty sure it could pry open a mech, but it seems unwieldy otherwise."
 	icon_state = "mechremoval0"
 	base_icon_state = "mechremoval"
+	icon = 'icons/obj/mechremoval.dmi'
 	w_class = WEIGHT_CLASS_HUGE
+	slot_flags = NONE
+	toolspeed = 1.25
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 0, FIRE = 100, ACID = 0)
+	resistance_flags = FIRE_PROOF
 	bare_wound_bonus = 15
 	wound_bonus = 10
-	toolspeed = 1.25
 	/// How much damage to do unwielded
 	var/force_unwielded = 5
 	/// How much damage to do wielded
@@ -179,7 +183,13 @@
 
 /obj/item/crowbar/mechremoval/Initialize(mapload)
 	. = ..()
+	transform = transform.Translate(0, -8)
 	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
+
+/obj/item/crowbar/mechremoval/update_icon_state()
+	icon_state = "[base_icon_state]0"
+	return ..()
+
 
 /obj/item/crowbar/mechremoval/proc/empty_mech(obj/vehicle/sealed/mecha/mech, mob/user)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))

@@ -120,8 +120,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		user.put_in_hands(held_item)
 		add_fingerprint(user)
 		update_appearance()
-		return
+
+/obj/structure/fireaxecabinet/attack_hand_secondary(mob/user, list/modifiers)
 	toggle_open(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -184,3 +186,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 	icon_state = "mechremoval"
 	item_path = /obj/item/crowbar/mechremoval
 	item_overlay = "crowbar"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval, 32)
