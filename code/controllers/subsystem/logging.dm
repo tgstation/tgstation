@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(logging)
 		return
 
 	LAZYADDASSOC(entries, entry.category, entry)
-	entries_by_key[entry.key] = entry
+	entries_by_key[entry.get_key()] = entry
 	var/category_file_id = replacetext(lowertext(entry.category), " ", "_")
 	var/target_file = "[category_file_id]-entry-[length(entries[entry.category])].json"
 	rustg_file_write(entry.to_json(), "[entry_dir_map[entry.category]]/[target_file]")
@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(logging)
 	for(var/category in entries)
 		.["entries"][category] = list()
 		for(var/datum/log_entry/entry as anything in entries[category])
-			.["entries"][category][UNLINT(entry.key)] = entry.final_list()
+			.["entries"][category][entry.get_key()] = entry.final_list()
 
 /datum/controller/subsystem/logging/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

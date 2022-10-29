@@ -218,3 +218,6 @@
 		to_chat(inspector, span_warning("This log entry has no source or the source has been garbage collected."))
 		return
 	inspector.client?.debug_variables(source_datum)
+
+/datum/log_entry/proc/get_key()
+	return key
