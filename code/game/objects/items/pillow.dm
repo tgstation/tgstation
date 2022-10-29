@@ -9,7 +9,9 @@
 	righthand_file = 'icons/mob/inhands/items/pillow_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	damtype = STAMINA
+	///change the description based on the pillow tag
 	var/static/tag_desc = "This one seems to have its tag removed."
+	///pillow tag is attached to it
 	var/obj/item/clothing/neck/pillow_tag/pillow_trophy
 	///whoever last use this pillow
 	var/last_fighter
@@ -41,7 +43,7 @@
 
 /obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)
 	. = ..()
-	if(!isliving(victim) || isdead(victim))
+	if(!istype(victim))
 		return
 	if(victim.wear_mask || !user.get_bodypart(BODY_ZONE_HEAD))
 		return
@@ -58,8 +60,7 @@
 			break
 		if(!do_after(user, 1 SECONDS, victim))
 			break
-		victim.losebreath = 1
-	victim.losebreath = 0
+		victim.losebreath += 1
 	victim.visible_message("[victim] manages to escape being smothered!", span_notice("You break free!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/pillow/examine(mob/user)
@@ -145,16 +146,11 @@
 	name = "clown pillow"
 	desc = "Daww look at that little clown!"
 	icon_state = "pillow_5_t"
-
-/obj/item/pillow/clown/update_appearance(updates)
-	. = ..()
-	icon_state = "pillow_5"
+	variation = 5
 
 /obj/item/pillow/mime
 	name = "mime pillow"
 	desc = "Daww look at that little mime!"
 	icon_state = "pillow_6_t"
+	variation = 6
 
-/obj/item/pillow/mime/update_appearance(updates)
-	. = ..()
-	icon_state = "pillow_6"
