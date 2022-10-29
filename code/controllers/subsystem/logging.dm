@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(logging)
 	if(istype(user, /client)) // we are nice and allow you to pass in a client
 		var/client/client = user
 		user = client.mob
-	if(IsAdminAdvancedProcCall() || !check_rights_for(user, R_ADMIN))
+	if(IsAdminAdvancedProcCall() || !check_rights_for(user.client, R_ADMIN))
 		return
 	var/choice = tgui_input_list(user, "Select a log category", "View Logs", src.entries)
 	if(!choice)
