@@ -100,8 +100,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 /obj/structure/sign/collision_counter/LateInitialize()
 	. = ..()
 	for(var/obj/structure/industrial_lift/tram/tram as anything in GLOB.lifts)
+		if(tram.lift_id != tram_id)
+			continue
 		RegisterSignal(tram, COMSIG_TRAM_COLLISION, .proc/new_hit)
-	update_appearance()
+		update_appearance()
+		break
 
 /obj/structure/sign/collision_counter/Destroy()
 	return ..()
