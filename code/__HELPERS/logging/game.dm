@@ -1,34 +1,34 @@
 /// Logging for generic/unsorted game messages
 /proc/log_game(text)
 	if (CONFIG_GET(flag/log_game))
-		WRITE_LOG(GLOB.world_game_log, "GAME: [text]")
+		new /datum/log_entry/game(text)
 
 /// Logging for emotes
 /proc/log_emote(text)
 	if (CONFIG_GET(flag/log_emote))
-		WRITE_LOG(GLOB.world_game_log, "EMOTE: [text]")
+		new /datum/log_entry/emote(text)
 
 /// Logging for emotes sent over the radio
 /proc/log_radio_emote(text)
 	if (CONFIG_GET(flag/log_emote))
-		WRITE_LOG(GLOB.world_game_log, "RADIOEMOTE: [text]")
+		new /datum/log_entry/radio(text)
 
 /// Logging for messages sent in OOC
 /proc/log_ooc(text)
 	if (CONFIG_GET(flag/log_ooc))
-		WRITE_LOG(GLOB.world_game_log, "OOC: [text]")
+		new /datum/log_entry/ooc(text)
 
 /// Logging for prayed messages
 /proc/log_prayer(text)
 	if (CONFIG_GET(flag/log_prayer))
-		WRITE_LOG(GLOB.world_game_log, "PRAY: [text]")
+		new /datum/log_entry/prayer(text)
 
 /// Logging for changes to ID card access
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
-		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
+		new /datum/log_entry/access(text)
 
 /// Logging for OOC votes
 /proc/log_vote(text)
 	if (CONFIG_GET(flag/log_vote))
-		WRITE_LOG(GLOB.world_game_log, "VOTE: [text]")
+		new /datum/log_entry/vote(text)

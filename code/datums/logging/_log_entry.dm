@@ -68,10 +68,12 @@
 	if(!message)
 		CRASH("Log entry created without a message.")
 	src.message = message
+	// automatically finalize after a tick, if not finalized manually
+	addtimer(CALLBACK(src, .proc/finalize), 1)
 
 /datum/log_entry/proc/finalize()
 	if(finalized)
-		CRASH("[type] finalized twice.")
+		return
 	SSlogging.append_entry(src)
 	finalized = TRUE
 
@@ -129,7 +131,7 @@
 		if(append_client_extended_data)
 			with_extended_data("source_mob_type", client.mob.type)
 			with_extended_data("source_client_is_admin", is_admin(client.mob))
-	source = "[source]"
+	source_name = "[source]"
 	source_weakref = WEAKREF(source)
 	return src
 
@@ -206,7 +208,7 @@
 			source_info = "\[[source_info]\]"
 	if(target_info)
 		target_info = " -> \[[target_info]\]"
-	return "([category])[source_info][target_info]: [message]"
+	return "[source_info][target_info]: [message]"
 
 /**
  * This proc is called when the log entry is inspected in-game by someone viewing the logs.
@@ -217,6 +219,10 @@
 	if(!source_datum)
 		to_chat(inspector, span_warning("This log entry has no source or the source has been garbage collected."))
 		return
+	if(ismob(source_datum))
+		var/mob/mob = source_datum
+		if(mob.client)
+			return inspector.client?.holder?.show_player_panel(mob)
 	inspector.client?.debug_variables(source_datum)
 
 /datum/log_entry/proc/get_key()

@@ -1,5 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Button, Dropdown, Flex, Input, Section } from '../components';
+import { SectionProps } from '../components/Section';
 import { Window } from '../layouts';
 
 type LogEntry = {
@@ -73,16 +74,7 @@ export const LogViewer = (props: any, context: any) => {
     'displayFilterOptions',
     false
   );
-  const [selectedEntry, setSelectedEntry] = useLocalState<LogEntry | null>(
-    context,
-    'selectedEntry',
-    null
-  );
 
-  const updateSelectedCategory = (category: string) => {
-    setSelectedEntry(null);
-    setSelectedCategory(category);
-  };
   const updateFilterType = (type: FilterType) => {
     if (type === FilterType.None) {
       setFilterText('');
@@ -113,8 +105,6 @@ export const LogViewer = (props: any, context: any) => {
 
   return (
     <Window
-      width={800}
-      height={600}
       title="Log Viewer"
       theme="admin"
       buttons={
@@ -140,29 +130,33 @@ export const LogViewer = (props: any, context: any) => {
           />
         </>
       }>
-      <Window.Content scrollable>
-        {displayFilterOptions && (
-          <FilterOptions
-            type={filterType}
-            text={filterText}
-            flags={filterFlags}
-            onTypeChange={(type) => updateFilterType(type)}
-            onTextChange={(text) => setFilterText(text)}
-            onFlagsChange={(flags) => setFilterFlags(flags)}
+      <Window.Content fitted>
+        <Flex direction="column" height="100%">
+          {displayFilterOptions && (
+            <FilterOptions
+              type={filterType}
+              text={filterText}
+              flags={filterFlags}
+              onTypeChange={(type) => updateFilterType(type)}
+              onTextChange={(text) => setFilterText(text)}
+              onFlagsChange={(flags) => setFilterFlags(flags)}
+            />
+          )}
+          <LogCategoryBar
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
           />
-        )}
-        <LogCategoryBar
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onCategoryChange={updateSelectedCategory}
-        />
-        {selectedCategory && (
-          <LogViewerContent
-            entries={filtered_entries!}
-            extendedTarget={extendedTarget}
-            setExtendedTarget={setExtendedTarget}
-          />
-        )}
+          {selectedCategory && (
+            <LogViewerContent
+              fill
+              scrollable
+              entries={filtered_entries!}
+              extendedTarget={extendedTarget}
+              setExtendedTarget={setExtendedTarget}
+            />
+          )}
+        </Flex>
       </Window.Content>
     </Window>
   );
@@ -256,7 +250,7 @@ type LogCategoryBarProps = {
 };
 
 const LogCategoryBar = (props: LogCategoryBarProps, context: any) => {
-  const { categories, selectedCategory, onCategoryChange } = props;
+  const { categories, selectedCategory, onCategoryChange, ...rest } = props;
 
   return (
     <Section>
@@ -276,7 +270,7 @@ const LogCategoryBar = (props: LogCategoryBarProps, context: any) => {
   );
 };
 
-type LogViewerContentProps = {
+type LogViewerContentProps = SectionProps & {
   entries: LogEntry[];
   extendedTarget: string | null;
   setExtendedTarget?: (target: string | null) => void;
@@ -284,9 +278,9 @@ type LogViewerContentProps = {
 
 const LogViewerContent = (props: LogViewerContentProps, context: any) => {
   const { act } = useBackend(context);
-  const { entries, extendedTarget, setExtendedTarget } = props;
+  const { entries, extendedTarget, setExtendedTarget, ...rest } = props;
   return (
-    <Section fluid scrollable title={entries.length + ' Entries'}>
+    <Section title={entries.length + ' Entries'} {...rest}>
       <Flex direction="column">
         {entries.map((entry) => (
           <Flex.Item key={entry.key}>
