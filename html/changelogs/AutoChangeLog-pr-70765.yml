@@ -1,4 +1,0 @@
-author: "exymian"
-delete-after: True
-changes: 
-  - bugfix: "Fixed 2 unconnected pipes in Tramstation atmos"

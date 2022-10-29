@@ -19,7 +19,7 @@
 	var/record_number = 1
 	var/obj/item/tank/inserted_tank
 	/// Reference to a disk we are going to print to.
-	var/obj/item/computer_hardware/hard_drive/portable/inserted_disk
+	var/obj/item/computer_disk/inserted_disk
 
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 
@@ -61,8 +61,8 @@
 		RegisterSignal(inserted_tank, COMSIG_PARENT_QDELETING, .proc/tank_destruction)
 		update_appearance()
 		return
-	if(istype(item, /obj/item/computer_hardware/hard_drive/portable))
-		var/obj/item/computer_hardware/hard_drive/portable/attacking_disk = item
+	if(istype(item, /obj/item/computer_disk))
+		var/obj/item/computer_disk/attacking_disk = item
 		eject_disk(user)
 		if(user.transferItemToLoc(attacking_disk, src))
 			inserted_disk = attacking_disk
@@ -201,7 +201,7 @@
 	record_data.gas_record = record
 	record_data.possible_experiments = apply_experiments(record)
 
-	if(inserted_disk.store_file(record_data))
+	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
 		playsound(src, 'sound/machines/terminal_error.ogg', 25)
@@ -239,7 +239,7 @@
 		UnregisterSignal(inserted_tank, COMSIG_PARENT_QDELETING)
 		inserted_tank = null
 		update_appearance()
-	. = ..()
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/on_deconstruction()
 	eject_tank()

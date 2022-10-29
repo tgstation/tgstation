@@ -23,6 +23,8 @@
 	var/cooldown = 0
 
 	var/clothing_flags = NONE
+	///List of items that can be equipped in the suit storage slot while we're worn.
+	var/list/allowed
 
 	var/can_be_bloody = TRUE
 

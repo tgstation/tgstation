@@ -14152,7 +14152,7 @@
 	default_raw_text = "ratsratsratsratsratsratsratsratsratsratsratsratsrats"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "eZs" = (
@@ -14949,9 +14949,9 @@
 /area/station/maintenance/tram/mid)
 "foD" = (
 /obj/structure/table/glass,
-/obj/item/computer_hardware/hard_drive/portable/chemistry,
-/obj/item/computer_hardware/hard_drive/portable/medical,
-/obj/item/computer_hardware/hard_drive/portable/medical,
+/obj/item/computer_disk/chemistry,
+/obj/item/computer_disk/medical,
+/obj/item/computer_disk/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
@@ -16765,9 +16765,9 @@
 /area/station/security/prison/mess)
 "fZz" = (
 /obj/structure/table/reinforced,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance,
 /obj/effect/landmark/event_spawn,
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/iron/cafeteria{
@@ -20013,8 +20013,8 @@
 	dir = 5
 	},
 /obj/item/clipboard,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/qm)
 "hhI" = (
@@ -24631,10 +24631,10 @@
 /area/station/cargo/miningdock)
 "iSX" = (
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = -2
 	},
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -44862,7 +44862,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/left)
 "pZr" = (
-/mob/living/simple_animal/mouse/brown/tom,
+/mob/living/basic/mouse/brown/tom,
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
 "pZu" = (
@@ -49927,11 +49927,11 @@
 /area/station/security/processing)
 "rLy" = (
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = -4;
 	pixel_y = -3
 	},
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = 2;
 	pixel_y = 8
 	},
@@ -50204,7 +50204,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/clothing/glasses/welding,
 /obj/item/wrench,
@@ -50212,6 +50211,9 @@
 	dir = 10
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/item/stack/sheet/glass{
+	amount = 20
+	},
 /turf/open/floor/iron,
 /area/station/science/lab)
 "rOb" = (
@@ -52382,10 +52384,10 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/spawner/west,
-/obj/item/computer_hardware/hard_drive/portable/engineering,
-/obj/item/computer_hardware/hard_drive/portable/engineering,
-/obj/item/computer_hardware/hard_drive/portable/engineering,
-/obj/item/computer_hardware/hard_drive/portable/atmos,
+/obj/item/computer_disk/engineering,
+/obj/item/computer_disk/engineering,
+/obj/item/computer_disk/engineering,
+/obj/item/computer_disk/atmos,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "sGu" = (
@@ -60542,7 +60544,7 @@
 /area/station/commons/toilet)
 "vBi" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "vBC" = (

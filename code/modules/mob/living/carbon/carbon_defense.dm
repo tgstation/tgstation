@@ -437,6 +437,17 @@
 		else
 			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
 
+	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && (istype(head, /obj/item/clothing/head/costume/kitty) || istype(head, /obj/item/clothing/head/collectable/kitty)))
+		var/obj/item/clothing/head/faketail = head
+		helper.visible_message(span_danger("[helper] pulls on [src]'s tail... and it rips off!"), \
+					null, span_hear("You hear a ripping sound."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		to_chat(helper, span_danger("You pull on [src]'s tail... and it rips off!"))
+		to_chat(src, span_userdanger("[helper] pulls on your tail... and it rips off!"))
+		playsound(loc, 'sound/effects/cloth_rip.ogg', 75, TRUE)
+		dropItemToGround(faketail)
+		helper.put_in_hands(faketail)
+		helper.add_mood_event("rippedtail", /datum/mood_event/rippedtail)
+
 	else
 		if (helper.grab_state >= GRAB_AGGRESSIVE)
 			helper.visible_message(span_notice("[helper] embraces [src] in a tight bear hug!"), \
