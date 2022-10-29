@@ -34,6 +34,11 @@
 	///Used to store the bonus text that displays when the paperwork's associated role reads it
 	var/detailed_desc
 
+/obj/item/paperwork/Initialize(mapload)
+	. = ..()
+
+	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
+
 /obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 
@@ -97,7 +102,7 @@
 
 /obj/item/paperwork/cargo/Initialize()
 	. = ..()
-	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
+
 	detailed_desc += span_info(" The papers are a mess of shipping order paperwork. There's no rhyme or reason to how these documents are sorted at all.")
 	detailed_desc += span_info(" By the looks of it, there's nothing out of the ordinary here besides a high-priority request for a second engine.")
 	detailed_desc += span_info(" The 'priority request reason' field is scribbled out, but a note in the margins reads 'we just want to try two engines, don't worry about it'.")
@@ -111,7 +116,6 @@
 /obj/item/paperwork/security/Initialize()
 	. = ..()
 
-	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 	detailed_desc += span_info(" The stack of documents are related to a civil case being processed by a neighboring installation.")
 	detailed_desc += span_info(" The document requests that you review a conduct report submitted by the lawyer of the station.")
 	detailed_desc += span_info(" The case file details accusations against the station's security department, including misconduct, harassment, an-")
@@ -125,7 +129,6 @@
 /obj/item/paperwork/service/Initialize()
 	. = ..()
 
-	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 	detailed_desc += span_info(" Your begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")
 	detailed_desc += span_info(" Looks like a nearby station has sent in a MAXIMUM priority request for coal, in seemingly ridiculous quantities.")
 	detailed_desc += span_info(" The reason listed for the request seems to be hastily filled in -- 'Seeking alternative methods to power the station.'")
@@ -139,7 +142,6 @@
 /obj/item/paperwork/medical/Initialize()
 	. = ..()
 
-	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 	detailed_desc += span_info(" The stack of documents appear to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")
 	detailed_desc += span_info(" Skipping to the end of the report reveals that the specimen was the station bartender's pet monkey.")
 	detailed_desc += span_info(" The specimen had been exposed to radiation during an 'unrelated incident with the engine', leading to it's mutated form.")
@@ -154,7 +156,6 @@
 /obj/item/paperwork/engineering/Initialize()
 	. = ..()
 
-	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 	detailed_desc += span_info(" These papers are a power output report from a neighboring station. It details the power output and other engineering data regarding the station during a typical shift.")
 	detailed_desc += span_info(" Checking the logs, you notice the energy output and engine temperature spike dramatically, and shortly after, the surrounding department appears to be depressurized by an unknown force.")
 	detailed_desc += span_info(" Clearly the station's engineering department was testing an experimental engine setup, and had to use the air in the nearby rooms to help cool the engine. Totally.")
@@ -168,7 +169,6 @@
 /obj/item/paperwork/research/Initialize()
 	. = ..()
 
-	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 	detailed_desc += span_info(" The documents detail the results of a standard ordnance test that occured on a nearby station.")
 	detailed_desc += span_info(" As you read further, you realize something strange with the results -- The epicenter doesn't seem to be correct.")
 	detailed_desc += span_info(" If your math is correct, this explosion didn't happen at the station's ordnance site, it occured in the station's engine room.")
@@ -182,7 +182,6 @@
 /obj/item/paperwork/captain/Initialize()
 	. = ..()
 
-	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 	detailed_desc += span_info(" The documents are an unsigned correspondence from the captain's desk of a nearby station.")
 	detailed_desc += span_info(" It seems to be a standard check-in message, reporting that the station is functioning at optimal efficiency.")
 	detailed_desc += span_info(" The message repeatedly asserts that the engine is functioning 'perfectly fine' and is generating 'buttloads' of power.")
@@ -196,6 +195,11 @@
 	stamp_icon = "paper_stamp-pc"
 	/// Has the photocopy been marked with a "void" stamp. Used to prevent documents from draining money if they somehow make their way to cargo.
 	var/voided = FALSE
+
+/obj/item/paperwork/photocopy/Initialize(mapload)
+	. = ..()
+
+	detailed_desc = span_notice("The print job on this paperwork has rendered it almost entirely unreadable.")
 
 /obj/item/paperwork/photocopy/examine_more(mob/user)
 	. = ..()
@@ -215,6 +219,9 @@
 		add_overlay(stamp_overlay)
 		voided = TRUE
 		stamped = TRUE //It won't get you any money, but it also can't LOSE you money now.
+		return
+
+	return ..()
 
 //Ancient paperwork is a subtype of paperwork, meant to be used for any paperwork not spawned by the event.
 //It doesn't have any of the flavor text that the event ones spawn with.
