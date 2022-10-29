@@ -1765,7 +1765,7 @@
 /area/awaymission/cabin/caves/mountain)
 "fL" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse{
+/mob/living/basic/mouse{
 	faction = list("sewer")
 	},
 /turf/open/floor/carpet,

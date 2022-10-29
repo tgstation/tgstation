@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes some basic mobs being immune to damage from atmos effects"
-  - code_imp: "A few bespoke elements are now properly passed static lists to stop them from creating tons of instances."
