@@ -7,7 +7,7 @@
 /datum/computer_file/program/chatclient
 	filename = "ntnrc_client"
 	filedesc = "Chat Client"
-	category = PROGRAM_CATEGORY_MISC
+	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "command"
 	extended_desc = "This program allows communication over NTNRC network"
 	size = 8
@@ -254,9 +254,9 @@
 			data["strong"] = channel.strong
 			data["clients"] = clients
 			var/list/messages = list()
-			for(var/message in channel.messages)
+			for(var/i=channel.messages.len, i>1, i--)
 				messages.Add(list(list(
-					"msg" = message,
+					"msg" = channel.messages[i],
 				)))
 			data["messages"] = messages
 			data["is_operator"] = (channel.channel_operator == src) || netadmin_mode
