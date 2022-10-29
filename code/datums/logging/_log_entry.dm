@@ -155,7 +155,7 @@
 		"target_ckey" = target_ckey,
 		"extended_data" = extended_data,
 	))
-	return json_encode(to_list())
+	return json_encode(json)
 
 /**
  * Gets the textual representation of this log entry.

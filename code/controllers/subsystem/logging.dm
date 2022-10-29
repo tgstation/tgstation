@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(logging)
 /datum/controller/subsystem/logging/proc/append_entry(datum/log_entry/entry)
 	LAZYADDASSOC(entries, entry.category, entry)
 	var/target_file = "log-entry-[length(entries[entry.category])].json"
-	WRITE_LOG("[entry_dir_map[entry.category]]/[target_file]", entry.to_json())
+	rustg_file_write(entry.to_json(), "[entry_dir_map[entry.category]]/[target_file]")
 
 /client/verb/view_logs()
 	SSlogging.view_logs()
