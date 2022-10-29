@@ -289,7 +289,7 @@
 			if(!held_signs.len)
 				return
 			var/obj/item/clothing/suit/caution/removed_sign = held_signs[1]
-			if(held_signs.len > 1)
+			if(length(held_signs) > 1)
 				balloon_alert(user, "removed \a [removed_sign]")
 			else
 				balloon_alert(user, "removed [removed_sign]")
