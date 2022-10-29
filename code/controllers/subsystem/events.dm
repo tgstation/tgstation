@@ -11,7 +11,16 @@ SUBSYSTEM_DEF(events)
 	var/frequency_lower = 1800 //3 minutes lower bound.
 	var/frequency_upper = 6000 //10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
-	var/list/holidays //List of all holidays occuring today or null if no holidays
+	/**
+	 * All ongoing holidays
+	 *
+	 * Assoc list of [holiday names] to [holiday datums]
+	 *
+	 * If there are no holidays, this is an empty list
+	 * If the list is not instantiated yet, this is null
+	 */
+	var/list/holidays
+
 	var/wizardmode = FALSE
 
 /datum/controller/subsystem/events/Initialize()
@@ -21,7 +30,8 @@ SUBSYSTEM_DEF(events)
 			continue //don't want this one! leave it for the garbage collector
 		control += E //add it to the list of all events (controls)
 	reschedule()
-	getHoliday()
+	if(isnull(holidays))
+		getHoliday()
 	return SS_INIT_SUCCESS
 
 
@@ -99,7 +109,7 @@ SUBSYSTEM_DEF(events)
 //Uncommenting ALLOW_HOLIDAYS in config.txt will enable holidays
 
 //It's easy to add stuff. Just add a holiday datum in code/modules/holiday/holidays.dm
-//You can then check if it's a special day in any code in the game by doing if(SSevents.holidays["Groundhog Day"])
+//You can then check if it's a special day in any code in the game by calling SSevents.check_holidays("Groundhog Day")
 
 //You can also make holiday random events easily thanks to Pete/Gia's system.
 //simply make a random event normally, then assign it a holidayID string which matches the holiday's name.
@@ -117,6 +127,8 @@ SUBSYSTEM_DEF(events)
 /datum/controller/subsystem/events/proc/getHoliday()
 	if(!CONFIG_GET(flag/allow_holidays))
 		return // Holiday stuff was not enabled in the config!
+
+	holidays = list()
 	for(var/H in subtypesof(/datum/holiday))
 		var/datum/holiday/holiday = new H()
 		var/delete_holiday = TRUE
@@ -130,17 +142,23 @@ SUBSYSTEM_DEF(events)
 
 			if(holiday.shouldCelebrate(DD, MM, YYYY, DDD))
 				holiday.celebrate()
-				LAZYSET(holidays, holiday.name, holiday)
+				holidays[holiday.name] = holiday
 				delete_holiday = FALSE
 				break
 		if(delete_holiday)
 			qdel(holiday)
 
-	if(holidays)
+	if(holidays.len)
 		holidays = shuffle(holidays)
 		// regenerate station name because holiday prefixes.
 		set_station_name(new_station_name())
 		world.update_status()
+
+/datum/controller/subsystem/events/proc/check_holidays(holiday_to_find)
+	if(isnull(holidays))
+		getHoliday()
+
+	return holidays[holiday_to_find]
 
 /datum/controller/subsystem/events/proc/toggleWizardmode()
 	wizardmode = !wizardmode

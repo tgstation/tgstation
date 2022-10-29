@@ -272,10 +272,10 @@ SUBSYSTEM_DEF(ticker)
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
-	if(SSevents.holidays)
+	if(length(SSevents.holidays))
 		to_chat(world, span_notice("and..."))
 		for(var/holidayname in SSevents.holidays)
-			var/datum/holiday/holiday = SSevents.holidays[holidayname]
+			var/datum/holiday/holiday = SSevents.check_holidays(holidayname)
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()

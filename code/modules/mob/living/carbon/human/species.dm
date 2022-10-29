@@ -267,6 +267,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /proc/get_selectable_species()
 	RETURN_TYPE(/list)
 
+	message_admins("Called")
+	stack_trace("Called")
 	if (!GLOB.roundstart_races.len)
 		GLOB.roundstart_races = generate_selectable_species()
 
