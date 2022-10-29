@@ -3,7 +3,6 @@
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
-	inhand_icon_state = "crowbar"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
@@ -31,7 +30,6 @@
 
 /obj/item/crowbar/red
 	icon_state = "crowbar_red"
-	inhand_icon_state = "crowbar_red"
 	force = 8
 
 /obj/item/crowbar/abductor
@@ -41,6 +39,7 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	icon_state = "crowbar"
+	inhand_icon_state = "crowbar"
 	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
 
@@ -68,6 +67,7 @@
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
 	force = 20
 	icon_state = "crowbar_powergame"
+	inhand_icon_state = "crowbar_red"
 
 /obj/item/crowbar/large/old
 	name = "old crowbar"
@@ -162,3 +162,42 @@
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5
+
+/obj/item/crowbar/mechremoval
+	name = "mech removal tool"
+	desc = "A... really big crowbar. You're pretty sure it could pry open a mech, but it seems unwieldy otherwise."
+	icon_state = "mechremoval0"
+	base_icon_state = "mechremoval"
+	w_class = WEIGHT_CLASS_HUGE
+	bare_wound_bonus = 15
+	wound_bonus = 10
+	toolspeed = 1.25
+	/// How much damage to do unwielded
+	var/force_unwielded = 5
+	/// How much damage to do wielded
+	var/force_wielded = 19
+
+/obj/item/crowbar/mechremoval/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
+
+/obj/item/crowbar/mechremoval/proc/empty_mech(obj/vehicle/sealed/mecha/mech, mob/user)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED))
+		mech.balloon_alert(user, "not wielded!")
+		return
+	if(!LAZYLEN(mech.occupants) || (LAZYLEN(mech.occupants) == 1 && mech.mecha_flags & SILICON_PILOT)) //if no occupants, or only an ai
+		mech.balloon_alert(user, "it's empty!")
+		return
+	mech.balloon_alert(user, "prying open...")
+	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 10 SECONDS, volume = 0, extra_checks = CALLBACK(src, .proc/extra_checks, mech)))
+		mech.balloon_alert(user, "interrupted!")
+		return
+	for(var/mob/living/occupant as anything in mech.occupants)
+		if(isAI(occupant))
+			continue
+		mech.mob_exit(occupant, randomstep = TRUE)
+	playsound(src, 'sound/machines/airlockforced.ogg', 50, TRUE)
+
+/obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech)
+	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants)

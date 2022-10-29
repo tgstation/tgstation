@@ -306,6 +306,10 @@
 /obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/I)
 	..()
 	. = TRUE
+	if(istype(I, /obj/item/crowbar/mechremoval))
+		var/obj/item/crowbar/mechremoval/remover = I
+		remover.empty_mech(src, user)
+		return
 	if(construction_state == MECHA_LOOSE_BOLTS)
 		construction_state = MECHA_OPEN_HATCH
 		to_chat(user, span_notice("You open the hatch to the power unit."))

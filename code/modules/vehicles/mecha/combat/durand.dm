@@ -56,7 +56,7 @@
 	. = ..()
 	shield.forceMove(T)
 
-/obj/vehicle/sealed/mecha/combat/durand/mob_exit(mob/M, silent, randomstep, forced)
+/obj/vehicle/sealed/mecha/combat/durand/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
 	if(defense_mode)
 		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, M, /datum/action/vehicle/sealed/mecha/mech_defense_mode)
 		if(action)

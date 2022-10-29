@@ -260,7 +260,7 @@
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
-		mob_exit(ejectee, TRUE, TRUE)
+		mob_exit(ejectee, silent = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -295,7 +295,7 @@
 			unlucky_ais = occupant
 			occupant.gib() //No wreck, no AI to recover
 			continue
-		mob_exit(occupant, FALSE, TRUE)
+		mob_exit(occupant, forced = TRUE)
 		occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
@@ -512,8 +512,7 @@
 
 	for(var/mob/living/occupant as anything in occupants)
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
-			visible_message(span_warning("[occupant] tumbles out of the cockpit!"))
-			mob_exit(occupant) //bye bye
+			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
 		if(cell)
 			var/cellcharge = cell.charge/cell.maxcharge
