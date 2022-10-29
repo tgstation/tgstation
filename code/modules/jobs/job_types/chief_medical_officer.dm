@@ -67,8 +67,8 @@
 	head = /obj/item/clothing/head/utility/surgerycap/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/pinpointer/crew
+	r_pocket = /obj/item/laser_pointer
 	l_hand = /obj/item/storage/medkit/surgery
-	r_hand = /obj/item/laser_pointer
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
