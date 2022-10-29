@@ -44,9 +44,6 @@
 	if(!do_mob(user, sharp_dresser, equip_time))
 		return
 
-	if(QDELETED(src) || QDELETED(sharp_dresser))
-		return
-
 	if(!user.Adjacent(sharp_dresser)) // Due to teleporting shenanigans
 		user.put_in_hands(attire)
 		return
