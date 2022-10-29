@@ -154,6 +154,13 @@ SUBSYSTEM_DEF(events)
 		set_station_name(new_station_name())
 		world.update_status()
 
+/**
+ * Check that the pased holiday is active.
+ *
+ * Use this instead of checking the list directly - this way, we ensure the holidays list has been instantiated.
+ *
+ * Returns a holiday datum, or null
+ */
 /datum/controller/subsystem/events/proc/check_holidays(holiday_to_find)
 	if(isnull(holidays))
 		getHoliday()
