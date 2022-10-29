@@ -266,7 +266,7 @@
 	name = "Meatlovers flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
-		/obj/item/food/meat/slab/ = 1
+		/obj/item/food/meat/slab = 1
 	)
 	result = /obj/item/food/pizza/rawmeat_flatbread
 	subcategory = CAT_LIZARD
@@ -293,7 +293,7 @@
 	subcategory = CAT_LIZARD
 
 /datum/crafting_recipe/food/fish_flatbread
-	name = "BBQ Fish flatbread"
+	name = "BBQ fish flatbread"
 	reqs = list(
 		/obj/item/food/root_flatbread = 1,
 		/obj/item/food/fishmeat = 2,

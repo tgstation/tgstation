@@ -428,13 +428,13 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "stinging_flatbread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/honey = 2)
-	tastes = list("bread" = 1, "sweet" = 1, "stinging" = 1, "viscous" = 1,)
+	tastes = list("bread" = 1, "sweetness" = 1, "stinging" = 1, "slime" = 1,)
 	slice_type = null
 	foodtypes = BUGS | NUTS | SEAFOOD | GORE
 
-/obj/item/food/pizza/zmorgast_flatbread // Name is based off of the sweedish dish Smörgåstårta
+/obj/item/food/pizza/zmorgast_flatbread // Name is based off of the Swedish dish Smörgåstårta
 	name = "\improper Zmorgast flatbread"
-	desc = "A Tiziran spin on the original Sweedish sandwich cake, the Zmorgast is a common dish at family gatherings."
+	desc = "A Tiziran spin on the original Swedish sandwich cake, the Zmorgast is a common dish at family gatherings."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "zmorgast_flatbread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 16, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
@@ -443,7 +443,7 @@
 	foodtypes = VEGETABLES | NUTS | MEAT
 
 /obj/item/food/pizza/fish_flatbread
-	name = "\improper BBQ Fish flatbread"
+	name = "\improper BBQ fish flatbread"
 	desc = "Superengine delamination, clown ops, too cold outside, I just want to grill for Tizira's sake!"
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "fish_flatbread"
@@ -464,7 +464,7 @@
 
 /obj/item/food/pizza/nutty_flatbread
 	name = "nut paste flatbread"
-	desc = "Modern advances in cuisine now allow for a double helping of the delicious taste of Korta Nuts, both as the base and as a topping on this flatbread."
+	desc = "Modern advances in cuisine now allow for a double helping of the delicious taste of korta nuts, both as the base and as a topping on this flatbread."
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "nutty_flatbread"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
