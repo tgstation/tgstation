@@ -30,7 +30,8 @@ SUBSYSTEM_DEF(logging)
 		return
 
 	LAZYADDASSOC(entries, entry.category, entry)
-	var/target_file = "log-entry-[length(entries[entry.category])].json"
+	var/category_file_id = replace_text(lowertext(entry.category), " ", "_")
+	var/target_file = "[category_file_id]-entry-[length(entries[entry.category])].json"
 	rustg_file_write(entry.to_json(), "[entry_dir_map[entry.category]]/[target_file]")
 
 /datum/controller/subsystem/logging/proc/process_pending()
