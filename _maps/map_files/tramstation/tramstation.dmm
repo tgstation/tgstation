@@ -14152,7 +14152,7 @@
 	default_raw_text = "ratsratsratsratsratsratsratsratsratsratsratsratsrats"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "eZs" = (
@@ -44862,7 +44862,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/left)
 "pZr" = (
-/mob/living/simple_animal/mouse/brown/tom,
+/mob/living/basic/mouse/brown/tom,
 /turf/open/misc/asteroid,
 /area/station/security/prison/workout)
 "pZu" = (
@@ -50204,7 +50204,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
-/obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/clothing/glasses/welding,
 /obj/item/wrench,
@@ -50212,6 +50211,9 @@
 	dir = 10
 	},
 /obj/item/radio/intercom/directional/south,
+/obj/item/stack/sheet/glass{
+	amount = 20
+	},
 /turf/open/floor/iron,
 /area/station/science/lab)
 "rOb" = (
@@ -60542,7 +60544,7 @@
 /area/station/commons/toilet)
 "vBi" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
 "vBC" = (

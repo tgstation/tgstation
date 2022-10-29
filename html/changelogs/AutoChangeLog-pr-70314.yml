@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "The Export Scanner, Sales Tagger, and Price Tagger have been merged together into the Universal Scanner."
-  - qol: "Using the Universal Scanner in-hand allows for switching between the three tools functionality on the fly."

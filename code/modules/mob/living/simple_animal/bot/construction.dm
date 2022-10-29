@@ -45,15 +45,42 @@
 	desc = "It's a bucket with a sensor attached."
 	name = "incomplete cleanbot assembly"
 	icon_state = "bucket_proxy"
+	greyscale_config = /datum/greyscale_config/buckets_cleanbot
 	throwforce = 5
 	created_name = "Cleanbot"
+	var/obj/item/reagent_containers/cup/bucket/bucket_obj
+
+/obj/item/bot_assembly/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/new_bucket)
+	if(!new_bucket)
+		new_bucket = new()
+	new_bucket.forceMove(src)
+	return ..()
+
+/obj/item/bot_assembly/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
+		if(bucket_obj && bucket_obj != arrived)
+			qdel(bucket_obj)
+		bucket_obj = arrived
+		set_greyscale(bucket_obj.greyscale_colors)
+	return ..()
+
+/obj/item/bot_assembly/cleanbot/Exited(atom/movable/gone, direction)
+	if(gone == bucket_obj)
+		bucket_obj = null
+	return ..()
+
+
+/obj/item/bot_assembly/cleanbot/Destroy(force)
+	QDEL_NULL(bucket_obj)
+	return ..()
+
 
 /obj/item/bot_assembly/cleanbot/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
 		if(!can_finish_build(W, user))
 			return
-		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location())
+		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location(), bucket_obj)
 		A.name = created_name
 		A.robot_arm = W.type
 		to_chat(user, span_notice("You add [W] to [src]. Beep boop!"))

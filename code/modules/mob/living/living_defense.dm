@@ -387,11 +387,12 @@
 		adjustFireLoss(shock_damage)
 	else
 		adjustStaminaLoss(shock_damage)
-	visible_message(
-		span_danger("[src] was shocked by \the [source]!"), \
-		span_userdanger("You feel a powerful shock coursing through your body!"), \
-		span_hear("You hear a heavy electrical crack.") \
-	)
+	if(!(flags & SHOCK_SUPPRESS_MESSAGE))
+		visible_message(
+			span_danger("[src] was shocked by \the [source]!"), \
+			span_userdanger("You feel a powerful shock coursing through your body!"), \
+			span_hear("You hear a heavy electrical crack.") \
+		)
 	return shock_damage
 
 /mob/living/emp_act(severity)

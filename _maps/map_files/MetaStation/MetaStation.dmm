@@ -3657,7 +3657,7 @@
 "bmX" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/sink/directional/south,
-/mob/living/simple_animal/mouse/brown/tom,
+/mob/living/basic/mouse/brown/tom,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "bno" = (
