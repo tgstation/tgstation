@@ -231,8 +231,7 @@
 	has_variants = FALSE
 	inserted_item = null
 	starting_programs = list(
-		/datum/computer_file/program/filemanager,
-		/datum/computer_file/program/chatclient,
+		/datum/computer_file/program/messenger,
 	)
 
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
