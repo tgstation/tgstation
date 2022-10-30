@@ -159,12 +159,6 @@
 			if(occupants)
 				SSexplosions.low_mov_atom += occupants
 
-/obj/vehicle/sealed/mecha/handle_atom_del(atom/A)
-	if(A in occupants) //todo does not work and in wrong file
-		LAZYREMOVE(occupants, A)
-		icon_state = initial(icon_state)+"-open"
-		setDir(dir_in)
-
 /obj/vehicle/sealed/mecha/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
