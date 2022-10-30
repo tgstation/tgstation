@@ -50,8 +50,6 @@
 		client?.prefs.safe_transfer_prefs_to(new_human)
 		new_human.dna.update_dna_identity()
 		new_human.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-		if(client)
-			SSquirks.AssignQuirks(new_human, client)
 
 	//Ghosts have copys of their minds, but if an admin put somebody else in their og body, the mind will have a new mind.key
 	//	and transfer_to will transfer the wrong person since it uses mind.key
