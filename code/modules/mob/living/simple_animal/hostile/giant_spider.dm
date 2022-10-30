@@ -455,7 +455,8 @@
 	var/obj/structure/spider/cocoon/casing = new(to_wrap.loc)
 	if(isliving(to_wrap))
 		var/mob/living/living_wrapped = to_wrap
-		// if they're not dead, you can consume them anyway
+		// You get a point every time you consume a living player, even if they've been consumed before.
+		// You only get a point for any individual corpse once, so you can't keep breaking it out and eating it again.
 		if(ishuman(living_wrapped) && (living_wrapped.stat != DEAD || !HAS_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED)))
 			var/datum/action/innate/spider/lay_eggs/enriched/egg_power = locate() in owner.actions
 			if(egg_power)
@@ -465,7 +466,7 @@
 					span_danger("[owner] sticks a proboscis into [living_wrapped] and sucks a viscous substance out."),
 					span_notice("You suck the nutriment out of [living_wrapped], feeding you enough to lay a cluster of enriched eggs."),
 				)
-			ADD_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED)
+			ADD_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED, TRAIT_GENERIC)
 			living_wrapped.death() //you just ate them, they're dead.
 		else
 			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
