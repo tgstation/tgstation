@@ -32,7 +32,7 @@
 		if(M.client)
 			M.reset_perspective(src)
 		hasmob = TRUE
-		RegisterSignal(M, COMSIG_LIVING_RESIST, .proc/struggle, M)
+		RegisterSignal(M, COMSIG_LIVING_RESIST, .proc/struggle_prep, M)
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals mail...
 	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
@@ -94,12 +94,26 @@
 	for(var/mob/living/piperider in contents)
 		to_chat(piperider, span_notice("Your movement has slowed to a stop. If you tried, you could probably <b>struggle</b> free."))
 
-
-/obj/structure/disposalholder/proc/struggle(mob/living/escapee)
+/**
+ * Starts the struggle code
+ *
+ * Called by resist verb (or hotkey) via signal. Makes a sanity
+ * check and then calls part 2.
+ */
+/obj/structure/disposalholder/proc/struggle_prep(mob/living/escapee)
 	SIGNAL_HANDLER
 	if(escapee.loc != src)
 		UnregisterSignal(escapee, COMSIG_LIVING_RESIST)
 		return //Somehow they got out without telling us
+	INVOKE_ASYNC(src, .proc/struggle_free, escapee)
+
+/**
+ * Completes the struggle code
+ *
+ * The linter gets upsetti spaghetti if this is part of the above proc
+ * because the do_after is a sleep.
+ */
+/obj/structure/disposalholder/proc/struggle_free(mob/living/escapee)
 	if(!istype(loc, /obj/structure/disposalpipe))
 		return //Somehow we're not in a pipe, shits probably fucked
 	var/obj/structure/disposalpipe/transport_cylinder = loc
@@ -111,8 +125,8 @@
 	to_chat(escapee, span_warning("You push against the thin pipe walls..."))
 	playsound(loc, 'sound/machines/airlock_alien_prying.ogg', vol = 30, vary = FALSE, extrarange = 3) //yeah I know but at least it sounds like metal being bent.
 
-	//if(!do_after(escapee, 20 SECONDS, get_turf(loc)))
-	//	return
+	if(!do_after(escapee, 20 SECONDS, get_turf(loc)))
+		return
 	for(var/mob/living/jailbird in contents)
 		jailbird.apply_damage(rand(5,15), damagetype = BRUTE)
 	transport_cylinder.spew_forth()
