@@ -31,6 +31,7 @@
 
 /obj/item/crowbar/red
 	icon_state = "crowbar_red"
+	inhand_icon_state = "crowbar_red"
 	force = 8
 
 /obj/item/crowbar/abductor
