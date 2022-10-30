@@ -512,6 +512,8 @@
 	. = ..()
 	if(.)
 		return
+	if(chassis.weapons_safety)
+		medigun.LoseTarget()
 	medigun.process(SSOBJ_DT)
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/action(mob/source, atom/movable/target, list/modifiers)
