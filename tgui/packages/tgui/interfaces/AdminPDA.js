@@ -89,10 +89,7 @@ export const MessageInput = (props, context) => {
     return reasonList.join(', ');
   };
 
-  let blocked;
-  if (!name || !job || !messageText) {
-    blocked = true;
-  }
+  const blocked = !name || !job || !messageText;
 
   return (
     <Section title="Message" textAlign="center">
