@@ -16,9 +16,7 @@
 	var/reagents_amount = 50
 	/// Probability of an individual scrubber overflowing
 	var/overflow_probability = 50
-	/// Whether or not to force all scrubbers to eject the same reagent
-	var/force_specific_reagent = FALSE
-	/// If forcing all scrubbers to eject the same reagent, what reagent to use
+	/// Specific reagent to force all scrubbers to use, null for random reagent choice
 	var/forced_reagent
 	/// A list of scrubbers that will have reagents ejected from them
 	var/list/scrubbers = list()
@@ -104,7 +102,7 @@
 
 		var/datum/reagents/dispensed_reagent = new /datum/reagents(reagents_amount)
 		dispensed_reagent.my_atom = vent
-		if (force_specific_reagent)
+		if (forced_reagent)
 			dispensed_reagent.add_reagent(forced_reagent, reagents_amount)
 		else if (prob(danger_chance))
 			dispensed_reagent.add_reagent(get_random_reagent_id(), reagents_amount)
@@ -152,7 +150,6 @@
 
 /datum/round_event/scrubber_overflow/beer
 	overflow_probability = 100
-	force_specific_reagent = TRUE
 	forced_reagent = /datum/reagent/consumable/ethanol/beer
 	reagents_amount = 100
 
