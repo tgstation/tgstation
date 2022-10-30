@@ -10,10 +10,6 @@
 	var/display_name = "Orbital Pad"
 	///Can we carry mobs or just mechs?
 	var/mech_only = FALSE
-	///The console the pad is linked to
-	var/obj/machinery/computer/mechpad/connected_console
-	///List of consoles that can access the pad
-	var/list/obj/machinery/computer/mechpad/consoles
 
 /obj/machinery/mechpad/Initialize(mapload)
 	. = ..()
@@ -21,10 +17,13 @@
 	GLOB.mechpad_list += src
 
 /obj/machinery/mechpad/Destroy()
-	for(var/obj/machinery/computer/mechpad/console in consoles)
-		console.mechpads -= src
 	GLOB.mechpad_list -= src
 	return ..()
+
+/obj/machinery/mechpad/examine(mob/user)
+	. = ..()
+	. += span_notice("Use a multitool with the panel open to save id to buffer.")
+	. += span_notice("Use wirecutters with the panel open to [mech_only ? "cut" : "mend"] the lifeform restriction wire.")
 
 /obj/machinery/mechpad/screwdriver_act(mob/user, obj/item/tool)
 	. = ..()

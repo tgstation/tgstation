@@ -18,22 +18,20 @@
 /obj/machinery/computer/mechpad/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		connect_pad(find_pad())
+		connect_launchpad(find_pad())
 		return INITIALIZE_HINT_LATELOAD
 	else
 		id = "handmade[REF(src)]"
 
-/obj/machinery/computer/mechpad/proc/connect_pad(obj/machinery/mechpad/pad)
+/obj/machinery/computer/mechpad/proc/connect_launchpad(obj/machinery/mechpad/pad)
 	if(connected_mechpad)
 		return
 	connected_mechpad = pad
-	connected_mechpad.connected_console = src
 	connected_mechpad.id = id
-	RegisterSignal(connected_mechpad, COMSIG_PARENT_QDELETING, .proc/unconnect_pad)
+	RegisterSignal(connected_mechpad, COMSIG_PARENT_QDELETING, .proc/unconnect_launchpad)
 
-/obj/machinery/computer/mechpad/proc/unconnect_pad(obj/machinery/mechpad/pad)
+/obj/machinery/computer/mechpad/proc/unconnect_launchpad(obj/machinery/mechpad/pad)
 	SIGNAL_HANDLER
-	connected_mechpad.connected_console = null
 	connected_mechpad = null
 
 /obj/machinery/computer/mechpad/LateInitialize()
@@ -42,18 +40,9 @@
 			continue
 		if(pad.id != id)
 			continue
-		mechpads += pad
-		LAZYADD(pad.consoles, src)
+		add_pad(pad)
 		if(mechpads.len > maximum_pads)
 			break
-
-/obj/machinery/computer/mechpad/Destroy()
-	if(connected_mechpad)
-		connected_mechpad.connected_console = null
-		connected_mechpad = null
-	for(var/obj/machinery/mechpad/mechpad in mechpads)
-		LAZYREMOVE(mechpad.consoles, src)
-	return ..()
 
 #define MECH_LAUNCH_TIME 5 SECONDS
 
@@ -107,15 +96,25 @@
 		if(buffered_pad == connected_mechpad)
 			to_chat(user, span_warning("[src] cannot connect to its own mechpad!"))
 		else if(!connected_mechpad && buffered_pad == find_pad())
-			connect_pad(buffered_pad)
+			if(buffered_pad in mechpads)
+				remove_pad(buffered_pad)
+			connect_launchpad(buffered_pad)
 			multitool.buffer = null
 			to_chat(user, span_notice("You connect the console to the pad with data from the [multitool.name]'s buffer."))
 		else
-			mechpads += buffered_pad
-			LAZYADD(buffered_pad.consoles, src)
+			add_pad(buffered_pad)
 			multitool.buffer = null
 			to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
 	return TRUE
+
+/obj/machinery/computer/mechpad/proc/add_pad(obj/machinery/mechpad/pad)
+	mechpads += pad
+	RegisterSignal(pad, COMSIG_PARENT_QDELETING, .proc/remove_pad)
+
+/obj/machinery/computer/mechpad/proc/remove_pad(obj/machinery/mechpad/pad)
+	SIGNAL_HANDLER
+	mechpads -= pad
+	UnregisterSignal(pad, COMSIG_PARENT_QDELETING)
 
 /**
  * Tries to call the launch proc on the connected mechpad, returns if there is no connected mechpad or there is no mecha on the pad
@@ -142,13 +141,6 @@
 		return
 	connected_mechpad.launch(where)
 
-///Checks if the pad of a certain number has been QDELETED, if yes returns FALSE, otherwise returns TRUE
-/obj/machinery/computer/mechpad/proc/pad_exists(number)
-	var/obj/machinery/mechpad/pad = mechpads[number]
-	if(QDELETED(pad))
-		return FALSE
-	return TRUE
-
 ///Returns the pad of the value specified
 /obj/machinery/computer/mechpad/proc/get_pad(number)
 	var/obj/machinery/mechpad/pad = mechpads[number]
@@ -164,23 +156,23 @@
 /obj/machinery/computer/mechpad/ui_data(mob/user)
 	var/list/data = list()
 	var/list/pad_list = list()
-	for(var/i in 1 to LAZYLEN(mechpads))
-		if(pad_exists(i))
-			var/obj/machinery/mechpad/pad = get_pad(i)
-			var/list/this_pad = list()
-			this_pad["name"] = pad.display_name
-			this_pad["id"] = i
-			pad_list += list(this_pad)
-		else
-			mechpads -= get_pad(i)
+	for(var/i in 1 to length(mechpads))
+		var/obj/machinery/mechpad/pad = get_pad(i)
+		var/list/this_pad = list()
+		this_pad["name"] = pad.display_name
+		this_pad["id"] = i
+		pad_list += list(this_pad)
 	data["mechpads"] = pad_list
 	data["selected_id"] = selected_id
-	data["connected_mechpad"] = !!connected_mechpad
+	data["connected_mechpad"] = !!connected_mechpad && !(connected_mechpad.machine_stat & (BROKEN|NOPOWER))
 	if(selected_id)
 		var/obj/machinery/mechpad/current_pad = mechpads[selected_id]
-		data["pad_name"] = current_pad.display_name
-		data["pad_active"] = !QDELETED(current_pad) && !(current_pad.machine_stat & (BROKEN|NOPOWER))
-		data["mechonly"] = current_pad.mech_only
+		if(!current_pad)
+			selected_id = null
+		else
+			data["pad_name"] = current_pad.display_name
+			data["pad_active"] = !!current_pad && !(current_pad.machine_stat & (BROKEN|NOPOWER))
+			data["mechonly"] = current_pad.mech_only
 	return data
 
 /obj/machinery/computer/mechpad/ui_act(action, params)
@@ -198,8 +190,7 @@
 			current_pad.display_name = new_name
 		if("remove")
 			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Orbital Pad", list("I'm Sure", "Abort")) == "I'm Sure")
-				mechpads -= current_pad
-				LAZYREMOVE(current_pad.consoles, src)
+				remove_pad(current_pad)
 				selected_id = null
 		if("launch")
 			if(!do_after(usr, 1 SECONDS, src))
