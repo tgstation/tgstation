@@ -23,7 +23,7 @@
 		connected_mechpad.id = id
 		return INITIALIZE_HINT_LATELOAD
 	else
-		id ="handmade"
+		id = "handmade[REF(src)]"
 
 /obj/machinery/computer/mechpad/LateInitialize()
 	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
@@ -44,6 +44,35 @@
 		LAZYREMOVE(mechpad.consoles, src)
 	return ..()
 
+#define MECH_LAUNCH_TIME 5 SECONDS
+
+/obj/machinery/computer/mechpad/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
+	if(user.combat_mode)
+		return ..()
+	var/mech_dir = mecha_attacker.dir
+	balloon_alert(user, "carefully starting launch process...")
+	INVOKE_ASYNC(src, .proc/random_beeps, MECH_LAUNCH_TIME)
+	if(!do_after(user, MECH_LAUNCH_TIME, src, extra_checks = CALLBACK(src, .proc/do_after_checks, mecha_attacker, mech_dir)))
+		balloon_alert(user, "interrupted!")
+		return
+	var/obj/machinery/mechpad/current_pad = mechpads[selected_id]
+	try_launch(user, current_pad)
+
+#undef MECH_LAUNCH_TIME
+
+/// do after checks for the mecha equipment do afters
+/obj/machinery/computer/mechpad/proc/do_after_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
+	return mech.dir == mech_dir
+
+/obj/machinery/computer/mechpad/proc/random_beeps(time)
+	var/list/static/beep_sounds = list('sound/machines/terminal_prompt_confirm.ogg', 'sound/machines/terminal_prompt_deny.ogg', 'sound/machines/terminal_error.ogg', 'sound/machines/terminal_select.ogg', 'sound/machines/terminal_success.ogg')
+	var/time_to_spend = 0
+	while(time > 0)
+		time_to_spend = rand(0.5 SECONDS, 1.5 SECONDS)
+		playsound(src, pick(beep_sounds), 75)
+		sleep(time_to_spend)
+		time -= time_to_spend
+
 ///Tries to locate a pad in the cardinal directions, if it finds one it returns it
 /obj/machinery/computer/mechpad/proc/connect_to_pad()
 	if(connected_mechpad)
@@ -62,7 +91,7 @@
 		var/obj/machinery/mechpad/buffered_console = multitool.buffer
 		if(!(mechpads.len < maximum_pads))
 			to_chat(user, span_warning("[src] cannot handle any more connections!"))
-			return
+			return TRUE
 		if(buffered_console == connected_mechpad)
 			to_chat(user, span_warning("[src] cannot connect to its own mechpad!"))
 		else if(!connected_mechpad && buffered_console == connect_to_pad())
@@ -76,6 +105,7 @@
 			LAZYADD(buffered_console.consoles, src)
 			multitool.buffer = null
 			to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
+	return TRUE
 
 /**
  * Tries to call the launch proc on the connected mechpad, returns if there is no connected mechpad or there is no mecha on the pad

@@ -67,9 +67,13 @@
 	explosionSize = list(0,0,0,0)
 	reversing = TRUE
 	reverse_option_list = list("Mobs"=FALSE,"Objects"=FALSE,"Anchored"=FALSE,"Underfloor"=FALSE,"Wallmounted"=FALSE,"Floors"=FALSE,"Walls"=FALSE,"Mecha"=TRUE)
-	delays = list(POD_TRANSIT = 0, POD_FALLING = 4, POD_OPENING = 0, POD_LEAVING = 0)
-	effectOrgans = TRUE
+	delays = list(POD_TRANSIT = 0, POD_FALLING = 5, POD_OPENING = 0, POD_LEAVING = 0)
 	effectQuiet = TRUE
+	effectStealth = TRUE
 	leavingSound = 'sound/vehicles/rocketlaunch.ogg'
 	close_sound = null
 	pod_flags = FIRST_SOUNDS
+
+/obj/structure/closet/supplypod/mechpod/handleReturnAfterDeparting(atom/movable/holder = src)
+	effectGib = TRUE
+	return ..()
