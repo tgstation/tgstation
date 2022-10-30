@@ -32,11 +32,14 @@ SUBSYSTEM_DEF(logging)
 		LAZYADD(pending_entries, entry)
 		return
 
+	var/entry_raw = entry.to_text()
 	LAZYADDASSOC(entries, entry.category, entry)
 	entries_by_key[entry.get_key()] = entry
 	var/category_file_id = replacetext(lowertext(entry.category), " ", "_")
 	var/target_file = "[category_file_id]-entry-[length(entries[entry.category])].json"
-	rustg_file_write(entry.to_json(), "[entry_dir_map[entry.category]]/[target_file]")
+	var/category_folder = entry_dir_map[entry.category]
+	WRITE_LOG("[category_folder]/[entry.category]-raw.log", entry.to_text())
+	rustg_file_write(entry.to_json(), "[category_folder]/[target_file]")
 
 /datum/controller/subsystem/logging/proc/process_pending()
 	if(!pending_entries)

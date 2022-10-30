@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Dropdown, Flex, Input, Section } from '../components';
+import { Button, Dropdown, Flex, Input, Section, Stack } from '../components';
 import { SectionProps } from '../components/Section';
 import { Window } from '../layouts';
 
@@ -23,16 +23,17 @@ type LogEntry = {
   extended_data?: {};
 };
 
-type LogCategory = {
-  [key: string]: LogEntry;
+type LogCategoryBarProps = {
+  categories: string[];
+  selectedCategory: string | null;
+  onCategoryChange: (category: string) => void;
 };
 
-type LogEntries = {
-  [key: string]: LogCategory;
-};
+type LogCategories = Record<string, LogEntries>;
+type LogEntries = Record<string, LogEntry>;
 
 type LogViewerData = {
-  entries: LogEntries;
+  entries: LogCategories;
 };
 
 enum FilterType {
@@ -87,7 +88,7 @@ export const LogViewer = (props: any, context: any) => {
   if (selectedCategory) {
     const categoryEntries = entries[selectedCategory];
     const entryKeys = Object.keys(categoryEntries);
-    entriesList = entryKeys.map((key) => KeyToEntry(key, categoryEntries));
+    entriesList = entryKeys.map((key) => categoryEntries[key]);
 
     filtered_entries = filter_entries(
       entriesList,
@@ -130,17 +131,19 @@ export const LogViewer = (props: any, context: any) => {
           />
         </>
       }>
-      <Window.Content fitted>
-        <Flex direction="column" height="100%">
+      <Window.Content>
+        <Stack vertical fill>
           {displayFilterOptions && (
-            <FilterOptions
-              type={filterType}
-              text={filterText}
-              flags={filterFlags}
-              onTypeChange={(type) => updateFilterType(type)}
-              onTextChange={(text) => setFilterText(text)}
-              onFlagsChange={(flags) => setFilterFlags(flags)}
-            />
+            <Stack.Item>
+              <FilterOptions
+                type={filterType}
+                text={filterText}
+                flags={filterFlags}
+                onTypeChange={(type) => updateFilterType(type)}
+                onTextChange={(text) => setFilterText(text)}
+                onFlagsChange={(flags) => setFilterFlags(flags)}
+              />
+            </Stack.Item>
           )}
           <LogCategoryBar
             categories={categories}
@@ -151,19 +154,17 @@ export const LogViewer = (props: any, context: any) => {
             <LogViewerContent
               fill
               scrollable
+              scrollableHorizontal
+              preserveWhitespace
               entries={filtered_entries!}
               extendedTarget={extendedTarget}
               setExtendedTarget={setExtendedTarget}
             />
           )}
-        </Flex>
+        </Stack>
       </Window.Content>
     </Window>
   );
-};
-
-const KeyToEntry = (key: string, entryMap): LogEntry => {
-  return entryMap[key];
 };
 
 type FilterOptionsProps = {
@@ -216,37 +217,25 @@ const FilterOptions = (props: FilterOptionsProps, context: any) => {
           />
         </>
       }>
-      <Flex direction="column">
-        <Flex.Item>
-          <Dropdown
-            width="200px"
-            options={Object.values(FilterType)}
-            selected={type}
-            onSelected={onTypeChange}
+      <Dropdown
+        width="200px"
+        options={Object.values(FilterType)}
+        selected={type}
+        onSelected={onTypeChange}
+      />
+      {type !== FilterType.None && (
+        <>
+          <br />
+          <Input
+            fluid
+            value={text}
+            placeholder={flags & FilterFlags.Regex ? 'Regex' : 'Filter'}
+            onInput={(_, value) => onTextChange(value)}
           />
-        </Flex.Item>
-        {type !== FilterType.None && (
-          <>
-            <br />
-            <Flex.Item>
-              <Input
-                fluid
-                value={text}
-                placeholder={flags & FilterFlags.Regex ? 'Regex' : 'Filter'}
-                onInput={(_, value) => onTextChange(value)}
-              />
-            </Flex.Item>
-          </>
-        )}
-      </Flex>
+        </>
+      )}
     </Section>
   );
-};
-
-type LogCategoryBarProps = {
-  categories: string[];
-  selectedCategory: string | null;
-  onCategoryChange: (category: string) => void;
 };
 
 const LogCategoryBar = (props: LogCategoryBarProps, context: any) => {
@@ -258,7 +247,6 @@ const LogCategoryBar = (props: LogCategoryBarProps, context: any) => {
         {categories.map((category) => (
           <Flex.Item key={category}>
             <Button
-              fluid
               selected={category === selectedCategory}
               onClick={() => onCategoryChange(category)}>
               {category}
@@ -281,9 +269,9 @@ const LogViewerContent = (props: LogViewerContentProps, context: any) => {
   const { entries, extendedTarget, setExtendedTarget, ...rest } = props;
   return (
     <Section title={entries.length + ' Entries'} {...rest}>
-      <Flex direction="column">
+      <Stack vertical grow>
         {entries.map((entry) => (
-          <Flex.Item key={entry.key}>
+          <Stack.Item key={entry.key}>
             <Button
               icon="file-alt"
               tooltip="Inspect"
@@ -310,9 +298,9 @@ const LogViewerContent = (props: LogViewerContentProps, context: any) => {
             />
             &nbsp;{entry.text}
             {extendedTarget === entry.key && <RecursiveData data={entry} />}
-          </Flex.Item>
+          </Stack.Item>
         ))}
-      </Flex>
+      </Stack>
     </Section>
   );
 };
