@@ -20,8 +20,6 @@
 	active = FALSE
 	last_pipe = null
 	current_pipe = null
-	for(var/atom/movable/thing in contents)
-		thing.forceMove(get_turf(src))
 	return ..()
 
 // initialize a holder from the contents of a disposal unit
@@ -98,22 +96,25 @@
 
 
 /obj/structure/disposalholder/proc/struggle(mob/living/escapee)
+	SIGNAL_HANDLER
 	if(escapee.loc != src)
 		UnregisterSignal(escapee, COMSIG_LIVING_RESIST)
 		return //Somehow they got out without telling us
 	if(!istype(loc, /obj/structure/disposalpipe))
 		return //Somehow we're not in a pipe, shits probably fucked
+	var/obj/structure/disposalpipe/transport_cylinder = loc
 	if(active)
 		to_chat(escapee, span_danger("You slide past [loc] and are unable to keep your grip!"))
 		return
 	if(src in escapee.do_afters)
 		return //already trying to escape
 	to_chat(escapee, span_warning("You push against the thin pipe walls..."))
-	playsound(loc, 'sound/machines/airlock_alien_prying.ogg',30,FALSE,3) //yeah I know but at least it sounds like metal being bent.
-	if(do_after(escapee, 20 SECONDS, get_turf(loc)))
-		for(var/mob/living/jailbird in contents)
-			jailbird.apply_damage(rand(5,15), damagetype = BRUTE)
-		loc.take_damage(loc.max_integrity)
+	playsound(loc, 'sound/machines/airlock_alien_prying.ogg', vol = 30, vary = FALSE, extrarange = 3) //yeah I know but at least it sounds like metal being bent.
+	if(!do_after(escapee, 20 SECONDS, get_turf(loc)))
+		return
+	escapee.apply_damage(rand(5,15), damagetype = BRUTE)
+	transport_cylinder.spew_forth()
+	transport_cylinder.take_damage(transport_cylinder.max_integrity)
 
 //failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
@@ -142,6 +143,8 @@
 	var/fdir = turn(dir, 180) // flip the movement direction
 	for(var/obj/structure/disposalpipe/P in T)
 		if(fdir & P.dpdir) // find pipe direction mask that matches flipped dir
+			if(QDELING(P))
+				to_chat(world, "DEBUG -- [src] here, new pipe is being thanos'd")
 			return P
 	// if no matching pipe, return null
 	return null
