@@ -465,6 +465,7 @@
 					span_danger("[owner] sticks a proboscis into [living_wrapped] and sucks a viscous substance out."),
 					span_notice("You suck the nutriment out of [living_wrapped], feeding you enough to lay a cluster of enriched eggs."),
 				)
+			ADD_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED)
 			living_wrapped.death() //you just ate them, they're dead.
 		else
 			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
