@@ -110,8 +110,9 @@
 		return //already trying to escape
 	to_chat(escapee, span_warning("You push against the thin pipe walls..."))
 	playsound(loc, 'sound/machines/airlock_alien_prying.ogg', vol = 30, vary = FALSE, extrarange = 3) //yeah I know but at least it sounds like metal being bent.
-	if(!do_after(escapee, 20 SECONDS, get_turf(loc)))
-		return
+
+	//if(!do_after(escapee, 20 SECONDS, get_turf(loc)))
+	//	return
 	for(var/mob/living/jailbird in contents)
 		jailbird.apply_damage(rand(5,15), damagetype = BRUTE)
 	transport_cylinder.spew_forth()
