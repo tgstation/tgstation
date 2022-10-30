@@ -66,7 +66,6 @@
 		var/mob/living/grabbed_mob = grabbed_atom
 		grabbed_mob.Stun(mob_stun_time)
 	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
-	START_PROCESSING(SSfastprocess, src)
 	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
 	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	grabbed_atom.add_overlay(kinesis_icon)
@@ -76,7 +75,9 @@
 	kinesis_catcher.view_list = getviewsize(mod.wearer.client.view)
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_VIEWDATA_UPDATE, /atom/movable/screen/fullscreen/kinesis.proc/on_viewdata_update)
+	kinesis_catcher.calculate_params()
 	soundloop.start()
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()
@@ -233,8 +234,8 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/mob/kinesis_user
 	var/list/view_list
-	var/given_x = 16
-	var/given_y = 16
+	var/given_x
+	var/given_y
 	var/turf/given_turf
 	var/mouse_params
 
@@ -264,10 +265,10 @@
 
 /atom/movable/screen/fullscreen/kinesis/proc/calculate_params()
 	var/list/modifiers = params2list(mouse_params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
-	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
-	var/our_x = round(icon_x / world.icon_size, 1)
-	var/our_y = round(icon_y / world.icon_size, 1)
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X)) || view_list[1]*world.icon_size/2
+	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y)) || view_list[2]*world.icon_size/2
+	var/our_x = round(icon_x / world.icon_size)
+	var/our_y = round(icon_y / world.icon_size)
 	given_turf = locate(kinesis_user.x+our_x-round(view_list[1]/2),kinesis_user.y+our_y-round(view_list[2]/2),kinesis_user.z)
 	given_x = round(icon_x - world.icon_size * our_x, 1)
 	given_y = round(icon_y - world.icon_size * our_y, 1)

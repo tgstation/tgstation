@@ -114,6 +114,7 @@
 	tracker.view_list = getviewsize(user.client.view)
 	tracker.RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/scope.proc/on_move)
 	tracker.RegisterSignal(user, COMSIG_VIEWDATA_UPDATE, /atom/movable/screen/fullscreen/scope.proc/on_viewdata_update)
+	tracker.calculate_params()
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/stop_zooming)
 	START_PROCESSING(SSfastprocess, src)
 
@@ -147,9 +148,9 @@
 	/// Client view size of the scoping mob.
 	var/list/view_list
 	/// Pixel x we send to the scope component.
-	var/given_x = 0
+	var/given_x
 	/// Pixel y we send to the scope component.
-	var/given_y = 0
+	var/given_y
 	/// The turf we send to the scope component.
 	var/turf/given_turf
 	/// Mouse parameters, for calculation.
@@ -187,8 +188,8 @@
 
 /atom/movable/screen/fullscreen/scope/proc/calculate_params()
 	var/list/modifiers = params2list(mouse_params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
-	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X)) || view_list[1]*world.icon_size/2
+	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y)) || view_list[2]*world.icon_size/2
 	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
 	given_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2))
 	given_turf = locate(marksman.x+round(given_x/world.icon_size, 1),marksman.y+round(given_y/world.icon_size, 1),marksman.z)
