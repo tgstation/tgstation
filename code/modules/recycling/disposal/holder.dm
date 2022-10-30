@@ -112,7 +112,8 @@
 	playsound(loc, 'sound/machines/airlock_alien_prying.ogg', vol = 30, vary = FALSE, extrarange = 3) //yeah I know but at least it sounds like metal being bent.
 	if(!do_after(escapee, 20 SECONDS, get_turf(loc)))
 		return
-	escapee.apply_damage(rand(5,15), damagetype = BRUTE)
+	for(var/mob/living/jailbird in contents)
+		jailbird.apply_damage(rand(5,15), damagetype = BRUTE)
 	transport_cylinder.spew_forth()
 	transport_cylinder.take_damage(transport_cylinder.max_integrity)
 
