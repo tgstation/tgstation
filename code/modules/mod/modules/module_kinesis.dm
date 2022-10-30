@@ -92,7 +92,9 @@
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
+	kinesis_catcher.calculate_params()
 	if(!kinesis_catcher.given_turf)
+		clear_grab()
 		return
 	drain_power(use_power_cost/10)
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
@@ -234,7 +236,7 @@
 	var/given_x = 16
 	var/given_y = 16
 	var/turf/given_turf
-	COOLDOWN_DECLARE(coordinate_cooldown)
+	var/mouse_params
 
 /atom/movable/screen/fullscreen/kinesis/proc/on_move(atom/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
@@ -252,14 +254,16 @@
 /atom/movable/screen/fullscreen/kinesis/MouseEntered(location, control, params)
 	. = ..()
 	MouseMove(location, control, params)
+	if(usr == kinesis_user)
+		calculate_params()
 
 /atom/movable/screen/fullscreen/kinesis/MouseMove(location, control, params)
-	if(!COOLDOWN_FINISHED(src, coordinate_cooldown))
+	if(usr != kinesis_user)
 		return
-	if(!kinesis_user?.client || usr != kinesis_user)
-		return
-	COOLDOWN_START(src, coordinate_cooldown, 0.1 SECONDS)
-	var/list/modifiers = params2list(params)
+	mouse_params = params
+
+/atom/movable/screen/fullscreen/kinesis/proc/calculate_params()
+	var/list/modifiers = params2list(mouse_params)
 	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
 	var/our_x = round(icon_x / world.icon_size, 1)

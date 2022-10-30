@@ -32,9 +32,10 @@
 	if(!tracker.marksman.client)
 		stop_zooming(tracker.marksman)
 		return
+	tracker.calculate_params()
 	if(!length(tracker.marksman.client.keys_held & tracker.marksman.client.movement_keys))
 		tracker.marksman.face_atom(tracker.given_turf)
-	animate(tracker.marksman.client, 0.2 SECONDS, easing = SINE_EASING, flags = EASE_OUT, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
+	animate(tracker.marksman.client, 0.2 SECONDS, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
 /datum/component/scope/proc/on_move(atom/movable/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
@@ -151,8 +152,8 @@
 	var/given_y = 0
 	/// The turf we send to the scope component.
 	var/turf/given_turf
-	/// The coordinate on our mouseentered, for performance reasons.
-	COOLDOWN_DECLARE(coordinate_cooldown)
+	/// Mouse parameters, for calculation.
+	var/mouse_params
 
 /atom/movable/screen/fullscreen/scope/proc/on_move(atom/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
@@ -171,14 +172,21 @@
 /atom/movable/screen/fullscreen/scope/MouseEntered(location, control, params)
 	. = ..()
 	MouseMove(location, control, params)
+	if(usr == marksman)
+		calculate_params()
 
 /atom/movable/screen/fullscreen/scope/MouseMove(location, control, params)
-	if(!COOLDOWN_FINISHED(src, coordinate_cooldown))
+	if(usr != marksman)
 		return
-	if(!marksman?.client || usr != marksman)
-		return
-	COOLDOWN_START(src, coordinate_cooldown, 0.1 SECONDS)
-	var/list/modifiers = params2list(params)
+	mouse_params = params
+
+/atom/movable/screen/fullscreen/scope/Click(location, control, params)
+	if(usr == marksman)
+		calculate_params()
+	return ..()
+
+/atom/movable/screen/fullscreen/scope/proc/calculate_params()
+	var/list/modifiers = params2list(mouse_params)
 	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
 	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
