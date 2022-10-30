@@ -18,12 +18,23 @@
 /obj/machinery/computer/mechpad/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		connected_mechpad = connect_to_pad()
-		connected_mechpad.connected_console = src
-		connected_mechpad.id = id
+		connect_pad(find_pad())
 		return INITIALIZE_HINT_LATELOAD
 	else
 		id = "handmade[REF(src)]"
+
+/obj/machinery/computer/mechpad/proc/connect_pad(obj/machinery/mechpad/pad)
+	if(connected_mechpad)
+		return
+	connected_mechpad = pad
+	connected_mechpad.connected_console = src
+	connected_mechpad.id = id
+	RegisterSignal(connected_mechpad, COMSIG_PARENT_QDELETING, .proc/unconnect_pad)
+
+/obj/machinery/computer/mechpad/proc/unconnect_pad(obj/machinery/mechpad/pad)
+	SIGNAL_HANDLER
+	connected_mechpad.connected_console = null
+	connected_mechpad = null
 
 /obj/machinery/computer/mechpad/LateInitialize()
 	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
@@ -47,7 +58,7 @@
 #define MECH_LAUNCH_TIME 5 SECONDS
 
 /obj/machinery/computer/mechpad/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
-	if(user.combat_mode)
+	if(user.combat_mode || machine_stat & (NOPOWER|BROKEN))
 		return ..()
 	var/mech_dir = mecha_attacker.dir
 	balloon_alert(user, "carefully starting launch process...")
@@ -61,7 +72,7 @@
 #undef MECH_LAUNCH_TIME
 
 /obj/machinery/computer/mechpad/proc/do_after_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
-	return mech.dir == mech_dir
+	return mech.dir == mech_dir && !(machine_stat & (NOPOWER|BROKEN))
 
 /// A proc that makes random beeping sounds for a set amount of time, the sounds are separated by a random amount of time.
 /obj/machinery/computer/mechpad/proc/random_beeps(mob/user, time = 0, mintime = 0, maxtime = 1)
@@ -76,35 +87,32 @@
 		sleep(time_to_spend)
 
 ///Tries to locate a pad in the cardinal directions, if it finds one it returns it
-/obj/machinery/computer/mechpad/proc/connect_to_pad()
-	if(connected_mechpad)
-		return
+/obj/machinery/computer/mechpad/proc/find_pad()
+	var/found_mechpad
 	for(var/direction in GLOB.cardinals)
-		connected_mechpad = locate(/obj/machinery/mechpad, get_step(src, direction))
-		if(connected_mechpad)
-			break
-	return connected_mechpad
+		found_mechpad = locate(/obj/machinery/mechpad, get_step(src, direction))
+		if(!found_mechpad)
+			continue
+		return found_mechpad
 
 /obj/machinery/computer/mechpad/multitool_act(mob/living/user, obj/item/tool)
 	if(!multitool_check_buffer(user, tool))
 		return
 	var/obj/item/multitool/multitool = tool
 	if(istype(multitool.buffer, /obj/machinery/mechpad))
-		var/obj/machinery/mechpad/buffered_console = multitool.buffer
+		var/obj/machinery/mechpad/buffered_pad = multitool.buffer
 		if(!(mechpads.len < maximum_pads))
 			to_chat(user, span_warning("[src] cannot handle any more connections!"))
 			return TRUE
-		if(buffered_console == connected_mechpad)
+		if(buffered_pad == connected_mechpad)
 			to_chat(user, span_warning("[src] cannot connect to its own mechpad!"))
-		else if(!connected_mechpad && buffered_console == connect_to_pad())
-			connected_mechpad = buffered_console
-			connected_mechpad.connected_console = src
-			connected_mechpad.id = id
+		else if(!connected_mechpad && buffered_pad == find_pad())
+			connect_pad(buffered_pad)
 			multitool.buffer = null
 			to_chat(user, span_notice("You connect the console to the pad with data from the [multitool.name]'s buffer."))
 		else
-			mechpads += buffered_console
-			LAZYADD(buffered_console.consoles, src)
+			mechpads += buffered_pad
+			LAZYADD(buffered_pad.consoles, src)
 			multitool.buffer = null
 			to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
 	return TRUE
@@ -119,11 +127,18 @@
 	if(!connected_mechpad)
 		to_chat(user, span_warning("[src] has no connected pad!"))
 		return
-	if(connected_mechpad.panel_open)
-		to_chat(user, span_warning("[src]'s pad has its' panel open! It won't work!"))
+	if(connected_mechpad.machine_stat & (BROKEN|NOPOWER) || where.machine_stat & (BROKEN|NOPOWER))
+		to_chat(user, span_warning("Pads are nonfunctional!"))
 		return
-	if(!(locate(/obj/vehicle/sealed/mecha) in get_turf(connected_mechpad)))
+	if(connected_mechpad.panel_open || where.panel_open)
+		to_chat(user, span_warning("Pads have open panels!"))
+		return
+	var/obj/vehicle/sealed/mecha/mech = locate() in get_turf(connected_mechpad)
+	if(!mech)
 		to_chat(user, span_warning("[src] detects no mecha on the pad!"))
+		return
+	if(where.mech_only && (locate(/mob/living) in mech.get_all_contents()))
+		to_chat(user, span_warning("The target pad does not allow lifeforms!"))
 		return
 	connected_mechpad.launch(where)
 
@@ -155,8 +170,6 @@
 			var/list/this_pad = list()
 			this_pad["name"] = pad.display_name
 			this_pad["id"] = i
-			if(pad.machine_stat & NOPOWER)
-				this_pad["inactive"] = TRUE
 			pad_list += list(this_pad)
 		else
 			mechpads -= get_pad(i)
@@ -166,11 +179,8 @@
 	if(selected_id)
 		var/obj/machinery/mechpad/current_pad = mechpads[selected_id]
 		data["pad_name"] = current_pad.display_name
-		data["selected_pad"] = current_pad
-		if(QDELETED(current_pad) || (current_pad.machine_stat & NOPOWER))
-			data["pad_active"] = FALSE
-			return data
-		data["pad_active"] = TRUE
+		data["pad_active"] = !QDELETED(current_pad) && !(current_pad.machine_stat & (BROKEN|NOPOWER))
+		data["mechonly"] = current_pad.mech_only
 	return data
 
 /obj/machinery/computer/mechpad/ui_act(action, params)
@@ -192,5 +202,8 @@
 				LAZYREMOVE(current_pad.consoles, src)
 				selected_id = null
 		if("launch")
+			if(!do_after(usr, 1 SECONDS, src))
+				balloon_alert(usr, "interrupted!")
+				return
 			try_launch(usr, current_pad)
 	. = TRUE
