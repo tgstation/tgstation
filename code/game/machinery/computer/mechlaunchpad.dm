@@ -196,5 +196,6 @@
 			if(!do_after(usr, 1 SECONDS, src))
 				balloon_alert(usr, "interrupted!")
 				return
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			try_launch(usr, current_pad)
 	. = TRUE
