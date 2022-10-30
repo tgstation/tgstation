@@ -51,7 +51,8 @@
 
 ///Clowns will always like bananas.
 /obj/item/food/grown/banana/proc/check_liked(fraction, mob/living/carbon/human/consumer)
-	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && consumer.mind && HAS_TRAIT(consumer.mind, TRAIT_BANANA_LOVER))
+	var/obj/item/organ/internal/liver/liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
 
 /obj/item/food/grown/banana/generate_trash(atom/location)
