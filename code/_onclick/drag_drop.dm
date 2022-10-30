@@ -10,13 +10,36 @@
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
 		return
-	if(over == src)
+	if(usr.client.check_drag_proximity(src, over, params))
 		return usr.client.Click(src, src_location, src_control, params)
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
 	over.MouseDrop_T(src,usr, params)
 	return
+
+// These two are globs for the purpose of testing, convert to defines when you're done
+// Distance in pixels that we consider "acceptable" from the initial click to the release
+// Note: this does not account for the position of the object, just where it was when we first started the timer
+GLOBAL_VAR_INIT(lieniency_distance, 10)
+// Accepted time in seconds between the initial click and drag release
+// Go higher then this and we just don't care anymore
+GLOBAL_VAR_INIT(lieniency_time, 0.1 SECONDS)
+/// Does the logic for checking if a drag counts as a click or not
+/// Returns true if it does, false otherwise
+/client/proc/check_drag_proximity(atom/dragging, atom/over, params)
+	if(dragging == over)
+		return TRUE
+	if(world.time - drag_start > GLOB.lieniency_time) // Time's up bestie
+		return FALSE
+	var/list/modifiers = params2list(params)
+	var/list/old_offsets = screen_loc_to_offset(LAZYACCESS(drag_details, SCREEN_LOC), view)
+	var/list/new_offsets = screen_loc_to_offset(LAZYACCESS(modifiers, SCREEN_LOC), view)
+
+	var/distance = sqrt(((old_offsets[1] - new_offsets[1]) ** 2) + ((old_offsets[2] - new_offsets[2]) ** 2))
+	if(distance > GLOB.lieniency_distance)
+		return FALSE
+	return TRUE
 
 // receive a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user, params)
@@ -96,6 +119,9 @@
 		else
 			middragtime = 0
 			middle_drag_atom_ref = null
+	if(!drag_start) // If we're just starting to drag
+		drag_start = world.time
+		drag_details = modifiers.Copy()
 	mouseParams = params
 	mouse_location_ref = WEAKREF(over_location)
 	mouse_object_ref = WEAKREF(over_object)
@@ -115,3 +141,5 @@
 		middragtime = 0
 		middle_drag_atom_ref = null
 	..()
+	drag_start = 0
+	drag_details = null
