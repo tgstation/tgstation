@@ -284,6 +284,7 @@
 	projectiles = 6
 	projectiles_cache = 999
 	harmful = TRUE
+	mech_flags = EXOSUIT_MODULE_RETICENCE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "\improper LBX AC 10 \"Scattershot\""

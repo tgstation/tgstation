@@ -51,7 +51,7 @@
 		return ..()
 	var/mech_dir = mecha_attacker.dir
 	balloon_alert(user, "carefully starting launch process...")
-	INVOKE_ASYNC(src, .proc/random_beeps, MECH_LAUNCH_TIME)
+	INVOKE_ASYNC(src, .proc/random_beeps, user, MECH_LAUNCH_TIME, 0.5 SECONDS, 1.5 SECONDS)
 	if(!do_after(user, MECH_LAUNCH_TIME, src, extra_checks = CALLBACK(src, .proc/do_after_checks, mecha_attacker, mech_dir)))
 		balloon_alert(user, "interrupted!")
 		return
@@ -64,14 +64,16 @@
 	return mech.dir == mech_dir
 
 /// A proc that makes random beeping sounds for a set amount of time, the sounds are separated by a random amount of time.
-/obj/machinery/computer/mechpad/proc/random_beeps(time)
+/obj/machinery/computer/mechpad/proc/random_beeps(mob/user, time = 0, mintime = 0, maxtime = 1)
 	var/list/static/beep_sounds = list('sound/machines/terminal_prompt_confirm.ogg', 'sound/machines/terminal_prompt_deny.ogg', 'sound/machines/terminal_error.ogg', 'sound/machines/terminal_select.ogg', 'sound/machines/terminal_success.ogg')
 	var/time_to_spend = 0
 	while(time > 0)
-		time_to_spend = rand(0.5 SECONDS, 1.5 SECONDS)
+		if(!DOING_INTERACTION_WITH_TARGET(user, src))
+			return
+		time_to_spend = rand(mintime, maxtime)
 		playsound(src, pick(beep_sounds), 75)
-		sleep(time_to_spend)
 		time -= time_to_spend
+		sleep(time_to_spend)
 
 ///Tries to locate a pad in the cardinal directions, if it finds one it returns it
 /obj/machinery/computer/mechpad/proc/connect_to_pad()
