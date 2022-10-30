@@ -1,3 +1,7 @@
+// don't produce a comment if the dice has less than this many sides
+// so you don't have d1's and d4's constantly producing comments
+#define MIN_SIDES_ALERT 5
+
 ///holding bag for dice
 /obj/item/storage/dice
 	name = "bag of dice"
@@ -225,7 +229,7 @@
 
 	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
-	if(sides > 1)  // less comment spam
+	if(sides > MIN_SIDES_ALERT)  // less comment spam
 		if(result == sides)
 			comment = "NAT [sides]!"
 		if(result == 1)
@@ -235,7 +239,7 @@
 	if(special_faces.len == sides)
 		comment = ""  // its not a number
 		result = special_faces[result]
-		if(!ISINTEGER(x))
+		if(!ISINTEGER(result))
 			comment = special_faces[result]  // should be a str now
 
 	if(user != null) //Dice was rolled in someone's hand
