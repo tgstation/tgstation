@@ -57,12 +57,25 @@
 
 	update_appearance(UPDATE_ICON)
 
-/obj/machinery/microwave/Destroy()
+/obj/machinery/microwave/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	ingredients += arrived
+	return ..()
+
+/obj/machinery/microwave/Exited(atom/movable/gone, direction)
+	if(gone in ingredients)
+		ingredients -= gone
+	return ..()
+
+
+/obj/machinery/microwave/on_deconstruction()
 	eject()
-	if(wires)
-		QDEL_NULL(wires)
+	return ..()
+
+/obj/machinery/microwave/Destroy()
+	QDEL_LIST(ingredients)
+	QDEL_NULL(wires)
 	QDEL_NULL(soundloop)
-	. = ..()
+	return ..()
 
 /obj/machinery/microwave/set_anchored(anchorvalue)
 	. = ..()
@@ -129,7 +142,7 @@
 	. = ..()
 
 	// All of these will use a full icon state instead
-	if (panel_open || dirty == 100 || broken || dirty_anim_playing)
+	if (panel_open || dirty == MAX_MICROWAVE_DIRTINESS || broken || dirty_anim_playing)
 		return .
 
 	var/ingredient_count = 0
@@ -208,23 +221,32 @@
 		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
+	if(operating)
+		return
+	if(!default_deconstruction_crowbar(tool))
+		return
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
+	if(operating)
+		return
+	if(dirty >= MAX_MICROWAVE_DIRTINESS)
+		return
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
+		update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)
 	if(operating)
 		return
-	if(default_deconstruction_crowbar(O))
-		return
-
-	if(dirty < MAX_MICROWAVE_DIRTINESS)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
-			update_appearance()
-			return
 
 	if(panel_open && is_wire_tool(O))
 		wires.interact(user)
 		return TRUE
 
 	if(broken > NOT_BROKEN)
-		if(broken == REALLY_BROKEN && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a screwdriver
+		if(broken == REALLY_BROKEN && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a TOOL_WIRECUTTER
 			user.visible_message(span_notice("[user] starts to fix part of \the [src]."), span_notice("You start to fix part of \the [src]..."))
 			if(O.use_tool(src, user, 20))
 				user.visible_message(span_notice("[user] fixes part of \the [src]."), span_notice("You fix part of \the [src]."))
@@ -280,7 +302,6 @@
 				return TRUE
 			if(T.atom_storage.attempt_remove(S, src))
 				loaded++
-				ingredients += S
 		if(loaded)
 			to_chat(user, span_notice("You insert [loaded] items into \the [src]."))
 		return
@@ -293,12 +314,11 @@
 			to_chat(user, span_warning("\The [O] is stuck to your hand!"))
 			return FALSE
 
-		ingredients += O
 		user.visible_message(span_notice("[user] adds \a [O] to \the [src]."), span_notice("You add [O] to \the [src]."))
 		update_appearance()
 		return
 
-	..()
+	return ..()
 
 /obj/machinery/microwave/attack_hand_secondary(mob/user, list/modifiers)
 	if(user.canUseTopic(src, !issilicon(usr)))
@@ -338,10 +358,9 @@
 			examine(user)
 
 /obj/machinery/microwave/proc/eject()
-	for(var/i in ingredients)
-		var/atom/movable/AM = i
-		AM.forceMove(drop_location())
-	ingredients.Cut()
+	var/atom/drop_loc = drop_location()
+	for(var/atom/movable/movable_ingredient as anything in ingredients)
+		movable_ingredient.forceMove(drop_loc)
 	open()
 	playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 
@@ -398,7 +417,7 @@
 
 /obj/machinery/microwave/proc/muck()
 	wzhzhzh()
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE)
+	playsound(loc, 'sound/effects/splat.ogg', 50, TRUE)
 	dirty_anim_playing = TRUE
 	update_appearance()
 	loop(MICROWAVE_MUCK, 4)
@@ -407,7 +426,8 @@
 	if((machine_stat & BROKEN) && type == MICROWAVE_PRE)
 		pre_fail()
 		return
-	if(!time)
+
+	if(!time || !length(ingredients))
 		switch(type)
 			if(MICROWAVE_NORMAL)
 				loop_finish(cooker)
@@ -451,10 +471,6 @@
 		dump_inventory_contents()
 
 	after_finish_loop()
-
-/obj/machinery/microwave/dump_inventory_contents()
-	. = ..()
-	ingredients.Cut()
 
 /obj/machinery/microwave/proc/pre_fail()
 	broken = REALLY_BROKEN

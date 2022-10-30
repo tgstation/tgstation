@@ -258,7 +258,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// needs more than one gas and rely on a fully parsed gas_percentage.
 	for (var/gas_path in absorbed_gasmix.gases)
 		var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
-		sm_gas.extra_effects(src)
+		sm_gas?.extra_effects(src)
 
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()

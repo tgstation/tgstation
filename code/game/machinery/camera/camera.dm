@@ -335,11 +335,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		var/info = ""
 
 		var/obj/item/modular_computer/tablet/computer = attacking_item
-		var/obj/item/computer_hardware/hard_drive/hdd = computer.all_components[MC_HDD]
-		if(hdd)
-			for(var/datum/computer_file/program/notepad/notepad_app in hdd.stored_files)
-				info = notepad_app.written_note
-				break
+		for(var/datum/computer_file/program/notepad/notepad_app in computer.stored_files)
+			info = notepad_app.written_note
+			break
 
 		itemname = computer.name
 		itemname = sanitize(itemname)
@@ -401,7 +399,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 				log_paper("[key_name(user)] held [last_shown_paper] up to [src], requesting [key_name(ai)] read it.")
 
 				if(user.name == "Unknown")
-					to_chat(ai, "[span_name(user)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
+					to_chat(ai, "[span_name(user.name)] holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
 				else
 					to_chat(ai, "<b><a href='?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='?_src_=usr;show_paper_note=[REF(last_shown_paper)];'>\a [item_name]</a> up to one of your cameras ...")
 				continue

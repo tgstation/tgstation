@@ -1470,18 +1470,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
 
-/datum/design/salestagger
-	name = "Sales Tagger"
-	id = "salestagger"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 700, /datum/material/glass = 200)
-	build_path = /obj/item/sales_tagger
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
-
 /datum/design/handlabeler
 	name = "Hand Labeler"
 	id = "handlabel"
@@ -1667,18 +1655,6 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/price_tagger
-	name = "Price Tagger"
-	id = "price_tagger"
-	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
-	build_path = /obj/item/price_tagger
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_CARGO
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/custom_vendor_refill
 	name = "Custom Vendor Refill"

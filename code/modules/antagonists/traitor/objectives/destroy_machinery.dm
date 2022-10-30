@@ -12,6 +12,7 @@
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 
+	progression_minimum = 0 MINUTES
 	progression_maximum = 10 MINUTES
 
 	/// The maximum amount of this type of objective a traitor can have.
@@ -42,9 +43,12 @@
 		JOB_SCIENTIST = /obj/machinery/rnd/server,
 	)
 
-/datum/traitor_objective/destroy_machinery/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+/datum/traitor_objective/destroy_machinery/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(length(possible_duplicates) >= maximum_allowed && !allow_more_than_max)
 		return FALSE
+	return TRUE
+
+/datum/traitor_objective/destroy_machinery/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	for(var/datum/traitor_objective/destroy_machinery/objective as anything in possible_duplicates)
 		applicable_jobs -= objective.chosen_job
 	if(!length(applicable_jobs))
@@ -70,8 +74,3 @@
 	replace_in_name("%MACHINE%", possible_machines[1].name)
 	return TRUE
 
-
-/datum/traitor_objective/destroy_machinery/is_duplicate(datum/traitor_objective/destroy_machinery/objective_to_compare)
-	if(objective_to_compare.chosen_job == chosen_job)
-		return TRUE
-	return FALSE
