@@ -60,10 +60,10 @@
 
 #undef MECH_LAUNCH_TIME
 
-/// do after checks for the mecha equipment do afters
 /obj/machinery/computer/mechpad/proc/do_after_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
 	return mech.dir == mech_dir
 
+/// A proc that makes random beeping sounds for a set amount of time, the sounds are separated by a random amount of time.
 /obj/machinery/computer/mechpad/proc/random_beeps(time)
 	var/list/static/beep_sounds = list('sound/machines/terminal_prompt_confirm.ogg', 'sound/machines/terminal_prompt_deny.ogg', 'sound/machines/terminal_error.ogg', 'sound/machines/terminal_select.ogg', 'sound/machines/terminal_success.ogg')
 	var/time_to_spend = 0
