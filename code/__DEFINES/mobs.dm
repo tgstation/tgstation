@@ -537,6 +537,7 @@
 
 /// Returns whether or not the given mob can succumb
 #define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION))
+#define CAN_WHISPER_SUCCUMB(target) (CAN_SUCCUMB(target) && !HAS_TRAIT(target, TRAIT_BLOCK_WHISPER_SUCCUMB))
 
 // Body position defines.
 /// Mob is standing up, usually associated with lying_angle value of 0.
