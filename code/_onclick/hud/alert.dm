@@ -413,8 +413,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!.)
 		return
 	var/mob/living/living_owner = owner
-	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
-	if(isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
+	var/last_whisper
+	if(!HAS_TRAIT(living_owner, TRAIT_BLOCK_WHISPER_SUCCUMB))
+		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
+	if((isnull(last_whisper) && !HAS_TRAIT(living_owner, TRAIT_BLOCK_WHISPER_SUCCUMB)) || !CAN_SUCCUMB(living_owner))
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
