@@ -54,7 +54,12 @@
 #define GC_FAILURE_HARD_LOOKUP
 #endif // REFERENCE_DOING_IT_LIVE
 
-//#define UNIT_TESTS //If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
+// If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
+// #define UNIT_TESTS
+
+// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so.
+// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
+#define USE_BYOND_TRACY
 
 /// If this is uncommented, Autowiki will generate edits and shut down the server.
 /// Prefer the autowiki build target instead.
