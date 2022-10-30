@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - qol: "makes borg light range at least the minimum useful light range"
