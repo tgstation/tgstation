@@ -69,7 +69,8 @@
 		CRASH("Log entry created without a message.")
 	src.message = message
 	// automatically finalize after a tick, if not finalized manually
-	addtimer(CALLBACK(src, .proc/finalize), 1)
+	spawn(1)
+		finalize()
 
 /datum/log_entry/proc/finalize()
 	if(finalized)

@@ -25,6 +25,7 @@ SUBSYSTEM_DEF(logging)
 	entries = SSlogging.entries
 	entry_dir_map = SSlogging.entry_dir_map
 	pending_entries = SSlogging.pending_entries
+	entries_by_key = SSlogging.entries_by_key
 	process_pending()
 
 /datum/controller/subsystem/logging/proc/append_entry(datum/log_entry/entry)
@@ -32,7 +33,6 @@ SUBSYSTEM_DEF(logging)
 		LAZYADD(pending_entries, entry)
 		return
 
-	var/entry_raw = entry.to_text()
 	LAZYADDASSOC(entries, entry.category, entry)
 	entries_by_key[entry.get_key()] = entry
 	var/category_file_id = replacetext(lowertext(entry.category), " ", "_")
