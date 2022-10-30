@@ -247,7 +247,7 @@
 		var/y_offset = source.loc.y - oldloc.y
 		given_turf = locate(given_turf.x+x_offset, given_turf.y+y_offset, given_turf.z)
 
-/atom/movable/screen/fullscreen/kinesis/proc/on_viewdata_update(atom/source)
+/atom/movable/screen/fullscreen/kinesis/proc/on_viewdata_update(datum/source, width, height)
 	SIGNAL_HANDLER
 
 	view_list = getviewsize(kinesis_user.client.view)

@@ -129,6 +129,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	RegisterSignal(mymob, COMSIG_MOB_LOGIN, .proc/client_refresh)
 	RegisterSignal(mymob, COMSIG_MOB_LOGOUT, .proc/clear_client)
 	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, .proc/update_sightflags)
+	RegisterSignal(mymob, COMSIG_VIEWDATA_UPDATE, .proc/on_viewdata_update)
 	update_sightflags(mymob, mymob.sight, NONE)
 
 /datum/hud/proc/client_refresh(datum/source)
@@ -138,6 +139,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/clear_client(datum/source)
 	if(mymob.canon_client)
 		UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
+
+/datum/hud/proc/on_viewdata_update(datum/source, width, height)
+	SIGNAL_HANDLER
+
+	view_audit_buttons()
 
 /datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
