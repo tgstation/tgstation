@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/paradox_clone
 	max_occurrences = 1
 	min_players = 15
-	earliest_start = 20 MINUTES //deadchat sink, lets not even consider it early on.
+	earliest_start = 20 MINUTES
 	category = EVENT_CATEGORY_INVASION
 	description = "A time-space anomaly will occur and spawn a paradox clone somewhere on the station."
 
@@ -26,7 +26,6 @@
 		return MAP_ERROR
 
 	var/mob/dead/selected = pick(candidates)
-	var/turf/landing_turf = pick(possible_spawns)
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
 
@@ -35,11 +34,50 @@
 	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
 	player_mind.special_role = ROLE_PARADOX_CLONE
 	player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
+
+	//cloning appearence/name/dna
+	var/datum/antagonist/paradox_clone/cloned = player_mind.has_antag_datum(/datum/antagonist/paradox_clone)
+	var/mob/living/carbon/carbon_cloned = cloned.original.current //target
+	var/mob/living/carbon/human/human_cloned = cloned.original.current
+
+	S.fully_replace_character_name(null, carbon_cloned.dna.real_name)
+	S.name = carbon_cloned.name
+	carbon_cloned.dna.transfer_identity(S, transfer_SE=1)
+	S.underwear = human_cloned.underwear
+	S.undershirt = human_cloned.undershirt
+	S.socks = human_cloned.socks
+	S.updateappearance(mutcolor_update=1)
+	S.domutcheck()
+
+	//cloning clothing/ID/bag
+	var/obj/item/clothing/under/sensor_clothes = S.w_uniform
+	var/list/all_items = S.get_all_contents()
+	var/obj/item/modular_computer/tablet/pda/messenger = locate(/obj/item/modular_computer/tablet/pda/) in S
+	S.mind.assigned_role = carbon_cloned.mind.assigned_role
+
+	if(isplasmaman(carbon_cloned))
+		S.equipOutfit(carbon_cloned.mind.assigned_role.plasmaman_outfit)
+		S.internal = S.get_item_for_held_index(1)
+	S.backpack = human_cloned.backpack
+	S.equipOutfit(carbon_cloned.mind.assigned_role.outfit)
+	for(var/charter in all_items)
+		if(istype(charter, /obj/item/station_charter))
+			qdel(charter) //so there wont be two station charters
+	if(sensor_clothes)
+		sensor_clothes.sensor_mode = SENSOR_OFF //dont want anyone noticing there's two now
+		S.update_suit_sensors()
+	if(messenger)
+		messenger.invisible = TRUE //clone doesnt show up on PDA message list
+	playsound(S, 'sound/weapons/plasma_cutter.ogg', 50, TRUE) //debug sound, remove later
+
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Paradox Clone by an event.")
 	S.log_message("was spawned as a Paradox Clone by an event.", LOG_GAME)
 	spawned_mobs += S
 	playsound(S, 'sound/weapons/emitter.ogg', 50, TRUE)
-	new /obj/item/storage/toolbox/mechanical(landing_turf)
+	new /obj/item/storage/toolbox/mechanical(S.loc) //so they dont get stuck in maints
+
+	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", ANNOUNCER_SPANOMALIES)
+
 	return SUCCESSFUL_SPAWN
 
 /datum/round_event/paradox_clone_event/announce(fake)

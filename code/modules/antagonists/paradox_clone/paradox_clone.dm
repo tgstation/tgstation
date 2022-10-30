@@ -4,7 +4,7 @@
 	job_rank = ROLE_PARADOX_CLONE
 	prevent_roundtype_conversion = FALSE
 	antag_hud_name = "paradox_clone"
-	suicide_cry = "FOR ME!!"
+	suicide_cry = "THERE CAN BE ONLY ONE!!"
 	preview_outfit = /datum/outfit/paradox_clone
 	count_against_dynamic_roll_chance = TRUE
 	//our target
@@ -31,11 +31,9 @@
 /datum/outfit/paradox_clone
 	name = "Paradox Clone (Preview only)"
 
-	uniform = /obj/item/clothing/under/misc/overalls
-	gloves = /obj/item/clothing/gloves/color/latex
-	mask = /obj/item/clothing/mask/surgical
-	neck = /obj/item/camera
-	suit = /obj/item/clothing/suit/apron
+	uniform = /obj/item/clothing/under/rank/civilian/janitor
+	gloves = /obj/item/clothing/gloves/color/black
+	head =  /obj/item/clothing/head/soft/purple
 
 /datum/antagonist/paradox_clone/on_gain()
 	forge_objectives()
@@ -46,7 +44,6 @@
 	if(!original)//admins didn't set one
 		original = find_original()
 	if(!original)//we didn't find one
-		send_to_playing_players(span_narsie("IT BROKE!!"))
 		qdel(src)
 		return
 
@@ -57,19 +54,19 @@
 	objectives += kill
 
 /datum/antagonist/paradox_clone/proc/find_original()
-	var/list/viable_minds = list() //The first list, which excludes hijinks
-	var/list/possible_targets = list() //The second list, which filters out silicons and simplemobs
-	var/chosen_victim  //The obsession target
+	var/list/viable_minds = list()
+	var/list/possible_targets = list() //filters out silicons and simplemobs
+	var/chosen_victim  //The cloned player
 
-	for(var/mob/player as anything in GLOB.player_list)//prevents crew members falling in love with nuke ops they never met, and other annoying hijinks
-		if(!player.client || !player.mind || isnewplayer(player) || player.stat == DEAD || isbrain(player) || player == owner)
+	for(var/mob/player as anything in GLOB.player_list)//prevents cloning of non-crew
+		if(!player.client || !player.mind || isnewplayer(player) || player.stat == DEAD || isbrain(player))
 			continue
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
 		viable_minds += player.mind
 	for(var/datum/mind/possible_target as anything in viable_minds)
-		if(possible_target != owner && ishuman(possible_target.current))
-			possible_targets += possible_target.current
+		if(ishuman(possible_target.current))
+			possible_targets += possible_target
 
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)
