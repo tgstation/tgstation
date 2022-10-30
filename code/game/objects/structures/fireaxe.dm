@@ -173,6 +173,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		return
 	else
 		open = !open
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 		update_appearance()
 		return
 
