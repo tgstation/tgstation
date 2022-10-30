@@ -487,7 +487,7 @@
 		var/mob/M = locate(href_list["forcespeech"])
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.", confidential = TRUE)
-
+			return
 		var/speech = input("What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
@@ -503,8 +503,10 @@
 		var/mob/living/carbon/human/target = locate(href_list["applyquirks"])
 		if(!istype(target))
 			to_chat(usr, "this can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
+			return
 		if(!target.client)
 			to_chat(usr, "[target] has no client!", confidential = TRUE)
+			return
 		SSquirks.AssignQuirks(target, target.client)
 		log_admin("[key_name(usr)] applied client quirks to [key_name(target)].")
 		message_admins(span_adminnotice("[key_name_admin(usr)] applied client quirks to [key_name_admin(target)]."))
