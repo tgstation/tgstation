@@ -400,7 +400,6 @@ GLOBAL_VAR(restart_counter)
 		else
 			CRASH("Unsupported platform: [system_type]")
 
-	// MBTODO: Does the 515 compiler pick this up?
 	var/init_result = call(library, "init")()
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
