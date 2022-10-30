@@ -16,6 +16,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
+	mind_traits = list(TRAIT_BANANA_LOVER)
 	liver_traits = list(TRAIT_COMEDY_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CLOWN
