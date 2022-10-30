@@ -48,6 +48,8 @@
 	. = ..()
 	if(!.)
 		return
+	if(!mod.wearer.client)
+		return
 	if(grabbed_atom)
 		launch()
 		clear_grab(playsound = FALSE)
@@ -71,7 +73,9 @@
 	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
 	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/kinesis, 0)
 	kinesis_catcher.kinesis_user = mod.wearer
+	kinesis_catcher.view_list = getviewsize(mod.wearer.client.view)
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
+	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_VIEWDATA_UPDATE, /atom/movable/screen/fullscreen/kinesis.proc/on_viewdata_update)
 	soundloop.start()
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE, deleting = FALSE)
@@ -226,6 +230,7 @@
 	plane = HUD_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/mob/kinesis_user
+	var/list/view_list
 	var/given_x = 16
 	var/given_y = 16
 	var/turf/given_turf
@@ -239,28 +244,27 @@
 		var/y_offset = source.loc.y - oldloc.y
 		given_turf = locate(given_turf.x+x_offset, given_turf.y+y_offset, given_turf.z)
 
+/atom/movable/screen/fullscreen/kinesis/proc/on_viewdata_update(atom/source)
+	SIGNAL_HANDLER
+
+	view_list = getviewsize(kinesis_user.client.view)
+
 /atom/movable/screen/fullscreen/kinesis/MouseEntered(location, control, params)
 	. = ..()
 	MouseMove(location, control, params)
 
 /atom/movable/screen/fullscreen/kinesis/MouseMove(location, control, params)
-	if(!kinesis_user?.client || usr != kinesis_user)
-		return
 	if(!COOLDOWN_FINISHED(src, coordinate_cooldown))
 		return
-	COOLDOWN_START(src, coordinate_cooldown, 0.2 SECONDS)
+	if(!kinesis_user?.client || usr != kinesis_user)
+		return
+	COOLDOWN_START(src, coordinate_cooldown, 0.1 SECONDS)
 	var/list/modifiers = params2list(params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X))
-	var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-	var/list/view = getviewsize(kinesis_user.client.view)
-	icon_x *= view[1]/FULLSCREEN_OVERLAY_RESOLUTION_X
-	icon_y *= view[2]/FULLSCREEN_OVERLAY_RESOLUTION_Y
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
+	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
 	var/our_x = round(icon_x / world.icon_size, 1)
 	var/our_y = round(icon_y / world.icon_size, 1)
-	var/mob_x = kinesis_user.x
-	var/mob_y = kinesis_user.y
-	var/mob_z = kinesis_user.z
-	given_turf = locate(mob_x+our_x-round(view[1]/2),mob_y+our_y-round(view[2]/2),mob_z)
+	given_turf = locate(kinesis_user.x+our_x-round(view_list[1]/2),kinesis_user.y+our_y-round(view_list[2]/2),kinesis_user.z)
 	given_x = round(icon_x - world.icon_size * our_x, 1)
 	given_y = round(icon_y - world.icon_size * our_y, 1)
 

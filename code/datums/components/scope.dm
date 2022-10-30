@@ -110,7 +110,9 @@
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/scope, 0)
 	tracker.range_modifier = range_modifier
 	tracker.marksman = user
+	tracker.view_list = getviewsize(user.client.view)
 	tracker.RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/scope.proc/on_move)
+	tracker.RegisterSignal(user, COMSIG_VIEWDATA_UPDATE, /atom/movable/screen/fullscreen/scope.proc/on_viewdata_update)
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/stop_zooming)
 	START_PROCESSING(SSfastprocess, src)
 
@@ -141,6 +143,8 @@
 	var/range_modifier = 1
 	/// The mob the scope is on.
 	var/mob/marksman
+	/// Client view size of the scoping mob.
+	var/list/view_list
 	/// Pixel x we send to the scope component.
 	var/given_x = 0
 	/// Pixel y we send to the scope component.
@@ -159,20 +163,24 @@
 	var/y_offset = source.loc.y - oldloc.y
 	given_turf = locate(given_turf.x+x_offset, given_turf.y+y_offset, given_turf.z)
 
+/atom/movable/screen/fullscreen/scope/proc/on_viewdata_update(atom/source)
+	SIGNAL_HANDLER
+
+	view_list = getviewsize(marksman.client.view)
+
 /atom/movable/screen/fullscreen/scope/MouseEntered(location, control, params)
 	. = ..()
 	MouseMove(location, control, params)
 
 /atom/movable/screen/fullscreen/scope/MouseMove(location, control, params)
-	if(!marksman?.client || usr != marksman)
-		return
 	if(!COOLDOWN_FINISHED(src, coordinate_cooldown))
 		return
-	COOLDOWN_START(src, coordinate_cooldown, 0.2 SECONDS)
+	if(!marksman?.client || usr != marksman)
+		return
+	COOLDOWN_START(src, coordinate_cooldown, 0.1 SECONDS)
 	var/list/modifiers = params2list(params)
 	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
 	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
-	var/list/view = getviewsize(marksman.client.view)
-	given_x = round(range_modifier * (icon_x - view[1]*world.icon_size/2))
-	given_y = round(range_modifier * (icon_y - view[2]*world.icon_size/2))
+	given_x = round(range_modifier * (icon_x - view_list[1]*world.icon_size/2))
+	given_y = round(range_modifier * (icon_y - view_list[2]*world.icon_size/2))
 	given_turf = locate(marksman.x+round(given_x/world.icon_size, 1),marksman.y+round(given_y/world.icon_size, 1),marksman.z)
