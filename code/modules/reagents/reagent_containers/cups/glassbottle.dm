@@ -106,18 +106,37 @@
 
 	return TRUE
 
-/** proc to make the effect of liquid froth
- * hi :)
- *
- *
+/*
+ * Proc to make the bottle spill some of its contents out in a froth geyser of varying intensity/height
+ * Arguments:
+ * * offset_x = pixel offset by x from where the froth animation will start
+ * * offset_y = pixel offset by y from where the froth animation will start
+ * * intensity = how strong the effect is, both visually and in the amount of reagents lost. comes in three flavours
 */
-/obj/item/reagent_containers/cup/glass/bottle/proc/make_froth(mob/user, offset_x, offset_y, intensity)
+/obj/item/reagent_containers/cup/glass/bottle/proc/make_froth(offset_x, offset_y, intensity)
 	if(!intensity)
 		return
+
+	if(!reagents.total_volume)
+		return
+
 	var/amount_lost = intensity * 5
 	reagents.remove_any(amount_lost)
-	visible_message(span_warning("[name]'s contents are let loose!"))
 
+	visible_message(span_warning("Some of [name]'s contents are let loose!"))
+	var/intensity_state = null
+	switch(intensity)
+		if(1)
+			intensity_state = "low"
+		if(2)
+			intensity_state = "medium"
+		if(3)
+			intensity_state = "high"
+	var/mutable_appearance/froth = mutable_appearance(icon, "froth_bottle_[intensity_state]")
+	froth.pixel_x = offset_x
+	froth.pixel_y = offset_y
+	add_overlay(froth)
+	addtimer(CALLBACK(src, /atom/proc/cut_overlay, froth), 2 SECONDS)
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
@@ -529,15 +548,13 @@
 		((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
 		((HAS_TRAIT(user, TRAIT_SABRAGE_PRO)) ? 35 : 0)
 
-	to_chat(user, span_boldnotice("Chance = [sabrage_chance]")) //debug, remove me!
-
 	if(prob(sabrage_chance))
 		///Severity of the resulting froth to pass to make_froth()
 		var/severity_to_pass
 		if(sabrage_chance > 100)
 			severity_to_pass = 0
 		else
-			switch(sabrage_chance) //the less likely we were to succeed, the more of the drink will end up wasted
+			switch(sabrage_chance) //the less likely we were to succeed, the more of the drink will end up wasted in froth
 				if(1 to 33)
 					severity_to_pass = 3
 				if(34 to 66)
@@ -583,7 +600,7 @@
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()
-	make_froth(user, intensity = froth_severity)
+	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) //the y offset for sabraged is lower because the bottle's lip is smashed
 	var/obj/projectile/bullet/reusable/cork_to_fire = sabraged ? /obj/projectile/bullet/reusable/champagne_cork/sabrage : /obj/projectile/bullet/reusable/champagne_cork
 	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new cork_to_fire (drop_location())
 	popped_cork.firer = user
