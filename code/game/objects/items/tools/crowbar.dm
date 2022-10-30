@@ -198,9 +198,10 @@
 	if(!LAZYLEN(mech.occupants) || (LAZYLEN(mech.occupants) == 1 && mech.mecha_flags & SILICON_PILOT)) //if no occupants, or only an ai
 		mech.balloon_alert(user, "it's empty!")
 		return
+	var/mech_dir = mech.dir
 	mech.balloon_alert(user, "prying open...")
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, .proc/extra_checks, mech)))
+	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, .proc/extra_checks, mech, mech_dir)))
 		mech.balloon_alert(user, "interrupted!")
 		return
 	for(var/mob/living/occupant as anything in mech.occupants)
@@ -209,5 +210,5 @@
 		mech.mob_exit(occupant, randomstep = TRUE)
 	playsound(src, 'sound/machines/airlockforced.ogg', 50, TRUE)
 
-/obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech)
-	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants)
+/obj/item/crowbar/mechremoval/proc/extra_checks(obj/vehicle/sealed/mecha/mech, mech_dir)
+	return HAS_TRAIT(src, TRAIT_WIELDED) && LAZYLEN(mech.occupants) && mech.dir == mech_dir
