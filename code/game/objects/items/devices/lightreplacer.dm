@@ -261,7 +261,3 @@
 
 /obj/item/lightreplacer/blue/emag_act()
 	return  // balancing against longrange explosions
-
-/obj/item/lightreplacer/blue/update_icon(updates)
-	. = ..()
-	icon_state = initial(icon_state)
