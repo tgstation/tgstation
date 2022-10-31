@@ -67,8 +67,7 @@ export const RequestManager = (props, context) => {
                 </h2>
                 <div className="RequestManager__message">
                   <RequestType requestType={request.req_type} />
-                  {request.req_type !== 'request_fax' &&
-                    decodeHtmlEntities(request.message)}
+                  {decodeHtmlEntities(request.message)}
                 </div>
               </div>
               {request.owner !== null && <RequestControls request={request} />}

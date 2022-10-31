@@ -205,9 +205,9 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 			return TRUE
 		if ("show")
 			if(request.req_type != REQUEST_FAX)
-				to_chat(usr, "Request doesn't have a peper to read.", confidential = TRUE)
+				to_chat(usr, "Request doesn't have a paper to read.", confidential = TRUE)
 				return TRUE
-			var/obj/item/paper/request_message = request.message
+			var/obj/item/paper/request_message = request.additional_information
 			request_message.ui_interact(usr)
 			return TRUE
 

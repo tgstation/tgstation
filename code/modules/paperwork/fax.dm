@@ -44,6 +44,11 @@
 		/obj/item/holochip,
 		/obj/item/card
 	)
+	///
+	var/list/special_networks = list(
+		list(fax_name = "Central Command", fax_id = "central_command", color = "teal", emag_need = FALSE),
+		list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_need = TRUE),
+	)
 
 /obj/machinery/fax/Initialize(mapload)
 	. = ..()
@@ -227,6 +232,7 @@
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
 	data["has_paper"] = !!loaded_item_ref?.resolve()
 	data["fax_history"] = fax_history
+	data["special_faxes"] = special_networks
 	return data
 
 /obj/machinery/fax/ui_act(action, list/params)
@@ -255,7 +261,7 @@
 					var/obj/item/paper/request = loaded
 					request.request_state = TRUE
 					request.loc = null
-					GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [special_fax_name(destination)]")
+					GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [special_fax_name(destination)]", request)
 				log_fax(loaded, destination, params["name"])
 				loaded_item_ref = null
 				update_appearance()

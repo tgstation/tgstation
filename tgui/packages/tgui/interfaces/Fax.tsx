@@ -11,6 +11,7 @@ type FaxData = {
   has_paper: string;
   syndicate_network: boolean;
   fax_history: FaxHistory[];
+  special_faxes: FaxSpecial[];
 };
 
 type FaxInfo = {
@@ -25,6 +26,13 @@ type FaxHistory = {
   history_type: string;
   history_fax_name: string;
   history_time: string;
+};
+
+type FaxSpecial = {
+  fax_name: string;
+  fax_id: string;
+  color: string;
+  needEmag: boolean;
 };
 
 export const Fax = (props, context) => {
@@ -118,4 +126,29 @@ export const Fax = (props, context) => {
       </Window.Content>
     </Window>
   );
+};
+
+export const SpecialButtons = (props, context) => {
+
+	return (
+		{data.special_faxes.map(
+			(special: FaxSpecial) =>
+			  !data.syndicate_network &&
+			  special.needEmag && (
+				<Button
+				  key={special.fax_id}
+				  title={special.fax_name}
+				  disabled={!data.has_paper}
+				  color="teal"
+				  onClick={() =>
+					act('send', {
+					  id: special.fax_id,
+					  name: special.fax_name,
+					})
+				  }>
+				  {special.fax_name}
+				</Button>
+			  )
+		  )}
+	);
 };
