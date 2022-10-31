@@ -66,7 +66,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m50
 	cost = 4
-	purchasable_from = ~UPLINK_CLOWN_OPS
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/revolver
