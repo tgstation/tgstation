@@ -1657,6 +1657,7 @@
 #include "code\game\objects\items\toy_mechs.dm"
 #include "code\game\objects\items\toys.dm"
 #include "code\game\objects\items\trash.dm"
+#include "code\game\objects\items\v8_engine.dm"
 #include "code\game\objects\items\vending_items.dm"
 #include "code\game\objects\items\virgin_mary.dm"
 #include "code\game\objects\items\wall_mounted.dm"
