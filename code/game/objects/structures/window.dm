@@ -652,7 +652,7 @@
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
 	icon_state = "plasma_window-0"
 	base_icon_state = "plasma_window"
-	max_integrity = 300
+	max_integrity = 400
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smoothing_flags = SMOOTH_BITMASK
