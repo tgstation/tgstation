@@ -81,15 +81,13 @@
 
 /mob/living/carbon/human/get_status_tab_items()
 	. = ..()
-	if (internal)
-		var/datum/gas_mixture/internal_air = internal.return_air()
-		if (!internal_air)
-			QDEL_NULL(internal)
-		else
-			. += ""
-			. += "Internal Atmosphere Info: [internal.name]"
-			. += "Tank Pressure: [internal_air.return_pressure()]"
-			. += "Distribution Pressure: [internal.distribute_pressure]"
+	var/obj/item/tank/target_tank = internal || external
+	if(target_tank)
+		var/datum/gas_mixture/internal_air = target_tank.return_air()
+		. += ""
+		. += "Internal Atmosphere Info: [target_tank.name]"
+		. += "Tank Pressure: [internal_air.return_pressure()]"
+		. += "Distribution Pressure: [target_tank.distribute_pressure]"
 	if(istype(wear_suit, /obj/item/clothing/suit/space))
 		var/obj/item/clothing/suit/space/S = wear_suit
 		. += "Thermal Regulator: [S.thermal_on ? "on" : "off"]"
