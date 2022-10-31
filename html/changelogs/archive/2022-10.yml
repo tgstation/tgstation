@@ -1082,3 +1082,16 @@
   - bugfix: The infiltrator modsuit properly hides tails.
   private-tristan:
   - bugfix: Tramstation science now has the 20 glass instead of 1.
+2022-10-31:
+  ArcaneMusic:
+  - bugfix: The QM now has a statue, as all other heads have statues.
+  Fikou:
+  - qol: makes borg light range at least the minimum useful light range
+  LarissaMayrink:
+  - rscadd: Powercreeps the CMO by giving them a laser pointer
+  Melbert:
+  - bugfix: Fixes Latejoin Revolution from triggering very commonly
+  ShizCalev:
+  - bugfix: Microwaves are now less likely to break if things inside of it are deleted.
+  Vishenka0704:
+  - admin: adds a PDA Message verb in Events
