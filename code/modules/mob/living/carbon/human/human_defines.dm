@@ -22,6 +22,9 @@
 	///Styles used for hair and facial hair gradients.
 	var/list/grad_style
 
+	//Penis hat that males use, Its lies on top of the penis shaft.
+	var/circumcised = FALSE
+
 	//Facial hair colour and style
 	var/facial_hair_color = "#000000"
 	var/facial_hairstyle = "Shaved"
