@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Dullahans, when speaking, use normal spans instead of robot span"
