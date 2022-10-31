@@ -23,7 +23,7 @@
 
 	var/obj/item/radio/headset/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
+	R.freqlock = RADIO_FREQENCY_LOCKED
 	if(additional_radio)
 		R.keyslot2 = new additional_radio()
 		R.recalculateChannels()
@@ -460,7 +460,7 @@
 
 	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
+	R.freqlock = RADIO_FREQENCY_LOCKED
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
 	W.update_label()

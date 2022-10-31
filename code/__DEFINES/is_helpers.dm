@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
-#define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
+#define ismouse(A) (istype(A, /mob/living/basic/mouse))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
@@ -149,8 +149,6 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
-
-#define israt(A) (istype(A, /mob/living/simple_animal/hostile/rat))
 
 #define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
 

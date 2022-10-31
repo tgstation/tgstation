@@ -17,6 +17,8 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
+	mind_traits = list(TRAIT_TOWER_OF_BABEL)
+
 	display_order = JOB_DISPLAY_ORDER_CURATOR
 	departments_list = list(
 		/datum/job_department/service,
@@ -62,4 +64,3 @@
 
 	translator.grant_all_languages(source=LANGUAGE_CURATOR)
 	translator.remove_blocked_language(GLOB.all_languages, source=LANGUAGE_ALL)
-	ADD_TRAIT(translator, TRAIT_TOWER_OF_BABEL, JOB_TRAIT)

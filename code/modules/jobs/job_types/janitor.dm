@@ -43,12 +43,12 @@
 
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	if(GARBAGEDAY in SSevents.holidays)
+	if(check_holidays(GARBAGEDAY))
 		backpack_contents += list(/obj/item/gun/ballistic/revolver)
 		r_pocket = /obj/item/ammo_box/a357
 
 /datum/outfit/job/janitor/get_types_to_preload()
 	. = ..()
-	if(GARBAGEDAY in SSevents.holidays)
+	if(check_holidays(GARBAGEDAY))
 		. += /obj/item/gun/ballistic/revolver
 		. += /obj/item/ammo_box/a357

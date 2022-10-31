@@ -178,7 +178,6 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	if (dropped_thing.forceMove(storage))
 		if (isliving(dropped_thing))
 			RegisterSignal(dropped_thing, COMSIG_LIVING_REVIVE, .proc/on_revive)
-		SEND_SIGNAL(dropped_thing, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	else
 		parent.visible_message(span_boldwarning("[parent] spits out [dropped_thing]!"))
 		dropped_thing.throw_at(get_edge_target_turf(parent, pick(GLOB.alldirs)), rand(1, 10), rand(1, 10))
@@ -233,3 +232,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	desc = "The bottom of a hole. You shouldn't be able to interact with this."
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/abstract/chasm_storage/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SECLUDED_LOCATION, INNATE_TRAIT)

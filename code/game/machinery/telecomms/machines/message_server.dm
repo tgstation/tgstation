@@ -182,8 +182,7 @@
 		return
 	for (var/obj/item/modular_computer/comp in data["targets"])
 		if(!QDELETED(comp))
-			var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
-			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+			for(var/datum/computer_file/program/messenger/app in comp.stored_files)
 				if(!QDELETED(app))
 					app.receive_message(src)
 
