@@ -9,6 +9,8 @@
 	desc_inert = "All that remains of a hivelord. It has decayed, and is completely useless."
 	user_status = /datum/status_effect/regenerative_core
 	actions_types = list(/datum/action/cooldown/monster_core_action/regenerative_core)
+	icon_state = "hivelord_core"
+	icon_state_inert = "hivelord_core_decayed"
 
 /obj/item/organ/internal/monster_core/regenerative_core/preserve(implanted = FALSE)
 	if (implanted)
@@ -48,16 +50,16 @@
 	desc = "A strange rock that crackles with power. It can be used to heal completely, but it will rapidly decay into uselessness."
 	desc_preserved = "The core has been stabilized, allowing you to use it to heal completely without danger of decay."
 	desc_inert = "The core has decayed, and is completely useless."
-	icon_state = "legion_soul_unstable"
-	icon_state_inert = "legion_soul_inert"
-	icon_state_preserved = "legion_soul"
+	icon_state = "legion_core"
+	icon_state_inert = "legion_core_decayed"
+	icon_state_preserved = "legion_core_stable"
 
 /// Action used by the regenerative core
 /datum/action/cooldown/monster_core_action/regenerative_core
 	name = "Regenerate"
 	desc = "Fully regenerate your body, consuming your regenerative core in the process. \
 		This process will trigger automatically if you are badly wounded."
-	button_icon_state = "legion_soul"
+	button_icon_state = "legion_core_stable"
 	check_flags = NONE
 
 /datum/action/cooldown/monster_core_action/regenerative_core

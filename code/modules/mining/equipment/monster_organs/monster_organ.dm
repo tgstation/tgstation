@@ -34,7 +34,7 @@
 	desc = "All that remains of a monster. This abstract item should not spawn. \
 		It will rapidly decay into uselessness. but don't worry because it's already useless."
 	icon = 'icons/obj/medical/organs/mining_organs.dmi'
-	icon_state = "hivelord_core_2"
+	icon_state = "hivelord_core"
 	actions_types = list(/datum/action/cooldown/monster_core_action)
 	visual = FALSE
 	item_flags = NOBLUDGEON
