@@ -86,7 +86,7 @@
 
 /obj/item/rod_of_asclepius/update_icon_state()
 	. = ..()
-	icon_state = inhand_icon_state = "ascelpius_[activated ? "active" : "dormant"]"
+	icon_state = inhand_icon_state = "asclepius_[activated ? "active" : "dormant"]"
 
 /obj/item/rod_of_asclepius/vv_edit_var(vname, vval)
 	. = ..()
