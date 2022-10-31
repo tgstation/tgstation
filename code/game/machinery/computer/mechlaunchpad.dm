@@ -117,29 +117,50 @@
 	UnregisterSignal(pad, COMSIG_PARENT_QDELETING)
 
 /**
- * Tries to call the launch proc on the connected mechpad, returns if there is no connected mechpad or there is no mecha on the pad
+ * Tries to call the launch proc on the connected mechpad, returns if unavailable
  * Arguments:
  * * user - The user of the proc
  * * where - The mechpad that the connected mechpad will try to send a supply pod to
  */
 /obj/machinery/computer/mechpad/proc/try_launch(mob/user, obj/machinery/mechpad/where)
-	if(!connected_mechpad)
-		to_chat(user, span_warning("[src] has no connected pad!"))
+	if(!can_launch(user, where))
 		return
-	if(connected_mechpad.machine_stat & (BROKEN|NOPOWER) || where.machine_stat & (BROKEN|NOPOWER))
-		to_chat(user, span_warning("Pads are nonfunctional!"))
-		return
-	if(connected_mechpad.panel_open || where.panel_open)
-		to_chat(user, span_warning("Pads have open panels!"))
-		return
-	var/obj/vehicle/sealed/mecha/mech = locate() in get_turf(connected_mechpad)
-	if(!mech)
-		to_chat(user, span_warning("[src] detects no mecha on the pad!"))
-		return
-	if(where.mech_only && (locate(/mob/living) in mech.get_all_contents()))
-		to_chat(user, span_warning("The target pad does not allow lifeforms!"))
+	flick("mechpad-launch", connected_mechpad)
+	addtimer(CALLBACK(src, .proc/start_launch, user, where), 1 SECONDS)
+
+/obj/machinery/computer/mechpad/proc/start_launch(mob/user, obj/machinery/mechpad/where)
+	if(!can_launch(user, where, silent = TRUE))
 		return
 	connected_mechpad.launch(where)
+
+/obj/machinery/computer/mechpad/proc/can_launch(mob/user, obj/machinery/mechpad/where, silent = FALSE)
+	if(QDELETED(where))
+		if(!silent)
+			to_chat(user, span_warning("No destination!"))
+		return FALSE
+	if(!connected_mechpad)
+		if(!silent)
+			to_chat(user, span_warning("[src] has no connected pad!"))
+		return FALSE
+	if(connected_mechpad.machine_stat & (BROKEN|NOPOWER) || where.machine_stat & (BROKEN|NOPOWER))
+		if(!silent)
+			to_chat(user, span_warning("Pads are nonfunctional!"))
+		return FALSE
+	if(connected_mechpad.panel_open || where.panel_open)
+		if(!silent)
+			to_chat(user, span_warning("Pads have open panels!"))
+		return FALSE
+	var/obj/vehicle/sealed/mecha/mech = locate() in get_turf(connected_mechpad)
+	if(!mech)
+		if(!silent)
+			to_chat(user, span_warning("[src] detects no mecha on the pad!"))
+		return FALSE
+	if(where.mech_only && (locate(/mob/living) in mech.get_all_contents()))
+		if(!silent)
+			to_chat(user, span_warning("The target pad does not allow lifeforms!"))
+		return FALSE
+	return TRUE
+
 
 ///Returns the pad of the value specified
 /obj/machinery/computer/mechpad/proc/get_pad(number)
@@ -193,9 +214,5 @@
 				remove_pad(current_pad)
 				selected_id = null
 		if("launch")
-			if(!do_after(usr, 1 SECONDS, src))
-				balloon_alert(usr, "interrupted!")
-				return
-			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			try_launch(usr, current_pad)
 	. = TRUE
