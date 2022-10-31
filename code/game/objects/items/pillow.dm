@@ -67,6 +67,17 @@
 		victim.losebreath += 1
 	victim.visible_message("[victim] manages to escape being smothered!", span_notice("You break free!"), vision_distance = COMBAT_MESSAGE_RANGE)
 
+/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, params)
+	. = ..()
+	if(!pillow_trophy && istype(attacking_item, /obj/item/clothing/neck/pillow_tag))
+		user.transferItemToLoc(attacking_item, src)
+		pillow_trophy = attacking_item
+		balloon_alert(user, "honor reclaimed!")
+		update_appearance()
+	else
+		balloon_alert(user, "tag is intact.")
+		return
+
 /obj/item/pillow/examine(mob/user)
 	. = ..()
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
@@ -96,6 +107,11 @@
 	if(!pillow_trophy)
 		desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"
 		icon_state = "pillow_[variation]"
+		inhand_icon_state = "pillow_no_t"
+	else
+		desc = "A soft and fluffy pillow. You can smack someone with this!"
+		icon_state = "pillow_[variation]_t"
+		inhand_icon_state = "pillow_t"
 
 /obj/item/pillow/random
 
