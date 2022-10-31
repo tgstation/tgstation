@@ -98,6 +98,6 @@
 	desc = "A brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
 	item = /obj/item/gun/ballistic/revolver
 	progression_minimum = 30 MINUTES
-	cost = 13
+	cost = 9
 	surplus = 50
 	purchasable_from = ~UPLINK_CLOWN_OPS
