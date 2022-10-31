@@ -3211,15 +3211,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"bpU" = (
-/obj/structure/bed{
-	dir = 8
-	},
-/obj/item/bedsheet/dorms,
-/obj/structure/sign/clock/directional/east,
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "bqg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -3712,6 +3703,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
+"bzs" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/structure/sign/clock/directional/west,
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "bzz" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -6689,6 +6691,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"cvg" = (
+/obj/structure/bed/double,
+/obj/item/bedsheet/dorms_double,
+/obj/effect/landmark/start/assistant,
+/obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "cvw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -7883,6 +7893,18 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard)
+"cPK" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant,
+/obj/structure/sign/clock/directional/west,
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "cPM" = (
 /turf/closed/wall,
 /area/station/engineering/atmos)
@@ -10094,16 +10116,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
-"dBQ" = (
-/obj/structure/bed{
-	dir = 8
-	},
-/obj/item/bedsheet/dorms,
-/obj/effect/landmark/start/assistant,
-/obj/structure/sign/clock/directional/east,
-/obj/item/pillow/random,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "dCd" = (
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/mid)
@@ -10947,6 +10959,17 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating/airless,
 /area/station/engineering/supermatter/room)
+"dRz" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/structure/sign/clock/directional/south,
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "dRK" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -13886,16 +13909,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
-"eUF" = (
-/obj/structure/bed{
-	dir = 8
-	},
-/obj/item/bedsheet/dorms,
-/obj/effect/landmark/start/assistant,
-/obj/structure/sign/clock/directional/east,
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "eUH" = (
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock"
@@ -13905,17 +13918,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/processing)
-"eUS" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/dorms{
-	dir = 4
-	},
-/obj/structure/sign/clock/directional/west,
-/obj/item/pillow/random,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "eUZ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
@@ -16609,17 +16611,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/commons/fitness/recreation/entertainment)
-"fWG" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/dorms{
-	dir = 4
-	},
-/obj/structure/sign/clock/directional/west,
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "fWJ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -18114,14 +18105,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"gyH" = (
-/obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
-/obj/effect/landmark/start/assistant,
-/obj/structure/sign/clock/directional/north,
-/obj/item/pillow/random,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "gyP" = (
 /obj/structure/rack,
 /obj/item/healthanalyzer{
@@ -19898,6 +19881,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
+"hft" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/dorms,
+/obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "hfw" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -21079,17 +21071,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/mining,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
-"hEp" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/dorms{
-	dir = 4
-	},
-/obj/structure/sign/clock/directional/south,
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "hEz" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/marker_beacon/burgundy,
@@ -21321,6 +21302,16 @@
 "hHP" = (
 /turf/open/floor/iron/dark,
 /area/station/maintenance/radshelter/civil)
+"hHR" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/dorms,
+/obj/effect/landmark/start/hangover,
+/obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "hIg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -21767,6 +21758,14 @@
 	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
+"hRK" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/obj/effect/landmark/start/hangover,
+/obj/structure/sign/clock/directional/south,
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "hSf" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -23354,6 +23353,13 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/service/library)
+"iuJ" = (
+/obj/structure/bed/double,
+/obj/item/bedsheet/dorms_double,
+/obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "iuM" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/machinery/door/window{
@@ -25793,6 +25799,16 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"jnR" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/dorms,
+/obj/effect/landmark/start/assistant,
+/obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "jnU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -25801,14 +25817,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"joe" = (
-/obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
-/obj/effect/landmark/start/hangover,
-/obj/structure/sign/clock/directional/north,
-/obj/item/pillow/random,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "jof" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -29432,16 +29440,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
-"kBm" = (
-/obj/structure/bed{
-	dir = 8
-	},
-/obj/item/bedsheet/dorms,
-/obj/effect/landmark/start/hangover,
-/obj/structure/sign/clock/directional/east,
-/obj/item/pillow/random,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "kBo" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -29727,15 +29725,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)
-"kFW" = (
-/obj/structure/bed{
-	dir = 8
-	},
-/obj/item/bedsheet/dorms,
-/obj/structure/sign/clock/directional/east,
-/obj/item/pillow/random,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "kFY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -32889,6 +32878,16 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
+"lLq" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/dorms,
+/obj/effect/landmark/start/assistant,
+/obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "lLx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -34272,13 +34271,6 @@
 /obj/effect/turf_decal/stripes/white/full,
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
-"mkZ" = (
-/obj/structure/bed/double,
-/obj/item/bedsheet/dorms_double,
-/obj/structure/sign/clock/directional/north,
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "mlg" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
@@ -39154,14 +39146,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
-"nYL" = (
-/obj/structure/bed,
-/obj/item/bedsheet/dorms,
-/obj/effect/landmark/start/hangover,
-/obj/structure/sign/clock/directional/south,
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "nYP" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -40329,6 +40313,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"ouo" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "oux" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 6
@@ -41451,17 +41443,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/left)
-"oRE" = (
-/obj/item/bedsheet/dorms_double{
-	dir = 4
-	},
-/obj/structure/bed/double{
-	dir = 4
-	},
-/obj/structure/sign/clock/directional/north,
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "oRV" = (
 /obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/line,
@@ -42212,6 +42193,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
+"pfm" = (
+/obj/item/bedsheet/dorms_double{
+	dir = 4
+	},
+/obj/structure/bed/double{
+	dir = 4
+	},
+/obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "pfo" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -46384,6 +46376,10 @@
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"qyZ" = (
+/obj/machinery/keycard_auth,
+/turf/closed/wall/r_wall,
+/area/station/command/bridge)
 "qza" = (
 /turf/closed/wall,
 /area/station/command/heads_quarters/qm)
@@ -52403,17 +52399,6 @@
 /obj/item/computer_disk/atmos,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
-"sGu" = (
-/obj/structure/bed/double{
-	dir = 4
-	},
-/obj/item/bedsheet/dorms_double{
-	dir = 4
-	},
-/obj/structure/sign/clock/directional/north,
-/obj/item/pillow/random,
-/turf/open/floor/wood,
-/area/station/commons/dorms)
 "sGF" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -56048,6 +56033,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/research)
+"tUM" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/dorms{
+	dir = 4
+	},
+/obj/structure/sign/clock/directional/west,
+/obj/item/pillow/random,
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "tVe" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -56667,6 +56663,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
+"ugf" = (
+/obj/structure/bed{
+	dir = 8
+	},
+/obj/item/bedsheet/dorms,
+/obj/structure/sign/clock/directional/east,
+/obj/item/pillow/random,
+/turf/open/floor/carpet,
+/area/station/commons/dorms)
 "ugh" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/effect/turf_decal/siding/thinplating{
@@ -57108,6 +57113,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/tram/center)
+"upb" = (
+/obj/structure/bed/double,
+/obj/item/bedsheet/dorms_double,
+/obj/effect/landmark/start/hangover,
+/obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "upe" = (
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61083,18 +61096,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/station/science/cytology)
-"vMv" = (
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/dorms{
-	dir = 4
-	},
-/obj/effect/landmark/start/assistant,
-/obj/structure/sign/clock/directional/west,
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "vMx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61993,14 +61994,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"wcj" = (
-/obj/structure/table/wood,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/obj/item/pillow/random,
-/turf/open/floor/carpet,
-/area/station/commons/dorms)
 "wcr" = (
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
@@ -63750,6 +63743,17 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"wJe" = (
+/obj/structure/bed/double{
+	dir = 4
+	},
+/obj/item/bedsheet/dorms_double{
+	dir = 4
+	},
+/obj/structure/sign/clock/directional/north,
+/obj/item/pillow/random,
+/turf/open/floor/wood,
+/area/station/commons/dorms)
 "wJh" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -84968,15 +84972,15 @@ ncF
 ncF
 dhe
 elr
-eUS
+tUM
 fOs
 suR
 elr
-fWG
+bzs
 pKZ
 oJR
 elr
-eUS
+tUM
 fOs
 suR
 elr
@@ -84985,11 +84989,11 @@ ujn
 elr
 oJR
 pKZ
-vMv
+cPK
 elr
 suR
 fOs
-eUS
+tUM
 apC
 apC
 apC
@@ -85250,7 +85254,7 @@ eAS
 elr
 xlU
 dxL
-hEp
+dRz
 apC
 xtu
 dhe
@@ -85507,7 +85511,7 @@ elr
 elr
 elr
 rnD
-wcj
+ouo
 apC
 xtu
 dhe
@@ -87534,15 +87538,15 @@ qQq
 uWr
 vqV
 ncF
-joe
+upb
 twk
 smp
 elr
-mkZ
+iuJ
 szo
 vyR
 elr
-gyH
+cvg
 twk
 smp
 apC
@@ -88562,15 +88566,15 @@ qQq
 hXO
 woH
 ncF
-sGu
+wJe
 twk
 smp
 elr
-oRE
+pfm
 szo
 vyR
 elr
-sGu
+wJe
 twk
 smp
 apC
@@ -90904,7 +90908,7 @@ eAS
 elr
 xlU
 dxL
-nYL
+hRK
 apC
 xtu
 dhe
@@ -91136,15 +91140,15 @@ ncF
 dhe
 dhe
 elr
-kBm
+hHR
 fOs
 dVA
 elr
-eUF
+jnR
 pKZ
 sjB
 elr
-kFW
+hft
 fOs
 dVA
 oTA
@@ -91153,11 +91157,11 @@ vwO
 oTA
 sjB
 pKZ
-bpU
+ugf
 elr
 dVA
 fOs
-dBQ
+lLq
 elr
 apC
 apC
@@ -152272,7 +152276,7 @@ pxi
 pxi
 pxi
 pxi
-pxi
+qyZ
 lDK
 xAQ
 eTv

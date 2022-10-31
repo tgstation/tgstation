@@ -115,7 +115,7 @@
 	return ..()
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
+	if(check_holidays(MONKEYDAY))
 		return TRUE
 	return ..()
 

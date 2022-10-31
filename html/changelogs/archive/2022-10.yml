@@ -1050,3 +1050,48 @@
   timothymtorres:
   - bugfix: Reagent containers playing attack animation when transferring reagents
       to deep fryers
+2022-10-30:
+  CMDR-Gungnir:
+  - qol: Recent breakthroughs in genetic crop modifications has created slightly less
+      addictive nicotine! A single cigarette should now be safe without ruining your
+      life.
+  GoldenAlpharex:
+  - bugfix: Random bedsheet spawners will now give their orientation to their spawned
+      bedsheet, for beds that aren't orientated in the regular direction. Mappers
+      rejoice!
+  - bugfix: Being hit by the freezing breath of two (or more) ice whelps will no longer
+      leave you looking like an ice cube for the rest of the round.
+  JohnFulpWillard:
+  - bugfix: 'The #cargobus channel now has all the department consoles again.'
+  Rhials:
+  - code_imp: Autodocs dreaming.dm and bedsheet_bin.dm.
+  - code_imp: Dreams now have an expanded list of subjects to choose from.
+  - bugfix: The Shuttle Insurance event no longer occurs when the BYOS is purchased.
+  ShizCalev:
+  - bugfix: holding someone up at gunpoint will no longer allow you to fire automatic
+      weapons at double RPM.
+  - bugfix: you can no longer one-shot kill people with the russian revolver by holding
+      them up.
+  Thunder12345:
+  - refactor: Dueling pistols have been refactored to be less prone to runtimes.
+  Watermelon914:
+  - balance: Limits how much of the heirloom objective you can get within 10 minutes.
+  etherware-novice:
+  - rscadd: title screen examine text
+  necromanceranne:
+  - bugfix: The infiltrator modsuit properly hides tails.
+  private-tristan:
+  - bugfix: Tramstation science now has the 20 glass instead of 1.
+2022-10-31:
+  ArcaneMusic:
+  - bugfix: The QM now has a statue, as all other heads have statues.
+  Fikou:
+  - qol: makes borg light range at least the minimum useful light range
+  LarissaMayrink:
+  - rscadd: Powercreeps the CMO by giving them a laser pointer
+  Melbert:
+  - bugfix: Fixes Latejoin Revolution from triggering very commonly
+  ShizCalev:
+  - bugfix: Microwaves are now less likely to break if things inside of it are deleted.
+  Vishenka0704:
+  - admin: adds a PDA Message verb in Events
