@@ -93,6 +93,15 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	restricted = TRUE
 
+/datum/uplink_item/dangerous/deagle
+	name = "Desert Eagle"
+	desc = "The tried-and-true, bulky behemoth of a pistol. Fires .50 AE rounds and contains 8 shots."
+	item = /obj/item/gun/ballistic/automatic/pistol/deagle
+	progression_minimum = 30 MINUTES
+	cost = 13
+	surplus = 50
+	purchasable_from = ~UPLINK_CLOWN_OPS
+
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
