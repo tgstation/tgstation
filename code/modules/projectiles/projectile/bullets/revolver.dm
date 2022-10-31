@@ -106,7 +106,7 @@
 
 /obj/projectile/bullet/a357
 	name = ".357 bullet"
-	damage = 60
+	damage = 40
 	wound_bonus = -30
 
 // admin only really, for ocelot memes
