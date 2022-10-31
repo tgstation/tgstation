@@ -73,7 +73,7 @@
 		time_to_spend = rand(mintime, maxtime)
 		playsound(src, pick(beep_sounds), 75)
 		time -= time_to_spend
-		sleep(time_to_spend)
+		stoplag(time_to_spend)
 
 ///Tries to locate a pad in the cardinal directions, if it finds one it returns it
 /obj/machinery/computer/mechpad/proc/find_pad()
