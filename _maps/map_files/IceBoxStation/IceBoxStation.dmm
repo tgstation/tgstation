@@ -20051,8 +20051,8 @@
 /area/station/cargo/office)
 "gaq" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/glass/coffee,
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full,
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = -8;
 	pixel_y = 5
 	},

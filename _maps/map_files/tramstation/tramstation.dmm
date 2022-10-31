@@ -894,12 +894,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/structure/table,
-/obj/item/storage/fancy/coffee_cart_rack{
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = 5;
 	pixel_y = 7
+	},
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = -9;
+	pixel_y = 1
 	},
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
@@ -23206,13 +23207,13 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/storage/fancy/coffee_cart_rack{
-	pixel_x = 8;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = -4;
 	pixel_y = 4
+	},
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = 8;
+	pixel_y = 16
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
@@ -27372,7 +27373,7 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/table/glass,
-/obj/machinery/coffeemaker,
+/obj/machinery/coffeemaker/impressa,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "jQS" = (
@@ -32533,7 +32534,7 @@
 /obj/item/storage/fancy/coffee_cart_rack{
 	pixel_x = -7
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = 8;
 	pixel_y = 4
 	},
@@ -43305,7 +43306,7 @@
 	dir = 2
 	},
 /obj/structure/table,
-/obj/machinery/coffeemaker,
+/obj/machinery/coffeemaker/impressa,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "pwS" = (

@@ -2942,8 +2942,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "aZL" = (
@@ -5318,8 +5317,7 @@
 	name = "Jim Norton's Quebecois Coffee";
 	req_one_access_txt = list("service","maint_tunnels")
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "bUC" = (
@@ -13775,7 +13773,6 @@
 /area/space/nearstation)
 "feA" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "feF" = (
@@ -14981,8 +14978,7 @@
 "fEs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/assistant,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/turf_decal/trimline/green/line,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "fEA" = (
@@ -15228,8 +15224,25 @@
 /area/station/command/teleporter)
 "fHk" = (
 /obj/machinery/newscaster/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/neutral/line,
+/obj/effect/turf_decal/trimline/green/line,
+/obj/effect/turf_decal/bot,
+/obj/structure/sink/directional/south{
+	dir = 8;
+	pixel_x = 14;
+	pixel_y = 0
+	},
+/obj/item/paper{
+	default_raw_text = "Jim Norton's Quebecois Coffee.         You see, in 2265 the Quebecois had finally had enough of Canada's shit, and went to the one place that wasn't corrupted by Canuckistan.Je vais au seul endroit qui n'a pas ??? corrompu par les Canadiens ... ESPACE.";
+	name = "Coffee Shop";
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/clothing/suit/apron/chef{
+	name = "Jim Norton's Quebecois Coffee apron"
+	},
+/obj/item/clothing/head/soft/green{
+	name = "Jim Norton's Quebecois Coffee cap"
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "fHC" = (
@@ -22493,37 +22506,18 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "imK" = (
-/obj/structure/sign/poster/contraband/robust_softdrinks{
-	name = "Jim Norton's Quebecois Coffee";
-	pixel_y = 32
-	},
-/obj/item/seeds/coffee{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/seeds/coffee/robusta{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/seeds/coffee{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/storage/box/drinkingglasses{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/storage/pill_bottle/happinesspsych{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/seeds/coffee{
-	pixel_x = 4;
-	pixel_y = -2
-	},
 /obj/machinery/light/directional/north,
-/obj/structure/table{
-	name = "Jim Norton's Quebecois Coffee table"
+/obj/structure/table/wood,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = -17;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/bottle/juice/cream{
+	pixel_x = -17;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
@@ -23820,11 +23814,11 @@
 /obj/structure/table{
 	name = "Jim Norton's Quebecois Coffee table"
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = -3;
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/cup/glass/coffee{
+/obj/item/reagent_containers/cup/glass/coffee/full{
 	pixel_x = 5;
 	pixel_y = 12
 	},
@@ -25892,22 +25886,24 @@
 /area/station/medical/surgery/theatre)
 "jpe" = (
 /obj/structure/window,
-/obj/item/reagent_containers/cup/glass/mug/coco{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/cup/glass/mug/tea{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/cup/glass/coffee{
-	pixel_x = -3
-	},
-/obj/structure/table/reinforced{
-	name = "Jim Norton's Quebecois Coffee table"
-	},
-/obj/effect/turf_decal/trimline/neutral/line{
+/obj/effect/turf_decal/trimline/green/line{
 	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/item/food/cakeslice/pound_cake_slice{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/food/cherrycupcake{
+	desc = "A dry and lumpy cupcake with cherry bits.";
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2);
+	name = "old cherry cupcake";
+	pixel_x = -1;
+	pixel_y = 11;
+	tastes = list("cake" = 1, "old rocky cherreis" = 2,"cardboard?" = 2)
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
@@ -28241,7 +28237,6 @@
 /area/station/medical/medbay/lobby)
 "kcM" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "kcV" = (
@@ -30898,29 +30893,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "lar" = (
-/obj/structure/noticeboard/directional/north,
-/obj/item/reagent_containers/condiment/milk{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/condiment/sugar{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/condiment/soymilk{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/cup/glass/ice{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/cup/glass/bottle/juice/cream{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/structure/table{
-	name = "Jim Norton's Quebecois Coffee table"
-	},
+/obj/structure/table/wood,
+/obj/machinery/coffeemaker/impressa,
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "lav" = (
@@ -41762,18 +41736,25 @@
 /obj/structure/window{
 	dir = 8
 	},
-/obj/item/stack/spacecash/c1{
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/cup/rag,
-/obj/structure/table/reinforced{
-	name = "Jim Norton's Quebecois Coffee table"
-	},
-/obj/effect/turf_decal/trimline/neutral/line{
+/obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
-/obj/structure/desk_bell{
-	pixel_x = 7
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel{
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/korta_nectar{
+	pixel_x = 4;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur{
+	pixel_x = 14;
+	pixel_y = 16
+	},
+/obj/item/storage/fancy/coffee_condi_display{
+	pixel_x = 3;
+	pixel_y = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
@@ -41841,13 +41822,28 @@
 /obj/structure/window{
 	dir = 8
 	},
-/obj/machinery/vending/coffee{
-	default_price = 0;
-	extra_price = 0;
-	fair_market_price = 0;
-	name = "\improper Jim Norton's Quebecois Coffee"
-	},
 /obj/machinery/light_switch/directional/north,
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 13;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/glass/mug{
+	pixel_x = 13;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/cup/glass/ice{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/storage/pill_bottle/happinesspsych{
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
 "oUh" = (
@@ -46538,18 +46534,17 @@
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "qCb" = (
-/obj/structure/table/reinforced{
-	name = "Jim Norton's Quebecois Coffee table"
-	},
-/obj/item/storage/fancy/donut_box,
-/obj/item/paper{
-	default_raw_text = "Jim Norton's Quebecois Coffee.         You see, in 2265 the Quebecois had finally had enough of Canada's shit, and went to the one place that wasn't corrupted by Canuckistan.Je vais au seul endroit qui n'a pas ??? corrompu par les Canadiens ... ESPACE.";
-	name = "Coffee Shop";
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/effect/turf_decal/trimline/neutral/line{
+/obj/effect/turf_decal/trimline/green/line{
 	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/structure/desk_bell{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/cup/rag,
+/obj/item/reagent_containers/cup/glass/coffee/full{
+	pixel_x = -3;
+	pixel_y = 9
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
@@ -50211,28 +50206,26 @@
 /area/station/medical/psychology)
 "rOG" = (
 /obj/structure/window,
-/obj/item/food/cakeslice/pound_cake_slice{
-	pixel_x = 8;
-	pixel_y = -2
-	},
 /obj/machinery/airalarm/directional/east,
-/obj/structure/table/reinforced{
-	name = "Jim Norton's Quebecois Coffee table"
-	},
 /obj/item/food/poppypretzel{
-	pixel_x = -8;
+	pixel_x = -2;
 	pixel_y = -3
 	},
-/obj/item/food/muffin/berry{
-	pixel_x = -4;
-	pixel_y = 9
-	},
 /obj/item/food/hotcrossbun{
-	pixel_x = 3;
-	pixel_y = 5
+	pixel_x = 5;
+	pixel_y = 8
 	},
-/obj/effect/turf_decal/trimline/neutral/line{
+/obj/effect/turf_decal/trimline/green/line{
 	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/food/muffin/berry{
+	desc = "A off-brand mass produced confectionary muffin. Its so dry that you wonder how long its been sitting here...";
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2);
+	name = "incredibly dry berry muffin";
+	pixel_x = -14;
+	pixel_y = 9;
+	tastes = list("muffin" = 1, "mass-produced confectionary" = 3,"cardboard?" = 2)
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
@@ -53877,7 +53870,6 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "sYp" = (
@@ -55774,7 +55766,6 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/station/service/cafeteria)
 "tHE" = (
@@ -57069,14 +57060,37 @@
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_x = 32
 	},
-/obj/structure/sink/directional/south,
-/obj/effect/turf_decal/bot,
-/obj/item/clothing/suit/apron/chef{
-	name = "Jim Norton's Quebecois Coffee apron"
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/north{
 	c_tag = "Jim Norton's Quebecois Coffee"
+	},
+/obj/item/reagent_containers/condiment/soymilk{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/condiment/milk{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/condiment/sugar{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/cup/glass/bottle/juice/cream{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/structure/noticeboard/directional/north,
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/storage/box/coffeepack/robusta{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/structure/closet/secure_closet/freezer/empty/open,
+/obj/item/reagent_containers/cup/glass/bottle/juice/cream{
+	pixel_x = 7;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
@@ -62832,6 +62846,10 @@
 /obj/effect/spawner/random/trash/bin,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"wbR" = (
+/obj/structure/sign/chalkboard_menu,
+/turf/closed/wall,
+/area/station/commons/storage/primary)
 "wcr" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -91368,7 +91386,7 @@ nZh
 hSf
 pID
 qSp
-guX
+wbR
 lar
 fEs
 qCb

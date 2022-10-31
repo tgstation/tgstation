@@ -223,3 +223,4 @@
 	desc = "The Nanotrasen corporate logo."
 	icon_state = "nanotrasen_sign1"
 	buildable_sign = FALSE
+

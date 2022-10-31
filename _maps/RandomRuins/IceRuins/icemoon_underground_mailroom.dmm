@@ -80,7 +80,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
 "hN" = (
-/obj/item/reagent_containers/cup/glass/coffee,
+/obj/item/reagent_containers/cup/glass/coffee/full,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "iO" = (

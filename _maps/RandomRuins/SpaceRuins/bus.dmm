@@ -191,7 +191,7 @@
 /area/ruin/unpowered/no_grav)
 "wc" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/glass/coffee,
+/obj/item/reagent_containers/cup/glass/coffee/full,
 /turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "wD" = (
