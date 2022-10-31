@@ -31208,7 +31208,9 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/obj/structure/chair/comfy/shuttle,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /obj/structure/fluff/tram_rail{
 	dir = 1
 	},
