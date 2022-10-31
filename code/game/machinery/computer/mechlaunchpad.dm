@@ -65,7 +65,7 @@
 
 /// A proc that makes random beeping sounds for a set amount of time, the sounds are separated by a random amount of time.
 /obj/machinery/computer/mechpad/proc/random_beeps(mob/user, time = 0, mintime = 0, maxtime = 1)
-	var/list/static/beep_sounds = list('sound/machines/terminal_prompt_confirm.ogg', 'sound/machines/terminal_prompt_deny.ogg', 'sound/machines/terminal_error.ogg', 'sound/machines/terminal_select.ogg', 'sound/machines/terminal_success.ogg')
+	var/static/list/beep_sounds = list('sound/machines/terminal_prompt_confirm.ogg', 'sound/machines/terminal_prompt_deny.ogg', 'sound/machines/terminal_error.ogg', 'sound/machines/terminal_select.ogg', 'sound/machines/terminal_success.ogg')
 	var/time_to_spend = 0
 	while(time > 0)
 		if(!DOING_INTERACTION_WITH_TARGET(user, src))
