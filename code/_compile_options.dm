@@ -54,6 +54,8 @@
 #define GC_FAILURE_HARD_LOOKUP
 #endif // REFERENCE_DOING_IT_LIVE
 
+// If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
+//#define DO_NOT_DEFER_ASSETS
 //#define UNIT_TESTS //If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 
 /// If this is uncommented, Autowiki will generate edits and shut down the server.
@@ -121,6 +123,8 @@
 #define REFERENCE_TRACKING_DEBUG
 #define FIND_REF_NO_CHECK_TICK
 #define GC_FAILURE_HARD_LOOKUP
+//Ensures all early assets can actually load early
+#define DO_NOT_DEFER_ASSETS
 #endif
 
 #ifdef TGS
