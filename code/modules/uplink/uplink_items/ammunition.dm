@@ -62,7 +62,7 @@
 /datum/uplink_item/ammo/deagle
 	name = ".50 AE Magazine"
 	desc = "An additional 7-round .50 AE magazine, compatible with the Desert Eagle pistol. \
-			Just in case you need to turn your enemies OFF."
+	Just in case you need to turn your enemies OFF."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/ammo_box/magazine/m50
 	cost = 4
