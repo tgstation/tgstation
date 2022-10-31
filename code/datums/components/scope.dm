@@ -35,7 +35,7 @@
 	tracker.calculate_params()
 	if(!length(tracker.marksman.client.keys_held & tracker.marksman.client.movement_keys))
 		tracker.marksman.face_atom(tracker.given_turf)
-	animate(tracker.marksman.client, 0.2 SECONDS, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
+	animate(tracker.marksman.client, world.tick_lag, pixel_x = tracker.given_x, pixel_y = tracker.given_y)
 
 /datum/component/scope/proc/on_move(atom/movable/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
@@ -85,6 +85,8 @@
 		if(iseffect(possible_target))
 			continue
 		if(ismob(possible_target))
+			if(possible_target == tracker.marksman)
+				continue
 			return possible_target
 		if(!possible_target.density)
 			non_dense_targets += possible_target
@@ -116,7 +118,7 @@
 	tracker.RegisterSignal(user, COMSIG_VIEWDATA_UPDATE, /atom/movable/screen/fullscreen/scope.proc/on_viewdata_update)
 	tracker.calculate_params()
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/stop_zooming)
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSprojectiles, src)
 
 /**
  * We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
@@ -127,7 +129,7 @@
 /datum/component/scope/proc/stop_zooming(mob/user)
 	SIGNAL_HANDLER
 
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSprojectiles, src)
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
