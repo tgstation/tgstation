@@ -49,7 +49,7 @@
 	C.set_safe_hunger_level()
 
 /datum/species/skeleton/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
