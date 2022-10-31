@@ -1017,3 +1017,81 @@
   timothymtorres:
   - bugfix: Fix table contextual screentips for tools
   - bugfix: Fix cyborgs dropping items when sent to the arena shuttle
+2022-10-28:
+  ShizCalev:
+  - code_imp: Added a unit test to catch items that can be equipped to suit slots
+      have missing textures.
+2022-10-29:
+  ArcaneMusic:
+  - qol: The Export Scanner, Sales Tagger, and Price Tagger have been merged together
+      into the Universal Scanner.
+  - qol: Using the Universal Scanner in-hand allows for switching between the three
+      tools functionality on the fly.
+  Melbert:
+  - bugfix: Roaches will actually eat ants
+  - bugfix: Rats can be multicolored now, like mice
+  - bugfix: Rats, when they die, become pick-up-able items like mice
+  - refactor: Refactored mice / rats into basicmobs.
+  ShizCalev:
+  - qol: Converted buckets (and naturally cleanbots) over to GAGs.
+  - bugfix: Cleanbots built with a wooden bucket will now properly drop a wooden bucket
+      when destroyed.
+  Vladoricious:
+  - bugfix: Consciousness Transference potions now tame the target creature, just
+      like Sentience potions.
+  Watermelon914:
+  - refactor: Refactored how duplicates are handled in traitor objective code. This
+      will fix destroy heirloom and eyesnatching objectives from only ever being available
+      once.
+  - bugfix: Fixed destroy heirloom objectives never generating
+  - bugfix: Fixed eyesnatching objectives never generating.
+  - balance: Kidnapping objective can only be taken a maximum of 3 times within 15
+      minutes. This puts it in line with the assassinate and eyesnatching objectives.
+  timothymtorres:
+  - bugfix: Reagent containers playing attack animation when transferring reagents
+      to deep fryers
+2022-10-30:
+  CMDR-Gungnir:
+  - qol: Recent breakthroughs in genetic crop modifications has created slightly less
+      addictive nicotine! A single cigarette should now be safe without ruining your
+      life.
+  GoldenAlpharex:
+  - bugfix: Random bedsheet spawners will now give their orientation to their spawned
+      bedsheet, for beds that aren't orientated in the regular direction. Mappers
+      rejoice!
+  - bugfix: Being hit by the freezing breath of two (or more) ice whelps will no longer
+      leave you looking like an ice cube for the rest of the round.
+  JohnFulpWillard:
+  - bugfix: 'The #cargobus channel now has all the department consoles again.'
+  Rhials:
+  - code_imp: Autodocs dreaming.dm and bedsheet_bin.dm.
+  - code_imp: Dreams now have an expanded list of subjects to choose from.
+  - bugfix: The Shuttle Insurance event no longer occurs when the BYOS is purchased.
+  ShizCalev:
+  - bugfix: holding someone up at gunpoint will no longer allow you to fire automatic
+      weapons at double RPM.
+  - bugfix: you can no longer one-shot kill people with the russian revolver by holding
+      them up.
+  Thunder12345:
+  - refactor: Dueling pistols have been refactored to be less prone to runtimes.
+  Watermelon914:
+  - balance: Limits how much of the heirloom objective you can get within 10 minutes.
+  etherware-novice:
+  - rscadd: title screen examine text
+  necromanceranne:
+  - bugfix: The infiltrator modsuit properly hides tails.
+  private-tristan:
+  - bugfix: Tramstation science now has the 20 glass instead of 1.
+2022-10-31:
+  ArcaneMusic:
+  - bugfix: The QM now has a statue, as all other heads have statues.
+  Fikou:
+  - qol: makes borg light range at least the minimum useful light range
+  LarissaMayrink:
+  - rscadd: Powercreeps the CMO by giving them a laser pointer
+  Melbert:
+  - bugfix: Fixes Latejoin Revolution from triggering very commonly
+  ShizCalev:
+  - bugfix: Microwaves are now less likely to break if things inside of it are deleted.
+  Vishenka0704:
+  - admin: adds a PDA Message verb in Events

@@ -117,11 +117,6 @@
 		if("Wire Brush")
 			tool_behaviour = TOOL_RUSTSCRAPER
 
-	if(tool_behaviour == TOOL_SCREWDRIVER)
-		AddElement(/datum/element/eyestab)
-	else
-		RemoveElement(/datum/element/eyestab)
-
 /obj/item/debug/omnitool/item_spawner/attack_self(mob/user)
 	if(!user || !user.client)
 		return

@@ -93,7 +93,6 @@
 		"recorder",
 		"rglass",
 		"roll",
-		"salestagger",
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
