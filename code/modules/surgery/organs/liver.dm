@@ -68,7 +68,20 @@
 		else if(HAS_TRAIT(src, TRAIT_PRETENDER_ROYAL_METABOLISM))
 			. += "A diet of imitation caviar, and signs of insomnia, implies that this is the liver of <em>someone who wants to be a head of staff</em>."
 
+/obj/item/organ/internal/liver/before_organ_replacement(obj/item/organ/replacement)
+	. = ..()
+	if(!istype(replacement, type))
+		return
 
+	var/datum/job/owner_job = owner.mind?.assigned_role
+	if(!owner_job || !LAZYLEN(owner_job.liver_traits))
+		return
+
+	// Transfer over liver traits from jobs, if we should have them
+	for(var/readded_trait in owner_job.liver_traits)
+		if(!HAS_TRAIT_FROM(src, readded_trait, JOB_TRAIT))
+			continue
+		ADD_TRAIT(replacement, readded_trait, JOB_TRAIT)
 
 #define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
 #define HAS_NO_TOXIN 1
@@ -178,9 +191,9 @@
 		if(0 to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			examine_list += span_notice("[owner]'s eyes are slightly yellow.")
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
-			examine_list += span_notice("[owner]'s eyes are completely yellow, and he is visibly suffering.")
+			examine_list += span_notice("[owner]'s eyes are completely yellow, and [owner.p_they()] [owner.p_are()] visibly suffering.")
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
-			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they()] don't look like they will be alive for much longer.")
+			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they(TRUE)] [owner.p_do()]n't look like [owner.p_they()] will be alive for much longer.")
 
 /obj/item/organ/internal/liver/on_death(delta_time, times_fired)
 	. = ..()
@@ -255,5 +268,3 @@
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
-
-

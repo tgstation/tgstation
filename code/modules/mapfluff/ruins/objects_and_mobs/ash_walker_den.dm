@@ -3,7 +3,7 @@
 /obj/structure/lavaland/ash_walker
 	name = "necropolis tendril nest"
 	desc = "A vile tendril of corruption. It's surrounded by a nest of rapidly growing eggs..."
-	icon = 'icons/mob/nest.dmi'
+	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	icon_state = "ash_walker_nest"
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it

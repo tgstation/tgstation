@@ -35,7 +35,7 @@
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	death_sound = 'sound/creatures/space_dragon_roar.ogg'
-	icon = 'icons/mob/spacedragon.dmi'
+	icon = 'icons/mob/nonhuman-player/spacedragon.dmi'
 	icon_state = "spacedragon"
 	icon_living = "spacedragon"
 	icon_dead = "spacedragon_dead"
@@ -88,7 +88,6 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
 	AddElement(/datum/element/content_barfer)
 	small_sprite = new
 	small_sprite.Grant(src)

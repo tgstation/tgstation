@@ -42,7 +42,7 @@
 	attack_verb_simple = "chomp"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
@@ -205,7 +205,7 @@
 				continue
 			hit_list += M
 			M.take_damage(45, BRUTE, MELEE, 1)
-		sleep(1.5)
+		sleep(0.15 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity <= EXPLODE_LIGHT)

@@ -4,6 +4,7 @@
 /obj/item/dualsaber
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	icon_state = "dualsaber0"
+	inhand_icon_state = "dualsaber0"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "double-bladed energy sword"
@@ -71,7 +72,7 @@
 	return HAS_TRAIT(src, TRAIT_WIELDED) && sharpness
 
 /obj/item/dualsaber/update_icon_state()
-	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
+	icon_state = inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "dualsaber[saber_color][HAS_TRAIT(src, TRAIT_WIELDED)]" : "dualsaber0"
 	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
@@ -89,7 +90,7 @@
 				user.emote("spin")
 				if (i == 3 && myhead)
 					myhead.drop_limb()
-				sleep(3)
+				sleep(0.3 SECONDS)
 			else
 				user.visible_message(span_suicide("[user] panics and starts choking to death!"))
 				return OXYLOSS

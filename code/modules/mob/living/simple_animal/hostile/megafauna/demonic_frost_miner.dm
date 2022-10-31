@@ -14,7 +14,7 @@ Difficulty: Extremely Hard
 	maxHealth = 1500
 	icon_state = "demonic_miner"
 	icon_living = "demonic_miner"
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummels"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
@@ -277,7 +277,7 @@ Difficulty: Extremely Hard
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_FEET)
+	if(slot & ITEM_SLOT_FEET)
 		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
@@ -362,6 +362,11 @@ Difficulty: Extremely Hard
 /datum/status_effect/ice_block_talisman/proc/owner_moved()
 	SIGNAL_HANDLER
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+/datum/status_effect/ice_block_talisman/be_replaced()
+	owner.cut_overlay(cube)
+	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
+	return ..()
 
 /datum/status_effect/ice_block_talisman/on_remove()
 	if(!owner.stat)

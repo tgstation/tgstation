@@ -12,9 +12,10 @@
 
 /obj/structure/holosign/Initialize(mapload, source_projector)
 	. = ..()
+	var/turf/our_turf = get_turf(src)
 	if(use_vis_overlay)
 		alpha = 0
-		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, GAME_PLANE_UPPER, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+		SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE_UPPER, our_turf), dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 	if(source_projector)
 		projector = source_projector
 		LAZYADD(projector.signs, src)
@@ -105,16 +106,13 @@
 
 /obj/structure/holosign/barrier/atmos/Initialize(mapload)
 	. = ..()
-	var/turf/local = get_turf(loc)
-	ADD_TRAIT(local, TRAIT_FIREDOOR_STOP, TRAIT_GENERIC)
 	air_update_turf(TRUE, TRUE)
+	AddElement(/datum/element/trait_loc, TRAIT_FIREDOOR_STOP)
 
 /obj/structure/holosign/barrier/atmos/block_superconductivity() //Didn't used to do this, but it's "normal", and will help ease heat flow transitions with the players.
 	return TRUE
 
 /obj/structure/holosign/barrier/atmos/Destroy()
-	var/turf/local = get_turf(loc)
-	REMOVE_TRAIT(local, TRAIT_FIREDOOR_STOP, TRAIT_GENERIC)
 	air_update_turf(TRUE, FALSE)
 	return ..()
 

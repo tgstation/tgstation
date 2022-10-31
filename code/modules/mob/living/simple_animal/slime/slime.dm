@@ -1,7 +1,7 @@
 #define SLIME_CARES_ABOUT(to_check) (to_check && (to_check == Target || to_check == Leader || (to_check in Friends)))
 /mob/living/simple_animal/slime
 	name = "grey baby slime (123)"
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE | PASSGRILLE
 	gender = NEUTER
@@ -351,7 +351,7 @@
 		if(..()) //successful attack
 			attacked += 10
 
-/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/simple_animal/slime/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(..()) //if harm or disarm intent.
 		attacked += 10
 		discipline_slime(user)

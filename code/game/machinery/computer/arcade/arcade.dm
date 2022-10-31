@@ -58,6 +58,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/rouny = 2,
 		/obj/item/toy/plush/abductor = 2,
 		/obj/item/toy/plush/abductor/agent = 2,
+		/obj/item/toy/plush/greek_cucumber = 2,
 		/obj/item/storage/belt/military/snack = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,
@@ -560,7 +561,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				obj_flags &= ~EMAGGED
 				xp_gained += 100
 			else
-				prizevend(user)
+				new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+				to_chat(user, span_notice("[src] dispenses 2 tickets!"))
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 			user.won_game()
@@ -665,7 +667,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		user.won_game()
 		playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
-		prizevend(user, rand(3,5))
+		new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
+		to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
 		return
 	else if(!do_they_still_have_that_hand(user, chopchop))
 		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))

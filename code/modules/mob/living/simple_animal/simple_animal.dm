@@ -1,7 +1,7 @@
 /// Simple, mostly AI-controlled critters, such as pets, bots, and drones.
 /mob/living/simple_animal
 	name = "animal"
-	icon = 'icons/mob/animal.dmi'
+	icon = 'icons/mob/simple/animal.dmi'
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder
@@ -502,7 +502,7 @@
 	adjust_bodytemperature((maxbodytemp + (fire_handler.stacks * 12)) * 0.5 * delta_time)
 
 /mob/living/simple_animal/update_fire_overlay(stacks, on_fire, last_icon_state, suffix = "")
-	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/onfire.dmi', "generic_fire")
+	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/effects/onfire.dmi', "generic_fire")
 	if(on_fire && isnull(last_icon_state))
 		add_overlay(fire_overlay)
 		return fire_overlay
@@ -569,25 +569,26 @@
 		return
 	if(stat == DEAD)
 		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-			sight = null
+			set_sight(null)
 		else if(is_secret_level(z))
-			sight = initial(sight)
+			set_sight(initial(sight))
 		else
-			sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = NIGHTVISION_FOV_RANGE
-		see_invisible = SEE_INVISIBLE_OBSERVER
+			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		set_see_in_dark(NIGHTVISION_FOV_RANGE)
+		set_invis_see(SEE_INVISIBLE_OBSERVER)
 		return
 
-	see_invisible = initial(see_invisible)
-	see_in_dark = initial(see_in_dark)
-	sight = initial(sight)
+	set_invis_see(initial(see_invisible))
+	set_see_in_dark(initial(see_in_dark))
 	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		sight = null
+		set_sight(null)
+	else
+		set_sight(initial(sight))
 	if(client.eye != src)
 		var/atom/A = client.eye
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
-	sync_lighting_plane_alpha()
+	return ..()
 
 //Will always check hands first, because access_card is internal to the mob and can't be removed or swapped.
 /mob/living/simple_animal/get_idcard(hand_first)
@@ -636,12 +637,14 @@
 	update_held_items()
 
 /mob/living/simple_animal/update_held_items()
-	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in held_items)
-			var/index = get_held_index_of_item(I)
-			I.plane = ABOVE_HUD_PLANE
-			I.screen_loc = ui_hand_position(index)
-			client.screen |= I
+	if(!client || !hud_used || hud_used.hud_version == HUD_STYLE_NOHUD)
+		return
+	var/turf/our_turf = get_turf(src)
+	for(var/obj/item/I in held_items)
+		var/index = get_held_index_of_item(I)
+		SET_PLANE(I, ABOVE_HUD_PLANE, our_turf)
+		I.screen_loc = ui_hand_position(index)
+		client.screen |= I
 
 //ANIMAL RIDING
 
@@ -678,7 +681,7 @@
 	if (pulledby || shouldwakeup)
 		toggle_ai(AI_ON)
 
-/mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf)
+/mob/living/simple_animal/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	..()
 	if (old_turf && AIStatus == AI_Z_OFF)
 		SSidlenpcpool.idle_mobs_by_zlevel[old_turf.z] -= src

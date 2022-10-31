@@ -31,7 +31,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/shell/allowed(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & COMPONENT_AIRLOCK_SHELL_ALLOW)
+	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & COMPONENT_OBJ_ALLOW)
 		return TRUE
 	return isAdminGhostAI(user)
 
@@ -156,12 +156,16 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
 		attached_airlock = shell
-		RegisterSignal(shell, COMSIG_AIRLOCK_SHELL_ALLOWED , .proc/handle_allowed)
+		RegisterSignal(shell, list(
+			COMSIG_OBJ_ALLOWED,
+			COMSIG_AIRLOCK_SHELL_ALLOWED,
+		), .proc/handle_allowed)
 
 /obj/item/circuit_component/airlock_access_event/unregister_shell(atom/movable/shell)
 	attached_airlock = null
 	UnregisterSignal(shell, list(
-		COMSIG_AIRLOCK_SHELL_ALLOWED ,
+		COMSIG_OBJ_ALLOWED,
+		COMSIG_AIRLOCK_SHELL_ALLOWED
 	))
 	return ..()
 
@@ -193,4 +197,6 @@
 		return
 
 	if(result["should_open"])
-		return COMPONENT_AIRLOCK_SHELL_ALLOW
+		return COMPONENT_OBJ_ALLOW
+	else
+		return COMPONENT_OBJ_DISALLOW

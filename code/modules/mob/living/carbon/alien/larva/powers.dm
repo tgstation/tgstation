@@ -53,7 +53,7 @@
 		caste_options = list()
 
 		// This can probably be genericized in the future.
-		var/mob/hunter_path = /mob/living/carbon/alien/humanoid/hunter
+		var/mob/hunter_path = /mob/living/carbon/alien/adult/hunter
 		var/datum/radial_menu_choice/hunter = new()
 		hunter.name = "Hunter"
 		hunter.image  = image(icon = initial(hunter_path.icon), icon_state = initial(hunter_path.icon_state))
@@ -62,7 +62,7 @@
 
 		caste_options["Hunter"] = hunter
 
-		var/mob/sentinel_path = /mob/living/carbon/alien/humanoid/sentinel
+		var/mob/sentinel_path = /mob/living/carbon/alien/adult/sentinel
 		var/datum/radial_menu_choice/sentinel = new()
 		sentinel.name = "Sentinel"
 		sentinel.image  = image(icon = initial(sentinel_path.icon), icon_state = initial(sentinel_path.icon_state))
@@ -72,7 +72,7 @@
 
 		caste_options["Sentinel"] = sentinel
 
-		var/mob/drone_path = /mob/living/carbon/alien/humanoid/drone
+		var/mob/drone_path = /mob/living/carbon/alien/adult/drone
 		var/datum/radial_menu_choice/drone = new()
 		drone.name = "Drone"
 		drone.image  = image(icon = initial(drone_path.icon), icon_state = initial(drone_path.icon_state))
@@ -86,14 +86,14 @@
 	if(QDELETED(src) || QDELETED(owner) || !IsAvailable() || isnull(alien_caste))
 		return
 
-	var/mob/living/carbon/alien/humanoid/new_xeno
+	var/mob/living/carbon/alien/adult/new_xeno
 	switch(alien_caste)
 		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(larva.loc)
+			new_xeno = new /mob/living/carbon/alien/adult/hunter(larva.loc)
 		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(larva.loc)
+			new_xeno = new /mob/living/carbon/alien/adult/sentinel(larva.loc)
 		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(larva.loc)
+			new_xeno = new /mob/living/carbon/alien/adult/drone(larva.loc)
 		else
 			CRASH("Alien evolve was given an invalid / incorrect alien cast type. Got: [alien_caste]")
 

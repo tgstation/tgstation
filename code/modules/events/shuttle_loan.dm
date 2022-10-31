@@ -65,7 +65,7 @@
 	end_when = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
-	SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
+	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
 	SSshuttle.supply.setTimer(3000)
 
 	switch(dispatch_type)

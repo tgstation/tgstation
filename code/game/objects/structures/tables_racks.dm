@@ -47,20 +47,30 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
-	if (!(flags_1 & NODECONSTRUCT_1))
-		var/static/list/tool_behaviors = list(
-			TOOL_SCREWDRIVER = list(
-				SCREENTIP_CONTEXT_RMB = "Disassemble",
-			),
+/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
 
-			TOOL_WRENCH = list(
-				SCREENTIP_CONTEXT_RMB = "Deconstruct",
-			),
-		)
+	if(isnull(held_item))
+		return NONE
 
-		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
-		register_context()
+	if(istype(held_item, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = held_item
+		if(dealer_deck.wielded)
+			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
+			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	if(!(flags_1 & NODECONSTRUCT_1) && deconstruction_ready)
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
+			. = CONTEXTUAL_SCREENTIP_SET
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -271,15 +281,6 @@
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(istype(held_item, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = held_item
-		if(dealer_deck.wielded)
-			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
-			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
-			return CONTEXTUAL_SCREENTIP_SET
-	return NONE
-
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	return
 
@@ -330,6 +331,14 @@
 	base_icon_state = "table_greyscale"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
+
+/obj/structure/table/greyscale/set_custom_materials(list/materials, multiplier)
+	. = ..()
+	var/list/materials_list = list()
+	for(var/custom_material in custom_materials)
+		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
+		materials_list += "[current_material.name]"
+	desc = "A square [(materials_list.len > 1) ? "amalgamation" : "piece"] of [english_list(materials_list)] on four legs. It can not move."
 
 ///Table on wheels
 /obj/structure/table/rolling
@@ -586,6 +595,18 @@
 	integrity_failure = 0.25
 	armor = list(MELEE = 10, BULLET = 30, LASER = 30, ENERGY = 100, BOMB = 20, BIO = 0, FIRE = 80, ACID = 70)
 
+/obj/structure/table/reinforced/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_RMB] = deconstruction_ready ? "Strengthen" : "Weaken"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
+
 /obj/structure/table/reinforced/deconstruction_hints(mob/user)
 	if(deconstruction_ready)
 		return span_notice("The top cover has been <i>welded</i> loose and the main frame's <b>bolts</b> are exposed.")
@@ -833,6 +854,7 @@
 	desc = "Parts of a rack."
 	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "rack_parts"
+	inhand_icon_state = "rack_parts"
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron=2000)
 	var/building = FALSE

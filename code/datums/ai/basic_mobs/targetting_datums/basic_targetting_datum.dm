@@ -13,6 +13,8 @@
 	return target_hiding_location
 
 /datum/targetting_datum/basic
+	/// When we do our basic faction check, do we look for exact faction matches?
+	var/check_factions_exactly = FALSE
 
 /datum/targetting_datum/basic/can_attack(mob/living/living_mob, atom/the_target)
 	if(isturf(the_target) || !the_target) // bail out on invalids
@@ -29,14 +31,14 @@
 	if(living_mob.z != the_target.z)
 		return FALSE
 
-	if(isliving(the_target)) //Targetting vs living mobs
+	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/L = the_target
-		var/faction_check = living_mob.faction_check_mob(L)
+		var/faction_check = living_mob.faction_check_mob(L, exact_match = check_factions_exactly)
 		if(faction_check || L.stat)
 			return FALSE
 		return TRUE
 
-	if(ismecha(the_target)) //Targetting vs mechas
+	if(ismecha(the_target)) //Targeting vs mechas
 		var/obj/vehicle/sealed/mecha/M = the_target
 		for(var/occupant in M.occupants)
 			if(can_attack(living_mob, occupant)) //Can we attack any of the occupants?
@@ -55,7 +57,7 @@
 	return FALSE
 
 /// Subtype more forgiving for items.
-/// Careful, this can go wrong and keep a mob hyperfocused on an item it can't lose aggro on
+/// Careful, this can go wrong and keep a mob hyper-focused on an item it can't lose aggro on
 /datum/targetting_datum/basic/allow_items
 
 /datum/targetting_datum/basic/allow_items/can_attack(mob/living/living_mob, atom/the_target)

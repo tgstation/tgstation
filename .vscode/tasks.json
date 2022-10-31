@@ -89,6 +89,19 @@
 			],
 			"group": "build",
 			"label": "tgui: sonar"
+		},
+		{
+			"type": "shell",
+			"command": "bin/tgfont",
+			"windows": {
+				"command": ".\\bin\\tgfont.cmd"
+			},
+			"problemMatcher": [
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": "build",
+			"label": "tgui: rebuild tgfont"
 		}
 	]
 }

@@ -39,7 +39,6 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
-	damage_overlay_type = "monkey"
 	sexes = FALSE
 	punchdamagelow = 1
 	punchdamagehigh = 3
@@ -83,7 +82,6 @@
 	C.dna.remove_mutation(/datum/mutation/human/race)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
-	. = ..()
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		if(!iscarbon(target))
 			return TRUE
@@ -106,14 +104,15 @@
 		to_chat(user, span_danger("You bite [victim]!"))
 		if(armor >= 2)
 			return TRUE
-		for(var/d in user.diseases)
-			var/datum/disease/bite_infection = d
+		for(var/datum/disease/bite_infection as anything in user.diseases)
 			if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 			victim.ForceContractDisease(bite_infection)
 		return TRUE
-	target.attack_paw(user, modifiers)
-	return TRUE
+	if(!ISADVANCEDTOOLUSER(user))
+		target.attack_paw(user, modifiers)
+		return TRUE
+	return ..()
 
 /datum/species/monkey/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
@@ -211,7 +210,7 @@
 	else
 		monkey_brain.tripping = TRUE
 		background_icon_state = "bg_default_on"
-		to_chat(monkey_brain.owner, span_notice("You will not stumble while while colliding with people who are in combat mode."))
+		to_chat(monkey_brain.owner, span_notice("You will now stumble while while colliding with people who are in combat mode."))
 	UpdateButtons()
 
 
@@ -219,7 +218,7 @@
 	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed, TRUE)
 
-/obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE)
+/obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE, no_id_transfer = FALSE)
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
 	return ..()
 
@@ -232,6 +231,6 @@
 	var/mob/living/in_the_way_mob = crossed
 	if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
 		return
-	if(in_the_way_mob.pass_flags == PASSTABLE)
+	if(in_the_way_mob.pass_flags & PASSTABLE)
 		return
 	in_the_way_mob.knockOver(owner)

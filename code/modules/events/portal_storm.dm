@@ -37,12 +37,16 @@
 	var/list/hostiles_spawn = list()
 	var/list/hostile_types = list()
 	var/number_of_hostiles
-	var/mutable_appearance/storm
+	/// List of mutable appearances in the form (plane offset + 1 -> appearance)
+	var/list/mutable_appearance/storm_appearances
 
 /datum/round_event/portal_storm/setup()
-	storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
-	storm.plane = ABOVE_GAME_PLANE
-	storm.color = "#00FF00"
+	storm_appearances = list()
+	for(var/offset in 0 to SSmapping.max_plane_offset)
+		var/mutable_appearance/storm = mutable_appearance('icons/obj/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+		SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
+		storm.color = "#00FF00"
+		storm_appearances += storm
 
 	number_of_bosses = 0
 	for(var/boss in boss_types)
@@ -63,9 +67,9 @@
 /datum/round_event/portal_storm/announce(fake)
 	set waitfor = 0
 	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
-	sleep(80)
+	sleep(8 SECONDS)
 	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
-	sleep(20)
+	sleep(2 SECONDS)
 	sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
 /datum/round_event/portal_storm/tick()
@@ -101,7 +105,7 @@
 		log_game("Portal Storm failed to spawn effect due to an invalid location.")
 		return
 	T = get_step(T, SOUTHWEST) //align center of image with turf
-	flick_overlay_static(storm, T, 15)
+	flick_overlay_static(storm_appearances[GET_TURF_PLANE_OFFSET(T) + 1], T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
 
 /datum/round_event/portal_storm/proc/spawn_hostile()

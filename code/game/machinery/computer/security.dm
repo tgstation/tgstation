@@ -553,7 +553,7 @@ What a mess.*/
 				if(!( printing ))
 					printing = TRUE
 					playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
-					sleep(30)
+					sleep(3 SECONDS)
 					print_security_record(active1, active2, loc)
 					printing = FALSE
 			if("Print Poster")
@@ -574,7 +574,7 @@ What a mess.*/
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 							printing = 1
-							sleep(30)
+							sleep(3 SECONDS)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.get_front_photo()
 								new /obj/item/poster/wanted(loc, photo.picture.picture_image, wanted_name, info, headerText)
@@ -591,7 +591,7 @@ What a mess.*/
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 							printing = 1
-							sleep(30)
+							sleep(3 SECONDS)
 							if((istype(active1, /datum/data/record) && GLOB.data_core.general.Find(active1)))//make sure the record still exists.
 								var/obj/item/photo/photo = active1.get_front_photo()
 								new /obj/item/poster/wanted/missing(loc, photo.picture.picture_image, missing_name, info, headerText)
@@ -621,7 +621,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, station_time_timestamp(), time2text(world.realtime, "MMM DD"), CURRENT_STATION_YEAR, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)
@@ -976,7 +976,7 @@ What a mess.*/
 	if (printing)
 		return
 	printing = TRUE
-	sleep(20)
+	sleep(2 SECONDS)
 	var/obj/item/photo/P = new/obj/item/photo(drop_location())
 	var/datum/picture/toEmbed = new(name = person_name, desc = "The photo on file for [person_name].", image = temp)
 	P.set_picture(toEmbed, TRUE, TRUE)

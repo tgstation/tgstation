@@ -81,7 +81,7 @@ SUBSYSTEM_DEF(research)
 	autosort_categories()
 	error_design = new
 	error_node = new
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/research/fire()
 	var/list/bitcoins = list()

@@ -36,7 +36,7 @@
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
 	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100)
-	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
@@ -109,8 +109,8 @@
 		else if(deconstruction == BLASTDOOR_NEEDS_WIRES)
 			. += span_notice("The <i>wires</i> have been removed and it's ready to be <b>sliced apart</b>.")
 
-/obj/machinery/door/poddoor/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	id = "[port.id]_[id]"
+/obj/machinery/door/poddoor/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.shuttle_id]_[id]"
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
@@ -131,7 +131,7 @@
 	. = ..()
 	icon_state = density ? "closed" : "open"
 
-/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))
 		add_fingerprint(user)
 		user.visible_message(span_warning("[user] begins prying open [src]."),\

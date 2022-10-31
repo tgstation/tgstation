@@ -26,7 +26,7 @@
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	appearance = fried.appearance
 	layer = initial(layer)
-	plane = initial(plane)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	lefthand_file = fried.lefthand_file
 	righthand_file = fried.righthand_file
 	inhand_icon_state = fried.inhand_icon_state

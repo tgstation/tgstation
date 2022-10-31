@@ -96,7 +96,7 @@
 					if (i == ingredients.len - 1)
 						ending = ", and "
 			ingredients_listed += "\a [ingredient.name][ending]"
-	examine_list += "It contains [LAZYLEN(ingredients) ? "[ingredients_listed]" : " no ingredients, "]making a [custom_adjective()]-sized [initial(atom_parent.name)]."
+	examine_list += "It [LAZYLEN(ingredients) ? "contains [ingredients_listed]making a [custom_adjective()]-sized [initial(atom_parent.name)]" : "does not contain any ingredients"]."
 
 
 ///Handles when the customizable food is attacked by something.

@@ -10,6 +10,7 @@
 	show_in_roundend = FALSE
 	silent = TRUE
 	ui_name = "AntagInfoShade"
+	count_against_dynamic_roll_chance = FALSE
 	/// Name of this shade's master.
 	var/master_name = "nobody?"
 

@@ -1,5 +1,3 @@
-#define INFINITE -1
-
 /obj/item/autosurgeon
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
@@ -34,7 +32,7 @@
 	. = ..()
 	if(stored_organ)
 		. += loaded_overlay
-		. += emissive_appearance(icon, loaded_overlay)
+		. += emissive_appearance(icon, loaded_overlay, src)
 
 /obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ, mob/living/user)
 	if(user)

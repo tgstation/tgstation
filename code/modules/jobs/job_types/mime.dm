@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "MIME"
 
 	outfit = /datum/outfit/job/mime
 	plasmaman_outfit = /datum/outfit/plasmaman/mime
@@ -86,6 +87,7 @@
 	name = "Guide to Dank Mimery"
 	desc = "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence. One use only."
 	icon_state = "bookmime"
+	starting_title = "Guide to Dank Mimery"
 
 /obj/item/book/mimery/attack_self(mob/user)
 	. = ..()

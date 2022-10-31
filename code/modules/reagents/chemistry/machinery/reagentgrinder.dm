@@ -99,7 +99,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
 		return
 	if(operating)
 		return
@@ -174,7 +174,7 @@
 	//Fill machine with a bag!
 	if(istype(I, /obj/item/storage/bag))
 		var/list/inserted = list()
-		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), null, null, user, inserted))
+		if(I.atom_storage.remove_type(/obj/item/food/grown, src, limit - length(holdingitems), TRUE, FALSE, user, inserted))
 			for(var/i in inserted)
 				holdingitems[i] = TRUE
 			if(!I.contents.len)

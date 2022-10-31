@@ -284,7 +284,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * returns whether the species should innately have this organ.
  *
  * regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.
- * This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.
+ * This is set to return true or false, depending on if a species has a trait that would nulify the purpose of the organ.
+ * For example, lungs won't be given if you have NO_BREATH, stomachs check for NO_HUNGER, and livers check for NO_METABOLISM.
+ * If you want a carbon to have a trait that normally blocks an organ but still want the organ. Attach the trait to the organ using the organ_traits var
  * Arguments:
  * owner_species - species, needed to return whether the species has an organ specific trait
  */
@@ -293,7 +295,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Called before organs are replaced in regenerate_organs with new ones
 /obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_ORGAN_BEING_REPLACED, replacement)
+
+	// If we're being replace with an identical type we should take organ damage
+	if(replacement.type == type)
+		replacement.setOrganDamage(damage)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
 /obj/item/organ/proc/get_status_text()

@@ -14,6 +14,18 @@
 		/obj/item/storage/box/donkpockets/donkpockethonk,
 	)
 
+/obj/effect/spawner/random/food_or_drink/donkpockets_single
+	name = "single donk pocket spawner"
+	icon_state = "donkpocket_single"
+	loot = list(
+		/obj/item/food/donkpocket,
+		/obj/item/food/donkpocket/spicy,
+		/obj/item/food/donkpocket/teriyaki,
+		/obj/item/food/donkpocket/pizza,
+		/obj/item/food/donkpocket/berry,
+		/obj/item/food/donkpocket/honk,
+	)
+
 /obj/effect/spawner/random/food_or_drink/seed
 	name = "seed spawner"
 	icon_state = "seed"
@@ -33,6 +45,7 @@
 		/obj/item/seeds/chanter,
 		/obj/item/seeds/potato,
 		/obj/item/seeds/sugarcane,
+		/obj/item/seeds/cucumber,
 	)
 
 /obj/effect/spawner/random/food_or_drink/seed_rare

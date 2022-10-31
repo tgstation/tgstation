@@ -260,7 +260,7 @@
 /datum/orion_event/raiders/emag_effect(obj/machinery/computer/arcade/orion_trail/game, mob/living/gamer)
 	if(prob(50-gamer_skill))
 		to_chat(usr, span_userdanger("You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?"))
-		gamer.hallucination += 30
+		gamer.adjust_hallucinations(60 SECONDS)
 	else
 		to_chat(usr, span_userdanger("Something strikes you from behind! It hurts like hell and feel like a blunt weapon, but nothing is there..."))
 		gamer.take_bodypart_damage(30)
@@ -529,4 +529,3 @@
 					spaceport_security.GiveTarget(usr)
 	game.fuel += fuel
 	game.food += food
-

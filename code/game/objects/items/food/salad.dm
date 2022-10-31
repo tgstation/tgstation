@@ -161,7 +161,7 @@
 	name = "Greek salad"
 	desc = "A popular salad made of tomatoes, onions, feta cheese, and olives all drizzled in olive oil. Though it feels like it's missing something..."
 	icon_state = "greek_salad"
-	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment = 12)
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 13, /datum/reagent/consumable/nutriment = 14)
 	tastes = list("healthy greens" = 2, "olive dressing" = 1, "feta cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
 

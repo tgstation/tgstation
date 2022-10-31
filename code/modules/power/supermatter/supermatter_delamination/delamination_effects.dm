@@ -7,8 +7,10 @@
 /// Just the mobs apparently.
 /datum/sm_delam/proc/effect_irradiate(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
-	for (var/mob/living/victim in range(20, sm))
+	for (var/mob/living/victim in range(DETONATION_RADIATION_RANGE, sm))
 		if(!is_valid_z_level(get_turf(victim), sm_turf))
+			continue
+		if(victim.z == 0)
 			continue
 		SSradiation.irradiate(victim)
 	return TRUE
@@ -19,16 +21,19 @@
 	for(var/mob/living/victim as anything in GLOB.alive_mob_list)
 		if(!istype(victim) || !is_valid_z_level(get_turf(victim), sm_turf))
 			continue
-		if(ishuman(victim))
-			//Hilariously enough, running into a closet should make you get hit the hardest.
-			var/mob/living/carbon/human/human = victim
-			human.hallucination += max(50, min(300, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, sm) + 1)) ) )
+		if(victim.z == 0)
+			continue
+
+		//Hilariously enough, running into a closet should make you get hit the hardest.
+		var/hallucination_amount = max(100 SECONDS, min(600 SECONDS, DETONATION_HALLUCINATION * sqrt(1 / (get_dist(victim, src) + 1))))
+		victim.adjust_hallucinations(hallucination_amount)
 
 	for(var/mob/victim as anything in GLOB.player_list)
-		if(!is_valid_z_level(get_turf(victim), sm_turf))
+		var/turf/victim_turf = get_turf(victim)
+		if(!is_valid_z_level(victim_turf, sm_turf))
 			continue
-		SEND_SOUND(victim, 'sound/magic/charge.ogg')
-		if(!is_valid_z_level(get_turf(victim), sm_turf))
+		victim.playsound_local(victim_turf, 'sound/magic/charge.ogg')
+		if(victim.z == 0) //victim is inside an object, this is to maintain an old bug turned feature with lockers n shit i guess. tg issue #69687
 			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as hard as you can, as reality distorts around you. You feel safe."))
 			continue
 		to_chat(victim, span_boldannounce("You feel reality distort for a moment..."))
@@ -65,7 +70,7 @@
 /// Explodes
 /datum/sm_delam/proc/effect_explosion(obj/machinery/power/supermatter_crystal/sm)
 	var/explosion_power = sm.explosion_power
-	var/power_scaling = sm.gasmix_power_ratio
+	var/power_scaling = sm.gas_heat_power_generation
 	var/turf/sm_turf = get_turf(sm)
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(origin = sm_turf,

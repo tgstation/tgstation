@@ -41,7 +41,8 @@
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
-/datum/round_event_control/proc/canSpawnEvent(players_amt)
+/datum/round_event_control/proc/can_spawn_event(players_amt)
+	SHOULD_CALL_PARENT(TRUE)
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
@@ -71,11 +72,13 @@
 		return EVENT_INTERRUPTED
 
 	triggering = TRUE
-	if (alert_observers)
-		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+
+	// We sleep HERE, in pre-event setup (because there's no sense doing it in runEvent() since the event is already running!) for the given amount of time to make an admin has enough time to cancel an event un-fitting of the present round.
+	if(alert_observers)
+		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name]. (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
-		if(!canSpawnEvent(players_amt))
+		if(!can_spawn_event(players_amt))
 			message_admins("Second pre-condition check for [name] failed, skipping...")
 			return EVENT_INTERRUPTED
 
@@ -120,10 +123,6 @@ Runs the event
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	triggering = TRUE
 
-	if (alert_observers && !admin_forced)
-		message_admins("Random Event triggering in [DisplayTimeText(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)]: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>).")
-		sleep(RANDOM_EVENT_ADMIN_INTERVENTION_TIME)
-
 	if(!triggering)
 		RegisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT, .proc/stop_random_event)
 		E.cancel_event = TRUE
@@ -134,7 +133,7 @@ Runs the event
 		log_game("Random Event triggering: [name] ([typepath]).")
 
 	if(alert_observers)
-		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>.", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
+		deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered!", "<b>[name]</b>", message_type=DEADCHAT_ANNOUNCEMENT) //STOP ASSUMING IT'S BADMINS!
 
 	SSblackbox.record_feedback("tally", "event_ran", 1, "[E]")
 	return E
@@ -144,8 +143,9 @@ Runs the event
 	SIGNAL_HANDLER
 	return CANCEL_RANDOM_EVENT
 
-//Special admins setup
-/datum/round_event_control/proc/admin_setup()
+/// Any special things admins can do while triggering this event to "improve" it.
+/// Return [ADMIN_CANCEL_EVENT] to stop the event from actually happening after all
+/datum/round_event_control/proc/admin_setup(mob/admin)
 	return
 
 /datum/round_event //NOTE: Times are measured in master controller ticks!

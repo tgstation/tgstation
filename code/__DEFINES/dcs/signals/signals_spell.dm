@@ -33,6 +33,8 @@
 // Spell type signals
 
 // Pointed projectiles
+// Sent from /datum/action/cooldown/spell/pointed/projectile/fire_projectile() to the caster: (datum/action/cooldown/spell/spell, atom/cast_on, obj/projectile/to_fire)
+#define COMSIG_MOB_SPELL_PROJECTILE "mob_spell_projectile"
 /// Sent from /datum/action/cooldown/spell/pointed/projectile/on_cast_hit: (atom/firer, atom/target, atom/hit, angle, hit_limb)
 #define COMSIG_SPELL_PROJECTILE_HIT "spell_projectile_hit"
 
@@ -53,6 +55,8 @@
 // Jaunt Spells
 /// Sent from datum/action/cooldown/spell/jaunt/enter_jaunt, to the mob jaunting: (obj/effect/dummy/phased_mob/jaunt, datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_ENTER_JAUNT "spell_mob_enter_jaunt"
+/// Set from /obj/effect/dummy/phased_mob after the mob is ejected from its contents: (obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
+#define COMSIG_MOB_EJECTED_FROM_JAUNT "spell_mob_eject_jaunt"
 /// Sent from datum/action/cooldown/spell/jaunt/exit_jaunt, after the mob exited jaunt: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_AFTER_EXIT_JAUNT "spell_mob_after_exit_jaunt"
 

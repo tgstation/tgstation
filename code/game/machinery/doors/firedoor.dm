@@ -101,6 +101,7 @@
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
+	unregister_adjacent_turfs(loc)
 	QDEL_NULL(soundloop)
 	return ..()
 
@@ -128,7 +129,7 @@
 
 	if (isnull(held_item))
 		if(density)
-			if(isalienhumanoid(living_user) || issilicon(living_user))
+			if(isalienadult(living_user) || issilicon(living_user))
 				context[SCREENTIP_CONTEXT_LMB] = "Open"
 				return CONTEXTUAL_SCREENTIP_SET
 			if(!living_user.combat_mode)
@@ -159,7 +160,7 @@
 				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
-			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
+			context[SCREENTIP_CONTEXT_RMB] = welded ? "Unweld shut" : "Weld shut"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WRENCH)
 			if (welded && !boltslocked)
@@ -416,12 +417,11 @@
 		if(place == my_area)
 			place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 
-/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/doorjack/digital_crowbar)
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/emag_type)
 	if(obj_flags & EMAGGED)
 		return
-	if(!isAI(user)) //Skip doorjack-specific code
-		if(!user || digital_crowbar.charges < 1)
-			return
+	if(istype(emag_type, /obj/item/card/emag/doorjack)) //Skip doorjack-specific code
+		var/obj/item/card/emag/doorjack/digital_crowbar = emag_type
 		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
 	INVOKE_ASYNC(src, .proc/open)
@@ -437,13 +437,13 @@
 	return FALSE //No bumping to open, not even in mechs
 
 /obj/machinery/door/firedoor/proc/on_power_loss()
-	SIGNAL_HANDLER 
-	
+	SIGNAL_HANDLER
+
 	soundloop.stop()
 
 /obj/machinery/door/firedoor/proc/on_power_restore()
-	SIGNAL_HANDLER 
-	
+	SIGNAL_HANDLER
+
 	correct_state()
 
 	if(is_playing_alarm)
@@ -498,7 +498,7 @@
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return
 
-/obj/machinery/door/firedoor/try_to_weld(obj/item/weldingtool/W, mob/user)
+/obj/machinery/door/firedoor/try_to_weld_secondary(obj/item/weldingtool/W, mob/user)
 	if(!W.tool_start_check(user, amount=0))
 		return
 	user.visible_message(span_notice("[user] starts [welded ? "unwelding" : "welding"] [src]."), span_notice("You start welding [src]."))
@@ -600,7 +600,7 @@
 		hazards.pixel_x = light_xoffset
 		hazards.pixel_y = light_yoffset
 		. += hazards
-		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", alpha = src.alpha)
+		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
 		hazards.pixel_x = light_xoffset
 		hazards.pixel_y = light_yoffset
 		. += hazards

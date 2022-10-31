@@ -60,6 +60,15 @@
 	///overlays managed by [update_overlays][/atom/proc/update_overlays] to prevent removing overlays that weren't added by the same proc. Single items are stored on their own, not in a list.
 	var/list/managed_overlays
 
+	/// Lazylist of all images (hopefully attached to us) to update when we change z levels
+	/// You will need to manage adding/removing from this yourself, but I'll do the updating for you
+	var/list/image/update_on_z
+
+	/// Lazylist of all overlays attached to us to update when we change z levels
+	/// You will need to manage adding/removing from this yourself, but I'll do the updating for you
+	/// Oh and note, if order of addition is important this WILL break that. so mind yourself
+	var/list/image/update_overlays_on_z
+
 	///Cooldown tick timer for buckle messages
 	var/buckle_message_cooldown = 0
 	///Last fingerprints to touch this atom
@@ -173,15 +182,11 @@
  * if the preloader is being used and then call [InitAtom][/datum/controller/subsystem/atoms/proc/InitAtom] of which the ultimate
  * result is that the Intialize proc is called.
  *
- * We also generate a tag here if the DF_USE_TAG flag is set on the atom
  */
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
-	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+	if(GLOB.use_preloader && src.type == GLOB._preloader_path)//in case the instanciated atom is creating other atoms in New()
 		world.preloader_load(src)
-
-	if(datum_flags & DF_USE_TAG)
-		GenerateTag()
 
 	var/do_initialize = SSatoms.initialized
 	if(do_initialize != INITIALIZATION_INSSATOMS)
@@ -239,7 +244,9 @@
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_INITIALIZED_ON, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
-	if(greyscale_config && greyscale_colors)
+	SET_PLANE_IMPLICIT(src, plane)
+
+	if(greyscale_config && greyscale_colors) //we'll check again at item/init for inhand/belt/worn configs.
 		update_greyscale()
 
 	//atom color stuff
@@ -292,7 +299,7 @@
  *
  * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
  *  proc must return the hint
- * [INITIALIZE_HINT_LATELOAD] otherwise you will never be called.
+ * [INITIALIZE_HINT_LATELOAD] otherwise it will never be called.
  *
  * useful for doing things like finding other machines on GLOB.machines because you can guarantee
  * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
@@ -372,7 +379,8 @@
 	atom_storage = new cloning.type(src, cloning.max_slots, cloning.max_specific_storage, cloning.max_total_storage, cloning.numerical_stacking, cloning.allow_quick_gather, cloning.collection_mode, cloning.attack_hand_interact)
 
 	if(cloning.can_hold || cloning.cant_hold)
-		atom_storage.set_holdable(cloning.can_hold, cloning.cant_hold)
+		if(!atom_storage.can_hold && !atom_storage.cant_hold) //In the event that the can/can't hold lists are already in place (such as from storage objects added on initialize).
+			atom_storage.set_holdable(cloning.can_hold, cloning.cant_hold)
 
 	return atom_storage
 
@@ -698,9 +706,11 @@
 
 	if(custom_materials)
 		var/list/materials_list = list()
-		for(var/datum/material/current_material as anything in custom_materials)
+		for(var/custom_material in custom_materials)
+			var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
 			materials_list += "[current_material.name]"
 		. += "<u>It is made out of [english_list(materials_list)]</u>."
+
 	if(reagents)
 		if(reagents.flags & TRANSPARENT)
 			. += "It contains:"
@@ -1152,15 +1162,14 @@
  */
 /atom/proc/wash(clean_types)
 	SHOULD_CALL_PARENT(TRUE)
-
-	. = FALSE
 	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
-		. = TRUE
+		return TRUE
 
 	// Basically "if has washable coloration"
 	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		return TRUE
+	return FALSE
 
 /**
  * call back when a var is edited on this atom
@@ -1224,6 +1233,7 @@
 	switch(var_name)
 		if(NAMEOF(src, color))
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
+			update_appearance()
 
 
 /**
@@ -1492,7 +1502,7 @@
 				created_atom.pixel_y += rand(-8,8)
 			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
-			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.name)]\s from [src]."))
+			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)]\s"] from [src]."))
 			created_atoms.Add(created_atom)
 		SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
 		UsedforProcessing(user, process_item, chosen_option)
@@ -1572,12 +1582,8 @@
 /atom/proc/analyzer_act_secondary(mob/living/user, obj/item/tool)
 	return
 
-///Generate a tag for this atom
-/atom/proc/GenerateTag()
-	return
-
 ///Connect this atom to a shuttle
-/atom/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/atom/proc/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	return
 
 /atom/proc/add_filter(name,priority,list/params)
@@ -1957,7 +1963,8 @@
 
 	active_hud.screentip_text.maptext_y = 0
 	var/lmb_rmb_line = ""
-	var/ctrl_lmb_alt_lmb_line = ""
+	var/ctrl_lmb_ctrl_rmb_line = ""
+	var/alt_lmb_alt_rmb_line = ""
 	var/shift_lmb_ctrl_shift_lmb_line = ""
 	var/extra_lines = 0
 	var/extra_context = ""
@@ -1984,20 +1991,31 @@
 				else if (rmb_text)
 					lmb_rmb_line = rmb_text
 
-				// Ctrl-LMB, Alt-LMB on one line...
+				// Ctrl-LMB, Ctrl-RMB on one line...
 				if (lmb_rmb_line != "")
 					lmb_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_CTRL_LMB in context)
-					ctrl_lmb_alt_lmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+				if (SCREENTIP_CONTEXT_CTRL_RMB in context)
+					if (ctrl_lmb_ctrl_rmb_line != "")
+						ctrl_lmb_ctrl_rmb_line += " | "
+					ctrl_lmb_ctrl_rmb_line += "[SCREENTIP_CONTEXT_CTRL_RMB]: [context[SCREENTIP_CONTEXT_CTRL_RMB]]"
+
+				// Alt-LMB, Alt-RMB on one line...
+				if (ctrl_lmb_ctrl_rmb_line != "")
+					ctrl_lmb_ctrl_rmb_line += "<br>"
+					extra_lines++
 				if (SCREENTIP_CONTEXT_ALT_LMB in context)
-					if (ctrl_lmb_alt_lmb_line != "")
-						ctrl_lmb_alt_lmb_line += " | "
-					ctrl_lmb_alt_lmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
+					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
+				if (SCREENTIP_CONTEXT_ALT_RMB in context)
+					if (alt_lmb_alt_rmb_line != "")
+						alt_lmb_alt_rmb_line += " | "
+					alt_lmb_alt_rmb_line += "[SCREENTIP_CONTEXT_ALT_RMB]: [context[SCREENTIP_CONTEXT_ALT_RMB]]"
 
 				// Shift-LMB, Ctrl-Shift-LMB on one line...
-				if (ctrl_lmb_alt_lmb_line != "")
-					ctrl_lmb_alt_lmb_line += "<br>"
+				if (alt_lmb_alt_rmb_line != "")
+					alt_lmb_alt_rmb_line += "<br>"
 					extra_lines++
 				if (SCREENTIP_CONTEXT_SHIFT_LMB in context)
 					shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_SHIFT_LMB]]"
@@ -2010,7 +2028,7 @@
 					extra_lines++
 
 				if(extra_lines)
-					extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_alt_lmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+					extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_ctrl_rmb_line][alt_lmb_alt_rmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
 					//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
 					active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
 
@@ -2049,16 +2067,3 @@
 	if(caller && (caller.pass_flags & pass_flags_self))
 		return TRUE
 	. = !density
-
-/**
- * Starts cleaning something by sending the COMSIG_START_CLEANING signal.
- * This signal is received by the [cleaner component](code/datums/components/cleaner.html).
- *
- * Arguments
- * * source the datum to send the signal from
- * * target the thing being cleaned
- * * user the person doing the cleaning
- * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
- */
-/atom/proc/start_cleaning(datum/source, atom/target, mob/living/user, clean_target = TRUE)
-	SEND_SIGNAL(source, COMSIG_START_CLEANING, target, user, clean_target)

@@ -3,7 +3,6 @@
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
 	var/obj_flags = CAN_BE_HIT
-	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
 
 	var/damtype = BRUTE
 	var/force = 0
@@ -31,8 +30,6 @@
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
-	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
-
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
@@ -48,35 +45,18 @@
 			return FALSE
 	return ..()
 
-/obj/Initialize(mapload)
-	. = ..()
-
-	if (set_obj_flags)
-		var/flagslist = splittext(set_obj_flags,";")
-		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
-		for (var/flag in flagslist)
-			if(flag[1] == "!")
-				flag = copytext(flag, length(flag[1]) + 1) // Get all but the initial !
-				obj_flags &= ~string_to_objflag[flag]
-			else
-				obj_flags |= string_to_objflag[flag]
-
-	if((obj_flags & ON_BLUEPRINTS) && isturf(loc))
-		var/turf/T = loc
-		T.add_blueprints_preround(src)
-
-	if(network_id)
-		var/area/A = get_area(src)
-		if(A)
-			if(!A.network_root_id)
-				log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
-				SSnetworks.lookup_area_root_id(A)
-			network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
-		else
-			log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
-			network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
-		AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
-
+// Call this if you want to add your object to a network
+/obj/proc/init_network_id(network_id)
+	var/area/A = get_area(src)
+	if(A)
+		if(!A.network_root_id)
+			log_telecomms("Area '[A.name]([REF(A)])' has no network network_root_id, force assigning in object [src]([REF(src)])")
+			SSnetworks.lookup_area_root_id(A)
+		network_id = NETWORK_NAME_COMBINE(A.network_root_id, network_id) // I regret nothing!!
+	else
+		log_telecomms("Created [src]([REF(src)] in nullspace, assuming network to be in station")
+		network_id = NETWORK_NAME_COMBINE(STATION_NETWORK_ROOT, network_id) // I regret nothing!!
+	AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
 
 /obj/Destroy(force)
 	if(!ismachinery(src))
@@ -308,7 +288,7 @@
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE))
 		reskin_obj(user)
 
 /**

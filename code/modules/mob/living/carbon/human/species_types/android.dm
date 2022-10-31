@@ -2,7 +2,7 @@
 	name = "Android"
 	id = SPECIES_ANDROID
 	say_mod = "states"
-	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING)
+	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING, NOSTOMACH)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_GENELESS,
@@ -25,7 +25,6 @@
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
-	damage_overlay_type = "synth"
 	mutanttongue = /obj/item/organ/internal/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
 	wings_icons = list("Robotic")

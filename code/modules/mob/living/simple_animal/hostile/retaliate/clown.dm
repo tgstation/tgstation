@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown
 	name = "Clown"
 	desc = "A denizen of clown planet."
-	icon = 'icons/mob/clown_mobs.dmi'
+	icon = 'icons/mob/simple/clown_mobs.dmi'
 	icon_state = "clown"
 	icon_living = "clown"
 	icon_dead = "clown_dead"
@@ -41,7 +41,8 @@
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
 	. = ..()
 	if(attack_reagent)
-		AddElement(/datum/element/venomous, attack_reagent, list(1, 5))
+		var/static/list/injection_range = list(1, 5)
+		AddElement(/datum/element/venomous, attack_reagent, injection_range)
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()

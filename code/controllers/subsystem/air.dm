@@ -36,6 +36,9 @@ SUBSYSTEM_DEF(air)
 	var/list/gas_reactions = list()
 	var/list/atmos_gen
 	var/list/planetary = list() //Lets cache static planetary mixes
+	/// List of gas string -> canonical gas mixture
+	var/list/strings_to_mix = list()
+
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -84,7 +87,7 @@ SUBSYSTEM_DEF(air)
 	return ..()
 
 
-/datum/controller/subsystem/air/Initialize(timeofday)
+/datum/controller/subsystem/air/Initialize()
 	map_loading = FALSE
 	gas_reactions = init_gas_reactions()
 	hotspot_reactions = init_hotspot_reactions()
@@ -95,7 +98,7 @@ SUBSYSTEM_DEF(air)
 	setup_turf_visuals()
 	process_adjacent_rebuild()
 	atmos_handbooks_init()
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/air/fire(resumed = FALSE)
@@ -386,8 +389,9 @@ SUBSYSTEM_DEF(air)
 		EG.dismantle_cooldown++
 		if(EG.breakdown_cooldown >= EXCITED_GROUP_BREAKDOWN_CYCLES)
 			EG.self_breakdown(poke_turfs = TRUE)
-		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES)
+		else if(EG.dismantle_cooldown >= EXCITED_GROUP_DISMANTLE_CYCLES && !(EG.turf_reactions & (REACTING | STOP_REACTIONS)))
 			EG.dismantle()
+		EG.turf_reactions = NONE
 		if (MC_TICK_CHECK)
 			return
 
@@ -521,7 +525,7 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	var/list/active_turfs = src.active_turfs
-	var/times_fired = ++src.times_fired
+	times_fired++
 
 	// Clear active turfs - faster than removing every single turf in the world
 	// one-by-one, and Initalize_Atmos only ever adds `src` back in.
@@ -531,13 +535,16 @@ SUBSYSTEM_DEF(air)
 		active.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_VIBRANT_LIME)
 	#endif
 	active_turfs.Cut()
+	var/time = 0
 
-	for(var/thing in turfs_to_init)
-		var/turf/T = thing
-		if (T.blocks_air)
+	for(var/turf/T as anything in turfs_to_init)
+		if (!T.init_air)
 			continue
-		T.Initalize_Atmos(times_fired)
-		CHECK_TICK
+		// We pass the tick as the current step so if we sleep the step changes
+		// This way we can make setting up adjacent turfs O(n) rather then O(n^2)
+		T.Initalize_Atmos(time)
+		if(CHECK_TICK)
+			time--
 
 	if(active_turfs.len)
 		var/starting_ats = active_turfs.len
@@ -561,8 +568,8 @@ SUBSYSTEM_DEF(air)
 
 			active_turfs += new_turfs_to_check
 			turfs_to_check = new_turfs_to_check
-
 		while (turfs_to_check.len)
+
 		var/ending_ats = active_turfs.len
 		for(var/thing in excited_groups)
 			var/datum/excited_group/EG = thing
@@ -620,12 +627,16 @@ GLOBAL_LIST_EMPTY(colored_turfs)
 GLOBAL_LIST_EMPTY(colored_images)
 /datum/controller/subsystem/air/proc/setup_turf_visuals()
 	for(var/sharp_color in GLOB.contrast_colors)
-		var/obj/effect/overlay/atmos_excited/suger_high = new()
-		GLOB.colored_turfs += suger_high
-		var/image/shiny = new('icons/effects/effects.dmi', suger_high, "atmos_top")
-		shiny.plane = ATMOS_GROUP_PLANE
-		shiny.color = sharp_color
-		GLOB.colored_images += shiny
+		var/list/add_to = list()
+		GLOB.colored_turfs += list(add_to)
+		for(var/offset in 0 to SSmapping.max_plane_offset)
+			var/obj/effect/overlay/atmos_excited/suger_high = new()
+			SET_PLANE_W_SCALAR(suger_high, HIGH_GAME_PLANE, offset)
+			add_to += suger_high
+			var/image/shiny = new('icons/effects/effects.dmi', suger_high, "atmos_top")
+			SET_PLANE_W_SCALAR(shiny, HIGH_GAME_PLANE, offset)
+			shiny.color = sharp_color
+			GLOB.colored_images += shiny
 
 /datum/controller/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	var/obj/machinery/atmospherics/AM
@@ -662,6 +673,39 @@ GLOBAL_LIST_EMPTY(colored_images)
 	for(var/T in subtypesof(/datum/atmosphere))
 		var/datum/atmosphere/atmostype = T
 		atmos_gen[initial(atmostype.id)] = new atmostype
+
+/// Takes a gas string, returns the matching mutable gas_mixture
+/datum/controller/subsystem/air/proc/parse_gas_string(gas_string, gastype = /datum/gas_mixture)
+	var/datum/gas_mixture/cached = strings_to_mix["[gas_string]-[gastype]"]
+
+	if(cached)
+		if(istype(cached, /datum/gas_mixture/immutable))
+			return cached
+		return cached.copy()
+
+	var/datum/gas_mixture/canonical_mix = new gastype()
+	// We set here so any future key changes don't fuck us
+	strings_to_mix["[gas_string]-[gastype]"] = canonical_mix
+	gas_string = preprocess_gas_string(gas_string)
+
+	var/list/gases = canonical_mix.gases
+	var/list/gas = params2list(gas_string)
+	if(gas["TEMP"])
+		canonical_mix.temperature = text2num(gas["TEMP"])
+		canonical_mix.temperature_archived = canonical_mix.temperature
+		gas -= "TEMP"
+	else // if we do not have a temp in the new gas mix lets assume room temp.
+		canonical_mix.temperature = T20C
+	for(var/id in gas)
+		var/path = id
+		if(!ispath(path))
+			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
+		ADD_GAS(path, gases)
+		gases[path][MOLES] = text2num(gas[id])
+
+	if(istype(canonical_mix, /datum/gas_mixture/immutable))
+		return canonical_mix
+	return canonical_mix.copy()
 
 /datum/controller/subsystem/air/proc/preprocess_gas_string(gas_string)
 	if(!atmos_gen)
@@ -748,8 +792,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 	#else
 	data["display_max"] = FALSE
 	#endif
-	var/atom/movable/screen/plane_master/plane = user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
-	data["showing_user"] = (plane.alpha == 255)
+	data["showing_user"] = user.hud_used.atmos_debug_overlays
 	return data
 
 /datum/controller/subsystem/air/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -787,13 +830,10 @@ GLOBAL_LIST_EMPTY(colored_images)
 					group.hide_turfs()
 			return TRUE
 		if("toggle_user_display")
-			var/atom/movable/screen/plane_master/plane = ui.user.hud_used.plane_masters["[ATMOS_GROUP_PLANE]"]
-			if(!plane.alpha)
-				if(ui.user.client)
-					ui.user.client.images += GLOB.colored_images
-				plane.alpha = 255
+			var/mob/user = ui.user
+			user.hud_used.atmos_debug_overlays = !user.hud_used.atmos_debug_overlays
+			if(user.hud_used.atmos_debug_overlays)
+				user.client.images += GLOB.colored_images
 			else
-				if(ui.user.client)
-					ui.user.client.images -= GLOB.colored_images
-				plane.alpha = 0
+				user.client.images -= GLOB.colored_images
 			return TRUE

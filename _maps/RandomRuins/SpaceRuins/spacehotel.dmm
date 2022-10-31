@@ -70,7 +70,7 @@
 /turf/open/floor/stone,
 /area/ruin/space/has_grav/hotel/bar)
 "aU" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
@@ -1131,7 +1131,7 @@
 /turf/open/floor/circuit/green,
 /area/ruin/space/has_grav/hotel)
 "jR" = (
-/obj/structure/chair/sofa/corp/right{
+/obj/structure/chair/sofa/corp/left{
 	dir = 1
 	},
 /turf/open/floor/carpet/blue,
@@ -2314,7 +2314,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "wP" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
@@ -3865,7 +3865,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "Ra" = (
-/obj/structure/chair/sofa/corp/left{
+/obj/structure/chair/sofa/corp/right{
 	dir = 1
 	},
 /turf/open/floor/carpet/blue,

@@ -44,6 +44,7 @@ export const WarningParameter = new Juke.Parameter({
 export const DmMapsIncludeTarget = new Juke.Target({
   executes: async () => {
     const folders = [
+      ...Juke.glob('_maps/map_files/**/modular_pieces/*.dmm'),
       ...Juke.glob('_maps/RandomRuins/**/*.dmm'),
       ...Juke.glob('_maps/RandomZLevels/**/*.dmm'),
       ...Juke.glob('_maps/shuttles/**/*.dmm'),
@@ -166,7 +167,12 @@ export const TgFontTarget = new Juke.Target({
     'tgui/packages/tgfont/dist/tgfont.eot',
     'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
-  executes: () => yarn('tgfont:build'),
+  executes: async () => {
+    await yarn('tgfont:build');
+    fs.copyFileSync('tgui/packages/tgfont/dist/tgfont.css', 'tgui/packages/tgfont/static/tgfont.css');
+    fs.copyFileSync('tgui/packages/tgfont/dist/tgfont.eot', 'tgui/packages/tgfont/static/tgfont.eot');
+    fs.copyFileSync('tgui/packages/tgfont/dist/tgfont.woff2', 'tgui/packages/tgfont/static/tgfont.woff2');
+  }
 });
 
 export const TguiTarget = new Juke.Target({

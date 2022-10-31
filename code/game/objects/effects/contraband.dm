@@ -37,8 +37,6 @@
 		icon_state = poster_structure.poster_item_icon_state
 
 		name = "[name] - [poster_structure.original_name]"
-		//If the poster structure is being deleted something has gone wrong, kill yourself off too
-		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
 
 /obj/item/poster/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/shard))
@@ -54,13 +52,21 @@
 	poster_structure.trap = WEAKREF(I)
 	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
 
-/obj/item/poster/Destroy()
-	poster_structure = null
+/obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()
+	if(gone == poster_structure)
+		poster_structure = null
+		if(!QDELING(src))
+			qdel(src) //we're now a poster, huzzah!
 
-/obj/item/poster/proc/react_to_deletion()
-	SIGNAL_HANDLER
-	qdel(src)
+/obj/item/poster/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == poster_structure)
+		poster_structure.moveToNullspace() //get it the fuck out of us since atom/destroy qdels contents and it'll cause a qdel loop
+	return ..()
+
+/obj/item/poster/Destroy(force)
+	QDEL_NULL(poster_structure)
+	return ..()
 
 // These icon_states may be overridden, but are for mapper's convinence
 /obj/item/poster/random_contraband
@@ -139,6 +145,7 @@
 	poster_item_desc = initial(selected.poster_item_desc)
 	poster_item_icon_state = initial(selected.poster_item_icon_state)
 	ruined = initial(selected.ruined)
+	update_appearance()
 
 /obj/structure/sign/poster/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER)
@@ -148,7 +155,7 @@
 			qdel(src)
 		else
 			to_chat(user, span_notice("You carefully remove the poster from the wall."))
-			roll_and_drop(user.loc)
+			roll_and_drop(Adjacent(user) ? get_turf(user) : loc)
 
 /obj/structure/sign/poster/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -184,29 +191,29 @@
 		return FALSE
 	return (!user.gloves && !HAS_TRAIT(user, TRAIT_PIERCEIMMUNE))
 
-/obj/structure/sign/poster/proc/roll_and_drop(loc)
+/obj/structure/sign/poster/proc/roll_and_drop(atom/location)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/P = new poster_item_type(loc, src)
-	forceMove(P)
-	return P
+	var/obj/item/poster/rolled_poster = new poster_item_type(location, src) // /obj/structure/sign/poster/wanted/roll_and_drop() has some snowflake handling due to icon memes, if you make a major change to this, don't forget to update it too. <3
+	forceMove(rolled_poster)
+	return rolled_poster
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
-/turf/closed/wall/proc/place_poster(obj/item/poster/P, mob/user)
-	if(!P.poster_structure)
-		to_chat(user, span_warning("[P] has no poster... inside it? Inform a coder!"))
+/turf/closed/wall/proc/place_poster(obj/item/poster/rolled_poster, mob/user)
+	if(!rolled_poster.poster_structure)
+		to_chat(user, span_warning("[rolled_poster] has no poster... inside it? Inform a coder!"))
 		return
 
 	// Deny placing posters on currently-diagonal walls, although the wall may change in the future.
 	if (smoothing_flags & SMOOTH_DIAGONAL_CORNERS)
-		for (var/O in overlays)
-			var/image/I = O
-			if(copytext(I.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
+		for (var/overlay in overlays)
+			var/image/new_image = overlay
+			if(copytext(new_image.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
 				return
 
 	var/stuff_on_wall = 0
-	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
-		if(istype(O, /obj/structure/sign/poster))
+	for(var/obj/contained_object in contents) //Let's see if it already has a poster on it or too much stuff
+		if(istype(contained_object, /obj/structure/sign/poster))
 			to_chat(user, span_warning("The wall is far too cluttered to place a poster!"))
 			return
 		stuff_on_wall++
@@ -216,24 +223,22 @@
 
 	to_chat(user, span_notice("You start placing the poster on the wall...") )
 
-	var/obj/structure/sign/poster/D = P.poster_structure
+	var/obj/structure/sign/poster/placed_poster = rolled_poster.poster_structure
 
-	var/temp_loc = get_turf(user)
-	flick("poster_being_set",D)
-	D.forceMove(src)
-	qdel(P) //delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
-	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	flick("poster_being_set", placed_poster)
+	placed_poster.forceMove(src) //deletion of the poster is handled in poster/Exited(), so don't have to worry about P anymore.
+	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
-	if(do_after(user, PLACE_SPEED, target=src))
-		if(!D || QDELETED(D))
-			return
+	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
+	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, /obj/structure/sign/poster.proc/snowflake_wall_turf_check, src)))
+		to_chat(user, span_notice("The poster falls down!"))
+		placed_poster.roll_and_drop(user_drop_location)
+		return
 
-		if(iswallturf(src) && user && user.loc == temp_loc) //Let's check if everything is still there
-			D.on_placed_poster(user)
-			return
+	placed_poster.on_placed_poster(user)
 
-	to_chat(user, span_notice("The poster falls down!"))
-	D.roll_and_drop(get_turf(user))
+/obj/structure/sign/poster/proc/snowflake_wall_turf_check(atom/hopefully_still_a_wall_turf) //since turfs never get deleted but instead change type, make sure we're still being placed on a wall.
+	return iswallturf(hopefully_still_a_wall_turf)
 
 /obj/structure/sign/poster/proc/on_placed_poster(mob/user)
 	to_chat(user, span_notice("You place the poster!"))
@@ -702,6 +707,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	name = "How To Charge Your PDA"
 	desc = "A perfectly legitimate poster that seems to advertise the very real and genuine method of charging your PDA in the future: microwaves."
 	icon_state = "microwave"
+
+/obj/structure/sign/poster/contraband/blood_geometer	//Poster sprite art by MetalClone, original art by SpessMenArt.
+	name = "Movie Poster: THE BLOOD GEOMETER"
+	desc = "A poster for a thrilling noir detective movie set aboard a state-of-the-art space station, following a detective who finds himself wrapped up in the activies of a dangerous cult, who worship an ancient deity: THE BLOOD GEOMETER."
+	icon_state = "blood_geometer"
+
+/obj/structure/sign/poster/contraband/blood_geometer/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("THE BLOOD GEOMETER. This name strikes fear into all who know the truth behind the blood-stained moniker of the blood goddess, her true name lost to time.")]"
+	. += "\t[span_info("In this <i>purely fictional</i> film, follow Ace Ironlungs as he delves into his deadliest mystery yet, and watch him uncover the real culprits behind the bloody plot hatched to bring about a new age of chaos.")]"
+	. += "\t[span_info("Starring Mason Williams as Ace Ironlungs, Sandra Faust as Vera Killian, and Brody Hart as Cody Parker. A Darrel Hatchkinson film. Screenplay by Adam Allan, music by Joel Karlsbad, directed by Darrel Hatchkinson.")]"
+	. += "\t[span_info("Thrilling, scary and genuinely worrying. The Blood Geometer has shocked us to our very cores with such striking visuals and overwhelming gore. - New Canadanian Film Guild")]"
+	. += "\t[span_info("Rated M for mature. A Pangalactic Studios Picture.")]"
 
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"

@@ -5,6 +5,9 @@
 	icon_state_unpowered = "tablet-red"
 	icon_state_powered = "tablet-red"
 	icon_state_menu = "menu"
+	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	base_icon_state = "tablet"
 	worn_icon_state = "tablet"
 	hardware_flag = PROGRAM_TABLET
@@ -23,11 +26,26 @@
 	var/has_variants = TRUE
 	var/finish_color = null
 
-	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	var/obj/item/insert_type = /obj/item/pen
-	var/obj/item/inserted_item
+	///The item currently inserted into the PDA, starts with a pen.
+	var/obj/item/inserted_item = /obj/item/pen
+	///List of items that can be stored in a PDA
+	var/static/list/contained_item = list(
+		/obj/item/pen,
+		/obj/item/toy/crayon,
+		/obj/item/lipstick,
+		/obj/item/flashlight/pen,
+		/obj/item/clothing/mask/cigarette,
+	)
 
-	var/note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, bringing you the best in electronics and software since 2467!"  // the note used by the notekeeping app, stored here for convenience
+/obj/item/modular_computer/tablet/Initialize(mapload)
+	. = ..()
+	if(inserted_item)
+		inserted_item = new inserted_item(src)
+
+/obj/item/modular_computer/tablet/Destroy()
+	if(istype(inserted_item))
+		QDEL_NULL(inserted_item)
+	return ..()
 
 /obj/item/modular_computer/tablet/update_icon_state()
 	if(has_variants && !bypass_state)
@@ -36,31 +54,49 @@
 		icon_state = icon_state_powered = icon_state_unpowered = "[base_icon_state]-[finish_color]"
 	return ..()
 
+/obj/item/modular_computer/tablet/attack_self(mob/user)
+	// bypass literacy checks to access syndicate uplink
+	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
+	if(hidden_uplink?.owner && HAS_TRAIT(user, TRAIT_ILLITERATE))
+		if(hidden_uplink.owner != user.key)
+			return ..()
+
+		hidden_uplink.locked = FALSE
+		hidden_uplink.interact(null, user)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	return ..()
+
 /obj/item/modular_computer/tablet/interact(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
 		explode(usr, from_message_menu = TRUE)
-		return
 
 /obj/item/modular_computer/tablet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove pen"
+	if(inserted_item)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Remove [inserted_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(istype(held_item) && is_type_in_list(held_item, contained_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert [held_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return . || NONE
 
 /obj/item/modular_computer/tablet/attackby(obj/item/W, mob/user)
 	. = ..()
 
 	if(is_type_in_list(W, contained_item))
 		if(W.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
+			user.balloon_alert(user, "too big!")
 			return
 		if(inserted_item)
-			to_chat(user, span_warning("There is already \a [inserted_item] in \the [src]!"))
+			balloon_alert(user, "no room!")
 		else
 			if(!user.transferItemToLoc(W, src))
 				return
-			to_chat(user, span_notice("You insert \the [W] into \the [src]."))
+			balloon_alert(user, "inserted [W]")
 			inserted_item = W
 			playsound(src, 'sound/machines/pda_button1.ogg', 50, TRUE)
 
@@ -82,10 +118,8 @@
 /obj/item/modular_computer/tablet/proc/get_detomatix_difficulty()
 	var/detomatix_difficulty
 
-	var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
-	if(hdd)
-		for(var/datum/computer_file/program/downloaded_apps as anything in hdd.stored_files)
-			detomatix_difficulty += downloaded_apps.detomatix_resistance
+	for(var/datum/computer_file/program/downloaded_apps as anything in stored_files)
+		detomatix_difficulty += downloaded_apps.detomatix_resistance
 
 	return detomatix_difficulty
 
@@ -95,17 +129,17 @@
 
 /obj/item/modular_computer/tablet/proc/remove_pen(mob/user)
 
-	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK doesn't work even with this removed but here for readability
+	if(issilicon(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)) //TK doesn't work even with this removed but here for readability
 		return
 
 	if(inserted_item)
-		to_chat(user, span_notice("You remove [inserted_item] from [src]."))
+		balloon_alert(user, "removed [inserted_item]")
 		user.put_in_hands(inserted_item)
 		inserted_item = null
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
-		to_chat(user, span_warning("This tablet does not have a pen in it!"))
+		balloon_alert(user, "nothing to remove!")
 
 // Tablet 'splosion..
 
@@ -127,11 +161,32 @@
 
 	if(T)
 		T.hotspot_expose(700,125)
-		if(istype(all_components[MC_SDD], /obj/item/computer_hardware/hard_drive/portable/virus/deto))
+		if(istype(inserted_disk, /obj/item/computer_disk/virus/detomatix))
 			explosion(src, devastation_range = -1, heavy_impact_range = 1, light_impact_range = 3, flash_range = 4)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
+
+
+/**
+ * A simple helper proc that applies the client's ringtone prefs to the tablet's messenger app,
+ * if it has one.
+ *
+ * Arguments:
+ * * ringtone_client - The client whose prefs we'll use to set the ringtone of this PDA.
+ */
+/obj/item/modular_computer/tablet/proc/update_ringtone(client/ringtone_client)
+	if(!ringtone_client)
+		return
+
+	var/new_ringtone = ringtone_client?.prefs?.read_preference(/datum/preference/text/pda_ringtone)
+
+	if(!new_ringtone || new_ringtone == MESSENGER_RINGTONE_DEFAULT)
+		return
+
+	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
+		messenger_app.ringtone = new_ringtone
+
 
 // SUBTYPES
 
@@ -174,30 +229,64 @@
 	has_light = FALSE //tablet light button actually enables/disables the borg lamp
 	comp_light_luminosity = 0
 	has_variants = FALSE
-	///Ref to the silicon we're installed in. Set by the borg during our creation.
-	var/mob/living/silicon/borgo
+	inserted_item = null
+	starting_programs = list(
+		/datum/computer_file/program/messenger,
+	)
+
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
+	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
+	var/mob/living/silicon/silicon_owner
+
+/obj/item/modular_computer/tablet/integrated/cyborg
+	starting_programs = list(
+		/datum/computer_file/program/computerconfig,
+		/datum/computer_file/program/filemanager,
+		/datum/computer_file/program/robotact,
+	)
 
 /obj/item/modular_computer/tablet/integrated/Initialize(mapload)
 	. = ..()
 	vis_flags |= VIS_INHERIT_ID
-	borgo = loc
-	if(!istype(borgo))
-		borgo = null
-		stack_trace("[type] initialized outside of a borg, deleting.")
+	silicon_owner = loc
+	if(!istype(silicon_owner))
+		silicon_owner = null
+		stack_trace("[type] initialized outside of a silicon, deleting.")
 		return INITIALIZE_HINT_QDEL
 
+/obj/item/modular_computer/tablet/integrated/install_default_programs()
+	for(var/programs in starting_programs)
+		var/datum/computer_file/program/program_type = new programs
+		store_file(program_type)
+
 /obj/item/modular_computer/tablet/integrated/Destroy()
-	borgo = null
+	silicon_owner = null
 	return ..()
 
 /obj/item/modular_computer/tablet/integrated/turn_on(mob/user, open_ui = FALSE)
-	if(borgo?.stat != DEAD)
+	if(silicon_owner?.stat != DEAD)
 		return ..()
 	return FALSE
+
+/obj/item/modular_computer/tablet/integrated/get_ntnet_status(specific_action = 0)
+	//No borg found
+	if(!silicon_owner)
+		return FALSE
+	// no AIs/pAIs
+	var/mob/living/silicon/robot/cyborg_check = silicon_owner
+	if(!istype(cyborg_check))
+		return ..()
+	//lockdown restricts borg networking
+	if(cyborg_check.lockcharge)
+		return FALSE
+	//borg cell dying restricts borg networking
+	if(!cyborg_check.cell || cyborg_check.cell.charge == 0)
+		return FALSE
+
+	return ..()
 
 /**
  * Returns a ref to the RoboTact app, creating the app if need be.
@@ -210,53 +299,46 @@
  * RoboTact is supposed to be undeletable, so these will create runtime messages.
  */
 /obj/item/modular_computer/tablet/integrated/proc/get_robotact()
-	if(!borgo)
-		return null
-	if(!robotact)
-		var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
-		robotact = hard_drive.find_file_by_name("robotact")
-		if(!robotact)
-			stack_trace("Cyborg [borgo] ( [borgo.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
-			robotact = new(hard_drive)
-			if(!hard_drive.store_file(robotact))
-				qdel(robotact)
-				robotact = null
-				CRASH("Cyborg [borgo]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
-	return robotact
+	if(robotact)
+		return robotact
+	robotact = find_file_by_name("robotact")
+	if(robotact)
+		return robotact
+	stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
+	robotact = new(src)
+	if(store_file(robotact))
+		return robotact
+	qdel(robotact)
+	robotact = null
+	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the light settings reflect the borg's headlamp settings
-/obj/item/modular_computer/tablet/integrated/ui_data(mob/user)
+/obj/item/modular_computer/tablet/integrated/cyborg/ui_data(mob/user)
 	. = ..()
 	.["has_light"] = TRUE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		.["light_on"] = robo.lamp_enabled
 		.["comp_light_color"] = robo.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet
 /obj/item/modular_computer/tablet/integrated/toggle_flashlight()
-	if(!borgo || QDELETED(borgo))
+	if(!silicon_owner || QDELETED(silicon_owner))
 		return FALSE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.toggle_headlamp()
 	return TRUE
 
 //Makes the flashlight color setting affect the borg rather than the tablet
 /obj/item/modular_computer/tablet/integrated/set_flashlight_color(color)
-	if(!borgo || QDELETED(borgo) || !color)
+	if(!silicon_owner || QDELETED(silicon_owner) || !color)
 		return FALSE
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = color
 		robo.toggle_headlamp(FALSE, TRUE)
 	return TRUE
-
-/obj/item/modular_computer/tablet/integrated/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
-	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
-		return
-	borgo.playsound_local(src, sound, 50, TRUE)
-	to_chat(borgo, span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/tablet/integrated/ui_state(mob/user)
 	return GLOB.reverse_contained_state
@@ -270,8 +352,8 @@
 
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
-	if(iscyborg(borgo))
-		var/mob/living/silicon/robot/robo = borgo
+	if(iscyborg(silicon_owner))
+		var/mob/living/silicon/robot/robo = silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red
 
 // Round start tablets
@@ -279,29 +361,34 @@
 /obj/item/modular_computer/tablet/pda
 	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "pda"
+	worn_icon_state = "pda"
 
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"
 
+	max_capacity = 64
 	bypass_state = TRUE
 	allow_chunky = TRUE
 
-	///All applications this tablet has pre-installed
-	var/list/default_applications = list()
-	///The pre-installed cartridge that comes with the tablet
-	var/loaded_cartridge
+	///Static list of default PDA apps to install on Initialize.
+	var/static/list/datum/computer_file/pda_programs = list(
+		/datum/computer_file/program/messenger,
+		/datum/computer_file/program/nt_pay,
+		/datum/computer_file/program/notepad,
+	)
+
+/obj/item/modular_computer/tablet/pda/install_default_programs()
+	for(var/programs as anything in (default_programs + pda_programs + starting_programs))
+		var/datum/computer_file/program/program_type = new programs
+		store_file(program_type)
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
-	var/init_icon = initial(icon)
 	var/obj/item/computer_hardware/card_slot/card = all_components[MC_CARD]
-	if(!init_icon)
-		return
-	if(card)
-		if(card.stored_card)
-			. += mutable_appearance(init_icon, "id_overlay")
+	if(card?.stored_card)
+		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
-		. += mutable_appearance(init_icon, "light_overlay")
+		. += mutable_appearance(initial(icon), "light_overlay")
 
 /obj/item/modular_computer/tablet/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
@@ -309,19 +396,5 @@
 
 /obj/item/modular_computer/tablet/pda/Initialize(mapload)
 	. = ..()
-	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
-	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
-
-	if(!isnull(default_applications))
-		var/obj/item/computer_hardware/hard_drive/small/hard_drive = find_hardware_by_name("solid state drive")
-		for(var/datum/computer_file/program/default_programs as anything in default_applications)
-			hard_drive.store_file(new default_programs)
-
-	if(loaded_cartridge)
-		var/obj/item/computer_hardware/hard_drive/portable/disk = new loaded_cartridge(src)
-		install_component(disk)
-
-	if(insert_type)
-		inserted_item = new insert_type(src)

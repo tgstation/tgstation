@@ -26,8 +26,15 @@
 	/// the item we need to destroy
 	var/obj/item/target_item
 
+	// The code below is for limiting how often you can get this objective. You will get this objective at a maximum of maximum_objectives_in_period every objective_period
+	/// The objective period at which we consider if it is an 'objective'. Set to 0 to accept all objectives.
+	var/objective_period = 10 MINUTES
+	/// The maximum number of objectives that can be taken in this period.
+	var/maximum_objectives_in_period = 2
+
 /datum/traitor_objective/destroy_heirloom/common
 	/// 30 minutes in, syndicate won't care about common heirlooms anymore
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	target_jobs = list(
 		// Medical
@@ -56,6 +63,7 @@
 /// This is only for assistants, because the syndies are a lot less likely to give a shit about what an assistant does, so they're a lot less likely to appear
 /datum/traitor_objective/destroy_heirloom/less_common
 	/// 30 minutes in, syndicate won't care about common heirlooms anymore
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	target_jobs = list(
 		/datum/job/assistant
@@ -63,6 +71,7 @@
 
 /datum/traitor_objective/destroy_heirloom/uncommon
 	/// 45 minutes in, syndicate won't care about uncommon heirlooms anymore
+	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	target_jobs = list(
 		// Cargo
@@ -97,6 +106,14 @@
 		/datum/job/captain
 	)
 
+/datum/traitor_objective/destroy_heirloom/New(datum/uplink_handler/handler)
+	. = ..()
+	AddComponent(/datum/component/traitor_objective_limit_per_time, \
+		/datum/traitor_objective/destroy_heirloom, \
+		time_period = objective_period, \
+		maximum_objectives = maximum_objectives_in_period \
+	)
+
 /datum/traitor_objective/destroy_heirloom/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
@@ -106,7 +123,7 @@
 			continue
 		var/datum/quirk/item_quirk/family_heirloom/quirk = locate() in possible_target.current.quirks
 		if(!quirk || !quirk.heirloom.resolve())
-			return
+			continue
 		if(!(possible_target.assigned_role.type in target_jobs))
 			continue
 		possible_targets += possible_target

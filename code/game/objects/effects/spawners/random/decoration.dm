@@ -70,6 +70,7 @@
 		/obj/structure/statue/gold/cmo = 5,
 		/obj/structure/statue/gold/ce = 5,
 		/obj/structure/statue/gold/rd = 5,
+		/obj/structure/statue/gold/qm = 5,
 		/obj/structure/statue/bananium/clown = 1,
 		/obj/structure/statue/elder_atmosian = 1,
 		/obj/structure/statue/uranium/nuke = 1,
@@ -110,3 +111,14 @@
 	icon_state = "paint"
 	loot_subtype_path = /obj/item/paint
 	loot = list()
+
+/obj/effect/spawner/random/decoration/flower
+	name = "random flower spawner"
+	icon_state = "flower"
+	loot = list(
+		/obj/item/food/grown/poppy,
+		/obj/item/food/grown/harebell,
+		/obj/item/food/grown/trumpet,
+		/obj/item/food/grown/sunflower,
+		/obj/item/food/grown/rose,
+	)

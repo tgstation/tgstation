@@ -112,7 +112,7 @@
 			if(!B.current.incapacitated())
 				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
 				to_chat(B.current, span_cultlarge("Acolyte [Nominee] has asserted that [Nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
-	sleep(100)
+	sleep(10 SECONDS)
 	var/list/asked_cultists = list()
 	for(var/datum/mind/B in team.members)
 		if(B.current && B.current != Nominee && !B.current.incapacitated())
@@ -259,7 +259,7 @@
 
 	return ..()
 
-/datum/action/innate/cult/master/cultmark/do_ability(mob/living/caller, params, atom/clicked_on)
+/datum/action/innate/cult/master/cultmark/do_ability(mob/living/caller, atom/clicked_on)
 	var/datum/antagonist/cult/cultist = caller.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
 	if(!cultist)
 		CRASH("[type] was casted by someone without a cult antag datum.")
@@ -388,7 +388,7 @@
 
 	return ..()
 
-/datum/action/innate/cult/master/pulse/do_ability(mob/living/caller, params, atom/clicked_on)
+/datum/action/innate/cult/master/pulse/do_ability(mob/living/caller, atom/clicked_on)
 	var/atom/throwee = throwee_ref?.resolve()
 
 	if(QDELETED(throwee))

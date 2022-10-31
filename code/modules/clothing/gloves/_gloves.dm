@@ -3,6 +3,12 @@
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
+	inhand_icon_state = "greyscale_gloves"
+	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
+	greyscale_colors = null
+	greyscale_config_inhand_left = /datum/greyscale_config/gloves_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/gloves_inhand_right
 	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = ITEM_SLOT_GLOVES
@@ -40,7 +46,7 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_worn_gloves()
-		
+
 /obj/item/clothing/gloves/proc/can_cut_with(obj/item/tool)
 	if(!cut_type)
 		return FALSE
@@ -54,7 +60,7 @@
 	if (!can_cut_with(tool))
 		return
 	balloon_alert(user, "cutting off fingertips...")
-	
+
 	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, .proc/can_cut_with, tool)))
 		return
 	balloon_alert(user, "cut fingertips off")

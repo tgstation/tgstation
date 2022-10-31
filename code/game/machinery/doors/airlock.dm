@@ -22,7 +22,7 @@
 /// Someone, for the love of god, profile this.  Is there a reason to cache mutable_appearance
 /// if so, why are we JUST doing the airlocks when we can put this in mutable_appearance.dm for
 /// everything
-/proc/get_airlock_overlay(icon_state, icon_file, em_block)
+/proc/get_airlock_overlay(icon_state, icon_file, atom/offset_spokesman, em_block)
 	var/static/list/airlock_overlays = list()
 
 	var/base_icon_key = "[icon_state][REF(icon_file)]"
@@ -31,10 +31,12 @@
 	if(isnull(em_block))
 		return
 
-	var/em_block_key = "[base_icon_key][em_block]"
+	var/turf/our_turf = get_turf(offset_spokesman)
+
+	var/em_block_key = "[base_icon_key][em_block][GET_TURF_PLANE_OFFSET(our_turf)]"
 	var/mutable_appearance/em_blocker = airlock_overlays[em_block_key]
 	if(!em_blocker)
-		em_blocker = airlock_overlays[em_block_key] = mutable_appearance(icon_file, icon_state, plane = EMISSIVE_PLANE, appearance_flags = EMISSIVE_APPEARANCE_FLAGS)
+		em_blocker = airlock_overlays[em_block_key] = mutable_appearance(icon_file, icon_state, offset_spokesman = offset_spokesman, plane = EMISSIVE_PLANE, appearance_flags = EMISSIVE_APPEARANCE_FLAGS)
 		em_blocker.color = em_block ? GLOB.em_block_color : GLOB.emissive_color
 
 	return list(., em_blocker)
@@ -149,10 +151,9 @@
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-	network_id = NETWORK_DOOR_AIRLOCKS
-
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
+	init_network_id(NETWORK_DOOR_AIRLOCKS)
 	wires = set_wires()
 	if(frequency)
 		set_frequency(frequency)
@@ -184,9 +185,9 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/airlock/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/door/airlock/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(id_tag)
-		id_tag = "[port.id]_[id_tag]"
+		id_tag = "[port.shuttle_id]_[id_tag]"
 
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/Airlock in GLOB.airlocks)
@@ -354,16 +355,17 @@
 		seal = null
 		update_appearance()
 
-/obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
-	if(!issilicon(usr))
-		if(isElectrified() && shock(user, 100))
-			return
-		else if(user.hallucinating() && iscarbon(user) && prob(1) && !operating)
-			var/mob/living/carbon/C = user
-			if(!C.wearing_shock_proof_gloves())
-				new /datum/hallucination/shock(C)
-				return
-	..()
+/obj/machinery/door/airlock/bumpopen(mob/living/user)
+	if(issilicon(user) || !iscarbon(user))
+		return ..()
+
+	if(isElectrified() && shock(user, 100))
+		return
+
+	if(SEND_SIGNAL(user, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, src) & STOP_BUMP)
+		return
+
+	return ..()
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	return (secondsElectrified != MACHINE_NOT_ELECTRIFIED)
@@ -392,7 +394,7 @@
 /obj/machinery/door/airlock/proc/handlePowerRestore()
 	var/cont = TRUE
 	while (cont)
-		sleep(10)
+		sleep(1 SECONDS)
 		if(QDELETED(src))
 			return
 		cont = FALSE
@@ -436,6 +438,8 @@
 /obj/machinery/door/airlock/proc/shock(mob/living/user, prb)
 	if(!istype(user) || !hasPower()) // unpowered, no shock
 		return FALSE
+	if(HAS_TRAIT(user, TRAIT_AIRLOCK_SHOCKIMMUNE)) // Be a bit more clever man come on
+		return FALSE
 	if(!COOLDOWN_FINISHED(src, shockCooldown))
 		return FALSE //Already shocked someone recently?
 	if(!prob(prb))
@@ -444,6 +448,9 @@
 	var/check_range = TRUE
 	if(electrocute_mob(user, get_area(src), src, 1, check_range))
 		COOLDOWN_START(src, shockCooldown, 1 SECONDS)
+		// Provides timed airlock shock immunity, to prevent overly cheesy deathtraps
+		ADD_TRAIT(user, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src))
+		addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_AIRLOCK_SHOCKIMMUNE, REF(src)), 1 SECONDS)
 		return TRUE
 	else
 		return FALSE
@@ -460,11 +467,6 @@
 	airlock_state = state
 
 	. = ..()
-
-	if(hasPower() && unres_sides)
-		set_light(2, 1)
-	else
-		set_light(0)
 
 /obj/machinery/door/airlock/update_icon_state()
 	. = ..()
@@ -500,56 +502,58 @@
 			frame_state = AIRLOCK_FRAME_OPENING
 			light_state = AIRLOCK_LIGHT_OPENING
 
-	. += get_airlock_overlay(frame_state, icon, em_block = TRUE)
+	. += get_airlock_overlay(frame_state, icon, src, em_block = TRUE)
 	if(airlock_material)
-		. += get_airlock_overlay("[airlock_material]_[frame_state]", overlays_file, em_block = TRUE)
+		. += get_airlock_overlay("[airlock_material]_[frame_state]", overlays_file, src, em_block = TRUE)
 	else
-		. += get_airlock_overlay("fill_[frame_state]", icon, em_block = TRUE)
+		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
 
 	if(lights && hasPower())
-		. += get_airlock_overlay("lights_[light_state]", overlays_file, em_block = FALSE)
+		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(panel_open)
-		. += get_airlock_overlay("panel_[frame_state][security_level ? "_protected" : null]", overlays_file, em_block = TRUE)
+		. += get_airlock_overlay("panel_[frame_state][security_level ? "_protected" : null]", overlays_file, src, em_block = TRUE)
 	if(frame_state == AIRLOCK_FRAME_CLOSED && welded)
-		. += get_airlock_overlay("welded", overlays_file, em_block = TRUE)
+		. += get_airlock_overlay("welded", overlays_file, src, em_block = TRUE)
 
 	if(airlock_state == AIRLOCK_EMAG)
-		. += get_airlock_overlay("sparks", overlays_file, em_block = FALSE)
+		. += get_airlock_overlay("sparks", overlays_file, src, em_block = FALSE)
 
 	if(hasPower())
 		if(frame_state == AIRLOCK_FRAME_CLOSED)
 			if(atom_integrity < integrity_failure * max_integrity)
-				. += get_airlock_overlay("sparks_broken", overlays_file, em_block = FALSE)
+				. += get_airlock_overlay("sparks_broken", overlays_file, src, em_block = FALSE)
 			else if(atom_integrity < (0.75 * max_integrity))
-				. += get_airlock_overlay("sparks_damaged", overlays_file, em_block = FALSE)
+				. += get_airlock_overlay("sparks_damaged", overlays_file, src, em_block = FALSE)
 		else if(frame_state == AIRLOCK_FRAME_OPEN)
 			if(atom_integrity < (0.75 * max_integrity))
-				. += get_airlock_overlay("sparks_open", overlays_file, em_block = FALSE)
+				. += get_airlock_overlay("sparks_open", overlays_file, src, em_block = FALSE)
 
 	if(note)
-		. += get_airlock_overlay(get_note_state(frame_state), note_overlay_file, em_block = TRUE)
+		. += get_airlock_overlay(get_note_state(frame_state), note_overlay_file, src, em_block = TRUE)
 
 	if(frame_state == AIRLOCK_FRAME_CLOSED && seal)
-		. += get_airlock_overlay("sealed", overlays_file, em_block = TRUE)
+		. += get_airlock_overlay("sealed", overlays_file, src, em_block = TRUE)
 
 	if(hasPower() && unres_sides)
-		if(unres_sides & NORTH)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
-			I.pixel_y = 32
-			. += I
-		if(unres_sides & SOUTH)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
-			I.pixel_y = -32
-			. += I
-		if(unres_sides & EAST)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
-			I.pixel_x = 32
-			. += I
-		if(unres_sides & WEST)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
-			I.pixel_x = -32
-			. += I
+		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
+			if(!(unres_sides & heading))
+				continue
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+			switch (heading)
+				if (NORTH)
+					floorlight.pixel_x = 0
+					floorlight.pixel_y = 32
+				if (SOUTH)
+					floorlight.pixel_x = 0
+					floorlight.pixel_y = -32
+				if (EAST)
+					floorlight.pixel_x = 32
+					floorlight.pixel_y = 0
+				if (WEST)
+					floorlight.pixel_x = -32
+					floorlight.pixel_y = 0
+			. += floorlight
 
 /obj/machinery/door/airlock/do_animate(animation)
 	switch(animation)
@@ -682,7 +686,7 @@
 	if(!aiHacking)
 		aiHacking = TRUE
 		to_chat(user, span_warning("Airlock AI control has been blocked. Beginning fault-detection."))
-		sleep(50)
+		sleep(5 SECONDS)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -692,9 +696,9 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Fault confirmed: airlock control wire disabled or cut."))
-		sleep(20)
+		sleep(2 SECONDS)
 		to_chat(user, span_notice("Attempting to hack into airlock. This may take some time."))
-		sleep(200)
+		sleep(20 SECONDS)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -704,7 +708,7 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Upload access confirmed. Loading control program into airlock software."))
-		sleep(170)
+		sleep(17 SECONDS)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -714,11 +718,11 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Transfer complete. Forcing airlock to execute program."))
-		sleep(50)
+		sleep(5 SECONDS)
 		//disable blocked control
 		aiControlDisabled = AI_WIRE_HACKED
 		to_chat(user, span_notice("Receiving control information from airlock."))
-		sleep(10)
+		sleep(1 SECONDS)
 		//bring up airlock dialog
 		aiHacking = FALSE
 		if(user)
@@ -765,7 +769,7 @@
 
 /obj/machinery/door/airlock/proc/electrified_loop()
 	while (secondsElectrified > MACHINE_NOT_ELECTRIFIED)
-		sleep(10)
+		sleep(1 SECONDS)
 		if(QDELETED(src))
 			return
 
@@ -1167,14 +1171,14 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
-	sleep(1)
+	sleep(0.1 SECONDS)
 	set_opacity(0)
 	update_freelook_sight()
-	sleep(4)
+	sleep(0.4 SECONDS)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
-	sleep(1)
+	sleep(0.1 SECONDS)
 	layer = OPEN_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
@@ -1219,18 +1223,18 @@
 		set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(1)
+	sleep(0.1 SECONDS)
 	if(!air_tight)
 		set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(4)
+	sleep(0.4 SECONDS)
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
 		set_opacity(1)
 	update_freelook_sight()
-	sleep(1)
+	sleep(0.1 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
@@ -1281,7 +1285,7 @@
 			D.use_charge(user)
 		operating = TRUE
 		update_icon(ALL, AIRLOCK_EMAG, 1)
-		sleep(6)
+		sleep(0.6 SECONDS)
 		if(QDELETED(src))
 			return
 		operating = FALSE
@@ -1293,7 +1297,7 @@
 		loseMainPower()
 		loseBackupPower()
 
-/obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
 		add_fingerprint(user)
 		return

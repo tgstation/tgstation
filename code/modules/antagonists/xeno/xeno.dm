@@ -1,5 +1,5 @@
 /datum/team/xeno
-	name = "Aliens"
+	name = "\improper Aliens"
 
 //Simply lists them.
 /datum/team/xeno/roundend_report()
@@ -33,7 +33,7 @@
 	return xeno_team
 
 /datum/antagonist/xeno/get_preview_icon()
-	return finish_preview_icon(icon('icons/mob/alien.dmi', "alienh"))
+	return finish_preview_icon(icon('icons/mob/nonhuman-player/alien.dmi', "alienh"))
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()

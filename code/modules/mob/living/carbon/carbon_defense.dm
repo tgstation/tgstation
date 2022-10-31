@@ -217,7 +217,7 @@
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
 				Paralyze(power * 2 SECONDS)
-				set_timed_status_effect(power * 2 SECONDS, /datum/status_effect/speech/stutter, only_if_higher = TRUE)
+				set_stutter_if_lower(power * 2 SECONDS)
 				if (prob(stunprob) && M.powerlevel >= 8)
 					adjustFireLoss(M.powerlevel * rand(6,10))
 					updatehealth()
@@ -388,8 +388,8 @@
 		Paralyze(40)
 	//Jitter and other fluff.
 	do_jitter_animation(300)
-	adjust_timed_status_effect(20 SECONDS, /datum/status_effect/jitter)
-	adjust_timed_status_effect(4 SECONDS, /datum/status_effect/speech/stutter)
+	adjust_jitter(20 SECONDS)
+	adjust_stutter(4 SECONDS)
 	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 2 SECONDS)
 	return shock_damage
 
@@ -403,7 +403,7 @@
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_HELP_ACT, helper) & COMPONENT_BLOCK_HELP_ACT)
+	if(SEND_SIGNAL(src, COMSIG_CARBON_PRE_MISC_HELP, helper) & COMPONENT_BLOCK_MISC_HELP)
 		return
 
 	if(helper == src)
@@ -436,6 +436,17 @@
 			to_chat(helper, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
 		else
 			add_mood_event("tailpulled", /datum/mood_event/tailpulled)
+
+	else if ((helper.zone_selected == BODY_ZONE_PRECISE_GROIN) && (istype(head, /obj/item/clothing/head/costume/kitty) || istype(head, /obj/item/clothing/head/collectable/kitty)))
+		var/obj/item/clothing/head/faketail = head
+		helper.visible_message(span_danger("[helper] pulls on [src]'s tail... and it rips off!"), \
+					null, span_hear("You hear a ripping sound."), DEFAULT_MESSAGE_RANGE, list(helper, src))
+		to_chat(helper, span_danger("You pull on [src]'s tail... and it rips off!"))
+		to_chat(src, span_userdanger("[helper] pulls on your tail... and it rips off!"))
+		playsound(loc, 'sound/effects/cloth_rip.ogg', 75, TRUE)
+		dropItemToGround(faketail)
+		helper.put_in_hands(faketail)
+		helper.add_mood_event("rippedtail", /datum/mood_event/rippedtail)
 
 	else
 		if (helper.grab_state >= GRAB_AGGRESSIVE)
@@ -553,7 +564,7 @@
 			eyes.applyOrganDamage(rand(12, 16))
 
 		if(eyes.damage > 10)
-			blind_eyes(damage)
+			adjust_blindness(damage)
 			blur_eyes(damage * rand(3, 6))
 
 			if(eyes.damage > 20)
