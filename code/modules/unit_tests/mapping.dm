@@ -21,6 +21,8 @@
 /// Verifies that there are no space turfs inside a station area, or on any planetary z-level. Sometimes, these are introduced during the load of the map and are not present in the DMM itself.
 /// Let's just make sure that we have a stop-gap measure in place to catch these if they pop up so we don't put it onto production servers should something errant come up.
 /datum/unit_test/mapload_space_verification
+	// This test is quite taxing time-wise, so let's run it later than other faster tests.
+	priority = TEST_ANTI_SPACE_TURF
 
 /datum/unit_test/mapload_space_verification/Run()
 	// Grab information on our current station.

@@ -53,6 +53,8 @@
 
 #define TEST_PRE 0
 #define TEST_DEFAULT 1
+/// This should run after the faster tests since it iterates over all turfs in the world (which is quite lengthy), just to do a quick check to see if they aren't space turfs.
+#define TEST_ANTI_SPACE_TURF 7
 /// This should be one of the last tests to run, because we run it for a little bit over 30 seconds by design and we want to run all of the tests that take a trivial amount of time to complete beforehand.
 #define TEST_MONKEY_BUSINESS 10
 /// This must be the last test to run due to the inherent nature of the test iterating every single tangible atom in the game and qdeleting all of them (while taking long sleeps to make sure the garbage collector fires properly) taking a large amount of time.
