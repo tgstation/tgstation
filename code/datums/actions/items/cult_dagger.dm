@@ -10,7 +10,6 @@
 
 /datum/action/item_action/cult_dagger/Grant(mob/grant_to)
 	if(!IS_CULTIST(grant_to))
-		Remove(owner)
 		return
 
 	return ..()

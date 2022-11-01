@@ -25,7 +25,7 @@
 
 
 /datum/species/dullahan/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
@@ -42,6 +42,7 @@
 			my_head = new /obj/item/dullahan_relay(head, human)
 			human.put_in_hands(head)
 			head.show_organs_on_examine = FALSE
+			head.speech_span = null // so we don't look roboty when talking through it
 
 			// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
 			head.eyes = new /obj/item/organ/internal/eyes(head)

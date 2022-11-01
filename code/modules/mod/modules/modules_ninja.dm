@@ -257,6 +257,9 @@
 	. = ..()
 	if(. != MOD_CANCEL_ACTIVATE || !isliving(user))
 		return
+	if(mod.ai == user)
+		to_chat(mod.ai, span_danger("<B>fATaL EERRoR</B>: 381200-*#00CODE <B>BLUE</B>\nAI INTErFERenCE DEtECted\nACTi0N DISrEGArdED"))
+		return
 	var/mob/living/living_user = user
 	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
 	living_user.gib()

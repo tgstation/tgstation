@@ -12,7 +12,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	"Slimecore" = 'icons/hud/screen_slimecore.dmi',
 	"Operative" = 'icons/hud/screen_operative.dmi',
 	"Clockwork" = 'icons/hud/screen_clockwork.dmi',
-	"Glass" = 'icons/hud/screen_glass.dmi'
+	"Glass" = 'icons/hud/screen_glass.dmi',
+	"Trasen-Knox" = 'icons/hud/screen_trasenknox.dmi'
 ))
 
 /proc/ui_style2icon(ui_style)
@@ -123,7 +124,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
 
-	AddComponent(/datum/component/zparallax, owner.client)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_plane_increase)
 	RegisterSignal(mymob, COMSIG_MOB_LOGIN, .proc/client_refresh)
 	RegisterSignal(mymob, COMSIG_MOB_LOGOUT, .proc/clear_client)
@@ -166,6 +166,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/eye_z_changed(atom/eye)
 	SIGNAL_HANDLER
+	update_parallax_pref(eye) // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)

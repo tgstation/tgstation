@@ -148,8 +148,10 @@
 		note = item
 		update_appearance()
 
-	else if(istype(item, /obj/item/sales_tagger))
-		var/obj/item/sales_tagger/sales_tagger = item
+	else if(istype(item, /obj/item/universal_scanner))
+		var/obj/item/universal_scanner/sales_tagger = item
+		if(sales_tagger.scanning_mode != SCAN_SALES_TAG)
+			return
 		if(sticker)
 			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
@@ -257,8 +259,8 @@
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "cargotagger"
-	worn_icon_state = "cargotagger"
+	icon_state = "cargo tagger"
+	worn_icon_state = "cargo tagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class = WEIGHT_CLASS_TINY
@@ -406,13 +408,3 @@
 		cut_multiplier = initial(cut_multiplier)
 	cut_multiplier = clamp(round(potential_cut/100, cut_min), cut_min, cut_max)
 	to_chat(user, span_notice("[round(cut_multiplier*100)]% profit will be received if a package with a barcode is sold."))
-
-/obj/item/barcode
-	name = "barcode tag"
-	desc = "A tiny tag, associated with a crewmember's account. Attach to a wrapped item to give that account a portion of the wrapped item's profit."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "barcode"
-	w_class = WEIGHT_CLASS_TINY
-	///All values inheirited from the sales tagger it came from.
-	var/datum/bank_account/payments_acc = null
-	var/cut_multiplier = 0.5

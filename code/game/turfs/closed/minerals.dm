@@ -98,8 +98,7 @@
 	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
 		return
 	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
-	var/skill_modifier = 1
-	skill_modifier = user?.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
+	var/skill_modifier = user.mind?.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER) || 1
 	balloon_alert(user, "pulling out pieces...")
 	if(!do_after(user, hand_mine_speed * skill_modifier, target = src))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
@@ -181,7 +180,7 @@
 	var/mineralChance = 13
 
 /turf/closed/mineral/random/Initialize(mapload)
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+	if(check_holidays(APRIL_FOOLS))
 		mineralSpawnChanceList[/obj/item/stack/ore/bananium] = 3
 
 	mineralSpawnChanceList = typelist("mineralSpawnChanceList", mineralSpawnChanceList)
@@ -563,7 +562,7 @@
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
 		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), src, 5) //makes the animation pulse one time per tick
 		det_time--
-		sleep(5)
+		sleep(0.5 SECONDS)
 	if(istype(src, /turf/closed/mineral/gibtonite))
 		if(stage == GIBTONITE_ACTIVE && det_time <= 0 && mineralAmt >= 1)
 			var/turf/bombturf = get_turf(src)

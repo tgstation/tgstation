@@ -85,6 +85,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/show_manifest,
 	/client/proc/list_dna,
 	/client/proc/list_fingerprints,
+	/client/proc/message_pda, /*send a message to somebody on PDA*/
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -142,7 +143,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/panicbunker,
 	/client/proc/toggle_interviews,
 	/client/proc/toggle_hub,
-	/client/proc/toggle_cdn
+	/client/proc/toggle_cdn,
+	/client/proc/generate_job_config,
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
