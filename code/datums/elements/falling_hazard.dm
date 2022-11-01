@@ -58,7 +58,7 @@
 	poor_target.visible_message(
 		span_warning("[source] falls on [poor_target], [crushes_people ? "crushing [poor_target.p_them()]" : "hitting [poor_target.p_them()] on the head"]!"),
 		span_userdanger("You are [crushes_people ? "crushed" : "hit"] by [source]!"),
-		span_userdanger("You hear a [crushes_people ? "crash" : "bonk"]!"),
+		span_hear("You hear a [crushes_people ? "crash" : "bonk"]!"),
 	)
 
 	if(!crushes_people)
