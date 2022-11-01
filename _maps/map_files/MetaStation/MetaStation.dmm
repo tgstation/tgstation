@@ -3549,7 +3549,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "bla" = (
-/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/wood,
 /area/station/service/library)
 "blb" = (
@@ -55179,6 +55179,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
+"tuj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "tuo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible/layer5,
 /obj/machinery/light/no_nightlight/directional/south,
@@ -63298,10 +63308,9 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "wki" = (
-/obj/effect/spawner/random/vending/snackvend,
-/obj/machinery/newscaster/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/wood,
+/area/station/service/library)
 "wkv" = (
 /obj/structure/railing{
 	dir = 8
@@ -88052,7 +88061,7 @@ cyk
 qzS
 rIa
 ahD
-mjr
+wki
 jIY
 mjr
 tbK
@@ -90890,7 +90899,7 @@ sVY
 sVY
 sVY
 sVY
-wki
+sVY
 xxk
 ahr
 bMY
@@ -91147,7 +91156,7 @@ vLi
 usA
 jWg
 tKu
-usA
+tuj
 txz
 wYe
 bMY
