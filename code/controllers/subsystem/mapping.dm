@@ -756,9 +756,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		global_area.contained_turfs += Z_TURFS(z_level)
 		return
 
-	for(var/turf/lad as anything in Z_TURFS(z_level))
-		var/area/our_area = lad.loc
-		our_area.contained_turfs += lad
+	for(var/turf/to_contain as anything in Z_TURFS(z_level))
+		var/area/our_area = to_contain.loc
+		our_area.contained_turfs += to_contain
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go

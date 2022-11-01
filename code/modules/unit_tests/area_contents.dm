@@ -1,27 +1,28 @@
 /// Verifies that an area's perception of their "turfs" is correct, and no other area overlaps with them
 /// Quite slow, but needed
 /datum/unit_test/area_contents
+	priority = TEST_LONGER
 
 /datum/unit_test/area_contents/Run()
 	/// assoc list of turfs -> areas
 	var/list/turf_to_area = list()
 	// First, we check that there are no entries in more then one area
 	// That or duplicate entries
-	for(var/area/lad in world)
-		for(var/turf/thing as anything in lad.contained_turfs)
-			if(!isturf(thing))
-				TEST_FAIL("Found a [thing.type] in [lad.type]'s turf listing")
-			var/area/existing = turf_to_area[thing]
-			if(existing == lad)
-				TEST_FAIL("Found a duplicate turf inside [lad.type]'s turf listing")
+	for(var/area/space in world)
+		for(var/turf/position as anything in space.contained_turfs)
+			if(!isturf(position))
+				TEST_FAIL("Found a [position.type] in [space.type]'s turf listing")
+			var/area/existing = turf_to_area[position]
+			if(existing == space)
+				TEST_FAIL("Found a duplicate turf [position.type] inside [space.type]'s turf listing")
 			else if(existing)
-				TEST_FAIL("Found a duplicate turf inside [lad.type] AND [existing.type]'s turf listing")
+				TEST_FAIL("Found a shared turf [position.type] between [space.type] and [existing.type]'s turf listings")
 
-			var/area/dream = thing.loc
-			if(dream != lad)
-				TEST_FAIL("Found a turf [thing.type] which is IN [dream.type], but is registered as being in [lad.type]")
+			var/area/dream_spot = position.loc
+			if(dream_spot != space)
+				TEST_FAIL("Found a turf [position.type] which is IN [dream_spot.type], but is registered as being in [space.type]")
 
-			turf_to_area[thing] = lad
+			turf_to_area[position] = space
 
 	for(var/turf/position in ALL_TURFS())
 		if(!turf_to_area[position])
