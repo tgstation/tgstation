@@ -81,8 +81,8 @@
  * Handled as a proc so that an object may be maked as "stamped" even when a stamp isn't present (like the photocopier)
  */
 /obj/item/paperwork/proc/add_stamp()
-	update_overlays()
 	stamped = TRUE
+	update_overlays()
 
 /**
  * Copies the requested stamp, associated job, and associated icon of a given paperwork type
