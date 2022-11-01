@@ -66,6 +66,7 @@
 		"kitchen_knife",
 		"laptop",
 		"light_bulb",
+		"light_replacer",
 		"light_tube",
 		"mechfab",
 		"micro_mani",
@@ -1377,7 +1378,7 @@
 		"buffer",
 		"vacuum",
 		"holobarrier_jani",
-		"light_replacer",
+		"light_replacer_blue",
 		"paint_remover",
 		"spraybottle",
 	)
