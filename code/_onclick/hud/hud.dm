@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(mymob.canon_client)
 		UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
 
-/datum/hud/proc/on_viewdata_update(datum/source, width, height)
+/datum/hud/proc/on_viewdata_update(datum/source, view)
 	SIGNAL_HANDLER
 
 	view_audit_buttons()

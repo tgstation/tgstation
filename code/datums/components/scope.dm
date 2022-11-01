@@ -167,10 +167,10 @@
 	var/y_offset = source.loc.y - oldloc.y
 	given_turf = locate(given_turf.x+x_offset, given_turf.y+y_offset, given_turf.z)
 
-/atom/movable/screen/fullscreen/scope/proc/on_viewdata_update(datum/source, width, height)
+/atom/movable/screen/fullscreen/scope/proc/on_viewdata_update(datum/source, view)
 	SIGNAL_HANDLER
 
-	view_list = getviewsize(marksman.client.view)
+	view_list = getviewsize(view)
 
 /atom/movable/screen/fullscreen/scope/MouseEntered(location, control, params)
 	. = ..()
