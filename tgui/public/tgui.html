@@ -55,8 +55,9 @@
   // Basic checks to detect whether this page runs in BYOND
   var isByond = (Byond.TRIDENT !== null || window.cef_to_byond)
     && location.hostname === '127.0.0.1'
-    && location.pathname.indexOf('/tmp') === 0
     && location.search !== '?external';
+    //As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
+    //&& location.pathname.indexOf('/tmp') === 0
 
   // Version constants
   Byond.IS_BYOND = isByond;
@@ -253,6 +254,8 @@
     var len = styleSheets.length;
     for (var i = 0; i < len; i++) {
       var styleSheet = styleSheets[i];
+      if(styleSheet.href === undefined)
+        continue;
       if (styleSheet.href.indexOf(url) !== -1) {
         return styleSheet.rules.length > 0;
       }
