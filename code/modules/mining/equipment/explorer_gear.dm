@@ -133,7 +133,7 @@
 		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/tank/internals,
 		)
-	armor = list(MELEE = 65, BULLET = 15, LASER = 20, ENERGY = 40, BOMB = 70, BIO = 60, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 65, BULLET = 15, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 60, FIRE = 100, ACID = 100)
 	hoodtype = /obj/item/clothing/head/hooded/cloakhood/drake
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -149,7 +149,7 @@
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	icon_state = "dragon"
 	desc = "The skull of a dragon."
-	armor = list(MELEE = 65, BULLET = 15, LASER = 20, ENERGY = 40, BOMB = 70, BIO = 60, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 65, BULLET = 15, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 60, FIRE = 100, ACID = 100)
 	clothing_flags = SNUG_FIT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
