@@ -5,7 +5,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "ap" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
@@ -13,7 +13,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "ax" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/silver{
@@ -23,7 +23,7 @@
 	amount = 25
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "aP" = (
 /obj/machinery/door/airlock{
 	name = "Crew Quarters"
@@ -33,7 +33,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "bg" = (
 /obj/machinery/airalarm/all_access{
 	dir = 1;
@@ -43,7 +43,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "bu" = (
 /obj/machinery/door/airlock{
 	name = "Crew Cabins"
@@ -54,7 +54,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "bI" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/box/white/corners,
@@ -67,7 +67,7 @@
 	name = "Cargo Blast Door Control"
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "bR" = (
 /obj/structure/toilet{
 	dir = 4
@@ -79,7 +79,7 @@
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "ct" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -87,7 +87,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "cx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -98,7 +98,7 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "cX" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/tile/yellow,
@@ -108,12 +108,12 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "ec" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "eP" = (
 /obj/machinery/door/poddoor{
 	id = "caravantrade1_cargo";
@@ -121,16 +121,16 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "fk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/meter,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "fD" = (
 /turf/template_noop,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "gs" = (
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
@@ -170,7 +170,7 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "gw" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -182,23 +182,23 @@
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "gH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "hk" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "if" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "jg" = (
 /obj/machinery/door/airlock{
 	name = "Restroom"
@@ -207,11 +207,11 @@
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "kv" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "lt" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron/twenty,
@@ -225,14 +225,14 @@
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "lx" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "lC" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -245,12 +245,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "lM" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/sign/warning/vacuum/directional/east,
 /turf/open/floor/plating,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "mo" = (
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 8
@@ -259,7 +259,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "mw" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/firealarm/directional/west,
@@ -279,7 +279,7 @@
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "mZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/trade1{
@@ -297,7 +297,7 @@
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "od" = (
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
@@ -306,23 +306,23 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "oj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "ot" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "oS" = (
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "oU" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
@@ -336,7 +336,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "pR" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
@@ -352,7 +352,7 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "qp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -363,7 +363,7 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "qM" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -373,14 +373,14 @@
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "rF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "sf" = (
 /obj/machinery/light/directional/north,
 /obj/structure/table,
@@ -396,7 +396,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "si" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -406,7 +406,7 @@
 	id_tag = "caravantrade1_bolt"
 	},
 /turf/open/floor/plating,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "ss" = (
 /obj/structure/rack,
 /obj/item/storage/belt/utility,
@@ -414,32 +414,32 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "tg" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "ur" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "vt" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "xz" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "xG" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/bed{
@@ -464,7 +464,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "yc" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/bed,
@@ -485,7 +485,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "yC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/blue,
@@ -499,7 +499,7 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "zd" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/components/tank/air{
@@ -507,17 +507,17 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "zy" = (
 /obj/structure/girder,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Ax" = (
 /obj/item/stack/sheet/iron/fifty,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "AM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -527,7 +527,7 @@
 	name = "Bridge"
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "AO" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/mineral/titanium{
@@ -538,7 +538,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "AX" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/closet/crate,
@@ -546,7 +546,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Bu" = (
 /obj/item/stack/sheet/mineral/titanium,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -554,7 +554,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "BN" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -564,14 +564,14 @@
 	name = "Engine Room"
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "CU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Dt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -587,7 +587,7 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "DQ" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
@@ -598,15 +598,15 @@
 	amount = 25
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "El" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Eo" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/mineral/titanium,
 /turf/template_noop,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "EI" = (
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue{
@@ -616,7 +616,7 @@
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "EQ" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/firealarm/directional/east,
@@ -631,7 +631,7 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "EW" = (
 /obj/structure/table/reinforced,
 /obj/machinery/button/door{
@@ -648,17 +648,17 @@
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Fv" = (
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Fx" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
 	icon_state = "singular"
 	},
 /turf/template_noop,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "FM" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -666,20 +666,20 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "GJ" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Hv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "HN" = (
 /obj/machinery/door/airlock{
 	id_tag = "caravantrade1_cabin2";
@@ -688,7 +688,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Ib" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/all_access{
@@ -699,7 +699,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Jv" = (
 /turf/template_noop,
 /area/template_noop)
@@ -718,7 +718,7 @@
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Ko" = (
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen,
@@ -730,31 +730,31 @@
 /turf/open/floor/iron{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "KC" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "KX" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "LK" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "LM" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "caravantrade1_bridge"
 	},
 /turf/open/floor/plating,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "LX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -765,7 +765,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Mb" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
@@ -773,7 +773,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "NY" = (
 /obj/machinery/door/poddoor{
 	id = "caravantrade1_cargo";
@@ -782,7 +782,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Od" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
@@ -807,12 +807,12 @@
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Ov" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Ow" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/shuttle/caravan/trade1{
@@ -828,7 +828,7 @@
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "TEMP=2.7"
 	},
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "OK" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
@@ -842,14 +842,14 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Qk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Qs" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -857,7 +857,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "QY" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
@@ -867,13 +867,13 @@
 	pixel_y = 4
 	},
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "RI" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "RN" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/space_heater,
@@ -883,7 +883,7 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "SO" = (
 /obj/machinery/door/airlock{
 	id_tag = "caravantrade1_cabin1";
@@ -893,22 +893,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Td" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "TP" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Ut" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "UW" = (
 /obj/machinery/airalarm/all_access{
 	dir = 4;
@@ -917,7 +917,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "VD" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -937,7 +937,7 @@
 	width = 21
 	},
 /turf/open/floor/plating,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "VN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -945,20 +945,20 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "VT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Wx" = (
 /obj/effect/turf_decal/bot_white,
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "WU" = (
 /obj/machinery/airalarm/all_access{
 	dir = 8;
@@ -970,7 +970,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "WX" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 8
@@ -980,7 +980,7 @@
 /obj/item/stack/sheet/plasteel/twenty,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "WZ" = (
 /obj/machinery/power/smes,
 /obj/effect/turf_decal/stripes/line{
@@ -989,20 +989,20 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Xh" = (
 /obj/machinery/door/poddoor{
 	id = "caravantrade1_cargo";
 	name = "Cargo Blast Door"
 	},
 /turf/open/floor/plating/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "Xt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 "ZZ" = (
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
@@ -1015,7 +1015,7 @@
 	amount = 20
 	},
 /turf/open/floor/iron/dark/airless,
-/area/shuttle/caravan/freighter1)
+/area/shuttle/ruin/caravan/freighter1)
 
 (1,1,1) = {"
 Jv
