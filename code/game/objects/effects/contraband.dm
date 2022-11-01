@@ -107,6 +107,8 @@
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
+	///Whether the poster should be printable from library management computer. Mostly exists to keep directionals from being printed.
+	var/printable = FALSE
 
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
@@ -742,6 +744,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
 	poster_item_icon_state = "rolled_legit"
+	printable = TRUE
 
 /obj/structure/sign/poster/official/random
 	name = "Random Official Poster (ROP)"
@@ -750,6 +753,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	never_random = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
+//This is being hardcoded here to ensure we don't print directionals from the library management computer because they act wierd as a poster item
+/obj/structure/sign/poster/official/random/directional
+	printable = FALSE
 
 /obj/structure/sign/poster/official/here_for_your_safety
 	name = "Here For Your Safety"

@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(library)
 /datum/controller/subsystem/library/proc/prepare_official_posters()
 	printable_posters = list()
 	for(var/obj/structure/sign/poster/official/poster_type as anything in subtypesof(/obj/structure/sign/poster/official))
-		if (!printable_posters[initial(poster_type.name)]) //prevent overwriting the plain version with the directional version of posters (mainly for the /random one)
+		if (initial(poster_type.printable) == TRUE) //Mostly this check exists to keep directionals from ending up in the printable list
 			printable_posters[initial(poster_type.name)] = poster_type
 
 /datum/controller/subsystem/library/proc/prepare_library_areas()
