@@ -78,6 +78,7 @@
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
+#include "area_contents.dm"
 #include "autowiki.dm"
 #include "barsigns.dm"
 #include "bespoke_id.dm"

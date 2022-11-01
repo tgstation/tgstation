@@ -458,29 +458,33 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
 	index = members.len
-	var/atom/instance
 	if(members[index] != /area/template_noop)
+		var/area/area_instance
 		if(members_attributes[index] != default_list)
 			world.preloader_setup(members_attributes[index], members[index])//preloader for assigning  set variables on atom creation
-		instance = loaded_areas[members[index]]
-		if(!instance)
+		area_instance = loaded_areas[members[index]]
+		if(!area_instance)
 			var/area_type = members[index]
 			// If this parsed map doesn't have that area already, we check the global cache
-			instance = GLOB.areas_by_type[area_type]
+			area_instance = GLOB.areas_by_type[area_type]
 			// If the global list DOESN'T have this area it's either not a unique area, or it just hasn't been created yet
-			if (!instance)
-				instance = new area_type(null)
-				if(!instance)
+			if (!area_instance)
+				area_instance = new area_type(null)
+				if(!area_instance)
 					CRASH("[area_type] failed to be new'd, what'd you do?")
-			loaded_areas[area_type] = instance
+			loaded_areas[area_type] = area_instance
 
-		instance.contents.Add(crds)
+		var/area/old_area = crds.loc
+		old_area.contained_turfs -= crds
+		area_instance.contents.Add(crds)
+		area_instance.contained_turfs.Add(crds)
 
 		if(GLOB.use_preloader)
-			world.preloader_load(instance)
+			world.preloader_load(area_instance)
 
 	// Index right before /area is /turf
 	index--
+	var/atom/instance
 	//then instance the /turf
 	//NOTE: this used to place any turfs before the last "underneath" it using .appearance and underlays
 	//We don't actually use this, and all it did was cost cpu, so we don't do this anymore

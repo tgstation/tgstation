@@ -390,16 +390,16 @@ Used by the AI doomsday and the self-destruct nuke.
 	// Custom maps are removed after station loading so the map files does not persist for no reason.
 	if(config.map_path == CUSTOM_MAP_PATH)
 		fdel("_maps/custom/[config.map_file]")
-		// And as the file is now removed set the next map to default.
+		// And as the file is now removed set the nextpotato_contents map to default.
 		next_map_config = load_default_map_config()
 
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
 	for(var/area/station/A in world)
-		if (!A.contents.len || !(A.area_flags & UNIQUE_AREA))
+		if (!A.contained_turfs.len || !(A.area_flags & UNIQUE_AREA))
 			continue
-		var/turf/picked = A.contents[1]
+		var/turf/picked = A.contained_turfs[1]
 		if (is_station_level(picked.z))
 			GLOB.the_station_areas += A.type
 
@@ -647,14 +647,18 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	clearing_reserved_turfs = FALSE
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
-	for(var/i in turfs)
-		var/turf/T = i
+	var/area/global_area = GLOB.areas_by_type[world.area]
+	for(var/turf/T as anything in turfs)
 		T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
 		LAZYINITLIST(unused_turfs["[T.z]"])
 		unused_turfs["[T.z]"] |= T
 		T.flags_1 |= UNUSED_RESERVATION_TURF
-		GLOB.areas_by_type[world.area].contents += T
+		var/area/old_area = T.loc
+		old_area.contained_turfs -= T
+		// We do this here because contents setting has overhead that I want to split up
+		global_area.contents += T
 		CHECK_TICK
+	global_area.contained_turfs += turfs
 
 //DO NOT CALL THIS PROC DIRECTLY, CALL wipe_reservations().
 /datum/controller/subsystem/mapping/proc/do_wipe_turf_reservations()
@@ -693,7 +697,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /// Takes a z level datum, and tells the mapping subsystem to manage it
 /// Also handles things like plane offset generation, and other things that happen on a z level to z level basis
-/datum/controller/subsystem/mapping/proc/manage_z_level(datum/space_level/new_z)
+/datum/controller/subsystem/mapping/proc/manage_z_level(datum/space_level/new_z, filled_with_space)
 	// First, add the z
 	z_list += new_z
 
@@ -712,10 +716,24 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(below_offset)
 		update_plane_tracking(new_z)
 
+	build_area_turfs(z_value, filled_with_space)
+
 	// And finally, misc global generation
 
 	// We'll have to update this if offsets change, because we load lowest z to highest z
 	generate_lighting_appearance_by_z(z_value)
+
+/datum/controller/subsystem/mapping/proc/build_area_turfs(z_level, space_guarenteed)
+	// If we know this is filled with default tiles, we can use the default area
+	// Faster
+	if(space_guarenteed)
+		var/area/global_area = GLOB.areas_by_type[world.area]
+		global_area.contained_turfs += Z_TURFS(z_level)
+		return
+
+	for(var/turf/lad as anything in Z_TURFS(z_level))
+		var/area/our_area = lad.loc
+		our_area.contained_turfs += lad
 
 /datum/controller/subsystem/mapping/proc/update_plane_tracking(datum/space_level/update_with)
 	// We're essentially going to walk down the stack of connected z levels, and set their plane offset as we go
