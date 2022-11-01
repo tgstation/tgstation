@@ -491,6 +491,16 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	desc = "A wonderous decorated Christmas tree. It has a seemly endless supply of presents!"
 	unlimited = TRUE
 
+/obj/structure/flora/tree/pine/holodeck
+	name = "holographic pine tree"
+	desc = "A coniferous pine tree, it looks very slightly digital."
+	product_types = list(/obj/effect/particle_effect/sparks = 1)
+	harvest_amount_low = 1
+	harvest_amount_high = 5
+	harvest_message_low = "The holographic tree bursts into a few sparks!"
+	harvest_message_med = "The holographic tree bursts into sparks!"
+	harvest_message_high = "The holographic tree bursts into a lot of sparks!"
+
 /obj/structure/festivus
 	name = "festivus pole"
 	desc = "During last year's Feats of Strength the Research Director was able to suplex this passing immobile rod into a planter."
