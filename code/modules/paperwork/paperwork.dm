@@ -44,7 +44,7 @@
 
 	if(!stamped)
 		if(istype(attacking_item, /obj/item/stamp))
-			if(istype(attacking_item, stamp_requested) || istype(attacking_item, stamp_requested)) //chameleon stamp does not work, this is a CRITICAL issue
+			if(istype(attacking_item, stamp_requested)) //chameleon stamp does not work, this is a CRITICAL issue
 				add_stamp()
 				to_chat(user, span_notice("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
 			else
