@@ -54,6 +54,7 @@
 		set_greyscale(colors=list(screwdriver_colors[our_color]))
 	. = ..()
 	AddElement(/datum/element/eyestab)
+	AddElement(/datum/element/falling_hazard, force, wound_bonus, TRUE, FALSE, hitsound)
 
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"

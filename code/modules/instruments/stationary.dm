@@ -41,6 +41,10 @@
 	density = TRUE
 	var/broken_icon_state = "pianobroken"
 
+/obj/structure/musician/piano/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/falling_hazard, 60, 10, FALSE, TRUE, 'sound/effects/piano_hit.ogg')
+
 /obj/structure/musician/piano/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)

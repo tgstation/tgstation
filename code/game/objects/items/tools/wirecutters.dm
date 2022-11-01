@@ -46,6 +46,9 @@
 	if(random_color)
 		var/our_color = pick(wirecutter_colors)
 		set_greyscale(colors=list(wirecutter_colors[our_color]))
+
+	AddElement(/datum/element/falling_hazard, force, wound_bonus, TRUE, FALSE, hitsound)
+
 	return ..()
 
 /obj/item/wirecutters/attack(mob/living/carbon/attacked_carbon, mob/user)

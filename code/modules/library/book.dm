@@ -110,6 +110,8 @@
 	. = ..()
 	book_data = new(starting_title, starting_author, starting_content)
 
+	AddElement(/datum/element/falling_hazard, 5, 0, TRUE, FALSE, drop_sound)
+
 /obj/item/book/proc/on_read(mob/living/user)
 	if(book_data?.content)
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
