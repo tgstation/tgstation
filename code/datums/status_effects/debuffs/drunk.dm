@@ -52,12 +52,6 @@
 
 	return null
 
-/// Removes all of our drunkenness (self-deletes) on signal.
-/datum/status_effect/inebriated/proc/clear_drunkenness(mob/living/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
-
 /// Sets the drunk value to set_to, deleting if the value drops to 0 or lower
 /datum/status_effect/inebriated/proc/set_drunk_value(set_to)
 	if(!isnum(set_to))

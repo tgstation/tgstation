@@ -24,8 +24,10 @@
 	var/atom/movable/screen/alert/status_effect/linked_alert
 	/// Used to define if the status effect should be using SSfastprocess or SSprocessing
 	var/processing_speed = STATUS_EFFECT_FAST_PROCESS
-	//// Do we self-terminate when a fullheal is called?
+	/// Do we self-terminate when a fullheal is called?
 	var/remove_on_fullheal = FALSE
+	/// If remove_on_fullheal is TRUE, what flag do we need to be removed?
+	var/heal_flag_necessary = HEAL_STATUS
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -41,6 +43,7 @@
 		return
 	if(owner)
 		LAZYADD(owner.status_effects, src)
+		RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_effect_on_heal)
 
 	if(duration != -1)
 		duration = world.time + duration
@@ -140,13 +143,15 @@
 /datum/status_effect/proc/nextmove_adjust()
 	return 0
 
+/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL] to remove us on fullheal
 /datum/status_effect/proc/remove_effect_on_heal(datum/source, heal_flags)
 	SIGNAL_HANDLER
 
-	if(!remove_on_fullheal || !(heal_flags & HEAL_STATUS))
+	if(!remove_on_fullheal)
 		return
 
-	qdel(src)
+	if(!heal_flag_necessary || (heal_flags & heal_flag_necessary))
+		qdel(src)
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

@@ -363,10 +363,10 @@
 /obj/item/organ/external/antennae/proc/heal_antennae(datum/source, heal_flags)
 	SIGNAL_HANDLER
 
-	if(!(heal_flags & HEAL_ORGANS))
+	if(!burnt)
 		return
 
-	if(burnt)
+	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
 		burnt = FALSE
 		set_sprite(original_sprite)
 

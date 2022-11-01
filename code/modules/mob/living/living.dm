@@ -721,7 +721,6 @@
 	else
 		clear_fullscreen("brute")
 
-//Proc used to resuscitate a mob, for full_heal see fully_heal()
 /**
  * Proc used to resuscitate a mob, bringing them back to life.
  *

@@ -33,7 +33,7 @@
 
 	user.cure_fakedeath("changeling")
 	// Heal all damage and some minor afflictions,
-	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS)
+	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
 	// but leave out limbs so we can do it specially
 	user.revive(flags_to_heal & ~HEAL_LIMBS)
 
