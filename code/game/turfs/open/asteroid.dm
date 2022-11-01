@@ -16,6 +16,8 @@
 
 	/// Base turf type to be created by the tunnel
 	var/turf_type = /turf/open/misc/asteroid
+			/// Whether this turf has different icon states
+	var/has_floor_variance = TRUE
 	/// Probability floor has a different icon state
 	var/floor_variance = 20
 	/// Itemstack to drop when dug by a shovel
@@ -24,6 +26,8 @@
 	var/dug = FALSE
 	/// Icon state to use when broken
 	var/broken_state = "asteroid_dug"
+	/// Percentage chance of receiving a bonus worm
+	var/worm_chance = 30
 
 /turf/open/misc/asteroid/break_tile()
 	icon_state = broken_state
@@ -32,13 +36,15 @@
 	var/proper_name = name
 	. = ..()
 	name = proper_name
-	if(prob(floor_variance))
+	if(has_floor_variance && prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,12)]"
 
 /// Drops itemstack when dug and changes icon
 /turf/open/misc/asteroid/proc/getDug()
 	dug = TRUE
 	new digResult(src, 5)
+	if (prob(worm_chance))
+		new /obj/item/food/bait/worm(src)
 	icon_state = "[base_icon_state]_dug"
 
 /// If the user can dig the turf
@@ -88,6 +94,7 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 
 /turf/open/misc/asteroid/dug //When you want one of these to be already dug.
+	has_floor_variance = FALSE
 	dug = TRUE
 	base_icon_state = "asteroid_dug"
 	icon_state = "asteroid_dug"
@@ -124,6 +131,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/basalt/airless
 	initial_gas_mix = AIRLESS_ATMOS
+	worm_chance = 0
 
 /turf/open/misc/asteroid/basalt/Initialize(mapload)
 	. = ..()
@@ -152,6 +160,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	initial_gas_mix = AIRLESS_ATMOS
 	baseturfs = /turf/open/misc/asteroid/airless
 	turf_type = /turf/open/misc/asteroid/airless
+	worm_chance = 0
 
 /turf/open/misc/asteroid/snow
 	gender = PLURAL
@@ -217,6 +226,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/airless
 	initial_gas_mix = AIRLESS_ATMOS
+	worm_chance = 0
 
 /turf/open/misc/asteroid/snow/temperatre
 	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"

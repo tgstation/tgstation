@@ -19,28 +19,23 @@
 	. = ..()
 	if(!isliving(arrived))
 		return
-	var/mob/living/L = arrived
-	if(!L.client || L.incorporeal_move || !L.mind)
+	var/mob/living/to_transform = arrived
+	var/datum/mind/transforming_mind = to_transform.mind
+	if(!to_transform.client || to_transform.incorporeal_move || !transforming_mind)
 		return
-	if(HAS_TRAIT(L.mind, TRAIT_HOT_SPRING_CURSED)) // no double dipping
+	if(HAS_TRAIT(transforming_mind, TRAIT_HOT_SPRING_CURSED)) // no double dipping
 		return
 
-	ADD_TRAIT(L.mind, TRAIT_HOT_SPRING_CURSED, TRAIT_GENERIC)
-	var/random_choice = pick("Mob", "Appearance")
-	switch(random_choice)
-		if("Mob")
-			L = L.wabbajack("animal")
-		if("Appearance")
-			var/mob/living/carbon/human/H = L.wabbajack("humanoid")
-			randomize_human(H)
-			var/list/all_species = list()
-			for(var/stype in subtypesof(/datum/species))
-				var/datum/species/S = stype
-				if(initial(S.changesource_flags) & RACE_SWAP)
-					all_species += stype
-			var/random_race = pick(all_species)
-			H.set_species(random_race)
-			L = H
-	var/turf/T = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
-	L.forceMove(T)
-	to_chat(L, span_notice("You blink and find yourself in [get_area_name(T)]."))
+	ADD_TRAIT(transforming_mind, TRAIT_HOT_SPRING_CURSED, TRAIT_GENERIC)
+	var/mob/living/transformed_mob = to_transform.wabbajack(pick(WABBAJACK_HUMAN, WABBAJACK_ANIMAL), change_flags = RACE_SWAP)
+	if(!transformed_mob)
+		// Wabbajack failed, maybe the mob had godmode or something.
+		if(!QDELETED(to_transform))
+			to_chat(to_transform, span_notice("The water seems to have no effect on you."))
+		// because it failed, let's allow them to try again in a lil' bit
+		addtimer(TRAIT_CALLBACK_REMOVE(transforming_mind, TRAIT_HOT_SPRING_CURSED, TRAIT_GENERIC), 10 SECONDS)
+		return
+
+	var/turf/return_turf = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
+	transformed_mob.forceMove(return_turf)
+	to_chat(transformed_mob, span_notice("You blink and find yourself in [get_area_name(return_turf)]."))

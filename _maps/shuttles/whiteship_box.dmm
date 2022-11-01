@@ -20,7 +20,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Hospital Ship";
@@ -79,13 +79,13 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "ar" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
 "as" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -1769,7 +1769,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/abandoned/medbay)
 "hV" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -1810,7 +1810,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
 "vk" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
@@ -1850,7 +1850,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "JU" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
@@ -1874,7 +1874,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "Tw" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,

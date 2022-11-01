@@ -13,8 +13,6 @@
 	var/loot_type_path
 	/// The subtypes (this excludes the provided path) to combine with the loot list
 	var/loot_subtype_path
-	/// Whether the spawner should immediately spawn loot and cleanup on Initialize()
-	var/spawn_on_init = TRUE
 	/// How many items will be spawned
 	var/spawn_loot_count = 1
 	/// If the same item can be spawned twice
@@ -32,19 +30,12 @@
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
-
-	if(should_spawn_on_init())
-		spawn_loot()
-		return INITIALIZE_HINT_QDEL
-
-/// Helper proc that returns TRUE if the spawner should spawn loot in Initialise() and FALSE otherwise. Override this to change spawning behaviour.
-/obj/effect/spawner/random/proc/should_spawn_on_init()
-	return spawn_on_init
+	spawn_loot()
 
 ///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
 /obj/effect/spawner/random/proc/spawn_loot(lootcount_override)
 	if(!prob(spawn_loot_chance))
-		return INITIALIZE_HINT_QDEL
+		return
 
 	var/list/spawn_locations = get_spawn_locations(spawn_scatter_radius)
 	var/spawn_loot_count = isnull(lootcount_override) ? src.spawn_loot_count : lootcount_override
@@ -72,13 +63,8 @@
 				if(spawn_scatter_radius > 0)
 					spawn_loc = pick_n_take(spawn_locations)
 
-				var/atom/movable/spawned_loot = new lootspawn(spawn_loc)
+				var/atom/movable/spawned_loot = make_item(spawn_loc, lootspawn)
 				spawned_loot.setDir(dir)
-
-				if(istype(src, /obj/effect/spawner/random/trash/graffiti))
-					var/obj/effect/spawner/random/trash/graffiti/G = src
-					G.select_graffiti(spawned_loot)
-					//var/obj/graffiti = new /obj/effect/decal/cleanable/crayon(get_turf(src))
 
 				if (!spawn_loot_split && !spawn_random_offset)
 					if (pixel_x != 0)
@@ -92,6 +78,15 @@
 					if (loot_spawned)
 						spawned_loot.pixel_x = spawned_loot.pixel_y = ((!(loot_spawned%2)*loot_spawned/2)*-1)+((loot_spawned%2)*(loot_spawned+1)/2*1)
 			loot_spawned++
+
+/**
+ *  Makes the actual item related to our spawner.
+ *
+ * spawn_loc - where are we spawning it?
+ * type_path_to_make - what are we spawning?
+ **/
+/obj/effect/spawner/random/proc/make_item(spawn_loc, type_path_to_make)
+	return new type_path_to_make(spawn_loc)
 
 ///If the spawner has a spawn_scatter_radius set, this creates a list of nearby turfs available
 /obj/effect/spawner/random/proc/get_spawn_locations(radius)

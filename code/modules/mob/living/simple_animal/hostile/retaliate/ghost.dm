@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/ghost
 	name = "ghost"
 	desc = "A soul of the dead, spooky."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "ghost"
 	icon_living = "ghost"
 	mob_biotypes = MOB_SPIRIT
@@ -55,12 +55,12 @@
 
 /mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()
 	if(ghost_hairstyle != null)
-		ghost_hair = mutable_appearance('icons/mob/human_face.dmi', "hair_[ghost_hairstyle]", -HAIR_LAYER)
+		ghost_hair = mutable_appearance('icons/mob/species/human/human_face.dmi', "hair_[ghost_hairstyle]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
 		add_overlay(ghost_hair)
 	if(ghost_facial_hairstyle != null)
-		ghost_facial_hair = mutable_appearance('icons/mob/human_face.dmi', "facial_[ghost_facial_hairstyle]", -HAIR_LAYER)
+		ghost_facial_hair = mutable_appearance('icons/mob/species/human/human_face.dmi', "facial_[ghost_facial_hairstyle]", -HAIR_LAYER)
 		ghost_facial_hair.alpha = 200
 		ghost_facial_hair.color = ghost_facial_hair_color
 		add_overlay(ghost_facial_hair)

@@ -11,8 +11,11 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Run Linters
     runs-on: ubuntu-20.04
+    concurrency:
+      group: run_linters-${{ github.ref }}
+      cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Restore SpacemanDMM cache
         uses: actions/cache@v3
         with:
@@ -45,7 +48,7 @@ jobs:
           tools/bootstrap/python -m mapmerge2.dmm_test
           ~/dreamchecker > ${GITHUB_WORKSPACE}/output-annotations.txt 2>&1
       - name: Annotate Lints
-        uses: yogstation13/DreamAnnotate@v1
+        uses: yogstation13/DreamAnnotate@v2
         if: always()
         with:
           outputFile: output-annotations.txt
@@ -54,8 +57,11 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Compile Maps
     runs-on: ubuntu-20.04
+    concurrency:
+      group: compile_all_maps-${{ github.ref }}
+      cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Restore BYOND cache
         uses: actions/cache@v3
         with:
@@ -73,15 +79,18 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
+    concurrency:
+      group: find_all_maps-${{ github.ref }}
+      cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Find Maps
         id: map_finder
         run: |
           echo "$(ls -mw0 _maps/*.json)" > maps_output.txt
           sed -i -e s+_maps/+\"+g -e s+.json+\"+g maps_output.txt
           echo "Maps: $(cat maps_output.txt)"
-          echo "::set-output name=maps::{\"paths\":[$(cat maps_output.txt)]}"
+          echo "maps={\"paths\":[$(cat maps_output.txt)]}" >> $GITHUB_OUTPUT
 
   run_all_tests:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -101,10 +110,10 @@ jobs:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     concurrency:
-      group: ci-${{ github.ref }}-${{ matrix.map }}
+      group: run_all_tests-${{ github.ref }}-${{ matrix.map }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Restore BYOND cache
         uses: actions/cache@v3
         with:
@@ -149,7 +158,7 @@ jobs:
     name: Compare Screenshot Tests
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # If we ever add more artifacts, this is going to break, but it'll be obvious.
       - name: Download screenshot tests
         uses: actions/download-artifact@v3
@@ -182,8 +191,11 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Windows Build
     runs-on: windows-latest
+    concurrency:
+      group: test_windows-${{ github.ref }}
+      cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Restore Yarn cache
         uses: actions/cache@v3
         with:
@@ -202,7 +214,7 @@ jobs:
           md deploy
           bash tools/deploy.sh ./deploy
       - name: Deploy artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: deploy
           path: deploy

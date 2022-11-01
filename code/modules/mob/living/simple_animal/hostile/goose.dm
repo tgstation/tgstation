@@ -191,7 +191,7 @@
 	var/destination = get_edge_target_turf(currentTurf, pick(GLOB.alldirs)) //Pick a random direction to toss them in
 	var/throwRange = hard ? rand(2,8) : 1
 	consumed.safe_throw_at(destination, throwRange, 2) //Thow the food at a random tile 1 spot away
-	sleep(2)
+	sleep(0.2 SECONDS)
 	if (QDELETED(src) || QDELETED(consumed))
 		return
 	currentTurf = get_turf(consumed)
@@ -211,7 +211,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_preend()
 	for (var/obj/item/consumed in contents) //Get rid of any food left in the poor thing
 		barf_food(consumed, TRUE)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		if (QDELETED(src))
 			return
 	vomit_end()
@@ -247,7 +247,7 @@
 	name = "Vomit"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "vomit"
-	icon_icon = 'icons/mob/animal.dmi'
+	icon_icon = 'icons/mob/simple/animal.dmi'
 	cooldown_time = 250
 
 /datum/action/cooldown/vomit/Activate(atom/target)

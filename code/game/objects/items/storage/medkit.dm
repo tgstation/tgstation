@@ -12,6 +12,7 @@
 	name = "medkit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "medkit"
+	inhand_icon_state = "medkit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
@@ -311,7 +312,7 @@
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
 	icon_state = "pill_canister"
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	inhand_icon_state = "contsolid"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
@@ -573,7 +574,7 @@
 		var/obj/item/organ/internal/int_organ = I
 		int_organ.organ_flags |= ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
 		for(var/obj/item/organ/internal/int_organ in B.contents)
 			int_organ.organ_flags |= ORGAN_FROZEN
@@ -585,13 +586,13 @@
 		var/obj/item/organ/internal/int_organ = I
 		int_organ.organ_flags &= ~ORGAN_FROZEN
 		return
-	if(istype(I, /obj/item/bodypart))
+	if(isbodypart(I))
 		var/obj/item/bodypart/B = I
 		for(var/obj/item/organ/internal/int_organ in B.contents)
 			int_organ.organ_flags &= ~ORGAN_FROZEN
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)

@@ -69,14 +69,14 @@
 
 	var/atom/original_object = parent
 
-	if(istype(parent, /obj/item/stack)) //Check if its a sheet, for grilling multiple things in a stack
+	if(isstack(parent)) //Check if its a sheet, for grilling multiple things in a stack
 		var/obj/item/stack/itemstack = original_object
 		var/atom/grilled_result = new cook_result(original_object.loc, itemstack.amount)
 		SEND_SIGNAL(parent, COMSIG_GRILL_COMPLETED, grilled_result)
 		currently_grilling = FALSE
 		grill_source.visible_message("<span class='[positive_result ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
 		grilled_result.pixel_x = original_object.pixel_x
-		grilled_result.pixel_y = original_object.pixel_y	
+		grilled_result.pixel_y = original_object.pixel_y
 		qdel(parent)
 		return
 
@@ -88,7 +88,7 @@
 	grilled_result.pixel_x = original_object.pixel_x
 	grilled_result.pixel_y = original_object.pixel_y
 
-	
+
 	grill_source.visible_message("<span class='[positive_result ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
 	SEND_SIGNAL(parent, COMSIG_GRILL_COMPLETED, grilled_result)
 	currently_grilling = FALSE

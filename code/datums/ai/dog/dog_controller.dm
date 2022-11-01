@@ -97,6 +97,11 @@
 /datum/ai_controller/dog/proc/on_attack_hand(datum/source, mob/living/user)
 	SIGNAL_HANDLER
 
+	var/mob/living/living_pawn = pawn
+	var/additional_text = HAS_TRAIT(user, TRAIT_NAIVE) ? "It looks like [living_pawn.p_theyre()] sleeping." : "[living_pawn.p_they(capitalized = TRUE)] seem[living_pawn.p_s()] to be dead."
+	if(living_pawn.stat == DEAD)
+		to_chat(user, span_warning("Touching [living_pawn], you feel [living_pawn.p_their()] cold skin through the fur. [additional_text]"))
+		return
 	if(user.combat_mode)
 		unfriend(user)
 	else
@@ -172,7 +177,7 @@
 		COMMAND_HEEL = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow"),
 		COMMAND_FETCH = image(icon = 'icons/mob/actions/actions_spells.dmi', icon_state = "summons"),
 		COMMAND_ATTACK = image(icon = 'icons/effects/effects.dmi', icon_state = "bite"),
-		COMMAND_DIE = image(icon = 'icons/mob/pets.dmi', icon_state = "puppy_dead")
+		COMMAND_DIE = image(icon = 'icons/mob/simple/pets.dmi', icon_state = "puppy_dead")
 		)
 
 	var/choice = show_radial_menu(clicker, pawn, commands, custom_check = CALLBACK(src, .proc/check_menu, clicker), tooltips = TRUE)

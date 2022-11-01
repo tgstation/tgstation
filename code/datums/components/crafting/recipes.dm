@@ -97,7 +97,7 @@
 
 /datum/crafting_recipe/strobeshield/New()
 	..()
-	blacklist |= subtypesof(/obj/item/shield/riot/)
+	blacklist |= subtypesof(/obj/item/shield/riot)
 
 /datum/crafting_recipe/molotov
 	name = "Molotov"
@@ -366,6 +366,7 @@
 	reqs = list(/obj/item/reagent_containers/cup/bucket = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
+	parts = list(/obj/item/reagent_containers/cup/bucket = 1)
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
@@ -429,7 +430,7 @@
 	reqs = list(/obj/item/extinguisher = 1,
 				/obj/item/bodypart/r_arm/robot = 1,
 				/obj/item/assembly/prox_sensor = 1,
-				/obj/item/clothing/head/hardhat/red = 1)
+				/obj/item/clothing/head/utility/hardhat/red = 1)
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
@@ -642,21 +643,21 @@
 
 /datum/crafting_recipe/lizardhat
 	name = "Lizard Cloche Hat"
-	result = /obj/item/clothing/head/lizard
+	result = /obj/item/clothing/head/costume/lizard
 	time = 1 SECONDS
 	reqs = list(/obj/item/organ/external/tail/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/lizardhat_alternate
 	name = "Lizard Cloche Hat"
-	result = /obj/item/clothing/head/lizard
+	result = /obj/item/clothing/head/costume/lizard
 	time = 1 SECONDS
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/kittyears
 	name = "Kitty Ears"
-	result = /obj/item/clothing/head/kitty/genuine
+	result = /obj/item/clothing/head/costume/kitty/genuine
 	time = 1 SECONDS
 	reqs = list(/obj/item/organ/external/tail/cat = 1,
 				/obj/item/organ/internal/ears/cat = 1)
@@ -1116,7 +1117,7 @@
 
 /datum/crafting_recipe/flower_garland
 	name = "Flower Garland"
-	result = /obj/item/clothing/head/garland
+	result = /obj/item/clothing/head/costume/garland
 	time = 1 SECONDS
 	reqs = list(/obj/item/food/grown/poppy = 4,
 				/obj/item/food/grown/harebell = 4,
@@ -1141,25 +1142,27 @@
 	reqs = list(/obj/item/aicard = 1,
 					/obj/item/food/grown/potato = 1,
 					/obj/item/stack/cable_coil = 5)
+	parts = list(/obj/item/aicard = 1)
 	category = CAT_MISC
 
-/datum/crafting_recipe/aitater/check_requirements(mob/user, list/collected_requirements)
-	var/obj/item/aicard/aicard = collected_requirements[/obj/item/aicard][1]
-	if(!aicard.AI)
-		return TRUE
-
-	to_chat(user, span_boldwarning("You can't craft an intelliTater with an AI in the card!"))
-	return FALSE
-
-/datum/crafting_recipe/aispook
+/datum/crafting_recipe/aitater/aispook
 	name = "intelliLantern"
 	result = /obj/item/aicard/aispook
-	time = 30
-	tool_behaviors = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/aicard = 1,
 					/obj/item/food/grown/pumpkin = 1,
 					/obj/item/stack/cable_coil = 5)
-	category = CAT_MISC
+
+/datum/crafting_recipe/aitater/on_craft_completion(mob/user, atom/result)
+	var/obj/item/aicard/new_card = result
+	var/obj/item/aicard/base_card = result.contents[1]
+	var/mob/living/silicon/ai = base_card.AI
+
+	if(ai)
+		base_card.AI = null
+		ai.forceMove(new_card)
+		new_card.AI = ai
+		new_card.update_appearance()
+	qdel(base_card)
 
 /datum/crafting_recipe/ghettojetpack
 	name = "Improvised Jetpack"
@@ -1835,6 +1838,24 @@
 	toiletbong.loc = toilet.loc
 	qdel(toilet)
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
+
+/datum/crafting_recipe/house_edge
+	name = "House Edge"
+	result = /obj/item/house_edge
+	always_available = FALSE
+	tool_behaviors = list(TOOL_WRENCH, TOOL_SCREWDRIVER, TOOL_WELDER)
+	reqs = list(
+		/obj/item/v8_engine = 1,
+		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/assembly/igniter = 1,
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/knife = 1,
+		/obj/item/weldingtool = 1,
+		/obj/item/roulette_wheel_beacon = 1,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

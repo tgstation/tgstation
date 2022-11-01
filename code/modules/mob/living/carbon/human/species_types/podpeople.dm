@@ -5,9 +5,6 @@
 	id = SPECIES_PODPERSON
 	species_traits = list(MUTCOLORS, EYECOLOR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_PLANT_SAFE,
 	)
 	external_organs = list(

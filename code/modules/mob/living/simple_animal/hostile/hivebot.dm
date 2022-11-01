@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/hivebot
 	name = "hivebot"
 	desc = "A small robot."
-	icon = 'icons/mob/hivebot.dmi'
+	icon = 'icons/mob/simple/hivebot.dmi'
 	icon_state = "basic"
 	icon_living = "basic"
 	icon_dead = "basic"
@@ -114,7 +114,7 @@
 	foam.Grant(src)
 
 /mob/living/simple_animal/hostile/hivebot/mechanic/AttackingTarget()
-	if(istype(target, /obj/machinery))
+	if(ismachinery(target))
 		var/obj/machinery/fixable = target
 		if(fixable.get_integrity() >= fixable.max_integrity)
 			to_chat(src, span_warning("Diagnostics indicate that this machine is at peak integrity."))

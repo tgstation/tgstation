@@ -210,7 +210,7 @@
 		if(!resolved_master)
 			balloon_alert(src, "cannot locate master")
 			return FALSE
-		if(src.z != resolved_master.z)
+		if(!is_valid_z_level(get_turf(src), get_turf(resolved_master)))
 			balloon_alert(src, "master out of range")
 			return FALSE
 		host_scan.attack(resolved_master, src)

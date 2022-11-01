@@ -129,7 +129,7 @@
 
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
-		if(istype(AM, /obj/item))
+		if(isitem(AM))
 			var/obj/item/bodypart/head/as_head = AM
 			var/obj/item/mmi/as_mmi = AM
 			if(istype(AM, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
@@ -159,9 +159,8 @@
 	if(!ismob(AM0))
 		qdel(AM0)
 	else // Lets not qdel a mob, yes?
-		for(var/i in AM0.contents)
-			var/atom/movable/content = i
-			content.moveToNullspace()
+		for(var/iterable in AM0.contents)
+			var/atom/movable/content = iterable
 			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)

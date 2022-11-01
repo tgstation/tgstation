@@ -25,6 +25,7 @@
 	. = ..()
 	if(!mapload || QDELETED(src))
 		return
+	// Only mapload from here on
 	set_anchored(TRUE)
 	state = BOOKCASE_FINISHED
 	for(var/obj/item/I in loc)
@@ -32,7 +33,11 @@
 			continue
 		I.forceMove(src)
 	update_appearance()
-	SSlibrary.shelves_to_load += src
+
+	if(SSlibrary.initialized)
+		INVOKE_ASYNC(src, .proc/load_shelf)
+	else
+		SSlibrary.shelves_to_load += src
 
 ///Loads the shelf, both by allowing it to generate random items, and by adding its contents to a list used by library machines
 /obj/structure/bookcase/proc/load_shelf()
@@ -118,10 +123,10 @@
 				to_chat(user, span_notice("You empty \the [I] into \the [src]."))
 				update_appearance()
 			else if(istype(I, /obj/item/pen))
-				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
+				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
 					return
 				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
-				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
+				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
 					return
 				if(!newname)
 					return

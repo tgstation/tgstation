@@ -15,7 +15,7 @@
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
 	/// Reference to a disk we are going to print to.
-	var/obj/item/computer_hardware/hard_drive/portable/inserted_disk
+	var/obj/item/computer_disk/inserted_disk
 
 	// Lighting system to better communicate the directions.
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
@@ -49,8 +49,8 @@
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
 /obj/machinery/doppler_array/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/computer_hardware/hard_drive/portable))
-		var/obj/item/computer_hardware/hard_drive/portable/disk = item
+	if(istype(item, /obj/item/computer_disk))
+		var/obj/item/computer_disk/disk = item
 		eject_disk(user)
 		if(user.transferItemToLoc(disk, src))
 			inserted_disk = disk
@@ -86,7 +86,7 @@
 	record_data.explosion_record = record
 	record_data.possible_experiments = apply_experiments(record)
 
-	if(inserted_disk.store_file(record_data))
+	if(inserted_disk.add_file(record_data))
 		playsound(src, 'sound/machines/ping.ogg', 25)
 	else
 		playsound(src, 'sound/machines/terminal_error.ogg', 25)
@@ -163,7 +163,7 @@
 	if(machine_stat & NOPOWER)
 		return FALSE
 	var/turf/zone = get_turf(src)
-	if(zone.z != epicenter.z)
+	if(!is_valid_z_level(zone, epicenter))
 		return FALSE
 
 	if(next_announce > world.time)
@@ -218,7 +218,7 @@
 /obj/machinery/doppler_array/Exited(atom/movable/gone, direction)
 	if(gone == inserted_disk)
 		inserted_disk = null
-	. = ..()
+	return ..()
 
 /obj/machinery/doppler_array/powered()
 	if(panel_open)

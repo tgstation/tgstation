@@ -15,7 +15,7 @@
 	dir = 2;
 	dwidth = 8;
 	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
 	port_direction = 2;
@@ -64,13 +64,13 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "am" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "an" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -90,7 +90,7 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "ar" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -286,7 +286,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aX" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
@@ -344,11 +344,11 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "be" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "bf" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "bg" = (

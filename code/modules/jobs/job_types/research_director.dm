@@ -17,6 +17,7 @@
 	exp_requirements = 180
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "RESEARCH_DIRECTOR"
 
 	outfit = /datum/outfit/job/rd
 	plasmaman_outfit = /datum/outfit/plasmaman/research_director
@@ -64,7 +65,7 @@
 	belt = /obj/item/modular_computer/tablet/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	l_pocket = /obj/item/laser_pointer
+	l_pocket = /obj/item/laser_pointer/purple
 	l_hand = /obj/item/clipboard
 
 	backpack = /obj/item/storage/backpack/science

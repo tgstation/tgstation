@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
  * range - the max range to check
  *
  * Returns a list of turfs, which is an area of isolated atmos
- */ 
+ */
 /proc/create_atmos_zone(turf/source, range = INFINITY)
 	var/counter = 1 // a counter which increment each loop
 	var/loops = 0
@@ -69,14 +69,14 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 				loops += 1
 				continue
 			if(length(connected_turfs) >= range)
-				return 
+				return
 			if(TURFS_CAN_SHARE(reference_turf, valid_turf))
-				loops = 0 
-				connected_turfs |= valid_turf//add that to the original list				
+				loops = 0
+				connected_turfs |= valid_turf//add that to the original list
 		if(loops >= 7)//if the loop has gone 7 consecutive times with no new turfs added, return the result. Number is arbitrary, subject to change
 			return
 		counter += 1 //increment by one so the next loop will start at the next position in the list
-				
+
 /proc/create_area(mob/creator)
 	// Passed into the above proc as list/break_if_found
 	var/static/list/area_or_turf_fail_types = typecacheof(list(
@@ -138,6 +138,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 	SEND_GLOBAL_SIGNAL(COMSIG_AREA_CREATED, newA, oldA, creator)
 	to_chat(creator, span_notice("You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered."))
+	creator.log_message("created a new area: [AREACOORD(creator)] (previously \"[oldA.name]\")", LOG_GAME)
 	return TRUE
 
 #undef BP_MAX_ROOM_SIZE
@@ -184,6 +185,14 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			if(area_to_check.type == areatype)
 				areas += area_to_check
 	return areas
+
+/// Iterates over all turfs in the target area and returns the first non-dense one
+/proc/get_first_open_turf_in_area(area/target)
+	if(!target)
+		return
+	for(var/turf/turf in target)
+		if(!turf.density)
+			return turf
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.

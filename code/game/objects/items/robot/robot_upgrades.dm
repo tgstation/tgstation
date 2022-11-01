@@ -558,10 +558,10 @@
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
 		smoke.set_up(1, holder = robot, location = robot.loc)
 		smoke.start()
-		sleep(2)
+		sleep(0.2 SECONDS)
 		for(var/i in 1 to 4)
 			playsound(robot, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-			sleep(12)
+			sleep(1.2 SECONDS)
 		if(!prev_lockcharge)
 			robot.SetLockdown(FALSE)
 		robot.set_anchored(FALSE)
@@ -581,7 +581,7 @@
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
 	desc = "A rapid part exchange device for the engineering cyborg."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "borgrped"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)

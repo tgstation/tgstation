@@ -25,7 +25,7 @@
 /datum/surgery/organ_manipulation/alien
 	name = "Alien organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-	target_mobtypes = list(/mob/living/carbon/alien/humanoid)
+	target_mobtypes = list(/mob/living/carbon/alien/adult)
 	steps = list(
 		/datum/surgery_step/saw,
 		/datum/surgery_step/incise,
@@ -205,7 +205,7 @@
 
 ///only operate on internal organs
 /datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
-	return istype(organ, /obj/item/organ/internal)
+	return isinternalorgan(organ)
 
 ///Surgery step for external organs/features, like tails, frills, wings etc
 /datum/surgery_step/manipulate_organs/external
@@ -214,4 +214,4 @@
 
 ///Only operate on external organs
 /datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)
-	return istype(organ, /obj/item/organ/external)
+	return isexternalorgan(organ)

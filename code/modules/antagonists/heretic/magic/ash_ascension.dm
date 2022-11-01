@@ -138,7 +138,7 @@
 /datum/action/cooldown/spell/pointed/ash_beams/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			break
 
 		for(var/mob/living/L in T.contents)
@@ -159,4 +159,4 @@
 				continue
 			hit_list += M
 			M.take_damage(45, BURN, MELEE, 1)
-		sleep(1.5)
+		sleep(0.15 SECONDS)

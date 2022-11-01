@@ -40,7 +40,7 @@
 			to_chat(user, span_warning("[organ_storage_contents] cannot be attached!"))
 			return SURGERY_STEP_FAIL
 		tool = organ_storage_contents
-	if(istype(tool, /obj/item/bodypart))
+	if(isbodypart(tool))
 		var/obj/item/bodypart/bodypart_to_attach = tool
 		if(IS_ORGANIC_LIMB(bodypart_to_attach))
 			organ_rejection_dam = 10
@@ -52,6 +52,10 @@
 					return SURGERY_STEP_FAIL
 				if(human_target.dna.species.id != bodypart_to_attach.limb_id)
 					organ_rejection_dam = 30
+
+			if(!bodypart_to_attach.can_attach_limb(target))
+				target.balloon_alert(user, "that doesn't go on the [parse_zone(target_zone)]!")
+				return SURGERY_STEP_FAIL
 
 		if(target_zone == bodypart_to_attach.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.
 			display_results(user, target, span_notice("You begin to replace [target]'s [parse_zone(target_zone)] with [tool]..."),
@@ -75,13 +79,9 @@
 		tool.desc = initial(tool.desc)
 		tool.cut_overlays()
 		tool = tool.contents[1]
-	if(istype(tool, /obj/item/bodypart) && user.temporarilyRemoveItemFromInventory(tool))
+	if(isbodypart(tool) && user.temporarilyRemoveItemFromInventory(tool))
 		var/obj/item/bodypart/limb_to_attach = tool
-		if(!limb_to_attach.attach_limb(target))
-			display_results(user, target, span_warning("You fail in replacing [target]'s [parse_zone(target_zone)]! Their body has rejected [limb_to_attach]!"),
-				span_warning("[user] fails to replace [target]'s [parse_zone(target_zone)]!"),
-				span_warning("[user] fails to replaces [target]'s [parse_zone(target_zone)]!"))
-			return
+		limb_to_attach.try_attach_limb(target)
 		if(organ_rejection_dam)
 			target.adjustToxLoss(organ_rejection_dam)
 		display_results(user, target, span_notice("You succeed in replacing [target]'s [parse_zone(target_zone)]."),
@@ -92,12 +92,7 @@
 	else
 		var/obj/item/bodypart/limb_to_attach = target.newBodyPart(target_zone, FALSE, FALSE)
 		limb_to_attach.is_pseudopart = TRUE
-		if(!limb_to_attach.attach_limb(target))
-			display_results(user, target, span_warning("You fail in attaching [target]'s [parse_zone(target_zone)]! Their body has rejected [limb_to_attach]!"),
-				span_warning("[user] fails to attach [target]'s [parse_zone(target_zone)]!"),
-				span_warning("[user] fails to attach [target]'s [parse_zone(target_zone)]!"))
-			limb_to_attach.forceMove(target.loc)
-			return
+		limb_to_attach.try_attach_limb(target)
 		user.visible_message(span_notice("[user] finishes attaching [tool]!"), span_notice("You attach [tool]."))
 		display_results(user, target, span_notice("You attach [tool]."),
 			span_notice("[user] finishes attaching [tool]!"),

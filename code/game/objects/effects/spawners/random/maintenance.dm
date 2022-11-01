@@ -2,7 +2,6 @@
 	name = "maintenance loot spawner"
 	desc = "Come on Lady Luck, spawn me a pair of sunglasses."
 	icon_state = "loot"
-	spawn_on_init = FALSE
 	// see code/_globalvars/lists/maintenance_loot.dm for loot table
 
 /obj/effect/spawner/random/maintenance/examine(mob/user)
@@ -11,23 +10,6 @@
 
 /obj/effect/spawner/random/maintenance/Initialize(mapload)
 	loot = GLOB.maintenance_loot
-
-	. = ..()
-
-	GLOB.maintenance_loot_spawners += src
-
-/obj/effect/spawner/random/maintenance/should_spawn_on_init()
-	. = ..()
-
-	if(.)
-		return
-
-	// Late loaded templates like shuttles can have maintenance loot.
-	// Once the game state progresses to roundstart, new maint loot spawners should just instantly pop.
-	return (SSticker.current_state >= GAME_STATE_SETTING_UP)
-
-/obj/effect/spawner/random/maintenance/Destroy()
-	GLOB.maintenance_loot_spawners -= src
 	return ..()
 
 /obj/effect/spawner/random/maintenance/proc/hide()

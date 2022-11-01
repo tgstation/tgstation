@@ -1,8 +1,11 @@
 
 //returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/accessor)
-	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor) & COMPONENT_OBJ_ALLOW)
+	var/result_bitflags = SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor)
+	if(result_bitflags & COMPONENT_OBJ_ALLOW)
 		return TRUE
+	if(result_bitflags & COMPONENT_OBJ_DISALLOW) // override all other checks
+		return FALSE
 	//check if it doesn't require any access at all
 	if(check_access(null))
 		return TRUE
@@ -31,6 +34,11 @@
 		var/mob/living/simple_animal/animal = accessor
 		if(check_access(animal.access_card))
 			return TRUE
+	else if(isbrain(accessor) && istype(accessor.loc, /obj/item/mmi))
+		var/obj/item/mmi/brain_mmi = accessor.loc
+		if(ismecha(brain_mmi.loc))
+			var/obj/vehicle/sealed/mecha/big_stompy_robot = brain_mmi.loc
+			return check_access_list(big_stompy_robot.operation_req_access)
 	return FALSE
 
 /obj/item/proc/GetAccess()

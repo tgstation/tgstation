@@ -146,7 +146,9 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "np" = (
-/obj/machinery/ticket_machine/directional/north,
+/obj/machinery/ticket_machine/directional/north{
+	id = "ticket_machine_icemailroom"
+	},
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)
 "nM" = (

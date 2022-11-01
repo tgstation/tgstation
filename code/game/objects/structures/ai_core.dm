@@ -4,7 +4,7 @@
 	density = TRUE
 	anchored = FALSE
 	name = "\improper AI core"
-	icon = 'icons/mob/ai.dmi'
+	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "0"
 	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
@@ -122,7 +122,7 @@
 		return FALSE
 	if(!SSmapping.level_trait(T.z,ZTRAIT_STATION))
 		return FALSE
-	if(!istype(T, /turf/open/floor))
+	if(!isfloorturf(T))
 		return FALSE
 	return TRUE
 

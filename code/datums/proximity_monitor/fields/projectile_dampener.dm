@@ -45,8 +45,11 @@
 	effect.icon_state = overlay.icon_state
 	effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	effect.layer = ABOVE_ALL_MOB_LAYER
-	effect.plane = ABOVE_GAME_PLANE
+	SET_PLANE(effect, ABOVE_GAME_PLANE, target)
 	LAZYSET(edgeturf_effects, target, effect)
+
+/datum/proximity_monitor/advanced/projectile_dampener/on_z_change(datum/source)
+	recalculate_field()
 
 /datum/proximity_monitor/advanced/projectile_dampener/cleanup_edge_turf(turf/target)
 	. = ..()
@@ -92,12 +95,12 @@
 	qdel(src)
 
 /datum/proximity_monitor/advanced/projectile_dampener/field_edge_uncrossed(atom/movable/movable, turf/location)
-	if(istype(movable, /obj/projectile) && get_dist(movable, host) > current_range)
+	if(isprojectile(movable) && get_dist(movable, host) > current_range)
 		if(movable in tracked)
 			release_projectile(movable)
 
 /datum/proximity_monitor/advanced/projectile_dampener/field_edge_crossed(atom/movable/movable, turf/location)
-	if(istype(movable, /obj/projectile) && !(movable in tracked))
+	if(isprojectile(movable) && !(movable in tracked))
 		capture_projectile(movable)
 
 /datum/proximity_monitor/advanced/projectile_dampener/peaceborg/process(delta_time)

@@ -41,7 +41,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/gas_production)
 	mutatelist = null
-	reagents_add = list(/datum/reagent/toxin/formaldehyde = 0.1)
+	reagents_add = list(/datum/reagent/toxin/formaldehyde = 0.1, /datum/reagent/fluorine = 0.1)
 
 //Galaxy Thistle
 /obj/item/seeds/galaxythistle

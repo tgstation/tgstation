@@ -128,7 +128,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		file_data["relic_hat"] = null
 		file_data["relic_mask"] = null
 	else
-		file_data["ancestor_name"] = ancestor_name ? ancestor_name : name
+		file_data["ancestor_name"] = ancestor_name ? ancestor_name : real_name
 		file_data["ancestor_chain"] = dead ? ancestor_chain + 1 : ancestor_chain
 		file_data["relic_hat"] = head ? head.type : null
 		file_data["relic_mask"] = wear_mask ? wear_mask.type : null

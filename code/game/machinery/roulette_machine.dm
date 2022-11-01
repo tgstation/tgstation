@@ -115,7 +115,7 @@
 		return ..()
 	var/obj/item/card/id/player_card = W.GetID()
 	if(player_card)
-		if(istype(W, /obj/item/card/id))
+		if(isidcard(W))
 			playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 		else
 			playsound(src, 'sound/machines/terminal_success.ogg', 50, TRUE)
@@ -205,7 +205,7 @@
 
 	var/payout = potential_payout
 
-	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount)
+	my_card.registered_account.transfer_money(player_id.registered_account, bet_amount, "Roulette: Bet")
 
 	playing = TRUE
 	update_appearance()
@@ -262,7 +262,7 @@
 
 	var/remaining_payout = payout
 
-	my_card.registered_account.adjust_money(-payout)
+	my_card.registered_account.adjust_money(-payout, "Roulette: Payout")
 
 	for(var/coin_type in coin_values) //Loop through all coins from most valuable to least valuable. Try to give as much of that coin (the iterable) as possible until you can't anymore, then move to the next.
 		var/value = coin_values[coin_type] //Change this to use initial value once we change to mat datum coins.

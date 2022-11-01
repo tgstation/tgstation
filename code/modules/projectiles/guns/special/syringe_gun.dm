@@ -1,7 +1,7 @@
 /obj/item/gun/syringe
 	name = "medical syringe gun"
 	desc = "A spring loaded gun designed to fit syringes, used to incapacitate unruly patients from a distance."
-	icon = 'icons/obj/guns/syringegun.dmi'
+	icon = 'icons/obj/weapons/guns/syringegun.dmi'
 	icon_state = "medicalsyringegun"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
@@ -54,7 +54,7 @@
 
 /obj/item/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
-		to_chat(user, span_warning("[src] is empty!"))
+		balloon_alert(user, "it's empty!")
 		return FALSE
 
 	var/obj/item/reagent_containers/syringe/S = syringes[syringes.len]
@@ -64,27 +64,27 @@
 	user.put_in_hands(S)
 
 	syringes.Remove(S)
-	to_chat(user, span_notice("You unload [S] from \the [src]."))
+	balloon_alert(user, "[S.name] unloaded")
 	update_appearance()
 
 	return TRUE
 
 /obj/item/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
 	if(istype(A, /obj/item/reagent_containers/syringe/bluespace))
-		to_chat(user, span_notice("[A] is too big to load into [src]."))
+		balloon_alert(user, "[A.name] is too big!")
 		return TRUE
 	if(istype(A, /obj/item/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(A, src))
 				return FALSE
-			to_chat(user, span_notice("You load [A] into \the [src]."))
+			balloon_alert(user, "[A.name] loaded")
 			syringes += A
 			recharge_newshot()
 			update_appearance()
 			playsound(loc, load_sound, 40)
 			return TRUE
 		else
-			to_chat(user, span_warning("[src] cannot hold more syringes!"))
+			balloon_alert(user, "it's already full!")
 	return FALSE
 
 /obj/item/gun/syringe/update_overlays()
@@ -154,25 +154,25 @@
 	if(istype(A, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = A
 		if(D.used)
-			to_chat(user, span_warning("This injector is used up!"))
+			balloon_alert("[D.name] is used up!")
 			return
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(D, src))
 				return FALSE
-			to_chat(user, span_notice("You load \the [D] into \the [src]."))
+			balloon_alert(user, "[D.name] loaded")
 			syringes += D
 			recharge_newshot()
 			update_appearance()
 			playsound(loc, load_sound, 40)
 			return TRUE
 		else
-			to_chat(user, span_warning("[src] cannot hold more syringes!"))
+			balloon_alert(user, "it's already full!")
 	return FALSE
 
 /obj/item/gun/syringe/blowgun
 	name = "blowgun"
 	desc = "Fire syringes at a short distance."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "blowgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'

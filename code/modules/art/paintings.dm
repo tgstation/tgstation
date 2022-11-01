@@ -6,7 +6,7 @@
 /obj/structure/easel
 	name = "easel"
 	desc = "Only for the finest of art!"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "easel"
 	density = TRUE
 	resistance_flags = FLAMMABLE
@@ -38,7 +38,7 @@
 /obj/item/canvas
 	name = "canvas"
 	desc = "Draw out your soul on this canvas!"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "11x11"
 	flags_1 = UNPAINTABLE_1
 	resistance_flags = FLAMMABLE
@@ -75,7 +75,7 @@
 	base_pixel_x = 11
 	base_pixel_y = 10
 
-	custom_premium_price = PAYCHECK_CREW
+	custom_price = PAYCHECK_CREW
 
 /obj/item/canvas/Initialize(mapload)
 	. = ..()
@@ -210,11 +210,11 @@
 		return
 	var/sniped_amount = painting_metadata.credit_value
 	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
-	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	if(sniped_amount != painting_metadata.credit_value)
 		return
-	if(!account.adjust_money(-offer_amount))
+	if(!account.adjust_money(-offer_amount, "Painting: Patron of [painting_metadata.title]"))
 		to_chat(user, span_warning("Transaction failure. Please try again."))
 		return
 	painting_metadata.patron_ckey = user.ckey
@@ -327,7 +327,7 @@
 	if(painting_metadata.loaded_from_json) // No renaming old paintings
 		return
 	var/new_name = tgui_input_text(user, "What do you want to name the painting?", "Title Your Masterpiece")
-	if(new_name != painting_metadata.title && new_name && user.canUseTopic(src, BE_CLOSE))
+	if(new_name != painting_metadata.title && new_name && user.canUseTopic(src, be_close = TRUE))
 		painting_metadata.title = new_name
 	var/sign_choice = tgui_alert(user, "Do you want to sign it or remain anonymous?", "Sign painting?", list("Yes", "No"))
 	if(sign_choice != "Yes")
@@ -399,12 +399,12 @@
 	pixels_per_unit = 20
 	w_class = WEIGHT_CLASS_BULKY
 
-	custom_premium_price = PAYCHECK_CREW * 1.25
+	custom_price = PAYCHECK_CREW * 1.25
 
 /obj/item/canvas/thirtysix_twentyfour/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.8)
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	icon_state = "36x24"
 
 /obj/item/canvas/fortyfive_twentyseven
@@ -422,18 +422,18 @@
 	pixels_per_unit = 18
 	w_class = WEIGHT_CLASS_BULKY
 
-	custom_premium_price = PAYCHECK_CREW * 1.75
+	custom_price = PAYCHECK_CREW * 1.75
 
 /obj/item/canvas/fortyfive_twentyseven/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 1, 0.7)
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	icon_state = "45x27"
 
 /obj/item/wallframe/painting
 	name = "painting frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = NONE
 	icon_state = "frame-empty"
@@ -443,7 +443,7 @@
 /obj/structure/sign/painting
 	name = "Painting"
 	desc = "Art or \"Art\"? You decide."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "frame-empty"
 	base_icon_state = "frame"
 	custom_materials = list(/datum/material/wood = 2000)
@@ -626,6 +626,7 @@
 	icon_state = "frame-large-empty"
 	result_path = /obj/structure/sign/painting/large
 	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
+	custom_price = PAYCHECK_CREW * 1.25
 
 /obj/item/wallframe/painting/large/try_build(turf/on_wall, mob/user)
 	. = ..()
@@ -647,7 +648,7 @@
 	our_frame.finalize_size()
 
 /obj/structure/sign/painting/large
-	icon = 'icons/obj/artstuff_64x64.dmi'
+	icon = 'icons/obj/art/artstuff_64x64.dmi'
 	custom_materials = list(/datum/material/wood = 4000)
 	accepted_canvas_types = list(
 		/obj/item/canvas/thirtysix_twentyfour,
@@ -754,7 +755,7 @@
 /obj/item/paint_palette
 	name = "paint palette"
 	desc = "paintbrush included"
-	icon = 'icons/obj/artstuff.dmi'
+	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "palette"
 	lefthand_file = 'icons/mob/inhands/equipment/palette_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'

@@ -484,7 +484,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		usr.log_message("made it to Orion on an emagged machine and got an explosive toy ship.", LOG_GAME)
 	else
-		prizevend(user)
+		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+		to_chat(user, span_notice("[src] dispenses 2 tickets!"))
 	obj_flags &= ~EMAGGED
 	name = initial(name)
 	desc = initial(desc)
@@ -509,7 +510,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 /obj/item/orion_ship
 	name = "model settler ship"
 	desc = "A model spaceship, it looks like those used back in the day when travelling to Orion! It even has a miniature FX-293 reactor, which was renowned for its instability and tendency to explode..."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "ship"
 	w_class = WEIGHT_CLASS_SMALL
 	var/active = 0 //if the ship is on
@@ -534,13 +535,13 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	visible_message(span_notice("[src] softly beeps and whirs to life!"))
 	playsound(loc, 'sound/machines/defib_SaftyOn.ogg', 25, TRUE)
 	say("This is ship ID #[rand(1,1000)] to Orion Port Authority. We're coming in for landing, over.")
-	sleep(20)
+	sleep(2 SECONDS)
 	visible_message(span_warning("[src] begins to vibrate..."))
 	say("Uh, Port? Having some issues with our reactor, could you check it out? Over.")
-	sleep(30)
+	sleep(3 SECONDS)
 	say("Oh, God! Code Eight! CODE EIGHT! IT'S GONNA BL-")
 	playsound(loc, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
-	sleep(3.6)
+	sleep(0.36 SECONDS)
 	visible_message(span_userdanger("[src] explodes!"))
 	explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 8, flame_range = 16)
 	qdel(src)

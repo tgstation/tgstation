@@ -389,6 +389,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	// Lock controls, to prevent moving-while-moving memes
 	set_controls(LIFT_PLATFORM_LOCKED)
+	// Send out a signal that we're going
+	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	// Close all lift doors
 	update_lift_doors(action = CLOSE_DOORS)
 
@@ -409,8 +411,15 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		user = user,
 	)
 
-	addtimer(CALLBACK(src, .proc/set_controls, LIFT_PLATFORM_UNLOCKED), lift_move_duration * 1.5)
+	addtimer(CALLBACK(src, .proc/finish_simple_move_wrapper), lift_move_duration * 1.5)
 	return TRUE
+
+/**
+ * Wrap everything up from simple_move_wrapper finishing its movement
+ */
+/datum/lift_master/proc/finish_simple_move_wrapper()
+	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
+	set_controls(LIFT_PLATFORM_UNLOCKED)
 
 /**
  * Moves the lift to the passed z-level.
@@ -447,6 +456,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	// Okay we're ready to start moving now.
 	set_controls(LIFT_PLATFORM_LOCKED)
+	// Send out a signal that we're going
+	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	var/travel_speed = prime_lift.elevator_vertical_speed
 
 	// Close all lift doors
@@ -469,6 +480,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			return
 
 	addtimer(CALLBACK(src, .proc/open_lift_doors_callback), 2 SECONDS)
+	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
 	return TRUE
 

@@ -35,11 +35,11 @@
 
 		var/atom/object_to_check = processing_list[index]
 
-		if(istype(object_to_check, /obj/item/organ))
+		if(isorgan(object_to_check))
 			found_organ = object_to_check
 			found_organ.organ_flags ^= ORGAN_FROZEN
 
-		else if(istype(object_to_check, /mob/living/carbon))
+		else if(iscarbon(object_to_check))
 			var/mob/living/carbon/mob_to_check = object_to_check
 			for(var/organ in mob_to_check.internal_organs)
 				found_organ = organ
@@ -245,10 +245,10 @@
  * Arguments:
  * * question - question to show players as part of poll
  * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - Unknown/needs further documentation.
+ * * be_special_flag - The required role that the player has to have enabled to see the prompt.
  * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
  * * target_mob - The mob that is being polled for.
- * * ignore_category - Unknown/needs further documentation.
+ * * ignore_category -  The notification preference that hides the prompt.
  */
 /proc/poll_candidates_for_mob(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, mob/target_mob, ignore_category = null)
 	var/static/list/mob/currently_polling_mobs = list()
@@ -272,10 +272,10 @@
  * Arguments:
  * * question - question to show players as part of poll
  * * jobban_type - Type of jobban to use to filter out potential candidates.
- * * be_special_flag - Unknown/needs further documentation.
+ * * be_special_flag - The required role that the player has to have enabled to see the prompt.
  * * poll_time - Length of time in deciseconds that the poll input box exists before closing.
  * * mobs - The list of mobs being polled for. This list is mutated and invalid mobs are removed from it before the proc returns.
- * * ignore_category - Unknown/needs further documentation.
+ * * ignore_category - The notification preference that hides the prompt.
  */
 /proc/poll_candidates_for_mobs(question, jobban_type, be_special_flag = 0, poll_time = 30 SECONDS, list/mobs, ignore_category = null)
 	var/list/candidate_list = poll_ghost_candidates(question, jobban_type, be_special_flag, poll_time, ignore_category)

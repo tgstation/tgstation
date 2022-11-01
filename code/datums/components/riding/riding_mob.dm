@@ -30,6 +30,7 @@
 	if(isanimal(parent))
 		var/mob/living/simple_animal/simple_parent = parent
 		simple_parent.stop_automated_movement = FALSE
+	REMOVE_TRAIT(parent, TRAIT_AI_PAUSED, REF(src))
 	return ..()
 
 /datum/component/riding/creature/RegisterWithParent()
@@ -69,20 +70,36 @@
 	rider.Knockdown(4 SECONDS)
 	living_parent.unbuckle_mob(rider)
 
-/datum/component/riding/creature/vehicle_mob_buckle(datum/source, mob/living/rider, force = FALSE)
+/datum/component/riding/creature/vehicle_mob_buckle(mob/living/ridden, mob/living/rider, force = FALSE)
 	// Ensure that the /mob/post_buckle_mob(mob/living/M) does not mess us up with layers
 	// If we do not do this override we'll be stuck with the above proc (+ 0.1)-ing our rider's layer incorrectly
 	rider.layer = initial(rider.layer)
+	if(can_be_driven)
+		//let the player take over if they should be controlling movement
+		ADD_TRAIT(ridden, TRAIT_AI_PAUSED, REF(src))
+	if(rider.pulling == ridden)
+		rider.stop_pulling()
+	RegisterSignal(rider, COMSIG_LIVING_TRY_PULL, .proc/on_rider_try_pull)
 	return ..()
 
-/datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/living_parent, mob/living/former_rider, force = FALSE)
-	if(istype(living_parent) && istype(former_rider))
-		living_parent.log_message("is no longer being ridden by [former_rider].", LOG_GAME, color="pink")
-		former_rider.log_message("is no longer riding [living_parent].", LOG_GAME, color="pink")
+/datum/component/riding/creature/proc/on_rider_try_pull(mob/living/rider_pulling, atom/movable/target, force)
+	SIGNAL_HANDLER
+	if(target == parent)
+		var/mob/living/ridden = parent
+		ridden.balloon_alert(rider_pulling, "not while riding it!")
+		return COMSIG_LIVING_CANCEL_PULL
+
+/datum/component/riding/creature/vehicle_mob_unbuckle(mob/living/formerly_ridden, mob/living/former_rider, force = FALSE)
+	if(istype(formerly_ridden) && istype(former_rider))
+		formerly_ridden.log_message("is no longer being ridden by [former_rider].", LOG_GAME, color="pink")
+		former_rider.log_message("is no longer riding [formerly_ridden].", LOG_GAME, color="pink")
 	remove_abilities(former_rider)
+	if(!formerly_ridden.buckled_mobs.len)
+		REMOVE_TRAIT(formerly_ridden, TRAIT_AI_PAUSED, REF(src))
+	UnregisterSignal(former_rider, COMSIG_LIVING_TRY_PULL)
 	// We gotta reset those layers at some point, don't we?
 	former_rider.layer = MOB_LAYER
-	living_parent.layer = MOB_LAYER
+	formerly_ridden.layer = MOB_LAYER
 	return ..()
 
 /datum/component/riding/creature/driver_move(atom/movable/movable_parent, mob/living/user, direction)
@@ -132,7 +149,7 @@
 
 /// If the ridden creature has abilities, and some var yet to be made is set to TRUE, the rider will be able to control those abilities
 /datum/component/riding/creature/proc/setup_abilities(mob/living/rider)
-	if(!istype(parent, /mob/living))
+	if(!isliving(parent))
 		return
 
 	var/mob/living/ridden_creature = parent
@@ -142,7 +159,7 @@
 
 /// Takes away the riding parent's abilities from the rider
 /datum/component/riding/creature/proc/remove_abilities(mob/living/rider)
-	if(!istype(parent, /mob/living))
+	if(!isliving(parent))
 		return
 
 	var/mob/living/ridden_creature = parent
@@ -316,6 +333,13 @@
 	set_vehicle_dir_layer(EAST, OBJ_LAYER)
 	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
+/datum/component/riding/creature/pig/handle_specials()
+	. = ..()
+	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+	set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+	set_vehicle_dir_layer(EAST, OBJ_LAYER)
+	set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
 /datum/component/riding/creature/bear/handle_specials()
 	. = ..()

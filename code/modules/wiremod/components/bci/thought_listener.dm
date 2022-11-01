@@ -48,7 +48,7 @@
 
 	var/mob/living/owner = bci.owner
 
-	if(!owner || !istype(owner) || !owner.client)
+	if(!owner || !istype(owner) || !owner.client || (owner.stat >= UNCONSCIOUS))
 		failure.set_output(COMPONENT_SIGNAL)
 		return
 

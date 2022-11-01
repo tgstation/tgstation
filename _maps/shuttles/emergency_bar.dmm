@@ -213,7 +213,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aN" = (
-/obj/structure/chair/stool/bar/directional/south,
+/obj/structure/chair/stool/bar/directional/north,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -436,11 +436,11 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bE" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bG" = (
@@ -613,7 +613,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "en" = (
-/obj/structure/chair/stool/bar/directional/west{
+/obj/structure/chair/stool/bar/directional/east{
 	can_buckle = 1;
 	name = "buckleable bar stool"
 	},

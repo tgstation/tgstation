@@ -62,8 +62,6 @@
 		reset_tesla(cast_on)
 		return . | SPELL_CANCEL_CAST
 
-	return TRUE
-
 /datum/action/cooldown/spell/tesla/reset_spell_cooldown()
 	reset_tesla(owner)
 	return ..()
@@ -90,7 +88,6 @@
 	playsound(get_turf(cast_on), 'sound/magic/lightningbolt.ogg', 50, TRUE)
 	zap_target(cast_on, to_zap_first)
 	reset_tesla(cast_on)
-	return TRUE
 
 /// Zaps a target, the bolt originating from origin.
 /datum/action/cooldown/spell/tesla/proc/zap_target(atom/origin, mob/living/carbon/to_zap, bolt_energy = 30, bounces = 5)

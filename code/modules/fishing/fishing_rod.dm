@@ -142,7 +142,7 @@
 /// Checks what can be hooked
 /obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
 	// Could be made dependent on actual hook, ie magnet to hook metallic items
-	return istype(target, /obj/item)
+	return isitem(target)
 
 /obj/item/fishing_rod/proc/clear_hooked_item()
 	SIGNAL_HANDLER
@@ -361,6 +361,20 @@
 		line = null
 	if(gone == hook)
 		hook = null
+
+/obj/item/fishing_rod/bone
+	name = "bone fishing rod"
+	desc = "A humble rod, made with whatever happened to be on hand."
+	icon_state = "fishing_rod_bone"
+
+/datum/crafting_recipe/bone_rod
+	name = "Bone Fishing Rod"
+	result = /obj/item/fishing_rod/bone
+	time = 5 SECONDS
+	reqs = list(/obj/item/stack/sheet/leather = 1,
+				/obj/item/stack/sheet/sinew = 2,
+				/obj/item/stack/sheet/bone = 2)
+	category = CAT_PRIMAL
 
 /obj/item/fishing_rod/master
 	name = "master fishing rod"

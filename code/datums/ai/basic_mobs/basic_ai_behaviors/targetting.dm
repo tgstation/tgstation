@@ -1,8 +1,9 @@
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS
+	/// How far can we see stuff?
 	var/vision_range = 9
-	///List of potentially dangerous objs
-	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
+	/// Static typecache list of potentially dangerous objs
+	var/static/list/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 
 /datum/ai_behavior/find_potential_targets/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -35,11 +36,11 @@
 		return
 
 	var/atom/target = pick(filtered_targets)
-	controller.blackboard[target_key] = target
+	controller.blackboard[target_key] = WEAKREF(target)
 
 	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, target)
 
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
-		controller.blackboard[hiding_location_key] = potential_hiding_location
+		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
 
 	finish_action(controller, TRUE)

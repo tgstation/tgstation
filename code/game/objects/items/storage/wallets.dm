@@ -41,7 +41,7 @@
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(istype(gone, /obj/item/card/id))
+	if(isidcard(gone))
 		refreshID()
 
 /**
@@ -86,7 +86,7 @@
 
 /obj/item/storage/wallet/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(istype(arrived, /obj/item/card/id))
+	if(isidcard(arrived))
 		refreshID()
 
 /obj/item/storage/wallet/update_overlays()
@@ -94,7 +94,6 @@
 	cached_flat_icon = null
 	if(!front_id)
 		return
-	COMPILE_OVERLAYS(front_id)
 	. += mutable_appearance(front_id.icon, front_id.icon_state)
 	. += front_id.overlays
 	. += mutable_appearance(icon, "wallet_overlay")

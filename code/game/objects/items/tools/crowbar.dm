@@ -3,6 +3,7 @@
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
+	inhand_icon_state = "crowbar"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
@@ -30,6 +31,7 @@
 
 /obj/item/crowbar/red
 	icon_state = "crowbar_red"
+	inhand_icon_state = "crowbar_red"
 	force = 8
 
 /obj/item/crowbar/abductor

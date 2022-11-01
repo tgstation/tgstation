@@ -1,7 +1,7 @@
 
 /obj/item/organ
 	name = "organ"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	///The mob that owns this organ.
@@ -41,6 +41,8 @@
 	var/failure_time = 0
 	///Do we effect the appearance of our mob. Used to save time in preference code
 	var/visual = TRUE
+	/// Traits that are given to the holder of the organ.
+	var/list/organ_traits = list()
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -60,7 +62,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/forceMove(atom/destination, check_dest = TRUE)
 	if(check_dest && destination) //Nullspace is always a valid location for organs. Because reasons.
 		if(organ_flags & ORGAN_UNREMOVABLE) //If this organ is unremovable, it should delete itself if it tries to be moved to anything besides a bodypart.
-			if(!istype(destination, /obj/item/bodypart) && !iscarbon(destination))
+			if(!isbodypart(destination) && !iscarbon(destination))
 				qdel(src)
 				return //Don't move it out of nullspace if it's deleted.
 	return ..()
@@ -90,6 +92,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	owner = reciever
 	moveToNullspace()
 	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
+	update_organ_traits(reciever)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(reciever)
 	return TRUE
@@ -98,8 +101,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /*
  * Remove the organ from the select mob.
  *
- * organ_owner - the mob who owns our organ, that we're removing the organ from.
- * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
+ * * organ_owner - the mob who owns our organ, that we're removing the organ from.
+ * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 
@@ -108,10 +111,26 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	owner = null
 	for(var/datum/action/action as anything in actions)
 		action.Remove(organ_owner)
+	for(var/trait in organ_traits)
+		REMOVE_TRAIT(organ_owner, trait, REF(src))
 
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
 
+/// Updates the traits of the organ on the specific organ it is called on. Should be called anytime an organ is given a trait while it is already in a body.
+/obj/item/organ/proc/update_organ_traits()
+	for(var/trait in organ_traits)
+		ADD_TRAIT(owner, trait, REF(src))
+
+/// Add a trait to an organ that it will give its owner.
+/obj/item/organ/proc/add_organ_trait(trait)
+	organ_traits += trait
+	update_organ_traits()
+
+/// Removes a trait from an organ, and by extension, its owner.
+/obj/item/organ/proc/remove_organ_trait(trait)
+	organ_traits -= trait
+	REMOVE_TRAIT(owner, trait, REF(src))
 
 /obj/item/organ/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -267,7 +286,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  * returns whether the species should innately have this organ.
  *
  * regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.
- * This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.
+ * This is set to return true or false, depending on if a species has a trait that would nulify the purpose of the organ.
+ * For example, lungs won't be given if you have NO_BREATH, stomachs check for NO_HUNGER, and livers check for NO_METABOLISM.
+ * If you want a carbon to have a trait that normally blocks an organ but still want the organ. Attach the trait to the organ using the organ_traits var
  * Arguments:
  * owner_species - species, needed to return whether the species has an organ specific trait
  */
@@ -276,7 +297,13 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /// Called before organs are replaced in regenerate_organs with new ones
 /obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_ORGAN_BEING_REPLACED, replacement)
+
+	// If we're being replace with an identical type we should take organ damage
+	if(replacement.type == type)
+		replacement.setOrganDamage(damage)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
 /obj/item/organ/proc/get_status_text()

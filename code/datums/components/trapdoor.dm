@@ -80,7 +80,7 @@
 	source.balloon_alert(user, "unlinking trapdoor")
 	INVOKE_ASYNC(src, .proc/async_try_unlink, source, user, tool)
 	return
-	
+
 /datum/component/trapdoor/proc/async_try_unlink(turf/source, mob/user, obj/item/tool)
 	if(!do_after(user, 5 SECONDS, target=source))
 		return
@@ -341,7 +341,7 @@
 /obj/item/trapdoor_kit
 	name = "trapdoor parts kit"
 	desc = "A kit containing all the parts needed to build a trapdoor. Can only be used on open space."
-	icon = 'icons/obj/improvised.dmi'
+	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "kitsuitcase"
 	var/in_use = FALSE
 

@@ -96,7 +96,7 @@
 	resistance_flags = FLAMMABLE
 
 /obj/structure/table_frame/wood/attackby(obj/item/I, mob/user, params)
-	if (istype(I, /obj/item/stack))
+	if (isstack(I))
 		var/obj/item/stack/material = I
 		var/toConstruct // stores the table variant
 		var/carpet_type // stores the carpet type used for construction in case of poker tables

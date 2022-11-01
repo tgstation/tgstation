@@ -26,6 +26,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
+	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/projectile_react)
 	if(ismovable(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
@@ -57,7 +58,6 @@
 	SIGNAL_HANDLER
 	if(!(I.item_flags & IN_STORAGE))
 		return
-	
 	check_if_detonate(I)
 
 /datum/component/explodable/proc/explodable_impact(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -82,6 +82,13 @@
 
 	if(check_if_detonate(tool))
 		return COMPONENT_BLOCK_TOOL_ATTACK
+
+/// Shot by something
+/datum/component/explodable/proc/projectile_react(datum/source, obj/projectile/shot)
+	SIGNAL_HANDLER
+
+	if(shot.damage_type == BURN && !shot.nodamage)
+		detonate()
 
 ///Called when you attack a specific body part of the thing this is equipped on. Useful for exploding pants.
 /datum/component/explodable/proc/explodable_attack_zone(datum/source, damage, damagetype, def_zone)

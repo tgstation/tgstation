@@ -11,17 +11,17 @@
 
 /datum/traitor_objective/final/space_dragon/on_objective_taken(mob/user)
 	. = ..()
-	var/datum/round_event/carp_migration/carp_event = locate(/datum/round_event_control/carp_migration) in SSevents.control
-	carp_event.start()
+	var/datum/round_event_control/carp_migration/carp_event = locate(/datum/round_event_control/carp_migration) in SSevents.control
+	carp_event.runEvent()
 
 /datum/traitor_objective/final/space_dragon/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!can_take_final_objective())
-		return
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		//remove areas too close to the destination, too obvious for our poor shmuck, or just unfair
 		if(istype(possible_area, /area/station/hallway) || istype(possible_area, /area/station/security))
 			possible_areas -= possible_area
+	if(length(possible_areas) == 0)
+		return FALSE
 	dna_scanner_spawnarea_type = pick(possible_areas)
 	replace_in_name("%AREA%", initial(dna_scanner_spawnarea_type.name))
 	return TRUE

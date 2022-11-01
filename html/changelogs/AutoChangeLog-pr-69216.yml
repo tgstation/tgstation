@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - balance: "Default heretic threat costs have been bumped down, and they can appear at slightly lower pop if the round is high threat. (Server configuration may differ from this)"

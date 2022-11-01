@@ -319,12 +319,12 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
-	if(istype(source, /obj/item))
+	if(isitem(source))
 		source.AddComponent(/datum/component/fantasy)
 
 /datum/material/mythril/on_removed_obj(atom/source, amount, material_flags)
 	. = ..()
-	if(istype(source, /obj/item))
+	if(isitem(source))
 		qdel(source.GetComponent(/datum/component/fantasy))
 
 /datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)

@@ -95,7 +95,7 @@
 
 	if(physical_cash_total < total_cost)
 		var/armless //Suggestions for those with no arms/simple animals.
-		if(!ishuman(user) && !istype(user, /mob/living/simple_animal/slime))
+		if(!ishuman(user) && !isslime(user))
 			armless = TRUE
 		else
 			var/mob/living/carbon/human/harmless_armless = user
@@ -119,7 +119,7 @@
 		var/obj/item/holochip/holochange = new /obj/item/holochip(user.loc) //Change is made in holocredits exclusively.
 		holochange.credits = physical_cash_total
 		holochange.name = "[holochange.credits] credit holochip"
-		if(istype(user, /mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/paying_customer = user
 			if(!INVOKE_ASYNC(paying_customer, /mob.proc/put_in_hands, holochange))
 				user.pulling = holochange
@@ -156,7 +156,7 @@
 				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
 		user.balloon_alert(user, "Cost: [total_cost] credits.")
 		return FALSE
-	target_acc.transfer_money(idcard.registered_account, total_cost)
+	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
 	log_econ("[total_cost] credits were spent on [parent] by [user] via [idcard.registered_account.account_holder]'s card.")
 	idcard.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)

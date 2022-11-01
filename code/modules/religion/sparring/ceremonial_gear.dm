@@ -4,7 +4,7 @@
 	desc = "A blade created to spar with. It seems weak, but if you spar with it...?"
 	icon_state = "default"
 	inhand_icon_state = "default"
-	icon = 'icons/obj/items/ritual_weapon.dmi'
+	icon = 'icons/obj/weapons/ritual_weapon.dmi'
 
 	//does the exact thing we want so heck why not
 	greyscale_config = /datum/greyscale_config/ceremonial_blade

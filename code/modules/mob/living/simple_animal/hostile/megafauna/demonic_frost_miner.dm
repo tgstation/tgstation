@@ -14,7 +14,7 @@ Difficulty: Extremely Hard
 	maxHealth = 1500
 	icon_state = "demonic_miner"
 	icon_living = "demonic_miner"
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummels"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
@@ -277,7 +277,7 @@ Difficulty: Extremely Hard
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_FEET)
+	if(slot & ITEM_SLOT_FEET)
 		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/dropped(mob/user)
@@ -297,7 +297,7 @@ Difficulty: Extremely Hard
 	SIGNAL_HANDLER
 
 	var/turf/T = get_turf(loc)
-	if(!on || istype(T, /turf/closed) || istype(T, change_turf))
+	if(!on || isclosedturf(T) || istype(T, change_turf))
 		return
 	var/reset_turf = T.type
 	T.ChangeTurf(change_turf, flags = CHANGETURF_INHERIT_AIR)
@@ -363,6 +363,11 @@ Difficulty: Extremely Hard
 	SIGNAL_HANDLER
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
+/datum/status_effect/ice_block_talisman/be_replaced()
+	owner.cut_overlay(cube)
+	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
+	return ..()
+
 /datum/status_effect/ice_block_talisman/on_remove()
 	if(!owner.stat)
 		to_chat(owner, span_notice("The cube melts!"))
@@ -380,7 +385,7 @@ Difficulty: Extremely Hard
 /obj/structure/frost_miner_prism
 	name = "frost miner light prism"
 	desc = "A magical crystal enhanced by a demonic presence."
-	icon = 'icons/obj/slimecrossing.dmi'
+	icon = 'icons/obj/xenobiology/slimecrossing.dmi'
 	icon_state = "lightprism"
 	density = FALSE
 	anchored = TRUE

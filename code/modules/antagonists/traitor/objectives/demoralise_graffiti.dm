@@ -6,6 +6,8 @@
 		five minutes following application, and it's slippery too! \
 		People seeing or slipping on your graffiti grants progress towards success."
 
+	progression_minimum = 0 MINUTES
+	duplicate_type = /datum/traitor_objective/demoralise/graffiti
 	/// Have we given out a spray can yet?
 	var/obtained_spray = FALSE
 	/// Graffiti 'rune' which we will be drawing
@@ -85,7 +87,7 @@
 /obj/item/traitor_spraycan
 	name = "seditious spraycan"
 	desc = "This spraycan deploys a subversive pattern containing subliminal priming agents over a 3x3 area. Contains enough primer for just one final coating."
-	icon = 'icons/obj/crayons.dmi'
+	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "deathcan"
 	worn_icon_state = "spraycan"
 	inhand_icon_state = "spraycan"

@@ -93,7 +93,7 @@
 		if(P.implant(M))
 			visible_message(span_warning("[M] is implanted by [src]."))
 			return TRUE
-	else if(istype(I, /obj/item/organ))
+	else if(isorgan(I))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
 		visible_message(span_warning("[M] is implanted by [src]."))

@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/vibebot
 	name = "\improper Vibebot"
 	desc = "A little robot. It's just vibing, doing its thing."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "vibebot"
 	density = FALSE
 	anchored = FALSE

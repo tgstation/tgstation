@@ -1,13 +1,10 @@
 /datum/lua_editor
 	var/datum/lua_state/current_state
 
-	/// Code imported from the user's system
-	var/imported_code
-
 	/// Arguments for a function call or coroutine resume
 	var/list/arguments = list()
 
-	/// If set, the global table will not be shown in the lua editor
+	/// If not set, the global table will not be shown in the lua editor
 	var/show_global_table = FALSE
 
 	/// The log page we are currently on
@@ -23,7 +20,7 @@
 	. = ..()
 	if(state)
 		current_state = state
-		LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+		LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -35,7 +32,7 @@
 /datum/lua_editor/Destroy(force, ...)
 	. = ..()
 	if(current_state)
-		LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_state(mob/user)
 	return GLOB.debug_state
@@ -110,22 +107,23 @@
 				return TRUE
 			var/datum/lua_state/new_state = new(state_name)
 			SSlua.states += new_state
-			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+			LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 			current_state = new_state
-			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+			LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 			page = 0
 			return TRUE
 		if("switchState")
 			var/state_index = params["index"]
-			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+			LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 			current_state = SSlua.states[state_index]
-			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+			LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 			page = 0
 			return TRUE
 		if("runCode")
 			var/code = params["code"]
 			var/result = current_state.load_script(code)
-			current_state.log_result(result)
+			var/index_with_result = current_state.log_result(result)
+			message_admins("[key_name(usr)] executed [length(code)] bytes of lua code. [ADMIN_LUAVIEW_CHUNK(current_state, index_with_result)]")
 			return TRUE
 		if("moveArgUp")
 			var/list/path = params["path"]

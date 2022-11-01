@@ -135,7 +135,7 @@ const IDCardTabs = (props, context) => {
 
 export const IDCardLogin = (props, context) => {
   const { act, data } = useBackend(context);
-  const { authenticatedUser, has_id, have_printer, authIDName } = data;
+  const { authenticatedUser, has_id, authIDName } = data;
 
   return (
     <Section
@@ -145,7 +145,7 @@ export const IDCardLogin = (props, context) => {
           <Button
             icon="print"
             content="Print"
-            disabled={!have_printer || !has_id}
+            disabled={!has_id}
             onClick={() => act('PRG_print')}
           />
           <Button
