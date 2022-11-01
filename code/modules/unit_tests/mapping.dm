@@ -30,7 +30,8 @@
 	var/current_space_ruin_levels = current_map.space_ruin_levels
 	var/current_empty_space_levels = current_map.space_empty_levels
 
-	// Is our current map a planetary station (NO space turfs allowed)? If so, check for ANY space turfs.
+	// Is our current map a planetary station (NO space turfs allowed)? If so, check for ANY space turfs. It's a hacky way to see if something is planetary since there's no flag for it, but the pattern should hold.
+	// Nothing bad happens if `validate_planetary_map()` doesn't run on a planetary map, it just doesn't take the special consideration that we want NO space turfs EVER (excluding CentCom).
 	if(!(current_empty_space_levels && current_space_ruin_levels))
 		validate_planetary_map()
 		return
