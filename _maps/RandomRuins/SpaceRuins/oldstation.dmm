@@ -1125,7 +1125,7 @@
 "dH" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/ruin/solars/ancientstation/charlie/solars)
+/area/ruin/space/solars/ancientstation/charlie/solars)
 "dK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -4034,7 +4034,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/ruin/solars/ancientstation/charlie/solars)
+/area/ruin/space/solars/ancientstation/charlie/solars)
 "mz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -6440,7 +6440,7 @@
 /obj/item/solar_assembly,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
-/area/ruin/solars/ancientstation/charlie/solars)
+/area/ruin/space/solars/ancientstation/charlie/solars)
 "BJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
@@ -7258,7 +7258,7 @@
 /obj/machinery/power/solar,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
-/area/ruin/solars/ancientstation/charlie/solars)
+/area/ruin/space/solars/ancientstation/charlie/solars)
 "IV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -7347,7 +7347,7 @@
 /obj/machinery/power/rtg/old_station,
 /obj/structure/cable,
 /turf/template_noop,
-/area/ruin/solars/ancientstation/charlie/solars)
+/area/ruin/space/solars/ancientstation/charlie/solars)
 "JC" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/bottle/sacid{
@@ -8622,7 +8622,7 @@
 "Ua" = (
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
-/area/ruin/solars/ancientstation/charlie/solars)
+/area/ruin/space/solars/ancientstation/charlie/solars)
 "Uj" = (
 /obj/structure/girder,
 /turf/closed/mineral/random,

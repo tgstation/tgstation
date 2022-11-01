@@ -2,6 +2,6 @@
 
 /area/shuttle/caravan/@SUBTYPES : /area/shuttle/ruin/caravan/@SUBTYPES
 
-/area/ruin/space/solars/@SUBTYPES : /area/ruin/space/solars/@SUBTYPES
+/area/ruin/solars/@SUBTYPES : /area/ruin/space/solars/@SUBTYPES
 
 /area/ruin/tcommsat_oldaisat : /area/ruin/space/tcommsat_oldaisat

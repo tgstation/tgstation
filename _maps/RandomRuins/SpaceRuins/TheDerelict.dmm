@@ -1899,7 +1899,7 @@
 "tk" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/solars/ks13/aft_solars)
+/area/ruin/space/solars/ks13/aft_solars)
 "tl" = (
 /obj/structure/table_frame/wood,
 /obj/effect/decal/cleanable/dirt,
@@ -1996,7 +1996,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/solars/ks13/aft_solars)
+/area/ruin/space/solars/ks13/aft_solars)
 "tT" = (
 /obj/effect/spawner/structure/window/hollow/middle,
 /turf/open/floor/plating/airless,
@@ -2118,7 +2118,7 @@
 "uD" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/solars/ks13/aft_solars)
+/area/ruin/space/solars/ks13/aft_solars)
 "uF" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -2605,7 +2605,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/solars/ks13/sb_bow_solars)
+/area/ruin/space/solars/ks13/sb_bow_solars)
 "xx" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
@@ -3345,7 +3345,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/solars/ks13/aft_solars)
+/area/ruin/space/solars/ks13/aft_solars)
 "Bo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -5073,7 +5073,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/solars/ks13/aft_solars)
+/area/ruin/space/solars/ks13/aft_solars)
 "Kl" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -5081,7 +5081,7 @@
 "Km" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/ruin/solars/ks13/aft_solars)
+/area/ruin/space/solars/ks13/aft_solars)
 "Ko" = (
 /obj/machinery/door/window/left/directional/south{
 	name = "Bridge Access"
@@ -5360,7 +5360,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/solars/ks13/sb_bow_solars)
+/area/ruin/space/solars/ks13/sb_bow_solars)
 "LV" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
@@ -6394,7 +6394,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/ruin/solars/ks13/aft_solars)
+/area/ruin/space/solars/ks13/aft_solars)
 "Ro" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
@@ -7044,7 +7044,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/ruin/solars/ks13/sb_bow_solars)
+/area/ruin/space/solars/ks13/sb_bow_solars)
 "Un" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt,
@@ -7472,7 +7472,7 @@
 "Ws" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/solars/ks13/sb_bow_solars)
+/area/ruin/space/solars/ks13/sb_bow_solars)
 "Wt" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/airless,
@@ -7707,7 +7707,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/solars/ks13/sb_bow_solars)
+/area/ruin/space/solars/ks13/sb_bow_solars)
 "XG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
