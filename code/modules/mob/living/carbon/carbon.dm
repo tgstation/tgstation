@@ -148,15 +148,15 @@
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CARBON_THROW_THING, src, target)
-	return
+	return TRUE
 
 /mob/living/carbon/throw_item(atom/target)
 	. = ..()
 	throw_mode_off(THROW_MODE_TOGGLE)
 	if(!target || !isturf(loc))
-		return
+		return FALSE
 	if(istype(target, /atom/movable/screen))
-		return
+		return FALSE
 
 	var/atom/movable/thrown_thing
 	var/obj/item/I = get_active_held_item()
@@ -172,7 +172,7 @@
 				stop_pulling()
 				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
-					return
+					return FALSE
 	else
 		thrown_thing = I.on_thrown(src, target)
 
