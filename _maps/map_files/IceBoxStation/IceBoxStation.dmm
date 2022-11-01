@@ -19958,7 +19958,7 @@
 /area/station/security/detectives_office)
 "fYQ" = (
 /obj/machinery/light/small/directional/west,
-/mob/living/simple_animal/mouse/brown/tom,
+/mob/living/basic/mouse/brown/tom,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
 "fYS" = (
@@ -20206,7 +20206,7 @@
 /obj/item/food/canned/beans,
 /obj/item/food/canned/beans,
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/simple_animal/mouse/white,
+/mob/living/basic/mouse/white,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "gbF" = (
@@ -75639,7 +75639,7 @@
 /area/station/security/office)
 "xlH" = (
 /obj/effect/mapping_helpers/broken_floor,
-/mob/living/simple_animal/mouse/white{
+/mob/living/basic/mouse/white{
 	desc = "This mouse smells faintly of alcohol.";
 	name = "Mik"
 	},

@@ -786,6 +786,7 @@
 	to_chat(user, span_notice("You drink the potion then place your hands on [switchy_mob]..."))
 
 	user.mind.transfer_to(switchy_mob)
+	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
 	switchy_mob.faction = user.faction.Copy()
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	switchy_mob.update_atom_languages()

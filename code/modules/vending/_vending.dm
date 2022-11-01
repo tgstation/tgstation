@@ -1425,34 +1425,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
 
-/obj/item/price_tagger
-	name = "price tagger"
-	desc = "This tool is used to set a price for items used in custom vendors."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "pricetagger"
-	custom_premium_price = PAYCHECK_CREW * 0.5
-	///the price of the item
-	var/price = 1
-
-/obj/item/price_tagger/attack_self(mob/user)
-	if(loc != user)
-		to_chat(user, span_warning("You must be holding the price tagger to continue!"))
-		return
-	var/chosen_price = tgui_input_number(user, "Set price", "Price", price)
-	if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
-		return
-	price = chosen_price
-	to_chat(user, span_notice(" The [src] will now give things a [price] cr tag."))
-
-/obj/item/price_tagger/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(isitem(target))
-		var/obj/item/I = target
-		I.custom_price = price
-		to_chat(user, span_notice("You set the price of [I] to [price] cr."))
-
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
 	icon_state = "greed"
 	icon_deny = "greed-deny"

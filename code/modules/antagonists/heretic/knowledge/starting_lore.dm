@@ -208,3 +208,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
 	route = PATH_START
+
+/datum/heretic_knowledge/spell/cloak_of_shadows
+	name = "Cloak of Shadow"
+	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
+		for three minutes, assisting you in keeping secrecy. Requires a focus to cast."
+	spell_to_add = /datum/action/cooldown/spell/shadow_cloak
+	cost = 0
+	route = PATH_START

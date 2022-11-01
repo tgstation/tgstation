@@ -26,7 +26,7 @@
 
 	var/obj/item/radio/headset/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
+	R.freqlock = RADIO_FREQENCY_LOCKED
 	..()
 
 /datum/outfit/space
@@ -131,7 +131,7 @@
 	var/obj/item/radio/outfit_radio = equipped.ears
 	if(outfit_radio)
 		outfit_radio.set_frequency(FREQ_SYNDICATE)
-		outfit_radio.freqlock = TRUE
+		outfit_radio.freqlock = RADIO_FREQENCY_LOCKED
 
 	var/obj/item/card/id/outfit_id = equipped.wear_id
 	if(outfit_id)

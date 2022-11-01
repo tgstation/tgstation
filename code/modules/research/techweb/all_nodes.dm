@@ -66,6 +66,7 @@
 		"kitchen_knife",
 		"laptop",
 		"light_bulb",
+		"light_replacer",
 		"light_tube",
 		"mechfab",
 		"micro_mani",
@@ -93,7 +94,6 @@
 		"recorder",
 		"rglass",
 		"roll",
-		"salestagger",
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
@@ -408,7 +408,6 @@
 	design_ids = list(
 		"crewpinpointer",
 		"defibrillator_compact",
-		"detective_scanner",
 		"harvester",
 		"healthanalyzer_advanced",
 		"holobarrier_med",
@@ -1379,7 +1378,7 @@
 		"buffer",
 		"vacuum",
 		"holobarrier_jani",
-		"light_replacer",
+		"light_replacer_blue",
 		"paint_remover",
 		"spraybottle",
 	)

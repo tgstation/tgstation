@@ -101,8 +101,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /*
  * Remove the organ from the select mob.
  *
- * organ_owner - the mob who owns our organ, that we're removing the organ from.
- * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
+ * * organ_owner - the mob who owns our organ, that we're removing the organ from.
+ * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 
