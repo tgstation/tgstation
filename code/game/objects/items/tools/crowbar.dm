@@ -177,15 +177,11 @@
 	resistance_flags = FIRE_PROOF
 	bare_wound_bonus = 15
 	wound_bonus = 10
-	/// How much damage to do unwielded
-	var/force_unwielded = 5
-	/// How much damage to do wielded
-	var/force_wielded = 19
 
 /obj/item/crowbar/mechremoval/Initialize(mapload)
 	. = ..()
 	transform = transform.Translate(0, -8)
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded = 5, force_wielded = 19, icon_wielded = "[base_icon_state]1")
 
 /obj/item/crowbar/mechremoval/update_icon_state()
 	icon_state = "[base_icon_state]0"
