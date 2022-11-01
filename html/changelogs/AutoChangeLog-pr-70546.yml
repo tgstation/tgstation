@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "You can harvest useful organs from Brimdemons and Lobstrosities."
-  - bugfix: "You can no longer 'preserve' regenerative cores which have already expired to repair them."
