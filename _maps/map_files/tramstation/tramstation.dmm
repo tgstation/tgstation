@@ -3057,7 +3057,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/lavaland/surface)
+/area/space/nearstation)
 "bnJ" = (
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -4125,7 +4125,7 @@
 	network = list("aicore")
 	},
 /turf/open/space/openspace,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
+/area/space/nearstation)
 "bGj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15045,7 +15045,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/lavaland/surface)
+/area/space/nearstation)
 "fqt" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -23990,7 +23990,7 @@
 	network = list("ss13","minisat")
 	},
 /turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/aisat_interior)
+/area/space/nearstation)
 "iEG" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
@@ -25570,7 +25570,7 @@
 	network = list("ss13","minisat")
 	},
 /turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/aisat_interior)
+/area/space/nearstation)
 "jjL" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -27481,7 +27481,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/lavaland/surface)
+/area/space/nearstation)
 "jTx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -33691,7 +33691,7 @@
 	network = list("ss13","minisat")
 	},
 /turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/aisat/foyer)
+/area/space/nearstation)
 "mbm" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -33808,7 +33808,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/lavaland/surface)
+/area/space/nearstation)
 "mdy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
@@ -43719,7 +43719,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/lavaland/surface)
+/area/space/nearstation)
 "pEe" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -44048,7 +44048,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/lavaland/surface)
+/area/space/nearstation)
 "pKs" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
@@ -48913,7 +48913,7 @@
 	},
 /obj/structure/cable/multilayer/connected,
 /turf/open/floor/engine/hull/reinforced,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
+/area/space/nearstation)
 "rvd" = (
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/cable,
@@ -52686,10 +52686,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/brig)
-"sLE" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/lavaland/surface)
 "sLF" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/box,
@@ -60839,7 +60835,7 @@
 	network = list("ss13","minisat")
 	},
 /turf/open/space/basic,
-/area/station/ai_monitored/turret_protected/aisat_interior)
+/area/space/nearstation)
 "vGA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -68081,7 +68077,7 @@
 	network = list("aicore")
 	},
 /turf/open/space/openspace,
-/area/station/ai_monitored/turret_protected/aisat/hallway)
+/area/space/nearstation)
 "ylF" = (
 /obj/structure/railing{
 	dir = 1
@@ -94496,9 +94492,9 @@ aRN
 aRN
 aRN
 aRN
-sLE
-sLE
-sLE
+pHM
+pHM
+pHM
 aRN
 aRN
 aRN
@@ -95530,7 +95526,7 @@ jTk
 jTk
 jTk
 pDT
-sLE
+pHM
 aRN
 xFs
 igy
@@ -95777,7 +95773,7 @@ vOU
 ney
 vNH
 lPz
-sLE
+pHM
 bnF
 bnF
 bnF
@@ -95787,7 +95783,7 @@ jTk
 jTk
 jTk
 pKr
-sLE
+pHM
 aRN
 aRN
 amq
@@ -96034,7 +96030,7 @@ dnE
 ney
 vNH
 aRN
-sLE
+pHM
 bnF
 bnF
 bnF
@@ -96044,7 +96040,7 @@ jTk
 jTk
 jTk
 pDT
-sLE
+pHM
 aRN
 xFs
 igy
@@ -96301,7 +96297,7 @@ jTk
 jTk
 jTk
 pKr
-sLE
+pHM
 aRN
 dhe
 igy
@@ -96558,7 +96554,7 @@ jTk
 jTk
 jTk
 pDT
-sLE
+pHM
 aRN
 dhe
 igy
