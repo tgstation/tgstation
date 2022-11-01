@@ -25,7 +25,7 @@
 /obj/item/kheiral_cuffs/Initialize(mapload)
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
-	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
+	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(check_z))
 
 	check_z(new_turf = loc)
 

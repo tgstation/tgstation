@@ -125,9 +125,9 @@
 
 /obj/item/circuit_component/vim/register_shell(atom/movable/shell)
 	. = ..()
-	RegisterSignal(shell, COMSIG_VIM_HEADLIGHTS_TOGGLED, .proc/on_headlights_toggle)
-	RegisterSignal(shell, COMSIG_VIM_CHIME_USED, .proc/on_chime_used)
-	RegisterSignal(shell, COMSIG_VIM_BUZZ_USED, .proc/on_buzz_used)
+	RegisterSignal(shell, COMSIG_VIM_HEADLIGHTS_TOGGLED, PROC_REF(on_headlights_toggle))
+	RegisterSignal(shell, COMSIG_VIM_CHIME_USED, PROC_REF(on_chime_used))
+	RegisterSignal(shell, COMSIG_VIM_BUZZ_USED, PROC_REF(on_buzz_used))
 
 /obj/item/circuit_component/vim/unregister_shell(atom/movable/shell)
 	. = ..()

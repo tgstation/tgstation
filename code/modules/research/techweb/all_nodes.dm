@@ -2132,7 +2132,7 @@
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
 	if(!SSearly_assets.initialized)
-		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(register_uplink_items))
 	else
 		register_uplink_items()
 

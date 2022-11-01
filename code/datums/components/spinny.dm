@@ -1,7 +1,7 @@
 /**
  * spinny.dm
  *
- * It's a component that spins things a whole bunch, like [proc/dance_rotate] but without the sleeps
+ * It's a component that spins things a whole bunch, like PROC_REF(dance_rotate] but without the sleeps)
 */
 /datum/component/spinny
 	dupe_mode = COMPONENT_DUPE_UNIQUE

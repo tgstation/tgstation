@@ -33,8 +33,8 @@
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(on_wield))
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, PROC_REF(on_unwield))
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
 	register_context()
 
@@ -116,7 +116,7 @@
 	cards = shuffle(cards)
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 	user.balloon_alert_to_viewers("shuffles the deck")
-	addtimer(CALLBACK(src, .proc/CardgameEvent, user), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(CardgameEvent), user), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /// This checks if nearby mobs are playing a cardgame and triggers a mood and memory
 /obj/item/toy/cards/deck/proc/CardgameEvent(mob/living/dealer)

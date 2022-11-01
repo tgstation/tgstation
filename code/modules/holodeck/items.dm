@@ -37,7 +37,7 @@
 
 /obj/item/toy/cards/deck/syndicate/holographic/Initialize(mapload, obj/machinery/computer/holodeck/holodeck)
 	src.holodeck = holodeck
-	RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/handle_card_delete)
+	RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(handle_card_delete))
 	. = ..()
 
 /obj/item/toy/cards/deck/syndicate/holographic/proc/handle_card_delete(datum/source)

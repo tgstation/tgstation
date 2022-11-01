@@ -34,7 +34,7 @@
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/pig/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/carrot), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 /mob/living/basic/pig/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE

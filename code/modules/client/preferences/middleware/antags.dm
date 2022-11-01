@@ -1,6 +1,6 @@
 /datum/preference_middleware/antags
 	action_delegations = list(
-		"set_antags" = .proc/set_antags,
+		"set_antags" = PROC_REF_STATIC(set_antags),
 	)
 
 /datum/preference_middleware/antags/get_ui_static_data(mob/user)

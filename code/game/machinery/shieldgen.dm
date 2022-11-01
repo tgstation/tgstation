@@ -290,7 +290,7 @@
 	. = ..()
 	if(anchored)
 		connect_to_network()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 
 /obj/machinery/power/shieldwallgen/Destroy()
 	for(var/d in GLOB.cardinals)
@@ -475,7 +475,7 @@
 		visible_message(span_danger("\The [src] is suddenly occupying the same space as \the [L]!"))
 		L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		L.gib()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity))
 
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null

@@ -45,7 +45,7 @@
 		qdel(src)
 		return
 
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_act))
 
 	src.parent = WEAKREF(parent)
 	src.fingerprints = fingerprints

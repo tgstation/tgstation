@@ -18,7 +18,7 @@
 
 /datum/proximity_monitor/advanced/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	..()
-	RegisterSignal(projector, COMSIG_PARENT_QDELETING, .proc/on_projector_del)
+	RegisterSignal(projector, COMSIG_PARENT_QDELETING, PROC_REF(on_projector_del))
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 

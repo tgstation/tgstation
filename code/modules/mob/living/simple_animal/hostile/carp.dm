@@ -99,7 +99,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/carp/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 /mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
 	tamed = TRUE

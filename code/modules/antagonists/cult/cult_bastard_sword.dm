@@ -36,8 +36,8 @@
 	AddComponent( \
 		/datum/component/spin2win, \
 		spin_cooldown_time = 25 SECONDS, \
-		on_spin_callback = CALLBACK(src, .proc/on_spin), \
-		on_unspin_callback = CALLBACK(src, .proc/on_unspin), \
+		on_spin_callback = CALLBACK(src, PROC_REF(on_spin)), \
+		on_unspin_callback = CALLBACK(src, PROC_REF(on_unspin)), \
 		start_spin_message = span_danger("%USER begins swinging the sword around with inhuman strength!"), \
 		end_spin_message = span_warning("%USER's inhuman strength dissipates and the sword's runes grow cold!") \
 	)

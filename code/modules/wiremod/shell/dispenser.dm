@@ -32,8 +32,8 @@
 	balloon_alert(user, "inserted item")
 	stored_items += to_add
 	to_add.forceMove(src)
-	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/handle_stored_item_moved)
-	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, .proc/handle_stored_item_deleted)
+	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, PROC_REF(handle_stored_item_moved))
+	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, PROC_REF(handle_stored_item_deleted))
 	SEND_SIGNAL(src, COMSIG_DISPENSERBOT_ADD_ITEM, to_add)
 
 /obj/structure/dispenser_bot/proc/handle_stored_item_moved(obj/item/moving_item, atom/location)
@@ -123,8 +123,8 @@
 
 /obj/item/circuit_component/dispenser_bot/register_shell(atom/movable/shell)
 	. = ..()
-	RegisterSignal(shell, COMSIG_DISPENSERBOT_ADD_ITEM, .proc/on_shell_add_item)
-	RegisterSignal(shell, COMSIG_DISPENSERBOT_REMOVE_ITEM, .proc/on_shell_remove_item)
+	RegisterSignal(shell, COMSIG_DISPENSERBOT_ADD_ITEM, PROC_REF(on_shell_add_item))
+	RegisterSignal(shell, COMSIG_DISPENSERBOT_REMOVE_ITEM, PROC_REF(on_shell_remove_item))
 
 /obj/item/circuit_component/dispenser_bot/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(
@@ -167,7 +167,7 @@
 			RegisterSignal(vendor_component, list(
 				COMSIG_PARENT_QDELETING,
 				COMSIG_CIRCUIT_COMPONENT_REMOVED,
-			), .proc/remove_vendor_component)
+			), PROC_REF(remove_vendor_component))
 
 /obj/item/circuit_component/vendor_component
 	display_name = "Vend"
@@ -195,7 +195,7 @@
 
 /obj/item/circuit_component/vendor_component/populate_ports()
 	item_to_vend = add_input_port("Item", PORT_TYPE_ATOM, trigger = null)
-	vend_item = add_input_port("Vend Item", PORT_TYPE_SIGNAL, trigger = .proc/vend_item)
+	vend_item = add_input_port("Vend Item", PORT_TYPE_SIGNAL, trigger = PROC_REF(vend_item))
 
 /obj/item/circuit_component/vendor_component/proc/vend_item(datum/port/input/port, list/return_values)
 	CIRCUIT_TRIGGER

@@ -19,7 +19,7 @@
 		stack_trace("[type] added to [target] without any requirements specified.")
 	src.atmos_requirements = atmos_requirements
 	src.unsuitable_atmos_damage = unsuitable_atmos_damage
-	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, .proc/on_non_stasis_life)
+	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
 
 /datum/element/atmos_requirements/Detach(datum/target)
 	. = ..()

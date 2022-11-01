@@ -21,8 +21,8 @@
 	src.slots_knockoffable = slots_knockoffable
 
 /datum/component/knockoff/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_dropped)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
 /datum/component/knockoff/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
@@ -88,8 +88,8 @@
 		UnregisterSignal(equipper, list(COMSIG_HUMAN_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN))
 		return
 
-	RegisterSignal(equipper, COMSIG_HUMAN_DISARM_HIT, .proc/on_equipped_mob_disarm, TRUE)
-	RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/on_equipped_mob_knockdown, TRUE)
+	RegisterSignal(equipper, COMSIG_HUMAN_DISARM_HIT, PROC_REF(on_equipped_mob_disarm), TRUE)
+	RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown), TRUE)
 
 /// Signal proc for [COMSIG_ITEM_DROPPED]
 /// Unregisters our signals which can cause a knockdown when we're unequipped (dropped)

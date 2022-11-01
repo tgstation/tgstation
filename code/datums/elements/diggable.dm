@@ -27,7 +27,7 @@
 	src.action_text = action_text
 	src.action_text_third_person = action_text_third_person
 
-	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_SHOVEL), .proc/on_shovel)
+	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_SHOVEL), PROC_REF(on_shovel))
 
 /datum/element/diggable/Detach(datum/source, ...)
 	. = ..()

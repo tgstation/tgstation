@@ -55,7 +55,7 @@
 		var/mob/holder = linked_swapper.loc
 		to_chat(holder, span_notice("[linked_swapper] starts buzzing."))
 	next_use = world.time + cooldown //only the one used goes on cooldown
-	addtimer(CALLBACK(src, .proc/swap, user), 25)
+	addtimer(CALLBACK(src, PROC_REF(swap), user), 25)
 
 /obj/item/swapper/examine(mob/user)
 	. = ..()

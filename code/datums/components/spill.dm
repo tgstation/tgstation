@@ -30,8 +30,8 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/spill/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/equip_react)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/drop_react)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(equip_react))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(drop_react))
 	var/obj/item/master = parent
 	preexisting_slot_flags = master.slot_flags
 	master.slot_flags |= ITEM_SLOT_POCKETS
@@ -46,7 +46,7 @@
 	SIGNAL_HANDLER
 
 	if(slot & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET))
-		RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/knockdown_react, TRUE)
+		RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(knockdown_react), TRUE)
 	else
 		UnregisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN)
 

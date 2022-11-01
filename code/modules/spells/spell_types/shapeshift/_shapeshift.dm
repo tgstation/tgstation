@@ -64,7 +64,7 @@
 		cast_on,
 		cast_on,
 		shape_names_to_image,
-		custom_check = CALLBACK(src, .proc/check_menu, cast_on),
+		custom_check = CALLBACK(src, PROC_REF(check_menu), cast_on),
 		radius = 38,
 	)
 

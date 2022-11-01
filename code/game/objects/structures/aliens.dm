@@ -214,7 +214,7 @@
 		check_weed = new(check_turf)
 		//set the new one's parent node to our parent node
 		check_weed.parent_node = parent_node
-		check_weed.RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
+		check_weed.RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, PROC_REF(after_parent_destroyed))
 
 /**
  * Called when the parent node is destroyed
@@ -222,7 +222,7 @@
 /obj/structure/alien/weeds/proc/after_parent_destroyed()
 	if(!find_new_parent())
 		var/random_time = rand(2 SECONDS, 8 SECONDS)
-		addtimer(CALLBACK(src, .proc/do_qdel), random_time)
+		addtimer(CALLBACK(src, PROC_REF(do_qdel)), random_time)
 
 /**
  * Called when trying to find a new parent after our previous parent died
@@ -236,7 +236,7 @@
 		if(new_parent == previous_node)
 			continue
 		parent_node = new_parent
-		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
+		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, PROC_REF(after_parent_destroyed))
 		return parent_node
 	return FALSE
 
@@ -348,7 +348,7 @@
 	if(status == GROWING || status == GROWN)
 		child = new(src)
 	if(status == GROWING)
-		addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
+		addtimer(CALLBACK(src, PROC_REF(Grow)), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 	proximity_monitor = new(src, status == GROWN ? 1 : 0)
 	if(status == BURST)
 		atom_integrity = integrity_failure * max_integrity
@@ -408,7 +408,7 @@
 		status = BURSTING
 		proximity_monitor.set_range(0)
 		flick("egg_opening", src)
-		addtimer(CALLBACK(src, .proc/finish_bursting, kill), 15)
+		addtimer(CALLBACK(src, PROC_REF(finish_bursting), kill), 15)
 
 /obj/structure/alien/egg/proc/finish_bursting(kill = TRUE)
 	status = BURST

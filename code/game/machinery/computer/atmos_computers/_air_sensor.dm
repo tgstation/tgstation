@@ -21,7 +21,7 @@
 	return ..()
 
 /obj/machinery/air_sensor/Destroy()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
+	INVOKE_ASYNC(src, PROC_REF(broadcast_destruction), src.frequency)
 	SSair.stop_processing_machine(src)
 	SSradio.remove_object(src, frequency)
 	return ..()

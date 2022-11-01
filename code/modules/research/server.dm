@@ -65,7 +65,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	set_machine_stat(machine_stat | EMPED)
-	addtimer(CALLBACK(src, .proc/fix_emp), 60 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(fix_emp)), 60 SECONDS)
 	refresh_working()
 
 /// Callback to un-emp the server afetr some time.

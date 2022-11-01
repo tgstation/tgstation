@@ -75,9 +75,9 @@
 	var/delay = world.tick_lag
 	var/datum/move_loop/our_loop = SSmove_manager.move_disposals(src, delay = delay, timeout = delay * count)
 	if(our_loop)
-		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
-		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/try_expel)
-		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/movement_stop)
+		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
+		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(try_expel))
+		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, PROC_REF(movement_stop))
 		current_pipe = loc
 
 /obj/structure/disposalholder/proc/pre_move(datum/move_loop/source)

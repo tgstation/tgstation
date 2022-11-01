@@ -308,7 +308,7 @@
 	var/turf/selected_turf = get_turf(src)
 	selected_turf.visible_message(span_userdanger("[src] flares briefly."))
 
-	addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(effect), user, .), 1 SECONDS)
 	COOLDOWN_START(src, roll_cd, 2.5 SECONDS)
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)

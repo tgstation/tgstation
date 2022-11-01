@@ -31,6 +31,7 @@
 		scanner.displayDetectiveScanResults(usr)
 
 /obj/item/detective_scanner/attack_self(mob/user)
+<<<<<<< HEAD
 	if(!LAZYLEN(log))
 		balloon_alert(user, "no logs!")
 		return
@@ -40,6 +41,14 @@
 	scanning = TRUE
 	balloon_alert(user, "printing report...")
 	addtimer(CALLBACK(src, .proc/PrintReport), 10 SECONDS)
+=======
+	if(log.len && !scanning)
+		scanning = TRUE
+		to_chat(user, span_notice("Printing report, please wait..."))
+		addtimer(CALLBACK(src, PROC_REF(PrintReport)), 100)
+	else
+		to_chat(user, span_notice("The scanner has no logs or is in use."))
+>>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper

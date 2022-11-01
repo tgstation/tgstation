@@ -23,10 +23,10 @@
 	cart_table = new(src)
 	cart_tent = new(src)
 	packed_things = list(cart_table, cart_smartfridge, cart_tent, cart_griddle) //middle, left, left, right
-	RegisterSignal(cart_griddle, COMSIG_PARENT_QDELETING, .proc/lost_part)
-	RegisterSignal(cart_smartfridge, COMSIG_PARENT_QDELETING, .proc/lost_part)
-	RegisterSignal(cart_table, COMSIG_PARENT_QDELETING, .proc/lost_part)
-	RegisterSignal(cart_tent, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	RegisterSignal(cart_griddle, COMSIG_PARENT_QDELETING, PROC_REF(lost_part))
+	RegisterSignal(cart_smartfridge, COMSIG_PARENT_QDELETING, PROC_REF(lost_part))
+	RegisterSignal(cart_table, COMSIG_PARENT_QDELETING, PROC_REF(lost_part))
+	RegisterSignal(cart_tent, COMSIG_PARENT_QDELETING, PROC_REF(lost_part))
 
 /obj/machinery/food_cart/Destroy()
 	if(cart_griddle)
@@ -75,7 +75,7 @@
 		var/turf/T = get_step(grabbed_turf, turn(SOUTH, angle))
 		var/obj/thing = packed_things[iteration]
 		thing.forceMove(T)
-		RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/lost_part)
+		RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(lost_part))
 		iteration++
 	unpacked = TRUE
 

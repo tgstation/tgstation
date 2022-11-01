@@ -43,7 +43,7 @@
 
 	if(generated_image)
 		hallucinator.client?.images += generated_image
-		addtimer(CALLBACK(src, .proc/remove_image, who_has_the_item), rand(15 SECONDS, 25 SECONDS))
+		addtimer(CALLBACK(src, PROC_REF(remove_image), who_has_the_item), rand(15 SECONDS, 25 SECONDS))
 		return TRUE
 
 	return FALSE

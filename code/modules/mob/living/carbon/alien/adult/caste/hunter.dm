@@ -50,7 +50,7 @@
 		body_position_pixel_y_offset = -32
 		update_icons()
 		ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPING_TRAIT) //Throwing itself doesn't protect mobs against lava (because gulag).
-		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, .proc/leap_end))
+		throw_at(A, MAX_ALIEN_LEAP_DIST, 1, src, FALSE, TRUE, callback = CALLBACK(src, PROC_REF(leap_end)))
 
 /mob/living/carbon/alien/adult/hunter/proc/leap_end()
 	leaping = FALSE

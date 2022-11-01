@@ -9,7 +9,7 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_MOVABLE_BUMP, .proc/Bump)
+	RegisterSignal(target, COMSIG_MOVABLE_BUMP, PROC_REF(Bump))
 
 /datum/element/skittish/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_MOVABLE_BUMP)

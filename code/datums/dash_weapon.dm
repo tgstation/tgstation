@@ -64,7 +64,7 @@
 	spot_one.Beam(spot_two, beam_effect, time = beam_length)
 	playsound(target_turf, dash_sound, 25, TRUE)
 	current_charges--
-	addtimer(CALLBACK(src, .proc/charge), charge_rate)
+	addtimer(CALLBACK(src, PROC_REF(charge)), charge_rate)
 	owner?.update_action_buttons_icon()
 
 	return TRUE

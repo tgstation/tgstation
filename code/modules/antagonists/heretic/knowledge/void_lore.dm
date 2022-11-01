@@ -64,7 +64,7 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/void_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
 /datum/heretic_knowledge/void_grasp/on_lose(mob/user)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
@@ -146,7 +146,7 @@
 	var/dir = angle2dir(dir2angle(get_dir(user, target)) + 180)
 	user.forceMove(get_step(target, dir))
 
-	INVOKE_ASYNC(src, .proc/follow_up_attack, user, target, blade)
+	INVOKE_ASYNC(src, PROC_REF(follow_up_attack), user, target, blade)
 
 /datum/heretic_knowledge/blade_upgrade/void/proc/follow_up_attack(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	blade.melee_attack_chain(user, target)
@@ -157,7 +157,7 @@
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
 		The Aristocrat reveals themself to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 	next_knowledge = list(
-		/datum/heretic_knowledge/final/void_final,
+		/datum/heretic_knowledge/ultimate/void_final,
 		/datum/heretic_knowledge/spell/cleave,
 		/datum/heretic_knowledge/summon/maid_in_mirror,
 	)
@@ -165,7 +165,7 @@
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/final/void_final
+/datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
 	desc = "The ascension ritual of the Path of Void. \
 		Bring 3 corpses to a transumation rune in sub-zero temperatures to complete the ritual. \
@@ -181,7 +181,7 @@
 	///Reference to the ongoing voidstrom that surrounds the heretic
 	var/datum/weather/void_storm/storm
 
-/datum/heretic_knowledge/final/void_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/void_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
 		loc.balloon_alert(user, "ritual failed, invalid location!")
 		return FALSE
@@ -193,7 +193,7 @@
 
 	return ..()
 
-/datum/heretic_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/void_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	priority_announce("[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
@@ -201,10 +201,10 @@
 
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
-	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
-/datum/heretic_knowledge/final/void_final/on_lose(mob/user)
+/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user)
 	on_death() // Losing is pretty much dying. I think
 	RegisterSignal(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
 
@@ -216,7 +216,7 @@
  *
  * Also starts storms in any area that doesn't have one.
  */
-/datum/heretic_knowledge/final/void_final/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/ultimate/void_final/proc/on_life(mob/living/source, delta_time, times_fired)
 	SIGNAL_HANDLER
 
 	for(var/mob/living/carbon/close_carbon in view(5, source))
@@ -243,7 +243,7 @@
  *
  * Stop the storm when the heretic passes away.
  */
-/datum/heretic_knowledge/final/void_final/proc/on_death()
+/datum/heretic_knowledge/ultimate/void_final/proc/on_death()
 	SIGNAL_HANDLER
 
 	if(sound_loop)

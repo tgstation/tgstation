@@ -203,10 +203,10 @@
 	return TRUE
 
 /obj/structure/holopay/proc/track(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
 	for(var/atom/movable/location in locations)
-		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+		RegisterSignal(location, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
 /obj/structure/holopay/proc/untrack(atom/movable/thing)
 	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)

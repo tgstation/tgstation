@@ -69,10 +69,10 @@
 		return FALSE
 
 	attached_hand = new_hand
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_hand_hit)
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, .proc/on_secondary_hand_hit)
-	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, .proc/on_hand_deleted)
-	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, .proc/on_hand_dropped)
+	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hand_hit))
+	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_hand_hit))
+	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, PROC_REF(on_hand_deleted))
+	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
 	to_chat(cast_on, draw_message)
 	return TRUE
 
@@ -122,7 +122,7 @@
 	if(!can_cast_spell(feedback = FALSE))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_hand_hit, source, victim, caster)
+	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, victim, caster)
 
 /**
  * Signal proc for [COMSIG_ITEM_AFTERATTACK_SECONDARY] from our attached hand.
@@ -139,7 +139,7 @@
 	if(!can_cast_spell(feedback = FALSE))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_secondary_hand_hit, source, victim, caster)
+	INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, victim, caster)
 
 /**
  * Calls cast_on_hand_hit() from the caster onto the victim.

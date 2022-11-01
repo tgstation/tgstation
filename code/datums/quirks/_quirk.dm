@@ -77,9 +77,9 @@
 		if(quirk_holder.client)
 			post_add()
 		else
-			RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/on_quirk_holder_first_login)
+			RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(on_quirk_holder_first_login))
 
-	RegisterSignal(quirk_holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdeleting)
+	RegisterSignal(quirk_holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdeleting))
 
 	return TRUE
 

@@ -60,7 +60,7 @@
 
 /obj/item/organ/internal/monster_core/Initialize(mapload)
 	. = ..()
-	decay_timer = addtimer(CALLBACK(src, .proc/go_inert), time_to_decay, TIMER_STOPPABLE)
+	decay_timer = addtimer(CALLBACK(src, PROC_REF(go_inert)), time_to_decay, TIMER_STOPPABLE)
 
 /obj/item/organ/internal/monster_core/Destroy(force, silent)
 	deltimer(decay_timer)

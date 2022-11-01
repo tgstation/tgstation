@@ -57,9 +57,9 @@
 	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
 	var/obj/item/storage/toolbox/toolbox = allocate(/obj/item/storage/toolbox)
 
-	RegisterSignal(toolbox, COMSIG_ITEM_PRE_ATTACK, .proc/pre_attack_hit)
-	RegisterSignal(toolbox, COMSIG_ITEM_ATTACK, .proc/attack_hit)
-	RegisterSignal(toolbox, COMSIG_ITEM_AFTERATTACK, .proc/post_attack_hit)
+	RegisterSignal(toolbox, COMSIG_ITEM_PRE_ATTACK, PROC_REF(pre_attack_hit))
+	RegisterSignal(toolbox, COMSIG_ITEM_ATTACK, PROC_REF(attack_hit))
+	RegisterSignal(toolbox, COMSIG_ITEM_AFTERATTACK, PROC_REF(post_attack_hit))
 
 	attacker.put_in_active_hand(toolbox, forced = TRUE)
 	attacker.set_combat_mode(TRUE)

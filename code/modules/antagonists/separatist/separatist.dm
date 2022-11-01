@@ -10,7 +10,7 @@
 
 /datum/team/nation/New(starting_members, potential_recruits, department)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_possible_separatist)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(new_possible_separatist))
 	src.potential_recruits = potential_recruits
 	src.department = department
 

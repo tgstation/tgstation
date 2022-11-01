@@ -83,7 +83,7 @@
 		return INITIALIZE_HINT_QDEL
 
 	src.airlock = airlock
-	RegisterSignal(airlock, COMSIG_PARENT_QDELETING, .proc/on_airlock_deleted)
+	RegisterSignal(airlock, COMSIG_PARENT_QDELETING, PROC_REF(on_airlock_deleted))
 	// We need to grab these for our image before we run our parent's parent initialize
 	src.image_icon = airlock.overlays_file
 	src.image_state = "lights_[AIRLOCK_LIGHT_BOLTS]"

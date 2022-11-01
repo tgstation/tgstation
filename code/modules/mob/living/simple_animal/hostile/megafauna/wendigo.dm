@@ -141,7 +141,7 @@ Difficulty: Hard
 	. = ..()
 	stored_move_dirs &= ~movement_dir
 	if(!stored_move_dirs)
-		INVOKE_ASYNC(src, .proc/wendigo_slam, stomp_range, 1, 8)
+		INVOKE_ASYNC(src, PROC_REF(wendigo_slam), stomp_range, 1, 8)
 
 /// Slams the ground around the source throwing back enemies caught nearby, delay is for the radius increase
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/wendigo_slam(range, delay, throw_range)

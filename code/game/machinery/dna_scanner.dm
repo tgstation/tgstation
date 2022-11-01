@@ -151,7 +151,7 @@
 		UnregisterSignal(linked_console, COMSIG_PARENT_QDELETING)
 	linked_console = new_console
 	if(linked_console)
-		RegisterSignal(linked_console, COMSIG_PARENT_QDELETING, .proc/react_to_console_del)
+		RegisterSignal(linked_console, COMSIG_PARENT_QDELETING, PROC_REF(react_to_console_del))
 
 /obj/machinery/dna_scannernew/proc/react_to_console_del(datum/source)
 	SIGNAL_HANDLER

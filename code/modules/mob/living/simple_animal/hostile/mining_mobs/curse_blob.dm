@@ -49,10 +49,10 @@
 	our_loop = SSmove_manager.force_move(src, move_target, delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!our_loop)
 		return
-	RegisterSignal(move_target, COMSIG_MOB_STATCHANGE, .proc/stat_change)
-	RegisterSignal(move_target, COMSIG_MOVABLE_Z_CHANGED, .proc/target_z_change)
-	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/our_z_change)
-	RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/handle_loop_end)
+	RegisterSignal(move_target, COMSIG_MOB_STATCHANGE, PROC_REF(stat_change))
+	RegisterSignal(move_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(target_z_change))
+	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(our_z_change))
+	RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, PROC_REF(handle_loop_end))
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/stat_change(datum/source, new_stat)
 	SIGNAL_HANDLER

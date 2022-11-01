@@ -159,7 +159,7 @@
 	var/obj/machinery/meter/connected_meter
 
 /obj/item/circuit_component/atmos_meter/populate_ports()
-	request_data = add_input_port("Request Meter Data", PORT_TYPE_SIGNAL, trigger = .proc/request_meter_data)
+	request_data = add_input_port("Request Meter Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(request_meter_data))
 
 	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
 	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)

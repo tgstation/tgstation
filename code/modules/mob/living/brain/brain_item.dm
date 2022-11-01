@@ -437,7 +437,7 @@
 	return actual_trauma
 
 /// Adds the passed trauma instance to our list of traumas and links it to our brain.
-/// DOES NOT handle setting up the trauma, that's done by [proc/brain_gain_trauma]!
+/// DOES NOT handle setting up the trauma, that's done by PROC_REF(brain_gain_trauma]!)
 /obj/item/organ/internal/brain/proc/add_trauma_to_traumas(datum/brain_trauma/trauma)
 	trauma.brain = src
 	traumas += trauma

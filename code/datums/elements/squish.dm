@@ -18,7 +18,7 @@
 
 	var/mob/living/carbon/C = target
 	var/was_lying = C.body_position == LYING_DOWN
-	addtimer(CALLBACK(src, .proc/Detach, C, was_lying, reverse), duration)
+	addtimer(CALLBACK(src, PROC_REF(Detach), C, was_lying, reverse), duration)
 
 	if(reverse)
 		C.transform = C.transform.Scale(SHORT, TALL)

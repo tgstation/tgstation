@@ -24,6 +24,11 @@
 
 /obj/structure/chair/Initialize(mapload)
 	. = ..()
+<<<<<<< HEAD
+=======
+	if(!anchored) //why would you put these on the shuttle?
+		addtimer(CALLBACK(src, PROC_REF(RemoveFromLatejoin)), 0)
+>>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 	if(prob(0.2))
 		name = "tactical [name]"
 	MakeRotate()
@@ -520,7 +525,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	Mob.pixel_y += 2
 	.=..()
 	if(iscarbon(Mob))
-		INVOKE_ASYNC(src, .proc/snap_check, Mob)
+		INVOKE_ASYNC(src, PROC_REF(snap_check), Mob)
 
 /obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
 	Mob.pixel_y -= 2

@@ -473,7 +473,7 @@
 	defib_instance = D
 	name = defib_instance.name
 	defib_instance.moveToNullspace()
-	RegisterSignal(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_defib_instance_qdel_or_moved)
+	RegisterSignal(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_defib_instance_qdel_or_moved))
 
 /obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
 	SIGNAL_HANDLER

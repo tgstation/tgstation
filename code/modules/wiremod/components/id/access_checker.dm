@@ -36,7 +36,7 @@
 
 /obj/item/circuit_component/compare/access/add_to(obj/item/integrated_circuit/added_to)
 	. = ..()
-	RegisterSignal(added_to, COMSIG_CIRCUIT_POST_LOAD, .proc/on_post_load)
+	RegisterSignal(added_to, COMSIG_CIRCUIT_POST_LOAD, PROC_REF(on_post_load))
 
 /obj/item/circuit_component/compare/access/removed_from(obj/item/integrated_circuit/removed_from)
 	UnregisterSignal(removed_from, COMSIG_CIRCUIT_POST_LOAD)

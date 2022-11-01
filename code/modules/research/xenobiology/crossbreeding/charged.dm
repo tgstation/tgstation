@@ -199,7 +199,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/gold/do_effect(mob/user)
 	user.visible_message(span_warning("[src] starts shuddering violently!"))
-	addtimer(CALLBACK(src, .proc/startTimer), 50)
+	addtimer(CALLBACK(src, PROC_REF(startTimer)), 50)
 
 /obj/item/slimecross/charged/gold/proc/startTimer()
 	START_PROCESSING(SSobj, src)
@@ -224,7 +224,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
 	user.visible_message(span_danger("[src] begins to shake with rapidly increasing force!"))
-	addtimer(CALLBACK(src, .proc/boom), 50)
+	addtimer(CALLBACK(src, PROC_REF(boom)), 50)
 
 /obj/item/slimecross/charged/oil/proc/boom()
 	explosion(src, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, explosion_cause = src) //Much smaller effect than normal oils, but devastatingly strong where it does hit.

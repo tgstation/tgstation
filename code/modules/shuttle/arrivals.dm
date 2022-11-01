@@ -205,7 +205,7 @@
 	if(mode != SHUTTLE_CALL)
 		announce_arrival(mob, rank)
 	else
-		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/announce_arrival, mob, rank))
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(announce_arrival), mob, rank))
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)

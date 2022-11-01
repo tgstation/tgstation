@@ -730,7 +730,7 @@
 
 /datum/holiday/xmas/celebrate()
 	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(roundstart_celebrate)))
 	GLOB.maintenance_loot += list(
 		list(
 			/obj/item/toy/xmas_cracker = 3,

@@ -9,7 +9,7 @@
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_item_attack)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 
 /datum/element/attack_equip/Detach(datum/source, ...)
 	. = ..()
@@ -28,7 +28,7 @@
 		return
 
 	if(attire.mob_can_equip(target, attire.slot_flags, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
-		INVOKE_ASYNC(src, .proc/equip, attire, sharp_dresser, user)
+		INVOKE_ASYNC(src, PROC_REF(equip), attire, sharp_dresser, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 

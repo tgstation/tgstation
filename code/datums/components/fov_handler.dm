@@ -124,12 +124,12 @@
 
 /datum/component/fov_handler/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/update_mask)
-	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/update_mask)
-	RegisterSignal(parent, COMSIG_MOB_CLIENT_CHANGE_VIEW, .proc/update_fov_size)
-	RegisterSignal(parent, COMSIG_MOB_RESET_PERSPECTIVE, .proc/update_mask)
-	RegisterSignal(parent, COMSIG_MOB_LOGOUT, .proc/mob_logout)
+	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(update_mask))
+	RegisterSignal(parent, COMSIG_LIVING_REVIVE, PROC_REF(update_mask))
+	RegisterSignal(parent, COMSIG_MOB_CLIENT_CHANGE_VIEW, PROC_REF(update_fov_size))
+	RegisterSignal(parent, COMSIG_MOB_RESET_PERSPECTIVE, PROC_REF(update_mask))
+	RegisterSignal(parent, COMSIG_MOB_LOGOUT, PROC_REF(mob_logout))
 
 /datum/component/fov_handler/UnregisterFromParent()
 	. = ..()

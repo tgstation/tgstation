@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	if(SSpersistence.initialized)
 		UpdateInfo()
 	else
-		SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
+		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(UpdateInfo)))
 
 /obj/item/paper/secretrecipe/ui_static_data(mob/living/user)
 	. = ..()

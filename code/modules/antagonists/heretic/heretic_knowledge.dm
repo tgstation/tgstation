@@ -242,7 +242,7 @@
 /datum/heretic_knowledge/limited_amount/starting/New()
 	. = ..()
 	// Starting path also determines the final knowledge we're limited too
-	for(var/datum/heretic_knowledge/final_knowledge_type as anything in subtypesof(/datum/heretic_knowledge/final))
+	for(var/datum/heretic_knowledge/final_knowledge_type as anything in subtypesof(/datum/heretic_knowledge/ultimate))
 		if(initial(final_knowledge_type.route) == route)
 			continue
 		banned_knowledge += final_knowledge_type
@@ -265,8 +265,8 @@
 	var/datum/status_effect/eldritch/mark_type
 
 /datum/heretic_knowledge/mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 
 /datum/heretic_knowledge/mark/on_lose(mob/user)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
@@ -328,8 +328,8 @@
 	cost = 2
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, .proc/on_ranged_eldritch_blade)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
+	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, PROC_REF(on_ranged_eldritch_blade))
 
 /datum/heretic_knowledge/blade_upgrade/on_lose(mob/user)
 	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_HERETIC_RANGED_BLADE_ATTACK))
@@ -432,7 +432,7 @@
 
 		potential_targets[human_to_check.real_name] = human_to_check
 
-	var/chosen_mob = tgui_input_list(user, "Select the victim you wish to curse.", name, sort_list(potential_targets, /proc/cmp_text_asc))
+	var/chosen_mob = tgui_input_list(user, "Select the victim you wish to curse.", name, sort_list(potential_targets, GLOBAL_PROC_REF(cmp_text_asc)))
 	if(isnull(chosen_mob))
 		return FALSE
 
@@ -471,7 +471,7 @@
 /datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	addtimer(CALLBACK(src, .proc/uncurse, chosen_mob, boosted), duration * (boosted ? duration_modifier : 1))
+	addtimer(CALLBACK(src, PROC_REF(uncurse), chosen_mob, boosted), duration * (boosted ? duration_modifier : 1))
 
 	if(!curse_color)
 		return
@@ -637,14 +637,14 @@
 /*
  * The special final tier of knowledges that unlocks ASCENSION.
  */
-/datum/heretic_knowledge/final
-	abstract_parent_type = /datum/heretic_knowledge/final
+/datum/heretic_knowledge/ultimate
+	abstract_parent_type = /datum/heretic_knowledge/ultimate
 	mutually_exclusive = TRUE // I guess, but it doesn't really matter by this point
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
 
-/datum/heretic_knowledge/final/on_research(mob/user)
+/datum/heretic_knowledge/ultimate/on_research(mob/user)
 	. = ..()
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/total_points = 0
@@ -655,7 +655,7 @@
 		They have [length(heretic_datum.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [heretic_datum.total_sacrifices] people ([heretic_datum.high_value_sacrifices] of which were high value)")
 
-/datum/heretic_knowledge/final/can_be_invoked(datum/antagonist/heretic/invoker)
+/datum/heretic_knowledge/ultimate/can_be_invoked(datum/antagonist/heretic/invoker)
 	if(invoker.ascended)
 		return FALSE
 
@@ -664,7 +664,7 @@
 
 	return TRUE
 
-/datum/heretic_knowledge/final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!can_be_invoked(heretic_datum))
 		return FALSE
@@ -682,10 +682,10 @@
 /**
  * Checks if the passed human is a valid sacrifice for our ritual.
  */
-/datum/heretic_knowledge/final/proc/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
+/datum/heretic_knowledge/ultimate/proc/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
 
-/datum/heretic_knowledge/final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.ascended = TRUE
 
@@ -698,7 +698,7 @@
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
 	return TRUE
 
-/datum/heretic_knowledge/final/cleanup_atoms(list/selected_atoms)
+/datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)
 	for(var/mob/living/carbon/human/sacrifice in selected_atoms)
 		selected_atoms -= sacrifice
 		sacrifice.gib()

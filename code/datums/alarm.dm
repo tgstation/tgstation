@@ -111,8 +111,8 @@
 	src.allowed_z_levels = allowed_z_levels
 	src.allowed_areas = allowed_areas
 	for(var/alarm_type in alarms_to_listen_for)
-		RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_FIRE(alarm_type), .proc/add_alarm)
-		RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_CLEAR(alarm_type), .proc/clear_alarm)
+		RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_FIRE(alarm_type), PROC_REF(add_alarm))
+		RegisterSignal(SSdcs, COMSIG_GLOB_ALARM_CLEAR(alarm_type), PROC_REF(clear_alarm))
 
 	return ..()
 
@@ -146,7 +146,7 @@
 	var/list/cameras = source_area.cameras
 	if(optional_camera)
 		cameras = list(optional_camera) // This will cause harddels, so we need to clear manually
-		RegisterSignal(optional_camera, COMSIG_PARENT_QDELETING, .proc/clear_camera_ref, override = TRUE) //It's just fine to override, cause we clear all refs in the proc
+		RegisterSignal(optional_camera, COMSIG_PARENT_QDELETING, PROC_REF(clear_camera_ref), override = TRUE) //It's just fine to override, cause we clear all refs in the proc
 
 	//This does mean that only the first alarm of that camera type in the area will send a ping, but jesus what else can ya do
 	alarms_of_our_type[source_area.name] = list(source_area, cameras, list(handler))

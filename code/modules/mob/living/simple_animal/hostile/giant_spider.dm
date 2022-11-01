@@ -438,7 +438,7 @@
 		return FALSE
 
 	StartCooldown(wrap_time)
-	INVOKE_ASYNC(src, .proc/cocoon, to_wrap)
+	INVOKE_ASYNC(src, PROC_REF(cocoon), to_wrap)
 	return TRUE
 
 /datum/action/cooldown/wrap/proc/cocoon(atom/movable/to_wrap)

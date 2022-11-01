@@ -287,7 +287,7 @@
 	if(!holder)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), /proc/cmp_typepaths_asc)
+	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!weather_type)
 		return
 
@@ -316,7 +316,7 @@
 
 	var/mob/living/marked_mob = holder.marked_datum
 
-	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	var/ability_type = tgui_input_list(usr, "Choose an ability", "Ability", all_mob_actions)
 

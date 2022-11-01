@@ -35,7 +35,7 @@
 
 /obj/item/hourglass/proc/start()
 	finish_time = world.time + time
-	timing_id = addtimer(CALLBACK(src, .proc/finish), time, TIMER_STOPPABLE)
+	timing_id = addtimer(CALLBACK(src, PROC_REF(finish)), time, TIMER_STOPPABLE)
 	countdown.start()
 	timing_animation()
 

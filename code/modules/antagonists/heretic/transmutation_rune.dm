@@ -36,7 +36,7 @@
 
 /obj/effect/heretic_rune/interact(mob/living/user)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/try_rituals, user)
+	INVOKE_ASYNC(src, PROC_REF(try_rituals), user)
 	return TRUE
 
 /**

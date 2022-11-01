@@ -71,6 +71,11 @@
 	var/contents_initialized = FALSE
 
 /obj/structure/closet/Initialize(mapload)
+<<<<<<< HEAD
+=======
+	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
+		addtimer(CALLBACK(src, PROC_REF(take_contents), TRUE), 0)
+>>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 	. = ..()
 
 	// if closed, any item at the crate's loc is put in the contents
@@ -80,8 +85,8 @@
 	update_appearance()
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
-		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF_STATIC(locker_carbon),
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF_STATIC(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -198,7 +203,7 @@
 			animate(door_obj, transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
 		else
 			animate(transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag)
-	addtimer(CALLBACK(src, .proc/end_door_animation), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(end_door_animation)), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
 
 /// Ends the door animation and removes the animated overlay
 /obj/structure/closet/proc/end_door_animation()
@@ -767,6 +772,6 @@
 	SIGNAL_HANDLER
 
 	locked = FALSE
-	INVOKE_ASYNC(src, .proc/open)
+	INVOKE_ASYNC(src, PROC_REF(open))
 
 #undef LOCKER_FULL

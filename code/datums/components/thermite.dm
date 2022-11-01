@@ -46,9 +46,9 @@
 	overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
 	master.add_overlay(overlay)
 
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
-	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_react))
+	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, PROC_REF(flame_react))
 
 /datum/component/thermite/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
@@ -70,7 +70,7 @@
 		amount += _amount
 	if (burn_timer) // prevent people from skipping a longer timer
 		deltimer(burn_timer)
-		burn_timer = addtimer(CALLBACK(src, .proc/burn_parent, usr), min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
+		burn_timer = addtimer(CALLBACK(src, PROC_REF(burn_parent), usr), min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
 
 /**
  * Used to begin the thermite burning process
@@ -83,9 +83,9 @@
 	master.cut_overlay(overlay)
 	playsound(master, 'sound/items/welder.ogg', 100, TRUE)
 	fakefire = new(master)
-	burn_timer = addtimer(CALLBACK(src, .proc/burn_parent, user), min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
+	burn_timer = addtimer(CALLBACK(src, PROC_REF(burn_parent), user), min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
 	UnregisterFromParent()
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/delete_fire) //in case parent gets deleted, get ready to delete the fire
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(delete_fire)) //in case parent gets deleted, get ready to delete the fire
 
 /**
  * Used to actually melt parent

@@ -168,9 +168,9 @@
 /obj/machinery/door/poddoor/shuttledock/proc/check()
 	var/turf/turf = get_step(src, checkdir)
 	if(!istype(turf, turftype))
-		INVOKE_ASYNC(src, .proc/open)
+		INVOKE_ASYNC(src, PROC_REF(open))
 	else
-		INVOKE_ASYNC(src, .proc/close)
+		INVOKE_ASYNC(src, PROC_REF(close))
 
 /obj/machinery/door/poddoor/incinerator_ordmix
 	name = "combustion chamber vent"

@@ -154,7 +154,7 @@
 			victim.Paralyze(1.5 SECONDS)
 			skater.adjustStaminaLoss(instability)
 			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
-	addtimer(CALLBACK(src, .proc/grind), 1)
+	addtimer(CALLBACK(src, PROC_REF(grind)), 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	. = ..()

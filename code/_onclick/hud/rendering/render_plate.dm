@@ -44,7 +44,7 @@
 	// Non 0 offset render plates will relay up to the transparent plane above them, assuming they're not on the same z level as their target of course
 	var/datum/hud/hud = home.our_hud
 	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
 	offset_change(hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/master/hide_from(mob/oldmob)
@@ -53,7 +53,7 @@
 		return
 	var/datum/hud/hud = home.our_hud
 	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
 
 /atom/movable/screen/plane_master/rendering_plate/master/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -137,7 +137,7 @@
 	// If we don't our lower plane gets totally overriden by the black void of the upper plane
 	var/datum/hud/hud = home.our_hud
 	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
 	offset_change(hud?.current_plane_offset || 0)
 	set_alpha(mymob.lighting_alpha)
 
@@ -148,7 +148,7 @@
 	oldmob.clear_fullscreen("lighting_backdrop_unlit")
 	var/datum/hud/hud = home.our_hud
 	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER

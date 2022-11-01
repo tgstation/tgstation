@@ -18,8 +18,8 @@
 /datum/ai_controller/cursed/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
-	RegisterSignal(new_pawn, COMSIG_MOVABLE_IMPACT, .proc/on_throw_hit)
-	RegisterSignal(new_pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	RegisterSignal(new_pawn, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_hit))
+	RegisterSignal(new_pawn, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	return ..() //Run parent at end
 
 /datum/ai_controller/cursed/UnpossessPawn()
@@ -32,12 +32,12 @@
 	if(!iscarbon(hit_atom))
 		return
 	//equipcode has sleeps all over it.
-	INVOKE_ASYNC(src, .proc/try_equipping_to_target_slot, hit_atom)
+	INVOKE_ASYNC(src, PROC_REF(try_equipping_to_target_slot), hit_atom)
 
 ///signal called by picking up the pawn, will try to equip to where it should actually be and start the curse
 /datum/ai_controller/cursed/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/try_equipping_to_target_slot, equipper, slot)
+	INVOKE_ASYNC(src, PROC_REF(try_equipping_to_target_slot), equipper, slot)
 
 /**
  * curse of hunger component; for very hungry items.

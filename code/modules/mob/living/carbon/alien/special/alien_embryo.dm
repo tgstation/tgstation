@@ -59,12 +59,12 @@
 	if(stage >= 6)
 		return
 	if(++stage < 6)
-		INVOKE_ASYNC(src, .proc/RefreshInfectionImage)
+		INVOKE_ASYNC(src, PROC_REF(RefreshInfectionImage))
 		var/slowdown = 1
 		if(ishuman(owner))
 			var/mob/living/carbon/human/baby_momma = owner
 			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
-		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time*slowdown)
+		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
 	if(stage == 6 && prob(50))
@@ -89,7 +89,7 @@
 	if(!candidates.len || !owner)
 		bursting = FALSE
 		stage = 5 // If no ghosts sign up for the Larva, let's regress our growth by one minute, we will try again!
-		addtimer(CALLBACK(src, .proc/advance_embryo_stage), growth_time)
+		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time)
 		return
 
 	var/mob/dead/observer/ghost = pick(candidates)

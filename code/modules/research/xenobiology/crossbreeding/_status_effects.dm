@@ -67,7 +67,7 @@
 	var/icon/bluespace
 
 /datum/status_effect/slimerecall/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(resistField))
 	to_chat(owner, span_danger("You feel a sudden tug from an unknown force, and feel a pull to bluespace!"))
 	to_chat(owner, span_notice("Resist if you wish avoid the force!"))
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -101,7 +101,7 @@
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
+	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(breakCube))
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -915,7 +915,7 @@
 	var/datum/weakref/draining_ref
 
 /datum/status_effect/stabilized/black/on_apply()
-	RegisterSignal(owner, COMSIG_MOVABLE_SET_GRAB_STATE, .proc/on_grab)
+	RegisterSignal(owner, COMSIG_MOVABLE_SET_GRAB_STATE, PROC_REF(on_grab))
 	return ..()
 
 /datum/status_effect/stabilized/black/on_remove()

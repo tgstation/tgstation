@@ -18,5 +18,5 @@
 	oldLoc = get_turf(oldLoc)
 	if(!QDELETED(builtInCamera) && !updating && oldLoc != get_turf(src))
 		updating = TRUE
-		addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), SILICON_CAMERA_BUFFER)
+		addtimer(CALLBACK(src, PROC_REF(do_camera_update), oldLoc), SILICON_CAMERA_BUFFER)
 #undef SILICON_CAMERA_BUFFER

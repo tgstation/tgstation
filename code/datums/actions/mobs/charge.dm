@@ -48,9 +48,9 @@
 	charging += charger
 	actively_moving = FALSE
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
-	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump, TRUE)
-	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move, TRUE)
-	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved, TRUE)
+	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump), TRUE)
+	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move), TRUE)
+	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), TRUE)
 	DestroySurroundings(charger)
 	charger.setDir(dir)
 	do_charge_indicator(charger, target)
@@ -62,11 +62,11 @@
 	var/datum/move_loop/new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!new_loop)
 		return
-	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
-	RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
-	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/charge_end)
+	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
+	RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(post_move))
+	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, PROC_REF(charge_end))
 	if(ismob(charger))
-		RegisterSignal(charger, COMSIG_MOB_STATCHANGE, .proc/stat_changed)
+		RegisterSignal(charger, COMSIG_MOB_STATCHANGE, PROC_REF(stat_changed))
 
 	// Yes this is disgusting. But we need to queue this stuff, and this code just isn't setup to support that right now. So gotta do it with sleeps
 	sleep(time_to_hit + charge_speed)
@@ -109,12 +109,12 @@
 	if(!actively_moving)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 	new /obj/effect/temp_visual/decoy/fading(source.loc, source)
-	INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
+	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
 	SIGNAL_HANDLER
 	playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
-	INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
+	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
@@ -154,7 +154,7 @@
 		if(isobj(target) && target.density)
 			SSexplosions.med_mov_atom += target
 
-	INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
+	INVOKE_ASYNC(src, PROC_REF(DestroySurroundings), source)
 	hit_target(source, target, charge_damage)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/target, damage_dealt)
@@ -261,7 +261,7 @@
 		our_clone.alpha = 127.5
 		our_clone.move_through_mob = owner
 		our_clone.spawn_blood = spawn_blood
-		INVOKE_ASYNC(src, .proc/do_charge, our_clone, target_atom, delay, past)
+		INVOKE_ASYNC(src, PROC_REF(do_charge), our_clone, target_atom, delay, past)
 	if(use_self)
 		do_charge(owner, target_atom, delay, past)
 

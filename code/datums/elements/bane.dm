@@ -17,9 +17,9 @@
 		return ELEMENT_INCOMPATIBLE
 
 	if(ispath(target_type, /mob/living))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/mob_check)
+		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(mob_check))
 	else if(ispath(target_type, /datum/species))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/species_check)
+		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(species_check))
 	else
 		return ELEMENT_INCOMPATIBLE
 

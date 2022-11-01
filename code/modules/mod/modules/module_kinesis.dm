@@ -72,10 +72,14 @@
 	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
 	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/kinesis, 0)
 	kinesis_catcher.kinesis_user = mod.wearer
+<<<<<<< HEAD
 	kinesis_catcher.view_list = getviewsize(mod.wearer.client.view)
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_VIEWDATA_UPDATE, /atom/movable/screen/fullscreen/kinesis.proc/on_viewdata_update)
 	kinesis_catcher.calculate_params()
+=======
+	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF( /atom/movable/screen/fullscreen/kinesis, on_move))
+>>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 	soundloop.start()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -198,7 +202,7 @@
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch()
 	playsound(grabbed_atom, 'sound/magic/repulse.ogg', 100, TRUE)
-	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_IMPACT, .proc/launch_impact)
+	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_IMPACT, PROC_REF(launch_impact))
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, grabbed_atom), get_turf(src), 10)
 	grabbed_atom.throw_at(target_turf, range = grab_range, speed = grabbed_atom.density ? 3 : 4, thrower = mod.wearer, spin = isitem(grabbed_atom))
 

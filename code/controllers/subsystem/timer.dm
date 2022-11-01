@@ -277,7 +277,7 @@ SUBSYSTEM_DEF(timer)
 		return
 
 	// Sort all timers by time to run
-	sortTim(alltimers, .proc/cmp_timer)
+	sortTim(alltimers, GLOBAL_PROC_REF(cmp_timer))
 
 	// Get the earliest timer, and if the TTR is earlier than the current world.time,
 	// then set the head offset appropriately to be the earliest time tracked by the

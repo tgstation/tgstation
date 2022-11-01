@@ -23,7 +23,7 @@
 
 /datum/action/cooldown/spell/jaunt/mirror_walk/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
 
 /datum/action/cooldown/spell/jaunt/mirror_walk/Remove(mob/remove_from)
 	. = ..()
@@ -77,7 +77,7 @@
 	var/obj/effect/dummy/phased_mob/jaunt = ..(jaunter, get_turf(nearby_reflection))
 	if (!jaunt)
 		return FALSE
-	RegisterSignal(jaunt, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+	RegisterSignal(jaunt, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
 	return jaunt
 
 /datum/action/cooldown/spell/jaunt/mirror_walk/exit_jaunt(mob/living/unjaunter, turf/loc_override)

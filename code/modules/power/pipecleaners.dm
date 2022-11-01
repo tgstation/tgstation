@@ -225,7 +225,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		pipe_icon.color = pipe_cleaner_colors[color]
 		possible_colors += list("[color]" = pipe_icon)
 
-	var/selected_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
+	var/selected_color = show_radial_menu(user, src, possible_colors, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE)
 	if(!selected_color)
 		return
 	set_pipecleaner_color(selected_color)

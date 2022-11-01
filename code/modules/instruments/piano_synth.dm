@@ -33,8 +33,8 @@
 /obj/item/instrument/piano_synth/headphones/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	RegisterSignal(src, COMSIG_INSTRUMENT_START, .proc/start_playing)
-	RegisterSignal(src, COMSIG_INSTRUMENT_END, .proc/stop_playing)
+	RegisterSignal(src, COMSIG_INSTRUMENT_START, PROC_REF(start_playing))
+	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(stop_playing))
 
 /**
  * Called by a component signal when our song starts playing.
@@ -101,18 +101,18 @@
 	var/obj/item/instrument/piano_synth/synth
 
 /obj/item/circuit_component/synth/populate_ports()
-	song = add_input_port("Song", PORT_TYPE_LIST(PORT_TYPE_STRING), trigger = .proc/import_song)
-	play = add_input_port("Play", PORT_TYPE_SIGNAL, trigger = .proc/start_playing)
-	stop = add_input_port("Stop", PORT_TYPE_SIGNAL, trigger = .proc/stop_playing)
-	repetitions = add_input_port("Repetitions", PORT_TYPE_NUMBER, trigger = .proc/set_repetitions)
-	beats_per_min = add_input_port("BPM", PORT_TYPE_NUMBER, trigger = .proc/set_bpm)
-	selected_instrument = add_option_port("Selected Instrument", SSinstruments.synthesizer_instrument_ids, trigger = .proc/set_instrument)
-	volume = add_input_port("Volume", PORT_TYPE_NUMBER, trigger = .proc/set_volume)
-	volume_dropoff = add_input_port("Volume Dropoff Threshold", PORT_TYPE_NUMBER, trigger = .proc/set_dropoff)
-	note_shift = add_input_port("Note Shift", PORT_TYPE_NUMBER, trigger = .proc/set_note_shift)
-	sustain_mode = add_option_port("Note Sustain Mode", SSinstruments.note_sustain_modes, trigger = .proc/set_sustain_mode)
-	sustain_value = add_input_port("Note Sustain Value", PORT_TYPE_NUMBER, trigger = .proc/set_sustain_value)
-	note_decay = add_input_port("Held Note Decay", PORT_TYPE_NUMBER, trigger = .proc/set_sustain_decay)
+	song = add_input_port("Song", PORT_TYPE_LIST(PORT_TYPE_STRING), trigger = PROC_REF(import_song))
+	play = add_input_port("Play", PORT_TYPE_SIGNAL, trigger = PROC_REF(start_playing))
+	stop = add_input_port("Stop", PORT_TYPE_SIGNAL, trigger = PROC_REF(stop_playing))
+	repetitions = add_input_port("Repetitions", PORT_TYPE_NUMBER, trigger = PROC_REF(set_repetitions))
+	beats_per_min = add_input_port("BPM", PORT_TYPE_NUMBER, trigger = PROC_REF(set_bpm))
+	selected_instrument = add_option_port("Selected Instrument", SSinstruments.synthesizer_instrument_ids, trigger = PROC_REF(set_instrument))
+	volume = add_input_port("Volume", PORT_TYPE_NUMBER, trigger = PROC_REF(set_volume))
+	volume_dropoff = add_input_port("Volume Dropoff Threshold", PORT_TYPE_NUMBER, trigger = PROC_REF(set_dropoff))
+	note_shift = add_input_port("Note Shift", PORT_TYPE_NUMBER, trigger = PROC_REF(set_note_shift))
+	sustain_mode = add_option_port("Note Sustain Mode", SSinstruments.note_sustain_modes, trigger = PROC_REF(set_sustain_mode))
+	sustain_value = add_input_port("Note Sustain Value", PORT_TYPE_NUMBER, trigger = PROC_REF(set_sustain_value))
+	note_decay = add_input_port("Held Note Decay", PORT_TYPE_NUMBER, trigger = PROC_REF(set_sustain_decay))
 
 	is_playing = add_output_port("Currently Playing", PORT_TYPE_NUMBER)
 	started_playing = add_output_port("Started Playing", PORT_TYPE_SIGNAL)
@@ -121,9 +121,9 @@
 /obj/item/circuit_component/synth/register_shell(atom/movable/shell)
 	. = ..()
 	synth = shell
-	RegisterSignal(synth, COMSIG_INSTRUMENT_START, .proc/on_song_start)
-	RegisterSignal(synth, COMSIG_INSTRUMENT_END, .proc/on_song_end)
-	RegisterSignal(synth, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING, .proc/continue_if_autoplaying)
+	RegisterSignal(synth, COMSIG_INSTRUMENT_START, PROC_REF(on_song_start))
+	RegisterSignal(synth, COMSIG_INSTRUMENT_END, PROC_REF(on_song_end))
+	RegisterSignal(synth, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING, PROC_REF(continue_if_autoplaying))
 
 /obj/item/circuit_component/synth/unregister_shell(atom/movable/shell)
 	if(synth.song.music_player == src)

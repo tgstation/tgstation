@@ -10,7 +10,7 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	dunk_amount = amount_per_dunk
-	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/get_dunked)
+	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(get_dunked))
 
 /datum/element/dunkable/Detach(datum/target)
 	. = ..()

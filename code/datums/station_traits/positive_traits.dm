@@ -95,7 +95,7 @@
 		/obj/item/clothing/neck/large_scarf/blue,
 	)
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
 /datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
@@ -145,7 +145,7 @@
 	deathrattle_group = new("[department_name] group")
 	blacklist += subtypesof(/datum/station_trait/deathrattle_department) - type //All but ourselves
 	report_message = "All members of [department_name] have received an implant to notify each other if one of them dies. This should help improve job-safety!"
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
 /datum/station_trait/deathrattle_department/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
@@ -221,7 +221,7 @@
 	. = ..()
 	deathrattle_group = new("station group")
 	blacklist = subtypesof(/datum/station_trait/deathrattle_department)
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
 /datum/station_trait/deathrattle_all/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
@@ -241,7 +241,7 @@
 
 /datum/station_trait/wallets/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 /datum/station_trait/wallets/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
 	SIGNAL_HANDLER

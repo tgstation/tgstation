@@ -82,8 +82,23 @@
 	var/datum/weakref/clothing
 
 /obj/item/food/clothing/MakeEdible()
+<<<<<<< HEAD
 	. = ..()
 	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, .proc/after_eat))
+=======
+	AddComponent(/datum/component/edible,\
+		initial_reagents = food_reagents,\
+		food_flags = food_flags,\
+		foodtypes = foodtypes,\
+		volume = max_volume,\
+		eat_time = eat_time,\
+		tastes = tastes,\
+		eatverbs = eatverbs,\
+		bite_consumption = bite_consumption,\
+		microwaved_type = microwaved_type,\
+		junkiness = junkiness,\
+		after_eat = CALLBACK(src, PROC_REF(after_eat)))
+>>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()
@@ -189,7 +204,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.visible_message(span_danger("The [zone_name] on [C]'s [src.name] is [break_verb] away!"), span_userdanger("The [zone_name] on your [src.name] is [break_verb] away!"), vision_distance = COMBAT_MESSAGE_RANGE)
-		RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
+		RegisterSignal(C, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
 
 	zones_disabled++
 	body_parts_covered &= ~body_zone2cover_flags(def_zone)
@@ -235,7 +250,7 @@
 		return
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
-			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
+			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
 		for(var/trait in clothing_traits)
 			ADD_CLOTHING_TRAIT(user, trait)
 		if (LAZYLEN(user_vars_to_edit))
@@ -440,7 +455,7 @@ BLIND     // can't see anything
 		return ..()
 	if(damage_flag == BOMB)
 		//so the shred survives potential turf change from the explosion.
-		addtimer(CALLBACK(src, .proc/_spawn_shreds), 1)
+		addtimer(CALLBACK(src, PROC_REF(_spawn_shreds)), 1)
 		deconstruct(FALSE)
 	if(damage_flag == CONSUME) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
 		var/turf/current_position = get_turf(src)

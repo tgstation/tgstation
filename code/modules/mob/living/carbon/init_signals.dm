@@ -2,8 +2,8 @@
 /mob/living/carbon/register_init_signals()
 	. = ..()
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), .proc/on_nobreath_trait_gain)
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), .proc/on_nometabolism_trait_gain)
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(on_nobreath_trait_gain))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_NOMETABOLISM), PROC_REF(on_nometabolism_trait_gain))
 
 /**
  * On gain of TRAIT_NOBREATH

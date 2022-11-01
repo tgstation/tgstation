@@ -20,7 +20,7 @@
 
 /obj/item/pushbroom/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_wielded="[base_icon_state]1", wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_wielded="[base_icon_state]1", wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "[base_icon_state]0"
@@ -35,7 +35,7 @@
  */
 /obj/item/pushbroom/proc/on_wield(obj/item/source, mob/user)
 	to_chat(user, span_notice("You brace the [src] against the ground in a firm sweeping stance."))
-	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/sweep)
+	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(sweep))
 
 /**
  * Handles unregistering the sweep proc when the broom is unwielded

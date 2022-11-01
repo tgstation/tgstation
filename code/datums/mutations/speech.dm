@@ -21,7 +21,7 @@
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/wacky/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -77,7 +77,7 @@
 /datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/swedish/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -108,7 +108,7 @@
 /datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/chav/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -157,7 +157,7 @@
 /datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/elvis/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -210,7 +210,7 @@
 /datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/medieval/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -250,7 +250,7 @@
 /datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/mutation/human/piglatin/on_losing(mob/living/carbon/human/owner)
 	if(..())

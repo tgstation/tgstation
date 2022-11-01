@@ -12,7 +12,7 @@
 		CRASH("Lazy fishing spot had no configuration passed in.")
 	src.configuration = configuration
 
-	RegisterSignal(target, COMSIG_PRE_FISHING, .proc/create_fishing_spot)
+	RegisterSignal(target, COMSIG_PRE_FISHING, PROC_REF(create_fishing_spot))
 
 /datum/element/lazy_fishing_spot/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_PRE_FISHING)

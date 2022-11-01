@@ -493,7 +493,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/sdql2_vv_all, new(null
 					options |= SDQL2_OPTION_SEQUENTIAL
 
 /datum/sdql2_query/proc/ARun()
-	INVOKE_ASYNC(src, .proc/Run)
+	INVOKE_ASYNC(src, PROC_REF(Run))
 
 /datum/sdql2_query/proc/Run()
 	if(SDQL2_IS_RUNNING)

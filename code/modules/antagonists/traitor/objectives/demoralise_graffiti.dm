@@ -33,8 +33,8 @@
 			user.put_in_hands(spray)
 			spray.balloon_alert(user, "the spraycan materializes in your hand")
 
-			RegisterSignal(spray, COMSIG_PARENT_QDELETING, .proc/on_spray_destroyed)
-			RegisterSignal(spray, COMSIG_TRAITOR_GRAFFITI_DRAWN, .proc/on_rune_complete)
+			RegisterSignal(spray, COMSIG_PARENT_QDELETING, PROC_REF(on_spray_destroyed))
+			RegisterSignal(spray, COMSIG_TRAITOR_GRAFFITI_DRAWN, PROC_REF(on_rune_complete))
 
 /**
  * Called when the spray can is deleted.
@@ -61,9 +61,9 @@
 	rune = drawn_rune
 	UnregisterSignal(spray, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(spray, COMSIG_TRAITOR_GRAFFITI_DRAWN)
-	RegisterSignal(drawn_rune, COMSIG_PARENT_QDELETING, .proc/on_rune_destroyed)
-	RegisterSignal(drawn_rune, COMSIG_DEMORALISING_EVENT, .proc/on_mood_event)
-	RegisterSignal(drawn_rune, COMSIG_TRAITOR_GRAFFITI_SLIPPED, .proc/on_mood_event)
+	RegisterSignal(drawn_rune, COMSIG_PARENT_QDELETING, PROC_REF(on_rune_destroyed))
+	RegisterSignal(drawn_rune, COMSIG_DEMORALISING_EVENT, PROC_REF(on_mood_event))
+	RegisterSignal(drawn_rune, COMSIG_TRAITOR_GRAFFITI_SLIPPED, PROC_REF(on_mood_event))
 
 /**
  * Called when your traitor rune is destroyed. If you haven't suceeded by now, you fail.area
@@ -295,7 +295,7 @@
 			var/datum/demoralise_moods/graffiti/mood_category = new()
 			demoraliser = new(src, 7, TRUE, mood_category)
 			clean_proof = TRUE
-			protected_timer = addtimer(CALLBACK(src, .proc/set_stage, RUNE_STAGE_REMOVABLE), 5 MINUTES)
+			protected_timer = addtimer(CALLBACK(src, PROC_REF(set_stage), RUNE_STAGE_REMOVABLE), 5 MINUTES)
 
 /obj/effect/decal/cleanable/traitor_rune/wash(clean_types)
 	if (clean_proof)

@@ -151,7 +151,7 @@
 			usr.log_message("set the logs of [src] [should_log ? "On" : "Off"].", LOG_GAME)
 		if("restore-console")
 			restoring = TRUE
-			addtimer(CALLBACK(src, .proc/restore_comp), rand(3,5) * 9 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(restore_comp)), rand(3,5) * 9 SECONDS)
 		if("access-apc")
 			var/ref = params["ref"]
 			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)

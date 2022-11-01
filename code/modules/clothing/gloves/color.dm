@@ -56,8 +56,8 @@
 
 /obj/item/clothing/gloves/color/yellow/sprayon/equipped(mob/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, .proc/use_charge)
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/use_charge)
+	RegisterSignal(user, COMSIG_LIVING_SHOCK_PREVENTED, PROC_REF(use_charge))
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(use_charge))
 
 /obj/item/clothing/gloves/color/yellow/sprayon/proc/use_charge()
 	SIGNAL_HANDLER

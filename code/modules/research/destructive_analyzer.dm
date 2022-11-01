@@ -38,7 +38,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item = O
 		to_chat(user, span_notice("You add the [O.name] to the [src.name]!"))
 		flick("d_analyzer_la", src)
-		addtimer(CALLBACK(src, .proc/finish_loading), 10)
+		addtimer(CALLBACK(src, PROC_REF(finish_loading)), 10)
 		updateUsrDialog()
 
 /obj/machinery/rnd/destructive_analyzer/proc/finish_loading()
@@ -55,7 +55,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if(!innermode)
 		flick("d_analyzer_process", src)
 		busy = TRUE
-		addtimer(CALLBACK(src, .proc/reset_busy), 24)
+		addtimer(CALLBACK(src, PROC_REF(reset_busy)), 24)
 		use_power(250)
 		if(thing == loaded_item)
 			loaded_item = null

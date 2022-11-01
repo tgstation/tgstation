@@ -37,7 +37,7 @@
 		streak = copytext(streak, 1 + length(streak[1]))
 	if (display_combos)
 		var/mob/living/holder_living = holder.resolve()
-		timerid = addtimer(CALLBACK(src, .proc/reset_streak, null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
+		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
 		holder_living?.hud_used?.combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /datum/martial_art/proc/reset_streak(mob/living/new_target, update_icon = TRUE)

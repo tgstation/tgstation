@@ -176,7 +176,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/offset_increased)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(offset_increased))
 	offset_increased(SSmapping, 0, SSmapping.max_plane_offset)
 
 /atom/movable/screen/plane_master/clickcatcher/proc/offset_increased(datum/source, old_off, new_off)
@@ -211,7 +211,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(offset != 0)
 		// You aren't the source? don't change yourself
 		return
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_increase)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
 	offset_increase(0, SSmapping.max_plane_offset)
 
 /atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
@@ -342,11 +342,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(offset != 0)
 		// You aren't the source? don't change yourself
 		return
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, .proc/handle_sight_value)
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight_value))
 	handle_sight_value(mymob, mymob.sight, 0)
 	var/datum/hud/hud = home.our_hud
 	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
 	offset_change(0, hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/blackness/hide_from(mob/oldmob)
@@ -356,7 +356,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
 	var/datum/hud/hud = home.our_hud
 	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
 
 /// Reacts to some new plane master value
 /atom/movable/screen/plane_master/blackness/proc/handle_sight_value(datum/source, new_sight, old_sight)

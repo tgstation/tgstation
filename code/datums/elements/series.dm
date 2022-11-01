@@ -20,7 +20,7 @@
 	subtype_list = subtypesof(subtype)
 	src.series_name = series_name
 	var/atom/attached = target
-	RegisterSignal(attached, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(attached, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/series/Detach(datum/target)
 	. = ..()

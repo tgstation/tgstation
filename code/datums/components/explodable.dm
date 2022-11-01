@@ -23,22 +23,22 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
-	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
-	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/projectile_react)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(explodable_attack))
+	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(detonate))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(welder_react))
+	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, PROC_REF(projectile_react))
 	if(ismovable(parent))
-		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
-		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
+		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(explodable_impact))
+		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(explodable_bump))
 		if(isitem(parent))
-			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
+			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), PROC_REF(explodable_attack))
 			if(isclothing(parent))
-				RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-				RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+				RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+				RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 
 	var/atom/atom_parent = parent
 	if(atom_parent.atom_storage)
-		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/explodable_insert_item)
+		RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(explodable_insert_item))
 
 	if (devastation_range)
 		src.devastation_range = devastation_range
@@ -105,7 +105,7 @@
 /datum/component/explodable/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	RegisterSignal(equipper, COMSIG_MOB_APPLY_DAMAGE,  .proc/explodable_attack_zone, TRUE)
+	RegisterSignal(equipper, COMSIG_MOB_APPLY_DAMAGE,  PROC_REF(explodable_attack_zone), TRUE)
 
 /datum/component/explodable/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -162,7 +162,7 @@
 		if(EXPLODABLE_DELETE_PARENT)
 			qdel(bomb)
 		else
-			addtimer(CALLBACK(src, .proc/reset_exploding), 0.1 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(reset_exploding)), 0.1 SECONDS)
 
 /**
  * Resets the expoding flag

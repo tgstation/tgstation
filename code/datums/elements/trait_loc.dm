@@ -16,7 +16,7 @@
 
 	src.trait_to_give = trait_to_give
 
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_movable_relocated)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_movable_relocated))
 	if(target.loc)
 		ADD_TRAIT(target.loc, trait_to_give, REF(target))
 

@@ -16,8 +16,8 @@
 
 /obj/machinery/plumbing/growing_vat/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles properly detaching signal hooks.
 /obj/machinery/plumbing/growing_vat/proc/on_reagents_del(datum/reagents/reagents)
@@ -62,7 +62,7 @@
 	to_chat(user, span_warning("You put some of the sample in the vat!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_appearance()
-	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, .proc/on_sample_growth_completed)
+	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, PROC_REF(on_sample_growth_completed))
 
 ///Adds text for when there is a sample in the vat
 /obj/machinery/plumbing/growing_vat/examine_more(mob/user)
@@ -131,7 +131,7 @@
 /obj/machinery/plumbing/growing_vat/proc/on_sample_growth_completed()
 	SIGNAL_HANDLER
 	if(resampler_active)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
 		biological_sample.reset_sample()
 		return SPARE_SAMPLE
 	UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)

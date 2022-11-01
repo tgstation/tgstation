@@ -10,11 +10,11 @@
 	var/mob/mob_parent = parent
 	var/dist = get_dist(mob_parent, target)
 	var/datum/move_loop/loop = SSmove_manager.move_towards(mob_parent, target, delay = 1, timeout = dist)
-	RegisterSignal(mob_parent, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, .proc/stop_move)
-	RegisterSignal(mob_parent, COMSIG_ATOM_PRE_PRESSURE_PUSH, .proc/stop_pressure)
+	RegisterSignal(mob_parent, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(stop_move))
+	RegisterSignal(mob_parent, COMSIG_ATOM_PRE_PRESSURE_PUSH, PROC_REF(stop_pressure))
 	if(spin)
-		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/slip_spin)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/loop_ended)
+		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(slip_spin))
+	RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(loop_ended))
 
 /datum/component/force_move/proc/stop_move(datum/source)
 	SIGNAL_HANDLER

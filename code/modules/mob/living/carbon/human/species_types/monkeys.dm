@@ -210,7 +210,7 @@
 
 /obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
-	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed, TRUE)
+	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
 /obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE, no_id_transfer = FALSE)
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)

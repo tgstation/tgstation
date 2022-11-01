@@ -145,7 +145,7 @@
 	jedi.mob_mood.sanity = 0
 	for(var/lore in typesof(/datum/brain_trauma/severe))
 		jedi.gain_trauma(lore)
-	addtimer(CALLBACK(src, .proc/deranged, jedi), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(deranged), jedi), 10 SECONDS)
 
 /obj/tear_in_reality/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
@@ -343,7 +343,7 @@
 	if(!whistle)
 		qdel(src)
 		return
-	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, .proc/check_teleport)
+	RegisterSignal(src, COMSIG_MOVABLE_CROSS_OVER, PROC_REF(check_teleport))
 	SSmove_manager.move_towards(src, get_turf(whistle.whistler))
 
 /// Check if anything the tornado crosses is the creator.
@@ -357,7 +357,7 @@
 	ADD_TRAIT(crossed, TRAIT_INCAPACITATED, WARPWHISTLE_TRAIT)
 	animate(src, alpha = 20, pixel_y = 400, time = 3 SECONDS)
 	animate(crossed, pixel_y = 400, time = 3 SECONDS)
-	addtimer(CALLBACK(src, .proc/send_away), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(send_away)), 2 SECONDS)
 
 /obj/effect/temp_visual/teleporting_tornado/proc/send_away()
 	var/turf/ending_turfs = find_safe_turf()

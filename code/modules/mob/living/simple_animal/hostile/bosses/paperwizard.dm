@@ -68,7 +68,7 @@
 	for(var/i in 1 to summon_amount)
 		var/atom/chosen_minion = pick_n_take(minions)
 		chosen_minion = new chosen_minion(get_step(boss, pick_n_take(directions)))
-		RegisterSignal(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/lost_minion)
+		RegisterSignal(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 		summoned_minions++
 
 /// Called when a minion is qdeleted or dies, removes it from our minion list

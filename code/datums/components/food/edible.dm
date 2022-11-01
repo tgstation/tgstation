@@ -96,7 +96,7 @@ Behavior that's still missing from this component that original food items had t
 			item.grind_results = list() //If this doesn't already exist, add it as an empty list. This is needed for the grinder to accept it.
 
 	else if(isturf(parent) || isstructure(parent))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatIt)
+		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(TryToEatIt))
 
 /datum/component/edible/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -412,7 +412,7 @@ Behavior that's still missing from this component that original food items had t
 
 	//If we're not force-feeding and there's an eat delay, try take another bite
 	if(eater == feeder && eat_time)
-		INVOKE_ASYNC(src, .proc/TryToEat, eater, feeder)
+		INVOKE_ASYNC(src, PROC_REF(TryToEat), eater, feeder)
 
 #undef EAT_TIME_FORCE_FEED
 #undef EAT_TIME_VORACIOUS_MULT

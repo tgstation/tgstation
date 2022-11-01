@@ -105,7 +105,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			//Code used for first master on game boot or if existing master got deleted
 			Master = src
 			var/list/subsystem_types = subtypesof(/datum/controller/subsystem)
-			sortTim(subsystem_types, /proc/cmp_subsystem_init)
+			sortTim(subsystem_types, GLOBAL_PROC_REF(cmp_subsystem_init))
 
 			//Find any abandoned subsystem from the previous master (if there was any)
 			var/list/existing_subsystems = list()
@@ -131,7 +131,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 /datum/controller/master/Shutdown()
 	processing = FALSE
-	sortTim(subsystems, /proc/cmp_subsystem_init)
+	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_init))
 	reverse_range(subsystems)
 	for(var/datum/controller/subsystem/ss in subsystems)
 		log_world("Shutting down [ss.name] subsystem...")
@@ -226,7 +226,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		stage_sorted_subsystems[i] = list()
 
 	// Sort subsystems by init_order, so they initialize in the correct order.
-	sortTim(subsystems, /proc/cmp_subsystem_init)
+	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_init))
 
 	for (var/datum/controller/subsystem/subsystem as anything in subsystems)
 		var/subsystem_init_stage = subsystem.init_stage
@@ -236,7 +236,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		stage_sorted_subsystems[subsystem_init_stage] += subsystem
 
 	// Sort subsystems by display setting for easy access.
-	sortTim(subsystems, /proc/cmp_subsystem_display)
+	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_display))
 	var/start_timeofday = REALTIMEOFDAY
 	for (var/current_init_stage in 1 to INITSTAGE_MAX)
 
@@ -426,9 +426,9 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	queue_tail = null
 	//these sort by lower priorities first to reduce the number of loops needed to add subsequent SS's to the queue
 	//(higher subsystems will be sooner in the queue, adding them later in the loop means we don't have to loop thru them next queue add)
-	sortTim(tickersubsystems, /proc/cmp_subsystem_priority)
+	sortTim(tickersubsystems, GLOBAL_PROC_REF(cmp_subsystem_priority))
 	for(var/I in runlevel_sorted_subsystems)
-		sortTim(I, /proc/cmp_subsystem_priority)
+		sortTim(I, GLOBAL_PROC_REF(cmp_subsystem_priority))
 		I += tickersubsystems
 
 	var/cached_runlevel = current_runlevel

@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(random_hallucination_weighted_list, generate_hallucination_weig
 			last_type_weight = this_weight
 
 	// Sort by weight descending, where weight is the values (not the keys). We assoc_to_keys later to get JUST the text
-	all_weights = sortTim(all_weights, /proc/cmp_numeric_dsc, associative = TRUE)
+	all_weights = sortTim(all_weights, GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 
 	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
 	var/page_contents = "[page_style]<table style=\"width:100%\">[header][jointext(assoc_to_keys(all_weights), "")]</table>"

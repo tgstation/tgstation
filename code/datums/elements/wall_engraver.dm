@@ -7,8 +7,8 @@
 	if (!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, .proc/on_item_pre_attack_secondary)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_item_pre_attack_secondary))
 
 /datum/element/wall_engraver/Detach(datum/source)
 	. = ..()
@@ -24,7 +24,7 @@
 /datum/element/wall_engraver/proc/on_item_pre_attack_secondary(datum/source, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/try_chisel, source, target, user)
+	INVOKE_ASYNC(src, PROC_REF(try_chisel), source, target, user)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 

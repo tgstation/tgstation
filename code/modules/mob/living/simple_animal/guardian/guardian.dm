@@ -77,9 +77,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 	summoner = to_who
 	Recall(TRUE)
-	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, .proc/on_owner_wabbajacked)
-	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, .proc/on_owner_shapeshifted)
-	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, .proc/on_owner_unshapeshifted)
+	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_owner_wabbajacked))
+	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_owner_shapeshifted))
+	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_owner_unshapeshifted))
 
 /// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
 /mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)

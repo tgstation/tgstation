@@ -7,7 +7,7 @@
 	/// While processing, this becomes the world.time when the status effect will expire.
 	/// -1 = infinite duration.
 	var/duration = -1
-	/// When set initially / in on_creation, this is how long between [proc/tick] calls in deciseconds.
+	/// When set initially / in on_creation, this is how long between PROC_REF(tick] calls in deciseconds.)
 	/// While processing, this becomes the world.time when the next tick will occur.
 	/// -1 = will stop processing, if duration is also unlimited (-1).
 	var/tick_interval = 1 SECONDS
@@ -15,12 +15,12 @@
 	var/mob/living/owner
 	/// How many of the effect can be on one mob, and/or what happens when you try to add a duplicate.
 	var/status_type = STATUS_EFFECT_UNIQUE
-	/// If TRUE, we call [proc/on_remove] when owner is deleted. Otherwise, we call [proc/be_replaced].
+	/// If TRUE, we call PROC_REF(on_remove] when owner is deleted. Otherwise), we call PROC_REF(be_replaced].)
 	var/on_remove_on_mob_delete = FALSE
 	/// The typepath to the alert thrown by the status effect when created.
 	/// Status effect "name"s and "description"s are shown to the owner here.
 	var/alert_type = /atom/movable/screen/alert/status_effect
-	/// The alert itself, created in [proc/on_creation] (if alert_type is specified).
+	/// The alert itself, created in PROC_REF(on_creation] (if alert_type is specified)).
 	var/atom/movable/screen/alert/status_effect/linked_alert
 	/// Used to define if the status effect should be using SSfastprocess or SSprocessing
 	var/processing_speed = STATUS_EFFECT_FAST_PROCESS
@@ -73,7 +73,7 @@
 	return ..()
 
 // Status effect process. Handles adjusting it's duration and ticks.
-// If you're adding processed effects, put them in [proc/tick]
+// If you're adding processed effects, put them in PROC_REF(tick])
 // instead of extending / overriding ththe process() proc.
 /datum/status_effect/process(delta_time, times_fired)
 	if(QDELETED(owner))

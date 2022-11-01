@@ -728,7 +728,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/circuit_spawner/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/spawn_circuit)
+	INVOKE_ASYNC(src, PROC_REF(spawn_circuit))
 
 /obj/effect/mapping_helpers/circuit_spawner/proc/spawn_circuit()
 	var/list/errors = list()

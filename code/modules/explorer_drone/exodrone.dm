@@ -105,7 +105,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		distance_to_travel = max(abs(target_site.distance - location.distance),1)
 	travel_target = target_site
 	travel_time = travel_cost_coeff*distance_to_travel
-	travel_timer_id = addtimer(CALLBACK(src,.proc/finish_travel),travel_time,TIMER_STOPPABLE)
+	travel_timer_id = addtimer(CALLBACK(src, PROC_REF(finish_travel)),travel_time,TIMER_STOPPABLE)
 
 /// Travel cleanup
 /obj/item/exodrone/proc/finish_travel()
@@ -230,10 +230,10 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/item/exodrone/proc/start_adventure(datum/adventure/adventure)
 	current_adventure = adventure
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_FINISHED,.proc/resolve_adventure)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_QUALITY_INIT,.proc/add_tool_qualities)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_START,.proc/adventure_delay_start)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_END,.proc/adventure_delay_end)
+	RegisterSignal(current_adventure,COMSIG_ADVENTURE_FINISHED, PROC_REF(resolve_adventure))
+	RegisterSignal(current_adventure,COMSIG_ADVENTURE_QUALITY_INIT, PROC_REF(add_tool_qualities))
+	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_START, PROC_REF(adventure_delay_start))
+	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_END, PROC_REF(adventure_delay_end))
 	set_status(EXODRONE_ADVENTURE)
 	current_adventure.start_adventure()
 

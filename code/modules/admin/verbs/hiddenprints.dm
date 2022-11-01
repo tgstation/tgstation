@@ -14,7 +14,7 @@
 	if(!length(hiddenprints))
 		hiddenprints = list("Nobody has touched this yet!")
 
-	hiddenprints = sort_list(hiddenprints, /proc/cmp_hiddenprint_lasttime_dsc)
+	hiddenprints = sort_list(hiddenprints, GLOBAL_PROC_REF(cmp_hiddenprint_lasttime_dsc))
 	for(var/record in hiddenprints)
 		interface += "<li>[record]</li><br>"
 

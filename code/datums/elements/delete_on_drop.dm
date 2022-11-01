@@ -8,7 +8,7 @@
 	. = ..()
 	if(!isitem(target))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_CASING_EJECTED), .proc/del_on_drop)
+	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_CASING_EJECTED), PROC_REF(del_on_drop))
 
 /datum/element/delete_on_drop/Detach(datum/source)
 	. = ..()

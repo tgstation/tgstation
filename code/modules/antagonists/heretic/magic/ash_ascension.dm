@@ -78,7 +78,7 @@
 
 /datum/action/cooldown/spell/fire_cascade/cast(atom/cast_on)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/fire_cascade, get_turf(cast_on), flame_radius)
+	INVOKE_ASYNC(src, PROC_REF(fire_cascade), get_turf(cast_on), flame_radius)
 
 /// Spreads a huge wave of fire in a radius around us, staggered between levels
 /datum/action/cooldown/spell/fire_cascade/proc/fire_cascade(atom/centre, flame_radius = 1)
@@ -121,7 +121,7 @@
 	. = ..()
 	var/static/list/offsets = list(-25, -10, 0, 10, 25)
 	for(var/offset in offsets)
-		INVOKE_ASYNC(src, .proc/fire_line, owner, line_target(offset, flame_line_length, target, owner))
+		INVOKE_ASYNC(src, PROC_REF(fire_line), owner, line_target(offset, flame_line_length, target, owner))
 
 /datum/action/cooldown/spell/pointed/ash_beams/proc/line_target(offset, range, atom/at, atom/user)
 	if(!at)

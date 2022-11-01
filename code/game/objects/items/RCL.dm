@@ -26,7 +26,7 @@
 /obj/item/rcl/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
-	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /// triggered on wield of two handed item
 /obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
@@ -165,7 +165,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, .proc/trigger)
+	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, PROC_REF(trigger))
 	listeningTo = to_hook
 
 /obj/item/rcl/proc/trigger(mob/user)
@@ -250,7 +250,7 @@
 /obj/item/rcl/proc/showWiringGui(mob/user)
 	var/list/choices = wiringGuiGenerateChoices(user)
 
-	wiring_gui_menu = show_radial_menu_persistent(user, src , choices, select_proc = CALLBACK(src, .proc/wiringGuiReact, user), radius = 42)
+	wiring_gui_menu = show_radial_menu_persistent(user, src , choices, select_proc = CALLBACK(src, PROC_REF(wiringGuiReact), user), radius = 42)
 
 /obj/item/rcl/proc/wiringGuiUpdate(mob/user)
 	if(!wiring_gui_menu)

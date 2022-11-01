@@ -50,7 +50,7 @@
 	user.forceMove(sync_holder)
 	last_use = world.time
 	icon_state = "desynchronizer-on"
-	resync_timer = addtimer(CALLBACK(src, .proc/resync), duration , TIMER_STOPPABLE)
+	resync_timer = addtimer(CALLBACK(src, PROC_REF(resync)), duration , TIMER_STOPPABLE)
 
 /obj/item/desynchronizer/proc/resync()
 	new /obj/effect/temp_visual/desynchronizer(sync_holder.drop_location())

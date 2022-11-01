@@ -5,7 +5,7 @@
 	losebreath = 0
 
 	if(!gibbed)
-		INVOKE_ASYNC(src, .proc/emote, "deathgasp")
+		INVOKE_ASYNC(src, PROC_REF(emote), "deathgasp")
 	reagents.end_metabolization(src)
 
 	add_memory_in_range(src, 7, MEMORY_DEATH, list(DETAIL_PROTAGONIST = src), memory_flags = MEMORY_FLAG_NOMOOD, story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF)
@@ -20,7 +20,7 @@
 		BT.on_death()
 
 /mob/living/carbon/proc/inflate_gib() // Plays an animation that makes mobs appear to inflate before finally gibbing
-	addtimer(CALLBACK(src, .proc/gib, null, null, TRUE, TRUE), 25)
+	addtimer(CALLBACK(src, PROC_REF(gib), null, null, TRUE, TRUE), 25)
 	var/matrix/M = matrix()
 	M.Scale(1.8, 1.2)
 	animate(src, time = 40, transform = M, easing = SINE_EASING)

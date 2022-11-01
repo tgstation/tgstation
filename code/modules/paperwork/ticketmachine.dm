@@ -216,7 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	tickets += theirticket
 	if(obj_flags & EMAGGED) //Emag the machine to destroy the HOP's life.
 		ready = FALSE
-		addtimer(CALLBACK(src, .proc/reset_cooldown), cooldown)//Small cooldown to prevent piles of flaming tickets
+		addtimer(CALLBACK(src, PROC_REF(reset_cooldown)), cooldown)//Small cooldown to prevent piles of flaming tickets
 		theirticket.fire_act()
 		user.dropItemToGround(theirticket)
 		user.adjust_fire_stacks(1)

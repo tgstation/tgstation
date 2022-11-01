@@ -69,7 +69,7 @@
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
@@ -110,8 +110,8 @@
 		/datum/status_effect/ghoul,
 		GHOUL_MAX_HEALTH,
 		user.mind,
-		CALLBACK(src, .proc/apply_to_ghoul),
-		CALLBACK(src, .proc/remove_from_ghoul),
+		CALLBACK(src, PROC_REF(apply_to_ghoul)),
+		CALLBACK(src, PROC_REF(remove_from_ghoul)),
 	)
 
 /// Callback for the ghoul status effect - Tracking all of our ghouls
@@ -195,8 +195,8 @@
 		/datum/status_effect/ghoul,
 		MUTE_MAX_HEALTH,
 		user.mind,
-		CALLBACK(src, .proc/apply_to_ghoul),
-		CALLBACK(src, .proc/remove_from_ghoul),
+		CALLBACK(src, PROC_REF(apply_to_ghoul)),
+		CALLBACK(src, PROC_REF(remove_from_ghoul)),
 	)
 
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
@@ -268,7 +268,7 @@
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 	next_knowledge = list(
-		/datum/heretic_knowledge/final/flesh_final,
+		/datum/heretic_knowledge/ultimate/flesh_final,
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/spell/cleave,
 	)
@@ -283,7 +283,7 @@
 	cost = 1
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/final/flesh_final
+/datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"
 	desc = "The ascension ritual of the Path of Flesh. \
 		Bring 4 corpses to a transumation rune to complete the ritual. \
@@ -299,7 +299,7 @@
 	required_atoms = list(/mob/living/carbon/human = 4)
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	priority_announce("[generate_heretic_text()] Ever coiling vortex. Reality unfolded. ARMS OUTREACHED, THE LORD OF THE NIGHT, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]", "[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 

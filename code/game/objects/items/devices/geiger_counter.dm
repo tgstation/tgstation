@@ -19,7 +19,7 @@
 /obj/item/geiger_counter/Initialize(mapload)
 	. = ..()
 
-	RegisterSignal(src, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+	RegisterSignal(src, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 
 /obj/item/geiger_counter/examine(mob/user)
 	. = ..()
@@ -77,12 +77,12 @@
 		return
 
 	user.visible_message(span_notice("[user] scans [target] with [src]."), span_notice("You scan [target]'s radiation levels with [src]..."))
-	addtimer(CALLBACK(src, .proc/scan, target, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
+	addtimer(CALLBACK(src, PROC_REF(scan), target, user), 20, TIMER_UNIQUE) // Let's not have spamming GetAllContents
 
 /obj/item/geiger_counter/equipped(mob/user, slot, initial)
 	. = ..()
 
-	RegisterSignal(user, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+	RegisterSignal(user, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 
 /obj/item/geiger_counter/dropped(mob/user, silent = FALSE)
 	. = ..()
@@ -93,7 +93,7 @@
 	SIGNAL_HANDLER
 
 	last_perceived_radiation_danger = get_perceived_radiation_danger(pulse_information, insulation_to_target)
-	addtimer(CALLBACK(src, .proc/reset_perceived_danger), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(reset_perceived_danger)), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	if (scanning)
 		update_appearance(UPDATE_ICON)

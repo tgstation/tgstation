@@ -8,7 +8,7 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	src.too_spooky = too_spooky
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(spectral_attack))
 
 /datum/element/spooky/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
@@ -25,7 +25,7 @@
 			U.set_stutter(40 SECONDS)
 			if(U.getStaminaLoss() > 95)
 				to_chat(U, "<font color ='red', size ='4'><B>Your ears weren't meant for this spectral sound.</B></font>")
-				INVOKE_ASYNC(src, .proc/spectral_change, U)
+				INVOKE_ASYNC(src, PROC_REF(spectral_change), U)
 			return
 
 	if(ishuman(C))
@@ -40,7 +40,7 @@
 		if((!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
 			C.adjustStaminaLoss(25) //boneless humanoids don't lose the will to live
 		to_chat(C, "<font color='red' size='4'><B>DOOT</B></font>")
-		INVOKE_ASYNC(src, .proc/spectral_change, H)
+		INVOKE_ASYNC(src, PROC_REF(spectral_change), H)
 
 	else //the sound will spook monkeys.
 		C.set_jitter_if_lower(30 SECONDS)

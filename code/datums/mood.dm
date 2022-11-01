@@ -46,11 +46,11 @@
 
 	mob_parent = mob_to_make_moody
 
-	RegisterSignal(mob_to_make_moody, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
-	RegisterSignal(mob_to_make_moody, COMSIG_ENTER_AREA, .proc/check_area_mood)
-	RegisterSignal(mob_to_make_moody, COMSIG_LIVING_REVIVE, .proc/on_revive)
-	RegisterSignal(mob_to_make_moody, COMSIG_MOB_STATCHANGE, .proc/handle_mob_death)
-	RegisterSignal(mob_to_make_moody, COMSIG_PARENT_QDELETING, .proc/clear_parent_ref)
+	RegisterSignal(mob_to_make_moody, COMSIG_MOB_HUD_CREATED, PROC_REF(modify_hud))
+	RegisterSignal(mob_to_make_moody, COMSIG_ENTER_AREA, PROC_REF(check_area_mood))
+	RegisterSignal(mob_to_make_moody, COMSIG_LIVING_REVIVE, PROC_REF(on_revive))
+	RegisterSignal(mob_to_make_moody, COMSIG_MOB_STATCHANGE, PROC_REF(handle_mob_death))
+	RegisterSignal(mob_to_make_moody, COMSIG_PARENT_QDELETING, PROC_REF(clear_parent_ref))
 
 	mob_to_make_moody.become_area_sensitive(MOOD_DATUM_TRAIT)
 	if(mob_to_make_moody.hud_used)
@@ -152,7 +152,7 @@
 			clear_mood_event(category)
 		else
 			if (the_event.timeout)
-				addtimer(CALLBACK(src, .proc/clear_mood_event, category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
+				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 			return // Don't need to update the event.
 	var/list/params = args.Copy(3)
 
@@ -166,7 +166,7 @@
 	update_mood()
 
 	if (the_event.timeout)
-		addtimer(CALLBACK(src, .proc/clear_mood_event, category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
+		addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 
 /**
  * Removes a mood event from the mob
@@ -279,8 +279,8 @@
 	mood_screen_object = new
 	mood_screen_object.color = "#4b96c4"
 	hud.infodisplay += mood_screen_object
-	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
-	RegisterSignal(mood_screen_object, COMSIG_CLICK, .proc/hud_click)
+	RegisterSignal(hud, COMSIG_PARENT_QDELETING, PROC_REF(unmodify_hud))
+	RegisterSignal(mood_screen_object, COMSIG_CLICK, PROC_REF(hud_click))
 
 /// Removes the mood HUD object
 /datum/mood/proc/unmodify_hud(datum/source)

@@ -20,8 +20,8 @@
 	src.base_icon_state = atom_parent.base_icon_state || atom_parent.icon_state
 
 /datum/component/toggle_icon/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_alt_click))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/toggle_icon/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE))

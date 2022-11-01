@@ -47,7 +47,7 @@
 
 	var/mob/living/carbon/human/human_target = owner
 
-	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul_status)
+	RegisterSignal(human_target, COMSIG_LIVING_DEATH, PROC_REF(remove_ghoul_status))
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
 
 	if(new_max_health)

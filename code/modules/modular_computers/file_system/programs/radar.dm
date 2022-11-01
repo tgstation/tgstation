@@ -315,7 +315,7 @@
 	if(!.)
 		return
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, .proc/on_nuke_armed)
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(on_nuke_armed))
 
 /datum/computer_file/program/radar/fission360/kill_program(forced)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)

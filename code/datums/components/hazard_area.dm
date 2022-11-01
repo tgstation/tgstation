@@ -28,10 +28,10 @@
 /datum/component/hazard_area/RegisterWithParent()
 	var/mob/parent_mob = parent
 	parent_mob.become_area_sensitive(type)
-	RegisterSignal(parent_mob, COMSIG_ENTER_AREA, .proc/handle_parent_area_change)
-	RegisterSignal(parent_mob, COMSIG_LADDER_TRAVEL, .proc/reject_ladder_movement)
-	RegisterSignal(parent_mob, COMSIG_VEHICLE_RIDDEN, .proc/reject_vehicle)
-	RegisterSignal(SSdcs, COMSIG_AREA_CREATED, .proc/on_area_creation)
+	RegisterSignal(parent_mob, COMSIG_ENTER_AREA, PROC_REF(handle_parent_area_change))
+	RegisterSignal(parent_mob, COMSIG_LADDER_TRAVEL, PROC_REF(reject_ladder_movement))
+	RegisterSignal(parent_mob, COMSIG_VEHICLE_RIDDEN, PROC_REF(reject_vehicle))
+	RegisterSignal(SSdcs, COMSIG_AREA_CREATED, PROC_REF(on_area_creation))
 
 /datum/component/hazard_area/UnregisterFromParent()
 	var/mob/parent_mob = parent
@@ -141,7 +141,7 @@
 		return
 	last_parent_area = new_area.type
 
-	INVOKE_ASYNC(src, .proc/update_parent_status_effect)
+	INVOKE_ASYNC(src, PROC_REF(update_parent_status_effect))
 
 /// The dedicated status effect for the hazard_area component - use with caution and know what it does!
 /datum/status_effect/hazard_area

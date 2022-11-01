@@ -7,7 +7,7 @@
 	matching -= resolve_parent
 
 	if(istype(to_insert, /obj/item/storage/backpack/holding) || matching.len)
-		INVOKE_ASYNC(src, .proc/recursive_insertion, to_insert, user)
+		INVOKE_ASYNC(src, PROC_REF(recursive_insertion), to_insert, user)
 		return
 
 	return ..()

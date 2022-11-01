@@ -27,7 +27,7 @@
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \
 		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, .proc/on_cult_rune_removed), \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune))
 
 	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
@@ -37,7 +37,7 @@
 			if(!initial(nullrod_type.chaplain_spawnable))
 				continue
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
-		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
+		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
 	GLOB.holy_weapon_type = holy_weapon_type

@@ -36,7 +36,7 @@
 		UnregisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT)
 		return
 
-	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, .proc/on_our_logout, override = TRUE)
+	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, PROC_REF(on_our_logout), override = TRUE)
 	mirror = new()
 	mirror.shadow(new_mob)
 
@@ -50,7 +50,7 @@
 	// Recreate our stored view, since we've changed mobs now
 	create_store()
 	UnregisterSignal(source, COMSIG_MOB_LOGOUT)
-	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, .proc/on_our_logout, override = TRUE)
+	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, PROC_REF(on_our_logout), override = TRUE)
 
 /// Create or refresh our stored visual data, represeting the viewing mob
 /datum/plane_master_debug/proc/create_store()

@@ -43,9 +43,9 @@
 	ADD_KEEP_TOGETHER(target, ITEM_SCALING_TRAIT)
 
 	// Object scaled when dropped/thrown OR when exiting a storage object.
-	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXITED), .proc/scale_overworld)
+	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_ATOM_EXITED), PROC_REF(scale_overworld))
 	// Object scaled when placed in an inventory slot OR when entering a storage component.
-	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ATOM_ENTERED), .proc/scale_storage)
+	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ATOM_ENTERED), PROC_REF(scale_storage))
 
 /**
  * Detach proc for the item_scaling element.

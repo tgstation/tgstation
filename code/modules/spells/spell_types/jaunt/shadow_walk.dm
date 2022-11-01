@@ -10,7 +10,7 @@
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/Remove(mob/remove_from)
 	. = ..()

@@ -78,9 +78,9 @@
 ///Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 /obj/item/assembly/proc/pulsed(radio = FALSE, mob/pulser)
 	if(wire_type & WIRE_RECEIVE)
-		INVOKE_ASYNC(src, .proc/activate, pulser)
+		INVOKE_ASYNC(src, PROC_REF(activate), pulser)
 	if(radio && (wire_type & WIRE_RADIO_RECEIVE))
-		INVOKE_ASYNC(src, .proc/activate, pulser)
+		INVOKE_ASYNC(src, PROC_REF(activate), pulser)
 	SEND_SIGNAL(src, COMSIG_ASSEMBLY_PULSED)
 	return TRUE
 

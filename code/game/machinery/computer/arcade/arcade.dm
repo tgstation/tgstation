@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else
 			playsound(src, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3)
 
-	timer_id = addtimer(CALLBACK(src, .proc/enemy_action,player_stance,user),1 SECONDS,TIMER_STOPPABLE)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(enemy_action),player_stance,user),1 SECONDS,TIMER_STOPPABLE)
 	gameover_check(user)
 
 
@@ -660,7 +660,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	to_chat(user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
 	user.played_game()
 	var/obj/item/bodypart/chopchop = user.get_active_hand()
-	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, .proc/do_they_still_have_that_hand, user, chopchop)))
+	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(do_they_still_have_that_hand), user, chopchop)))
 		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 		to_chat(user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		chopchop.dismember()

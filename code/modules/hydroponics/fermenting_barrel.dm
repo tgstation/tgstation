@@ -49,7 +49,7 @@
 			to_chat(user, span_warning("[I] is stuck to your hand!"))
 			return TRUE
 		to_chat(user, span_notice("You place [I] into [src] to start the fermentation process."))
-		addtimer(CALLBACK(src, .proc/makeWine, fruit), rand(80, 120) * speed_multiplier)
+		addtimer(CALLBACK(src, PROC_REF(makeWine), fruit), rand(80, 120) * speed_multiplier)
 		return TRUE
 	if(I)
 		if(I.is_refillable())

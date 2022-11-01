@@ -115,7 +115,7 @@
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
-			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
+			addtimer(CALLBACK(src, PROC_REF(teleport), usr), 5)
 			return TRUE
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/scan_machinery()

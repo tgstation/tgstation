@@ -64,7 +64,7 @@
 /obj/item/hardened_spike/Initialize(mapload, mob/living/carbon/source)
 	. = ..()
 	src.fired_by_ref = WEAKREF(source)
-	addtimer(CALLBACK(src, .proc/check_embedded), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_embedded)), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/check_embedded()
 	if(missed)

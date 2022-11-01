@@ -141,7 +141,7 @@
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 	teleporting = TRUE
 
-	addtimer(CALLBACK(src, .proc/teleport_contents, user, target_pad), teleport_speed)
+	addtimer(CALLBACK(src, PROC_REF(teleport_contents), user, target_pad), teleport_speed)
 
 /obj/machinery/quantumpad/proc/teleport_contents(mob/user, obj/machinery/quantumpad/target_pad)
 	teleporting = FALSE

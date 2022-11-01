@@ -19,7 +19,7 @@
 	src.alert_message = alert_message
 	src.typecache = typecache
 
-	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_pre_attacking_target)
+	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attacking_target))
 
 /datum/element/prevent_attacking_of_types/Detach(datum/source, ...)
 	UnregisterSignal(source, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)

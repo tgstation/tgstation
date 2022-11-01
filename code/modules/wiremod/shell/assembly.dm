@@ -34,7 +34,7 @@
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/assembly_input/register_shell(atom/movable/shell)
-	RegisterSignal(shell, list(COMSIG_ASSEMBLY_PULSED, COMSIG_ITEM_ATTACK_SELF), .proc/on_pulsed)
+	RegisterSignal(shell, list(COMSIG_ASSEMBLY_PULSED, COMSIG_ITEM_ATTACK_SELF), PROC_REF(on_pulsed))
 
 /obj/item/circuit_component/assembly_input/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(COMSIG_ASSEMBLY_PULSED, COMSIG_ITEM_ATTACK_SELF))

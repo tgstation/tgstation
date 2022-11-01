@@ -79,12 +79,12 @@
 	living_parent.update_appearance(UPDATE_ICON_STATE)
 
 /datum/component/mob_harvest/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 
 	// Only do update_icon_state business on non-carbon mobs
 	if(!iscarbon(parent))
-		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, .proc/on_update_icon_state)
+		RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_icon_state))
 
 		var/mob/living/living_parent = parent
 		living_parent.update_appearance(UPDATE_ICON_STATE)
@@ -108,7 +108,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(used_item, harvest_tool))
-		INVOKE_ASYNC(src, .proc/harvest_item, user)
+		INVOKE_ASYNC(src, PROC_REF(harvest_item), user)
 	if(istype(used_item, fed_item))
 		remove_wait_time(user)
 		qdel(used_item)

@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, /proc/cmp_unit_test_priority)
+	tests_to_run = sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 

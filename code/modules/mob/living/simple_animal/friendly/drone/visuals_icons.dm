@@ -104,7 +104,7 @@
 		"Repair Drone" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = REPAIRDRONE),
 		"Scout Drone" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = SCOUTDRONE)
 		)
-	var/picked_icon = show_radial_menu(src, src, drone_icons, custom_check = CALLBACK(src, .proc/check_menu), radius = 38, require_near = TRUE)
+	var/picked_icon = show_radial_menu(src, src, drone_icons, custom_check = CALLBACK(src, PROC_REF(check_menu)), radius = 38, require_near = TRUE)
 	switch(picked_icon)
 		if("Maintenance Drone")
 			visualAppearance = MAINTDRONE
@@ -116,7 +116,7 @@
 				"pink" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[visualAppearance]_pink"),
 				"red" = image(icon = 'icons/mob/silicon/drone.dmi', icon_state = "[visualAppearance]_red")
 				)
-			var/picked_color = show_radial_menu(src, src, drone_colors, custom_check = CALLBACK(src, .proc/check_menu), radius = 38, require_near = TRUE)
+			var/picked_color = show_radial_menu(src, src, drone_colors, custom_check = CALLBACK(src, PROC_REF(check_menu)), radius = 38, require_near = TRUE)
 			if(picked_color)
 				icon_state = "[visualAppearance]_[picked_color]"
 				icon_living = "[visualAppearance]_[picked_color]"

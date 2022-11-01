@@ -25,7 +25,7 @@
 	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
 
 /obj/item/implant/ui_action_click()
-	INVOKE_ASYNC(src, .proc/activate, "action_button")
+	INVOKE_ASYNC(src, PROC_REF(activate), "action_button")
 
 /obj/item/implant/item_action_slot_check(slot, mob/user)
 	return user == imp_in

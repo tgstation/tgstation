@@ -10,7 +10,7 @@
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_HEAD)
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 		ADD_TRAIT(M, TRAIT_GARLIC_BREATH, type)
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)

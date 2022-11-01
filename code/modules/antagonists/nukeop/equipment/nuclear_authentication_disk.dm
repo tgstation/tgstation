@@ -119,7 +119,7 @@
 	playsound(src, 'sound/machines/alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 101)
 	return MANUAL_SUICIDE
 
 /obj/item/disk/nuclear/proc/manual_suicide(mob/living/user)

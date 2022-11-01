@@ -212,7 +212,7 @@
 /datum/traitor_objective/kidnapping/proc/call_pod(mob/living/user)
 	pod_called = TRUE
 	var/obj/structure/closet/supplypod/extractionpod/new_pod = new()
-	RegisterSignal(new_pod, COMSIG_ATOM_ENTERED, .proc/enter_check)
+	RegisterSignal(new_pod, COMSIG_ATOM_ENTERED, PROC_REF(enter_check))
 	new /obj/effect/pod_landingzone(get_turf(user), new_pod)
 
 /datum/traitor_objective/kidnapping/proc/enter_check(obj/structure/closet/supplypod/extractionpod/source, entered_atom)
@@ -241,7 +241,7 @@
 
 	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
 
-	addtimer(CALLBACK(src, .proc/handle_victim, sent_mob), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(handle_victim), sent_mob), 1.5 SECONDS)
 
 	if(sent_mob != victim)
 		fail_objective(penalty_cost = telecrystal_penalty)
@@ -255,7 +255,7 @@
 	source.startExitSequence(source)
 
 /datum/traitor_objective/kidnapping/proc/handle_victim(mob/living/carbon/human/sent_mob)
-	addtimer(CALLBACK(src, .proc/return_victim, sent_mob), 3 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(return_victim), sent_mob), 3 MINUTES)
 	if(sent_mob.stat == DEAD)
 		return
 
