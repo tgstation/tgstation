@@ -47,11 +47,19 @@ const HistorianPanel = (props, context) => {
         />
       )}
       {!!historian_mode && (
-        <Button
-          icon="times"
-          content="Lock historian mode"
-          onClick={() => act('lock')}
-        />
+        <div>
+          <Button
+            icon="times"
+            content="Lock historian mode"
+            onClick={() => act('lock')}
+          />
+          <Button
+            icon="pencil"
+            content="Edit description"
+            disabled={!has_showpiece || holographic_showpiece}
+            onClick={() => act('change_message')}
+          />
+        </div>
       )}
       {!!historian_mode && !!holographic_showpiece && (
         <Box>
@@ -98,27 +106,11 @@ const ShowpieceDescription = (props, context) => {
         </Box>
       )}
       {!!holographic_showpiece && <b>{showpiece_description}</b>}
-      {!holographic_showpiece && !historian_mode && !!has_showpiece && (
+      {!holographic_showpiece && !!has_showpiece && (
         <Box fill className="Trophycase-description">
           {showpiece_description
             ? decodeHtmlEntities(showpiece_description)
             : "This exhibit under construction. Get the curator's key to finalize your contribution!"}
-        </Box>
-      )}
-      {!holographic_showpiece && !!historian_mode && !!has_showpiece && (
-        <Box fill>
-          <TextArea
-            height="60px"
-            fluid
-            maxLength={max_length}
-            placeholder="Let's make history!"
-            value={showpiece_description}
-            onChange={(e, value) =>
-              act('change_message', {
-                passedMessage: value,
-              })
-            }
-          />
         </Box>
       )}
     </Section>
