@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes:
+  - spellcheck: "Updated the reagent dartgun's uplink description to reflect its current reagent capacity (90u)."
