@@ -187,7 +187,7 @@
 		return
 
 	if(caster_mob.stat != DEAD)
-		caster_mob.revive(full_heal = TRUE, admin_revive = FALSE)
+		caster_mob.revive(HEAL_DAMAGE)
 
 		var/damage_to_apply = caster_mob.maxHealth * ((owner.maxHealth - owner.health) / owner.maxHealth)
 		caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, wound_bonus = CANT_WOUND)

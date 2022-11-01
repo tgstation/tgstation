@@ -722,6 +722,17 @@
 		clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
+/**
+ * Proc used to resuscitate a mob, bringing them back to life.
+ *
+ * Note that, even if a mob cannot be revived, the healing from this proc will still be applied.
+ *
+ * Arguments
+ * * full_heal_flags - Optional. If supplied, [/mob/living/fully_heal] will be called with these flags before revival.
+ * * excess_healing - Optional. If supplied, this number will be used to apply a bit of healing to the mob. Currently, 1 "excess healing" translates to -1 oxyloss, -1 toxloss, +2 blood, -5 to all organ damage.
+ * * force_grab_ghost - We grab the ghost of the mob on revive. If TRUE, we force grab the ghost (includes suiciders). If FALSE, we do not. See [/mob/grab_ghost].
+ *
+ */
 /mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
 		adjustOxyLoss(-excess_healing, FALSE)
