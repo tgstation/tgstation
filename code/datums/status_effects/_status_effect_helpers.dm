@@ -69,7 +69,10 @@
  *
  * Returns an instance of a status effect, or NULL if none were found.
  */
-/mob/living/proc/has_status_effect(datum/status_effect/checked_effect)
+/mob/proc/has_status_effect(datum/status_effect/checked_effect)
+	return null
+
+/mob/living/has_status_effect(datum/status_effect/checked_effect)
 	RETURN_TYPE(/datum/status_effect)
 
 	for(var/datum/status_effect/present_effect as anything in status_effects)
@@ -86,7 +89,10 @@
  *
  * Returns an instance of a status effect, or NULL if none were found.
  */
-/mob/living/proc/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, sources)
+/mob/proc/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, sources)
+	return null
+
+/mob/living/has_status_effect_from_source(datum/status_effect/grouped/checked_effect, sources)
 	RETURN_TYPE(/datum/status_effect)
 
 	if(!ispath(checked_effect))
@@ -111,7 +117,9 @@
  *
  * Returns a list
  */
-/mob/living/proc/has_status_effect_list(datum/status_effect/checked_effect)
+/mob/proc/has_status_effect_list(datum/status_effect/checked_effect)
+
+/mob/living/has_status_effect_list(datum/status_effect/checked_effect)
 	RETURN_TYPE(/list)
 
 	var/list/effects_found = list()

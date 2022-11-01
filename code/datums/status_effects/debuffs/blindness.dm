@@ -132,9 +132,7 @@
 
 #undef CAN_BE_BLIND
 
-// I wish these could be macros but an inordinate amount of places
-// check for blindness for mobs which are not typecasted to living
-// which I don't want to go through and sort out, so here we are for now
+/*
 
 /// Checks if this mob is blind.
 /mob/proc/is_blind()
@@ -174,3 +172,5 @@
 
 /mob/living/is_nearsighted_from(sources)
 	return has_status_effect_from_source(/datum/status_effect/grouped/visually_impaired/blindness, sources)
+
+*/
