@@ -46,7 +46,7 @@
 		poor_target.visible_message(
 			span_userdanger("[source] falls on [poor_target], thankfully [poor_target.p_they()] had a helmet on!"),
 			span_userdanger("You are hit on the head by [source], good thing you had a helmet on!"),
-			span_userdanger("You hear a [crushes_people ? "crash" : "bonk"]!"),
+			span_hear("You hear a [crushes_people ? "crash" : "bonk"]!"),
 		)
 		if(crushes_people)
 			poor_target.Knockdown(5 SECONDS)
