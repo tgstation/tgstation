@@ -56,7 +56,7 @@
 	poor_target.apply_damage(fall_damage * levels, forced = TRUE, spread_damage = TRUE, wound_bonus = fall_wound_bonus)
 
 	poor_target.visible_message(
-		span_userdanger("[source] falls on [poor_target], [crushes_people ? "crushing [poor_target.p_them()]" : "hitting [poor_target.p_them()] on the head"]!"),
+		span_warning("[source] falls on [poor_target], [crushes_people ? "crushing [poor_target.p_them()]" : "hitting [poor_target.p_them()] on the head"]!"),
 		span_userdanger("You are [crushes_people ? "crushed" : "hit"] by [source]!"),
 		span_userdanger("You hear a [crushes_people ? "crash" : "bonk"]!"),
 	)
