@@ -53,7 +53,10 @@
 /obj/item/paperwork/update_overlays()
 	. = ..()
 
-	if(stamped && stamp_overlay)
+	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
+	add_overlay(stamp_overlay)
+
+	if(stamped)
 		. += stamp_overlay
 
 /obj/item/paperwork/examine_more(mob/user)
@@ -78,8 +81,7 @@
  * Handled as a proc so that an object may be maked as "stamped" even when a stamp isn't present (like the photocopier)
  */
 /obj/item/paperwork/proc/add_stamp()
-	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
-	add_overlay(stamp_overlay)
+	update_overlays()
 	stamped = TRUE
 
 /**

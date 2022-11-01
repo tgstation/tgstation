@@ -69,6 +69,7 @@
 	QDEL_NULL(paper_copy)
 	QDEL_NULL(photo_copy)
 	QDEL_NULL(toner_cartridge)
+	QDEL_NULL(paperwork_copy)
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
