@@ -48,6 +48,8 @@
 			span_userdanger("You are hit on the head by [source], good thing you had a helmet on!"),
 			span_userdanger("You hear a [crushes_people ? "crash" : "bonk"]!"),
 		)
+		if(crushes_people)
+			poor_target.Knockdown(5 SECONDS)
 		return
 
 	// This does more damage the more levels the falling object has fallen
