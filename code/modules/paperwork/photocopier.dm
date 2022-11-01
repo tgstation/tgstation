@@ -63,6 +63,8 @@
 		ass = null
 	if(deleting_atom == toner_cartridge)
 		toner_cartridge = null
+	if(deleting_atom == paperwork_copy)
+		paperwork_copy = null
 	return ..()
 
 /obj/machinery/photocopier/Destroy()
