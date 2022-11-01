@@ -473,6 +473,15 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
+"ajh" = (
+/obj/structure/closet{
+	name = "Evidence Closet 1"
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/evidence)
 "ajj" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/event_spawn,
@@ -15167,8 +15176,9 @@
 /obj/structure/closet{
 	name = "Evidence Closet 1"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "fte" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -16844,6 +16854,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/research)
+"gan" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/station/security/evidence)
 "gaq" = (
 /obj/structure/bookcase/random/fiction,
 /turf/open/floor/wood/large,
@@ -17412,8 +17426,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "glJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -20346,10 +20361,10 @@
 /obj/machinery/vending/dinnerware,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/elevator_control_panel/directional/north{
+	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
-	preset_destination_names = list("2"="Hydroponics","3"="Kitchen");
 	name = "Dumbwaiter Control Panel";
-	desc = "A small control panel used to move the kitchen dumbwaiter up and down."
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
@@ -23702,8 +23717,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "izU" = (
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
@@ -24190,8 +24207,9 @@
 	name = "Evidence Closet 1"
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "iJx" = (
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
@@ -25294,8 +25312,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/xeno_spawn,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "jeB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -27530,6 +27550,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
+"jTP" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/station/security/evidence)
 "jUh" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics"
@@ -29104,8 +29128,9 @@
 	},
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "kvn" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -30798,8 +30823,10 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "kYZ" = (
 /obj/machinery/airalarm/server{
 	dir = 4;
@@ -33462,8 +33489,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "lXi" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -36764,8 +36793,8 @@
 	},
 /obj/structure/tramwall/titanium,
 /obj/machinery/destination_sign{
-	layer = 3.4;
-	dir = 1
+	dir = 1;
+	layer = 3.4
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -40007,8 +40036,10 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "ooC" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -44362,10 +44393,10 @@
 	dir = 8
 	},
 /obj/machinery/elevator_control_panel/directional/south{
+	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
-	preset_destination_names = list("2"="Hydroponics","3"="Kitchen");
 	name = "Dumbwaiter Control Panel";
-	desc = "A small control panel used to move the kitchen dumbwaiter up and down."
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -52127,6 +52158,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/office)
 "szZ" = (
@@ -58287,8 +58319,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "uKI" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
@@ -157370,11 +157403,11 @@ pqz
 tag
 oLZ
 kvb
-oLZ
+jTP
 izR
-iZb
-iZb
-iZb
+gan
+gan
+gan
 jKq
 pTr
 drq
@@ -157627,7 +157660,7 @@ aJk
 tag
 dLB
 dLB
-oLZ
+jTP
 ooA
 iIK
 fsQ
@@ -157884,7 +157917,7 @@ tag
 tag
 hgJ
 hga
-oLZ
+jTP
 lWR
 kYP
 jer
@@ -158141,10 +158174,10 @@ dhe
 iZb
 iBV
 dLB
-oLZ
+jTP
 glD
 fsQ
-fsQ
+ajh
 fsQ
 jKq
 awB
@@ -158398,11 +158431,11 @@ dhe
 iZb
 iZb
 csK
-oLZ
-oLZ
-oLZ
-oLZ
-oLZ
+jTP
+jTP
+jTP
+jTP
+jTP
 rrk
 rrk
 rrk
@@ -158656,7 +158689,7 @@ iZb
 aRN
 xXs
 aRN
-iZb
+gan
 dhe
 dhe
 dhe
