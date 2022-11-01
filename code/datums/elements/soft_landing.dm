@@ -4,7 +4,6 @@
  * Non bespoke element (1 in existence) that makes objs provide a soft landing when you fall on them!
  */
 /datum/element/soft_landing
-	element_flags = ELEMENT_DETACH
 
 /datum/element/soft_landing/Attach(datum/target)
 	. = ..()

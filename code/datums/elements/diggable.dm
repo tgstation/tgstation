@@ -1,6 +1,6 @@
 /// Lets you make hitting a turf with a shovel pop something out, and scrape the turf
 /datum/element/diggable
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// Typepath of what we spawn on shovel
 	var/atom/to_spawn
