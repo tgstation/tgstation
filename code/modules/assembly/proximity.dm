@@ -21,7 +21,8 @@
 
 /obj/item/assembly/prox_sensor/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	QDEL_NULL(proximity_monitor)
+	return ..()
 
 /obj/item/assembly/prox_sensor/examine(mob/user)
 	. = ..()
@@ -44,7 +45,7 @@
 	// assembly holder's attached object
 	// assembly holder itself
 	// us
-	proximity_monitor.set_host(connected?.holder || holder?.master || holder || src, src)
+	proximity_monitor?.set_host(connected?.holder || holder?.master || holder || src, src)
 
 /obj/item/assembly/prox_sensor/on_attach()
 	. = ..()

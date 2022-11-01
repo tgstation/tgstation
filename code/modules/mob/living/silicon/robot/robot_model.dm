@@ -124,7 +124,7 @@
 		return
 	var/list/held_modules = cyborg.held_items.Copy()
 	var/active_module = cyborg.module_active
-	cyborg.uneq_all()
+	cyborg.drop_all_held_items()
 	modules = list()
 	for(var/obj/item/module in basic_modules)
 		add_module(module, FALSE, FALSE)
@@ -237,17 +237,17 @@
 
 /obj/item/robot_model/proc/do_transform_delay()
 	var/mob/living/silicon/robot/cyborg = loc
-	sleep(1)
+	sleep(0.1 SECONDS)
 	flick("[cyborg_base_icon]_transform", cyborg)
 	cyborg.notransform = TRUE
 	if(locked_transform)
 		cyborg.SetLockdown(TRUE)
 		cyborg.set_anchored(TRUE)
 	cyborg.logevent("Chassis model has been set to [name].")
-	sleep(1)
+	sleep(0.1 SECONDS)
 	for(var/i in 1 to 4)
 		playsound(cyborg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-		sleep(7)
+		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
 	cyborg.setDir(SOUTH)
 	cyborg.set_anchored(FALSE)

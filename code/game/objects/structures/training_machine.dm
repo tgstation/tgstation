@@ -145,7 +145,7 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
 	vis_contents -= attached_item
-	attached_item &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE)
+	attached_item.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE)
 	attached_item = null
 	handle_density()
 

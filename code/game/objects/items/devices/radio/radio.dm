@@ -43,8 +43,6 @@
 	/// Tracks the number of EMPs currently stacked.
 	var/emped = 0
 
-	/// If true, the transmit wire starts cut.
-	var/prison_radio = FALSE
 	/// Whether wires are accessible. Toggleable by screwdrivering.
 	var/unscrewed = FALSE
 	/// If true, the radio has access to the full spectrum.
@@ -54,7 +52,7 @@
 	/// If true, subspace_transmission can be toggled at will.
 	var/subspace_switchable = FALSE
 	/// Frequency lock to stop the user from untuning specialist radios.
-	var/freqlock = FALSE
+	var/freqlock = RADIO_FREQENCY_UNLOCKED
 	/// If true, broadcasts will be large and BOLD.
 	var/use_command = FALSE
 	/// If true, use_command can be toggled at will.
@@ -78,8 +76,6 @@
 
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
-	if(prison_radio)
-		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = list()
 	. = ..()
 
@@ -90,7 +86,7 @@
 
 	set_listening(listening)
 	set_broadcasting(broadcasting)
-	set_frequency(sanitize_frequency(frequency, freerange))
+	set_frequency(sanitize_frequency(frequency, freerange, syndie))
 	set_on(on)
 
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
@@ -372,7 +368,7 @@
 	data["frequency"] = frequency
 	data["minFrequency"] = freerange ? MIN_FREE_FREQ : MIN_FREQ
 	data["maxFrequency"] = freerange ? MAX_FREE_FREQ : MAX_FREQ
-	data["freqlock"] = freqlock
+	data["freqlock"] = freqlock != RADIO_FREQENCY_UNLOCKED
 	data["channels"] = list()
 	for(var/channel in channels)
 		data["channels"][channel] = channels[channel] & FREQ_LISTENING
@@ -390,7 +386,7 @@
 		return
 	switch(action)
 		if("frequency")
-			if(freqlock)
+			if(freqlock != RADIO_FREQENCY_UNLOCKED)
 				return
 			var/tune = params["tune"]
 			var/adjust = text2num(params["adjust"])
@@ -401,7 +397,7 @@
 				tune = tune * 10
 				. = TRUE
 			if(.)
-				set_frequency(sanitize_frequency(tune, freerange))
+				set_frequency(sanitize_frequency(tune, freerange, syndie))
 		if("listen")
 			set_listening(!listening)
 			. = TRUE

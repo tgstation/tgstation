@@ -21,3 +21,7 @@
 
 /datum/movespeed_modifier/status_effect/hazard_area
 	multiplicative_slowdown = 4
+
+/datum/movespeed_modifier/status_effect/lobster_rush
+	multiplicative_slowdown = -0.5
+	blacklisted_movetypes = (FLYING|FLOATING)

@@ -13,8 +13,6 @@
 	var/loot_type_path
 	/// The subtypes (this excludes the provided path) to combine with the loot list
 	var/loot_subtype_path
-	/// Whether the spawner should immediately spawn loot and cleanup on Initialize()
-	var/spawn_on_init = TRUE
 	/// How many items will be spawned
 	var/spawn_loot_count = 1
 	/// If the same item can be spawned twice
@@ -32,14 +30,7 @@
 
 /obj/effect/spawner/random/Initialize(mapload)
 	. = ..()
-
-	if(should_spawn_on_init())
-		spawn_loot()
-		return INITIALIZE_HINT_QDEL
-
-/// Helper proc that returns TRUE if the spawner should spawn loot in Initialise() and FALSE otherwise. Override this to change spawning behaviour.
-/obj/effect/spawner/random/proc/should_spawn_on_init()
-	return spawn_on_init
+	spawn_loot()
 
 ///If the spawner has any loot defined, randomly picks some and spawns it. Does not cleanup the spawner.
 /obj/effect/spawner/random/proc/spawn_loot(lootcount_override)

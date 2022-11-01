@@ -693,7 +693,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!..())
 		return FALSE
 
-	usr.visible_message(span_deadsay("<b>[src]</b> points to [pointed_at]."))
+	visible_message(span_deadsay("<b>[src]</b> points to [pointed_at]."))
 
 /mob/dead/observer/verb/view_manifest()
 	set name = "View Crew Manifest"
