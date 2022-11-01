@@ -10,6 +10,7 @@
  * Rolling Paper Pack
  * Cigar Case
  * Heart Shaped Box w/ Chocolates
+ * Coffee condiments display
  */
 
 /obj/item/storage/fancy
@@ -487,4 +488,64 @@
 			icon_state = base_icon_state
 	return
 
+/*
+ * Coffee condiments display
+ */
+
+/obj/item/storage/fancy/coffee_condi_display
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "coffee_condi_display"
+	base_icon_state = "coffee_condi_display"
+	name = "coffee condiments display"
+	desc = "A neat small wooden box, holding all your favorite coffee condiments."
+	contents_tag = "coffee condiment"
+	custom_materials = list(/datum/material/wood = 1000)
+	fold_result = /obj/item/stack/sheet/mineral/wood
+	is_open = TRUE
+
+/obj/item/storage/fancy/coffee_condi_display/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 14
+	atom_storage.set_holdable(list(/obj/item/reagent_containers/condiment/pack/sugar, /obj/item/reagent_containers/condiment/creamer, /obj/item/reagent_containers/condiment/pack/astrotame, /obj/item/reagent_containers/condiment/chocolate))
+
+/obj/item/storage/fancy/coffee_condi_display/update_overlays()
+	. = ..()
+
+	for(var/_sugar in contents)
+		if (istype(_sugar, /obj/item/reagent_containers/condiment/pack/sugar))
+			. += "condi_display_sugar"
+			break
+
+	for(var/_sweetener in contents)
+		var/obj/item/reagent_containers/condiment/pack/astrotame/sweetener = _sweetener
+		if (istype(sweetener))
+			. += "condi_display_sweetener"
+			break
+
+	for(var/_creamer in contents)
+		var/obj/item/reagent_containers/condiment/creamer/creamer = _creamer
+		if (istype(creamer))
+			. += "condi_display_creamer"
+			break
+
+	for(var/_chocolate in contents)
+		var/obj/item/reagent_containers/condiment/chocolate/chocolate = _chocolate
+		if (istype(chocolate))
+			. += "condi_display_chocolate"
+			break
+
+/obj/item/storage/fancy/coffee_condi_display/PopulateContents()
+	for(var/i = 1 to 4)
+		new /obj/item/reagent_containers/condiment/pack/sugar(src)
+	for(var/i = 1 to 3)
+		new /obj/item/reagent_containers/condiment/pack/astrotame(src)
+	for(var/i = 1 to 4)
+		new /obj/item/reagent_containers/condiment/creamer(src)
+	for(var/i = 1 to 3)
+		new /obj/item/reagent_containers/condiment/chocolate(src)
+	update_appearance()
+
+/obj/item/storage/fancy/coffee_condi_display/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
+	return
 

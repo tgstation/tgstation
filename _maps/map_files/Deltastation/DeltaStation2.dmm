@@ -33894,17 +33894,13 @@
 "ihu" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/folder/white,
-/obj/item/reagent_containers/spray/cleaner{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/machinery/camera/directional/west{
 	c_tag = "Medbay - Break Room";
 	name = "medical camera";
 	network = list("ss13","medical")
 	},
 /obj/machinery/newscaster/directional/west,
+/obj/machinery/coffeemaker/impressa,
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "ihF" = (
@@ -56593,15 +56589,7 @@
 "nJT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm/directional/north,
-/obj/item/storage/box/matches{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/item/lighter,
-/obj/item/lighter{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/machinery/coffeemaker/impressa,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "nJV" = (
@@ -58109,6 +58097,10 @@
 /obj/effect/spawner/random/entertainment/cigarette_pack{
 	pixel_x = 3;
 	pixel_y = 2
+	},
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = -13;
+	pixel_y = 7
 	},
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
@@ -85689,6 +85681,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/machinery/status_display/evac/directional/west,
+/obj/item/folder/white{
+	pixel_x = -6;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/item/storage/box/coffeepack/arabica{
+	pixel_x = 8;
+	pixel_y = 17
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "uUg" = (
