@@ -28,14 +28,14 @@
 /area/template_noop)
 "ag" = (
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "ah" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "ai" = (
 /turf/closed/wall,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aj" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
@@ -47,7 +47,7 @@
 /obj/item/stack/rods,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "al" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
@@ -59,36 +59,36 @@
 "am" = (
 /obj/item/stack/rods,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "an" = (
 /obj/machinery/light/broken/directional/west,
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "ao" = (
 /obj/structure/closet/emcloset,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "ar" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "at" = (
 /obj/item/stack/rods,
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "av" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aw" = (
 /obj/item/stack/sheet/iron,
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "ax" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "az" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 8;
@@ -97,7 +97,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aA" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 1;
@@ -109,11 +109,11 @@
 /obj/item/stack/tile/iron/base,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aC" = (
 /obj/machinery/light/broken/directional/south,
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aD" = (
 /obj/item/stack/sheet/iron,
 /obj/effect/turf_decal/tile/bar,
@@ -122,13 +122,13 @@
 	},
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aE" = (
 /obj/structure/door_assembly/door_assembly_mhatch{
 	name = "broken airlock"
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aF" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/effect/turf_decal/tile/bar,
@@ -136,7 +136,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aG" = (
 /obj/structure/door_assembly/door_assembly_public{
 	name = "broken airlock"
@@ -146,36 +146,36 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aH" = (
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aI" = (
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aJ" = (
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aK" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/machinery/light/broken/directional/north,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aL" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aM" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aN" = (
 /obj/item/plate,
 /obj/effect/turf_decal/tile/bar,
@@ -183,7 +183,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aO" = (
 /obj/item/chair,
 /obj/effect/turf_decal/tile/bar,
@@ -191,23 +191,23 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aP" = (
 /obj/machinery/light/broken/directional/north,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aQ" = (
 /obj/item/stack/tile/iron/base,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aR" = (
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aS" = (
 /obj/structure/table_frame,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aT" = (
 /obj/item/kitchen/fork,
 /obj/effect/turf_decal/tile/bar,
@@ -215,23 +215,23 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aU" = (
 /obj/structure/table/wood,
 /obj/item/shard,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aV" = (
 /obj/structure/table/wood,
 /obj/item/plate,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aW" = (
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aX" = (
 /obj/item/chair/stool/bar,
 /obj/effect/turf_decal/tile/bar,
@@ -239,7 +239,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "aY" = (
 /obj/structure/lattice,
 /obj/item/stack/sheet/iron,
@@ -253,16 +253,16 @@
 "ba" = (
 /mob/living/simple_animal/hostile/retaliate/ghost,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bb" = (
 /obj/item/food/donkpocket,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bc" = (
 /obj/structure/table,
 /obj/item/shard,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bd" = (
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/tile/bar,
@@ -270,43 +270,43 @@
 	dir = 1
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bg" = (
 /obj/item/stack/sheet/iron,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bh" = (
 /obj/machinery/light/broken/directional/west,
 /obj/structure/table_frame,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bi" = (
 /obj/item/stack/sheet/iron,
 /obj/item/clothing/head/utility/chefhat,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bj" = (
 /obj/item/plate,
 /obj/effect/decal/remains/human,
 /turf/open/floor/iron/cafeteria/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bk" = (
 /obj/structure/table_frame/wood,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bl" = (
 /obj/structure/girder,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bm" = (
 /obj/item/chair,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bo" = (
 /obj/item/stack/rods,
 /turf/template_noop,
@@ -316,13 +316,13 @@
 /obj/structure/girder,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "br" = (
 /obj/structure/girder,
 /obj/item/stack/sheet/iron,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bt" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 1;
@@ -330,11 +330,11 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bu" = (
 /obj/structure/fluff/broken_flooring,
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bv" = (
 /obj/structure/fluff/broken_flooring{
 	icon_state = "pile"
@@ -349,7 +349,7 @@
 	name = "broken plating"
 	},
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bx" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
@@ -358,14 +358,14 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "by" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
 	icon_state = "pile"
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bz" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
@@ -374,7 +374,7 @@
 	name = "broken plating"
 	},
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bA" = (
 /obj/structure/fluff/broken_flooring{
 	icon_state = "singular"
@@ -387,21 +387,21 @@
 	dir = 1
 	},
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bD" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
 	icon_state = "singular"
 	},
 /turf/open/floor/iron/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bE" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
 	dir = 8
 	},
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bF" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
@@ -409,7 +409,7 @@
 	icon_state = "side"
 	},
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bG" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
@@ -424,7 +424,7 @@
 	},
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "bI" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
@@ -433,7 +433,7 @@
 	name = "broken plating"
 	},
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 
 (1,1,1) = {"
 aa

@@ -45273,7 +45273,7 @@
 /area/station/commons/locker)
 "qfs" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
-/turf/open/space/basic,
+/turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "qfB" = (
 /obj/effect/decal/cleanable/dirt,

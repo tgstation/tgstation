@@ -69,10 +69,10 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "cg" = (
 /turf/closed/mineral/asteroid,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ch" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "cE" = (
 /obj/structure/closet{
 	desc = "It's a storage unit for mining.";
@@ -173,7 +173,7 @@
 "es" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ev" = (
 /obj/structure/table/reinforced,
 /obj/item/pen,
@@ -205,7 +205,7 @@
 "eG" = (
 /obj/item/transfer_valve,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "fv" = (
 /obj/machinery/door/window/left/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -225,7 +225,7 @@
 "gg" = (
 /obj/structure/frame/computer,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "gm" = (
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -281,7 +281,7 @@
 "he" = (
 /obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "hk" = (
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -415,7 +415,7 @@
 "ju" = (
 /obj/item/assembly/signaler,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "jC" = (
 /mob/living/simple_animal/slime{
 	colour = "bluespace";
@@ -429,7 +429,7 @@
 /obj/item/paper/crumpled/ruins/note_institute,
 /obj/item/pen,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "jJ" = (
 /obj/item/reagent_containers/cup/beaker/bluespace{
 	pixel_y = 5
@@ -559,7 +559,7 @@
 	bulb_power = 0.6
 	},
 /turf/closed/mineral/asteroid,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "nh" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/light/red/directional/west,
@@ -587,11 +587,11 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ny" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "nB" = (
 /obj/structure/sign/departments/chemistry/directional/north,
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
@@ -683,7 +683,7 @@
 /obj/structure/lattice/catwalk,
 /obj/item/raw_anomaly_core/bluespace,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "qI" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/stack/sheet/bluespace_crystal{
@@ -725,7 +725,7 @@
 "rg" = (
 /obj/item/keycard/hilbert,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ru" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/titanium{
@@ -736,7 +736,7 @@
 "rJ" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "rM" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -792,7 +792,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "tr" = (
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ty" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/stock_parts/matter_bin/bluespace{
@@ -864,10 +864,10 @@
 "va" = (
 /obj/machinery/research/anomaly_refinery,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "vi" = (
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "vq" = (
 /obj/item/toy/plush/beeplushie,
 /turf/open/floor/plating/elevatorshaft,
@@ -1778,7 +1778,7 @@
 "Nh" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Nl" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/food/grown/tomato/blue,
@@ -1960,7 +1960,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Rq" = (
 /turf/closed/indestructible/riveted/plastinum,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Ru" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -2255,7 +2255,7 @@
 "WP" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "WY" = (
 /obj/effect/turf_decal/trimline/purple/arrow_cw,
 /obj/effect/turf_decal/trimline/purple/mid_joiner,
@@ -2315,7 +2315,7 @@
 "Yi" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Ym" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood/corner{

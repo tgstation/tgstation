@@ -137,7 +137,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aC" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "aD" = (
 /obj/machinery/door/poddoor{
 	id = "bigderelictship"
@@ -1265,7 +1265,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "tu" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "tE" = (
 /obj/effect/decal/cleanable/blood/old{
 	dir = 4;

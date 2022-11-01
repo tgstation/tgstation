@@ -19,3 +19,6 @@
 
 /area/ruin/powered
 	requires_power = FALSE
+
+// Specific area intended for space ruins for Unit Testing purposes.
+/area/ruin/space/powered

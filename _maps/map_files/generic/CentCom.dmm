@@ -11457,7 +11457,7 @@
 /area/centcom/syndicate_mothership/control)
 "GX" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space,
+/turf/open/floor/plating/airless,
 /area/centcom/wizard_station)
 "GZ" = (
 /obj/structure/sign/poster/contraband/gorlex_recruitment{
