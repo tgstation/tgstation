@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes being unable to attack people with clothing to quickly equip it without the strip menu"

@@ -86,7 +86,7 @@
 
 /obj/item/rod_of_asclepius/update_icon_state()
 	. = ..()
-	icon_state = inhand_icon_state = "ascelpius_[activated ? "active" : "dormant"]"
+	icon_state = inhand_icon_state = "asclepius_[activated ? "active" : "dormant"]"
 
 /obj/item/rod_of_asclepius/vv_edit_var(vname, vval)
 	. = ..()
@@ -631,7 +631,17 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF
 	clothing_flags = THICKMATERIAL
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/internal/regenerative_core/legion, /obj/item/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/pickaxe,
+		/obj/item/spear,
+		/obj/item/organ/internal/monster_core,
+		/obj/item/knife,
+		/obj/item/kinetic_crusher,
+		/obj/item/resonator,
+		/obj/item/melee/cleaving_saw,
+	)
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
