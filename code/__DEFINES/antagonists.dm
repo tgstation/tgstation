@@ -71,7 +71,7 @@
 #define PATH_VOID "Void Path"
 #define PATH_BLADE "Blade Path"
 
-/// Defines are used in PROC_REF(has_living_heart()) to report if the heretic has no heart period, no living heart, or has a living heart.
+/// Defines are used in has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
 #define HERETIC_NO_LIVING_HEART 0
 #define HERETIC_HAS_LIVING_HEART 1

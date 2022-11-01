@@ -836,7 +836,7 @@
 		else
 			. += list(recursive_list_resolve_element(element))
 
-///Helper for PROC_REF(recursive_list_resolve)
+///Helper for recursive_list_resolve()
 /proc/recursive_list_resolve_element(element)
 	if(islist(element))
 		var/list/inner_list = element
