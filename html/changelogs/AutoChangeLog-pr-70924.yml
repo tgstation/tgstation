@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - qol: "color codes job laser pointers. now you can tell which job blinded you!"
