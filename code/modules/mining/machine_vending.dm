@@ -270,7 +270,7 @@
 		var/point_movement = (tgui_alert(user, "To ID (from card) or to card (from ID)?", "Mining Points Transfer", list(TO_USER_ID, TO_POINT_CARD)))
 		if(!point_movement)
 			return
-		var/amount = tgui_input_number(user, "How much do you want to transfer?\nID Balance: [swiped.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
+		var/amount = tgui_input_number(user, "How much do you want to transfer? ID Balance: [swiped.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
 		if(!amount)
 			return
 		switch(point_movement)
