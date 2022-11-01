@@ -44,7 +44,7 @@
 
 	if(obeys_hardhats && target_head_armor >= 15) // 15 melee armor is enough that most head items dont have this, but anything above a hardhat should protect you
 		poor_target.visible_message(
-			span_userdanger("[source] falls on [poor_target], thankfully [poor_target.p_they()] had a helmet on!"),
+			span_warning("[source] falls on [poor_target], thankfully [poor_target.p_they()] had a helmet on!"),
 			span_userdanger("You are hit on the head by [source], good thing you had a helmet on!"),
 			span_hear("You hear a [crushes_people ? "crash" : "bonk"]!"),
 		)
