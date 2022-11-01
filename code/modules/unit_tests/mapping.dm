@@ -61,14 +61,14 @@
 /datum/unit_test/mapload_space_verification/proc/validate_planetary_map()
 	// We want to get both the station level and the mining level (if the two are seperate for any reason).
 	var/list/testable_levels = list()
-	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
 	testable_levels += SSmapping.levels_by_trait(ZTRAIT_STATION) // Station z-levels get to be in by default because they can derail an entire round and cause LINDA to weep if a space turf is present.
 
-	for(var/station_level in testable_levels)
-		for(var/mining_level in mining_levels)
-			if(mining_level in testable_levels) // check for duplicates because we can have a Z-Level be both station and mining, don't add it if we already have it.
-				continue
-			testable_levels += mining_level
+	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	// Add in mining levels should they exist, and dupecheck to make sure we don't have any duplicates because it's valid to have a station and mining level be the same.
+	for(var/mining_level in mining_levels)
+		if(mining_level in testable_levels)
+			continue
+		testable_levels += mining_level
 
 	for(var/level in testable_levels)
 		var/testable_turfs = Z_TURFS(level)
