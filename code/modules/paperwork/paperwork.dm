@@ -237,7 +237,10 @@
 
 	detailed_desc = span_notice("It's impossible to really tell how old these are or what they're for, but Central Command might appreciate them anyways.")
 
-	var/list/paperwork_list = subtypesof(/obj/item/paperwork) //Make the ancient paperwork function like one of the main types
-	paperwork_list.Remove(list(/obj/item/paperwork/ancient, /obj/item/paperwork/photocopy)) //Get rid of the uncopiable paperwork types
-	var/obj/item/paperwork/paperwork_type = pick(paperwork_list)
+	var/static/list/paperwork_to_use //Make the ancient paperwork function like one of the main types
+	if(!paperwork_to_use)
+		paperwork_to_use = subtypesof(/obj/item/paperwork)
+		paperwork_to_use -= (list(/obj/item/paperwork/ancient, /obj/item/paperwork/photocopy)) //Get rid of the uncopiable paperwork types
+
+	var/obj/item/paperwork/paperwork_type = pick(paperwork_to_use)
 	copy_stamp_info(paperwork_type)
