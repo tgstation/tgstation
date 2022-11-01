@@ -292,8 +292,12 @@
 	var/mob/living/silicon/ai/unlucky_ais
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
-			unlucky_ais = occupant
-			occupant.gib() //No wreck, no AI to recover
+			var/mob/living/silicon/ai/AI = occupant
+			if(!AI.linked_core) // we probably shouldnt gib AIs with a core
+				unlucky_ais = occupant
+				AI.gib() //No wreck, no AI to recover
+			else
+				mob_exit(AI,silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
 		mob_exit(occupant, FALSE, TRUE)
 		occupant.SetSleeping(destruction_sleep_duration)
