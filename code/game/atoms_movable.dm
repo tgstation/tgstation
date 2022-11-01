@@ -227,6 +227,7 @@
 			if(hurt_atom.layer > highest.layer)
 				highest = hurt_atom
 	INVOKE_ASYNC(src, .proc/SpinAnimation, 5, 2)
+	SEND_SIGNAL(src, COMSIG_ATOM_ON_Z_IMPACT, impacted_turf, levels)
 	return TRUE
 
 /*
