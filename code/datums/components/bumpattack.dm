@@ -1,14 +1,14 @@
 /**
  * Add an auto attack on bump behaviour to item
- * valid_slot: the inventory slot the item could be held in while still bumpattacking with it
+ * valid_inventory_slot: the inventory slot the item could be held in while still bumpattacking with it
  * proxy_weapon: the weapon that will gain this behaviour
  */
 #define COOLDOWN_BUMP_ATTACK "bump_attack_cooldown"
 
 /datum/component/bumpattack
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	///inventory slot that the item could be stored while still being able to attack with it
-	var/list/valid_slots
+	///inventory slot that the item could be stored while still being able to attack with it. DO SLOT_HANDS|SLOT_BACK instead of a list for multiple slots
+	var/valid_inventory_slot
 	///whether or not the behaviour would be active on the item
 	var/active = FALSE
 	///the mob handling the item
@@ -18,10 +18,10 @@
 	///cool down between each hit
 	var/attack_cooldown = CLICK_CD_MELEE
 
-/datum/component/bumpattack/Initialize(valid_slots, obj/item/proxy_weapon)
+/datum/component/bumpattack/Initialize(valid_inventory_slot, obj/item/proxy_weapon)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.valid_slots = valid_slots
+	src.valid_inventory_slot = valid_inventory_slot
 	src.proxy_weapon = proxy_weapon
 
 	return ..()
@@ -37,7 +37,7 @@
 	SIGNAL_HANDLER
 	if(!user) // iunno, thoroughness
 		return
-	if(slot & valid_slots)
+	if(slot & valid_inventory_slot)
 		activate(user)
 	else
 		deactivate()
