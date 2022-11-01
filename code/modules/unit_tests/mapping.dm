@@ -25,14 +25,11 @@
 	priority = TEST_ANTI_SPACE_TURF
 
 /datum/unit_test/mapload_space_verification/Run()
-	// Grab information on our current station.
+	// Get the datum associated with our currently running map.
 	var/datum/map_config/current_map = SSmapping.config
-	var/current_space_ruin_levels = current_map.space_ruin_levels
-	var/current_empty_space_levels = current_map.space_empty_levels
 
-	// Is our current map a planetary station (NO space turfs allowed)? If so, check for ANY space turfs. It's a hacky way to see if something is planetary since there's no flag for it, but the pattern should hold.
-	// Nothing bad happens if `validate_planetary_map()` doesn't run on a planetary map, it just doesn't take the special consideration that we want NO space turfs EVER (excluding CentCom).
-	if(!(current_empty_space_levels && current_space_ruin_levels))
+	// Is our current map a planetary station (NO space turfs allowed)? If so, check for ANY space turfs.
+	if(current_map.planetary)
 		validate_planetary_map()
 		return
 

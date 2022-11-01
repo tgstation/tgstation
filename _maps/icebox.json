@@ -5,6 +5,7 @@
 	"map_file": "IceBoxStation.dmm",
 	"space_ruin_levels": 0,
 	"space_empty_levels": 0,
+	"planetary": 1,
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
