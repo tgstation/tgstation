@@ -19,10 +19,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/calendar, 32)
 
 /obj/structure/sign/calendar/examine(mob/user)
 	. = ..()
-	. += span_info("The current date is: [time2text(world.realtime, "DDD, MMM DD")], [GLOB.year_integer+540].")
-	if(SSevents.holidays)
+	. += span_info("The current date is: [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR].")
+	if(length(GLOB.holidays))
 		. += span_info("Events:")
-		for(var/holidayname in SSevents.holidays)
+		for(var/holidayname in GLOB.holidays)
 			. += span_info("[holidayname]")
 
 /**

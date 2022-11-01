@@ -57,6 +57,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	var/warns_on_down_movement = FALSE
 	/// if TRUE, we will gib anyone we land on top of. if FALSE, we will just apply damage with a serious wound penalty.
 	var/violent_landing = TRUE
+	/// damage multiplier if a mob is hit by the lift while it is moving horizontally
+	var/collision_lethality = 1
 	/// How long does it take for the elevator to move vertically?
 	var/elevator_vertical_speed = 2 SECONDS
 
@@ -332,8 +334,6 @@ GLOBAL_LIST_EMPTY(lifts)
 	else
 		///potentially finds a spot to throw the victim at for daring to be hit by a tram. is null if we havent found anything to throw
 		var/atom/throw_target
-		var/datum/lift_master/tram/our_lift = lift_master_datum
-		var/collision_lethality = our_lift.collision_lethality
 
 		for(var/turf/dest_turf as anything in entering_locs)
 			///handles any special interactions objects could have with the lift/tram, handled on the item itself
@@ -344,10 +344,15 @@ GLOBAL_LIST_EMPTY(lifts)
 				do_sparks(2, FALSE, collided_wall)
 				collided_wall.dismantle_wall(devastated = TRUE)
 				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(collided_wall, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
-					if(get_dist(dest_turf, client_mob) <= 8)
-						shake_camera(client_mob, 2, 3)
+					shake_camera(client_mob, duration = 2, strength = 3)
 
 				playsound(collided_wall, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+
+			if(ismineralturf(dest_turf))
+				var/turf/closed/mineral/dest_mineral_turf = dest_turf
+				for(var/mob/client_mob in SSspatial_grid.orthogonal_range_search(dest_mineral_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 8))
+					shake_camera(client_mob, duration = 2, strength = 3)
+				dest_mineral_turf.gets_drilled(give_exp = FALSE)
 
 			for(var/obj/structure/victim_structure in dest_turf.contents)
 				if(QDELING(victim_structure))
@@ -713,8 +718,9 @@ GLOBAL_LIST_EMPTY(lifts)
 	lift_id = DEBUG_LIFT_ID
 	radial_travel = TRUE
 
-/obj/structure/industrial_lift/debug/open_lift_radial(mob/user)
-	if (!in_range(src, user))
+/obj/structure/industrial_lift/debug/open_lift_radial(mob/living/user)
+	var/starting_position = loc
+	if (!can_open_lift_radial(user,starting_position))
 		return
 //NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST
 	var/static/list/tool_list = list(
@@ -728,34 +734,38 @@ GLOBAL_LIST_EMPTY(lifts)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST)
 		)
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = FALSE)
-	if (!in_range(src, user))
-		return  // nice try
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/can_open_lift_radial, user, starting_position), require_near = TRUE, tooltips = FALSE)
+	if (!can_open_lift_radial(user,starting_position))
+		return	// nice try
+	if(!isnull(result) && result != "Cancel" && lift_master_datum.controls_locked)
+		// Only show this message if they actually wanted to move
+		balloon_alert(user, "elevator controls locked!")
+		return
 
 	switch(result)
 		if("NORTH")
-			lift_master_datum.move_lift_horizontally(NORTH, z)
+			lift_master_datum.move_lift_horizontally(NORTH)
 			open_lift_radial(user)
 		if("NORTHEAST")
-			lift_master_datum.move_lift_horizontally(NORTHEAST, z)
+			lift_master_datum.move_lift_horizontally(NORTHEAST)
 			open_lift_radial(user)
 		if("EAST")
-			lift_master_datum.move_lift_horizontally(EAST, z)
+			lift_master_datum.move_lift_horizontally(EAST)
 			open_lift_radial(user)
 		if("SOUTHEAST")
-			lift_master_datum.move_lift_horizontally(SOUTHEAST, z)
+			lift_master_datum.move_lift_horizontally(SOUTHEAST)
 			open_lift_radial(user)
 		if("SOUTH")
-			lift_master_datum.move_lift_horizontally(SOUTH, z)
+			lift_master_datum.move_lift_horizontally(SOUTH)
 			open_lift_radial(user)
 		if("SOUTHWEST")
-			lift_master_datum.move_lift_horizontally(SOUTHWEST, z)
+			lift_master_datum.move_lift_horizontally(SOUTHWEST)
 			open_lift_radial(user)
 		if("WEST")
-			lift_master_datum.move_lift_horizontally(WEST, z)
+			lift_master_datum.move_lift_horizontally(WEST)
 			open_lift_radial(user)
 		if("NORTHWEST")
-			lift_master_datum.move_lift_horizontally(NORTHWEST, z)
+			lift_master_datum.move_lift_horizontally(NORTHWEST)
 			open_lift_radial(user)
 		if("Cancel")
 			return
