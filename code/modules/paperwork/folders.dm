@@ -10,10 +10,10 @@
 	var/bg_color = "#7f7f7f"
 	/// A typecache of the objects that can be inserted into a folder
 	var/static/list/folder_insertables = typecacheof(list(
-   		/obj/item/paper,
-    	/obj/item/photo,
-    	/obj/item/documents,
-    	/obj/item/paperwork,
+		/obj/item/paper,
+		/obj/item/photo,
+		/obj/item/documents,
+		/obj/item/paperwork,
 		))
 
 /obj/item/folder/suicide_act(mob/living/user)
