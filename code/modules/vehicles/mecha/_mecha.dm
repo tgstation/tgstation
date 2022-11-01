@@ -289,12 +289,12 @@
 	spark_system?.start()
 	loc.assume_air(cabin_air)
 
-	var/mob/living/silicon/ai/unlucky_ais
+	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
 			var/mob/living/silicon/ai/AI = occupant
 			if(!AI.linked_core) // we probably shouldnt gib AIs with a core
-				unlucky_ais = occupant
+				unlucky_ai = occupant
 				AI.gib() //No wreck, no AI to recover
 			else
 				mob_exit(AI,silent = TRUE, forced = TRUE) // so we dont ghost the AI
@@ -303,7 +303,7 @@
 		occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ais)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ai)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in flat_equipment)
 			if(E.detachable && prob(30))
 				WR.crowbar_salvage += E
