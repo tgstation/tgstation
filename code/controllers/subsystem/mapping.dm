@@ -423,7 +423,7 @@ Used by the AI doomsday and the self-destruct nuke.
 	// Custom maps are removed after station loading so the map files does not persist for no reason.
 	if(config.map_path == CUSTOM_MAP_PATH)
 		fdel("_maps/custom/[config.map_file]")
-		// And as the file is now removed set the nextpotato_contents map to default.
+		// And as the file is now removed set the next map to default.
 		next_map_config = load_default_map_config()
 
 GLOBAL_LIST_EMPTY(the_station_areas)
