@@ -63,7 +63,7 @@
 	SIGNAL_HANDLER
 	var/obj/item/our_weapon = proxy_weapon || parent
 	if(!istype(our_weapon))
-		stack_trace("[our_weapon] somehow failed istype")
+		CRASH("[our_weapon] somehow failed istype")
 	if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BUMP_ATTACK))
 		TIMER_COOLDOWN_START(src, COOLDOWN_BUMP_ATTACK, attack_cooldown)
 		INVOKE_ASYNC(target, /atom.proc/attackby , our_weapon, bumper)
