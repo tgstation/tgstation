@@ -32,7 +32,7 @@
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 	return BULLET_ACT_HIT
 
-/obj/machinery/power/supermatter_crystal/proc/log_activation(cause, source)
+/obj/machinery/power/supermatter_crystal/proc/log_activation(source, cause)
 	var/fired_from_str = cause ? " with [cause]" : ""
 	investigate_log(
 		source \
@@ -42,7 +42,7 @@
 	)
 	message_admins(
 		source \
-			? "[src] [ADMIN_JMP(src)] has been powered for the first time by [ADMIN_FULLMONTY(source)][fired_from_str]." \
+			? "[src] [ADMIN_JMP(src)] has been powered for the first time by [cause ? ADMIN_FULLMONTY(source) + (fired_from_str) : "environmental factors"]." \
 			: "[src] [ADMIN_JMP(src)] has been powered for the first time."
 	)
 
@@ -85,7 +85,7 @@
 			new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
 			external_power_trickle += 800
 			if(!has_been_powered)
-				log_activation(cause = user, source = scalpel)
+				log_activation(source = scalpel, cause = user)
 			scalpel.usesLeft--
 			if (!scalpel.usesLeft)
 				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
@@ -114,7 +114,7 @@
 			external_damage_immediate += 100
 			external_power_trickle += 500
 			if(!has_been_powered)
-				log_activation(cause = user, source = destabilizing_crystal)
+				log_activation(source = destabilizing_crystal, cause = user)
 			qdel(destabilizing_crystal)
 		return
 
