@@ -258,7 +258,8 @@
 					/obj/item/reagent_containers/condiment/milk,
 					/obj/item/reagent_containers/condiment/soymilk,
 					/obj/item/reagent_containers/condiment/sugar,
-					/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel)	//one extra syrup as a treat
+					/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel, //one extra syrup as a treat
+				)
 	crate_name = "coffee equippemnt crate"
 
 /datum/supply_pack/service/coffeemaker
