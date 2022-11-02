@@ -251,21 +251,37 @@
 			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
 			update_appearance()
 			return TRUE
+		
 		if("send")
 			var/obj/item/loaded = loaded_item_ref?.resolve()
 			if (!loaded)
 				return
 			var/destination = params["id"]
 			if(send(loaded, destination))
-				if(findtext(destination, "sp_"))
-					var/obj/item/paper/request = loaded
-					request.request_state = TRUE
-					request.loc = null
-					GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [special_fax_name(destination)]", request)
 				log_fax(loaded, destination, params["name"])
 				loaded_item_ref = null
 				update_appearance()
 				return TRUE
+		
+		if("send_special")
+			if(!istype(loaded_item_ref?.resolve(), /obj/item/paper))
+				to_chat(usr, "[icon2html(getFlatIcon(src))] Fax cannot send all above paper on this protected network, sorry.")
+				return 
+			
+			var/obj/item/paper/fax_paper = loaded_item_ref?.resolve()
+			fax_paper.request_state = TRUE
+			fax_paper.loc = null
+
+
+			INVOKE_ASYNC(src, .proc/animate_object_travel, fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
+			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+
+			
+			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", fax_paper)
+			log_fax(fax_paper, params["id"], params["name"])
+			loaded_item_ref = null
+			update_appearance()
+				
 		if("history_clear")
 			history_clear()
 			return TRUE
@@ -303,8 +319,7 @@
 			balloon_alert(usr, "destination port jammed")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			return FALSE
-		if (!findtext(id, "sp_"))
-			FAX.receive(loaded, fax_name)
+		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
 		INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "send"))
 		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
@@ -486,8 +501,3 @@
 
 	return .
 
-/obj/machinery/fax/proc/special_fax_name(id)
-	switch(id)
-		if("sp_cc") return "Central Command"
-		if("sp_sy") return "Syndicate Outpost"
-		else return "Unassigned"

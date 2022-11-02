@@ -32,7 +32,7 @@ type FaxSpecial = {
   fax_name: string;
   fax_id: string;
   color: string;
-  needEmag: boolean;
+  emag_need: boolean;
 };
 
 export const Fax = (props, context) => {
@@ -77,6 +77,24 @@ export const Fax = (props, context) => {
         </Section>
         <Section title="Send">
           <Box mt={0.4}>
+            {(!data.syndicate_network
+              ? data.special_faxes.filter((fax: FaxSpecial) => !fax.emag_need)
+              : data.special_faxes
+            ).map((special: FaxSpecial) => (
+              <Button
+                key={special.fax_id}
+                title={special.fax_name}
+                disabled={!data.has_paper}
+                color="teal"
+                onClick={() =>
+                  act('send_special', {
+                    id: special.fax_id,
+                    name: special.fax_name,
+                  })
+                }>
+                {special.fax_name}
+              </Button>
+            ))}
             {faxes.map((fax: FaxInfo) => (
               <Button
                 key={fax.fax_id}
@@ -126,29 +144,4 @@ export const Fax = (props, context) => {
       </Window.Content>
     </Window>
   );
-};
-
-export const SpecialButtons = (props, context) => {
-
-	return (
-		{data.special_faxes.map(
-			(special: FaxSpecial) =>
-			  !data.syndicate_network &&
-			  special.needEmag && (
-				<Button
-				  key={special.fax_id}
-				  title={special.fax_name}
-				  disabled={!data.has_paper}
-				  color="teal"
-				  onClick={() =>
-					act('send', {
-					  id: special.fax_id,
-					  name: special.fax_name,
-					})
-				  }>
-				  {special.fax_name}
-				</Button>
-			  )
-		  )}
-	);
 };
