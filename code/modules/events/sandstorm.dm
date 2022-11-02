@@ -37,7 +37,7 @@
 
 /datum/round_event/sandstorm
 	start_when = 60
-	end_when = 90
+	end_when = 100
 	announce_when = 1
 	///Which direction the storm will come from.
 	var/start_side
@@ -87,7 +87,7 @@
 	max_occurrences = 0
 	earliest_start = 0 MINUTES
 	category = EVENT_CATEGORY_SPACE
-	description = "The station is pelted by an extreme amount of sand, from all sides, for several minutes."
+	description = "The station is pelted by an extreme amount of dust, from all sides, for several minutes."
 
 /datum/round_event/sandstorm_classic
 	start_when = 1
