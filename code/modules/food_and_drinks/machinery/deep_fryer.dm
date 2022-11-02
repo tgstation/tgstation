@@ -28,12 +28,13 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	var/frying_burnt //If the object has been burnt
 	var/datum/looping_sound/deep_fryer/fry_loop
 	var/static/list/deepfry_blacklisted_items = typecacheof(list(
-	/obj/item/screwdriver,
-	/obj/item/crowbar,
-	/obj/item/wrench,
-	/obj/item/wirecutters,
-	/obj/item/multitool,
-	/obj/item/weldingtool))
+		/obj/item/screwdriver,
+		/obj/item/crowbar,
+		/obj/item/wrench,
+		/obj/item/wirecutters,
+		/obj/item/multitool,
+		/obj/item/weldingtool,
+	))
 
 /obj/machinery/deepfryer/Initialize(mapload)
 	. = ..()
@@ -86,7 +87,9 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", weapon)) //where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(weapon, deepfry_blacklisted_items) || is_type_in_typecache(weapon, GLOB.oilfry_blacklisted_items) || weapon.atom_storage || HAS_TRAIT(weapon, TRAIT_NODROP) || (weapon.item_flags & (ABSTRACT | DROPDEL)))
+		if(weapon.is_drainable())
+			return // so we skip the attack animation
+		else if(is_type_in_typecache(weapon, deepfry_blacklisted_items) || is_type_in_typecache(weapon, GLOB.oilfry_blacklisted_items) || weapon.atom_storage || HAS_TRAIT(weapon, TRAIT_NODROP) || (weapon.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(weapon, src))
 			fry(weapon, user)

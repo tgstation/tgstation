@@ -13,6 +13,7 @@
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "SECURITY_OFFICER"
 
 	outfit = /datum/outfit/job/security
 	plasmaman_outfit = /datum/outfit/plasmaman/security
@@ -20,7 +21,6 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
-	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_SECURITY_OFFICER
@@ -241,19 +241,19 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	recalculateChannels()
 
 /obj/item/radio/headset/headset_sec/alt/department/engi
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_eng
+	keyslot = /obj/item/encryptionkey/headset_sec
+	keyslot2 = /obj/item/encryptionkey/headset_eng
 
 /obj/item/radio/headset/headset_sec/alt/department/supply
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_cargo
+	keyslot = /obj/item/encryptionkey/headset_sec
+	keyslot2 = /obj/item/encryptionkey/headset_cargo
 /obj/item/radio/headset/headset_sec/alt/department/med
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_med
+	keyslot = /obj/item/encryptionkey/headset_sec
+	keyslot2 = /obj/item/encryptionkey/headset_med
 
 /obj/item/radio/headset/headset_sec/alt/department/sci
-	keyslot = new /obj/item/encryptionkey/headset_sec
-	keyslot2 = new /obj/item/encryptionkey/headset_sci
+	keyslot = /obj/item/encryptionkey/headset_sec
+	keyslot2 = /obj/item/encryptionkey/headset_sci
 
 /// Returns the distribution of splitting the given security officers into departments.
 /// Return value is an assoc list of candidate => SEC_DEPT_*.

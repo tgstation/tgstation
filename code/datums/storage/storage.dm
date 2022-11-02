@@ -268,7 +268,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return "\n\t[span_notice("[desc.Join("\n\t")]")]"
 
 /// Updates the action button for toggling collectmode.
-/datum/storage/proc/update_actions()
+/datum/storage/proc/update_actions(atom/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
 	var/obj/item/resolve_parent = parent?.resolve()
@@ -311,6 +311,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/obj/item/resolve_location = real_location?.resolve()
 	if(!resolve_location)
 		return
+
+	if(QDELETED(to_insert))
+		return FALSE
 
 	if(!isitem(to_insert))
 		return FALSE

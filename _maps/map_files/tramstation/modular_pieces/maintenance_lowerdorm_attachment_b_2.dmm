@@ -48,7 +48,7 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -69,7 +69,7 @@
 /area/station/maintenance/central/lesser)
 "M" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
+/area/lavaland/surface)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,

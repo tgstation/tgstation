@@ -36,7 +36,7 @@
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
 	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100)
-	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
@@ -131,7 +131,7 @@
 	. = ..()
 	icon_state = density ? "closed" : "open"
 
-/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))
 		add_fingerprint(user)
 		user.visible_message(span_warning("[user] begins prying open [src]."),\

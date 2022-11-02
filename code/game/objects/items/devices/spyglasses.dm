@@ -24,7 +24,7 @@
 
 /obj/item/clothing/glasses/sunglasses/spy/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_EYES)
+	if(!(slot & ITEM_SLOT_EYES))
 		user.client?.close_popup("spypopup")
 
 /obj/item/clothing/glasses/sunglasses/spy/dropped(mob/user)
@@ -35,7 +35,7 @@
 	show_to_user(user)
 
 /obj/item/clothing/glasses/sunglasses/spy/item_action_slot_check(slot)
-	if(slot == ITEM_SLOT_EYES)
+	if(slot & ITEM_SLOT_EYES)
 		return TRUE
 
 /obj/item/clothing/glasses/sunglasses/spy/Destroy()

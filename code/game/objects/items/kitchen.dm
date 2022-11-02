@@ -103,6 +103,7 @@
 	desc = "Used to knock out the Bartender."
 	icon_state = "rolling_pin"
 	worn_icon_state = "rolling_pin"
+	inhand_icon_state = "rolling_pin"
 	force = 8
 	throwforce = 5
 	throw_speed = 3
@@ -118,6 +119,7 @@
 	name = "metal rolling pin"
 	desc = "A heavy metallic rolling pin used to bash in those annoying ingredients."
 	icon_state = "metal_rolling_pin"
+	inhand_icon_state = "metal_rolling_pin"
 	force = 12
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT * 1.5, /datum/material/plastic = MINERAL_MATERIAL_AMOUNT * 1.5)

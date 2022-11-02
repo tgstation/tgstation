@@ -261,7 +261,7 @@
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] || prob(1))
+	if(check_holidays(APRIL_FOOLS) || prob(1))
 		mod.set_mod_color("#b17f00")
 		mod.wearer.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
 		mod.wearer.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
@@ -315,10 +315,10 @@
 		blind_message = span_hear("You hear a charging sound."))
 	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
 	balloon_alert(mod.wearer, "you start charging...")
-	animate(mod.wearer, 0.3 SECONDS, pixel_z = 16, flags = ANIMATION_RELATIVE|SINE_EASING|EASE_OUT)
+	animate(mod.wearer, 0.3 SECONDS, pixel_z = 16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_OUT)
 	addtimer(CALLBACK(mod.wearer, /atom.proc/SpinAnimation, 3, 2), 0.3 SECONDS)
 	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
-		animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE|SINE_EASING|EASE_IN)
+		animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_IN)
 		return
 	animate(mod.wearer)
 	drain_power(use_power_cost)
@@ -332,7 +332,7 @@
 	if(!user)
 		return
 	user.transform = user.transform.Turn(angle)
-	animate(user, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE|SINE_EASING|EASE_IN)
+	animate(user, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_IN)
 
 /obj/item/mod/module/power_kick/proc/on_throw_impact(mob/living/source, atom/target, datum/thrownthing/thrownthing)
 	SIGNAL_HANDLER
@@ -451,3 +451,49 @@
 	if(!holding_storage || holding_storage.max_specific_storage >= mod.w_class)
 		return
 	mod.forceMove(drop_location())
+
+/obj/item/mod/module/demoralizer
+	name = "MOD psi-echo demoralizer module"
+	desc = "One incredibly morbid member of the RND team at Roseus Galactic posed a question to her colleagues. \
+	'I desire the power to scar my enemies mentally as I murder them. Who will stop me implementing this in our next project?' \
+	And thus the Psi-Echo Demoralizer Device was reluctantly invented. The future of psychological warfare, today!"
+	icon_state = "brain_hurties"
+	complexity = 0
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	removable = FALSE
+	var/datum/proximity_monitor/advanced/demoraliser/demoralizer
+
+/obj/item/mod/module/demoralizer/on_suit_activation()
+	var/datum/demoralise_moods/module/mood_category = new()
+	demoralizer = new(mod.wearer, 7, TRUE, mood_category)
+
+/obj/item/mod/module/demoralizer/on_suit_deactivation(deleting = FALSE)
+	QDEL_NULL(demoralizer)
+
+/obj/item/mod/module/infiltrator
+	name = "MOD infiltration core programs module"
+	desc = "The primary stealth systems operating within the suit. Utilizing electromagnetic signals, \
+		the wearer simply cannot be observed closely, or heard clearly by those around them."
+	icon_state = "infiltrator"
+	complexity = 0
+	removable = FALSE
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
+	incompatible_modules = list(/obj/item/mod/module/infiltrator, /obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
+
+/obj/item/mod/module/infiltrator/on_install()
+	mod.item_flags |= EXAMINE_SKIP
+
+/obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
+	mod.item_flags &= ~EXAMINE_SKIP
+
+/obj/item/mod/module/infiltrator/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_UNKNOWN, MOD_TRAIT)
+	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+
+/obj/item/mod/module/infiltrator/on_suit_deactivation(deleting = FALSE)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_UNKNOWN, MOD_TRAIT)
+	if(deleting)
+		return
+	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)

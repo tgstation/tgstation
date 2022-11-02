@@ -145,7 +145,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Blacklist for mobs that can't read or write
 #define TRAIT_ILLITERATE "illiterate"
 #define TRAIT_BLIND "blind"
+/// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
+/// Emotemute. Can't... emote.
 #define TRAIT_EMOTEMUTE "emotemute"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_NEARSIGHT "nearsighted"
@@ -318,7 +320,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// prevents the damage done by a brain tumor
 #define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
 /// Prevents hallucinations from the hallucination brain trauma (RDS)
-#define TRAIT_HALLUCINATION_SUPPRESSED "hallucination_suppressed"
+#define TRAIT_RDS_SUPPRESSED "rds_suppressed"
 /// overrides the update_fire proc to always add fire (for lava)
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
 /// Galactic Common Sign Language
@@ -381,8 +383,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLUSHING "blushing"
 /// This person is crying
 #define TRAIT_CRYING "crying"
-/// For simple mobs controlled by a player. Sends a death alert in deadchat (used by space dragons, morphs, revenants, elite lavaland mobs, brood spiders)
-#define TRAIT_ALERT_GHOSTS_ON_DEATH "trait_alert_ghosts_on_death"
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
@@ -401,14 +401,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
-/*
-* Trait granted by various security jobs, and checked by [/obj/item/food/donut]
-* When present in the mob's mind, they will always love donuts.
-*/
-#define TRAIT_DONUT_LOVER "donut_lover"
 
 /// `do_teleport` will not allow this atom to teleport
 #define TRAIT_NO_TELEPORT "no-teleport"
+/// This atom is a secluded location, which is counted as out of bounds.
+/// Anything that enters this atom's contents should react if it wants to stay in bounds.
+#define TRAIT_SECLUDED_LOCATION "secluded_loc"
 
 /// Trait used by fugu glands to avoid double buffing
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
@@ -432,6 +430,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Item still allows you to examine items while blind and actively held.
 #define TRAIT_BLIND_TOOL "blind_tool"
+
+/// The person with this trait always appears as 'unknown'.
+#define TRAIT_UNKNOWN "unknown"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -523,8 +524,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
 #define TRAIT_MAT_TRANSMUTED "transmuted"
 
+// cargo traits
 ///If the item will block the cargo shuttle from flying to centcom
 #define TRAIT_BANNED_FROM_CARGO_SHUTTLE "banned_from_cargo_shuttle"
+///If the item's contents are immune to the missing item manifest error
+#define TRAIT_NO_MISSING_ITEM_ERROR "no_missing_item_error"
 
 ///SSeconomy trait, if the market is crashing and people can't withdraw credits from ID cards.
 #define TRAIT_MARKET_CRASHING "market_crashing"
@@ -562,6 +566,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVING_HEART "living_heart"
 /// Prevents the same person from being chosen multiple times for kidnapping objective
 #define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
+/// An item still plays its hitsound even if it has 0 force, instead of the tap
+#define TRAIT_CUSTOM_TAP_SOUND "no_tap_sound"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -652,6 +658,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// trait that prevents AI controllers from planning detached from ai_status to prevent weird state stuff.
 #define TRAIT_AI_PAUSED "TRAIT_AI_PAUSED"
 
+/// this is used to bypass tongue language restrictions but not tongue disabilities
+#define TRAIT_TOWER_OF_BABEL "tower_of_babel"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
@@ -734,6 +743,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define MAFIA_TRAIT "mafia"
 /// Trait associated with highlander
 #define HIGHLANDER_TRAIT "highlander"
+/// Trait given from playing pretend with baguettes
+#define SWORDPLAY_TRAIT "swordplay"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
@@ -746,6 +757,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
+/// changelings with this trait can no longer talk over the hivemind
+#define CHANGELING_HIVEMIND_MUTE "ling_mute"
 #define ABYSSAL_GAZE_BLIND "abyssal_gaze"
 #define HIGHLANDER "highlander"
 #define TRAIT_HULK "hulk"
@@ -840,6 +853,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ITEM_SCALING_TRAIT "item_scaling"
 /// Trait given by Objects that provide blindsight
 #define ITEM_BLIND_TRAIT "blind_item_trait"
+/// Trait given by choking
+#define CHOKING_TRAIT "choking_trait"
+/// Trait given by hallucinations
+#define HALLUCINATION_TRAIT "hallucination_trait"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -872,6 +889,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_FILLED_MAINT "station_trait_filled_maint"
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
+#define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
@@ -937,3 +955,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Makes a species be better/worse at defending against tackling depending on their tail's status
 #define TRAIT_TACKLING_TAILED_DEFENDER "tackling_tailed_defender"
+
+/// some trait sorces dirived from bodyparts BODYPART_TRAIT is generic.
+#define BODYPART_TRAIT "bodypart"
+#define HEAD_TRAIT "head"
+#define CHEST_TRAIT "chest"
+#define RIGHT_ARM_TRAIT "right_arm"
+#define LEFT_ARM_TRAIT "left_arm"
+#define RIGHT_LEG_TRAIT "right_leg"
+#define LEFT_LEG_TRAIT "left_leg"

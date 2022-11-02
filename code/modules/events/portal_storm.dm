@@ -67,9 +67,9 @@
 /datum/round_event/portal_storm/announce(fake)
 	set waitfor = 0
 	sound_to_playing_players('sound/magic/lightning_chargeup.ogg')
-	sleep(80)
+	sleep(8 SECONDS)
 	priority_announce("Massive bluespace anomaly detected en route to [station_name()]. Brace for impact.")
-	sleep(20)
+	sleep(2 SECONDS)
 	sound_to_playing_players('sound/magic/lightningbolt.ogg')
 
 /datum/round_event/portal_storm/tick()

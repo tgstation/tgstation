@@ -207,7 +207,7 @@ If you make a derivative work from this code, you must include this notification
 	set waitfor = FALSE
 	if (D)
 		animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-	sleep(15)
+	sleep(1.5 SECONDS)
 	if (D)
 		animate(D, transform = null, time = 1, loop = 0)
 
@@ -268,7 +268,7 @@ If you make a derivative work from this code, you must include this notification
 				D.pixel_y = D.base_pixel_y
 			return
 
-		sleep(1)
+		sleep(0.1 SECONDS)
 
 	if (A && D)
 		A.pixel_x = A.base_pixel_x
@@ -391,7 +391,7 @@ If you make a derivative work from this code, you must include this notification
 						span_danger("You climb onto [surface]!"))
 		A.pixel_y = A.base_pixel_y + 10
 		falling = 1
-		sleep(10)
+		sleep(1 SECONDS)
 
 	if (A && D)
 		// These are necessary because of the sleep call.
@@ -413,7 +413,7 @@ If you make a derivative work from this code, you must include this notification
 
 		if(A)
 			animate(A, transform = matrix(90, MATRIX_ROTATE), time = 1, loop = 0)
-		sleep(10)
+		sleep(1 SECONDS)
 		if(A)
 			animate(A, transform = null, time = 1, loop = 0)
 
@@ -468,7 +468,7 @@ If you make a derivative work from this code, you must include this notification
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_BELT)
+	if(slot & ITEM_SLOT_BELT)
 		style.teach(user, TRUE)
 	return
 

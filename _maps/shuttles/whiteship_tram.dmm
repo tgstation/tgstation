@@ -59,7 +59,7 @@
 	pixel_y = 4
 	},
 /obj/item/flashlight,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/cold/no_nightlight/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -144,7 +144,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "au" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -153,7 +153,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/cargo)
 "av" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -252,7 +252,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -304,7 +304,7 @@
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "aX" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -374,7 +374,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/shuttle/abandoned/cargo)
 "bj" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -621,7 +621,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "bS" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced/plasma/spawner,
@@ -669,7 +669,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/abandoned/engine)
 "ce" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced/plasma/spawner,
@@ -1078,7 +1078,7 @@
 /turf/open/floor/mineral/titanium/white/airless,
 /area/shuttle/abandoned/cargo)
 "fh" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced/plasma/spawner,

@@ -180,7 +180,7 @@
 		client.images.Remove(human_image)
 	return ..()
 
-/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if (!message)
 		return
 
@@ -214,12 +214,12 @@
 
 	//speech bubble
 	if(owner.client)
-		var/mutable_appearance/MA = mutable_appearance('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
-		SET_PLANE_EXPLICIT(MA, ABOVE_GAME_PLANE, src)
-		MA.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, MA, list(owner.client), 30)
-		LAZYADD(update_on_z, MA)
-		addtimer(CALLBACK(src, .proc/clear_saypopup, MA), 3.5 SECONDS)
+		var/image/bubble = mutable_appearance('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
+		SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
+		bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, list(owner.client), 30)
+		LAZYADD(update_on_z, bubble)
+		addtimer(CALLBACK(src, .proc/clear_saypopup, bubble), 3.5 SECONDS)
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, owner)

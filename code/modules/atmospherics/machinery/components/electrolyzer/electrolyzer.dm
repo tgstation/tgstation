@@ -35,6 +35,22 @@
 	SSair.start_processing_machine(src)
 	update_appearance()
 
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Toggle power", \
+	)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Open hatch",
+		),
+
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Anchor",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/machinery/electrolyzer/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
@@ -54,6 +70,10 @@
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
+
 
 /obj/machinery/electrolyzer/update_icon_state()
 	icon_state = "electrolyzer-[on ? "[mode]" : "off"]"
@@ -166,6 +186,21 @@
 		return
 	return ..()
 
+/obj/machinery/electrolyzer/attack_hand_secondary(mob/user, list/modifiers)
+	if(!can_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	toggle_power(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/electrolyzer/proc/toggle_power(user)
+	on = !on
+	mode = ELECTROLYZER_MODE_STANDBY
+	if(!isnull(user))
+		balloon_alert(user, "turned [on ? "on" : "off"]")
+	update_appearance()
+	if(on)
+		SSair.start_processing_machine(src)
+
 /obj/machinery/electrolyzer/ui_state(mob/user)
 	return GLOB.physical_state
 
@@ -191,12 +226,7 @@
 		return
 	switch(action)
 		if("power")
-			on = !on
-			mode = ELECTROLYZER_MODE_STANDBY
-			usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
-			update_appearance()
-			if (on)
-				SSair.start_processing_machine(src)
+			toggle_power()
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)

@@ -363,7 +363,9 @@
 	desc = "Used for absolutely hilarious sacrifices."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "clownrender"
-	inhand_icon_state = "render"
+	inhand_icon_state = "cultdagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "render"
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = SHARP_EDGED
@@ -422,7 +424,10 @@
 	icon_state = "fedora"
 	inhand_icon_state = "fedora"
 	slot_flags = ITEM_SLOT_HEAD
-	icon = 'icons/obj/clothing/hats.dmi'
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	force = 0
 	throw_speed = 4
 	throw_range = 7

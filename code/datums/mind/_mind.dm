@@ -427,11 +427,10 @@
 				var/objective_typepath = tgui_input_list(usr, "Select objective", "Select objective", all_objectives)
 				if(!objective_typepath)
 					return
-				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath)
+				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath, force = TRUE)
 				if(objective)
 					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective_typepath]).")
 					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective_typepath]).")
-					objective.forced = TRUE
 				else
 					to_chat(usr, span_warning("Failed to generate the objective!"))
 					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")

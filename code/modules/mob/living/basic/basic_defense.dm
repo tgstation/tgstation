@@ -37,8 +37,8 @@
 						span_userdanger("[user] [response_harm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You [response_harm_simple] [src]!"))
 		playsound(loc, attacked_sound, 25, TRUE, -1)
-
-		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+		var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+		var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
 
 		attack_threshold_check(damage)
 		log_combat(user, src, "attacked")
@@ -69,7 +69,7 @@
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 
-/mob/living/basic/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/mob/living/basic/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(..()) //if harm or disarm intent.
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)

@@ -49,12 +49,7 @@ SUBSYSTEM_DEF(vote)
 	current_vote?.reset()
 	current_vote = null
 
-	for(var/datum/action/vote/voting_action as anything in generated_actions)
-		if(QDELETED(voting_action))
-			continue
-		voting_action.Remove(voting_action.owner)
-
-	generated_actions.Cut()
+	QDEL_LIST(generated_actions)
 
 	SStgui.update_uis(src)
 

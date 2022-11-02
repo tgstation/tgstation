@@ -479,13 +479,13 @@
 	else if(amt > old_limbs)
 		hand_bodyparts.len = amt
 		for(var/i in old_limbs+1 to amt)
-			var/path = /obj/item/bodypart/l_arm
+			var/path = /obj/item/bodypart/arm/left
 			if(!(i % 2))
-				path = /obj/item/bodypart/r_arm
+				path = /obj/item/bodypart/arm/right
 
 			var/obj/item/bodypart/BP = new path ()
 			BP.held_index = i
-			BP.attach_limb(src, TRUE)
+			BP.try_attach_limb(src, TRUE)
 			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them
 

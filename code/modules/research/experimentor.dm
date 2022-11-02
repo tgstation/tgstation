@@ -621,7 +621,20 @@
 	visible_message(message)
 	to_chat(user, message)
 
-	var/list/valid_animals = list(/mob/living/simple_animal/parrot/natural, /mob/living/simple_animal/butterfly, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/crab, /mob/living/simple_animal/pet/fox, /mob/living/simple_animal/hostile/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/dog/pug, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/bee, /mob/living/simple_animal/hostile/carp)
+	var/static/list/valid_animals = list(
+		/mob/living/simple_animal/parrot/natural,
+		/mob/living/simple_animal/butterfly,
+		/mob/living/simple_animal/pet/cat,
+		/mob/living/simple_animal/pet/dog/corgi,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/pet/fox,
+		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/basic/mouse,
+		/mob/living/simple_animal/pet/dog/pug,
+		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/hostile/bee,
+		/mob/living/simple_animal/hostile/carp,
+	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))

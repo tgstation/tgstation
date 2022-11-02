@@ -162,7 +162,7 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(has_cap && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(has_cap && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		is_capped = !is_capped
 		to_chat(user, span_notice("The cap on [src] is now [is_capped ? "on" : "off"]."))
 		update_appearance()
@@ -612,6 +612,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	desc = "A metallic container containing tasty paint."
 	w_class = WEIGHT_CLASS_SMALL
+	custom_price = PAYCHECK_CREW * 2.5
 
 	instant = TRUE
 	edible = FALSE

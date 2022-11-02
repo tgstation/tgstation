@@ -23,6 +23,8 @@
 	var/cooldown = 0
 
 	var/clothing_flags = NONE
+	///List of items that can be equipped in the suit storage slot while we're worn.
+	var/list/allowed
 
 	var/can_be_bloody = TRUE
 
@@ -53,6 +55,7 @@
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
 		LoadComponent(/datum/component/bloodysoles)
+	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
 
@@ -104,8 +107,8 @@
 	else
 		qdel(src)
 
-/obj/item/clothing/attack(mob/living/M, mob/living/user, params)
-	if(user.combat_mode || !ismoth(M) || ispickedupmob(src))
+/obj/item/clothing/attack(mob/living/target, mob/living/user, params)
+	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
 		return ..()
 	if(clothing_flags & INEDIBLE_CLOTHING)
 		return ..()
@@ -113,7 +116,7 @@
 		moth_snack = new
 		moth_snack.name = name
 		moth_snack.clothing = WEAKREF(src)
-	moth_snack.attack(M, user, params)
+	moth_snack.attack(target, user, params)
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))
@@ -309,7 +312,7 @@
 		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee)
 			readout += "\n<b>ARMOR (I-X)</b>"
 			if(armor.bio)
-				readout += "\nTOXIN [armor_to_protection_class(armor.bio)]"
+				readout += "\nBIOHAZARD [armor_to_protection_class(armor.bio)]"
 			if(armor.bomb)
 				readout += "\nEXPLOSIVE [armor_to_protection_class(armor.bomb)]"
 			if(armor.bullet)

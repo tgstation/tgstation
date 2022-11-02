@@ -472,21 +472,23 @@
 	return FALSE
 
 /// Returns whether the given mob is convertable to the blood cult
-/proc/is_convertable_to_cult(mob/living/M, datum/team/cult/specific_cult)
-	if(!istype(M))
+/proc/is_convertable_to_cult(mob/living/target, datum/team/cult/specific_cult)
+	if(!istype(target))
 		return FALSE
-	if(M.mind)
-		if(ishuman(M) && (M.mind.holy_role))
+	if(target.mind)
+		if(ishuman(target) && (target.mind.holy_role))
 			return FALSE
-		if(specific_cult?.is_sacrifice_target(M.mind))
+		if(specific_cult?.is_sacrifice_target(target.mind))
 			return FALSE
-		if(M.mind.enslaved_to && !IS_CULTIST(M.mind.enslaved_to))
+		if(target.mind.enslaved_to && !IS_CULTIST(target.mind.enslaved_to))
 			return FALSE
-		if(M.mind.unconvertable)
+		if(target.mind.unconvertable)
+			return FALSE
+		if(target.mind.has_antag_datum(/datum/antagonist/heretic))
 			return FALSE
 	else
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || !M.client)
+	if(HAS_TRAIT(target, TRAIT_MINDSHIELD) || issilicon(target) || isbot(target) || isdrone(target) || !target.client)
 		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
 
