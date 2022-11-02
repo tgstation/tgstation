@@ -523,7 +523,6 @@
 		coffeepot = new /obj/item/reagent_containers/cup/coffeepot(src)
 		cartridge = null
 
-
 /obj/machinery/coffeemaker/impressa/Destroy()
 	QDEL_NULL(coffeepot)
 	QDEL_NULL(coffee)
