@@ -107,6 +107,11 @@
 	// Chosen because mothblocks liked it, didn't cause motion sickness while also giving a sense of height
 	var/scale_by = 0.965
 	if(!use_scale)
+		// This is a workaround for two things
+		// First of all, if a mob can see objects but not turfs, they will not be shown the holder objects we use for
+		// What I'd like to do is revert to images if this case throws, but image vis_contents is broken
+		// https://www.byond.com/forum/post/2821969
+		// If that's ever fixed, please just use that. thanks :)
 		scale_by = 1
 
 	var/list/offsets = list()
