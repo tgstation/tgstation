@@ -97,7 +97,7 @@
 				return TRUE
 
 			dispense(/obj/item/tank/internals/oxygen, usr)
-			plasmatanks--
+			oxygentanks--
 
 	update_appearance()
 	return TRUE
