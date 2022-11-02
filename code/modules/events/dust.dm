@@ -49,11 +49,10 @@
 
 /datum/round_event_control/sandstorm
 	name = "Space Dust: Sandstorm"
-	typepath = /datum/round_event/sandstorm
-	weight = 8
-	max_occurrences = 1
-	min_players = 35
-	earliest_start = 30 MINUTES
+	typepath = /datum/round_event/sandstorm //comments below are comparison for catastropic meteor wave numbers
+	max_occurrences = 3 //3
+	min_players = 35 //25
+	earliest_start = 30 MINUTES //45
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."
 	///Where will the sandstorm be coming from -- Established in admin_setup, passed down to round_event
@@ -74,6 +73,7 @@
 				start_side = EAST
 			if("Left")
 				start_side = WEST
+
 /datum/round_event/sandstorm
 	start_when = 60
 	end_when = 90
@@ -82,7 +82,7 @@
 	var/start_side
 
 /datum/round_event/sandstorm/setup()
-	start_when = rand(50, 70) //20 seconds makes a big difference here
+	start_when = rand(50, 70)
 	start_when = 60
 
 /datum/round_event/sandstorm/announce(fake)
@@ -103,8 +103,7 @@
 		if(WEST)
 			start_side_text = "port"
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
-						Engineering intervention and use of shield generators may be required to prevent serious \
-						damage to external fittings and fixtures.", "Collision Priority Alert")
+						All employees are encouraged to assist in repairs or mitigation of damage to external fittings and fixtures.", "Collision Priority Alert")
 
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(15, GLOB.meteorsE, start_side)
