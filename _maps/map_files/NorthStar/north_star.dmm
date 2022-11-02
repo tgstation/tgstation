@@ -1654,6 +1654,10 @@
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron/dark/smooth_large,
 /area/space)
+"axF" = (
+/obj/machinery/gateway/centerstation,
+/turf/open/floor/iron/dark,
+/area/station/command/gateway)
 "axG" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -4546,6 +4550,9 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron/kitchen,
 /area/space)
+"bmT" = (
+/turf/closed/wall,
+/area/station/command/gateway)
 "bne" = (
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor3/port/fore)
@@ -20962,6 +20969,13 @@
 /obj/item/mop,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/fore)
+"gBU" = (
+/obj/item/radio/intercom/directional/north,
+/obj/structure/sign/poster/official/random/directional/west,
+/turf/open/floor/iron/dark/side{
+	dir = 9
+	},
+/area/station/hallway/floor4/fore)
 "gBX" = (
 /obj/effect/turf_decal/trimline/blue/corner,
 /obj/structure/window/spawner/east,
@@ -22224,6 +22238,9 @@
 	},
 /turf/open/floor/wood/large,
 /area/space)
+"gYS" = (
+/turf/closed/wall/r_wall,
+/area/station/hallway/floor4/fore)
 "gZf" = (
 /obj/machinery/camera/autoname/directional/west,
 /obj/structure/table,
@@ -28359,6 +28376,9 @@
 	},
 /turf/open/floor/carpet/red,
 /area/space)
+"iXS" = (
+/turf/closed/wall/r_wall,
+/area/station/command/gateway)
 "iYq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -36303,8 +36323,7 @@
 /turf/open/floor/iron/dark,
 /area/space)
 "lui" = (
-/obj/item/radio/intercom/directional/north,
-/turf/open/floor/iron/dark/side{
+/turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
 /area/station/hallway/floor4/fore)
@@ -39784,10 +39803,8 @@
 /turf/open/floor/engine,
 /area/station/maintenance/floor4/starboard/aft)
 "mvw" = (
-/obj/machinery/light/directional/north,
-/obj/structure/sign/poster/official/random/directional/north,
-/turf/open/floor/iron/dark/side{
-	dir = 1
+/turf/open/floor/iron/dark/corner{
+	dir = 4
 	},
 /area/station/hallway/floor4/fore)
 "mvJ" = (
@@ -40142,6 +40159,9 @@
 	dir = 4
 	},
 /area/space)
+"mBt" = (
+/turf/open/floor/iron/dark,
+/area/station/command/gateway)
 "mBP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47258,10 +47278,7 @@
 /area/station/medical/psychology)
 "oCx" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/sign/poster/official/random/directional/north,
-/turf/open/floor/iron/dark/side{
-	dir = 1
-	},
+/turf/open/floor/iron,
 /area/station/hallway/floor4/fore)
 "oCF" = (
 /turf/open/openspace,
@@ -63052,6 +63069,12 @@
 	},
 /turf/open/floor/noslip,
 /area/space)
+"tIy" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/station/hallway/floor4/fore)
 "tIF" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -72665,6 +72688,12 @@
 "wFY" = (
 /turf/open/floor/wood,
 /area/station/hallway/floor3/fore)
+"wGb" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
+/area/station/hallway/floor4/fore)
 "wGg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -72989,6 +73018,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood/large,
 /area/space)
+"wJT" = (
+/turf/open/floor/iron,
+/area/station/hallway/floor4/fore)
 "wKa" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -299872,17 +299904,17 @@ nPE
 hWu
 hWu
 nPE
-owI
-owI
-owI
-wdL
+mBt
+mBt
+mBt
+iXS
 sdB
 hNh
 hNh
 hNh
 sdB
 wdL
-gxn
+yeq
 uPX
 gRe
 raq
@@ -300129,16 +300161,16 @@ nPE
 hWu
 nPE
 nPE
-owI
-owI
-owI
-wdL
-wdL
-wdL
-wdL
-wdL
-wdL
-wdL
+mBt
+mBt
+mBt
+iXS
+iXS
+iXS
+iXS
+iXS
+gYS
+gYS
 rPF
 uPX
 mSP
@@ -300385,17 +300417,17 @@ keh
 nPE
 hWu
 nPE
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-wdL
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+iXS
+gBU
+tIy
 lui
 uPX
 gRe
@@ -300642,17 +300674,17 @@ bpF
 nPE
 hWu
 nPE
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-wdL
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+gxn
+wJT
 oCx
 uPX
 gRe
@@ -300899,18 +300931,18 @@ bpF
 nPE
 hWu
 nPE
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-wdL
-yeq
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+gxn
+wJT
+wJT
 uPX
 mVq
 wdL
@@ -301156,18 +301188,18 @@ bpF
 nPE
 hWu
 nPE
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-myO
+mBt
+axF
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
 gxn
+wJT
+wJT
 cKO
 kTm
 wdL
@@ -301413,17 +301445,17 @@ gDy
 nPE
 hWu
 nPE
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-owI
-myO
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+mBt
+bmT
+xUQ
+wGb
 mvw
 uPX
 moj
@@ -301671,16 +301703,16 @@ nPE
 nPE
 nPE
 nPE
-wdL
-wdL
-wdL
-wdL
-wdL
-wdL
-wdL
-myO
-myO
-myO
+iXS
+iXS
+iXS
+iXS
+iXS
+iXS
+iXS
+bmT
+hIb
+hIb
 gir
 lrV
 bOZ
