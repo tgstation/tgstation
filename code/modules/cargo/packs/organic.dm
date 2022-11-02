@@ -336,7 +336,7 @@
 
 /datum/supply_pack/organic/syrup
 	name = "Coffee Syrups Box"
-	desc = "A packaged box of various syrups, perfect to make your delicious coffee even more diabetic."
+	desc = "A packaged box of various syrups, perfect for making your delicious coffee even more diabetic."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel,
 					/obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur,
