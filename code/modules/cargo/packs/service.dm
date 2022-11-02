@@ -264,7 +264,7 @@
 
 /datum/supply_pack/service/coffeemaker
 	name = "Impressa Coffeemaker Crate"
-	desc = "A assembled Impressa model coffeemaker."
+	desc = "An assembled Impressa model coffeemaker."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/machinery/coffeemaker/impressa)
 	crate_name = "coffeemaker crate"
