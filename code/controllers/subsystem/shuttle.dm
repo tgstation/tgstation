@@ -86,6 +86,8 @@ SUBSYSTEM_DEF(shuttle)
 	/// Queued supplies to be purchased for the chef.
 	var/list/chef_groceries = list()
 
+	var/list/mining_groceries = list()
+
 	/// Queued supply packs to be purchased.
 	var/list/shopping_list = list()
 

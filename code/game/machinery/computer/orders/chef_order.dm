@@ -136,16 +136,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			var/message = "The kitchen has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!"
 			radio.talk_into(src, message, radio_channel)
 			COOLDOWN_START(src, order_cooldown, 60 SECONDS)
-			for(var/datum/orderable_item/ordered_item in grocery_list)
-				if(!(ordered_item in order_categories))
-					grocery_list.Remove(ordered_item)
-					continue
-				if(ordered_item in SSshuttle.chef_groceries)
-					SSshuttle.chef_groceries[ordered_item] += grocery_list[ordered_item]
-				else
-					SSshuttle.chef_groceries[ordered_item] = grocery_list[ordered_item]
-			grocery_list.Cut()
-			update_static_data(chef)
+			order_groceries()
 		if("express")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
@@ -181,3 +172,15 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list.Cut()
 			update_static_data(chef)
 	return TRUE
+
+/obj/machinery/computer/order_console/proc/order_groceries()
+	for(var/datum/orderable_item/ordered_item in grocery_list)
+		if(!(ordered_item in order_categories))
+			grocery_list.Remove(ordered_item)
+			continue
+		if(ordered_item in SSshuttle.chef_groceries)
+			SSshuttle.chef_groceries[ordered_item] += grocery_list[ordered_item]
+		else
+			SSshuttle.chef_groceries[ordered_item] = grocery_list[ordered_item]
+	grocery_list.Cut()
+	update_static_data(chef)

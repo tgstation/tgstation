@@ -14,18 +14,17 @@
 		CATEGORY_PKA,
 	)
 
-/obj/machinery/computer/order_console/mining/golem
-	name = "golem ship equipment vendor"
-	circuit = /obj/item/circuitboard/computer/order_console/mining/golem
-	forced_express = TRUE
-	express_cost_multiplier = 1
-	order_categories = list(
-		CATEGORY_GOLEM,
-		CATEGORY_MINING,
-		CATEGORY_CONSUMABLES,
-		CATEGORY_TOYS_DRONE,
-		CATEGORY_PKA,
-	)
+/obj/machinery/computer/order_console/mining/order_groceries()
+	for(var/datum/orderable_item/ordered_item in grocery_list)
+		if(!(ordered_item in order_categories))
+			grocery_list.Remove(ordered_item)
+			continue
+		if(ordered_item in SSshuttle.mining_groceries)
+			SSshuttle.mining_groceries[ordered_item] += grocery_list[ordered_item]
+		else
+			SSshuttle.mining_groceries[ordered_item] = grocery_list[ordered_item]
+	grocery_list.Cut()
+	update_static_data(chef)
 
 /obj/machinery/computer/order_console/mining/ui_act(action, params)
 	. = ..()
@@ -94,7 +93,18 @@
 		return FALSE
 	return TRUE
 
-
+/obj/machinery/computer/order_console/mining/golem
+	name = "golem ship equipment vendor"
+	circuit = /obj/item/circuitboard/computer/order_console/mining/golem
+	forced_express = TRUE
+	express_cost_multiplier = 1
+	order_categories = list(
+		CATEGORY_GOLEM,
+		CATEGORY_MINING,
+		CATEGORY_CONSUMABLES,
+		CATEGORY_TOYS_DRONE,
+		CATEGORY_PKA,
+	)
 
 /**********************Mining Equipment Voucher**********************/
 
