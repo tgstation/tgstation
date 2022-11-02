@@ -271,6 +271,9 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	name = "mining radio headset"
 	desc = "Headset used by shaft miners."
 	icon_state = "mine_headset"
+	// "puts the antenna down" while the headset is off
+	overlay_speaker_idle = "headset_up"
+	overlay_mic_idle = "headset_up"
 	keyslot = /obj/item/encryptionkey/headset_mining
 
 /obj/item/radio/headset/headset_srv

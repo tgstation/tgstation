@@ -75,14 +75,14 @@
 	var/list/secure_radio_connections
 
 	/// overlay when speaker is on
-	var/overlay_speaker_idle = "default_s_idle"
+	var/overlay_speaker_idle = "s_idle"
 	/// overlay when recieving a message
-	var/overlay_speaker_active "default_s_active"
+	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
-	var/overlay_mic_idle = "default_m_idle"
+	var/overlay_mic_idle = "m_idle"
 	/// overlay when speaking a message (will most likely be displayed at same time as the speaker active, please account for this.)
-	var/overlay_mic_active = "default_m_active"
+	var/overlay_mic_active = "m_active"
 
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
