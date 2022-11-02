@@ -147,10 +147,15 @@
 
 /obj/machinery/coffeemaker/update_overlays()
 	. = ..()
+	. += overlay_checks()
+
+/obj/machinery/coffeemaker/proc/overlay_checks()
+	. = list()
 	if(coffeepot)
 		. += "coffeemaker_pot"
 	if(cartridge)
 		. += "coffeemaker_cartidge"
+	return
 
 /obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/cup/coffeepot/new_coffeepot)
 	if(!user)
@@ -541,6 +546,10 @@
 
 /obj/machinery/coffeemaker/impressa/update_overlays()
 	. = ..()
+	. += overlay_checks()
+
+/obj/machinery/coffeemaker/impressa/overlay_checks()
+	. = list()
 	if(coffeepot)
 		if(coffeepot.reagents.total_volume > 0)
 			. += "pot_full"
@@ -565,6 +574,7 @@
 			. += "grinder_half"
 		else
 			. += "grinder_full"
+	return
 
 /obj/machinery/coffeemaker/impressa/handle_atom_del(atom/A)
 	. = ..()
