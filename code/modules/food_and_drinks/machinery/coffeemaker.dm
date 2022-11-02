@@ -514,7 +514,7 @@
 	pass_flags = PASSTABLE
 
 	//this type of coffeemaker takes fresh whole beans insted of cartidges
-	var/list/coffee= list()
+	var/list/coffee = list()
 	var/coffee_amount = 0
 
 /obj/machinery/coffeemaker/impressa/Initialize(mapload)
