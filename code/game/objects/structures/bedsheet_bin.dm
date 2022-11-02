@@ -116,7 +116,7 @@ LINEN BINS
 	// double check the canUseTopic args to make sure it's correct
 	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		return
-	dir = dir & WEST ? EAST : WEST
+	dir = turn(dir, 180)
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"
