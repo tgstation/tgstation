@@ -130,7 +130,7 @@
 /// Returns the cards in this deck.
 /// Lazily generates the cards if they haven't already been made.
 /obj/item/toy/cards/proc/fetch_card_atoms()
-	RETURN_TYPE(list/obj/item/toy/singlecard)
+	RETURN_TYPE(/list/obj/item/toy/singlecard)
 
 	if (!isnull(card_atoms))
 		return card_atoms
