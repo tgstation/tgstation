@@ -12,7 +12,7 @@
 #define PROC_REF(X) (.proc/##X)
 #define TYPE_PROC_REF(TYPE, X) (##TYPE.proc/##X)
 #define PROC_REF_STATIC(X) (.proc/##X)
-#define GLOBAL_PROC_REF(X) (.proc/##X)
+#define GLOBAL_PROC_REF(X) (/proc/##X)
 #else
 // In 515 proc refs in call() use the proc on given type instead of most specific override so we have to use names
 #define PROC_REF(X) (#X || src::##X())
