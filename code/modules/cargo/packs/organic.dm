@@ -348,7 +348,7 @@
 /datum/supply_pack/organic/syrup_contraband
 	contraband = TRUE
 	name = "Contraband Syrups Box"
-	desc = "A packaged box containing illegal coffee syrups. Possesion of these carries a penalty established in the galactic penal code"
+	desc = "A packaged box containing illegal coffee syrups. Possession of these carries a penalty established in the galactic penal code."
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup,
 					/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup,
