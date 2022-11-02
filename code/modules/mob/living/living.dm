@@ -1319,7 +1319,7 @@
 				/mob/living/simple_animal/crab,
 				/mob/living/simple_animal/pet/dog/pug,
 				/mob/living/simple_animal/pet/cat,
-				/mob/living/simple_animal/mouse,
+				/mob/living/basic/mouse,
 				/mob/living/simple_animal/chicken,
 				/mob/living/basic/cow,
 				/mob/living/simple_animal/hostile/lizard,
@@ -2172,7 +2172,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	. = body_position
 	body_position = new_value
-	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION)
+	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION, new_value, .)
 	if(new_value == LYING_DOWN) // From standing to lying down.
 		on_lying_down()
 	else // From lying down to standing up.

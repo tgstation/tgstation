@@ -226,17 +226,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/name_part1
 	var/name_part2
 
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_halloween")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_halloween")
-	else if(SSevents.holidays && SSevents.holidays[CHRISTMAS])
+	else if(check_holidays(CHRISTMAS))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_xmas")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
-	else if(SSevents.holidays && SSevents.holidays[VALENTINES])
+	else if(check_holidays(VALENTINES))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_valentines")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
@@ -561,7 +561,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				obj_flags &= ~EMAGGED
 				xp_gained += 100
 			else
-				prizevend(user)
+				new /obj/item/stack/arcadeticket((get_turf(src)), 2)
+				to_chat(user, span_notice("[src] dispenses 2 tickets!"))
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 			user.won_game()
@@ -666,7 +667,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		user.won_game()
 		playsound(src, 'sound/arcade/win.ogg', 50, TRUE)
-		prizevend(user, rand(3,5))
+		new /obj/item/stack/arcadeticket((get_turf(src)), rand(6,10))
+		to_chat(user, span_notice("[src] dispenses a handful of tickets!"))
 		return
 	else if(!do_they_still_have_that_hand(user, chopchop))
 		to_chat(user, span_warning("The guillotine drops, but your hand seems to be gone already!"))

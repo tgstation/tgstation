@@ -36,7 +36,10 @@
 	var/obj/item/back = null
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/neck/wear_neck = null
+	/// Equipped air tank. Never set this manually.
 	var/obj/item/tank/internal = null
+	/// "External" air tank. Never set this manually. Not required to stay directly equipped on the mob (i.e. could be a machine or MOD suit module).
+	var/obj/item/tank/external = null
 	var/obj/item/clothing/head = null
 
 	///only used by humans
@@ -70,10 +73,10 @@
 	var/list/bodyparts = list(
 		/obj/item/bodypart/chest,
 		/obj/item/bodypart/head,
-		/obj/item/bodypart/l_arm,
-		/obj/item/bodypart/r_arm,
-		/obj/item/bodypart/r_leg,
-		/obj/item/bodypart/l_leg,
+		/obj/item/bodypart/arm/left,
+		/obj/item/bodypart/arm/right,
+		/obj/item/bodypart/leg/right,
+		/obj/item/bodypart/leg/left,
 	)
 
 	/// A collection of arms (or actually whatever the fug /bodyparts you monsters use to wreck my systems)

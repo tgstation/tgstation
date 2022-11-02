@@ -24,11 +24,11 @@
 	ass_image = 'icons/ass/assslime.png'
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/jelly,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/jelly,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/jelly,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/jelly,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/jelly,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/jelly,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/jelly,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/jelly,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/jelly,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
 	)
 
@@ -155,11 +155,11 @@
 	var/datum/action/innate/swap_body/swap_body
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/slime,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/slime,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/slime,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/slime,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/slime,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/slime,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/slime,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/slime,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/slime,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slime,
 	)
 
@@ -442,11 +442,11 @@
 	id = SPECIES_LUMINESCENT
 	examine_limb_id = SPECIES_LUMINESCENT
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/luminescent,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/luminescent,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/luminescent,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/luminescent,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/luminescent,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/luminescent,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/luminescent,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/luminescent,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/luminescent,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/luminescent,
 	)
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW

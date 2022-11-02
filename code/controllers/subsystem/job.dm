@@ -629,13 +629,13 @@ SUBSYSTEM_DEF(job)
 			var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
 			var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
 
-			if(default_positions)
+			if(default_positions || default_positions == 0) // We need to account for jobs that were intentionally turned off via config too.
 				occupation.total_positions = default_positions
-			if(starting_positions)
+			if(starting_positions || starting_positions == 0)
 				occupation.spawn_positions = starting_positions
-			if(playtime_requirements)
+			if(playtime_requirements || playtime_requirements == 0)
 				occupation.exp_requirements = playtime_requirements
-			if(required_account_age)
+			if(required_account_age || required_account_age == 0)
 				occupation.minimal_player_age = required_account_age
 
 		return
@@ -729,13 +729,13 @@ SUBSYSTEM_DEF(job)
 		var/job_name = occupation.title
 		var/job_key = occupation.config_tag
 
-		var/default_positions = job_config[job_key][TOTAL_POSITIONS]
-		var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
-		var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
-		var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
-
 		// When we regenerate, we want to make sure commented stuff stays commented, but we also want to migrate information that remains uncommented. So, let's make sure we keep that pattern.
 		if(job_config["[job_key]"]) // Let's see if any data for this job exists.
+			var/default_positions = job_config[job_key][TOTAL_POSITIONS]
+			var/starting_positions = job_config[job_key][SPAWN_POSITIONS]
+			var/playtime_requirements = job_config[job_key][PLAYTIME_REQUIREMENTS]
+			var/required_account_age = job_config[job_key][REQUIRED_ACCOUNT_AGE]
+
 			if(file_data["[job_key]"]) // Sanity, let's just make sure we don't overwrite anything or add any dupe keys. We also unit test for this, but eh, you never know sometimes.
 				stack_trace("We were about to over-write a job key that already exists in file_data while generating a new jobconfig.toml! This should not happen! Verify you do not have any duplicate job keys in your codebase!")
 				continue
