@@ -80,8 +80,7 @@
 	var/obj/item/stock_parts/cell/cell
 
 /obj/item/mod/core/standard/Destroy()
-	if(cell)
-		QDEL_NULL(cell)
+	QDEL_NULL(cell)
 	return ..()
 
 /obj/item/mod/core/standard/install(obj/item/mod/control/mod_unit)
