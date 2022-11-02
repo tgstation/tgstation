@@ -8,6 +8,12 @@
 	dog_fashion = null
 	unscrewed = FALSE
 
+	overlay_speaker_idle = "intercom_s"
+	overlay_speaker_active = "intercom_s"
+
+	overlay_mic_idle = "intercom_m"
+	overlay_mic_active = "intercom_m"
+
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
 

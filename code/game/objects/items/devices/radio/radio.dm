@@ -74,6 +74,16 @@
 	/// associative list of the encrypted radio channels this radio can listen/broadcast to, of the form: list(channel name = channel frequency)
 	var/list/secure_radio_connections
 
+	/// overlay when speaker is on
+	var/overlay_speaker_idle = "default_s_idle"
+	/// overlay when recieving a message
+	var/overlay_speaker_active "default_s_active"
+
+	/// overlay when mic is on
+	var/overlay_mic_idle = "default_m_idle"
+	/// overlay when speaking a message (will most likely be displayed at same time as the speaker active, please account for this.)
+	var/overlay_mic_active = "default_m_active"
+
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
 	secure_radio_connections = list()
@@ -190,6 +200,7 @@
 		readd_listening_radio_channels()
 	else if(!listening)
 		remove_radio_all(src)
+	update_icon()
 
 /**
  * setter for broadcasting that makes us not hearing sensitive if not broadcasting and hearing sensitive if broadcasting
@@ -208,6 +219,7 @@
 		become_hearing_sensitive(INNATE_TRAIT)
 	else if(!broadcasting)
 		lose_hearing_sensitivity(INNATE_TRAIT)
+	update_icon()
 
 ///setter for the on var that sets both broadcasting and listening to off or whatever they were supposed to be
 /obj/item/radio/proc/set_on(new_on)
@@ -244,6 +256,8 @@
 
 	if(use_command)
 		spans |= SPAN_COMMAND
+
+	flick_overlay(overlay_mic_active)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -437,6 +451,14 @@
 		. += span_notice("It can be attached and modified.")
 	else
 		. += span_notice("It cannot be modified or attached.")
+
+/obj/item/radio/update_overlays()
+	if(unscrewed)
+		return
+	if(broadcasting)
+		add_overlay(overlay_mic_idle)
+	if(listening)
+		add_overlay(overlay_speaker_idle)
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
