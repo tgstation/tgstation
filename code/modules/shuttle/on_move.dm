@@ -154,7 +154,7 @@ All ShuttleMove procs go here
 		return TRUE
 
 	contents -= oldT
-	contained_turfs -= oldT
+	turfs_to_uncontain += oldT
 	underlying_old_area.contents += oldT
 	underlying_old_area.contained_turfs += oldT
 	oldT.transfer_area_lighting(src, underlying_old_area)
@@ -164,7 +164,7 @@ All ShuttleMove procs go here
 	parallax_movedir = old_dest_area.parallax_movedir
 
 	old_dest_area.contents -= newT
-	old_dest_area.contained_turfs -= newT
+	old_dest_area.turfs_to_uncontain += newT
 	contents += newT
 	contained_turfs += newT
 	newT.transfer_area_lighting(old_dest_area, src)

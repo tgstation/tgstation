@@ -604,7 +604,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(!midpoint)
 		return FALSE
 	var/area/old_area = midpoint.loc
-	old_area.contained_turfs -= proposal.reserved_turfs
+	old_area.turfs_to_uncontain += proposal.reserved_turfs
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
 	A.contents = proposal.reserved_turfs

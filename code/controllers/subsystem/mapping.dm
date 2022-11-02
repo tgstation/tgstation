@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(mapping)
 			LAZYINITLIST(unused_turfs["[T.z]"])
 			unused_turfs["[T.z]"] |= T
 			var/area/old_area = T.loc
-			old_area.contained_turfs -= T
+			old_area.turfs_to_uncontain += T
 			T.flags_1 |= UNUSED_RESERVATION_TURF
 			world_contents += T
 			world_turf_contents += T
@@ -368,13 +368,13 @@ Used by the AI doomsday and the self-destruct nuke.
 	var/start_z = world.maxz + 1
 	var/i = 0
 	for (var/level in traits)
-		add_new_zlevel("[name][i ? " [i + 1]" : ""]", level)
+		add_new_zlevel("[name][i ? " [i + 1]" : ""]", level, contain_turfs = FALSE)
 		++i
 
 	// load the maps
 	for (var/P in parsed_maps)
 		var/datum/parsed_map/pm = P
-		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE))
+		if (!pm.load(1, 1, start_z + parsed_maps[P], no_changeturf = TRUE, new_z = TRUE))
 			errorList |= pm.original_path
 	if(!silent)
 		INIT_ANNOUNCE("Loaded [name] in [(REALTIMEOFDAY - start_time)/10]s!")
@@ -429,7 +429,7 @@ Used by the AI doomsday and the self-destruct nuke.
 GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/generate_station_area_list()
-	for(var/area/station/station_area in world)
+	for(var/area/station/station_area in GLOB.areas)
 		if (!(station_area.area_flags & UNIQUE_AREA))
 			continue
 		if (is_station_level(station_area.z))
@@ -439,7 +439,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		log_world("ERROR: Station areas list failed to generate!")
 
 /datum/controller/subsystem/mapping/proc/run_map_generation()
-	for(var/area/A in world)
+	for(var/area/A as anything in GLOB.areas)
 		A.RunGeneration()
 
 /datum/controller/subsystem/mapping/proc/maprotate()
@@ -722,7 +722,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /// Takes a z level datum, and tells the mapping subsystem to manage it
 /// Also handles things like plane offset generation, and other things that happen on a z level to z level basis
-/datum/controller/subsystem/mapping/proc/manage_z_level(datum/space_level/new_z, filled_with_space)
+/datum/controller/subsystem/mapping/proc/manage_z_level(datum/space_level/new_z, filled_with_space, contain_turfs = TRUE)
 	// First, add the z
 	z_list += new_z
 
@@ -741,7 +741,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(below_offset)
 		update_plane_tracking(new_z)
 
-	build_area_turfs(z_value, filled_with_space)
+	if(contain_turfs)
+		build_area_turfs(z_value, filled_with_space)
 
 	// And finally, misc global generation
 

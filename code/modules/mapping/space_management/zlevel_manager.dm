@@ -19,7 +19,7 @@
 		manage_z_level(S, filled_with_space = FALSE)
 	generate_z_level_linkages() // Default Zs don't use add_new_zlevel() so they don't automatically generate z-linkages.
 
-/datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level)
+/datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level, contain_turfs = TRUE)
 	UNTIL(!adding_new_zlevel)
 	adding_new_zlevel = TRUE
 	var/new_z = z_list.len + 1
@@ -28,7 +28,8 @@
 		CHECK_TICK
 	// TODO: sleep here if the Z level needs to be cleared
 	var/datum/space_level/S = new z_type(new_z, name, traits)
-	manage_z_level(S, filled_with_space = TRUE)
+#warn clean up this logical flow, it's confusing and annoying
+	manage_z_level(S, filled_with_space = TRUE, contain_turfs = contain_turfs)
 	generate_linkages_for_z_level(new_z)
 	calculate_z_level_gravity(new_z)
 	adding_new_zlevel = FALSE

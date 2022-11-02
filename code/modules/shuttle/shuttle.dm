@@ -651,7 +651,7 @@
 		if(!oldT || !istype(oldT.loc, area_type))
 			continue
 		var/area/old_area = oldT.loc
-		old_area.contained_turfs -= oldT
+		old_area.turfs_to_uncontain += oldT
 		underlying_area.contents += oldT
 		underlying_area.contained_turfs += oldT
 		oldT.transfer_area_lighting(old_area, underlying_area)
@@ -959,6 +959,7 @@
 		distant_source = engine_list[1]
 	else
 		for(var/our_area in areas)
+#warn can this be made better, maybe?
 			distant_source = locate(/obj/machinery/door) in our_area
 			if(distant_source)
 				break

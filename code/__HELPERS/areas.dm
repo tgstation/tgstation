@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	for(var/i in 1 to length(turfs))
 		var/turf/thing = turfs[i]
 		var/area/old_area = thing.loc
-		old_area.contained_turfs -= thing
+		old_area.turfs_to_uncontain += thing
 		newA.contents += thing
 		newA.contained_turfs += thing
 		thing.transfer_area_lighting(old_area, newA)
@@ -147,10 +147,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 
 //Repopulates sortedAreas list
 /proc/repopulate_sorted_areas()
-	GLOB.sortedAreas = list()
-
-	for(var/area/A in world)
-		GLOB.sortedAreas.Add(A)
+	GLOB.sortedAreas = GLOB.areas.Copy()
 
 	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
 
@@ -179,11 +176,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 	var/list/areas = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(cache[area_to_check.type])
 				areas += area_to_check
 	else
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(area_to_check.type == areatype)
 				areas += area_to_check
 	return areas
@@ -206,24 +203,25 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 		areatype = areatemp.type
 	else if(!ispath(areatype))
 		return null
-
+#warn lemon todo: make this better
 	var/list/turfs = list()
 	if(subtypes)
 		var/list/cache = typecacheof(areatype)
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(!cache[area_to_check.type])
 				continue
 			for(var/turf/turf_in_area in area_to_check)
 				if(target_z == 0 || target_z == turf_in_area.z)
 					turfs += turf_in_area
 	else
-		for(var/area/area_to_check as anything in GLOB.sortedAreas)
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(area_to_check.type != areatype)
 				continue
 			for(var/turf/turf_in_area in area_to_check)
 				if(target_z == 0 || target_z == turf_in_area.z)
 					turfs += turf_in_area
 	return turfs
+#warn lemon todo: this too
 
 ///Takes: list of area types
 ///Returns: all mobs that are in an area type
