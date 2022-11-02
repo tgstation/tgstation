@@ -54,6 +54,9 @@
 			var/new_path = tgui_input_text(user, "New trophy path?", "Path Editing", trophy.path)
 			if(!new_path)
 				return
+			if(!text2path(new_path))
+				to_chat(user, span_warning("Invalid path selected"))
+				return
 			trophy.path = new_path
 			log_admin("[key_name(user)] has edited the item path of trophy made by [trophy.placer_key] from \"[old_path]\" to \"[new_path]\".")
 			return TRUE
