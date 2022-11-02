@@ -83,5 +83,4 @@
 
 /obj/structure/closet/supplypod/mechpod/handleReturnAfterDeparting(atom/movable/holder = src)
 	effectGib = TRUE
-	effectStealth = FALSE
 	return ..()
