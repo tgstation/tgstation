@@ -749,10 +749,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// We'll have to update this if offsets change, because we load lowest z to highest z
 	generate_lighting_appearance_by_z(z_value)
 
-/datum/controller/subsystem/mapping/proc/build_area_turfs(z_level, space_guarenteed)
+/datum/controller/subsystem/mapping/proc/build_area_turfs(z_level, space_guaranteed)
 	// If we know this is filled with default tiles, we can use the default area
 	// Faster
-	if(space_guarenteed)
+	if(space_guaranteed)
 		var/area/global_area = GLOB.areas_by_type[world.area]
 		global_area.contained_turfs += Z_TURFS(z_level)
 		return
