@@ -543,7 +543,7 @@
 		new /obj/item/reagent_containers/condiment/pack/sugar(src)
 	for(var/i = 1 to 3)
 		new /obj/item/reagent_containers/condiment/pack/astrotame(src)
-	for(var/i = 1 to 4)
+	for(var/i in 1 to 4)
 		new /obj/item/reagent_containers/condiment/creamer(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/condiment/chocolate(src)
