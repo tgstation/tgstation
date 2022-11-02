@@ -301,6 +301,7 @@
 /obj/machinery/light/small/built/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/oil,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "nQ" = (
@@ -388,7 +389,6 @@
 "pV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/ants,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -482,6 +482,8 @@
 	faction = list("spiders")
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/terminal,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "sY" = (
@@ -614,9 +616,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "Bu" = (
-/obj/machinery/power/terminal{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -800,7 +799,6 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "Il" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -813,6 +811,7 @@
 	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "Je" = (
