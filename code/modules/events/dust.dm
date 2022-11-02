@@ -107,3 +107,21 @@
 
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(15, GLOB.meteorsE, start_side)
+
+/datum/round_event_control/sandstorm_classic //Preserving the original event, in case it ever sees use.
+	name = "Space Dust: Classic Sandstorm"
+	typepath = /datum/round_event/sandstorm_classic
+	weight = 0
+	max_occurrences = 0 //Admin-only event
+	earliest_start = 0 MINUTES
+	category = EVENT_CATEGORY_SPACE
+	description = "The station is pelted by an extreme amount of sand, from all sides, for several minutes."
+
+/datum/round_event/sandstorm_classic
+	start_when = 1
+	end_when = 150 // ~5 min
+	announce_when = 0
+	fakeable = FALSE
+
+/datum/round_event/sandstorm_classic/tick()
+	spawn_meteors(10, GLOB.meteorsC)
