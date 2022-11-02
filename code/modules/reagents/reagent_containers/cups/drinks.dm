@@ -114,7 +114,7 @@
 	return
 
 /obj/item/reagent_containers/cup/glass/coffee/AltClick(mob/user)
-	lid_open = lid_open ? 0 : 1
+	lid_open = !lid_open
 	update_icon_state()
 	return ..()
 
