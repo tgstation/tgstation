@@ -26,7 +26,7 @@
 
 /obj/item/wrench/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/falling_hazard, force, wound_bonus, TRUE, FALSE, hitsound)
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 /obj/item/wrench/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

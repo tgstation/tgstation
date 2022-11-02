@@ -47,7 +47,7 @@
 		var/our_color = pick(wirecutter_colors)
 		set_greyscale(colors=list(wirecutter_colors[our_color]))
 
-	AddElement(/datum/element/falling_hazard, force, wound_bonus, TRUE, FALSE, hitsound)
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 	return ..()
 

@@ -110,7 +110,7 @@
 	. = ..()
 	book_data = new(starting_title, starting_author, starting_content)
 
-	AddElement(/datum/element/falling_hazard, 5, 0, TRUE, FALSE, drop_sound)
+	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
 
 /obj/item/book/proc/on_read(mob/living/user)
 	if(book_data?.content)
