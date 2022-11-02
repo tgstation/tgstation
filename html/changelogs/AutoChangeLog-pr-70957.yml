@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes:
+  - bugfix: "AIs no longer teleport gas tanks to them when ejecting tanks from atmos machinery"

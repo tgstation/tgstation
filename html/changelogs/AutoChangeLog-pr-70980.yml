@@ -1,0 +1,4 @@
+author: "Cheshify"
+delete-after: True
+changes:
+  - bugfix: "A design fault near the library has been removed, there is now a snack vendor within the library that was once in the hall."

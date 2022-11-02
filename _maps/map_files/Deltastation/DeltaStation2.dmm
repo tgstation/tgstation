@@ -1523,6 +1523,7 @@
 /obj/item/bedsheet/dorms{
 	dir = 1
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "aqW" = (
@@ -19117,10 +19118,10 @@
 /area/station/engineering/storage/tech)
 "eCO" = (
 /obj/item/stack/cable_coil,
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 3
 	},
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -3
 	},
 /obj/structure/table,
@@ -45860,10 +45861,10 @@
 "lbz" = (
 /obj/structure/table/reinforced,
 /obj/item/bodypart/chest/robot,
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 6
 	},
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -6
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -56637,6 +56638,7 @@
 /obj/item/bedsheet/dorms,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/start/hangover,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "nKA" = (
@@ -60482,6 +60484,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
 /obj/machinery/status_display/evac/directional/east,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "oLT" = (
@@ -65392,6 +65395,7 @@
 	dir = 1
 	},
 /obj/machinery/status_display/evac/directional/north,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "pUp" = (
@@ -81528,8 +81532,8 @@
 "tTe" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/blue,
-/obj/item/bodypart/l_leg/robot,
-/obj/item/bodypart/r_leg/robot,
+/obj/item/bodypart/leg/left/robot,
+/obj/item/bodypart/leg/right/robot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -84456,6 +84460,7 @@
 /obj/item/bedsheet/dorms_double,
 /obj/machinery/status_display/evac/directional/east,
 /obj/effect/landmark/start/hangover,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "uEv" = (
