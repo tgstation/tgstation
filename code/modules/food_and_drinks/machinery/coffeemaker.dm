@@ -494,8 +494,6 @@
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(/obj/item/coffee_cartridge))
 
-
-
 /*
  * impressa coffee maker
  * its supposed to be a premium line product, so its cargo-only, the board cant be therefore researched
