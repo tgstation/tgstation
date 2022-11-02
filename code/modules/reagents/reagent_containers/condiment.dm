@@ -303,7 +303,7 @@
 
 /obj/item/reagent_containers/condiment/creamer
 	name = "coffee creamer pack"
-	desc = "better not wonder what they are making this from"
+	desc = "Better not think about what they're making this from."
 	icon_state = "condi_creamer"
 	volume = 5
 	list_reagents = list(/datum/reagent/consumable/creamer = 5)
