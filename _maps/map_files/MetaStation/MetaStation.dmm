@@ -5118,7 +5118,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/engine)
 "bQk" = (
-/obj/item/bodypart/l_arm,
+/obj/item/bodypart/arm/left,
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "bQs" = (
@@ -6036,7 +6036,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "cmH" = (
-/obj/item/bodypart/l_leg,
+/obj/item/bodypart/leg/left,
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "cnc" = (
@@ -65776,10 +65776,10 @@
 "xgi" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 3
 	},
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -3
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
@@ -66098,6 +66098,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/circuit/red,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"xlW" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/locker)
 "xmb" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/purple/visible{
 	dir = 4
@@ -100366,7 +100372,7 @@ jAO
 ejX
 qXV
 eVz
-pJE
+xlW
 sNJ
 hWF
 rxc
