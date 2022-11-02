@@ -9,13 +9,13 @@
 /obj/item/toy/cards/deck/kotahi/Initialize(mapload)
 	. = ..()
 	for(var/colour in list("Red","Yellow","Green","Blue"))
-		cards += new /obj/item/toy/singlecard(src, "[colour] 0", src) //kotahi decks have only one colour of each 0, weird huh?
+		initial_cards += "[colour] 0" //kotahi decks have only one colour of each 0, weird huh?
 		for(var/k in 0 to 1) //two of each colour of number
-			cards += new /obj/item/toy/singlecard(src, "[colour] skip", src)
-			cards += new /obj/item/toy/singlecard(src, "[colour] reverse", src)
-			cards += new /obj/item/toy/singlecard(src, "[colour] draw 2", src)
+			initial_cards += "[colour] skip"
+			initial_cards += "[colour] reverse"
+			initial_cards += "[colour] draw 2"
 			for(var/i in 1 to 9)
-				cards += new /obj/item/toy/singlecard(src, "[colour] [i]", src)
+				initial_cards += "[colour] [i]"
 	for(var/k in 0 to 3) //4 wilds and draw 4s
-		cards += new /obj/item/toy/singlecard(src, "Wildcard", src)
-		cards += new /obj/item/toy/singlecard(src, "Draw 4", src)
+		initial_cards += "Wildcard"
+		initial_cards += "Draw 4"
