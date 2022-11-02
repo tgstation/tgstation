@@ -54,10 +54,8 @@ LINEN BINS
 /obj/item/bedsheet/attack(mob/living/target, mob/living/user)
 	if(!user.CanReach(target))
 		return
-	if(user.combat_mode)
+	if(user.combat_mode || target.body_position != LYING_DOWN)
 		return ..()
-	if(target.body_position != LYING_DOWN)
-		return
 	if(!user.dropItemToGround(src))
 		return
 
