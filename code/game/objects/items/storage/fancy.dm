@@ -506,11 +506,12 @@
 /obj/item/storage/fancy/coffee_condi_display/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 14
-	atom_storage.set_holdable(list(/obj/item/reagent_containers/condiment/pack/sugar,
+	atom_storage.set_holdable(list(
+		/obj/item/reagent_containers/condiment/pack/sugar,
 		/obj/item/reagent_containers/condiment/creamer,
 		/obj/item/reagent_containers/condiment/pack/astrotame,
-		/obj/item/reagent_containers/condiment/chocolate,
-	))
+		/obj/item/reagent_containers/condiment/chocolate)
+		)
 
 /obj/item/storage/fancy/coffee_condi_display/update_overlays()
 	. = ..()

@@ -251,15 +251,14 @@
 	desc = "A complete kit to setup your own cozy coffee shop, the coffeemaker is for some reason not included."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/storage/box/coffeepack/robusta,
-					/obj/item/storage/box/coffeepack,
-					/obj/item/reagent_containers/cup/coffeepot,
-					/obj/item/storage/fancy/coffee_condi_display,
-					/obj/item/reagent_containers/cup/glass/bottle/juice/cream,
-					/obj/item/reagent_containers/condiment/milk,
-					/obj/item/reagent_containers/condiment/soymilk,
-					/obj/item/reagent_containers/condiment/sugar,
-					/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel, //one extra syrup as a treat
-				)
+		/obj/item/storage/box/coffeepack,
+		/obj/item/reagent_containers/cup/coffeepot,
+		/obj/item/storage/fancy/coffee_condi_display,
+		/obj/item/reagent_containers/cup/glass/bottle/juice/cream,
+		/obj/item/reagent_containers/condiment/milk,
+		/obj/item/reagent_containers/condiment/soymilk,
+		/obj/item/reagent_containers/condiment/sugar,
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel) //one extra syrup as a treat
 	crate_name = "coffee equippemnt crate"
 
 /datum/supply_pack/service/coffeemaker
