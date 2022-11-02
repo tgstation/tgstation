@@ -12046,7 +12046,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/mine/laborcamp/security)
 "dBx" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/light_switch/directional/south,
 /obj/machinery/newscaster/directional/east,
@@ -24971,7 +24971,7 @@
 /turf/open/floor/engine,
 /area/station/science/genetics)
 "hDx" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Mining Bunks";
@@ -31569,7 +31569,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "jHT" = (
-/obj/machinery/computer/chef_order{
+/obj/machinery/computer/order_console{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -44393,7 +44393,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "nFk" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -52112,7 +52112,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "pYl" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},

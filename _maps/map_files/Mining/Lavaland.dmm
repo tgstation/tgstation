@@ -1666,7 +1666,7 @@
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
 "kx" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
@@ -1804,7 +1804,7 @@
 /turf/open/floor/iron/dark,
 /area/mine/production)
 "lg" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},

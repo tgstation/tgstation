@@ -616,7 +616,7 @@
 	name = "Mining Rewards Vendor Board"
 	desc = "The circuit board for a Mining Rewards Vendor."
 	id = "mining_equipment_vendor"
-	build_path = /obj/item/circuitboard/machine/mining_equipment_vendor
+	build_path = /obj/item/circuitboard/computer/order_console/mining
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_CARGO
 	)
