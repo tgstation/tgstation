@@ -82,8 +82,8 @@
 	var/start_side
 
 /datum/round_event/sandstorm/setup()
-	start_when = rand(30, 60)
-	start_when = 45 //testing purposes
+	start_when = rand(50, 70) //20 seconds makes a big difference here
+	start_when = 60
 
 /datum/round_event/sandstorm/announce(fake)
 	var/datum/round_event_control/sandstorm/sandstorm_event = control
@@ -104,7 +104,7 @@
 			start_side_text = "port"
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
 						Engineering intervention and use of shield generators may be required to prevent serious \
-						damage to external fittings and fixtures.", "Collision Alert")
+						damage to external fittings and fixtures.", "Collision Priority Alert")
 
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(15, GLOB.meteorsE, start_side)
