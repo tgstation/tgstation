@@ -37,6 +37,7 @@
 	transform = M
 	icon = smooth_icon
 
+// Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
 	. = ..()
 	if(!isliving(bumped_atom))
