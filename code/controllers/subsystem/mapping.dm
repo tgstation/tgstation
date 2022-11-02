@@ -115,7 +115,7 @@ SUBSYSTEM_DEF(mapping)
 	initialize_biomes()
 	loadWorld()
 	determine_fake_sale()
-	repopulate_sorted_areas()
+	require_area_resort()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
 
@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(mapping)
 	run_map_generation()
 	// Add the transit level
 	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
-	repopulate_sorted_areas()
+	require_area_resort()
 	// Set up Z-level transitions.
 	setup_map_transitions()
 	generate_station_area_list()
