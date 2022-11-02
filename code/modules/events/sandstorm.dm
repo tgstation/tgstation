@@ -1,14 +1,14 @@
 /**
  * Sandstorm Event: Throws dust/sand at one side of the station. High-intensity and relatively short,
- * however the incoming direction is given, along with preparation time. With people actively making repairs
- * as the event happens damages can be mitigated, but leaving the event to run on its own can lead to widespread breaches.
+ * however the incoming direction is given, along with preparation time. Damages can be reduced or
+ * mitigated with a few people, but leaving the event to run on its own can lead to widespread breaches.
  *
  * Meant to be encountered mid-round, with enough spare manpower among the crew to properly respond.
  * Anyone with a welder or metal can contribute.
  */
 
 /datum/round_event_control/sandstorm
-	name = "Space Dust: Sandstorm"
+	name = "Sandstorm: Directional"
 	typepath = /datum/round_event/sandstorm //comments below are comparison for catastropic meteor wave numbers
 	max_occurrences = 3 //3
 	min_players = 35 //25
@@ -77,11 +77,11 @@
  * Uses space dust, meaning walls/rwalls are quickly chewed up very quickly.
  *
  * Super dangerous, super funny, preserved for future admin use in case the new event reminds
- * them that this exists.
+ * them that this exists. It is unchanged from its original form.
  */
 
 /datum/round_event_control/sandstorm_classic
-	name = "Space Dust: Classic Sandstorm"
+	name = "Sandstorm: Classic"
 	typepath = /datum/round_event/sandstorm_classic
 	weight = 0
 	max_occurrences = 0
