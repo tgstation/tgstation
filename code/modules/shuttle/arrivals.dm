@@ -36,7 +36,6 @@
 /obj/docking_port/mobile/arrivals/LateInitialize()
 	areas = list()
 
-#warn check this for overhead, and then see what walking the turfs manually does for us
 	var/list/new_latejoin = list()
 	for(var/area/shuttle/arrival/A in GLOB.areas)
 		for(var/obj/structure/chair/C in A)

@@ -959,7 +959,6 @@
 		distant_source = engine_list[1]
 	else
 		for(var/our_area in areas)
-#warn can this be made better, maybe?
 			distant_source = locate(/obj/machinery/door) in our_area
 			if(distant_source)
 				break
