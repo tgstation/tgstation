@@ -194,6 +194,11 @@
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
+	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // Why is this a component?
+	if(!istype(our_supermatter))
+		our_supermatter = null // so we don't runtime on the next line....
+	if(our_supermatter?.has_been_powered)
+		our_supermatter.log_activation(source = atom_source)
 	if(isliving(hit_object))
 		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 			span_userdanger("You slam into \the [atom_source] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
