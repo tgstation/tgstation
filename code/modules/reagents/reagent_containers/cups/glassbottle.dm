@@ -531,7 +531,7 @@
 	if(spillable)
 		return
 
-	if(!attacking_item.get_sharpness())
+	if(!(attacking_item.sharpness == SHARP_EDGED))
 		return
 
 	if(attacking_item.force < 5)
