@@ -539,7 +539,7 @@
 			break
 
 /obj/item/storage/fancy/coffee_condi_display/PopulateContents()
-	for(var/i = 1 to 4)
+	for(var/i in 1 to 4)
 		new /obj/item/reagent_containers/condiment/pack/sugar(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/condiment/pack/astrotame(src)
