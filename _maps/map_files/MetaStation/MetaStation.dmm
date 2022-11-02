@@ -30887,7 +30887,7 @@
 /area/station/maintenance/aft/greater)
 "lar" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/coffeepack/arabica{
+/obj/item/storage/box/coffeepack{
 	pixel_x = 15;
 	pixel_y = 10
 	},
@@ -57065,7 +57065,7 @@
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/storage/box/coffeepack/arabica,
+/obj/item/storage/box/coffeepack,
 /obj/item/storage/box/coffeepack/robusta,
 /obj/item/reagent_containers/condiment/soymilk,
 /obj/item/reagent_containers/condiment/milk,

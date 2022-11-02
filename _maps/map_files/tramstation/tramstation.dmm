@@ -898,7 +898,7 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/storage/box/coffeepack/arabica{
+/obj/item/storage/box/coffeepack{
 	pixel_x = -9;
 	pixel_y = 3
 	},
@@ -23211,7 +23211,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/storage/box/coffeepack/arabica{
+/obj/item/storage/box/coffeepack{
 	pixel_x = 8;
 	pixel_y = 12
 	},
