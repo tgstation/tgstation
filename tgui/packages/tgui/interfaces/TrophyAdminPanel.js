@@ -12,11 +12,11 @@ export const TrophyAdminPanel = (props, context) => {
         <Table>
           <Table.Row header>
             <Table.Cell color="label">Path</Table.Cell>
-            <Table.Cell color="label"></Table.Cell>
+            <Table.Cell color="label" />
             <Table.Cell color="label">Message</Table.Cell>
-            <Table.Cell color="label"></Table.Cell>
+            <Table.Cell color="label" />
             <Table.Cell color="label">Placer Key</Table.Cell>
-            <Table.Cell color="label"></Table.Cell>
+            <Table.Cell color="label" />
           </Table.Row>
           {!!trophies &&
             trophies.map((trophy) => (
@@ -36,9 +36,8 @@ export const TrophyAdminPanel = (props, context) => {
                     icon="edit"
                     tooltip={'Edit path'}
                     tooltipPosition="bottom"
-                    onClick={() =>
-                      act('edit_path', { ref: trophy.ref })
-                    }></Button>
+                    onClick={() => act('edit_path', { ref: trophy.ref })}
+                  />
                 </Table.Cell>
                 <Table.Cell
                   style={{
@@ -52,9 +51,8 @@ export const TrophyAdminPanel = (props, context) => {
                     icon="edit"
                     tooltip={'Edit message'}
                     tooltipPosition="bottom"
-                    onClick={() =>
-                      act('edit_message', { ref: trophy.ref })
-                    }></Button>
+                    onClick={() => act('edit_message', { ref: trophy.ref })}
+                  />
                 </Table.Cell>
                 <Table.Cell
                   style={{
@@ -68,7 +66,8 @@ export const TrophyAdminPanel = (props, context) => {
                     icon="trash"
                     tooltip={'Delete trophy'}
                     tooltipPosition="bottom"
-                    onClick={() => act('delete', { ref: trophy.ref })}></Button>
+                    onClick={() => act('delete', { ref: trophy.ref })}
+                  />
                 </Table.Cell>
               </Table.Row>
             ))}
