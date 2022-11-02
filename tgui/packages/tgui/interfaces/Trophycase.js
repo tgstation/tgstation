@@ -82,7 +82,7 @@ const HistorianPanel = (props, context) => {
         !holographic_showpiece &&
         !showpiece_description && (
           <Box>
-            New trophy detected. Please record a message to begin archival.
+            New trophy detected. Please record a description to begin archival.
           </Box>
         )}
     </Section>
@@ -110,7 +110,7 @@ const ShowpieceDescription = (props, context) => {
         <Box fill className="Trophycase-description">
           {showpiece_description
             ? decodeHtmlEntities(showpiece_description)
-            : "This exhibit under construction. Get the curator's key to finalize your contribution!"}
+            : "This exhibit is under construction. Get the curator's key to finalize your contribution!"}
         </Box>
       )}
     </Section>
