@@ -303,6 +303,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
+	job_preferences = SANITIZE_LIST(job_preferences)
+	all_quirks = SANITIZE_LIST(all_quirks)
 
 	//Validate job prefs
 	for(var/j in job_preferences)
