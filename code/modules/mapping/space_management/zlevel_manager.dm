@@ -28,7 +28,6 @@
 		CHECK_TICK
 	// TODO: sleep here if the Z level needs to be cleared
 	var/datum/space_level/S = new z_type(new_z, name, traits)
-#warn clean up this logical flow, it's confusing and annoying
 	manage_z_level(S, filled_with_space = TRUE, contain_turfs = contain_turfs)
 	generate_linkages_for_z_level(new_z)
 	calculate_z_level_gravity(new_z)
