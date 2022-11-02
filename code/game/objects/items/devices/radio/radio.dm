@@ -257,7 +257,7 @@
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	flick_overlay(overlay_mic_active)
+	flick_overlay_view(overlay_mic_active, src, 20)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -362,6 +362,9 @@
 			if(GLOB.radiochannels[ch_name] == text2num(input_frequency) || syndie)
 				return TRUE
 	return FALSE
+
+/obj/item/radio/proc/on_recieve_message()
+	flick_overlay_view(overlay_speaker_active, src, 20)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
