@@ -16,7 +16,7 @@
 
 /obj/machinery/computer/order_console/mining/order_groceries()
 	for(var/datum/orderable_item/ordered_item in grocery_list)
-		if(!(ordered_item in order_categories))
+		if(!(ordered_item.category_index in order_categories))
 			grocery_list.Remove(ordered_item)
 			continue
 		if(ordered_item in SSshuttle.mining_groceries)
@@ -24,7 +24,6 @@
 		else
 			SSshuttle.mining_groceries[ordered_item] = grocery_list[ordered_item]
 	grocery_list.Cut()
-	update_static_data(chef)
 
 /obj/machinery/computer/order_console/mining/ui_act(action, params)
 	. = ..()

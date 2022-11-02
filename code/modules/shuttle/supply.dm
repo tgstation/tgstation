@@ -117,12 +117,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.chef_groceries.Cut() //This lets the console know it can order another round.
 
 	if(SSshuttle.mining_groceries.len)
-		var/obj/structure/closet/crate/grocery_crate = new(pick_n_take(empty_turfs))
-		grocery_crate.name = "shaft miner delivery crate"
+		var/obj/structure/closet/crate/mining_crate = new(pick_n_take(empty_turfs))
+		mining_crate.name = "shaft miner delivery crate"
+		mining_crate.req_access = list(ACCESS_MINING)
 		investigate_log("Chef's [SSshuttle.mining_groceries.len] sized order arrived. Cost was deducted from orderer, not cargo.", INVESTIGATE_CARGO)
 		for(var/datum/orderable_item/item as anything in SSshuttle.mining_groceries)//every order
 			for(var/amt in 1 to SSshuttle.mining_groceries[item])//every order amount
-				new item.item_path(grocery_crate)
+				new item.item_path(mining_crate)
 		SSshuttle.mining_groceries.Cut() //This lets the console know it can order another round.
 
 	if(!SSshuttle.shopping_list.len)

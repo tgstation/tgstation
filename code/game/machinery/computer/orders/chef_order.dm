@@ -137,6 +137,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			radio.talk_into(src, message, radio_channel)
 			COOLDOWN_START(src, order_cooldown, 60 SECONDS)
 			order_groceries()
+			update_static_data(chef)
 		if("express")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
@@ -155,11 +156,14 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				if(!chef_card.registered_account.adjust_money(-final_cost, "Chef Order: Purchase"))
 					say("Sorry, but you do not have enough money. Remember, Express upcharges the cost!")
 					return
-			say("Thank you for your purchase! Please note: The charge of this purchase and machine cooldown has been doubled!")
+			var/say_message = "Thank you for your purchase!"
+			if(express_cost_multiplier > 1)
+				say_message += "Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
+			say(say_message)
 			COOLDOWN_START(src, order_cooldown, 120 SECONDS)
 			var/list/ordered_paths = list()
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
-				if(!(item in order_categories))
+				if(!(item.category_index in order_categories))
 					grocery_list.Remove(item)
 					continue
 				for(var/amt in 1 to grocery_list[item])//every order amount
@@ -175,7 +179,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/proc/order_groceries()
 	for(var/datum/orderable_item/ordered_item in grocery_list)
-		if(!(ordered_item in order_categories))
+		if(!(ordered_item.category_index in order_categories))
 			grocery_list.Remove(ordered_item)
 			continue
 		if(ordered_item in SSshuttle.chef_groceries)
@@ -183,4 +187,3 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		else
 			SSshuttle.chef_groceries[ordered_item] = grocery_list[ordered_item]
 	grocery_list.Cut()
-	update_static_data(chef)
