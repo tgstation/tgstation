@@ -32,12 +32,18 @@
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
-	var/matrix/M = new
-	M.Translate(-4, -4)
-	transform = M
+
+	var/static/matrix/transform_matrix = create_transform_matrix()
+
+	transform = transform_matrix
 	icon = smooth_icon
 	var/static/list/behaviors = list(TOOL_MINING)
 	AddElement(/datum/element/bump_click, tool_behaviours = behaviors, allow_unarmed = TRUE)
+
+/turf/closed/mineral/proc/create_transform_matrix()
+	var/matrix/transform_matrix = new
+	transform_matrix.Translate(-4, -4)
+	return transform_matrix
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
