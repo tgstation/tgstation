@@ -18,7 +18,7 @@
 
 /obj/item/paint/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/falling_hazard, force = 20, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE) // You ever watched home alone?
+	AddElement(/datum/element/falling_hazard, damage = 20, wound_bonus = 5, hardhat_safety = TRUE, crushes = FALSE) // You ever watched home alone?
 
 /obj/item/paint/red
 	name = "red paint"

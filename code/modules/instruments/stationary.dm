@@ -43,7 +43,7 @@
 
 /obj/structure/musician/piano/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/falling_hazard, force = 60, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE, impact_sound = 'sound/effects/piano_hit.ogg')
+	AddElement(/datum/element/falling_hazard, damage = 60, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE, impact_sound = 'sound/effects/piano_hit.ogg')
 
 /obj/structure/musician/piano/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
