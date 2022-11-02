@@ -26,7 +26,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "aaF" = (
@@ -12654,8 +12653,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/obj/machinery/status_display/ai/directional/east,
 /obj/structure/cable/layer3,
+/obj/machinery/status_display/ai/directional/east{
+	pixel_y = -32
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "exi" = (
@@ -18103,6 +18104,9 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/status_display/ai/directional/west{
+	pixel_y = 32
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gyP" = (
@@ -20344,10 +20348,10 @@
 /obj/machinery/vending/dinnerware,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/elevator_control_panel/directional/north{
+	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
-	preset_destination_names = list("2"="Hydroponics","3"="Kitchen");
 	name = "Dumbwaiter Control Panel";
-	desc = "A small control panel used to move the kitchen dumbwaiter up and down."
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
@@ -31375,10 +31379,13 @@
 /area/station/engineering/atmos)
 "lkp" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 1
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/ai/directional/north,
+/obj/structure/cable/layer3,
+/obj/machinery/status_display/evac/directional/west{
+	pixel_y = -32
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lkv" = (
@@ -35363,15 +35370,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"mDx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/evac/directional/west,
-/obj/structure/cable/layer3,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "mDC" = (
 /obj/machinery/air_sensor/carbon_tank,
 /turf/open/floor/engine/co2,
@@ -36763,8 +36761,8 @@
 	},
 /obj/structure/tramwall/titanium,
 /obj/machinery/destination_sign{
-	layer = 3.4;
-	dir = 1
+	dir = 1;
+	layer = 3.4
 	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
@@ -42246,11 +42244,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
-"pgu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/machinery/status_display/ai/directional/west,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "pgw" = (
 /obj/item/ammo_casing/spent,
 /obj/item/ammo_casing/spent{
@@ -44363,10 +44356,10 @@
 	dir = 8
 	},
 /obj/machinery/elevator_control_panel/directional/south{
+	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
-	preset_destination_names = list("2"="Hydroponics","3"="Kitchen");
 	name = "Dumbwaiter Control Panel";
-	desc = "A small control panel used to move the kitchen dumbwaiter up and down."
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
@@ -45900,6 +45893,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/status_display/evac/directional/east{
+	pixel_y = 32
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "qro" = (
@@ -53121,7 +53117,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/status_display/evac/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -55455,15 +55450,6 @@
 /mob/living/simple_animal/bot/floorbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"tIq" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/machinery/status_display/evac/directional/south,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "tIK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -67382,7 +67368,6 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister,
-/obj/machinery/status_display/ai/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -97341,8 +97326,8 @@ xqO
 dJM
 uRS
 xSw
-xSw
 ewX
+xSw
 xSw
 xSw
 kWr
@@ -99654,13 +99639,13 @@ ltq
 fuj
 qmi
 miU
-tIq
+rMZ
 hDI
 cNU
 uoD
 pgV
 hDI
-lkp
+qqc
 qgB
 wXe
 uDu
@@ -99911,12 +99896,12 @@ wVp
 fuj
 qki
 hyP
+lkp
 hyP
-mDx
 gvK
 gvK
 wPj
-pgu
+wPj
 gyC
 qgB
 cXJ
