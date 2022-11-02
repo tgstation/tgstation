@@ -4,7 +4,7 @@
 		if(!A.static_lighting)
 			continue
 
-		for(var/turf/T in A.get_contained_turfs())
+		for(var/turf/T as anything n A.get_contained_turfs())
 			if(T.always_lit)
 				continue
 			new/datum/lighting_object(T)

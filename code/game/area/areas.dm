@@ -143,12 +143,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			continue
 		if (!AR.has_contained_turfs())
 			continue
-		AR.cannonize_contained_turfs()
-		var/turf/picked = AR.contained_turfs[1]
-		if (picked && is_station_level(picked.z))
+		if (is_station_level(AR.z))
 			GLOB.teleportlocs[AR.name] = AR
-
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
 
 /**
  * Called when an area loads

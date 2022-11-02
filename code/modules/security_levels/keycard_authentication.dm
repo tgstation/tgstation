@@ -140,7 +140,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
 	for(var/area/station/maintenance/A in GLOB.areas)
-		for(var/turf/in_area in A.get_contained_turfs())
+		for(var/turf/in_area as anything in A.get_contained_turfs())
 			for(var/obj/machinery/door/airlock/D in in_area)
 				D.emergency = TRUE
 				D.update_icon(ALL, 0)
@@ -150,7 +150,7 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 
 /proc/revoke_maint_all_access()
 	for(var/area/station/maintenance/A in GLOB.areas)
-		for(var/turf/in_area in A.get_contained_turfs())
+		for(var/turf/in_area as anything in A.get_contained_turfs())
 			for(var/obj/machinery/door/airlock/D in in_area)
 				D.emergency = FALSE
 				D.update_icon(ALL, 0)
