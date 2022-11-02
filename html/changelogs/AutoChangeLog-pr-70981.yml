@@ -1,0 +1,4 @@
+author: "Cheshify"
+delete-after: True
+changes:
+  - bugfix: "There are now only 4 displays in Tram's SM room, not 8."
