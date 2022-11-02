@@ -50,7 +50,7 @@ const ShoppingTab = (props, context) => {
                       'vertical-align': 'middle',
                     }}
                   />{' '}
-                  <Stack.Item grow>{item.name}</Stack.Item>
+                  <Stack.Item>{item.name}</Stack.Item>
                   <Stack.Item grow mt={-1} color="label" fontSize="10px">
                     {'"' + item.desc + '"'}
                     <br />
