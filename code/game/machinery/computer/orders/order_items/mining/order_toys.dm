@@ -13,10 +13,6 @@
 	item_path = /obj/item/clothing/mask/facehugger/toy
 	cost_per_order = 300
 
-/datum/orderable_item/toys_drones/marker_beacon
-	item_path = /obj/item/hivelordstabilizer
-	cost_per_order = 400
-
 /datum/orderable_item/toys_drones/mining_drone
 	item_path = /mob/living/simple_animal/hostile/mining_drone
 	cost_per_order = 800

@@ -9,8 +9,8 @@
 	item_path = /obj/item/skeleton_key
 	cost_per_order = 777
 
-/datum/orderable_item/mining/marker_beacon
-	item_path = /obj/item/hivelordstabilizer
+/datum/orderable_item/mining/mining_stabilizer
+	item_path = /obj/item/mining_stabilizer
 	cost_per_order = 400
 
 /datum/orderable_item/mining/fulton_core
