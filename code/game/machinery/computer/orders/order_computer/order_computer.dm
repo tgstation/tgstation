@@ -107,6 +107,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
+			update_static_data(living_user)
 		if("purchase")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
