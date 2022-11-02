@@ -157,12 +157,10 @@
 		return FALSE
 	if(istype(target, /atom/movable/screen))
 		return FALSE
-
 	var/atom/movable/thrown_thing
-	var/obj/item/I = get_active_held_item()
+	var/obj/item/held_item = get_active_held_item()
 	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
-
-	if(!I)
+	if(!held_item)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
 			var/mob/living/throwable_mob = pulling
 			if(!throwable_mob.buckled)
@@ -174,8 +172,7 @@
 					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
 					return FALSE
 	else
-		thrown_thing = I.on_thrown(src, target)
-
+		thrown_thing = held_item.on_thrown(src, target)
 	if(!thrown_thing)
 		return FALSE
 	if(isliving(thrown_thing))
