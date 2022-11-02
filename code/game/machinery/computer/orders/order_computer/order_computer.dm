@@ -1,11 +1,10 @@
 GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console
-	name = "Produce Orders Console"
-	desc = "An interface for ordering fresh produce and other. A far more expensive option than the botanists, but oh well."
+	name = "Orders Console"
+	desc = "An interface for ordering specific ingredients from Cargo, with an express option at the cost of more money."
 	icon_screen = "request"
 	icon_keyboard = "generic_key"
-	circuit = /obj/item/circuitboard/computer/order_console
 	light_color = LIGHT_COLOR_ORANGE
 
 	///The current list of things we're trying to order, waiting for checkout.
@@ -25,11 +24,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	///Whether we should charge in mining points instead
 	var/mining_point_price = FALSE
 	///The categories of orderable items this console can view and purchase.
-	var/order_categories = list(
-		CATEGORY_FRUITS_VEGGIES,
-		CATEGORY_MILK_EGGS,
-		CATEGORY_SAUCES_REAGENTS,
-	)
+	var/order_categories = list()
 
 /obj/machinery/computer/order_console/Initialize(mapload)
 	. = ..()
@@ -65,6 +60,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
 	var/list/data = ..()
+	data["total_cost"] = get_total_cost()
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
 	var/obj/item/card/id/id_card
@@ -82,7 +78,6 @@ GLOBAL_LIST_EMPTY(order_console_products)
 /obj/machinery/computer/order_console/ui_static_data(mob/user)
 	var/list/data = ..()
 	data["forced_express"] = forced_express
-	data["total_cost"] = get_total_cost()
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()
 	for(var/datum/orderable_item/item as anything in GLOB.order_console_products)
@@ -104,7 +99,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		return
 	if(!isliving(usr))
 		return
-	var/mob/living/chef = usr
+	var/mob/living/living_user = usr
 	//this is null if the action doesn't need it (purchase, quickpurchase)
 	var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 	switch(action)
@@ -112,24 +107,23 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
-			update_static_data(chef)
 		if("purchase")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			if(forced_express)
 				return ui_act(action = "express")
-			var/obj/item/card/id/chef_card = chef.get_idcard(TRUE)
-			if(!chef_card || !chef_card.registered_account)
+			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
+			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
 				return
 			var/final_cost = get_total_cost()
 			if(mining_point_price)
-				if(final_cost > chef_card.mining_points)
+				if(final_cost > used_id_card.mining_points)
 					say("Sorry, but you do not have enough mining points.")
 					return
-				chef_card.mining_points -= final_cost
+				used_id_card.mining_points -= final_cost
 			else
-				if(!chef_card.registered_account.adjust_money(-final_cost, "Chef Order: Purchase"))
+				if(!used_id_card.registered_account.adjust_money(-final_cost, "[name]: Purchase"))
 					say("Sorry, but you do not have enough money.")
 					return
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
@@ -137,23 +131,22 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			radio.talk_into(src, message, radio_channel)
 			COOLDOWN_START(src, order_cooldown, 60 SECONDS)
 			order_groceries()
-			update_static_data(chef)
 		if("express")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
-			var/obj/item/card/id/chef_card = chef.get_idcard(TRUE)
-			if(!chef_card || !chef_card.registered_account)
+			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
+			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
 				return
 			var/final_cost = get_total_cost()
 			final_cost *= express_cost_multiplier
 			if(mining_point_price)
-				if(final_cost > chef_card.mining_points)
+				if(final_cost > used_id_card.mining_points)
 					say("Sorry, but you do not have enough mining points. Remember, Express upcharges the cost!")
 					return
-				chef_card.mining_points -= final_cost
+				used_id_card.mining_points -= final_cost
 			else
-				if(!chef_card.registered_account.adjust_money(-final_cost, "Chef Order: Purchase"))
+				if(!used_id_card.registered_account.adjust_money(-final_cost, "[name]: Purchase"))
 					say("Sorry, but you do not have enough money. Remember, Express upcharges the cost!")
 					return
 			var/say_message = "Thank you for your purchase!"
@@ -169,21 +162,12 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				for(var/amt in 1 to grocery_list[item])//every order amount
 					ordered_paths += item.item_path
 			podspawn(list(
-				"target" = get_turf(chef),
+				"target" = get_turf(living_user),
 				"style" = STYLE_BLUESPACE,
 				"spawn" = ordered_paths,
 			))
 			grocery_list.Cut()
-			update_static_data(chef)
 	return TRUE
 
 /obj/machinery/computer/order_console/proc/order_groceries()
-	for(var/datum/orderable_item/ordered_item in grocery_list)
-		if(!(ordered_item.category_index in order_categories))
-			grocery_list.Remove(ordered_item)
-			continue
-		if(ordered_item in SSshuttle.chef_groceries)
-			SSshuttle.chef_groceries[ordered_item] += grocery_list[ordered_item]
-		else
-			SSshuttle.chef_groceries[ordered_item] = grocery_list[ordered_item]
-	grocery_list.Cut()
+	return

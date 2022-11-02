@@ -38428,7 +38428,7 @@
 /turf/open/floor/grass,
 /area/station/medical/psychology)
 "kUy" = (
-/obj/machinery/computer/order_console{
+/obj/machinery/computer/order_console/cook{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,

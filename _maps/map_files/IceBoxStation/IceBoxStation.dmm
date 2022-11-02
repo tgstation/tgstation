@@ -31557,7 +31557,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "jHT" = (
-/obj/machinery/computer/order_console{
+/obj/machinery/computer/order_console/cook{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{

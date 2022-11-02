@@ -25410,7 +25410,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "jgk" = (
-/obj/machinery/computer/order_console,
+/obj/machinery/computer/order_console/cook,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,

@@ -62658,7 +62658,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "pnq" = (
-/obj/machinery/computer/order_console,
+/obj/machinery/computer/order_console/cook,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
