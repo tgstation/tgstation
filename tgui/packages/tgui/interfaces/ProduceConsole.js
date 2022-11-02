@@ -110,8 +110,8 @@ const CheckoutTab = (props, context) => {
               {checkout_list.map((item) => (
                 <Stack.Item key={item}>
                   <Stack>
-                    <Stack.Item grow>{item.name}</Stack.Item>
-                    <Stack.Item mt={-1} color="label" fontSize="10px">
+                    <Stack.Item>{item.name}</Stack.Item>
+                    <Stack.Item grow mt={-1} color="label" fontSize="10px">
                       {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
