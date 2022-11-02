@@ -439,12 +439,12 @@
 
 	var/static/list/directional_blocker_cache = typecacheof(list(/obj/structure/window, /obj/machinery/door/window, /obj/structure/railing, /obj/machinery/door/firedoor/border_only))
 	// Source border object checks
-	for(var/obj/lad in src)
-		if(!directional_blocker_cache[lad.type])
+	for(var/obj/border in src)
+		if(!directional_blocker_cache[border.type])
 			continue
-		if(!lad.density && lad.can_astar_pass == CANASTARPASS_DENSITY)
+		if(!border.density && border.can_astar_pass == CANASTARPASS_DENSITY)
 			continue
-		if(!lad.CanAStarPass(ID, actual_dir, no_id = no_id))
+		if(!border.CanAStarPass(ID, actual_dir, no_id = no_id))
 			return TRUE
 
 	// Destination blockers check
