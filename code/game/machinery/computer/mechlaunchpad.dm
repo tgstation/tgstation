@@ -133,6 +133,8 @@
 /obj/machinery/computer/mechpad/proc/start_launch(mob/user, obj/machinery/mechpad/where)
 	if(!can_launch(user, where, silent = TRUE))
 		return
+	var/obj/vehicle/sealed/mecha/mech = locate() in get_turf(connected_mechpad)
+	mech.setDir(SOUTH)
 	connected_mechpad.launch(where)
 
 /obj/machinery/computer/mechpad/proc/can_launch(mob/user, obj/machinery/mechpad/where, silent = FALSE)
