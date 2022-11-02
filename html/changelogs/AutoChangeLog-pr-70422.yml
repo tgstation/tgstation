@@ -1,4 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes:
-  - refactor: "Elements of unarmed strikes are now limb dependent instead of species dependent. Go rip off an ethereal arm, sew it onto yourself, and burn some people."
