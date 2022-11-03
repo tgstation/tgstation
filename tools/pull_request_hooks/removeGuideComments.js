@@ -18,7 +18,6 @@ function escapeRegex(string) {
 export async function removeGuideComments({ github, context }) {
   let newBody = context.payload.pull_request.body;
 
-  // sometimes we make PRs without PR bodies and the whole thing will fail
   if (!newBody) {
 	console.log("PR body is empty, skipping...");
 	return;
