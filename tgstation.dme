@@ -3387,6 +3387,7 @@
 #include "code\modules\mapfluff\ruins\spaceruin_code\clericsden.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\crashedclownship.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\crashedship.dm"
+#include "code\modules\mapfluff\ruins\spaceruin_code\cyborgmothership.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\deepstorage.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\DJstation.dm"
 #include "code\modules\mapfluff\ruins\spaceruin_code\forgottenship.dm"
