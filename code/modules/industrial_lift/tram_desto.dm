@@ -1,12 +1,3 @@
-#define DESTINATION_WEST_ACTIVE "west_active"
-#define DESTINATION_WEST_IDLE "west_idle"
-#define DESTINATION_CENTRAL_EASTBOUND_ACTIVE "central_eb_active"
-#define DESTINATION_CENTRAL_WESTBOUND_ACTIVE "central_wb_active"
-#define DESTINATION_CENTRAL_IDLE "central_idle"
-#define DESTINATION_EAST_ACTIVE "east_active"
-#define DESTINATION_EAST_IDLE "east_idle"
-#define DESTINATION_NOT_IN_SERVICE "NIS"
-
 /obj/machinery/destination_sign
 	name = "destination sign"
 	desc = "A display to show you what direction the tram is travelling."
