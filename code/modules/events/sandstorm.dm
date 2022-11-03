@@ -33,7 +33,6 @@
 				start_side = EAST
 			if("Left")
 				start_side = WEST
-			else ADMIN_CANCEL_EVENT
 
 /datum/round_event/sandstorm
 	start_when = 60
