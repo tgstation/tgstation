@@ -214,14 +214,6 @@
 		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
 		log_filter("Soft IC (Passed)", message, filter_result)
 
-	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
-		client?.cmd_admin_say(message)
-		return
-
-	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
-		client?.dsay(message)
-		return
-
 	if(client && !(ignore_spam || forced))
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, span_danger("You cannot speak IC (muted)."))
@@ -244,6 +236,14 @@
 	var/list/message_mods = list()
 	message = get_message_mods(message, message_mods)
 
+	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
+		client?.cmd_admin_say(message)
+		return
+
+	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
+		client?.dsay(message)
+		return
+
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(message)]</span></span>"
 	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(message)]</span></span>"
 
@@ -253,7 +253,7 @@
 
 	//speech bubble
 	if(owner.client)
-		var/image/bubble = mutable_appearance('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
+		var/image/bubble = image('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
 		SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
 		bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, list(src.client, owner.client), 3 SECONDS)
