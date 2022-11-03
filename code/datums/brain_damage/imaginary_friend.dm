@@ -273,6 +273,35 @@
 /mob/camera/imaginary_friend/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
 
+/mob/camera/imaginary_friend/create_thinking_indicator()
+	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
+		return FALSE
+	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
+	add_image_to_clients(active_thinking_indicator, list(src.client, owner.client))
+
+/mob/camera/imaginary_friend/remove_thinking_indicator()
+	if(!active_thinking_indicator)
+		return FALSE
+	remove_image_from_clients(active_thinking_indicator, list(src.client, owner.client))
+	active_thinking_indicator = null
+
+/mob/camera/imaginary_friend/create_typing_indicator()
+	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
+		return FALSE
+	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
+	add_image_to_clients(active_typing_indicator, list(src.client, owner.client))
+
+/mob/camera/imaginary_friend/remove_typing_indicator()
+	if(!active_typing_indicator)
+		return FALSE
+	remove_image_from_clients(active_typing_indicator, list(src.client, owner.client))
+	active_typing_indicator = null
+
+/mob/camera/imaginary_friend/remove_all_indicators()
+	thinking_IC = FALSE
+	remove_thinking_indicator()
+	remove_typing_indicator()
+
 /mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)
 		return FALSE
