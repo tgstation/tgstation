@@ -249,7 +249,7 @@ SUBSYSTEM_DEF(persistence)
 	new_data["path"] = path
 	new_data["message"] = message
 	new_data["placer_key"] = placer_key
-	new_data["is_valid"] = text2path(path)
+	new_data["is_valid"] = text2path(path) ? TRUE : FALSE
 	return new_data
 
 /// Returns a list for the admin trophy panel.
