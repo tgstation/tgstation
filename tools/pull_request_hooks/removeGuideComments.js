@@ -20,7 +20,7 @@ export async function removeGuideComments({ github, context }) {
 
   // sometimes we make PRs without PR bodies and the whole thing will fail
   if (!newBody) {
-	console.log("PR body is empty, skipping");
+	console.log("PR body is empty, skipping...");
 	return;
   }
 
