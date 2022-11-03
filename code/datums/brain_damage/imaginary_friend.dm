@@ -244,8 +244,8 @@
 		client?.dsay(message)
 		return
 
-	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(message)]</span></span>"
-	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(message)]</span></span>"
+	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(message), spans, message_mods)]</span></span>"
+	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(say_emphasis(message), spans, message_mods)]</span></span>"
 
 	var/language = owner.language_holder.get_selected_language()
 	owner.Hear(rendered, src, language, message, null, spans, message_mods)
