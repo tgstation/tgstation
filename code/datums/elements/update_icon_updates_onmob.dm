@@ -2,7 +2,7 @@
 //Very good name, I know
 /datum/element/update_icon_updates_onmob
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///The ITEM_SLOT_X flags to update on the parent mob. (Ex: ITEM_SLOT_HANDS|ITEM_SLOT_FEET)
 	var/update_flags = NONE
 	///Should the element call [/mob/proc/update_body()] in addition to clothing updates?

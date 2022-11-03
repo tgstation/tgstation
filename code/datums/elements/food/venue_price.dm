@@ -1,7 +1,7 @@
 ///This component can be used to give something value for venues
 /datum/element/venue_price
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/venue_price
 
 /datum/element/venue_price/Attach(datum/target, venue_price)

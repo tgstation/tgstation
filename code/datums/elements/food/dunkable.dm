@@ -2,7 +2,7 @@
 // Dunking the item into a container will transfer reagents from the container to the item.
 /datum/element/dunkable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/dunk_amount // the amount of reagents that will be transfered from the container to the item on each click
 
 /datum/element/dunkable/Attach(datum/target, amount_per_dunk)

@@ -9,12 +9,15 @@
 	var/element_flags = NONE
 	/**
 	  * The index of the first attach argument to consider for duplicate elements
+	  * 
+	  * All arguments from this index onwards (1 based) are hashed into the key to determine
+	  * if this is a new unique element or one already exists
 	  *
 	  * Is only used when flags contains [ELEMENT_BESPOKE]
 	  *
 	  * This is infinity so you must explicitly set this
 	  */
-	var/id_arg_index = INFINITY
+	var/argument_hash_start_idx = INFINITY
 
 /// Activates the functionality defined by the element on the given target datum
 /datum/element/proc/Attach(datum/target)

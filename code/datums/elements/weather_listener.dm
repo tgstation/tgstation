@@ -1,7 +1,7 @@
 ///This element just handles creating and destroying an area sound manager that's hooked into weather stuff
 /datum/element/weather_listener
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/weather_type
 	//What events to change the track on
 	var/list/sound_change_signals

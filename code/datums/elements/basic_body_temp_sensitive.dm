@@ -3,7 +3,7 @@
  */
 /datum/element/basic_body_temp_sensitive
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	///Min body temp
 	var/min_body_temp = 250

@@ -5,7 +5,7 @@
  */
 /datum/element/content_barfer
 	element_flags = ELEMENT_DETACH
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 /datum/element/content_barfer/Attach(datum/target, tally_string)
 	. = ..()

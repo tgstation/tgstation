@@ -2,7 +2,7 @@
 
 /datum/element/can_barricade
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 /datum/element/can_barricade/Attach(atom/target)
 	. = ..()

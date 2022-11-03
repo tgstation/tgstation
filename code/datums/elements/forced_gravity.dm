@@ -1,6 +1,6 @@
 /datum/element/forced_gravity
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///the level of gravity we force unto our target
 	var/gravity
 	///whether we will override the turf if it forces no gravity

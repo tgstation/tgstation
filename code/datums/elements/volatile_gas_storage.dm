@@ -1,7 +1,7 @@
 /// An element to make an /obj explode based on gas pressure when broken
 /datum/element/volatile_gas_storage
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// The minimum pressure of the gas storage to consider an explosion when broken
 	var/minimum_explosive_pressure
