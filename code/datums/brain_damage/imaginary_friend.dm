@@ -71,6 +71,7 @@
 	var/hidden = FALSE
 	var/move_delay = 0
 	var/mob/living/owner
+	var/bubble_icon = "default"
 
 	var/datum/action/innate/imaginary_join/join
 	var/datum/action/innate/imaginary_hide/hide
@@ -258,7 +259,7 @@
 		if(friend_client && (!friend_client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(friend_client)
 
-	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
+	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_icon][say_test(message)]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
 	bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, speech_bubble_recipients, 3 SECONDS)
