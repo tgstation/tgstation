@@ -221,14 +221,14 @@
 		if(client.handle_spam_prevention(message, MUTE_IC))
 			return FALSE
 
-	friend_talk(message)
+	friend_talk(message, spans)
 
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
-/mob/camera/imaginary_friend/proc/friend_talk(message)
+/mob/camera/imaginary_friend/proc/friend_talk(message, list/spans)
 	message = capitalize(message)
 
 	src.log_talk(message, LOG_SAY, tag="imaginary friend")
@@ -239,8 +239,8 @@
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(message)]</span></span>"
 	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(message)]</span></span>"
 
-	owner.Hear(rendered, src, owner.language_holder.understood_languages[0], message, null, null, message_mods)
-	Hear(rendered, src, owner.language_holder.understood_languages[0], message, null, null, message_mods)
+	owner.Hear(rendered, src, owner.language_holder.understood_languages[0], message, null, spans, message_mods)
+	Hear(rendered, src, owner.language_holder.understood_languages[0], message, null, spans, message_mods)
 
 	//speech bubble
 	if(owner.client)
