@@ -1,6 +1,6 @@
 
 /// The number of influences spawned per heretic
-#define NUM_INFLUENCES_PER_HERETIC 4
+#define NUM_INFLUENCES_PER_HERETIC 5
 
 /**
  * #Reality smash tracker

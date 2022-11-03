@@ -670,7 +670,7 @@
 
 /datum/objective/minor_sacrifice/New(text)
 	. = ..()
-	target_amount = rand(2, 3)
+	target_amount = rand(3, 4)
 	update_explanation_text()
 
 /datum/objective/minor_sacrifice/update_explanation_text()

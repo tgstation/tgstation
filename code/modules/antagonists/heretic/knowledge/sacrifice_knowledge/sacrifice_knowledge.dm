@@ -16,6 +16,8 @@
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
 	route = PATH_START
+	/// How many targets do we generate?
+	var/num_targets_to_generate = 5
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
 	var/static/heretic_level_generated = FALSE
 	/// A weakref to the mind of our heretic.
@@ -32,7 +34,7 @@
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	obtain_targets(user, silent = TRUE)
+	obtain_targets(user, silent = TRUE, heretic_datum = our_heretic)
 	heretic_mind = our_heretic.owner
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
@@ -81,7 +83,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!LAZYLEN(heretic_datum.sac_targets))
-		if(obtain_targets(user))
+		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
 			loc.balloon_alert(user, "ritual failed, no targets found!")
@@ -96,7 +98,7 @@
  *
  * Returns FALSE if no targets are found, TRUE if the targets list was populated.
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE, datum/antagonist/heretic/heretic_datum)
 
 	// First construct a list of minds that are valid objective targets.
 	var/list/datum/mind/valid_targets = list()
@@ -145,17 +147,11 @@
 			valid_targets -= department_mind
 			break
 
-	// Final target, just get someone random.
-	final_targets += pick_n_take(valid_targets)
-
-	// If any of our targets failed to aquire,
-	// Let's run a loop until we get four total, grabbing random targets.
+	// Now grab completely random targets until we'll full
 	var/target_sanity = 0
-	while(length(final_targets) < 4 && length(valid_targets) > 4 && target_sanity < 25)
+	while(length(final_targets) < num_targets_to_generate && length(valid_targets) > num_targets_to_generate && target_sanity < 25)
 		final_targets += pick_n_take(valid_targets)
 		target_sanity++
-
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 
 	if(!silent)
 		to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
@@ -372,6 +368,7 @@
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
 	sac_target.clear_mood_event("shadow_realm")
+	sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/supernatural, TRAUMA_RESILIENCE_MAGIC)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
