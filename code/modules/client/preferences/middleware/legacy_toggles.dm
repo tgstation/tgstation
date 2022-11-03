@@ -102,14 +102,6 @@
 		else
 			preferences.toggles &= ~legacy_flag
 
-		/*// I know this looks silly, but this is the only one that cares
-		// and NO NEW LEGACY TOGGLES should ever be added.
-		if (legacy_flag == SOUND_LOBBY)
-			if (value && isnewplayer(user))
-				user.client?.playtitlemusic()
-			else
-				user.stop_sound_channel(CHANNEL_LOBBYMUSIC)*/
-
 		return TRUE
 
 	var/legacy_chat_flag = legacy_chat_toggles[preference]
