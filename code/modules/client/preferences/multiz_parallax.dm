@@ -1,4 +1,4 @@
-/// Whether or not to toggle ambient occlusion, the shadows around people
+/// Whether or not to toggle multiz parallax, the parallax effect for lower z-levels.
 /datum/preference/toggle/multiz_parallax
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "multiz_parallax"
