@@ -404,9 +404,23 @@ SUBSYSTEM_DEF(persistence)
 	for(var/datum/trophy_data/data in saved_trophies)
 		converted_data += list(data.to_json())
 
+	converted_data = remove_duplicate_trophies(converted_data)
+
 	file_data["data"] = converted_data
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+///gets the list of json trophies, and deletes the ones with an identical path and message
+/datum/controller/subsystem/persistence/proc/remove_duplicate_trophies(list/trophies)
+	var/list/ukeys = list()
+	. = list()
+	for(var/trophy in trophies)
+		var/tkey = "[trophy["path"]]-[trophy["message"]]"
+		if(ukeys[tkey])
+			continue
+		else
+			. += list(trophy)
+			ukeys[tkey] = TRUE
 
 ///If there is a trophy in the trophy case, saved it, if the trophy was not a holo trophy and has a message attached.
 /datum/controller/subsystem/persistence/proc/save_trophy(obj/structure/displaycase/trophy/trophy_case)
