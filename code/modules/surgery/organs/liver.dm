@@ -96,8 +96,7 @@
 	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) // can't process reagents with a failing liver
 		return
 	if(!filterToxins && HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
-		return 
-
+		return
 
 	// How much damage to inflict on our liver
 	var/damange_to_deal = 0
@@ -113,7 +112,7 @@
 			thisamount += belly.reagents.get_reagent_amount(toxin.type)
 		total_toxins += thisamount
 
-		if (total_toxins && total_toxins <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
+		if (total_toxins && total_toxins <= toxTolerance * (maxHealth - damage) / maxHealth ) 
 			liver_owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * liver_owner.metabolism_efficiency * delta_time)
 		else
 			damange_to_deal += (thisamount * toxLethality * delta_time)
@@ -125,13 +124,23 @@
 	
 	
 	
-	
+	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
 	var/list/cached_reagents = liver_owner.reagents.reagent_list
 	var/need_mob_update = FALSE
+	var/damange_to_deal = 0 // How much damage to inflict on our liver
+	var/provide_pain_message = HAS_NO_TOXIN
 	
+	// metabolize reagents for mob
 	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(istype(reagent, /datum/reagent/toxin) && )
+		if(istype(reagent, /datum/reagent/toxin)) // handle liver toxin filtration
+			var/datum/reagent/toxin/toxin = reagent
+			// this is an optimization
+			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // old code liver_owner.reagents.get_reagent_amount(toxin.type)
+			if(belly)
+				amount += belly.reagents.get_reagent_amount(toxin.type)
 			
+			var/liver_health_percent = (maxHealth - damage) / maxHealth
+			if(amount <= toxTolerance * liver_health_percent) //toxTolerance is effectively multiplied by the % that your liver's health is at
 			
 		need_mob_update += metabolize_reagent(liver_owner, reagent, delta_time, times_fired, can_overdose=TRUE) // liverless arg?
 
