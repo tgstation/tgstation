@@ -250,3 +250,4 @@
 ///Clean bot keys
 #define BB_CLEAN_BOT_TARGET "BB_clean_bot_target"
 #define BB_CLEAN_BOT_VALID_TARGETS "BB_clean_bot_valid_targets"
+#define BB_CLEAN_BOT_BUSY_CLEANING "BB_clean_bot_BUSY_CLEANING"

@@ -101,7 +101,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/cleaner, 1 SECONDS, \
-		on_cleaned_callback = CALLBACK(src, /proc/finish_cleaning))
+		on_cleaned_callback = CALLBACK(src, .proc/finish_cleaning))
 
 	update_targets()
 	update_appearance(UPDATE_ICON)
@@ -285,7 +285,7 @@
 		if(!living_target.stat)
 			melee_attack(living_target)
 			visible_message(span_danger("[src] smashes [living_target] with its mop!"))
-			if(!victim || victim.stat == DEAD)//cleanbots always finish the job
+			if(!living_target || living_target.stat == DEAD)//cleanbots always finish the job
 				finish_cleaning()
 
 	else if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions

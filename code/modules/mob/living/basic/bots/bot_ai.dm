@@ -214,12 +214,14 @@
 		for(var/atom/scan in scanned_turf)
 			var/final_result = targetting_datum.can_attack(living_pawn, scan)
 			if(final_result)
-				on_find_target(controller, target_key, final_result)
+				on_find_target(controller, target_key, scan)
+				break
 
 	for(var/atom/scanned_atom as anything in reverseList(view(scan_range, living_pawn) - adjacent)) //Search for something in range, minus what we already checked.
 		var/final_result = targetting_datum.can_attack(living_pawn, scanned_atom)
 		if(final_result)
-			on_find_target(controller, target_key, final_result)
+			on_find_target(controller, target_key, scanned_atom)
+			break
 
 	if(should_finish_after_scan)
 		finish_action(controller, TRUE)

@@ -23,8 +23,7 @@
 			if(target_carbon.body_position != LYING_DOWN)
 				return FALSE
 
-		return TRUE
 	if(is_type_in_typecache(the_target, targetting_bot.ai_controller.blackboard[BB_CLEAN_BOT_VALID_TARGETS]))
-		return the_target
+		return TRUE
 
 	return FALSE

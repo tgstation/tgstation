@@ -78,24 +78,28 @@
 
 	var/mob/living/living_pawn = controller.pawn
 
+	if(blackboard[BB_CLEAN_BOT_BUSY_CLEANING])
+		return
+
 	if(get_dist(controller.pawn, target) <= required_distance)
 		living_pawn.UnarmedAttack(target, proximity_flag = TRUE) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+		blackboard[BB_CLEAN_BOT_BUSY_CLEANING] = TRUE
 
 /datum/ai_behavior/clean/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key)
 	. = ..()
 
-	UnregisterSignal(bot, COMSIG_AINOTIFY_CLEANBOT_FINISH_CLEANING, .proc/on_finish_cleaning)
-
 	var/mob/living/basic/bot/bot = controller.pawn
+	UnregisterSignal(bot, COMSIG_AINOTIFY_CLEANBOT_FINISH_CLEANING, .proc/on_finish_cleaning)
 	bot.set_current_mode()
 
 	if(!succeeded)
-		controller.blackboard[BB_IGNORE_LIST][WEAKREF(controller.blackboard[BB_CLEAN_BOT_TARGET])] = TRUE
+		var/atom/target = controller.blackboard[BB_CLEAN_BOT_TARGET]
+		controller.blackboard[BB_IGNORE_LIST][WEAKREF(target)] = TRUE
 
 	controller.blackboard[BB_CLEAN_BOT_TARGET] = null
 
 /datum/ai_behavior/clean/proc/on_finish_cleaning(datum/source, datum/ai_controller/controller, target_key, targetting_datum_key)
-	finish_action(TRUE,
+	finish_action(TRUE, controller, target_key, targetting_datum_key)
 
 
 /datum/ai_behavior/evil_clean
