@@ -2351,6 +2351,7 @@
 #include "code\modules\antagonists\heretic\magic\rust_construction.dm"
 #include "code\modules\antagonists\heretic\magic\rust_wave.dm"
 #include "code\modules\antagonists\heretic\magic\shadow_cloak.dm"
+#include "code\modules\antagonists\heretic\magic\void_cold_cone.dm"
 #include "code\modules\antagonists\heretic\magic\void_phase.dm"
 #include "code\modules\antagonists\heretic\magic\void_pull.dm"
 #include "code\modules\antagonists\heretic\mobs\maid_in_mirror.dm"

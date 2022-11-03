@@ -309,6 +309,10 @@
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
+	/// How much force do we apply to the offhand?
+	var/offand_force_decrement = 0
+	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
+	var/last_weapon_force = -1
 
 /datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(target == source)
@@ -328,32 +332,36 @@
 /datum/heretic_knowledge/blade_upgrade/blade/proc/follow_up_attack(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(QDELETED(source) || QDELETED(target) || QDELETED(blade))
 		return
-	// Sanity to ensure that the blade we're delivering
-	// an offhand attack with is actually our offhand
+	// Sanity to ensure that the blade we're delivering an offhand attack with is ACTUALLY our offhand
 	if(blade != source.get_inactive_held_item())
 		return
+	// And we easily could've moved away
 	if(!source.Adjacent(target))
 		return
 
-	// We want to make sure that the offhand blade increases their hits to crit by one, just about
-	// So, let's do some quick math. Yes this'll be inaccurate if their mainhand blade is modified (whetstone), no I don't care
-	// Find how much force we need to detract from the second blade
-	var/offand_force_decrement = 0
-	var/hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2))
-	while(hits_to_crit_on_average <= 3) // 3 hits and beyond is a bit too absurd
-		if(offand_force_decrement + 2 > blade.force * 0.5) // But also cutting the force beyond half is absurd
-			break
+	// Check if we need to recaclulate our offhand force
+	// This is just so we don't run this block every attack, that's wasteful
+	if(last_weapon_force != blade.force)
+		offand_force_decrement = 0
+		// We want to make sure that the offhand blade increases their hits to crit by one, just about
+		// So, let's do some quick math. Yes this'll be inaccurate if their mainhand blade is modified (whetstone), no I don't care
+		// Find how much force we need to detract from the second blade
+		var/hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2))
+		while(hits_to_crit_on_average <= 3) // 3 hits and beyond is a bit too absurd
+			if(offand_force_decrement + 2 > blade.force * 0.5) // But also cutting the force beyond half is absurd
+				break
 
-		offand_force_decrement += 2
-		hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2 - offand_force_decrement))
+			offand_force_decrement += 2
+			hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2 - offand_force_decrement))
 
-	// I really don't want someone to find a way to farm infinite force so we'll just save this
-	// to restore after the attack. It's not like they can whetstone the force mid-attack anyways
-	var/force_pre = blade.force
-
+	// Save the force as our last weapon force
+	last_weapon_force = blade.force
+	// Subtract the decrement
 	blade.force -= offand_force_decrement
+	// Perform the offhand attack
 	blade.melee_attack_chain(source, target)
-	blade.force = force_pre
+	// Restore the force.
+	blade.force = last_weapon_force
 
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"
