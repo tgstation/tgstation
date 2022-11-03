@@ -233,11 +233,14 @@
 
 	src.log_talk(message, LOG_SAY, tag="imaginary friend")
 
+	var/list/message_mods = list()
+	message = get_message_mods(message, message_mods)
+
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(message)]</span></span>"
 	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(message)]</span></span>"
 
-	to_chat(owner, "[rendered]")
-	to_chat(src, "[rendered]")
+	owner.Hear(rendered, src, owner.language_holder.understood_languages[0], message, null, null, message_mods)
+	Hear(rendered, src, owner.language_holder.understood_languages[0], message, null, null, message_mods)
 
 	//speech bubble
 	if(owner.client)
