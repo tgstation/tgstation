@@ -133,6 +133,8 @@
 
 ///Add an image to a list of clients and calls a proc to remove it after a duration
 /proc/flick_overlay(image/image_to_show, list/show_to, duration)
+	if(!show_to || !length(show_to) || !image_to_show)
+		return
 	for(var/client/add_to in show_to)
 		add_to.images += image_to_show
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_images_from_clients), image_to_show, show_to), duration, TIMER_CLIENT_TIME)
