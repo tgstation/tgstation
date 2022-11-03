@@ -1,4 +1,4 @@
-import { multiline } from 'common/string';
+import { capitalize, multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Divider, Icon, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -50,7 +50,7 @@ const ShoppingTab = (props, context) => {
                       'vertical-align': 'middle',
                     }}
                   />{' '}
-                  <Stack.Item>{item.name}</Stack.Item>
+                  <Stack.Item>{capitalize(item.name)}</Stack.Item>
                   <Stack.Item grow mt={-1} color="label" fontSize="10px">
                     {'"' + item.desc + '"'}
                     <br />
@@ -110,7 +110,7 @@ const CheckoutTab = (props, context) => {
               {checkout_list.map((item) => (
                 <Stack.Item key={item}>
                   <Stack>
-                    <Stack.Item>{item.name}</Stack.Item>
+                    <Stack.Item>{capitalize(item.name)}</Stack.Item>
                     <Stack.Item grow mt={-1} color="label" fontSize="10px">
                       {'"' + item.desc + '"'}
                       <br />
