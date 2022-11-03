@@ -740,6 +740,7 @@
 /obj/structure/closet,
 /obj/effect/spawner/random/maintenance/three,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "Fw" = (
