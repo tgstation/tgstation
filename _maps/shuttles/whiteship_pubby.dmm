@@ -272,7 +272,10 @@
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned)
 "lV" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	y_offset = 2;
+	x_offset = -7
+	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
