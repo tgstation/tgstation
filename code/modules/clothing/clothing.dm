@@ -16,11 +16,6 @@
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
-	var/alt_desc = null
-	var/toggle_message = null
-	var/alt_toggle_message = null
-	var/toggle_cooldown = null
-	var/cooldown = 0
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -87,18 +82,8 @@
 	var/datum/weakref/clothing
 
 /obj/item/food/clothing/MakeEdible()
-	AddComponent(/datum/component/edible,\
-		initial_reagents = food_reagents,\
-		food_flags = food_flags,\
-		foodtypes = foodtypes,\
-		volume = max_volume,\
-		eat_time = eat_time,\
-		tastes = tastes,\
-		eatverbs = eatverbs,\
-		bite_consumption = bite_consumption,\
-		microwaved_type = microwaved_type,\
-		junkiness = junkiness,\
-		after_eat = CALLBACK(src, .proc/after_eat))
+	. = ..()
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, .proc/after_eat))
 
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()

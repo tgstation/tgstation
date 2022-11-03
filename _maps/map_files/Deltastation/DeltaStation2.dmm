@@ -50610,12 +50610,12 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot,
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -75318,7 +75318,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/east,
 /obj/item/clothing/suit/costume/justice,
-/obj/item/clothing/head/helmet/justice/escape{
+/obj/item/clothing/head/helmet/toggleable/justice/escape{
 	name = "justice helmet"
 	},
 /turf/open/floor/iron/dark,
