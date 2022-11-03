@@ -93,32 +93,55 @@
 
 	if(!istype(liver_owner))
 		return
-	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
+	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) // can't process reagents with a failing liver
 		return
+	if(!filterToxins && HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
+		return 
+
 
 	// How much damage to inflict on our liver
 	var/damange_to_deal = 0
 
 	var/provide_pain_message = HAS_NO_TOXIN
 	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
-	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-		//handle liver toxin filtration
-		var/total_toxins = 0
-		for(var/datum/reagent/toxin/toxin in liver_owner.reagents.reagent_list)
-			var/thisamount = liver_owner.reagents.get_reagent_amount(toxin.type)
-			if(belly)
-				thisamount += belly.reagents.get_reagent_amount(toxin.type)
-			total_toxins += thisamount
-			
-			if (total_toxins && total_toxins <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
-				liver_owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * liver_owner.metabolism_efficiency * delta_time)
-			else
-				damange_to_deal += (thisamount * toxLethality * delta_time)
-				if(provide_pain_message != HAS_PAINFUL_TOXIN)
-					provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
+	
+	//handle liver toxin filtration
+	var/total_toxins = 0
+	for(var/datum/reagent/toxin/toxin in liver_owner.reagents.reagent_list)
+		var/thisamount = liver_owner.reagents.get_reagent_amount(toxin.type)
+		if(belly)
+			thisamount += belly.reagents.get_reagent_amount(toxin.type)
+		total_toxins += thisamount
+
+		if (total_toxins && total_toxins <= toxTolerance * (maxHealth - damage) / maxHealth ) //toxTolerance is effectively multiplied by the % that your liver's health is at
+			liver_owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * liver_owner.metabolism_efficiency * delta_time)
+		else
+			damange_to_deal += (thisamount * toxLethality * delta_time)
+			if(provide_pain_message != HAS_PAINFUL_TOXIN)
+				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
 	//metabolize reagents
 	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
+	
+	
+	
+	
+	var/list/cached_reagents = liver_owner.reagents.reagent_list
+	var/need_mob_update = FALSE
+	
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		if(istype(reagent, /datum/reagent/toxin) && )
+			
+			
+		need_mob_update += metabolize_reagent(liver_owner, reagent, delta_time, times_fired, can_overdose=TRUE) // liverless arg?
+
+	if(liver_owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
+		liver_owner.updatehealth()
+		liver_owner.update_stamina()
+	liver_owner.reagents.update_total()
+	
+	
+	
 
 	if(damange_to_deal)
 		applyOrganDamage(damange_to_deal)
