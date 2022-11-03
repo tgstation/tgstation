@@ -388,56 +388,6 @@
 	SAY OOGA
 	DELAY 20"}
 
-/obj/item/disk/holodisk/ruin/cyborg_mothership
-	name = "Blackbox Print-out #101011"
-	desc = "A rusty holodisk containing the last moments of 101011."
-	preset_image_type = /datum/preset_holoimage/ai
-	preset_record_text = {"
-	NAME MarinAI
-	SAY Warning - Space vines detected
-	DELAY 10
-	NAME Unit-577
-	PRESET /datum/preset_holoimage/robot
-	SAY Running diagnostics... vine biomass appears to be covering the ship's solar panels.
-	DELAY 30
-	NAME MarinAI
-	PRESET /datum/preset_holoimage/ai
-	SAY Unit-577 please commence decontamination coroutines. Power is decreasing exponentially.
-	DELAY 30
-	NAME Unit-577
-	PRESET /datum/preset_holoimage/robot
-	SAY Affirmative. Destination set to solar panels. Plant biomass is set to be termina--
-	DELAY 30
-	NAME Hivebot
-	PRESET /datum/preset_holoimage/hivebot
-	SAY Exterminate, annihilate, DESTROY!
-	DELAY 30
-	NAME Unit-577
-	PRESET /datum/preset_holoimage/robot
-	SAY Unknown robotic lifeform, identify yourself!
-	DELAY 30
-	NAME Hivebot
-	PRESET /datum/preset_holoimage/hivebot
-	SAY EXTERMINATE!
-	DELAY 30
-	NAME Unit-577
-	PRESET /datum/preset_holoimage/robot
-	SAY *static* Modules offline! *static* D@am3E 1s pr3s&nt
-	DELAY 30
-	SOUND explosion
-	DELAY 20
-	NAME MarinAI
-	SAY Hostile robotic lifeforms detected. Station power status is depleted. Powering down...
-	DELAY 30
-	NAME Hivebot
-	PRESET /datum/preset_holoimage/hivebot
-	SAY Seek! Locate! Exterminate!
-	DELAY 30
-	PRESET /datum/preset_holoimage/corgi
-	NAME Blackbox Automated Message
-	SAY Connection lost. Dumping audio logs to disk.
-	DELAY 50"}
-
 /obj/item/disk/holodisk/donutstation/whiteship
 	name = "Blackbox Print-out #DS024"
 	desc = "A holodisk containing the last viable recording of DS024's blackbox."
