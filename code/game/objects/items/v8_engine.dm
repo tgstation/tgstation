@@ -33,7 +33,7 @@
 	INVOKE_ASYNC(src, .proc/start_learning_recipe, user)
 
 /obj/item/v8_engine/proc/start_learning_recipe(mob/user)
-	var/datum/crafting_recipe/house_edge/edge
+	var/edge = /datum/crafting_recipe/house_edge
 	if(!user.mind)
 		return
 	if(user.mind.has_crafting_recipe(user = user, potential_recipe = edge))
