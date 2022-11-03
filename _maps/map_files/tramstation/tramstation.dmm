@@ -1737,7 +1737,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "aNm" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Western Tram Bridge 2"
 	},
@@ -2143,7 +2143,7 @@
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "aVB" = (
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
@@ -2214,7 +2214,7 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "aXm" = (
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
@@ -2553,14 +2553,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
-"bfr" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1
-	},
-/turf/open/floor/vault,
-/area/station/hallway/primary/tram/center)
 "bfE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
@@ -4728,7 +4720,7 @@
 /area/station/maintenance/tram/right)
 "bOV" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/left)
 "bPf" = (
@@ -4787,7 +4779,7 @@
 /area/station/cargo/miningdock/cafeteria)
 "bPY" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/right)
 "bPZ" = (
@@ -12080,6 +12072,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"ekY" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/holosign/barrier/atmos/tram,
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/vault,
+/area/station/hallway/primary/tram/center)
 "elo" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Head of Security"
@@ -14827,7 +14827,7 @@
 /area/station/cargo/miningdock/cafeteria)
 "fmd" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
@@ -21144,7 +21144,7 @@
 /area/station/science/research)
 "hFy" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/center)
 "hFC" = (
@@ -24068,7 +24068,7 @@
 /area/station/security/office)
 "iGz" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
@@ -25608,7 +25608,7 @@
 /area/station/service/chapel)
 "jkv" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/center)
@@ -26025,7 +26025,7 @@
 /area/station/hallway/secondary/entry)
 "jsL" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Eastern Tram Bridge 2"
 	},
@@ -35052,7 +35052,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/tram/right)
 "myM" = (
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
@@ -42071,7 +42071,7 @@
 /area/station/security/brig)
 "pcD" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Eastern Tram Bridge 1"
 	},
@@ -51345,7 +51345,7 @@
 /area/station/security/checkpoint)
 "slF" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/right)
@@ -62902,7 +62902,7 @@
 /area/station/service/library)
 "wvB" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Western Tram Bridge 1"
 	},
@@ -66028,7 +66028,7 @@
 /area/station/engineering/break_room)
 "xyj" = (
 /obj/effect/turf_decal/delivery,
-/obj/structure/holosign/barrier/atmos/sturdy,
+/obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/left)
@@ -159981,7 +159981,7 @@ hFy
 hFy
 jkv
 myM
-bfr
+hFy
 hFy
 aNm
 pdW
@@ -171289,7 +171289,7 @@ hFy
 hFy
 jkv
 myM
-bfr
+ekY
 hFy
 pcD
 pdW
