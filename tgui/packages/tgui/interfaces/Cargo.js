@@ -100,7 +100,8 @@ const CargoStatus = (props, context) => {
               color={(grocery && 'orange') || 'green'}
               content={location}
               tooltip={
-                (grocery && 'The kitchen is waiting for their grocery supply delivery!') ||
+                (grocery &&
+                  'The kitchen is waiting for their grocery supply delivery!') ||
                 ''
               }
               tooltipPosition="right"
