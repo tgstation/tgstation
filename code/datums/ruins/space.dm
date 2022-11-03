@@ -334,6 +334,6 @@
 
 /datum/map_template/ruin/space/cyborg_mothership
 	id = "cyborg_mothership"
-	suffix = "ruin_cyborg_mothership.dmm"
+	suffix = "cyborg_mothership.dmm"
 	name = "Cyborg Mothership"
 	description = "An abandoned cyborg mothership that was overtaken by space vines and hivebots. It appears that it hosted an experimental AI focused on mining before it was depowered."
