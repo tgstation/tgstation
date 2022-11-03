@@ -214,6 +214,14 @@
 		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
 		log_filter("Soft IC (Passed)", message, filter_result)
 
+	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
+		client?.cmd_admin_say(message)
+		return
+
+	if(message_mods[RADIO_EXTENSION] == MODE_DEADMIN)
+		client?.dsay(message)
+		return
+
 	if(client && !(ignore_spam || forced))
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, span_danger("You cannot speak IC (muted)."))
