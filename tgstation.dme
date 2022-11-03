@@ -2468,6 +2468,7 @@
 #include "code\modules\asset_cache\assets\common.dm"
 #include "code\modules\asset_cache\assets\condiments.dm"
 #include "code\modules\asset_cache\assets\contracts.dm"
+#include "code\modules\asset_cache\assets\emojipedia.dm"
 #include "code\modules\asset_cache\assets\fish.dm"
 #include "code\modules\asset_cache\assets\fontawesome.dm"
 #include "code\modules\asset_cache\assets\genetics.dm"

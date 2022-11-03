@@ -1,7 +1,7 @@
+import { classes } from 'common/react';
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
-import '../styles/interfaces/Emojipedia.scss';
 
 export const NtosEmojipedia = (props, context) => {
   const { data } = useBackend(context);
@@ -21,7 +21,7 @@ export const NtosEmojipedia = (props, context) => {
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
         <Section
-          title={'Emojipedia V2.2.1-pre' + (filter ? ` - ${filter}` : '')}
+          title={'Emojipedia V2.3.0-patch' + (filter ? ` - ${filter}` : '')}
           buttons={
             <>
               <Input
@@ -47,10 +47,9 @@ export const NtosEmojipedia = (props, context) => {
           {filtered_emoji_list.map((emoji) => (
             <Box
               key={emoji.name}
-              className="Emojipedia__item"
+              className={classes(['emojipedia16x16', emoji.name])}
               as="img"
               m={0}
-              src={`data:image/jpeg;base64,${emoji.icon64}`}
               title={emoji.name}
               style={{
                 '-ms-interpolation-mode': 'nearest-neighbor',
