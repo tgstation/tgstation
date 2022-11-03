@@ -1,8 +1,18 @@
+#define DESTINATION_WEST_ACTIVE "west_active"
+#define DESTINATION_WEST_IDLE "west_idle"
+#define DESTINATION_CENTRAL_EASTBOUND_ACTIVE "central_eb_active"
+#define DESTINATION_CENTRAL_WESTBOUND_ACTIVE "central_wb_active"
+#define DESTINATION_CENTRAL_IDLE "central_idle"
+#define DESTINATION_EAST_ACTIVE "east_active"
+#define DESTINATION_EAST_IDLE "east_idle"
+#define DESTINATION_NOT_IN_SERVICE "NIS"
+
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
-	icon_screen = "tram"
-	icon_keyboard = "atmos_key"
+	base_icon_state = "tram_"
+	icon_screen = "tram_central_idle"
+	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -14,6 +24,8 @@
 
 	var/specific_lift_id = MAIN_STATION_TRAM
 
+	var/previous_destination
+
 /obj/machinery/computer/tram_controls/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/tram_controls))
@@ -22,6 +34,17 @@
 /obj/machinery/computer/tram_controls/LateInitialize()
 	. = ..()
 	find_tram()
+
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	if(tram_part)
+		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/set_controls_display)
+
+/obj/machinery/destination_sign/Destroy()
+	. = ..()
+
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	if(tram_part)
+		UnregisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING)
 
 /**
  * Finds the tram from the console
@@ -110,6 +133,7 @@
 		return FALSE
 	tram_part.tram_travel(to_where)
 	say("The tram has been called to [to_where.name].")
+	set_controls_display()
 	return TRUE
 
 /obj/item/circuit_component/tram_controls
@@ -171,6 +195,53 @@
 		return
 
 	computer.try_send_tram(destination)
+
+/obj/machinery/computer/tram_controls/proc/set_controls_display()
+	var/datum/lift_master/tram/tram = tram_ref?.resolve()
+
+	if(!tram || !is_operational)
+		return PROCESS_KILL
+
+	use_power(active_power_usage)
+
+	if(!tram.travelling)
+		if(istype(tram.from_where, /obj/effect/landmark/tram/left_part))
+			icon_screen = "[base_icon_state][DESTINATION_WEST_IDLE]"
+			previous_destination = tram.from_where
+			update_appearance()
+			return PROCESS_KILL
+
+		if(istype(tram.from_where, /obj/effect/landmark/tram/middle_part))
+			icon_screen = "[base_icon_state][DESTINATION_CENTRAL_IDLE]"
+			previous_destination = tram.from_where
+			update_appearance()
+			return PROCESS_KILL
+
+		if(istype(tram.from_where, /obj/effect/landmark/tram/right_part))
+			icon_screen = "[base_icon_state][DESTINATION_EAST_IDLE]"
+			previous_destination = tram.from_where
+			update_appearance()
+			return PROCESS_KILL
+
+	if(istype(tram.from_where, /obj/effect/landmark/tram/left_part))
+		previous_destination = tram.from_where
+		icon_screen = "[base_icon_state][DESTINATION_WEST_ACTIVE]"
+		update_appearance()
+		return PROCESS_KILL
+
+	if(istype(tram.from_where, /obj/effect/landmark/tram/middle_part))
+		if(istype(previous_destination, /obj/effect/landmark/tram/left_part))
+			icon_screen = "[base_icon_state][DESTINATION_CENTRAL_EASTBOUND_ACTIVE]"
+		if(istype(previous_destination, /obj/effect/landmark/tram/right_part))
+			icon_screen = "[base_icon_state][DESTINATION_CENTRAL_WESTBOUND_ACTIVE]"
+		update_appearance()
+		return PROCESS_KILL
+
+	if(istype(tram.from_where, /obj/effect/landmark/tram/right_part))
+		previous_destination = tram.from_where
+		icon_screen = "[base_icon_state][DESTINATION_EAST_ACTIVE]"
+		update_appearance()
+		return PROCESS_KILL
 
 /obj/item/circuit_component/tram_controls/proc/on_tram_set_travelling(datum/source, travelling)
 	SIGNAL_HANDLER

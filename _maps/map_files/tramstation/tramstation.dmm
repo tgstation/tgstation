@@ -27640,7 +27640,11 @@
 /area/station/security/execution/transfer)
 "jWv" = (
 /obj/effect/landmark/tram/middle_part,
-/obj/machinery/computer/tram_controls,
+/obj/machinery/computer/tram_controls{
+	icon_keyboard = null;
+	icon_state = "tram_controls";
+	icon_screen = "tram_central_idle"
+	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
