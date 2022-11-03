@@ -245,6 +245,11 @@
 		client?.dsay(message)
 		return
 
+	if(message_mods[MODE_SING])
+		var/randomnote = pick("\u2669", "\u266A", "\u266B")
+		message = "[randomnote] [message] [randomnote]"
+		spans |= SPAN_SINGING
+
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(message), spans, message_mods)]</span></span>"
 	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(say_emphasis(message), spans, message_mods)]</span></span>"
 
