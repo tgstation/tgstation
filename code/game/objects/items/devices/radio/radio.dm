@@ -264,7 +264,7 @@
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	flick_overlay_view(overlay_mic_active, src, 20)
+	flick_overlay_view(overlay_mic_active, src, 2 SECONDS)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
