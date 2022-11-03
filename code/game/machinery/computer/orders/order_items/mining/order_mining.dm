@@ -17,7 +17,7 @@
 	item_path = /obj/item/fulton_core
 	cost_per_order = 400
 
-/datum/orderable_item/mining/kheiralcuffs
+/datum/orderable_item/mining/mining_modsuit
 	item_path = /obj/item/mod/control/pre_equipped/mining
 	cost_per_order = 3000
 
@@ -96,11 +96,3 @@
 /datum/orderable_item/mining/hiking_boots
 	item_path = /obj/item/clothing/shoes/winterboots/ice_boots
 	cost_per_order = 2500
-
-/datum/orderable_item/mining/kheiralcuffs
-	item_path = /obj/item/kheiral_cuffs
-	cost_per_order = 2000
-
-/datum/orderable_item/mining/kheiralcuffs
-	item_path = /obj/item/kheiral_cuffs
-	cost_per_order = 2000
