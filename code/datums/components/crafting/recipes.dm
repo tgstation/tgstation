@@ -1839,6 +1839,28 @@
 	qdel(toilet)
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 
+/datum/crafting_recipe/pillow_suit
+	name = "pillow suit"
+	result = /obj/item/clothing/suit/pillow_suit
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sticky_tape = 10,
+		/obj/item/pillow = 5,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/pillow_hood
+	name = "pillow hood"
+	result = /obj/item/clothing/head/pillow_hood
+	tool_behaviors = list(TOOL_WIRECUTTER, TOOL_KNIFE)
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/pillow = 1,
+	)
+	category = CAT_CLOTHING
+
+
 /datum/crafting_recipe/house_edge
 	name = "House Edge"
 	result = /obj/item/house_edge

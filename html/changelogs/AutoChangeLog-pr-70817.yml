@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes:
-  - bugfix: "The supermatter will now do linear powerloss at the correct conditions when you shoot it with adminium emitters."
