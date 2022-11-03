@@ -229,7 +229,7 @@
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
 /mob/camera/imaginary_friend/proc/friend_talk(message)
-	message = capitalize(trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = capitalize(message)
 
 	if(!message)
 		return
