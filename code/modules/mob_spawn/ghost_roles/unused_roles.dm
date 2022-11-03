@@ -204,7 +204,7 @@
 
 /obj/effect/mob_spawn/ghost_role/mouse
 	name = "sleeper"
-	mob_type = /mob/living/simple_animal/mouse
+	mob_type = /mob/living/basic/mouse
 	prompt_name = "a mouse"
 	you_are_text = "You're a mouse!"
 	flavour_text = "Uh... yep! Squeak squeak, motherfucker."

@@ -314,9 +314,9 @@
 /obj/item/food/proc/try_break_off(mob/living/attacker, mob/living/user) //maybe i give you a pizza maybe i break off your arm
 	if(prob(50) || (attacker != user) || !iscarbon(user) || HAS_TRAIT(user, TRAIT_NODISMEMBER))
 		return
-	var/obj/item/bodypart/l_arm = user.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/r_arm = user.get_bodypart(BODY_ZONE_R_ARM)
-	var/did_the_thing = (l_arm?.dismember() || r_arm?.dismember()) //not all limbs can be removed, so important to check that we did. the. thing.
+	var/obj/item/bodypart/arm/left = user.get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/arm/right = user.get_bodypart(BODY_ZONE_R_ARM)
+	var/did_the_thing = (left?.dismember() || right?.dismember()) //not all limbs can be removed, so important to check that we did. the. thing.
 	if(!did_the_thing)
 		return
 	to_chat(user, span_userdanger("Maybe I'll give you a pizza, maybe I'll break off your arm.")) //makes the reference more obvious

@@ -46,6 +46,8 @@
 #define COMSIG_MOB_RESET_PERSPECTIVE "mob_reset_perspective"
 /// from base of /client/proc/set_eye() : (atom/old_eye, atom/new_eye)
 #define COMSIG_CLIENT_SET_EYE "client_set_eye"
+/// from base of /datum/view_data/proc/afterViewChange() : (view)
+#define COMSIG_VIEWDATA_UPDATE "viewdata_update"
 
 
 ///from mind/transfer_to. Sent to the receiving mob.

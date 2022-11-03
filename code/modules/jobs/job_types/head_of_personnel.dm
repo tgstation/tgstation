@@ -73,7 +73,7 @@
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
+	if(check_holidays("Ian's Birthday"))
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
 //only pet worth reviving

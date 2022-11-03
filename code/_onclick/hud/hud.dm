@@ -124,11 +124,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
 
-	AddComponent(/datum/component/zparallax, owner.client)
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_plane_increase)
 	RegisterSignal(mymob, COMSIG_MOB_LOGIN, .proc/client_refresh)
 	RegisterSignal(mymob, COMSIG_MOB_LOGOUT, .proc/clear_client)
 	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, .proc/update_sightflags)
+	RegisterSignal(mymob, COMSIG_VIEWDATA_UPDATE, .proc/on_viewdata_update)
 	update_sightflags(mymob, mymob.sight, NONE)
 
 /datum/hud/proc/client_refresh(datum/source)
@@ -138,6 +138,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/clear_client(datum/source)
 	if(mymob.canon_client)
 		UnregisterSignal(mymob.canon_client, COMSIG_CLIENT_SET_EYE)
+
+/datum/hud/proc/on_viewdata_update(datum/source, view)
+	SIGNAL_HANDLER
+
+	view_audit_buttons()
 
 /datum/hud/proc/on_eye_change(datum/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
@@ -167,6 +172,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/eye_z_changed(atom/eye)
 	SIGNAL_HANDLER
+	update_parallax_pref(eye) // If your eye changes z level, so should your parallax prefs
 	var/turf/eye_turf = get_turf(eye)
 	var/new_offset = GET_TURF_PLANE_OFFSET(eye_turf)
 	if(current_plane_offset == new_offset)
