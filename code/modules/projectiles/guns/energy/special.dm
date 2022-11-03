@@ -375,7 +375,7 @@
 
 /obj/item/gun/energy/marksman_revolver
 	name = "marksman revolver"
-	desc = "A weapon created during the Final War for medium-to-long distance combat. Uses electric pulses to fire microscopic pieces of metal at incredibly high speeds. Alternate fire flips a coin that can be targeted for extra firepower."
+	desc = "Uses electric pulses to fire microscopic pieces of metal at incredibly high speeds. Alternate fire flips a coin that can be targeted for extra firepower."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
 	inhand_icon_state = "tesla"

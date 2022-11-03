@@ -37,11 +37,10 @@
 		var/mob/living/carbon/M = target
 		M.silent = max(M.silent, 10)
 
+
 // Marksman Revolver + Ricochet Coin
 
-// *******************
-// ** Marksman Shot **
-// *******************
+/// Marksman Shot
 /obj/projectile/bullet/marksman
 	name = "nanoshot"
 	hitscan = TRUE
@@ -51,9 +50,10 @@
 	/// How many ricochets deep this is, for tracer size
 	var/ricoshot_level = 0
 
-/obj/projectile/bullet/marksman/Initialize(mapload, outgoing_ricoshot_level = 0)
+/obj/projectile/bullet/marksman/Initialize(mapload, obj/item/ammo_casing/casing, incoming_ricoshot_level)
 	. = ..()
-	ricoshot_level = outgoing_ricoshot_level
+	if(isnum(incoming_ricoshot_level))
+		ricoshot_level = incoming_ricoshot_level
 
 	switch(ricoshot_level)
 		if(0)
@@ -67,16 +67,14 @@
 	var/turf/cur_turf = get_turf(src) // check to see if we're passing over a turf with a coin on it
 	var/obj/projectile/bullet/coin/coin_check = cur_turf ? locate(/obj/projectile/bullet/coin) in cur_turf.contents : null
 
-	if(!coin_check || coin_check.used) // no coin, keep trucking
+	if(!coin_check || (ricoshot_level == 0 && get_dist(coin_check.target_turf, coin_check) >= 1) || coin_check.used) // no coin, keep trucking
 		return ..()
 
 	testing("smt type [type]")
-	coin_check.check_splitshot(firer, src, ricoshot_level)
+	coin_check.check_splitshot(firer, src)
 	Impact(coin_check)
 
-// *******************
-// ** Marksman Coin **
-// *******************
+/// Marksman Coin
 /obj/projectile/bullet/coin
 	name = "marksman coin"
 	icon_state = "coinshot"
@@ -98,16 +96,11 @@
 	/// The mob who originally flipped this coin, as a matter of convenience, may be able tto be removed
 	var/mob/original_firer
 
-	var/outgoing_ricoshot_level
-
-	var/in_fired_from
-	var/in_firer
-	var/in_damage
 
 /obj/projectile/bullet/coin/Initialize(mapload, turf/the_target, mob/original_firer)
 	src.original_firer = original_firer
 	target_turf = the_target
-	range = (get_dist(original_firer, target_turf) + 3) * 3
+	range = (get_dist(original_firer, target_turf) + 3) * 3 // 3 tiles past the origin (the *3 is because Range() ticks 3 times a tile because of the slower speed)
 
 	. = ..()
 
@@ -123,9 +116,20 @@
 	return ..()
 
 // the coin must be on the target turf to be directly targetable
+/obj/projectile/bullet/coin/fire(angle, atom/direct_target)
+	var/est_time = (range - 3) * 0.5 SECONDS
+	animate(src, est_time, FALSE, transform = matrix()*2)
+	. = ..()
+
+
+// the coin must be on the target turf to be directly targetable
 /obj/projectile/bullet/coin/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
+	testing("Range: [range]/[decayedRange] | Time: [world.time]")
 	if(!valid && get_dist(loc, target_turf) < 1)
+		testing("PEAKED")
+		var/est_time_down = 0.5 SECONDS
+		animate(src, est_time_down, FALSE, transform = matrix()*0.5)
 		original_firer?.playsound_local(src, 'sound/machines/ping.ogg', 30)
 		valid = TRUE
 		if(crosshair_indicator)
@@ -145,21 +149,14 @@
 	if(!forced && get_dist(src, target_turf) > 1)
 		return FALSE
 
-	outgoing_ricoshot_level = incoming_shot.ricoshot_level + 1
-	in_firer = shooter
-	in_fired_from = incoming_shot.fired_from
-	in_damage = incoming_shot.damage
-
-
-	testing("check splitshot incoming type [incoming_shot] | [incoming_shot.type]")
 	used = TRUE
 	var/turf/cur_tur = get_turf(src)
 	cur_tur.visible_message(span_nicegreen("[incoming_shot] impacts [src] and splits!"))
-	iterate__splitshots(shooter, incoming_shot)
+	iterate_splitshots(shooter, incoming_shot)
 	QDEL_IN(src, 0.25 SECONDS) // may not be needed
 
 /// Now we actually create all the splitshots, loop through however many splits we'll create and fire them
-/obj/projectile/bullet/coin/proc/iterate__splitshots(mob/living/shooter, obj/projectile/incoming_shot)
+/obj/projectile/bullet/coin/proc/iterate_splitshots(mob/living/shooter, obj/projectile/incoming_shot)
 	for(var/i in 1 to num_of_splitshots)
 		fire_splitshot(incoming_shot)
 
@@ -169,17 +166,26 @@
 
 	ADD_TRAIT(next_target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT)
 	addtimer(TRAIT_CALLBACK_REMOVE(next_target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT), 0.5 SECONDS)
-	var/projectile_type = incoming_shot.type
-	testing("Type of new shot: [incoming_shot] | [incoming_shot.type] | [incoming_shot.ricoshot_level] | [outgoing_ricoshot_level]")
-	var/obj/projectile/bullet/marksman/new_splitshot = new /obj/projectile/bullet/marksman(get_turf(src), outgoing_ricoshot_level)
+	//var/projectile_type = incoming_shot.type
+	//testing("Type of new shot: [incoming_shot] | [incoming_shot.type] | [incoming_shot.ricoshot_level] | [outgoing_ricoshot_level]")
+	var/outgoing_ricoshot_level = incoming_shot.ricoshot_level + 1
+	var/obj/projectile/bullet/marksman/new_splitshot = new /obj/projectile/bullet/marksman(get_turf(src), null, outgoing_ricoshot_level)
 	testing("new: [new_splitshot] | [new_splitshot.type] | [new_splitshot.damage]")
 	//Shooting Code:
 	new_splitshot.original = next_target
-	new_splitshot.fired_from = in_fired_from
-	new_splitshot.firer = in_firer
-	new_splitshot.preparePixelProjectile(next_target, get_turf(src))
-	new_splitshot.fire()
-	new_splitshot.damage = 1.5 * in_damage
+	new_splitshot.fired_from = incoming_shot.fired_from
+	new_splitshot.firer = incoming_shot.firer
+	new_splitshot.damage = 1.3 * incoming_shot.damage
+
+	var/current_turf = get_turf(src)
+	var/target_turf = get_turf(next_target)
+
+	if(Adjacent(current_turf, target_turf))
+		new_splitshot.fire(get_angle(current_turf, target_turf), direct_target = next_target)
+	else
+		new_splitshot.preparePixelProjectile(next_target, get_turf(src))
+		new_splitshot.fire()
+
 
 	if(istype(next_target, /obj/projectile/bullet/coin)) // handle further splitshot checks
 		var/obj/projectile/bullet/coin/our_coin = next_target

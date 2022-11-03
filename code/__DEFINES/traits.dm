@@ -931,5 +931,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes a species be better/worse at defending against tackling depending on their tail's status
 #define TRAIT_TACKLING_TAILED_DEFENDER "tackling_tailed_defender"
 
-/// This target has recently been shot by a marksman coin and is very briefly immune to being hit by one again to prevent recusion
+/// This target has recently been shot by a marksman coin and is very briefly immune to being hit by one again to prevent recursion
 #define TRAIT_RECENTLY_COINED "trait_recently_coined"
