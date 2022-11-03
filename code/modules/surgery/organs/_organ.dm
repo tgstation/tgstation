@@ -41,7 +41,7 @@
 	var/failure_time = 0
 	///Do we effect the appearance of our mob. Used to save time in preference code
 	var/visual = TRUE
-	/// Traits that are given to the holder of the organ.
+	/// Traits that are given to the holder of the organ. If you want an effect that changes this, don't add directly to this. Use the add_organ_trait() proc
 	var/list/organ_traits = list()
 
 // Players can look at prefs before atoms SS init, and without this
@@ -101,8 +101,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /*
  * Remove the organ from the select mob.
  *
- * organ_owner - the mob who owns our organ, that we're removing the organ from.
- * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
+ * * organ_owner - the mob who owns our organ, that we're removing the organ from.
+ * * special - "quick swapping" an organ out - when TRUE, the mob will be unaffected by not having that organ for the moment
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 

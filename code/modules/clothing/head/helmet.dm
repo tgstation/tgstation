@@ -102,35 +102,20 @@
 	inhand_icon_state = "blueshift_helmet"
 	custom_premium_price = PAYCHECK_COMMAND
 
-/obj/item/clothing/head/helmet/riot
-	name = "riot helmet"
-	desc = "It's a helmet specifically designed to protect against close range attacks."
-	icon_state = "riot"
-	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down on"
-	alt_toggle_message = "You push the visor up on"
-	can_toggle = 1
-	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80, WOUND = 15)
-	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
-	strip_delay = 80
-	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = HIDEFACE|HIDESNOUT
-	toggle_cooldown = 0
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	dog_fashion = null
 
-/obj/item/clothing/head/helmet/attack_self(mob/user)
+/obj/item/clothing/head/helmet/toggleable
+	dog_fashion = null
+	///chat message when the visor is toggled down.
+	var/toggle_message
+	///chat message when the visor is toggled up.
+	var/alt_toggle_message
+
+/obj/item/clothing/head/helmet/toggleable/attack_self(mob/user)
 	. = ..()
 	if(.)
 		return
-	if(!can_toggle)
+	if(user.incapacitated() || !try_toggle())
 		return
-
-	if(user.incapacitated() || world.time <= cooldown + toggle_cooldown)
-		return
-
-	cooldown = world.time
 	up = !up
 	flags_1 ^= visor_flags
 	flags_inv ^= visor_flags_inv
@@ -143,7 +128,26 @@
 		var/mob/living/carbon/carbon_user = user
 		carbon_user.head_update(src, forced = TRUE)
 
-/obj/item/clothing/head/helmet/justice
+///Attempt to toggle the visor. Returns true if it does the thing.
+/obj/item/clothing/head/helmet/toggleable/proc/try_toggle()
+	return TRUE
+
+/obj/item/clothing/head/helmet/toggleable/riot
+	name = "riot helmet"
+	desc = "It's a helmet specifically designed to protect against close range attacks."
+	icon_state = "riot"
+	inhand_icon_state = "riot_helmet"
+	toggle_message = "You pull the visor down on"
+	alt_toggle_message = "You push the visor up on"
+	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80, WOUND = 15)
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
+	strip_delay = 80
+	actions_types = list(/datum/action/item_action/toggle)
+	visor_flags_inv = HIDEFACE|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+
+/obj/item/clothing/head/helmet/toggleable/justice
 	name = "helmet of justice"
 	desc = "WEEEEOOO. WEEEEEOOO. WEEEEOOOO."
 	icon_state = "justice"
@@ -151,33 +155,36 @@
 	toggle_message = "You turn off the lights on"
 	alt_toggle_message = "You turn on the lights on"
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
-	can_toggle = 1
-	toggle_cooldown = 20
-	dog_fashion = null
+	///Cooldown for toggling the visor.
+	COOLDOWN_DECLARE(visor_toggle_cooldown)
 	///Looping sound datum for the siren helmet
 	var/datum/looping_sound/siren/weewooloop
 
-/obj/item/clothing/head/helmet/justice/Initialize(mapload)
+/obj/item/clothing/head/helmet/toggleable/justice/try_toggle()
+	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
+		return FALSE
+	COOLDOWN_START(src, visor_toggle_cooldown, 2 SECONDS)
+	return TRUE
+
+/obj/item/clothing/head/helmet/toggleable/justice/Initialize(mapload)
 	. = ..()
 	weewooloop = new(src, FALSE, FALSE)
 
-/obj/item/clothing/head/helmet/justice/Destroy()
+/obj/item/clothing/head/helmet/toggleable/justice/Destroy()
 	QDEL_NULL(weewooloop)
 	return ..()
 
-/obj/item/clothing/head/helmet/justice/attack_self(mob/user)
+/obj/item/clothing/head/helmet/toggleable/justice/attack_self(mob/user)
 	. = ..()
 	if(up)
 		weewooloop.start()
 	else
 		weewooloop.stop()
 
-/obj/item/clothing/head/helmet/justice/escape
+/obj/item/clothing/head/helmet/toggleable/justice/escape
 	name = "alarm helmet"
 	desc = "WEEEEOOO. WEEEEEOOO. STOP THAT MONKEY. WEEEOOOO."
 	icon_state = "justice2"
-	toggle_message = "You turn off the light on"
-	alt_toggle_message = "You turn on the light on"
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"

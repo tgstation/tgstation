@@ -5,13 +5,11 @@
 	inherent_traits = list(
 		TRAIT_NOSLIPALL,
 	)
-	attack_verb = "slap"
-	attack_effect = ATTACK_EFFECT_DISARM
+
 	say_mod = "slurs"
 	coldmod = 0.5 //snails only come out when its cold and wet
 	burnmod = 2
 	speedmod = 6
-	punchdamagehigh = 0.5 //snails are soft and squishy
 	siemens_coeff = 2 //snails are mostly water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP
 	sexes = FALSE //snails are hermaphrodites
@@ -23,10 +21,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/snail,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/snail,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/snail,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/snail,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/snail,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/snail
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/snail,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/snail,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/snail,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/snail
 	)
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)

@@ -18,19 +18,11 @@
 	///Used in New() to set network tag according to our area.
 	var/console_department = ""
 
-/obj/machinery/modular_computer/console/buildable/Initialize(mapload)
-	. = ..()
-	// User-built consoles start as empty frames.
-	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
-	qdel(hard_drive)
-
 /obj/machinery/modular_computer/console/Initialize(mapload)
 	. = ..()
 	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
 	if(battery_module)
 		qdel(battery_module)
-
-	cpu.install_component(new /obj/item/computer_hardware/hard_drive/super) // Consoles generally have better HDDs due to lower space limitations
 
 	if(cpu)
 		cpu.screen_on = TRUE

@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes:
+  - bugfix: "makes beeping sounds work on mechpads when used by a mech"
