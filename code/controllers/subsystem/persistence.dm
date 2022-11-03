@@ -197,15 +197,7 @@ SUBSYSTEM_DEF(persistence)
 /// Loads the trophies from the source file, and places a few in trophy display cases.
 /datum/controller/subsystem/persistence/proc/load_trophies()
 	var/list/raw_saved_trophies = list()
-	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/TrophyItems.sav")
-		var/saved_json
-		S >> saved_json
-		if(!saved_json)
-			return
-		raw_saved_trophies = json_decode(saved_json)
-		fdel("data/npc_saves/TrophyItems.sav")
-	else if(fexists("data/npc_saves/TrophyItems.json"))
+	if(fexists("data/npc_saves/TrophyItems.json"))
 		var/json_file = file("data/npc_saves/TrophyItems.json")
 		if(!fexists(json_file))
 			return
