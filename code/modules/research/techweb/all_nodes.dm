@@ -34,6 +34,7 @@
 		"coffee_cartridge",
 		"coffeemaker",
 		"coffeepot",
+		"syrup_bottle",
 		"condenser",
 		"conveyor_belt",
 		"conveyor_switch",

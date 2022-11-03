@@ -460,7 +460,6 @@
 
 /*
  *	Syrup bottles, basically a unspillable cup that transfers reagents upon clicking on it with a cup
- *	Exclusive, can only be ordered from cargo, you cant refill them.
  */
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle
@@ -471,25 +470,36 @@
 	fill_icon_state = "syrup"
 	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100)
 	possible_transfer_amounts = list(5, 10)
-	reagent_flags = DUNKABLE | DRAINABLE | TRANSPARENT	//redefined to make it non-refillable
 	volume = 50
 	amount_per_transfer_from_this = 5
 	spillable = FALSE
+	///variable to tell if the bottle can be refilled
+	var/cap_on = TRUE
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to toggle the pump cap.")
+	return
 
 //when you attack the syrup bottle with a container it refills it
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/attackby(obj/item/attacking_item, mob/user, params)
-	SHOULD_CALL_PARENT(FALSE)
+	//SHOULD_CALL_PARENT(FALSE)
+
+	if(!cap_on)
+		.=..()
+		return
+
 	if(!check_allowed_items(attacking_item,target_self=1))
 		return
 
 	if(attacking_item.is_refillable())
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("[src] is empty!"))
-			return
+			return TRUE
 
 		if(attacking_item.reagents.holder_full())
 			to_chat(user, span_warning("[attacking_item] is full."))
-			return
+			return TRUE
 
 		var/trans = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [attacking_item]."))
@@ -503,6 +513,17 @@
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/afterattack(obj/target, mob/living/user, proximity)
 	SHOULD_CALL_PARENT(FALSE)
 	return TRUE
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/AltClick(mob/user)
+	cap_on = !cap_on
+	if(!cap_on)
+		icon_state = "syrup_open"
+		to_chat(user, span_notice("You remove the pump cap."))
+	else
+		icon_state = "syrup"
+		to_chat(user, span_notice("You put the pump cap on."))
+	update_icon_state()
+	return ..()
 
 //types of syrups
 
