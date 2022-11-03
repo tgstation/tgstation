@@ -25,6 +25,7 @@
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/charge/proc/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	do_charge(owner, target_atom, charge_delay, charge_past)

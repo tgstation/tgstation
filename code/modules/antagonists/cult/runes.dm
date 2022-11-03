@@ -281,7 +281,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.remove_status_effect(/datum/status_effect/speech/slurring/cult)
 		H.remove_status_effect(/datum/status_effect/speech/stutter)
 
-		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		if(prob(1) || check_holidays(APRIL_FOOLS))
 			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
@@ -296,15 +296,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!C)
 		return FALSE
 
-	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
-	if(signal_result & STOP_SACRIFICE)
-		return FALSE
-
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
 		for(var/M in invokers)
 			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
+		return FALSE
+
+	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
+	if(signal_result & STOP_SACRIFICE)
 		return FALSE
 
 	if(sacrificial.mind)

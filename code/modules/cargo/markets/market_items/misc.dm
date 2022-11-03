@@ -76,3 +76,22 @@
 	price_max = CARGO_CRATE_VALUE * 5
 	stock_max = 2
 	availability_prob = 30
+
+/datum/market_item/misc/roulette
+	name = "Roulette Beacon"
+	desc = "Start your own underground casino, wherever you go. One use only. No refunds."
+	item = /obj/item/roulette_wheel_beacon
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 2.5
+	stock_max = 3
+	availability_prob = 50
+
+
+/datum/market_item/misc/v8_engine
+	name = "Genuine V8 Engine (Perserved)"
+	desc = "Hey greasemonkeys, you ready to start those engines? Want to start racing through the halls and making some tighter turns on the interstellar beltway? Then you need this classic engine."
+	item = /obj/item/v8_engine
+	price_min = CARGO_CRATE_VALUE * 4
+	price_max = CARGO_CRATE_VALUE * 6
+	stock_max = 1
+	availability_prob = 15

@@ -124,9 +124,13 @@
 /datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
-	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
+	var/obj/item/held_item = pawn.get_active_held_item()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
 	var/atom/target = target_ref?.resolve()
+
+	if(!held_item) //if held_item is null, we pretend that action was succesful
+		finish_action(controller, TRUE)
+		return
 
 	if(!target || !pawn.CanReach(target) || !isliving(target))
 		finish_action(controller, FALSE)
@@ -144,10 +148,10 @@
 		finish_action(controller, FALSE)
 		return
 	var/pocket_choice = prob(50) ? ITEM_SLOT_RPOCKET : ITEM_SLOT_LPOCKET
-	if(prob(50) && living_target.can_put_in_hand(held_item))
-		living_target.put_in_hand(held_item)
-	else if(held_item.mob_can_equip(living_target, pawn, pocket_choice, TRUE))
-		living_target.equip_to_slot(held_item, pocket_choice)
+	if(prob(50))
+		living_target.put_in_hands(held_item)
+	else
+		living_target.equip_to_slot_if_possible(held_item, pocket_choice)
 
 	finish_action(controller, TRUE)
 

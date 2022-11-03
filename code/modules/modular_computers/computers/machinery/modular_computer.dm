@@ -12,7 +12,7 @@
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	///A flag that describes this device type
-	var/hardware_flag = 0
+	var/hardware_flag = NONE
 	///Power usage during last tick
 	var/last_power_usage = 0
 	/// Amount of programs that can be ran at once
@@ -112,13 +112,6 @@
 	if(cpu)
 		return cpu.interact(user)
 	return ..()
-
-// Process currently calls handle_power(), may be expanded in future if more things are added.
-/obj/machinery/modular_computer/process(delta_time)
-	if(cpu)
-		// Keep names in sync.
-		cpu.name = name
-		cpu.process(delta_time)
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()

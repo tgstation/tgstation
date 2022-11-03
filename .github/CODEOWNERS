@@ -41,6 +41,12 @@
 /code/__DEFINES/spatial_gridmap.dm @Kylerace
 /code/controllers/subsystem/spatial_gridmap.dm @Kylerace
 
+# LemonInTheDark
+
+/.github/guides/VISUALS.md @LemonInTheDark
+/code/_onclick/hud/ @LemonInTheDark
+/code/__DEFINES/layers.dm @LemonInTheDark
+
 # Mothblocks
 
 /.github/workflows/ @Mothblocks
@@ -52,6 +58,7 @@
 /code/modules/preferences_menu.dm @Mothblocks
 /code/modules/preferences_savefile.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/pull_request_hooks/ @Mothblocks
 /tools/screenshot-test-comparison/ @Mothblocks
 /tools/test_merge_bot/ @Mothblocks
 
@@ -102,6 +109,11 @@
 
 /code/modules/forensics/ @SuperNovaa41
 /code/datums/mood.dm @SuperNovaa41
+
+# tralezab
+/code/__DEFINES/basic_mobs.dm @tralezab
+/code/datums/ai @tralezab
+/code/modules/mob/living/basic/ @tralezab
 
 # Watermelon914
 

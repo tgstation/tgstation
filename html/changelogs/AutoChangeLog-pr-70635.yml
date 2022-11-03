@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes Nightmare heart revival causing their other organs to not realize they're no longer dead on the same tick."

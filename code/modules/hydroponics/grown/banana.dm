@@ -28,11 +28,34 @@
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
+///Override for checkliked callback
+/obj/item/food/grown/banana/MakeEdible()
+	AddComponent(
+		/datum/component/edible,\
+		initial_reagents = food_reagents,\
+		food_flags = food_flags,\
+		foodtypes = foodtypes,\
+		volume = max_volume,\
+		eat_time = eat_time,\
+		tastes = tastes,\
+		eatverbs = eatverbs,\
+		bite_consumption = bite_consumption,\
+		microwaved_type = microwaved_type,\
+		junkiness = junkiness,\
+		check_liked = CALLBACK(src, .proc/check_liked),\
+	)
+
 /obj/item/food/grown/banana/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		AddComponent(/datum/component/boomerang, boomerang_throw_range = throw_range + 4, thrower_easy_catch_enabled = TRUE)
 		desc += " The curve on this one looks particularly acute."
+
+///Clowns will always like bananas.
+/obj/item/food/grown/banana/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+	var/obj/item/organ/internal/liver/liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
+		return FOOD_LIKED
 
 /obj/item/food/grown/banana/generate_trash(atom/location)
 	. = ..()

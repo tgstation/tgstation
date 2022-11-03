@@ -83,6 +83,8 @@
 			return FALSE
 
 /datum/hud/proc/update_parallax_pref(mob/viewmob)
+	if(!viewmob.client)
+		return
 	remove_parallax(viewmob)
 	create_parallax(viewmob)
 	update_parallax(viewmob)

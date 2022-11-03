@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("tram wall girders (anchored)", /obj/structure/girder/tram, 2, time = 40, one_per_turf = TRUE, on_solid_ground = FALSE, on_tram = TRUE, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75), \
 	null, \
 	new/datum/stack_recipe("computer frame", /obj/structure/frame/computer, 5, time = 25, one_per_turf = TRUE, on_solid_ground = TRUE), \
-	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer/console/buildable, 10, time = 25, one_per_turf = TRUE, on_solid_ground = TRUE), \
+	new/datum/stack_recipe("modular console", /obj/machinery/modular_computer/console, 10, time = 25, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	new/datum/stack_recipe("machine frame", /obj/structure/frame/machine, 5, time = 25, one_per_turf = TRUE, on_solid_ground = TRUE), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
@@ -430,6 +430,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3), \
 	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4), \
 	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5), \
+	new/datum/stack_recipe("pillow", /obj/item/pillow, 3), \
 	))
 
 /obj/item/stack/sheet/cloth

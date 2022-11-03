@@ -16,13 +16,10 @@
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
-	var/alt_desc = null
-	var/toggle_message = null
-	var/alt_toggle_message = null
-	var/toggle_cooldown = null
-	var/cooldown = 0
 
 	var/clothing_flags = NONE
+	///List of items that can be equipped in the suit storage slot while we're worn.
+	var/list/allowed
 
 	var/can_be_bloody = TRUE
 
@@ -310,7 +307,7 @@
 		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee)
 			readout += "\n<b>ARMOR (I-X)</b>"
 			if(armor.bio)
-				readout += "\nTOXIN [armor_to_protection_class(armor.bio)]"
+				readout += "\nBIOHAZARD [armor_to_protection_class(armor.bio)]"
 			if(armor.bomb)
 				readout += "\nEXPLOSIVE [armor_to_protection_class(armor.bomb)]"
 			if(armor.bullet)

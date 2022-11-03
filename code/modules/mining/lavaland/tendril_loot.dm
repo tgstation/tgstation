@@ -86,7 +86,7 @@
 
 /obj/item/rod_of_asclepius/update_icon_state()
 	. = ..()
-	icon_state = inhand_icon_state = "ascelpius_[activated ? "active" : "dormant"]"
+	icon_state = inhand_icon_state = "asclepius_[activated ? "active" : "dormant"]"
 
 /obj/item/rod_of_asclepius/vv_edit_var(vname, vval)
 	. = ..()
@@ -444,6 +444,11 @@
 /obj/effect/immortality_talisman/attackby()
 	return
 
+/obj/effect/immortality_talisman/relaymove(mob/living/user, direction)
+	// Won't really come into play since our mob has notransform and cannot move,
+	// but regardless block all relayed moves, becuase no, you cannot move in the void.
+	return
+
 /obj/effect/immortality_talisman/singularity_pull()
 	return
 
@@ -626,7 +631,17 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF
 	clothing_flags = THICKMATERIAL
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/internal/regenerative_core/legion, /obj/item/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/pickaxe,
+		/obj/item/spear,
+		/obj/item/organ/internal/monster_core,
+		/obj/item/knife,
+		/obj/item/kinetic_crusher,
+		/obj/item/resonator,
+		/obj/item/melee/cleaving_saw,
+	)
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
@@ -643,6 +658,8 @@
 	name = "berserker helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "berserker"
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	cold_protection = HEAD
@@ -759,7 +776,9 @@
 	// Behead someone, their "glasses" drop on the floor
 	// and thus, the god eye should no longer be sticky
 	REMOVE_TRAIT(src, TRAIT_NODROP, EYE_OF_GOD_TRAIT)
-	scan_ability.Remove(user)
+	// And remove the scan ability, note that if we're being called from Destroy
+	// that this may already be nulled and removed
+	scan_ability?.Remove(user)
 
 /obj/item/clothing/glasses/godeye/proc/pain(mob/living/victim)
 	to_chat(victim, span_userdanger("You experience blinding pain, as [src] burrows into your skull."))

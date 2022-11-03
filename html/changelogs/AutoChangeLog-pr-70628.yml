@@ -1,5 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes: 
-  - bugfix: "stone stairs placed side by side will now actually line up in spriting"
-  - bugfix: "I forgor to remove the ability to build material stairs without a stairs frame when I added the whole frame system, this has been fixed, use a stairs frame made of wood or iron now."

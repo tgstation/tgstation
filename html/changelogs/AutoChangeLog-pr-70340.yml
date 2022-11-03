@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - qol: "The voting system will now prevent you (and give a short message via the tooltip) from starting a map vote when there are zero or one map choices available."
-  - qol: "If there is only one map choice available, the map vote will automatically change it to that map choice when the shuttle departs the station. It has also been made so that you may not rock the vote after this point if it has been auto-rotated, since there was only ever once choice to begin with, making the whole purpose of a vote useless."

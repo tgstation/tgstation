@@ -901,12 +901,12 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot,
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -5277,10 +5277,10 @@
 	name = "atmospherics camera";
 	network = list("ss13","engine")
 	},
-/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "bDV" = (
@@ -7088,7 +7088,7 @@
 	pixel_y = -6;
 	req_access = list("engineering")
 	},
-/obj/item/computer_hardware/hard_drive/portable/atmos{
+/obj/item/computer_disk/atmos{
 	pixel_x = 10;
 	pixel_y = -4
 	},
@@ -7096,11 +7096,11 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/obj/item/computer_hardware/hard_drive/portable/engineering{
+/obj/item/computer_disk/engineering{
 	pixel_x = 10;
 	pixel_y = -8
 	},
-/obj/item/computer_hardware/hard_drive/portable/engineering{
+/obj/item/computer_disk/engineering{
 	pixel_x = 10;
 	pixel_y = -8
 	},
@@ -8331,6 +8331,7 @@
 	specialfunctions = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "czH" = (
@@ -16195,10 +16196,6 @@
 "ePm" = (
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"ePy" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall/r_wall/rust,
-/area/station/engineering/atmos)
 "ePU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21055,10 +21052,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/item/computer_hardware/hard_drive/portable/medical,
-/obj/item/computer_hardware/hard_drive/portable/medical,
-/obj/item/computer_hardware/hard_drive/portable/medical,
-/obj/item/computer_hardware/hard_drive/portable/chemistry,
+/obj/item/computer_disk/medical,
+/obj/item/computer_disk/medical,
+/obj/item/computer_disk/medical,
+/obj/item/computer_disk/chemistry,
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 5
 	},
@@ -24848,6 +24845,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "hfP" = (
@@ -26550,20 +26548,20 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/fore)
 "hCY" = (
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = -5;
 	pixel_y = 8
 	},
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/item/computer_hardware/hard_drive/portable{
+/obj/item/computer_disk{
 	pixel_x = -8;
 	pixel_y = -3
 	},
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable/ordnance{
+/obj/item/computer_disk/ordnance{
 	pixel_x = 2;
 	pixel_y = 1
 	},
@@ -28741,17 +28739,17 @@
 /obj/item/bodypart/chest/robot{
 	pixel_y = 4
 	},
-/obj/item/bodypart/r_leg/robot{
+/obj/item/bodypart/leg/right/robot{
 	pixel_x = 6
 	},
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/bodypart/l_leg/robot{
+/obj/item/bodypart/leg/left/robot{
 	pixel_x = -6
 	},
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -40259,9 +40257,9 @@
 "ltQ" = (
 /obj/structure/table,
 /obj/item/clipboard,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance,
 /obj/item/circuitboard/aicore{
 	pixel_y = 5
 	},
@@ -44175,6 +44173,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "mCk" = (
@@ -48770,9 +48769,9 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/folder/yellow,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
-/obj/item/computer_hardware/hard_drive/portable/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
+/obj/item/computer_disk/quartermaster,
 /obj/item/pen/fountain,
 /obj/item/stamp{
 	pixel_x = 8;
@@ -62545,6 +62544,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "rPy" = (
@@ -72599,10 +72599,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/medbay/lobby)
-"uHj" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/aft)
 "uHv" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/blue{
@@ -75336,6 +75332,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/effect/mapping_helpers/ianbirthday,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "vvE" = (
@@ -79796,7 +79793,7 @@
 	c_tag = "Prison Maintenance";
 	network = list("ss13","prison")
 	},
-/mob/living/simple_animal/mouse/brown/tom{
+/mob/living/basic/mouse/brown/tom{
 	name = "Jerm"
 	},
 /turf/open/floor/iron/grimy,
@@ -81550,7 +81547,7 @@
 "xdl" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/color/black,
-/obj/item/clothing/head/helmet/justice/escape{
+/obj/item/clothing/head/helmet/toggleable/justice/escape{
 	name = "justice helmet"
 	},
 /turf/open/floor/iron/dark,
@@ -81560,6 +81557,7 @@
 /obj/effect/landmark/start/assistant,
 /obj/item/bedsheet/dorms,
 /obj/effect/landmark/start/hangover,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "xdv" = (
@@ -83724,7 +83722,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "xJK" = (
-/obj/item/clothing/head/helmet/justice/escape{
+/obj/item/clothing/head/helmet/toggleable/justice/escape{
 	name = "justice helmet"
 	},
 /obj/structure/sign/poster/official/the_owl{
@@ -114174,9 +114172,9 @@ pRP
 gmG
 sfI
 biP
-uHj
-uHj
-ePy
+cfL
+cfL
+jwV
 bDQ
 ouC
 kHQ

@@ -87,6 +87,7 @@
 	name = "Guide to Dank Mimery"
 	desc = "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence. One use only."
 	icon_state = "bookmime"
+	starting_title = "Guide to Dank Mimery"
 
 /obj/item/book/mimery/attack_self(mob/user)
 	. = ..()

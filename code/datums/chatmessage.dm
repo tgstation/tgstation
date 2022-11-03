@@ -212,7 +212,7 @@
 
 	// Build message image
 	message = image(loc = message_loc, layer = CHAT_LAYER + CHAT_LAYER_Z_STEP * current_z_idx++)
-	SET_PLANE(message, RUNECHAT_PLANE, message_loc)
+	SET_PLANE_EXPLICIT(message, RUNECHAT_PLANE, message_loc)
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
 	message.pixel_y = target.maptext_height

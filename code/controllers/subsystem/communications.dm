@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(communications)
  * * user - Mob who called the meeting
  */
 /datum/controller/subsystem/communications/proc/can_make_emergency_meeting(mob/living/user)
-	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+	if(!check_holidays(APRIL_FOOLS))
 		return FALSE
 	else if(COOLDOWN_FINISHED(src, emergency_meeting_cooldown))
 		return TRUE

@@ -328,7 +328,7 @@
 	recoil = 2
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
-	fire_delay = 40
+	fire_delay = 4 SECONDS
 	burst_size = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK
@@ -340,6 +340,13 @@
 /obj/item/gun/ballistic/automatic/sniper_rifle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/reset_semicd()
+	. = ..()
+	if(suppressed)
+		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	else
+		playsound(src, 'sound/machines/eject.ogg', 50, TRUE)
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"

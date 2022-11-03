@@ -47,20 +47,30 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
-	if (!(flags_1 & NODECONSTRUCT_1))
-		var/static/list/tool_behaviors = list(
-			TOOL_SCREWDRIVER = list(
-				SCREENTIP_CONTEXT_RMB = "Disassemble",
-			),
+/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
 
-			TOOL_WRENCH = list(
-				SCREENTIP_CONTEXT_RMB = "Deconstruct",
-			),
-		)
+	if(isnull(held_item))
+		return NONE
 
-		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
-		register_context()
+	if(istype(held_item, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = held_item
+		if(dealer_deck.wielded)
+			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
+			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	if(!(flags_1 & NODECONSTRUCT_1) && deconstruction_ready)
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
+			. = CONTEXTUAL_SCREENTIP_SET
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -270,15 +280,6 @@
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(istype(held_item, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = held_item
-		if(dealer_deck.wielded)
-			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
-			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
-			return CONTEXTUAL_SCREENTIP_SET
-	return NONE
 
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	return
@@ -593,6 +594,18 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list(MELEE = 10, BULLET = 30, LASER = 30, ENERGY = 100, BOMB = 20, BIO = 0, FIRE = 80, ACID = 70)
+
+/obj/structure/table/reinforced/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_RMB] = deconstruction_ready ? "Strengthen" : "Weaken"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
 
 /obj/structure/table/reinforced/deconstruction_hints(mob/user)
 	if(deconstruction_ready)
