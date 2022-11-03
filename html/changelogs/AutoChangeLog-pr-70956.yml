@@ -1,4 +1,0 @@
-author: "antropod"
-delete-after: True
-changes:
-  - bugfix: "Assemblies can be picked up again after detaching from chemical grenade"
