@@ -57,8 +57,7 @@
 		loan_list += loan_event_control.shuttle_loan_offers
 		var/list/run_events = loan_event_control.run_events //Ask the round_event_control which loans have already been offered
 
-		for(var/event in run_events) //Remove the already offered loans from the candidate list
-			loan_list.Remove(event)
+		loan_list -= run_events //Remove the already offered loans from the candidate list
 
 		if(!length(loan_list)) //If we somehow run out of loans, they all become available again
 			loan_list += loan_event_control.shuttle_loan_offers
