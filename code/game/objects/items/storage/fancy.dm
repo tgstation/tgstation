@@ -515,29 +515,29 @@
 
 /obj/item/storage/fancy/coffee_condi_display/update_overlays()
 	. = ..()
+	var/has_sugar = FALSE
+	var/has_sweetener = FALSE
+	var/has_creamer = FALSE
+	var/has_chocolate = FALSE
 
-	for(var/_sugar in contents)
-		if (istype(_sugar, /obj/item/reagent_containers/condiment/pack/sugar))
-			. += "condi_display_sugar"
-			break
+	for(var/thing in contents)
+		if(istype(thing, /obj/item/reagent_containers/condiment/pack/sugar))
+			has_sugar = TRUE
+		if(istype(thing, /obj/item/reagent_containers/condiment/pack/astrotame/))
+			has_sweetener = TRUE
+		if(istype(thing, /obj/item/reagent_containers/condiment/creamer))
+			has_creamer = TRUE
+		if(istype(thing, /obj/item/reagent_containers/condiment/chocolate))
+			has_chocolate = TRUE
 
-	for(var/_sweetener in contents)
-		var/obj/item/reagent_containers/condiment/pack/astrotame/sweetener = _sweetener
-		if (istype(sweetener))
-			. += "condi_display_sweetener"
-			break
-
-	for(var/_creamer in contents)
-		var/obj/item/reagent_containers/condiment/creamer/creamer = _creamer
-		if (istype(creamer))
-			. += "condi_display_creamer"
-			break
-
-	for(var/_chocolate in contents)
-		var/obj/item/reagent_containers/condiment/chocolate/chocolate = _chocolate
-		if (istype(chocolate))
-			. += "condi_display_chocolate"
-			break
+	if (has_sugar)
+		. += "condi_display_sugar"
+	if (has_sweetener)
+		. += "condi_display_sweetener"
+	if (has_creamer)
+		. += "condi_display_creamer"
+	if (has_chocolate)
+		. += "condi_display_chocolate"
 
 /obj/item/storage/fancy/coffee_condi_display/PopulateContents()
 	for(var/i in 1 to 4)
