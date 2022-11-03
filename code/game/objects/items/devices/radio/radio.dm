@@ -371,7 +371,7 @@
 	return FALSE
 
 /obj/item/radio/proc/on_recieve_message()
-	flick_overlay_view(overlay_speaker_active, src, 20)
+	flick_overlay_view(overlay_speaker_active, src, 2 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
