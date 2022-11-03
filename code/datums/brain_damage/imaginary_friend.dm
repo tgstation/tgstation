@@ -252,13 +252,12 @@
 	Hear(rendered, src, language, message, null, spans, message_mods)
 
 	//speech bubble
-	if(owner.client)
-		var/image/bubble = image('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
-		SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
-		bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, list(src.client, owner.client), 3 SECONDS)
-		LAZYADD(update_on_z, bubble)
-		addtimer(CALLBACK(src, PROC_REF(clear_saypopup), bubble), 3.5 SECONDS)
+	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
+	SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
+	bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, list(src.client, owner.client), 3 SECONDS)
+	LAZYADD(update_on_z, bubble)
+	addtimer(CALLBACK(src, .proc/clear_saypopup, bubble), 3.5 SECONDS)
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, owner)
