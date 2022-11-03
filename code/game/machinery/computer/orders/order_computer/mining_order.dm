@@ -3,6 +3,8 @@
 	desc = "An equipment shop for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
+	icon_keyboard = null
+	icon_screen = null
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 
 	express_cost_multiplier = 1.5
