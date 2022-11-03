@@ -231,9 +231,6 @@
 /mob/camera/imaginary_friend/proc/friend_talk(message)
 	message = capitalize(message)
 
-	if(!message)
-		return
-
 	src.log_talk(message, LOG_SAY, tag="imaginary friend")
 
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(message)]</span></span>"
