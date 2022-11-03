@@ -252,10 +252,16 @@
 	Hear(rendered, src, language, message, null, spans, message_mods)
 
 	//speech bubble
+	var/list/friend_clients = list(src.client, owner.client)
+	var/list/speech_bubble_recipients = list()
+	for var/friend_client in friend_clients
+		if(friend_client && (!friend_client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
+			speech_bubble_recipients.Add(M.client)
+
 	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
 	bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, list(src.client, owner.client), 3 SECONDS)
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, bubble)
 	addtimer(CALLBACK(src, .proc/clear_saypopup, bubble), 3.5 SECONDS)
 
