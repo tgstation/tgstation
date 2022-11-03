@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Properly suppressed a message about suppressing messages."
