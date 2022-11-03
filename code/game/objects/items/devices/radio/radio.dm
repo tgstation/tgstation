@@ -77,12 +77,12 @@
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
 	/// overlay when recieving a message
-	var/overlay_speaker_active = "s_active"
+	var/image/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
 	var/overlay_mic_idle = "m_idle"
 	/// overlay when speaking a message (will most likely be displayed at same time as the speaker active, please account for this.)
-	var/overlay_mic_active = "m_active"
+	var/image/overlay_mic_active = "m_active"
 
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
@@ -93,6 +93,13 @@
 		keyslot = new keyslot()
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+	// allows you to just put an icon state for the var
+	if(overlay_speaker_active && !istype(overlay_speaker_active))
+		overlay_speaker_active = image(icon, src, overlay_speaker_active)
+
+	if(overlay_mic_active && !istype(overlay_mic_active))
+		overlay_mic_active = image(icon, src, overlay_mic_active)
 
 	set_listening(listening)
 	set_broadcasting(broadcasting)
@@ -456,12 +463,13 @@
 		. += span_notice("It cannot be modified or attached.")
 
 /obj/item/radio/update_overlays()
+	. = ..()
 	if(unscrewed)
 		return
 	if(broadcasting)
-		add_overlay(overlay_mic_idle)
+		. += overlay_mic_idle
 	if(listening)
-		add_overlay(overlay_speaker_idle)
+		. += overlay_speaker_idle
 
 /obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)

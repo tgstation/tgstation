@@ -177,7 +177,7 @@
 					radios += independent_radio
 
 	for(var/obj/item/radio/called_radio in radios)
-		radios.on_recieve_message()
+		called_radio.on_recieve_message()
 
 	// From the list of radios, find all mobs who can hear those.
 	var/list/receive = get_hearers_in_radio_ranges(radios)
