@@ -466,7 +466,7 @@
 	build_path = /obj/machinery/computer/camera_advanced/syndie
 
 //Service
-/obj/item/circuitboard/computer/order_console/cook
+/obj/item/circuitboard/computer/order_console
 	name = "Produce Orders Console"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE
 	build_path = /obj/machinery/computer/order_console/cook

@@ -1,7 +1,7 @@
 /obj/machinery/computer/order_console/cook
 	name = "Produce Orders Console"
 	desc = "An interface for ordering fresh produce and other. A far more expensive option than the botanists, but oh well."
-	circuit = /obj/item/circuitboard/computer/order_console/cook
+	circuit = /obj/item/circuitboard/computer/order_console
 	order_categories = list(
 		CATEGORY_FRUITS_VEGGIES,
 		CATEGORY_MILK_EGGS,
