@@ -1,12 +1,3 @@
-#define DESTINATION_WEST_ACTIVE "west_active"
-#define DESTINATION_WEST_IDLE "west_idle"
-#define DESTINATION_CENTRAL_EASTBOUND_ACTIVE "central_eb_active"
-#define DESTINATION_CENTRAL_WESTBOUND_ACTIVE "central_wb_active"
-#define DESTINATION_CENTRAL_IDLE "central_idle"
-#define DESTINATION_EAST_ACTIVE "east_active"
-#define DESTINATION_EAST_IDLE "east_idle"
-#define DESTINATION_NOT_IN_SERVICE "NIS"
-
 /obj/machinery/computer/tram_controls
 	name = "tram controls"
 	desc = "An interface for the tram that lets you tell the tram where to go and hopefully it makes it there. I'm here to describe the controls to you, not to inspire confidence."
