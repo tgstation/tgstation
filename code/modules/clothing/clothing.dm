@@ -16,11 +16,6 @@
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
-	var/alt_desc = null
-	var/toggle_message = null
-	var/alt_toggle_message = null
-	var/toggle_cooldown = null
-	var/cooldown = 0
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
