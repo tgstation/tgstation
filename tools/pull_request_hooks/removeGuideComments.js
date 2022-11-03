@@ -20,7 +20,7 @@ export async function removeGuideComments({ github, context }) {
 
   // sometimes we make PRs without PR bodies and the whole thing will fail
   if (!newBody) {
-	return
+    return;
   }
 
   for (const comment of comments) {
