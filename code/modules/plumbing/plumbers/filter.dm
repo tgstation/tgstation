@@ -52,7 +52,7 @@
 								english_right += selected_reagent
 								right += chem_id
 				else
-					to_chat(usr, span_warning("No such known reagent exists!"))
+					to_chat(usr, span_warning("No such Known Reagent Exists!!"))
 
 		if("remove")
 			var/chem_name = params["reagent"]
