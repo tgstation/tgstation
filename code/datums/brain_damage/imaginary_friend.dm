@@ -239,8 +239,9 @@
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(message)]</span></span>"
 	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(message)]</span></span>"
 
-	owner.Hear(rendered, src, owner.language_holder.understood_languages[0], message, null, spans, message_mods)
-	Hear(rendered, src, owner.language_holder.understood_languages[0], message, null, spans, message_mods)
+	var/language = owner.language_holder.get_selected_language()
+	owner.Hear(rendered, src, language, message, null, spans, message_mods)
+	Hear(rendered, src, language, message, null, spans, message_mods)
 
 	//speech bubble
 	if(owner.client)
