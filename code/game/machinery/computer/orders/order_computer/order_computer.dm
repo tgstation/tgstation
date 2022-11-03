@@ -1,3 +1,4 @@
+///List of all items that can be found in the different types of order consoles, to purchase.
 GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console
@@ -7,8 +8,6 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	icon_keyboard = "generic_key"
 	light_color = LIGHT_COLOR_ORANGE
 
-	///The current list of things we're trying to order, waiting for checkout.
-	var/list/grocery_list = list()
 	///Cooldown between order uses.
 	COOLDOWN_DECLARE(order_cooldown)
 
@@ -21,10 +20,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	var/forced_express = FALSE
 	///Multiplied cost to use express mode
 	var/express_cost_multiplier = 2
-	///Whether we should charge in mining points instead
-	var/mining_point_price = FALSE
 	///The categories of orderable items this console can view and purchase.
-	var/order_categories = list()
+	var/list/order_categories = list()
+	///The current list of things we're trying to order, waiting for checkout.
+	var/list/datum/orderable_item/grocery_list = list()
 
 /obj/machinery/computer/order_console/Initialize(mapload)
 	. = ..()
@@ -59,24 +58,21 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		ui.open()
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
-	var/list/data = ..()
+	var/list/data = list()
 	data["total_cost"] = get_total_cost()
 	data["off_cooldown"] = COOLDOWN_FINISHED(src, order_cooldown)
 
-	var/obj/item/card/id/id_card
-	if(isliving(user))
-		var/mob/living/living_user = user
-		id_card = living_user.get_idcard(TRUE)
+	if(!isliving(user))
+		return data
+	var/mob/living/living_user = user
+	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(id_card)
-		if(mining_point_price)
-			data["points"] = id_card.mining_points
-		else
-			data["points"] = id_card.registered_account?.account_balance
+		data["points"] = id_card.registered_account?.account_balance
 
 	return data
 
 /obj/machinery/computer/order_console/ui_static_data(mob/user)
-	var/list/data = ..()
+	var/list/data = list()
 	data["forced_express"] = forced_express
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()
@@ -100,10 +96,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	if(!isliving(usr))
 		return
 	var/mob/living/living_user = usr
-	//this is null if the action doesn't need it (purchase, quickpurchase)
-	var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 	switch(action)
 		if("cart_set")
+			//this is null if the action doesn't need it (purchase, quickpurchase)
+			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
@@ -117,21 +113,13 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
 				return
-			var/final_cost = get_total_cost()
-			if(mining_point_price)
-				if(final_cost > used_id_card.mining_points)
-					say("Sorry, but you do not have enough mining points.")
-					return
-				used_id_card.mining_points -= final_cost
-			else
-				if(!used_id_card.registered_account.adjust_money(-final_cost, "[name]: Purchase"))
-					say("Sorry, but you do not have enough money.")
-					return
+			if(!purchase_items(used_id_card))
+				return
+			order_groceries(living_user, used_id_card, grocery_list)
+			grocery_list.Cut()
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
-			var/message = "The kitchen has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!"
-			radio.talk_into(src, message, radio_channel)
+			radio.talk_into(src, "The kitchen has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
 			COOLDOWN_START(src, order_cooldown, 60 SECONDS)
-			order_groceries()
 		if("express")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
@@ -139,17 +127,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
 				return
-			var/final_cost = get_total_cost()
-			final_cost *= express_cost_multiplier
-			if(mining_point_price)
-				if(final_cost > used_id_card.mining_points)
-					say("Sorry, but you do not have enough mining points. Remember, Express upcharges the cost!")
-					return
-				used_id_card.mining_points -= final_cost
-			else
-				if(!used_id_card.registered_account.adjust_money(-final_cost, "[name]: Purchase"))
-					say("Sorry, but you do not have enough money. Remember, Express upcharges the cost!")
-					return
+			if(!purchase_items(used_id_card, express = TRUE))
+				return
 			var/say_message = "Thank you for your purchase!"
 			if(express_cost_multiplier > 1)
 				say_message += "Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
@@ -158,6 +137,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			var/list/ordered_paths = list()
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
 				if(!(item.category_index in order_categories))
+					stack_trace("[src] somehow delivered [item] which is not purchasable at this order console.")
 					grocery_list.Remove(item)
 					continue
 				for(var/amt in 1 to grocery_list[item])//every order amount
@@ -170,5 +150,24 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list.Cut()
 	return TRUE
 
-/obj/machinery/computer/order_console/proc/order_groceries()
+/**
+ * Checks if an ID card is able to afford the total cost of the current console's grocieries
+ * and deducts the cost if they can.
+ * Args:
+ * card - The ID card we check for balance
+ * express - Boolean on whether we need to add the express cost mulitplier
+ * returns TRUE if we can afford, FALSE otherwise.
+ */
+/obj/machinery/computer/order_console/proc/purchase_items(obj/item/card/id/card, express = FALSE)
+	var/final_cost = get_total_cost()
+	var/failure_message = "Sorry, but you do not have enough money."
+	if(express)
+		final_cost *= express_cost_multiplier
+		failure_message += "Remember, Express upcharges the cost!"
+	if(card.registered_account.adjust_money(-final_cost, "[name]: Purchase"))
+		return TRUE
+	say(failure_message)
+	return FALSE
+
+/obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
 	return

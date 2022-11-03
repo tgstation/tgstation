@@ -42,13 +42,25 @@
 	var/orderer_ckey
 	var/reason
 	var/discounted_pct
+	///If set to FALSE, we won't charge when the cargo shuttle arrives with this.
+	var/charge_on_purchase = TRUE
 	///area this order wants to reach, if not null then it will come with the deliver_first component set to this area
 	var/department_destination
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
 	var/obj/item/coupon/applied_coupon
 
-/datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account, department_destination, coupon)
+/datum/supply_order/New(
+	datum/supply_pack/pack,
+	orderer,
+	orderer_rank,
+	orderer_ckey,
+	reason,
+	paying_account,
+	department_destination,
+	coupon,
+	charge_on_purchase,
+)
 	id = SSshuttle.order_number++
 	src.pack = pack
 	src.orderer = orderer
@@ -58,6 +70,7 @@
 	src.paying_account = paying_account
 	src.department_destination = department_destination
 	src.applied_coupon = coupon
+	src.charge_on_purchase = charge_on_purchase
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition_paper = new(T)

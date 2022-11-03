@@ -6,7 +6,6 @@
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 
 	express_cost_multiplier = 1.5
-	mining_point_price = TRUE
 	order_categories = list(
 		CATEGORY_MINING,
 		CATEGORY_CONSUMABLES,
@@ -14,16 +13,47 @@
 		CATEGORY_PKA,
 	)
 
-/obj/machinery/computer/order_console/mining/order_groceries()
-	for(var/datum/orderable_item/ordered_item in grocery_list)
-		if(!(ordered_item.category_index in order_categories))
-			grocery_list.Remove(ordered_item)
-			continue
-		if(ordered_item in SSshuttle.mining_groceries)
-			SSshuttle.mining_groceries[ordered_item] += grocery_list[ordered_item]
-		else
-			SSshuttle.mining_groceries[ordered_item] = grocery_list[ordered_item]
-	grocery_list.Cut()
+/obj/machinery/computer/order_console/mining/purchase_items(obj/item/card/id/card, express = FALSE)
+	var/final_cost = get_total_cost()
+	var/failure_message = "Sorry, but you do not have enough mining points."
+	if(express)
+		final_cost *= express_cost_multiplier
+		failure_message += "Remember, Express upcharges the cost!"
+	if(final_cost <= card.mining_points)
+		card.mining_points -= final_cost
+		return TRUE
+	say(failure_message)
+	return FALSE
+
+/obj/machinery/computer/order_console/mining/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
+	var/list/things_to_order = list()
+	for(var/datum/orderable_item/item as anything in groceries)
+		things_to_order[item.item_path] = groceries[item]
+
+	var/datum/supply_pack/custom/mining_pack = new(purchaser, things_to_order)
+	var/datum/supply_order/new_order = new(
+		pack = mining_pack, \
+		orderer = purchaser, \
+		orderer_rank = "Mining Vendor", \
+		orderer_ckey = purchaser.ckey, \
+		reason = "", \
+		paying_account = card.registered_account, \
+		department_destination = null, \
+		coupon = null, \
+		charge_on_purchase = FALSE,
+	)
+	SSshuttle.shopping_list += new_order
+
+/obj/machinery/computer/order_console/mining/ui_data(mob/user)
+	var/list/data = ..()
+	if(!isliving(user))
+		return data
+	var/mob/living/living_user = user
+	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
+	if(id_card)
+		data["points"] = id_card.mining_points
+
+	return data
 
 /obj/machinery/computer/order_console/mining/ui_act(action, params)
 	. = ..()

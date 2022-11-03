@@ -8,13 +8,12 @@
 		CATEGORY_SAUCES_REAGENTS,
 	)
 
-/obj/machinery/computer/order_console/cook/order_groceries()
-	for(var/datum/orderable_item/ordered_item in grocery_list)
+/obj/machinery/computer/order_console/cook/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
+	for(var/datum/orderable_item/ordered_item in groceries)
 		if(!(ordered_item.category_index in order_categories))
-			grocery_list.Remove(ordered_item)
+			groceries.Remove(ordered_item)
 			continue
 		if(ordered_item in SSshuttle.chef_groceries)
-			SSshuttle.chef_groceries[ordered_item] += grocery_list[ordered_item]
+			SSshuttle.chef_groceries[ordered_item] += groceries[ordered_item]
 		else
-			SSshuttle.chef_groceries[ordered_item] = grocery_list[ordered_item]
-	grocery_list.Cut()
+			SSshuttle.chef_groceries[ordered_item] = groceries[ordered_item]
