@@ -8,7 +8,7 @@
 	plane = FLOOR_PLANE
 	max_integrity = 200
 	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
-
+    ///OOOFFFF
 	var/uses = 20
 	var/cooldown = 0
 	var/cooldown_time = 100
