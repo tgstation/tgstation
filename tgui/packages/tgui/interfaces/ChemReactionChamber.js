@@ -175,9 +175,11 @@ export const ChemReactionChamber = (props, context) => {
                         content="Add Reagent"
                         color="good"
                         width="150px"
-                        onClick={() => act('add', {
-                          amount: reagentQuantity,
-                        })}
+                        onClick={() =>
+                          act('add', {
+                            amount: reagentQuantity,
+                          })
+                        }
                       />
                     </Stack.Item>
                     <Stack.Item>
