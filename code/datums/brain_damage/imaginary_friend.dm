@@ -390,6 +390,30 @@
 /datum/emote/imaginary_friend/custom/replace_pronoun(mob/user, message)
 	return message
 
+// I LOVE copy pasting code!!
+/mob/camera/imaginary_friend/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	if((spintime < 1)||(speed < 1)||!spintime||!speed)
+		return
+
+	flags_1 |= IS_SPINNING_1
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		setDir(D)
+		Show() // We need this otherwise it won't work (also the reason we need to copy-paste it over)
+		spintime -= speed
+	flags_1 &= ~IS_SPINNING_1
+
 /mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
 		return FALSE
