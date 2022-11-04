@@ -190,7 +190,7 @@
 		owner.client.images.Remove(human_image)
 	if(client)
 		client.images.Remove(human_image)
-	client.imaginary_group -= src
+	owner.imaginary_group -= src
 	return ..()
 
 /mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
