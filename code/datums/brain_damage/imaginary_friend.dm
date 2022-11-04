@@ -242,6 +242,9 @@
 		client?.dsay(message)
 		return
 
+	if(check_emote(message, forced))
+		return
+
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
 		message = "[randomnote] [capitalize(message)] [randomnote]"
