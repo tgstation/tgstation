@@ -15,7 +15,9 @@
 	..()
 	make_friend()
 	get_ghost()
-	owner?.imaginary_group += friend
+	if(!owner.imaginary_group)
+		owner.imaginary_group = list(owner)
+	owner.imaginary_group += friend
 
 /datum/brain_trauma/special/imaginary_friend/on_life(delta_time, times_fired)
 	if(get_dist(owner, friend) > 9)

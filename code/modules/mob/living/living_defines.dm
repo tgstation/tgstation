@@ -213,4 +213,4 @@
 	var/datum/mood/mob_mood
 
 	// Multiple imaginary friends!
-	var/list/imaginary_group = list()
+	var/list/imaginary_group = null
