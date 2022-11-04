@@ -89,26 +89,31 @@
 	switch(action)
 		if("add")
 			var/selected_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.chemical_name_list)
-			if(selected_reagent)
-				var/input_reagent = get_chem_id(selected_reagent)
-				if(input_reagent && !required_reagents.Find(input_reagent))
-					var/input_amount = text2num(params["amount"])
-					if(input_amount)
-						required_reagents[input_reagent] = input_amount
-						. = TRUE
+			if(!selected_reagent)
+				return TRUE
+				
+			var/input_reagent = get_chem_id(selected_reagent)
+			if(!input_reagent)
+				return TRUE
+				
+			if(!required_reagents.Find(input_reagent))
+				var/input_amount = text2num(params["amount"])
+				if(input_amount)
+					required_reagents[input_reagent] = input_amount
 
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
-				. = TRUE
+				
 		if("temperature")
 			var/target = params["target"]
 			if(text2num(target) != null)
 				target = text2num(target)
-				. = TRUE
 			if(.)
 				target_temperature = clamp(target, 0, 1000)
+				
+	return TRUE
 
 ///Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting
 /obj/machinery/plumbing/reaction_chamber/chem
