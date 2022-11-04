@@ -31,7 +31,7 @@
 	dangerous_construction = TRUE
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/bluespace/bluespace_crystal
+/datum/design/bluespace_crystal //it's not /bluespace/ because less copypaste and it's away friendly
 	name = "Artificial Bluespace Crystal"
 	desc = "A small blue crystal with mystical properties."
 	id = "bluespace_crystal"
@@ -42,7 +42,6 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-		autolathe_exportable = TRUE
 
 /datum/design/bluespace/telesci_gps
 	name = "GPS Device"
@@ -68,7 +67,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/bluespace/miningsatchel_holding
+/datum/design/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	desc = "A mining satchel that can hold an infinite amount of ores."
 	id = "minerbag_holding"
@@ -79,7 +78,6 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
-		autolathe_exportable = TRUE
 
 /datum/design/bluespace/swapper
 	name = "Quantum Spin Inverter"
