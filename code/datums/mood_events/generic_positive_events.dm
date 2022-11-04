@@ -278,6 +278,14 @@
 	mood_change = 10
 	timeout = 5 MINUTES
 
+/datum/mood_event/love_reagent
+	description = "This food reminds me of the good ol' days."
+	mood_change = 5
+
+/datum/mood_event/love_reagent/add_effects(duration)
+	if(isnum(duration))
+		timeout = duration
+
 /datum/mood_event/won_52_card_pickup
 	description = "HA! That loser will be picking cards up for a long time!"
 	mood_change = 3

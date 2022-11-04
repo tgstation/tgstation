@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - qol: "Mining point cards are now reusable, allowing user-set transfers of mining points to and from the point card itself."

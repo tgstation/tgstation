@@ -47,7 +47,7 @@
 #define MECH_LAUNCH_TIME 5 SECONDS
 
 /obj/machinery/computer/mechpad/mech_melee_attack(obj/vehicle/sealed/mecha/mecha_attacker, mob/living/user)
-	if(user.combat_mode || machine_stat & (NOPOWER|BROKEN))
+	if(user.combat_mode || machine_stat & (NOPOWER|BROKEN) || DOING_INTERACTION_WITH_TARGET(user, src))
 		return ..()
 	var/mech_dir = mecha_attacker.dir
 	balloon_alert(user, "carefully starting launch process...")
@@ -67,8 +67,9 @@
 /obj/machinery/computer/mechpad/proc/random_beeps(mob/user, time = 0, mintime = 0, maxtime = 1)
 	var/static/list/beep_sounds = list('sound/machines/terminal_prompt_confirm.ogg', 'sound/machines/terminal_prompt_deny.ogg', 'sound/machines/terminal_error.ogg', 'sound/machines/terminal_select.ogg', 'sound/machines/terminal_success.ogg')
 	var/time_to_spend = 0
+	var/orig_time = time
 	while(time > 0)
-		if(!DOING_INTERACTION_WITH_TARGET(user, src))
+		if(!DOING_INTERACTION_WITH_TARGET(user, src) && time != orig_time)
 			return
 		time_to_spend = rand(mintime, maxtime)
 		playsound(src, pick(beep_sounds), 75)
@@ -126,11 +127,14 @@
 	if(!can_launch(user, where))
 		return
 	flick("mechpad-launch", connected_mechpad)
+	playsound(connected_mechpad, 'sound/machines/triple_beep.ogg', 50, TRUE)
 	addtimer(CALLBACK(src, .proc/start_launch, user, where), 1 SECONDS)
 
 /obj/machinery/computer/mechpad/proc/start_launch(mob/user, obj/machinery/mechpad/where)
 	if(!can_launch(user, where, silent = TRUE))
 		return
+	var/obj/vehicle/sealed/mecha/mech = locate() in get_turf(connected_mechpad)
+	mech.setDir(SOUTH)
 	connected_mechpad.launch(where)
 
 /obj/machinery/computer/mechpad/proc/can_launch(mob/user, obj/machinery/mechpad/where, silent = FALSE)

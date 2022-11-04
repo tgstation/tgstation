@@ -1,0 +1,5 @@
+author: "Cheshify"
+delete-after: True
+changes:
+  - bugfix: "All maps have a consistent Evidence room."
+  - imageadd: "Ddds an icon for the Evidence Storage area"
