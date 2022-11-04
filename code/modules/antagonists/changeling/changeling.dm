@@ -141,7 +141,7 @@
 	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/on_login)
 	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
-	RegisterSignal(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
+	RegisterSignals(living_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
 
 	if(living_mob.hud_used)
 		var/datum/hud/hud_used = living_mob.hud_used

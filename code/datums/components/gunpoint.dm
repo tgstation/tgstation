@@ -33,9 +33,9 @@
 	var/mob/living/shooter = parent
 	target = targ
 	weapon = wep
-	RegisterSignal(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), .proc/trigger_reaction)
+	RegisterSignals(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), .proc/trigger_reaction)
 
-	RegisterSignal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
+	RegisterSignals(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
 
 	shooter.visible_message(span_danger("[shooter] aims [weapon] point blank at [target]!"), \
 		span_danger("You aim [weapon] point blank at [target]!"), ignored_mobs = target)
@@ -67,7 +67,7 @@
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/flinch)
 	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
 	RegisterSignal(parent, COMSIG_MOB_UPDATE_SIGHT, .proc/check_deescalate)
-	RegisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
+	RegisterSignals(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
 
 /datum/component/gunpoint/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)

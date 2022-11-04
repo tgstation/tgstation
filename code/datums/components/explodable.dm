@@ -31,7 +31,7 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
 		if(isitem(parent))
-			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
+			RegisterSignals(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
 			if(isclothing(parent))
 				RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 				RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)

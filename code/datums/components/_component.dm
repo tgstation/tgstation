@@ -174,13 +174,20 @@
  *
  * Arguments:
  * * datum/target The target to listen for signals from
- * * sig_type_or_types Either a string signal name, or a list of signal names (strings)
+ * * signal_type A signal name
  * * proctype The proc to call back when the signal is emitted
  * * override If a previous registration exists you must explicitly set this
  */
-/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
+/datum/proc/RegisterSignal(datum/target, signal_type, proctype, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
 		return
+
+	#ifdef UNIT_TESTS
+	if (islist(proctype))
+		stack_trace("[target] is registering [signal_type] as a list, the older method.")
+		RegisterSignals(target, signal_type, proctype, override)
+		return
+	#endif
 
 	var/list/procs = signal_procs
 	if(!procs)
@@ -190,21 +197,25 @@
 	if(!lookup)
 		target.comp_lookup = lookup = list()
 
-	for(var/sig_type in (islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)))
-		if(!override && target_procs[sig_type])
-			log_signal("[sig_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]")
+	if(!override && target_procs[signal_type])
+		log_signal("[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]")
 
-		target_procs[sig_type] = proctype
-		var/list/looked_up = lookup[sig_type]
+	target_procs[signal_type] = proctype
+	var/list/looked_up = lookup[signal_type]
 
-		if(!looked_up) // Nothing has registered here yet
-			lookup[sig_type] = src
-		else if(looked_up == src) // We already registered here
-			continue
-		else if(!length(looked_up)) // One other thing registered here
-			lookup[sig_type] = list((looked_up) = TRUE, (src) = TRUE)
-		else // Many other things have registered here
-			looked_up[src] = TRUE
+	if(!looked_up) // Nothing has registered here yet
+		lookup[signal_type] = src
+	else if(looked_up == src) // We already registered here
+		// pass
+	else if(!length(looked_up)) // One other thing registered here
+		lookup[signal_type] = list((looked_up) = TRUE, (src) = TRUE)
+	else // Many other things have registered here
+		looked_up[src] = TRUE
+
+/// Registers multiple signals to the same proc.
+/datum/proc/RegisterSignals(datum/target, list/signal_types, proctype, override = FALSE)
+	for (var/signal_type in signal_types)
+		RegisterSignal(target, signal_type, proctype)
 
 /**
  * Stop listening to a given signal from target

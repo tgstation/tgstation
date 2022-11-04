@@ -13,8 +13,8 @@
 /datum/component/plumbing/iv_drip/RegisterWithParent()
 	. = ..()
 
-	RegisterSignal(parent, list(COMSIG_IV_ATTACH), .proc/update_attached)
-	RegisterSignal(parent, list(COMSIG_IV_DETACH), .proc/clear_attached)
+	RegisterSignals(parent, list(COMSIG_IV_ATTACH), .proc/update_attached)
+	RegisterSignals(parent, list(COMSIG_IV_DETACH), .proc/clear_attached)
 
 /datum/component/plumbing/iv_drip/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_IV_ATTACH))

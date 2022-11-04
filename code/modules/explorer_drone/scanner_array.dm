@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /obj/machinery/exoscanner/Initialize(mapload)
 	. = ..()
-	RegisterSignal(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED),.proc/scan_change)
+	RegisterSignals(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED),.proc/scan_change)
 	update_readiness()
 
 /obj/machinery/exoscanner/proc/scan_change()

@@ -53,7 +53,7 @@
 	right = C.get_bodypart(BODY_ZONE_R_LEG)
 	update_limp()
 	RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/check_step)
-	RegisterSignal(C, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB), .proc/update_limp)
+	RegisterSignals(C, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB), .proc/update_limp)
 	return TRUE
 
 /datum/status_effect/limp/on_remove()

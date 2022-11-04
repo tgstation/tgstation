@@ -26,7 +26,7 @@
 		RegisterSignal(target, succeed_signals, .proc/on_success)
 	if(fail_signals)
 		RegisterSignal(target, fail_signals, .proc/on_fail)
-	RegisterSignal(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), .proc/delete_self)
+	RegisterSignals(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), .proc/delete_self)
 
 /datum/component/traitor_objective_register/UnregisterFromParent()
 	if(target)

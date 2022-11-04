@@ -81,7 +81,7 @@
 	if(!QDELETED(shooter))
 		RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
 		UnregisterSignal(shooter, COMSIG_MOB_LOGIN)
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/autofire_off)
+	RegisterSignals(parent, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/autofire_off)
 	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
 	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
 

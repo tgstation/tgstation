@@ -184,7 +184,7 @@
 		return
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/check_owner_in_range)
-	RegisterSignal(offered_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_item)
+	RegisterSignals(offered_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/dropped_item)
 	//RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
 
 /datum/status_effect/offering/Destroy()

@@ -120,7 +120,7 @@
 	new_link.Grant(to_link)
 
 	linked_mobs[to_link] = new_link
-	RegisterSignal(to_link, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED), .proc/unlink_mob)
+	RegisterSignals(to_link, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED), .proc/unlink_mob)
 
 	return TRUE
 

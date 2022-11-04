@@ -36,7 +36,7 @@
 	scaling_delay = scaling
 	strength = severity
 
-	RegisterSignal(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), .proc/rot_react_touch)
+	RegisterSignals(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), .proc/rot_react_touch)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/rot_hit_react)
 	if(ismovable(parent))
 		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
@@ -46,10 +46,10 @@
 		RegisterSignal(parent, COMSIG_LIVING_GET_PULLED, .proc/rot_react_touch)
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
-		RegisterSignal(carbon_parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT,
+		RegisterSignals(carbon_parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
 			COMSIG_REAGENTS_DEL_REAGENT), .proc/check_reagent)
-		RegisterSignal(parent, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), .proc/check_husk_trait)
+		RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), .proc/check_husk_trait)
 		check_reagent(carbon_parent.reagents, null)
 		check_husk_trait(null)
 	if(ishuman(parent))

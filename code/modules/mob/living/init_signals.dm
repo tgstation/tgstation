@@ -30,7 +30,7 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), .proc/on_restrained_trait_gain)
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED), .proc/on_restrained_trait_loss)
 
-	RegisterSignal(src, list(
+	RegisterSignals(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
 		SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION),
 

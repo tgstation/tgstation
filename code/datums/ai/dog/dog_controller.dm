@@ -30,7 +30,7 @@
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
 	RegisterSignal(new_pawn, COMSIG_CLICK_ALT, .proc/check_altclicked)
-	RegisterSignal(new_pawn, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
+	RegisterSignals(new_pawn, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
 	RegisterSignal(SSdcs, COMSIG_GLOB_CARBON_THROW_THING, .proc/listened_throw)
 	return ..() //Run parent at end
 

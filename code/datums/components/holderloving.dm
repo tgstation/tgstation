@@ -32,7 +32,7 @@
 /datum/component/holderloving/RegisterWithParent()
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/check_my_loc)
 	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/holder_deleting)
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ATOM_ENTERED,
