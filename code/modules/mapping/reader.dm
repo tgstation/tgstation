@@ -40,6 +40,7 @@
  * {} denotes a list of variable edits applied to the path that came before the first {
  * the final } is followed by a comma, and then a new line
  * Variable edits have the form \tname = value;\n
+ * Except the last edit, which has no final ;, and just ends in a newline
  * No extra padding is permitted
  * Many values are supported. See parse_constant()
  * Strings must be wrapped in "...", files in '...', and lists in list(...)
@@ -55,6 +56,7 @@
  * /path,
  * /other/path{
  *     var = list("name" = 'filepath');
+ *     other_var = /path
  *     },
  * /turf,
  * /area)
