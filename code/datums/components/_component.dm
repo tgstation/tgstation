@@ -182,12 +182,10 @@
 	if(QDELETED(src) || QDELETED(target))
 		return
 
-	#ifdef UNIT_TESTS
 	if (islist(proctype))
 		stack_trace("[target] is registering [signal_type] as a list, the older method. Change it to RegisterSignals.")
 		RegisterSignals(target, signal_type, proctype, override)
 		return
-	#endif
 
 	var/list/procs = (signal_procs ||= list())
 	var/list/target_procs = (procs[target] ||= list())
