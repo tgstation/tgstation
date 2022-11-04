@@ -230,12 +230,11 @@
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
 /mob/camera/imaginary_friend/proc/friend_talk(message, list/spans)
-	message = capitalize(message)
-
 	src.log_talk(message, LOG_SAY, tag="imaginary friend")
 
 	var/list/message_mods = list()
 	message = get_message_mods(message, message_mods)
+	message = capitalize(message)
 
 	if(message_mods[RADIO_EXTENSION] == MODE_ADMIN)
 		client?.cmd_admin_say(message)
