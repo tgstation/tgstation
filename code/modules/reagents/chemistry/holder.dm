@@ -25,7 +25,7 @@
 	var/list/name_list = list()
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
-		name_list[R.name]=R.name
+		name_list += reagent.name
 	return sort_list(name_list)
 
 
