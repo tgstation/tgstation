@@ -14,7 +14,7 @@
 	bioware_target = BIOWARE_LIGAMENTS
 
 /datum/surgery_step/reinforce_ligaments
-	name = "reinforce ligaments"
+	name = "reinforce ligaments (hand)"
 	accept_hand = TRUE
 	time = 125
 
