@@ -721,7 +721,7 @@
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
 			if(amount <= liver_tolerance)
-				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * liver_owner.metabolism_efficiency * delta_time)
+				owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * owner.metabolism_efficiency * delta_time)
 				continue
 
 		need_mob_update += metabolize_reagent(owner, reagent, delta_time, times_fired, can_overdose, liverless)
