@@ -81,7 +81,7 @@
 
 	/// overlay when mic is on
 	var/overlay_mic_idle = "m_idle"
-	/// overlay when speaking a message (will most likely be displayed at same time as the speaker active, please account for this.)
+	/// overlay when speaking a message (is displayed simultaniously with speaker_active)
 	var/overlay_mic_active = "m_active"
 
 /obj/item/radio/Initialize(mapload)
