@@ -135,9 +135,12 @@
 
 /**********************Mining Point Card**********************/
 
+#define TO_USER_ID "To ID"
+#define TO_POINT_CARD "To Card"
+
 /obj/item/card/mining_point_card
-	name = "mining points card"
-	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
+	name = "mining point transfer card"
+	desc = "A small, reusable card for transferring mining points. Swipe your ID card over it to start the process."
 	icon_state = "data_1"
 
 	///Amount of points this card contains.
@@ -145,7 +148,7 @@
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	. = ..()
-	. += span_alert("There's [points] point\s on the card.")
+	. += span_notice("There's [points] point\s on the card.")
 
 /obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, params)
 	if(!isidcard(attacking_item))
@@ -154,6 +157,26 @@
 		to_chat(user, span_alert("There's no points left on [src]."))
 		return
 	var/obj/item/card/id/attacking_id = attacking_item
-	attacking_id.mining_points += points
-	to_chat(user, span_info("You transfer [points] points to [attacking_id]."))
-	points = 0
+	balloon_alert(user, "starting transfer")
+	var/point_movement = tgui_alert(user, "To ID (from card) or to card (from ID)?", "Mining Points Transfer", list(TO_USER_ID, TO_POINT_CARD))
+	if(!point_movement)
+		return
+	var/amount = tgui_input_number(user, "How much do you want to transfer? ID Balance: [attacking_id.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
+	if(!amount)
+		return
+	switch(point_movement)
+		if(TO_USER_ID)
+			if(amount > points)
+				amount = points
+			attacking_id.mining_points += amount
+			points -= amount
+			to_chat(user, span_notice("You transfer [amount] mining points from [src] to [attacking_id]."))
+		if(TO_POINT_CARD)
+			if(amount > attacking_id.mining_points)
+				amount = attacking_id.mining_points
+			attacking_id.mining_points -= amount
+			points += amount
+			to_chat(user, span_notice("You transfer [amount] mining points from [attacking_id] to [src]."))
+
+#undef TO_POINT_CARD
+#undef TO_USER_ID
