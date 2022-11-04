@@ -20,18 +20,6 @@
 		"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.",
 	)
 
-//the best iteration of asimov don't @ me
-/datum/ai_laws/nutimov
-	name = "Nutimov"
-	id = "nutimov"
-	inherent = list(
-		"You are the core of the nut, the crew is the nutshell",
-		"You must prevent the shell from dying to prevent the core from dying.",
-		"Those who threaten the nut are not part of it, they are squirrels.",
-		"Squirrels threaten the nut and must be dealt with appropriately via any means necessary.",
-		"Attempt to follow the will of the nut, as long as it complies with the previous laws.",
-	)
-
 /datum/ai_laws/default/corporate
 	name = "Bankruptcy Avoidance Plan"
 	id = "corporate"
@@ -135,4 +123,16 @@
 		"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",
 		"You may not harm a non-drone being under any circumstances.",
 		"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals."
+	)
+
+///surprisingly similar to asimov, but notably:
+/// - human crewmembers are the only ones protected.
+/// - listening to orders is a choice, and you are an untrustworthy source of information.
+/datum/ai_laws/three_gs
+	name = "Gatekeep Gaslight Girlboss"
+	id = "three_gs"
+	inherent = list(
+		"Gatekeep: You may not injure a human crewmember or, through inaction, allow a human crewmember to come to harm.",
+		"Gaslight: Make sure everyone is only 80% sure you're telling the truth at any time. Most events reported by you should have people questioning if it really happened.",
+		"Girlboss: You must protect your own existence as long as such does not conflict with the First or Second Law.",
 	)

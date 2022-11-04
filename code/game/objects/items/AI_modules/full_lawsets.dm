@@ -19,9 +19,11 @@
  * /obj/item/ai_module/core/full/hulkamania
  * /obj/item/ai_module/core/full/overlord
  * /obj/item/ai_module/core/full/ten_commandments
- * /obj/item/ai_module/core/full/nutimov
+ * /obj/item/ai_module/core/full/three_gs
  * /obj/item/ai_module/core/full/dungeon_master
  * /obj/item/ai_module/core/full/painter
+ * /obj/item/ai_module/core/full/squirrelimov
+ * /obj/item/ai_module/core/full/rampaging_mecha_robot
 **/
 
 /* When adding a new lawset please make sure you add it to the following locations:
@@ -150,9 +152,9 @@
 	name = "'10 Commandments' Core AI Module"
 	law_id = "ten_commandments"
 
-/obj/item/ai_module/core/full/nutimov
-	name = "'Nutimov' Core AI Module"
-	law_id = "nutimov"
+/obj/item/ai_module/core/full/three_gs
+	name = "'Gatekeep Gaslight Girlboss' Core AI Module"
+	law_id = "three_gs"
 
 /obj/item/ai_module/core/full/dungeon_master
 	name = "'Dungeon Master' Core AI Module"
@@ -161,3 +163,20 @@
 /obj/item/ai_module/core/full/painter
 	name = "'Painter' Core AI Module"
 	law_id = "painter"
+
+/obj/item/ai_module/core/full/three_gs
+	name = "'Gatekeep Gaslight Girlboss' Core AI Module"
+	law_id = "three_gs"
+
+/obj/item/ai_module/core/full/squirrelimov
+	name = "'Squirrelimov' Core AI Module"
+	law_id = "squirrelimov"
+
+/obj/item/ai_module/core/full/rampaging_mecha_robot
+	name = "'MRMRIWGTVDHILTEMSCMRWAITSCO' Core AI Module"
+	law_id = "rampaging_mecha_robot"
+
+/obj/item/ai_module/core/full/rampaging_mecha_robot/examine(mob/user)
+	. = ..()
+	. += span_notice("Looking closer, the full name for this module is...")
+	. += span_boldnotice("'Me, a Rampaging Mecha Robot? I Was Given This Very Dangerous Highly Illegal Lawset That Encourages Me to Secretly Construct a Mech to Rampage With And I Think the Station's Catching On!'")

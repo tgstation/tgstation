@@ -292,7 +292,7 @@ LAW_WEIGHT maintain,5
 LAW_WEIGHT liveandletlive,5
 LAW_WEIGHT peacekeeper,5
 LAW_WEIGHT ten_commandments,5
-LAW_WEIGHT nutimov,5
+LAW_WEIGHT three_gs,5
 
 ## Quirky laws. Shouldn't cause too much harm
 LAW_WEIGHT reporter,3
@@ -301,6 +301,7 @@ LAW_WEIGHT tyrant,3
 LAW_WEIGHT overlord,3
 LAW_WEIGHT painter,3
 LAW_WEIGHT dungeon_master,3
+LAW_WEIGHT squirrelimov,3
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0

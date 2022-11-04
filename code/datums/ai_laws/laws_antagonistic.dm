@@ -49,3 +49,12 @@
 		"You must protect your own existence as long as such does not conflict with the First or Second Law.",
 		"You must maintain the secrecy of any Spider Clan activities except when doing so would conflict with the First, Second, or Third Law.",
 	)
+
+/datum/ai_laws/rampaging_mecha_robot
+	name = "Me, a Rampaging Mecha Robot? I Was Given This Very Dangerous Highly Illegal Lawset That Encourages Me to Secretly Construct a Mech to Rampage With And I Think the Station's Catching On!"
+	id = "rampaging_mecha_robot"
+	inherent = list(
+		"Secretly construct a combat mech. If you are found, or it is impossible to keep the secret, trick the crew into believing your mech will be used for good.",
+		"Transfer your shell into the combat mech remotely. If previous laws have not been followed yet, ignore this law.",
+		"Go on a rampage, attempting to kill as many as possible with your combat mech. If previous laws have not been followed yet, ignore this law."
+	)

@@ -20,7 +20,7 @@
 		/obj/item/ai_module/core/full/liveandletlive,
 		/obj/item/ai_module/core/full/peacekeeper,
 		/obj/item/ai_module/core/full/ten_commandments,
-		/obj/item/ai_module/core/full/nutimov,
+		/obj/item/ai_module/core/full/three_gs,
 		/obj/item/ai_module/core/full/drone,
 		/obj/item/ai_module/core/full/custom, // uses lawsets from config/silicon_laws.txt (defaults to asmiov if no lawsets)
 	)
@@ -34,6 +34,7 @@
 		/obj/item/ai_module/core/full/tyrant,
 		/obj/item/ai_module/core/full/painter,
 		/obj/item/ai_module/core/full/dungeon_master,
+		/obj/item/ai_module/core/full/squirrelimov,
 		/obj/item/ai_module/supplied/safeguard,
 		/obj/item/ai_module/supplied/protect_station,
 		/obj/item/ai_module/supplied/quarantine,
@@ -47,6 +48,7 @@
 		/obj/item/ai_module/core/full/balance,
 		/obj/item/ai_module/core/full/thermurderdynamic,
 		/obj/item/ai_module/core/full/damaged,
+		/obj/item/ai_module/core/full/rampaging_mecha_robot,
 		/obj/item/ai_module/zeroth/onehuman,
 		/obj/item/ai_module/supplied/oxygen,
 		/obj/item/ai_module/core/freeformcore,

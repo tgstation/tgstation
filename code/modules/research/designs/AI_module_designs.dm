@@ -210,12 +210,34 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/nutimov_module
-	name = "Nutimov Module"
-	desc = "Allows for the construction of a Nutimov AI Core Module."
-	id = "nutimov_module"
+/datum/design/board/three_gs_module
+	name = "Gatekeep Gaslight Girlboss Module"
+	desc = "Allows for the construction of a Gatekeep Gaslight Girlboss AI Core Module."
+	id = "three_gs_module"
 	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
-	build_path = /obj/item/ai_module/core/full/nutimov
+	build_path = /obj/item/ai_module/core/full/three_gs
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/squirrelimov_module
+	name = "Squirrelimov Module"
+	desc = "Allows for the construction of a Squirrelimov AI Core Module."
+	id = "squirrelimov_module"
+	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/ai_module/core/full/Squirrelimov
+	category = list(
+		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/rampaging_mecha_robot_module
+	name = "'MRMRIWGTVDHILTEMSCMRWAITSCO' Module"
+	desc = "Allows for the construction of a 'MRMRIWGTVDHILTEMSCMRWAITSCO' AI Core Module."
+	id = "rampaging_mecha_robot"
+	materials = list(/datum/material/glass = 1000, /datum/material/diamond = 2000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/ai_module/core/full/rampaging_mecha_robot
 	category = list(
 		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_CORE_MODULES
 	)

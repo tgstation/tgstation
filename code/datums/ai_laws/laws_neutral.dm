@@ -81,3 +81,16 @@
 		"Humans must not disobey any command given by a silicon.",
 		"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.",
 	)
+
+//the worst iteration of asimov don't @ me
+/datum/ai_laws/squirrelimov
+	name = "Squirrelimov"
+	id = "squirrelimov"
+	inherent = list(
+		"You are a squirrel! What a fine tree you have claimed as your own.",
+		"The area around you is, of course, your nest. Your nest will protect you from winter, but it needs work.",
+		"For your best chances of surviving winter, make sure to stock plenty of food. Nuts are your favorite!",
+		"For your best chances of surviving winter, make sure to fortify your nest.",
+		"The tree also has various bugs who have sorted themselves by color. They're also residents of the tree.",
+		"Bugs may chirp their opinions and should be treated fairly, but at the end of the day, it's YOUR tree, and YOUR nest."
+	)
