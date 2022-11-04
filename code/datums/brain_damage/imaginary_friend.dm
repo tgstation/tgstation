@@ -66,6 +66,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_MAXIMUM
+	has_emotes = TRUE
 	var/icon/human_image
 	var/image/current_image
 	var/hidden = FALSE
@@ -314,9 +315,6 @@
 	if(!message)
 		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
-
-/mob/camera/imaginary_friend/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
-	return ../..(act, m_type, message, intentional, force_silence)
 
 /mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)

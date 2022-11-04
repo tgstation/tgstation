@@ -10,6 +10,7 @@
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF | SEE_BLACKNESS
 	move_on_shuttle = FALSE
+	has_emotes = FALSE
 
 /mob/camera/Initialize(mapload)
 	. = ..()
@@ -40,4 +41,6 @@
 	return ..()
 
 /mob/camera/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
+	if(has_emotes)
+		return ..(act, m_type, message, intentional, force_silence)
 	return FALSE
