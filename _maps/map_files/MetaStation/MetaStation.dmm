@@ -28069,12 +28069,11 @@
 /turf/open/space,
 /area/space/nearstation)
 "jZP" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/purple{
 	dir = 5
 	},
-/obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/vending/wardrobe/gene_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "jZR" = (
@@ -36804,6 +36803,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "neG" = (
