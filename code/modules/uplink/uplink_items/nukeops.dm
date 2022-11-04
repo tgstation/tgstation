@@ -25,7 +25,7 @@
 	desc = "The support specialist: Aid your fellow operatives with this medical bundle. Contains a tactical medkit, \
 			a Donksoft LMG, a box of riot darts and a magboot MODsuit module to rescue your friends in no-gravity environments."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	cost = 20 // normally 26
+	cost = 25 // normally 31
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/sniper
@@ -664,7 +664,7 @@
 			improved medical supplies, including Interdyne-approved pharmaceuticals, a hacked cybernetic surgery toolset arm implant, \
 			and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."
 	item = /obj/item/storage/medkit/tactical
-	cost = 10
+	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/potion
