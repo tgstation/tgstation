@@ -249,14 +249,31 @@
 		message = "[randomnote] [capitalize(message)] [randomnote]"
 		spans |= SPAN_SINGING
 
-	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(message), spans, message_mods)]</span></span>"
-	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[say_quote(say_emphasis(message), spans, message_mods)]</span></span>"
+	var/eavesdrop_range = 0
+	var eavesdropping_message = ""
+	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
+		spans |= SPAN_ITALICS
+		eavesdrop_range = EAVESDROP_EXTRA_RANGE
+		// "This proc is dangerously laggy, avoid it or die"
+		// What other option do I have here? I guess I'll die
+		eavesdropping_message = say_quote(say_emphasis(stars(message)), spans, message_mods)
+
+	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		message = message_mods[MODE_CUSTOM_SAY_EMOTE]
+
+	var/quoted_message = say_quote(say_emphasis(message), spans, message_mods)
+	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[quoted_message]</span></span>"
+	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[quoted_message]</span></span>"
 
 	var/language = owner.language_holder.get_selected_language()
-	owner.Hear(rendered, src, language, message, null, spans, message_mods)
 	Hear(rendered, src, language, message, null, spans, message_mods)
+	if(eavesdrop_range && get_dist(src, owner) > 1 + eavesdrop_range)
+		rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[eavesdropping_message]</span></span>"
+		owner.Hear(rendered, src, language, eavesdropping_message, null, spans, message_mods)
+	else
+		owner.Hear(rendered, src, language, message, null, spans, message_mods)
 
-	//speech bubble
+	// Speech bubble, but only for those who have runechat off
 	var/list/friend_clients = list(src.client, owner.client)
 	var/list/speech_bubble_recipients = list()
 	for(var/client/friend_client in friend_clients)
