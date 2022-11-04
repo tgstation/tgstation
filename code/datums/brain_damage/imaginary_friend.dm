@@ -344,10 +344,10 @@
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
 
 	to_chat(friend, message)
-	if(friend.client)
+	if(friend.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		friend.create_chat_message(friend, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 	to_chat(friend.owner, message)
-	if(friend.owner.client)
+	if(friend.owner.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
 		friend.owner.create_chat_message(friend, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 	return TRUE
 
