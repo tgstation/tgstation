@@ -274,6 +274,24 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
 
+/obj/item/reagent_containers/cup/beaker/meta/omnizine
+	list_reagents = list(/datum/reagent/medicine/omnizine = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/bruvital
+	list_reagents = list(/datum/reagent/medicine/bruvital = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/alivuri
+	list_reagents = list(/datum/reagent/medicine/alivuri = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/detoxiver
+	list_reagents = list(/datum/reagent/medicine/detoxiver = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/atropine
+	list_reagents = list(/datum/reagent/medicine/atropine = 180)
+
+/obj/item/reagent_containers/cup/beaker/meta/salbutamol
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 180)
+
 /obj/item/reagent_containers/cup/beaker/cryoxadone
 	list_reagents = list(/datum/reagent/medicine/cryoxadone = 30)
 

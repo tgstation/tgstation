@@ -23,9 +23,9 @@
 /datum/uplink_item/bundles_tc/medical
 	name = "Medical bundle"
 	desc = "The support specialist: Aid your fellow operatives with this medical bundle. Contains a tactical medkit, \
-			a Donksoft LMG, a box of riot darts and a pair of magboots to rescue your friends in no-gravity environments."
+			a Donksoft LMG, a box of riot darts and a magboot MODsuit module to rescue your friends in no-gravity environments."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	cost = 15 // normally 20
+	cost = 20 // normally 26
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/sniper
@@ -658,12 +658,13 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/medkit
-	name = "Syndicate Combat Medic Kit"
-	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector \
-			for rapid healing, a medical night vision HUD for quick identification of injured personnel, \
-			and other supplies helpful for a field medic."
+	name = "Syndicate Combat Medical Suite"
+	desc = "This first aid kit is a suspicious brown and red. Included is an unloaded combat chemical injector \
+			for suit-penetrative chem delivery, a medical science night vision HUD for quick identification of injured personnel and chemical supplies, \
+			improved medical supplies, including Interdyne-approved pharmaceuticals, a hacked cybernetic surgery toolset arm implant, \
+			and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."
 	item = /obj/item/storage/medkit/tactical
-	cost = 4
+	cost = 10
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/potion

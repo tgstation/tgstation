@@ -755,13 +755,21 @@
 
 /datum/reagent/medicine/atropine
 	name = "Atropine"
-	description = "If a patient is in critical condition, rapidly heals all damage types as well as regulating oxygen in the body. Excellent for stabilizing wounded patients."
+	description = "If a patient is in critical condition, rapidly heals all damage types as well as regulating oxygen in the body. Excellent for stabilizing wounded patients, and said to neutralize blood-activated internal explosives found amongst clandestine black op agents."
 	reagent_state = LIQUID
 	color = "#1D3535" //slightly more blue, like epinephrine
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 35
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/medicine/atropine/on_mob_add(mob/living/owner)
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION, "[type]")
+
+/datum/reagent/medicine/atropine/on_mob_delete(mob/living/owner)
+	REMOVE_TRAIT(owner, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION, "[type]")
+	return ..()
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.health <= M.crit_threshold)
@@ -1585,3 +1593,67 @@
 	clot_rate = 0.4 //slightly better than regular coagulant
 	passive_bleed_modifier = 0.5
 	overdose_threshold = 10 //but easier to overdose on
+
+/datum/reagent/medicine/bruvital
+	name = "bruvital"
+	description = "An experimental and secretative chemical, used to rapidly repair brute damage. Overdose causes extreme, rapid physical degradation."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+
+/datum/reagent/medicine/bruvital/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjustBruteLoss(-10 * REM * delta_time, 0)
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/bruvital/overdose_process(mob/living/M, delta_time, times_fired)
+	M.apply_damage(20, BRUTE) //have fun
+	..()
+
+/datum/reagent/medicine/alivuri
+	name = "alivuri"
+	description = "An experimental and secretative chemical, used to rapidly repair burn damage. Overdose causes instant conflaguration and rapid combustion."
+	reagent_state = LIQUID
+	color = "#d76e2c"
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+
+/datum/reagent/medicine/alivuri/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjustFireLoss(-10 * REM * delta_time, 0)
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/alivuri/overdose_process(mob/living/M, delta_time, times_fired)
+	M.adjust_fire_stacks(5)
+	M.apply_damage(10, BURN)
+	M.ignite_mob()
+	..()
+
+/datum/reagent/medicine/detoxiver
+	name = "detoxiver"
+	description = "An experimental and secretative chemical, used to rapidly repair toxin damage. Overdose causes massive organ failure."
+	reagent_state = LIQUID
+	color = "#57ac61"
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+
+/datum/reagent/medicine/detoxiver/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjustToxLoss(-10 * REM * delta_time, 0)
+	for(var/datum/reagent/toxin/badstuff in M.reagents.reagent_list)
+		if(badstuff != src)
+			M.reagents.remove_reagent(badstuff.type, 2 * REM * delta_time)
+			M.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time)
+			if(prob(10))
+				M.balloon_alert(M, "your body aches")
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/detoxiver/overdose_process(mob/living/M, delta_time, times_fired)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS, 3 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES, 3 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_HEART, 3 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 3 * REM * delta_time)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 3 * REM * delta_time)
+	..()

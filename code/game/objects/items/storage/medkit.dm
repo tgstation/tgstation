@@ -263,17 +263,23 @@
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 12
+	atom_storage.max_total_storage = 24
 
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/defibrillator/compact/combat/loaded(src)
-	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/libital(src)
-	new /obj/item/reagent_containers/pill/patch/libital(src)
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
+	new /obj/item/stack/medical/suture/medicated(src)
+	new /obj/item/stack/medical/suture/medicated(src)
+	new /obj/item/stack/medical/mesh/advanced(src)
+	new /obj/item/stack/medical/mesh/advanced(src)
+	new /obj/item/mod/module/thread_ripper(src)
+	new /obj/item/mod/module/surgical_processor/preloaded(src)
+	new /obj/item/mod/module/defibrillator/combat(src)
+	new /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset(src)
+	new /obj/item/reagent_containers/hypospray/combat/empty(src)
+	new /obj/item/storage/box/evilmeds(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
 //medibot assembly

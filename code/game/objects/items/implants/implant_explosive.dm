@@ -44,6 +44,8 @@
 		popup = FALSE
 		if(response != "Yes")
 			return 0
+	if(cause == "death" && HAS_TRAIT(imp_in, TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION))
+		return 0
 	heavy = round(heavy)
 	medium = round(medium)
 	weak = round(weak)

@@ -120,3 +120,18 @@
 /obj/item/storage/box/silver_sulf/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/patch/aiuri(src)
+
+/obj/item/storage/box/evilmeds
+	name = "box of experimental medicine"
+	desc = "Contains a large number of beakers filled with experimental medical supplies. Straight from Interdyne Pharmaceutics!"
+	icon_state = "syndiebox"
+	illustration = "beaker"
+
+/obj/item/storage/box/evilmeds/PopulateContents()
+	new /obj/item/reagent_containers/cup/beaker/meta/omnizine(src)
+	new /obj/item/reagent_containers/cup/beaker/meta/bruvital(src)
+	new /obj/item/reagent_containers/cup/beaker/meta/alivuri(src)
+	new /obj/item/reagent_containers/cup/beaker/meta/detoxiver(src)
+	new /obj/item/reagent_containers/cup/beaker/meta/atropine(src)
+	new /obj/item/reagent_containers/cup/beaker/meta/salbutamol(src)
+	new /obj/item/clothing/glasses/science(src)
