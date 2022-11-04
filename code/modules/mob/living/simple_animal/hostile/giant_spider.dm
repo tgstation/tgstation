@@ -312,7 +312,9 @@
 
 /datum/action/innate/spider/lay_web/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
+	if (!owner)
+		return
+	RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
 
 /datum/action/innate/spider/lay_web/Remove(mob/removed_from)
 	. = ..()
@@ -332,7 +334,7 @@
 	var/obj/structure/spider/stickyweb/web = locate() in get_turf(spider)
 	if(web && (!spider.web_sealer || istype(web, /obj/structure/spider/stickyweb/sealed)))
 		if (feedback)
-			owner.balloon_alert(owner, "already webbed")
+			owner.balloon_alert(owner, "already webbed!")
 		return FALSE
 	return TRUE
 
@@ -378,7 +380,9 @@
 
 /datum/action/cooldown/wrap/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
+	if (!owner)
+		return
+	RegisterSignal(owner, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
 
 /datum/action/cooldown/wrap/Remove(mob/removed_from)
 	. = ..()
@@ -468,6 +472,7 @@
 				)
 			ADD_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED, TRAIT_GENERIC)
 			living_wrapped.death() //you just ate them, they're dead.
+			log_combat(owner, living_wrapped, "spider cocooned")
 		else
 			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
 
@@ -487,7 +492,9 @@
 
 /datum/action/innate/spider/lay_eggs/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
+	if (!owner)
+		return
+	RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
 
 /datum/action/innate/spider/lay_eggs/Remove(mob/removed_from)
 	. = ..()
