@@ -312,6 +312,9 @@
 		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
 
+/mob/camera/imaginary_friend/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
+	return ../..()
+
 /mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
 		return FALSE
