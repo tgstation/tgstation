@@ -134,4 +134,3 @@
 	new /obj/item/reagent_containers/cup/beaker/meta/detoxiver(src)
 	new /obj/item/reagent_containers/cup/beaker/meta/atropine(src)
 	new /obj/item/reagent_containers/cup/beaker/meta/salbutamol(src)
-	new /obj/item/clothing/glasses/science(src)
