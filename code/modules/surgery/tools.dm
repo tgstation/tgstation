@@ -524,7 +524,7 @@
 	. = TRUE
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(usr, "Select Reagent To Filter", "WhiteList Reagent", GLOB.chemical_name_list)
+			var/selected_reagent = tgui_input_list(usr, "Select reagent to filter", "Whitelist reagent", GLOB.chemical_name_list)
 			if(!selected_reagent)
 				return TRUE
 			
