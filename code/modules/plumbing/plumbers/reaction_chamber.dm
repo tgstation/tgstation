@@ -88,7 +88,7 @@
 		return
 	switch(action)
 		if("add")
-			var/selected_reagent = tgui_input_list(usr, "Select Reagent", "Reagent", GLOB.chemical_name_list)
+			var/selected_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.chemical_name_list)
 			if(selected_reagent)
 				var/input_reagent = get_chem_id(selected_reagent)
 				if(input_reagent && !required_reagents.Find(input_reagent))
