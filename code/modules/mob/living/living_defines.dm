@@ -211,3 +211,6 @@
 
 	/// Living mob's mood datum
 	var/datum/mood/mob_mood
+
+	// Multiple imaginary friends!
+	var/list/imaginary_group = list()

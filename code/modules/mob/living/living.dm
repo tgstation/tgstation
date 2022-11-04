@@ -12,6 +12,7 @@
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
+	imaginary_group += client
 
 /mob/living/prepare_huds()
 	..()
@@ -35,6 +36,7 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	QDEL_LAZYLIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LIST(surgeries)
 	return ..()
