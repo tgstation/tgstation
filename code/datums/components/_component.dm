@@ -182,7 +182,7 @@
 	if(QDELETED(src) || QDELETED(target))
 		return
 
-	if (islist(proctype))
+	if (islist(signal_type))
 		stack_trace("[target] is registering [signal_type] as a list, the older method. Change it to RegisterSignals.")
 		RegisterSignals(target, signal_type, proctype, override)
 		return
