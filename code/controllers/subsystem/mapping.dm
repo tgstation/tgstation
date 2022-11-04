@@ -157,7 +157,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/world_contents = GLOB.areas_by_type[world.area].contents
 	var/list/lists_to_reserve = src.lists_to_reserve
 	var/index = 0
-	while(length(lists_to_reserve))
+	while(index < length(lists_to_reserve))
 		var/list/packet = lists_to_reserve[index + 1]
 		var/packetlen = length(packet)
 		while(packetlen)
@@ -174,8 +174,6 @@ SUBSYSTEM_DEF(mapping)
 			packetlen = length(packet)
 
 		index++
-		// If we're here, we're done with that lad
-		lists_to_reserve.len--
 	lists_to_reserve.Cut(1, index)
 
 /datum/controller/subsystem/mapping/proc/calculate_default_z_level_gravities()

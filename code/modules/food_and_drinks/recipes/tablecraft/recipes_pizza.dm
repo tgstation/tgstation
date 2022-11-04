@@ -110,3 +110,12 @@
 	)
 	result = /obj/item/food/pizzaslice/ants
 	subcategory = CAT_PIZZA
+
+/datum/crafting_recipe/food/energypizza
+	name = "Energy pizza"
+	reqs = list(
+		/obj/item/food/flatdough = 1,
+		/obj/item/stock_parts/cell = 2,
+	)
+	result = /obj/item/food/pizza/energy/raw
+	subcategory = CAT_PIZZA

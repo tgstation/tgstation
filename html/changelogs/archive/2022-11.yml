@@ -121,3 +121,29 @@
   - bugfix: Properly suppressed a message about suppressing messages.
   tf-4:
   - bugfix: Eating food with onions in will no longer make you cry.
+2022-11-04:
+  Drake and Josh (Fikou and Melbert):
+  - bugfix: Ash Drake's fire rain and swoop landing breath work again.
+  Fikou:
+  - bugfix: fixes throw click cooldown not applying
+  - bugfix: makes beeping sounds work on mechpads when used by a mech
+  GoblinBackwards:
+  - qol: Space Ninja now has their MODsuit module buttons pinned by default
+  Melbert:
+  - rscadd: Chefs can now make food with love. They can purchase a skillchip from
+      their vendor which enhances their kiss emote. Using your kiss on food you create
+      will add a special reagent to it which makes it nicer.
+  - refactor: Separated Microwavable from the Edible component, refactored microwave
+      act to accompany this
+  - refactor: Refactored how grilled items are generated
+  - refactor: Refactored how silver slime food items are generated
+  - refactor: Refactored how edible items inherit new edible statuses
+  - code_imp: Removed some magic numbers from microwaves
+  - code_imp: General code improvements for grillable / bakeable / etc
+  ShizCalev:
+  - code_imp: Riot helmets and justice helmets are now in a /toggeable subtype.
+  Tastyfish:
+  - rscadd: Adds an option in Game Preferences -> Game Options to turn off MultiZ
+      parallax.
+  timothymtorres:
+  - bugfix: Fix zombie tongue to only apply to infectious species

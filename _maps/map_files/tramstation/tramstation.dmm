@@ -15175,7 +15175,7 @@
 	name = "Evidence Closet 1"
 	},
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "fte" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -17410,7 +17410,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "glJ" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -23715,8 +23715,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "izU" = (
 /turf/closed/wall,
 /area/station/hallway/primary/tram/center)
@@ -24204,7 +24205,7 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "iJx" = (
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = "MedbayFoyer";
@@ -25307,8 +25308,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/xeno_spawn,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "jeB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -29121,7 +29123,7 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "kvn" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -30127,6 +30129,9 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"kNs" = (
+/turf/closed/wall/r_wall,
+/area/station/security/evidence)
 "kNT" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
@@ -30797,8 +30802,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "kYZ" = (
 /obj/machinery/airalarm/server{
 	dir = 4;
@@ -33474,8 +33480,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "lXi" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -39996,8 +40003,9 @@
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "ooC" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -46635,12 +46643,12 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot,
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -51483,6 +51491,14 @@
 "soH" = (
 /turf/open/floor/iron/goonplaque,
 /area/station/hallway/secondary/entry)
+"spc" = (
+/obj/structure/closet{
+	name = "Evidence Closet 1"
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/evidence)
 "spf" = (
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
@@ -52127,6 +52143,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/office)
 "szZ" = (
@@ -58200,6 +58217,9 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/service/hydroponics/garden)
+"uIt" = (
+/turf/closed/wall,
+/area/station/security/evidence)
 "uIx" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron/dark,
@@ -58296,7 +58316,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/security/office)
+/area/station/security/evidence)
 "uKI" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
@@ -157377,11 +157397,11 @@ pqz
 tag
 oLZ
 kvb
-oLZ
+kNs
 izR
-iZb
-iZb
-iZb
+uIt
+uIt
+uIt
 jKq
 pTr
 drq
@@ -157634,7 +157654,7 @@ aJk
 tag
 dLB
 dLB
-oLZ
+kNs
 ooA
 iIK
 fsQ
@@ -157891,7 +157911,7 @@ tag
 tag
 hgJ
 hga
-oLZ
+kNs
 lWR
 kYP
 jer
@@ -158148,10 +158168,10 @@ dhe
 iZb
 iBV
 dLB
-oLZ
+kNs
 glD
 fsQ
-fsQ
+spc
 fsQ
 jKq
 awB
@@ -158405,11 +158425,11 @@ dhe
 iZb
 iZb
 csK
-oLZ
-oLZ
-oLZ
-oLZ
-oLZ
+kNs
+kNs
+kNs
+kNs
+kNs
 rrk
 rrk
 rrk
@@ -158663,7 +158683,7 @@ iZb
 aRN
 xXs
 aRN
-iZb
+uIt
 dhe
 dhe
 dhe

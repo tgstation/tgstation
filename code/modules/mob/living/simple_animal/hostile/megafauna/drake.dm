@@ -133,15 +133,14 @@
 			fire_cone.StartCooldown(0)
 			fire_cone.Trigger(target = target)
 			meteors.StartCooldown(0)
-			INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, target)
+			meteors.Trigger(target = target)
 			return
 	else if(prob(10+anger_modifier) && DRAKE_ENRAGED)
 		mass_fire.Trigger(target = target)
 		return
-	if(fire_cone.Trigger(target = target))
-		if(prob(50))
-			meteors.StartCooldown(0)
-			meteors.Trigger(target = target)
+	if(fire_cone.Trigger(target = target) && prob(50))
+		meteors.StartCooldown(0)
+		meteors.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
