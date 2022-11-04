@@ -159,7 +159,7 @@
 /// Returns all member clients of the imaginary_group
 /mob/camera/imaginary_friend/proc/group_clients()
 	var/group_clients = list()
-	for(var/mob/person in owner.imaginary_group)
+	for(var/mob/person as anything in owner.imaginary_group)
 		if(person.client)
 			group_clients += person.client
 	return group_clients
