@@ -25,6 +25,7 @@
 		PIZZA_DELIVERY,
 		RUSKY_PARTY,
 		SPIDER_GIFT,
+		PAPERS_PLEASE,
 	)
 	///The types of loan events already run (and to be excluded if the event triggers).
 	var/list/run_events = list()
@@ -53,18 +54,6 @@
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-
-	var/list/shuttle_loan_offers = list(
-		ANTIDOTE_NEEDED,
-		DEPARTMENT_RESUPPLY,
-		HIJACK_SYNDIE,
-		ITS_HIP_TO,
-		MY_GOD_JC,
-		PIZZA_DELIVERY,
-		RUSKY_PARTY,
-		SPIDER_GIFT,
-		PAPERS_PLEASE,
-	)
 
 	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't call control, because it hasn't been set yet
 		var/list/loan_list = list()
