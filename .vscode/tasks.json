@@ -17,10 +17,7 @@
 				"$tsc",
 				"$eslint-stylish"
 			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",			
 			"dependsOn": "dm: reparse",
 			"label": "Build All"
 		},
