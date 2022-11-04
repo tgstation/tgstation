@@ -55,6 +55,8 @@
 
 	/// don't show any chat messages regarding inserting items
 	var/silent = FALSE
+	/// same as above but only for the user, useful to cut on chat spam without removing feedback for other players
+	var/silent_for_user = FALSE
 	/// play a rustling sound when interacting with the bag
 	var/rustle_sound = TRUE
 
@@ -457,7 +459,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(rustle_sound)
 		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
 
-	to_chat(user, span_notice("You put [thing] [insert_preposition]to [resolve_parent]."))
+	if(!silent_for_user)
+		to_chat(user, span_notice("You put [thing] [insert_preposition]to [resolve_parent]."))
 
 	for(var/mob/viewing in oviewers(user, null))
 		if(in_range(user, viewing))

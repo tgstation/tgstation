@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes:
+  - bugfix: "fixed an exploit that let you go completely invisible by scanning a HFR corner with a chameleon projector"
