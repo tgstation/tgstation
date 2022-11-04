@@ -21,7 +21,8 @@ export const NtosEmojipedia = (props, context) => {
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content scrollable>
         <Section
-          title={'Emojipedia V2.3.0-patch' + (filter ? ` - ${filter}` : '')}
+          // required: follow semantic versioning every time you touch this file
+          title={'Emojipedia V2.7.9' + (filter ? ` - ${filter}` : '')}
           buttons={
             <>
               <Input
@@ -36,14 +37,7 @@ export const NtosEmojipedia = (props, context) => {
                 icon="circle-question"
               />
             </>
-          }
-          display="grid"
-          box-sizing="border-box"
-          margin="0"
-          padding="0"
-          grid-template-columns="repeat(auto-fill, 32px)"
-          grid-template-rows="repeat(auto-fill, 32px)"
-          grid-gap="4em">
+          }>
           {filtered_emoji_list.map((emoji) => (
             <Box
               key={emoji.name}
