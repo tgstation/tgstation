@@ -1,0 +1,4 @@
+author: "Imaginos"
+delete-after: True
+changes:
+  - imageadd: "new icons for modsuit actions"
