@@ -319,8 +319,8 @@
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
 		if(holographic_showpiece)
-			visible_message(span_danger("The [showpiece] fizzles and vanishes!"))
-			do_sparks(1, FALSE, src)
+			visible_message(span_danger("[showpiece] fizzles and vanishes!"))
+			do_sparks(number = 1, cardinal_only = FALSE, source = src)
 			QDEL_NULL(showpiece)
 			holographic_showpiece = FALSE
 		else
@@ -336,8 +336,8 @@
 
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
 	historian_mode = !historian_mode
-	to_chat(user, span_notice("You [!historian_mode ? "disable" : "enable"] the case's historian mode."))
-	playsound(src, 'sound/machines/twobeep.ogg', 50)
+	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
+	playsound(src, 'sound/machines/twobeep.ogg', vary = 50)
 	SStgui.update_uis(src)
 
 /obj/structure/displaycase/trophy/toggle_lock(mob/user)

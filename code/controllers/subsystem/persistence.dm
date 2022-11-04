@@ -246,10 +246,13 @@ SUBSYSTEM_DEF(persistence)
 
 /// Returns a list for the admin trophy panel.
 /datum/controller/subsystem/persistence/proc/trophy_ui_data()
+	var/list/ui_data = list()
 	for(var/datum/trophy_data/data in saved_trophies)
 		var/list/pdata = data.to_json()
 		pdata["ref"] = REF(data)
-		. += list(pdata)
+		ui_data += list(pdata)
+
+	return ui_data
 
 /// Loads up the amount of times maps appeared to alter their appearance in voting and rotation.
 /datum/controller/subsystem/persistence/proc/load_recent_maps()
@@ -299,9 +302,9 @@ SUBSYSTEM_DEF(persistence)
 		var/datum/trophy_data/chosen_trophy = pick_n_take(valid_trophies)
 
 		trophy_case.showpiece = new /obj/item/showpiece_dummy(trophy_case, text2path(chosen_trophy.path))
-		trophy_case.trophy_message = trim(chosen_trophy.message, MAX_PLAQUE_LEN )
+		trophy_case.trophy_message = trim(chosen_trophy.message, MAX_PLAQUE_LEN)
 		if(trophy_case.trophy_message == "")
-			trophy_case.trophy_message = trim(trophy_case.showpiece.desc, MAX_PLAQUE_LEN )
+			trophy_case.trophy_message = trim(trophy_case.showpiece.desc, MAX_PLAQUE_LEN)
 		trophy_case.placer_key = trim(chosen_trophy.placer_key)
 		trophy_case.holographic_showpiece = TRUE
 		trophy_case.update_appearance()

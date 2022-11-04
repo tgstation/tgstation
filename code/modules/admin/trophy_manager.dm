@@ -23,8 +23,9 @@
 		ui.open()
 
 /datum/trophy_manager/ui_data(mob/user)
-	. = list()
-	.["trophies"] = SSpersistence.trophy_ui_data()
+	var/list/data = list()
+	data["trophies"] = SSpersistence.trophy_ui_data()
+	return data
 
 /datum/trophy_manager/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if(..())
