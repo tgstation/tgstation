@@ -1641,11 +1641,12 @@
 /datum/reagent/medicine/detoxiver/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustToxLoss(-10 * REM * delta_time, 0)
 	for(var/datum/reagent/toxin/badstuff in M.reagents.reagent_list)
-		if(badstuff != src)
-			M.reagents.remove_reagent(badstuff.type, 2 * REM * delta_time)
-			M.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time)
-			if(prob(10))
-				M.balloon_alert(M, "your body aches")
+		if(badstuff == src)
+			continue
+		M.reagents.remove_reagent(badstuff.type, 2 * REM * delta_time)
+		M.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time)
+		if(DT_PROB(10, delta_time))
+			to_chat(M, span_warning("You feel a dull ache in your body."))
 	..()
 	. = TRUE
 
