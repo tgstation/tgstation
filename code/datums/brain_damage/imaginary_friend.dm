@@ -287,9 +287,19 @@
 	LAZYADD(update_on_z, bubble)
 	addtimer(CALLBACK(src, .proc/clear_saypopup, bubble), 3.5 SECONDS)
 
-	for(var/mob/M in GLOB.dead_mob_list)
-		var/link = FOLLOW_LINK(M, owner)
-		to_chat(M, "[link] [dead_rendered]")
+	var/turf/center_turf = get_turf(src)
+	if(!center_turf)
+		return
+
+	for(var/mob/dead_player in GLOB.dead_mob_list)
+		if(dead_player.z != z || get_dist(src, dead_player) > 7)
+			if(eavesdrop_range)
+				if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER))
+					continue
+			else if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTEARS))
+				continue
+		var/link = FOLLOW_LINK(dead_player, owner)
+		dead_player.Hear("[link] [dead_rendered]", src, language, message, null, spans, message_mods)
 
 /mob/camera/imaginary_friend/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
