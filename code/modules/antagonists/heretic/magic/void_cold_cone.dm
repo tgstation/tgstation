@@ -13,6 +13,7 @@
 
 	invocation = "FR'ZE!"
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
 
 	// In room temperature, the ice won't last very long
 	// ...but in space / freezing rooms, it will stick around

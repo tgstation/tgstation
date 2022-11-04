@@ -13,6 +13,7 @@
 
 	invocation = "V'LC'N!"
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
 	channel_time = 5 SECONDS
 	target_radius = 5
 	max_beam_bounces = 4

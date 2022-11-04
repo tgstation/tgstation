@@ -15,6 +15,7 @@
 
 	invocation = "R'S'T."
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
 
 /datum/action/cooldown/spell/realignment/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
