@@ -307,6 +307,11 @@
 /mob/camera/imaginary_friend/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
 
+/mob/camera/imaginary_friend/whisper(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language, ignore_spam = FALSE, forced, filterproof)
+	if(!message)
+		return
+	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
+
 /mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
 		return FALSE
