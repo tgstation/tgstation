@@ -203,6 +203,9 @@
 			medical_mode_flags ^= MEDBOT_STATIONARY_MODE
 			path = list()
 		if("sync_tech")
+			if(!linked_techweb)
+				to_chat(usr, span_notice("No research techweb connected."))
+				return
 			var/oldheal_amount = heal_amount
 			var/tech_boosters
 			for(var/index in linked_techweb.researched_designs)
