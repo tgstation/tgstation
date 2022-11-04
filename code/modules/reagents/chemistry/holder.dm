@@ -22,7 +22,7 @@
 
 /// Creates an list which is indexed by reagent name . used by plumbing reaction chamber and chemical filter UI
 /proc/init_chemical_name_list()
-	var/list/name_list=new/list()
+	var/list/name_list = list()
 	for(var/X in GLOB.chemical_reagents_list)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[X]
 		name_list[R.name]=R.name
