@@ -39,20 +39,22 @@
 		if("add")
 			var/which=params["which"]
 			var/selected_reagent = tgui_input_list(usr, "Select [which] Reagent", "Reagent", GLOB.chemical_name_list)
-			if(selected_reagent)
-				var/chem_id = get_chem_id(selected_reagent)
-				if(chem_id)
-					switch(which)
-						if("left")
-							if(!left.Find(chem_id))
-								english_left += selected_reagent
-								left += chem_id
-						if("right")
-							if(!right.Find(chem_id))
-								english_right += selected_reagent
-								right += chem_id
-				else
-					CRASH("User gave unknown chemical ID: [selected_reagent]")
+			if(!selected_reagent)
+				return TRUE
+				
+			var/chem_id = get_chem_id(selected_reagent)
+			if(!chem_id)
+				return TRUE
+				
+			switch(which)
+				if("left")
+					if(!left.Find(chem_id))
+						english_left += selected_reagent
+						left += chem_id
+				if("right")
+					if(!right.Find(chem_id))
+						english_right += selected_reagent
+						right += chem_id
 
 		if("remove")
 			var/chem_name = params["reagent"]
