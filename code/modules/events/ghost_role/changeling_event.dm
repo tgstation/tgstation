@@ -52,19 +52,17 @@
 	spawned_mobs += new_changeling
 	return SUCCESSFUL_SPAWN
 
-/obj/effect/meteor/changeling
+/obj/effect/meteor/meaty/changeling
 	name = "unsettlingly meaty meteor"
 	desc = "A tightly packed knit of flesh and skin. Did it just move?"
 	icon_state = "meateor" //oh you KNOW we need a custom sprite for this bad boy
+	heavy = FALSE
 	hits = 1 //Instant impact explosion
 	hitpwr = EXPLODE_LIGHT
-	meteorsound = 'sound/effects/meteorimpact.ogg' //replace with splat sfx
 	threat = 100
-	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant)
-	dropamt = 4
 	signature = "xenobiological lifesign"
 
-/obj/effect/meteor/changeling/meteor_effect()
+/obj/effect/meteor/meaty/changeling/meteor_effect()
 	..()
 
 	for(var/atom/movable/child in contents) //Why would there be anything else?
