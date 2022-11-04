@@ -43,5 +43,5 @@
 
 /mob/camera/emote(act, m_type=1, message = null, intentional = FALSE, force_silence = FALSE)
 	if(has_emotes)
-		return ..(act, m_type, message, intentional, force_silence)
+		return ..()
 	return FALSE
