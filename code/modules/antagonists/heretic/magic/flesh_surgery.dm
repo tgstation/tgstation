@@ -180,7 +180,7 @@
 
 	carbon_victim.balloon_alert(caster, "extracting [chosen_organ]...")
 	playsound(victim, 'sound/weapons/slice.ogg', 50, TRUE)
-	carbon_victim.add_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
+	carbon_victim.add_atom_colour(COLOR_DARK_RED, TEMPORARY_COLOUR_PRIORITY)
 	if(!do_after(caster, time_it_takes, carbon_victim, extra_checks = CALLBACK(src, .proc/extraction_checks, picked_organ, hand, victim, caster)))
 		carbon_victim.balloon_alert(caster, "interrupted!")
 		return FALSE
