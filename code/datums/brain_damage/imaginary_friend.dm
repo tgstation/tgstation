@@ -15,9 +15,6 @@
 	..()
 	make_friend()
 	get_ghost()
-	if(!owner.imaginary_group)
-		owner.imaginary_group = list(owner)
-	owner.imaginary_group += friend
 
 /datum/brain_trauma/special/imaginary_friend/on_life(delta_time, times_fired)
 	if(get_dist(owner, friend) > 9)
@@ -30,12 +27,10 @@
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
-	owner?.imaginary_group -= friend
 	qdel(src) //friend goes down with the ship
 
 /datum/brain_trauma/special/imaginary_friend/on_lose()
 	..()
-	owner?.imaginary_group -= friend
 	QDEL_NULL(friend)
 
 //If the friend goes afk, make a brand new friend. Plenty of fish in the sea of imagination.
@@ -114,6 +109,10 @@
 	hide = new
 	hide.Grant(src)
 
+	if(!owner.imaginary_group)
+		owner.imaginary_group = list(owner)
+	owner.imaginary_group += src
+
 /mob/camera/imaginary_friend/proc/setup_friend()
 	var/gender = pick(MALE, FEMALE)
 	real_name = random_unique_name(gender)
@@ -191,6 +190,7 @@
 		owner.client.images.Remove(human_image)
 	if(client)
 		client.images.Remove(human_image)
+	client.imaginary_group -= src
 	return ..()
 
 /mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
