@@ -460,7 +460,7 @@
 				rangers[M] = TRUE
 				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
 		for(var/mob/L in rangers)
-			if(get_dist(src,L) > 10)
+			if(get_dist(src,L) > 10 || !(L.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
 				rangers -= L
 				if(!L || !L.client)
 					continue

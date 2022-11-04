@@ -34,6 +34,10 @@
 	savefile_key = "sound_jukebox"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/datum/preference/toggle/sound_jukebox/apply_to_client_updated(client/client, value)
+	if (!value)
+		client.mob.stop_sound_channel(CHANNEL_JUKEBOX)
+
 /// Controls hearing lobby music
 /datum/preference/toggle/sound_lobby
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
