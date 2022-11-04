@@ -123,15 +123,15 @@
 		remove_from.images -= image_to_remove
 
 ///Add an image to a list of clients and calls a proc to remove it after a duration
-/proc/flick_overlay(image/image_to_show, list/show_to, duration)
+/atom/proc/flick_overlay(image/image_to_show, list/show_to, duration)
 	for(var/client/add_to in show_to)
 		add_to.images += image_to_show
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, image_to_show, show_to), duration, TIMER_CLIENT_TIME)
 
-///wrapper for flick_overlay(), flicks to everyone who can see the target atom
-/proc/flick_overlay_view(image/image_to_show, atom/target, duration)
+///wrapper for flick_overlay(), flicks to everyone who can see the atom
+/atom/proc/flick_overlay_view(image/image_to_show, duration)
 	var/list/viewing = list()
-	for(var/mob/viewer as anything in viewers(target))
+	for(var/mob/viewer as anything in viewers(src))
 		if(viewer.client)
 			viewing += viewer.client
 	flick_overlay(image_to_show, viewing, duration)
