@@ -105,7 +105,7 @@
 		log_game("Portal Storm failed to spawn effect due to an invalid location.")
 		return
 	T = get_step(T, SOUTHWEST) //align center of image with turf
-	flick_overlay_static(storm_appearances[GET_TURF_PLANE_OFFSET(T) + 1], T, 15)
+	T.flick_overlay_static(storm_appearances[GET_TURF_PLANE_OFFSET(T) + 1], 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
 
 /datum/round_event/portal_storm/proc/spawn_hostile()

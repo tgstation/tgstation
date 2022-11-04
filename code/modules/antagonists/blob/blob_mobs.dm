@@ -327,7 +327,7 @@
 		I.appearance_flags = RESET_COLOR
 		if(overmind)
 			I.color = overmind.blobstrain.complementary_color
-		flick_overlay_view(I, src, 8)
+		flick_overlay_view(I, 8)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/AttackingTarget()
 	. = ..()
