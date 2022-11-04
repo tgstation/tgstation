@@ -299,7 +299,7 @@
 			else if(!(dead_player.client?.prefs.chat_toggles & CHAT_GHOSTEARS))
 				continue
 		var/link = FOLLOW_LINK(dead_player, owner)
-		dead_player.Hear("[link] [dead_rendered]", src, language, message, null, spans, message_mods)
+		to_chat(dead_player, "[link] [dead_rendered]")
 
 /mob/camera/imaginary_friend/proc/clear_saypopup(image/say_popup)
 	LAZYREMOVE(update_on_z, say_popup)
