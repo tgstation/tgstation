@@ -250,13 +250,13 @@
 		spans |= SPAN_SINGING
 
 	var/eavesdrop_range = 0
-	var eavesdropping_message = ""
+	var/eavesdropped_message = ""
 	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 		spans |= SPAN_ITALICS
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 		// "This proc is dangerously laggy, avoid it or die"
 		// What other option do I have here? I guess I'll die
-		eavesdropping_message = say_quote(say_emphasis(stars(message)), spans, message_mods)
+		eavesdropped_message = stars(message)
 
 	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		message = message_mods[MODE_CUSTOM_SAY_EMOTE]
@@ -268,8 +268,8 @@
 	var/language = owner.language_holder.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods)
 	if(eavesdrop_range && get_dist(src, owner) > 1 + eavesdrop_range)
-		rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[eavesdropping_message]</span></span>"
-		owner.Hear(rendered, src, language, eavesdropping_message, null, spans, message_mods)
+		rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]</span></span>"
+		owner.Hear(rendered, src, language, eavesdropped_message, null, spans, message_mods)
 	else
 		owner.Hear(rendered, src, language, message, null, spans, message_mods)
 
