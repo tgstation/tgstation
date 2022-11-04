@@ -192,7 +192,7 @@
 	if(prob(30))
 		back = /obj/item/nullrod/scythe/talking
 	else
-		back = /obj/item/shield/riot/buckler
+		back = /obj/item/shield/buckler
 		belt = /obj/item/nullrod/claymore
 
 /datum/outfit/consumed_shadowperson
