@@ -532,7 +532,7 @@
 			if(!chem_id)
 				return TRUE
 				
-			if(chem_id && !(chem_id in whitelist))
+			if(!(chem_id in whitelist))
 				whitelist[chem_id] = selected_reagent
 				
 
