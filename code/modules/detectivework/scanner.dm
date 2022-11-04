@@ -39,7 +39,7 @@
 		return
 	scanning = TRUE
 	balloon_alert(user, "printing report...")
-	addtimer(CALLBACK(src, .proc/PrintReport), 100)
+	addtimer(CALLBACK(src, .proc/PrintReport), 10 SECONDS)
 
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
