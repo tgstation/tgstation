@@ -247,7 +247,7 @@
 		return
 
 	if(message_mods[MODE_SING])
-		var/randomnote = pick("\u2669", "\u266A", "\u266B")
+		var/randomnote = pick("♩", "♪", "♫")
 		message = "[randomnote] [capitalize(message)] [randomnote]"
 		spans |= SPAN_SINGING
 
