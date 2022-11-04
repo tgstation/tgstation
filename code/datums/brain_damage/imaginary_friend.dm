@@ -156,6 +156,7 @@
 
 	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 
+/// Returns all member clients of the imaginary_group
 /mob/camera/imaginary_friend/proc/group_clients()
 	var/group_clients = list()
 	for(var/mob/person in owner.imaginary_group)
