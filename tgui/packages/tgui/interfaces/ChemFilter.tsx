@@ -11,13 +11,13 @@ type Data = {
 type Props = {
   title: string;
   list: string[];
-  btitle: string;
-  bcolor: string;
+  buttonTitle: string;
+  buttonColor: string;
 };
 
 export const ChemFilterPane = (props: Props, context) => {
   const { act } = useBackend(context);
-  const { title, list, btitle, bcolor } = props;
+  const { title, list, buttonTitle, buttonColor } = props;
   const titleKey = title.toLowerCase();
 
   return (
@@ -67,16 +67,16 @@ export const ChemFilter = (props, context) => {
             <ChemFilterPane
               title="Left"
               list={left}
-              btitle="Add Left Reagent"
-              bcolor="yellow"
+              buttonTitle="Add Left Reagent"
+              buttonColor="yellow"
             />
           </Stack.Item>
           <Stack.Item grow>
             <ChemFilterPane
               title="Right"
               list={right}
-              btitle="Add Right Reagent"
-              bcolor="red"
+              buttonTitle="Add Right Reagent"
+              buttonColor="red"
             />
           </Stack.Item>
         </Stack>
