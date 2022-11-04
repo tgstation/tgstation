@@ -118,7 +118,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			T.multiz_turf_new(src, UP)
 
 	// by default, vis_contents is inherited from the turf that was here before
-	vis_contents.Cut()
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 	assemble_baseturfs()
 
