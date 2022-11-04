@@ -21,15 +21,14 @@
 	fakeable = FALSE // No announcement is made, nothing to announce.
 
 /datum/round_event/ghost_role/changeling/spawn_role()
-
-	var/list/mob/dead/observer/candidate = get_candidates(ROLE_CHANGELING, ROLE_CHANGELING)
+	var/list/mob/dead/observer/candidate = get_candidates(ROLE_CHANGELING, ROLE_CHANGELING) //Change to midround changeling when you get that shit figured out
 
 	if(!candidate.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/obj/effect/meteor/changeling_meteor = make_body(pick_n_take(candidate))
+	var/obj/effect/meteor/changeling_meteor
 
-	var/mob/dead/selected = pick_n_take(candidate) //Grab the selected player's mind
+	var/mob/dead/selected = make_body(pick_n_take(candidate)) //Grab the selected player's mind
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
 
