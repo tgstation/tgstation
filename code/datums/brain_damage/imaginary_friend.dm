@@ -247,7 +247,7 @@
 
 	if(message_mods[MODE_SING])
 		var/randomnote = pick("\u2669", "\u266A", "\u266B")
-		message = "[randomnote] [message] [randomnote]"
+		message = "[randomnote] [capitalize(message)] [randomnote]"
 		spans |= SPAN_SINGING
 
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(message), spans, message_mods)]</span></span>"
