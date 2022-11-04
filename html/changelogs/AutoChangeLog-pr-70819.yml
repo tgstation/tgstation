@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - balance: "The Shuttle Loan event no longer only rolls once per round."
