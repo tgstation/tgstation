@@ -33,9 +33,11 @@
 	var/start_side = pick(GLOB.cardinals) //Select our starting turf
 	var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/picked_start = spaceDebrisStartLoc(start_side, start_z)
-	var/turf/picked_end = spaceDebrisFinishLoc(start_side, start_z)
 
-	var/obj/effect/meteor/changeling/changeling_meteor = new/obj/effect/meteor/changeling(picked_start, picked_end)
+	if(!GLOB.xeno_spawn)
+		return MAP_ERROR
+
+	var/obj/effect/meteor/changeling/changeling_meteor = new/obj/effect/meteor/changeling(picked_start, pick(GLOB.xeno_spawn)) //Until I find a better way to make sure the meteor hits
 
 	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
 
@@ -64,8 +66,10 @@
 
 /obj/effect/meteor/changeling/meteor_effect()
 	..()
-	for(var/atom/movable/child in contents)
+
+	for(var/atom/movable/child in contents) //Why would there be anything else?
 		child.forceMove(get_turf(src))
+		to_chat(child, span_changeling("Our conciousness stirs once again. After drifting for an unknowable time, we've come upon a destination. A cradle of life adrift in the void of space. We must find a way in and feed from its occupants."))
 
 /obj/effect/meteor/changeling/ram_turf()
 	return //So we don't instantly smash into our occupant upon unloading them.
