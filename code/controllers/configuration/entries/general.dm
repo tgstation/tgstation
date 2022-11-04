@@ -353,6 +353,8 @@
 
 /datum/config_entry/flag/show_irc_name
 
+/datum/config_entry/flag/sync_science_research
+
 /datum/config_entry/flag/see_own_notes //Can players see their own admin notes
 
 /datum/config_entry/number/note_fresh_days

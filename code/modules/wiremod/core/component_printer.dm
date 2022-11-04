@@ -19,8 +19,21 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
+	if(CONFIG_GET(flag/sync_science_research))
+		connect_techweb(SSresearch.science_tech)
 
-	techweb = SSresearch.science_tech
+	materials = AddComponent( \
+		/datum/component/remote_materials, \
+		"component_printer", \
+		mapload, \
+		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
+	)
+
+/obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
+	if(techweb)
+		UnregisterSignal(techweb, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
+
+	techweb = new_techweb
 
 	for (var/researched_design_id in techweb.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
@@ -32,12 +45,10 @@
 	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
 	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		"component_printer", \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+/obj/machinery/component_printer/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		connect_techweb(tool.buffer)
+	return TRUE
 
 /obj/machinery/component_printer/proc/on_research(datum/source, datum/design/added_design, custom)
 	SIGNAL_HANDLER

@@ -137,7 +137,8 @@
 
 	skin = new_skin
 	update_appearance()
-	linked_techweb = SSresearch.science_tech
+	if(CONFIG_GET(flag/sync_science_research))
+		linked_techweb = SSresearch.science_tech
 
 	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
@@ -163,6 +164,11 @@
 
 /mob/living/simple_animal/bot/medbot/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
+
+/mob/living/simple_animal/bot/medbot/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		linked_techweb = tool.buffer
+	return TRUE
 
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/medbot/ui_data(mob/user)

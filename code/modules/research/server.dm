@@ -27,8 +27,10 @@
 
 /obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
-	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
+	if(!CONFIG_GET(flag/sync_science_research))
+		stored_research = new /datum/techweb
 	SSresearch.servers |= src
+	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
@@ -94,6 +96,13 @@
 
 	return SERVER_NOMINAL_TEXT
 
+/obj/machinery/rnd/server/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!stored_research)
+		return
+	tool.buffer = stored_research
+	to_chat(user, span_notice("Stored [src]'s techweb information in [tool]."))
+	return TRUE
+
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
 	desc = "Used to manage access to research and manufacturing databases."
@@ -107,7 +116,8 @@
 
 /obj/machinery/computer/rdservercontrol/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	stored_research = SSresearch.science_tech
+	if(CONFIG_GET(flag/sync_science_research))
+		stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())

@@ -17,7 +17,8 @@
 
 /obj/machinery/computer/operating/Initialize(mapload)
 	..()
-	linked_techweb = SSresearch.science_tech
+	if(CONFIG_GET(flag/sync_science_research))
+		linked_techweb = SSresearch.science_tech
 	find_table()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -37,7 +38,12 @@
 		if(table && table.computer == src)
 			table.computer = null
 	QDEL_NULL(experiment_handler)
-	. = ..()
+	return ..()
+
+/obj/machinery/computer/operating/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		linked_techweb = tool.buffer
+	return TRUE
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/disk/surgery))

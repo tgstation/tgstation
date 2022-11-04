@@ -94,15 +94,6 @@ export const Techweb = (props, context) => {
 const TechwebStart = (props, context) => {
   const { act, data } = useRemappedBackend(context);
   const { locked, stored_research } = data;
-  if (!stored_research) {
-    return (
-      <Modal width="25em" align="center" className="Techweb__LockedModal">
-        <div>
-          <b>No research techweb found, please synchronize the console.</b>
-        </div>
-      </Modal>
-    );
-  }
   return (
     <>
       {!!locked && (
@@ -113,6 +104,13 @@ const TechwebStart = (props, context) => {
           <Button icon="unlock" onClick={() => act('toggleLock')}>
             Unlock
           </Button>
+        </Modal>
+      )}
+      {!stored_research && (
+        <Modal width="25em" align="center" className="Techweb__LockedModal">
+          <div>
+            <b>No research techweb found, please synchronize the console.</b>
+          </div>
         </Modal>
       )}
       <TechwebContent />

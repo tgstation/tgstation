@@ -47,8 +47,9 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/Initialize(mapload)
 	. = ..()
-	stored_research = SSresearch.science_tech
-	stored_research.consoles_accessing[src] = TRUE
+	if(CONFIG_GET(flag/sync_science_research))
+		stored_research = SSresearch.science_tech
+		stored_research.consoles_accessing[src] = TRUE
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(stored_research)
@@ -87,6 +88,12 @@ Nothing else in the console has ID requirements.
 		to_chat(user, span_notice("You insert [D] into \the [src]!"))
 		return
 	return ..()
+
+/obj/machinery/computer/rdconsole/multitool_act(mob/living/user, obj/item/multitool/tool)
+	. = ..()
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		stored_research = tool.buffer
+	return TRUE
 
 /obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
@@ -154,7 +161,7 @@ Nothing else in the console has ID requirements.
 	var/list/data = list()
 	data["stored_research"] = !!stored_research
 	if(!stored_research) //lack of a research node is all we care about.
-		return
+		return data
 	data += list(
 		"nodes" = list(),
 		"experiments" = list(),
