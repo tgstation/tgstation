@@ -10,7 +10,7 @@
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF | SEE_BLACKNESS
 	move_on_shuttle = FALSE
-	has_emotes = FALSE
+	var/has_emotes = FALSE
 
 /mob/camera/Initialize(mapload)
 	. = ..()
