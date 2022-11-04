@@ -189,13 +189,9 @@
 		return
 	#endif
 
-	var/list/procs = signal_procs
-	if(!procs)
-		signal_procs = procs = list()
-	var/list/target_procs = procs[target] || (procs[target] = list())
-	var/list/lookup = target.comp_lookup
-	if(!lookup)
-		target.comp_lookup = lookup = list()
+	var/list/procs = (signal_procs ||= list())
+	var/list/target_procs = (procs[target] ||= list())
+	var/list/lookup = (target.comp_lookup ||= list())
 
 	if(!override && target_procs[signal_type])
 		log_signal("[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]")
@@ -203,7 +199,7 @@
 	target_procs[signal_type] = proctype
 	var/list/looked_up = lookup[signal_type]
 
-	if(!looked_up) // Nothing has registered here yet
+	if(isnull(looked_up)) // Nothing has registered here yet
 		lookup[signal_type] = src
 	else if(looked_up == src) // We already registered here
 		// pass
