@@ -1,6 +1,8 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_LETHALITY 0.25 //lower values lower how harmful toxins are to the liver
 #define LIVER_FAILURE_STAGE_SECONDS 60 //amount of seconds before liver failure reaches a new stage
+#define MAX_TOXIN_LIVER_DAMAGE 1.5 //the max amount of damage the liver can recieve in one tick
+
 /obj/item/organ/internal/liver
 	name = "liver"
 	icon_state = "liver"
@@ -17,8 +19,9 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5)
 	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
-	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
-	/// The maximum volume of toxins the liver will quickly purge
+	/// Affects how much damage the liver takes from alcohol
+	var/alcohol_tolerance = ALCOHOL_RATE
+	/// The maximum volume of toxins the liver will ignore
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE
 	/// Scaling factor for how much damage toxins deal to the liver
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
