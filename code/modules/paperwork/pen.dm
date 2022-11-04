@@ -317,7 +317,7 @@
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/obj/item/pen/edagger/proc/on_scan(mob/user, list/extra_data)
+/obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, list/extra_data)
 	SIGNAL_HANDLER
 	LAZYADD(extra_data["Illicit Tech"], "Hard-light generator detected.")
 

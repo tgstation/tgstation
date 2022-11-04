@@ -91,6 +91,7 @@
 		var/list/blood = GET_ATOM_BLOOD_DNA(A)
 		var/list/fibers = GET_ATOM_FIBRES(A)
 		var/list/reagents = list()
+		var/list/print_access = list()
 
 		var/target_name = A.name
 
@@ -121,9 +122,22 @@
 							LAZYINITLIST(blood)
 							blood[blood_DNA] = blood_type
 
+		if(istype(A, /obj/item/card/id))
+			var/obj/item/card/id/userid = A
+			var/access = userid.GetAccess()
+			for(var/x in list(REGION_SECURITY, REGION_ENGINEERING, REGION_SUPPLY, REGION_GENERAL, REGION_MEDBAY, \
+			REGION_COMMAND, REGION_RESEARCH, REGION_CENTCOM))
+				var/access_in_region = accesses_by_region(x) & access
+				if(access_in_region)
+					print_access += "[x]:"
+					var/list/formatted_access = list()
+					for(var/x in formatted_access)
+						formatted_access += SSid_access.get_access_desc(x)
+					print_access += english_list(formatted_access)
+
 		// assoc list, key names are used for headers and the list is used for entries
 		// use LAZYADD(extra_data["CATEGORYHEADER"], list("whatever", "here")) to add an entry
-		var/extra_data = list()
+		var/list/extra_data = list()
 		SEND_SIGNAL(A, COMSIG_DET_SCANNED, user, extra_data)
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
@@ -169,6 +183,7 @@
 				add_log("<B>[x]</B>")
 				for(var/entry in extra_data[x])
 					add_log(entry)
+			found_something = TRUE
 
 		// Get a new user
 		var/mob/holder = null
