@@ -414,6 +414,25 @@
 		spintime -= speed
 	flags_1 &= ~IS_SPINNING_1
 
+// Another snowflake proc, when will they end... should have refactored it differently
+/mob/camera/imaginary_friend/point_at(atom/pointed_atom)
+	if(!isturf(loc))
+		return
+
+	if (pointed_atom in src)
+		create_point_bubble(pointed_atom)
+		return
+
+	var/turf/tile = get_turf(pointed_atom)
+	if (!tile)
+		return
+
+	var/turf/our_tile = get_turf(src)
+	var/obj/visual = image('icons/hud/screen_gen.dmi', our_tile, "arrow", FLY_LAYER)
+
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, visual, list(src.client, owner.client), 2.5 SECONDS)
+	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
+
 /mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
 		return FALSE
