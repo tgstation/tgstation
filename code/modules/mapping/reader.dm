@@ -356,7 +356,7 @@
 	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
 
 	// We make the assumption that the last block of turfs will have the highest embedded z in it
-	var/highest_z = last_column.zcrd + z_offset
+	var/highest_z = last_column.zcrd + z_offset - 1 // Lets not just make a new z level each time we increment maxz
 	var/z_threshold = world.maxz
 	if(highest_z > z_threshold && cropMap)
 		for(var/i in z_threshold + 1 to highest_z) //create a new z_level if needed
