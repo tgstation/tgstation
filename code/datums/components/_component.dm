@@ -184,7 +184,7 @@
 
 	#ifdef UNIT_TESTS
 	if (islist(proctype))
-		stack_trace("[target] is registering [signal_type] as a list, the older method.")
+		stack_trace("[target] is registering [signal_type] as a list, the older method. Change it to RegisterSignals.")
 		RegisterSignals(target, signal_type, proctype, override)
 		return
 	#endif
