@@ -55,7 +55,7 @@
 /obj/effect/meteor/meaty/changeling
 	name = "unsettlingly meaty meteor"
 	desc = "A tightly packed knit of flesh and skin. Did it just move?"
-	icon_state = "meateor" //oh you KNOW we need a custom sprite for this bad boy
+	icon_state = "changeling"
 	heavy = FALSE
 	hits = 1 //Instant impact explosion
 	hitpwr = EXPLODE_LIGHT
