@@ -4,7 +4,6 @@
 *
 */
 
-
 /datum/round_event_control/changeling
 	name = "Changeling Meteor"
 	typepath = /datum/round_event/ghost_role/changeling
@@ -13,7 +12,7 @@
 	min_players = 20
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
-	description = "A ghost is placed inside of a changeling meteor and hurled at the station"
+	description = "A changeling is summoned and thrown at the exterior of the station."
 
 /datum/round_event/ghost_role/changeling
 	minimum_required = 1
@@ -38,10 +37,10 @@
 		return MAP_ERROR
 
 	var/obj/effect/meteor/changeling/changeling_meteor = new/obj/effect/meteor/changeling(picked_start, pick(GLOB.xeno_spawn)) //Until I find a better way to make sure the meteor hits
-
 	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
+	new_changeling.equipOutfit(/datum/outfit/changeling_space)
 
-	new_changeling.forceMove(changeling_meteor)
+	new_changeling.forceMove(changeling_meteor) //Place our payload inside of its vessel
 
 	player_mind.transfer_to(new_changeling)
 	player_mind.special_role = ROLE_CHANGELING_MIDROUND
@@ -65,7 +64,7 @@
 /obj/effect/meteor/meaty/changeling/meteor_effect()
 	..()
 
-	for(var/atom/movable/child in contents) //Why would there be anything else?
+	for(var/atom/movable/child in contents)
 		child.forceMove(get_turf(src))
 		to_chat(child, span_changeling("Our conciousness stirs once again. After drifting for an unknowable time, we've come upon a destination. A cradle of life adrift in the void of space. We must find a way in and feed from its occupants."))
 
