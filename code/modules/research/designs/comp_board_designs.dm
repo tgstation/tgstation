@@ -6,6 +6,12 @@
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass = 1000)
 
+/datum/design/board/bluespace
+	name = "BLUESPACE RESTRICTED NULL ENTRY Board"
+	desc = "Nanotrasen intellectual property so blackboxed it doesn't do anything"
+	build_type = IMPRINTER
+	autolathe_exportable = FALSE
+
 /datum/design/board/arcade_battle
 	name = "Battle Arcade Machine Board"
 	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
@@ -118,11 +124,10 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
-/datum/design/board/crewconsole
+/datum/design/board/bluespace/crewconsole
 	name = "Crew Monitoring Computer Board"
 	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."
 	id = "crewconsole"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/crew
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
@@ -241,22 +246,20 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/cargo
+/datum/design/board/bluespace/cargo
 	name = "Supply Console Board"
 	desc = "Allows for the construction of circuit boards used to build a Supply Console."
 	id = "cargo"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
-/datum/design/board/cargorequest
+/datum/design/board/bluespace/cargorequest
 	name = "Supply Request Console Board"
 	desc = "Allows for the construction of circuit boards used to build a Supply Request Console."
 	id = "cargorequest"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo/request
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
@@ -353,33 +356,30 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
-/datum/design/board/exoscanner_console
+/datum/design/board/bluespace/exoscanner_console
 	name = "Scanner Array Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new scanner array control console."
 	id = "exoscanner_console"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exoscanner_console
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/exodrone_console
+/datum/design/board/bluespace/exodrone_console
 	name = "Exploration Drone Control Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new exploration drone control console."
 	id = "exodrone_console"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exodrone_console
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/accounting_console
+/datum/design/board/bluespace/accounting_console
 	name = "Account Lookup Console Board"
 	desc = "Allows for the construction of circuit boards used to assess the wealth of crewmates on station."
 	id = "account_console"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/accounting
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY

@@ -101,10 +101,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/bluespace
-	build_type = IMPRINTER
-	autolathe_exportable = FALSE
-
 /datum/design/board/bluespace/teleport_station
 	name = "Teleportation Station Board"
 	desc = "The circuit board for a teleportation station."
@@ -304,11 +300,10 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_CARGO
 
-/datum/design/board/protolathe
+/datum/design/board/bluespace/protolathe
 	name = "Protolathe Board"
 	desc = "The circuit board for a protolathe."
 	id = "protolathe"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/protolathe
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
@@ -326,11 +321,10 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/circuit_imprinter
+/datum/design/board/bluespace/circuit_imprinter
 	name = "Circuit Imprinter Board"
 	desc = "The circuit board for a circuit imprinter."
 	id = "circuit_imprinter"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/circuit_imprinter
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
@@ -639,11 +633,10 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/ntnet_relay
+/datum/design/board/bluespace/ntnet_relay
 	name = "NTNet Relay Board"
 	desc = "The circuit board for a wireless network relay."
 	id = "ntnet_relay"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/ntnet_relay
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELECOMMS
@@ -780,11 +773,10 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
-/datum/design/board/spaceship_navigation_beacon
+/datum/design/board/bluespace/spaceship_navigation_beacon
 	name = "Bluespace Navigation Gigabeacon Board"
 	desc = "The circuit board for a Bluespace Navigation Gigabeacon."
 	id = "spaceship_navigation_beacon"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/spaceship_navigation_beacon
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
