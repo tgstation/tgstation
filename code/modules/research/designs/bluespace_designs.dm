@@ -3,7 +3,10 @@
 ///////////////Bluespace/////////////////
 /////////////////////////////////////////
 
-/datum/design/beacon
+/datum/design/bluespace
+	autolathe_exportable = FALSE
+
+/datum/design/bluespace/beacon
 	name = "Tracking Beacon"
 	desc = "A bluespace tracking beacon."
 	id = "beacon"
@@ -15,7 +18,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/bag_holding
+/datum/design/bluespace/bag_holding
 	name = "Inert Bag of Holding"
 	desc = "A block of metal ready to be transformed into a bag of holding with a bluespace anomaly core."
 	id = "bag_holding"
@@ -28,7 +31,7 @@
 	dangerous_construction = TRUE
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/bluespace_crystal
+/datum/design/bluespace/bluespace_crystal
 	name = "Artificial Bluespace Crystal"
 	desc = "A small blue crystal with mystical properties."
 	id = "bluespace_crystal"
@@ -39,8 +42,9 @@
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MATERIALS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+		autolathe_exportable = TRUE
 
-/datum/design/telesci_gps
+/datum/design/bluespace/telesci_gps
 	name = "GPS Device"
 	desc = "Little thingie that can track its position at all times."
 	id = "telesci_gps"
@@ -51,9 +55,8 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_BLUESPACE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
-	autolathe_exportable = FALSE
 
-/datum/design/desynchronizer
+/datum/design/bluespace/desynchronizer
 	name = "Desynchronizer"
 	desc = "A device that can desynchronize the user from spacetime."
 	id = "desynchronizer"
@@ -65,7 +68,7 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/miningsatchel_holding
+/datum/design/bluespace/miningsatchel_holding
 	name = "Mining Satchel of Holding"
 	desc = "A mining satchel that can hold an infinite amount of ores."
 	id = "minerbag_holding"
@@ -76,8 +79,9 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_MINING
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
+		autolathe_exportable = TRUE
 
-/datum/design/swapper
+/datum/design/bluespace/swapper
 	name = "Quantum Spin Inverter"
 	desc = "An experimental device that is able to swap the locations of two entities by switching their particles' spin values. Must be linked to another device to function."
 	id = "swapper"

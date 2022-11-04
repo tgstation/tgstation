@@ -101,75 +101,72 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/teleport_station
+/datum/design/board/bluespace
+	build_type = IMPRINTER
+	autolathe_exportable = FALSE
+
+/datum/design/board/bluespace/teleport_station
 	name = "Teleportation Station Board"
 	desc = "The circuit board for a teleportation station."
 	id = "tele_station"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/teleporter_station
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/teleport_hub
+/datum/design/board/bluespace/teleport_hub
 	name = "Teleportation Hub Board"
 	desc = "The circuit board for a teleportation hub."
 	id = "tele_hub"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/teleporter_hub
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/quantumpad
+/datum/design/board/bluespace/quantumpad
 	name = "Quantum Pad Board"
 	desc = "The circuit board for a quantum telepad."
 	id = "quantumpad"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/quantumpad
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/botpad
+/datum/design/board/bluespace/botpad
 	name = "Machine Design (Bot launchpad)"
 	desc = "The circuit board for a bot launchpad."
 	id = "botpad"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/botpad
 	category = list(RND_CATEGORY_MACHINE)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/launchpad
+/datum/design/board/bluespace/launchpad
 	name = "Bluespace Launchpad Board"
 	desc = "The circuit board for a bluespace Launchpad."
 	id = "launchpad"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/launchpad
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/launchpad_console
+/datum/design/board/bluespace/launchpad_console
 	name = "Bluespace Launchpad Console Board"
 	desc = "The circuit board for a bluespace launchpad Console."
 	id = "launchpad_console"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/launchpad_console
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/teleconsole
+/datum/design/board/bluespace/teleconsole
 	name = "Teleporter Console Board"
 	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
 	id = "teleconsole"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/teleporter
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_TELEPORT
