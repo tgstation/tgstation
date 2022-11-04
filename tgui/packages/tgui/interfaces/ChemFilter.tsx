@@ -26,9 +26,9 @@ export const ChemFilterPane = (props: Props, context) => {
       minHeight="240px"
       buttons={
         <Button
-          content={btitle}
+          content={buttonTitle}
           width="150px"
-          color={bcolor}
+          color={buttonColor}
           onClick={() =>
             act('add', {
               which: titleKey,
