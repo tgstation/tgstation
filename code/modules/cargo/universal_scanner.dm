@@ -118,7 +118,7 @@
 		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 			return
 		new_custom_price = chosen_price
-		to_chat(user, span_notice("\The [src] will now give things a [new_custom_price] cr tag."))
+		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
 
 /obj/item/universal_scanner/CtrlClick(mob/user)
 	. = ..()
@@ -146,12 +146,9 @@
 			. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
 	if(scanning_mode == SCAN_PRICE_TAG)
-		. += span_notice("The current custom price is set to [new_custom_price] cr. <b>Right-Click</b> to change.")
+		. += span_notice("The current custom price is set to [new_custom_price] cr. <b>Right-click</b> to change.")
 
 /obj/item/universal_scanner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	//if (held_item != src)
-	//	return NONE
 	switch(scanning_mode)
 		if(SCAN_SALES_TAG)
 			context[SCREENTIP_CONTEXT_LMB] = "Tag package"
