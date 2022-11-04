@@ -25,7 +25,7 @@
 
 
 /datum/species/dullahan/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
@@ -42,6 +42,7 @@
 			my_head = new /obj/item/dullahan_relay(head, human)
 			human.put_in_hands(head)
 			head.show_organs_on_examine = FALSE
+			head.speech_span = null // so we don't look roboty when talking through it
 
 			// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
 			head.eyes = new /obj/item/organ/internal/eyes(head)
@@ -167,7 +168,7 @@
 			var/datum/species/dullahan/dullahan_species = human.dna.species
 			if(isobj(dullahan_species.my_head.loc))
 				var/obj/head = dullahan_species.my_head.loc
-				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], range = speech_args[SPEECH_RANGE])
+				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE])
 	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/internal/ears/dullahan

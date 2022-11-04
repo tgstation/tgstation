@@ -361,6 +361,9 @@
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 	merge_type = /obj/item/stack/medical/aloe
 
+/obj/item/stack/medical/aloe/fresh
+	amount = 2
+
 /obj/item/stack/medical/bone_gel
 	name = "bone gel"
 	singular_name = "bone gel"
@@ -368,6 +371,7 @@
 
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "bone-gel"
+	inhand_icon_state = "bone-gel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 

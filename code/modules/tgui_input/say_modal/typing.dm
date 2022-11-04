@@ -79,6 +79,7 @@
 		return FALSE
 	active_thinking_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]3", TYPING_LAYER)
 	add_overlay(active_thinking_indicator)
+	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
 
 /mob/living/remove_thinking_indicator()
 	if(!active_thinking_indicator)
@@ -91,6 +92,7 @@
 		return FALSE
 	active_typing_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]0", TYPING_LAYER)
 	add_overlay(active_typing_indicator)
+	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
 
 /mob/living/remove_typing_indicator()
 	if(!active_typing_indicator)

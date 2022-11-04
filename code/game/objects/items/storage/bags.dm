@@ -115,6 +115,7 @@
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/stack/ore))
+	atom_storage.silent_for_user = TRUE
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
@@ -162,11 +163,17 @@
 		playsound(user, SFX_RUSTLE, 50, TRUE)
 
 		if (box)
-			user.visible_message(span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."), \
-				span_notice("You offload the ores beneath you into your [box]."))
+			balloon_alert(user, "scoops ore into box")
+			user.visible_message(
+				span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."),
+				ignored_mobs = user
+			)
 		else
-			user.visible_message(span_notice("[user] scoops up the ores beneath [user.p_them()]."), \
-				span_notice("You scoop up the ores beneath you with your [name]."))
+			balloon_alert(user, "scoops ore into bag")
+			user.visible_message(
+				span_notice("[user] scoops up the ores beneath [user.p_them()]."),
+				ignored_mobs = user
+			)
 
 	spam_protection = FALSE
 
@@ -511,7 +518,7 @@
 	name = "harpoon quiver"
 	desc = "A quiver for holding harpoons."
 	icon_state = "quiver"
-	inhand_icon_state = "quiver"
+	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
 
 /obj/item/storage/bag/harpoon_quiver/Initialize(mapload)

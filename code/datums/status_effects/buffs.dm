@@ -161,7 +161,7 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/C = owner
-	QDEL_LIST(C.all_scars)
+	QDEL_LAZYLIST(C.all_scars)
 
 /atom/movable/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
@@ -237,7 +237,7 @@
 					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
 					if(((hand % 2) == 0))
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
-						if(L.attach_limb(itemUser))
+						if(L.try_attach_limb(itemUser))
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -245,7 +245,7 @@
 							return
 					else
 						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
-						if(L.attach_limb(itemUser))
+						if(L.try_attach_limb(itemUser))
 							itemUser.put_in_hand(newRod, hand, forced = TRUE)
 						else
 							qdel(L)
@@ -360,13 +360,14 @@
 
 	owner.drop_all_held_items()
 
-	chainsaw = new(get_turf(owner))
-	ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
-	owner.put_in_hands(chainsaw, forced = TRUE)
-	chainsaw.attack_self(owner)
+	if(iscarbon(owner))
+		chainsaw = new(get_turf(owner))
+		ADD_TRAIT(chainsaw, TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
+		owner.put_in_hands(chainsaw, forced = TRUE)
+		chainsaw.attack_self(owner)
+		owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
 
 	owner.log_message("entered a blood frenzy", LOG_ATTACK)
-	owner.reagents.add_reagent(/datum/reagent/medicine/adminordrazine, 25)
 	to_chat(owner, span_warning("KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!"))
 
 	var/datum/client_colour/colour = owner.add_client_colour(/datum/client_colour/bloodlust)

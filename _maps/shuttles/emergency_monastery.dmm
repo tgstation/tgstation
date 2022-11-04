@@ -149,14 +149,14 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bv" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bx" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 8;
 	layer = 2.9
@@ -172,7 +172,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bC" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -470,7 +470,7 @@
 /turf/open/space/basic,
 /area/shuttle/escape)
 "hC" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -683,7 +683,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "jt" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -697,7 +697,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "jG" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1088,7 +1088,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "pr" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -1149,7 +1149,7 @@
 	},
 /obj/structure/closet,
 /obj/item/storage/backpack/cultpack,
-/obj/item/clothing/head/nun_hood,
+/obj/item/clothing/head/chaplain/nun_hood,
 /obj/item/clothing/suit/chaplainsuit/nun,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1726,9 +1726,9 @@
 /obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/item/clothing/suit/utility/beekeeper_suit,
 /obj/item/clothing/suit/utility/beekeeper_suit,
-/obj/item/clothing/head/beekeeper_head,
-/obj/item/clothing/head/beekeeper_head,
-/obj/item/clothing/head/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
+/obj/item/clothing/head/utility/beekeeper_head,
 /obj/item/melee/flyswatter,
 /obj/item/melee/flyswatter,
 /obj/item/melee/flyswatter,
@@ -2245,7 +2245,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/item/clothing/suit/chaplainsuit/nun,
-/obj/item/clothing/head/nun_hood,
+/obj/item/clothing/head/chaplain/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell2";
 	name = "Cell Bolt Control";
@@ -2405,7 +2405,7 @@
 /obj/structure/closet/cabinet,
 /obj/item/clothing/suit/chaplainsuit/holidaypriest,
 /obj/item/clothing/suit/chaplainsuit/nun,
-/obj/item/clothing/head/nun_hood,
+/obj/item/clothing/head/chaplain/nun_hood,
 /obj/machinery/button/door{
 	id = "Cell1";
 	name = "Cell Bolt Control";
@@ -2842,7 +2842,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Nb" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -3008,7 +3008,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "Pb" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -3074,7 +3074,7 @@
 /area/shuttle/escape)
 "PJ" = (
 /obj/structure/table/wood,
-/obj/item/clothing/head/pharaoh,
+/obj/item/clothing/head/costume/pharaoh,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
@@ -3433,7 +3433,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Tc" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "Tf" = (
@@ -3512,7 +3512,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Ua" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -3634,7 +3634,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "VE" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "VF" = (
@@ -3865,7 +3865,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "Ye" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/window/reinforced{
 	dir = 4
 	},

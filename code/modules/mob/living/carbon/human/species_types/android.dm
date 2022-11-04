@@ -2,7 +2,7 @@
 	name = "Android"
 	id = SPECIES_ANDROID
 	say_mod = "states"
-	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING)
+	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING, NOSTOMACH)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_GENELESS,
@@ -33,10 +33,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/robot,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/robot,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/robot,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/robot,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/robot,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot,
 	)
 	examine_limb_id = SPECIES_HUMAN
 

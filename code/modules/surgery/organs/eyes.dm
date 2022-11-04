@@ -36,6 +36,8 @@
 	var/no_glasses
 	/// indication that the eyes are undergoing some negative effect
 	var/damaged = FALSE
+	/// Native FOV that will be applied if a config is enabled
+	var/native_fov = FOV_90_DEGREES
 
 /obj/item/organ/internal/eyes/Insert(mob/living/carbon/eye_owner, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()
@@ -53,6 +55,8 @@
 			eye_color_right = human_owner.eye_color_right
 		if(HAS_TRAIT(human_owner, TRAIT_NIGHT_VISION) && !lighting_alpha)
 			lighting_alpha = LIGHTING_PLANE_ALPHA_NV_TRAIT
+		if(CONFIG_GET(flag/native_fov) && native_fov)
+			human_owner.add_fov_trait(type, native_fov)
 	eye_owner.update_tint()
 	owner.update_sight()
 	if(eye_owner.has_dna() && ishuman(eye_owner))
@@ -89,6 +93,8 @@
 		if(initial(eye_color_right))
 			human_owner.eye_color_right = old_eye_color_right
 		human_owner.update_body()
+		if(native_fov)
+			eye_owner.remove_fov_trait(type)
 	eye_owner.cure_blind(EYE_DAMAGE)
 	eye_owner.cure_nearsighted(EYE_DAMAGE)
 	eye_owner.set_blindness(0)
@@ -517,6 +523,7 @@
 	eye_icon_state = "flyeyes"
 	icon_state = "eyeballs-fly"
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
+	native_fov = NONE //flies can see all around themselves.
 
 /obj/item/organ/internal/eyes/night_vision/maintenance_adapted
 	name = "adapted eyes"

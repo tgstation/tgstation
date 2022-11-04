@@ -283,7 +283,7 @@
 /area/ruin/unpowered)
 "bi" = (
 /obj/item/stack/sheet/iron,
-/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/utility/chefhat,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)

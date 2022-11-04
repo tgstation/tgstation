@@ -142,7 +142,7 @@
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return
 	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (0-360)", "Rotate Pen Head", max_value = 360)
-	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 		return
 	degrees = deg
 	to_chat(user, span_notice("You rotate the top of the pen to [deg] degrees."))
@@ -163,12 +163,12 @@
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
 		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
-		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+		if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 			return
 		if(penchoice == "Rename")
 			var/input = tgui_input_text(user, "What do you want to name [O]?", "Object Name", "[O.name]", MAX_NAME_LEN)
 			var/oldname = O.name
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 			if(input == oldname || !input)
 				to_chat(user, span_notice("You changed [O] to... well... [O]."))
@@ -184,7 +184,7 @@
 		if(penchoice == "Description")
 			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
 			var/olddesc = O.desc
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 			if(input == olddesc || !input)
 				to_chat(user, span_notice("You decide against changing [O]'s description."))
@@ -194,7 +194,7 @@
 				O.renamedByPlayer = TRUE
 
 		if(penchoice == "Reset")
-			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
+			if(QDELETED(O) || !user.canUseTopic(O, be_close = TRUE))
 				return
 
 			qdel(O.GetComponent(/datum/component/rename))
@@ -339,3 +339,53 @@
 	force = 5
 	wound_bonus = 100
 	demolition_mod = 9000
+
+// screwdriver pen!
+
+/obj/item/pen/screwdriver
+	desc = "A pen with an extendable screwdriver tip. This one has a yellow cap."
+	icon_state = "pendriver"
+	toolspeed = 1.2  // gotta have some downside
+	/// whether the pen is extended
+	var/extended = FALSE
+
+/obj/item/pen/screwdriver/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		throwforce_on = 5, \
+		w_class_on = WEIGHT_CLASS_SMALL, \
+		sharpness_on = TRUE)
+
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/toggle_screwdriver)
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+
+/obj/item/pen/screwdriver/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, extended))
+		if(var_value != extended)
+			var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
+			transforming_comp.on_attack_self(src)
+			datum_flags |= DF_VAR_EDITED
+			return
+	return ..()
+
+/obj/item/pen/screwdriver/proc/toggle_screwdriver(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+	extended = active
+	if(user)
+		balloon_alert(user, "[extended ? "extended" : "retracted"]!")
+
+	if(!extended)
+		tool_behaviour = initial(tool_behaviour)
+		RemoveElement(/datum/element/eyestab)
+	else
+		tool_behaviour = TOOL_SCREWDRIVER
+		AddElement(/datum/element/eyestab)
+
+	update_appearance(UPDATE_ICON)
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/pen/screwdriver/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][extended ? "_out":null]"
+	inhand_icon_state = initial(inhand_icon_state) //since transforming component switches the icon.

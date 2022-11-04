@@ -11,23 +11,23 @@
 	///Number of candidates to be smote
 	var/quantity = 1
 
-/datum/round_event_control/heart_attack/canSpawnEvent()
+/datum/round_event_control/heart_attack/can_spawn_event(players_amt)
 	. = ..()
 	if(!.)
 		return .
-	generate_candidates() //generating candidates and checking in canSpawnEvent prevents extreme edge case of there being the 40 minimum players, with all being ineligible for a heart attack, wasting the event
+	generate_candidates() //generating candidates and checking in can_spawn_event prevents extreme edge case of there being the 40 minimum players, with all being ineligible for a heart attack, wasting the event
 	if(length(heart_attack_candidates))
 		return TRUE
 
 /datum/round_event_control/heart_attack/admin_setup()
 	if(!check_rights(R_FUN))
-		return
+		return ADMIN_CANCEL_EVENT
 
-	generate_candidates() //canSpawnEvent() is bypassed by admin_setup, so this makes sure that the candidates are still generated
+	generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
 
 	if(!length(heart_attack_candidates))
 		message_admins("There are no candidates eligible to recieve a heart attack!")
-		return
+		return ADMIN_CANCEL_EVENT
 	quantity = tgui_input_number(usr, "There are [length(heart_attack_candidates)] crewmembers eligible for a heart attack. Please select how many people's days you wish to ruin.", "Shia Hato Atakku!", 1, length(heart_attack_candidates))
 
 /**
@@ -58,7 +58,9 @@
 	var/datum/round_event_control/heart_attack/heart_attack_event = control
 
 	attacks_left = heart_attack_event.quantity
-	victims = heart_attack_event.heart_attack_candidates
+	victims += heart_attack_event.heart_attack_candidates
+	heart_attack_event.heart_attack_candidates.Cut()
+	heart_attack_event.quantity = 1
 
 	while(attacks_left > 0 && length(victims))
 		if(attack_heart())

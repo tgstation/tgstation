@@ -139,18 +139,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(user)
 		invokers += user
 	if(req_cultists > 1 || istype(src, /obj/effect/rune/convert))
-		var/list/things_in_range = range(1, src)
-		for(var/mob/living/L in things_in_range)
-			if(IS_CULTIST(L))
-				if(L == user)
-					continue
-				if(ishuman(L))
-					var/mob/living/carbon/human/H = L
-					if((HAS_TRAIT(H, TRAIT_MUTE)) || H.silent)
-						continue
-				if(L.stat)
-					continue
-				invokers += L
+		for(var/mob/living/cultist in range(1, src))
+			if(!IS_CULTIST(cultist))
+				continue
+			if(cultist == user)
+				continue
+			if(!cultist.can_speak(allow_mimes = TRUE))
+				continue
+			if(cultist.stat != CONSCIOUS)
+				continue
+			invokers += cultist
+
 	return invokers
 
 /obj/effect/rune/proc/invoke(list/invokers)
@@ -171,7 +170,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/proc/do_invoke_glow()
 	set waitfor = FALSE
 	animate(src, transform = matrix()*2, alpha = 0, time = 5, flags = ANIMATION_END_NOW) //fade out
-	sleep(5)
+	sleep(0.5 SECONDS)
 	animate(src, transform = matrix(), alpha = 255, time = 0, flags = ANIMATION_END_NOW)
 
 /obj/effect/rune/proc/fail_invoke()
@@ -282,7 +281,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.remove_status_effect(/datum/status_effect/speech/slurring/cult)
 		H.remove_status_effect(/datum/status_effect/speech/stutter)
 
-		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		if(prob(1) || check_holidays(APRIL_FOOLS))
 			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
@@ -297,15 +296,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!C)
 		return FALSE
 
-	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
-	if(signal_result & STOP_SACRIFICE)
-		return FALSE
-
 	var/big_sac = FALSE
 	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
 		for(var/M in invokers)
 			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
+		return FALSE
+
+	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
+	if(signal_result & STOP_SACRIFICE)
 		return FALSE
 
 	if(sacrificial.mind)
@@ -733,7 +732,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
 	visible_message(span_warning("A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!"))
-	cultist_to_summon.forceMove(get_turf(src))
+	if(!do_teleport(cultist_to_summon, get_turf(src)))
+		to_chat(user, span_warning("The summoning has completely failed for [cultist_to_summon]!"))
+		fail_logmsg += "target failed criteria to teleport." //catch-all term, just means they failed do_teleport somehow. The most common reasons why someone should fail to be summoned already have verbose messages.
+		log_game(fail_logmsg)
+		fail_invoke()
+		return
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby
@@ -768,17 +772,17 @@ structure_check() searches for nearby cultist structures required for the invoca
 				continue
 			to_chat(target, span_cultlarge("Your blood boils in your veins!"))
 	animate(src, color = "#FCB56D", time = 4)
-	sleep(4)
+	sleep(0.4 SECONDS)
 	if(QDELETED(src))
 		return
 	do_area_burn(T, 0.5)
 	animate(src, color = "#FFDF80", time = 5)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	do_area_burn(T, 1)
 	animate(src, color = "#FFFDF4", time = 6)
-	sleep(6)
+	sleep(0.6 SECONDS)
 	if(QDELETED(src))
 		return
 	do_area_burn(T, 1.5)
@@ -871,7 +875,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(user.stat != CONSCIOUS || HAS_TRAIT(new_human, TRAIT_CRITICAL_CONDITION))
 				break
 			user.apply_damage(0.1, BRUTE)
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 		qdel(N)
 		ghosts--
@@ -906,7 +910,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(affecting.health <= 10)
 				to_chat(G, span_cultitalic("Your body can no longer sustain the connection!"))
 				break
-			sleep(5)
+			sleep(0.5 SECONDS)
 		CM.Remove(G)
 		GM.Remove(G)
 		affecting.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
@@ -1054,14 +1058,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/image/I in images)
 			I.override = FALSE
 			animate(I, alpha = 0, time = 25, flags = ANIMATION_PARALLEL)
-		sleep(35)
+		sleep(3.5 SECONDS)
 		for(var/image/I in images)
 			animate(I, alpha = 255, time = 25, flags = ANIMATION_PARALLEL)
-		sleep(25)
+		sleep(2.5 SECONDS)
 		for(var/image/I in images)
 			if(I.icon_state != "bloodsparkles")
 				I.override = TRUE
-		sleep(190)
+		sleep(19 SECONDS)
 
 
 

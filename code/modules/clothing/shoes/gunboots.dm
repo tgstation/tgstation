@@ -3,8 +3,6 @@
 	desc = "This is what all those research points added up to, the ultimate workplace hazard."
 	icon_state = "jackboots"
 	inhand_icon_state = "jackboots"
-	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	/// What projectile do we shoot?
 	var/projectile_type = /obj/projectile/bullet/c10mm
 	/// Each step, this is the chance we fire a shot

@@ -88,6 +88,7 @@
 	savedName = user.name
 	user.name = friendlyName
 	user.model.cyborg_base_icon = disguise
+	user.model.name = capitalize(disguise)
 	user.bubble_icon = "robot"
 	active = TRUE
 	user.update_icons()
@@ -107,6 +108,7 @@
 	do_sparks(5, FALSE, user)
 	user.name = savedName
 	user.model.cyborg_base_icon = initial(user.model.cyborg_base_icon)
+	user.model.name = initial(user.model.name)
 	user.bubble_icon = "syndibot"
 	active = FALSE
 	user.update_icons()

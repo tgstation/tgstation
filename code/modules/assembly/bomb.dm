@@ -77,7 +77,7 @@
 /obj/item/onetankbomb/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(src))
 		return
 	if(status)
@@ -136,6 +136,7 @@
 
 	bomb.bombassembly = assembly //Tell the bomb about its assembly part
 	assembly.master = bomb //Tell the assembly about its new owner
+	assembly.on_attach()
 
 	bomb.bombtank = src //Same for tank
 	master = bomb

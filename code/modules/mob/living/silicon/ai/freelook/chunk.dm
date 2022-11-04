@@ -126,8 +126,8 @@
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
 /datum/camerachunk/New(x, y, lower_z)
-	x &= ~(CHUNK_SIZE - 1)
-	y &= ~(CHUNK_SIZE - 1)
+	x = GET_CHUNK_COORD(x)
+	y = GET_CHUNK_COORD(y)
 
 	src.x = x
 	src.y = y
@@ -137,14 +137,15 @@
 
 	for(var/z_level in lower_z to upper_z)
 		var/list/local_cameras = list()
-		cameras["[z_level]"] = local_cameras
 		for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
 			if(camera.can_use())
 				local_cameras += camera
 
 		for(var/mob/living/silicon/sillycone in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z_level)))
 			if(sillycone.builtInCamera?.can_use())
-				local_cameras += sillycone
+				local_cameras += sillycone.builtInCamera
+
+		cameras["[z_level]"] = local_cameras
 
 		var/image/mirror_from = GLOB.cameranet.obscured_images[GET_Z_PLANE_OFFSET(z_level) + 1]
 		for(var/turf/lad as anything in block(locate(max(x, 1), max(y, 1), z_level), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z_level)))
@@ -170,3 +171,4 @@
 
 #undef UPDATE_BUFFER_TIME
 #undef CHUNK_SIZE
+#undef GET_CHUNK_COORD

@@ -17,7 +17,7 @@
 	///Click with any item?
 	var/allow_any = TRUE
 
-/datum/element/bump_click/Attach(datum/target, list/tool_behaviours, list/tool_items, allow_unarmed = FALSE, allow_combat = FALSE, allow_any = FALSE)
+/datum/element/bump_click/Attach(datum/target, list/tool_behaviours, list/tool_types, allow_unarmed = FALSE, allow_combat = FALSE, allow_any = FALSE)
 	. = ..()
 
 	if(!isatom(target) || isarea(target))

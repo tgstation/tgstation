@@ -21,18 +21,28 @@
 	name = "banana"
 	desc = "It's an excellent prop for a clown."
 	icon_state = "banana"
-	inhand_icon_state = "banana"
+	inhand_icon_state = "banana_peel"
 	trash_type = /obj/item/grown/bananapeel
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
+/obj/item/food/grown/banana/MakeEdible()
+	. = ..()
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, .proc/check_liked))
+
 /obj/item/food/grown/banana/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		AddComponent(/datum/component/boomerang, boomerang_throw_range = throw_range + 4, thrower_easy_catch_enabled = TRUE)
 		desc += " The curve on this one looks particularly acute."
+
+///Clowns will always like bananas.
+/obj/item/food/grown/banana/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+	var/obj/item/organ/internal/liver/liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
+	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
+		return FOOD_LIKED
 
 /obj/item/food/grown/banana/generate_trash(atom/location)
 	. = ..()
@@ -44,11 +54,11 @@
 /obj/item/food/grown/banana/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
-	sleep(25)
+	sleep(2.5 SECONDS)
 	if(!user)
 		return (OXYLOSS)
 	user.say("BANG!", forced = /datum/reagent/consumable/banana)
-	sleep(25)
+	sleep(2.5 SECONDS)
 	if(!user)
 		return (OXYLOSS)
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
@@ -141,6 +151,7 @@
 	name = "bluespace banana peel"
 	desc = "A peel from a bluespace banana."
 	icon_state = "bluenana_peel"
+	inhand_icon_state = "bluespace_peel"
 
 // Other
 /obj/item/grown/bananapeel/specialpeel //used by /obj/item/clothing/shoes/clown_shoes/banana_shoes

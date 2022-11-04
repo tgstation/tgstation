@@ -18,8 +18,6 @@
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
 	icon_state = "kiosk"
 	base_icon_state = "kiosk"
-	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED
@@ -127,7 +125,7 @@
 	return ..()
 
 /obj/machinery/medical_kiosk/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
 		return
 	if(!scanner_wand)
 		to_chat(user, span_warning("The scanner wand is currently removed from the machine."))
