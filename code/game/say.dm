@@ -115,6 +115,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return verb_yell
 	else if(message_mods[MODE_SING])
 		. = verb_sing
+	else if(message_mods[WHISPER_MODE])
+		. = verb_whisper
 	else if(ending == "?")
 		return verb_ask
 	else if(ending == "!")
