@@ -26,8 +26,6 @@
 	if(!candidate.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/obj/effect/meteor/changeling_meteor
-
 	var/mob/dead/selected = make_body(pick_n_take(candidate)) //Grab the selected player's mind
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
@@ -35,8 +33,13 @@
 	var/start_side = pick(GLOB.cardinals) //Select our starting turf
 	var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/picked_start = spaceDebrisStartLoc(start_side, start_z)
+	var/turf/picked_end = spaceDebrisFinishLoc(start_side, start_z)
+
+	var/obj/effect/meteor/changeling/changeling_meteor = new/obj/effect/meteor/changeling(picked_start, picked_end)
 
 	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
+
+	new_changeling.forceMove(changeling_meteor)
 
 	player_mind.transfer_to(new_changeling)
 	player_mind.special_role = ROLE_CHANGELING_MIDROUND
@@ -46,7 +49,6 @@
 	new_changeling.log_message("was spawned as a midround changeling by an event.", LOG_GAME)
 	spawned_mobs += new_changeling
 	return SUCCESSFUL_SPAWN
-
 /obj/effect/meteor/changeling
 	name = "unsettlingly meaty meteor"
 	desc = "A tightly packed knit of flesh and skin. Did it just move?"
