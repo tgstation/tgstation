@@ -901,12 +901,12 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot,
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -8331,6 +8331,7 @@
 	specialfunctions = 4
 	},
 /obj/effect/mapping_helpers/broken_floor,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "czH" = (
@@ -24844,6 +24845,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "hfP" = (
@@ -62542,6 +62544,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/hangover,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "rPy" = (
@@ -81544,7 +81547,7 @@
 "xdl" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/color/black,
-/obj/item/clothing/head/helmet/justice/escape{
+/obj/item/clothing/head/helmet/toggleable/justice/escape{
 	name = "justice helmet"
 	},
 /turf/open/floor/iron/dark,
@@ -81554,6 +81557,7 @@
 /obj/effect/landmark/start/assistant,
 /obj/item/bedsheet/dorms,
 /obj/effect/landmark/start/hangover,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/locker)
 "xdv" = (
@@ -83718,7 +83722,7 @@
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "xJK" = (
-/obj/item/clothing/head/helmet/justice/escape{
+/obj/item/clothing/head/helmet/toggleable/justice/escape{
 	name = "justice helmet"
 	},
 /obj/structure/sign/poster/official/the_owl{

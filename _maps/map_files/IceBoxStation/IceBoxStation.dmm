@@ -5035,19 +5035,9 @@
 /turf/closed/wall,
 /area/station/maintenance/port/fore)
 "bBw" = (
-/obj/machinery/door/airlock/maintenance,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/unres{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/item/trash/sosjerky,
 /turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
+/area/station/maintenance/aft/greater)
 "bBx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -6973,6 +6963,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "ccr" = (
@@ -8833,10 +8824,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
-"cEu" = (
-/obj/item/trash/sosjerky,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
 "cEv" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
@@ -10424,6 +10411,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "dct" = (
@@ -41280,6 +41268,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "mJX" = (
@@ -41908,12 +41897,17 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "mVD" = (
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "mVY" = (
@@ -43800,12 +43794,12 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot,
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -45067,6 +45061,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "nOw" = (
@@ -48040,8 +48035,8 @@
 "oGS" = (
 /obj/structure/table/wood,
 /obj/machinery/libraryscanner{
-	pixel_y = 5;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 5
 	},
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/machinery/light/small/directional/east,
@@ -49570,6 +49565,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "piI" = (
@@ -255245,10 +255241,10 @@ bgx
 bgx
 bgx
 vzD
-vzD
+sZF
+wRr
 bBw
-vzD
-gQw
+vjZ
 bln
 bln
 bln
@@ -255504,7 +255500,7 @@ jCl
 jCl
 vzD
 mVD
-cEu
+vzD
 vzD
 vzD
 vzD

@@ -264,6 +264,7 @@
 		/obj/item/clothing/head/costume/nightcap/red,
 		/obj/item/clothing/under/misc/pj/blue,
 		/obj/item/clothing/head/costume/nightcap/blue,
+		/obj/item/pillow/random,
 	)
 
 /datum/quirk/hypersensitive

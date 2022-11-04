@@ -90,3 +90,60 @@
   itseasytosee:
   - refactor: Elements of unarmed strikes are now limb dependent instead of species
       dependent. Go rip off an ethereal arm, sew it onto yourself, and burn some people.
+2022-11-03:
+  ATHATH:
+  - qol: The determination, universal indicator, and organic slurry reagents now have
+      the REAGENT_CAN_BE_SYNTHESIZED flag, like most other reagents in the game. This
+      allows those reagents to be harvested from corpses (if the corpse had them in
+      their system when they died), to appear in randomized chemical plant traits,
+      and to be replicated by Odysseuses (Odyssi?).
+  Cheshify:
+  - bugfix: There are now only 4 displays in Tram's SM room, not 8.
+  - bugfix: A wall in icebox maintenance behind xenobiology no longer blocks off the
+      view outside.
+  - bugfix: A design fault near the library has been removed, there is now a snack
+      vendor within the library that was once in the hall.
+  Fikou:
+  - spellcheck: renames TOXIN to BIOHAZARD in clothing protective tag
+  GoblinBackwards:
+  - bugfix: AIs no longer teleport gas tanks to them when ejecting tanks from atmos
+      machinery
+  Pickle-Coding:
+  - bugfix: The supermatter will now do linear powerloss at the correct conditions
+      when you shoot it with adminium emitters.
+  Zergspower:
+  - bugfix: fixes the errant line in the default Siding decal 'end'
+  antropod:
+  - bugfix: Assemblies can be picked up again after detaching from chemical grenade
+  etherware-novice:
+  - refactor: suicide code doesnt check damagetype multiple times
+  lizardqueenlexi:
+  - bugfix: Properly suppressed a message about suppressing messages.
+  tf-4:
+  - bugfix: Eating food with onions in will no longer make you cry.
+2022-11-04:
+  Drake and Josh (Fikou and Melbert):
+  - bugfix: Ash Drake's fire rain and swoop landing breath work again.
+  Fikou:
+  - bugfix: fixes throw click cooldown not applying
+  - bugfix: makes beeping sounds work on mechpads when used by a mech
+  GoblinBackwards:
+  - qol: Space Ninja now has their MODsuit module buttons pinned by default
+  Melbert:
+  - rscadd: Chefs can now make food with love. They can purchase a skillchip from
+      their vendor which enhances their kiss emote. Using your kiss on food you create
+      will add a special reagent to it which makes it nicer.
+  - refactor: Separated Microwavable from the Edible component, refactored microwave
+      act to accompany this
+  - refactor: Refactored how grilled items are generated
+  - refactor: Refactored how silver slime food items are generated
+  - refactor: Refactored how edible items inherit new edible statuses
+  - code_imp: Removed some magic numbers from microwaves
+  - code_imp: General code improvements for grillable / bakeable / etc
+  ShizCalev:
+  - code_imp: Riot helmets and justice helmets are now in a /toggeable subtype.
+  Tastyfish:
+  - rscadd: Adds an option in Game Preferences -> Game Options to turn off MultiZ
+      parallax.
+  timothymtorres:
+  - bugfix: Fix zombie tongue to only apply to infectious species

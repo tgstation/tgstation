@@ -1146,6 +1146,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "awt" = (
@@ -3549,7 +3550,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "bla" = (
-/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/wood,
 /area/station/service/library)
 "blb" = (
@@ -3629,6 +3630,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "bmB" = (
@@ -4501,6 +4503,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
+"bBA" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "bBI" = (
 /obj/structure/window{
 	dir = 4
@@ -32197,6 +32209,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "lxm" = (
@@ -50605,6 +50618,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "rUE" = (
@@ -52464,6 +52478,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "sBd" = (
@@ -58129,14 +58144,14 @@
 "uwg" = (
 /obj/structure/rack,
 /obj/machinery/light/directional/west,
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_y = 2
 	},
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -63298,10 +63313,9 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "wki" = (
-/obj/effect/spawner/random/vending/snackvend,
-/obj/machinery/newscaster/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/turf/open/floor/wood,
+/area/station/service/library)
 "wkv" = (
 /obj/structure/railing{
 	dir = 8
@@ -64718,6 +64732,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/item/pillow/random,
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "wND" = (
@@ -88058,7 +88073,7 @@ cyk
 qzS
 rIa
 ahD
-mjr
+wki
 jIY
 mjr
 tbK
@@ -90896,7 +90911,7 @@ sVY
 sVY
 sVY
 sVY
-wki
+sVY
 xxk
 ahr
 bMY
@@ -91153,7 +91168,7 @@ vLi
 usA
 jWg
 tKu
-usA
+bBA
 txz
 wYe
 bMY

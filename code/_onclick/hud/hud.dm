@@ -161,8 +161,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(should_sight_scale(new_sight) == should_sight_scale(old_sight))
 		return
 
-	var/datum/plane_master_group/group = get_plane_group(PLANE_GROUP_MAIN)
-	group.transform_lower_turfs(src, current_plane_offset)
+	for(var/group_key as anything in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		group.transform_lower_turfs(src, current_plane_offset)
 
 /datum/hud/proc/should_use_scale()
 	return should_sight_scale(mymob.sight)
@@ -181,9 +182,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	current_plane_offset = new_offset
 
 	SEND_SIGNAL(src, COMSIG_HUD_OFFSET_CHANGED, old_offset, new_offset)
-	var/datum/plane_master_group/group = get_plane_group(PLANE_GROUP_MAIN)
-	if(group && should_use_scale())
-		group.transform_lower_turfs(src, new_offset)
+	if(should_use_scale())
+		for(var/group_key as anything in master_groups)
+			var/datum/plane_master_group/group = master_groups[group_key]
+			group.transform_lower_turfs(src, new_offset)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)

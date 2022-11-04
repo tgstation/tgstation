@@ -1,4 +1,0 @@
-author: "etherware-novice"
-delete-after: True
-changes:
-  - refactor: "suicide code doesnt check damagetype multiple times"
