@@ -229,11 +229,10 @@
 
 	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
-	if(sides > MIN_SIDES_ALERT)  // less comment spam
-		if(result == sides)
-			comment = "NAT [sides]!"
-		if(result == 1)
-			comment = "Ouch, bad luck."
+	if(sides > MIN_SIDES_ALERT && result == 1)  // less comment spam
+		comment = "Ouch, bad luck."
+	if(sides == 20 && result == 20)
+		comment = "NAT 20!"  // maint wanted this hardcoded to nat20 don't blame me
 	update_appearance()
 	result = manip_result(result)
 	if(special_faces.len == sides)
