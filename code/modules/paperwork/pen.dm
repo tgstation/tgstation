@@ -274,6 +274,7 @@
 		sharpness_on = SHARP_EDGED, \
 		w_class_on = WEIGHT_CLASS_NORMAL)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_DET_SCANNED, .proc/on_scan)
 
 /obj/item/pen/edagger/suicide_act(mob/user)
 	. = BRUTELOSS
@@ -315,6 +316,10 @@
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	set_light_on(active)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/pen/edagger/proc/on_scan(mob/user, list/extra_data)
+	SIGNAL_HANDLER
+	LAZYADD(extra_data["Illicit Tech"], "Hard-light generator detected.")
 
 /obj/item/pen/survival
 	name = "survival pen"

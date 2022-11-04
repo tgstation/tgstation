@@ -121,6 +121,11 @@
 							LAZYINITLIST(blood)
 							blood[blood_DNA] = blood_type
 
+		// assoc list, key names are used for headers and the list is used for entries
+		// use LAZYADD(extra_data["CATEGORYHEADER"], list("whatever", "here")) to add an entry
+		var/extra_data = list()
+		SEND_SIGNAL(A, COMSIG_DET_SCANNED, user, extra_data)
+
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 
 		var/found_something = FALSE
@@ -157,6 +162,13 @@
 			for(var/R in reagents)
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
 			found_something = TRUE
+
+		// item custom data
+		if(length(extra_data))
+			for(var/x in extra_data)
+				add_log("<B>[x]</B>")
+				for(var/entry in extra_data[x])
+					add_log(entry)
 
 		// Get a new user
 		var/mob/holder = null

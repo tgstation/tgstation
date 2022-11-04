@@ -84,8 +84,18 @@
 	if(item_parent.sharpness || sharpness_on)
 		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
+	RegisterSignal(parent, COMSIG_DET_SCANNED, .proc/debug_on_scan)
+
 /datum/component/transforming/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
+
+// This will not be part of the final pr, but is here to test multiple categories and registrations.
+// If this makes it to the final pr laugh at me
+/datum/component/transforming/proc/debug_on_scan(mob/user, list/extra_data)
+	SIGNAL_HANDLER
+	LAZYADD(extra_data["Illicit Tech"], "It transforms.")
+	LAZYADD(extra_data["General"], "This is a datum.")
+
 
 /*
  * Called on [COMSIG_ITEM_ATTACK_SELF].
