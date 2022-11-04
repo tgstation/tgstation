@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "The universal scanner now properly show all three options in the radial with sprites, due to a missing space."
+  - qol: "The universal scanner now has contextual screentips within all three of its modes."
