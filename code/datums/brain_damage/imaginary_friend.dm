@@ -259,14 +259,14 @@
 		log_message(message, LOG_RADIO_EMOTE)
 	else
 		if(message_mods[WHISPER_MODE] == MODE_WHISPER)
-			log_say(message, LOG_WHISPER, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
+			log_talk(message, LOG_WHISPER, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 			spans |= SPAN_ITALICS
 			eavesdrop_range = EAVESDROP_EXTRA_RANGE
 			// "This proc is dangerously laggy, avoid it or die"
 			// What other option do I have here? I guess I'll die
 			eavesdropped_message = stars(message)
 		else
-			log_say(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
+			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
 	var/quoted_message = say_quote(say_emphasis(message), spans, message_mods)
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[quoted_message]</span></span>"
