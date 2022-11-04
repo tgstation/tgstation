@@ -49,14 +49,23 @@
 	new_changeling.log_message("was spawned as a midround changeling by an event.", LOG_GAME)
 	spawned_mobs += new_changeling
 	return SUCCESSFUL_SPAWN
+
 /obj/effect/meteor/changeling
 	name = "unsettlingly meaty meteor"
 	desc = "A tightly packed knit of flesh and skin. Did it just move?"
-	icon = 'icons/obj/meteor.dmi' //oh you KNOW we need a sprite for this bad boy
+	icon_state = "meateor" //oh you KNOW we need a custom sprite for this bad boy
 	hits = 1 //Instant impact explosion
 	hitpwr = EXPLODE_LIGHT
 	meteorsound = 'sound/effects/meteorimpact.ogg' //replace with splat sfx
 	threat = 100
-	meteordrop = list(/obj/item/stack/ore/iron) //MEAT
+	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant)
 	dropamt = 4
-	signature = "biological lifesign"
+	signature = "xenobiological lifesign"
+
+/obj/effect/meteor/changeling/meteor_effect()
+	..()
+	for(var/atom/movable/child in contents)
+		child.forceMove(get_turf(src))
+
+/obj/effect/meteor/changeling/ram_turf()
+	return //So we don't instantly smash into our occupant upon unloading them.
