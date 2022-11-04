@@ -1,0 +1,5 @@
+author: "VexingRaven"
+delete-after: True
+changes:
+  - bugfix: "Fixed posters printed from the library console staying in your hand when you place them"
+  - bugfix: "Fixed Random Official Poster printed from the library console always placing the west-facing variant no matter where you place it"

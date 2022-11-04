@@ -6,7 +6,7 @@
 #define MC_CELL "CELL"
 
 //NTNet stuff, for modular computers
-									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
+// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
 #define NTNET_SOFTWAREDOWNLOAD 1 // Downloads of software from NTNet
 #define NTNET_PEERTOPEER 2 // P2P transfers of files between devices
 #define NTNET_COMMUNICATION 3 // Communication (messaging)

@@ -6053,7 +6053,7 @@
 	pixel_x = -5;
 	pixel_y = -2
 	},
-/obj/item/bodypart/l_arm/robot,
+/obj/item/bodypart/arm/left/robot,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},

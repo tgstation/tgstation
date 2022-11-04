@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "Put the proper access helpers on two maintenance airlocks in MetaStation medical."
