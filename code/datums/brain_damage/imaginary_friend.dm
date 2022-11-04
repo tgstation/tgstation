@@ -316,6 +316,80 @@
 		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
 
+// We have to create our own since we can only show emotes to ourselves and our owner
+/datum/emote/imaginary_friend/run_emote(mob/user, params, type_override, intentional = FALSE)
+	user.log_talk(message, LOG_EMOTE)
+	if(!can_run_emote(user, FALSE, intentional))
+		return FALSE
+
+	var/msg = select_message_type(user, message, intentional)
+	if(params && message_param)
+		msg = select_param(user, params)
+
+	msg = replace_pronoun(user, msg)
+
+	if(!msg)
+		return TRUE
+
+	var/mob/camera/imaginary_friend/friend = user
+	var/dchatmsg = "<b>[friend] (Imaginary friend of [friend.owner])</b> [msg]"
+	message = "<span class='emote'><b>[user]</b> [msg]</span>"
+
+	var/user_turf = get_turf(user)
+	if (user.client)
+		for(var/mob/ghost as anything in GLOB.dead_mob_list)
+			if(!ghost.client || isnewplayer(ghost))
+				continue
+			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
+
+	to_chat(friend, message)
+	if(friend.client)
+		friend.create_chat_message(friend, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
+	to_chat(friend.owner, message)
+	if(friend.owner.client)
+		friend.owner.create_chat_message(friend, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
+	return TRUE
+
+/datum/emote/imaginary_friend/point
+	key = "point"
+	key_third_person = "points"
+	message = "points."
+	message_param = "points at %t."
+
+/datum/emote/imaginary_friend/point/run_emote(mob/camera/imaginary_friend/friend, params, type_override, intentional)
+	message_param = initial(message_param) // reset
+	return ..()
+
+/datum/emote/imaginary_friend/custom
+	key = "me"
+	key_third_person = "custom"
+	message = null
+
+/datum/emote/imaginary_friend/custom/can_run_emote(mob/user, status_check, intentional)
+	. = ..() && intentional
+
+/datum/emote/imaginary_friend/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
+	if(!can_run_emote(user, TRUE, intentional))
+		return FALSE
+	if(is_banned_from(user.ckey, "Emote"))
+		to_chat(user, span_boldwarning("You cannot send custom emotes (banned)."))
+		return FALSE
+	else if(QDELETED(user))
+		return FALSE
+	else if(user.client && user.client.prefs.muted & MUTE_IC)
+		to_chat(user, span_boldwarning("You cannot send IC messages (muted)."))
+		return FALSE
+	else if(!params)
+		message = copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
+	else
+		message = params
+	. = ..()
+	message = null
+
+/datum/emote/imaginary_friend/custom/replace_pronoun(mob/user, message)
+	return message
+
 /mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
 		return FALSE
