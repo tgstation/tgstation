@@ -222,16 +222,14 @@
 		if(client.handle_spam_prevention(message, MUTE_IC))
 			return FALSE
 
-	friend_talk(message, spans)
+	friend_talk(message, spans, forced)
 
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
-/mob/camera/imaginary_friend/proc/friend_talk(message, list/spans)
-	src.log_talk(message, LOG_SAY, tag="imaginary friend")
-
+/mob/camera/imaginary_friend/proc/friend_talk(message, list/spans, forced = null)
 	var/list/message_mods = list()
 	message = get_message_mods(message, message_mods)
 	message = capitalize(message)
@@ -251,15 +249,20 @@
 
 	var/eavesdrop_range = 0
 	var/eavesdropped_message = ""
-	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
-		spans |= SPAN_ITALICS
-		eavesdrop_range = EAVESDROP_EXTRA_RANGE
-		// "This proc is dangerously laggy, avoid it or die"
-		// What other option do I have here? I guess I'll die
-		eavesdropped_message = stars(message)
 
 	if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		message = message_mods[MODE_CUSTOM_SAY_EMOTE]
+		log_message(message, LOG_RADIO_EMOTE)
+	else
+		if(message_mods[WHISPER_MODE] == MODE_WHISPER)
+			log_say(message, LOG_WHISPER, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
+			spans |= SPAN_ITALICS
+			eavesdrop_range = EAVESDROP_EXTRA_RANGE
+			// "This proc is dangerously laggy, avoid it or die"
+			// What other option do I have here? I guess I'll die
+			eavesdropped_message = stars(message)
+		else
+			log_say(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
 	var/quoted_message = say_quote(say_emphasis(message), spans, message_mods)
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[quoted_message]</span></span>"
