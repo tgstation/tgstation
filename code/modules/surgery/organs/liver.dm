@@ -95,65 +95,27 @@
 		return
 	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) // can't process reagents with a failing liver
 		return
-	if(!filterToxins && HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
-		return
 
-	// How much damage to inflict on our liver
-	var/damange_to_deal = 0
-
-	var/provide_pain_message = HAS_NO_TOXIN
-	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
-	
-	//handle liver toxin filtration
-	var/total_toxins = 0
-	for(var/datum/reagent/toxin/toxin in liver_owner.reagents.reagent_list)
-		var/thisamount = liver_owner.reagents.get_reagent_amount(toxin.type)
-		if(belly)
-			thisamount += belly.reagents.get_reagent_amount(toxin.type)
-		total_toxins += thisamount
-
-		if (total_toxins && total_toxins <= toxTolerance * (maxHealth - damage) / maxHealth ) 
-			liver_owner.reagents.remove_reagent(toxin.type, toxin.metabolization_rate * liver_owner.metabolism_efficiency * delta_time)
-		else
-			damange_to_deal += (thisamount * toxLethality * delta_time)
-			if(provide_pain_message != HAS_PAINFUL_TOXIN)
-				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
-
-	//metabolize reagents
-	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
-	
-	
-	
 	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
 	var/list/cached_reagents = liver_owner.reagents.reagent_list
 	var/need_mob_update = FALSE
-	var/damange_to_deal = 0 // How much damage to inflict on our liver
+	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
-	
-	// metabolize reagents for mob
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		if(istype(reagent, /datum/reagent/toxin)) // handle liver toxin filtration
-			var/datum/reagent/toxin/toxin = reagent
-			// this is an optimization
-			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // old code liver_owner.reagents.get_reagent_amount(toxin.type)
+
+	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		for(var/datum/reagent/toxin/toxin in cached_reagents)
+			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
-			
-			var/liver_health_percent = (maxHealth - damage) / maxHealth
-			if(amount <= toxTolerance * liver_health_percent) //toxTolerance is effectively multiplied by the % that your liver's health is at
-			
-		need_mob_update += metabolize_reagent(liver_owner, reagent, delta_time, times_fired, can_overdose=TRUE) // liverless arg?
 
-	if(liver_owner && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
-		liver_owner.updatehealth()
-		liver_owner.update_stamina()
-	liver_owner.reagents.update_total()
-	
-	
-	
+			liver_damage += amount * toxLethality * delta_time
+			if(provide_pain_message != HAS_PAINFUL_TOXIN)
+				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
-	if(damange_to_deal)
-		applyOrganDamage(damange_to_deal)
+	liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE)
+
+	if(liver_damage)
+		applyOrganDamage(liver_damage)
 
 	if(provide_pain_message && damage > 10 && DT_PROB(damage/6, delta_time)) //the higher the damage the higher the probability
 		to_chat(liver_owner, span_warning("You feel a dull pain in your abdomen."))
