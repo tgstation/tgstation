@@ -85,8 +85,6 @@
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon_state = "riot"
 	inhand_icon_state = "riot"
-	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
