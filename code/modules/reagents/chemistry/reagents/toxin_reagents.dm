@@ -11,6 +11,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	///How much damage this toxin does
 	var/toxpwr = 1.5
+	///The damage this does to the liver per tick
+	var/liver_damage = 0
 	///won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present if true
 	var/silent_toxin = FALSE
 	///The afflicted must be above this health value in order for the toxin to deal damage

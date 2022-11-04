@@ -1,5 +1,5 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
-#define LIVER_DEFAULT_TOX_LETHALITY 0.005 //lower values lower how harmful toxins are to the liver
+#define LIVER_DEFAULT_TOX_LETHALITY 0.25 //lower values lower how harmful toxins are to the liver
 #define LIVER_FAILURE_STAGE_SECONDS 60 //amount of seconds before liver failure reaches a new stage
 /obj/item/organ/internal/liver
 	name = "liver"
@@ -107,7 +107,12 @@
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
-			liver_damage += amount * toxLethality * delta_time
+			// (cyanide)
+			// units of poison *  0.005 * 0.5
+			// 5u * 0.005 * 0.5
+			//
+
+			liver_damage += amount * toxin.toxpwr * toxLethality * delta_time
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
