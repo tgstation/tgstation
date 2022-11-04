@@ -342,7 +342,7 @@
 	suit = /obj/item/clothing/suit/costume/bronze
 	shoes = /obj/item/clothing/shoes/bronze
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/bronze
+	head = /obj/item/clothing/head/costume/bronze
 	mask = /obj/item/clothing/mask/gas/explorer
 
 /obj/effect/mob_spawn/corpse/human/scientist/caves
