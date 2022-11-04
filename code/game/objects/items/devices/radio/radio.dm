@@ -77,12 +77,12 @@
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
 	/// overlay when recieving a message
-	var/image/overlay_speaker_active = "s_active"
+	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
 	var/overlay_mic_idle = "m_idle"
 	/// overlay when speaking a message (will most likely be displayed at same time as the speaker active, please account for this.)
-	var/image/overlay_mic_active = "m_active"
+	var/overlay_mic_active = "m_active"
 
 /obj/item/radio/Initialize(mapload)
 	wires = new /datum/wires/radio(src)
@@ -93,13 +93,6 @@
 		keyslot = new keyslot()
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
-
-	// allows you to just put an icon state for the var
-	if(overlay_speaker_active && !istype(overlay_speaker_active))
-		overlay_speaker_active = image(icon, src, overlay_speaker_active)
-
-	if(overlay_mic_active && !istype(overlay_mic_active))
-		overlay_mic_active = image(icon, src, overlay_mic_active)
 
 	set_listening(listening)
 	set_broadcasting(broadcasting)
@@ -123,6 +116,13 @@
 
 	if(listening && on)
 		add_radio(src, new_frequency)
+
+// will be removed once #71045 is merged
+/obj/item/radio/proc/construct_flick_overlay(image_to_show)
+	if(!istype(image_to_show, /image))
+		image_to_show = image(icon, src, image_to_show)
+
+	flick_overlay_view(image_to_show, src, 2 SECONDS)
 
 /obj/item/radio/proc/recalculateChannels()
 	resetChannels()
@@ -264,7 +264,7 @@
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	flick_overlay_view(overlay_mic_active, src, 2 SECONDS)
+	construct_flick_overlay(overlay_mic_active)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -371,7 +371,7 @@
 	return FALSE
 
 /obj/item/radio/proc/on_recieve_message()
-	flick_overlay_view(overlay_speaker_active, src, 2 SECONDS)
+	construct_flick_overlay(overlay_speaker_active)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
