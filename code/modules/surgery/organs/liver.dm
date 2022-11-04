@@ -98,7 +98,6 @@
 
 	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
 	var/list/cached_reagents = liver_owner.reagents.reagent_list
-	var/need_mob_update = FALSE
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
 
