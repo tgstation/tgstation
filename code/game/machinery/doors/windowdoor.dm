@@ -50,7 +50,7 @@
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, PROC_REF(ntnet_receive))
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = PROC_REF_STATIC(on_exit),
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)

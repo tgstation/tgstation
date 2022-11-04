@@ -23,7 +23,7 @@
 
 	///what we set connect_loc to if parent is an item
 	var/static/list/item_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(play_squeak_crossed),
+		COMSIG_ATOM_ENTERED = PROC_REF(play_squeak_crossed),
 	)
 
 

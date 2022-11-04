@@ -264,7 +264,7 @@ at the cost of risking a vicious bite.**/
 	if(prob(75))
 		vent_active = FALSE
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = PROC_REF_STATIC(blow_steam),
+		COMSIG_ATOM_EXIT = PROC_REF(blow_steam),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	update_icon_state()

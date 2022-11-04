@@ -21,7 +21,7 @@
 
 	///given to connect_loc to listen for something moving over target
 	var/static/list/crossed_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(on_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 
 	///So we can update ant damage

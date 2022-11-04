@@ -233,7 +233,7 @@
 	. = ..()
 	AddComponent(/datum/component/knockoff, 25, list(BODY_ZONE_PRECISE_EYES), slot_flags)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(on_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

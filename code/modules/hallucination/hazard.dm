@@ -34,8 +34,8 @@
 /obj/effect/client_image_holder/hallucination/danger/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(atom_touched_holder),
-		COMSIG_ATOM_EXITED = PROC_REF_STATIC(atom_touched_holder),
+		COMSIG_ATOM_ENTERED = PROC_REF(atom_touched_holder),
+		COMSIG_ATOM_EXITED = PROC_REF(atom_touched_holder),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

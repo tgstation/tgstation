@@ -28,7 +28,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, TYPE_PROC_REF( /mob/living/carbon/human/, should_strip))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(on_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src

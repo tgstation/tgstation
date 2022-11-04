@@ -60,7 +60,7 @@
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = PROC_REF_STATIC(on_exit),
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	if (flags_1 & ON_BORDER_1)

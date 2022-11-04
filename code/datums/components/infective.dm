@@ -17,7 +17,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/static/list/disease_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(try_infect_crossed),
+		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
 

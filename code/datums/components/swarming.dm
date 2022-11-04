@@ -4,8 +4,8 @@
 	var/is_swarming = FALSE
 	var/list/swarm_members = list()
 	var/static/list/swarming_loc_connections = list(
-		COMSIG_ATOM_EXITED = PROC_REF_STATIC(leave_swarm),
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(join_swarm)
+		COMSIG_ATOM_EXITED = PROC_REF(leave_swarm),
+		COMSIG_ATOM_ENTERED = PROC_REF(join_swarm)
 	)
 
 

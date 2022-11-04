@@ -3,9 +3,9 @@
 /// Middleware to handle keybindings
 /datum/preference_middleware/keybindings
 	action_delegations = list(
-		"reset_all_keybinds" = PROC_REF_STATIC(reset_all_keybinds),
-		"reset_keybinds_to_defaults" = PROC_REF_STATIC(reset_keybinds_to_defaults),
-		"set_keybindings" = PROC_REF_STATIC(set_keybindings),
+		"reset_all_keybinds" = PROC_REF(reset_all_keybinds),
+		"reset_keybinds_to_defaults" = PROC_REF(reset_keybinds_to_defaults),
+		"set_keybindings" = PROC_REF(set_keybindings),
 	)
 
 /datum/preference_middleware/keybindings/get_ui_static_data(mob/user)

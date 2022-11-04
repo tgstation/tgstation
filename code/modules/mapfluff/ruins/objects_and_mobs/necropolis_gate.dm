@@ -47,7 +47,7 @@
 	add_overlay(dais_overlay)
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = PROC_REF_STATIC(on_exit),
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -251,7 +251,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(on_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

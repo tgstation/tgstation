@@ -179,7 +179,7 @@
 
 	// Click on the floor to close airlocks
 	var/static/list/connections = list(
-		COMSIG_ATOM_ATTACK_HAND = PROC_REF_STATIC(on_attack_hand)
+		COMSIG_ATOM_ATTACK_HAND = PROC_REF(on_attack_hand)
 	)
 	AddElement(/datum/element/connect_loc, connections)
 

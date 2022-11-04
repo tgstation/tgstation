@@ -85,8 +85,8 @@
 	update_appearance()
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF_STATIC(locker_carbon),
-		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF_STATIC(on_magic_unlock),
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(locker_carbon),
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

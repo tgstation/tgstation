@@ -173,7 +173,7 @@
 		weapon.force = weapon.force / 2
 	add_overlay(image(icon = weapon.lefthand_file, icon_state = weapon.inhand_icon_state))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(on_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return TRUE

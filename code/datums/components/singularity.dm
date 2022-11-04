@@ -89,7 +89,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(moved))
 	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(consume))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(on_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 

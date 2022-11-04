@@ -25,8 +25,8 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_moved))
 	// Relocate when our loc, or any of our loc's locs, becomes unreachable
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_MOVED = PROC_REF_STATIC(on_parent_moved),
-		SIGNAL_ADDTRAIT(TRAIT_SECLUDED_LOCATION) = PROC_REF_STATIC(on_loc_secluded),
+		COMSIG_MOVABLE_MOVED = PROC_REF(on_parent_moved),
+		SIGNAL_ADDTRAIT(TRAIT_SECLUDED_LOCATION) = PROC_REF(on_loc_secluded),
 	)
 	AddComponent(/datum/component/connect_containers, parent, loc_connections)
 

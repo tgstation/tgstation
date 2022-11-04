@@ -82,9 +82,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	///Leaving onto conveyor detection won't work at this point, but that's alright since it's an optimization anyway
 	///Should be fine without it
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXITED = PROC_REF_STATIC(conveyable_exit),
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(conveyable_enter),
-		COMSIG_ATOM_INITIALIZED_ON = PROC_REF_STATIC(conveyable_enter)
+		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
+		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
+		COMSIG_ATOM_INITIALIZED_ON = PROC_REF(conveyable_enter)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	update_move_direction()

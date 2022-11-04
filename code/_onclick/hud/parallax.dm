@@ -337,8 +337,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 	if(!owner?.client)
 		return
 	var/static/list/connections = list(
-		COMSIG_MOVABLE_Z_CHANGED = PROC_REF_STATIC(on_z_change),
-		COMSIG_MOB_LOGOUT = PROC_REF_STATIC(on_mob_logout),
+		COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_change),
+		COMSIG_MOB_LOGOUT = PROC_REF(on_mob_logout),
 	)
 	AddComponent(/datum/component/connect_mob_behalf, owner.client, connections)
 	on_z_change(owner)

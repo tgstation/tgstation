@@ -672,7 +672,7 @@ Difficulty: Hard
 		M.gets_drilled(caster)
 	INVOKE_ASYNC(src, PROC_REF(blast))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF_STATIC(on_entered),
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

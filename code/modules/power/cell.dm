@@ -62,7 +62,7 @@
 
 	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
 	var/static/list/loc_connections = list(
-		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF_STATIC(on_magic_charge),
+		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
