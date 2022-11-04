@@ -12,7 +12,7 @@
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
-	imaginary_group += client
+	imaginary_group += src
 
 /mob/living/prepare_huds()
 	..()

@@ -15,7 +15,7 @@
 	..()
 	make_friend()
 	get_ghost()
-	owner?.imaginary_group += friend.client
+	owner?.imaginary_group += friend
 
 /datum/brain_trauma/special/imaginary_friend/on_life(delta_time, times_fired)
 	if(get_dist(owner, friend) > 9)
@@ -28,12 +28,12 @@
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
-	owner?.imaginary_group -= friend.client
+	owner?.imaginary_group -= friend
 	qdel(src) //friend goes down with the ship
 
 /datum/brain_trauma/special/imaginary_friend/on_lose()
 	..()
-	owner?.imaginary_group -= friend.client
+	owner?.imaginary_group -= friend
 	QDEL_NULL(friend)
 
 //If the friend goes afk, make a brand new friend. Plenty of fish in the sea of imagination.
@@ -155,14 +155,21 @@
 
 	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 
+/mob/camera/imaginary_friend/proc/group_clients()
+	var/group_clients = list()
+	for(var/mob/person in owner.imaginary_group)
+		if(person.client)
+			group_clients += person.client
+	return group_clients
+
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home
 		return
 
-	var/group = owner.imaginary_group.Copy()
-	group -= src.client
+	var/list/friend_clients = group_clients()
+	friend_clients -= src.client
 	//Remove old image from group
-	remove_image_from_clients(current_image, owner.imaginary_group)
+	remove_image_from_clients(current_image, friend_clients)
 
 	//Generate image from the static icon and the current dir
 	current_image = image(human_image, src, , MOB_LAYER, dir=src.dir)
@@ -173,7 +180,7 @@
 
 	//Add new image to owner and friend
 	if(!hidden)
-		add_image_to_clients(current_image, group)
+		add_image_to_clients(current_image, friend_clients)
 
 	src.client.images |= current_image
 
@@ -277,20 +284,19 @@
 	var/language = owner.language_holder.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods)
 	var/group = owner.imaginary_group.Copy()
-	group -= src.client
-	for(var/client/client in group)
-		if(eavesdrop_range && get_dist(src, client.mob) > 1 + eavesdrop_range)
+	group -= src
+	for(var/mob/person in group)
+		if(eavesdrop_range && get_dist(src, person) > 1 + eavesdrop_range)
 			var/new_rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]</span></span>"
-			client.mob.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
+			person.Hear(new_rendered, src, language, eavesdropped_message, null, spans, message_mods)
 		else
-			client.mob.Hear(rendered, src, language, message, null, spans, message_mods)
+			person.Hear(rendered, src, language, message, null, spans, message_mods)
 
 	// Speech bubble, but only for those who have runechat off
-	var/list/friend_clients = owner.imaginary_group
 	var/list/speech_bubble_recipients = list()
-	for(var/client/friend_client in friend_clients)
-		if(friend_client && (!friend_client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
-			speech_bubble_recipients.Add(friend_client)
+	for(var/client/group_client in group_clients())
+		if(group_client && (!group_client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
+			speech_bubble_recipients.Add(group_client)
 
 	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_icon][say_test(message)]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
@@ -348,10 +354,10 @@
 			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
 				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
 
-	for(var/client/client in friend.owner.imaginary_group)
-		to_chat(client.mob, message)
-		if(client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
-			client.mob.create_chat_message(friend, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
+	for(var/mob/person in friend.owner.imaginary_group)
+		to_chat(person, message)
+		if(person.client?.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+			person.create_chat_message(friend, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 	return TRUE
 
 /datum/emote/imaginary_friend/point
@@ -433,31 +439,31 @@
 	var/turf/our_tile = get_turf(src)
 	var/obj/visual = image('icons/hud/screen_gen.dmi', our_tile, "arrow", FLY_LAYER)
 
-	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, visual, owner.imaginary_group, 2.5 SECONDS)
+	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, visual, group_clients(), 2.5 SECONDS)
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /mob/camera/imaginary_friend/create_thinking_indicator()
 	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
-	add_image_to_clients(active_thinking_indicator, owner.imaginary_group)
+	add_image_to_clients(active_thinking_indicator, group_clients())
 
 /mob/camera/imaginary_friend/remove_thinking_indicator()
 	if(!active_thinking_indicator)
 		return FALSE
-	remove_image_from_clients(active_thinking_indicator, owner.imaginary_group)
+	remove_image_from_clients(active_thinking_indicator, group_clients())
 	active_thinking_indicator = null
 
 /mob/camera/imaginary_friend/create_typing_indicator()
 	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
-	add_image_to_clients(active_typing_indicator, owner.imaginary_group)
+	add_image_to_clients(active_typing_indicator, group_clients())
 
 /mob/camera/imaginary_friend/remove_typing_indicator()
 	if(!active_typing_indicator)
 		return FALSE
-	remove_image_from_clients(active_typing_indicator, owner.imaginary_group)
+	remove_image_from_clients(active_typing_indicator, group_clients())
 	active_typing_indicator = null
 
 /mob/camera/imaginary_friend/remove_all_indicators()
