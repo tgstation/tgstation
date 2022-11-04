@@ -1,9 +1,3 @@
-/// Controls hearing dance machines
-/datum/preference/toggle/sound_dance_machine
-	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
-	savefile_key = "sound_dance_machine"
-	savefile_identifier = PREFERENCE_PLAYER
-
 /// Controls hearing ambience
 /datum/preference/toggle/sound_ambience
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -20,6 +14,12 @@
 /datum/preference/toggle/sound_combatmode
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "sound_combatmode"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/// Controls hearing dance machines
+/datum/preference/toggle/sound_jukebox
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_jukebox"
 	savefile_identifier = PREFERENCE_PLAYER
 
 /// Controls hearing round end sounds

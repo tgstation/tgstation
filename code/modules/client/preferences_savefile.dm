@@ -1,5 +1,5 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN 33
+#define SAVEFILE_VERSION_MIN 32
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 // You do not need to raise this if you are adding new values that have sane defaults.

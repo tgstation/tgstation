@@ -454,7 +454,7 @@
 		var/sound/song_played = sound(selection.song_path)
 
 		for(var/mob/M in range(10,src))
-			if(!M.client || !(M.client.prefs.read_preference(/datum/preference/toggle/sound_dance_machine)))
+			if(!M.client || !(M.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
