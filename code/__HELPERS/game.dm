@@ -127,8 +127,8 @@
 	remove_from?.images -= image_to_remove
 
 /// Like remove_image_from_client, but will remove the image from a list of clients
-/proc/remove_image_from_clients(image/image_to_remove, list/remove_from)
-	for(var/client/remove_from as anything in remove_from)
+/proc/remove_image_from_clients(image/image_to_remove, list/hide_from)
+	for(var/client/remove_from as anything in hide_from)
 		remove_from?.images -= image_to_remove
 
 ///Add an image to a list of clients and calls a proc to remove it after a duration
