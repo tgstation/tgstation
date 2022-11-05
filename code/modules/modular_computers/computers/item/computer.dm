@@ -764,6 +764,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
+		if(ismachinery(loc))
+			return
 		if(internal_cell)
 			to_chat(user, span_warning("You try to connect \the [attacking_item] to \the [src], but its connectors are occupied."))
 			return
@@ -845,7 +847,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(internal_cell)
 			user.put_in_hands(internal_cell)
 			to_chat(user, span_notice("You detach \the [internal_cell] from \the [src]."))
-			internal_cell.forceMove(drop_location())
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!Adjacent(user))
 		return
