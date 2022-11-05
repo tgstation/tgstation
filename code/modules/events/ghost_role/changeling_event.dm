@@ -38,7 +38,6 @@
 
 	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new/obj/effect/meteor/meaty/changeling(picked_start, pick(GLOB.xeno_spawn)) //Until I find a better way to make sure the meteor hits
 	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
-	new_changeling.equipOutfit(/datum/outfit/changeling_space)
 
 	new_changeling.forceMove(changeling_meteor) //Place our payload inside of its vessel
 
@@ -49,7 +48,16 @@
 	message_admins("[ADMIN_LOOKUPFLW(new_changeling)] has been made into a changeling by an event.")
 	new_changeling.log_message("was spawned as a midround changeling by an event.", LOG_GAME)
 	spawned_mobs += new_changeling
+
+	for(var/datum/antagonist/changeling/changeling_datum in player_mind.antag_datums) //Automatically buys the flesh space suit ability :)
+		changeling_datum.purchase_power(/datum/action/changeling/suit/organic_space_suit)
+
 	return SUCCESSFUL_SPAWN
+
+	//TODO:
+	//Set up midround changeling prefs
+	//Set up midround dynamic interaction override stuff (?)
+	//
 
 /obj/effect/meteor/meaty/changeling
 	name = "unsettlingly meaty meteor"
@@ -59,7 +67,7 @@
 	hits = 1 //Instant impact explosion
 	hitpwr = EXPLODE_LIGHT
 	threat = 100
-	signature = "xenobiological lifesign"
+	signature = "xenobiological lifesign" //In the extremely unlikely one-in-a-million chance that one of these gets reported by the stray meteor event
 
 /obj/effect/meteor/meaty/changeling/meteor_effect()
 	..()

@@ -1002,10 +1002,3 @@
 	head = /obj/item/clothing/head/helmet/changeling
 	suit = /obj/item/clothing/suit/armor/changeling
 	l_hand = /obj/item/melee/arm_blade
-
-/datum/outfit/changeling_space //I'm like 99% sure this shit doesn't come off. Check if you can transform out of it?
-	name = "Changeling (Space Suit)"
-
-	head = /obj/item/clothing/head/helmet/space/changeling
-	suit = /obj/item/clothing/suit/space/changeling
-	l_hand = /obj/item/melee/arm_blade
