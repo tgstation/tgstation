@@ -138,6 +138,7 @@
 #include "ntnetwork_tests.dm"
 #include "nuke_cinematic.dm"
 #include "objectives.dm"
+#include "orderable_items.dm"
 #include "operating_table.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"
