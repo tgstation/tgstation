@@ -23,7 +23,7 @@
 		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical),\
 		disallowed_traits = EXPERIMENT_TRAIT_DESTRUCTIVE)
 
-/obj/item/experi_scanner/suicide_act(mob/user)
+/obj/item/experi_scanner/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is giving in to the Great Toilet Beyond! It looks like [user.p_theyre()] trying to commit suicide!"))
 
 	forceMove(drop_location())
