@@ -893,6 +893,19 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/mining_charge
+	name = "Mining Charge"
+	result = /obj/item/grenade/c4/es8
+	reqs = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/gibtonite = 1,
+		/obj/item/grenade/chem_grenade = 2
+	)
+	parts = list(/obj/item/stock_parts/matter_bin = 1, /obj/item/grenade/chem_grenade = 2)
+	time = 5 SECONDS
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/bonearmor
 	name = "Bone Armor"
 	result = /obj/item/clothing/suit/armor/bone
