@@ -20,16 +20,16 @@
 	species_language_holder = /datum/language_holder/shadowpeople
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/shadow,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/shadow,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/shadow,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/shadow,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/shadow,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/shadow,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/shadow,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/shadow,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/shadow,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/shadow,
 	)
 
 /datum/species/shadow/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 

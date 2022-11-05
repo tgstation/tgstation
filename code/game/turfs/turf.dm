@@ -274,7 +274,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return FALSE
 
 //direction is direction of travel of air
-/turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
+/turf/proc/zPassOut(atom/movable/A, direction, turf/destination, allow_anchored_movement)
 	return FALSE
 
 //direction is direction of travel of air

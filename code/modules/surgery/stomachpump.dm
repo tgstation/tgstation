@@ -24,7 +24,7 @@
 
 //Working the stomach by hand in such a way that you induce vomiting.
 /datum/surgery_step/stomach_pump
-	name = "Pump Stomach"
+	name = "pump stomach (hand)"
 	accept_hand = TRUE
 	repeatable = TRUE
 	time = 20

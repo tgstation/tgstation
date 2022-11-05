@@ -122,6 +122,7 @@
 
 	if(living_pawn.health >= MONKEY_FLEE_HEALTH)
 		finish_action(controller, TRUE) //we're back in bussiness
+		return
 
 	var/mob/living/target = null
 
@@ -153,6 +154,7 @@
 
 	if(!target || target.stat != CONSCIOUS)
 		finish_action(controller, TRUE) //Target == owned
+		return
 
 	if(isturf(target.loc) && !IS_DEAD_OR_INCAP(living_pawn)) // Check if they're a valid target
 		// check if target has a weapon
@@ -259,6 +261,10 @@
 
 	controller.current_movement_target = target
 
+	if(!target)
+		finish_action(controller, FALSE)
+		return
+
 	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
 			target.grabbedby(living_pawn)
@@ -267,6 +273,10 @@
 	var/datum/weakref/disposal_ref = controller.blackboard[disposal_target_key]
 	var/obj/machinery/disposal/disposal = disposal_ref.resolve()
 	controller.current_movement_target = disposal
+
+	if(!disposal)
+		finish_action(controller, FALSE)
+		return
 
 	if(living_pawn.Adjacent(disposal))
 		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller, attack_target_key, disposal_target_key) //put him in!
@@ -310,9 +320,15 @@
 	var/list/enemies = controller.blackboard[enemies_key]
 	var/list/valids = list()
 	for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, controller.pawn))
+		if(possible_enemy == controller.pawn)
+			continue // don't target ourselves
 		var/datum/weakref/enemy_ref = WEAKREF(possible_enemy)
-		if(possible_enemy == controller.pawn || (!enemies[enemy_ref] && (!controller.blackboard[BB_MONKEY_AGGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
-			continue
+		if(enemy_ref in enemies)
+			continue // don't target enemies we already hate
+		if(!controller.blackboard[BB_MONKEY_AGGRESSIVE])
+			continue // don't target enemies if we're not aggressive
+		if(HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS])
+			continue // don't target monkeys if we're not supposed to
 		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
 		valids[enemy_ref] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
 

@@ -34,7 +34,7 @@
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
 
-	repopulate_sorted_areas()
+	require_area_resort()
 
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start),
 						locate(bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1)))

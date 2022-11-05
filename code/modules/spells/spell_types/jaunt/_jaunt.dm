@@ -50,6 +50,7 @@
  */
 /datum/action/cooldown/spell/jaunt/proc/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(loc_override || get_turf(jaunter), jaunter)
+	RegisterSignal(jaunt, COMSIG_MOB_EJECTED_FROM_JAUNT, .proc/on_jaunt_exited)
 	spell_requirements |= SPELL_CASTABLE_WHILE_PHASED
 	ADD_TRAIT(jaunter, TRAIT_MAGICALLY_PHASED, REF(src))
 
@@ -59,6 +60,7 @@
 
 /**
  * Ejects the [unjaunter] from jaunt
+ * The jaunt object in turn should call on_jaunt_exited
  * If [loc_override] is supplied,
  * the jaunt will be moved to that turf
  * before ejecting the unjaunter
@@ -76,12 +78,22 @@
 	if(loc_override)
 		jaunt.forceMove(loc_override)
 	jaunt.eject_jaunter()
+	return TRUE
+
+/**
+ * Called when a mob is ejected from the jaunt holder and goes back to normal.
+ * This is called both fom exit_jaunt() but also if the caster is ejected involuntarily for some reason.
+ * Use this to clear state data applied when jaunting, such as the trait TRAIT_MAGICALLY_PHASED.
+ * Arguments
+ * * jaunt - The mob holder effect the caster has just exited
+ * * unjaunter - The spellcaster who is no longer jaunting
+ */
+/datum/action/cooldown/spell/jaunt/proc/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
+	SHOULD_CALL_PARENT(TRUE)
 	spell_requirements &= ~SPELL_CASTABLE_WHILE_PHASED
 	REMOVE_TRAIT(unjaunter, TRAIT_MAGICALLY_PHASED, REF(src))
-
-	// Ditto - this needs to happen at the end, after all the traits and stuff is handled
+	// This needs to happen at the end, after all the traits and stuff is handled
 	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
-	return TRUE
 
 /// Simple helper to check if the passed mob is currently jaunting or not
 /datum/action/cooldown/spell/jaunt/proc/is_jaunting(mob/living/user)
@@ -89,4 +101,8 @@
 
 /datum/action/cooldown/spell/jaunt/Remove(mob/living/remove_from)
 	exit_jaunt(remove_from)
+	if (!is_jaunting(remove_from)) // In case you have made exit_jaunt conditional, as in mirror walk
+		return ..()
+	var/obj/effect/dummy/phased_mob/jaunt = remove_from.loc
+	jaunt.eject_jaunter()
 	return ..()

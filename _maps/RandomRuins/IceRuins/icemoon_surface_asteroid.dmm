@@ -34,7 +34,7 @@
 /area/icemoon/surface)
 "B" = (
 /turf/open/genturf,
-/area/mine/unexplored)
+/area/lavaland/surface/outdoors/unexplored)
 "C" = (
 /obj/structure/fluff/clockwork/blind_eye,
 /turf/open/floor/bronze,

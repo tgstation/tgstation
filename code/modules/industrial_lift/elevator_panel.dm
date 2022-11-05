@@ -38,6 +38,7 @@
 	/// If you want to override what each floor is named as, you can do so with this list.
 	/// Make this an assoc list of "z level you want to rename" to "desired name".
 	/// So, if you want the z-level 2 destination to be named "Cargo", you would do list("2" = "Cargo").
+	/// (Reminder: Z1 gets loaded as Central Command, so your map's bottom Z will be Z2!)
 	var/list/preset_destination_names
 
 	/// What z-level did we move to last? Used for showing the user in the UI which direction we're moving.

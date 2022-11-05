@@ -4,17 +4,18 @@
 
 /datum/hallucination/death/Destroy()
 	if(!QDELETED(hallucinator))
-		hallucinator.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, type)
+		// Really make sure these go away, would be bad if they stuck around
+		hallucinator.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, REF(src))
+		REMOVE_TRAIT(hallucinator, TRAIT_MUTE, REF(src))
+		REMOVE_TRAIT(hallucinator, TRAIT_EMOTEMUTE, REF(src))
 
 	return ..()
 
 /datum/hallucination/death/start()
 	hallucinator.Paralyze(30 SECONDS)
-	hallucinator.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, type)
-
-	if(iscarbon(hallucinator))
-		var/mob/living/carbon/carbon_hallucinator = hallucinator
-		carbon_hallucinator.silent += 10
+	hallucinator.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, REF(src))
+	ADD_TRAIT(hallucinator, TRAIT_MUTE, REF(src))
+	ADD_TRAIT(hallucinator, TRAIT_EMOTEMUTE, REF(src))
 
 	to_chat(hallucinator, span_deadsay("<b>[hallucinator.real_name]</b> has died at <b>[get_area_name(hallucinator)]</b>."))
 
@@ -71,13 +72,10 @@
 
 /datum/hallucination/death/proc/wake_up()
 	if(!QDELETED(hallucinator))
-		hallucinator.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, type)
-
-		if(iscarbon(hallucinator))
-			var/mob/living/carbon/carbon_hallucinator = hallucinator
-			carbon_hallucinator.silent = 0
-
+		hallucinator.remove_status_effect(/datum/status_effect/grouped/screwy_hud/fake_dead, REF(src))
 		hallucinator.SetParalyzed(0 SECONDS)
+		REMOVE_TRAIT(hallucinator, TRAIT_MUTE, REF(src))
+		REMOVE_TRAIT(hallucinator, TRAIT_EMOTEMUTE, REF(src))
 
 	if(!QDELETED(src))
 		qdel(src)
