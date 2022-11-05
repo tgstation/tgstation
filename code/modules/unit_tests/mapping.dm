@@ -22,7 +22,7 @@
 /// Let's just make sure that we have a stop-gap measure in place to catch these if they pop up so we don't put it onto production servers should something errant come up.
 /datum/unit_test/mapload_space_verification
 	// This test is quite taxing time-wise, so let's run it later than other faster tests.
-	priority = TEST_ANTI_SPACE_TURF
+	priority = TEST_LONGER
 
 /datum/unit_test/mapload_space_verification/Run()
 	// Get the datum associated with our currently running map.
