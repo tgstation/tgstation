@@ -1,4 +1,0 @@
-author: "SpaceLove"
-delete-after: True
-changes:
-  - bugfix: "QM can no longer be managed by HR core app."
