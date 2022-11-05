@@ -154,7 +154,7 @@
 
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
-	for(var/obj/machinery/computer/communications/communications_console in GLOB.machines)
+	for(var/obj/machinery/computer/communications/communications_console in GLOB.shuttle_caller_list)
 		communications_console.override_cooldown()
 
 /datum/world_topic/news_report

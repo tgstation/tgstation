@@ -365,7 +365,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, owner)
 		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
 
-	var/obj/machinery/computer/communications/C = locate() in GLOB.machines
+	var/obj/machinery/computer/communications/C = locate() in GLOB.shuttle_caller_list
 	if(C)
 		C.post_status("alert", "lockdown")
 
@@ -559,7 +559,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/honk/Activate()
 	to_chat(owner, span_clown("The intercom system plays your prepared file as commanded."))
-	for(var/obj/item/radio/intercom/found_intercom in GLOB.intercoms_list)
+	for(var/obj/item/radio/intercom/found_intercom as anything in GLOB.intercoms_list)
 		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
 			continue
 		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
