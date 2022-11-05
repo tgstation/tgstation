@@ -955,11 +955,38 @@
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
-	. = list()
-	. += span_notice("It contains the following parts:")
+	var/init_value=0
+	var/list/part_count = list()
 	for(var/obj/item/C in component_parts)
-		. += span_notice("[icon2html(C, user)] \A [C].")
-	. = jointext(., "")
+		if(!part_count[C.name])
+			if(isstack(C))
+				var/obj/item/stack/stack_part=C
+				init_value=stack_part.amount
+			else
+				init_value=1
+			part_count[C.name]=init_value
+		else
+			part_count[C.name]++
+
+	var/count=0
+	var/suffix=""
+	var/list/printed_components = list()
+
+	var/text = span_notice("It contains the following parts:")
+	for(var/obj/item/C in component_parts)
+		if(!printed_components[C.name])
+			count=part_count[C.name]
+			if(count>1)
+				if(!is_cable_coil(C) && isstack(C))
+					suffix=" sheets"
+				else
+					suffix="s"
+			else
+				suffix=""
+			text+= span_notice("[icon2html(C, user)] [count] [C.name][suffix].")
+			printed_components[C.name]=TRUE
+
+	return text
 
 /obj/machinery/examine(mob/user)
 	. = ..()
