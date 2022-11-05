@@ -183,7 +183,8 @@
 		return
 
 	if (islist(signal_type))
-		stack_trace("[target] is registering [signal_type] as a list, the older method. Change it to RegisterSignals.")
+		var/list/signal_type_list = signal_type
+		stack_trace("[target] ([target.type]) is registering [signal_type_list.Join(", ")] as a list, the older method. Change it to RegisterSignals.")
 		RegisterSignals(target, signal_type, proctype, override)
 		return
 
