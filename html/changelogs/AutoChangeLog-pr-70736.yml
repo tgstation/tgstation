@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Flickering lights will now stop flickering and turn off properly when depowered or disabled."

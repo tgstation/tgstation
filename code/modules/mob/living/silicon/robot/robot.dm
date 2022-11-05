@@ -546,12 +546,12 @@
 		robot_suit.update_appearance()
 	else
 		new /obj/item/robot_suit(T)
-		new /obj/item/bodypart/l_leg/robot(T)
-		new /obj/item/bodypart/r_leg/robot(T)
+		new /obj/item/bodypart/leg/left/robot(T)
+		new /obj/item/bodypart/leg/right/robot(T)
 		new /obj/item/stack/cable_coil(T, 1)
 		new /obj/item/bodypart/chest/robot(T)
-		new /obj/item/bodypart/l_arm/robot(T)
-		new /obj/item/bodypart/r_arm/robot(T)
+		new /obj/item/bodypart/arm/left/robot(T)
+		new /obj/item/bodypart/arm/right/robot(T)
 		new /obj/item/bodypart/head/robot(T)
 		var/b
 		for(b=0, b!=2, b++)

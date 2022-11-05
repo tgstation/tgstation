@@ -8,7 +8,7 @@
 	///checker on whether we have sent the crystal yet.
 	var/sent_crystal = FALSE
 
-/datum/traitor_objective/final/supermatter_cascade/can_generate_objective(generating_for, list/generating_for)
+/datum/traitor_objective/final/supermatter_cascade/can_generate_objective(generating_for, list/possible_duplicates)
 	. = ..()
 	if(!.)
 		return FALSE

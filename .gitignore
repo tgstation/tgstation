@@ -213,6 +213,10 @@ aux*.dll
 libaux*.so
 aux*.pdb
 
+# byond-tracy, we intentionally do not ship this and do not want to maintain it
+prof.dll
+libprof.so
+
 # JavaScript tools
 **/node_modules
 
