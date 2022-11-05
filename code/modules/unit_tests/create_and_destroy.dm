@@ -157,6 +157,27 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		time_needed += SSgarbage.collection_timeout[index]
 
 	var/start_time = world.time
+	// spin until the first item in the filter queue is older than start_time
+	var/filter_queue_finished = FALSE
+	var/list/filter_queue = SSgarbage.queues[GC_QUEUE_FILTER]
+	while(!filter_queue_finished)
+		if(!length(filter_queue))
+			filter_queue_finished = TRUE
+			break
+		var/list/oldest_item = filter_queue[1]
+		//Pull out the time we deld at
+		var/qdel_time = oldest_item[1]
+		if(qdel_time > start_time) // Everything we care about has graduated to the check queue now!
+			filter_queue_finished = TRUE
+			break
+		if(world.time > start_time + GC_FILTER_QUEUE + 2 MINUTES) // This is much faster than the check queue.
+			TEST_FAIL("Something has gone horribly wrong, the filter queue has been processing for well over 2 minutes. What the hell did you do??")
+			break
+		// We want to fire every time.
+		SSgarbage.next_fire = 1
+		sleep(SSgarbage.wait + GC_FILTER_QUEUE)
+	// We need to check the check queue now.
+	start_time = world.time
 	var/garbage_queue_processed = FALSE
 
 	sleep(time_needed)
