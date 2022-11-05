@@ -10,8 +10,6 @@
 	var/datum/team/battlecruiser/team
 
 /datum/traitor_objective/final/battlecruiser/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!can_take_final_objective())
-		return FALSE
 	// There's no empty space to load a battlecruiser in...
 	if(!SSmapping.empty_space)
 		return FALSE
@@ -22,7 +20,7 @@
 	. = ..()
 	team = new()
 	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
-	if(nuke.r_code == "ADMIN")
+	if(nuke.r_code == NUKE_CODE_UNSET)
 		nuke.r_code = random_nukecode()
 	team.nuke = nuke
 	team.update_objectives()

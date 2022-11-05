@@ -12,6 +12,7 @@
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon_state = "riot"
+	inhand_icon_state = "riot"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
@@ -124,27 +125,61 @@
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
-	var/obj/item/assembly/flash/handheld/embedded_flash
+	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
 
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
-	embedded_flash = new(src)
-	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/update_icon_updates_onmob)
+	if(embedded_flash)
+		embedded_flash = new(src)
+		embedded_flash.set_light_flags(embedded_flash.light_flags | LIGHT_ATTACHED)
+		update_appearance(UPDATE_ICON)
 
-/obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
-	. = embedded_flash.attack(M, user)
-	update_appearance()
+/obj/item/shield/riot/flash/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/assembly/flash/handheld))
+		embedded_flash = arrived
+		embedded_flash.set_light_flags(embedded_flash.light_flags | LIGHT_ATTACHED)
+		update_appearance(UPDATE_ICON)
+	return ..()
+
+/obj/item/shield/riot/flash/Exited(atom/movable/gone, direction)
+	if(gone == embedded_flash)
+		embedded_flash.set_light_flags(embedded_flash.light_flags & ~LIGHT_ATTACHED)
+		embedded_flash = null
+		update_appearance(UPDATE_ICON)
+	return ..()
+
+/obj/item/shield/riot/flash/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, embedded_flash))
+		update_appearance(UPDATE_ICON)
+
+/obj/item/shield/riot/flash/Destroy(force)
+	QDEL_NULL(embedded_flash)
+	return ..()
+
+/obj/item/shield/riot/flash/attack(mob/living/target_mob, mob/user)
+	flash_away(user, target_mob)
 
 /obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
-	. = embedded_flash.attack_self(user)
-	update_appearance()
+	flash_away(user)
 
 /obj/item/shield/riot/flash/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	. = ..()
-	if (. && !embedded_flash.burnt_out)
-		embedded_flash.activate()
-		update_appearance()
+	if(.)
+		flash_away(owner)
 
+///Handles calls for the actual flash object + plays the flashing animations.
+/obj/item/shield/riot/flash/proc/flash_away(mob/owner, mob/target, animation_only)
+	if(QDELETED(embedded_flash) || (embedded_flash.burnt_out && !animation_only))
+		return
+	var/flick = animation_only ? TRUE : (target ? embedded_flash.attack(target, owner) : embedded_flash.AOE_flash(user = owner))
+	if(!flick && !embedded_flash.burnt_out)
+		return
+	flick("flashshield_flash", src)
+	inhand_icon_state = "flashshield_flash"
+	owner?.update_held_items()
+	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE)) //.5 second delay so the inhands sprite finishes its anim since inhands don't support flick().
 
 /obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/assembly/flash/handheld))
@@ -155,23 +190,24 @@
 		else
 			to_chat(user, span_notice("You begin to replace the bulb..."))
 			if(do_after(user, 20, target = user))
-				if(flash.burnt_out || !flash || QDELETED(flash))
+				if(QDELETED(flash) || flash.burnt_out)
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				qdel(embedded_flash)
-				embedded_flash = flash
 				flash.forceMove(src)
-				update_appearance()
 				return
-	..()
+	return ..()
 
 /obj/item/shield/riot/flash/emp_act(severity)
 	. = ..()
+	if(QDELETED(embedded_flash) || embedded_flash.burnt_out)
+		return
 	embedded_flash.emp_act(severity)
-	update_appearance()
+	if(embedded_flash.burnt_out) // a little hacky but no good way to check otherwise.
+		flash_away((ismob(loc) ? loc : null), animation_only = TRUE)
 
 /obj/item/shield/riot/flash/update_icon_state()
-	if(!embedded_flash || embedded_flash.burnt_out)
+	if(QDELETED(embedded_flash) || embedded_flash.burnt_out)
 		icon_state = "riot"
 		inhand_icon_state = "riot"
 	else
@@ -182,12 +218,13 @@
 /obj/item/shield/riot/flash/examine(mob/user)
 	. = ..()
 	if (embedded_flash?.burnt_out)
-		. += span_info("The mounted bulb has burnt out. You can try replacing it with a new one.")
+		. += span_info("The mounted bulb has burnt out. You can try replacing it with a new <b>flash</b>.")
 
 /obj/item/shield/energy
 	name = "energy combat shield"
 	desc = "A shield that reflects almost all energy projectiles, but is useless against physical attacks. It can be retracted, expanded, and stored anywhere."
 	icon_state = "eshield"
+	inhand_icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -241,6 +278,7 @@
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
 	icon_state = "teleriot"
+	inhand_icon_state = "teleriot"
 	worn_icon_state = "teleriot"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'

@@ -18,6 +18,9 @@
 	bot_type = CLEAN_BOT
 	hackables = "cleaning software"
 	path_image_color = "#993299"
+	greyscale_config = /datum/greyscale_config/buckets_cleanbot
+	///the bucket used to build us.
+	var/obj/item/reagent_containers/cup/bucket/build_bucket
 
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
 	var/janitor_mode_flags = CLEANBOT_CLEAN_BLOOD
@@ -95,8 +98,13 @@
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
 
-/mob/living/simple_animal/bot/cleanbot/Initialize(mapload)
+/mob/living/simple_animal/bot/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/bucket_obj)
+	if(!bucket_obj)
+		bucket_obj = new()
+	bucket_obj.forceMove(src)
+
 	. = ..()
+
 	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
 		on_cleaned_callback = CALLBACK(src, /atom/.proc/update_appearance, UPDATE_ICON))
 
@@ -110,7 +118,22 @@
 
 	GLOB.janitor_devices += src
 
+/mob/living/simple_animal/bot/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
+		if(build_bucket && build_bucket != arrived)
+			qdel(build_bucket)
+		build_bucket = arrived
+		set_greyscale(build_bucket.greyscale_colors)
+	return ..()
+
+/mob/living/simple_animal/bot/cleanbot/Exited(atom/movable/gone, direction)
+	if(gone == build_bucket)
+		build_bucket = null
+	return ..()
+
+
 /mob/living/simple_animal/bot/cleanbot/Destroy()
+	QDEL_NULL(build_bucket)
 	GLOB.janitor_devices -= src
 	if(weapon)
 		var/atom/drop_loc = drop_location()
@@ -121,7 +144,7 @@
 /mob/living/simple_animal/bot/cleanbot/examine(mob/user)
 	. = ..()
 	if(!weapon)
-		return
+		return .
 	. += "[span_warning("Is that \a [weapon] taped to it...?")]"
 
 	if(ascended && user.stat == CONSCIOUS && user.client)
@@ -239,9 +262,9 @@
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //Emag functions
 		var/mob/living/carbon/victim = locate(/mob/living/carbon) in loc
 		if(victim && victim == target)
-			UnarmedAttack(victim) // Acid spray
+			UnarmedAttack(victim, proximity_flag = TRUE) // Acid spray
 		if(isopenturf(loc) && prob(15)) // Wets floors and spawns foam randomly
-			UnarmedAttack(src)
+			UnarmedAttack(src, proximity_flag = TRUE)
 	else if(prob(5))
 		audible_message("[src] makes an excited beeping booping sound!")
 
@@ -267,7 +290,7 @@
 				shuffle = TRUE //Shuffle the list the next time we scan so we dont both go the same way.
 				path = list()
 			else
-				UnarmedAttack(target) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+				UnarmedAttack(target, proximity_flag = TRUE) //Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
 				if(QDELETED(target)) //We done here.
 					target = null
 					mode = BOT_IDLE
@@ -316,7 +339,7 @@
 	if(janitor_mode_flags & CLEANBOT_CLEAN_PESTS)
 		target_types += list(
 			/mob/living/basic/cockroach,
-			/mob/living/simple_animal/mouse,
+			/mob/living/basic/mouse,
 		)
 
 	if(janitor_mode_flags & CLEANBOT_CLEAN_DRAWINGS)
@@ -333,12 +356,10 @@
 /mob/living/simple_animal/bot/cleanbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
-	. = ..()
 	if(ismopable(attack_target))
 		mode = BOT_CLEANING
 		update_icon_state()
-		var/turf/turf_to_clean = get_turf(attack_target)
-		start_cleaning(src, turf_to_clean, src)
+		. = ..()
 		target = null
 		mode = BOT_IDLE
 
@@ -391,7 +412,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
-	new /obj/item/reagent_containers/cup/bucket(drop_loc)
+	build_bucket.forceMove(drop_loc)
 	new /obj/item/assembly/prox_sensor(drop_loc)
 	return ..()
 

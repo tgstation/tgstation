@@ -9,7 +9,10 @@
 		return
 	message_admins("Polling [number_to_ask] players for commendations.")
 
-	for(var/i in GLOB.joined_player_list)
+	// We need the list to be random, otherwise we'll end up always asking the same people to give out commendations.
+	var/list/eligible_player_list = shuffle(GLOB.joined_player_list)
+
+	for(var/i in eligible_player_list)
 		var/mob/check_mob = get_mob_by_ckey(i)
 		if(!check_mob?.mind || !check_mob.client)
 			continue

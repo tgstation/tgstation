@@ -268,9 +268,8 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	if(!try_use_flash())
+	if(!AOE_flash())
 		return
-	AOE_flash()
 	burn_out()
 
 /obj/item/assembly/flash/activate()//AOE flash on signal received
@@ -299,7 +298,7 @@
 	//If this proc fires the mob must be a revhead
 	var/datum/antagonist/rev/head/converter = aggressor.mind.has_antag_datum(/datum/antagonist/rev/head)
 	if(converter.add_revolutionary(victim.mind))
-		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		if(prob(1) || check_holidays(APRIL_FOOLS))
 			victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 	else

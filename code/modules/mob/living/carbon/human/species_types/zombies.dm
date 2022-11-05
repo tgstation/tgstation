@@ -25,7 +25,6 @@
 		TRAIT_TOXIMMUNE,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW | GORE
@@ -37,10 +36,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/zombie,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/zombie,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/zombie,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/zombie,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/zombie,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/zombie
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/zombie,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/zombie,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
@@ -48,7 +47,7 @@
 	return
 
 /datum/species/zombie/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
@@ -83,6 +82,7 @@
 	speedmod = 1.6
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/zombie
 	mutantbrain = /obj/item/organ/internal/brain/zombie
+	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	/// The rate the zombies regenerate at
 	var/heal_rate = 0.5
@@ -145,16 +145,15 @@
 	id = SPECIES_ZOMBIE_KROKODIL
 	examine_limb_id = SPECIES_HUMAN
 	sexes = 0
-	mutanttongue = /obj/item/organ/internal/tongue/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/zombie,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/zombie,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/zombie,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/zombie,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/zombie,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/zombie
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/zombie,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/zombie,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/zombie,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/zombie
 	)
 
 

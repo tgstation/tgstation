@@ -26,7 +26,7 @@
 
 	virus_suspectibility = 2
 	growth_rate = VAT_GROWTH_RATE
-	resulting_atoms = list(/mob/living/simple_animal/mouse = 2)
+	resulting_atoms = list(/mob/living/basic/mouse = 2)
 
 /datum/micro_organism/cell_line/chicken //basic cell line designed as a good source of protein and eggyolk.
 	desc = "Galliform skin cells."

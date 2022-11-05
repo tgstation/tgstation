@@ -158,10 +158,10 @@
 	shot_glass_icon_state = "shotglass"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(ishuman(M) && M.mind?.miming)
-		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+/datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(ishuman(drinker) && drinker.mind?.miming)
+		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
+		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	..()
 
@@ -1284,7 +1284,7 @@
 /datum/reagent/consumable/cucumberjuice
 	name = "Cucumber Juice"
 	description = "Ordinary cucumber juice, nothing from the fantasy world."
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "light cucumber"
 	glass_icon_state = "glass_cucumber"
 	glass_name = "glass of cucumber juice"

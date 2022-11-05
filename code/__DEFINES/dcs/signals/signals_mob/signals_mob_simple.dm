@@ -1,6 +1,8 @@
 // simple_animal signals
-/// called when a simplemob is given sentience from a potion (target = person who sentienced)
+/// called when a simplemob is given sentience from a sentience potion (target = person who sentienced)
 #define COMSIG_SIMPLEMOB_SENTIENCEPOTION "simplemob_sentiencepotion"
+/// called when a simplemob is given sentience from a consciousness transference potion (target = person who sentienced)
+#define COMSIG_SIMPLEMOB_TRANSFERPOTION "simplemob_transferpotion"
 
 // /mob/living/simple_animal/hostile signals
 ///before attackingtarget has happened, source is the attacker and target is the attacked

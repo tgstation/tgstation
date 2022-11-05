@@ -194,7 +194,7 @@
 	stage3 = list("<span class='danger'>Your throat feels very scratchy.</span>", "Your skin feels tight.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4 = list("<span class='danger'>Your skin feels very tight.</span>", "<span class='danger'>Your blood boils!</span>", "<span class='danger'>You can feel... something...inside you.</span>")
 	stage5 = list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
-	new_form = /mob/living/carbon/alien/humanoid/hunter
+	new_form = /mob/living/carbon/alien/adult/hunter
 	bantype = ROLE_ALIEN
 
 

@@ -91,7 +91,7 @@
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
 
 	// Sleep for a couple of ticks to allow the human to see the pain
-	sleep(5)
+	sleep(0.5 SECONDS)
 
 	use_power(active_power_usage) // Use a lot of power.
 	var/mob/living/silicon/robot/R = H.Robotize()
@@ -107,7 +107,7 @@
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/R)
 	playsound(src.loc, 'sound/machines/ping.ogg', 50, FALSE)
-	sleep(30)
+	sleep(3 SECONDS)
 	if(R)
 		R.SetLockdown(FALSE)
 		R.notify_ai(AI_NOTIFICATION_NEW_BORG)
