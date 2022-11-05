@@ -100,13 +100,13 @@
 
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
-	var/static/regex/dmmRegex = new(@'"([a-zA-Z]+)" = (?:\(\n|\()((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
+	var/static/regex/dmm_regex = new(@'"([a-zA-Z]+)" = (?:\(\n|\()((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
 	/// Matches key formats in TMG (IE: newline after the \()
-	var/static/regex/matchesTGM = new(@'^"[A-z]*"[\s]*=[\s]*\([\s]*\n', "m")
+	var/static/regex/matches_tgm = new(@'^"[A-z]*"[\s]*=[\s]*\([\s]*\n', "m")
 	/// Pulls out key value pairs for TGM
-	var/static/regex/varEditsTGM = new(@'^\t([A-z]*) = (.*?);?$')
+	var/static/regex/var_edits_tgm = new(@'^\t([A-z]*) = (.*?);?$')
 	/// Pulls out model paths for DMM
-	var/static/regex/modelPath = new(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g")
+	var/static/regex/model_path = new(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g")
 
 	#ifdef TESTING
 	var/turfsSkipped = 0
@@ -144,7 +144,7 @@
 
 	src.bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 
-	if(findtext(tfile, matchesTGM))
+	if(findtext(tfile, matches_tgm))
 		map_format = MAP_TGM
 	else
 		map_format = MAP_DMM // Fallback
@@ -158,10 +158,10 @@
 	var/stored_index = 1
 	var/list/regexOutput
 	//multiz lool
-	while(dmmRegex.Find(tfile, stored_index))
-		stored_index = dmmRegex.next
+	while(dmm_regex.Find(tfile, stored_index))
+		stored_index = dmm_regex.next
 		// Datum var lookup is expensive, this isn't
-		regexOutput = dmmRegex.group
+		regexOutput = dmm_regex.group
 
 		// "aa" = (/type{vars=blah})
 		if(regexOutput[1]) // Model
@@ -248,15 +248,12 @@
 	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
 	Master.StopLoadingMap()
 
-/*
 #define MAPLOADING_CHECK_TICK \
 	if(TICK_CHECK) { \
 		SSatoms.map_loader_stop(); \
 		stoplag(); \
 		SSatoms.map_loader_begin(); \
 	}
-*/
-#define MAPLOADING_CHECK_TICK
 
 // Do not call except via load() above.
 /datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, new_z = FALSE)
@@ -568,7 +565,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
 	var/static/list/default_list = GLOB.map_model_default // It's stupid, but it saves += list(list)
 	var/static/list/wrapped_default_list = list(default_list) // It's stupid, but it saves += list(list)
-	var/static/regex/varEdits = varEditsTGM
+	var/static/regex/var_edits = var_edits_tgm
 
 	var/path_to_init = ""
 	// Reference to the attributes list we're currently filling, if any
@@ -604,11 +601,11 @@ GLOBAL_LIST_EMPTY(map_model_default)
 					// Var edits look like \tname = value;
 					// I'm gonna try capturing them with regex, since it ought to be the fastest here
 					// Should hand back key = value
-					varEdits.Find(line)
-					var/value = parse_constant(varEdits.group[2])
+					var_edits.Find(line)
+					var/value = parse_constant(var_edits.group[2])
 					if(istext(value))
 						value = apply_text_macros(value)
-					current_attributes[varEdits.group[1]] = value
+					current_attributes[var_edits.group[1]] = value
 					continue // Keep on keeping on brother
 				if("{") // Start of an edit, and so also the start of a path
 					editing = TRUE
@@ -632,11 +629,11 @@ GLOBAL_LIST_EMPTY(map_model_default)
 						// Var edits look like \tname = value;
 						// I'm gonna try capturing them with regex, since it ought to be the fastest here
 						// Should hand back key = value
-						varEdits.Find(line)
-						var/value = parse_constant(varEdits.group[2])
+						var_edits.Find(line)
+						var/value = parse_constant(var_edits.group[2])
 						if(istext(value))
 							value = apply_text_macros(value)
-						current_attributes[varEdits.group[1]] = value
+						current_attributes[var_edits.group[1]] = value
 						continue // Keep on keeping on brother
 
 					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
@@ -679,6 +676,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			continue
 
 		.[model_key] = list(members, members_attributes)
+	return .
 
 /// Builds key caches for general formats
 /// Slower then the proc above, tho it could still be optimized slightly. it's just not a priority
@@ -704,10 +702,10 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		////////////////////////////////////////////////////////
 
 		var/model_index = 1
-		while(modelPath.Find(model, model_index))
+		while(model_path.Find(model, model_index))
 			var/variables_start = 0
-			var/member_string = modelPath.group[1]
-			model_index = modelPath.next
+			var/member_string = model_path.group[1]
+			model_index = model_path.next
 			//findtext is a bit expensive, lets only do this if the last char of our string is a } (IE: we know we have vars)
 			//this saves about 25 miliseconds on my machine. Not a major optimization
 			if(member_string[length(member_string)] == "}")
@@ -760,6 +758,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			continue
 
 		.[model_key] = list(members, members_attributes)
+	return .
 
 /datum/parsed_map/proc/build_coordinate(list/model, turf/crds, no_changeturf as num, placeOnTop as num, new_z)
 	// If we don't have a turf, nothing we will do next will actually acomplish anything, so just go back
