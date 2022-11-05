@@ -82,12 +82,10 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "by" = (
-/obj/machinery/suit_storage_unit/standard_unit{
-	desc = "An industrial suit storage device carrying retro space suits. Neat!";
-	helmet_type = /obj/item/clothing/head/helmet/space;
-	suit_type = /obj/item/clothing/suit/space
-	},
 /obj/machinery/light/small/directional/west,
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
 "bE" = (

@@ -228,8 +228,9 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned/bar)
 "mW" = (
-/obj/item/tank/internals/oxygen,
-/obj/machinery/suit_storage_unit/standard_unit,
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/abandoned/crew)
 "ne" = (
@@ -622,7 +623,6 @@
 /turf/open/floor/iron/large,
 /area/shuttle/abandoned/bar)
 "Kv" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/structure/window/reinforced,
 /obj/machinery/light/small/broken/directional/west,
 /obj/machinery/button/door/directional/west{
@@ -630,6 +630,9 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4;
 	id = "whiteship_westbolt"
+	},
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/shuttle/abandoned)
@@ -803,11 +806,12 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned/bar)
 "SW" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/item/tank/internals/oxygen,
 /obj/machinery/airalarm/all_access{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/machinery/suit_storage_unit/spaceruin{
+	desc = "An industrial suit storage device carrying retro space suits. Neat!"
 	},
 /turf/open/floor/mineral/titanium/purple,
 /area/shuttle/abandoned/bar)
