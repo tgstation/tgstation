@@ -4,7 +4,9 @@
 
 /datum/unit_test/orderable_item_descriptions/Run()
 	for (var/datum/orderable_item/orderable_item as anything in subtypesof(/datum/orderable_item))
-		if (!isnull(initial(orderable_item.desc)))
+		if(isnull(initial(orderable_item.category_index))) // don't check if they're just categorizing subtypes
+			continue
+		if (!isnull(initial(orderable_item.desc))) //don't check if they have no description
 			continue
 
 		var/item_path = initial(orderable_item.item_path)
