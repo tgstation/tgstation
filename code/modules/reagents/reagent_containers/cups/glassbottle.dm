@@ -573,8 +573,8 @@
 		return pop_cork(user, sabrage = TRUE, froth_severity = severity_to_pass)
 	else //you dun goofed
 		user.visible_message(
-			span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
-			span_danger("You fail your stunt and cut [src] in half, spilling it over you!")
+			span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"),
+			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"), 
 			)
 		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
 		return smash(target = user, ranged = FALSE, break_top = TRUE)
@@ -592,14 +592,14 @@
 /obj/item/reagent_containers/cup/glass/bottle/champagne/proc/pop_cork(mob/living/user, sabrage, froth_severity)
 	if(!sabrage)
 		user.visible_message(
-			span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."), \
-			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force.")
+			span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."),
+			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force."),
 			)
 	else
 		sabraged = TRUE
 		user.visible_message(
-			span_danger("[user] cleanly slices off the cork of [src], causing it to fly off the bottle with great force."), \
-			span_nicegreen("You elegantly slice the cork off of [src], causing it to fly off the bottle with great force.")
+			span_danger("[user] cleanly slices off the cork of [src], causing it to fly off the bottle with great force."),
+			span_nicegreen("You elegantly slice the cork off of [src], causing it to fly off the bottle with great force."),
 			)
 		for(var/mob/living/carbon/stunt_witness in view(7, user))
 			stunt_witness.clear_mood_event("sabrage_success")
