@@ -188,6 +188,7 @@
 		var/message = "[target] ([target.type]) is registering [signal_type_list.Join(", ")] as a list, the older method. Change it to RegisterSignals."
 
 		if (!(message in known_failures))
+			known_failures[message] = TRUE
 			stack_trace(message)
 
 		RegisterSignals(target, signal_type, proctype, override)
