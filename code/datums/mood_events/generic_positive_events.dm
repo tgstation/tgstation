@@ -195,7 +195,7 @@
 
 /datum/mood_event/hope_lavaland
 	description = "What a peculiar emblem.  It makes me feel hopeful for my future."
-	mood_change = 10
+	mood_change = 5
 
 /datum/mood_event/confident_mane
 	description = "I'm feeling confident with a head full of hair."

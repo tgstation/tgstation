@@ -48,7 +48,7 @@
 	desc = "A pin to show off your appreciation for mimes and miming!"
 	icon_state = "mime_fan_pin"
 
-/obj/item/clothing/accessory/mime_fan_pin/accessoryequipped(obj/item/clothing/under/clothes, mob/living/user)
+/obj/item/clothing/accessory/mime_fan_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_MIME_FAN))
 		user.add_mood_event("mime_fan_pin", /datum/mood_event/mime_fan_pin)
 	if(ishuman(user))

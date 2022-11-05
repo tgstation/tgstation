@@ -53,16 +53,18 @@
 		attach_to.clone_storage(atom_storage)
 		attach_to.atom_storage.set_real_location(src)
 
-	layer = FLOAT_LAYER
+	var/num_other_accessories = LAZYLEN(attach_to.attached_accessories)
+	layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
 	plane = FLOAT_PLANE
 
 	if(minimize_when_attached)
 		transform *= 0.5 //halve the size so it doesn't overpower the under
 		pixel_x += 8
-		pixel_y -= (8 + LAZYLEN(attach_to.attached_accessories) * 2)
+		pixel_y -= (8 - (num_other_accessories * 2))
 
-	attach_to.add_overlay(src)
-	LAZYADD(attach_to.attached_accessories, attach_to)
+	// attach_to.add_overlay(src)
+	attach_to.vis_contents |= src
+	LAZYADD(attach_to.attached_accessories, src)
 	forceMove(attach_to)
 
 	/*
@@ -77,6 +79,7 @@
 
 	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, .proc/on_uniform_equipped)
 	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, .proc/on_uniform_dropped)
+	RegisterSignal(attach_to, COMSIG_CLOTHING_UNDER_ADJUSTED, .proc/on_uniform_adjusted)
 
 	var/mob/equipped_to = attach_to.loc
 	if(istype(equipped_to))
@@ -92,7 +95,7 @@
 	U.armor = U.armor.detachArmor(armor)
 	*/
 
-	UnregisterSignal(detach_from, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(detach_from, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_UNDER_ADJUSTED))
 	var/mob/dropped_from = detach_from.loc
 	if(istype(dropped_from))
 		on_uniform_dropped(detach_from, dropped_from)
@@ -104,10 +107,9 @@
 
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
-	detach_from.cut_overlays()
+	// detach_from.cut_overlays()
+	detach_from.vis_contents -= src
 	LAZYREMOVE(detach_from.attached_accessories, src)
-	forceMove(detach_from.drop_location())
-
 	return TRUE
 
 /obj/item/clothing/accessory/proc/on_uniform_equipped(obj/item/clothing/under/source, mob/living/user, slot)
@@ -118,14 +120,27 @@
 
 	accessory_equipped(source, user)
 
-/obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/source, mob/living/user, slot)
+/obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/source, mob/living/user)
 	SIGNAL_HANDLER
 
 	accessory_dropped(source, user)
+	user.update_clothing(ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/accessory/proc/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	return
 
 /obj/item/clothing/accessory/proc/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	return
+
+/obj/item/clothing/accessory/proc/on_uniform_adjusted(obj/item/clothing/under/source)
+	SIGNAL_HANDLER
+
+	if(can_attach_accessory(source))
+		return
+
+	source.remove_accessory(src)
+	forceMove(source.drop_location())
+	source.visible_message(span_warning("[src] falls off of [source]!"))
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
 	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
