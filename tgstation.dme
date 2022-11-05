@@ -110,6 +110,7 @@
 #include "code\__DEFINES\loot.dm"
 #include "code\__DEFINES\machines.dm"
 #include "code\__DEFINES\magic.dm"
+#include "code\__DEFINES\map_switch.dm"
 #include "code\__DEFINES\maps.dm"
 #include "code\__DEFINES\materials.dm"
 #include "code\__DEFINES\maths.dm"
