@@ -132,6 +132,7 @@
 			intensity_state = "medium"
 		if(3)
 			intensity_state = "high"
+	///The froth fountain that we are sticking onto the bottle
 	var/mutable_appearance/froth = mutable_appearance(icon, "froth_bottle_[intensity_state]")
 	froth.pixel_x = offset_x
 	froth.pixel_y = offset_y
@@ -157,7 +158,9 @@
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
 	sharpness = SHARP_EDGED
+	///The mask image for mimicking a broken-off bottom of the bottle
 	var/static/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
+	///The mask image for mimicking a broken-off neck of the bottle
 	var/static/icon/flipped_broken_outline = icon('icons/obj/drinks.dmi', "broken-flipped")
 
 /obj/item/broken_bottle/Initialize(mapload)
@@ -531,7 +534,7 @@
 	if(spillable)
 		return
 
-	if(!(attacking_item.sharpness == SHARP_EDGED))
+	if(attacking_item.sharpness != SHARP_EDGED)
 		return
 
 	if(attacking_item != user.get_active_held_item()) //no TK allowed
@@ -547,10 +550,12 @@
 	if(!do_after(user, 2 SECONDS, src)) //takes longer because you are supposed to take the foil off the bottle first
 		return
 
+	///The bonus to success chance that the user gets for being a command role
+	var/command_bonus = user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND ? 20 : 0
+	///The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
+	var/skillchip_bonus = HAS_TRAIT(user, TRAIT_SABRAGE_PRO) ? 35 : 0
 	//calculate success chance. example: captain's sabre - 15 force = 75% chance
-	var/sabrage_chance = attacking_item.force * sabrage_success_percentile + \
-		((user.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_COMMAND)) ? 20 : 0) + \
-		((HAS_TRAIT(user, TRAIT_SABRAGE_PRO)) ? 35 : 0)
+	var/sabrage_chance = (attacking_item.force * sabrage_success_percentile) + command_bonus + skillchip_bonus
 
 	if(prob(sabrage_chance))
 		///Severity of the resulting froth to pass to make_froth()
@@ -567,10 +572,12 @@
 					severity_to_pass = 1
 		return pop_cork(user, sabrage = TRUE, froth_severity = severity_to_pass)
 	else //you dun goofed
-		user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
-			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"))
+		user.visible_message(
+			span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
+			span_danger("You fail your stunt and cut [src] in half, spilling it over you!")
+			)
 		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
-		return smash(user, ranged = FALSE, break_top = TRUE)
+		return smash(target = user, ranged = FALSE, break_top = TRUE)
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
@@ -584,17 +591,18 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/proc/pop_cork(mob/living/user, sabrage, froth_severity)
 	if(!sabrage)
-		user.visible_message(span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."), \
-			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force."))
+		user.visible_message(
+			span_danger("[user] loosens the cork of [src], causing it to pop out of the bottle with great force."), \
+			span_nicegreen("You elegantly loosen the cork of [src], causing it to pop out of the bottle with great force.")
+			)
 	else
 		sabraged = TRUE
-		user.visible_message(span_danger("[user] cleanly slices off the cork of [src], causing it to fly off the bottle with great force."), \
-			span_nicegreen("You elegantly slice the cork off of [src], causing it to fly off the bottle with great force."))
+		user.visible_message(
+			span_danger("[user] cleanly slices off the cork of [src], causing it to fly off the bottle with great force."), \
+			span_nicegreen("You elegantly slice the cork off of [src], causing it to fly off the bottle with great force.")
+			)
 		for(var/mob/living/carbon/stunt_witness in view(7, user))
-			for(var/find_previous_showoff in stunt_witness.mob_mood.mood_events) //if someone who did a sabrage before us saw us doing it, clear their success mood event
-				if(find_previous_showoff == "sabrage_success")
-					stunt_witness.clear_mood_event(find_previous_showoff)
-					continue
+			stunt_witness.clear_mood_event("sabrage_success")
 			if(stunt_witness == user)
 				stunt_witness.add_mood_event("sabrage_success", /datum/mood_event/sabrage_success)
 				continue
@@ -605,7 +613,9 @@
 	spillable = TRUE
 	update_appearance()
 	make_froth(offset_x = 0, offset_y = sabraged ? 13 : 15, intensity = froth_severity) //the y offset for sabraged is lower because the bottle's lip is smashed
+	///Type of cork to fire away
 	var/obj/projectile/bullet/reusable/cork_to_fire = sabraged ? /obj/projectile/bullet/reusable/champagne_cork/sabrage : /obj/projectile/bullet/reusable/champagne_cork
+	///Our resulting cork projectile
 	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new cork_to_fire (drop_location())
 	popped_cork.firer = user
 	popped_cork.fired_from = src
