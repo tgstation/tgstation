@@ -54,7 +54,7 @@
 	var/power_coeff = 1
 	var/energy_coeff = 1
 
-/datum/mutation/human/firebreath/modify()
+/datum/mutation/human/mindreader/modify()
 	. = ..()
 	var/datum/action/cooldown/spell/pointed/mindread/to_modify = .
 	if(!istype(to_modify)) // null or invalid
