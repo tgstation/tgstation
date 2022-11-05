@@ -85,7 +85,7 @@
 
 /datum/component/mind_linker/RegisterWithParent()
 	if(signals_which_destroy_us)
-		RegisterSignal(parent, signals_which_destroy_us, .proc/destroy_link)
+		RegisterSignals(parent, signals_which_destroy_us, .proc/destroy_link)
 
 /datum/component/mind_linker/UnregisterFromParent()
 	if(signals_which_destroy_us)
