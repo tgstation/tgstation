@@ -318,7 +318,7 @@
 	GLOB.trophy_cases -= src
 	return ..()
 
-/obj/structure/displaycase/trophy/proc/set_up_trophy(var/datum/trophy_data/chosen_trophy)
+/obj/structure/displaycase/trophy/proc/set_up_trophy(datum/trophy_data/chosen_trophy)
 	showpiece = new /obj/item/showpiece_dummy(src, text2path(chosen_trophy.path))
 	trophy_message = trim(chosen_trophy.message, MAX_PLAQUE_LEN)
 	if(trophy_message == "")
