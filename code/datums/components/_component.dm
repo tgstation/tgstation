@@ -183,8 +183,13 @@
 		return
 
 	if (islist(signal_type))
+		var/static/list/known_failures = list()
 		var/list/signal_type_list = signal_type
-		stack_trace("[target] ([target.type]) is registering [signal_type_list.Join(", ")] as a list, the older method. Change it to RegisterSignals.")
+		var/message = "[target] ([target.type]) is registering [signal_type_list.Join(", ")] as a list, the older method. Change it to RegisterSignals."
+
+		if (!(message in known_failures))
+			stack_trace(message)
+
 		RegisterSignals(target, signal_type, proctype, override)
 		return
 

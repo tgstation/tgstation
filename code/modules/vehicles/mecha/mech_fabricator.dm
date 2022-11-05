@@ -58,7 +58,7 @@
 	cached_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	update_menu_tech()
-	RegisterSignal(
+	RegisterSignals(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
 		.proc/on_techweb_update
