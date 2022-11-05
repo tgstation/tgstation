@@ -74,7 +74,10 @@
 				"$tsc",
 				"$eslint-stylish"
 			],
-			"group": "build",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
 			"label": "tgui: bench"
 		},
 		{

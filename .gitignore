@@ -222,3 +222,4 @@ libprof.so
 
 # Screenshot tests
 /artifacts
+tgstation_unit_test_focus_file.dm
