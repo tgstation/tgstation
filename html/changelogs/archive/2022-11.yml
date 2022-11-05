@@ -147,3 +147,71 @@
       parallax.
   timothymtorres:
   - bugfix: Fix zombie tongue to only apply to infectious species
+2022-11-05:
+  ArcaneMusic:
+  - bugfix: The universal scanner now properly show all three options in the radial
+      with sprites, due to a missing space.
+  - qol: The universal scanner now has contextual screentips within all three of its
+      modes.
+  Cheshify:
+  - bugfix: All maps have a consistent Evidence room.
+  - imageadd: Ddds an icon for the Evidence Storage area
+  Comxy:
+  - bugfix: Fixes conveyor speed input.
+  - bugfix: Fixes radiation blocking properties of glass types.
+  Fikou:
+  - balance: less megafauna should spawn on icebox and lavaland
+  - qol: blood drunk miner ruin on lavaland will spawn every round
+  GoblinBackwards:
+  - bugfix: fixed an exploit that let you go completely invisible by scanning a HFR
+      corner with a chameleon projector
+  Guillaume Prata:
+  - qol: The forensic scanner uses balloon alerts for most of it's simple feedback
+      messages, enjoy having an easier time hearing the radio chatter.
+  - qol: Ore bags are "silent" for the wearer and won't send pointless chat messages
+      about what has been stored/removed from it. Other players will still get a chat
+      message, so miners can't get away with surprise plasma ore bombs.
+  Hardly3D:
+  - spellcheck: AI Universal Standard canvas will now specify it's size on the item
+      name.
+  Hatterhat:
+  - qol: Mining point cards are now reusable, allowing user-set transfers of mining
+      points to and from the point card itself.
+  Imaginos:
+  - imageadd: new icons for modsuit actions
+  Imitates-The-Lizards:
+  - qol: Janitors and Shaft Miners start with the ExperTrak Skill Tracker preinstalled
+      on their PDAs.
+  Melbert:
+  - bugfix: Fixes Regal Rat Domain not functioning as intended
+  - bugfix: Triggering a traitor poster trap progresses their objective.
+  Rhials:
+  - admin: Forcing the shuttle catastrophe event while an emergency shuttle is docked
+      comes with a warning now.
+  - balance: The Shuttle Loan event no longer only rolls once per round.
+  SpaceLove:
+  - bugfix: QM can no longer be managed by HR core app.
+  VexingRaven:
+  - bugfix: Fixed posters printed from the library console staying in your hand when
+      you place them
+  - bugfix: Fixed Random Official Poster printed from the library console always placing
+      the west-facing variant no matter where you place it
+  flowercuco:
+  - rscadd: Added 6 new flatbreads and their associated recipes
+  - rscadd: Added 1 new pizza for ethereals
+  lizardqueenlexi:
+  - bugfix: Put the proper access helpers on two maintenance airlocks in MetaStation
+      medical.
+  - bugfix: Added a missing watering can and two bottles of nutrient to the Tramstation
+      public garden.
+  - bugfix: Added a missing GeneDrobe to MetaStation.
+  - qol: Made surgical computers tell you what tool to use for the current surgical
+      step.
+  mc-oofert:
+  - bugfix: Fixes getting AIs with cores getting gibbed if their mech theyre controlling
+      is destroyed
+  tralezab:
+  - rscadd: Screwdriver cocktails now work as the world's worst screwdriver
+  zxaber:
+  - rscadd: You can now resist out of disposals pipes once you have stopped, at the
+      cost of some brute damage.
