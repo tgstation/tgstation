@@ -13,7 +13,7 @@
 
 		var/item_path = initial(orderable_item.item_path)
 
-		var/obj/item/item_instance = new allocate(item_path)
+		var/obj/item/item_instance = allocate(item_path)
 		var/initial_desc = initial(item_instance.desc)
 
 		if(item_path in all_paths)
