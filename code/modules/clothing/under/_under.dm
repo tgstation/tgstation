@@ -23,6 +23,16 @@
 	var/mutable_appearance/accessory_overlay
 	var/freshly_laundered = FALSE
 
+	/// The max number of accessories we can have on this suit.
+	var/max_number_of_accessories = 5
+	/// A list of all accessories attached to us.
+	var/list/obj/item/clothing/accessory/attached_accessories
+	/// The overlay of the accessory we're demonstrating. Only index 1 will show up.
+	/// This is the overlay on the MOB, not the item itself.
+	var/mutable_appearance/accessory_overlay
+
+	var/updates_onmob = FALSE
+
 /obj/item/clothing/under/Initialize(mapload)
 	. = ..()
 	if(random_sensor)
@@ -31,30 +41,31 @@
 	register_context()
 
 /obj/item/clothing/under/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	var/screentip_change = FALSE
+	. = NONE
 
 	if(isnull(held_item) && has_sensor == HAS_SENSORS)
 		context[SCREENTIP_CONTEXT_RMB] = "Toggle suit sensors"
-		screentip_change = TRUE
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/clothing/accessory) && !attached_accessory)
+	if(istype(held_item, /obj/item/clothing/accessory) && length(attached_accessories) <= max_number_of_accessories)
 		var/obj/item/clothing/accessory/accessory = held_item
 		if(accessory.can_attach_accessory(src, user))
 			context[SCREENTIP_CONTEXT_LMB] = "Attach accessory"
-			screentip_change = TRUE
+			. = CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/stack/cable_coil) && has_sensor == BROKEN_SENSORS)
 		context[SCREENTIP_CONTEXT_LMB] = "Repair suit sensors"
-		screentip_change = TRUE
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(attached_accessory)
+	if(length(attached_accessories))
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove accessory"
-		screentip_change = TRUE
-	else if(can_adjust)
-		context[SCREENTIP_CONTEXT_ALT_LMB] = adjusted == ALT_STYLE ? "Wear normally" : "Wear casually"
-		screentip_change = TRUE
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	return screentip_change ? CONTEXTUAL_SCREENTIP_SET : NONE
+	else if(can_adjust)
+		context[SCREENTIP_CONTEXT_ALT_LMB] =  "Wear [adjusted == ALT_STYLE ? "normally" : "casually"]"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return .
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -132,7 +143,6 @@
 
 	if(attached_accessory && !(slot & ITEM_SLOT_HANDS) && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		attached_accessory.on_uniform_equip(src, user)
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
 			H.update_worn_oversuit()
@@ -151,7 +161,8 @@
 			H.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
 				H.update_worn_oversuit()
-	..()
+
+	return ..()
 
 /mob/living/carbon/human/update_suit_sensors()
 	. = ..()
@@ -167,68 +178,75 @@
 /mob/living/carbon/human/dummy/update_sensor_list()
 	return
 
-/obj/item/clothing/under/proc/attach_accessory(obj/item/tool, mob/user, notifyAttach = 1)
+/obj/item/clothing/under/proc/attach_accessory(/obj/item/clothing/accessory/accessory, mob/living/user, attach_message = TRUE)
 	. = FALSE
-	if(!istype(tool, /obj/item/clothing/accessory))
+	if(!istype(accessory))
 		return
-	var/obj/item/clothing/accessory/accessory = tool
-	if(attached_accessory)
+	if(length(attached_accessories) >= max_number_of_accessories)
 		if(user)
 			to_chat(user, span_warning("[src] already has an accessory."))
 		return
 
-	if(!accessory.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
+	if(!accessory.can_attach_accessory(src, user))
 		return
 	if(user && !user.temporarilyRemoveItemFromInventory(accessory))
 		return
 	if(!accessory.attach(src, user))
 		return
 
-	. = TRUE
-	if(user && notifyAttach)
+	if(user && attach_message)
 		to_chat(user, span_notice("You attach [accessory] to [src]."))
 
-	var/accessory_color = attached_accessory.icon_state
-	accessory_overlay = mutable_appearance(attached_accessory.worn_icon, "[accessory_color]")
-	accessory_overlay.alpha = attached_accessory.alpha
-	accessory_overlay.color = attached_accessory.color
+	if(!accessory_overlay)
+		create_accessory_overlay()
+		update_appearance()
 
-	update_appearance()
-	if(!ishuman(loc))
+	return TRUE
+
+/obj/item/clothing/under/proc/pop_accessory(mob/living/user, attach_message = TRUE)
+	var/obj/item/clothing/accessory/popped_accessory = attached_accessories[1]
+	remove_accessory(popped_accessory)
+
+	if(!user)
 		return
 
-	var/mob/living/carbon/human/holder = loc
-	holder.update_worn_undersuit()
-	holder.update_worn_oversuit()
-	holder.fan_hud_set_fandom()
-
-/obj/item/clothing/under/proc/remove_accessory(mob/user)
-	. = FALSE
-	if(!isliving(user))
-		return
-	if(!can_use(user))
+	var/put_success = user.put_in_hands(popped_accessory)
+	if(!attach_message)
 		return
 
-	if(!attached_accessory)
-		return
-
-	. = TRUE
-	var/obj/item/clothing/accessory/accessory = attached_accessory
-	attached_accessory.detach(src, user)
-	if(user.put_in_hands(accessory))
-		to_chat(user, span_notice("You detach [accessory] from [src]."))
+	if(put_success)
+		to_chat(user, span_notice("You detach [popped_accessory] from [src]."))
 	else
-		to_chat(user, span_notice("You detach [accessory] from [src] and it falls on the floor."))
+		to_chat(user, span_notice("You detach [popped_accessory] from [src] and it falls on the floor."))
+
+/obj/item/clothing/under/proc/remove_accessory(obj/item/clothing/accessory/removed)
+	// Stays in loc
+	removed.detach(src)
+
+	if(removed == attached_accessories[1])
+		accessory_overlay = null
+		if(LAZYLEN(attached_accessories))
+			create_accessory_overlay()
 
 	update_appearance()
-	if(!ishuman(loc))
-		return
 
-	var/mob/living/carbon/human/holder = loc
-	holder.update_worn_undersuit()
-	holder.update_worn_oversuit()
-	holder.fan_hud_set_fandom()
+/obj/item/clothing/under/proc/create_accessory_overlay()
+	// Lazyily add this when it's needed
+	if(!updates_onmob)
+		updates_onmob = TRUE
+		AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 
+	var/obj/item/clothing/accessory/prime_accessory = attached_accessories[1]
+	var/accessory_color = prime_accessory.icon_state
+	accessory_overlay = mutable_appearance(prime_accessory.worn_icon, "[accessory_color]")
+	accessory_overlay.alpha = prime_accessory.alpha
+	accessory_overlay.color = prime_accessory.color
+
+/obj/item/clothing/under/handle_atom_del(atom/deleting_atom)
+	. = ..()
+	// If one of our accessories was deleted, handle it
+	if(deleting_atom in attached_accessories)
+		remove_accessory(deleting_atom)
 
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
@@ -251,8 +269,8 @@
 				. += "Its vital tracker appears to be enabled."
 			if(SENSOR_COORDS)
 				. += "Its vital tracker and tracking beacon appear to be enabled."
-	if(attached_accessory)
-		. += "\A [attached_accessory] is attached to it."
+	if(LAZYLEN(attached_accessories))
+		. += "[capitalize(english_list(attached_accessories))] is attached to it."
 
 /obj/item/clothing/under/verb/toggle()
 	set name = "Adjust Suit Sensors"
@@ -315,10 +333,12 @@
 	if(.)
 		return
 
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user), floor_okay = TRUE))
 		return
-	if(attached_accessory)
-		remove_accessory(user)
+	if(user.incapacitated())
+		return
+	if(LAZYLEN(attached_accessories))
+		pop_accessory(user)
 	else
 		rolldown()
 
