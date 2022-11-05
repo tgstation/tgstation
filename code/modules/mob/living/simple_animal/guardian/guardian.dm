@@ -308,6 +308,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 			gib()
 			return TRUE
 		if(EXPLODE_HEAVY)
@@ -318,6 +319,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
 		to_chat(summoner, "[span_danger("<B>Your [src] was blown up!")]</B>")
+		summoner.investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 		summoner.gib()
 	ghostize()
 	qdel(src)

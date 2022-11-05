@@ -397,6 +397,7 @@
 		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2)
 	else
 		explosion(src, devastation_range = -1, light_impact_range = 2)
+	investigate_log("has self-destructed.", INVESTIGATE_DEATHS)
 	gib()
 
 /mob/living/silicon/robot/proc/UnlinkSelf()

@@ -873,6 +873,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
 			var/mob/living/bug = target
+			bug.investigate_log("has been splatted by a flyswatter.", INVESTIGATE_DEATHS)
 			bug.gib()
 		else
 			qdel(target)

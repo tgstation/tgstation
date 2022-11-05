@@ -573,6 +573,7 @@
 	if(holder_animal)
 		if(holder_animal.stat == DEAD)
 			dump_contents()
+			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			holder_animal.gib()
 			return
 
@@ -603,7 +604,7 @@
 			holder_animal.mind.transfer_to(L)
 			holder_animal.gib()
 		if(kill || !isanimal(loc))
-			L.investigate_log("has died from the quantum entanglement stasis warp field.", INVESTIGATE_DEATHS)
+			L.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
 			L.death(FALSE)
 	..()
 
