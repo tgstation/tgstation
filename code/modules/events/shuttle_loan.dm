@@ -7,14 +7,40 @@
 #define ITS_HIP_TO 7
 #define MY_GOD_JC 8
 
-
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
-	max_occurrences = 1
+	max_occurrences = 3
 	earliest_start = 7 MINUTES
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
+	///The types of loan offers that the crew can recieve.
+	var/list/shuttle_loan_offers = list(
+		ANTIDOTE_NEEDED,
+		DEPARTMENT_RESUPPLY,
+		HIJACK_SYNDIE,
+		ITS_HIP_TO,
+		MY_GOD_JC,
+		PIZZA_DELIVERY,
+		RUSKY_PARTY,
+		SPIDER_GIFT,
+	)
+	///The types of loan events already run (and to be excluded if the event triggers).
+	var/list/run_events = list()
+
+/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
+	. = ..()
+
+	for(var/datum/round_event/running_event in SSevents.running)
+		if(istype(running_event, /datum/round_event/shuttle_loan)) //Make sure two of these don't happen at once.
+			return FALSE
+
+/datum/round_event_control/shuttle_loan/admin_setup()
+	if(!check_rights(R_FUN))
+		return ADMIN_CANCEL_EVENT
+
+	for(var/datum/round_event/shuttle_loan/loan_event in SSevents.running)
+		loan_event.kill() //Force out the old event for a new one to take its place
 
 /datum/round_event/shuttle_loan
 	announce_when = 1
@@ -26,7 +52,19 @@
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
+	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't call control, because it hasn't been set yet
+		var/list/loan_list = list()
+		loan_list += loan_event_control.shuttle_loan_offers
+		var/list/run_events = loan_event_control.run_events //Ask the round_event_control which loans have already been offered
+
+		loan_list -= run_events //Remove the already offered loans from the candidate list
+
+		if(!length(loan_list)) //If we somehow run out of loans, they all become available again
+			loan_list += loan_event_control.shuttle_loan_offers
+			run_events.Cut()
+
+		dispatch_type = pick(loan_list) //Pick a loan to offer, and add it to the blacklist
+		loan_event_control.run_events += dispatch_type
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
