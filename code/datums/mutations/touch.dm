@@ -35,7 +35,7 @@
 
 	var/chain = 0
 	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
-	//damage should do 1 per limb
+	//damage should do about 1 per limb
 	var/zap_power = 5000
 	//range
 	var/zap_range = 7
