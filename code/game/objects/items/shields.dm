@@ -1,3 +1,5 @@
+#define BATON_BASH_COOLDOWN (3 SECONDS)
+
 /obj/item/shield
 	name = "shield"
 	icon = 'icons/obj/weapons/shields.dmi'
@@ -13,9 +15,20 @@
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 70)
-	var/transparent = FALSE // makes beam projectiles pass through the shield
+	/// makes beam projectiles pass through the shield
+	var/transparent = FALSE
+	/// if the shield will break by sustaining damage
+	var/breakable_by_damage = TRUE
+	/// what the shield leaves behind when it breaks
+	var/shield_break_leftover = /obj/item/stack/sheet/mineral/wood
+	/// sound the shield makes when it breaks
+	var/shield_break_sound = 'sound/effects/bang.ogg'
+	/// baton bash cooldown
+	COOLDOWN_DECLARE(baton_bash)
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(!breakable_by_damage)
+		return FALSE
 	if(transparent && (hitby.pass_flags & PASSGLASS))
 		return FALSE
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
@@ -38,8 +51,8 @@
 			. += span_warning("It's falling apart!")
 
 /obj/item/shield/proc/shatter(mob/living/carbon/human/owner)
-	playsound(owner, 'sound/effects/bang.ogg', 50)
-	new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+	playsound(owner, shield_break_sound, 50)
+	new shield_break_leftover(get_turf(src))
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
 	if (atom_integrity <= damage)
@@ -69,6 +82,8 @@
 	inhand_icon_state = "roman_shield"
 	custom_materials = list(/datum/material/iron=8500)
 	max_integrity = 65
+	shield_break_sound = 'sound/effects/grillehit.ogg'
+	shield_break_leftover = /obj/item/stack/sheet/iron
 
 /obj/item/shield/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
@@ -76,40 +91,35 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	max_integrity = 30
 
-/obj/item/shield/roman/shatter(mob/living/carbon/human/owner)
-	playsound(owner, 'sound/effects/grillehit.ogg', 100)
-	new /obj/item/stack/sheet/iron(get_turf(src))
-
 /obj/item/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
 	icon_state = "riot"
 	inhand_icon_state = "riot"
 	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
-	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
 	max_integrity = 75
+	shield_break_sound = 'sound/effects/glassbr3.ogg'
+	shield_break_leftover = /obj/item/shard
 
 /obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, params)
 	if(istype(attackby_item, /obj/item/melee/baton))
-		if(cooldown < world.time - 25)
-			user.visible_message(span_warning("[user] bashes [src] with [attackby_item]!"))
-			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, TRUE)
-			cooldown = world.time
-	else if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
+		if(!COOLDOWN_FINISHED(src, baton_bash))
+			return
+		user.visible_message(span_warning("[user] bashes [src] with [attackby_item]!"))
+		playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, TRUE)
+		COOLDOWN_START(src, baton_bash, BATON_BASH_COOLDOWN)
+		return
+	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
 		if (atom_integrity >= max_integrity)
 			to_chat(user, span_warning("[src] is already in perfect condition."))
-		else
-			var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
-			titanium_sheet.use(1)
-			atom_integrity = max_integrity
-			to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
-	else
-		return ..()
-
-/obj/item/shield/riot/shatter(mob/living/carbon/human/owner)
-	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
-	new /obj/item/shard((get_turf(src)))
+			return
+		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
+		titanium_sheet.use(1)
+		atom_integrity = max_integrity
+		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+		return
+	return ..()
 
 /obj/item/shield/riot/flash
 	name = "strobe shield"
@@ -223,7 +233,7 @@
 	force = 3
 	throwforce = 3
 	throw_speed = 3
-
+	breakable_by_damage = FALSE
 	/// Whether the shield is currently extended and protecting the user.
 	var/enabled = FALSE
 	/// Force of the shield when active.
@@ -309,3 +319,5 @@
 	playsound(user ? user : src, 'sound/weapons/batonextend.ogg', 50, TRUE)
 	balloon_alert(user, "[active ? "extended" : "collapsed"]")
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+#undef BATON_BASH_COOLDOWN
