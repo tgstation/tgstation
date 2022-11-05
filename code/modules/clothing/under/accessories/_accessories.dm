@@ -152,5 +152,5 @@
 
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()
-	. += span_notice("\The [src] can be attached to a uniform. Alt-click to remove it once attached.")
-	. += span_notice("\The [src] can be worn above or below your suit. Right-click to toggle.")
+	. += "It can be attached to a uniform. Alt-click to remove it once attached."
+	. += "It can be worn above or below your suit. Right-click to toggle."
