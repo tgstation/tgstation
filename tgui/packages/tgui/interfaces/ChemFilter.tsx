@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
-import { useBackend, useLocalState } from '../backend';
-import { Button, Input, Section, Stack } from '../components';
+import { useBackend } from '../backend';
+import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -11,13 +11,13 @@ type Data = {
 type Props = {
   title: string;
   list: string[];
-  reagentName: string;
-  onReagentInput: (str: string) => void;
+  buttonTitle: string;
+  buttonColor: string;
 };
 
 export const ChemFilterPane = (props: Props, context) => {
   const { act } = useBackend(context);
-  const { title, list, reagentName, onReagentInput } = props;
+  const { title, list, buttonTitle, buttonColor } = props;
   const titleKey = title.toLowerCase();
 
   return (
@@ -25,23 +25,16 @@ export const ChemFilterPane = (props: Props, context) => {
       title={title}
       minHeight="240px"
       buttons={
-        <>
-          <Input
-            placeholder="Reagent"
-            width="140px"
-            onInput={(_, value) => onReagentInput(value)}
-          />
-          <Button
-            ml={1}
-            icon="plus"
-            onClick={() =>
-              act('add', {
-                which: titleKey,
-                name: reagentName,
-              })
-            }
-          />
-        </>
+        <Button
+          content={buttonTitle}
+          width="150px"
+          color={buttonColor}
+          onClick={() =>
+            act('add', {
+              which: titleKey,
+            })
+          }
+        />
       }>
       {list.map((filter) => (
         <Fragment key={filter}>
@@ -65,8 +58,6 @@ export const ChemFilterPane = (props: Props, context) => {
 export const ChemFilter = (props, context) => {
   const { data } = useBackend<Data>(context);
   const { left = [], right = [] } = data;
-  const [leftName, setLeftName] = useLocalState(context, 'leftName', '');
-  const [rightName, setRightName] = useLocalState(context, 'rightName', '');
 
   return (
     <Window width={500} height={300}>
@@ -76,16 +67,16 @@ export const ChemFilter = (props, context) => {
             <ChemFilterPane
               title="Left"
               list={left}
-              reagentName={leftName}
-              onReagentInput={(value) => setLeftName(value)}
+              buttonTitle="Add Left Reagent"
+              buttonColor="yellow"
             />
           </Stack.Item>
           <Stack.Item grow>
             <ChemFilterPane
               title="Right"
               list={right}
-              reagentName={rightName}
-              onReagentInput={(value) => setRightName(value)}
+              buttonTitle="Add Right Reagent"
+              buttonColor="red"
             />
           </Stack.Item>
         </Stack>
