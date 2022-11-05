@@ -280,7 +280,7 @@
 
 	if(!no_changeturf)
 		for(var/turf/T as anything in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
+			//we do this after we load everything in. if we don't, we'll have weird atmos bugs regarding atmos adjacent turfs
 			T.AfterChange(CHANGETURF_IGNORE_AIR)
 
 	if(expanded_x || expanded_y)
@@ -668,7 +668,8 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			&& members_attributes[1] == default_list \
 			&& members_attributes[2] == default_list \
 			&& members[2] == world.area \
-			&& members[1] == world.turf)
+			&& members[1] == world.turf
+		)
 			set_space = TRUE
 			.[SPACE_KEY] = model_key
 			continue
