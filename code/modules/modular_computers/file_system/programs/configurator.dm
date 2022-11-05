@@ -24,10 +24,7 @@
 	data["disk_size"] = computer.max_capacity
 	data["disk_used"] = computer.used_capacity
 	data["power_usage"] = computer.last_power_usage
-	data["battery_exists"] = !!computer.internal_cell
 	if(computer.internal_cell)
-		data["battery_rating"] = computer.internal_cell.maxcharge
-		data["battery_percent"] = round(computer.internal_cell.percent())
 		data["battery"] = list(
 			"max" = computer.internal_cell.maxcharge,
 			"charge" = round(computer.internal_cell.charge),
@@ -41,8 +38,8 @@
 		"desc" = H.desc,
 		"enabled" = H.enabled,
 		"critical" = H.critical,
-		"powerusage" = H.power_usage
-		)))
+		"powerusage" = H.power_usage,
+	)))
 
 	data["hardware"] = all_entries
 	return data
