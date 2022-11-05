@@ -1,7 +1,6 @@
 /obj/machinery/modular_computer/console/preset
 	// Can be changed to give devices specific hardware
 	var/_has_second_id_slot = FALSE
-	var/_has_battery = FALSE
 	///List of programs the computer starts with, given on Initialize.
 	var/list/datum/computer_file/starting_programs = list()
 
@@ -13,8 +12,6 @@
 	cpu.install_component(new /obj/item/computer_hardware/card_slot)
 	if(_has_second_id_slot)
 		cpu.install_component(new /obj/item/computer_hardware/card_slot/secondary)
-	if(_has_battery)
-		cpu.install_component(new /obj/item/computer_hardware/battery(cpu, /obj/item/stock_parts/cell/computer/super))
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		cpu.store_file(program_type)

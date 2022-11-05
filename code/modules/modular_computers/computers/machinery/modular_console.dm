@@ -20,10 +20,6 @@
 
 /obj/machinery/modular_computer/console/Initialize(mapload)
 	. = ..()
-	var/obj/item/computer_hardware/battery/battery_module = cpu.all_components[MC_CELL]
-	if(battery_module)
-		qdel(battery_module)
-
 	if(cpu)
 		cpu.screen_on = TRUE
 	update_appearance()

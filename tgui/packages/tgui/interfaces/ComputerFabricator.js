@@ -92,51 +92,6 @@ const CfStep2 = (props, context) => {
           <Table.Cell bold position="relative">
             <Tooltip
               content={multiline`
-                Allows your device to operate without external utility power
-                source. Advanced batteries increase battery life.
-              `}
-              position="right">
-              Battery:
-            </Tooltip>
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Standard"
-              selected={data.hw_battery === 1}
-              onClick={() =>
-                act('hw_battery', {
-                  battery: '1',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Upgraded"
-              selected={data.hw_battery === 2}
-              onClick={() =>
-                act('hw_battery', {
-                  battery: '2',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Advanced"
-              selected={data.hw_battery === 3}
-              onClick={() =>
-                act('hw_battery', {
-                  battery: '3',
-                })
-              }
-            />
-          </Table.Cell>
-        </Table.Row>
-        <Table.Row>
-          <Table.Cell bold position="relative">
-            <Tooltip
-              content={multiline`
                 Stores file on your device. Advanced drives can store more
                 files, but use more power, shortening battery life.
               `}
