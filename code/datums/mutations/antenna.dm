@@ -50,6 +50,19 @@
 	instability = 40
 	difficulty = 8
 	locked = TRUE
+	var/synchronizer_coeff = 1
+	var/power_coeff = 1
+	var/energy_coeff = 1
+
+/datum/mutation/human/firebreath/modify()
+	. = ..()
+	var/datum/action/cooldown/spell/pointed/mindread/to_modify = .
+	if(!istype(to_modify)) // null or invalid
+		return
+
+	to_modify.messages_returned = ceil(to_modify.messages_returned * GET_MUTATION_POWER(src))
+	to_modify.alert_chance *= GET_MUTATION_SYNCHRONIZER(src)
+	//we could also modify pass chance here, but that could make synchronized mindreads more frustrating to use than vanilla mindreads if your target is vocally responding to your mindread attempts
 
 /datum/action/cooldown/spell/pointed/mindread
 	name = "Mindread"
@@ -58,6 +71,12 @@
 	cooldown_time = 5 SECONDS
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	antimagic_flags = MAGIC_RESISTANCE_MIND
+	///The limit to the number of messages that can be (successfully) displayed by a single casting
+	messages_returned = 3
+	///The chance for a message to be ignored by (this casting of) mindread
+	pass_chance = 50
+	///The chance to notify your target that their mind has been read
+	alert_chance = 30
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 
@@ -86,7 +105,7 @@
 		return
 
 	to_chat(owner, span_boldnotice("You plunge into [cast_on]'s mind..."))
-	if(prob(20))
+	if(prob(alert_chance))
 		// chance to alert the read-ee
 		to_chat(cast_on, span_danger("You feel something foreign enter your mind."))
 
@@ -103,10 +122,10 @@
 				break
 
 	for(var/spoken_memory in say_log)
-		//up to 3 random lines of speech, favoring more recent speech
-		if(length(recent_speech) >= 3)
+		//up to 3*power_coeff (rounded up) random lines of speech, favoring more recent speech
+		if(length(recent_speech) >= messages_returned) 
 			break
-		if(prob(50))
+		if(prob(pass_chance))
 			continue
 		// log messages with tags like telepathy are displayed like "(Telepathy to Ckey/(target)) "greetings"""
 		// by splitting the text by using a " delimiter, we can grab JUST the greetings part
