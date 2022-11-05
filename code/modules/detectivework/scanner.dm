@@ -99,8 +99,8 @@
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A
-			if(!H.gloves)
-				LAZYADD(det_data[DETSCAN_CAT_FINGERS], md5(H.data.unique_identity))
+			if(!H?.gloves)
+				LAZYADD(det_data[DETSCAN_CAT_FINGERS], md5(H.dna?.unique_identity))
 
 		else if(!ismob(A))
 
@@ -111,7 +111,7 @@
 
 				for(var/datum/reagent/R in A.reagents.reagent_list)
 					LAZYADD(det_data[DETSCAN_CAT_DRINK], \
-					"Reagent: <font color='red'>[R.name]</font> Volume: <font color='red'>[reagents[R.volume_pump]]</font>"
+					"Reagent: <font color='red'>[R.name]</font> Volume: <font color='red'>[reagents[R.volume]]</font>")
 
 					// Get blood data from the blood reagent.
 					if(istype(R, /datum/reagent/blood))
@@ -147,7 +147,7 @@
 		add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", 0)
 
 		for(var/category in DETSCAN_DEFAULT_ORDER)
-			if(!LAZYLEN(det_data[category]) || det_data[category].find(DETSCAN_BLOCK))
+			if(!LAZYLEN(det_data[category]))
 				continue  // no data found, move to next category
 			sleep(3 SECONDS)
 			add_log(span_info("<B>[category]:</B>"))
