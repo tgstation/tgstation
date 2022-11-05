@@ -472,6 +472,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_KNOW_CYBORG_WIRES "know_cyborg_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
+#define TRAIT_SABRAGE_PRO "sabrage_pro"
 /// this skillchip trait lets you wash brains in washing machines to heal them
 #define TRAIT_BRAINWASHING "brainwashing"
 /// Allows chef's to chefs kiss their food, to make them with love
