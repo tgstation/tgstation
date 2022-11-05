@@ -91,5 +91,5 @@
 		child.forceMove(get_turf(src))
 		to_chat(child, span_changeling("Our conciousness stirs once again. After drifting for an unknowable time, we've come upon a destination. A cradle of life adrift in the void of space. We must find a way in and feed from its occupants."))
 
-/obj/effect/meteor/changeling/ram_turf()
+/obj/effect/meteor/meaty/changeling/ram_turf()
 	return //So we don't instantly smash into our occupant upon unloading them.
