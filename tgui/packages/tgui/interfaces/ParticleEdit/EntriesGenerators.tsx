@@ -39,7 +39,6 @@ export const FloatGenerator = (props: FloatGeneratorProps, context) => {
             <NumberInput
               animated
               value={float}
-              minValue={0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -98,7 +97,6 @@ export const FloatGeneratorColor = (
             <Input
               animated
               value={float}
-              minValue={0}
               onChange={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -171,7 +169,6 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input}
-              minValue={0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -191,7 +188,6 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input[0]}
-              minValue={0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -202,7 +198,6 @@ export const EntryGeneratorNumbersList = (
             <NumberInput
               animated
               value={input[1]}
-              minValue={0}
               onDrag={(e, value) =>
                 act('edit', {
                   var: var_name,
@@ -214,7 +209,6 @@ export const EntryGeneratorNumbersList = (
               <NumberInput
                 animated
                 value={input[2]}
-                minValue={0}
                 onDrag={(e, value) =>
                   act('edit', {
                     var: var_name,
