@@ -35,7 +35,7 @@
 	if(bartender_check(target) && ranged)
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
-	var/obj/item/broken_bottle/B = new(loc)
+	var/obj/item/broken_bottle/B = new(drop_location())
 	if(!ranged && thrower)
 		thrower.put_in_hands(B)
 	B.mimic_broken(src, target, break_top)
@@ -534,6 +534,10 @@
 	if(!(attacking_item.sharpness == SHARP_EDGED))
 		return
 
+	if(attacking_item != user.get_active_held_item()) //no TK allowed
+		to_chat(user, span_userdanger("Such a feat is beyond your skills of telekinesis!"))
+		return
+
 	if(attacking_item.force < 5)
 		balloon_alert(user, "not strong enough!")
 		return
@@ -566,7 +570,7 @@
 		user.visible_message(span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"), \
 			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"))
 		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
-		return smash(user, user, ranged = FALSE, break_top = TRUE)
+		return smash(user, ranged = FALSE, break_top = TRUE)
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
