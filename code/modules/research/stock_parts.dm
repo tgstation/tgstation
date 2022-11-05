@@ -217,7 +217,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
 /proc/cmp_rped_sort(obj/item/A, obj/item/B)
-	return B.get_part_rating() - A.get_part_rating()
+	///all stacks have a rating of 1
+	var/A_Rating=isstack(A)?1:A.get_part_rating()
+	var/B_Rating=isstack(B)?1:B.get_part_rating()
+	return B_Rating - A_Rating
 
 /obj/item/stock_parts
 	name = "stock part"
