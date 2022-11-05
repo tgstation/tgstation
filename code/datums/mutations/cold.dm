@@ -34,7 +34,7 @@
 	name = "Cryobeam"
 	desc = "This power fires a frozen bolt at a target."
 	button_icon_state = "icebeam0"
-	cooldown_time = 15 SECONDS
+	cooldown_time = 16 SECONDS
 	spell_requirements = NONE
 	antimagic_flags = NONE
 

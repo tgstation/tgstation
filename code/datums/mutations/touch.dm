@@ -19,10 +19,10 @@
 		return
 
 	if(GET_MUTATION_POWER(src) <= 1)
-		to_modify.pwr_chrom = 0
+		to_modify.chain = 0
 		return
 
-	to_modify.pwr_chrom = 1
+	to_modify.chain = 1
 
 /datum/action/cooldown/spell/touch/shock
 	name = "Shock Touch"
@@ -33,7 +33,7 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
-	var/pwr_chrom = 0
+	var/chain = 0
 	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
 	//damage should do 1 per limb
 	var/zap_power = 5000
@@ -57,8 +57,10 @@
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),
 			)
-			if(pwr_chrom == 1)
+			if(chain == 1)
 				tesla_zap(victim, zap_range, zap_power, zap_flags)
+				carbon_victim.visible_message(
+					span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 
 	else if(isliving(victim))
@@ -68,8 +70,10 @@
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),
 			)
-			if(pwr_chrom == 1)
+			if(chain == 1)
 				tesla_zap(victim, zap_range, zap_power, zap_flags)
+				living_victim.visible_message(
+					span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 
 	to_chat(caster, span_warning("The electricity doesn't seem to affect [victim]..."))
