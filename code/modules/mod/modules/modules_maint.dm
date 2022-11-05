@@ -53,6 +53,7 @@
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
 	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
+		mod.wearer.investigate_log("has been killed by [src].", INVESTIGATE_DEATHS)
 		mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 

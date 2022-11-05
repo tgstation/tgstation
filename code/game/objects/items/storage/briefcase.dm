@@ -35,7 +35,7 @@
 	new /obj/item/stamp/law(src)
 	..()
 
-/obj/item/storage/briefcase/suicide_act(mob/user)
+/obj/item/storage/briefcase/suicide_act(mob/living/user)
 	var/list/papers_found = list()
 	var/turf/item_loc = get_turf(src)
 

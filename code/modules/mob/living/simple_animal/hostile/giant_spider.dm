@@ -447,6 +447,7 @@
 						span_notice("You suck the nutriment out of [living_wrapped], feeding you enough to lay a cluster of enriched eggs."),
 					)
 
+				living_wrapped.investigate_log("has been killed by being wrapped in a cocoon.", INVESTIGATE_DEATHS)
 				living_wrapped.death() //you just ate them, they're dead.
 			else
 				to_chat(owner, span_warning("[living_wrapped] cannot sate your hunger!"))

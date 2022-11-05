@@ -58,6 +58,7 @@
 				to_chat(src, span_warning("You feel extremely [word]."))
 		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
 			if(!HAS_TRAIT(src, TRAIT_NODEATH))
+				investigate_log("has died of bloodloss.", INVESTIGATE_DEATHS)
 				death()
 
 	var/temp_bleed = 0

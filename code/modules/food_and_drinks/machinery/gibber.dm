@@ -198,7 +198,8 @@
 		skin = new typeofskin
 
 	log_combat(user, occupant, "gibbed")
-	mob_occupant.death(1)
+	mob_occupant.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
+	mob_occupant.death(TRUE)
 	mob_occupant.ghostize()
 	set_occupant(null)
 	qdel(mob_occupant)

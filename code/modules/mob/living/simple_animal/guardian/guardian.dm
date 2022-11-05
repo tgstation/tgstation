@@ -508,7 +508,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(chosen_guardian, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
 	to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[chosen_guardian.guardiancolor]\">[chosen_guardian.real_name]</font> has been successfully reset.</span>")
 	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
-	chosen_guardian.ghostize(0)
+	chosen_guardian.ghostize(FALSE)
 	chosen_guardian.guardianrecolor()
 	chosen_guardian.guardianrename() //give it a new color and name, to show it's a new person
 	chosen_guardian.key = candidate.key

@@ -226,6 +226,7 @@
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has died from a devastating explosion.", INVESTIGATE_DEATHS)
 			death()
 		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)
