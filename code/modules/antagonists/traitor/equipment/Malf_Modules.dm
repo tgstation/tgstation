@@ -749,10 +749,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
-	for(var/V in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		if(!uses)
 			break
-		var/obj/machinery/camera/C = V
 		if(!C.status || C.view_range != initial(C.view_range))
 			C.toggle_cam(owner_AI, 0) //Reactivates the camera based on status. Badly named proc.
 			C.view_range = initial(C.view_range)
@@ -781,8 +780,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	AI.update_sight()
 
 	var/upgraded_cameras = 0
-	for(var/V in GLOB.cameranet.cameras)
-		var/obj/machinery/camera/C = V
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		var/obj/structure/camera_assembly/assembly = C.assembly_ref?.resolve()
 		if(assembly)
 			var/upgraded = FALSE

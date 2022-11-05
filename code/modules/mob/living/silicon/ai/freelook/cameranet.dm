@@ -12,7 +12,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/name = "Camera Net"
 
 	/// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
-	var/list/cameras = list()
+	var/list/obj/machinery/camera/cameras = list()
 	/// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
 	var/ready = 0
