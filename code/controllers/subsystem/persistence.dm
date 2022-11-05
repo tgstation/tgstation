@@ -299,15 +299,7 @@ SUBSYSTEM_DEF(persistence)
 		if(trophy_case.showpiece)
 			continue
 
-		var/datum/trophy_data/chosen_trophy = pick_n_take(valid_trophies)
-
-		trophy_case.showpiece = new /obj/item/showpiece_dummy(trophy_case, text2path(chosen_trophy.path))
-		trophy_case.trophy_message = trim(chosen_trophy.message, MAX_PLAQUE_LEN)
-		if(trophy_case.trophy_message == "")
-			trophy_case.trophy_message = trim(trophy_case.showpiece.desc, MAX_PLAQUE_LEN)
-		trophy_case.placer_key = trim(chosen_trophy.placer_key)
-		trophy_case.holographic_showpiece = TRUE
-		trophy_case.update_appearance()
+		trophy_case.set_up_trophy(pick_n_take(valid_trophies))
 
 ///Loads up the photo album source file.
 /datum/controller/subsystem/persistence/proc/get_photo_albums()

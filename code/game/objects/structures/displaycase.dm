@@ -20,14 +20,18 @@
 	///If we have a custom glass overlay to use.
 	var/custom_glass_overlay = FALSE
 	var/obj/item/electronics/airlock/electronics
-	///add type for items on display
+	///Add type for items on display
 	var/start_showpiece_type = null
-	///displaycase is fixed by glass
+	///Displaycase is fixed by glass
 	var/glass_fix = TRUE
 	///Represents a signel source of screaming when broken
 	var/datum/alarm_handler/alarm_manager
 	///Used for subtypes that have a UI in them. The examine on click while adjecent will not fire, as we already get a popup
 	var/autoexamine_while_closed = TRUE
+	///Does the display case uses a UI that requires caching?
+	var/uses_showpiece_cache = FALSE
+	///The base64 encoding of the showpiece's sprite
+	var/showpiece_cache_base64
 
 /obj/structure/displaycase/Initialize(mapload)
 	. = ..()
@@ -67,6 +71,7 @@
 		return
 	showpiece.forceMove(drop_location())
 	showpiece = null
+	showpiece_cache_base64 = null
 	update_appearance()
 
 /obj/structure/displaycase/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -178,6 +183,8 @@
 		showpiece = new_showpiece
 		to_chat(user, span_notice("You put [new_showpiece] on display."))
 		update_appearance()
+		if(uses_showpiece_cache)
+			showpiece_cache_base64 = icon2base64(getFlatIcon(showpiece,  no_anim=TRUE))
 
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
 	open = !open
@@ -293,6 +300,7 @@
 	integrity_failure = 0
 	req_access = list(ACCESS_LIBRARY)
 	autoexamine_while_closed = FALSE
+	uses_showpiece_cache = TRUE
 	///the key of the player who placed the item in the case
 	var/placer_key = ""
 	///is the trophy a hologram, not a real item placed by a player?
@@ -309,6 +317,17 @@
 /obj/structure/displaycase/trophy/Destroy()
 	GLOB.trophy_cases -= src
 	return ..()
+
+/obj/structure/displaycase/trophy/proc/set_up_trophy(var/datum/trophy_data/chosen_trophy)
+	showpiece = new /obj/item/showpiece_dummy(src, text2path(chosen_trophy.path))
+	trophy_message = trim(chosen_trophy.message, MAX_PLAQUE_LEN)
+	if(trophy_message == "")
+		trophy_message = trim(showpiece.desc, MAX_PLAQUE_LEN)
+	placer_key = trim(chosen_trophy.placer_key)
+	holographic_showpiece = TRUE
+	update_appearance()
+	if(uses_showpiece_cache)
+		showpiece_cache_base64 = icon2base64(getFlatIcon(showpiece,  no_anim=TRUE))
 
 /obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/key/displaycase))
@@ -352,8 +371,7 @@
 	data["has_showpiece"] = showpiece ? TRUE : FALSE
 	if(showpiece)
 		data["showpiece_name"] = capitalize(format_text(showpiece.name))
-		var/base64 = icon2base64(getFlatIcon(showpiece,  no_anim=TRUE))
-		data["showpiece_icon"] = base64
+		data["showpiece_icon"] = showpiece_cache_base64
 		data["showpiece_description"] = trophy_message ? format_text(trophy_message) : null
 	return data
 
@@ -419,6 +437,7 @@
 	glass_fix = FALSE //Fixable with tools instead.
 	pass_flags = PASSTABLE ///Can be placed and moved onto a table.
 	autoexamine_while_closed = FALSE
+	uses_showpiece_cache = TRUE
 	///The price of the item being sold. Altered by grab intent ID use.
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
@@ -448,8 +467,7 @@
 		data["owner_name"] = payments_acc.account_holder
 	if(showpiece)
 		data["product_name"] = capitalize(format_text(showpiece.name))
-		var/base64 = icon2base64(getFlatIcon(showpiece,  no_anim=TRUE))
-		data["product_icon"] = base64
+		data["product_icon"] = showpiece_cache_base64
 	data["registered"] = register
 	data["product_cost"] = sale_price
 	data["tray_open"] = open
