@@ -19,6 +19,7 @@
 
 /datum/orderable_item/mining/mining_modsuit
 	item_path = /obj/item/mod/control/pre_equipped/mining
+	desc = "A mining-themed MODsuit that works best when in a mining environment."
 	cost_per_order = 3000
 
 /datum/orderable_item/mining/mining_belt
