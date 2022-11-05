@@ -176,7 +176,7 @@
 /obj/item/broken_bottle/proc/mimic_broken(obj/item/reagent_containers/cup/glass/to_mimic, atom/target, break_top)
 	icon_state = to_mimic.icon_state
 	var/icon/drink_icon = new(to_mimic.icon, icon_state)
-	if(break_top) //if the bottle breaks it's top off instead of the bottom
+	if(break_top) //if the bottle breaks its top off instead of the bottom
 		desc = "A bottle with its neck smashed off."
 		drink_icon.Blend(flipped_broken_outline, ICON_OVERLAY, rand(5), 0)
 	else
