@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - qol: "Made surgical computers tell you what tool to use for the current surgical step."
