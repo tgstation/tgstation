@@ -50,9 +50,9 @@
 	instability = 40
 	difficulty = 8
 	locked = TRUE
-	var/synchronizer_coeff = 1
-	var/power_coeff = 1
-	var/energy_coeff = 1
+	synchronizer_coeff = 1
+	power_coeff = 1
+	energy_coeff = 1
 
 /datum/mutation/human/mindreader/modify()
 	. = ..()
@@ -72,11 +72,11 @@
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	///The limit to the number of messages that can be (successfully) displayed by a single casting
-	messages_returned = 3
+	var/messages_returned = 3
 	///The chance for a message to be ignored by (this casting of) mindread
-	pass_chance = 50
+	var/pass_chance = 50
 	///The chance to notify your target that their mind has been read
-	alert_chance = 30
+	var/alert_chance = 30
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 
