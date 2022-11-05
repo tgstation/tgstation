@@ -8,6 +8,21 @@
 	text_lose_indication = "<span class='notice'>The energy in your hands subsides.</span>"
 	power_path = /datum/action/cooldown/spell/touch/shock
 	instability = 30
+	energy_coeff = 1
+	power_coeff = 1
+
+/datum/mutation/human/shock/modify()
+	. = ..()
+	var/datum/action/cooldown/spell/touch/shock/to_modify =.
+
+	if(!istype(to_modify)) // null or invalid
+		return
+
+	if(GET_MUTATION_POWER(src) <= 1)
+		to_modify.pwr_chrom = 0
+		return
+
+	to_modify.pwr_chrom = 1
 
 /datum/action/cooldown/spell/touch/shock
 	name = "Shock Touch"
@@ -17,6 +32,15 @@
 	cooldown_time = 10 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+
+	var/pwr_chrom = 0
+	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
+	//damage should do 1 per limb
+	var/zap_power = 5000
+	//range
+	var/zap_range = 7
+	//flags
+	var/zap_flags = ZAP_MOB_DAMAGE
 
 	hand_path = /obj/item/melee/touch_attack/shock
 	draw_message = span_notice("You channel electricity into your hand.")
@@ -33,6 +57,8 @@
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),
 			)
+			if(pwr_chrom == 1)
+				tesla_zap(victim, zap_range, zap_power, zap_flags)
 			return TRUE
 
 	else if(isliving(victim))
@@ -42,6 +68,8 @@
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),
 			)
+			if(pwr_chrom == 1)
+				tesla_zap(victim, zap_range, zap_power, zap_flags)
 			return TRUE
 
 	to_chat(caster, span_warning("The electricity doesn't seem to affect [victim]..."))
