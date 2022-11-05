@@ -843,3 +843,20 @@
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
+
+/// Space Changeling ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/changeling //Entirely untested, waiting until I learn how I even would
+	name = "Space Changeling" //IT CAME FROM OUTER SPESS
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_flag = ROLE_CHANGELING_MIDROUND
+	required_type = /mob/dead/observer
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0) //subject to change
+	required_candidates = 1
+	weight = 3 //subject to change
+	cost = 8 //subject to change
+	minimum_players = 27 //subject to change
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/from_ghosts/changeling/generate_ruleset_body(mob/applicant)
+	var/body = generate_changeling_meteor(applicant)
+	return body
