@@ -18,7 +18,8 @@
 
 	src.examine_string = examine_string
 
-	QDEL_IN(src, clear_after)
+	if(isnum(clear_after))
+		QDEL_IN(src, clear_after)
 
 /datum/component/onwear_mood/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/affect_wearer)
