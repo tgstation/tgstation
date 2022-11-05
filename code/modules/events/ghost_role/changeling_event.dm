@@ -36,7 +36,7 @@
 	if(!GLOB.xeno_spawn)
 		return MAP_ERROR
 
-	var/obj/effect/meteor/changeling/changeling_meteor = new/obj/effect/meteor/changeling(picked_start, pick(GLOB.xeno_spawn)) //Until I find a better way to make sure the meteor hits
+	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new/obj/effect/meteor/meaty/changeling(picked_start, pick(GLOB.xeno_spawn)) //Until I find a better way to make sure the meteor hits
 	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
 	new_changeling.equipOutfit(/datum/outfit/changeling_space)
 
