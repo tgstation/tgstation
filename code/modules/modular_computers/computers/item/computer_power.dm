@@ -11,9 +11,8 @@
 	if(!internal_cell || !internal_cell.charge)
 		return FALSE
 
-	var/obj/item/stock_parts/cell/cell = battery_module.battery
-	if(!cell.use(amount JOULES))
-		cell.use(min(amount JOULES, cell.charge))
+	if(!internal_cell.use(amount JOULES))
+		internal_cell.use(min(amount JOULES, internal_cell.charge)) //drain it anyways.
 		return FALSE
 	return TRUE
 

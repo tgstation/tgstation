@@ -765,7 +765,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(internal_cell)
-			to_chat(user, span_warning("You try to connect \the [I] to \the [src], but its connectors are occupied."))
+			to_chat(user, span_warning("You try to connect \the [attacking_item] to \the [src], but its connectors are occupied."))
 			return
 		if(user && !user.transferItemToLoc(attacking_item, src))
 			return
@@ -843,9 +843,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
 	if(isnull(choice))
 		if(internal_cell)
-			user.put_in_hands(battery)
-			to_chat(user, span_notice("You detach \the [battery] from \the [src]."))
-			battery.forceMove(drop_location())
+			user.put_in_hands(internal_cell)
+			to_chat(user, span_notice("You detach \the [internal_cell] from \the [src]."))
+			internal_cell.forceMove(drop_location())
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!Adjacent(user))
 		return
