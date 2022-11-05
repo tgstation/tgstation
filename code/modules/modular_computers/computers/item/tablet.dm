@@ -245,6 +245,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/computerconfig,
 		/datum/computer_file/program/filemanager,
+		/datum/computer_file/program/messenger,
 		/datum/computer_file/program/robotact,
 	)
 
