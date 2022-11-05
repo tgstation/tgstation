@@ -19,7 +19,7 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	if(CONFIG_GET(flag/sync_science_research))
+	if(!CONFIG_GET(flag/no_default_techweb_link))
 		connect_techweb(SSresearch.science_tech)
 
 	materials = AddComponent( \

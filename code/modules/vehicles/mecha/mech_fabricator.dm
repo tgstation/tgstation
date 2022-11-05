@@ -53,7 +53,7 @@
 	var/list/datum/design/cached_designs
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
-	if(CONFIG_GET(flag/sync_science_research))
+	if(!CONFIG_GET(flag/no_default_techweb_link))
 		connect_techweb(SSresearch.science_tech)
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	cached_designs = list()

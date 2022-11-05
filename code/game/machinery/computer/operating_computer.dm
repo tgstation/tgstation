@@ -17,7 +17,7 @@
 
 /obj/machinery/computer/operating/Initialize(mapload)
 	..()
-	if(CONFIG_GET(flag/sync_science_research))
+	if(!CONFIG_GET(flag/no_default_techweb_link))
 		linked_techweb = SSresearch.science_tech
 	find_table()
 	return INITIALIZE_HINT_LATELOAD

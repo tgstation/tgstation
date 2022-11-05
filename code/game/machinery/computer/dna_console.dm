@@ -237,7 +237,7 @@
 
 	// Link machine with research techweb. Used for discovering and accessing
 	// already discovered mutations
-	if(CONFIG_GET(flag/sync_science_research))
+	if(!CONFIG_GET(flag/no_default_techweb_link))
 		stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
