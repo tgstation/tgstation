@@ -1,6 +1,6 @@
 /// Designates the atom as a "point of interest", meaning it can be directly orbited
 /datum/element/point_of_interest
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 /datum/element/point_of_interest/Attach(datum/target)
 	if (!isatom(target))
