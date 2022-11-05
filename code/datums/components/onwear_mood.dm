@@ -10,7 +10,7 @@
 
 /datum/component/onwear_mood/Initialize(clear_after, datum/mood_event/saved_event, examine_string)
 
-	if(!istype(parent, /obj/item/clothing))
+	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	if(istype(saved_event))
