@@ -506,3 +506,5 @@
 		asoundout = 'sound/magic/wand_teleport.ogg',
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
+
+#undef MIN_SIDES_ALERT
