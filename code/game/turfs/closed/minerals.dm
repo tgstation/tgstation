@@ -44,8 +44,8 @@
 	// The cost of the list() being in the type def is very large for something as common as minerals
 	src.smoothing_groups = smoothing_groups
 	src.canSmoothWith = canSmoothWith
-  
-  return ..()
+
+	return ..()
 
 // Inlined version of the bump click element. way faster this way, the element's nice but it's too much overhead
 /turf/closed/mineral/Bumped(atom/movable/bumped_atom)
@@ -218,9 +218,9 @@
 	if (prob(mineralChance))
 		var/list/spawn_chance_list = mineral_chances_by_type[type]
 		if (isnull(spawn_chance_list))
-			mineral_chances_by_type[type] = mineral_chances()
+			mineral_chances_by_type[type] = expand_weights(mineral_chances())
 			spawn_chance_list = mineral_chances_by_type[type]
-		var/path = pick_weight(spawn_chance_list)
+		var/path = pick(spawn_chance_list)
 		if(ispath(path, /turf))
 			var/stored_flags = 0
 			if(turf_flags & NO_RUINS)
