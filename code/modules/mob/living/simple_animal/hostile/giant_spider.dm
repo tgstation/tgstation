@@ -368,7 +368,8 @@
 /datum/action/cooldown/wrap
 	name = "Wrap"
 	desc = "Wrap something or someone in a cocoon. If it's a human or similar species, \
-		you'll also consume them, allowing you to lay enriched eggs."
+		you'll also consume them, allowing you to lay enriched eggs. \
+		Activate this ability and then click on an adjacent target to begin wrapping them."
 	background_icon_state = "bg_alien"
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "wrap_0"
@@ -403,7 +404,7 @@
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B>"))
+	on_who.balloon_alert(on_who, "prepared to wrap")
 	button_icon_state = "wrap_1"
 	UpdateButtons()
 
