@@ -68,14 +68,15 @@
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.heal_bodypart_damage(5 * REM * delta_time, 5 * REM * delta_time, updating_health = FALSE)
 	M.adjustToxLoss(-5 * REM * delta_time, FALSE, TRUE)
-	M.fully_heal(full_heal_flags)
+	// Heal everything! That we want to. But really don't heal reagents. Otherwise we'll lose ... us.
+	M.fully_heal(full_heal_flags & ~HEAL_ALL_REAGENTS)
 	return ..()
 
 /datum/reagent/medicine/adminordrazine/quantum_heal
 	name = "Quantum Medicine"
 	description = "Rare and experimental particles, that apparently swap the user's body with one from an alternate dimension where it's completely healthy."
 	taste_description = "science"
-	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS)
+	full_heal_flags = ~(HEAL_ADMIN|HEAL_BRUTE|HEAL_BURN|HEAL_TOX|HEAL_RESTRAINTS|HEAL_ALL_REAGENTS)
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
