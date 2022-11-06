@@ -193,56 +193,12 @@
 	owner.imaginary_group -= src
 	return ..()
 
-/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	// I love old snowflake code where I can't inherit anything but have to copy-paste instead
-	var/list/filter_result
-	var/list/soft_filter_result
-	if(client && !forced && !filterproof)
-		//The filter doesn't act on the sanitized message, but the raw message.
-		filter_result = CAN_BYPASS_FILTER(src) ? null : is_ic_filtered(message)
-		if(!filter_result)
-			soft_filter_result = CAN_BYPASS_FILTER(src) ? null : is_soft_ic_filtered(message)
-
-	if(sanitize)
-		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-	if(!message || message == "")
-		return
-
-	if(filter_result  && !filterproof)
-		//The filter warning message shows the sanitized message though.
-		to_chat(src, span_warning("That message contained a word prohibited in IC chat! Consider reviewing the server rules."))
-		to_chat(src, span_warning("\"[message]\""))
-		REPORT_CHAT_FILTER_TO_USER(src, filter_result)
-		log_filter("IC", message, filter_result)
-		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
-		return
-
-	if(soft_filter_result && !filterproof)
-		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
-			SSblackbox.record_feedback("tally", "soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
-			log_filter("Soft IC", message, filter_result)
-			return
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
-		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[message]\"")
-		SSblackbox.record_feedback("tally", "passed_soft_ic_blocked_words", 1, lowertext(config.soft_ic_filter_regex.match))
-		log_filter("Soft IC (Passed)", message, filter_result)
-
-	if(client && !(ignore_spam || forced))
-		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, span_danger("You cannot speak IC (muted)."))
-			return FALSE
-		if(client.handle_spam_prevention(message, MUTE_IC))
-			return FALSE
-
-	friend_talk(message, spans, forced)
-
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
-/mob/camera/imaginary_friend/proc/friend_talk(message, list/spans, forced = null)
-	var/list/message_mods = list()
+/mob/camera/imaginary_friend/send_speech(message, range = 7, obj/source = src, bubble_type = bubble_icon, list/spans = list(), datum/language/message_language = null, list/message_mods = list(), forced = null)
 	message = get_message_mods(message, message_mods)
 	message = capitalize(message)
 
@@ -283,7 +239,7 @@
 	var/rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[quoted_message]</span></span>"
 	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[quoted_message]</span></span>"
 
-	var/language = owner.language_holder.get_selected_language()
+	var/language = message_language || owner.language_holder.get_selected_language()
 	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
 	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
@@ -299,7 +255,7 @@
 		if(user.client && (!user.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(user.client)
 
-	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_icon][say_test(message)]", FLY_LAYER)
+	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
 	bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, speech_bubble_recipients, 3 SECONDS)
