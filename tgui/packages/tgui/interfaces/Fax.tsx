@@ -85,7 +85,7 @@ export const Fax = (props, context) => {
                 key={special.fax_id}
                 title={special.fax_name}
                 disabled={!data.has_paper}
-                color="teal"
+                color={special.color}
                 onClick={() =>
                   act('send_special', {
                     id: special.fax_id,
