@@ -23,7 +23,6 @@
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
-	var/associated_lift = null
 
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
@@ -114,7 +113,7 @@
 	if(!open())
 		return
 	autoclose = TRUE
-	if(check_access(null) && !associated_lift)
+	if(check_access(null))
 		sleep(5 SECONDS)
 	else //secure doors close faster
 		sleep(2 SECONDS)
