@@ -33,7 +33,7 @@
 /datum/component/onwear_mood/proc/affect_wearer(mob/target)
 	SIGNAL_HANDLER
 	wearer = target
-	wearer.add_mood_event("onwear", saved_event)
+	wearer.add_mood_event(REF(src), saved_event)
 	RegisterSignal(wearer, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/clear_effects)
 	RegisterSignal(wearer, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
