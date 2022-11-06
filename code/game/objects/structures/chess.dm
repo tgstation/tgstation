@@ -8,7 +8,7 @@
 	max_integrity = 100
 
 /obj/structure/chess/wrench_act(mob/user, obj/item/tool)
-	if(src.flags_1 & HOLOGRAM_1)
+	if(flags_1 & HOLOGRAM_1)
 		return FALSE
 	to_chat(user, span_notice("You start to take apart the chess piece."))
 	if(!do_after(user, 0.5 SECONDS, target = src))
