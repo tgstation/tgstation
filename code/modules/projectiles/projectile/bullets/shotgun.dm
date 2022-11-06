@@ -49,26 +49,6 @@
 	color = "#FFFF00"
 	embedding = null
 
-/obj/projectile/bullet/shotgun_meteorslug
-	name = "meteorslug"
-	icon = 'icons/obj/meteor.dmi'
-	icon_state = "dust"
-	damage = 30
-	paralyze = 15
-	knockdown = 80
-	hitsound = 'sound/effects/meteorimpact.ogg'
-
-/obj/projectile/bullet/shotgun_meteorslug/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	if(ismovable(target))
-		var/atom/movable/M = target
-		var/atom/throw_target = get_edge_target_turf(M, get_dir(src, get_step_away(M, src)))
-		M.safe_throw_at(throw_target, 3, 2, force = MOVE_FORCE_EXTREMELY_STRONG)
-
-/obj/projectile/bullet/shotgun_meteorslug/Initialize(mapload)
-	. = ..()
-	SpinAnimation()
-
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
 	icon_state = "pellet"
