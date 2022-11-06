@@ -284,6 +284,9 @@
 		return
 	say("#[message]", bubble_type, spans, sanitize, language, ignore_spam, forced, filterproof)
 
+/datum/emote/imaginary_friend
+	mob_type_allowed_typecache = /mob/camera/imaginary_friend
+
 // We have to create our own since we can only show emotes to ourselves and our owner
 /datum/emote/imaginary_friend/run_emote(mob/user, params, type_override, intentional = FALSE)
 	user.log_talk(message, LOG_EMOTE)
