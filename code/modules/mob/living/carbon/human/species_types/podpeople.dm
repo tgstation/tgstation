@@ -12,10 +12,7 @@
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list("plants", "vines")
-	attack_verb = "slash"
-	attack_effect = ATTACK_EFFECT_CLAW
-	attack_sound = 'sound/weapons/slice.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
+
 	burnmod = 1.25
 	heatmod = 1.5
 	payday_modifier = 0.75
@@ -27,11 +24,11 @@
 	species_language_holder = /datum/language_holder/plant
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/pod,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/pod,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/pod,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/pod,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/pod,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/pod,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/pod,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/pod,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/pod,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
 	)
 

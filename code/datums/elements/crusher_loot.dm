@@ -4,7 +4,7 @@
  * Used for all the mobs droppin' crusher trophies
  */
 /datum/element/crusher_loot
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// Path of the trophy dropped
 	var/trophy_type

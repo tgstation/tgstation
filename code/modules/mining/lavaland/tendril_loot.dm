@@ -86,7 +86,7 @@
 
 /obj/item/rod_of_asclepius/update_icon_state()
 	. = ..()
-	icon_state = inhand_icon_state = "ascelpius_[activated ? "active" : "dormant"]"
+	icon_state = inhand_icon_state = "asclepius_[activated ? "active" : "dormant"]"
 
 /obj/item/rod_of_asclepius/vv_edit_var(vname, vval)
 	. = ..()
@@ -513,21 +513,25 @@
 /obj/item/reagent_containers/cup/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
+	fill_icon = 'icons/obj/lavaland/artefacts.dmi'
+	fill_icon_state = "potion_fill"
+	fill_icon_thresholds = list(0, 1)
+
+/obj/item/reagent_containers/cup/bottle/potion/update_overlays()
+	. = ..()
+	if(reagents?.total_volume)
+		. += "potionflask_cap"
 
 /obj/item/reagent_containers/cup/bottle/potion/flight
 	name = "strange elixir"
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/reagent_containers/cup/bottle/potion/update_icon_state()
-	icon_state = "potionflask[reagents?.total_volume ? null : "_empty"]"
-	return ..()
-
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
-	color = "#FFEBEB"
+	color = "#976230"
 
 /datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -631,7 +635,17 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF
 	clothing_flags = THICKMATERIAL
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/internal/regenerative_core/legion, /obj/item/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
+	allowed = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/pickaxe,
+		/obj/item/spear,
+		/obj/item/organ/internal/monster_core,
+		/obj/item/knife,
+		/obj/item/kinetic_crusher,
+		/obj/item/resonator,
+		/obj/item/melee/cleaving_saw,
+	)
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
@@ -648,6 +662,8 @@
 	name = "berserker helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "berserker"
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
 	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/berserk_mode)
 	cold_protection = HEAD
@@ -784,7 +800,7 @@
 	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
 
-/datum/action/cooldown/scan/IsAvailable()
+/datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
 	return ..() && isliving(owner)
 
 /datum/action/cooldown/scan/Activate(atom/scanned)
@@ -911,7 +927,7 @@
 		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/cut),
 		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/cloak),
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/shatter),
-		)
+	)
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()
@@ -1033,7 +1049,8 @@
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/hostile_target = target
-		hostile_target.LoseTarget()
+		if(hostile_target.target == user)
+			hostile_target.LoseTarget()
 	addtimer(CALLBACK(src, .proc/uncloak, user), 5 SECONDS, TIMER_UNIQUE)
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)

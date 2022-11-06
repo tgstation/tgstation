@@ -9,7 +9,7 @@
 
 #define DENY_SOUND_COOLDOWN (2 SECONDS)
 /datum/element/deliver_first
-	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	///typepath of the area we will be allowed to be opened in
 	var/goal_area_type

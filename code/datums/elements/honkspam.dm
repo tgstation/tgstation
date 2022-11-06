@@ -1,6 +1,5 @@
 /// Attachable to items. Plays a bikehorn sound whenever attack_self is called (with a cooldown).
 /datum/element/honkspam
-	element_flags = ELEMENT_DETACH
 
 /datum/element/honkspam/Attach(datum/target)
 	. = ..()
