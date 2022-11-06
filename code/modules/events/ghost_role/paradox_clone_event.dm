@@ -80,7 +80,7 @@
 
 	return SUCCESSFUL_SPAWN
 
-/datum/round_event/paradox_clone_event/announce(fake)
+/datum/round_event/ghost_role/paradox_clone/announce(fake)
 	priority_announce("A time-space anomaly has been detected on the station, be aware of possible discrepancies.", "General Alert")
 
 
