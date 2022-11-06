@@ -77,6 +77,8 @@
 
 /obj/projectile/bullet/cannonball/meteorslug
 	name = "meteorslug"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "small"
 	damage = 40 //REALLY not as bad as a real cannonball but they'll fucking hurt
 	paralyze = 1 SECONDS //The original stunned, okay?
 	knockdown = 8 SECONDS
