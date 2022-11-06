@@ -658,12 +658,21 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/medkit
+	name = "Syndicate Combat Medic Kit"
+	desc = "This first aid kit is a suspicious black and red. Included is a number of atropine medipens \
+			for rapid stabilization and detonation prevention, sutures and regenerative mesh for wound treatment, and patches \
+			for faster healing on the field. Also comes with basic medical tools and sterlizer."
+	item = /obj/item/storage/medkit/tactical
+	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
-	desc = "This first aid kit is a suspicious brown and red. Included is an unloaded combat chemical injector \
+	desc = "This first aid kit is a suspicious black and red. Included is an unloaded combat chemical injector \
 			for suit-penetrative chem delivery, a medical science night vision HUD for quick identification of injured personnel and chemical supplies, \
 			improved medical supplies, including Interdyne-approved pharmaceuticals, a hacked cybernetic surgery toolset arm implant, \
 			and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."
-	item = /obj/item/storage/medkit/tactical
+	item = /obj/item/storage/medkit/tactical/premium
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 

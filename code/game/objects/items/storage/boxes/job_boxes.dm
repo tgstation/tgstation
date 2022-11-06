@@ -64,7 +64,7 @@
 // Syndie survival box
 /obj/item/storage/box/survival/syndie
 	name = "operation-ready survival box"
-	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank."
+	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank and a handy guide on survival."
 	icon_state = "syndiebox"
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
@@ -76,6 +76,7 @@
 	new /obj/item/crowbar/red(src)
 	new /obj/item/screwdriver/red(src)
 	new /obj/item/weldingtool/mini(src)
+	new /obj/item/paper/fluff/operative(src)
 
 /obj/item/storage/box/survival/centcom
 	name = "emergency response survival box"

@@ -388,15 +388,16 @@
 	device = /obj/item/surgical_processor/mod/preloaded
 
 /obj/item/surgical_processor/mod/preloaded
-	loaded_surgeries = list(/datum/surgery/advanced/pacify,
-				/datum/surgery/healing/combo/upgraded/femto,
-				/datum/surgery/advanced/brainwashing,
-				/datum/surgery/advanced/bioware/nerve_splicing,
-				/datum/surgery/advanced/bioware/nerve_grounding,
-				/datum/surgery/advanced/bioware/vein_threading,
-				/datum/surgery/advanced/bioware/muscled_veins,
-				/datum/surgery/advanced/bioware/ligament_hook,
-				/datum/surgery/advanced/bioware/ligament_reinforcement,
-				/datum/surgery/advanced/bioware/cortex_imprint,
-				/datum/surgery/advanced/bioware/cortex_folding
-				)
+	loaded_surgeries = list(
+		/datum/surgery/advanced/pacify,
+		/datum/surgery/healing/combo/upgraded/femto,
+		/datum/surgery/advanced/brainwashing,
+		/datum/surgery/advanced/bioware/nerve_splicing,
+		/datum/surgery/advanced/bioware/nerve_grounding,
+		/datum/surgery/advanced/bioware/vein_threading,
+		/datum/surgery/advanced/bioware/muscled_veins,
+		/datum/surgery/advanced/bioware/ligament_hook,
+		/datum/surgery/advanced/bioware/ligament_reinforcement,
+		/datum/surgery/advanced/bioware/cortex_imprint,
+		/datum/surgery/advanced/bioware/cortex_folding
+	)

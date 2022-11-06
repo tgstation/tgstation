@@ -122,15 +122,19 @@
 		new /obj/item/reagent_containers/pill/patch/aiuri(src)
 
 /obj/item/storage/box/evilmeds
-	name = "box of experimental medicine"
-	desc = "Contains a large number of beakers filled with experimental medical supplies. Straight from Interdyne Pharmaceutics!"
+	name = "box of premium medicine"
+	desc = "Contains a large number of beakers filled with premium medical supplies. Straight from Interdyne Pharmaceutics!"
 	icon_state = "syndiebox"
 	illustration = "beaker"
 
 /obj/item/storage/box/evilmeds/PopulateContents()
-	new /obj/item/reagent_containers/cup/beaker/meta/omnizine(src)
-	new /obj/item/reagent_containers/cup/beaker/meta/bruvital(src)
-	new /obj/item/reagent_containers/cup/beaker/meta/alivuri(src)
-	new /obj/item/reagent_containers/cup/beaker/meta/detoxiver(src)
-	new /obj/item/reagent_containers/cup/beaker/meta/atropine(src)
-	new /obj/item/reagent_containers/cup/beaker/meta/salbutamol(src)
+	var/list/items_inside = list(
+		/obj/item/reagent_containers/cup/beaker/meta/omnizine = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/sal_acid = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/oxandrolone = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/pen_acid = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/atropine = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/salbutamol = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/rezadone = 1
+		)
+	generate_items_inside(items_inside, src)
