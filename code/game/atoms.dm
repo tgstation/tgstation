@@ -335,6 +335,7 @@
 
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
+	// Checking length(overlays) before cutting has significant speed benefits
 	if (length(overlays))
 		overlays.Cut()
 

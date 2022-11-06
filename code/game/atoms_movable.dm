@@ -196,6 +196,7 @@
 
 	vis_locs = null //clears this atom out of all viscontents
 
+	// Checking length(vis_contents) before cutting has significant speed benefits
 	if (length(vis_contents))
 		vis_contents.Cut()
 
