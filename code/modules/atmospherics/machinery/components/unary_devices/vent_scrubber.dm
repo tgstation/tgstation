@@ -1,6 +1,3 @@
-#define SIPHONING 0
-#define SCRUBBING 1
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon_state = "scrub_map-3"
 
@@ -18,8 +15,8 @@
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 	processing_flags = NONE
 
-	///The mode of the scrubber (SCRUBBING or SIPHONING)
-	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
+	///The mode of the scrubber (ATMOS_DIRECTION_SCRUBBING or ATMOS_DIRECTION_SIPHONING)
+	var/scrubbing = ATMOS_DIRECTION_SCRUBBING
 	///The list of gases we are filtering
 	var/list/filter_types = list(/datum/gas/carbon_dioxide)
 	///Rate of the scrubber to remove gases from the air
@@ -157,7 +154,7 @@
 		icon_state = "scrub_off"
 		return
 
-	if(scrubbing & SCRUBBING)
+	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
 		if(widenet)
 			icon_state = "scrub_wide"
 		else
@@ -222,7 +219,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	if(welded || !is_operational)
 		return FALSE
-	if(!nodes[1] || !on || (!filter_types && scrubbing != SIPHONING))
+	if(!nodes[1] || !on || (!filter_types && scrubbing != ATMOS_DIRECTION_SIPHONING))
 		on = FALSE
 		return FALSE
 
@@ -231,7 +228,7 @@
 	if(!changed_gas)
 		return FALSE
 
-	if(scrubbing == SIPHONING || length(filter_types & changed_gas))
+	if(scrubbing == ATMOS_DIRECTION_SIPHONING || length(filter_types & changed_gas))
 		return TRUE
 
 	return FALSE
@@ -268,7 +265,7 @@
 	if(air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE)
 		return FALSE
 
-	if(scrubbing == SCRUBBING)
+	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
 		if(length(env_gases & filter_types))
 			///contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
 			var/datum/gas_mixture/filtered_out = new
@@ -389,7 +386,7 @@
 	active_power_usage = initial(idle_power_usage)
 
 	var/new_power_usage = 0
-	if(scrubbing == SCRUBBING)
+	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
 		new_power_usage = idle_power_usage + idle_power_usage * length(filter_types)
 		update_use_power(IDLE_POWER_USE)
 	else
@@ -399,7 +396,7 @@
 	if(widenet)
 		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
 
-	update_mode_power_usage(scrubbing == SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
+	update_mode_power_usage(scrubbing == ATMOS_DIRECTION_SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	. = ..()
@@ -521,6 +518,3 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
 	..()
 	on = FALSE
-
-#undef SIPHONING
-#undef SCRUBBING

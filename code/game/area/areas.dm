@@ -115,7 +115,9 @@
 	///Used to decide what kind of reverb the area makes sound have
 	var/sound_environment = SOUND_ENVIRONMENT_NONE
 
-	var/list/air_vent_info = list()
+	/// List of all air vents in the area
+	var/list/obj/machinery/atmospherics/components/unary/vent_pump/air_vents = list()
+
 	var/list/air_scrub_info = list()
 
 /**
@@ -276,6 +278,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	GLOB.areas -= src
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
+	air_vents = null
 	return ..()
 
 /**

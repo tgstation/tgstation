@@ -1,9 +1,4 @@
-#define EXT_BOUND 1
-#define INT_BOUND 2
 #define NO_BOUND 3
-
-#define SIPHONING 0
-#define RELEASING 1
 
 /obj/machinery/atmospherics/components/unary/vent_pump
 	icon_state = "vent_map-3"
@@ -21,16 +16,16 @@
 	pipe_state = "uvent"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
-	///Direction of pumping the gas (RELEASING or SIPHONING)
-	var/pump_direction = RELEASING
-	///Should we check internal pressure, external pressure, both or none? (EXT_BOUND, INT_BOUND, NO_BOUND)
-	var/pressure_checks = EXT_BOUND
+	///Direction of pumping the gas (ATMOS_DIRECTION_RELEASING or ATMOS_DIRECTION_SIPHONING)
+	var/pump_direction = ATMOS_DIRECTION_RELEASING
+	///Should we check internal pressure, external pressure, both or none? (ATMOS_EXTERNAL_BOUND, ATMOS_INTERNAL_BOUND, NO_BOUND)
+	var/pressure_checks = ATMOS_EXTERNAL_BOUND
 	///The external pressure threshold (default 101 kPa)
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	///The internal pressure threshold (default 0 kPa)
 	var/internal_pressure_bound = 0
-	// EXT_BOUND: Do not pass external_pressure_bound
-	// INT_BOUND: Do not pass internal_pressure_bound
+	// ATMOS_EXTERNAL_BOUND: Do not pass external_pressure_bound
+	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
 	///Frequency id for connecting to the NTNet
@@ -47,10 +42,16 @@
 		id_tag = SSnetworks.assign_random_name()
 	. = ..()
 
+/obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
+	. = ..()
+
+	var/area/area = get_area(src)
+	LAZYADD(area.air_vents, src)
+
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	var/area/vent_area = get_area(src)
 	if(vent_area)
-		vent_area.air_vent_info -= id_tag
+		vent_area.air_vents -= src
 		GLOB.air_vent_names -= id_tag
 
 	SSradio.remove_object(src,frequency)
@@ -74,14 +75,14 @@
 			icon_state = "vent_off"
 			return
 
-		if(pump_direction & RELEASING)
+		if(pump_direction & ATMOS_DIRECTION_RELEASING)
 			icon_state = "vent_out-off"
 		else // pump_direction == SIPHONING
 			icon_state = "vent_in-off"
 		return
 
 	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
-		if(pump_direction & RELEASING)
+		if(pump_direction & ATMOS_DIRECTION_RELEASING)
 			icon_state = "vent_out"
 			flick("vent_out-starting", src)
 		else // pump_direction == SIPHONING
@@ -89,7 +90,7 @@
 			flick("vent_in-starting", src)
 		return
 
-	if(pump_direction & RELEASING)
+	if(pump_direction & ATMOS_DIRECTION_RELEASING)
 		icon_state = "vent_out"
 	else // pump_direction == SIPHONING
 		icon_state = "vent_in"
@@ -108,12 +109,12 @@
 	var/datum/gas_mixture/environment = us.return_air()
 	var/environment_pressure = environment.return_pressure()
 
-	if(pump_direction & RELEASING) // internal -> external
+	if(pump_direction & ATMOS_DIRECTION_RELEASING) // internal -> external
 		var/pressure_delta = 10000
 
-		if(pressure_checks&EXT_BOUND)
+		if(pressure_checks&ATMOS_EXTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
-		if(pressure_checks&INT_BOUND)
+		if(pressure_checks&ATMOS_INTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (air_contents.return_pressure() - internal_pressure_bound))
 
 		if(pressure_delta > 0)
@@ -129,9 +130,9 @@
 
 	else // external -> internal
 		var/pressure_delta = 10000
-		if(pressure_checks&EXT_BOUND)
+		if(pressure_checks&ATMOS_EXTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
-		if(pressure_checks&INT_BOUND)
+		if(pressure_checks&ATMOS_INTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (internal_pressure_bound - air_contents.return_pressure()))
 
 		if(pressure_delta > 0 && environment.temperature > 0)
@@ -153,6 +154,7 @@
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
 
+#ifdef MBTODO
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return
@@ -180,6 +182,7 @@
 	vent_area.air_vent_info[id_tag] = signal.data
 
 	radio_connection.post_signal(src, signal, radio_filter_out)
+#endif
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
 	. = ..()
@@ -195,9 +198,9 @@
 	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
-	broadcast_status()
 	..()
 
+#ifdef MBTODO
 /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(!is_operational)
 		return
@@ -270,6 +273,7 @@
 		// log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 	broadcast_status()
 	update_appearance()
+#endif
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()
@@ -347,8 +351,8 @@
 	icon_state = "vent_map_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
-	pump_direction = SIPHONING
-	pressure_checks = INT_BOUND
+	pump_direction = ATMOS_DIRECTION_SIPHONING
+	pressure_checks = ATMOS_INTERNAL_BOUND
 	internal_pressure_bound = 4000
 	external_pressure_bound = 0
 
@@ -393,8 +397,8 @@
 	icon_state = "map_vent_on-4"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
-	pump_direction = SIPHONING
-	pressure_checks = INT_BOUND
+	pump_direction = ATMOS_DIRECTION_SIPHONING
+	pressure_checks = ATMOS_INTERNAL_BOUND
 	internal_pressure_bound = 2000
 	external_pressure_bound = 0
 
@@ -418,9 +422,4 @@
 	piping_layer = 4
 	icon_state = "vent_map_siphon_on-4"
 
-#undef INT_BOUND
-#undef EXT_BOUND
 #undef NO_BOUND
-
-#undef SIPHONING
-#undef RELEASING

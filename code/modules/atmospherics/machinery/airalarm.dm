@@ -227,24 +227,22 @@
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
-		for(var/id_tag in my_area.air_vent_info)
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 			var/long_name = GLOB.air_vent_names[id_tag]
-			var/list/info = my_area.air_vent_info[id_tag]
-			if(!info || info["frequency"] != frequency)
-				continue
 			data["vents"] += list(list(
-					"id_tag" = id_tag,
-					"long_name" = sanitize(long_name),
-					"power" = info["power"],
-					"checks" = info["checks"],
-					"excheck" = info["checks"]&1,
-					"incheck" = info["checks"]&2,
-					"direction" = info["direction"],
-					"external" = info["external"],
-					"internal" = info["internal"],
-					"extdefault"= (info["external"] == ONE_ATMOSPHERE),
-					"intdefault"= (info["internal"] == 0)
-				))
+				"ref" = REF(vent),
+				"id_tag" = id_tag,
+				"long_name" = sanitize(long_name),
+				"power" = vent.on,
+				"checks" = vent.pressure_checks,
+				"excheck" = vent.pressure_checks & ATMOS_EXTERNAL_BOUND,
+				"incheck" = vent.pressure_checks & ATMOS_INTERNAL_BOUND,
+				"direction" = vent.pump_direction,
+				"external" = vent.external_pressure_bound,
+				"internal" = vent.internal_pressure_bound,
+				"extdefault" = (vent.external_pressure_bound == ONE_ATMOSPHERE),
+				"intdefault" = (vent.internal_pressure_bound == 0)
+			))
 		data["scrubbers"] = list()
 		for(var/id_tag in my_area.air_scrub_info)
 			var/long_name = GLOB.air_scrub_names[id_tag]
@@ -309,7 +307,12 @@
 		return
 	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
-	var/device_id = params["id_tag"]
+
+	var/mob/user = usr
+	var/area/area = get_area(src)
+	ASSERT(!isnull(area))
+
+	#ifdef MBTODO
 	switch(action)
 		if("lock")
 			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
@@ -368,7 +371,84 @@
 			if(alarm_manager.clear_alarm(ALARM_ATMOS))
 				post_alert(0)
 			. = TRUE
+	#endif
+
+	var/ref = params["ref"]
+
+	// Possible machines this can refer to
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = isnull(ref) ? null : locate(ref) in area.air_vents
+
+	switch (action)
+		if ("power")
+			// MBTODO: Scrubbers
+			if (!isnull(vent))
+				vent.on = !!params["val"]
+				vent.update_appearance(UPDATE_ICON)
+		if ("direction")
+			var/value = params["val"]
+
+			// MBTODO: Scrubbers
+			if (!isnull(vent))
+				if (value == ATMOS_DIRECTION_SIPHONING || value == ATMOS_DIRECTION_RELEASING)
+					vent.pump_direction = value
+					vent.update_appearance(UPDATE_ICON)
+		if ("incheck")
+			if (isnull(vent))
+				return TRUE
+
+			var/new_checks = clamp((text2num(params["val"]) || 0) ^ ATMOS_INTERNAL_BOUND, NONE, ATMOS_BOUND_MAX)
+			vent.pressure_checks = new_checks
+			vent.update_appearance(UPDATE_ICON)
+		if ("excheck")
+			if (isnull(vent))
+				return TRUE
+
+			var/new_checks = clamp((text2num(params["val"]) || 0) ^ ATMOS_EXTERNAL_BOUND, NONE, ATMOS_BOUND_MAX)
+			vent.pressure_checks = new_checks
+			vent.update_appearance(UPDATE_ICON)
+		if ("set_internal_pressure")
+			if (isnull(vent))
+				return TRUE
+
+			var/old_pressure = vent.internal_pressure_bound
+			var/new_pressure = clamp(text2num(params["value"]), 0, ATMOS_PUMP_MAX_PRESSURE)
+			vent.internal_pressure_bound = new_pressure
+			if (old_pressure != new_pressure)
+				vent.investigate_log(" internal pressure was set to [new_pressure] by [key_name(user)]", INVESTIGATE_ATMOS)
+		if ("reset_internal_pressure")
+			if (isnull(vent))
+				return TRUE
+
+			if (vent.internal_pressure_bound != 0)
+				vent.internal_pressure_bound = 0
+				vent.investigate_log(" internal pressure was reset by [key_name(user)]", INVESTIGATE_ATMOS)
+		if ("set_external_pressure")
+			if (isnull(vent))
+				return TRUE
+
+			var/old_pressure = vent.external_pressure_bound
+			var/new_pressure = clamp(text2num(params["value"]), 0, ATMOS_PUMP_MAX_PRESSURE)
+
+			if (old_pressure == new_pressure)
+				return TRUE
+
+			vent.external_pressure_bound = new_pressure
+			vent.investigate_log(" external pressure was set to [new_pressure] by [key_name(user)]", INVESTIGATE_ATMOS)
+			vent.update_appearance(UPDATE_ICON)
+		if ("reset_external_pressure")
+			if (isnull(vent))
+				return TRUE
+
+			if (vent.external_pressure_bound == ATMOS_PUMP_MAX_PRESSURE)
+				return TRUE
+
+			vent.external_pressure_bound = ATMOS_PUMP_MAX_PRESSURE
+			vent.investigate_log(" internal pressure was reset by [key_name(user)]", INVESTIGATE_ATMOS)
+			vent.update_appearance(UPDATE_ICON)
+
 	update_appearance()
+
+	return TRUE
 
 
 /obj/machinery/airalarm/proc/reset(wire)
@@ -433,6 +513,7 @@
 		if(AALARM_MODE_FLOOD)
 			return "Flood"
 
+#ifdef MBTODO
 /obj/machinery/airalarm/proc/apply_mode(atom/signal_source)
 	switch(mode)
 		if(AALARM_MODE_SCRUBBING)
@@ -554,6 +635,10 @@
 					"set_internal_pressure" = 0
 				), signal_source)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, signal_source)
+#endif
+
+/obj/machinery/airalarm/proc/apply_mode(atom/signal_source)
+	// MBTODO
 
 /obj/machinery/airalarm/update_appearance(updates)
 	. = ..()
@@ -1449,7 +1534,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/on_duplicate_removed)
 		vent_duplicates += component
 		component.connected_alarm = connected_alarm
-		component.vents.possible_options = connected_alarm.my_area.air_vent_info
+		component.vents.possible_options = extract_vent_tags(connected_alarm.my_area)
 
 /obj/item/circuit_component/air_alarm_vents/proc/on_duplicate_removed(datum/source)
 	SIGNAL_HANDLER
@@ -1504,7 +1589,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	. = ..()
 	if(istype(shell, /obj/machinery/airalarm))
 		connected_alarm = shell
-		vents.possible_options = connected_alarm.my_area.air_vent_info
+		vents.possible_options = extract_vent_tags(connected_alarm.my_area)
 
 /obj/item/circuit_component/air_alarm_vents/unregister_usb_parent(atom/movable/shell)
 	connected_alarm = null
@@ -1532,9 +1617,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 			"power" = FALSE,
 		))
 
-#define EXT_BOUND 1
-#define INT_BOUND 2
 #define NO_BOUND 3
+
+/obj/item/circuit_component/air_alarm_vents/proc/extract_vent_tags(area/area)
+	var/list/tags = list()
+
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in area.air_vents)
+		tags += vent.id_tag
+
+	return tags
+
+/obj/item/circuit_component/air_alarm_vents/proc/get_vent(vent_id)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in connected_alarm.my_area.air_vents)
+		if (vent.id_tag == vent_id)
+			return vent
+
+	return null
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_external(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1544,19 +1642,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
-	var/list/info = connected_alarm.my_area.air_vent_info[vent_id]
-	if(!info || info["frequency"] != connected_alarm.frequency)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = get_vent(vents.value)
+	if(isnull(vent))
 		return
 
 	if(port == enable_external)
-		connected_alarm.send_signal(vent_id, list(
-			"checks" = (info["checks"] | EXT_BOUND),
-		))
+		vent.pressure_checks |= ATMOS_EXTERNAL_BOUND
 	else
-		connected_alarm.send_signal(vent_id, list(
-			"checks" = (info["checks"] & ~EXT_BOUND),
-		))
+		vent.pressure_checks &= ~ATMOS_EXTERNAL_BOUND
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_internal(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1566,19 +1659,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
-	var/list/info = connected_alarm.my_area.air_vent_info[vent_id]
-	if(!info || info["frequency"] != connected_alarm.frequency)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = get_vent(vents.value)
+	if(isnull(vent))
 		return
 
 	if(port == enable_internal)
-		connected_alarm.send_signal(vent_id, list(
-			"checks" = (info["checks"] | INT_BOUND),
-		))
+		vent.pressure_checks |= ATMOS_INTERNAL_BOUND
 	else
-		connected_alarm.send_signal(vent_id, list(
-			"checks" = (info["checks"] & ~INT_BOUND),
-		))
+		vent.pressure_checks &= ~ATMOS_INTERNAL_BOUND
 
 /obj/item/circuit_component/air_alarm_vents/proc/set_internal_pressure(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1588,11 +1676,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = get_vent(vents.value)
+	if(isnull(vent))
+		return
 
-	connected_alarm.send_signal(vent_id, list(
-		"set_internal_pressure" = internal_pressure.value || 0,
-	))
+	vent.internal_pressure_bound = clamp(internal_pressure.value, 0, ATMOS_PUMP_MAX_PRESSURE)
 
 /obj/item/circuit_component/air_alarm_vents/proc/set_external_pressure(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1602,12 +1690,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = get_vent(vents.value)
+	if(isnull(vent))
+		return
 
-	connected_alarm.send_signal(vent_id, list(
-		"set_external_pressure" = external_pressure.value || 0,
-	))
-
+	vent.internal_pressure_bound = clamp(external_pressure.value, 0, ATMOS_PUMP_MAX_PRESSURE)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_siphon(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1633,22 +1720,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
-
-	var/list/info = connected_alarm.my_area.air_vent_info[vent_id]
-	if(!info || info["frequency"] != connected_alarm.frequency)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = get_vent(vents.value)
+	if(isnull(vent))
 		return
 
-	enabled.set_value(info["power"])
-	is_siphoning.set_value(!info["direction"])
-	internal_on.set_value(!!(info["checks"] & INT_BOUND))
-	current_internal_pressure.set_value(info["internal"])
-	external_on.set_value(!!(info["checks"] & EXT_BOUND))
-	current_external_pressure.set_value(info["external"])
+	enabled.set_value(vent.on)
+	is_siphoning.set_value(vent.pump_direction == ATMOS_DIRECTION_SIPHONING)
+	internal_on.set_value(!!(vent.pressure_checks & ATMOS_INTERNAL_BOUND))
+	current_internal_pressure.set_value(vent.internal_pressure_bound)
+	external_on.set_value(!!(vent.pressure_checks & ATMOS_EXTERNAL_BOUND))
+	current_external_pressure.set_value(vent.external_pressure_bound)
 	update_received.set_value(COMPONENT_SIGNAL)
 
-#undef EXT_BOUND
-#undef INT_BOUND
 #undef NO_BOUND
 
 #undef AALARM_MODE_SCRUBBING
