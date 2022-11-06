@@ -288,9 +288,9 @@
 		UnregisterSignal(friend, list(COMSIG_MOB_STATCHANGE, COMSIG_PARENT_QDELETING))
 
 		friend.forceMove(release_turf)
-		if(!friend.revive(HEAL_ALL, force_grab_ghost = TRUE))
+		// Heals them back to state one
+		if(!friend.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE))
 			continue
-		friend.grab_ghost(force = TRUE)
 		playsound(release_turf, consumed_mobs, 50, TRUE, -1)
 		to_chat(friend, span_clown("You leave [source]'s warm embrace, and feel ready to take on the world."))
 
