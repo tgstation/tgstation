@@ -27,7 +27,7 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	clear_effects()
 
-/datum/component/onwear_mood/proc/affect_wearer(mob/target)
+/datum/component/onwear_mood/proc/affect_wearer(datum/source, mob/target)
 	SIGNAL_HANDLER
 	target.add_mood_event(REF(src), saved_event)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
