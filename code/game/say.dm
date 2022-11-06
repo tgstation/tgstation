@@ -37,8 +37,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 
 /**
- * Attempts to / checks if our movable can speak the passed message.
- * CAN include feedback messages about why someone can or can't speak
+ * Checks if our movable can speak the provided message, passing it through filters
+ * and spam detection. Does not call can_speak. CAN include feedback messages about
+ * why someone can or can't speak
  *
  * Used in [proc/say] and other methods of speech (radios) after a movable has inputted some message.
  * If you just want to check if the movable is able to speak in character, use [proc/can_speak] instead.
@@ -46,7 +47,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
  * Parameters:
  * - message (string): the original message
  * - ignore_spam (bool): should we ignore spam?
- * - forced (null|str): what was it forced by? null if voluntary
+ * - forced (null|string): what was it forced by? null if voluntary
  * - filterproof (bool): are we filterproof?
  *
  * Returns:
