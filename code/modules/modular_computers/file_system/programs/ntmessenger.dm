@@ -201,11 +201,8 @@
 	var/list/data = ..()
 
 	data["owner"] = computer.saved_identification
-	data["ringer_status"] = ringer_status
-	data["sending_and_receiving"] = sending_and_receiving
 	data["sortByJob"] = sort_by_job
 	data["isSilicon"] = issilicon(user)
-	data["viewing_messages"] = viewing_messages
 
 	return data
 
@@ -214,6 +211,9 @@
 
 	data["messages"] = messages
 	data["messengers"] = ScrubMessengerList()
+	data["ringer_status"] = ringer_status
+	data["sending_and_receiving"] = sending_and_receiving
+	data["viewing_messages"] = viewing_messages
 	data["photo"] = photo_path
 	data["canSpam"] = spam_mode
 

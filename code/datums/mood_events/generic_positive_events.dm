@@ -329,3 +329,13 @@
 	description = "You are all loved by the Universe. I’m not alone, and you aren’t either."
 	mood_change = 14
 	timeout = 10 SECONDS
+
+/datum/mood_event/sabrage_success
+	description = "I pulled that sabrage stunt off! Feels good to be a show-off."
+	mood_change = 2
+	timeout = 4 MINUTES
+
+/datum/mood_event/sabrage_witness
+	description = "I saw someone pop the cork off a champagne bottle in quite a radical fashion."
+	mood_change = 1
+	timeout = 2 MINUTES

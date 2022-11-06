@@ -450,6 +450,16 @@
 	activate_message = span_notice("You feel that you can recognize special, minute details on ID cards.")
 	deactivate_message = span_notice("Was there something special about certain IDs?")
 
+/obj/item/skillchip/sabrage
+	name = "Le S48R4G3 skillchip"
+	auto_traits = list(TRAIT_SABRAGE_PRO)
+	skill_name = "Sabrage Proficiency"
+	skill_description = "Grants the user knowledge of the intricate structure of a champagne bottle's structural weakness at the neck, \
+	improving their proficiency at being a show-off at officer parties."
+	skill_icon = "bottle-droplet"
+	activate_message = span_notice("You feel a new understanding of champagne bottles and methods on how to remove their corks.")
+	deactivate_message = span_notice("The knowledge of the subtle physics residing inside champagne bottles fades from your mind.")
+
 /obj/item/skillchip/brainwashing
 	name = "suspicious skillchip"
 	auto_traits = list(TRAIT_BRAINWASHING)
