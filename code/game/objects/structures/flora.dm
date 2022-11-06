@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	if(user.combat_mode)
 		return ..()
 
-	if(can_uproot && is_type_in_typecache(used_item, uprooting_tools))
+	if(can_uproot && is_type_in_typecache(used_item, uprooting_tools) && !(src.flags_1 & HOLOGRAM_1))
 		if(uprooted)
 			user.visible_message(span_notice("[user] starts to replant [src]..."),
 				span_notice("You start to replant [src]..."))
@@ -183,6 +183,8 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
  */
 /obj/structure/flora/proc/can_harvest(mob/user, obj/item/harvesting_item)
 
+	if(src.flags_1 & HOLOGRAM_1)
+		return FALSE
 	if(harvested || !harvestable)
 		return null
 
