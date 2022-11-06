@@ -20,17 +20,17 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
 	))
 
-/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
-	if(!try_speak(message, ignore_spam, forced))
+/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = FALSE, message_range = 7, datum/saymode/saymode = null)
+	if(!try_speak(message, ignore_spam, forced, filterproof))
 		return
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-	if(message == "" || !message)
+	if(!message || message == "")
 		return
 	spans |= speech_span
 	if(!language)
 		language = get_selected_language()
-	send_speech(message, message_range, src, , spans, message_language=language)
+	send_speech(message, message_range, src, bubble_type, spans, message_language = language, forced = forced)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
@@ -40,10 +40,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
  * Attempts to / checks if our movable can speak the passed message.
  * CAN include feedback messages about why someone can or can't speak
  *
- * Used in [proc/say] and other methods of speech (radios)) after a movable has inputted some message.
- * If you just want to check if the movable is able to speak in character, use [proc/can_speak] instead.)
+ * Used in [proc/say] and other methods of speech (radios) after a movable has inputted some message.
+ * If you just want to check if the movable is able to speak in character, use [proc/can_speak] instead.
+ *
+ * Parameters:
+ * - message (string): the original message
+ * - ignore_spam (bool): should we ignore spam?
+ * - forced (bool): was it forced?
+ * - filterproof (bool): are we filterproof?
+ *
+ * Returns:
+ * 	TRUE of FASE depending on if our movable can speak
  */
-/atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = FALSE)
+/atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = FALSE, filterproof = FALSE)
 	return TRUE
 
 /**
@@ -63,7 +72,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /atom/movable/proc/can_speak(allow_mimes = FALSE)
 	return TRUE
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list())
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE)
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
 	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
