@@ -168,8 +168,7 @@
 	if(!client) //nobody home
 		return
 
-	var/list/friend_clients = group_clients()
-	friend_clients -= src.client
+	var/list/friend_clients = group_clients() - src.client
 	//Remove old image from group
 	remove_image_from_clients(current_image, friend_clients)
 
@@ -285,9 +284,8 @@
 	var/dead_rendered = "<span class='game say'>[span_name("[name] (Imaginary friend of [owner])")] <span class='message'>[quoted_message]</span></span>"
 
 	var/language = owner.language_holder.get_selected_language()
-	Hear(rendered, src, language, message, null, spans, message_mods)
-	var/group = owner.imaginary_group.Copy()
-	group -= src
+	Hear(rendered, src, language, message, null, spans, message_mods) // We always hear what we say
+	var/group = owner.imaginary_group - src // The people in our group don't, so we have to exclude ourselves not to hear twice
 	for(var/mob/person in group)
 		if(eavesdrop_range && get_dist(src, person) > 1 + eavesdrop_range)
 			var/new_rendered = "<span class='game say'>[span_name("[name]")] <span class='message'>[say_quote(say_emphasis(eavesdropped_message), spans, message_mods)]</span></span>"
@@ -297,9 +295,9 @@
 
 	// Speech bubble, but only for those who have runechat off
 	var/list/speech_bubble_recipients = list()
-	for(var/client/group_client in group_clients())
-		if(group_client && (!group_client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
-			speech_bubble_recipients.Add(group_client)
+	for(var/mob/user as anything in (group + src)) // Add ourselves back in
+		if(user.client && (!user.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
+			speech_bubble_recipients.Add(user.client)
 
 	var/image/bubble = image('icons/mob/effects/talk.dmi', src, "[bubble_icon][say_test(message)]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
@@ -402,30 +400,6 @@
 /datum/emote/imaginary_friend/custom/replace_pronoun(mob/user, message)
 	return message
 
-// I LOVE copy pasting code!!
-/mob/camera/imaginary_friend/spin(spintime, speed)
-	set waitfor = 0
-	var/D = dir
-	if((spintime < 1)||(speed < 1)||!spintime||!speed)
-		return
-
-	flags_1 |= IS_SPINNING_1
-	while(spintime >= speed)
-		sleep(speed)
-		switch(D)
-			if(NORTH)
-				D = EAST
-			if(SOUTH)
-				D = WEST
-			if(EAST)
-				D = SOUTH
-			if(WEST)
-				D = NORTH
-		setDir(D)
-		Show() // We need this otherwise it won't work (also the reason we need to copy-paste it over)
-		spintime -= speed
-	flags_1 &= ~IS_SPINNING_1
-
 // Another snowflake proc, when will they end... should have refactored it differently
 /mob/camera/imaginary_friend/point_at(atom/pointed_atom)
 	if(!isturf(loc))
@@ -485,13 +459,9 @@
 	abstract_move(NewLoc)
 	move_delay = world.time + 1
 
-/mob/camera/imaginary_friend/keybind_face_direction(direction)
+/mob/camera/imaginary_friend/setDir(newdir)
 	. = ..()
-	Show()
-
-/mob/camera/imaginary_friend/abstract_move(atom/destination)
-	. = ..()
-	Show()
+	Show() // The image does not actually update until Show() gets called
 
 /mob/camera/imaginary_friend/proc/recall()
 	if(!owner || loc == owner)
