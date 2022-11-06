@@ -50,16 +50,17 @@
 	S.domutcheck()
 
 	//cloning clothing/ID/bag
-	var/obj/item/clothing/under/sensor_clothes = S.w_uniform
-	var/list/all_items = S.get_all_contents()
-	var/obj/item/modular_computer/tablet/pda/messenger = locate(/obj/item/modular_computer/tablet/pda/) in S
 	S.mind.assigned_role = carbon_cloned.mind.assigned_role
 
 	if(isplasmaman(carbon_cloned))
 		S.equipOutfit(carbon_cloned.mind.assigned_role.plasmaman_outfit)
 		S.internal = S.get_item_for_held_index(1)
-	S.backpack = human_cloned.backpack
 	S.equipOutfit(carbon_cloned.mind.assigned_role.outfit)
+
+	var/obj/item/clothing/under/sensor_clothes = S.w_uniform
+	var/list/all_items = S.get_all_contents()
+	var/obj/item/modular_computer/tablet/pda/messenger = locate(/obj/item/modular_computer/tablet/pda/) in S
+	S.backpack = human_cloned.backpack
 	for(var/charter in all_items)
 		if(istype(charter, /obj/item/station_charter))
 			qdel(charter) //so there wont be two station charters
@@ -68,15 +69,14 @@
 		S.update_suit_sensors()
 	if(messenger)
 		messenger.invisible = TRUE //clone doesnt show up on PDA message list
-	playsound(S, 'sound/weapons/plasma_cutter.ogg', 50, TRUE) //debug sound, remove later
 
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Paradox Clone by an event.")
 	S.log_message("was spawned as a Paradox Clone by an event.", LOG_GAME)
 	spawned_mobs += S
-	playsound(S, 'sound/weapons/emitter.ogg', 50, TRUE)
+	playsound(S, 'sound/weapons/zapbang.ogg', 50, TRUE)
 	new /obj/item/storage/toolbox/mechanical(S.loc) //so they dont get stuck in maints
 
-	priority_announce("Space-time anomalies detected on the station. There is no additional data.", "Anomaly Alert", ANNOUNCER_SPANOMALIES)
+	priority_announce("A time-space anomaly has been detected on the station, be aware of possible discrepancies.", "General Alert")
 
 	return SUCCESSFUL_SPAWN
 
