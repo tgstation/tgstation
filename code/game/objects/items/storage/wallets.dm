@@ -36,7 +36,10 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/pill,
 		/obj/item/screwdriver,
-		/obj/item/stamp),
+		/obj/item/stamp,
+		/obj/item/door_remote,
+		/obj/item/circuitboard,
+		/obj/item/computer_disk),
 		list(/obj/item/screwdriver/power))
 
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
