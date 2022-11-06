@@ -845,7 +845,7 @@
 	return TRUE
 
 /// Space Changeling ruleset
-/datum/dynamic_ruleset/midround/from_ghosts/changeling //Entirely untested, waiting until I learn how I even would
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround //Entirely untested, waiting until I learn how I even would
 	name = "Space Changeling" //IT CAME FROM OUTER SPESS
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = ROLE_CHANGELING_MIDROUND
@@ -857,6 +857,6 @@
 	minimum_players = 27 //subject to change
 	repeatable = TRUE
 
-/datum/dynamic_ruleset/midround/from_ghosts/changeling/generate_ruleset_body(mob/applicant)
+/datum/dynamic_ruleset/midround/from_ghosts/changeling_midround/generate_ruleset_body(mob/applicant)
 	var/body = generate_changeling_meteor(applicant)
 	return body
