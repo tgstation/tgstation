@@ -540,7 +540,7 @@
 	///Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
 	var/is_charging = FALSE
 
-/datum/action/innate/unstable_teleport/IsAvailable()
+/datum/action/innate/unstable_teleport/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
