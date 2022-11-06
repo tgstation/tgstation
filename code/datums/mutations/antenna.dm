@@ -60,7 +60,7 @@
 	if(!istype(to_modify)) // null or invalid
 		return
 
-	to_modify.messages_returned = ceiling(initial(to_modify.messages_returned) * GET_MUTATION_POWER(src))
+	to_modify.messages_returned = CEILING(initial(to_modify.messages_returned) * GET_MUTATION_POWER(src), 1)
 	to_modify.alert_chance = initial(to_modify.alert_chance) * GET_MUTATION_SYNCHRONIZER(src)
 	//we could also modify pass chance here, but that could make synchronized mindreads more frustrating to use than vanilla mindreads if your target is vocally responding to your mindread attempts
 
