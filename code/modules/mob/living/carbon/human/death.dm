@@ -46,12 +46,12 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 
 /mob/living/carbon/human/proc/reagents_readout()
 	var/readout = "Blood:"
-	for(var/datum/reagent/reagent in reagents.reagent_list)
+	for(var/datum/reagent/reagent in reagents?.reagent_list)
 		readout += "<br>[round(reagent.volume, 0.001)] units of [reagent.name]"
 
 	readout += "<br>Stomach:"
 	var/obj/item/organ/internal/stomach/belly = getorganslot(ORGAN_SLOT_STOMACH)
-	for(var/datum/reagent/bile in belly.reagents.reagent_list)
+	for(var/datum/reagent/bile in belly?.reagents?.reagent_list)
 		if(!belly.food_reagents[bile.type])
 			readout += "<br>[round(bile.volume, 0.001)] units of [bile.name]"
 
