@@ -76,7 +76,6 @@
 	playsound(S, 'sound/weapons/zapbang.ogg', 50, TRUE)
 	new /obj/item/storage/toolbox/mechanical(S.loc) //so they dont get stuck in maints
 
-	priority_announce("A time-space anomaly has been detected on the station, be aware of possible discrepancies.", "General Alert")
 
 	return SUCCESSFUL_SPAWN
 
