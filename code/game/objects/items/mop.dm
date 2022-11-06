@@ -20,6 +20,11 @@
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
 	var/insertable = TRUE
+	var/static/list/clean_blacklist = list(
+		/obj/item/reagent_containers/cup/bucket,
+		/obj/structure/janitorialcart,
+		/obj/structure/mopbucket,
+	)
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
@@ -33,7 +38,7 @@
 
 ///Checks whether or not we should clean.
 /obj/item/mop/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
-	if(istype(atom_to_clean, /obj/item/reagent_containers/cup/bucket) || istype(atom_to_clean, /obj/structure/janitorialcart))
+	if(atom_to_clean.type in clean_blacklist)
 		return DO_NOT_CLEAN
 	if(reagents.total_volume < 0.1)
 		to_chat(cleaner, span_warning("Your mop is dry!"))

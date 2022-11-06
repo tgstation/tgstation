@@ -1,6 +1,6 @@
 #define CART_HAS_MINIMUM_REAGENT_VOLUME !(reagents.total_volume < 1)
 
-/obj/structure/janitorialcart
+/obj/structure/mopbucket/janitorialcart
 	name = "janitorial cart"
 	desc = "This is the alpha and omega of sanitation."
 	icon = 'icons/obj/janitor.dmi'

@@ -18,13 +18,11 @@
 			reagents.trans_to(weapon, 5, transfered_by = user)
 			to_chat(user, span_notice("You wet [weapon] in [src]."))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-			update_appearance()
-		return TRUE //Stop the click handling chain so the mop after attack doesn't proc and you don't wet the turf the bucket is on
-	
-	if(weapon.is_drainable())
-		return
 
 	update_appearance()
+	if(weapon.is_drainable() || istype(weapon, /obj/item/mop))
+		return // skip attack animations
+
 	return ..()
 
 
