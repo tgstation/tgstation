@@ -5,8 +5,6 @@
 	var/datum/mood_event/saved_event
 	/// examine string added to examine
 	var/examine_string
-	/// the wearer themself
-	var/mob/wearer
 
 /datum/component/onwear_mood/Initialize(clear_after, datum/mood_event/saved_event, examine_string)
 
@@ -23,33 +21,29 @@
 
 /datum/component/onwear_mood/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/affect_wearer)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/clear_effects)
 
 /datum/component/onwear_mood/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED)
-
-	if(wearer)
-		clear_effects()
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	clear_effects()
 
 /datum/component/onwear_mood/proc/affect_wearer(mob/target)
 	SIGNAL_HANDLER
-	wearer = target
-	wearer.add_mood_event(REF(src), saved_event)
-	RegisterSignal(wearer, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/clear_effects)
-	RegisterSignal(wearer, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	target.add_mood_event(REF(src), saved_event)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/onwear_mood/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	examine_text += span_notice(examine_string)
 
 /// clears the effects on the wearer
-/datum/component/onwear_mood/proc/clear_effects()
+/datum/component/onwear_mood/proc/clear_effects(datum/source, mob/target)
 	SIGNAL_HANDLER
-	if(!wearer)
+	target = target || loc
+	if(!istype(target))
 		return
-
-	UnregisterSignal(wearer, list(COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_PARENT_EXAMINE))
-	wearer.clear_mood_event("onwear")
-	wearer = null
+	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
+	target.clear_mood_event(REF(src))
 
 /datum/component/onwear_mood/Destroy(force, silent)
 	clear_effects()
