@@ -126,9 +126,8 @@
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!travelling)
 		icon_screen = "[base_icon_state][tram_part.from_where.name]_idle"
-		update_appearance()
-		return PROCESS_KILL
-	icon_screen = "[base_icon_state][tram_part.from_where.name]_active"
+	else
+		icon_screen = "[base_icon_state][tram_part.from_where.name]_active"
 	update_appearance()
 	return PROCESS_KILL
 
