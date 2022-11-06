@@ -2,6 +2,9 @@
 	var/real_parts
 	category = CAT_FOOD
 
+/datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
+	ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user))
+
 /datum/crafting_recipe/food/New()
 	real_parts = parts.Copy()
 	parts |= reqs

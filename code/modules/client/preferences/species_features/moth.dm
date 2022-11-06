@@ -44,8 +44,8 @@
 	var/list/body_parts = list(
 		/obj/item/bodypart/head/moth,
 		/obj/item/bodypart/chest/moth,
-		/obj/item/bodypart/l_arm/moth,
-		/obj/item/bodypart/r_arm/moth,
+		/obj/item/bodypart/arm/left/moth,
+		/obj/item/bodypart/arm/right/moth,
 	)
 
 	for (var/obj/item/bodypart/body_part in body_parts)

@@ -1,7 +1,7 @@
 /** Object integrity regeneration element added by alien alloy.
  */
 /datum/element/obj_regen
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
 	id_arg_index = 2
 	/// The rate of regeneration as a function of maximum integrity.
 	var/rate

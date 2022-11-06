@@ -278,7 +278,7 @@
 
 //medibot assembly
 /obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
-	if((!istype(bodypart, /obj/item/bodypart/l_arm/robot)) && (!istype(bodypart, /obj/item/bodypart/r_arm/robot)))
+	if((!istype(bodypart, /obj/item/bodypart/arm/left/robot)) && (!istype(bodypart, /obj/item/bodypart/arm/right/robot)))
 		return ..()
 
 	//Making a medibot!

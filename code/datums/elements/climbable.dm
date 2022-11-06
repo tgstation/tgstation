@@ -1,5 +1,5 @@
 /datum/element/climbable
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	id_arg_index = 2
 	///Time it takes to climb onto the object
 	var/climb_time = (2 SECONDS)

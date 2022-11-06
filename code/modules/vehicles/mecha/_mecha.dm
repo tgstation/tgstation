@@ -289,17 +289,21 @@
 	spark_system?.start()
 	loc.assume_air(cabin_air)
 
-	var/mob/living/silicon/ai/unlucky_ais
+	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
-			unlucky_ais = occupant
-			occupant.gib() //No wreck, no AI to recover
+			var/mob/living/silicon/ai/ai = occupant
+			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+				unlucky_ai = occupant
+				ai.gib() //No wreck, no AI to recover
+			else
+				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
 		mob_exit(occupant, FALSE, TRUE)
 		occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ais)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ai)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in flat_equipment)
 			if(E.detachable && prob(30))
 				WR.crowbar_salvage += E
@@ -603,24 +607,23 @@
 		selected = equip_by_category[MECHA_R_ARM]
 	else
 		selected = equip_by_category[MECHA_L_ARM]
-	if(!selected)
-		return
-	if(!Adjacent(target) && (selected.range & MECHA_RANGED))
-		if(HAS_TRAIT(livinguser, TRAIT_PACIFISM) && selected.harmful)
-			to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
+	if(selected)
+		if(!Adjacent(target) && (selected.range & MECHA_RANGED))
+			if(HAS_TRAIT(livinguser, TRAIT_PACIFISM) && selected.harmful)
+				to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
+				return
+			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+				return
+			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
 			return
-		if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+		if(Adjacent(target) && (selected.range & MECHA_MELEE))
+			if(isliving(target) && selected.harmful && HAS_TRAIT(livinguser, TRAIT_PACIFISM))
+				to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
+				return
+			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+				return
+			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
 			return
-		INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
-		return
-	if((selected.range & MECHA_MELEE) && Adjacent(target))
-		if(isliving(target) && selected.harmful && HAS_TRAIT(livinguser, TRAIT_PACIFISM))
-			to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
-			return
-		if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
-			return
-		INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
-		return
 	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
 		to_chat(livinguser, span_warning("You're in the wrong seat to interact with your hands."))
 		return
@@ -637,9 +640,8 @@
 		return
 	use_power(melee_energy_drain)
 
-	if(force)
-		target.mech_melee_attack(src, user)
-		TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
+	target.mech_melee_attack(src, user)
+	TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown)
 
 /// middle mouse click signal wrapper for AI users
 /obj/vehicle/sealed/mecha/proc/on_middlemouseclick(mob/user, atom/target, params)

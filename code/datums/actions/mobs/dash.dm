@@ -13,6 +13,7 @@
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	dash_to(target_atom)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/dash/proc/dash_to(atom/dash_target)
 	var/list/accessable_turfs = list()

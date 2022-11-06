@@ -4,7 +4,7 @@
  * Used for spiders, frogs, and bees!
  */
 /datum/element/venomous
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	///Path of the reagent added
 	var/poison_type
