@@ -46,13 +46,13 @@ GLOBAL_LIST_INIT(freqtospan, list(
  * Parameters:
  * - message (string): the original message
  * - ignore_spam (bool): should we ignore spam?
- * - forced (bool): was it forced?
+ * - forced (null|str): what was it forced by? null if voluntary
  * - filterproof (bool): are we filterproof?
  *
  * Returns:
  * 	TRUE of FASE depending on if our movable can speak
  */
-/atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = FALSE, filterproof = FALSE)
+/atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	return TRUE
 
 /**
