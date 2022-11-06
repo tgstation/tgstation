@@ -11,56 +11,40 @@
 /obj/structure/mopbucket/Initialize(mapload)
 	. = ..()
 	create_reagents(100, OPENCONTAINER)
+	register_context()
+
+/obj/structure/janitorialcart/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(istype(held_item, /obj/item/mop))
+		if(CART_HAS_MINIMUM_REAGENT_VOLUME && held_item.reagents.total_volume < held_item.reagents.maximum_volume)
+			context[SCREENTIP_CONTEXT_LMB] = "Wet [held_item]"
+			context[SCREENTIP_CONTEXT_RMB] = "Wet [held_item]"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
 
 /obj/structure/mopbucket/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/mop))
-		if(reagents.total_volume < 1)
-			to_chat(user, span_warning("[src] is out of water!"))
-		else
-			reagents.trans_to(weapon, 5, transfered_by = user)
-			to_chat(user, span_notice("You wet [weapon] in [src]."))
-			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-
-	update_appearance()
-	if(weapon.is_drainable() || istype(weapon, /obj/item/mop))
-		return // skip attack animations
-
-	return ..()
-
-/obj/structure/mopbucket/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/mop))
-		var/obj/item/mop/mop = weapon
+	var/obj/item/mop/mop = weapon
+	if(istype(mop))
 		if(mop.reagents.total_volume >= mop.reagents.maximum_volume)
 			balloon_alert(user, "[mop] is already soaked!")
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 			balloon_alert(user, "mop bucket is empty!")
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		reagents.trans_to(mop, mop.reagents.maximum_volume, transfered_by = user)
 		balloon_alert(user, "wet [mop]")
 		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
-		return
 
-	if(weapon.is_drainable())
-		return FALSE // skip attack animations when refilling cart
+	if(weapon.is_drainable() || istype(mop))
+		update_appearance(UPDATE_ICON)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN // skip attack animations when refilling cart
 
 	return ..()
 
-/obj/structure/mopbucket/attackby_secondary(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/mop))
-		var/obj/item/mop/your_mop = weapon
-		if(your_mop.reagents.total_volume >= your_mop.reagents.maximum_volume)
-			balloon_alert(user, "[your_mop] is already soaked!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
-			balloon_alert(user, "mop bucket is empty!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		reagents.trans_to(your_mop, your_mop.reagents.maximum_volume, transfered_by = user)
-		balloon_alert(user, "wet [your_mop]")
-		playsound(src, 'sound/effects/slosh.ogg', 25, TRUE)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+/obj/structure/mopbucket/attackby_secondary(obj/item/weapon, mob/user, params)	
+	return attackby(weapon, user, params) || SECONDARY_ATTACK_CONTINUE_CHAIN // maybe do ..() ?
 
 /obj/structure/mopbucket/update_overlays()
 	. = ..()
@@ -84,8 +68,6 @@
 /obj/structure/janitorialcart/Initialize(mapload)
 	. = ..()
 	GLOB.janitor_devices += src
-
-	register_context() //Context sensitive tooltips. See add_context()
 
 /obj/structure/janitorialcart/Destroy()
 	GLOB.janitor_devices -= src
