@@ -30,7 +30,7 @@
 	return TRUE
 
 /datum/surgery_step/dissection
-	name = "dissect"
+	name = "dissect (scalpel)"
 	time = 16 SECONDS
 	implements = list(
 		TOOL_SCALPEL = 100,

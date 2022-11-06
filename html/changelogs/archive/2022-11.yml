@@ -121,3 +121,113 @@
   - bugfix: Properly suppressed a message about suppressing messages.
   tf-4:
   - bugfix: Eating food with onions in will no longer make you cry.
+2022-11-04:
+  Drake and Josh (Fikou and Melbert):
+  - bugfix: Ash Drake's fire rain and swoop landing breath work again.
+  Fikou:
+  - bugfix: fixes throw click cooldown not applying
+  - bugfix: makes beeping sounds work on mechpads when used by a mech
+  GoblinBackwards:
+  - qol: Space Ninja now has their MODsuit module buttons pinned by default
+  Melbert:
+  - rscadd: Chefs can now make food with love. They can purchase a skillchip from
+      their vendor which enhances their kiss emote. Using your kiss on food you create
+      will add a special reagent to it which makes it nicer.
+  - refactor: Separated Microwavable from the Edible component, refactored microwave
+      act to accompany this
+  - refactor: Refactored how grilled items are generated
+  - refactor: Refactored how silver slime food items are generated
+  - refactor: Refactored how edible items inherit new edible statuses
+  - code_imp: Removed some magic numbers from microwaves
+  - code_imp: General code improvements for grillable / bakeable / etc
+  ShizCalev:
+  - code_imp: Riot helmets and justice helmets are now in a /toggeable subtype.
+  Tastyfish:
+  - rscadd: Adds an option in Game Preferences -> Game Options to turn off MultiZ
+      parallax.
+  timothymtorres:
+  - bugfix: Fix zombie tongue to only apply to infectious species
+2022-11-05:
+  ArcaneMusic:
+  - bugfix: The universal scanner now properly show all three options in the radial
+      with sprites, due to a missing space.
+  - qol: The universal scanner now has contextual screentips within all three of its
+      modes.
+  Cheshify:
+  - bugfix: All maps have a consistent Evidence room.
+  - imageadd: Ddds an icon for the Evidence Storage area
+  Comxy:
+  - bugfix: Fixes conveyor speed input.
+  - bugfix: Fixes radiation blocking properties of glass types.
+  Fikou:
+  - balance: less megafauna should spawn on icebox and lavaland
+  - qol: blood drunk miner ruin on lavaland will spawn every round
+  GoblinBackwards:
+  - bugfix: fixed an exploit that let you go completely invisible by scanning a HFR
+      corner with a chameleon projector
+  Guillaume Prata:
+  - qol: The forensic scanner uses balloon alerts for most of it's simple feedback
+      messages, enjoy having an easier time hearing the radio chatter.
+  - qol: Ore bags are "silent" for the wearer and won't send pointless chat messages
+      about what has been stored/removed from it. Other players will still get a chat
+      message, so miners can't get away with surprise plasma ore bombs.
+  Hardly3D:
+  - spellcheck: AI Universal Standard canvas will now specify it's size on the item
+      name.
+  Hatterhat:
+  - qol: Mining point cards are now reusable, allowing user-set transfers of mining
+      points to and from the point card itself.
+  Imaginos:
+  - imageadd: new icons for modsuit actions
+  Imitates-The-Lizards:
+  - qol: Janitors and Shaft Miners start with the ExperTrak Skill Tracker preinstalled
+      on their PDAs.
+  Melbert:
+  - bugfix: Fixes Regal Rat Domain not functioning as intended
+  - bugfix: Triggering a traitor poster trap progresses their objective.
+  Rhials:
+  - admin: Forcing the shuttle catastrophe event while an emergency shuttle is docked
+      comes with a warning now.
+  - balance: The Shuttle Loan event no longer only rolls once per round.
+  SpaceLove:
+  - bugfix: QM can no longer be managed by HR core app.
+  VexingRaven:
+  - bugfix: Fixed posters printed from the library console staying in your hand when
+      you place them
+  - bugfix: Fixed Random Official Poster printed from the library console always placing
+      the west-facing variant no matter where you place it
+  flowercuco:
+  - rscadd: Added 6 new flatbreads and their associated recipes
+  - rscadd: Added 1 new pizza for ethereals
+  lizardqueenlexi:
+  - bugfix: Put the proper access helpers on two maintenance airlocks in MetaStation
+      medical.
+  - bugfix: Added a missing watering can and two bottles of nutrient to the Tramstation
+      public garden.
+  - bugfix: Added a missing GeneDrobe to MetaStation.
+  - qol: Made surgical computers tell you what tool to use for the current surgical
+      step.
+  mc-oofert:
+  - bugfix: Fixes getting AIs with cores getting gibbed if their mech theyre controlling
+      is destroyed
+  tralezab:
+  - rscadd: Screwdriver cocktails now work as the world's worst screwdriver
+  zxaber:
+  - rscadd: You can now resist out of disposals pipes once you have stopped, at the
+      cost of some brute damage.
+2022-11-06:
+  Sealed101:
+  - rscadd: You can now perform an overly-complicated cork removal ritual known as
+      Sabrage. Swing at a champagne bottle with a sharp enough blade to strike the
+      cork off the bottle!
+  - rscadd: Added a Sabrage skill chip to the Library Play Room Vendor.
+  - rscadd: Heads of staff are more likely to pull this stunt off.
+  VexingRaven:
+  - rscadd: Added several new pepper spray refillers around the Security wing of Ice
+      Box Station
+  - bugfix: Fixed missing pepper spray refiller in the Medbay Checkpoint on Ice Box
+      Station
+  - bugfix: Fixed a doubled-up pepper spray refiller in the Security Office on Delta
+      Station
+  exymian:
+  - bugfix: fixed the prox sensor
