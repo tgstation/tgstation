@@ -18,7 +18,7 @@ Doesn't work on other aliens/AI.*/
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
 
-/datum/action/cooldown/alien/IsAvailable()
+/datum/action/cooldown/alien/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -61,7 +61,7 @@ Doesn't work on other aliens/AI.*/
 	/// The type of structure the action makes on use
 	var/obj/structure/made_structure_type
 
-/datum/action/cooldown/alien/make_structure/IsAvailable()
+/datum/action/cooldown/alien/make_structure/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -135,7 +135,7 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	var/to_whisper = tgui_input_text(owner, title = "Alien Whisper")
-	if(QDELETED(chosen_recipient) || QDELETED(src) || QDELETED(owner) || !IsAvailable() || !to_whisper)
+	if(QDELETED(chosen_recipient) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE) || !to_whisper)
 		return FALSE
 	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		to_chat(owner, span_warning("As you reach into [chosen_recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
@@ -176,7 +176,7 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	var/amount = tgui_input_number(owner, "Amount", "Transfer Plasma to [donation_target]", max_value = carbon_owner.getPlasma())
-	if(QDELETED(donation_target) || QDELETED(src) || QDELETED(owner) || !IsAvailable() || isnull(amount) || amount <= 0)
+	if(QDELETED(donation_target) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE) || isnull(amount) || amount <= 0)
 		return FALSE
 
 	if(get_dist(owner, donation_target) > 1)
@@ -243,7 +243,7 @@ Doesn't work on other aliens/AI.*/
 	button_icon_state = "alien_neurotoxin_0"
 	plasma_cost = 50
 
-/datum/action/cooldown/alien/acid/neurotoxin/IsAvailable()
+/datum/action/cooldown/alien/acid/neurotoxin/IsAvailable(feedback = FALSE)
 	if(owner.is_muzzled())
 		return FALSE
 	if(!isturf(owner.loc))
@@ -327,7 +327,7 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien/make_structure/resin/Activate(atom/target)
 	var/choice = tgui_input_list(owner, "Select a shape to build", "Resin building", structures)
-	if(isnull(choice) || QDELETED(src) || QDELETED(owner) || !check_for_duplicate() || !IsAvailable())
+	if(isnull(choice) || QDELETED(src) || QDELETED(owner) || !check_for_duplicate() || !IsAvailable(feedback = TRUE))
 		return FALSE
 
 	var/obj/structure/choice_path = structures[choice]

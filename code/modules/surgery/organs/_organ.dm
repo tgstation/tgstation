@@ -61,7 +61,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/forceMove(atom/destination, check_dest = TRUE)
 	if(check_dest && destination) //Nullspace is always a valid location for organs. Because reasons.
-		if(organ_flags & ORGAN_UNREMOVABLE) //If this organ is unremovable, it should delete itself if it tries to be moved to anything besides a bodypart.
+		if(organ_flags & ORGAN_UNREMOVABLE && owner) //If this organ is unremovable, it should delete itself if it tries to be moved to anything besides a bodypart.
 			if(!isbodypart(destination) && !iscarbon(destination))
 				qdel(src)
 				return //Don't move it out of nullspace if it's deleted.

@@ -796,7 +796,7 @@
 	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
 
-/datum/action/cooldown/scan/IsAvailable()
+/datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
 	return ..() && isliving(owner)
 
 /datum/action/cooldown/scan/Activate(atom/scanned)
@@ -923,7 +923,7 @@
 		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/cut),
 		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/cloak),
 		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/shatter),
-		)
+	)
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()
@@ -1045,7 +1045,8 @@
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/hostile_target = target
-		hostile_target.LoseTarget()
+		if(hostile_target.target == user)
+			hostile_target.LoseTarget()
 	addtimer(CALLBACK(src, .proc/uncloak, user), 5 SECONDS, TIMER_UNIQUE)
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)

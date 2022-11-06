@@ -215,3 +215,19 @@
   zxaber:
   - rscadd: You can now resist out of disposals pipes once you have stopped, at the
       cost of some brute damage.
+2022-11-06:
+  Sealed101:
+  - rscadd: You can now perform an overly-complicated cork removal ritual known as
+      Sabrage. Swing at a champagne bottle with a sharp enough blade to strike the
+      cork off the bottle!
+  - rscadd: Added a Sabrage skill chip to the Library Play Room Vendor.
+  - rscadd: Heads of staff are more likely to pull this stunt off.
+  VexingRaven:
+  - rscadd: Added several new pepper spray refillers around the Security wing of Ice
+      Box Station
+  - bugfix: Fixed missing pepper spray refiller in the Medbay Checkpoint on Ice Box
+      Station
+  - bugfix: Fixed a doubled-up pepper spray refiller in the Security Office on Delta
+      Station
+  exymian:
+  - bugfix: fixed the prox sensor

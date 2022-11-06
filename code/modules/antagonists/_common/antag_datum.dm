@@ -494,7 +494,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	target.ui_interact(owner)
 
-/datum/action/antag_info/IsAvailable()
+/datum/action/antag_info/IsAvailable(feedback = FALSE)
 	if(!target)
 		stack_trace("[type] was used without a target antag datum!")
 		return FALSE
