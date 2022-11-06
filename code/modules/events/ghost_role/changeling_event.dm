@@ -73,6 +73,9 @@
 	//Set up midround dynamic interaction override stuff (?)
 	//Better text explanation for what you're expected to do
 	//Decide what the ling is expected to do
+	//Meteor sprite is borken
+	//midround ling isnt showing up in prefs for some reason
+	//more like pee-gui because thi
 
 /obj/effect/meteor/meaty/changeling
 	name = "unsettlingly meaty meteor"
