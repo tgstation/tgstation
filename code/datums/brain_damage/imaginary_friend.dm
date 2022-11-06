@@ -336,7 +336,7 @@
 	message = null
 
 /datum/emote/imaginary_friend/custom/can_run_emote(mob/user, status_check, intentional)
-	. = ..() && intentional
+	return ..() && intentional
 
 /datum/emote/imaginary_friend/custom/run_emote(mob/user, params, type_override = null, intentional = FALSE)
 	if(!can_run_emote(user, TRUE, intentional))
