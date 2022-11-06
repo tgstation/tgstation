@@ -27643,7 +27643,7 @@
 /obj/machinery/computer/tram_controls{
 	icon_keyboard = null;
 	icon_state = "tram_controls";
-	icon_screen = "tram_central_idle"
+	icon_screen = "tram_Central Wing_idle"
 	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
