@@ -222,7 +222,8 @@
 	deathmessage = "vanishes into thin air!";
 	multiply_chance = 25;
 	health = 25;
-	name = "architect"
+	name = "architect";
+	desc = "I don't think you're supposed to be here."
 	},
 /turf/open/misc/asteroid/basalt,
 /area/template_noop)
@@ -275,7 +276,8 @@
 	deathmessage = "vanishes into thin air!";
 	multiply_chance = 25;
 	health = 25;
-	name = "architect"
+	name = "architect";
+	desc = "I don't think you're supposed to be here."
 	},
 /turf/open/misc/asteroid/basalt,
 /area/template_noop)

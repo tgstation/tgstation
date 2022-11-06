@@ -6,16 +6,6 @@
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"ax" = (
-/obj/structure/rack,
-/obj/structure/stone_tile/slab,
-/obj/item/reagent_containers/glass/bucket/wooden,
-/obj/item/reagent_containers/glass/bucket/wooden{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/turf/open/indestructible/boss,
-/area/awaymission/caves/misc/ashwalker_village)
 "aX" = (
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -429,7 +419,6 @@
 "nQ" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/table/wood,
-/obj/item/clothing/head/bronze,
 /obj/item/clothing/shoes/bronze,
 /turf/open/indestructible/boss,
 /area/awaymission/caves/misc/ashwalker_village)
@@ -888,7 +877,6 @@
 "Gy" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/britcup,
 /obj/item/clothing/mask/fakemoustache,
 /obj/item/food/butterbiscuit{
 	pixel_x = 8;
@@ -970,9 +958,6 @@
 /obj/item/food/no_raisin,
 /obj/item/vending_refill/snack,
 /obj/item/vending_refill/snack,
-/obj/item/reagent_containers/food/drinks/dry_ramen,
-/obj/item/reagent_containers/food/drinks/dry_ramen,
-/obj/item/reagent_containers/food/drinks/dry_ramen,
 /obj/item/food/chocolatebar,
 /obj/item/food/chocolatebar,
 /obj/item/food/candy,
@@ -1190,8 +1175,8 @@
 /obj/structure/closet/crate/wooden,
 /obj/item/clothing/under/costume/gladiator/ash_walker,
 /obj/item/clothing/head/helmet/gladiator,
-/obj/item/clothing/head/lobsterhat,
 /obj/item/clothing/under/costume/lobster,
+/obj/item/clothing/head/costume/lobsterhat,
 /turf/open/indestructible/boss,
 /area/awaymission/caves/misc/ashwalker_village)
 "Sq" = (
@@ -4072,7 +4057,7 @@ Jc
 Pv
 Yc
 oR
-ax
+rB
 Dg
 Pv
 fS

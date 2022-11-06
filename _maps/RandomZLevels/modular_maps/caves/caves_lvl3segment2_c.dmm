@@ -476,7 +476,6 @@
 /obj/structure/table,
 /obj/machinery/airalarm/directional/south,
 /obj/structure/sign/calendar/directional/east,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
 "hI" = (
@@ -681,11 +680,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/structure/table,
 /obj/item/wrench,
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate/genetics)
 "lM" = (
@@ -1702,10 +1696,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/food/condiment/peppermill,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
 "Dt" = (
@@ -2525,9 +2515,6 @@
 "Sp" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
 "Sr" = (

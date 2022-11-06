@@ -127,11 +127,6 @@
 /obj/structure/stone_tile/burnt,
 /turf/open/indestructible/boss,
 /area/template_noop)
-"hW" = (
-/obj/structure/stone_tile/slab,
-/obj/item/reagent_containers/food/drinks/waterbottle/large,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "ii" = (
 /obj/structure/stone_tile/slab,
 /mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
@@ -253,10 +248,6 @@
 /area/template_noop)
 "ru" = (
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
-"sc" = (
-/obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "sh" = (
@@ -636,14 +627,6 @@
 /obj/item/flashlight/lantern,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"Xj" = (
-/obj/structure/bed/maint,
-/obj/item/reagent_containers/food/drinks/trophy/bronze_cup{
-	desc = "Annual Mine-A-Thon, 3rd Place 4 years in a row! Congrats J. Joffee!";
-	name = "Mine-A-Thon Third Place Trophy"
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "XE" = (
 /obj/structure/stone_tile/block{
 	dir = 4
@@ -944,7 +927,7 @@ BN
 BN
 Iu
 Ew
-hW
+Jj
 KD
 XE
 Iu
@@ -1018,13 +1001,13 @@ Iu
 ru
 wF
 Qq
-sc
+BN
 pB
 bc
 Et
 BN
 sI
-Xj
+eX
 hA
 BN
 sI

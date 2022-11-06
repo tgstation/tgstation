@@ -51,10 +51,6 @@
 /area/template_noop)
 "fk" = (
 /obj/structure/fluff/beach_umbrella,
-/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb{
-	pixel_x = 13;
-	pixel_y = -7
-	},
 /turf/open/misc/beach/coastline_t{
 	dir = 9
 	},
@@ -107,7 +103,9 @@
 /mob/living/simple_animal/hostile/illusion{
 	deathmessage = "vanishes into thin air!";
 	multiply_chance = 25;
-	health = 25
+	health = 25;
+	name = "architect";
+	desc = "I don't think you're supposed to be here."
 	},
 /turf/open/floor/wood,
 /area/template_noop)
@@ -206,12 +204,8 @@
 /turf/open/misc/beach/sand,
 /area/template_noop)
 "yz" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/coffee{
-	pixel_x = 10;
-	pixel_y = 2
-	},
-/turf/open/floor/wood/large,
+/mob/living/simple_animal/crab/coffee,
+/turf/open/misc/beach/sand,
 /area/template_noop)
 "zp" = (
 /turf/open/misc/beach/coastline_t{
@@ -228,7 +222,9 @@
 /mob/living/simple_animal/hostile/illusion{
 	deathmessage = "vanishes into thin air!";
 	multiply_chance = 25;
-	health = 25
+	health = 25;
+	name = "architect";
+	desc = "I don't think you're supposed to be here."
 	},
 /turf/open/floor/wood,
 /area/template_noop)
@@ -1057,7 +1053,7 @@ aq
 da
 zp
 aO
-Vd
+yz
 Vd
 UU
 zK
@@ -1605,7 +1601,7 @@ DZ
 GP
 iT
 Ig
-yz
+ou
 Dn
 Vk
 RE

@@ -47,12 +47,6 @@
 "aZ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor/closed,
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
-	},
 /turf/open/floor/iron/kitchen{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -213,7 +207,6 @@
 "dZ" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner,
-/obj/item/reagent_containers/food/drinks/waterbottle/large,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -357,7 +350,6 @@
 	dir = 4
 	},
 /obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter)
 "hb" = (
@@ -1879,9 +1871,6 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/food/condiment/enzyme{
-	layer = 5
-	},
 /obj/structure/sign/clock/directional/north,
 /turf/open/floor/iron/kitchen{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -2106,7 +2095,6 @@
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
 "Ue" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/flask,
 /obj/item/folder/blue,
 /obj/item/pen/fourcolor,
 /turf/open/floor/iron/dark,
@@ -2200,7 +2188,6 @@
 /area/awaymission/caves/second_outpost/researchcenter)
 "VJ" = (
 /obj/item/aicard,
-/obj/item/paicard,
 /obj/item/melee/baton/telescopic,
 /obj/item/clothing/under/rank/rnd/research_director,
 /obj/effect/turf_decal/tile/purple/opposingcorners{

@@ -289,15 +289,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/second_outpost/barracks)
-"bg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/shuttle/engine/propulsion/in_wall{
-	dir = 1
-	},
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "bh" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/airalarm/directional/south,
@@ -2564,12 +2555,6 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/hardhat/orange{
-	name = "protective hat"
-	},
-/obj/item/clothing/head/hardhat/orange{
-	name = "protective hat"
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
@@ -6169,16 +6154,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
-"Bu" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/shuttle/engine/propulsion/in_wall,
-/obj/structure/railing/corner{
-	dir = 8
-	},
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "Bv" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -7364,16 +7339,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost)
-"Hn" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/shuttle/engine/propulsion/in_wall,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron/dark{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/tunnel)
 "Ho" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/bump_teleporter{
@@ -45383,7 +45348,7 @@ HY
 cG
 cG
 lk
-Bu
+RS
 IU
 IU
 IU
@@ -45626,7 +45591,7 @@ Ox
 Ox
 Ox
 Ox
-bg
+Ox
 lk
 cG
 cG
@@ -46411,7 +46376,7 @@ dO
 cG
 cG
 lk
-Hn
+hG
 Wt
 Wt
 Wt
@@ -46654,7 +46619,7 @@ Ox
 Ox
 Ox
 Ox
-bg
+Ox
 lk
 cG
 cG

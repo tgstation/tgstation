@@ -466,7 +466,6 @@
 /mob/living/simple_animal/hostile/lizard{
 	name = "Builds-The-Arena"
 	},
-/obj/item/clothing/head/hardhat,
 /turf/open/floor/bronze,
 /area/template_noop)
 "fh" = (
@@ -1094,7 +1093,6 @@
 /area/template_noop)
 "mq" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
 /turf/open/floor/carpet,
 /area/template_noop)
 "ms" = (
@@ -4406,10 +4404,6 @@
 	pixel_x = 8;
 	pixel_y = 32
 	},
-/obj/item/paicard{
-	desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape.";
-	name = "\improper Nanotrasen-brand personal AI device exhibit"
-	},
 /turf/open/floor/wood,
 /area/template_noop)
 "UG" = (
@@ -4957,10 +4951,6 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/item/radio/intercom/directional/north,
-/obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /turf/open/floor/wood,
 /area/template_noop)
 "ZC" = (

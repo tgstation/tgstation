@@ -42,12 +42,6 @@
 "bu" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
-	desc = "A premium single-malt whiskey, gently matured in an off-station distrillery orbiting the gas giant Wolf 359.";
-	name = "Warren Kepler's special reserve";
-	pixel_x = 11;
-	pixel_y = 14
-	},
 /turf/open/floor/carpet/purple,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
 "by" = (
@@ -491,7 +485,6 @@
 /area/awaymission/caves/second_outpost/researchcenter)
 "je" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/coffee,
 /obj/structure/sign/poster/official/periodic_table{
 	pixel_x = 32
 	},
@@ -715,7 +708,6 @@
 	req_access_txt = "away_science"
 	},
 /obj/item/aicard,
-/obj/item/paicard,
 /obj/item/melee/baton/telescopic,
 /obj/item/clothing/under/rank/rnd/research_director,
 /obj/effect/turf_decal/tile/purple/opposingcorners{
@@ -956,7 +948,6 @@
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "rT" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/mug/coco,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1102,7 +1093,6 @@
 "vE" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/east,
-/obj/item/reagent_containers/food/drinks/waterbottle,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "vL" = (
@@ -1540,12 +1530,6 @@
 "EX" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "EY" = (
@@ -2297,9 +2281,6 @@
 /obj/machinery/reagentgrinder{
 	pixel_x = 6;
 	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/condiment/enzyme{
-	layer = 5
 	},
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)

@@ -608,7 +608,6 @@
 "lP" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/east,
-/obj/item/reagent_containers/food/drinks/waterbottle,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
@@ -668,9 +667,6 @@
 /obj/machinery/reagentgrinder{
 	pixel_x = 6;
 	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/condiment/enzyme{
-	layer = 5
 	},
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
@@ -811,10 +807,6 @@
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "pt" = (
 /turf/template_noop,
-/area/template_noop)
-"pw" = (
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "py" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1128,18 +1120,6 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
-"uB" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/awaymission/caves/second_outpost/researchcenter/messhall)
 "uI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -1226,12 +1206,6 @@
 "wt" = (
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner,
-/turf/open/floor/iron/dark,
-/area/awaymission/caves/second_outpost/researchcenter/work)
-"wH" = (
-/obj/structure/table,
-/obj/structure/window/reinforced/spawner,
-/obj/item/reagent_containers/food/drinks/mug/coco,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "wK" = (
@@ -1651,7 +1625,6 @@
 /obj/structure/sign/poster/official/periodic_table{
 	pixel_y = 32
 	},
-/obj/item/reagent_containers/food/drinks/coffee,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "Fh" = (
@@ -1703,16 +1676,6 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/caves/second_outpost/researchcenter)
-"GJ" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
-	desc = "A premium single-malt whiskey, gently matured in an off-station distrillery orbiting the gas giant Wolf 359.";
-	name = "Warren Kepler's special reserve"
-	},
-/turf/open/floor/carpet/purple{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
-/area/awaymission/caves/second_outpost/researchcenter/dorm)
 "Hd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/departments/science/alt/directional/south,
@@ -2203,7 +2166,6 @@
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
 "Sh" = (
 /obj/item/aicard,
-/obj/item/paicard,
 /obj/item/melee/baton/telescopic,
 /obj/item/clothing/under/rank/rnd/research_director,
 /obj/effect/turf_decal/tile/purple/opposingcorners{
@@ -2671,7 +2633,7 @@ aa
 aa
 TK
 TK
-pw
+TK
 TK
 SH
 SH
@@ -3053,7 +3015,7 @@ ZY
 sE
 YZ
 af
-uB
+uX
 Ci
 Ci
 mz
@@ -3065,7 +3027,7 @@ fO
 sa
 be
 oK
-wH
+wt
 fv
 Vs
 Fw
@@ -3649,7 +3611,7 @@ TZ
 Le
 mW
 gN
-GJ
+gN
 TZ
 iR
 Di

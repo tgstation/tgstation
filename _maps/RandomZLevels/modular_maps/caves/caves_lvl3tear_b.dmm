@@ -329,7 +329,8 @@
 	deathmessage = "vanishes into thin air!";
 	multiply_chance = 25;
 	health = 25;
-	name = "architect"
+	name = "architect";
+	desc = "I don't think you're supposed to be here."
 	},
 /turf/open/misc/asteroid,
 /area/template_noop)

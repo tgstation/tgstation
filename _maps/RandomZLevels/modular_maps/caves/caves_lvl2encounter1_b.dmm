@@ -106,13 +106,6 @@
 /obj/structure/flora/ash/cap_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"R" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/item/paicard{
-	desc = "A harm alarm, it seems like it wasn't all that useful after all..."
-	},
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/template_noop)
 "S" = (
 /obj/item/stack/ore/diamond{
 	amount = 7
@@ -458,7 +451,7 @@ b
 b
 A
 Y
-R
+B
 l
 A
 b

@@ -249,7 +249,6 @@
 /obj/item/stack/sheet/bone{
 	amount = 3
 	},
-/obj/item/reagent_containers/food/drinks/waterbottle/relic,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "qC" = (
@@ -496,7 +495,6 @@
 "Ie" = (
 /obj/structure/closet/crate/grave,
 /obj/item/stack/sheet/bone,
-/obj/item/clothing/head/crown,
 /obj/item/staff,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
@@ -538,8 +536,6 @@
 	amount = 2
 	},
 /obj/item/organ/internal/tongue/alien,
-/obj/item/bodypart/r_leg/skeleton,
-/obj/item/bodypart/l_leg/skeleton,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "Kt" = (
