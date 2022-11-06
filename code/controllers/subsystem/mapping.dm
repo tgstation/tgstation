@@ -537,7 +537,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	if(config.minetype == "lavaland")
 		banned += generateMapList("lavaruinblacklist.txt")
 	else
-		banned += generateMapList("iceruinblacklist.txt")
+		banned += generateMapList(config.blacklist_file)
 
 	for(var/item in sort_list(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
 		var/datum/map_template/ruin/ruin_type = item
