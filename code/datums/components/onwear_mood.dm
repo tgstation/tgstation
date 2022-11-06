@@ -27,7 +27,7 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	clear_effects()
 
-/datum/component/onwear_mood/proc/affect_wearer(datum/source, mob/target)
+/datum/component/onwear_mood/proc/affect_wearer(datum/source, mob/living/target)
 	SIGNAL_HANDLER
 	target.add_mood_event(REF(src), saved_event)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -37,7 +37,7 @@
 	examine_text += span_notice(examine_string)
 
 /// clears the effects on the wearer
-/datum/component/onwear_mood/proc/clear_effects(datum/source, mob/target)
+/datum/component/onwear_mood/proc/clear_effects(datum/source, mob/living/target)
 	SIGNAL_HANDLER
 	target = target || loc
 	if(!istype(target))
