@@ -272,7 +272,6 @@
 	if(!user.canUseTopic(src))
 		return
 	cover_open = !cover_open
-	to_chat(user, span_notice("You [cover_open ? "open" : "close"] [src]'s cover."))
 	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
 	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
