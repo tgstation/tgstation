@@ -89,9 +89,9 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 
 	if (isnull(cached_id_info))
 		if (isnull(ids_per_type[eletype]))
-			ids_per_type[eletype] = list((source_path) = list(arguments, id))
+			ids_per_type[eletype] = list((source_path) = list(arguments.Copy(), id))
 		else
-			ids_per_type[eletype][source_path] = list(arguments, id)
+			ids_per_type[eletype][source_path] = list(arguments.Copy(), id)
 
 	return id
 
