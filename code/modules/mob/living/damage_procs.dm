@@ -194,7 +194,7 @@
 
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && status_flags & GODMODE)
+	if(!forced && (status_flags & GODMODE))
 		return
 	. = oxyloss
 	oxyloss = amount
@@ -233,7 +233,7 @@
 	return amount
 
 /mob/living/proc/setFireLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && status_flags & GODMODE)
+	if(!forced && (status_flags & GODMODE))
 		return
 	. = fireloss
 	fireloss = amount
