@@ -506,7 +506,7 @@
 /obj/structure/sign/painting/AltClick(mob/user)
 	. = ..()
 	if(current_canvas?.can_select_frame(user))
-		INVOKE_ASYNC(current_canvas, TYPE_PROC_REF( /obj/item/canvas, select_new_frame), user)
+		INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))

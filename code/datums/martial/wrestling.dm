@@ -199,7 +199,7 @@ If you make a derivative work from this code, you must include this notification
 		if (T && isturf(T))
 			if (!D.stat)
 				D.emote("scream")
-			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, TYPE_PROC_REF( /mob/living, Paralyze), 20))
+			D.throw_at(T, 10, 4, A, TRUE, TRUE, callback = CALLBACK(D, TYPE_PROC_REF(/mob/living, Paralyze), 20))
 	log_combat(A, D, "has thrown with wrestling")
 	return
 

@@ -137,13 +137,13 @@
 		spiral_shots.enraged = COLOSSUS_ENRAGED
 		telegraph()
 		icon_state = "eva_attack"
-		INVOKE_ASYNC(src, TYPE_PROC_REF( /atom/movable, say), "Judgement.", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Judgement.", null, list("colossus", "yell"))
 	else if(activated == random_shots)
-		INVOKE_ASYNC(src, TYPE_PROC_REF( /atom/movable, say), "Wrath.", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Wrath.", null, list("colossus", "yell"))
 	else if(activated == shotgun_blast)
-		INVOKE_ASYNC(src, TYPE_PROC_REF( /atom/movable, say), "Retribution.", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Retribution.", null, list("colossus", "yell"))
 	else if(activated == dir_shots)
-		INVOKE_ASYNC(src, TYPE_PROC_REF( /atom/movable, say), "Lament.", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Lament.", null, list("colossus", "yell"))
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
 	SIGNAL_HANDLER
@@ -179,7 +179,7 @@
 /obj/effect/temp_visual/at_shield/Initialize(mapload, new_target)
 	. = ..()
 	target = new_target
-	INVOKE_ASYNC(src, TYPE_PROC_REF( /atom/movable, orbit), target, 0, FALSE, 0, 0, FALSE, TRUE)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, orbit), target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /obj/projectile/colossus
 	name = "death bolt"

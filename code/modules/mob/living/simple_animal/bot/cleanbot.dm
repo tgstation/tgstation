@@ -106,7 +106,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
-		on_cleaned_callback = CALLBACK(src, TYPE_PROC_REF( /atom/, update_appearance), UPDATE_ICON))
+		on_cleaned_callback = CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance), UPDATE_ICON))
 
 	get_targets()
 	update_appearance(UPDATE_ICON)
@@ -210,7 +210,7 @@
 		update_titles()
 
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	INVOKE_ASYNC(weapon, TYPE_PROC_REF( /obj/item, attack), stabbed_carbon, src)
+	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack), stabbed_carbon, src)
 	stabbed_carbon.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/attacking_item, mob/living/user, params)

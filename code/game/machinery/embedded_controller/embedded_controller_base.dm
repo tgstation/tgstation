@@ -63,7 +63,7 @@
 /obj/machinery/embedded_controller/proc/process_command(command)
 	if(program)
 		program.receive_user_command(command)
-		addtimer(CALLBACK(program, TYPE_PROC_REF( /datum/computer/file/embedded_program, process)), 5)
+		addtimer(CALLBACK(program, TYPE_PROC_REF(/datum/computer/file/embedded_program, process)), 5)
 
 /obj/machinery/embedded_controller/process(delta_time)
 	if(program)

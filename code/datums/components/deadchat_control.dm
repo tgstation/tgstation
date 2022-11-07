@@ -244,7 +244,7 @@
 
 	. = ..()
 
-	inputs["up"] = CALLBACK(parent, TYPE_PROC_REF( /obj/effect/immovablerod, walk_in_direction), NORTH)
-	inputs["down"] = CALLBACK(parent, TYPE_PROC_REF( /obj/effect/immovablerod, walk_in_direction), SOUTH)
-	inputs["left"] = CALLBACK(parent, TYPE_PROC_REF( /obj/effect/immovablerod, walk_in_direction), WEST)
-	inputs["right"] = CALLBACK(parent, TYPE_PROC_REF( /obj/effect/immovablerod, walk_in_direction), EAST)
+	inputs["up"] = CALLBACK(parent, TYPE_PROC_REF(/obj/effect/immovablerod, walk_in_direction), NORTH)
+	inputs["down"] = CALLBACK(parent, TYPE_PROC_REF(/obj/effect/immovablerod, walk_in_direction), SOUTH)
+	inputs["left"] = CALLBACK(parent, TYPE_PROC_REF(/obj/effect/immovablerod, walk_in_direction), WEST)
+	inputs["right"] = CALLBACK(parent, TYPE_PROC_REF(/obj/effect/immovablerod, walk_in_direction), EAST)

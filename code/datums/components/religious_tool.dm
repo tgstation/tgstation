@@ -55,7 +55,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(the_item, catalyst_type))
-		INVOKE_ASYNC(src, TYPE_PROC_REF( /datum, ui_interact), user) //asynchronous to avoid sleeping in a signal
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) //asynchronous to avoid sleeping in a signal
 
 	/**********Sacrificing**********/
 	else if(operation_flags & RELIGION_TOOL_SACRIFICE)

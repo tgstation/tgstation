@@ -36,14 +36,14 @@
 	// Shortly after shooting our shot, it plays a hit (or miss) sound.
 	var/next_hit_sound = rand(0.5 SECONDS, 1 SECONDS)
 	if(prob(50))
-		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF( /mob/, playsound_local), source, hit_person_sound, 25, TRUE), next_hit_sound)
+		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, hit_person_sound, 25, TRUE), next_hit_sound)
 		hits++
 	else
-		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF( /mob/, playsound_local), source, hit_wall_sound, 25, TRUE), next_hit_sound)
+		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, hit_wall_sound, 25, TRUE), next_hit_sound)
 
 	// If we scored enough hits, we have a chance to knock them down and stop the hallucination early.
 	if(hits >= number_of_hits_to_end && prob(chance_to_fall))
-		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF( /mob/, playsound_local), source, SFX_BODYFALL, 25, TRUE), next_hit_sound)
+		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, SFX_BODYFALL, 25, TRUE), next_hit_sound)
 		qdel(src)
 
 	// Or, if we do have shots left, keep it going.

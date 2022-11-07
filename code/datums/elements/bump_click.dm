@@ -56,10 +56,10 @@
 	var/obj/item/held_item = bumping.get_active_held_item()
 	if(!held_item) //Not holding anything in active hand, so no tool to check
 		if(allow_unarmed)
-			INVOKE_ASYNC(bumping, TYPE_PROC_REF( /mob, ClickOn), source) //Click with empty active hand
+			INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), source) //Click with empty active hand
 		return
 	if(allow_any)
-		INVOKE_ASYNC(bumping, TYPE_PROC_REF( /mob, ClickOn), source) //Click with whatever we're holding
+		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), source) //Click with whatever we're holding
 		return
 	if(check_tool(held_item))
-		INVOKE_ASYNC(bumping, TYPE_PROC_REF( /mob, ClickOn), source) //Click with approved item
+		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), source) //Click with approved item

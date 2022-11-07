@@ -505,10 +505,10 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 		switch(action)
 			if(OPEN_DOORS)
-				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF( /obj/machinery/door/poddoor, open))
+				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
 			if(CLOSE_DOORS)
-				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF( /obj/machinery/door/poddoor, close))
+				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
 			else
 				stack_trace("Elevator lift update_lift_doors called with an improper action ([action]).")

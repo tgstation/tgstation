@@ -34,7 +34,7 @@
 		tgui_alert(usr,"Wait until the game starts")
 		return
 	log_admin("[key_name(src)] has robotized [M.key].")
-	INVOKE_ASYNC(M, TYPE_PROC_REF( /mob, Robotize))
+	INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, Robotize))
 
 /client/proc/poll_type_to_del(search_string)
 	var/list/types = get_fancy_list_of_atom_types()
@@ -749,7 +749,7 @@
 	var/list/queries = list()
 	for(var/i in 1 to val)
 		var/datum/db_query/query = SSdbcore.NewQuery("NULL")
-		INVOKE_ASYNC(query, TYPE_PROC_REF( /datum/db_query, Execute))
+		INVOKE_ASYNC(query, TYPE_PROC_REF(/datum/db_query, Execute))
 		queries += query
 
 	for(var/datum/db_query/query as anything in queries)

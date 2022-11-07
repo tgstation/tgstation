@@ -253,12 +253,12 @@ Difficulty: Extremely Hard
 	var/typepath = user.type
 	var/mob/living/carbon/clone = new typepath(user.loc)
 	clone.real_name = user.real_name
-	INVOKE_ASYNC(user.dna, TYPE_PROC_REF( /datum/dna, transfer_identity), clone)
+	INVOKE_ASYNC(user.dna, TYPE_PROC_REF(/datum/dna, transfer_identity), clone)
 	clone.updateappearance(mutcolor_update=1)
 	var/turf/T = find_safe_turf()
 	user.forceMove(T)
 	user.revive(full_heal = TRUE, admin_revive = TRUE)
-	INVOKE_ASYNC(user, TYPE_PROC_REF( /mob/living/carbon, set_species), /datum/species/shadow)
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/carbon, set_species), /datum/species/shadow)
 	to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]... feeling a bit darker."))
 	clone.dust()
 	qdel(src)
@@ -301,7 +301,7 @@ Difficulty: Extremely Hard
 		return
 	var/reset_turf = T.type
 	T.ChangeTurf(change_turf, flags = CHANGETURF_INHERIT_AIR)
-	addtimer(CALLBACK(T, TYPE_PROC_REF( /turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), duration, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(T, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), duration, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/item/pickaxe/drill/jackhammer/demonic
 	name = "demonic jackhammer"

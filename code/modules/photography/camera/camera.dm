@@ -311,6 +311,6 @@
 			return
 	if(!camera.can_target(target))
 		return
-	INVOKE_ASYNC(camera, TYPE_PROC_REF( /obj/item/camera, captureimage), target, null, camera.picture_size_y  - 1, camera.picture_size_y - 1)
+	INVOKE_ASYNC(camera, TYPE_PROC_REF(/obj/item/camera, captureimage), target, null, camera.picture_size_y  - 1, camera.picture_size_y - 1)
 
 #undef CAMERA_PICTURE_SIZE_HARD_LIMIT

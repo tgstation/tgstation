@@ -153,11 +153,11 @@
 		if(potential_module.name == module_to_select.value)
 			module = potential_module
 	if(COMPONENT_TRIGGERED_BY(toggle_suit, port))
-		INVOKE_ASYNC(attached_module.mod, TYPE_PROC_REF( /obj/item/mod/control, toggle_activate), attached_module.mod.wearer)
+		INVOKE_ASYNC(attached_module.mod, TYPE_PROC_REF(/obj/item/mod/control, toggle_activate), attached_module.mod.wearer)
 	if(COMPONENT_TRIGGERED_BY(toggle_deploy, port))
-		INVOKE_ASYNC(attached_module.mod, TYPE_PROC_REF( /obj/item/mod/control, quick_deploy), attached_module.mod.wearer)
+		INVOKE_ASYNC(attached_module.mod, TYPE_PROC_REF(/obj/item/mod/control, quick_deploy), attached_module.mod.wearer)
 	if(attached_module.mod.active && module && COMPONENT_TRIGGERED_BY(select_module, port))
-		INVOKE_ASYNC(module, TYPE_PROC_REF( /obj/item/mod/module, on_select))
+		INVOKE_ASYNC(module, TYPE_PROC_REF(/obj/item/mod/module, on_select))
 
 /obj/item/circuit_component/mod_adapter_core/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER

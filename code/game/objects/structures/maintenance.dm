@@ -221,7 +221,7 @@ at the cost of risking a vicious bite.**/
 	var/obj/item/clothing/under/pants/slacks/altar/pants = new(get_turf(src))
 	pants.add_atom_colour(pants_color, ADMIN_COLOUR_PRIORITY)
 	COOLDOWN_START(src, use_cooldown, use_cooldown_duration)
-	addtimer(CALLBACK(src, TYPE_PROC_REF( /atom, update_icon)), 1 MINUTES + 0.1 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 1 MINUTES + 0.1 SECONDS)
 	update_icon()
 
 /obj/structure/destructible/cult/pants_altar/proc/check_menu(mob/user)

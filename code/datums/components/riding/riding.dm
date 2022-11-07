@@ -230,10 +230,10 @@
 	if(!istype(possible_bumped_door))
 		return
 	for(var/occupant in movable_parent.buckled_mobs)
-		INVOKE_ASYNC(possible_bumped_door, TYPE_PROC_REF( /obj/machinery/door/, bumpopen), occupant)
+		INVOKE_ASYNC(possible_bumped_door, TYPE_PROC_REF(/obj/machinery/door/, bumpopen), occupant)
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
-	addtimer(CALLBACK(parent, TYPE_PROC_REF( /atom/movable/, unbuckle_mob), M), 0, TIMER_UNIQUE)
+	addtimer(CALLBACK(parent, TYPE_PROC_REF(/atom/movable/, unbuckle_mob), M), 0, TIMER_UNIQUE)
 
 /datum/component/riding/proc/Process_Spacemove(direction, continuous_move)
 	var/atom/movable/AM = parent

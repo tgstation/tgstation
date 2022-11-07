@@ -299,7 +299,7 @@
 			if(!lift || lift.controls_locked == LIFT_PLATFORM_LOCKED)
 				return TRUE // We shouldn't be moving anything, update UI
 
-			INVOKE_ASYNC(lift, TYPE_PROC_REF( /datum/lift_master, move_to_zlevel), desired_z, CALLBACK(src, PROC_REF(check_panel)), usr)
+			INVOKE_ASYNC(lift, TYPE_PROC_REF(/datum/lift_master, move_to_zlevel), desired_z, CALLBACK(src, PROC_REF(check_panel)), usr)
 			last_move_target = desired_z
 			return TRUE // Succcessfully initiated a move. Regardless of whether it actually works, update the UI
 

@@ -170,7 +170,7 @@
 	if(!COOLDOWN_FINISHED(module, cooldown_timer))
 		var/image/cooldown_image = image(icon = 'icons/hud/radial.dmi', icon_state = "module_cooldown")
 		current_button.add_overlay(cooldown_image)
-		addtimer(CALLBACK(current_button, TYPE_PROC_REF( /image, cut_overlay), cooldown_image), COOLDOWN_TIMELEFT(module, cooldown_timer))
+		addtimer(CALLBACK(current_button, TYPE_PROC_REF(/image, cut_overlay), cooldown_image), COOLDOWN_TIMELEFT(module, cooldown_timer))
 
 /datum/action/item_action/mod/pinned_module/proc/on_module_activate(datum/source)
 	SIGNAL_HANDLER

@@ -330,7 +330,7 @@
 
 /obj/effect/anomaly/bluespace/proc/blue_effect(mob/make_sparkle)
 	make_sparkle.overlay_fullscreen("bluespace_flash", /atom/movable/screen/fullscreen/bluespace_sparkle, 1)
-	addtimer(CALLBACK(make_sparkle, TYPE_PROC_REF( /mob/, clear_fullscreen), "bluespace_flash"), 2 SECONDS)
+	addtimer(CALLBACK(make_sparkle, TYPE_PROC_REF(/mob/, clear_fullscreen), "bluespace_flash"), 2 SECONDS)
 
 /////////////////////
 

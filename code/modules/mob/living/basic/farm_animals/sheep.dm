@@ -65,7 +65,7 @@
 		to_chat(cultist, span_cultitalic("This feels a bit too cliché, don't you think?"))
 
 	cult_converted = TRUE
-	INVOKE_ASYNC(src, TYPE_PROC_REF( /atom/movable, say), "BAAAAAAAAH!")
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "BAAAAAAAAH!")
 	update_appearance(UPDATE_ICON)
 	return STOP_SACRIFICE
 

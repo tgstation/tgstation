@@ -140,7 +140,7 @@
 	var/turf/open/dying_trapdoor = parent
 	if((flags & CHANGETURF_TRAPDOOR_INDUCED) == 0) //not a process of the trapdoor
 		if(!IS_OPEN(parent) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace)) // allow people to place tiles on plating / change tiles without breaking the trapdoor
-			post_change_callbacks += CALLBACK(src, TYPE_PROC_REF( /datum/component/trapdoor, carry_over_trapdoor), path, conspicuous, assembly)
+			post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), path, conspicuous, assembly)
 			return
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
@@ -149,7 +149,7 @@
 			assembly.stored_decals.Cut()
 			assembly = null
 		return
-	post_change_callbacks += CALLBACK(src, TYPE_PROC_REF( /datum/component/trapdoor, carry_over_trapdoor), trapdoor_turf_path, conspicuous, assembly)
+	post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), trapdoor_turf_path, conspicuous, assembly)
 
 /**
  * ## carry_over_trapdoor

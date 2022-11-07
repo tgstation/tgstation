@@ -244,7 +244,7 @@
 			forced = "hulk (hallucinating)",
 		)
 	else if((afflicted.status_flags & CANKNOCKDOWN) && !HAS_TRAIT(afflicted, TRAIT_STUNIMMUNE))
-		addtimer(CALLBACK(afflicted, TYPE_PROC_REF( /mob/living/carbon, do_jitter_animation), 20), 0.5 SECONDS)
+		addtimer(CALLBACK(afflicted, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 20), 0.5 SECONDS)
 
 /obj/projectile/hallucination/disabler
 	name = "disabler beam"

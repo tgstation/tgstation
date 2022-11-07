@@ -50,7 +50,7 @@
 		log_dynamic_and_announce("An unfavorable situation was requested, but no heavy rulesets could be drafted. Spawning [initial(round_event_control_type.name)] in [DisplayTimeText(delay)] instead.")
 
 		var/datum/round_event_control/round_event_control = new round_event_control_type
-		addtimer(CALLBACK(round_event_control, TYPE_PROC_REF( /datum/round_event_control, runEvent)), delay)
+		addtimer(CALLBACK(round_event_control, TYPE_PROC_REF(/datum/round_event_control, runEvent)), delay)
 	else
 		var/datum/dynamic_ruleset/midround/heavy_ruleset = pick_weight(possible_heavies)
 		log_dynamic_and_announce("An unfavorable situation was requested, spawning [initial(heavy_ruleset.name)]")

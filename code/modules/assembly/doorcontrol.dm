@@ -109,7 +109,7 @@
 	cooldown = TRUE
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
-			INVOKE_ASYNC(M, TYPE_PROC_REF( /obj/machinery/door/poddoor, open))
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
 	sleep(1 SECONDS)
 
@@ -121,7 +121,7 @@
 
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
-			INVOKE_ASYNC(M, TYPE_PROC_REF( /obj/machinery/door/poddoor, close))
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
@@ -136,7 +136,7 @@
 	cooldown = TRUE
 	for(var/obj/machinery/sparker/M in GLOB.machines)
 		if (M.id == src.id)
-			INVOKE_ASYNC(M, TYPE_PROC_REF( /obj/machinery/sparker, ignite))
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/sparker, ignite))
 
 	for(var/obj/machinery/igniter/M in GLOB.machines)
 		if(M.id == src.id)
@@ -156,7 +156,7 @@
 	cooldown = TRUE
 	for(var/obj/machinery/flasher/M in GLOB.machines)
 		if(M.id == src.id)
-			INVOKE_ASYNC(M, TYPE_PROC_REF( /obj/machinery/flasher, flash))
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/obj/machinery/flasher, flash))
 
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
 

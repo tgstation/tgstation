@@ -66,7 +66,7 @@
 			to_chat(living_guy, span_warning("A malevolent force launches your body to the floor..."))
 			var/obj/machinery/door/airlock/darth_airlock = turf_content
 			living_guy.apply_status_effect(/datum/status_effect/incapacitating/paralyzed, 10)
-			INVOKE_ASYNC(darth_airlock, TYPE_PROC_REF( /obj/machinery/door/airlock, close), TRUE)
+			INVOKE_ASYNC(darth_airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, close), TRUE)
 			if(!permanent)
 				qdel(src)
 			return
@@ -82,7 +82,7 @@
 		for(var/obj/machinery/vending/darth_vendor in the_turf)
 			if(darth_vendor.tiltable)
 				to_chat(living_guy, span_warning("A malevolent force tugs at the [darth_vendor]..."))
-				INVOKE_ASYNC(darth_vendor, TYPE_PROC_REF( /obj/machinery/vending, tilt), living_guy)
+				INVOKE_ASYNC(darth_vendor, TYPE_PROC_REF(/obj/machinery/vending, tilt), living_guy)
 				if(!permanent)
 					qdel(src)
 				return

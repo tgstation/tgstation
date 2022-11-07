@@ -228,7 +228,7 @@
 	chrono_beam.preparePixelProjectile(target, mod.wearer)
 	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
-	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF( /obj/projectile, fire))
+	INVOKE_ASYNC(chrono_beam, TYPE_PROC_REF(/obj/projectile, fire))
 
 /obj/item/mod/module/tem/on_uninstall(deleting = FALSE)
 	if(!field)

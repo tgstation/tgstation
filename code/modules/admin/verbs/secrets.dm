@@ -449,7 +449,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			log_admin("[key_name_admin(holder)] made everyone into monkeys.")
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
-				INVOKE_ASYNC(H, TYPE_PROC_REF( /mob/living/carbon, monkeyize))
+				INVOKE_ASYNC(H, TYPE_PROC_REF(/mob/living/carbon, monkeyize))
 		if("traitor_all")
 			if(!is_funmin)
 				return

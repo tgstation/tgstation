@@ -284,7 +284,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		balloon_alert(usr, "there's nothing on TV!")
 		return
 
-	INVOKE_ASYNC(src, TYPE_PROC_REF( /atom, interact), usr)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, interact), usr)
 
 ///Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)

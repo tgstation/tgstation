@@ -146,7 +146,7 @@
 			if(flavour.add_flavour(src, dispenser.beaker?.reagents.total_volume ? dispenser.beaker.reagents : null))
 				dispenser.visible_message("[icon2html(dispenser, viewers(source))] [span_info("[user] scoops delicious [dispenser.selected_flavour] ice cream into [source].")]")
 				dispenser.product_types[dispenser.selected_flavour]--
-				INVOKE_ASYNC(dispenser, TYPE_PROC_REF( /obj/machinery/icecream_vat, updateDialog))
+				INVOKE_ASYNC(dispenser, TYPE_PROC_REF(/obj/machinery/icecream_vat, updateDialog))
 		else
 			to_chat(user, span_warning("There is not enough ice cream left!"))
 	else

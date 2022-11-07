@@ -362,7 +362,7 @@
 		to_chat(C, span_warning("No potion loaded."))
 		return
 	if(mobarea.name == E.allowed_area || (mobarea.area_flags & XENOBIOLOGY_COMPATIBLE))
-		INVOKE_ASYNC(X.current_potion, TYPE_PROC_REF( /obj/item/slimepotion/slime, attack), S, C)
+		INVOKE_ASYNC(X.current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), S, C)
 
 //Picks up slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickShift(mob/living/user, mob/living/simple_animal/slime/S)

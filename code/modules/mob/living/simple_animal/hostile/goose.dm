@@ -235,8 +235,8 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
 		"vomit" = CALLBACK(src, PROC_REF(vomit_prestart), 25),
-		"honk" = CALLBACK(src, TYPE_PROC_REF( /atom/movable, say), "HONK!!!"),
-		"spin" = CALLBACK(src, TYPE_PROC_REF( /mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
+		"honk" = CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), "HONK!!!"),
+		"spin" = CALLBACK(src, TYPE_PROC_REF(/mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return

@@ -236,8 +236,8 @@
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
 
-	addtimer(CALLBACK(sac_target, TYPE_PROC_REF( /mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (1/3))
-	addtimer(CALLBACK(sac_target, TYPE_PROC_REF( /mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (2/3))
+	addtimer(CALLBACK(sac_target, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (1/3))
+	addtimer(CALLBACK(sac_target, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (2/3))
 
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain

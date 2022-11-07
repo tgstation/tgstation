@@ -325,7 +325,7 @@
 	))
 	button_icon_state = "mech_ivanov_cooldown"
 	UpdateButtons()
-	addtimer(CALLBACK(src, TYPE_PROC_REF( /datum/action/vehicle/sealed/mecha/ivanov_strike, reset_button_icon)), strike_cooldown_time)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/action/vehicle/sealed/mecha/ivanov_strike, reset_button_icon)), strike_cooldown_time)
 
 //misc effects
 

@@ -1007,10 +1007,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	if(port == enable_fire_alarm)
 		if(connected_alarm.alarm_manager.send_alarm(ALARM_ATMOS))
-			INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF( /obj/machinery/airalarm, post_alert), 2)
+			INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF(/obj/machinery/airalarm, post_alert), 2)
 	else
 		if(connected_alarm.alarm_manager.clear_alarm(ALARM_ATMOS))
-			INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF( /obj/machinery/airalarm, post_alert), 0)
+			INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF(/obj/machinery/airalarm, post_alert), 0)
 
 /obj/item/circuit_component/air_alarm_general/proc/set_mode(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1022,7 +1022,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	connected_alarm.mode = options_map[mode.value]
 	connected_alarm.investigate_log("was turned to [connected_alarm.get_mode_name(connected_alarm.mode)] by [parent.get_creator()]")
-	INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF( /obj/machinery/airalarm, apply_mode), src)
+	INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF(/obj/machinery/airalarm, apply_mode), src)
 
 /obj/item/circuit_component/air_alarm
 	display_name = "Air Alarm Core Control"

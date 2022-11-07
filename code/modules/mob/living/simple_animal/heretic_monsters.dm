@@ -120,7 +120,7 @@
 	if(QDELETED(unlinked_mob) || unlinked_mob.stat == DEAD)
 		return
 
-	INVOKE_ASYNC(unlinked_mob, TYPE_PROC_REF( /mob, emote), "scream")
+	INVOKE_ASYNC(unlinked_mob, TYPE_PROC_REF(/mob, emote), "scream")
 	unlinked_mob.AdjustParalyzed(0.5 SECONDS) //micro stun
 
 // What if we took a linked list... But made it a mob?

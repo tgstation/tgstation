@@ -121,7 +121,7 @@
 		return
 
 	if(attached_circuit)
-		INVOKE_ASYNC(attached_circuit, TYPE_PROC_REF( /datum, ui_interact), ghost)
+		INVOKE_ASYNC(attached_circuit, TYPE_PROC_REF(/datum, ui_interact), ghost)
 
 /datum/component/shell/proc/on_examine(atom/movable/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -170,7 +170,7 @@
 
 	if(istype(item, /obj/item/inducer))
 		var/obj/item/inducer/inducer = item
-		INVOKE_ASYNC(inducer, TYPE_PROC_REF( /obj/item, attack_atom), attached_circuit, attacker, list())
+		INVOKE_ASYNC(inducer, TYPE_PROC_REF(/obj/item, attack_atom), attached_circuit, attacker, list())
 		return COMPONENT_NO_AFTERATTACK
 
 	if(attached_circuit)

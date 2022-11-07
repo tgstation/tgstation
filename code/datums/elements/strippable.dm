@@ -57,7 +57,7 @@
 		strip_menu = new(source, src)
 		LAZYSET(strip_menus, source, strip_menu)
 
-	INVOKE_ASYNC(strip_menu, TYPE_PROC_REF( /datum/, ui_interact), user)
+	INVOKE_ASYNC(strip_menu, TYPE_PROC_REF(/datum/, ui_interact), user)
 
 /// A representation of an item that can be stripped down
 /datum/strippable_item

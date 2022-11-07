@@ -110,7 +110,7 @@
 	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
 	RegisterSignal(fishing_line_beam, COMSIG_PARENT_QDELETING, PROC_REF(clear_line))
 	fishing_lines += fishing_line_beam
-	INVOKE_ASYNC(fishing_line_beam, TYPE_PROC_REF( /datum/beam/, Start))
+	INVOKE_ASYNC(fishing_line_beam, TYPE_PROC_REF(/datum/beam/, Start))
 	user.update_held_items()
 	return fishing_line_beam
 
@@ -453,7 +453,7 @@
 /datum/beam/fishing_line/proc/handle_dir_change(atom/movable/source, olddir, newdir)
 	SIGNAL_HANDLER
 	update_offsets(newdir)
-	INVOKE_ASYNC(src, TYPE_PROC_REF( /datum/beam/, redrawing))
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/beam/, redrawing))
 
 /datum/beam/fishing_line/proc/update_offsets(user_dir)
 	switch(user_dir)

@@ -157,7 +157,7 @@
 			for(var/mob/M in viewers(src, 7))
 				var/mob/living/carbon/human/C = M
 				if (ishuman(M))
-					addtimer(CALLBACK(C, TYPE_PROC_REF( /mob/, emote), "clap"), delay_offset * 0.3)
+					addtimer(CALLBACK(C, TYPE_PROC_REF(/mob/, emote), "clap"), delay_offset * 0.3)
 					delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)

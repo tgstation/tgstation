@@ -221,7 +221,7 @@
 	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 		if(to_hands)
-			INVOKE_ASYNC(to_hands, TYPE_PROC_REF( /mob, put_in_hands), weapon)
+			INVOKE_ASYNC(to_hands, TYPE_PROC_REF(/mob, put_in_hands), weapon)
 		else
 			weapon.forceMove(get_turf(victim))
 

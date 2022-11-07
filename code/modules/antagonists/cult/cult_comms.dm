@@ -208,7 +208,7 @@
 									S.release_shades(owner)
 								B.current.setDir(SOUTH)
 								new /obj/effect/temp_visual/cult/blood(final)
-								addtimer(CALLBACK(B.current, TYPE_PROC_REF( /mob/, reckon), final), 10)
+								addtimer(CALLBACK(B.current, TYPE_PROC_REF(/mob/, reckon), final), 10)
 		else
 			return
 	antag.cult_team.reckoning_complete = TRUE

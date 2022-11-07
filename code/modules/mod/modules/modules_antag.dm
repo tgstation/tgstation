@@ -287,7 +287,7 @@
 	flame.preparePixelProjectile(target, mod.wearer)
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
-	INVOKE_ASYNC(flame, TYPE_PROC_REF( /obj/projectile, fire))
+	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
 
 ///Power kick - Lets the user launch themselves at someone to kick them.

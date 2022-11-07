@@ -416,9 +416,9 @@
 		if(D.id != "mafia") //so as to not trigger shutters on station, lol
 			continue
 		if(close)
-			INVOKE_ASYNC(D, TYPE_PROC_REF( /obj/machinery/door/poddoor, close))
+			INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 		else
-			INVOKE_ASYNC(D, TYPE_PROC_REF( /obj/machinery/door/poddoor, open))
+			INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
 /**
  * The actual start of night for players. Mostly info is given at the start of the night as the end of the night is when votes and actions are submitted and tried.

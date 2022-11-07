@@ -803,11 +803,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(ishuman(user))
 		var/mob/living/carbon/human/hum = user
 		if(hum.l_store == resolve_parent && !hum.get_active_held_item())
-			INVOKE_ASYNC(hum, TYPE_PROC_REF( /mob, put_in_hands), resolve_parent)
+			INVOKE_ASYNC(hum, TYPE_PROC_REF(/mob, put_in_hands), resolve_parent)
 			hum.l_store = null
 			return
 		if(hum.r_store == resolve_parent && !hum.get_active_held_item())
-			INVOKE_ASYNC(hum, TYPE_PROC_REF( /mob, put_in_hands), resolve_parent)
+			INVOKE_ASYNC(hum, TYPE_PROC_REF(/mob, put_in_hands), resolve_parent)
 			hum.r_store = null
 			return
 

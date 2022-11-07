@@ -204,7 +204,7 @@
 	if(!ninja || !hacking_module)
 		return NONE
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
-		INVOKE_ASYNC(src, TYPE_PROC_REF( /atom, emag_act))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 		hacking_module.door_hack_counter++
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)

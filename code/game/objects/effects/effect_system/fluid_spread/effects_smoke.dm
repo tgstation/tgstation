@@ -64,7 +64,7 @@
 
 	var/time_to_transparency = round(((alpha - 160) / alpha) * frames)
 	if(time_to_transparency >= 1)
-		addtimer(CALLBACK(src, TYPE_PROC_REF( /atom, set_opacity), FALSE), time_to_transparency)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, set_opacity), FALSE), time_to_transparency)
 	else
 		set_opacity(FALSE)
 	animate(src, time = frames, alpha = 0)

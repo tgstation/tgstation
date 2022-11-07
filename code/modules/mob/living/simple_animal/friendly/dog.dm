@@ -74,7 +74,7 @@
 		"speak" = CALLBACK(src, PROC_REF(handle_automated_speech), TRUE),
 		"wear_hat" = CALLBACK(src, PROC_REF(find_new_hat)),
 		"drop_hat" = CALLBACK(src, PROC_REF(drop_hat)),
-		"spin" = CALLBACK(src, TYPE_PROC_REF( /mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
+		"spin" = CALLBACK(src, TYPE_PROC_REF(/mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return

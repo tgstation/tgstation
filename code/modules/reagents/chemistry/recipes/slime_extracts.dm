@@ -563,7 +563,7 @@
 		S.visible_message(span_danger("Infused with plasma, the core begins to expand uncontrollably!"))
 		S.icon_state = "[S.base_state]_active"
 		S.active = TRUE
-		addtimer(CALLBACK(S, TYPE_PROC_REF( /obj/item/grenade, detonate)), rand(15,60))
+		addtimer(CALLBACK(S, TYPE_PROC_REF(/obj/item/grenade, detonate)), rand(15,60))
 	else
 		var/mob/living/simple_animal/slime/random/S = new (get_turf(holder.my_atom))
 		S.visible_message(span_danger("Infused with plasma, the core begins to quiver and grow, and a new baby slime emerges from it!"))
@@ -580,7 +580,7 @@
 	S.visible_message(span_danger("Infused with slime jelly, the core begins to expand uncontrollably!"))
 	S.icon_state = "[S.base_state]_active"
 	S.active = TRUE
-	addtimer(CALLBACK(S, TYPE_PROC_REF( /obj/item/grenade, detonate)), rand(15,60))
+	addtimer(CALLBACK(S, TYPE_PROC_REF(/obj/item/grenade, detonate)), rand(15,60))
 	var/lastkey = holder.my_atom.fingerprintslast
 	var/touch_msg = "N/A"
 	if(lastkey)

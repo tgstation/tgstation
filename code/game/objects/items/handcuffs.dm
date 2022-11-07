@@ -435,7 +435,7 @@
 		if(C.body_position == STANDING_UP)
 			def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 			if(!C.legcuffed && C.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
-				INVOKE_ASYNC(C, TYPE_PROC_REF( /mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
+				INVOKE_ASYNC(C, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 	else if(snap && isanimal(L))
 		var/mob/living/simple_animal/SA = L

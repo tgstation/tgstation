@@ -148,7 +148,7 @@
 
 	exited.add_atom_colour(new_color, TEMPORARY_COLOUR_PRIORITY)
 	// ...but only for a few seconds
-	addtimer(CALLBACK(exited, TYPE_PROC_REF( /atom/, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, new_color), 6 SECONDS)
+	addtimer(CALLBACK(exited, TYPE_PROC_REF(/atom/, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, new_color), 6 SECONDS)
 
 /**
  * Slaughter demon's blood crawl
