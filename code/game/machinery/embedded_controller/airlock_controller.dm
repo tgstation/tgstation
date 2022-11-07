@@ -7,16 +7,19 @@
 
 /datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
-	var/exterior_door_tag //Burn chamber facing door
-	var/interior_door_tag //Station facing door
-	var/airpump_tag //See: dp_vent_pump.dm
 	var/sensor_tag //See: /obj/machinery/airlock_sensor
 	var/sanitize_external //Before the interior airlock opens, do we first drain all gases inside the chamber and then repressurize?
 
+	var/datum/weakref/interior_door_ref
+	var/datum/weakref/exterior_door_ref
+	var/datum/weakref/pump_ref
+
 	state = AIRLOCK_STATE_CLOSED
 	var/target_state = AIRLOCK_STATE_CLOSED
-	var/sensor_pressure = null
 
+	var/processing = FALSE
+
+#ifdef MBTODO
 /datum/computer/file/embedded_program/airlock_controller/receive_signal(datum/signal/signal)
 	var/receive_tag = signal.data["tag"]
 	if(!receive_tag)
@@ -45,6 +48,7 @@
 					target_state = AIRLOCK_STATE_OUTOPEN
 				else
 					target_state = AIRLOCK_STATE_INOPEN
+#endif
 
 /datum/computer/file/embedded_program/airlock_controller/receive_user_command(command)
 	switch(command)
@@ -64,89 +68,103 @@
 		switch(state)
 			if(AIRLOCK_STATE_INOPEN)
 				if(target_state != state)
-					if(memory["interior_status"] == "closed")
+					var/obj/machinery/door/airlock/interior_airlock = interior_door_ref.resolve()
+					if (isnull(interior_airlock))
+						continue
+
+					if(interior_airlock.density)
 						state = AIRLOCK_STATE_CLOSED
 						process_again = 1
 					else
-						post_signal(new /datum/signal(list(
-							"tag" = interior_door_tag,
-							"command" = "secure_close"
-						)))
+						interior_airlock.secure_close()
 				else
-					if(memory["pump_status"] != "off")
-						post_signal(new /datum/signal(list(
-							"tag" = airpump_tag,
-							"power" = 0,
-							"sigtype" = "command"
-						)))
+					var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
+
+					if(pump?.on)
+						pump.on = FALSE
+						pump.update_appearance(UPDATE_ICON)
 
 			if(AIRLOCK_STATE_PRESSURIZE)
 				if(target_state == AIRLOCK_STATE_INOPEN)
+					var/sensor_pressure = sensor_pressure()
+					if (isnull(sensor_pressure))
+						continue
+
 					if(sensor_pressure >= ONE_ATMOSPHERE*0.95)
-						if(memory["interior_status"] == "open")
+						var/obj/machinery/door/airlock/interior_airlock = interior_door_ref.resolve()
+						if (isnull(interior_airlock))
+							continue
+
+						if(interior_airlock.density)
+							interior_airlock?.secure_open()
+						else
 							state = AIRLOCK_STATE_INOPEN
 							process_again = 1
-						else
-							post_signal(new /datum/signal(list(
-								"tag" = interior_door_tag,
-								"command" = "secure_open"
-							)))
 					else
-						var/datum/signal/signal = new(list(
-							"tag" = airpump_tag,
-							"sigtype" = "command"
-						))
-						if(memory["pump_status"] == "siphon")
-							signal.data["stabilize"] = 1
-						else if(memory["pump_status"] != "release")
-							signal.data["power"] = 1
-						post_signal(signal)
+						var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
+						if (isnull(pump))
+							continue
+
+						if(pump.pump_direction == ATMOS_DIRECTION_SIPHONING)
+							pump.pressure_checks |= ATMOS_EXTERNAL_BOUND
+							pump.pump_direction = ATMOS_DIRECTION_RELEASING
+						else if(pump.pump_direction == ATMOS_DIRECTION_RELEASING)
+							pump.on = TRUE
+
+						pump.update_appearance(UPDATE_ICON)
 				else
 					state = AIRLOCK_STATE_CLOSED
 					process_again = 1
 
 			if(AIRLOCK_STATE_CLOSED)
 				if(target_state == AIRLOCK_STATE_OUTOPEN)
-					if(memory["interior_status"] == "closed")
+					var/obj/machinery/door/airlock/interior_airlock = interior_door_ref.resolve()
+					if (isnull(interior_airlock))
+						continue
+
+					if(interior_airlock.density)
 						state = AIRLOCK_STATE_DEPRESSURIZE
 						process_again = 1
 					else
-						post_signal(new /datum/signal(list(
-							"tag" = interior_door_tag,
-							"command" = "secure_close"
-						)))
+						interior_airlock?.secure_close()
 				else if(target_state == AIRLOCK_STATE_INOPEN)
-					if(memory["exterior_status"] == "closed")
+					var/obj/machinery/door/airlock/exterior_airlock = exterior_door_ref.resolve()
+					if (isnull(exterior_airlock))
+						continue
+
+					if(exterior_airlock.density)
 						state = AIRLOCK_STATE_PRESSURIZE
 						process_again = 1
 					else
-						post_signal(new /datum/signal(list(
-							"tag" = exterior_door_tag,
-							"command" = "secure_close"
-						)))
-
+						exterior_airlock?.secure_close()
 				else
-					if(memory["pump_status"] != "off")
-						post_signal(new /datum/signal(list(
-							"tag" = airpump_tag,
-							"power" = 0,
-							"sigtype" = "command"
-						)))
+					var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
+					if (isnull(pump))
+						continue
+
+					if (!pump.on)
+						pump.on = TRUE
+						pump.update_appearance(UPDATE_ICON)
 
 			if(AIRLOCK_STATE_DEPRESSURIZE)
 				var/target_pressure = ONE_ATMOSPHERE*0.05
 				if(sanitize_external)
 					target_pressure = ONE_ATMOSPHERE*0.01
 
+				var/sensor_pressure = sensor_pressure()
+				if (isnull(sensor_pressure))
+					continue
+
 				if(sensor_pressure <= target_pressure)
 					if(target_state == AIRLOCK_STATE_OUTOPEN)
-						if(memory["exterior_status"] == "open")
-							state = AIRLOCK_STATE_OUTOPEN
+						var/obj/machinery/door/airlock/exterior_airlock = exterior_door_ref.resolve()
+						if (isnull(exterior_airlock))
+							continue
+
+						if(exterior_airlock.density)
+							exterior_airlock.secure_open()
 						else
-							post_signal(new /datum/signal(list(
-								"tag" = exterior_door_tag,
-								"command" = "secure_open"
-							)))
+							state = AIRLOCK_STATE_OUTOPEN
 					else
 						state = AIRLOCK_STATE_CLOSED
 						process_again = 1
@@ -154,19 +172,22 @@
 					state = AIRLOCK_STATE_CLOSED
 					process_again = 1
 				else
-					var/datum/signal/signal = new(list(
-						"tag" = airpump_tag,
-						"sigtype" = "command"
-					))
-					if(memory["pump_status"] == "release")
-						signal.data["purge"] = 1
-					else if(memory["pump_status"] != "siphon")
-						signal.data["power"] = 1
-					post_signal(signal)
+					var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
+					if (isnull(pump))
+						continue
+
+					if(pump.pump_direction == ATMOS_DIRECTION_RELEASING)
+						pump.pressure_checks &= ~ATMOS_EXTERNAL_BOUND
+						pump.pump_direction = ATMOS_DIRECTION_SIPHONING
+						pump.update_appearance(UPDATE_ICON)
 
 			if(AIRLOCK_STATE_OUTOPEN) //state 2
 				if(target_state != AIRLOCK_STATE_OUTOPEN)
-					if(memory["exterior_status"] == "closed")
+					var/obj/machinery/door/airlock/exterior_airlock = exterior_door_ref.resolve()
+					if (isnull(exterior_airlock))
+						continue
+
+					if(exterior_airlock.density)
 						if(sanitize_external)
 							state = AIRLOCK_STATE_DEPRESSURIZE
 							process_again = 1
@@ -174,24 +195,25 @@
 							state = AIRLOCK_STATE_CLOSED
 							process_again = 1
 					else
-						post_signal(new /datum/signal(list(
-							"tag" = exterior_door_tag,
-							"command" = "secure_close"
-						)))
+						exterior_airlock.secure_close()
 				else
-					if(memory["pump_status"] != "off")
-						post_signal(new /datum/signal(list(
-							"tag" = airpump_tag,
-							"power" = 0,
-							"sigtype" = "command"
-						)))
+					var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
+					if (isnull(pump))
+						continue
 
-	memory["sensor_pressure"] = sensor_pressure
-	memory["processing"] = state != target_state
-	//sensor_pressure = null //not sure if we can comment this out. Uncomment in case of problems -rastaf0
+					if (pump.on)
+						pump.on = FALSE
+						pump.update_appearance(UPDATE_ICON)
+
+	processing = state != target_state
 
 	return 1
 
+/// Returns the pressure over the pump, or null if it is deleted
+/datum/computer/file/embedded_program/airlock_controller/proc/sensor_pressure()
+	var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
+	var/datum/gas_mixture/air = pump?.return_air()
+	return air?.return_pressure()
 
 /obj/machinery/embedded_controller/radio/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
@@ -211,6 +233,31 @@
 	var/sensor_tag
 	var/sanitize_external
 
+/obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		return
+
+	var/datum/computer/file/embedded_program/airlock_controller/new_prog = new
+
+	new_prog.id_tag = id_tag
+	new_prog.sensor_tag = sensor_tag
+	new_prog.sanitize_external = sanitize_external
+
+	new_prog.master = src
+	program = new_prog
+
+/obj/machinery/embedded_controller/radio/airlock_controller/LateInitialize()
+	. = ..()
+
+	if (isnull(program))
+		return
+
+	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
+	airlock_program.interior_door_ref = WEAKREF(GLOB.airlocks_by_id[interior_door_tag])
+	airlock_program.exterior_door_ref = WEAKREF(GLOB.airlocks_by_id[exterior_door_tag])
+	airlock_program.pump_ref = WEAKREF(GLOB.vents_by_id[airpump_tag])
+
 /obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list) // needed to override obj/machinery/embedded_controller/Topic, dont think its actually used in game other than here but the code is still here
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
@@ -228,11 +275,34 @@
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_data(mob/user)
 	var/list/data = list()
-	data["airlockState"] = program.state
-	data["sensorPressure"] = program.memory["sensor_pressure"] ? program.memory["sensor_pressure"] : "----"
-	data["exteriorStatus"] = program.memory["exterior_status"] ? program.memory["exterior_status"] : "----"
-	data["interiorStatus"] = program.memory["interior_status"] ? program.memory["interior_status"] : "----"
-	data["pumpStatus"] = program.memory["pump_status"] ? program.memory["pump_status"] : "----"
+
+	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
+	data["airlockState"] = airlock_program.state
+
+	var/sensor_pressure = airlock_program.sensor_pressure()
+	data["sensorPressure"] = isnull(sensor_pressure) ? "----" : round(sensor_pressure, 0.1)
+
+	var/obj/machinery/door/airlock/interior_airlock = airlock_program.interior_door_ref.resolve()
+	if (isnull(interior_airlock))
+		data["interiorStatus"] = "----"
+	else
+		data["interiorStatus"] = interior_airlock.density ? "closed" : "open"
+
+	var/obj/machinery/door/airlock/exterior_airlock = airlock_program.exterior_door_ref.resolve()
+	if (isnull(exterior_airlock))
+		data["exteriorStatus"] = "----"
+	else
+		data["exteriorStatus"] = exterior_airlock.density ? "closed" : "open"
+
+	var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = airlock_program.pump_ref.resolve()
+	switch (pump?.pump_direction)
+		if (null)
+			data["pumpStatus"] = "----"
+		if (ATMOS_DIRECTION_RELEASING)
+			data["pumpStatus"] = "release"
+		if (ATMOS_DIRECTION_SIPHONING)
+			data["pumpStatus"] = "siphon"
+
 	return data
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_act(action, params)
@@ -270,26 +340,10 @@
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 
-/obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		return
-
-	var/datum/computer/file/embedded_program/airlock_controller/new_prog = new
-
-	new_prog.id_tag = id_tag
-	new_prog.exterior_door_tag = exterior_door_tag
-	new_prog.interior_door_tag = interior_door_tag
-	new_prog.airpump_tag = airpump_tag
-	new_prog.sensor_tag = sensor_tag
-	new_prog.sanitize_external = sanitize_external
-
-	new_prog.master = src
-	program = new_prog
-
 /obj/machinery/embedded_controller/radio/airlock_controller/update_icon_state()
 	if(on && program)
-		icon_state = "[base_icon_state]_[program.memory["processing"] ? "process" : "standby"]"
+		var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
+		icon_state = "[base_icon_state]_[airlock_program.processing ? "process" : "standby"]"
 		return ..()
 	icon_state = "[base_icon_state]_off"
 	return ..()

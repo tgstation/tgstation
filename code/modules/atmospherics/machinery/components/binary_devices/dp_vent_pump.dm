@@ -1,7 +1,5 @@
 //Acts like a normal vent, but has an input AND output.
 ///pressure_checks defines for external_pressure_bound and input_pressure_min
-#define EXT_BOUND 1
-#define INPUT_MIN 2
 #define OUTPUT_MAX 4
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump
@@ -18,12 +16,12 @@
 
 	///Variable for radio frequency
 	var/frequency = 0
-	///Variable for radio id
+	///Variable for machinery that needs to directly interact with this pump, such as airlock controllers
 	var/id = null
 	///Stores the radio connection
 	var/datum/radio_frequency/radio_connection
-	///Indicates that the direction of the pump, if 0 is siphoning, if 1 is releasing
-	var/pump_direction = 1
+	///Indicates that the direction of the pump, if ATMOS_DIRECTION_SIPHONING is siphoning, if ATMOS_DIRECTION_RELEASING is releasing
+	var/pump_direction = ATMOS_DIRECTION_RELEASING
 	///Set the maximum allowed external pressure
 	var/external_pressure_bound = ONE_ATMOSPHERE
 	///Set the maximum pressure at the input port
@@ -31,10 +29,20 @@
 	///Set the maximum pressure at the output port
 	var/output_pressure_max = 0
 	///Set the flag for the pressure bound
-	var/pressure_checks = EXT_BOUND
+	var/pressure_checks = ATMOS_EXTERNAL_BOUND
+
+/// A list of all vents that have an id
+GLOBAL_LIST_EMPTY_TYPED(vents_by_id, /obj/machinery/atmospherics/components/binary/dp_vent_pump)
+
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/Initialize(mapload)
+	. = ..()
+
+	if (!isnull(id))
+		GLOB.vents_by_id[id] = src
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
 	SSradio.remove_object(src, frequency)
+	GLOB.vents_by_id -= id
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
@@ -65,9 +73,9 @@
 	if(pump_direction) //input -> external
 		var/pressure_delta = 10000
 
-		if(pressure_checks&EXT_BOUND)
+		if(pressure_checks&ATMOS_EXTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (external_pressure_bound - environment_pressure))
-		if(pressure_checks&INPUT_MIN)
+		if(pressure_checks&ATMOS_INTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (air1.return_pressure() - input_pressure_min))
 
 		if(pressure_delta <= 0)
@@ -89,9 +97,9 @@
 	else //external -> output
 		var/pressure_delta = 10000
 
-		if(pressure_checks&EXT_BOUND)
+		if(pressure_checks&ATMOS_EXTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
-		if(pressure_checks&INPUT_MIN)
+		if(pressure_checks&ATMOS_INTERNAL_BOUND)
 			pressure_delta = min(pressure_delta, (output_pressure_max - air2.return_pressure()))
 
 		if(pressure_delta <= 0)
@@ -251,6 +259,4 @@
 	piping_layer = 4
 	icon_state = "dpvent_map_on-4"
 
-#undef EXT_BOUND
-#undef INPUT_MIN
 #undef OUTPUT_MAX

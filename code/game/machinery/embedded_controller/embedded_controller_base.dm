@@ -1,5 +1,4 @@
 /datum/computer/file/embedded_program
-	var/list/memory = list()
 	var/state
 	var/obj/machinery/embedded_controller/master
 
@@ -7,6 +6,7 @@
 	master = null
 	. = ..()
 
+// MBTODO: Remove
 /datum/computer/file/embedded_program/proc/post_signal(datum/signal/signal, comm_line)
 	if(master)
 		master.post_signal(signal, comm_line)
@@ -84,12 +84,14 @@
 	. = ..()
 	set_frequency(frequency)
 
+#ifdef MBTODO
 /obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)
 	signal.transmission_method = TRANSMISSION_RADIO
 	if(radio_connection)
 		return radio_connection.post_signal(src, signal)
 	else
 		signal = null
+#endif
 
 /obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)

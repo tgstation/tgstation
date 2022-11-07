@@ -7,6 +7,7 @@
 	var/frequency
 	var/datum/radio_frequency/radio_connection
 
+#ifdef MBTODO
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal)
 		return
@@ -48,6 +49,27 @@
 			update_appearance()
 
 	send_status()
+#endif
+
+/// Forces the airlock to unbolt and open
+/obj/machinery/door/airlock/proc/secure_open()
+	locked = FALSE
+	update_appearance()
+
+	stoplag(0.2 SECONDS)
+	open(forced = TRUE)
+
+	locked = TRUE
+	update_appearance()
+
+/// Forces the airlock to close and bolt
+/obj/machinery/door/airlock/proc/secure_close()
+	locked = FALSE
+	close(forced = TRUE)
+
+	locked = TRUE
+	stoplag(0.2 SECONDS)
+	update_appearance()
 
 /obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
@@ -128,6 +150,8 @@
 	. = ..()
 	if(.)
 		return
+
+	// MBTODO: Airlock cycles
 	var/datum/signal/signal = new(list(
 		"tag" = master_tag,
 		"command" = "cycle"
