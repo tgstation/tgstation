@@ -403,8 +403,6 @@
 				concatenated_message += " I'm okay now."
 		if(CLINGY_TIMER_START_MESSAGE)
 			concatenated_message += " You've got roughly [DisplayTimeText(clingy_timer_duration)] to get me back!"
-		if(PISSING_OFF)
-			speaker.say("Fuck you, I'm out of here. :middle_finger:", forced = COMPONENT_FORCED_SPEAK_NAME)
 
 	if(!concatenated_message)
 		stack_trace("Unable to generate a clingy message for [speaker]. Likely an issue with the strings file [strings_file]. Message type: [message_type]")
