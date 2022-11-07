@@ -299,7 +299,7 @@
  *
  * To have your LateIntialize proc be called, your atoms [Initalization][/atom/proc/Initialize]
  *  proc must return the hint
- * [INITIALIZE_HINT_LATELOAD] otherwise you will never be called.
+ * [INITIALIZE_HINT_LATELOAD] otherwise it will never be called.
  *
  * useful for doing things like finding other machines on GLOB.machines because you can guarantee
  * that all atoms will actually exist in the "WORLD" at this time and that all their Intialization
@@ -335,7 +335,10 @@
 
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
-	LAZYCLEARLIST(overlays)
+	// Checking length(overlays) before cutting has significant speed benefits
+	if (length(overlays))
+		overlays.Cut()
+
 	LAZYNULL(managed_overlays)
 
 	QDEL_NULL(light)
@@ -1500,7 +1503,6 @@
 			if(i > 1)
 				created_atom.pixel_x += rand(-8,8)
 				created_atom.pixel_y += rand(-8,8)
-			SEND_SIGNAL(created_atom, COMSIG_ATOM_CREATEDBY_PROCESSING, src, chosen_option)
 			created_atom.OnCreatedFromProcessing(user, process_item, chosen_option, src)
 			to_chat(user, span_notice("You manage to create [chosen_option[TOOL_PROCESSING_AMOUNT]] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)]\s"] from [src]."))
 			created_atoms.Add(created_atom)
@@ -1512,8 +1514,11 @@
 	qdel(src)
 	return
 
-/atom/proc/OnCreatedFromProcessing(mob/living/user, obj/item/food, list/chosen_option, atom/original_atom)
-	return
+/atom/proc/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_ATOM_CREATEDBY_PROCESSING, original_atom, chosen_option)
+	ADD_TRAIT(src, TRAIT_FOOD_CHEF_MADE, REF(user))
 
 //! Tool-specific behavior procs.
 ///

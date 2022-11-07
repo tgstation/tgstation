@@ -108,6 +108,10 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 				SStitle.icon = icon
 				handle_generic_titlescreen_sizes()
 
+/turf/closed/indestructible/splashscreen/examine()
+	desc = pick(strings(SPLASH_FILE, "splashes"))
+	return ..()
+
 /turf/closed/indestructible/start_area
 	name = null
 	desc = null

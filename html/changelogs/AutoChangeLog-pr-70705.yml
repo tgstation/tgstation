@@ -1,4 +1,0 @@
-author: "Foxtrot (Funce)"
-delete-after: True
-changes: 
-  - admin: "\"Admin PM\" verb can now be cancelled without an error message"

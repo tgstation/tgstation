@@ -96,8 +96,10 @@
 	griddled_objects += item_to_grill
 	item_to_grill.flags_1 |= IS_ONTOP_1
 	item_to_grill.vis_flags |= VIS_INHERIT_PLANE
+
+	SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_PLACED_ON, user)
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
-	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
+	RegisterSignal(item_to_grill, COMSIG_ITEM_GRILLED, .proc/GrillCompleted)
 	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
 	update_grill_audio()
 	update_appearance()
@@ -108,7 +110,7 @@
 	ungrill.vis_flags &= ~VIS_INHERIT_PLANE
 	griddled_objects -= ungrill
 	vis_contents -= ungrill
-	UnregisterSignal(ungrill, list(COMSIG_GRILL_COMPLETED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(ungrill, list(COMSIG_ITEM_GRILLED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)
@@ -153,7 +155,7 @@
 	..()
 	for(var/i in griddled_objects)
 		var/obj/item/griddled_item = i
-		if(SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILLED, src, delta_time) & COMPONENT_HANDLED_GRILLING)
+		if(SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_PROCESS, src, delta_time) & COMPONENT_HANDLED_GRILLING)
 			continue
 		griddled_item.fire_act(1000) //Hot hot hot!
 		if(prob(10))

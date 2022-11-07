@@ -131,8 +131,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/armour_penetration = 0
 	///Whether or not our object is easily hindered by the presence of armor
 	var/weak_against_armour = FALSE
-	///What objects the suit storage can store
-	var/list/allowed = null
 	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_self = 0
 	///In deciseconds, how long an item takes to put on another person
@@ -934,11 +932,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		MO.desc = "Looks like this was \an [src] some time ago."
 		..()
 
-/obj/item/proc/microwave_act(obj/machinery/microwave/M)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, M) & COMPONENT_SUCCESFUL_MICROWAVE)
-		return TRUE
-	if(istype(M) && M.dirty < 100)
-		M.dirty++
+/obj/item/proc/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
+	SHOULD_CALL_PARENT(TRUE)
+
+	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
+
 
 /obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
 	return TRUE
@@ -1482,11 +1480,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/proc/set_painting_tool_color(chosen_color)
 	SEND_SIGNAL(src, COMSIG_PAINTING_TOOL_SET_COLOR, chosen_color)
-
-/// Triggered from a silver slime reaction, sends a signal for the listener in component/edible
-/obj/item/proc/mark_silver_slime_reaction()
-	SIGNAL_HANDLER
-	SEND_SIGNAL(src, COMSIG_FOOD_SILVER_SPAWNED)
 
 /**
  * Returns null if this object cannot be used to interact with physical writing mediums such as paper.

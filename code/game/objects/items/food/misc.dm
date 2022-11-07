@@ -64,6 +64,23 @@
 	eatverbs = list("bite", "nibble", "gnaw", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
+/obj/item/food/popcorn/salty
+	name = "salty popcorn"
+	icon_state = "salty_popcorn"
+	desc = "Salty popcorn, a classic for all time."
+	trash_type = /obj/item/trash/popcorn/salty
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 2)
+	tastes = list("salt" = 2, "popcorn" = 1)
+
+/obj/item/food/popcorn/caramel
+	name = "caramel popcorn"
+	icon_state = "сaramel_popcorn"
+	desc = "Caramel-covered popcorn. Sweet!"
+	trash_type = /obj/item/trash/popcorn/caramel
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/caramel = 4)
+	tastes = list("caramel" = 2, "popcorn" = 1)
+	foodtypes = JUNKFOOD | SUGAR
+
 /obj/item/food/loadedbakedpotato
 	name = "loaded baked potato"
 	desc = "Totally baked."
@@ -152,7 +169,7 @@
 
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_GRILLED, .proc/OnGrill)
+	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, .proc/OnGrill)
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
@@ -450,18 +467,8 @@
 		hallucinate(loc)
 
 /obj/item/food/bubblegum/bubblegum/MakeEdible()
-	AddComponent(/datum/component/edible,\
-				initial_reagents = food_reagents,\
-				food_flags = food_flags,\
-				foodtypes = foodtypes,\
-				volume = max_volume,\
-				eat_time = eat_time,\
-				tastes = tastes,\
-				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness,\
-				on_consume = CALLBACK(src, .proc/OnConsume))
+	. = ..()
+	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, .proc/OnConsume))
 
 /obj/item/food/bubblegum/bubblegum/proc/OnConsume(mob/living/eater, mob/living/feeder)
 	if(iscarbon(eater))
@@ -672,18 +679,8 @@
 
 ///Override for checkliked callback
 /obj/item/food/rationpack/MakeEdible()
-	AddComponent(/datum/component/edible,\
-				initial_reagents = food_reagents,\
-				food_flags = food_flags,\
-				foodtypes = foodtypes,\
-				volume = max_volume,\
-				eat_time = eat_time,\
-				tastes = tastes,\
-				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness,\
-				check_liked = CALLBACK(src, .proc/check_liked))
+	. = ..()
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, .proc/check_liked))
 
 /obj/item/food/rationpack/proc/check_liked(fraction, mob/mob) //Nobody likes rationpacks. Nobody.
 	return FOOD_DISLIKED
@@ -787,11 +784,16 @@
 	icon_state = "ready_donk"
 	trash_type = /obj/item/trash/ready_donk
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
-	microwaved_type = /obj/item/food/ready_donk/warm
 	tastes = list("food?" = 2, "laziness" = 1)
 	foodtypes = MEAT | JUNKFOOD
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+	/// What type of ready-donk are we warmed into?
+	var/warm_type = /obj/item/food/ready_donk/warm
+
+/obj/item/food/ready_donk/make_microwavable()
+	AddElement(/datum/element/microwavable, warm_type)
 
 /obj/item/food/ready_donk/examine_more(mob/user)
 	. = ..()
@@ -806,15 +808,18 @@
 	desc = "A quick Donk-dinner, now with flavour! And it's even hot!"
 	icon_state = "ready_donk_warm"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/medicine/omnizine = 3)
-	microwaved_type = null
 	tastes = list("food?" = 2, "laziness" = 1)
+
+	// Don't burn your warn ready donks.
+	warm_type = /obj/item/food/badrecipe
 
 /obj/item/food/ready_donk/mac_n_cheese
 	name = "\improper Ready-Donk: Donk-a-Roni"
 	desc = "Neon-orange mac n' cheese in seconds!"
-	microwaved_type = /obj/item/food/ready_donk/warm/mac_n_cheese
 	tastes = list("cheesy pasta" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/mac_n_cheese
 
 /obj/item/food/ready_donk/warm/mac_n_cheese
 	name = "warm Ready-Donk: Donk-a-Roni"
@@ -826,9 +831,10 @@
 /obj/item/food/ready_donk/donkhiladas
 	name = "\improper Ready-Donk: Donkhiladas"
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, for an 'authentic' taste of Mexico."
-	microwaved_type = /obj/item/food/ready_donk/warm/donkhiladas
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+	warm_type = /obj/item/food/ready_donk/warm/donkhiladas
 
 /obj/item/food/ready_donk/warm/donkhiladas
 	name = "warm Ready-Donk: Donkhiladas"
@@ -939,3 +945,6 @@
 	tastes = list("rice wrappers" = 1, "spice" = 1, "crunchy veggies" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+
+
+

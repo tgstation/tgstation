@@ -633,9 +633,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(!CONFIG_GET(flag/panic_bunker_interview))
 			// If we don't have panic_bunker_living set and the client is not in the DB, reject them.
 			// Otherwise, if we do have a panic_bunker_living set, check if they have enough minutes played.
-			if((!living_recs && !client_is_in_db) || living_recs >= minutes)
+			if((living_recs == 0 && !client_is_in_db) || living_recs >= minutes)
 				var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
-					[living_recs == -1 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
+					[living_recs == 0 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
 				log_access(reject_message)
 				message_admins(span_adminnotice("[reject_message]"))
 				var/message = CONFIG_GET(string/panic_bunker_message)

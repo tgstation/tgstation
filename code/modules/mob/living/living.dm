@@ -433,8 +433,13 @@
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
 	if (!CAN_SUCCUMB(src))
-		to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
-		return
+		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
+			if(whispered)
+				to_chat(src, text="You are unable to succumb to death! Unless you just press the UI button.", type=MESSAGE_TYPE_INFO)
+				return
+		else
+			to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
+			return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
 	adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 	updatehealth()
@@ -1319,7 +1324,7 @@
 				/mob/living/simple_animal/crab,
 				/mob/living/simple_animal/pet/dog/pug,
 				/mob/living/simple_animal/pet/cat,
-				/mob/living/simple_animal/mouse,
+				/mob/living/basic/mouse,
 				/mob/living/simple_animal/chicken,
 				/mob/living/basic/cow,
 				/mob/living/simple_animal/hostile/lizard,
@@ -2172,7 +2177,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	. = body_position
 	body_position = new_value
-	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION)
+	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION, new_value, .)
 	if(new_value == LYING_DOWN) // From standing to lying down.
 		on_lying_down()
 	else // From lying down to standing up.

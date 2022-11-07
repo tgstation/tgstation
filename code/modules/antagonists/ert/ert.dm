@@ -232,7 +232,7 @@
 		return
 	if(isplasmaman(H))
 		H.equipOutfit(plasmaman_outfit)
-		H.internal = H.get_item_for_held_index(2)
+		H.open_internals(H.get_item_for_held_index(2))
 	H.equipOutfit(outfit)
 
 
