@@ -501,7 +501,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /**
  * Begins the process of exploding the nuke.
- * PROC_REF(explode] -> [proc/actually_explode] -> [proc/really_actually_explode])
+ * [proc/explode] -> [proc/actually_explode] -> [proc/really_actually_explode])
  *
  * Goes through a few timers and plays a cinematic.
  */

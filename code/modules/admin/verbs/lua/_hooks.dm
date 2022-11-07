@@ -73,11 +73,11 @@
  * - ["status"]: How the chunk or function stopped code execution
  *     - "sleeping": The chunk or function called dm.sleep,
  *       placing it in the sleep queue. Items in the sleep
- *       queue can be resumed using PROC_REF(__lua_awaken)
+ *       queue can be resumed using /proc/__lua_awaken
  *     - "yielded": The chunk or function called coroutine.yield,
  *       placing it in the yield table. Items in the yield
  *       table can can be resumed by passing their index
- *       to PROC_REF(__lua_resume)
+ *       to /proc/__lua_resume
  *     - "finished": The chunk or function finished
  *     - "errored": The chunk or function produced an error
  *     - "bad return": The chunk or function yielded or finished,
@@ -108,11 +108,11 @@
  * - ["status"]: How the chunk or function stopped code execution
  *     - "sleeping": The chunk or function called dm.sleep,
  *       placing it in the sleep queue. Items in the sleep
- *       queue can be resumed using PROC_REF(__lua_awaken)
+ *       queue can be resumed using /proc/__lua_awaken
  *     - "yielded": The chunk or function called coroutine.yield,
  *       placing it in the yield table. Items in the yield
  *       table can can be resumed by passing their index
- *       to PROC_REF(__lua_resume)
+ *       to /proc/__lua_resume
  *     - "finished": The chunk or function finished
  *     - "errored": The chunk or function produced an error
  *     - "bad return": The chunk or function yielded or finished,
@@ -142,11 +142,11 @@
  * - ["status"]: How the chunk or function stopped code execution
  *     - "sleeping": The chunk or function called dm.sleep,
  *       placing it in the sleep queue. Items in the sleep
- *       queue can be resumed using PROC_REF(__lua_awaken)
+ *       queue can be resumed using /proc/__lua_awaken
  *     - "yielded": The chunk or function called coroutine.yield,
  *       placing it in the yield table. Items in the yield
  *       table can can be resumed by passing their index
- *       to PROC_REF(__lua_resume)
+ *       to /proc/__lua_resume
  *     - "finished": The chunk or function finished
  *     - "errored": The chunk or function produced an error
  *     - "bad return": The chunk or function yielded or finished,
@@ -180,11 +180,11 @@
  * - ["status"]: How the chunk or function stopped code execution
  *     - "sleeping": The chunk or function called dm.sleep,
  *       placing it in the sleep queue. Items in the sleep
- *       queue can be resumed using PROC_REF(__lua_awaken)
+ *       queue can be resumed using /proc/__lua_awaken
  *     - "yielded": The chunk or function called coroutine.yield,
  *       placing it in the yield table. Items in the yield
  *       table can can be resumed by passing their index
- *       to PROC_REF(__lua_resume)
+ *       to /proc/__lua_resume
  *     - "finished": The chunk or function finished
  *     - "errored": The chunk or function produced an error
  *     - "bad return": The chunk or function yielded or finished,
