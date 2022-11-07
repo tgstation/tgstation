@@ -26,12 +26,14 @@
 /obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
-	AddComponent(/datum/component/stationloving/clingy, inform_admins = !fake, strings_file = NUCLEAR_DISK_FILE)
 
 	if(!fake)
+		AddComponent(/datum/component/stationloving/clingy, inform_admins = TRUE, strings_file = NUCLEAR_DISK_FILE)
 		SSpoints_of_interest.make_point_of_interest(src)
 		last_disk_move = world.time
 		START_PROCESSING(SSobj, src)
+	else
+		AddComponent(/datum/component/stationloving, inform_admins = FALSE)
 
 /obj/item/disk/nuclear/process()
 	if(fake)
