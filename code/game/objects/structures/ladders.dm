@@ -157,7 +157,7 @@
 			going_up = TRUE
 		if("Down")
 			going_up = FALSE
-		if("Cancel")
+		else
 			return
 
 	if(is_ghost || !travel_time)
@@ -255,7 +255,6 @@
 	use(user, going_up = FALSE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-
 /obj/structure/ladder/attack_pai(mob/user, list/modifiers)
 	use(user)
 	return TRUE
@@ -266,18 +265,6 @@
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	use(user, going_up = FALSE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/structure/ladder/attack_lightgeist(mob/living/user, list/modifiers)
-	use(user)
-	return TRUE
-
-/obj/structure/ladder/attack_lightgeist_secondary(mob/living/user, list/modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	use(user, going_up = FALSE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)
 	ghost_use(user)
