@@ -23,7 +23,6 @@
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
-	var/associated_lift = null
 
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
