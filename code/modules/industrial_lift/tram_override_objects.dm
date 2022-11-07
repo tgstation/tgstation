@@ -23,8 +23,6 @@
 	//DO NOT put something on the tram roundstart that has opacity, it WILL overload SSlighting
 	opacity = FALSE
 
-GLOBAL_LIST_EMPTY (tram_doors)
-
 /obj/machinery/door/window/left/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	var/associated_lift = MAIN_STATION_TRAM
