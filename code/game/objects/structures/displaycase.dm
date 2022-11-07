@@ -333,7 +333,7 @@
 	if(istype(W, /obj/item/key/displaycase))
 		toggle_historian_mode(user)
 		return
-	. = ..()
+	return ..()
 
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
@@ -570,7 +570,7 @@
 	if(istype(I, /obj/item/modular_computer))
 		return TRUE
 	SStgui.update_uis(src)
-	. = ..()
+	return ..()
 
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
