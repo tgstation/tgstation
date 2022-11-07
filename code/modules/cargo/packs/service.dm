@@ -247,7 +247,7 @@
 		new item(C)
 
 /datum/supply_pack/service/coffeekit
-	name = "Coffee Equippment Crate"
+	name = "Coffee Equipment Crate"
 	desc = "A complete kit to setup your own cozy coffee shop, the coffeemaker is for some reason not included."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/storage/box/coffeepack/robusta,
