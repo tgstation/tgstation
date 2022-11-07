@@ -1,5 +1,4 @@
-// Add to clothing to give the wearer a mood buff and a unique examine str
-
+/// Add to clothing to give the wearer a mood buff and a unique examine text
 /datum/component/onwear_mood
 	/// the event the wearer experiences
 	var/datum/mood_event/saved_event
