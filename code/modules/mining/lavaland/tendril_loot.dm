@@ -513,21 +513,25 @@
 /obj/item/reagent_containers/cup/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
+	fill_icon = 'icons/obj/lavaland/artefacts.dmi'
+	fill_icon_state = "potion_fill"
+	fill_icon_thresholds = list(0, 1)
+
+/obj/item/reagent_containers/cup/bottle/potion/update_overlays()
+	. = ..()
+	if(reagents?.total_volume)
+		. += "potionflask_cap"
 
 /obj/item/reagent_containers/cup/bottle/potion/flight
 	name = "strange elixir"
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/reagent_containers/cup/bottle/potion/update_icon_state()
-	icon_state = "potionflask[reagents?.total_volume ? null : "_empty"]"
-	return ..()
-
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
-	color = "#FFEBEB"
+	color = "#976230"
 
 /datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -609,11 +613,11 @@
 	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
 
-/obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
+/obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/user, atom/rocks, proximity)
 	SIGNAL_HANDLER
-	if(!ismineralturf(A))
+	if(!ismineralturf(rocks) && !isasteroidturf(rocks))
 		return
-	A.attackby(src, H)
+	rocks.attackby(src, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/suit/hooded/berserker

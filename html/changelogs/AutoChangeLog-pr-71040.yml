@@ -1,0 +1,5 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - qol: "Jukebox music can be controlled by a new seperate preference, and is no longer linked to the instrument sound preference option."
+  - refactor: "Sound related toggle preferences have been migrated away from the legacy system. Pre-existing preferences should be safely migrated but players are advised to check."

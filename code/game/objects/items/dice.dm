@@ -242,7 +242,7 @@
 	. = ..()
 	. += "[icon_state]-[result]"
 
-/obj/item/dice/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver)
+/obj/item/dice/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
 	if(microwave_riggable)
 		rigged = DICE_BASICALLY_RIGGED
 		rigged_value = result
