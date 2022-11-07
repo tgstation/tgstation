@@ -404,6 +404,10 @@
 /obj/structure/displaycase/trophy/ui_interact(mob/user, datum/tgui/ui)
 	if(open)
 		return
+	if(isliving(usr))
+		var/mob/living/living_usr = usr
+		if(living_usr.combat_mode)
+			return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Trophycase", name)
