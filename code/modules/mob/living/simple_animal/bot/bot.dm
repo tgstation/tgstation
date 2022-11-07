@@ -495,14 +495,7 @@
  * scan_range - how far away from [src] will be scanned, if nothing is found directly adjacent.
  */
 /mob/living/simple_animal/bot/proc/scan(list/scan_types, old_target, scan_range = DEFAULT_SCAN_RANGE)
-	var/turf/current_turf = get_turf(src)
-	if(!current_turf)
-		return
-	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
-	if(shuffle) //If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
-		adjacent = shuffle(adjacent)
-		shuffle = FALSE
-
+	var/list/adjacent = shuffle(view(1, src))
 	for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
 		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
 			continue
