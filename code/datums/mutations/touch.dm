@@ -19,10 +19,10 @@
 		return
 
 	if(GET_MUTATION_POWER(src) <= 1)
-		to_modify.chain = 0
+		to_modify.chain = FALSE
 		return
 
-	to_modify.chain = 1
+	to_modify.chain = TRUE
 
 /datum/action/cooldown/spell/touch/shock
 	name = "Shock Touch"
@@ -33,13 +33,13 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
-	var/chain = 0
+	var/chain = FALSE
 	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
 	//damage should do about 1 per limb
 	var/zap_power = 7500
-	//range
+	//range of tesla shock
 	var/zap_range = 7
-	//flags
+	//flags, Only includes the flag that allows the shocks to damage mobs, leaving out structure damage and energy generating flags
 	var/zap_flags = ZAP_MOB_DAMAGE
 
 	hand_path = /obj/item/melee/touch_attack/shock
@@ -57,10 +57,9 @@
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),
 			)
-			if(chain == 1)
+			if(chain)
 				tesla_zap(victim, zap_range, zap_power, zap_flags)
-				carbon_victim.visible_message(
-					span_danger("An arc of electricity explodes out of [victim]!"))
+				carbon_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 
 	else if(isliving(victim))
@@ -70,10 +69,9 @@
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),
 			)
-			if(chain == 1)
+			if(chain)
 				tesla_zap(victim, zap_range, zap_power, zap_flags)
-				living_victim.visible_message(
-					span_danger("An arc of electricity explodes out of [victim]!"))
+				living_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 
 	to_chat(caster, span_warning("The electricity doesn't seem to affect [victim]..."))
