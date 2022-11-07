@@ -146,7 +146,7 @@
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
-	else if(istype(target, /turf/open/misc/asteroid))
+	else if(isasteroidturf(target))
 		var/turf/open/misc/asteroid/sand_turf = target
 		if(!sand_turf.can_dig(mod.wearer))
 			return
