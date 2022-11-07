@@ -71,11 +71,6 @@
 	var/contents_initialized = FALSE
 
 /obj/structure/closet/Initialize(mapload)
-<<<<<<< HEAD
-=======
-	if(mapload && !opened) // if closed, any item at the crate's loc is put in the contents
-		addtimer(CALLBACK(src, PROC_REF(take_contents), TRUE), 0)
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 	. = ..()
 
 	// if closed, any item at the crate's loc is put in the contents

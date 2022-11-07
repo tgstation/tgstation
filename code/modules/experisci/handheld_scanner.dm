@@ -36,7 +36,7 @@
 	playsound(src, 'sound/machines/destructive_scanner/ScanDangerous.ogg', 40)
 	user.emote("scream")
 
-	addtimer(CALLBACK(src, .proc/make_meat_toilet, user), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(make_meat_toilet), user), 5 SECONDS)
 	return MANUAL_SUICIDE
 
 /obj/item/experi_scanner/proc/make_meat_toilet(mob/living/carbon/user)

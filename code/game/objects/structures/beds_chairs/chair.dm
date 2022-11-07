@@ -24,11 +24,6 @@
 
 /obj/structure/chair/Initialize(mapload)
 	. = ..()
-<<<<<<< HEAD
-=======
-	if(!anchored) //why would you put these on the shuttle?
-		addtimer(CALLBACK(src, PROC_REF(RemoveFromLatejoin)), 0)
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 	if(prob(0.2))
 		name = "tactical [name]"
 	MakeRotate()

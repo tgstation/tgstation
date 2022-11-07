@@ -101,11 +101,7 @@
 		if("bulb")
 			if(prob(5))
 				break_light_tube(TRUE)
-<<<<<<< HEAD
 	update(trigger = FALSE)
-=======
-	addtimer(CALLBACK(src, PROC_REF(update), FALSE), 0.1 SECONDS)
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 
 /obj/machinery/light/Destroy()
 	var/area/local_area =get_room_area(src)

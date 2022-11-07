@@ -35,9 +35,9 @@
 		src.positive_result = positive_result
 
 /datum/component/bakeable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_OVEN_PLACED_IN, .proc/on_baking_start)
-	RegisterSignal(parent, COMSIG_ITEM_OVEN_PROCESS, .proc/on_bake)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_ITEM_OVEN_PLACED_IN, PROC_REF(on_baking_start))
+	RegisterSignal(parent, COMSIG_ITEM_OVEN_PROCESS, PROC_REF(on_bake))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/bakeable/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_OVEN_PLACED_IN, COMSIG_ITEM_OVEN_PROCESS, COMSIG_PARENT_EXAMINE))

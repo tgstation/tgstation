@@ -36,7 +36,7 @@
 		if(M.client)
 			M.reset_perspective(src)
 		hasmob = TRUE
-		RegisterSignal(M, COMSIG_LIVING_RESIST, .proc/struggle_prep, M)
+		RegisterSignal(M, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep), M)
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals mail...
 	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
@@ -109,7 +109,7 @@
 	if(escapee.loc != src)
 		UnregisterSignal(escapee, COMSIG_LIVING_RESIST)
 		return //Somehow they got out without telling us
-	INVOKE_ASYNC(src, .proc/struggle_free, escapee)
+	INVOKE_ASYNC(src, PROC_REF(struggle_free), escapee)
 
 /**
  * Completes the struggle code

@@ -31,7 +31,7 @@
 
 /obj/item/food/candy/bronx/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, .proc/after_eat))
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
 /obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
 	if(ishuman(eater))

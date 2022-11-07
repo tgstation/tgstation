@@ -8,11 +8,7 @@
 	///checker on whether we have sent the crystal yet.
 	var/sent_crystal = FALSE
 
-<<<<<<< HEAD
 /datum/traitor_objective/final/supermatter_cascade/can_generate_objective(generating_for, list/possible_duplicates)
-=======
-/datum/traitor_objective/ultimate/supermatter_cascade/can_generate_objective(generating_for, list/generating_for)
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 	. = ..()
 	if(!.)
 		return FALSE

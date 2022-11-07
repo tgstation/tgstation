@@ -7,7 +7,7 @@
 
 /obj/item/food/deepfryholder/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, .proc/On_Consume))
+	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(On_Consume)))
 
 /obj/item/food/deepfryholder/Initialize(mapload, obj/item/fried)
 	if(!fried)

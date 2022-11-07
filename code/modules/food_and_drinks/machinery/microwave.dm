@@ -443,11 +443,7 @@
 		return
 	time--
 	use_power(active_power_usage)
-<<<<<<< HEAD
-	addtimer(CALLBACK(src, .proc/loop, type, time, wait, cooker), wait)
-=======
-	addtimer(CALLBACK(src, PROC_REF(loop), type, time, wait), wait)
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
+	addtimer(CALLBACK(src, PROC_REF(loop), type, time, wait, cooker), wait)
 
 /obj/machinery/microwave/power_change()
 	. = ..()

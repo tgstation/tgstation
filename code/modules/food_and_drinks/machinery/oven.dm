@@ -105,11 +105,7 @@
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
 	oven_tray.pixel_x = OVEN_TRAY_X_OFFSET
 
-<<<<<<< HEAD
-	RegisterSignal(used_tray, COMSIG_MOVABLE_MOVED, .proc/on_tray_moved)
-=======
-	RegisterSignal(used_tray, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
+	RegisterSignal(used_tray, COMSIG_MOVABLE_MOVED, PROC_REF(on_tray_moved))
 	update_baking_audio()
 	update_appearance()
 

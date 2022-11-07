@@ -68,12 +68,7 @@
 			return
 		else if(!grilled_item && user.transferItemToLoc(I, src))
 			grilled_item = I
-<<<<<<< HEAD
-			RegisterSignal(grilled_item, COMSIG_ITEM_GRILLED, .proc/GrillCompleted)
-=======
-			RegisterSignal(grilled_item, COMSIG_GRILL_COMPLETED, PROC_REF(GrillCompleted))
-			ADD_TRAIT(grilled_item, TRAIT_FOOD_GRILLED, "boomers")
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
+			RegisterSignal(grilled_item, COMSIG_ITEM_GRILLED, PROC_REF(GrillCompleted))
 			to_chat(user, span_notice("You put the [grilled_item] on [src]."))
 			update_appearance()
 			grill_loop.start()

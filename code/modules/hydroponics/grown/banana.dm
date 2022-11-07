@@ -29,25 +29,8 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
 
 /obj/item/food/grown/banana/MakeEdible()
-<<<<<<< HEAD
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, .proc/check_liked))
-=======
-	AddComponent(
-		/datum/component/edible,\
-		initial_reagents = food_reagents,\
-		food_flags = food_flags,\
-		foodtypes = foodtypes,\
-		volume = max_volume,\
-		eat_time = eat_time,\
-		tastes = tastes,\
-		eatverbs = eatverbs,\
-		bite_consumption = bite_consumption,\
-		microwaved_type = microwaved_type,\
-		junkiness = junkiness,\
-		check_liked = CALLBACK(src, PROC_REF(check_liked)),\
-	)
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/grown/banana/Initialize(mapload)
 	. = ..()

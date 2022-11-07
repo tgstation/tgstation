@@ -28,7 +28,7 @@
 		return
 	connected_mechpad = pad
 	connected_mechpad.id = id
-	RegisterSignal(connected_mechpad, COMSIG_PARENT_QDELETING, .proc/unconnect_launchpad)
+	RegisterSignal(connected_mechpad, COMSIG_PARENT_QDELETING, PROC_REF(unconnect_launchpad))
 
 /obj/machinery/computer/mechpad/proc/unconnect_launchpad(obj/machinery/mechpad/pad)
 	SIGNAL_HANDLER
@@ -51,8 +51,8 @@
 		return ..()
 	var/mech_dir = mecha_attacker.dir
 	balloon_alert(user, "carefully starting launch process...")
-	INVOKE_ASYNC(src, .proc/random_beeps, user, MECH_LAUNCH_TIME, 0.5 SECONDS, 1.5 SECONDS)
-	if(!do_after(user, MECH_LAUNCH_TIME, src, extra_checks = CALLBACK(src, .proc/do_after_checks, mecha_attacker, mech_dir)))
+	INVOKE_ASYNC(src, PROC_REF(random_beeps), user, MECH_LAUNCH_TIME, 0.5 SECONDS, 1.5 SECONDS)
+	if(!do_after(user, MECH_LAUNCH_TIME, src, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), mecha_attacker, mech_dir)))
 		balloon_alert(user, "interrupted!")
 		return
 	var/obj/machinery/mechpad/current_pad = mechpads[selected_id]
@@ -110,7 +110,7 @@
 
 /obj/machinery/computer/mechpad/proc/add_pad(obj/machinery/mechpad/pad)
 	mechpads += pad
-	RegisterSignal(pad, COMSIG_PARENT_QDELETING, .proc/remove_pad)
+	RegisterSignal(pad, COMSIG_PARENT_QDELETING, PROC_REF(remove_pad))
 
 /obj/machinery/computer/mechpad/proc/remove_pad(obj/machinery/mechpad/pad)
 	SIGNAL_HANDLER
@@ -128,7 +128,7 @@
 		return
 	flick("mechpad-launch", connected_mechpad)
 	playsound(connected_mechpad, 'sound/machines/triple_beep.ogg', 50, TRUE)
-	addtimer(CALLBACK(src, .proc/start_launch, user, where), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_launch), user, where), 1 SECONDS)
 
 /obj/machinery/computer/mechpad/proc/start_launch(mob/user, obj/machinery/mechpad/where)
 	if(!can_launch(user, where, silent = TRUE))

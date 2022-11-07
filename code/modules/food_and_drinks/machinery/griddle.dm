@@ -96,17 +96,11 @@
 	griddled_objects += item_to_grill
 	item_to_grill.flags_1 |= IS_ONTOP_1
 	item_to_grill.vis_flags |= VIS_INHERIT_PLANE
-<<<<<<< HEAD
 
 	SEND_SIGNAL(item_to_grill, COMSIG_ITEM_GRILL_PLACED_ON, user)
-	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
-	RegisterSignal(item_to_grill, COMSIG_ITEM_GRILLED, .proc/GrillCompleted)
-	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
-=======
 	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
-	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, PROC_REF(GrillCompleted))
+	RegisterSignal(item_to_grill, COMSIG_ITEM_GRILLED, PROC_REF(GrillCompleted))
 	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, PROC_REF(ItemRemovedFromGrill))
->>>>>>> 0768db0d601... Normalizes proc refs, fixes removal of .proc support and final keyword
 	update_grill_audio()
 	update_appearance()
 
