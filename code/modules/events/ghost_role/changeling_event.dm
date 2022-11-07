@@ -20,7 +20,7 @@
 	fakeable = FALSE // No announcement is made, nothing to announce.
 
 /datum/round_event/ghost_role/changeling/spawn_role()
-	var/list/mob/dead/observer/candidate = get_candidates(ROLE_CHANGELING_MIDROUND, ROLE_CHANGELING_MIDROUND) //Change to midround changeling when you get that shit figured out
+	var/list/mob/dead/observer/candidate = get_candidates(ROLE_CHANGELING, ROLE_CHANGELING) //Change to midround changeling when you get that shit figured out
 
 	if(!candidate.len)
 		return NOT_ENOUGH_PLAYERS
