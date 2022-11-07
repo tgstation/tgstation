@@ -13,7 +13,6 @@
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
 		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
 		/obj/item/broken_bottle = 5,
-		/obj/item/reagent_containers/cup/bowl = 5,
 		/obj/item/light/tube/broken = 5,
 		/obj/item/light/bulb/broken = 5,
 		/obj/item/assembly/mousetrap/armed = 5,
