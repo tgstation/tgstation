@@ -9724,11 +9724,6 @@
 /turf/open/floor/iron,
 /area/station/medical/medbay)
 "cky" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin/carbon{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/machinery/button/door/directional/south{
 	id = "psych_shutters";
 	name = "Shutter Control";
@@ -9739,15 +9734,6 @@
 	pixel_x = 6
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 15;
-	pixel_y = 7
-	},
-/obj/item/folder/white{
-	pixel_x = -2;
-	pixel_y = 3
-	},
-/obj/item/pen,
 /obj/machinery/button/door/directional/south{
 	id = "psych_bolt";
 	name = "Bolt Control";
@@ -9756,6 +9742,11 @@
 	pixel_y = -35;
 	req_access = list("psychology");
 	specialfunctions = 4
+	},
+/obj/structure/table/wood,
+/obj/machinery/computer/med_data/laptop{
+	dir = 1;
+	pixel_y = 4
 	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
@@ -22971,12 +22962,21 @@
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "fxP" = (
-/obj/structure/closet/secure_closet/psychology,
-/obj/item/toy/plush/beeplushie{
-	desc = "Maybe hugging this will make you feel better about yourself.";
-	name = "Therabee"
-	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/obj/structure/table/wood,
+/obj/item/folder/white{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/pen,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 9;
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "fya" = (
@@ -88042,15 +88042,15 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "vxc" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop{
-	dir = 1;
-	pixel_y = 4
-	},
 /obj/structure/sign/poster/official/help_others{
 	pixel_x = 32
 	},
 /obj/machinery/light/warm/directional/south,
+/obj/structure/closet/secure_closet/psychology,
+/obj/item/toy/plush/beeplushie{
+	desc = "Maybe hugging this will make you feel better about yourself.";
+	name = "Therabee"
+	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "vxf" = (
