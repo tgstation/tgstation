@@ -202,7 +202,7 @@
 
 /**
  * Consumes the [victim] from the [jaunter], fully healing them
- * and calling PROC_REF(on_victim_consumed] if successful.)
+ * and calling [proc/on_victim_consumed] if successful.)
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/consume_victim(mob/living/victim, mob/living/jaunter)
 	on_victim_start_consume(victim, jaunter)

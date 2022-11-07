@@ -225,7 +225,7 @@
 	qdel(rune)
 
 /*
- * Wraps the entire act of PROC_REF(do_scribe_rune] to ensure it properly enables or disables [var/drawing_a_rune].)
+ * Wraps the entire act of [/proc/do_scribe_rune] to ensure it properly enables or disables [var/drawing_a_rune].)
  *
  * tool - the parent, source of the signal - the item inscribing the rune, casted to item.
  * cultist - the mob scribing the rune

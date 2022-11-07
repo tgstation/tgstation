@@ -255,7 +255,7 @@
  *
  * Returns a bitflag.
  * - SPELL_CANCEL_CAST will stop the spell from being cast.
- * - SPELL_NO_FEEDBACK will prevent the spell from calling PROC_REF(spell_feedback] on cast. (invocation), sounds)
+ * - SPELL_NO_FEEDBACK will prevent the spell from calling [proc/spell_feedback] on cast. (invocation), sounds)
  * - SPELL_NO_IMMEDIATE_COOLDOWN will prevent the spell from starting its cooldown between cast and before after_cast.
  */
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)

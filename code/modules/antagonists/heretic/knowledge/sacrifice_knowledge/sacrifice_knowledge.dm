@@ -199,7 +199,7 @@
 		disembowel_target(sacrifice)
 
 /**
- * This proc is called from PROC_REF(sacrifice_process] after the heretic successfully sacrifices [sac_target].)
+ * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].)
  *
  * Sets off a chain that sends the person sacrificed to the shadow realm to dodge hands to fight for survival.
  *
@@ -257,7 +257,7 @@
 	return TRUE
 
 /**
- * This proc is called from PROC_REF(begin_sacrifice] after the [sac_target] falls asleep), shortly after the sacrifice occurs.
+ * This proc is called from [proc/begin_sacrifice] after the [sac_target] falls asleep), shortly after the sacrifice occurs.
  *
  * Teleports the [sac_target] to the heretic room, asleep.
  * If it fails to teleport, they will be disemboweled and stop the chain.
@@ -296,7 +296,7 @@
 	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death)) // Loss condition
 
 /**
- * This proc is called from PROC_REF(after_target_sleeps] when the [sac_target] should be waking up.)
+ * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.)
  *
  * Begins the survival minigame, featuring the sacrifice targets.
  * Gives them Helgrasp, throwing cursed hands towards them that they must dodge to survive.
@@ -332,7 +332,7 @@
 	LAZYSET(return_timers, REF(sac_target), win_timer)
 
 /**
- * This proc is called from PROC_REF(after_target_wakes] after the helgrasp runs out in the [sac_target].)
+ * This proc is called from [proc/after_target_wakes] after the helgrasp runs out in the [sac_target].)
  *
  * It gives them a message letting them know it's getting easier and they're almost free.
  */
@@ -343,7 +343,7 @@
 	to_chat(sac_target, span_hypnophrase("The worst is behind you... Not much longer! Hold fast, or expire!"))
 
 /**
- * This proc is called from PROC_REF(begin_sacrifice] if the target survived the shadow realm), or [COMSIG_LIVING_DEATH] if they don't.
+ * This proc is called from [proc/begin_sacrifice] if the target survived the shadow realm), or [COMSIG_LIVING_DEATH] if they don't.
  *
  * Teleports [sac_target] back to a random safe turf on the station (or observer spawn if it fails to find a safe turf).
  * Also clears their status effects, unregisters any signals associated with the shadow realm, and sends a message
@@ -431,7 +431,7 @@
 	disembowel_target(sac_target)
 
 /**
- * This proc is called from PROC_REF(return_target] if the [sac_target] survives the shadow realm.)
+ * This proc is called from [proc/return_target] if the [sac_target] survives the shadow realm.)
  *
  * Gives the sacrifice target some after effects upon ariving back to reality.
  */
@@ -457,7 +457,7 @@
 	sac_target.reagents?.add_reagent(/datum/reagent/medicine/epinephrine, 8)
 
 /**
- * This proc is called from PROC_REF(return_target] if the target dies in the shadow realm.)
+ * This proc is called from [proc/return_target] if the target dies in the shadow realm.)
  *
  * After teleporting the target back to the station (dead),
  * it spawns a special red broken illusion on their spot, for style.
