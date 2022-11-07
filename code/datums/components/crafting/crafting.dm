@@ -276,7 +276,7 @@
 							RG.volume -= amt
 							data = RG.data
 							RC.reagents.conditional_update(RC)
-							RC.update_appearance()
+							RC.update_appearance(UPDATE_ICON)
 							RG = locate(RG.type) in Deletion
 							RG.volume = amt
 							RG.data += data
@@ -286,7 +286,7 @@
 							amt -= RG.volume
 							RC.reagents.reagent_list -= RG
 							RC.reagents.conditional_update(RC)
-							RC.update_appearance()
+							RC.update_appearance(UPDATE_ICON)
 							RGNT = locate(RG.type) in Deletion
 							RGNT.volume += RG.volume
 							RGNT.data += RG.data
