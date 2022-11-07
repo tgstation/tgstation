@@ -328,7 +328,6 @@
 		/obj/effect/decal/cleanable/generic,
 		/obj/effect/decal/cleanable/shreds,
 		/obj/effect/decal/cleanable/glass,
-		/obj/effect/decal/cleanable/cobweb,
 		/obj/effect/decal/cleanable/wrapping,
 		/obj/effect/decal/cleanable/glitter,
 		/obj/effect/decal/cleanable/confetti,
