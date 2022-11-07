@@ -47,4 +47,4 @@
 
 /datum/component/onwear_mood/Destroy(force, silent)
 	clear_effects()
-	. = ..()
+	return ..()
