@@ -6,16 +6,16 @@
 	name = "bomb"
 	icon = 'icons/hud/screen_gen.dmi'
 	icon_state = "x"
-	/* Gasmixes for tank_one and tank_two of the ttv respectively. 
+	/* Gasmixes for tank_one and tank_two of the ttv respectively.
 	 * Populated on /obj/effect/spawner/newbomb/Initialize, depopulated right after by the children procs.
 	 */
 	var/datum/gas_mixture/first_gasmix
 	var/datum/gas_mixture/second_gasmix
 
-/** 
+/**
  * The part of code that actually spawns the bomb. Always call the parent's initialize first for subtypes of these.
  *
- * Arguments: 
+ * Arguments:
  * * assembly - An assembly typepath to add to the ttv.
  */
 /obj/effect/spawner/newbomb/Initialize(mapload, assembly = null)
@@ -33,7 +33,6 @@
 		newassembly.on_attach()
 		newassembly.holder = ttv
 	ttv.update_appearance()
-	return INITIALIZE_HINT_QDEL
 
 /obj/effect/spawner/newbomb/proc/calculate_pressure(datum/gas_mixture/gasmix, pressure)
 	return pressure * gasmix.volume/(R_IDEAL_GAS_EQUATION*gasmix.temperature)
@@ -85,7 +84,7 @@
 	first_gasmix.assert_gas(/datum/gas/hypernoblium)
 	first_gasmix.assert_gas(/datum/gas/tritium)
 	second_gasmix.assert_gas(/datum/gas/oxygen)
-	
+
 	first_gasmix.gases[/datum/gas/hypernoblium][MOLES] = REACTION_OPPRESSION_THRESHOLD - 0.01
 	first_gasmix.gases[/datum/gas/tritium][MOLES] = 0.5 * calculate_pressure(first_gasmix, TANK_LEAK_PRESSURE - 1)
 	second_gasmix.gases[/datum/gas/oxygen][MOLES] = calculate_pressure(second_gasmix, TANK_LEAK_PRESSURE-1)

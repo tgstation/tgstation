@@ -612,6 +612,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	desc = "A metallic container containing tasty paint."
 	w_class = WEIGHT_CLASS_SMALL
+	custom_price = PAYCHECK_CREW * 2.5
 
 	instant = TRUE
 	edible = FALSE

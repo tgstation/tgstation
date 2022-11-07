@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Reagent containers playing attack animation when transferring reagents to deep fryers"

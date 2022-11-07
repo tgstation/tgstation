@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "Fixes 1 tile foam in Foam Dispensers,Clown Cars, Hygiene Bots,Firebots, Soap Suicide, Emagged cleanbots, and the clown plasmaman envirosuit"

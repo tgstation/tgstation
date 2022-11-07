@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - qol: "When saving Experiment Log Recording Data to a data disk on either the Tachyon Doppler or the Tank Compressor, Nanotrasen released a UI/UX update in order to have the button that saves the data onto your disk... say \"Save\"."
