@@ -14,7 +14,7 @@
 /area/template_noop)
 "f" = (
 /obj/effect/turf_decal/board_letter/e{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -40,7 +40,7 @@
 	name = "White King"
 	},
 /obj/effect/turf_decal/board_letter/h{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -51,25 +51,25 @@
 	name = "Black Pawn"
 	},
 /obj/effect/turf_decal/board_letter/f{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "j" = (
 /obj/effect/turf_decal/board_letter/f{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "k" = (
 /obj/effect/turf_decal/board_number/four{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "n" = (
 /obj/effect/turf_decal/board_number/seven{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -77,7 +77,7 @@
 /area/template_noop)
 "p" = (
 /obj/effect/turf_decal/board_letter/c{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -87,37 +87,37 @@
 	name = "White Pawn"
 	},
 /obj/effect/turf_decal/board_number/two{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "s" = (
 /obj/effect/turf_decal/board_letter/a{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "t" = (
 /obj/effect/turf_decal/board_letter/b{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "v" = (
 /obj/effect/turf_decal/board_number/two{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "w" = (
 /obj/effect/turf_decal/board_number/seven{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "x" = (
 /obj/effect/turf_decal/board_number/one{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -151,7 +151,7 @@
 /area/template_noop)
 "A" = (
 /obj/effect/turf_decal/board_number/three{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -164,22 +164,22 @@
 	name = "Black Pawn"
 	},
 /obj/effect/turf_decal/board_letter/h{
-	pixel_y = 11
+	dir = 1
 	},
 /obj/effect/turf_decal/board_number/eight{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "D" = (
 /obj/effect/turf_decal/board_letter/d{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "E" = (
 /obj/effect/turf_decal/board_letter/a{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -187,19 +187,19 @@
 /area/template_noop)
 "F" = (
 /obj/effect/turf_decal/board_number/five{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "G" = (
 /obj/effect/turf_decal/board_number/six{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "H" = (
 /obj/effect/turf_decal/board_number/one{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -212,13 +212,13 @@
 /area/template_noop)
 "K" = (
 /obj/effect/turf_decal/board_number/three{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "L" = (
 /obj/effect/turf_decal/board_number/four{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
@@ -237,13 +237,13 @@
 	name = "Black Pawn"
 	},
 /obj/effect/turf_decal/board_number/six{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "O" = (
 /obj/effect/turf_decal/board_letter/c{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -251,7 +251,7 @@
 /area/template_noop)
 "P" = (
 /obj/effect/turf_decal/board_letter/g{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
@@ -262,7 +262,7 @@
 	name = "Black Pawn"
 	},
 /obj/effect/turf_decal/board_letter/b{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
@@ -273,13 +273,13 @@
 	name = "Black Pawn"
 	},
 /obj/effect/turf_decal/board_letter/d{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor/dark,
 /area/template_noop)
 "W" = (
 /obj/effect/turf_decal/board_letter/g{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -287,7 +287,7 @@
 /area/template_noop)
 "X" = (
 /obj/effect/turf_decal/board_number/five{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
@@ -295,13 +295,13 @@
 /area/template_noop)
 "Y" = (
 /obj/effect/turf_decal/board_number/eight{
-	pixel_x = 11
+	dir = 4
 	},
 /turf/open/floor/holofloor/plating,
 /area/template_noop)
 "Z" = (
 /obj/effect/turf_decal/board_letter/e{
-	pixel_y = 11
+	dir = 1
 	},
 /turf/open/floor/holofloor{
 	icon_state = "white"
