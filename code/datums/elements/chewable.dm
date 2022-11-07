@@ -1,7 +1,7 @@
 /// Anything with this element will provide the reagents inside the
 /// item to the user when it is equipped.
 /datum/element/chewable
-	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_BESPOKE
 	id_arg_index = 2
 
 	/// The amount to metabolize per second

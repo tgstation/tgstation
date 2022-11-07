@@ -113,7 +113,9 @@
 /obj/item/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
 	user.visible_message(span_suicide("[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!"))
-	new /obj/effect/particle_effect/fluid/foam(loc)
+	var/datum/effect_system/fluid_spread/foam/foam = new
+	foam.set_up(1, holder = src, location = user.loc)
+	foam.start()
 	return (TOXLOSS)
 
 /obj/item/soap/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)

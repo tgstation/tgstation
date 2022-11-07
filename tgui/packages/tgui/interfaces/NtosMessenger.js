@@ -57,7 +57,7 @@ const ContactsScreen = (props, context) => {
           <Section fill textAlign="center">
             <Box bold>
               <Icon name="address-card" mr={1} />
-              SpaceMessenger V6.4.7
+              SpaceMessenger V6.4.8
             </Box>
             <Box italic opacity={0.3}>
               Bringing you spy-proof communications since 2467.

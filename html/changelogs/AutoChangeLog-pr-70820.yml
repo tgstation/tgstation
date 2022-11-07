@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - qol: "The forensic scanner uses balloon alerts for most of it's simple feedback messages, enjoy having an easier time hearing the radio chatter."

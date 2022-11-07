@@ -4,7 +4,7 @@
  * Simulates a click on the attached atom when it's bumped, if the bumper and their active object meet certain criteria.
  */
 /datum/element/bump_click
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	id_arg_index = 2
 	///Tool behaviours to check for on the bumper's active held item before clicking the attached atom with it.
 	var/list/tool_behaviours
