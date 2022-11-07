@@ -94,6 +94,9 @@
 
 	if(istype(destination_area, /area/station))
 		return TRUE
+	if(istype(destination_area, /area/shuttle))
+		clingy_messaging_tree()
+		return TRUE
 	else if(is_type_in_typecache(destination_area, outdoors_areas))
 		return FALSE
 	else
