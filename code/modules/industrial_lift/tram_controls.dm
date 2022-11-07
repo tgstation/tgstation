@@ -121,7 +121,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/tram/from_where, var/travelling)
+/obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/tram/from_where, travelling)
 	SIGNAL_HANDLER
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!travelling)
