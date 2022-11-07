@@ -264,17 +264,16 @@
 				return TRUE
 		
 		if("send_special")
-			if(!istype(loaded_item_ref?.resolve(), /obj/item/paper))
+			var/obj/item/paper/fax_paper = loaded_item_ref?.resolve()
+			if(!istype(fax_paper))
 				to_chat(usr, icon2html(src.icon, usr) + span_warning("Fax cannot send all above paper on this protected network, sorry."))
 				return 
 			
-			var/obj/item/paper/fax_paper = loaded_item_ref?.resolve()
 			fax_paper.request_state = TRUE
 			fax_paper.loc = null
 
-
 			INVOKE_ASYNC(src, .proc/animate_object_travel, fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
-			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
+			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, vary = FALSE)
 
 			history_add("Send", params["name"])
 			

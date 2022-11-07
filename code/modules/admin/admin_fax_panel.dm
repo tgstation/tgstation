@@ -2,15 +2,12 @@
 	set category = "Admin.Events"
 	set name = "Fax Panel"
 
-	admin_fax_panel()
-
-/client/proc/admin_fax_panel()
 	if(!check_rights(R_ADMIN))
 		return
 
 	var/datum/fax_panel_interface/ui = new(usr)
 	ui.ui_interact(usr)
-
+	
 /// Panel
 /datum/fax_panel_interface
 	/// All faxes in game list
@@ -38,15 +35,19 @@
 	//Give our paper special status, to read everywhere.
 	fax_paper.request_state = TRUE
 
-//Maybe.. useless proc, but find fax like object what we need.
+/**
+ * Return fax if name exists
+ * Arguments:
+ * * name - Name of fax what we try to find.
+ */
 /datum/fax_panel_interface/proc/get_fax_by_name(name)
 	if(!length(available_faxes))
-		return
+		return null
 
-	for(var/obj/machinery/fax/potential_fax in available_faxes)
+	for(var/obj/machinery/fax/potential_fax as anything in available_faxes)
 		if(potential_fax.fax_name == name)
 			return potential_fax
-	return
+	return null
 
 /datum/fax_panel_interface/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -63,7 +64,7 @@
 	data["stamps"] = list()
 	for(var/stamp in stamp_list)
 		data["stamps"] += list(stamp[1]) // send only names.
-	for(var/obj/machinery/fax/another_fax in available_faxes)
+	for(var/obj/machinery/fax/another_fax as anything in available_faxes)
 		data["faxes"] += list(another_fax.fax_name)
 	return data
 
@@ -81,12 +82,10 @@
 	
 	switch(action)
 
-		if("jump") // jump on fax. maybe i shoul make follow action(?)
-			var/turf/fax_turf = get_turf(action_fax)
-			if(!fax_turf || !usr.client)
-				return
-			
-			usr.client.jumptoturf(fax_turf)
+		if("follow")
+			if(!isobserver(usr))
+				usr.client?.admin_ghost()
+			usr.client?.admin_follow(action_fax)
 		
 		if("preview") // see saved variant
 			if(!fax_paper)
@@ -118,7 +117,7 @@
 			
 		if("send")
 			//copy
-			var/obj/item/paper/our_fax = fax_paper.copy(/obj/item/paper, null, FALSE)
+			var/obj/item/paper/our_fax = fax_paper.copy(/obj/item/paper, null, colored = FALSE)
 			our_fax.name = fax_paper.name
 			//send
 			action_fax.receive(our_fax, sending_fax_name)
@@ -127,8 +126,6 @@
 		
 		if("createPaper")
 
-			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, usr.loc, FALSE)
+			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, usr.loc, colored = FALSE)
 			our_paper.name = fax_paper.name
 			
-		
-

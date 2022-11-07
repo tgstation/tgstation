@@ -43,12 +43,11 @@ export const FaxMainPanel = (props, context) => {
               icon="arrow-up"
               disabled={!fax}
               onClick={() =>
-                act('jump', {
+                act('follow', {
                   faxName: fax,
-                  action: 'jump',
                 })
               }>
-              Jump to
+              Follow
             </Button>
           </Box>
         }>

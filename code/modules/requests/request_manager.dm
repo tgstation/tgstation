@@ -1,3 +1,14 @@
+/// Requests from prayers
+#define REQUEST_PRAYER "request_prayer"
+/// Requests for Centcom
+#define REQUEST_CENTCOM "request_centcom"
+/// Requests for the Syndicate
+#define REQUEST_SYNDICATE "request_syndicate"
+/// Requests for the nuke code
+#define REQUEST_NUKE "request_nuke"
+/// Requests somebody from fax
+#define REQUEST_FAX "request_fax"
+
 GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 
 /**
@@ -229,3 +240,9 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 				"timestamp_str" = gameTimestamp(wtime = request.timestamp)
 			)
 			.["requests"] += list(data)
+
+#undef REQUEST_PRAYER
+#undef REQUEST_CENTCOM
+#undef REQUEST_SYNDICATE
+#undef REQUEST_NUKE
+#undef REQUEST_FAX
