@@ -37,11 +37,11 @@
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP, //person picks up an item
 		COMSIG_ATOM_ENTERED), //Object enters a storage object (boxes, etc.)
- 		PROC_REF(picked_up))
+		PROC_REF(picked_up))
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
 		COMSIG_ATOM_EXITED), //Object exits a storage object (boxes, etc)
- 		PROC_REF(dropped))
+		PROC_REF(dropped))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
 
 	if(custom_time) // We have a custom decomposition time, set it to that

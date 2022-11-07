@@ -46,7 +46,7 @@
 	RegisterSignal(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
- 		PROC_REF(on_techweb_update)
+		PROC_REF(on_techweb_update)
 	)
 
 /obj/machinery/rnd/production/Destroy()
