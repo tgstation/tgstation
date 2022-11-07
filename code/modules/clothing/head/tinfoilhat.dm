@@ -77,10 +77,13 @@
 			return
 	return ..()
 
-/obj/item/clothing/head/costume/foilhat/microwave_act(obj/machinery/microwave/M)
+/obj/item/clothing/head/costume/foilhat/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
 	. = ..()
-	if(!warped)
-		warp_up()
+	if(warped)
+		return
+
+	warp_up()
+	return . | COMPONENT_MICROWAVE_SUCCESS
 
 /obj/item/clothing/head/costume/foilhat/proc/call_suicide(datum/source)
 	SIGNAL_HANDLER

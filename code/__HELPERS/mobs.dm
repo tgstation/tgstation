@@ -342,6 +342,8 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(progress)
 		progbar = new(user, delay, target || user)
 
+	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
+
 	var/endtime = world.time + delay
 	var/starttime = world.time
 	. = TRUE
@@ -380,7 +382,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	if(interaction_key)
 		LAZYREMOVE(user.do_afters, interaction_key)
-
+	SEND_SIGNAL(user, COMSIG_DO_AFTER_ENDED)
 
 ///Timed action involving at least one mob user and a list of targets. interaction_key is the assoc key under which the do_after is capped under, and the max interaction count is how many of this interaction you can do at once.
 /proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1)

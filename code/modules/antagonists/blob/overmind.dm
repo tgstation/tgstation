@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			L.fully_heal(admin_revive = FALSE)
 
-		for(var/area/A in GLOB.sortedAreas)
+		for(var/area/A in GLOB.areas)
 			if(!(A.type in GLOB.the_station_areas))
 				continue
 			if(!(A.area_flags & BLOBS_ALLOWED))

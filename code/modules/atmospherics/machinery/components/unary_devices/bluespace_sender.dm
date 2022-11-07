@@ -26,6 +26,9 @@
 	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
+/// All bluespace gas senders
+GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/components/unary/bluespace_sender)
+
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
@@ -36,12 +39,17 @@
 		var/datum/gas/gas = gas_id
 		base_prices[gas_id] = initial(gas.base_value)
 
+	GLOB.bluespace_senders += src
+
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
 	if(bluespace_network.total_moles())
 		var/turf/local_turf = get_turf(src)
 		local_turf.assume_air(bluespace_network)
+
+	GLOB.bluespace_senders -= src
+
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()

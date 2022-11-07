@@ -1,3 +1,5 @@
+#define ORE_BAG_BALOON_COOLDOWN (2 SECONDS)
+
 /*
  * These absorb the functionality of the plant bag, ore satchel, etc.
  * They use the use_to_pickup, quick_gather, and quick_empty functions
@@ -104,8 +106,11 @@
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
-	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
+	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
+	var/spam_protection = FALSE
 	var/mob/listeningTo
+	///Cooldown on balloon alerts when picking ore
+	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
 
 /obj/item/storage/bag/ore/Initialize(mapload)
 	. = ..()
@@ -115,6 +120,7 @@
 	atom_storage.allow_quick_empty = TRUE
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/stack/ore))
+	atom_storage.silent_for_user = TRUE
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
@@ -160,7 +166,10 @@
 					continue
 	if(show_message)
 		playsound(user, SFX_RUSTLE, 50, TRUE)
+		if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
+			return
 
+		COOLDOWN_START(src, ore_bag_balloon_cooldown, ORE_BAG_BALOON_COOLDOWN)
 		if (box)
 			balloon_alert(user, "scoops ore into box")
 			user.visible_message(
@@ -532,3 +541,5 @@
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
 		new /obj/item/ammo_casing/caseless/harpoon(src)
+
+#undef ORE_BAG_BALOON_COOLDOWN

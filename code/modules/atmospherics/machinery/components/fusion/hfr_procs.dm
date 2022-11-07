@@ -24,16 +24,16 @@
 				. = FALSE
 			switch(dir)
 				if(SOUTHEAST)
-					if(object.dir != dir)
+					if(object.dir != SOUTH)
 						. = FALSE
 				if(SOUTHWEST)
-					if(object.dir != dir)
+					if(object.dir != WEST)
 						. = FALSE
 				if(NORTHEAST)
-					if(object.dir != dir)
+					if(object.dir != EAST)
 						. = FALSE
 				if(NORTHWEST)
-					if(object.dir != dir)
+					if(object.dir != NORTH)
 						. = FALSE
 			corners |= object
 			continue
