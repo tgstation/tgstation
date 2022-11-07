@@ -215,8 +215,7 @@
 
 	switch(message_type)
 		if(BACK_INSIDE_STATION) // could also be considered a "Clingy Timer Stop Message", but it can also work from just getting back inside from space.
-			if(clingy_handling) // Clingy Handling is TRUE while this proc is called from clingy_timer_handling(), so we can leverage that to give a small fluff message saying that the timer ended.
-				concatenated_message += " I'm okay now."
+			concatenated_message += " I'm okay now."
 		if(CLINGY_TIMER_START_MESSAGE)
 			concatenated_message += " You've got roughly [DisplayTimeText(clingy_timer_duration)] to get me back!"
 
