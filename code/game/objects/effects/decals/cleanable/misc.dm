@@ -118,7 +118,6 @@
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
-	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/cobweb/cobweb2
 	icon_state = "cobweb2"
