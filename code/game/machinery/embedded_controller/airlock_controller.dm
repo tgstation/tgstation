@@ -7,7 +7,6 @@
 
 /datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
-	var/sensor_tag //See: /obj/machinery/airlock_sensor
 	var/sanitize_external //Before the interior airlock opens, do we first drain all gases inside the chamber and then repressurize?
 
 	var/datum/weakref/interior_door_ref
@@ -233,15 +232,19 @@
 	var/sensor_tag
 	var/sanitize_external
 
+GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_controller/radio/airlock_controller)
+
 /obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		return
 
+	if (!isnull(id_tag))
+		GLOB.airlock_controllers_by_id[id_tag] = src
+
 	var/datum/computer/file/embedded_program/airlock_controller/new_prog = new
 
 	new_prog.id_tag = id_tag
-	new_prog.sensor_tag = sensor_tag
 	new_prog.sanitize_external = sanitize_external
 
 	new_prog.master = src
@@ -257,6 +260,10 @@
 	airlock_program.interior_door_ref = WEAKREF(GLOB.airlocks_by_id[interior_door_tag])
 	airlock_program.exterior_door_ref = WEAKREF(GLOB.airlocks_by_id[exterior_door_tag])
 	airlock_program.pump_ref = WEAKREF(GLOB.vents_by_id[airpump_tag])
+
+/obj/machinery/embedded_controller/radio/airlock_controller/Destroy()
+	GLOB.airlock_controllers_by_id -= id_tag
+	return ..()
 
 /obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list) // needed to override obj/machinery/embedded_controller/Topic, dont think its actually used in game other than here but the code is still here
 
@@ -312,6 +319,17 @@
 	// no need for sanitisation, command just changes target_state and can't do anything else
 	process_command(action)
 	return TRUE
+
+/// Starts an airlock cycle
+/obj/machinery/embedded_controller/radio/airlock_controller/proc/cycle()
+	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
+	if (isnull(airlock_program))
+		return
+
+	if (airlock_program.state < AIRLOCK_STATE_CLOSED)
+		airlock_program.target_state = AIRLOCK_STATE_OUTOPEN
+	else
+		airlock_program.target_state = AIRLOCK_STATE_INOPEN
 
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix
 	name = "Incinerator Access Console"

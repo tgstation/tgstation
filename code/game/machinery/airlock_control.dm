@@ -151,13 +151,9 @@
 	if(.)
 		return
 
-	// MBTODO: Airlock cycles
-	var/datum/signal/signal = new(list(
-		"tag" = master_tag,
-		"command" = "cycle"
-	))
+	var/obj/machinery/embedded_controller/radio/airlock_controller/airlock_controller = GLOB.airlock_controllers_by_id[master_tag]
+	airlock_controller?.cycle()
 
-	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 	flick("airlock_sensor_cycle", src)
 
 /obj/machinery/airlock_sensor/process()

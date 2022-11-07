@@ -6,17 +6,7 @@
 	master = null
 	. = ..()
 
-// MBTODO: Remove
-/datum/computer/file/embedded_program/proc/post_signal(datum/signal/signal, comm_line)
-	if(master)
-		master.post_signal(signal, comm_line)
-	else
-		qdel(signal)
-
 /datum/computer/file/embedded_program/proc/receive_user_command(command)
-
-/datum/computer/file/embedded_program/proc/receive_signal(datum/signal/signal)
-	return null
 
 /datum/computer/file/embedded_program/process()
 	return 0
@@ -45,10 +35,6 @@
 
 /obj/machinery/embedded_controller/proc/post_signal(datum/signal/signal, comm_line)
 	return
-
-/obj/machinery/embedded_controller/receive_signal(datum/signal/signal)
-	if(istype(signal) && program)
-		program.receive_signal(signal)
 
 /obj/machinery/embedded_controller/Topic(href, href_list)
 	. = ..()
