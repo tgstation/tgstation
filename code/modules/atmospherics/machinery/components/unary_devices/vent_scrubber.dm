@@ -51,13 +51,15 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
 	. = ..()
+
+	var/area/area = get_area(src)
+	area?.air_scrubbers += src
+
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
-	if(scrub_area)
-		scrub_area.air_scrub_info -= id_tag
-		GLOB.air_scrub_names -= id_tag
+	scrub_area?.air_scrubbers -= src
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -112,6 +114,7 @@
 	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
 	return TRUE
 
+// WARNING: This proc takes untrusted user input from toggle_filter in air alarm's ui_act
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/toggle_filters(filter_or_filters)
 	if(!islist(filter_or_filters))
 		filter_or_filters = list(filter_or_filters)
@@ -162,11 +165,52 @@
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/try_update_atmos_process()
+	var/turf/open/turf = get_turf(src)
+	if (!istype(turf))
+		return
+
+	var/datum/gas_mixture/turf_gas = turf.air
+	if (isnull(turf_gas))
+		return
+
+	check_atmos_process(turf, turf_gas, turf_gas.temperature)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/update_power_usage()
+	idle_power_usage = initial(idle_power_usage)
+	active_power_usage = initial(idle_power_usage)
+
+	var/new_power_usage = 0
+	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
+		new_power_usage = idle_power_usage + idle_power_usage * length(filter_types)
+		update_use_power(IDLE_POWER_USE)
+	else
+		new_power_usage = active_power_usage
+		update_use_power(ACTIVE_POWER_USE)
+
+	if(widenet)
+		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
+
+	update_mode_power_usage(scrubbing == ATMOS_DIRECTION_SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_scrubbing(scrubbing, mob/user)
+	src.scrubbing = scrubbing
+	investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [isnull(user) ? "the game" : key_name(user)]", INVESTIGATE_ATMOS)
+	update_appearance(UPDATE_ICON)
+	try_update_atmos_process()
+	update_power_usage()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_widenet(widenet)
+	src.widenet = widenet
+	update_appearance(UPDATE_ICON)
+	update_power_usage()
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
 
+#ifdef MBTODO
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
@@ -199,6 +243,7 @@
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 	return TRUE
+#endif
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_name()
 	. = ..()
@@ -212,7 +257,6 @@
 	radio_filter_out = frequency == initial(frequency) ? RADIO_TO_AIRALARM : null
 	if(frequency)
 		set_frequency(frequency)
-	broadcast_status()
 	check_turfs()
 	. = ..()
 
@@ -317,6 +361,7 @@
 	var/turf/local_turf = get_turf(src)
 	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
 
+#ifdef MBTODO
 /obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return
@@ -397,6 +442,7 @@
 		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
 
 	update_mode_power_usage(scrubbing == ATMOS_DIRECTION_SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
+#endif
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	. = ..()

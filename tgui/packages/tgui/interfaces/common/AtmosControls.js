@@ -138,8 +138,7 @@ export const Vent = (props, context) => {
 export const Scrubber = (props, context) => {
   const { scrubber } = props;
   const { act } = useBackend(context);
-  const { long_name, power, scrubbing, id_tag, widenet, filter_types } =
-    scrubber;
+  const { long_name, power, scrubbing, ref, widenet, filter_types } = scrubber;
   return (
     <Section
       level={2}
@@ -151,7 +150,7 @@ export const Scrubber = (props, context) => {
           selected={power}
           onClick={() =>
             act('power', {
-              id_tag,
+              ref,
               val: Number(!power),
             })
           }
@@ -165,7 +164,7 @@ export const Scrubber = (props, context) => {
             content={scrubbing ? 'Scrubbing' : 'Siphoning'}
             onClick={() =>
               act('scrubbing', {
-                id_tag,
+                ref,
                 val: Number(!scrubbing),
               })
             }
@@ -176,7 +175,7 @@ export const Scrubber = (props, context) => {
             content={widenet ? 'Expanded range' : 'Normal range'}
             onClick={() =>
               act('widenet', {
-                id_tag,
+                ref,
                 val: Number(!widenet),
               })
             }
@@ -193,7 +192,7 @@ export const Scrubber = (props, context) => {
                 selected={filter.enabled}
                 onClick={() =>
                   act('toggle_filter', {
-                    id_tag,
+                    ref,
                     val: filter.gas_id,
                   })
                 }

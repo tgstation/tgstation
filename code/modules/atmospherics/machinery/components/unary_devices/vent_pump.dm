@@ -52,7 +52,6 @@
 	var/area/vent_area = get_area(src)
 	if(vent_area)
 		vent_area.air_vents -= src
-		GLOB.air_vent_names -= id_tag
 
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
@@ -153,36 +152,6 @@
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
-
-#ifdef MBTODO
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
-	var/datum/signal/signal = new(list(
-		"tag" = id_tag,
-		"frequency" = frequency,
-		"device" = "VP",
-		"timestamp" = world.time,
-		"power" = on,
-		"direction" = pump_direction,
-		"checks" = pressure_checks,
-		"internal" = internal_pressure_bound,
-		"external" = external_pressure_bound,
-		"sigtype" = "status"
-	))
-
-	var/area/vent_area = get_area(src)
-	if(!GLOB.air_vent_names[id_tag])
-		// If we do not have a name, assign one.
-		// Produces names like "Port Quarter Solar vent pump hZ2l6".
-		update_name()
-		GLOB.air_vent_names[id_tag] = name
-
-	vent_area.air_vent_info[id_tag] = signal.data
-
-	radio_connection.post_signal(src, signal, radio_filter_out)
-#endif
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
 	. = ..()

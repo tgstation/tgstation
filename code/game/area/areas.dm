@@ -117,8 +117,7 @@
 
 	/// List of all air vents in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_pump/air_vents = list()
-
-	var/list/air_scrub_info = list()
+	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
 /**
  * A list of teleport locations
