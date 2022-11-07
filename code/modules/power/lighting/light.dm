@@ -101,7 +101,7 @@
 		if("bulb")
 			if(prob(5))
 				break_light_tube(TRUE)
-	addtimer(CALLBACK(src, .proc/update, FALSE), 0.1 SECONDS)
+	update(trigger = FALSE)
 
 /obj/machinery/light/Destroy()
 	var/area/local_area =get_room_area(src)

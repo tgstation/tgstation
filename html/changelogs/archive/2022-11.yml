@@ -231,3 +231,44 @@
       Station
   exymian:
   - bugfix: fixed the prox sensor
+2022-11-07:
+  A.C.M.O.:
+  - rscadd: Added the Deaf Personnel pin for users of the Deaf quirk.
+  Fikou:
+  - bugfix: flight potions no longer have white bottle overlays
+  - bugfix: fixes cursed katana not spawning
+  GoldenAlpharex:
+  - bugfix: SpaceMessenger was now updated to 6.4.8, bringing you more responsiveness
+      than ever (so long as ever is shorter than seven days ago)!
+  Jacquerel:
+  - qol: More actions should report why they are unavailable if pressed while they
+      are unavailable.
+  - qol: Giant Spider action buttons should now correctly display whether they are
+      available or not.
+  - bugfix: Spider broodmothers can now only lay one enriched egg per victim.
+  - bugfix: Spider broodmothers can no longer feed multiple times from the same corpse,
+      a bug they never previously needed to exploit because of the previous bug.
+  JohnFulpWillard:
+  - bugfix: Detomatix cartridges are no longer called attacking items.
+  Sealed101:
+  - bugfix: fixed mecha internal damage diagnostic HUD blip not appearing
+  - rscadd: Added a special suicide to the Experi-Scanner
+  ShizCalev:
+  - qol: Randomized the pixel offset of stuff when it comes out of a microwave
+  - bugfix: Fixed a runtime when NPC monkeys attempt to put items in the hands of
+      mobs with no hands (ie cyborgs, lizards, rats, ect.)
+  - bugfix: Monkeys will no longer attempt to put items in your pockets if you have
+      no pockets.
+  Striders13:
+  - bugfix: permanent one-use portals will no longer get used up when clicked by a
+      ghost
+  lizardqueenlexi:
+  - bugfix: Made the V8 Engine teach you the House Edge recipe.
+  - bugfix: Fixed an error related to the V8 Engine that caused an infinite progress
+      bar.
+  san7890, ZephyrTFA:
+  - bugfix: Emojipedia has been restored to tablets! Look for it in your local Nanotrasen
+      Software Hub.
+  - balance: Everyone is now able to send Emojis via PDA Messaging! It's no longer
+      restricted to just mime and curators, so enjoy sending the classics such as
+      :ai:, :1997:, :pslime:, and more!

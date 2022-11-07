@@ -33,14 +33,13 @@
 	INVOKE_ASYNC(src, .proc/start_learning_recipe, user)
 
 /obj/item/v8_engine/proc/start_learning_recipe(mob/user)
-	var/datum/crafting_recipe/house_edge/edge
 	if(!user.mind)
 		return
-	if(user.mind.has_crafting_recipe(user = user, potential_recipe = edge))
+	if(user.mind.has_crafting_recipe(user = user, potential_recipe = /datum/crafting_recipe/house_edge))
 		return
 	to_chat(user, span_notice("You peer at the label on the side, reading about some unique modifications that could be made to the engine..."))
 	if(do_after(user, 15 SECONDS, src))
-		user.mind.teach_crafting_recipe(edge)
+		user.mind.teach_crafting_recipe(/datum/crafting_recipe/house_edge)
 		to_chat(user, span_notice("You learned how to make the House Edge."))
 
 
