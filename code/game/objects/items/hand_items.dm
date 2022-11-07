@@ -395,6 +395,10 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
+
+	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
+		kiss_type = /obj/projectile/kiss/chef
+
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
 	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
@@ -548,3 +552,33 @@
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)
+
+/obj/projectile/kiss/chef
+	name = "chef's kiss"
+
+// If our chef's kiss hits a food item, we will improve it with love.
+/obj/projectile/kiss/chef/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!IS_EDIBLE(target) || !target.reagents)
+		return
+	if(!firer || !target.Adjacent(firer))
+		return
+
+	// From here on, no message
+	suppressed = SUPPRESSED_VERY
+
+	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
+		return
+	if(target.reagents.has_reagent(/datum/reagent/love))
+		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
+		return
+
+	var/amount_nutriment = target.reagents.get_multiple_reagent_amounts(typesof(/datum/reagent/consumable/nutriment))
+	if(amount_nutriment <= 0)
+		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
+		return
+
+	to_chat(firer, span_green("You deliver a chef's kiss over [target], declaring it perfect."))
+	target.visible_message(span_notice("[firer] delivers a chef's kiss over [target]."), ignored_mobs = firer)
+	target.reagents.add_reagent(/datum/reagent/love, clamp(amount_nutriment / 4, 1, 10)) // clamped to about half of the most dense food I think we have (super bite burger)

@@ -3,7 +3,7 @@
  * The overlay can be specified in new as the first paramter; if not set it defaults to rust_overlay's rust_default
  */
 /datum/element/rust
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	id_arg_index = 2
 	/// The rust image itself, since the icon and icon state are only used as an argument
 	var/image/rust_overlay

@@ -258,7 +258,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// needs more than one gas and rely on a fully parsed gas_percentage.
 	for (var/gas_path in absorbed_gasmix.gases)
 		var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
-		sm_gas.extra_effects(src)
+		sm_gas?.extra_effects(src)
 
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
@@ -571,7 +571,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/momentary_power = internal_energy
 	for(var/powergain_type in additive_power)
 		momentary_power += additive_power[powergain_type]
-	if(internal_energy < powerloss_linear_threshold) // Negative numbers
+	if(momentary_power < powerloss_linear_threshold) // Negative numbers
 		additive_power[SM_POWER_POWERLOSS] = -1 * (momentary_power / POWERLOSS_CUBIC_DIVISOR) ** 3
 	else
 		additive_power[SM_POWER_POWERLOSS] = -1 * (momentary_power * POWERLOSS_LINEAR_RATE + powerloss_linear_offset)

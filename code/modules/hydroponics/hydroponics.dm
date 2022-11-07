@@ -1079,8 +1079,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(!anchored)
-		update_appearance()
-		return FALSE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/warning = tgui_alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", list("Yes", "No"))
 	if(warning == "Yes" && user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		reagents.clear_reagents()

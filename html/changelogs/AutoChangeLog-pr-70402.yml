@@ -1,5 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - qol: "Crafting intelliTaters/intelliLanterns now carries over the AI from the card used to craft it."
-  - bugfix: "Crafting intelliLanterns with a card that contains an AI no longer deletes the AI."

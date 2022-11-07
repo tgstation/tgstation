@@ -91,19 +91,17 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 
-#define isalienhumanoid(A) (istype(A, /mob/living/carbon/alien/humanoid))
-
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid) || istype(A, /mob/living/simple_animal/hostile/alien))
+#define isalienadult(A) (istype(A, /mob/living/carbon/alien/adult) || istype(A, /mob/living/simple_animal/hostile/alien))
 
-#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
+#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/adult/hunter))
 
-#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/adult/sentinel))
 
-#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/humanoid/royal))
+#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/adult/royal))
 
-#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
+#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/adult/royal/queen))
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
@@ -138,7 +136,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
-#define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
+#define ismouse(A) (istype(A, /mob/living/basic/mouse))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
@@ -151,8 +149,6 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
-
-#define israt(A) (istype(A, /mob/living/simple_animal/hostile/rat))
 
 #define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
 

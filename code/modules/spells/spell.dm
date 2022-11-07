@@ -123,19 +123,8 @@
 
 	return ..()
 
-/datum/action/cooldown/spell/IsAvailable()
-	return ..() && can_cast_spell(feedback = FALSE)
-
-/datum/action/cooldown/spell/Trigger(trigger_flags, atom/target)
-	// We implement this can_cast_spell check before the parent call of Trigger()
-	// to allow people to click unavailable abilities to get a feedback chat message
-	// about why the ability is unavailable.
-	// It is otherwise redundant, however, as IsAvailable() checks can_cast_spell as well.
-	if(!can_cast_spell())
-		UpdateButtons(TRUE)
-		return FALSE
-
-	return ..()
+/datum/action/cooldown/spell/IsAvailable(feedback = FALSE)
+	return ..() && can_cast_spell(feedback)
 
 /datum/action/cooldown/spell/set_click_ability(mob/on_who)
 	if(SEND_SIGNAL(on_who, COMSIG_MOB_SPELL_ACTIVATED, src) & SPELL_CANCEL_CAST)

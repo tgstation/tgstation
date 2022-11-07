@@ -959,6 +959,7 @@
 		if(!C)//vice versa but in a variable we use later
 			GLOB.mafia_signup -= key
 			GLOB.mafia_bad_signup += key
+			continue
 		if(!isobserver(C.mob))
 			//they are back to playing the game, remove them from the signups
 			GLOB.mafia_signup -= key

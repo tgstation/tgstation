@@ -53,6 +53,8 @@
 	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
 	var/obj/structure/table/tableVariant
+	/// What typepath stairs do we create from this stack
+	var/obj/structure/stairs/stairs_type
 	/// If TRUE, we'll use a radial instead when displaying recipes
 	var/use_radial = FALSE
 	/// If use_radial is TRUE, this is the radius of the radial
@@ -230,7 +232,7 @@
 		"res_amount" = R.res_amount,
 		"max_res_amount" = R.max_res_amount,
 		"req_amount" = R.req_amount,
-		"ref" = "\ref[R]",
+		"ref" = text_ref(R),
 	)
 
 /**
@@ -702,10 +704,6 @@
 	add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
-
-/obj/item/stack/microwave_act(obj/machinery/microwave/M)
-	if(istype(M) && M.dirty < 100)
-		M.dirty += amount
 
 #undef STACK_CHECK_CARDINALS
 #undef STACK_CHECK_ADJACENT

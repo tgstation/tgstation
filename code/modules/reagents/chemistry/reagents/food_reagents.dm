@@ -62,7 +62,7 @@
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(30, delta_time))
-		M.heal_bodypart_damage(brute = brute_heal, burn = burn_heal)
+		M.heal_bodypart_damage(brute = brute_heal, burn = burn_heal, updating_health = FALSE, required_status = BODYTYPE_ORGANIC)
 		. = TRUE
 	..()
 
@@ -481,7 +481,7 @@
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
-	if(methods & (INGEST | VAPOR))
+	if(methods & (TOUCH | VAPOR))
 		var/tear_proof = victim.is_eyes_covered()
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))

@@ -1,5 +1,5 @@
 /datum/element/art
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	id_arg_index = 2
 	var/impressiveness = 0
 

@@ -240,11 +240,11 @@
 			lostPower = FALSE
 
 /obj/machinery/door_buttons/airlock_controller/findObjsByTag()
-	for(var/obj/machinery/door/airlock/A in GLOB.machines)
-		if(A.id_tag == idInterior)
-			interiorAirlock = A
-		else if(A.id_tag == idExterior)
-			exteriorAirlock = A
+	for(var/obj/machinery/door/door as anything in GLOB.airlocks)
+		if(door.id_tag == idInterior)
+			interiorAirlock = door
+		else if(door.id_tag == idExterior)
+			exteriorAirlock = door
 
 /obj/machinery/door_buttons/airlock_controller/update_icon_state()
 	if(machine_stat & NOPOWER)

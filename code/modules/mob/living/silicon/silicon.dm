@@ -82,23 +82,24 @@
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
+	if(isAI(src))
+		modularInterface.saved_job = "AI"
+	if(ispAI(src))
+		modularInterface.saved_job = "pAI Messenger"
+
 	modularInterface.layer = ABOVE_HUD_PLANE
 	SET_PLANE_EXPLICIT(modularInterface, ABOVE_HUD_PLANE, src)
 	modularInterface.saved_identification = real_name || name
-	if(iscyborg(src))
+
+/mob/living/silicon/robot/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/cyborg(src)
 		modularInterface.saved_job = "Cyborg"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
-	if(isAI(src))
-		modularInterface.saved_job = "AI"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
-	if(ispAI(src))
-		modularInterface.saved_job = "pAI Messenger"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
+	return ..()
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
-		modularInterface.saved_identification = real_name
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
@@ -243,12 +244,12 @@
 	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:", forced = forced_log_message)
-	sleep(10)
+	sleep(1 SECONDS)
 
 	if (lawcache_zeroth)
 		if (force || (lawcache_zeroth in lawcache_lawcheck))
 			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
-			sleep(10)
+			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
@@ -257,7 +258,7 @@
 			continue
 		if (force || (law in lawcache_hackedcheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
-			sleep(10)
+			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_ion))
 		var/law = lawcache_ion[index]
@@ -266,7 +267,7 @@
 			return
 		if (force || (law in lawcache_ioncheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
-			sleep(10)
+			sleep(1 SECONDS)
 
 	var/number = 1
 	for (var/index in 1 to length(lawcache_inherent))
@@ -276,7 +277,7 @@
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
-			sleep(10)
+			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_supplied))
 		var/law = lawcache_supplied[index]
@@ -286,7 +287,7 @@
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
-			sleep(10)
+			sleep(1 SECONDS)
 
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()

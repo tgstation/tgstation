@@ -49,12 +49,7 @@ SUBSYSTEM_DEF(vote)
 	current_vote?.reset()
 	current_vote = null
 
-	for(var/datum/action/vote/voting_action as anything in generated_actions)
-		if(QDELETED(voting_action))
-			continue
-		voting_action.Remove(voting_action.owner)
-
-	generated_actions.Cut()
+	QDEL_LIST(generated_actions)
 
 	SStgui.update_uis(src)
 
@@ -316,7 +311,7 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote!"
 	button_icon_state = "vote"
 
-/datum/action/vote/IsAvailable()
+/datum/action/vote/IsAvailable(feedback = FALSE)
 	return TRUE // Democracy is always available to the free people
 
 /datum/action/vote/Trigger(trigger_flags)

@@ -314,7 +314,7 @@
 			shake_camera(owner, 0.3 SECONDS, 1.5)
 		return
 	// Failure condition
-	if(isalienhumanoid(user))
+	if(isalienadult(user))
 		play_from.visible_message(span_danger("[user] blows a hole in [stomach_text] and escapes!"), \
 			span_userdanger("As your hive's food bursts out of your stomach, one thought fills your mind. \"Oh, so this is how the other side feels\""))
 	else // Just to be safe ya know?

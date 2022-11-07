@@ -26,8 +26,11 @@ LINEN BINS
 	dying_key = DYE_REGISTRY_BEDSHEET
 
 	dog_fashion = /datum/dog_fashion/head/ghost
+	/// Custom nouns to act as the subject of dreams
 	var/list/dream_messages = list("white")
+	/// The number of cloth sheets to be dropped by this bedsheet when cut
 	var/stack_amount = 3
+	/// Denotes if the bedsheet is a single, double, or other kind of bedsheet
 	var/bedsheet_type = BEDSHEET_SINGLE
 
 /obj/item/bedsheet/Initialize(mapload)
@@ -284,7 +287,8 @@ LINEN BINS
 				spawn_list += sheet
 		LAZYSET(bedsheet_list, spawn_type, spawn_list)
 	var/chosen_type = pick(bedsheet_list[spawn_type])
-	new chosen_type(loc)
+	var/obj/item/bedsheet = new chosen_type(loc)
+	bedsheet.dir = dir
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/bedsheet/random/double
@@ -516,8 +520,11 @@ LINEN BINS
 	anchored = TRUE
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
+	/// The number of bedsheets in the bin
 	var/amount = 10
+	/// A list of actual sheets within the bin
 	var/list/sheets = list()
+	/// The object hiddin within the bedsheet bin
 	var/obj/item/hidden = null
 
 /obj/structure/bedsheetbin/empty

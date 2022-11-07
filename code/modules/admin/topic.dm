@@ -487,7 +487,7 @@
 		var/mob/M = locate(href_list["forcespeech"])
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.", confidential = TRUE)
-
+			return
 		var/speech = input("What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
@@ -495,6 +495,21 @@
 		speech = sanitize(speech) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins(span_adminnotice("[key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]"))
+
+	else if(href_list["applyquirks"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/target = locate(href_list["applyquirks"])
+		if(!istype(target))
+			to_chat(usr, "this can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
+			return
+		if(!target.client)
+			to_chat(usr, "[target] has no client!", confidential = TRUE)
+			return
+		SSquirks.AssignQuirks(target, target.client)
+		log_admin("[key_name(usr)] applied client quirks to [key_name(target)].")
+		message_admins(span_adminnotice("[key_name_admin(usr)] applied client quirks to [key_name_admin(target)]."))
 
 	else if(href_list["sendtoprison"])
 		if(!check_rights(R_ADMIN))
@@ -561,7 +576,7 @@
 			L.dropItemToGround(I, TRUE)
 
 		L.Unconscious(100)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdome1))
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Team 1)")
@@ -587,7 +602,7 @@
 			L.dropItemToGround(I, TRUE)
 
 		L.Unconscious(100)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdome2))
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Team 2)")
@@ -610,7 +625,7 @@
 		var/mob/living/L = M
 
 		L.Unconscious(100)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdomeadmin))
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Admin.)")
@@ -641,7 +656,7 @@
 			observer.equip_to_slot_or_del(new /obj/item/clothing/neck/tie/black/tied(observer), ITEM_SLOT_NECK)
 			observer.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/black(observer), ITEM_SLOT_FEET)
 		L.Unconscious(100)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdomeobserve))
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Observer.)")
@@ -743,7 +758,7 @@
 		var/client/C = usr.client
 		if(!isobserver(usr))
 			C.admin_ghost()
-		sleep(2)
+		sleep(0.2 SECONDS)
 		C.jumptocoord(x,y,z)
 
 	else if(href_list["adminchecklaws"])
