@@ -23,9 +23,6 @@
 
 ///Subtype of stationloving component where the disk is "clingy to the station."
 /datum/component/stationloving/clingy
-	/// Boolean that tracks if this disk is "clingy". In short terms, "clingy" disks are more strict about where they can be placed (as in being more resistant to being in a non-station area)
-	/// This variable will enhance the behavior to give more user feedback as to it's preferences. It's more annoying to have to deal with, but such is the cost for being the bearer of such an important item.
-	var/clingy = TRUE
 	/// Boolean that tracks if we are currently processing behavior related to clinginess. Prevents message flooding (lag, things happening during timers), and allows graceful overrides of certain actions.
 	var/clingy_handling = FALSE
 	/// Number of seconds we create a bound-checking timer for. This only matters in clingy mode, and it's how long the item-holder has to get back to a safe zone.
@@ -45,8 +42,7 @@
 		/area/mine,
 	))
 
-/datum/component/stationloving/clingy/Initialize(inform_admins = FALSE, allow_item_destruction = FALSE, clingy = FALSE, clingy_timer_duration = 30 SECONDS, strings_file)
-	src.clingy = clingy
+/datum/component/stationloving/clingy/Initialize(inform_admins = FALSE, allow_item_destruction = FALSE, clingy_timer_duration = 30 SECONDS, strings_file)
 	src.clingy_timer_duration = clingy_timer_duration
 	src.strings_file = strings_file
 
@@ -84,8 +80,6 @@
 /datum/component/stationloving/clingy/atom_in_bounds(atom/atom_to_check)
 	var/turf/checkable_turf = get_turf(atom_to_check)
 	if(is_station_level(checkable_turf.z))
-		if(!clingy)
-			return TRUE
 		if(!validate_parent_area(atom_to_check))
 			return clingy_outdoors_setup() // if passed, we over-write the rest of the proc here, just in case we're doing some clingy handling timers and such
 		else
@@ -94,7 +88,7 @@
 
 	return ..()
 
-/// An area-checker useful for rapid checking if we're in an outdoors area.
+/// An area-checker useful for rapid checking if we're in an outdoors area. Atom_to_check is the atom we're checking the area of.
 /datum/component/stationloving/clingy/proc/validate_parent_area(atom/atom_to_check)
 	var/area/destination_area = get_area(atom_to_check)
 
