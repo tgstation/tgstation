@@ -58,14 +58,10 @@
 	clone.equipOutfit(carbon_cloned.mind.assigned_role.outfit)
 
 	var/obj/item/clothing/under/sensor_clothes = clone.w_uniform
-	var/list/all_items = clone.get_all_contents()
 	var/obj/item/modular_computer/tablet/pda/messenger = locate(/obj/item/modular_computer/tablet/pda/) in clone
 	clone.backpack = human_cloned.backpack
-	for(var/charter in all_items)
-		if(istype(charter, /obj/item/station_charter))
-			qdel(charter) //so there wont be two station charters
 	if(sensor_clothes)
-		sensor_clothes.sensor_mode = SENSOR_OFF //dont want anyone noticing there'clone two now
+		sensor_clothes.sensor_mode = SENSOR_OFF //dont want anyone noticing there's two now
 		clone.update_suit_sensors()
 	if(messenger)
 		messenger.invisible = TRUE //clone doesnt show up on PDA message list
