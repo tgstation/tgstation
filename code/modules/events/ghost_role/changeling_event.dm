@@ -65,6 +65,7 @@
 
 	for(var/datum/antagonist/changeling/changeling_datum in player_mind.antag_datums) //Automatically buys the flesh space suit ability :)
 		changeling_datum.purchase_power(/datum/action/changeling/suit/organic_space_suit)
+		new_changeling.equipOutfit(/datum/outfit/changeling_space)
 
 	return new_changeling
 
