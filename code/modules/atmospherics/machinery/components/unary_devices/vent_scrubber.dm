@@ -218,41 +218,6 @@
 
 	filter_types = new_filter_ids
 
-#ifdef MBTODO
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
-	if(!radio_connection)
-		return FALSE
-
-	var/list/f_types = list()
-	for(var/path in GLOB.meta_gas_info)
-		var/list/gas = GLOB.meta_gas_info[path]
-		f_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in filter_types)))
-
-	var/datum/signal/signal = new(list(
-		"tag" = id_tag,
-		"frequency" = frequency,
-		"device" = "VS",
-		"timestamp" = world.time,
-		"power" = on,
-		"scrubbing" = scrubbing,
-		"widenet" = widenet,
-		"filter_types" = f_types,
-		"sigtype" = "status"
-	))
-
-	var/area/scrub_area = get_area(src)
-	if(!GLOB.air_scrub_names[id_tag])
-		// If we do not have a name, assign one
-		update_name()
-		GLOB.air_scrub_names[id_tag] = name
-
-	scrub_area.air_scrub_info[id_tag] = signal.data
-
-	radio_connection.post_signal(src, signal, radio_filter_out)
-
-	return TRUE
-#endif
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_name()
 	. = ..()
 	if(override_naming)
@@ -368,89 +333,6 @@
 	adjacent_turfs.Cut()
 	var/turf/local_turf = get_turf(src)
 	adjacent_turfs = local_turf.get_atmos_adjacent_turfs(alldir = TRUE)
-
-#ifdef MBTODO
-/obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(!is_operational || !signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return
-
-	var/old_widenet = widenet
-	var/old_scrubbing = scrubbing
-	var/old_filter_length = length(filter_types)
-
-	///whether we should attempt to start processing due to settings allowing us to take gas out of our environment
-	var/try_start_processing = FALSE
-
-	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas = our_turf?.air
-
-	var/atom/signal_sender = signal.data["user"]
-
-	if("power" in signal.data)
-		on = text2num(signal.data["power"])
-		try_start_processing = TRUE
-	if("power_toggle" in signal.data)
-		on = !on
-		try_start_processing = TRUE
-
-	if("widenet" in signal.data)
-		widenet = text2num(signal.data["widenet"])
-	if("toggle_widenet" in signal.data)
-		widenet = !widenet
-
-	if("scrubbing" in signal.data)
-		scrubbing = text2num(signal.data["scrubbing"])
-		try_start_processing = TRUE
-	if("toggle_scrubbing" in signal.data)
-		scrubbing = !scrubbing
-		try_start_processing = TRUE
-
-	if(scrubbing != old_scrubbing)
-		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
-
-	if("toggle_filter" in signal.data)
-		toggle_filters(signal.data["toggle_filter"])
-
-	if("set_filters" in signal.data)
-		filter_types = list()
-		add_filters(signal.data["set_filters"])
-
-	if("init" in signal.data)
-		name = signal.data["init"]
-		return
-
-	if("status" in signal.data)
-		broadcast_status()
-		return //do not update_appearance
-
-	broadcast_status()
-	update_appearance()
-
-	if(!our_turf || !turf_gas)
-		try_start_processing = FALSE
-
-	if(try_start_processing)//check if our changes should make us start processing
-		check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
-
-	if(length(filter_types) == old_filter_length && old_scrubbing == scrubbing && old_widenet == widenet)
-		return
-
-	idle_power_usage = initial(idle_power_usage)
-	active_power_usage = initial(idle_power_usage)
-
-	var/new_power_usage = 0
-	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
-		new_power_usage = idle_power_usage + idle_power_usage * length(filter_types)
-		update_use_power(IDLE_POWER_USE)
-	else
-		new_power_usage = active_power_usage
-		update_use_power(ACTIVE_POWER_USE)
-
-	if(widenet)
-		new_power_usage += new_power_usage * (length(adjacent_turfs) * (length(adjacent_turfs) / 2))
-
-	update_mode_power_usage(scrubbing == ATMOS_DIRECTION_SCRUBBING ? IDLE_POWER_USE : ACTIVE_POWER_USE, new_power_usage)
-#endif
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/power_change()
 	. = ..()

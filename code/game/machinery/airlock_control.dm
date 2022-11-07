@@ -7,50 +7,6 @@
 	var/frequency
 	var/datum/radio_frequency/radio_connection
 
-#ifdef MBTODO
-/obj/machinery/door/airlock/receive_signal(datum/signal/signal)
-	if(!signal)
-		return
-
-	if(id_tag != signal.data["tag"] || !signal.data["command"])
-		return
-
-	switch(signal.data["command"])
-		if("open")
-			open(TRUE)
-
-		if("close")
-			close(TRUE)
-
-		if("unlock")
-			locked = FALSE
-			update_appearance()
-
-		if("lock")
-			locked = TRUE
-			update_appearance()
-
-		if("secure_open")
-			locked = FALSE
-			update_appearance()
-
-			sleep(0.2 SECONDS)
-			open(TRUE)
-
-			locked = TRUE
-			update_appearance()
-
-		if("secure_close")
-			locked = FALSE
-			close(TRUE)
-
-			locked = TRUE
-			sleep(0.2 SECONDS)
-			update_appearance()
-
-	send_status()
-#endif
-
 /// Forces the airlock to unbolt and open
 /obj/machinery/door/airlock/proc/secure_open()
 	locked = FALSE
@@ -70,26 +26,6 @@
 	locked = TRUE
 	stoplag(0.2 SECONDS)
 	update_appearance()
-
-/obj/machinery/door/airlock/proc/send_status()
-	if(radio_connection)
-		var/datum/signal/signal = new(list(
-			"tag" = id_tag,
-			"timestamp" = world.time,
-			"door_status" = density ? "closed" : "open",
-			"lock_status" = locked ? "locked" : "unlocked"
-		))
-		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
-
-/obj/machinery/door/airlock/open(surpress_send)
-	. = ..()
-	if(!surpress_send)
-		send_status()
-
-/obj/machinery/door/airlock/close(surpress_send)
-	. = ..()
-	if(!surpress_send)
-		send_status()
 
 /obj/machinery/door/airlock/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
