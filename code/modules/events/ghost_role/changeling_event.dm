@@ -51,7 +51,7 @@
 	var/start_z = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 	var/turf/picked_start = spaceDebrisStartLoc(start_side, start_z)
 
-	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new/obj/effect/meteor/meaty/changeling(picked_start, pick(GLOB.xeno_spawn)) //Until I find a better way to make sure the meteor hits
+	var/obj/effect/meteor/meaty/changeling/changeling_meteor = new/obj/effect/meteor/meaty/changeling(picked_start, pick(shuffle(GLOB.station_turfs))) //Let's make sure this thing REALLY hits
 	var/mob/living/carbon/human/new_changeling = new /mob/living/carbon/human/(picked_start)
 
 	new_changeling.forceMove(changeling_meteor) //Place our payload inside of its vessel
@@ -73,8 +73,6 @@
 	//Set up midround changeling prefs
 	//Set up midround dynamic interaction override stuff (?)
 	//Better text explanation for what you're expected to do
-	//Decide what the ling is expected to do
-	//Meteor sprite is borken
 	//midround ling isnt showing up in prefs for some reason
 	//more like pee-gui because thi
 
