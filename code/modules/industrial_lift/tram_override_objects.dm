@@ -43,6 +43,22 @@
 	associated_lift = MAIN_STATION_TRAM
 	INVOKE_ASYNC(src, .proc/open)
 
+/obj/machinery/door/window/left/tram/open_and_close()
+	if(!open())
+		return
+	autoclose = TRUE
+	sleep(1 SECONDS)
+	if(!density && autoclose) //did someone change state while we slept?
+		close()
+
+/obj/machinery/door/window/right/tram/open_and_close()
+	if(!open())
+		return
+	autoclose = TRUE
+	sleep(1 SECONDS)
+	if(!density && autoclose) //did someone change state while we slept?
+		close()
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left/tram, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right/tram, 0)
 
