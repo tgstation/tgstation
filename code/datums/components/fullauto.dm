@@ -279,7 +279,7 @@
 		return FALSE
 	var/obj/item/bodypart/other_hand = shooter.has_hand_for_held_index(shooter.get_inactive_hand_index())
 	if(weapon_weight == WEAPON_HEAVY && (shooter.get_inactive_held_item() || !other_hand))
-		balloon_alert(shooter, "need two hands!")
+		balloon_alert(shooter, "use both hands!")
 		return FALSE
 	return TRUE
 
