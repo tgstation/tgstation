@@ -64,6 +64,7 @@ SUBSYSTEM_DEF(research)
 		/obj/item/assembly/signaler/anomaly/flux = MAX_CORES_FLUX,
 		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
 		/obj/item/assembly/signaler/anomaly/bioscrambler = MAX_CORES_BIOSCRAMBLER,
+		/obj/item/assembly/signaler/anomaly/dimensional = MAX_CORES_DIMENSIONAL,
 	)
 
 	/// Lookup list for ordnance briefers.
