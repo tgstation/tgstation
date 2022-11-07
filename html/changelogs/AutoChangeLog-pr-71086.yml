@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "Fixed a runtime when NPC monkeys attempt to put items in the hands of mobs with no hands (ie cyborgs, lizards, rats, ect.)"
-  - bugfix: "Monkeys will no longer attempt to put items in your pockets if you have no pockets."
