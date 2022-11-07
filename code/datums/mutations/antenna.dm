@@ -76,7 +76,7 @@
 	///The chance for a message to be ignored by (this casting of) mindread
 	var/pass_chance = 50
 	///The chance to notify your target that their mind has been read
-	var/alert_chance = 30
+	var/alert_chance = 20
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 
