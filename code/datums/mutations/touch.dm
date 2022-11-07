@@ -19,7 +19,7 @@
 		return
 
 	if(GET_MUTATION_POWER(src) <= 1)
-		to_modify.chain = FALSE
+		to_modify.chain = initial(to_modify.chain)
 		return
 
 	to_modify.chain = TRUE
@@ -37,9 +37,9 @@
 	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
 	//damage should do about 1 per limb
 	var/zap_power = 7500
-	//range of tesla shock
+	//range of tesla shock bounces
 	var/zap_range = 7
-	//flags, Only includes the flag that allows the shocks to damage mobs, leaving out structure damage and energy generating flags
+	//flags, Can only damage mobs, leaving out machine damage and energy generating flags as they have alot more impact
 	var/zap_flags = ZAP_MOB_DAMAGE
 
 	hand_path = /obj/item/melee/touch_attack/shock
