@@ -210,6 +210,14 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_filter_types(list/new_filters)
+	var/list/new_filter_ids = list()
+
+	for (var/datum/gas/gas_type in new_filters)
+		new_filter_ids += initial(gas_type.id)
+
+	filter_types = new_filter_ids
+
 #ifdef MBTODO
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)

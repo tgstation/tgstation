@@ -60,6 +60,7 @@
 #define AALARM_MODE_SIPHON 7 //Scrubbers suck air
 #define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
 #define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output
+#define AALARM_MODE_MAX AALARM_MODE_REFILL
 
 #define AALARM_REPORT_TIMEOUT 100
 
@@ -464,6 +465,10 @@
 				return TRUE
 
 			scrubber.toggle_filters(params["val"])
+		if ("mode")
+			mode = clamp(round(text2num(params["mode"])), AALARM_MODE_SCRUBBING, AALARM_MODE_MAX)
+			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(user)]", INVESTIGATE_ATMOS)
+			apply_mode(user)
 
 	update_appearance()
 
@@ -656,8 +661,113 @@
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, signal_source)
 #endif
 
-/obj/machinery/airalarm/proc/apply_mode(atom/signal_source)
-	// MBTODO
+/obj/machinery/airalarm/proc/apply_mode(atom/source)
+	switch (mode)
+		if (AALARM_MODE_SCRUBBING)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_EXTERNAL_BOUND
+				vent.external_pressure_bound = ONE_ATMOSPHERE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.set_filter_types(list(/datum/gas/carbon_dioxide))
+				scrubber.set_scrubbing(TRUE)
+				scrubber.set_widenet(FALSE)
+		if (AALARM_MODE_CONTAMINATED)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_EXTERNAL_BOUND
+				vent.external_pressure_bound = ONE_ATMOSPHERE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.set_filter_types(list(
+					/datum/gas/carbon_dioxide,
+					/datum/gas/miasma,
+					/datum/gas/plasma,
+					/datum/gas/water_vapor,
+					/datum/gas/hypernoblium,
+					/datum/gas/nitrous_oxide,
+					/datum/gas/nitrium,
+					/datum/gas/tritium,
+					/datum/gas/bz,
+					/datum/gas/pluoxium,
+					/datum/gas/freon,
+					/datum/gas/hydrogen,
+					/datum/gas/healium,
+					/datum/gas/proto_nitrate,
+					/datum/gas/zauker,
+					/datum/gas/helium,
+					/datum/gas/antinoblium,
+					/datum/gas/halon,
+				))
+				scrubber.set_scrubbing(TRUE)
+				scrubber.set_widenet(TRUE)
+		if (AALARM_MODE_VENTING)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_EXTERNAL_BOUND
+				vent.external_pressure_bound = ONE_ATMOSPHERE * 2
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.set_widenet(FALSE)
+				scrubber.set_scrubbing(FALSE)
+		if (AALARM_MODE_REFILL)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_EXTERNAL_BOUND
+				vent.external_pressure_bound = ONE_ATMOSPHERE * 3
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+
+				scrubber.set_filter_types(list(/datum/gas/carbon_dioxide))
+				scrubber.set_widenet(FALSE)
+				scrubber.set_scrubbing(FALSE)
+		if (AALARM_MODE_PANIC, AALARM_MODE_REPLACEMENT)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = FALSE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.set_widenet(TRUE)
+				scrubber.set_scrubbing(FALSE)
+		if (AALARM_MODE_SIPHON)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = FALSE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.set_widenet(FALSE)
+				scrubber.set_scrubbing(FALSE)
+		if (AALARM_MODE_OFF)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = FALSE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = FALSE
+				scrubber.update_appearance(UPDATE_ICON)
+		if (AALARM_MODE_FLOOD)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_INTERNAL_BOUND
+				vent.internal_pressure_bound = 0
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = FALSE
+				scrubber.update_appearance(UPDATE_ICON)
+
+	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
 /obj/machinery/airalarm/update_appearance(updates)
 	. = ..()
@@ -1760,3 +1870,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 #undef AALARM_MODE_CONTAMINATED
 #undef AALARM_MODE_REFILL
 #undef AALARM_REPORT_TIMEOUT
+#undef AALARM_MODE_MAX
