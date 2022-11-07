@@ -456,7 +456,7 @@
 \***************************************/
 /datum/action/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure. Costs 20 chemicals."
+	desc = "We grow an organic suit to protect ourselves from space exposure, in addition to regulating temperature and oxygen needs. Costs 20 chemicals."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
 	button_icon_state = "organic_suit"
 	chemical_cost = 20
