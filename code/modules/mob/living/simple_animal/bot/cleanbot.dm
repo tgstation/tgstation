@@ -316,6 +316,7 @@
 	//main targets
 	target_types = list(
 		/obj/effect/decal/cleanable/oil,
+		/obj/effect/decal/cleanable/fuel_pool,
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/robot_debris,
 		/obj/effect/decal/cleanable/molten_object,
@@ -324,6 +325,13 @@
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
 		/obj/effect/decal/cleanable/insectguts,
+		/obj/effect/decal/cleanable/generic,
+		/obj/effect/decal/cleanable/shreds,
+		/obj/effect/decal/cleanable/glass,
+		/obj/effect/decal/cleanable/cobweb,
+		/obj/effect/decal/cleanable/wrapping,
+		/obj/effect/decal/cleanable/glitter,
+		/obj/effect/decal/cleanable/confetti,
 		/obj/effect/decal/remains,
 	)
 
@@ -338,6 +346,7 @@
 		target_types += list(
 			/mob/living/basic/cockroach,
 			/mob/living/basic/mouse,
+			/obj/effect/decal/cleanable/ants,
 		)
 
 	if(janitor_mode_flags & CLEANBOT_CLEAN_DRAWINGS)
