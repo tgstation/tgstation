@@ -22,7 +22,7 @@
 		if(istype(warp_point.loc, /area/station/maintenance))
 			possible_spawns += warp_point
 	if(!possible_spawns.len)
-		message_admins("No valid spawn locations found, aborting...")
+		message_admins("No valid spawn locations found for Paradox Clone event, aborting...")
 		return MAP_ERROR
 
 	var/mob/dead/selected = pick(candidates)
