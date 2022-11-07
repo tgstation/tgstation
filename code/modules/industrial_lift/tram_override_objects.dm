@@ -23,23 +23,27 @@
 	//DO NOT put something on the tram roundstart that has opacity, it WILL overload SSlighting
 	opacity = FALSE
 
+GLOBAL_LIST_EMPTY (tram_doors)
+
 /obj/machinery/door/window/left/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
+	var/associated_lift = MAIN_STATION_TRAM
 
 /obj/machinery/door/window/right/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
+	var/associated_lift = MAIN_STATION_TRAM
 
 /obj/machinery/door/window/left/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
-	INVOKE_ASYNC(src, /obj/machinery/door/window.proc/open)
+	INVOKE_ASYNC(src, .proc/open)
 
 /obj/machinery/door/window/right/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
-	INVOKE_ASYNC(src, /obj/machinery/door/window.proc/open)
+	INVOKE_ASYNC(src, .proc/open)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left/tram, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right/tram, 0)
