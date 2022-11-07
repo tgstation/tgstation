@@ -260,7 +260,7 @@
 		/obj/item/reagent_containers/condiment/sugar,
 		/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel, //one extra syrup as a treat
 	)
-	crate_name = "coffee equippemnt crate"
+	crate_name = "coffee equipment crate"
 
 /datum/supply_pack/service/coffeemaker
 	name = "Impressa Coffeemaker Crate"
