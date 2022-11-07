@@ -26,7 +26,7 @@
 /obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
-	AddComponent(/datum/component/stationloving, inform_admins = !fake, clingy = TRUE, strings_file = NUCLEAR_DISK_FILE)
+	AddComponent(/datum/component/stationloving/clingy, inform_admins = !fake, clingy = TRUE, strings_file = NUCLEAR_DISK_FILE)
 
 	if(!fake)
 		SSpoints_of_interest.make_point_of_interest(src)
