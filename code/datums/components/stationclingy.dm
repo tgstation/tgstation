@@ -56,7 +56,9 @@
 	if(clingy_handling)
 		return
 
+	var/turf/target_turf = get_valid_turf()
 	clingy_handling = TRUE
+
 	// Give it a second in case we're switching z-levels so the user can actually hear the message, and then teleport it back a second after their mistake is made and all they can do is watch in horror.
 	addtimer(CALLBACK(src, .proc/clingy_message, PISSING_OFF), 1 SECONDS)
 	addtimer(CALLBACK(src, .proc/full_move, target_turf), 2 SECONDS)
@@ -80,7 +82,8 @@
 	return ..()
 
 /datum/component/stationloving/clingy/atom_in_bounds(atom/atom_to_check)
-	if(is_station_level(destination_turf.z))
+	var/turf/checkable_turf = get_turf(atom_to_check)
+	if(is_station_level(checkable_turf.z))
 		if(!clingy)
 			return TRUE
 		if(!validate_parent_area(atom_to_check))
@@ -103,7 +106,7 @@
 		return TRUE // we're probably fine since we're in some sort of edge-case yet still on a station z-level.
 
 /// Sets up the clingy timer to run (async) if that hasn't already been set up earlier.
-/datum/component/stationloving/cling/proc/clingy_outdoors_setup()
+/datum/component/stationloving/clingy/proc/clingy_outdoors_setup()
 	// This is here so we don't have to go through and summon the async timer if we're already doing something.
 	if(clingy_handling)
 		return TRUE
@@ -210,7 +213,7 @@
 
 	concatenated_message = pick(strings(strings_file, message_type))
 
-	switch(message_type) // san7890 - these are default messages. change these.
+	switch(message_type)
 		if(BACK_INSIDE_STATION) // could also be considered a "Clingy Timer Stop Message", but it can also work from just getting back inside from space.
 			if(clingy_handling) // Clingy Handling is TRUE while this proc is called from clingy_timer_handling(), so we can leverage that to give a small fluff message saying that the timer ended.
 				concatenated_message += " I'm okay now."
