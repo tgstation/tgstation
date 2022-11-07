@@ -429,6 +429,7 @@ Diagnostic HUDs!
 	if(internal_damage)
 		holder.icon_state = "hudwarn"
 		set_hud_image_active(DIAG_STAT_HUD)
+		return
 	holder.icon_state = null
 	set_hud_image_inactive(DIAG_STAT_HUD)
 
