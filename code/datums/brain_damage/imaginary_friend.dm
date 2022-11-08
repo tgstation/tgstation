@@ -260,7 +260,7 @@
 	bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, bubble)
-	addtimer(CALLBACK(src, .proc/clear_saypopup, bubble), 3.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(clear_saypopup, bubble)), 3.5 SECONDS)
 
 	var/turf/center_turf = get_turf(src)
 	if(!center_turf)
