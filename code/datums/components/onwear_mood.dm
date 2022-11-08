@@ -11,7 +11,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.saved_event = saved_event
-	src.examine_string = examine_strine
+	src.examine_string = examine_string
 
 /datum/component/onwear_mood/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/affect_wearer)
@@ -27,7 +27,7 @@
 	target.add_mood_event(REF(src), saved_event)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-/datum/component/onwear_mood/on_examine(datum/source, mob/user, list/examine_text)
+/datum/component/onwear_mood/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	examine_text += span_notice(examine_string)
 
