@@ -117,7 +117,7 @@
 			
 		if("send")
 			//copy
-			var/obj/item/paper/our_fax = fax_paper.copy(/obj/item/paper, null, colored = FALSE)
+			var/obj/item/paper/our_fax = fax_paper.copy(/obj/item/paper)
 			our_fax.name = fax_paper.name
 			//send
 			action_fax.receive(our_fax, sending_fax_name)
@@ -126,6 +126,6 @@
 		
 		if("createPaper")
 
-			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, usr.loc, colored = FALSE)
+			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, usr.loc)
 			our_paper.name = fax_paper.name
 			
