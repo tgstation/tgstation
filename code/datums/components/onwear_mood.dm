@@ -32,9 +32,10 @@
 	examine_text += span_notice(examine_string)
 
 /// clears the effects on the wearer
-/datum/component/onwear_mood/proc/clear_effects(datum/source, mob/living/target)
+/datum/component/onwear_mood/proc/clear_effects(atom/source, mob/living/target)
 	SIGNAL_HANDLER
-	target = target || loc
+
+	target = target || source?.loc || parent.loc
 	if(!istype(target))
 		return
 	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
