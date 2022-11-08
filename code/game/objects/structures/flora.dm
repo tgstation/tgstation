@@ -90,8 +90,10 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 /obj/structure/flora/attackby(obj/item/used_item, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
-
-	if(can_uproot && is_type_in_typecache(used_item, uprooting_tools) && !(flags_1 & HOLOGRAM_1))
+	if(flags_1 & HOLOGRAM_1)
+		balloon_alert(user,"[used_item] passes right through [src]!")
+		return ..()
+	if(can_uproot && is_type_in_typecache(used_item, uprooting_tools))
 		if(uprooted)
 			user.visible_message(span_notice("[user] starts to replant [src]..."),
 				span_notice("You start to replant [src]..."))
