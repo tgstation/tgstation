@@ -15,7 +15,7 @@
 	. = ..()
 	var/datum/action/cooldown/spell/touch/shock/to_modify =.
 
-	if(!istype(to_modify)) // null or invalid
+	if(!istype(to_modify)) /// null or invalid
 		return
 
 	if(GET_MUTATION_POWER(src) <= 1)
@@ -33,13 +33,14 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
+	///Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
+	///This var decides if the spell should chain, dictated by presence of power chromosome
 	var/chain = FALSE
-	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
-	//damage should do about 1 per limb
+	///Affects damage, should do about 1 per limb
 	var/zap_power = 7500
-	//range of tesla shock bounces
+	///Range of tesla shock bounces
 	var/zap_range = 7
-	//flags, Can only damage mobs, leaving out machine damage and energy generating flags as they have alot more impact
+	///flags that dictate what the tesla shock can interact with, Can only damage mobs, Cannot damage machines or generate energy
 	var/zap_flags = ZAP_MOB_DAMAGE
 
 	hand_path = /obj/item/melee/touch_attack/shock
