@@ -88,9 +88,6 @@
 	var/shorted = 0
 	var/buildstage = AIRALARM_BUILD_COMPLETE // 2 = complete, 1 = no wires,  0 = circuit gone
 
-	var/frequency = FREQ_ATMOS_CONTROL
-	var/alarm_frequency = FREQ_ATMOS_ALARMS
-	var/datum/radio_frequency/radio_connection
 	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
 	var/datum/alarm_handler/alarm_manager
 
@@ -138,7 +135,6 @@
 	my_area = get_area(src)
 	update_appearance()
 
-	set_frequency(frequency)
 	AddElement(/datum/element/connect_loc, atmos_connections)
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/air_alarm_general,
@@ -152,7 +148,6 @@
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
-	SSradio.remove_object(src, frequency)
 	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
 	return ..()
@@ -438,11 +433,7 @@
 	else
 		return FALSE
 
-/obj/machinery/airalarm/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
-
+#ifdef MBTODO
 /obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
 	if(!radio_connection)
 		return FALSE
@@ -454,6 +445,7 @@
 	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
 
 	return TRUE
+#endif
 
 /obj/machinery/airalarm/proc/get_mode_name(mode_value)
 	switch(mode_value)
@@ -679,6 +671,7 @@
 		INVOKE_ASYNC(src, .proc/apply_mode, src)
 
 
+#ifdef MBTODO
 /obj/machinery/airalarm/proc/post_alert(alert_level)
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
 
@@ -697,6 +690,10 @@
 		alert_signal.data["alert"] = "clear"
 
 	frequency.post_signal(src, alert_signal, range = -1)
+#endif
+
+/obj/machinery/airalarm/proc/post_alert(alert_level)
+	// MBTODO
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 
@@ -1326,9 +1323,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 			continue
 		valid_filters += info
 
-	connected_alarm.send_signal(scrubber_id, list(
-		"set_filters" = valid_filters,
-	))
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if(isnull(scrubber))
+		return
+
+	scrubber.set_filter_types(valid_filters)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_scrubber(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1338,16 +1337,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
+	// var/scrubber_id = scrubbers.value
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if (isnull(scrubber))
+		return
 
-	if(port == enable)
-		connected_alarm.send_signal(scrubber_id, list(
-			"power" = TRUE,
-		))
-	else
-		connected_alarm.send_signal(scrubber_id, list(
-			"power" = FALSE,
-		))
+	scrubber.on = (port == enable)
+	scrubber.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_range(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1357,16 +1353,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if(isnull(scrubber))
+		return
 
-	if(port == enable_extended_range)
-		connected_alarm.send_signal(scrubber_id, list(
-			"widenet" = TRUE,
-		))
-	else
-		connected_alarm.send_signal(scrubber_id, list(
-			"widenet" = FALSE,
-		))
+	scrubber.widenet = (port == enable_extended_range)
+	scrubber.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_siphon(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1376,16 +1368,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if(isnull(scrubber))
+		return
 
-	if(port == enable_siphon)
-		connected_alarm.send_signal(scrubber_id, list(
-			"scrubbing" = FALSE,
-		))
-	else
-		connected_alarm.send_signal(scrubber_id, list(
-			"scrubbing" = TRUE,
-		))
+	scrubber.scrubbing = (port != enable_siphon)
+	scrubber.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/update_data()
 	CIRCUIT_TRIGGER
@@ -1547,16 +1535,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
+		return
 
-	if(port == enable)
-		connected_alarm.send_signal(vent_id, list(
-			"power" = TRUE,
-		))
-	else
-		connected_alarm.send_signal(vent_id, list(
-			"power" = FALSE,
-		))
+	vent.on = (port == enable)
+	vent.update_appearance(UPDATE_ICON)
 
 #define NO_BOUND 3
 
@@ -1630,16 +1614,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = vents.value
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
+		return
 
-	if(port == enable_siphon)
-		connected_alarm.send_signal(scrubber_id, list(
-			"direction" = FALSE,
-		))
-	else
-		connected_alarm.send_signal(scrubber_id, list(
-			"direction" = TRUE,
-		))
+	vent.pump_direction = (port == enable_siphon) ? ATMOS_DIRECTION_SIPHONING : ATMOS_DIRECTION_RELEASING
 
 /obj/item/circuit_component/air_alarm_vents/proc/update_data()
 	CIRCUIT_TRIGGER

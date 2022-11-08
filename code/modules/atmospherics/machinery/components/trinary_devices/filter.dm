@@ -108,10 +108,6 @@
 
 	update_parents()
 
-/obj/machinery/atmospherics/components/trinary/filter/atmos_init()
-	set_frequency(frequency)
-	return ..()
-
 /obj/machinery/atmospherics/components/trinary/filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

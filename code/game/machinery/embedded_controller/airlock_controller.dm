@@ -49,7 +49,7 @@
 					target_state = AIRLOCK_STATE_INOPEN
 #endif
 
-/datum/computer/file/embedded_program/airlock_controller/receive_user_command(command)
+/datum/computer/file/embedded_program/airlock_controller/proc/receive_user_command(command)
 	switch(command)
 		if("cycleClosed")
 			target_state = AIRLOCK_STATE_CLOSED
@@ -231,6 +231,9 @@
 	var/sensor_tag
 	var/sanitize_external
 
+	// MBTODO: Clear needless typecasts, change this to just being part of the machine itself probably
+	var/datum/computer/file/embedded_program/airlock_controller/program
+
 GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_controller)
 
 /obj/machinery/airlock_controller/Initialize(mapload)
@@ -262,9 +265,8 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_contro
 
 /obj/machinery/airlock_controller/Destroy()
 	GLOB.airlock_controllers_by_id -= id_tag
+	QDEL_NULL(program)
 	return ..()
-
-/obj/machinery/airlock_controller/Topic(href, href_list) // needed to override obj/machinery/embedded_controller/Topic, dont think its actually used in game other than here but the code is still here
 
 /obj/machinery/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -316,7 +318,7 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_contro
 	if(.)
 		return
 	// no need for sanitisation, command just changes target_state and can't do anything else
-	process_command(action)
+	program.receive_user_command(action)
 	return TRUE
 
 /// Starts an airlock cycle
@@ -358,9 +360,6 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_contro
 	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 
 /obj/machinery/airlock_controller/update_icon_state()
-	if(on && program)
-		var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
-		icon_state = "[base_icon_state]_[airlock_program.processing ? "process" : "standby"]"
-		return ..()
-	icon_state = "[base_icon_state]_off"
+	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
+	icon_state = "[base_icon_state]_[airlock_program.processing ? "process" : "standby"]"
 	return ..()
