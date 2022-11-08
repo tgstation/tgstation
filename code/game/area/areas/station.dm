@@ -1448,19 +1448,3 @@
 /area/station/maintenance/external/port/bow
 	name = "\improper Port Bow External Hull Access"
 
-/// External "asteroid" portions that are still part of the astral body that the station rests on. Do not use in planetary settings for an "outdoors" area.
-/// Should only be used when the asteroid is perfectly replacable with a space turf/area.
-/area/station/asteroid
-	name = "\improper Asteroid Exterior"
-	icon_state = "asteroid"
-	always_unpowered = TRUE
-	power_environ = FALSE
-	power_equip = FALSE
-	power_light = FALSE
-	requires_power = TRUE
-	ambience_index = AMBIENCE_MINING
-	sound_environment = SOUND_AREA_ASTEROID
-	area_flags = VALID_TERRITORY | UNIQUE_AREA
-	flags_1 = CAN_BE_DIRTY_1
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
