@@ -93,3 +93,18 @@
 #define COMSIG_MOVABLE_USING_RADIO "movable_radio"
 	/// Return to prevent the movable from talking into the radio.
 	#define COMPONENT_CANNOT_USE_RADIO (1<<0)
+
+/// Sent from /atom/movable/proc/say_quote() after say verb is chosen and before spans are applied.
+#define COMSIG_MOVABLE_SAY_QUOTE "movable_say_quote"
+/// Sent from /atom/movable/proc/lang_treat() before it runs.
+#define COMSIG_MOVABLE_TREAT_MESSAGE "movable_treat_message"
+	// Used to access COMSIG_MOB_SAY argslist
+	/// The index of args that corresponds to the mob speaking
+	#define MOVABLE_TREAT_MESSAGE_SPEAKER 1
+	/// The index of args that corresponds to the spoken language
+	#define MOVABLE_TREAT_MESSAGE_LANGUAGE 2
+	/// The index of args that corresponds to the actual message
+	#define MOVABLE_TREAT_MESSAGE_MESSAGE 3
+	#define MOVABLE_TREAT_MESSAGE_SPANS 4
+	#define MOVABLE_TREAT_MESSAGE_MODS 5
+	#define MOVABLE_TREAT_MESSAGE_NOQUOTE 6
