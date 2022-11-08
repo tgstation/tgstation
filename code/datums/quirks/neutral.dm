@@ -358,50 +358,6 @@
 
 	quirk_holder.add_mood_event("bad_hair_day", /datum/mood_event/bald)
 
-/datum/quirk/item_quirk/tongue_tied
-	name = "Tongue Tied"
-	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
-	icon = "sign-language"
-	value = 0
-	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
-	mail_goodies = list(/obj/item/clothing/gloves/radio)
-
-/datum/quirk/item_quirk/tongue_tied/add_unique()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/organ/internal/tongue/old_tongue = human_holder.getorganslot(ORGAN_SLOT_TONGUE)
-	old_tongue.Remove(human_holder)
-	qdel(old_tongue)
-
-	var/obj/item/organ/internal/tongue/tied/new_tongue = new(get_turf(human_holder))
-	new_tongue.Insert(human_holder)
-	// Only tongues of people with this quirk can't be removed. Manually spawned or found tongues can be.
-	new_tongue.organ_flags |= ORGAN_UNREMOVABLE
-
-	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
-	if(isplasmaman(human_holder))
-		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
-	give_item_to_holder(gloves_type, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-
-/datum/quirk/item_quirk/tongue_tied/post_add()
-	to_chat(quirk_holder, span_boldannounce("Because you speak with your hands, having them full hinders your ability to communicate!"))
-
-/datum/quirk/item_quirk/tongue_tied/remove()
-	var/obj/item/organ/internal/tongue/tied/quirk_tongue = quirk_holder.getorganslot(ORGAN_SLOT_TONGUE)
-	if(!istype(quirk_tongue))
-		return
-
-	var/obj/item/organ/internal/tongue/new_tongue_type = /obj/item/organ/internal/tongue
-	if(iscarbon(quirk_holder))
-		var/mob/living/carbon/carbon_quirky = quirk_holder
-		new_tongue_type = carbon_quirky.dna?.species?.mutanttongue
-	if(!new_tongue_type)
-		return
-
-	var/obj/item/organ/internal/tongue/new_tongue = new new_tongue_type()
-	quirk_tongue.Remove(quirk_holder, TRUE)
-	new_tongue.Insert(quirk_holder, TRUE)
-	qdel(quirk_tongue)
-
 /datum/quirk/item_quirk/photographer
 	name = "Photographer"
 	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary among your coworkers."
