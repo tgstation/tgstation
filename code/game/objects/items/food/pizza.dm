@@ -373,6 +373,7 @@
 	tastes = list("pure electricity" = 4, "pizza" = 2)
 	slice_type = /obj/item/food/pizzaslice/energy
 	foodtypes = TOXIC
+	boxtag = "24 Hour Energy"
 
 /obj/item/food/pizza/energy/raw
 	name = "raw energy pizza"

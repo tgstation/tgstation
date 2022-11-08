@@ -1,3 +1,7 @@
+#define INFINITE_PIZZA_CHANCE 1
+#define PIZZA_BOMB_CHANCE 3
+#define PIZZA_DUD_CHANCE 33
+
 /datum/supply_pack/organic
 	group = "Food & Hydroponics"
 	crate_type = /obj/structure/closet/crate/freezer
@@ -155,25 +159,14 @@
 	desc = "Why visit the kitchen when you can have five random pizzas in a fraction of the time? \
 			Best prices this side of the galaxy! All deliveries are guaranteed to be 99% anomaly-free."
 	cost = CARGO_CRATE_VALUE * 10 // Best prices this side of the galaxy.
-	contains = list(/obj/item/pizzabox/margherita,
-					/obj/item/pizzabox/mushroom,
-					/obj/item/pizzabox/meat,
-					/obj/item/pizzabox/vegetable,
-					/obj/item/pizzabox/pineapple,
-				)
+	contains = list()
 	crate_name = "pizza crate"
+
 	///Whether we've provided an infinite pizza box already this shift or not.
-	var/static/anomalous_box_provided = FALSE
-	///The percentage chance (per pizza) of this supply pack to spawn an anomalous pizza box.
-	var/anna_molly_box_chance = 1
-	///Total tickets in our figurative lottery (per pizza) to decide if we create a bomb box, and if so what type. 1 to 3 create a bomb. The rest do nothing.
-	var/boombox_tickets = 100
+	var/anomalous_box_provided = FALSE
 	///Whether we've provided a bomb pizza box already this shift or not.
 	var/boombox_provided = FALSE
-
-/datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/C)
-	. = ..()
-
+	/// weighted list of pizza by how disruptive it would be
 	var/list/pizza_types = list(
 		/obj/item/food/pizza/margherita = 10,
 		/obj/item/food/pizza/meat = 10,
@@ -185,52 +178,63 @@
 		/obj/item/food/pizza/pineapple = 10,
 		/obj/item/food/pizza/arnold = 3,
 		/obj/item/food/pizza/energy = 5
-	) //weighted by chance to disrupt eaters' rounds
+	)
 
-	for(var/obj/item/pizzabox/P in C)
-		if(!anomalous_box_provided)
-			if(prob(anna_molly_box_chance)) //1% chance for each box, so 4% total chance per order
-				var/obj/item/pizzabox/infinite/fourfiveeight = new(C)
-				fourfiveeight.boxtag = P.boxtag
-				fourfiveeight.boxtag_set = TRUE
-				fourfiveeight.update_appearance()
-				qdel(P)
-				anomalous_box_provided = TRUE
-				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
-				if(prob(50))
-					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
-					message_admins("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
-				else
-					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
-				continue
+/datum/supply_pack/organic/pizza/fill(obj/structure/closet/crate/new_crate)
+	. = ..()
+	var/list/rng_pizza_list = pizza_types.Copy()
+	for(var/i in 1 to 5)
+		if(add_anomalous(new_crate))
+			continue
+		if(add_boombox(new_crate))
+			continue
+		add_normal_pizza(new_crate, rng_pizza_list)
 
-		if(!boombox_provided)
-			var/boombox_lottery = rand(1,boombox_tickets)
-			var/boombox_type
-			switch(boombox_lottery)
-				if(1 to 2)
-					boombox_type = /obj/item/pizzabox/bomb/armed //explodes after opening
-				if(3)
-					boombox_type = /obj/item/pizzabox/bomb //free bomb
+/// adds the chance for an infinite pizza box
+/datum/supply_pack/organic/pizza/proc/add_anomalous(obj/structure/closet/crate/new_crate)
+	if(anomalous_box_provided)
+		return FALSE
+	if(!prob(INFINITE_PIZZA_CHANCE))
+		return FALSE
+	new /obj/item/pizzabox/infinite(new_crate)
+	anomalous_box_provided = TRUE
+	log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
+	if(prob(50))
+		addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+		message_admins("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
+	else
+		message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
+	return TRUE
 
-			if(boombox_type)
-				new boombox_type(C)
-				qdel(P)
-				boombox_provided = TRUE
-				log_game("A pizza box bomb was created by a pizza crate delivery.")
-				message_admins("A pizza box bomb has arrived in a pizza crate delivery.")
-				continue
+#undef INFINITE_PIZZA_CHANCE
 
-		//here we randomly replace our pizzas for a chance at the full range
-		var/obj/item/food/pizza/replacement_type = pick_weight(pizza_types)
-		pizza_types -= replacement_type
-		if(replacement_type && !istype(P.pizza, replacement_type))
-			QDEL_NULL(P.pizza)
-			P.pizza = new replacement_type
-			P.boxtag = P.pizza.boxtag
-			P.boxtag_set = TRUE
-			P.update_appearance()
+/// adds a chance of a pizza bomb replacing a pizza
+/datum/supply_pack/organic/pizza/proc/add_boombox(obj/structure/closet/crate/new_crate)
+	if(boombox_provided)
+		return FALSE
+	if(!prob(PIZZA_BOMB_CHANCE))
+		return FALSE
+	var/boombox_type = (prob(PIZZA_DUD_CHANCE)) ? /obj/item/pizzabox/bomb : /obj/item/pizzabox/bomb/armed
+	new boombox_type(new_crate)
+	boombox_provided = TRUE
+	log_game("A pizza box bomb was created by a pizza crate delivery.")
+	message_admins("A pizza box bomb has arrived in a pizza crate delivery.")
+	return TRUE
 
+#undef PIZZA_BOMB_CHANCE
+#undef PIZZA_DUD_CHANCE
+
+/// adds a randomized pizza from the pizza list
+/datum/supply_pack/organic/pizza/proc/add_normal_pizza(obj/structure/closet/crate/new_crate, list/rng_pizza_list)
+	var/randomize_pizza = pick_weight(rng_pizza_list)
+	rng_pizza_list -= randomize_pizza
+	var/obj/item/pizzabox/new_pizza_box = new(new_crate)
+	new_pizza_box.pizza = new randomize_pizza
+	new_pizza_box.boxtag = new_pizza_box.pizza.boxtag
+	new_pizza_box.boxtag_set = TRUE
+	new_pizza_box.update_appearance()
+
+/// tells crew that an infinite pizza box exists
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
 	delivery. Please search all crates and manifests provided with the delivery and return the object if is located. The object resembles a standard <b>\[DATA EXPUNGED\]</b> and is to be \
