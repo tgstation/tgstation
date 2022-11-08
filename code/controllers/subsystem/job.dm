@@ -553,7 +553,7 @@ SUBSYSTEM_DEF(job)
 
 	if(ishuman(equipping) && equipping.mind)
 		var/mob/living/carbon/human/wageslave = equipping
-		wageslave.add_mob_memory(/datum/memory/account, remembered_id = wageslave.account_id)
+		wageslave.add_mob_memory(/datum/memory/key/account, remembered_id = wageslave.account_id)
 
 
 	job.after_spawn(equipping, player_client)

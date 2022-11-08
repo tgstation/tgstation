@@ -108,7 +108,7 @@
 /// Was cyborgized.
 /datum/memory/was_cyborged
 	story_value = STORY_VALUE_OKAY
-	memory_flags = MEMORY_FLAG_NOMOOD
+	memory_flags = MEMORY_FLAG_NOMOOD|MEMORY_SKIP_UNCONSCIOUS
 
 /datum/memory/was_cyborged/get_names()
 	return list("The borging of [protagonist_name].")
@@ -122,7 +122,7 @@
 /// Witnessed someone die nearby.
 /datum/memory/witnessed_death
 	story_value = STORY_VALUE_OKAY
-	memory_flags = MEMORY_CHECK_BLIND_AND_DEAF|MEMORY_FLAG_NOMOOD
+	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS|MEMORY_FLAG_NOMOOD
 
 /datum/memory/witnessed_death/get_names()
 	return list("The death of [protagonist_name].")
@@ -330,7 +330,7 @@
 /// Our pet died...
 /datum/memory/pet_died
 	story_value = STORY_VALUE_AMAZING
-	memory_flags = MEMORY_CHECK_BLIND_AND_DEAF
+	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
 
 /datum/memory/pet_died/get_names()
 	return list("The death of [deuteragonist_name].")
@@ -351,7 +351,7 @@
 /// The revolution was triumphant
 /datum/memory/revolutionary_victory
 	story_value = STORY_VALUE_LEGENDARY
-	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF
+	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
 
 /datum/memory/revolutionary_victory/get_names()
 	return list("The revolution of [station_name()] by [protagonist_name].")
@@ -373,7 +373,7 @@
 /// Watched someone receive a commendation medal
 /datum/memory/received_medal
 	story_value = STORY_VALUE_AMAZING
-	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF
+	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
 	var/medal_type
 	var/medal_text
 
@@ -462,7 +462,7 @@
 /// Saw someone get crushed by a vending machine.
 /datum/memory/witness_vendor_crush
 	story_value = STORY_VALUE_AMAZING
-	memory_flags = MEMORY_CHECK_BLINDNESS
+	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_SKIP_UNCONSCIOUS
 
 /datum/memory/witness_vendor_crush/get_names()
 	return list("[protagonist_name] being crushed by a [antagonist_name].")

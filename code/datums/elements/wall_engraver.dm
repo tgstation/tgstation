@@ -54,16 +54,13 @@
 	user.balloon_alert(user, "wall engraved")
 	user.do_attack_animation(wall)
 
-	var/do_persistent_save = TRUE
-	if(memory_to_engrave.memory_flags & MEMORY_FLAG_NOPERSISTENCE)
-		do_persistent_save = FALSE
-
+	var/do_persistent_save = !(memory_to_engrave.memory_flags & MEMORY_FLAG_NOPERSISTENCE)
 	var/engraved_story = memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED)
 
 	if(!engraved_story)
 		CRASH("Tried to submit a memory with an invalid story [memory_to_engrave]")
 
-	wall.AddComponent(/datum/component/engraved, memory_to_engrave.generate_story(STORY_ENGRAVING, STORY_FLAG_DATED), persistent_save = do_persistent_save, story_value = memory_to_engrave.story_value)
+	wall.AddComponent(/datum/component/engraved, engraved_story, persistent_save = do_persistent_save, story_value = memory_to_engrave.story_value)
 	memory_to_engrave.memory_flags |= MEMORY_FLAG_ALREADY_USED
 	//while someone just engraved a story "worth engraving" we should add this to SSpersistence for a possible prison tattoo
 

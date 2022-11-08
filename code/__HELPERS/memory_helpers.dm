@@ -25,7 +25,7 @@
 
 	if(current)
 		var/new_memory_flags = initial(memory_type.memory_flags)
-		if(new_memory_flags & MEMORY_CHECK_UNCONSCIOUS && current.stat >= UNCONSCIOUS)
+		if(!(new_memory_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
 			return
 		if(new_memory_flags & MEMORY_CHECK_BLINDNESS && current.is_blind())
 			return
@@ -49,7 +49,7 @@
 
 	for(var/key in memories)
 		var/datum/memory/memory_iter = memories[key]
-		if(memory_iter.memory_flags & MEMORY_FLAG_ALREADY_USED) //Can't use memories multiple times
+		if(memory_iter.memory_flags & (MEMORY_FLAG_ALREADY_USED|MEMORY_NO_STORY)) //Can't use memories multiple times
 			continue
 		choice_list[memory_iter.name] = memory_iter
 

@@ -187,7 +187,7 @@
 		if(battlecruiser_team.nuke)
 			var/obj/machinery/nuclearbomb/nuke = battlecruiser_team.nuke
 			antag_memory += "<B>[nuke] Code</B>: [nuke.r_code]<br>"
-			owner.add_memory(/datum/memory/nuke_code, nuclear_code = nuke.r_code)
+			owner.add_memory(/datum/memory/key/nuke_code, nuclear_code = nuke.r_code)
 			to_chat(owner, "The nuclear authorization code is: <B>[nuke.r_code]</B>")
 	return ..()
 
