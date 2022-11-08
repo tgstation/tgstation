@@ -1,4 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes:
-  - bugfix: "Fixed a few balloon alerts for guns and moved a few more chat messages to balloon alerts"

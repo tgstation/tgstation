@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Unremovable organs that are forcemoved out of a mob with an owner no longer self terminate"
