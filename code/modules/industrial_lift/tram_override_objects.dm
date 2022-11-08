@@ -27,6 +27,8 @@
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
+	name = "tram door"
+	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 
 /obj/machinery/door/window/left/tram/proc/find_tram()
 	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
@@ -37,6 +39,8 @@
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	var/associated_lift = MAIN_STATION_TRAM
 	var/datum/weakref/tram_ref
+	name = "tram door"
+	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 
 /obj/machinery/door/window/right/tram/proc/find_tram()
 	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
