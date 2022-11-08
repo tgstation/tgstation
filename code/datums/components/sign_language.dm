@@ -217,14 +217,14 @@
 	SIGNAL_HANDLER
 
 	if(check_signables_state() == SIGN_ONE_HAND)
-		message_args[MOVABLE_TREAT_MESSAGE_MESSAGE] = stars(message_args[MOVABLE_TREAT_MESSAGE_MESSAGE])
+		message_args[TREAT_MESSAGE_MESSAGE] = stars(message_args[TREAT_MESSAGE_MESSAGE])
 
 /// Signal proc for [COMSIG_MOVABLE_SAY_QUOTE]
 /// Removes exclamation/question marks.
 /datum/component/sign_language/proc/on_say_quote(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
-	message_args[TREAT_MESSAGE_MESSAGE] = sanitize_message(message_args[TREAT_MESSAGE_MESSAGE])
+	message_args[MOVABLE_TREAT_MESSAGE_MESSAGE] = sanitize_message(message_args[MOVABLE_TREAT_MESSAGE_MESSAGE])
 
 /// Signal proc for [COMSIG_MOVABLE_TREAT_MESSAGE]
 /// Removes exclamation/question marks if /atom/movable/proc/say_quote() isn't going to run.
