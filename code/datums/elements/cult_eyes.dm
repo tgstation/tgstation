@@ -4,7 +4,6 @@
  * Applies and removes the glowing cult eyes
  */
 /datum/element/cult_eyes
-	element_flags = ELEMENT_DETACH
 
 /datum/element/cult_eyes/Attach(datum/target, initial_delay = 20 SECONDS)
 	. = ..()

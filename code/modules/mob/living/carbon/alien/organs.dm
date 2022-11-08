@@ -326,6 +326,7 @@
 	shake_camera(user, 1 SECONDS, 3)
 	if(owner)
 		shake_camera(owner, 2, 5)
+		owner.investigate_log("has been gibbed by something inside [owner.p_their()] stomach.", INVESTIGATE_DEATHS)
 		owner.gib()
 	qdel(src)
 

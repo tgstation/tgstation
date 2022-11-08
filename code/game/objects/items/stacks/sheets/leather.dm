@@ -287,6 +287,12 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step two - washing..... it's actually in washing machine code.
 
 //Step three - drying
+/obj/item/stack/sheet/wethide
+
+/obj/item/stack/sheet/wethide/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/microwavable, /obj/item/stack/sheet/leather)
+
 /obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > drying_threshold_temperature)
 
@@ -296,11 +302,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		new /obj/item/stack/sheet/leather(drop_location(), 1)
 		wetness = initial(wetness)
 		use(1)
-
-/obj/item/stack/sheet/wethide/microwave_act(obj/machinery/microwave/MW)
-	..()
-	new /obj/item/stack/sheet/leather(drop_location(), amount)
-	qdel(src)
 
 /obj/item/stack/sheet/animalhide/carp
 	name = "carp scales"

@@ -98,7 +98,7 @@
 				<b>Integrity:</b> [round((chassis.get_integrity()/chassis.max_integrity * 100), 0.01)]%<br>
 				<b>Cell Charge:</b> [isnull(cell_charge) ? "Not Found":"[chassis.cell.percent()]%"]<br>
 				<b>Airtank:</b> [chassis.internal_tank ? "[round(chassis.return_pressure(), 0.01)]" : "Not Equipped"] kPa<br>
-				<b>Pilot:</b> [chassis.return_drivers() || "None"]<br>
+				<b>Pilot:</b> [english_list(chassis.return_drivers(), nothing_text = "None")]<br>
 				<b>Location:</b> [get_area_name(chassis, TRUE) || "Unknown"]"}
 	if(istype(chassis, /obj/vehicle/sealed/mecha/working/ripley))
 		var/obj/vehicle/sealed/mecha/working/ripley/RM = chassis

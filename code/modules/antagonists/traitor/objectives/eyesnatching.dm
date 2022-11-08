@@ -7,7 +7,7 @@
 	weight = OBJECTIVE_WEIGHT_TINY
 
 /datum/traitor_objective/eyesnatching
-	name = "Steal %TARGET%'s (%JOB TITLE%) eyes"
+	name = "Steal the eyes of %TARGET% the %JOB TITLE%"
 	description = "%TARGET% messed with the wrong people. Steal their eyes to teach them a lesson. You will be provided an experimental eyesnatcher device to aid you in your mission."
 
 	progression_minimum = 10 MINUTES
@@ -131,7 +131,7 @@
 			spawned_eyesnatcher = TRUE
 			var/obj/item/eyesnatcher/eyesnatcher = new(user.drop_location())
 			user.put_in_hands(eyesnatcher)
-			eyesnatcher.balloon_alert(user, "the eyesnatcher materializes in your hand")
+			eyesnatcher.balloon_alert(user, "the snatcher materializes in your hand")
 
 /obj/item/eyesnatcher
 	name = "portable eyeball extractor"
@@ -146,6 +146,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
+	///Whether it's been used to steal a pair of eyes already.
 	var/used = FALSE
 
 /obj/item/eyesnatcher/update_icon_state()
@@ -159,23 +160,18 @@
 	var/obj/item/organ/internal/eyes/eyeballies = victim.getorganslot(ORGAN_SLOT_EYES)
 	var/obj/item/bodypart/head/head = victim.get_bodypart(BODY_ZONE_HEAD)
 
-	if(!eyeballies || victim.is_eyes_covered())
-		return ..()
-
-	if((head && head.eyes != eyeballies) || eyeballies.zone != BODY_ZONE_PRECISE_EYES)
-		to_chat(user, span_warning("You don't know how to apply [src] to the abomination that [victim] is!"))
-		return ..()
-
-	if(!head || !istype(head))
+	if(!head || !eyeballies || victim.is_eyes_covered())
 		return ..()
 
 	user.do_attack_animation(victim, used_item = src)
-	victim.visible_message(span_warning("[user] presses [src] against [victim]'s skull!"), span_userdanger("[user] presses [src] against your skull!"))
+	victim.visible_message(
+		span_warning("[user] presses [src] against [victim]'s skull!"),
+		span_userdanger("[user] presses [src] against your skull!"))
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
 		return
 
-	to_chat(victim, span_userdanger("You feel [src] pushing at your skull!"))
-	to_chat(user, span_notice("You apply more pressure to [src]."))
+	to_chat(victim, span_userdanger("You feel something forcing its way into your skull!"))
+	balloon_alert(user, "applying pressure...")
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
 		return
 
@@ -190,38 +186,41 @@
 	eyeballies.applyOrganDamage(eyeballies.maxHealth)
 	victim.emote("scream")
 	playsound(victim, "sound/effects/wounds/crackandbleed.ogg", 100)
-	log_combat(user, victim, "pierced skull of", src)
+	log_combat(user, victim, "cracked the skull of (eye snatching)", src)
 
 	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
 		return
 
 	if(!HAS_TRAIT(victim, TRAIT_BLIND))
 		to_chat(victim, span_userdanger("You suddenly go blind!"))
+	if(prob(1))
+		to_chat(victim, span_notice("At least you got a new pirate-y look out of it..."))
+		var/obj/item/clothing/glasses/eyepatch/new_patch = new(victim.loc)
+		victim.equip_to_slot_if_possible(new_patch, ITEM_SLOT_EYES, disable_warning = TRUE)
 
-	to_chat(user, span_notice("You successfully extract [victim]'s eyeballs using [src]."))
-	victim.emote("scream")
+	to_chat(user, span_notice("You successfully extract [victim]'s eyeballs."))
 	playsound(victim, 'sound/surgery/retractor2.ogg', 100, TRUE)
 	playsound(victim, 'sound/effects/pop.ogg', 100, TRAIT_MUTE)
 	eyeballies.Remove(victim)
 	eyeballies.forceMove(get_turf(victim))
+	victim.emote("scream")
+	if(prob(20))
+		victim.emote("cry")
 	used = TRUE
 	desc += " It has been used up."
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/item/eyesnatcher/proc/eyeballs_exist(obj/item/organ/internal/eyes/eyeballies, obj/item/bodypart/head/head, mob/living/carbon/human/victim)
 	if(!eyeballies || QDELETED(eyeballies))
 		return FALSE
-
 	if(!head || QDELETED(head))
-		return FALSE
-
-	if(!victim || QDELETED(victim))
 		return FALSE
 
 	if(eyeballies.owner != victim)
 		return FALSE
-
-	if(head.owner != victim || head.eyes != eyeballies)
+	var/obj/item/organ/internal/eyes/eyes = victim.getorganslot(ORGAN_SLOT_EYES)
+	//got different eyes or doesn't own the head... somehow
+	if(head.owner != victim || eyes != eyeballies)
 		return FALSE
 
 	return TRUE

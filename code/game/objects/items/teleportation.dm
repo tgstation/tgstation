@@ -295,7 +295,7 @@
 			return DESTINATION_PORTAL
 	return FALSE
 
-/obj/item/hand_tele/suicide_act(mob/user)
+/obj/item/hand_tele/suicide_act(mob/living/user)
 	if(iscarbon(user))
 		user.visible_message(span_suicide("[user] is creating a weak portal and sticking [user.p_their()] head through! It looks like [user.p_theyre()] trying to commit suicide!"))
 		var/mob/living/carbon/itemUser = user
@@ -307,7 +307,7 @@
 			itemUser.visible_message(span_suicide("The portal snaps closed taking [user]'s head with it!"))
 		else
 			itemUser.visible_message(span_suicide("[user] looks even further depressed as they realize they do not have a head...and suddenly dies of shame!"))
-		return (BRUTELOSS)
+		return BRUTELOSS
 
 /obj/item/syndicate_teleporter
 	name = "experimental teleporter"
@@ -475,6 +475,7 @@
 		to_chat(victim, span_userdanger("You teleport into [destination]."))
 	destination.ex_act(EXPLODE_HEAVY)
 	victim.unequip_everything()
+	victim.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 	victim.gib()
 
 ///Damage and stun all mobs in fragging_location turf, called after a teleport

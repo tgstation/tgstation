@@ -139,6 +139,14 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	/// Defaults to false so we can process this stuff nicely
 	var/load_immediately = FALSE
 
+/datum/asset/spritesheet/proc/should_load_immediately()
+#ifdef DO_NOT_DEFER_ASSETS
+	return TRUE
+#else
+	return load_immediately
+#endif
+
+
 /datum/asset/spritesheet/should_refresh()
 	if (..())
 		return TRUE
@@ -167,10 +175,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		load_immediately = TRUE
 
 	create_spritesheets()
-	if(load_immediately)
+	if(should_load_immediately())
 		realize_spritesheets(yield = FALSE)
 	else
-		SSasset_loading.generate_queue += src
+		SSasset_loading.queue_asset(src)
 
 /datum/asset/spritesheet/proc/realize_spritesheets(yield)
 	if(fully_generated)
@@ -197,7 +205,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		write_to_cache()
 	fully_generated = TRUE
 	// If we were ever in there, remove ourselves
-	SSasset_loading.generate_queue -= src
+	SSasset_loading.dequeue_asset(src)
 
 /datum/asset/spritesheet/queued_generation()
 	realize_spritesheets(yield = TRUE)
@@ -328,7 +336,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	CRASH("create_spritesheets() not implemented for [type]!")
 
 /datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
-	if(load_immediately)
+	if(should_load_immediately())
 		queuedInsert(sprite_name, I, icon_state, dir, frame, moving)
 	else
 		to_generate += list(args.Copy())

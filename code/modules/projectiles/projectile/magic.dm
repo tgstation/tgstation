@@ -44,6 +44,7 @@
 			else if(victim.stat != DEAD)
 				to_chat(victim, span_notice("You feel great!"))
 			return
+		victim.investigate_log("has been killed by a bolt of death.", INVESTIGATE_DEATHS)
 		victim.death()
 
 	if(istype(target, /obj/machinery/hydroponics))
@@ -67,6 +68,7 @@
 		var/mob/living/victim = target
 
 		if(victim.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			victim.investigate_log("has been killed by a bolt of life.", INVESTIGATE_DEATHS)
 			victim.death()
 			return
 

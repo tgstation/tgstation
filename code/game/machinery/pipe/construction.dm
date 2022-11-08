@@ -286,11 +286,11 @@ Buildable meters
 	..()
 	T.flipped = flipped
 
-/obj/item/pipe/suicide_act(mob/user)
+/obj/item/pipe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] shoves [src] in [user.p_their()] mouth and turns it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		for(var/i=1 to 20)
+		for(var/i in 1 to 20)
 			C.vomit(0, TRUE, FALSE, 4, FALSE)
 			if(prob(20))
 				C.spew_organ()
