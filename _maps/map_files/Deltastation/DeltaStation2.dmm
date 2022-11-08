@@ -72676,7 +72676,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "rLO" = (
-/obj/structure/janitorialcart,
+/obj/structure/mopbucket/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/radio/intercom/directional/east,

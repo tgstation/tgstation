@@ -29,7 +29,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "ai" = (
-/obj/structure/janitorialcart,
+/obj/structure/mopbucket/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/cup/bucket,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
