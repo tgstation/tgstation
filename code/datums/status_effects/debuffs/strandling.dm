@@ -6,7 +6,7 @@
 	id = "strandling"
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/strandling
-	/// How long it takes to remove the status effect via try_remove_effect()
+	/// How long it takes to remove the status effect via [proc/try_remove_effect]
 	var/time_to_remove = 3.5 SECONDS
 
 /datum/status_effect/strandling/on_apply()

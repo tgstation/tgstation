@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
 /**
- * Create an atmos zone (Think ZAS), similiar to [proc/detect_room] but it ignores walls and turfs which are non-[atmos_can_pass])
+ * Create an atmos zone (Think ZAS), similiar to [proc/detect_room] but it ignores walls and turfs which are non-[atmos_can_pass]
  *
  * Arguments
  * source - the turf which to find all connected atmos turfs

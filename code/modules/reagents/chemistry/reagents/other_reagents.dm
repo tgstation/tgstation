@@ -1432,7 +1432,7 @@
 	..()
 
 /////////////////////////Colorful Powder////////////////////////////
-//For colouring in mix_color_from_reagents()
+//For colouring in /proc/mix_color_from_reagents
 
 /datum/reagent/colorful_reagent/powder
 	name = "Mundane Powder" //the name's a bit similar to the name of colorful reagent, but hey, they're practically the same chem anyway
