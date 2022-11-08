@@ -1,7 +1,3 @@
-#define INFINITE_PIZZA_CHANCE 1
-#define PIZZA_BOMB_CHANCE 3
-#define PIZZA_DUD_CHANCE 33
-
 /datum/supply_pack/organic
 	group = "Food & Hydroponics"
 	crate_type = /obj/structure/closet/crate/freezer
@@ -164,8 +160,15 @@
 
 	///Whether we've provided an infinite pizza box already this shift or not.
 	var/anomalous_box_provided = FALSE
+	/// one percent chance for a pizza box to be the ininfite pizza box
+	var/infinite_pizza_chance = 1
 	///Whether we've provided a bomb pizza box already this shift or not.
 	var/boombox_provided = FALSE
+	/// three percent chance for a pizza box to be the pizza bomb
+	var/bomb_pizza_chance = 3
+	/// 1 in 3 pizza bombs spawned will be a dud
+	var/bomb_dud_chance = 33
+
 	/// weighted list of pizza by how disruptive it would be
 	var/list/pizza_types = list(
 		/obj/item/food/pizza/margherita = 10,
@@ -194,7 +197,7 @@
 /datum/supply_pack/organic/pizza/proc/add_anomalous(obj/structure/closet/crate/new_crate)
 	if(anomalous_box_provided)
 		return FALSE
-	if(!prob(INFINITE_PIZZA_CHANCE))
+	if(!prob(infinite_pizza_chance))
 		return FALSE
 	new /obj/item/pizzabox/infinite(new_crate)
 	anomalous_box_provided = TRUE
@@ -206,23 +209,18 @@
 		message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
 	return TRUE
 
-#undef INFINITE_PIZZA_CHANCE
-
 /// adds a chance of a pizza bomb replacing a pizza
 /datum/supply_pack/organic/pizza/proc/add_boombox(obj/structure/closet/crate/new_crate)
 	if(boombox_provided)
 		return FALSE
-	if(!prob(PIZZA_BOMB_CHANCE))
+	if(!prob(bomb_pizza_chance))
 		return FALSE
-	var/boombox_type = (prob(PIZZA_DUD_CHANCE)) ? /obj/item/pizzabox/bomb : /obj/item/pizzabox/bomb/armed
+	var/boombox_type = (prob(bomb_dud_chance)) ? /obj/item/pizzabox/bomb : /obj/item/pizzabox/bomb/armed
 	new boombox_type(new_crate)
 	boombox_provided = TRUE
 	log_game("A pizza box bomb was created by a pizza crate delivery.")
 	message_admins("A pizza box bomb has arrived in a pizza crate delivery.")
 	return TRUE
-
-#undef PIZZA_BOMB_CHANCE
-#undef PIZZA_DUD_CHANCE
 
 /// adds a randomized pizza from the pizza list
 /datum/supply_pack/organic/pizza/proc/add_normal_pizza(obj/structure/closet/crate/new_crate, list/rng_pizza_list)
