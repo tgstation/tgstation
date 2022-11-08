@@ -1,0 +1,1 @@
+/obj/machinery/computer/atmos_control/noreconnect : /obj/machinery/computer/atmos_control{@OLD}

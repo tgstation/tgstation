@@ -16,8 +16,6 @@
 
 	/// Whether we can actually adjust the chambers or not.
 	var/control = TRUE
-	/// Whether we are allowed to reconnect.
-	var/reconnecting = TRUE
 
 #ifdef MBTODO
 /obj/machinery/computer/atmos_control/Initialize(mapload)
@@ -113,9 +111,6 @@
 	return TRUE
 #endif
 
-/obj/machinery/computer/atmos_control/proc/reconnect(mob/user)
-	// MBTODO: Reconnect
-
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -128,7 +123,6 @@
 	data["maxInput"] = MAX_TRANSFER_RATE
 	data["maxOutput"] = MAX_OUTPUT_PRESSURE
 	data["control"] = control
-	data["reconnecting"] = reconnecting
 	data += return_atmos_handbooks()
 	return data
 
@@ -164,7 +158,7 @@
 
 /obj/machinery/computer/atmos_control/ui_act(action, params)
 	. = ..()
-	if(. || !(control || reconnecting))
+	if(. || !control)
 		return
 
 	var/chamber = params["chamber"]
@@ -202,12 +196,7 @@
 	control = FALSE
 	circuit = /obj/item/circuitboard/computer/atmos_control/nocontrol
 
-/obj/machinery/computer/atmos_control/noreconnect
-	reconnecting = FALSE
-	circuit = /obj/item/circuitboard/computer/atmos_control/noreconnect
-
 /// Vegetable
 /obj/machinery/computer/atmos_control/fixed
 	control = FALSE
-	reconnecting = FALSE
 	circuit = /obj/item/circuitboard/computer/atmos_control/fixed

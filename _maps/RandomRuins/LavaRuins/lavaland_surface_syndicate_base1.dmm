@@ -2526,7 +2526,7 @@
 "pm" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/atmos_control/noreconnect{
+/obj/machinery/computer/atmos_control{
 	dir = 1;
 	atmos_chambers = list("lavalandsyndieo2"="Oxygen Supply","lavalandsyndien2"="Nitrogen Supply","lavalandsyndieco2"="Carbon Dioxide Supply","lavalandsyndieplasma"="Plasma Supply")
 	},
