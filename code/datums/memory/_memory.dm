@@ -23,40 +23,42 @@
 	// (And call parent at the end of your override, not the beginning).
 
 	/// The main character of the memory.
-	var/protagonist
+	var/protagonist_name
 	/// The side character of the memory.
-	var/deuteragonist
+	var/deuteragonist_name
 	/// The main villain of the memory.
-	var/antagonist
+	var/antagonist_name
 	/// Where this memory took place.
 	var/where
 
 /datum/memory/New(
 	datum/mind/memorizer_mind,
-	memorizer,
-	// You should always pass a protagonist, usually it's the memorizer's mob.
-	atom/protagonist_actual,
-	// Optional
-	atom/deuteragonist_actual,
-	// Optional
-	atom/antagonist_actual,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	...
 )
-	src.memorizer_mind = memorizer_mind
-	src.memorizer = memorizer
-	src.protagonist = protagonist_actual.name
-	src.deuteragonist = deuteragonist_actual?.name
-	src.antagonist = antagonist_actual.name
-	src.where = get_are_name(protagonist_actual)
+	if(isnull(protagonist))
+		protagonist = memorizer_mind.current
 
-	var/story_mood = MOODLESS_MEMORY
-	if(isliving(protagonist_actual))
-		var/mob/living/the_main_character = protagonist_actual
-		story_mood = the_main_character.mob_mood?.mood_level || MOODLESS_MEMORY
-	else if(isliving(memorizer_mind.current))
-		story_mood = memorizer_mind.current.mob_mood?.mood_level || MOODLESS_MEMORY
+	src.memorizer_mind = memorizer_mind
+	src.memorizer = build_story_mob(memorizer_mind)
+	src.protagonist_name = build_story_mob(protagonist)
+	src.deuteragonist_name = build_story_mob(deuteragonist)
+	src.antagonist_name = build_story_mob(antagonist)
+
+	if(!(memory_flags & MEMORY_FLAG_NOLOCATION))
+		src.where = get_area_name(protagonist)
+
+	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
+		var/story_mood = MOODLESS_MEMORY
+		if(isliving(protagonist))
+			var/mob/living/the_main_character = protagonist
+			story_mood = the_main_character.mob_mood?.mood_level || MOODLESS_MEMORY
+
+		select_mood_verb(story_mood)
 
 	generate_memory_name()
-	select_mood_verb(story_mood)
 
 /datum/memory/proc/generate_memory_name()
 	var/potential_names = get_names()
@@ -191,10 +193,9 @@
 			styles += strings(MEMORY_FILE, story_type + "_styles")
 
 	// These are picked from the datum
-	var/list/wheres = get_locations()
+	var/list/wheres = (memory_flags & MEMORY_FLAG_NOLOCATION) ? null : get_locations()
 	var/list/story_starts = get_starts()
-	var/list/story_mood_sentences = get_moods()
-
+	var/list/story_mood_sentences = (memory_flags & MEMORY_FLAG_NOMOOD) ? null : get_moods()
 	var/mob/living/crew_member
 	var/atom/something = pick(something_pool) //Pick a something for the potential something line
 
@@ -221,10 +222,10 @@
 	//The story start for this specific action. (E.g. The Chef carving into The Clown)
 	story_pieces += pick(story_starts)
 	//The location it happend, which isn't always included, but commonly is. (E.g. in Space, while in the Bar)
-	if(legnth(wheres))
+	if(length(wheres))
 		story_pieces += pick(wheres)
 	//Shows how the protagonist felt about it all (E.g. The Chef is looking sad as they tear into The Clown.)
-	if(legnth(story_mood_sentences))
+	if(length(story_mood_sentences))
 		story_pieces += pick(story_mood_sentences)
 	//A nonsensical addition, using the memorizer, protagonist or even random crew / things (E.g. in the meantime, the Clown is being arrested, clutching a skub.")
 	if(prob(75))
@@ -236,7 +237,7 @@
 
 		story_pieces += chosen_addition
 	//Explains any unique styling the art has. e.g. (The engraving has a cubist style.)
-	if(legnth(styles) && prob(75))
+	if(length(styles) && prob(75))
 		story_pieces += pick(styles)
 
 	var/parsed_story = ""
@@ -265,19 +266,28 @@
 
 	return parsed_story
 
-///returns the story name of a mob
-/datum/memory/proc/build_story_mob(mob/living/target)
-	if(isanimal_or_basicmob(target))
-		return "\the [target]"
-	if(isliving(target) && target.mind?.assigned_role)
-		return  "\the [lowertext(initial(target.mind?.assigned_role.title))]"
-	return target
+/**
+ * When passed a story character, returns the name of the character in a story.
+ *
+ * If character is a string, it will just return it back.
+ *
+ * Otherwise, it will try to generate a title based on the mob's assigned role.
+ *
+ * If the character has no mind or no assigned role, it'll just return their name,
+ */
+/datum/memory/proc/build_story_mob(character)
+	if(isnull(character))
+		return
+	if(istext(character))
+		return character
 
-///returns the story name of anything
-/datum/memory/proc/build_story_detail(detail)
-	if(!isatom(detail))
-		return detail //Its either text or deserves to runtime.
-	var/atom/target = detail
-	if(isliving(target))
-		return build_story_mob(target)
-	return lowertext(initial(target.name))
+	if(ishuman(character))
+		var/mob/living/carbon/human/human_character = character
+		if(human_character.mind && !is_unassigned_job(human_character.mind.assigned_role))
+			character = human_character.mind
+
+	if(istype(character, /datum/mind))
+		var/datum/mind/character_mind = character
+		return "\the [lowertext(initial(character_mind.assigned_role.title))]"
+
+	return "\the [character]"

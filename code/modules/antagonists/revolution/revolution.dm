@@ -421,11 +421,11 @@
 		if (rev_mind.has_antag_datum(/datum/antagonist/rev))
 			var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
 			rev_antag.remove_revolutionary(FALSE, . == STATION_VICTORY ? DECONVERTER_STATION_WIN : DECONVERTER_REVS_WIN)
-			if(!(rev_mind in ex_headrevs))
-				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
-			else
+			if(rev_mind in ex_headrevs)
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
-				add_memory_in_range(rev_mind.current, 7, MEMORY_WON_REVOLUTION, list(DETAIL_PROTAGONIST = rev_mind.current, DETAIL_STATION_NAME = station_name()), story_value = STORY_VALUE_LEGENDARY, memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF, protagonist_memory_flags = MEMORY_FLAG_NOSTATIONNAME)
+				add_memory_in_range(rev_mind.current, 7, /datum/memory/revolutionary_victory, protagonist = rev_mind.current)
+			else
+				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods

@@ -40,9 +40,10 @@
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_verygood)
 		if (DRINK_FANTASTIC)
 			exposed_mob.add_mood_event("quality_drink", /datum/mood_event/quality_fantastic)
-			exposed_mob.mind?.add_memory(MEMORY_DRINK, list(DETAIL_DRINK = src), story_value = STORY_VALUE_OKAY)
+			exposed_mob.add_mob_memory(/datum/memory/good_drink, drink = src)
 		if (FOOD_AMAZING)
 			exposed_mob.add_mood_event("quality_food", /datum/mood_event/amazingtaste)
+			exposed_mob.add_mob_memory(/datum/memory/good_food, drink = src)
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"

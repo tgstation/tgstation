@@ -1,14 +1,13 @@
 
-///Adds a memory to people that can see this happening, only use this for impactful or rare events to reduce overhead.
-/proc/add_memory_in_range(atom/source, range, memory_type, extra_info, story_value, memory_flags, protagonist_memory_flags)
-	var/list/memorizers = hearers(range, source)
-	if(!isnull(protagonist_memory_flags))
-		var/mob/living/carbon/protagonist = extra_info[DETAIL_PROTAGONIST]
-		if(istype(protagonist))
-			memorizers -= protagonist
-			protagonist.mind?.add_memory(memory_type, extra_info, story_value, protagonist_memory_flags)
-	for(var/mob/living/carbon/memorizer in memorizers)
-		memorizer.mind?.add_memory(memory_type, extra_info, story_value, memory_flags)
+#define add_memory_in_range(source, range, arguments...) _add_memory_in_range(source, range, list(##arguments))
+
+/proc/_add_memory_in_range(atom/source, range = 7, list/memory_args)
+	var/list/witnessing = hearers(range, source) - source
+	for(var/mob/living/carbon/memorizer in witnessing)
+		memorizer.mind?._add_memory(memory_args)
+
+#define add_mob_memory(arguments...) mind?._add_memory(list(##arguments))
+#define add_memory(arguments...) _add_memory(list(##arguments))
 
 /**
  * add_memory
@@ -21,22 +20,27 @@
  * * memory_flags: special specifications for skipping parts of the memory like moods for stories where showing moods doesn't make sense
  * Returns the datum memory created, null otherwise.
  */
-/datum/mind/proc/add_memory(memory_type, ...)
+/datum/mind/proc/_add_memory(list/memory_args)
+	var/datum/memory/memory_type = memory_args[1]
+
 	if(current)
-		if(!(memory_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
+		var/new_memory_flags = initial(memory_type.memory_flags)
+		if(new_memory_flags & MEMORY_CHECK_UNCONSCIOUS && current.stat >= UNCONSCIOUS)
 			return
-		if(memory_flags & MEMORY_CHECK_BLINDNESS && current.is_blind())
+		if(new_memory_flags & MEMORY_CHECK_BLINDNESS && current.is_blind())
 			return
-		if(memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF))
+		if(new_memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF))
 			return
 
 	var/datum/memory/replaced_memory = memories[memory_type]
 	if(replaced_memory)
 		qdel(replaced_memory)
 
-	var/list/memory_args = args.Copy(2)
-	memories[memory_type] = new memory_type(arglist(memory_args))
-	return memories[memory_type]
+	memory_args[1] = src
+	var/datum/memory/created_memory = new memory_type(arglist(memory_args))
+
+	memories[memory_type] = created_memory
+	return created_memory
 
 ///sane proc for giving a mob with a mind the option to select one of their memories, returns the memory selected (null otherwise)
 /datum/mind/proc/select_memory(verbage)

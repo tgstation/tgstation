@@ -329,22 +329,23 @@
 		if(istype(slap_check))
 			slappers_giver++
 
-	if(slappers_giver >= 2) // we only check this if it's already established the taker has 2+ hands free
+	var/high_ten = (slappers_giver >= 2)
+
+	if(high_ten) // we only check this if it's already established the taker has 2+ hands free
 		offerer.visible_message(span_notice("[taker] enthusiastically high-tens [offerer]!"), span_nicegreen("Wow! You're high-tenned [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
 		to_chat(taker, span_nicegreen("You give high-tenning [offerer] your all!"))
 		playsound(offerer, 'sound/weapons/slap.ogg', 100, TRUE, 1)
-		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high ten"), story_value = STORY_VALUE_OKAY)
 		offerer.add_mood_event("high_five", /datum/mood_event/high_ten)
 		taker.add_mood_event("high_five", /datum/mood_event/high_ten)
 	else
 		offerer.visible_message(span_notice("[taker] high-fives [offerer]!"), span_nicegreen("All right! You're high-fived by [taker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), ignored_mobs=taker)
 		to_chat(taker, span_nicegreen("You high-five [offerer]!"))
 		playsound(offerer, 'sound/weapons/slap.ogg', 50, TRUE, -1)
-		offerer.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = taker, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
-		taker.mind.add_memory(MEMORY_HIGH_FIVE, list(DETAIL_DEUTERAGONIST = offerer, DETAIL_HIGHFIVE_TYPE = "high five"), story_value = STORY_VALUE_OKAY)
 		offerer.add_mood_event("high_five", /datum/mood_event/high_five)
 		taker.add_mood_event("high_five", /datum/mood_event/high_five)
+
+	offerer.add_mob_memory(/datum/memory/high_five, deuteragonist = taker, high_five_type = "high [high_ten ? "ten" : "five"]")
+	taker.add_mob_memory(/datum/memory/high_five, deuteragonist = offerer, high_five_type = "high [high_ten ? "ten" : "five"]")
 	qdel(src)
 
 /obj/item/hand_item/stealer
@@ -481,11 +482,11 @@
 	if(!suppressed)  // direct
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 
-	living_target.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY)
+	living_target.add_mob_memory(/datum/memory/kissed, deuteragonist = firer)
 	living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
 	if(isliving(firer))
 		var/mob/living/kisser = firer
-		kisser.mind?.add_memory(MEMORY_KISS, list(DETAIL_PROTAGONIST = living_target, DETAIL_KISSER = firer), story_value = STORY_VALUE_OKAY, memory_flags = MEMORY_CHECK_BLINDNESS)
+		kisser.add_mob_memory(/datum/memory/kissed, protagonist = living_target, deuteragonist = firer)
 	try_fluster(living_target)
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)
