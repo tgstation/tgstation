@@ -1,8 +1,4 @@
-/////////////////////////////////////////////////////////////
-// GENERAL AIR CONTROL (a.k.a atmos computer)
-/////////////////////////////////////////////////////////////
-GLOBAL_LIST_EMPTY(atmos_air_controllers)
-
+/// GENERAL AIR CONTROL (a.k.a atmos computer)
 /obj/machinery/computer/atmos_control
 	name = "atmospherics monitoring"
 	desc = "Used to monitor the station's atmospherics sensors."
@@ -18,17 +14,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	/// Assoc of list[chamber_id] = readable_chamber_name
 	var/list/atmos_chambers
 
-	// The list where received signals about devices are written into.
-	// Assoc of list[atmos_chambers_string]
-	var/list/sensor_info
-	var/list/input_info
-	var/list/output_info
-
 	/// Whether we can actually adjust the chambers or not.
 	var/control = TRUE
 	/// Whether we are allowed to reconnect.
 	var/reconnecting = TRUE
 
+#ifdef MBTODO
 /obj/machinery/computer/atmos_control/Initialize(mapload)
 	. = ..()
 
@@ -120,6 +111,10 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	radio_connection.post_signal(src, update_request, filter = RADIO_ATMOSIA)
 
 	return TRUE
+#endif
+
+/obj/machinery/computer/atmos_control/proc/reconnect(mob/user)
+	// MBTODO: Reconnect
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -145,16 +140,25 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		var/list/chamber_info = list()
 		chamber_info["id"] = chamber_id
 		chamber_info["name"] = atmos_chambers[chamber_id]
-		if(sensor_info[chamber_id])
-			chamber_info["gasmix"] = sensor_info[chamber_id]["gasmix"]
-		if(input_info[chamber_id])
-			chamber_info["input_info"] = list()
-			chamber_info["input_info"]["active"] = input_info[chamber_id]["power"]
-			chamber_info["input_info"]["amount"] = input_info[chamber_id]["volume_rate"]
-		if(output_info[chamber_id])
-			chamber_info["output_info"] = list()
-			chamber_info["output_info"]["active"] = output_info[chamber_id]["power"]
-			chamber_info["output_info"]["amount"] = output_info[chamber_id]["internal"]
+
+		var/obj/machinery/sensor = GLOB.objects_by_id_tag["[chamber_id]_sensor"]
+		if (!isnull(sensor))
+			chamber_info["gasmix"] = gas_mixture_parser(sensor.return_air())
+
+		var/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/input = GLOB.objects_by_id_tag["[chamber_id]_in"]
+		if (!isnull(input))
+			chamber_info["input_info"] = list(
+				"active" = input.on,
+				"amount" = input.volume_rate,
+			)
+
+		var/obj/machinery/atmospherics/components/unary/vent_pump/output = GLOB.objects_by_id_tag["[chamber_id]_out"]
+		if (!isnull(output))
+			chamber_info["output_info"] = list(
+				"active" = output.on,
+				"amount" = output.internal_pressure_bound,
+			)
+
 		data["chambers"] += list(chamber_info)
 	return data
 
