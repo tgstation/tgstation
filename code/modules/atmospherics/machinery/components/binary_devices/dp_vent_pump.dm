@@ -150,15 +150,12 @@ GLOBAL_LIST_EMPTY_TYPED(vents_by_id, /obj/machinery/atmospherics/components/bina
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix
 	id = INCINERATOR_ORDMIX_DP_VENTPUMP
-	frequency = FREQ_AIRLOCK_CONTROL
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos
 	id = INCINERATOR_ATMOS_DP_VENTPUMP
-	frequency = FREQ_AIRLOCK_CONTROL
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava
 	id = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
-	frequency = FREQ_AIRLOCK_CONTROL
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer2
 	piping_layer = 2
