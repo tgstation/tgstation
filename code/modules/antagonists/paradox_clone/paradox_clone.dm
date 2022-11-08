@@ -89,7 +89,7 @@
 	var/list/report = list()
 
 	if(!owner)
-		CRASH("antagonist datum without owner")
+		CRASH("[type] antag datum found without an owner!")
 
 	//roundend report
 	report += "<b>[printplayer(owner)]</b>"
