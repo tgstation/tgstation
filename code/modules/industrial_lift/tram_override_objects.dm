@@ -26,37 +26,59 @@
 /obj/machinery/door/window/left/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	var/associated_lift = MAIN_STATION_TRAM
+	var/datum/weakref/tram_ref
+
+/obj/machinery/door/window/left/tram/proc/find_tram()
+	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+		if(lift.specific_lift_id == associated_lift)
+			tram_ref = WEAKREF(lift)
 
 /obj/machinery/door/window/right/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
 	var/associated_lift = MAIN_STATION_TRAM
+	var/datum/weakref/tram_ref
+
+/obj/machinery/door/window/right/tram/proc/find_tram()
+	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+		if(lift.specific_lift_id == associated_lift)
+			tram_ref = WEAKREF(lift)
 
 /obj/machinery/door/window/left/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
 	INVOKE_ASYNC(src, .proc/open)
+	find_tram()
 
 /obj/machinery/door/window/right/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
 	INVOKE_ASYNC(src, .proc/open)
+	find_tram()
 
 /obj/machinery/door/window/left/tram/open_and_close()
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!open())
 		return
+	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
+		say("Emergency exit activated!")
+		return PROCESS_KILL
 	autoclose = TRUE
 	sleep(1 SECONDS)
-	if(!density && autoclose) //did someone change state while we slept?
+	if(!density && autoclose) //check for changed state
 		close()
 
 /obj/machinery/door/window/right/tram/open_and_close()
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(!open())
 		return
+	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
+		say("Emergency exit activated!")
+		return PROCESS_KILL
 	autoclose = TRUE
 	sleep(1 SECONDS)
-	if(!density && autoclose) //did someone change state while we slept?
+	if(!density && autoclose) //check for changed state
 		close()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left/tram, 0)
