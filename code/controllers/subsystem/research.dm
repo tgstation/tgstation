@@ -84,17 +84,27 @@ SUBSYSTEM_DEF(research)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/research/fire()
+	var/efficiency=0
+
+	//since the game will ever have only 1 master server we just return if that is offline
+	for(var/obj/machinery/rnd/server/master/master_server in master_servers)
+		if(!master_server.working)
+			return
+
 	var/list/bitcoins = list()
 	for(var/obj/machinery/rnd/server/miner as anything in servers)
+		///should check if it was not manually disabled & is working
 		if(miner.working)
+			efficiency=miner.calculate_efficiency()
 			bitcoins = single_server_income.Copy()
 			break //Just need one to work.
 
-	if (!isnull(last_income))
+	if (!isnull(last_income) && efficiency>0)
 		var/income_time_difference = world.time - last_income
 		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
+
 		for(var/i in bitcoins)
-			bitcoins[i] *= (income_time_difference / 10) * income_modifier
+			bitcoins[i] *= (income_time_difference / 10) * income_modifier * efficiency
 		science_tech.add_point_list(bitcoins)
 
 	last_income = world.time

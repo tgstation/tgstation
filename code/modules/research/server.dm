@@ -30,6 +30,18 @@
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 	SSresearch.servers |= src
 
+///calculate efficiency of server based on scanning modules installed
+/obj/machinery/rnd/server/proc/calculate_efficiency()
+	var/rating = 0
+
+	///only one scanning module so rating will always be rating of that component
+	for(var/obj/item/stock_parts/scanning_module/scanning_module in component_parts)
+		///we do -1 because normal scanning modules of rating 1 do not contribute any points
+		rating += scanning_module.rating
+
+	//tier 4 module will give us 4 times the efficiency
+	return rating
+
 /obj/machinery/rnd/server/Destroy()
 	SSresearch.servers -= src
 	return ..()
@@ -99,13 +111,15 @@
 	desc = "Used to manage access to research and manufacturing databases."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
-	var/screen = 0
-	var/obj/machinery/rnd/server/temp_server
-	var/list/servers = list()
-	var/list/consoles = list()
 	req_access = list(ACCESS_RD)
-	var/badmin = 0
 	circuit = /obj/item/circuitboard/computer/rdservercontrol
+
+///we work only on the list of master servers & regular servers and not on the whole games machines list GLOB.machines
+/obj/machinery/computer/rdservercontrol/proc/server_list()
+	var/obj/machinery/rnd/server/server_list=list()
+	server_list+=SSresearch.master_servers
+	server_list+=SSresearch.servers
+	return server_list
 
 /obj/machinery/computer/rdservercontrol/Topic(href, href_list)
 	if(..())
@@ -114,7 +128,7 @@
 	add_fingerprint(usr)
 	if (href_list["toggle"])
 		if(allowed(usr) || obj_flags & EMAGGED)
-			var/obj/machinery/rnd/server/S = locate(href_list["toggle"]) in SSresearch.servers
+			var/obj/machinery/rnd/server/S = locate(href_list["toggle"]) in server_list()
 			S.toggle_disable(usr)
 		else
 			to_chat(usr, span_danger("Access Denied."))
@@ -128,7 +142,8 @@
 
 	dat += "<b>Connected Servers:</b>"
 	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Status</b></td><td style='width:25%'><b>Control</b></td>"
-	for(var/obj/machinery/rnd/server/server in GLOB.machines)
+
+	for(var/obj/machinery/rnd/server/server in server_list())
 		var/server_info = ""
 
 		var/status_text = server.get_status_text()
@@ -182,13 +197,24 @@
 	var/hdd_wires = 6
 
 /obj/machinery/rnd/server/master/Initialize(mapload)
+	///this will indirectly add the master server to the list of normal servers. We should remove it from there
 	. = ..()
+
 	name = "\improper Master " + name
 	desc += "\nIt looks incredibly resistant to damage!"
 	source_code_hdd = new(src)
 	SSresearch.master_servers += src
+	///remove the master server from the list of normal servers the line above adds it to its own seperate list and we dont want it to be redundant here as well
+	SSresearch.servers -= src
 
 	add_overlay("RD-server-objective-stripes")
+
+/obj/machinery/rnd/server/master/toggle_disable(mob/user)
+	.=..()
+
+	for(var/obj/machinery/rnd/server/miner in SSresearch.servers)
+		miner.research_disabled=!research_disabled
+		miner.toggle_disable(usr)
 
 /obj/machinery/rnd/server/master/Destroy()
 	if (source_code_hdd && (deconstruction_state == HDD_OVERLOADED))
