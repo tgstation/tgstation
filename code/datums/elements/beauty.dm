@@ -4,7 +4,7 @@
  * Shabbier, dirtier ones lead to negative moodlets EXCLUSIVE to characters with the snob quirk.
  */
 /datum/element/beauty
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
 	id_arg_index = 2
 	var/beauty = 0
 	/**

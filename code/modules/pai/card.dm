@@ -53,7 +53,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(!pai?.holoform)
+	if(pai && !pai.holoform)
 		pai.emp_act(severity)
 
 /obj/item/pai_card/handle_atom_del(atom/thing)

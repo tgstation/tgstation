@@ -15,11 +15,12 @@
 
 /datum/status_effect/hallucination/on_creation(
 	mob/living/new_owner,
-	duration = 10 SECONDS,
+	duration,
 	affects_silicons = FALSE,
 )
 
-	src.duration = duration
+	if(isnum(duration))
+		src.duration = duration
 	src.affects_silicons = affects_silicons
 	return ..()
 
@@ -89,3 +90,41 @@
 	var/datum/hallucination/picked_hallucination = pick_weight(GLOB.random_hallucination_weighted_list)
 	owner.cause_hallucination(picked_hallucination, "[id] status effect")
 	COOLDOWN_START(src, hallucination_cooldown, rand(lower_tick_interval, upper_tick_interval))
+
+// Sanity related hallucinations
+/datum/status_effect/hallucination/sanity
+	id = "low sanity"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = -1 // This lasts "forever", only goes away with sanity gain
+
+/datum/status_effect/hallucination/sanity/on_apply()
+	if(!owner.mob_mood)
+		return FALSE
+
+	update_intervals()
+	return ..()
+
+/datum/status_effect/hallucination/sanity/refresh(...)
+	update_intervals()
+
+/datum/status_effect/hallucination/sanity/tick(delta_time, times_fired)
+	// Using psicodine / happiness / whatever to become fearless will stop sanity based hallucinations
+	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
+		return
+
+	return ..()
+
+/// Updates our upper and lower intervals based on our owner's current sanity level.
+/datum/status_effect/hallucination/sanity/proc/update_intervals()
+	switch(owner.mob_mood.sanity_level)
+		if(SANITY_LEVEL_CRAZY)
+			upper_tick_interval = 8 MINUTES
+			lower_tick_interval = 4 MINUTES
+
+		if(SANITY_LEVEL_INSANE)
+			upper_tick_interval = 4 MINUTES
+			lower_tick_interval = 2 MINUTES
+
+		else
+			stack_trace("[type] was assigned a mob which was not crazy or insane. (was: [owner.mob_mood.sanity_level])")
+			qdel(src)

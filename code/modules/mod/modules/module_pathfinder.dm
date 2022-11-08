@@ -145,7 +145,7 @@
 	name = "Recall MOD"
 	desc = "Recall a MODsuit anyplace, anytime."
 	check_flags = AB_CHECK_CONSCIOUS
-	background_icon_state = "bg_tech_blue"
+	background_icon_state = "bg_mod"
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
 	button_icon_state = "recall"
 	/// The cooldown for the recall.

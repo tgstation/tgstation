@@ -189,7 +189,7 @@
 	switch(school)
 		if(SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION)
 			return
-		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN)
+		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN, SCHOOL_SANGUINE)
 			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
 			lightningbolt(user)
 			owner.add_mood_event("honorbound", /datum/mood_event/banished)

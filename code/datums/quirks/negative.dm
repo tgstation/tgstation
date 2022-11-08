@@ -62,17 +62,21 @@
 	hardcore_value = 8
 	processing_quirk = TRUE
 	mail_goodies = list(/obj/item/reagent_containers/blood/o_minus) // universal blood type that is safe for all
+	var/min_blood = BLOOD_VOLUME_SAFE - 25 // just barely survivable without treatment
+	var/drain_rate = 0.275
 
 /datum/quirk/blooddeficiency/process(delta_time)
 	if(quirk_holder.stat == DEAD)
 		return
 
-	var/mob/living/carbon/human/H = quirk_holder
-	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+	var/mob/living/carbon/human/carbon_target = quirk_holder
+	if(NOBLOOD in carbon_target.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
 
-	if (H.blood_volume > (BLOOD_VOLUME_SAFE - 25)) // just barely survivable without treatment
-		H.blood_volume -= 0.275 * delta_time
+	if (carbon_target.blood_volume <= min_blood)
+		return
+	// Ensures that we don't reduce total blood volume below min_blood.
+	carbon_target.blood_volume = max(min_blood, carbon_target.blood_volume - drain_rate * delta_time)
 
 /datum/quirk/item_quirk/blindness
 	name = "Blind"
@@ -132,7 +136,7 @@
 
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
 
-/datum/quirk/deafness
+/datum/quirk/item_quirk/deafness
 	name = "Deaf"
 	desc = "You are incurably deaf."
 	icon = "deaf"
@@ -143,6 +147,9 @@
 	medical_record_text = "Patient's cochlear nerve is incurably damaged."
 	hardcore_value = 12
 	mail_goodies = list(/obj/item/clothing/mask/whistle)
+
+/datum/quirk/item_quirk/deafness/add_unique()
+	give_item_to_holder(/obj/item/clothing/accessory/deaf_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/depression
 	name = "Depression"
@@ -260,6 +267,7 @@
 		/obj/item/clothing/head/costume/nightcap/red,
 		/obj/item/clothing/under/misc/pj/blue,
 		/obj/item/clothing/head/costume/nightcap/blue,
+		/obj/item/pillow/random,
 	)
 
 /datum/quirk/hypersensitive
@@ -463,16 +471,16 @@
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
-			prosthetic = new /obj/item/bodypart/l_arm/robot/surplus
+			prosthetic = new /obj/item/bodypart/arm/left/robot/surplus
 			slot_string = "left arm"
 		if(BODY_ZONE_R_ARM)
-			prosthetic = new /obj/item/bodypart/r_arm/robot/surplus
+			prosthetic = new /obj/item/bodypart/arm/right/robot/surplus
 			slot_string = "right arm"
 		if(BODY_ZONE_L_LEG)
-			prosthetic = new /obj/item/bodypart/l_leg/robot/surplus
+			prosthetic = new /obj/item/bodypart/leg/left/robot/surplus
 			slot_string = "left leg"
 		if(BODY_ZONE_R_LEG)
-			prosthetic = new /obj/item/bodypart/r_leg/robot/surplus
+			prosthetic = new /obj/item/bodypart/leg/right/robot/surplus
 			slot_string = "right leg"
 	human_holder.del_and_replace_bodypart(prosthetic)
 
@@ -490,10 +498,10 @@
 
 /datum/quirk/quadruple_amputee/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/l_arm/robot/surplus)
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/r_arm/robot/surplus)
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/l_leg/robot/surplus)
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/r_leg/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/left/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
@@ -523,6 +531,8 @@
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/pill_bottle/lsdpsych)
+	/// Weakref to the trauma we give out
+	var/datum/weakref/added_trama_ref
 
 /datum/quirk/insanity/add()
 	if(!iscarbon(quirk_holder))
@@ -541,6 +551,7 @@
 	added_trauma.lose_text = null
 
 	carbon_quirk_holder.gain_trauma(added_trauma)
+	added_trama_ref = WEAKREF(added_trauma)
 
 /datum/quirk/insanity/post_add()
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
@@ -549,6 +560,9 @@
 	// it's probably a good thing to have.
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your [lowertext(name)] does NOT give you the right to attack people or otherwise cause any interference to \
 		the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
+
+/datum/quirk/insanity/remove()
+	QDEL_NULL(added_trama_ref)
 
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"

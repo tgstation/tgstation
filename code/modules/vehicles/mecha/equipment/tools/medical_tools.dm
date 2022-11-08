@@ -200,7 +200,8 @@
 	if(to_inject && patient.reagents.get_reagent_amount(R.type) + to_inject <= inject_amount*2)
 		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Injecting [patient] with [to_inject] units of [R.name].")]")
 		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
-		log_combat(chassis.occupants, patient, "injected", "[name] ([R] - [to_inject] units)")
+		for(var/driver in chassis.return_drivers())
+			log_combat(driver, patient, "injected", "[name] ([R] - [to_inject] units)")
 		SG.reagents.trans_id_to(patient,R.type,to_inject)
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/container_resist_act(mob/living/user)
@@ -286,11 +287,6 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/vehicle/sealed/mecha/medical/M, attach_right = FALSE)
-	. = ..()
-	if(!istype(M))
-		return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_snowflake_data()
 	return list(
@@ -516,6 +512,8 @@
 	. = ..()
 	if(.)
 		return
+	if(chassis.weapons_safety)
+		medigun.LoseTarget()
 	medigun.process(SSOBJ_DT)
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/action(mob/source, atom/movable/target, list/modifiers)

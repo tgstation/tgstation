@@ -32,7 +32,7 @@ GLOBAL_VAR(station_nuke_source)
 	/// world time tracker for when we're going to explode
 	var/detonation_timer = null
 	/// The code we need to detonate this nuke. Starts as "admin", purposefully un-enterable
-	var/r_code = "ADMIN"
+	var/r_code = NUKE_CODE_UNSET
 	/// If TRUE, the correct code has been entered and we can start the nuke
 	var/yes_code = FALSE
 	/// Whether the nuke safety is on, can't explode if it is
@@ -617,6 +617,7 @@ GLOBAL_VAR(station_nuke_source)
 		return FALSE
 
 	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
+	gibbed.investigate_log("has been gibbed by a nuclear blast.", INVESTIGATE_DEATHS)
 	gibbed.gib()
 	return TRUE
 

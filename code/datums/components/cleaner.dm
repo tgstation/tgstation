@@ -1,6 +1,3 @@
-GLOBAL_DATUM_INIT(cleaning_bubbles_lower, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, GAME_PLANE)) //displays at the top of floor tiles, but under mobs
-GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, ABOVE_GAME_PLANE)) //displays above mobs
-
 /**
  * Component that can be used to clean things.
  * Takes care of duration, cleaning skill and special cleaning interactions.
@@ -14,6 +11,8 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 	var/skill_duration_modifier_offset
 	/// Determines what this cleaner can wash off, [the available options are found here](code/__DEFINES/cleaning.html).
 	var/cleaning_strength
+	/// Gets called before you start cleaning, returns TRUE/FALSE whether the clean should actually wash tiles, or DO_NOT_CLEAN to not clean at all.
+	var/datum/callback/pre_clean_callback
 	/// Gets called when something is successfully cleaned.
 	var/datum/callback/on_cleaned_callback
 
@@ -21,26 +20,44 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
 	base_cleaning_duration = 3 SECONDS,
 	skill_duration_modifier_offset = 0,
 	cleaning_strength = CLEAN_SCRUB,
+	datum/callback/pre_clean_callback = null,
 	datum/callback/on_cleaned_callback = null,
 )
 	src.base_cleaning_duration = base_cleaning_duration
 	src.skill_duration_modifier_offset = skill_duration_modifier_offset
 	src.cleaning_strength = cleaning_strength
+	src.pre_clean_callback = pre_clean_callback
 	src.on_cleaned_callback = on_cleaned_callback
 
 /datum/component/cleaner/Destroy(force, silent)
+	if(pre_clean_callback)
+		QDEL_NULL(pre_clean_callback)
 	if(on_cleaned_callback)
 		QDEL_NULL(on_cleaned_callback)
 	return ..()
 
 /datum/component/cleaner/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_START_CLEANING, .proc/on_start_cleaning)
+	if(isbot(parent))
+		RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, .proc/on_unarmed_attack)
+		return
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
 
 /datum/component/cleaner/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_START_CLEANING)
+	if(isbot(parent))
+		UnregisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK)
+		return
+	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
 
 /**
- * Handles the COMSIG_START_CLEANING signal by calling the clean proc.
+ * Handles the COMSIG_LIVING_UNARMED_ATTACK signal used for cleanbots
+ * Redirects to afterattack, while setting parent (the bot) as user.
+ */
+/datum/component/cleaner/proc/on_unarmed_attack(datum/source, atom/target, proximity_flags, modifiers)
+	SIGNAL_HANDLER
+	return on_afterattack(source, target, parent, proximity_flags, modifiers)
+
+/**
+ * Handles the COMSIG_ITEM_AFTERATTACK signal by calling the clean proc.
  *
  * Arguments
  * * source the datum that sent the signal to start cleaning
@@ -48,8 +65,15 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
  * * user the person doing the cleaning
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
-/datum/component/cleaner/proc/on_start_cleaning(datum/source, atom/target, mob/living/user, clean_target)
+/datum/component/cleaner/proc/on_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER
+	if(!proximity_flag)
+		return
+	var/clean_target
+	if(pre_clean_callback)
+		clean_target = pre_clean_callback?.Invoke(source, target, user)
+		if(clean_target == DO_NOT_CLEAN)
+			return
 	INVOKE_ASYNC(src, .proc/clean, source, target, user, clean_target) //signal handlers can't have do_afters inside of them
 
 /**
@@ -64,49 +88,58 @@ GLOBAL_DATUM_INIT(cleaning_bubbles_higher, /mutable_appearance, mutable_appearan
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
-	//add the cleaning overlay
-	var/already_cleaning = HAS_TRAIT(target, CURRENTLY_CLEANING) //tracks if atom had the cleaning trait when you started cleaning
-	if(!already_cleaning) //add the trait and overlay
+	if(!HAS_TRAIT(target, CURRENTLY_CLEANING)) //add the trait and overlay
 		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
-		if(target.plane > GLOB.cleaning_bubbles_lower.plane) //check if the higher overlay is necessary
-			target.add_overlay(GLOB.cleaning_bubbles_higher)
-		else if(target.plane == GLOB.cleaning_bubbles_lower.plane)
-			if(target.layer > GLOB.cleaning_bubbles_lower.layer)
-				target.add_overlay(GLOB.cleaning_bubbles_higher)
+
+		// We need to update our planes on overlay changes
+		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/cleaning_target_moved)
+		var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
+		var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
+		if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
+			target.add_overlay(high_bubble)
+		else if(target.plane == low_bubble.plane)
+			if(target.layer > low_bubble.layer)
+				target.add_overlay(high_bubble)
 			else
-				target.add_overlay(GLOB.cleaning_bubbles_lower)
-		else //(target.plane < GLOB.cleaning_bubbles_lower.plane)
-			target.add_overlay(GLOB.cleaning_bubbles_lower)
+				target.add_overlay(low_bubble)
+		else //(target.plane < low_bubble.plane)
+			target.add_overlay(low_bubble)
 
 	//set the cleaning duration
 	var/cleaning_duration = base_cleaning_duration
 	if(user.mind) //higher cleaning skill can make the duration shorter
 		//offsets the multiplier you get from cleaning skill, but doesn't allow the duration to be longer than the base duration
-		cleaning_duration = cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset,1)
+		cleaning_duration = (cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset, 1))
 
 	//do the cleaning
 	user.visible_message(span_notice("[user] starts to clean [target]!"), span_notice("You start to clean [target]..."))
 	if(do_after(user, cleaning_duration, target = target))
 		user.visible_message(span_notice("[user] finishes cleaning [target]!"), span_notice("You finish cleaning [target]."))
 		if(clean_target)
-			if(isturf(target)) //cleaning the floor and every bit of filth on top of it
-				for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
-					user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
-			else if(istype(target, /obj/structure/window)) //window cleaning
-				target.set_opacity(initial(target.opacity))
-				target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-				var/obj/structure/window/window = target
-				if(window.bloodied)
-					for(var/obj/effect/decal/cleanable/blood/iter_blood in window)
-						window.vis_contents -= iter_blood
-						qdel(iter_blood)
-						window.bloodied = FALSE
-			user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
-			target.wash(cleaning_strength)
-		on_cleaned_callback?.Invoke(source, target, user, clean_target)
+			for(var/obj/effect/decal/cleanable/cleanable_decal in target) //it's important to do this before you wash all of the cleanables off
+				user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
+			if(target.wash(cleaning_strength))
+				user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
+		on_cleaned_callback?.Invoke(source, target, user)
 
 	//remove the cleaning overlay
-	if(!already_cleaning)
-		target.cut_overlay(GLOB.cleaning_bubbles_lower)
-		target.cut_overlay(GLOB.cleaning_bubbles_higher)
-		REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
+	var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
+	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
+	target.cut_overlay(low_bubble)
+	target.cut_overlay(high_bubble)
+	REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
+
+/datum/component/cleaner/proc/cleaning_target_moved(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
+	if(same_z_layer)
+		return
+	// First, get rid of the old overlay
+	var/mutable_appearance/old_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, GAME_PLANE)
+	var/mutable_appearance/old_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, old_turf, ABOVE_GAME_PLANE)
+	source.cut_overlay(old_low_bubble)
+	source.cut_overlay(old_high_bubble)
+
+	// Now, add the new one
+	var/mutable_appearance/new_low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, GAME_PLANE)
+	var/mutable_appearance/new_high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, new_turf, ABOVE_GAME_PLANE)
+	source.add_overlay(new_low_bubble)
+	source.add_overlay(new_high_bubble)

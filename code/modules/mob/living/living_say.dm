@@ -344,6 +344,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			if(player_mob.stat != DEAD) //not dead, not important
 				continue
 			if(player_mob.z != z || get_dist(player_mob, src) > 7) //they're out of range of normal hearing
+				if(player_mob.client && !player_mob.client?.prefs)
+					stack_trace("[player_mob] ([player_mob.ckey]) had null prefs, which shouldn't be possible!")
+					continue
+
 				if(eavesdrop_range)
 					if(!(player_mob.client?.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 						continue
@@ -473,7 +477,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 /mob/living/say_mod(input, list/message_mods = list())
 	if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 		. = verb_whisper
-	else if(message_mods[WHISPER_MODE] == MODE_WHISPER_CRIT)
+	else if(message_mods[WHISPER_MODE] == MODE_WHISPER_CRIT && !HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 		. = "[verb_whisper] in [p_their()] last breath"
 	else if(message_mods[MODE_SING])
 		. = verb_sing

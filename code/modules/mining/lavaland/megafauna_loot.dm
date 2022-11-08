@@ -182,7 +182,7 @@
 			new /obj/effect/temp_visual/hierophant/blast/visual(t, user, TRUE)
 		for(var/mob/living/L in range(1, source))
 			INVOKE_ASYNC(src, .proc/teleport_mob, source, L, T, user)
-		sleep(6) //at this point the blasts detonate
+		sleep(0.6 SECONDS) //at this point the blasts detonate
 		if(beacon)
 			beacon.icon_state = "hierophant_tele_off"
 	else
@@ -199,19 +199,19 @@
 	if(!turf_to_teleport_to || turf_to_teleport_to.is_blocked_turf(TRUE))
 		return
 	animate(teleporting, alpha = 0, time = 2, easing = EASE_OUT) //fade out
-	sleep(1)
+	sleep(0.1 SECONDS)
 	if(!teleporting)
 		return
 	teleporting.visible_message(span_hierophant_warning("[teleporting] fades out!"))
-	sleep(2)
+	sleep(0.2 SECONDS)
 	if(!teleporting)
 		return
 	var/success = do_teleport(teleporting, turf_to_teleport_to, no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-	sleep(1)
+	sleep(0.1 SECONDS)
 	if(!teleporting)
 		return
 	animate(teleporting, alpha = 255, time = 2, easing = EASE_IN) //fade IN
-	sleep(1)
+	sleep(0.1 SECONDS)
 	if(!teleporting)
 		return
 	teleporting.visible_message(span_hierophant_warning("[teleporting] fades in!"))
@@ -865,7 +865,7 @@
 	. += span_notice("Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.")
 	. += span_notice("Transforming it immediately after an attack causes the next attack to come out faster.")
 
-/obj/item/melee/cleaving_saw/suicide_act(mob/user)
+/obj/item/melee/cleaving_saw/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is [is_open ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	attack_self(user)
 	return BRUTELOSS

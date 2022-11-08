@@ -18,10 +18,10 @@
 	. = ..()
 	AddElement(/datum/element/kneejerk)
 
-/obj/item/gavelhammer/suicide_act(mob/user)
+/obj/item/gavelhammer/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] has sentenced [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/gavelblock
 	name = "gavel block"

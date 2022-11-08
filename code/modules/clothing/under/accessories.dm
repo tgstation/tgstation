@@ -360,10 +360,13 @@
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
+/obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
 
 	create_storage(type = /datum/storage/pockets/pocketprotector)
+
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
+	. = ..()
 
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
@@ -474,3 +477,8 @@
 						"Intersex Pride" = "pride_intersex",
 						"Lesbian Pride" = "pride_lesbian",
 						)
+
+/obj/item/clothing/accessory/deaf_pin
+	name = "deaf personnel pin"
+	desc = "Indicates that the wearer is deaf."
+	icon_state = "deaf_pin"

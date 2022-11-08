@@ -436,6 +436,7 @@ Difficulty: Hard
 	visible_message(span_hierophant_warning("\"[pick(kill_phrases)]\""))
 	visible_message(span_hierophant_warning("[src] annihilates [L]!"),span_userdanger("You annihilate [L], restoring your health!"))
 	adjustHealth(-L.maxHealth*0.5)
+	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
 	L.dust()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
@@ -680,10 +681,10 @@ Difficulty: Hard
 	if(!T)
 		return
 	playsound(T,'sound/magic/blind.ogg', 125, TRUE, -5) //make a sound
-	sleep(6) //wait a little
+	sleep(0.6 SECONDS) //wait a little
 	bursting = TRUE
 	do_damage(T) //do damage and mark us as bursting
-	sleep(1.3) //slightly forgiving; the burst animation is 1.5 deciseconds
+	sleep(0.13 SECONDS) //slightly forgiving; the burst animation is 1.5 deciseconds
 	bursting = FALSE //we no longer damage crossers
 
 /obj/effect/temp_visual/hierophant/blast/damaging/proc/on_entered(datum/source, atom/movable/AM)

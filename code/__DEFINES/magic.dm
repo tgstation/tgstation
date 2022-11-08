@@ -26,6 +26,8 @@
 #define SCHOOL_NECROMANCY "necromancy"
 /// Other forbidden magics, such as heretic spells
 #define SCHOOL_FORBIDDEN "forbidden"
+/// Blood magic, involves vampirism, draining blood, etc.
+#define SCHOOL_SANGUINE "sanguine"
 
 // Invocation types - what does the wizard need to do to invoke (cast) the spell?
 /// Allows being able to cast the spell without saying or doing anything.

@@ -55,7 +55,7 @@ Buildable meters
 	update()
 	pixel_x += rand(-5, 5)
 	pixel_y += rand(-5, 5)
-	
+
 	//Flipping handled manually due to custom handling for trinary pipes
 	AddComponent(/datum/component/simple_rotation, ROTATION_NO_FLIPPING)
 	return ..()
@@ -286,15 +286,15 @@ Buildable meters
 	..()
 	T.flipped = flipped
 
-/obj/item/pipe/suicide_act(mob/user)
+/obj/item/pipe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] shoves [src] in [user.p_their()] mouth and turns it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		for(var/i=1 to 20)
+		for(var/i in 1 to 20)
 			C.vomit(0, TRUE, FALSE, 4, FALSE)
 			if(prob(20))
 				C.spew_organ()
-			sleep(5)
+			sleep(0.5 SECONDS)
 		C.blood_volume = 0
 	return(OXYLOSS|BRUTELOSS)
 
