@@ -13,10 +13,6 @@
 #define MIN_PERSISTENT_ENGRAVINGS 15
 #define MAX_PERSISTENT_ENGRAVINGS 25
 
-///threshold for the memory being a happy one
-#define MEMORY_HAPPY_THRESHOLD 7
-///threshold for the memory being a sad one
-#define MEMORY_SAD_THRESHOLD 7
 ///moodlet set if the creature with the memory doesn't use mood (doesn't include mood line)
 #define MOODLESS_MEMORY "nope"
 

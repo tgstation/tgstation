@@ -228,7 +228,7 @@
 		return
 
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
-	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, bomb_type = src)
+	user.add_mob_memory(/datum/memory/bomb_planted/syndicate, antagonist = src)
 	log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 	payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
 	user.log_message("primed the [src]. (Payload: [payload.name])", LOG_GAME, log_globally = FALSE)

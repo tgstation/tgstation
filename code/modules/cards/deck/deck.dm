@@ -133,10 +133,10 @@
 
 			player.add_mood_event("playing_cards", /datum/mood_event/playing_cards)
 			player.add_mob_memory(/datum/memory/playing_cards, \
+				deuteragonist = dealer, \
 				game = cardgame_desc, \
-				dealer = dealer, \
-				other_players = other_players, \
-				protagonist_held_card = held_card_item)
+				protagonist_held_card = held_card_item, \
+				other_players = other_players)
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
 	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))

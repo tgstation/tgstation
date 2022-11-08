@@ -1,6 +1,9 @@
 /// A doctor successfuly completed a surgery on someone.
 /datum/memory/surgery
 	story_value = STORY_VALUE_OKAY
+	// Protagonist - The surgeon, completing the surgery
+	// Deuteragonist - The mob being operated on
+	/// What type of surgery it was
 	var/surgery_type
 
 /datum/memory/surgery/New(
@@ -35,33 +38,24 @@
 /// Planted a bomb.
 /datum/memory/bomb_planted
 	story_value = STORY_VALUE_MEH
-	var/bomb_type
-
-/datum/memory/bomb_planted/New(
-	datum/mind/memorizer_mind,
-	atom/protagonist,
-	atom/deuteragonist,
-	atom/antagonist,
-	obj/bomb_type,
-)
-	src.bomb_type = build_story_character(bomb_type)
-	return ..()
+	// Protagonist - Whoever armed the bomb
+	// Antaognist - The bomb that was armed
 
 /datum/memory/bomb_planted/get_names()
-	return list("The arming of [bomb_type] by [protagonist_name].")
+	return list("The arming of [antagonist_name] by [protagonist_name].")
 
 /datum/memory/bomb_planted/get_starts()
 	return list(
-		"[protagonist_name] pressing an ominous button, causing [bomb_type] to begin beeping",
-		"[protagonist_name] slapping down a [bomb_type]",
-		"[bomb_type] being armed by [protagonist_name]",
+		"[protagonist_name] pressing an ominous button, causing [antagonist_name] to begin beeping",
+		"[protagonist_name] slapping down a [antagonist_name]",
+		"[antagonist_name] being armed by [protagonist_name]",
 	)
 
 /datum/memory/bomb_planted/get_moods()
 	return list(
-		"[protagonist_name] [mood_verb] and begins to walk away from [bomb_type].",
-		"[protagonist_name] [mood_verb] as [bomb_type] begins to tick.",
-		"[protagonist_name] [mood_verb] with [bomb_type] winding down.",
+		"[protagonist_name] [mood_verb] and begins to walk away from [antagonist_name].",
+		"[protagonist_name] [mood_verb] as [antagonist_name] begins to tick.",
+		"[protagonist_name] [mood_verb] with [antagonist_name] winding down.",
 		"beep... beep... [protagonist_name] [mood_verb]."
 	)
 
@@ -72,8 +66,16 @@
 /datum/memory/bomb_planted/syndicate
 	story_value = STORY_VALUE_AMAZING
 
+/// Planted a NUKE!
+/datum/memory/bomb_planted/nuke
+	story_value = STORY_VALUE_LEGENDARY
+
 /// Got a sweet high five.
 /datum/memory/high_five
+	story_value = STORY_VALUE_MEH
+	// Protagonist - One of the high-fivers
+	// Deuteragonist - The other high fiver
+	/// What type of high five it was - A "high five" or a "high ten"
 	var/high_five_type
 
 /datum/memory/high_five/New(
@@ -109,6 +111,7 @@
 /datum/memory/was_cyborged
 	story_value = STORY_VALUE_OKAY
 	memory_flags = MEMORY_FLAG_NOMOOD|MEMORY_SKIP_UNCONSCIOUS
+	// Protagonist - The mind of who was just cyborgized
 
 /datum/memory/was_cyborged/get_names()
 	return list("The borging of [protagonist_name].")
@@ -123,6 +126,7 @@
 /datum/memory/witnessed_death
 	story_value = STORY_VALUE_MEH // this is pretty common on this hellhole
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS|MEMORY_FLAG_NOMOOD
+	// Protagonist - Who died
 
 /datum/memory/witnessed_death/get_names()
 	return list("The death of [protagonist_name].")
@@ -139,6 +143,7 @@
 /datum/memory/witnessed_creampie
 	story_value = STORY_VALUE_OKAY
 	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist - The mob that got pied
 
 /datum/memory/witnessed_creampie/get_names()
 	return list("The creaming of [protagonist_name].")
@@ -159,6 +164,8 @@
 /// Got slipped by something.
 /datum/memory/was_slipped
 	story_value = STORY_VALUE_MEH
+	// Protagonist - The mob that got slipped
+	// Antagonist - The thing that did the slipping (banana peel, etc)
 
 /datum/memory/was_slipped/get_names()
 	return list("The slipping of [protagonist_name].")
@@ -183,6 +190,7 @@
 /datum/memory/lost_spaghetti
 	story_value = STORY_VALUE_AMAZING // This doesn't happen very often
 	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist - The mob losing their spaghet
 
 /datum/memory/lost_spaghetti/get_names()
 	return list("[protagonist_name]'s spaghetti blunder.")
@@ -204,6 +212,8 @@
 	story_value = STORY_VALUE_MEH
 	// Sorry but blind people can't feel kisses...
 	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist - The mob being kissed
+	// Deuteragonist - The mob doing the kissing
 
 /datum/memory/kissed/get_names()
 	return list("the kiss blown to [protagonist_name]")
@@ -223,6 +233,8 @@
 /// Had some good food.
 /datum/memory/good_food
 	story_value = STORY_VALUE_MEH
+	// Protagonist - The mob consuming the food
+	/// The name of the food item being consumed
 	var/food
 
 /datum/memory/good_food/New(
@@ -253,6 +265,8 @@
 /// Had a good drink.
 /datum/memory/good_drink
 	story_value = STORY_VALUE_MEH
+	// Protagonist - The mob consuming the drink
+	/// The name of the nice drink reagent
 	var/drink
 
 /datum/memory/good_drink/New(
@@ -282,6 +296,7 @@
 /// Was set on fire and started to burn.
 /datum/memory/was_burning
 	story_value = STORY_VALUE_MEH
+	// Protagonist - The mob burning
 
 /datum/memory/was_burning/get_names()
 	return list("The burning of [protagonist_name].")
@@ -299,6 +314,8 @@
 /// Got a limb removed by force.
 /datum/memory/was_dismembered
 	story_value = STORY_VALUE_AMAZING
+	// Protagonist - The mob who lost a limb
+	/// The limb (in plaintext) that got lost (ends up being "left arm" or "right leg")
 	var/lost_limb
 
 /datum/memory/was_dismembered/New(
@@ -331,6 +348,8 @@
 /datum/memory/pet_died
 	story_value = STORY_VALUE_AMAZING
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
+	// Protagonist - The mob who saw the pet die
+	// Deuteragonist - The pet which died
 
 /datum/memory/pet_died/get_names()
 	return list("The death of [deuteragonist_name].")
@@ -353,6 +372,7 @@
 /datum/memory/revolution_rev_victory
 	story_value = STORY_VALUE_LEGENDARY
 	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
+	// Protagonist - The head revolutionary that won the revolution
 
 /datum/memory/revolution_rev_victory/get_names()
 	return list("The revolution of [station_name()] by [protagonist_name].")
@@ -375,6 +395,7 @@
 /datum/memory/revolution_heads_defeated
 	story_value = STORY_VALUE_NONE
 	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_SKIP_UNCONSCIOUS
+	// Protagonist - The head of staff that lost the revolution
 
 /datum/memory/revolution_heads_defeated/get_names()
 	return list("The defeat of [protagonist_name] at the hands of the revolution")
@@ -396,6 +417,7 @@
 /datum/memory/revolution_rev_defeat
 	story_value = STORY_VALUE_NONE
 	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_SKIP_UNCONSCIOUS
+	// Protagonist - The head revolutionary that lost the revolution
 
 /datum/memory/revolution_rev_defeat/get_names()
 	return list(
@@ -413,6 +435,7 @@
 /datum/memory/revolution_heads_victory
 	story_value = STORY_VALUE_AMAZING // Not as cool as a rev victory. Everyone loves underdog stories
 	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_SKIP_UNCONSCIOUS
+	// Protagonist - The head of staff that won the revolution
 
 /datum/memory/revolution_heads_victory/get_names()
 	return list("The success of [protagonist_name] and Nanotrasen over the hateful revolution")
@@ -430,7 +453,11 @@
 /datum/memory/received_medal
 	story_value = STORY_VALUE_AMAZING
 	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
+	// Protagonist - The person being given a medal
+	// Deuteragonist - The mob awarding a medal
+	/// The name of the medal being rewarded
 	var/medal_type
+	/// The text on the medal / the commendation / the input
 	var/medal_text
 
 /datum/memory/received_medal/New(
@@ -464,6 +491,8 @@
 /// Killed a Megafauna
 /datum/memory/megafauna_slayer
 	story_value = STORY_VALUE_LEGENDARY
+	// Protagonist - The person who killed the megafauna
+	// Antagonist - The megafauna
 
 /datum/memory/megafauna_slayer/get_names()
 	return list("The slaughter of [antagonist_name].")
@@ -485,6 +514,9 @@
 /datum/memory/held_at_gunpoint
 	story_value = STORY_VALUE_OKAY
 	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist - Who was held at gunpoint
+	// Deuteragonist - Who held them at gunpoint
+	// Antagonist - The gun
 
 /datum/memory/held_at_gunpoint/get_names()
 	return list("[protagonist_name] being held at gunpoint.")
@@ -505,6 +537,7 @@
 /datum/memory/witness_gib
 	story_value = STORY_VALUE_OKAY
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_FLAG_NOMOOD
+	// Protagonist - Who got gibbed
 
 /datum/memory/witness_gib/get_names()
 	return list("[protagonist_name] exploding into bits.")
@@ -519,6 +552,8 @@
 /datum/memory/witness_vendor_crush
 	story_value = STORY_VALUE_OKAY
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_SKIP_UNCONSCIOUS
+	// Protagonist - Who got crushed
+	// Antagonist - The vendor that crushed them
 
 /datum/memory/witness_vendor_crush/get_names()
 	return list("[protagonist_name] being crushed by a [antagonist_name].")
@@ -540,6 +575,8 @@
 /datum/memory/witness_supermatter_dusting
 	story_value = STORY_VALUE_AMAZING
 	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist - Who got dusted
+	// Antagonist - The supermatter
 
 /datum/memory/witness_supermatter_dusting/get_names()
 	return list("The dusting of [protagonist_name] by the [antagonist_name].")
@@ -561,9 +598,13 @@
 /datum/memory/playing_cards
 	story_value = STORY_VALUE_MEH
 	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist - The player
+	// Deuteragonist - The game dealer (which may be a player OR in the players list)
+	/// What card game is being played
 	var/game
+	/// The card the protagonist is holding
 	var/protagonist_held_card
-	var/dealer
+	/// A string (english list) of all the mobs playing the game
 	var/formatted_players_list
 
 /datum/memory/playing_cards/New(
@@ -572,14 +613,17 @@
 	atom/deuteragonist,
 	atom/antagonist,
 	game,
-	mob/living/dealer,
-	list/mob/living/other_players,
 	obj/item/protagonist_held_card,
+	list/mob/living/other_players,
 )
 	src.game = game
 	src.protagonist_held_card = protagonist_held_card.name
-	src.dealer = dealer.name
-	src.formatted_players_list = english_list(other_players, nothing_text = "no-one")
+
+	var/list/story_players = list()
+	for(var/mob/living/person as anything in other_players)
+		story_players += build_story_character(person)
+
+	src.formatted_players_list = english_list(story_players, nothing_text = "no-one")
 	return ..()
 
 /datum/memory/playing_cards/get_names()
@@ -588,8 +632,8 @@
 /datum/memory/playing_cards/get_starts()
 	return list(
 		"[formatted_players_list] are waiting for [protagonist_name] to start the [game]",
-		"The [game] has been setup by [dealer]",
-		"[dealer] starts shuffling the deck for the [game]",
+		"The [game] has been setup by [deuteragonist_name]",
+		"[deuteragonist_name] starts shuffling the deck for the [game]",
 	)
 
 /datum/memory/playing_cards/get_moods()
@@ -603,6 +647,9 @@
 /datum/memory/playing_card_pickup
 	story_value = STORY_VALUE_OKAY
 	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist - The guy who initiated the game
+	// Deuteragonist - The guy who got the cards thrown in their face
+	// Antagonist - The deck of cards
 
 /datum/memory/playing_card_pickup/get_names()
 	return list("[protagonist_name] tricking [deuteragonist_name] into playing 52 pickup with [antagonist_name].")
@@ -622,8 +669,13 @@
 /// Saw someone play Russian Roulette.
 /datum/memory/witnessed_russian_roulette
 	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist = The guy who played roulette
+	// Antagonist = The revolver
+	/// The bodypart the protagonist was aiming at
 	var/aimed_at
+	/// How many rounds were loaded in the revolver
 	var/rounds_loaded
+	/// The result of the game ("won"(survived) or "lost"(shot themselves))
 	var/result
 
 /datum/memory/witnessed_russian_roulette/New(
@@ -662,6 +714,8 @@
 
 /// When a heretic finishes their ritual of knowledge
 /datum/memory/heretic_knowlege_ritual
+	story_value = STORY_VALUE_AMAZING
+	// Protagonist = heretic
 
 /datum/memory/heretic_knowlege_ritual/get_names()
 	return list("[protagonist_name] absorbing boundless knowledge through eldritch research.")
@@ -687,3 +741,55 @@
 
 /datum/memory/heretic_knowlege_ritual/get_sad_moods()
 	return list("cackling insanely")
+
+/// Failed to defuse a bomb, by triggering it early.
+/datum/memory/bomb_defuse_failure
+	story_value = STORY_VALUE_NONE // Anyone who gets this is probably dead
+	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
+	// Protagonist = (failed) defuser
+	// Antagonist = bomb
+
+/datum/memory/bomb_defuse_failure/get_names()
+	return list("[protagonist_name] failing to defuse [antagonist_name].")
+
+/datum/memory/bomb_defuse_failure/get_starts()
+	return list(
+		"[protagonist_name] cutting the wrong wire on [antagonist_name]",
+		"[protagonist_name] sweating nervously and shielding their face as [antagonist_name] makes a loud noise",
+		"The clock on [antagonist_name] suddenly jumping to 0 seconds"
+	)
+
+/datum/memory/bomb_defuse_failure/get_moods()
+	return list("[protagonist_name] [mood_verb] as they snip a wire on [antagonist_name].")
+
+/// Succeeded in defusing a bomb!
+/datum/memory/bomb_defuse_success
+	story_value = STORY_VALUE_LEGENDARY // Very sick, and can't be gotten from training bombs
+	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
+	// Protagonist = defuser
+	// Antagonist = bomb
+	/// This is the time left (in seconds) of the bomb at defusal
+	var/bomb_time_left
+
+/datum/memory/bomb_defuse_success/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	bomb_time_left = -1,
+)
+	src.bomb_time_left = bomb_time_left
+	return ..()
+
+/datum/memory/bomb_defuse_success/get_names()
+	return list("[protagonist_name] successfully defusing [antagonist_name].")
+
+/datum/memory/bomb_defuse_success/get_starts()
+	return list(
+		"[protagonist_name] cutting the right wire on [antagonist_name]",
+		"[protagonist_name] sweating nervously and shielding their face as [antagonist_name] makes a shrill beep",
+		"The clock on [antagonist_name] stopping at [bomb_time_left]"
+	)
+
+/datum/memory/bomb_defuse_success/get_moods()
+	return list("[protagonist_name] [mood_verb] as they snip a wire on [antagonist_name].")

@@ -298,9 +298,9 @@
 				qdel(O.mmi)
 			O.mmi = W //and give the real mmi to the borg.
 			O.updatename(brainmob.client)
-			brainmob.mind.transfer_to(O)
 			// This canonizes that MMI'd cyborgs have memories of their previous life
-			O.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob, deuteragonist = user)
+			brainmob.add_mob_memory(/datum/memory/was_cyborged, protagonist = brainmob.mind, deuteragonist = user)
+			brainmob.mind.transfer_to(O)
 			playsound(O.loc, 'sound/voice/liveagain.ogg', 75, TRUE)
 
 			if(O.mind && O.mind.special_role)

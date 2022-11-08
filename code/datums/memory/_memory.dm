@@ -57,7 +57,7 @@
 	src.deuteragonist_name = build_story_character(deuteragonist)
 	src.antagonist_name = build_story_character(antagonist)
 
-	if(!(memory_flags & MEMORY_FLAG_NOLOCATION))
+	if(protagonist && !(memory_flags & MEMORY_FLAG_NOLOCATION))
 		src.where = get_area_name(protagonist)
 
 	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
@@ -68,6 +68,7 @@
 
 		select_mood_verb(story_mood)
 
+	// This happens after everything's all set, remember this for New overrides
 	generate_memory_name()
 
 /datum/memory/Destroy(force, ...)
@@ -80,7 +81,9 @@
 /datum/memory/proc/generate_memory_name()
 	var/list/potential_names = get_names()
 	if(!length(potential_names))
+		// Someone forgot to implement get_names - it will stack trace, so we just need to return
 		name = "Erroneous memory - This is a bug"
+		story_value = STORY_VALUE_SHIT
 		memory_flags |= (MEMORY_FLAG_NOPERSISTENCE|MEMORY_NO_STORY)
 		return
 
@@ -94,6 +97,7 @@
  */
 /datum/memory/proc/select_mood_verb(story_mood)
 	if(story_mood == MOODLESS_MEMORY)
+		// The protagonist didn't end up having a mood, so just continue on
 		memory_flags |= MEMORY_FLAG_NOMOOD
 		return
 
@@ -224,43 +228,43 @@
 	//entirely independent vars (not related to the action or story type)
 
 	var/static/list/something_pool = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/cow,
+		/mob/living/basic/cow/wisdom,
+		/mob/living/basic/mouse,
+		/mob/living/basic/stickman,
+		/mob/living/basic/stickman/dog,
+		/mob/living/simple_animal/butterfly,
+		/mob/living/simple_animal/chick,
+		/mob/living/simple_animal/chicken,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
+		/mob/living/simple_animal/hostile/asteroid/goliath/beast,
 		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
+		/mob/living/simple_animal/hostile/carp,
+		/mob/living/simple_animal/hostile/carp/ranged,
+		/mob/living/simple_animal/hostile/carp/ranged/chaos,
+		/mob/living/simple_animal/hostile/giant_spider,
+		/mob/living/simple_animal/hostile/giant_spider/hunter,
+		/mob/living/simple_animal/hostile/gorilla,
+		/mob/living/simple_animal/hostile/headcrab,
+		/mob/living/simple_animal/hostile/killertomato,
+		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
+		/mob/living/simple_animal/hostile/morph,
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/netherworld/statue,
 		/mob/living/simple_animal/hostile/retaliate/bat,
 		/mob/living/simple_animal/hostile/retaliate/goat,
-		/mob/living/simple_animal/hostile/killertomato,
-		/mob/living/simple_animal/hostile/giant_spider,
-		/mob/living/simple_animal/hostile/giant_spider/hunter,
-		/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-		/mob/living/simple_animal/hostile/carp/ranged,
-		/mob/living/simple_animal/hostile/carp/ranged/chaos,
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher,
-		/mob/living/simple_animal/hostile/asteroid/goliath/beast,
-		/mob/living/simple_animal/hostile/headcrab,
-		/mob/living/simple_animal/hostile/morph,
-		/mob/living/basic/stickman,
-		/mob/living/basic/stickman/dog,
-		/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-		/mob/living/simple_animal/hostile/gorilla,
 		/mob/living/simple_animal/parrot,
-		/mob/living/simple_animal/pet/dog/corgi,
-		/mob/living/simple_animal/crab,
-		/mob/living/simple_animal/pet/dog/pug,
 		/mob/living/simple_animal/pet/cat,
-		/mob/living/basic/mouse,
-		/mob/living/simple_animal/chicken,
-		/mob/living/basic/cow,
-		/mob/living/simple_animal/hostile/lizard,
-		/mob/living/simple_animal/pet/fox,
-		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/pet/cat/cak,
 		/mob/living/simple_animal/pet/dog/breaddog,
-		/mob/living/simple_animal/chick,
-		/mob/living/basic/cow/wisdom,
+		/mob/living/simple_animal/pet/dog/corgi,
+		/mob/living/simple_animal/pet/dog/pug,
+		/mob/living/simple_animal/pet/fox,
+		/obj/item/food/sausage/american,
 		/obj/item/skub,
-		/obj/item/food/sausage/american
 	)
 
 	// These are picked from the json
@@ -360,11 +364,12 @@
 	if(istext(character))
 		return character
 
-	if(ishuman(character))
-		var/mob/living/carbon/human/human_character = character
-		if(human_character.mind && !is_unassigned_job(human_character.mind.assigned_role))
-			character = human_character.mind
-		else
+	if(isliving(character))
+		var/mob/living/living_character = character
+		if(living_character.mind && !is_unassigned_job(living_character.mind.assigned_role))
+			character = living_character.mind
+
+		else if(ishuman(character))
 			// This can slip into memories involving monkey humans.
 			return "the unfamiliar person"
 

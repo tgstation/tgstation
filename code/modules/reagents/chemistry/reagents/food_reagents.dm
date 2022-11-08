@@ -43,7 +43,10 @@
 			exposed_mob.add_mob_memory(/datum/memory/good_drink, drink = src)
 		if (FOOD_AMAZING)
 			exposed_mob.add_mood_event("quality_food", /datum/mood_event/amazingtaste)
-			exposed_mob.add_mob_memory(/datum/memory/good_food, drink = src)
+			// The food this was in was really tasty, not the reagent itself
+			var/obj/item/the_real_food = holder.my_atom
+			if(isitem(the_real_food) && !is_reagent_container(the_real_food))
+				exposed_mob.add_mob_memory(/datum/memory/good_food, food = the_real_food)
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
