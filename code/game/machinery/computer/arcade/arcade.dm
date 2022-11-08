@@ -578,6 +578,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(obj_flags & EMAGGED)
 			var/mob/living/living_user = user
 			if (istype(living_user))
+				living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 		user.lost_game()

@@ -222,6 +222,7 @@
 	visible_message(span_warning("[name] burrows into the flesh of [H]!"))
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = make_legion(H)
 	visible_message(span_warning("[L] staggers to [L.p_their()] feet!"))
+	H.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	H.death()
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H

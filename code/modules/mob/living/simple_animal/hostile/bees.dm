@@ -353,7 +353,7 @@
 				to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
 	..()
 
-/obj/item/queen_bee/suicide_act(mob/user)
+/obj/item/queen_bee/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.say("IT'S HIP TO EAT BEES!")
 	qdel(src)

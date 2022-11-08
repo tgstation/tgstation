@@ -338,6 +338,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return FALSE
 
 	to_chat(victim, span_userdanger("The blast wave from [source] tears you atom from atom!"))
+	victim.investigate_log("has been dusted by a doomsday device.", INVESTIGATE_DEATHS)
 	victim.dust()
 	return TRUE
 

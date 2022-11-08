@@ -134,19 +134,18 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 
-/obj/item/surgicaldrill/suicide_act(mob/user)
+/obj/item/surgicaldrill/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
 	addtimer(CALLBACK(user, /mob/living/carbon.proc/gib, null, null, TRUE, TRUE), 25)
 	user.SpinAnimation(3, 10)
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
-	return (MANUAL_SUICIDE)
+	return MANUAL_SUICIDE
 
 /obj/item/surgicaldrill/augment
 	desc = "Effectively a small power drill contained within your arm. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
-
 
 /obj/item/scalpel
 	name = "scalpel"
@@ -187,10 +186,9 @@
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
 
-/obj/item/scalpel/suicide_act(mob/user)
+/obj/item/scalpel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
-
+	return BRUTELOSS
 
 /obj/item/circular_saw
 	name = "circular saw"

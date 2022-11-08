@@ -51,18 +51,18 @@
 		peel.grind_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 		peel.juice_results = list(/datum/reagent/medicine/coagulant/banana_peel = peel.seed.potency * 0.2)
 
-/obj/item/food/grown/banana/suicide_act(mob/user)
+/obj/item/food/grown/banana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is aiming [src] at [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE, -1)
 	sleep(2.5 SECONDS)
 	if(!user)
-		return (OXYLOSS)
+		return OXYLOSS
 	user.say("BANG!", forced = /datum/reagent/consumable/banana)
 	sleep(2.5 SECONDS)
 	if(!user)
-		return (OXYLOSS)
+		return OXYLOSS
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
-	return (OXYLOSS)
+	return OXYLOSS
 
 //Banana Peel
 /obj/item/grown/bananapeel
@@ -86,11 +86,10 @@
 		else
 			icon_state = "[icon_state]_3"
 
-/obj/item/grown/bananapeel/suicide_act(mob/user)
+/obj/item/grown/bananapeel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
-
+	return BRUTELOSS
 
 // Mimana - invisible sprites are totally a feature!
 /obj/item/seeds/banana/mime

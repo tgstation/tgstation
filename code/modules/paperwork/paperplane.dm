@@ -53,7 +53,7 @@
 	if(eyes)
 		eyes.applyOrganDamage(rand(6,8))
 	sleep(1 SECONDS)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/paperplane/update_overlays()
 	. = ..()

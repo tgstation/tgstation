@@ -472,6 +472,7 @@
 					span_notice("You suck the nutriment out of [living_wrapped], feeding you enough to lay a cluster of enriched eggs."),
 				)
 			ADD_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED, TRAIT_GENERIC)
+			living_wrapped.investigate_log("has been killed by being wrapped in a cocoon.", INVESTIGATE_DEATHS)
 			living_wrapped.death() //you just ate them, they're dead.
 			log_combat(owner, living_wrapped, "spider cocooned")
 		else
