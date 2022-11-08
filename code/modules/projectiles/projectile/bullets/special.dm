@@ -42,8 +42,9 @@
 
 /// Marksman Shot
 /obj/projectile/bullet/marksman
-	name = "nanoshot"
+	name = "marksman nanoshot"
 	hitscan = TRUE
+	damage = 30
 	tracer_type = /obj/effect/projectile/tracer/solar
 	muzzle_type = /obj/effect/projectile/muzzle/bullet
 	impact_type = /obj/effect/projectile/impact/sniper
@@ -70,7 +71,6 @@
 	if(!coin_check || (ricoshot_level == 0 && get_dist(coin_check.target_turf, coin_check) >= 1) || coin_check.used) // no coin, keep trucking
 		return ..()
 
-	testing("smt type [type]")
 	coin_check.check_splitshot(firer, src)
 	Impact(coin_check)
 
@@ -96,7 +96,6 @@
 	/// The mob who originally flipped this coin, as a matter of convenience, may be able tto be removed
 	var/mob/original_firer
 
-
 /obj/projectile/bullet/coin/Initialize(mapload, turf/the_target, mob/original_firer)
 	src.original_firer = original_firer
 	target_turf = the_target
@@ -116,24 +115,11 @@
 	return ..()
 
 // the coin must be on the target turf to be directly targetable
-/obj/projectile/bullet/coin/fire(angle, atom/direct_target)
-	var/est_time = (range - 3) * 0.5 SECONDS
-	animate(src, est_time, FALSE, transform = matrix()*2)
-	. = ..()
-
-
-// the coin must be on the target turf to be directly targetable
 /obj/projectile/bullet/coin/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	testing("Range: [range]/[decayedRange] | Time: [world.time]")
 	if(!valid && get_dist(loc, target_turf) < 1)
-		testing("PEAKED")
-		var/est_time_down = 0.5 SECONDS
-		animate(src, est_time_down, FALSE, transform = matrix()*0.5)
 		original_firer?.playsound_local(src, 'sound/machines/ping.ogg', 30)
 		valid = TRUE
-		if(crosshair_indicator)
-			crosshair_indicator.color = COLOR_YELLOW
 	else if(valid && get_dist(loc, target_turf) > 1)
 		valid = FALSE
 		remove_crosshair_indicator()
@@ -166,16 +152,13 @@
 
 	ADD_TRAIT(next_target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT)
 	addtimer(TRAIT_CALLBACK_REMOVE(next_target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT), 0.5 SECONDS)
-	//var/projectile_type = incoming_shot.type
-	//testing("Type of new shot: [incoming_shot] | [incoming_shot.type] | [incoming_shot.ricoshot_level] | [outgoing_ricoshot_level]")
 	var/outgoing_ricoshot_level = incoming_shot.ricoshot_level + 1
 	var/obj/projectile/bullet/marksman/new_splitshot = new /obj/projectile/bullet/marksman(get_turf(src), null, outgoing_ricoshot_level)
-	testing("new: [new_splitshot] | [new_splitshot.type] | [new_splitshot.damage]")
 	//Shooting Code:
 	new_splitshot.original = next_target
 	new_splitshot.fired_from = incoming_shot.fired_from
 	new_splitshot.firer = incoming_shot.firer
-	new_splitshot.damage = 1.3 * incoming_shot.damage
+	new_splitshot.damage = 2 * incoming_shot.damage
 
 	var/current_turf = get_turf(src)
 	var/target_turf = get_turf(next_target)
@@ -185,7 +168,6 @@
 	else
 		new_splitshot.preparePixelProjectile(next_target, get_turf(src))
 		new_splitshot.fire()
-
 
 	if(istype(next_target, /obj/projectile/bullet/coin)) // handle further splitshot checks
 		var/obj/projectile/bullet/coin/our_coin = next_target
@@ -213,7 +195,7 @@
 	if(possible_victims.len)
 		return pick(possible_victims)
 
-	var/list/static/prioritized_targets = list(/obj/structure/reagent_dispensers/fueltank, /obj/item/grenade, /obj/structure/window)
+	var/list/static/prioritized_targets = list(/obj/structure/reagent_dispensers, /obj/item/grenade, /obj/structure/window)
 	for(var/iter_type in prioritized_targets)
 		for(var/already_coined_tries in 1 to 3)
 			var/atom/iter_type_check = locate(iter_type) in valid_targets

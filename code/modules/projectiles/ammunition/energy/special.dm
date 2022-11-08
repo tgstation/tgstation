@@ -71,5 +71,6 @@
 
 /obj/item/ammo_casing/energy/marksman
 	projectile_type = /obj/projectile/bullet/marksman
-	select_name = "marksman bullet"
+	select_name = "marksman nanoshot"
 	e_cost = 0
+	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
