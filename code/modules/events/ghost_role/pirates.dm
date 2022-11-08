@@ -156,7 +156,7 @@
 	for(var/obj/machinery/rnd/server/S as anything in SSresearch.servers)
 		if(S.machine_stat & (NOPOWER|BROKEN))
 			continue
-		if(!(S.stored_research == SSresearch.science_tech)) //only target the station
+		if(S.stored_research != SSresearch.science_tech) //only target the station
 			continue
 		S.emp_act()
 		new /obj/effect/temp_visual/emp(get_turf(S))
