@@ -8,13 +8,13 @@
 	icon = 'icons/mob/augmentation/augments.dmi'
 	icon_state = "robo_suit"
 	/// Left arm part of the endoskeleton
-	var/obj/item/bodypart/l_arm/robot/l_arm = null
+	var/obj/item/bodypart/arm/left/robot/l_arm = null
 	/// Right arm part of the endoskeleton
-	var/obj/item/bodypart/r_arm/robot/r_arm = null
+	var/obj/item/bodypart/arm/right/robot/r_arm = null
 	/// Left leg part of this endoskeleton
-	var/obj/item/bodypart/l_leg/robot/l_leg = null
+	var/obj/item/bodypart/leg/left/robot/l_leg = null
 	/// Right leg part of this endoskeleton
-	var/obj/item/bodypart/r_leg/robot/r_leg = null
+	var/obj/item/bodypart/leg/right/robot/r_leg = null
 	/// Chest part of this endoskeleton
 	var/obj/item/bodypart/chest/robot/chest = null
 	/// Head part of this endoskeleton
@@ -162,7 +162,7 @@
 			else
 				to_chat(user, span_warning("You need one sheet of iron to start building ED-209!"))
 				return
-	else if(istype(W, /obj/item/bodypart/l_leg/robot))
+	else if(istype(W, /obj/item/bodypart/leg/left/robot))
 		if(l_leg)
 			return
 		if(!user.transferItemToLoc(W, src))
@@ -172,7 +172,7 @@
 		l_leg = W
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/r_leg/robot))
+	else if(istype(W, /obj/item/bodypart/leg/right/robot))
 		if(src.r_leg)
 			return
 		if(!user.transferItemToLoc(W, src))
@@ -182,7 +182,7 @@
 		r_leg = W
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/l_arm/robot))
+	else if(istype(W, /obj/item/bodypart/arm/left/robot))
 		if(l_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
@@ -192,7 +192,7 @@
 		l_arm = W
 		update_appearance()
 
-	else if(istype(W, /obj/item/bodypart/r_arm/robot))
+	else if(istype(W, /obj/item/bodypart/arm/right/robot))
 		if(r_arm)
 			return
 		if(!user.transferItemToLoc(W, src))

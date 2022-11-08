@@ -171,7 +171,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 		hold_this.display(orphan, src)
 
 /datum/element/turf_z_transparency
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
 /datum/element/turf_z_transparency/Attach(datum/target, mapload)

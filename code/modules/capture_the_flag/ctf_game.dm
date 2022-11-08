@@ -553,6 +553,7 @@
 		return
 	if(!(src.team in L.faction))
 		to_chat(L, span_danger("<B>Stay out of the enemy spawn!</B>"))
+		L.investigate_log("has died from entering the enemy spawn in CTF.", INVESTIGATE_DEATHS)
 		L.death()
 
 /obj/structure/trap/ctf/red

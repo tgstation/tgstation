@@ -477,3 +477,8 @@
 						"Intersex Pride" = "pride_intersex",
 						"Lesbian Pride" = "pride_lesbian",
 						)
+
+/obj/item/clothing/accessory/deaf_pin
+	name = "deaf personnel pin"
+	desc = "Indicates that the wearer is deaf."
+	icon_state = "deaf_pin"

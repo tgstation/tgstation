@@ -70,7 +70,7 @@
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/pet/dog/pug,
 		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/mouse,
+		/mob/living/basic/mouse,
 		/mob/living/simple_animal/chicken,
 		/mob/living/basic/cow,
 		/mob/living/simple_animal/hostile/lizard,
@@ -190,9 +190,9 @@
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
 		if(memory_flags & MEMORY_FLAG_NOSTATIONNAME)
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [CURRENT_STATION_YEAR]."
 		else
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [CURRENT_STATION_YEAR] on [station_name()]."
 
 	parsed_story = trim_right(parsed_story)
 
@@ -205,5 +205,3 @@
 		var/detail = extra_info[key]
 		line = replacetext(line, "%[key]", "[detail]")
 	name = line
-
-

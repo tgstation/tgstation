@@ -2,7 +2,6 @@
 /// Adds the TRAIT_RADIATION_PROTECTED_CLOTHING trait, as well as adding an
 /// extra bit to the examine descrpition.
 /datum/element/radiation_protected_clothing
-	element_flags = ELEMENT_DETACH
 
 /datum/element/radiation_protected_clothing/Attach(datum/target)
 	. = ..()

@@ -363,6 +363,11 @@ Difficulty: Extremely Hard
 	SIGNAL_HANDLER
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 
+/datum/status_effect/ice_block_talisman/be_replaced()
+	owner.cut_overlay(cube)
+	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
+	return ..()
+
 /datum/status_effect/ice_block_talisman/on_remove()
 	if(!owner.stat)
 		to_chat(owner, span_notice("The cube melts!"))

@@ -152,6 +152,7 @@
 		return
 	C.vomit(0, TRUE, TRUE, 3, TRUE)
 	C.spew_organ(3, 2)
+	C.investigate_log("has died from using telekinesis on a tear in reality.", INVESTIGATE_DEATHS)
 	C.death()
 
 #undef TEAR_IN_REALITY_CONSUME_RANGE

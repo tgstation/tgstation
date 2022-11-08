@@ -119,7 +119,7 @@
 		return TRUE
 	return ..()
 
-/obj/item/melee/energy/sword/bananium/suicide_act(mob/user)
+/obj/item/melee/energy/sword/bananium/suicide_act(mob/living/user)
 	if(!blade_active)
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!"))
@@ -202,11 +202,11 @@
 	. = ..()
 	QDEL_NULL(bomb)
 
-/obj/item/grown/bananapeel/bombanana/suicide_act(mob/user)
+/obj/item/grown/bananapeel/bombanana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide."))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
 	bomb.arm_grenade(user, 0, FALSE)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 //TEARSTACHE GRENADE
 

@@ -47,7 +47,7 @@
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	belt = /obj/item/modular_computer/tablet/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
-	l_hand = /obj/item/export_scanner
+	l_hand = /obj/item/universal_scanner
 
 /datum/outfit/job/cargo_tech/mod
 	name = "Cargo Technician (MODsuit)"

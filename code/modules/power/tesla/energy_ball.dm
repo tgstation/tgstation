@@ -168,6 +168,7 @@
 	jedi.ghostize(jedi)
 	if(rip_u)
 		qdel(rip_u)
+	jedi.investigate_log("had [jedi.p_their()] brain dusted by touching [src] with telekinesis.", INVESTIGATE_DEATHS)
 	jedi.death()
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -196,6 +197,7 @@
 		if(GR.anchored)
 			return
 	var/mob/living/carbon/C = A
+	C.investigate_log("has been dusted by an energy ball.", INVESTIGATE_DEATHS)
 	C.dust()
 
 /proc/tesla_zap(atom/source, zap_range = 3, power, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets = list())
