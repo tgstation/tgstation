@@ -224,7 +224,7 @@
 /datum/component/sign_language/proc/on_say_quote(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
-	message_args[MOVABLE_TREAT_MESSAGE_MESSAGE] = sanitize_message(message_args[MOVABLE_TREAT_MESSAGE_MESSAGE])
+	message_args[MOVABLE_SAY_QUOTE_MESSAGE] = sanitize_message(message_args[MOVABLE_SAY_QUOTE_MESSAGE])
 
 /// Signal proc for [COMSIG_MOVABLE_TREAT_MESSAGE]
 /// Removes exclamation/question marks if /atom/movable/proc/say_quote() isn't going to run.
