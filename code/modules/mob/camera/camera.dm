@@ -26,10 +26,8 @@ GLOBAL_LIST_EMPTY(cliented_mob_cams)
 	GLOB.cliented_mob_cams += src
 
 /mob/camera/Logout()
-	. = ..()
-	if(!.)
-		return
-	GLOB.cliented_mob_cams += src
+	GLOB.cliented_mob_cams -= src
+	return ..()
 
 /mob/camera/experience_pressure_difference()
 	return
