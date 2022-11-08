@@ -34,7 +34,7 @@
 
 /// Planted a bomb.
 /datum/memory/bomb_planted
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_MEH
 	var/bomb_type
 
 /datum/memory/bomb_planted/New(
@@ -74,7 +74,6 @@
 
 /// Got a sweet high five.
 /datum/memory/high_five
-	story_value = STORY_VALUE_OKAY
 	var/high_five_type
 
 /datum/memory/high_five/New(
@@ -85,6 +84,7 @@
 	high_five_type,
 )
 	src.high_five_type = high_five_type
+	story_value = high_five_type == "high ten" ? STORY_VALUE_OKAY : STORY_VALUE_MEH
 	return ..()
 
 /datum/memory/high_five/get_names()
@@ -121,7 +121,7 @@
 
 /// Witnessed someone die nearby.
 /datum/memory/witnessed_death
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_MEH // this is pretty common on this hellhole
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS|MEMORY_FLAG_NOMOOD
 
 /datum/memory/witnessed_death/get_names()
@@ -158,7 +158,7 @@
 
 /// Got slipped by something.
 /datum/memory/was_slipped
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_MEH
 
 /datum/memory/was_slipped/get_names()
 	return list("The slipping of [protagonist_name].")
@@ -181,7 +181,7 @@
 
 /// Had spaghetti fall from their pockets.
 /datum/memory/lost_spaghetti
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_AMAZING // This doesn't happen very often
 	memory_flags = MEMORY_CHECK_BLINDNESS
 
 /datum/memory/lost_spaghetti/get_names()
@@ -201,7 +201,7 @@
 
 /// Got kissed! AHHHHH!
 /datum/memory/kissed
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_MEH
 	// Sorry but blind people can't feel kisses...
 	memory_flags = MEMORY_CHECK_BLINDNESS
 
@@ -222,7 +222,7 @@
 
 /// Had some good food.
 /datum/memory/good_food
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_MEH
 	var/food
 
 /datum/memory/good_food/New(
@@ -252,7 +252,7 @@
 
 /// Had a good drink.
 /datum/memory/good_drink
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_MEH
 	var/drink
 
 /datum/memory/good_drink/New(
@@ -281,7 +281,7 @@
 
 /// Was set on fire and started to burn.
 /datum/memory/was_burning
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_MEH
 
 /datum/memory/was_burning/get_names()
 	return list("The burning of [protagonist_name].")
@@ -411,7 +411,7 @@
 
 /// Given to heads of staff, and those around them, upon defeating the revolutionaries.
 /datum/memory/revolution_heads_victory
-	story_value = STORY_VALUE_AMAZING // Not as amazing as a rev victory. Everyone loves underdog stories
+	story_value = STORY_VALUE_AMAZING // Not as cool as a rev victory. Everyone loves underdog stories
 	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_SKIP_UNCONSCIOUS
 
 /datum/memory/revolution_heads_victory/get_names()
@@ -503,7 +503,7 @@
 
 /// Saw someone get gibbed.
 /datum/memory/witness_gib
-	story_value = STORY_VALUE_AMAZING
+	story_value = STORY_VALUE_OKAY
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_FLAG_NOMOOD
 
 /datum/memory/witness_gib/get_names()
@@ -517,7 +517,7 @@
 
 /// Saw someone get crushed by a vending machine.
 /datum/memory/witness_vendor_crush
-	story_value = STORY_VALUE_AMAZING
+	story_value = STORY_VALUE_OKAY
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_SKIP_UNCONSCIOUS
 
 /datum/memory/witness_vendor_crush/get_names()
@@ -538,7 +538,7 @@
 
 /// Saw someone get dusted by the supermatter.
 /datum/memory/witness_supermatter_dusting
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_AMAZING
 	memory_flags = MEMORY_CHECK_BLINDNESS
 
 /datum/memory/witness_supermatter_dusting/get_names()
@@ -559,7 +559,7 @@
 
 /// Played cards with another person.
 /datum/memory/playing_cards
-	story_value = STORY_VALUE_OKAY
+	story_value = STORY_VALUE_MEH
 	memory_flags = MEMORY_CHECK_BLINDNESS
 	var/game
 	var/protagonist_held_card

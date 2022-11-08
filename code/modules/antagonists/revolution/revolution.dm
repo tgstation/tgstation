@@ -435,18 +435,19 @@
 	var/charter_given = FALSE
 
 	for(var/datum/mind/headrev_mind as anything in ex_headrevs)
-		add_memory_in_range(headrev_mind.current, 5, /datum/memory/revolution_rev_victory, protagonist = rev_mind.current)
-		if(charter_given)
+		var/mob/living/real_headrev = headrev_mind.current
+		if(isnull(real_headrev))
 			continue
-		if(!headrev_mind.current || headrev_mind.current.stat != CONSCIOUS)
+		add_memory_in_range(real_headrev, 5, /datum/memory/revolution_rev_victory, protagonist = real_headrev)
+		if(charter_given || real_headrev.stat != CONSCIOUS)
 			continue
 		charter_given = TRUE
 		podspawn(list(
-			"target" = get_turf(headrev_mind.current),
+			"target" = get_turf(real_headrev),
 			"style" = STYLE_SYNDICATE,
 			"spawn" = /obj/item/station_charter/revolution,
 		))
-		to_chat(headrev_mind.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
+		to_chat(real_headrev, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
 			\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
 			<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
 
