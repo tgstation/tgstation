@@ -7,14 +7,20 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "A sketchy but legit insurance offer."
 
-/datum/round_event_control/shuttle_insurance/canSpawnEvent(players)
+/datum/round_event_control/shuttle_insurance/can_spawn_event(players)
+	. = ..()
+	if(!.)
+		return .
+
 	if(!SSeconomy.get_dep_account(ACCOUNT_CAR))
 		return FALSE //They can't pay?
 	if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return FALSE //don't do it if there's nothing to insure
+	if(istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build))
+		return FALSE //this shuttle prevents the catastrophe event from happening making this event effectively useless
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return FALSE //catastrophes won't trigger so no point
-	return ..()
+	return TRUE
 
 /datum/round_event/shuttle_insurance
 	var/ship_name = "\"In the Unlikely Event\""

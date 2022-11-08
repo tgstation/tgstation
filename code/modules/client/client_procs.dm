@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	var/stl = CONFIG_GET(number/second_topic_limit)
-	if (!holder && stl)
+	if (!holder && stl && href_list["window_id"] != "statbrowser")
 		var/second = round(world.time, 10)
 		if (!topiclimiter)
 			topiclimiter = new(LIMITER_SIZE)
@@ -544,6 +544,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
+	if(obj_window)
+		QDEL_NULL(obj_window)
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
@@ -631,9 +633,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(!CONFIG_GET(flag/panic_bunker_interview))
 			// If we don't have panic_bunker_living set and the client is not in the DB, reject them.
 			// Otherwise, if we do have a panic_bunker_living set, check if they have enough minutes played.
-			if((!living_recs && !client_is_in_db) || living_recs >= minutes)
+			if((living_recs == 0 && !client_is_in_db) || living_recs >= minutes)
 				var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
-					[living_recs == -1 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
+					[living_recs == 0 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
 				log_access(reject_message)
 				message_admins(span_adminnotice("[reject_message]"))
 				var/message = CONFIG_GET(string/panic_bunker_message)
@@ -952,7 +954,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//check if the server is overloaded and if it is then queue up the click for next tick
 	//yes having it call a wrapping proc on the subsystem is fucking stupid glad we agree unfortunately byond insists its reasonable
-	if(TRY_QUEUE_VERB(VERB_CALLBACK(object, /atom/proc/_Click, location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
+	if(!QDELETED(object) && TRY_QUEUE_VERB(VERB_CALLBACK(object, /atom/proc/_Click, location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
 		return
 
 	if (hotkeys)
@@ -1033,6 +1035,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/rescale_view(change, min, max)
 	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
+/client/proc/set_eye(new_eye)
+	if(new_eye == eye)
+		return
+	var/atom/old_eye = eye
+	eye = new_eye
+	SEND_SIGNAL(src, COMSIG_CLIENT_SET_EYE, old_eye, new_eye)
 /**
  * Updates the keybinds for special keys
  *
@@ -1184,7 +1192,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		winset(src, "default.ShiftUp", "is-disabled=true")
 
 /client/proc/update_ambience_pref()
-	if(prefs.toggles & SOUND_AMBIENCE)
+	if(prefs.read_preference(/datum/preference/toggle/sound_ambience))
 		if(SSambience.ambience_listening_clients[src] > world.time)
 			return // If already properly set we don't want to reset the timer.
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.

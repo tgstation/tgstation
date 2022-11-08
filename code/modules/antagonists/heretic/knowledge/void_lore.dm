@@ -76,7 +76,7 @@
 		return
 
 	var/mob/living/carbon/carbon_target = target
-	carbon_target.silent += 5
+	carbon_target.adjust_silence(10 SECONDS)
 	carbon_target.apply_status_effect(/datum/status_effect/void_chill)
 
 /datum/heretic_knowledge/cold_snap
@@ -195,7 +195,7 @@
 
 /datum/heretic_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, step along the Waltz that ends worlds! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce("[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, stepping along the Waltz that ends worlds! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
 	ADD_TRAIT(user, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
 
@@ -222,7 +222,7 @@
 	for(var/mob/living/carbon/close_carbon in view(5, source))
 		if(IS_HERETIC_OR_MONSTER(close_carbon))
 			continue
-		close_carbon.silent += 1
+		close_carbon.adjust_silence_up_to(2 SECONDS, 20 SECONDS)
 
 	// Telegraph the storm in every area on the station.
 	var/list/station_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)

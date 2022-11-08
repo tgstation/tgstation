@@ -21,6 +21,11 @@
 	progression_reward = list(2 MINUTES, 4 MINUTES)
 	telecrystal_reward = list(1, 2)
 
+	/// The period of time until you can take another objective after taking 3 objectives.
+	var/objective_period = 15 MINUTES
+	/// The maximum number of objectives we can get within this period.
+	var/maximum_objectives_in_period = 3
+
 	/// The jobs that this objective is targetting.
 	var/list/target_jobs
 	/// The person we need to kidnap
@@ -34,7 +39,21 @@
 	/// All stripped victims belongings
 	var/list/victim_belogings = list()
 
+/datum/traitor_objective/kidnapping/supported_configuration_changes()
+	. = ..()
+	. += NAMEOF(src, objective_period)
+	. += NAMEOF(src, maximum_objectives_in_period)
+
+/datum/traitor_objective/kidnapping/New(datum/uplink_handler/handler)
+	. = ..()
+	AddComponent(/datum/component/traitor_objective_limit_per_time, \
+		/datum/traitor_objective/assassinate, \
+		time_period = objective_period, \
+		maximum_objectives = maximum_objectives_in_period \
+	)
+
 /datum/traitor_objective/kidnapping/common
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	target_jobs = list(
 		// Medical
@@ -62,12 +81,14 @@
 	)
 
 /datum/traitor_objective/kidnapping/less_common
+	progression_minimum = 0 MINUTES
 	progression_maximum = 15 MINUTES
 	target_jobs = list(
 		/datum/job/assistant
 	)
 
 /datum/traitor_objective/kidnapping/uncommon //Hard to fish out victims
+	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	target_jobs = list(
 		// Medical
@@ -239,8 +260,8 @@
 		return
 
 	sent_mob.flash_act()
-	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
-	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
+	sent_mob.adjust_confusion(10 SECONDS)
+	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.blur_eyes(5 SECONDS)
 	to_chat(sent_mob, span_hypnophrase(span_reallybig("A million voices echo in your head... <i>\"Your mind held many valuable secrets - \
 		we thank you for providing them. Your value is expended, and you will be ransomed back to your station. We always get paid, \
@@ -285,11 +306,8 @@
 
 	sent_mob.forceMove(return_pod)
 	sent_mob.flash_act()
-	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
-	sent_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness)
+	sent_mob.adjust_confusion(10 SECONDS)
+	sent_mob.adjust_dizzy(10 SECONDS)
 	sent_mob.blur_eyes(5 SECONDS)
 
 	new /obj/effect/pod_landingzone(pick(possible_turfs), return_pod)
-
-
-

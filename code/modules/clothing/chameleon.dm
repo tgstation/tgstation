@@ -6,7 +6,7 @@
 	button_icon_state = "random"
 
 /datum/action/item_action/chameleon/drone/randomise/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 
 	// Damn our lack of abstract interfeces
@@ -33,7 +33,7 @@
 		button_icon_state = "drone_camogear_mask"
 
 /datum/action/item_action/chameleon/drone/togglehatmask/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 
 	// No point making the code more complicated if no non-drone
@@ -91,12 +91,12 @@
 	return select_outfit(owner)
 
 /datum/action/chameleon_outfit/proc/select_outfit(mob/user)
-	if(!user || !IsAvailable())
+	if(!user || !IsAvailable(feedback = TRUE))
 		return FALSE
 	var/selected = tgui_input_list(user, "Select outfit to change into", "Chameleon Outfit", outfit_options)
 	if(isnull(selected))
 		return FALSE
-	if(!IsAvailable() || QDELETED(src) || QDELETED(user))
+	if(!IsAvailable(feedback = TRUE) || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(isnull(outfit_options[selected]))
 		return FALSE
@@ -244,7 +244,7 @@
 		atom_target.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 
 	select_look(owner)
@@ -468,6 +468,7 @@
 	name = "insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
+	greyscale_colors = null
 
 	resistance_flags = NONE
 	armor = list(MELEE = 10, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
@@ -496,8 +497,9 @@
 /obj/item/clothing/head/chameleon
 	name = "grey cap"
 	desc = "It's a baseball hat in a tasteful grey colour."
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "greysoft"
-
 	resistance_flags = NONE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 
@@ -598,6 +600,7 @@
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	icon_state = "sneakers"
+	inhand_icon_state = "sneakers_back"
 	greyscale_colors = "#545454#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers_worn

@@ -81,9 +81,9 @@
 
 #define COMSIG_OBJ_ALLOWED "door_try_to_activate"
 	#define COMPONENT_OBJ_ALLOW (1<<0)
+	#define COMPONENT_OBJ_DISALLOW (1<<1)
 
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
-	#define COMPONENT_AIRLOCK_SHELL_ALLOW (1<<0)
 
 // /obj/machinery/door/airlock signals
 
@@ -93,9 +93,14 @@
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
 ///from /obj/machinery/door/airlock/set_bolt():
 #define COMSIG_AIRLOCK_SET_BOLT "airlock_set_bolt"
+///from /obj/machinery/door/airlock/bumpopen(), to the carbon who bumped: (airlock)
+#define COMSIG_CARBON_BUMPED_AIRLOCK_OPEN "carbon_bumped_airlock_open"
+	/// Return to stop the door opening on bump.
+	#define STOP_BUMP (1<<0)
+
 // /obj/item signals
 
-///from base of obj/item/equipped(): (/mob/equipper, slot)
+///from base of obj/item/equipped(): (mob/equipper, slot)
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 /// A mob has just equipped an item. Called on [/mob] from base of [/obj/item/equipped()]: (/obj/item/equipped_item, slot)
 #define COMSIG_MOB_EQUIPPED_ITEM "mob_equipped_item"
@@ -130,31 +135,13 @@
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
-///called on item when microwaved (): (obj/machinery/microwave/M)
-#define COMSIG_ITEM_MICROWAVE_ACT "microwave_act"
-	#define COMPONENT_SUCCESFUL_MICROWAVE (1<<0)
-///called on item when created through microwaving (): (obj/machinery/microwave/M, cooking_efficiency)
-#define COMSIG_ITEM_MICROWAVE_COOKED "microwave_cooked"
 ///from base of item/sharpener/attackby(): (amount, max)
 #define COMSIG_ITEM_SHARPEN_ACT "sharpen_act"
 	#define COMPONENT_BLOCK_SHARPEN_APPLIED (1<<0)
 	#define COMPONENT_BLOCK_SHARPEN_BLOCKED (1<<1)
 	#define COMPONENT_BLOCK_SHARPEN_ALREADY (1<<2)
 	#define COMPONENT_BLOCK_SHARPEN_MAXED (1<<3)
-///Called when an object is grilled ontop of a griddle
-#define COMSIG_ITEM_GRILLED "item_griddled"
-	#define COMPONENT_HANDLED_GRILLING (1<<0)
-///Called when an object is turned into another item through grilling ontop of a griddle
-#define COMSIG_GRILL_COMPLETED "item_grill_completed"
-///Called when an object is meant to be grilled through a grill: (atom/fry_object, grill_time)
-#define COMSIG_GRILL_FOOD "item_grill_food"
-//Called when an object is in an oven
-#define COMSIG_ITEM_BAKED "item_baked"
-	#define COMPONENT_HANDLED_BAKING (1<<0)
-	#define COMPONENT_BAKING_GOOD_RESULT (1<<1)
-	#define COMPONENT_BAKING_BAD_RESULT (1<<2)
-///Called when an object is turned into another item through baking in an oven
-#define COMSIG_BAKE_COMPLETED "item_bake_completed"
+
 ///Called when an armor plate is successfully applied to an object
 #define COMSIG_ARMOR_PLATED "armor_plated"
 ///Called when an item gets recharged by the ammo powerup

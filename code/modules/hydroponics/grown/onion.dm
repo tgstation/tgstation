@@ -14,7 +14,7 @@
 	growthstages = 3
 	weed_chance = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.5)
 	mutatelist = list(/obj/item/seeds/onion/red)
 
 /obj/item/food/grown/onion
@@ -36,7 +36,6 @@
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
 	product = /obj/item/food/grown/onion/red
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/tearjuice = 0.05)
 	mutatelist = null
 
 /obj/item/food/grown/onion/red
@@ -65,7 +64,9 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	gender = PLURAL
 	w_class = WEIGHT_CLASS_TINY
-	microwaved_type = /obj/item/food/onionrings
+
+/obj/item/food/onion_slice/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/onionrings)
 
 /obj/item/food/onion_slice/red
 	name = "red onion slices"

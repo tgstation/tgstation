@@ -192,9 +192,9 @@ if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo -e "${RED}ERROR: Variable editted /area path use detected in a map, please replace with a proper area path.${NC}"
     st=1
 fi;
-if grep -P '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
+if grep -P '\/turf\s*[,\){]' _maps/**/*.dmm; then
 	echo
-    echo -e "${RED}ERROR: Base /turf path use detected in maps, please replace a with proper turf path.${NC}"
+    echo -e "${RED}ERROR: Base /turf path use detected in maps, please replace it with a proper turf path.${NC}"
     st=1
 fi;
 if grep -Pzo '"\w+" = \(\n[^)]*?/turf/[/\w]*?,\n[^)]*?/turf/[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm; then
@@ -244,6 +244,11 @@ done < <(find . -type f -name '*.dm')
 
 echo -e "${BLUE}Checking for common mistakes...${NC}"
 
+if grep -P 'to_chat\((?!.*,).*\)' code/**/*.dm; then
+	echo
+    echo -e "${RED}ERROR: to_chat() missing arguments.${NC}"
+    st=1
+fi;
 if grep -P 'addtimer\((?=.*TIMER_OVERRIDE)(?!.*TIMER_UNIQUE).*\)' code/**/*.dm; then
 	echo
     echo -e "${RED}ERROR: TIMER_OVERRIDE used without TIMER_UNIQUE.${NC}"

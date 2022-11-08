@@ -4,6 +4,8 @@
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	base_icon_state = "nothingwand"
 	w_class = WEIGHT_CLASS_SMALL
 	can_charge = FALSE
@@ -120,7 +122,8 @@
 			to_chat(user, "<span class='warning'>You irradiate yourself with pure positive energy! \
 			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You die...","Do you want your possessions identified?")]\
 			</span>")
-			user.death(0)
+			user.investigate_log("has been killed by a bolt of resurrection.", INVESTIGATE_DEATHS)
+			user.death(FALSE)
 			return
 	user.revive(full_heal = TRUE, admin_revive = TRUE)
 	to_chat(user, span_notice("You feel great!"))

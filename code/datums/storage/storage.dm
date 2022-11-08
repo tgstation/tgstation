@@ -55,6 +55,8 @@
 
 	/// don't show any chat messages regarding inserting items
 	var/silent = FALSE
+	/// same as above but only for the user, useful to cut on chat spam without removing feedback for other players
+	var/silent_for_user = FALSE
 	/// play a rustling sound when interacting with the bag
 	var/rustle_sound = TRUE
 
@@ -268,7 +270,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return "\n\t[span_notice("[desc.Join("\n\t")]")]"
 
 /// Updates the action button for toggling collectmode.
-/datum/storage/proc/update_actions()
+/datum/storage/proc/update_actions(atom/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
 	var/obj/item/resolve_parent = parent?.resolve()
@@ -290,7 +292,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /// Refreshes and item to be put back into the real world, out of storage.
 /datum/storage/proc/reset_item(obj/item/thing)
 	thing.layer = initial(thing.layer)
-	thing.plane = initial(thing.plane)
+	SET_PLANE_IMPLICIT(thing, initial(thing.plane))
 	thing.mouse_opacity = initial(thing.mouse_opacity)
 	thing.screen_loc = null
 	if(thing.maptext)
@@ -312,6 +314,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_location)
 		return
 
+	if(QDELETED(to_insert))
+		return FALSE
+
 	if(!isitem(to_insert))
 		return FALSE
 
@@ -327,7 +332,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	if(resolve_location.contents.len >= max_slots)
-		if(messages && user)
+		if(messages && user && !silent_for_user)
 			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
 		return FALSE
 
@@ -337,7 +342,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		total_weight += thing.w_class
 
 	if(total_weight > max_total_storage)
-		if(messages && user)
+		if(messages && user && !silent_for_user)
 			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
 		return FALSE
 
@@ -454,7 +459,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(rustle_sound)
 		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
 
-	to_chat(user, span_notice("You put [thing] [insert_preposition]to [resolve_parent]."))
+	if(!silent_for_user)
+		to_chat(user, span_notice("You put [thing] [insert_preposition]to [resolve_parent]."))
 
 	for(var/mob/viewing in oviewers(user, null))
 		if(in_range(user, viewing))
@@ -860,15 +866,17 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	boxes.screen_loc = "[screen_start_x]:[screen_pixel_x],[screen_start_y]:[screen_pixel_y] to [screen_start_x+cols-1]:[screen_pixel_x],[screen_start_y+rows-1]:[screen_pixel_y]"
 	var/current_x = screen_start_x
 	var/current_y = screen_start_y
+	var/turf/our_turf = get_turf(resolve_location)
 
 	if(islist(numerical_display_contents))
 		for(var/type in numerical_display_contents)
 			var/datum/numbered_display/numberdisplay = numerical_display_contents[type]
 
-			numberdisplay.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
-			numberdisplay.sample_object.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
-			numberdisplay.sample_object.maptext = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
-			numberdisplay.sample_object.plane = ABOVE_HUD_PLANE
+			var/obj/item/display_sample = numberdisplay.sample_object
+			display_sample.mouse_opacity = MOUSE_OPACITY_OPAQUE
+			display_sample.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+			display_sample.maptext = MAPTEXT("<font color='white'>[(numberdisplay.number > 1)? "[numberdisplay.number]" : ""]</font>")
+			SET_PLANE(display_sample, ABOVE_HUD_PLANE, our_turf)
 
 			current_x++
 
@@ -885,6 +893,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
 			item.maptext = ""
 			item.plane = ABOVE_HUD_PLANE
+			SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
 
 			current_x++
 

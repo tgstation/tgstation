@@ -156,7 +156,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/camera/blob/proc/victory()
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	sleep(100)
+	sleep(10 SECONDS)
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 		var/turf/T = get_turf(L)
@@ -173,12 +173,14 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		if(!(ROLE_BLOB in L.faction))
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
+			if(L.stat != DEAD)
+				L.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
 			L.fully_heal(admin_revive = FALSE)
 
-		for(var/area/A in GLOB.sortedAreas)
+		for(var/area/A in GLOB.areas)
 			if(!(A.type in GLOB.the_station_areas))
 				continue
 			if(!(A.area_flags & BLOBS_ALLOWED))
@@ -252,7 +254,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
 
-/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if (!message)
 		return
 

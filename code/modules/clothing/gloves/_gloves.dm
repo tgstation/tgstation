@@ -3,8 +3,12 @@
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
+	inhand_icon_state = "greyscale_gloves"
 	lefthand_file = 'icons/mob/inhands/clothing/gloves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/gloves_righthand.dmi'
+	greyscale_colors = null
+	greyscale_config_inhand_left = /datum/greyscale_config/gloves_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/gloves_inhand_right
 	siemens_coefficient = 0.5
 	body_parts_covered = HANDS
 	slot_flags = ITEM_SLOT_GLOVES

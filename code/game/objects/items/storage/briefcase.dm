@@ -2,6 +2,7 @@
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
 	icon_state = "briefcase"
+	inhand_icon_state = "briefcase"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -34,7 +35,7 @@
 	new /obj/item/stamp/law(src)
 	..()
 
-/obj/item/storage/briefcase/suicide_act(mob/user)
+/obj/item/storage/briefcase/suicide_act(mob/living/user)
 	var/list/papers_found = list()
 	var/turf/item_loc = get_turf(src)
 

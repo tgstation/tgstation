@@ -6,17 +6,8 @@
 	bite_consumption = 2
 
 /obj/item/food/deepfryholder/MakeEdible()
-	AddComponent(/datum/component/edible,\
-			initial_reagents = food_reagents,\
-			food_flags = food_flags,\
-			foodtypes = foodtypes,\
-			volume = max_volume,\
-			eat_time = eat_time,\
-			tastes = tastes,\
-			eatverbs = eatverbs,\
-			bite_consumption = bite_consumption,\
-			on_consume = CALLBACK(src, .proc/On_Consume))
-
+	. = ..()
+	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, .proc/On_Consume))
 
 /obj/item/food/deepfryholder/Initialize(mapload, obj/item/fried)
 	if(!fried)
@@ -26,7 +17,7 @@
 	name = fried.name //We'll determine the other stuff when it's actually removed
 	appearance = fried.appearance
 	layer = initial(layer)
-	plane = initial(plane)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	lefthand_file = fried.lefthand_file
 	righthand_file = fried.righthand_file
 	inhand_icon_state = fried.inhand_icon_state

@@ -14,7 +14,7 @@
 	var/obj/effect/temp_visual/cult/rune_spawn/rune_center_type
 	var/rune_color
 
-/datum/action/innate/cult/create_rune/IsAvailable()
+/datum/action/innate/cult/create_rune/IsAvailable(feedback = FALSE)
 	if(!rune_type || cooldown > world.time)
 		return FALSE
 	return ..()

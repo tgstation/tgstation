@@ -15,7 +15,7 @@
 	taunt_chance = 25
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1)
+	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -91,7 +91,7 @@
 	icon_living = "combatbear"
 	icon_dead = "combatbear_dead"
 	faction = list("russian")
-	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1, /obj/item/bear_armor = 1)
+	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1, /obj/item/bear_armor = 1)
 	melee_damage_lower = 18
 	melee_damage_upper = 20
 	wound_bonus = 0

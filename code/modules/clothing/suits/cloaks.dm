@@ -5,7 +5,7 @@
 	desc = "It's a cape that can be worn around your neck."
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
-	inhand_icon_state = "qmcloak"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESUITSTORAGE
@@ -14,9 +14,9 @@
 	. = ..()
 	AddComponent(/datum/component/surgery_initiator)
 
-/obj/item/clothing/neck/cloak/suicide_act(mob/user)
+/obj/item/clothing/neck/cloak/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(OXYLOSS)
+	return OXYLOSS
 
 /obj/item/clothing/neck/cloak/hos
 	name = "head of security's cloak"

@@ -28,7 +28,6 @@
 //Gives player-controlled variants the ability to swap attacks
 /mob/living/simple_animal/hostile/asteroid/elite/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_ALERT_GHOSTS_ON_DEATH, INNATE_TRAIT)
 	for(var/action_type in attack_action_types)
 		var/datum/action/innate/elite_attack/attack_action = new action_type()
 		attack_action.Grant(src)
@@ -59,7 +58,7 @@
 		M.take_damage(50, BRUTE, MELEE, 1)
 
 //Elites can't talk (normally)!
-/mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/living/simple_animal/hostile/asteroid/elite/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	if(can_talk)
 		. = ..()
 		return TRUE
@@ -259,8 +258,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/structure/elite_tumor/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(istype(attacking_item, /obj/item/organ/internal/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
-		var/obj/item/organ/internal/regenerative_core/core = attacking_item
+	if(istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
+		var/obj/item/organ/internal/monster_core/regenerative_core/core = attacking_item
 		visible_message(span_boldwarning("As [user] drops the core into [src], [src] appears to swell."))
 		icon_state = "advanced_tumor"
 		boosted = TRUE

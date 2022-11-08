@@ -27,7 +27,6 @@
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
 	mutantstomach = /obj/item/organ/internal/stomach/bone
-	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW | GORE
 	wings_icons = list("Skeleton")
@@ -37,11 +36,11 @@
 	species_language_holder = /datum/language_holder/skeleton
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/skeleton,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/skeleton,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/skeleton,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/skeleton,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/skeleton,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/skeleton,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/skeleton,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/skeleton,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/skeleton,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/skeleton,
 	)
 
@@ -50,7 +49,7 @@
 	C.set_safe_hunger_level()
 
 /datum/species/skeleton/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 

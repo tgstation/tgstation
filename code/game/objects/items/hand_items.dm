@@ -234,7 +234,7 @@
 		SEND_SOUND(slapped, sound('sound/weapons/flash_ring.ogg'))
 		shake_camera(slapped, 2, 2)
 		slapped.Paralyze(2.5 SECONDS)
-		slapped.adjust_timed_status_effect(7 SECONDS, /datum/status_effect/confusion)
+		slapped.adjust_confusion(7 SECONDS)
 		slapped.adjustStaminaLoss(40)
 	else if(user.zone_selected == BODY_ZONE_HEAD || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		if(user == slapped)
@@ -360,11 +360,14 @@
 	if (!ishuman(target_mob))
 		return
 	var/mob/living/carbon/human/target_human = target_mob
+	if(target_human == user)
+		to_chat(user, span_notice("Why would you try stealing your own shoes?"))
+		return
 	if (!target_human.shoes)
 		return
 	if (user.body_position != LYING_DOWN)
 		return
-	var/obj/item/item_to_strip = target_human.shoes
+	var/obj/item/clothing/shoes/item_to_strip = target_human.shoes
 	user.visible_message(span_warning("[user] starts stealing [target_human]'s [item_to_strip.name]!"), \
 		span_danger("You start stealing [target_human]'s [item_to_strip.name]..."))
 	to_chat(target_human, span_userdanger("[user] starts stealing your [item_to_strip.name]!"))
@@ -392,6 +395,10 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
+
+	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
+		kiss_type = /obj/projectile/kiss/chef
+
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
 	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
@@ -495,12 +502,12 @@
 		if(1)
 			other_msg = "stumbles slightly, turning a bright red!"
 			self_msg = "You lose control of your limbs for a moment as your blood rushes to your face, turning it bright red!"
-			living_target.adjust_timed_status_effect(rand(5 SECONDS, 10 SECONDS), /datum/status_effect/confusion)
+			living_target.adjust_confusion(rand(5 SECONDS, 10 SECONDS))
 		if(2)
 			other_msg = "stammers softly for a moment before choking on something!"
 			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
 			addtimer(CALLBACK(living_target, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
-			living_target.adjust_timed_status_effect(rand(10 SECONDS, 30 SECONDS), /datum/status_effect/speech/stutter)
+			living_target.adjust_stutter(rand(10 SECONDS, 30 SECONDS))
 		if(3)
 			other_msg = "locks up with a stunned look on [living_target.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
 			self_msg = "Your brain completely fails to process what just happened, leaving you rooted in place staring at [firer ? "[firer]" : "the ceiling"] for what feels like an eternity!"
@@ -545,3 +552,33 @@
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)
+
+/obj/projectile/kiss/chef
+	name = "chef's kiss"
+
+// If our chef's kiss hits a food item, we will improve it with love.
+/obj/projectile/kiss/chef/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!IS_EDIBLE(target) || !target.reagents)
+		return
+	if(!firer || !target.Adjacent(firer))
+		return
+
+	// From here on, no message
+	suppressed = SUPPRESSED_VERY
+
+	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
+		return
+	if(target.reagents.has_reagent(/datum/reagent/love))
+		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
+		return
+
+	var/amount_nutriment = target.reagents.get_multiple_reagent_amounts(typesof(/datum/reagent/consumable/nutriment))
+	if(amount_nutriment <= 0)
+		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
+		return
+
+	to_chat(firer, span_green("You deliver a chef's kiss over [target], declaring it perfect."))
+	target.visible_message(span_notice("[firer] delivers a chef's kiss over [target]."), ignored_mobs = firer)
+	target.reagents.add_reagent(/datum/reagent/love, clamp(amount_nutriment / 4, 1, 10)) // clamped to about half of the most dense food I think we have (super bite burger)

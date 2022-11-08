@@ -3,6 +3,7 @@
 	desc = "An issue of The Griffon, the newspaper circulating aboard Nanotrasen Space Stations."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "newspaper"
+	inhand_icon_state = "newspaper"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -21,7 +22,7 @@
 	var/wantedPhoto
 	var/creation_time
 
-/obj/item/newspaper/suicide_act(mob/user)
+/obj/item/newspaper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!"))
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced="newspaper suicide")
 	var/mob/living/carbon/human/H = user
@@ -29,8 +30,7 @@
 	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), TRUE)
 	W.reagents.trans_to(H, W.reagents.total_volume, transfered_by = user)
 	user.visible_message(span_suicide("[user] downs the contents of [W.name] in one gulp! Shoulda stuck to sudoku!"))
-
-	return(TOXLOSS)
+	return TOXLOSS
 
 /obj/item/newspaper/attack_self(mob/user)
 	if(!istype(user) || !user.can_read(src))
@@ -166,7 +166,7 @@
 			var/s = tgui_input_text(user, "Write something", "Newspaper")
 			if (!s)
 				return
-			if(!user.canUseTopic(src, BE_CLOSE))
+			if(!user.canUseTopic(src, be_close = TRUE))
 				return
 			scribble_page = curr_page
 			scribble = s

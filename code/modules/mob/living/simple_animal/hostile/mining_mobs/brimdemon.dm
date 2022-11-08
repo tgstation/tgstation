@@ -29,7 +29,11 @@
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/effect/decal/cleanable/brimdust = 1)
+	butcher_results = list(
+		/obj/item/food/meat/slab = 2,
+		/obj/effect/decal/cleanable/brimdust = 1,
+		/obj/item/organ/internal/monster_core/brimdust_sac = 1,
+	)
 	loot = list()
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -220,7 +224,7 @@
 
 /obj/item/ore_sensor/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_EARS)
+	if(slot & ITEM_SLOT_EARS)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)

@@ -24,7 +24,6 @@
 	brutemod = 1.5
 	payday_modifier = 0.75
 	breathid = "plas"
-	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
@@ -33,11 +32,11 @@
 	species_language_holder = /datum/language_holder/skeleton
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/plasmaman,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/plasmaman,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/plasmaman,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/plasmaman,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/plasmaman,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/plasmaman,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/plasmaman,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/plasmaman,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/plasmaman,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
 	)
 
@@ -117,7 +116,7 @@
 /datum/species/plasmaman/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
 	if(job.plasmaman_outfit)
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
-	equipping.internal = equipping.get_item_for_held_index(2)
+	equipping.open_internals(equipping.get_item_for_held_index(2))
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
 	if(unique)
@@ -138,6 +137,7 @@
 			var/datum/wound/iter_wound = i
 			iter_wound.on_xadone(4 * REAGENTS_EFFECT_MULTIPLIER * delta_time) // plasmamen use plasma to reform their bones or whatever
 		return TRUE
+
 	if(istype(chem, /datum/reagent/toxin/bonehurtingjuice))
 		H.adjustStaminaLoss(7.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
 		H.adjustBruteLoss(0.5 * REAGENTS_EFFECT_MULTIPLIER * delta_time, 0)
@@ -163,6 +163,13 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
 		return TRUE
+
+	if(istype(chem, /datum/reagent/gunpowder))
+		H.set_timed_status_effect(15 SECONDS * delta_time, /datum/status_effect/drugginess)
+		if(H.get_timed_status_effect_duration(/datum/status_effect/hallucination) / 10 < chem.volume)
+			H.adjust_hallucinations(2.5 SECONDS * delta_time)
+		// Do normal metabolism
+		return FALSE
 
 /datum/species/plasmaman/get_species_description()
 	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \

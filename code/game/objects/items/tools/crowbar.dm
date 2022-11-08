@@ -3,6 +3,7 @@
 	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "crowbar"
+	inhand_icon_state = "crowbar"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
@@ -23,13 +24,14 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
 	var/force_opens = FALSE
 
-/obj/item/crowbar/suicide_act(mob/user)
+/obj/item/crowbar/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/crowbar/red
 	icon_state = "crowbar_red"
+	inhand_icon_state = "crowbar_red"
 	force = 8
 
 /obj/item/crowbar/abductor
@@ -128,7 +130,7 @@
 	. = ..()
 	. += " It's fitted with a [tool_behaviour == TOOL_CROWBAR ? "prying" : "cutting"] head."
 
-/obj/item/crowbar/power/suicide_act(mob/user)
+/obj/item/crowbar/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_CROWBAR)
 		user.visible_message(span_suicide("[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(loc, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
@@ -141,7 +143,7 @@
 			if(target_bodypart)
 				target_bodypart.drop_limb()
 				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/crowbar/power/attack(mob/living/carbon/attacked_carbon, mob/user)
 	if(istype(attacked_carbon) && attacked_carbon.handcuffed && tool_behaviour == TOOL_WIRECUTTER)

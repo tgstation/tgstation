@@ -22,7 +22,7 @@
 /obj/item/assembly/timer/proc/manual_suicide(mob/living/user)
 	user.visible_message(span_suicide("[user]'s time is up!"))
 	user.adjustOxyLoss(200)
-	user.death(0)
+	user.death(FALSE)
 
 /obj/item/assembly/timer/Initialize(mapload)
 	. = ..()
@@ -54,12 +54,11 @@
 	return secured
 
 /obj/item/assembly/timer/proc/timer_end()
-	if(!secured || next_activate > world.time)
-		return FALSE
-	pulse(FALSE)
-	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
-	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	if(secured && next_activate <= world.time)
+		pulse(FALSE)
+		audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"), null, hearing_range)
+		for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
+			hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	if(loop)
 		timing = TRUE
 	update_appearance()

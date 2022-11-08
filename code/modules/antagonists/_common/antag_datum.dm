@@ -189,7 +189,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner)]) to replace a jobbanned player.")
-		owner.current.ghostize(0)
+		owner.current.ghostize(FALSE)
 		owner.current.key = C.key
 
 /**
@@ -350,7 +350,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/render_preview_outfit(datum/outfit/outfit, mob/living/carbon/human/dummy)
 	dummy = dummy || new /mob/living/carbon/human/dummy/consistent
 	dummy.equipOutfit(outfit, visualsOnly = TRUE)
-	COMPILE_OVERLAYS(dummy)
 	var/icon = getFlatIcon(dummy)
 
 	// We don't want to qdel the dummy right away, since its items haven't initialized yet.
@@ -495,7 +494,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	target.ui_interact(owner)
 
-/datum/action/antag_info/IsAvailable()
+/datum/action/antag_info/IsAvailable(feedback = FALSE)
 	if(!target)
 		stack_trace("[type] was used without a target antag datum!")
 		return FALSE

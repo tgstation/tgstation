@@ -286,7 +286,7 @@
 	message_admins(span_adminnotice("[key_name_admin(usr)] used the Test Areas debug command checking [log_message]."))
 	log_admin("[key_name(usr)] used the Test Areas debug command checking [log_message].")
 
-	for(var/area/A in world)
+	for(var/area/A as anything in GLOB.areas)
 		if(on_station)
 			var/list/area_turfs = get_area_turfs(A.type)
 			if (!length(area_turfs))
@@ -631,6 +631,23 @@
 		return
 	holder.color_test.ui_interact(mob)
 
+/client/proc/debug_plane_masters()
+	set category = "Debug"
+	set name = "Edit/Debug Planes"
+	set desc = "Edit and visualize plane masters and their connections (relays)"
+
+	edit_plane_masters()
+
+/client/proc/edit_plane_masters(mob/debug_on)
+	if(!holder)
+		return
+	if(debug_on)
+		holder.plane_debug.set_mirroring(TRUE)
+		holder.plane_debug.set_target(debug_on)
+	else
+		holder.plane_debug.set_mirroring(FALSE)
+	holder.plane_debug.ui_interact(mob)
+
 /client/proc/debug_huds(i as num)
 	set category = "Debug"
 	set name = "Debug HUDs"
@@ -928,7 +945,7 @@
 				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_HEAD)
-				actual_file_name = 'icons/mob/clothing/head.dmi'
+				actual_file_name = 'icons/mob/clothing/head/default.dmi'
 				if(!(sprite.worn_icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)
@@ -953,7 +970,7 @@
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_HEAD)
-				actual_file_name = 'icons/mob/clothing/head.dmi'
+				actual_file_name = 'icons/mob/clothing/head/default.dmi'
 				if(!(sprite.icon_state in icon_states(actual_file_name)))
 					to_chat(src, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)

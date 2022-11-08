@@ -278,7 +278,7 @@
 	if(!account || account.account_balance < money_cost)
 		to_chat(user, span_warning("This rite requires more money!"))
 		return FALSE
-	account.adjust_money(-money_cost)
+	account.adjust_money(-money_cost, "Church Donation: Rite")
 	. = ..()
 
 /datum/religion_rites/greed/vendatray
@@ -656,7 +656,7 @@
 
 /datum/religion_rites/declare_arena/perform_rite(mob/living/user, atom/religious_tool)
 	var/list/filtered = list()
-	for(var/area/unfiltered_area as anything in GLOB.sortedAreas)
+	for(var/area/unfiltered_area as anything in get_sorted_areas())
 		if(istype(unfiltered_area, /area/centcom)) //youuu dont need thaaat
 			continue
 		if(!(unfiltered_area.area_flags & HIDDEN_AREA))

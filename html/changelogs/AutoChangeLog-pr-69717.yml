@@ -1,6 +1,0 @@
-author: "Pizzie11"
-delete-after: True
-changes: 
-  - rscadd: "Added a unique service department version of the Plumbing Constructor, the Service Plumbing Constructor. This can be fabricated in the service protolate."
-  - rscadd: "New plumbing machines have been added for the Service Plumbing Constructor: Soda Synthesizer, Booze Synthesizer, Mixing Chamber, and Output Tap."
-  - rscadd: "The Chemical Receiver board can now be printed at the service protolathe"

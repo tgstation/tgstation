@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - admin: "Improved some varedit handling for anything w/ the /obj/structure/closet path (closets / lockers / crates)"

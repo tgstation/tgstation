@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Add screentips for objects that use rotation (chairs, windows, pipes, etc.)"
-  - qol: "Add Alt RMB and Ctrl RMB screentips options.  Instead of Alt + Ctrl being one line, they are now split on separate lines."

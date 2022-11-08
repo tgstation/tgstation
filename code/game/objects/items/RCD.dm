@@ -370,7 +370,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	toggle_window_glass(usr)
@@ -380,7 +380,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	toggle_window_size(usr)
@@ -848,7 +848,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
 /obj/item/rcd_ammo
-	name = "compressed matter cartridge"
+	name = "RCD matter cartridge"
 	desc = "Highly compressed matter for the RCD."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcdammo"
@@ -1119,7 +1119,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/plumbing/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
+	if(slot & ITEM_SLOT_HANDS)
 		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
 	else
 		UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)

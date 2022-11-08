@@ -25,6 +25,7 @@
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/charge/proc/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	do_charge(owner, target_atom, charge_delay, charge_past)
@@ -147,10 +148,11 @@
 	SIGNAL_HANDLER
 	if(owner == target)
 		return
-	if(isturf(target))
-		SSexplosions.medturf += target
-	if(isobj(target) && target.density)
-		SSexplosions.med_mov_atom += target
+	if(destroy_objects)
+		if(isturf(target))
+			SSexplosions.medturf += target
+		if(isobj(target) && target.density)
+			SSexplosions.med_mov_atom += target
 
 	INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
 	hit_target(source, target, charge_damage)

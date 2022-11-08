@@ -234,7 +234,7 @@
 			source.delay = 3
 
 /obj/item/extinguisher/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
 	if(!user.is_holding(src))
 		to_chat(user, span_notice("You must be holding the [src] in your hands do this!"))
@@ -254,7 +254,7 @@
 
 //firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
+	if(istype(O, /obj/item/bodypart/arm/left/robot) || istype(O, /obj/item/bodypart/arm/right/robot))
 		to_chat(user, span_notice("You add [O] to [src]."))
 		qdel(O)
 		qdel(src)

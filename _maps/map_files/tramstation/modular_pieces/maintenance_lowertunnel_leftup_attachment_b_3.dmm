@@ -41,7 +41,9 @@
 /area/template_noop)
 "L" = (
 /obj/item/stack/ore/glass,
-/turf/open/misc/asteroid/dug,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
 /area/station/maintenance/port/central)
 "Q" = (
 /obj/item/shovel,

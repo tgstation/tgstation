@@ -153,8 +153,10 @@
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM
-			if(world.time - M.last_bumped <= 10)
-				return //Can bump-open one airlock per second. This is to prevent shock spam.
+			//Can bump-open maybe 3 airlocks per second. This is to prevent weird mass door openings
+			//While keeping things feeling snappy
+			if(world.time - M.last_bumped <= 0.3 SECONDS)
+				return
 			M.last_bumped = world.time
 			if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null) && !emergency)
 				return
@@ -348,10 +350,10 @@
 	use_power(active_power_usage)
 	do_animate("opening")
 	set_opacity(0)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
-	sleep(5)
+	sleep(0.5 SECONDS)
 	layer = initial(layer)
 	update_appearance()
 	set_opacity(0)
@@ -378,10 +380,10 @@
 
 	do_animate("closing")
 	layer = closingLayer
-	sleep(5)
+	sleep(0.5 SECONDS)
 	set_density(TRUE)
 	flags_1 |= PREVENT_CLICK_UNDER_1
-	sleep(5)
+	sleep(0.5 SECONDS)
 	update_appearance()
 	if(visible && !glass)
 		set_opacity(1)
@@ -400,7 +402,7 @@
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))
-		sleep(1)
+		sleep(0.1 SECONDS)
 		open()
 
 /obj/machinery/door/proc/crush()

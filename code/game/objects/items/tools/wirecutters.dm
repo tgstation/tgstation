@@ -9,6 +9,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
 	greyscale_config = /datum/greyscale_config/wirecutters
+	greyscale_config_belt = /datum/greyscale_config/wirecutters_belt_overlay
+	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/wirecutter_inhand_right
 
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
@@ -53,10 +56,10 @@
 
 	return ..()
 
-/obj/item/wirecutters/suicide_act(mob/user)
+/obj/item/wirecutters/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, usesound, 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"

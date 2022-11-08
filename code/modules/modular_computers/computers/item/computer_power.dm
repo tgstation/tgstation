@@ -3,14 +3,13 @@
 	if(check_power_override())
 		return TRUE
 
-	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
-
-	if(recharger?.check_functionality())
-		if(recharger.use_power(amount))
+	if(ismachinery(loc))
+		var/obj/machinery/machine_holder = loc
+		if(machine_holder.powered())
+			machine_holder.use_power(amount)
 			return TRUE
 
 	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
-
 	if(battery_module && battery_module.battery && battery_module.battery.charge)
 		var/obj/item/stock_parts/cell/cell = battery_module.battery
 		if(cell.use(amount JOULES))
@@ -35,17 +34,12 @@
 	if(enabled) // Shut down the computer
 		if(active_program)
 			active_program.event_powerfailure(0)
-		for(var/I in idle_threads)
-			var/datum/computer_file/program/PRG = I
-			PRG.event_powerfailure(1)
+		for(var/datum/computer_file/program/programs as anything in idle_threads)
+			programs.event_powerfailure(background = TRUE)
 		shutdown_computer(0)
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
 /obj/item/modular_computer/proc/handle_power(delta_time)
-	var/obj/item/computer_hardware/recharger/recharger = all_components[MC_CHARGE]
-	if(recharger)
-		recharger.process(delta_time)
-
 	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
 
 	for(var/obj/item/computer_hardware/H in all_components)
@@ -59,6 +53,10 @@
 		power_failure()
 		return FALSE
 
-// Used by child types if they have other power source than battery or recharger
+///Used by subtypes for special cases for power usage, returns TRUE if it should stop the use_power chain.
 /obj/item/modular_computer/proc/check_power_override()
 	return FALSE
+
+//Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
+/obj/item/modular_computer/tablet/integrated/check_power_override()
+	return TRUE

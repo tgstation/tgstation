@@ -273,6 +273,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 /mob/living/simple_animal/pet/machine_wash(obj/machinery/washing_machine/washer)
 	washer.bloody_mess = TRUE
+	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
 	gib()
 
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
@@ -296,12 +297,9 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	..()
 	held_mob.machine_wash(washer)
 
-/obj/item/clothing/shoes/sneakers/machine_wash(obj/machinery/washing_machine/washer)
-	if(chained)
-		chained = FALSE
-		slowdown = SHOES_SLOWDOWN
-		new /obj/item/restraints/handcuffs(loc)
-	..()
+/obj/item/clothing/shoes/sneakers/orange/machine_wash(obj/machinery/washing_machine/washer)
+	attached_cuffs?.forceMove(loc)
+	return ..()
 
 /obj/machinery/washing_machine/relaymove(mob/living/user, direction)
 	container_resist_act(user)

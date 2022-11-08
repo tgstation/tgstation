@@ -42,7 +42,7 @@
 /// Returns a fresh piece of paper
 /obj/item/paper_bin/proc/generate_paper()
 	var/obj/item/paper/paper = new papertype
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+	if(check_holidays(APRIL_FOOLS))
 		if(prob(30))
 			paper.add_raw_text("<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>")
 			paper.AddElement(/datum/element/honkspam)
@@ -129,6 +129,12 @@
 /obj/item/paper_bin/proc/at_overlay_limit()
 	return overlays.len >= MAX_ATOM_OVERLAYS - 1
 
+/obj/item/paper_bin/proc/remove_paper(amount = 1)
+	var/obj/item/paper/top_paper = pop(paper_stack)
+	if(top_paper)
+		qdel(top_paper)
+	total_paper -= amount
+
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
 	if(total_paper)
@@ -196,9 +202,8 @@
 	var/obj/item/stack/cable_coil/binding_cable
 
 /obj/item/paper_bin/bundlenatural/Initialize(mapload)
-	binding_cable = new /obj/item/stack/cable_coil(src, 2)
-	binding_cable.color = COLOR_ORANGE_BROWN
-	binding_cable.cable_color = "brown"
+	binding_cable = new(src, 2)
+	binding_cable.set_cable_color(CABLE_COLOR_BROWN)
 	binding_cable.desc += " Non-natural."
 	return ..()
 

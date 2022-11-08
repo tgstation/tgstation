@@ -212,7 +212,7 @@
 /datum/status_effect/bonechill/tick()
 	if(prob(50))
 		owner.adjustFireLoss(1)
-		owner.set_timed_status_effect(6 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+		owner.set_jitter_if_lower(6 SECONDS)
 		owner.adjust_bodytemperature(-10)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/humi = owner
@@ -613,7 +613,7 @@
 /datum/status_effect/stabilized/darkpurple/tick()
 	var/obj/item/item = owner.get_active_held_item()
 	if(item)
-		if(IS_EDIBLE(item) && item.microwave_act())
+		if(IS_EDIBLE(item) && (item.microwave_act(microwaver = owner) & COMPONENT_MICROWAVE_SUCCESS))
 			to_chat(owner, span_warning("[linked_extract] flares up brightly, and your hands alone are enough cook [item]!"))
 		else
 			item.attackby(fire, owner)

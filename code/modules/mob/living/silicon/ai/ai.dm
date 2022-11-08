@@ -21,7 +21,7 @@
 	density = TRUE
 	status_flags = CANSTUN|CANPUSH
 	combat_mode = TRUE //so we always get pushed instead of trying to swap
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_BLACKNESS
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
@@ -30,7 +30,6 @@
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
-	native_fov = null
 	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
@@ -616,12 +615,13 @@
 	var/mob/living/silicon/ai/U = usr
 
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
+
 		var/list/tempnetwork = C.network
-		if(!(is_station_level(C.z) || is_mining_level(C.z) || ("ss13" in tempnetwork)))
+		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || ("ss13" in tempnetwork)))
 			continue
 		if(!C.can_use())
 			continue
-
 		tempnetwork.Remove("rd", "ordnance", "prison")
 		if(length(tempnetwork))
 			for(var/i in C.network)
@@ -782,11 +782,12 @@
 	var/list/obj/machinery/camera/add = list()
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()
-	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
-		for (var/obj/machinery/camera/C in CC.cameras)
-			if (!C.can_use() || get_dist(C, eyeobj) > 7 || !C.internal_light)
-				continue
-			visible |= C
+	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
+		for (var/z_key in chunk.cameras)
+			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
+				if (!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
+					continue
+				visible |= camera
 
 	add = visible - lit_cameras
 	remove = lit_cameras - visible
@@ -924,34 +925,40 @@
 		modules_action.Grant(src)
 
 /mob/living/silicon/ai/reset_perspective(atom/new_eye)
+	SHOULD_CALL_PARENT(FALSE) // I hate you all
 	if(camera_light_on)
 		light_cameras()
 	if(istype(new_eye, /obj/machinery/camera))
 		current = new_eye
-	if(client)
-		if(ismovable(new_eye))
-			if(new_eye != GLOB.ai_camera_room_landmark)
-				end_multicam()
-			client.perspective = EYE_PERSPECTIVE
-			client.eye = new_eye
-		else
+	if(!client)
+		return
+
+	if(ismovable(new_eye))
+		if(new_eye != GLOB.ai_camera_room_landmark)
 			end_multicam()
-			if(isturf(loc))
-				if(eyeobj)
-					client.eye = eyeobj
-					client.perspective = EYE_PERSPECTIVE
-				else
-					client.eye = client.mob
-					client.perspective = MOB_PERSPECTIVE
-			else
+		client.perspective = EYE_PERSPECTIVE
+		client.set_eye(new_eye)
+	else
+		end_multicam()
+		if(isturf(loc))
+			if(eyeobj)
+				client.set_eye(eyeobj)
 				client.perspective = EYE_PERSPECTIVE
-				client.eye = loc
-		update_sight()
-		if(client.eye != src)
-			var/atom/AT = client.eye
-			AT.get_remote_view_fullscreens(src)
+			else
+				client.set_eye(client.mob)
+				client.perspective = MOB_PERSPECTIVE
 		else
-			clear_fullscreen("remote_view", 0)
+			client.perspective = EYE_PERSPECTIVE
+			client.set_eye(loc)
+	update_sight()
+	if(client.eye != src)
+		var/atom/AT = client.eye
+		AT.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
+
+	// I am so sorry
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 
 /mob/living/silicon/ai/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()

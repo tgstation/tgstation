@@ -81,15 +81,13 @@
 
 /mob/living/carbon/human/get_status_tab_items()
 	. = ..()
-	if (internal)
-		var/datum/gas_mixture/internal_air = internal.return_air()
-		if (!internal_air)
-			QDEL_NULL(internal)
-		else
-			. += ""
-			. += "Internal Atmosphere Info: [internal.name]"
-			. += "Tank Pressure: [internal_air.return_pressure()]"
-			. += "Distribution Pressure: [internal.distribute_pressure]"
+	var/obj/item/tank/target_tank = internal || external
+	if(target_tank)
+		var/datum/gas_mixture/internal_air = target_tank.return_air()
+		. += ""
+		. += "Internal Atmosphere Info: [target_tank.name]"
+		. += "Tank Pressure: [internal_air.return_pressure()]"
+		. += "Distribution Pressure: [target_tank.distribute_pressure]"
 	if(istype(wear_suit, /obj/item/clothing/suit/space))
 		var/obj/item/clothing/suit/space/S = wear_suit
 		. += "Thermal Regulator: [S.thermal_on ? "on" : "off"]"
@@ -366,7 +364,7 @@
 				var/counter = 1
 				while(target_record.fields[text("com_[]", counter)])
 					counter++
-				target_record.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				target_record.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), CURRENT_STATION_YEAR, t1)
 				to_chat(human_user, span_notice("Successfully added comment."))
 				return
 
@@ -715,52 +713,46 @@
 /mob/living/carbon/human/update_health_hud()
 	if(!client || !hud_used)
 		return
-	if(dna.species.update_health_hud())
+
+	// Updates the health bar, also sends signal
+	. = ..()
+
+	// Updates the health doll
+	if(!hud_used.healthdoll)
 		return
-	else
-		if(hud_used.healths)
-			if(..()) //not dead
-				switch(hal_screwyhud)
-					if(SCREWYHUD_CRIT)
-						hud_used.healths.icon_state = "health6"
-					if(SCREWYHUD_DEAD)
-						hud_used.healths.icon_state = "health7"
-					if(SCREWYHUD_HEALTHY)
-						hud_used.healths.icon_state = "health0"
-		if(hud_used.healthdoll)
-			hud_used.healthdoll.cut_overlays()
-			if(stat != DEAD)
-				hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
-				for(var/obj/item/bodypart/body_part as anything in bodyparts)
-					var/icon_num = 0
-					//Hallucinations
-					if(body_part.type in hal_screwydoll)
-						icon_num = hal_screwydoll[body_part.type]
-						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
-						continue
-					//Not hallucinating
-					var/damage = body_part.burn_dam + body_part.brute_dam
-					var/comparison = (body_part.max_damage/5)
-					if(damage)
-						icon_num = 1
-					if(damage > (comparison))
-						icon_num = 2
-					if(damage > (comparison*2))
-						icon_num = 3
-					if(damage > (comparison*3))
-						icon_num = 4
-					if(damage > (comparison*4))
-						icon_num = 5
-					if(hal_screwyhud == SCREWYHUD_HEALTHY)
-						icon_num = 0
-					if(icon_num)
-						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
-				for(var/t in get_missing_limbs()) //Missing limbs
-					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
-				for(var/t in get_disabled_limbs()) //Disabled limbs
-					hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
-			else
-				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
+
+	hud_used.healthdoll.cut_overlays()
+	if(stat == DEAD)
+		hud_used.healthdoll.icon_state = "healthdoll_DEAD"
+		return
+
+	hud_used.healthdoll.icon_state = "healthdoll_OVERLAY"
+	for(var/obj/item/bodypart/body_part as anything in bodyparts)
+		var/icon_num = 0
+
+		if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
+			continue
+
+		var/damage = body_part.burn_dam + body_part.brute_dam
+		var/comparison = (body_part.max_damage/5)
+		if(damage)
+			icon_num = 1
+		if(damage > (comparison))
+			icon_num = 2
+		if(damage > (comparison*2))
+			icon_num = 3
+		if(damage > (comparison*3))
+			icon_num = 4
+		if(damage > (comparison*4))
+			icon_num = 5
+		if(has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
+			icon_num = 0
+		if(icon_num)
+			hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
+	for(var/t in get_missing_limbs()) //Missing limbs
+		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]6"))
+	for(var/t in get_disabled_limbs()) //Disabled limbs
+		hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[t]7"))
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE)
 	dna?.species.spec_fully_heal(src)
@@ -788,7 +780,7 @@
 			visible_message(span_warning("[src] dry heaves!"), \
 							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
 		if(stun)
-			Paralyze(200)
+			Stun(20 SECONDS)
 		return 1
 	..()
 

@@ -72,6 +72,7 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window // special layer/plane set to appear on windows
 	layer = ABOVE_WINDOW_LAYER
 	plane = GAME_PLANE
+	vis_flags = VIS_INHERIT_PLANE
 	turf_loc_check = FALSE
 	alpha = 180
 
@@ -115,6 +116,10 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, .proc/on_pipe_eject)
 
+/obj/effect/decal/cleanable/blood/gibs/Destroy()
+	LAZYNULL(streak_diseases)
+	return ..()
+
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
 	return FALSE //Never fail to place us
 
@@ -144,9 +149,9 @@
 	streak(dirs)
 
 /obj/effect/decal/cleanable/blood/gibs/proc/streak(list/directions, mapload=FALSE)
+	LAZYINITLIST(streak_diseases)
 	SEND_SIGNAL(src, COMSIG_GIBS_STREAK, directions, streak_diseases)
 	var/direction = pick(directions)
-	streak_diseases = list()
 	var/delay = 2
 	var/range = pick(0, 200; 1, 150; 2, 50; 3, 17; 50) //the 3% chance of 50 steps is intentional and played for laughs.
 	if(!step_to(src, get_step(src, direction), 0))

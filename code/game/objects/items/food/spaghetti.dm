@@ -5,20 +5,23 @@
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/spaghetti/Initialize(mapload)
-	. = ..()
-	if(!microwaved_type) // This isn't cooked, why would you put uncooked spaghetti in your pocket?
-		var/list/display_message = list(
-			span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
-			span_warning("Oh shit! All your pocket [name] fell out!"))
-		AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', MEMORY_SPAGHETTI_SPILL)
+// Why are you putting cooked spaghetti in your pockets?
+/obj/item/food/spaghetti/make_microwavable()
+	var/list/display_message = list(
+		span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
+		span_warning("Oh shit! All your pocket [name] fell out!"))
+	AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', MEMORY_SPAGHETTI_SPILL)
+
+	return ..()
 
 /obj/item/food/spaghetti/raw
 	name = "spaghetti"
 	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
-	microwaved_type = /obj/item/food/spaghetti/boiledspaghetti
 	tastes = list("pasta" = 1)
+
+/obj/item/food/spaghetti/raw/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/spaghetti/boiledspaghetti)
 
 /obj/item/food/spaghetti/boiledspaghetti
 	name = "boiled spaghetti"
@@ -69,7 +72,7 @@
 	desc = "A nice mix of noodles and fried vegetables."
 	icon_state = "chowmein"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
-	tastes = list("noodle" = 1, "tomato" = 1)
+	tastes = list("noodle" = 1, "meat" = 1, "fried vegetables" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/food/spaghetti/beefnoodle
@@ -78,7 +81,7 @@
 	icon_state = "beefnoodle"
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/liquidgibs = 3)
-	tastes = list("noodle" = 1, "meat" = 1)
+	tastes = list("noodles" = 1, "meat" = 1)
 	foodtypes = GRAIN | MEAT | VEGETABLES
 
 /obj/item/food/spaghetti/butternoodles
@@ -86,7 +89,7 @@
 	desc = "Noodles covered in savory butter. Simple and slippery, but delicious."
 	icon_state = "butternoodles"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("noodle" = 1, "butter" = 1)
+	tastes = list("noodles" = 1, "butter" = 1)
 	foodtypes = GRAIN | DAIRY
 
 /obj/item/food/spaghetti/mac_n_cheese

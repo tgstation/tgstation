@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - admin: "When you add a watchlist expiration date without having previously set one, the logged message should now be more clear as to this."

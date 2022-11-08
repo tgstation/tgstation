@@ -170,7 +170,7 @@
 	. += span_notice("Alt-click to toggle modes.")
 
 /obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
 		return
 	toggle_mode(user)
 
@@ -218,6 +218,7 @@
 	desc = "A folded and unloaded heavy machine gun, ready to be deployed and used."
 	icon = 'icons/obj/weapons/turrets.dmi'
 	icon_state = "folded_hmg"
+	inhand_icon_state = "folded_hmg"
 	max_integrity = 250
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK

@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fix plasma cutter or guns that burn not being able to ignite plasma"
-  - balance: "Change plasma cutters damage type to BURN and this will cause reduced damage to mining mobs"
-  - balance: "Explodable stuff now detonates when hit by a BURN projectile."

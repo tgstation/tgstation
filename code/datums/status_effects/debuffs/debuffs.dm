@@ -332,8 +332,8 @@
 	alert_type = null
 
 /datum/status_effect/cultghost/on_apply()
-	owner.see_invisible = SEE_INVISIBLE_OBSERVER
-	owner.see_in_dark = 2
+	owner.set_invis_see(SEE_INVISIBLE_OBSERVER)
+	owner.set_see_in_dark(2)
 
 /datum/status_effect/cultghost/tick()
 	if(owner.reagents)
@@ -551,7 +551,7 @@
 /datum/status_effect/trance/tick()
 	if(stun)
 		owner.Stun(6 SECONDS, TRUE)
-	owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
+	owner.set_dizzy(40 SECONDS)
 
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
@@ -671,7 +671,7 @@
 				span_notice("[H]'s hand convulses, and they drop their [I.name]!"),
 				span_userdanger("Your hand convulses violently, and you drop what you were holding!"),
 			)
-			H.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/jitter)
+			H.adjust_jitter(10 SECONDS)
 
 /atom/movable/screen/alert/status_effect/convulsing
 	name = "Shaky Hands"

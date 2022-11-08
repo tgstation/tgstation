@@ -38,7 +38,7 @@
 	var/resetTime = 15
 	var/cloneMode = FALSE
 	var/list/item_reactions = list()
-	var/list/valid_items = list() //valid items for special reactions like transforming
+	var/static/list/valid_items //valid items for special reactions like transforming
 	var/list/critical_items_typecache //items that can cause critical reactions
 
 /obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
@@ -47,13 +47,16 @@
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
+/obj/machinery/rnd/experimentor/proc/valid_items()
+	if (!isnull(valid_items))
+		return valid_items
 
-/obj/machinery/rnd/experimentor/proc/SetTypeReactions()
-	// Don't need to keep this typecache around, only used in this proc once.
 	var/static/list/banned_typecache = typecacheof(list(
 		/obj/item/stock_parts/cell/infinite,
 		/obj/item/grenade/chem_grenade/tuberculosis
 	))
+
+	valid_items = list()
 
 	for(var/I in typesof(/obj/item))
 		if(ispath(I, /obj/item/relic))
@@ -74,12 +77,13 @@
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items["[I]"] += rand(1,4)
 
+	return valid_items
+
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
 
 	tracked_ian_ref = WEAKREF(locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list)
 	tracked_runtime_ref = WEAKREF(locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list)
-	SetTypeReactions()
 
 	critical_items_typecache = typecacheof(list(
 		/obj/item/construction/rcd,
@@ -293,7 +297,7 @@
 		else if(prob(EFFECT_PROB_MEDIUM-malfunction_probability_coeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
-			var/newPath = text2path(pick_weight(valid_items))
+			var/newPath = text2path(pick_weight(valid_items()))
 			loaded_item = new newPath(src)
 			visible_message(span_warning("[src] malfunctions, transforming [savedName] into [loaded_item]!"))
 			investigate_log("Experimentor has transformed [savedName] into [loaded_item]", INVESTIGATE_EXPERIMENTOR)
@@ -373,14 +377,9 @@
 		else if(prob(EFFECT_PROB_MEDIUM-malfunction_probability_coeff))
 			visible_message(span_warning("[src] malfunctions, melting [exp_on] and leaking hot air!"))
 			var/datum/gas_mixture/env = loc.return_air()
-			var/transfer_moles = 0.25 * env.total_moles()
-			var/datum/gas_mixture/removed = env.remove(transfer_moles)
-			if(removed)
-				var/heat_capacity = removed.heat_capacity()
-				if(heat_capacity == 0 || heat_capacity == null)
-					heat_capacity = 1
-				removed.temperature = min((removed.temperature*heat_capacity + 100000)/heat_capacity, 1000)
-			env.merge(removed)
+			if(env)
+				var/heat_capacity = max(env.heat_capacity(), 1)
+				env.temperature = min((env.temperature * heat_capacity + 100000) / heat_capacity, 1000)
 			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released hot air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
@@ -419,14 +418,9 @@
 		else if(prob(EFFECT_PROB_LOW-malfunction_probability_coeff))
 			visible_message(span_warning("[src] malfunctions, shattering [exp_on] and leaking cold air!"))
 			var/datum/gas_mixture/env = loc.return_air()
-			var/transfer_moles = 0.25 * env.total_moles()
-			var/datum/gas_mixture/removed = env.remove(transfer_moles)
-			if(removed)
-				var/heat_capacity = removed.heat_capacity()
-				if(heat_capacity == 0 || heat_capacity == null)
-					heat_capacity = 1
-				removed.temperature = (removed.temperature*heat_capacity - 75000)/heat_capacity
-			env.merge(removed)
+			if(env)
+				var/heat_capacity = max(env.heat_capacity(), 1)
+				env.temperature = max((env.temperature * heat_capacity - 75000) / heat_capacity, TCMB)
 			air_update_turf(FALSE, FALSE)
 			investigate_log("Experimentor has released cold air.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
@@ -631,7 +625,20 @@
 	visible_message(message)
 	to_chat(user, message)
 
-	var/list/valid_animals = list(/mob/living/simple_animal/parrot/natural, /mob/living/simple_animal/butterfly, /mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/crab, /mob/living/simple_animal/pet/fox, /mob/living/simple_animal/hostile/lizard, /mob/living/simple_animal/mouse, /mob/living/simple_animal/pet/dog/pug, /mob/living/simple_animal/hostile/bear, /mob/living/simple_animal/hostile/bee, /mob/living/simple_animal/hostile/carp)
+	var/static/list/valid_animals = list(
+		/mob/living/simple_animal/parrot/natural,
+		/mob/living/simple_animal/butterfly,
+		/mob/living/simple_animal/pet/cat,
+		/mob/living/simple_animal/pet/dog/corgi,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/pet/fox,
+		/mob/living/simple_animal/hostile/lizard,
+		/mob/living/basic/mouse,
+		/mob/living/simple_animal/pet/dog/pug,
+		/mob/living/simple_animal/hostile/bear,
+		/mob/living/simple_animal/hostile/bee,
+		/mob/living/simple_animal/hostile/carp,
+	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)
 		new mobType(get_turf(src))

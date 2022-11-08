@@ -45,15 +45,13 @@
 		. = TRUE
 
 	// Handling nearsightnedness
-	if(. && is_nearsighted())					
+	if(. && is_nearsighted())
 		if((rel_x >= NEARSIGHTNESS_FOV_BLINDNESS || rel_x <= -NEARSIGHTNESS_FOV_BLINDNESS) || (rel_y >= NEARSIGHTNESS_FOV_BLINDNESS || rel_y <= -NEARSIGHTNESS_FOV_BLINDNESS))
 			return FALSE
 
 /// Updates the applied FOV value and applies the handler to client if able
 /mob/living/proc/update_fov()
 	var/highest_fov
-	if(CONFIG_GET(flag/native_fov))
-		highest_fov = native_fov
 	for(var/trait_type in fov_traits)
 		var/fov_type = fov_traits[trait_type]
 		if(fov_type > highest_fov)
@@ -88,10 +86,10 @@
 	UNSETEMPTY(fov_traits)
 	update_fov()
 
-//did you know you can subtype /image and /mutable_appearance?
+//did you know you can subtype /image and /mutable_appearance? // Stop telling them that they might actually do it
 /image/fov_image
 	icon = 'icons/effects/fov/fov_effects.dmi'
-	layer = FOV_EFFECTS_LAYER
+	layer = EFFECTS_LAYER + FOV_EFFECT_LAYER
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM
 	plane = FULLSCREEN_PLANE
 

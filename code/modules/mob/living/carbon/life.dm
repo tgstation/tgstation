@@ -71,7 +71,7 @@
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe(delta_time, times_fired)
 	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
+	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE) & COMSIG_CARBON_BLOCK_BREATH)
 		return
 
 	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE)
@@ -239,9 +239,9 @@
 	if(breath_gases[/datum/gas/bz])
 		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
-			hallucination += 10
+			adjust_hallucinations(20 SECONDS)
 		else if(bz_partialpressure > 0.01)
-			hallucination += 5
+			adjust_hallucinations(10 SECONDS)
 
 	//NITRIUM
 	if(breath_gases[/datum/gas/nitrium])
@@ -303,21 +303,26 @@
 
 	return TRUE
 
-//Fourth and final link in a breath chain
+/// Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
 	// The air you breathe out should match your body temperature
 	breath.temperature = bodytemperature
 
+/// Attempts to take a breath from the external or internal air tank.
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
-	if(internal)
-		if(internal.loc != src)
-			internal = null
-		else if ((!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			internal = null
-		else
-			. = internal.remove_air_volume(volume_needed)
-			if(!.)
-				return FALSE //to differentiate between no internals and active, but empty internals
+	if(invalid_internals())
+		// Unexpectely lost breathing apparatus and ability to breathe from the internal air tank.
+		cutoff_internals()
+		return
+	if (external)
+		. = external.remove_air_volume(volume_needed)
+	else if (internal)
+		. = internal.remove_air_volume(volume_needed)
+	else
+		// Return without taking a breath if there is no air tank.
+		return
+	// To differentiate between no internals and active, but empty internals.
+	return . || FALSE
 
 /mob/living/carbon/proc/handle_blood(delta_time, times_fired)
 	return
@@ -334,7 +339,11 @@
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/obj/item/organ/internal/organ as anything in internal_organs)
-			organ.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
+			// On-death is where organ decay is handled
+			organ.on_death(delta_time, times_fired)
+			// We need to re-check the stat every organ, as one of our others may have revived us
+			if(stat != DEAD)
+				break
 		return
 
 	// NOTE: internal_organs_slot is sorted by GLOB.organ_process_order on insertion
@@ -409,12 +418,6 @@
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
 			AdjustSleeping(10 SECONDS)
-
-	if(silent)
-		silent = max(silent - (0.5 * delta_time), 0)
-
-	if(hallucination)
-		handle_hallucinations(delta_time, times_fired)
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
