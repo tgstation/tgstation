@@ -416,26 +416,18 @@
 	save_members()
 
 	// Remove everyone as a revolutionary
-	for (var/_rev_mind in members)
-		var/datum/mind/rev_mind = _rev_mind
-		if (rev_mind.has_antag_datum(/datum/antagonist/rev))
-			var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
+	for (var/datum/mind/rev_mind as anything in members)
+		var/datum/antagonist/rev/rev_antag = rev_mind.has_antag_datum(/datum/antagonist/rev)
+		if (!isnull(rev_antag))
 			rev_antag.remove_revolutionary(FALSE, . == STATION_VICTORY ? DECONVERTER_STATION_WIN : DECONVERTER_REVS_WIN)
 			if(rev_mind in ex_headrevs)
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
-				add_memory_in_range(rev_mind.current, 7, /datum/memory/revolutionary_victory, protagonist = rev_mind.current)
 			else
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
 
 	if (. == STATION_VICTORY)
-		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/datum/mind/rev_head as anything in ex_headrevs)
-			if(!isnull(rev_head.current))
-				ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
-				rev_head.current.med_hud_set_status()
+		defeat_effects()
 
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 	else
 		victory_effects()
 
@@ -443,8 +435,9 @@
 	var/charter_given = FALSE
 
 	for(var/datum/mind/headrev_mind as anything in ex_headrevs)
+		add_memory_in_range(headrev_mind.current, 5, /datum/memory/revolution_rev_victory, protagonist = rev_mind.current)
 		if(charter_given)
-			break
+			continue
 		if(!headrev_mind.current || headrev_mind.current.stat != CONSCIOUS)
 			continue
 		charter_given = TRUE
@@ -537,6 +530,21 @@
 		return
 
 	SSshuttle.call_evac_shuttle("Sending emergency shuttle to rescue command and security staff.")
+
+/datum/team/revolution/proc/defeat_effects()
+	// If the revolution was quelled, make rev heads unable to be revived through pods
+	for (var/datum/mind/rev_head as anything in ex_headrevs)
+		if(!isnull(rev_head.current))
+			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			rev_head.current.med_hud_set_status()
+
+	for(var/datum/objective/mutiny/head_tracker in objectives)
+		var/mob/living/head_of_staff = head_tracker.target?.current
+		if(!isnull(head_of_staff))
+			add_memory_in_range(head_of_staff, 5, /datum/memory/revolution_heads_victory, protagonist = head_of_staff)
+
+	priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
+		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)
