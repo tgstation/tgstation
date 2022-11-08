@@ -49,7 +49,7 @@
 				A.apply_mode(usr)
 		if(WIRE_ALARM) // Clear alarms.
 			if(A.alarm_manager.clear_alarm(ALARM_ATMOS))
-				A.post_alert(0)
+				A.danger_level = AIR_ALARM_ALERT_NONE
 			A.update_appearance()
 
 /datum/wires/airalarm/on_cut(wire, mend)
@@ -70,5 +70,5 @@
 				A.apply_mode(usr)
 		if(WIRE_ALARM) // Post alarm.
 			if(A.alarm_manager.send_alarm(ALARM_ATMOS))
-				A.post_alert(2)
+				A.danger_level = AIR_ALARM_ALERT_SEVERE
 			A.update_appearance()

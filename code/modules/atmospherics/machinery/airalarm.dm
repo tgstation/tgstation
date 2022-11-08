@@ -670,9 +670,6 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 		mode = AALARM_MODE_SCRUBBING
 		INVOKE_ASYNC(src, .proc/apply_mode, src)
 
-/obj/machinery/airalarm/proc/post_alert(alert_level)
-	// MBTODO
-
 /obj/machinery/airalarm/proc/apply_danger_level()
 
 	var/new_area_danger_level = 0
@@ -1011,10 +1008,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	if(port == enable_fire_alarm)
 		if(connected_alarm.alarm_manager.send_alarm(ALARM_ATMOS))
-			INVOKE_ASYNC(connected_alarm, /obj/machinery/airalarm.proc/post_alert, 2)
+			connected_alarm.danger_level = AIR_ALARM_ALERT_SEVERE
 	else
 		if(connected_alarm.alarm_manager.clear_alarm(ALARM_ATMOS))
-			INVOKE_ASYNC(connected_alarm, /obj/machinery/airalarm.proc/post_alert, 0)
+			connected_alarm.danger_level = AIR_ALARM_ALERT_NONE
 
 /obj/item/circuit_component/air_alarm_general/proc/set_mode(datum/port/input/port)
 	CIRCUIT_TRIGGER
