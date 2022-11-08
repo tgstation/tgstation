@@ -267,7 +267,7 @@
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")
 	var/list/somethings = strings(MEMORY_FILE, story_type + "_somethings")
 	var/list/styles
-	if(story_type != STORY_CHANGELING_ABSORB) //changeling absorbs do not have styles
+	if(story_flags & STORY_FLAG_NO_STYLE)
 		styles = strings(MEMORY_FILE, "styles")
 		if("[story_type]_styles" in GLOB.string_cache[MEMORY_FILE])
 			styles += strings(MEMORY_FILE, story_type + "_styles")

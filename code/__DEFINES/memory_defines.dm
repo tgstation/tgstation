@@ -73,3 +73,5 @@
 //These defines are story flags for including special bits on the generated story.
 ///include a date this event happened
 #define STORY_FLAG_DATED (1<<0)
+/// Don't style this story
+#define STORY_FLAG_NO_STYLE (1<<1)
