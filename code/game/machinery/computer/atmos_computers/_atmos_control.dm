@@ -7,109 +7,12 @@
 	circuit = /obj/item/circuitboard/computer/atmos_control
 	light_color = LIGHT_COLOR_CYAN
 
-	var/frequency = FREQ_ATMOS_STORAGE
-	var/datum/radio_frequency/radio_connection
-
 	/// Which sensors/input/outlets do we want to listen to.
 	/// Assoc of list[chamber_id] = readable_chamber_name
 	var/list/atmos_chambers
 
 	/// Whether we can actually adjust the chambers or not.
 	var/control = TRUE
-
-#ifdef MBTODO
-/obj/machinery/computer/atmos_control/Initialize(mapload)
-	. = ..()
-
-	GLOB.atmos_air_controllers += src
-	set_frequency(frequency)
-
-	sensor_info = list()
-	input_info = list()
-	output_info = list()
-
-/obj/machinery/computer/atmos_control/Destroy()
-	GLOB.atmos_air_controllers -= src
-	SSradio.remove_object(src, frequency)
-	return ..()
-
-/obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
-	if(!signal)
-		return
-
-	/// The tag of the signal data should be the id_tag var of the atmos object. Format is chamber_role.
-	/// Where chamber is the chamber name and role is one of "sensor", "in", and "out".
-	var/list/tag_data = splittext(signal.data["tag"], "_")
-
-	if(length(tag_data) < 2)
-		return
-
-	if(!(tag_data[1] in atmos_chambers))
-		return
-
-	var/list/info_list
-	switch(tag_data[2])
-		if("sensor")
-			info_list = sensor_info
-		if("in")
-			info_list = input_info
-		if("out")
-			info_list = output_info
-		else
-			return
-
-	if(signal.data["sigtype"] == "status")
-		info_list[tag_data[1]] = signal.data
-
-	if(signal.data["sigtype"] == "destroyed")
-		info_list[tag_data[1]] = null
-
-/obj/machinery/computer/atmos_control/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
-
-/// Reconnect only works for station based chambers.
-/obj/machinery/computer/atmos_control/proc/reconnect(mob/user)
-	if(!reconnecting)
-		return FALSE
-
-	// We only prompt the user with the sensors that are actually available.
-	var/available_devices = list()
-	for(var/datum/weakref/device_ref as anything in radio_connection.devices[RADIO_ATMOSIA])
-		var/obj/machinery/machine = device_ref.resolve()
-		if(istype(machine, /obj/machinery/computer/atmos_control)) // Skip if we are a listener. Make this a list if you add devices that work similarly to this comp.
-			continue
-		var/chamber_identifier = splittext(machine.id_tag, "_")[1]
-		if(!GLOB.station_gas_chambers[chamber_identifier])
-			continue
-		available_devices[GLOB.station_gas_chambers[chamber_identifier]] = chamber_identifier
-
-	// As long as we dont put any funny chars in the strings it should match.
-	var/new_name = tgui_input_list(user, "Select the device set", "Reconnect", available_devices)
-	var/new_id = available_devices[new_name]
-
-	if(isnull(new_id))
-		return FALSE
-
-	atmos_chambers = list()
-	atmos_chambers[new_id] = new_name
-	sensor_info = list()
-	input_info = list()
-	output_info = list()
-
-	name = new_name + (control ? " Control" : " Monitor")
-
-	// Ask things around us to update.
-	// Due to how signal datums work this is unoptimized but as long as our freq isnt terribly populated we should be fine.
-	// Also, we dont need to prompt sensors and meters since they already broadcast every process_atmos().
-	var/datum/signal/update_request = new(list("sigtype" = "command", "user" = usr, "status" = TRUE ,"tag" = "[new_id]_in"))
-	radio_connection.post_signal(src, update_request, filter = RADIO_ATMOSIA)
-	update_request = new(list("sigtype" = "command", "user" = usr, "status" = TRUE ,"tag" = "[new_id]_out"))
-	radio_connection.post_signal(src, update_request, filter = RADIO_ATMOSIA)
-
-	return TRUE
-#endif
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

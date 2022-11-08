@@ -428,6 +428,8 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	set name = "Check Atmos Chamber Devices"
 	set category = "Mapping"
 
+#ifdef MBTODO
+
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, "Game still loading, please run this again later!", confidential = TRUE)
 		return
@@ -517,6 +519,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		to_chat(usr, "Atmos control frequency check passed without encountering problems.", confidential=TRUE)
 	else
 		to_chat(usr, "Total errors: [invalid_machine + invalid_tag + tagless + duplicate_tag + not_heard + not_told]", confidential=TRUE)
+#endif
 
 /// Check all tiles with a vent or scrubber on it and ensure that nothing is covering it up.
 /client/proc/check_for_obstructed_atmospherics()

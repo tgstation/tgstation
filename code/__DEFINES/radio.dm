@@ -78,7 +78,6 @@
 // Only the 1441 to 1489 range is freely available for general conversation.
 // This represents 1/8th of the available spectrum.
 
-#define FREQ_ATMOS_STORAGE 1441
 #define FREQ_NAV_BEACON 1445
 #define FREQ_AI_PRIVATE 1447  // AI private comms frequency, magenta
 #define FREQ_PRESSURE_PLATE 1447
