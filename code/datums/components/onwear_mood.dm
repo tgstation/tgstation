@@ -16,9 +16,10 @@
 /datum/component/onwear_mood/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/affect_wearer)
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/clear_effects)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/onwear_mood/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_PARENT_EXAMINE))
 	clear_effects()
 
 /datum/component/onwear_mood/proc/affect_wearer(datum/source, mob/living/target)
