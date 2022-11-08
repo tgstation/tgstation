@@ -271,7 +271,7 @@
 	var/list/forewords = strings(MEMORY_FILE, story_type + "_forewords")
 	var/list/somethings = strings(MEMORY_FILE, story_type + "_somethings")
 	var/list/styles
-	if(story_flags & STORY_FLAG_NO_STYLE)
+	if(!(story_flags & STORY_FLAG_NO_STYLE))
 		styles = strings(MEMORY_FILE, "styles")
 		if("[story_type]_styles" in GLOB.string_cache[MEMORY_FILE])
 			styles += strings(MEMORY_FILE, story_type + "_styles")
@@ -289,7 +289,7 @@
 		crew_member = creeper.trauma.obsession //ALWAYS ENGRAVE MY OBSESSION!
 
 	// Get a random crewmember
-	if(!crew_member)
+	else
 		var/list/crew_members = list()
 		for(var/mob/living/carbon/human/potential_crew_member as anything in GLOB.human_list)
 			if(potential_crew_member.mind?.assigned_role.job_flags & JOB_CREW_MEMBER)

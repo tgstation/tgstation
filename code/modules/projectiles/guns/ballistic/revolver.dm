@@ -212,7 +212,7 @@
 		if(loaded_rounds && is_target_face)
 			add_memory_in_range(user, 7, /datum/memory/witnessed_russian_roulette, \
 				protagonist = user, \
-				antagonist = src,
+				antagonist = src, \
 				rounds_loaded = loaded_rounds, \
 				aimed_at =  affecting.name, \
 				result = (chambered ? "lost" : "won"))

@@ -60,7 +60,7 @@
 	)
 
 /datum/memory/bomb_planted/get_happy_moods()
-	return list("feels too cool to look at [bomb_type]")
+	return list("feels too cool to look at [antagonist_name]")
 
 /// Planted a SYNDICATE bomb.
 /datum/memory/bomb_planted/syndicate
