@@ -158,8 +158,6 @@ GLOBAL_LIST_EMPTY_TYPED(airlocks_by_id, /obj/machinery/door/airlock)
 	. = ..()
 	init_network_id(NETWORK_DOOR_AIRLOCKS)
 	wires = set_wires()
-	if(frequency)
-		set_frequency(frequency)
 	if(glass)
 		airlock_material = "glass"
 	if(security_level > AIRLOCK_SECURITY_IRON)

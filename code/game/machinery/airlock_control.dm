@@ -5,7 +5,6 @@
 	/// The current state of the airlock, used to construct the airlock overlays
 	var/airlock_state
 	var/frequency
-	var/datum/radio_frequency/radio_connection
 
 /// Forces the airlock to unbolt and open
 /obj/machinery/door/airlock/proc/secure_open()
@@ -27,20 +26,9 @@
 	stoplag(0.2 SECONDS)
 	update_appearance()
 
-/obj/machinery/door/airlock/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	if(new_frequency)
-		frequency = new_frequency
-		radio_connection = SSradio.add_object(src, frequency, RADIO_AIRLOCK)
-
 /obj/machinery/door/airlock/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
 	// Airlocks should unlock themselves when knock is casted, THEN open up.
 	locked = FALSE
-	return ..()
-
-/obj/machinery/door/airlock/Destroy()
-	if(frequency)
-		SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/airlock_sensor
@@ -53,9 +41,6 @@
 	power_channel = AREA_USAGE_ENVIRON
 
 	var/master_tag
-	var/frequency = FREQ_AIRLOCK_CONTROL
-
-	var/datum/radio_frequency/radio_connection
 
 	var/on = TRUE
 	var/alert = FALSE
@@ -98,25 +83,4 @@
 		var/pressure = round(air_sample.return_pressure(),0.1)
 		alert = (pressure < ONE_ATMOSPHERE*0.8)
 
-		var/datum/signal/signal = new(list(
-			"tag" = id_tag,
-			"timestamp" = world.time,
-			"pressure" = num2text(pressure)
-		))
-
-		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
-
 	update_appearance()
-
-/obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_AIRLOCK)
-
-/obj/machinery/airlock_sensor/Initialize(mapload)
-	. = ..()
-	set_frequency(frequency)
-
-/obj/machinery/airlock_sensor/Destroy()
-	SSradio.remove_object(src,frequency)
-	return ..()

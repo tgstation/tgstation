@@ -12,6 +12,9 @@
 	var/datum/weakref/interior_door_ref
 	var/datum/weakref/exterior_door_ref
 	var/datum/weakref/pump_ref
+	var/datum/weakref/sensor_ref
+
+	var/last_pressure = null
 
 	state = AIRLOCK_STATE_CLOSED
 	var/target_state = AIRLOCK_STATE_CLOSED
@@ -210,9 +213,13 @@
 
 /// Returns the pressure over the pump, or null if it is deleted
 /datum/computer/file/embedded_program/airlock_controller/proc/sensor_pressure()
-	var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
-	var/datum/gas_mixture/air = pump?.return_air()
-	return air?.return_pressure()
+	var/obj/machinery/airlock_sensor/sensor = sensor_ref.resolve()
+	if (!isnull(sensor) && !sensor.on)
+		return last_pressure
+
+	var/datum/gas_mixture/air = sensor?.return_air()
+	last_pressure = air?.return_pressure()
+	return last_pressure
 
 /obj/machinery/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
@@ -259,9 +266,11 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_contro
 		return
 
 	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
+	// MBTODO: Delete airlocks_by_id and vents_by_id
 	airlock_program.interior_door_ref = WEAKREF(GLOB.airlocks_by_id[interior_door_tag])
 	airlock_program.exterior_door_ref = WEAKREF(GLOB.airlocks_by_id[exterior_door_tag])
 	airlock_program.pump_ref = WEAKREF(GLOB.vents_by_id[airpump_tag])
+	airlock_program.sensor_ref = WEAKREF(GLOB.objects_by_id_tag[sensor_tag])
 
 /obj/machinery/airlock_controller/Destroy()
 	GLOB.airlock_controllers_by_id -= id_tag
