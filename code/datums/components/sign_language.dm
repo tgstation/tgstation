@@ -133,7 +133,7 @@
 	human_parent.verb_sing = initial(human_parent.verb_sing)
 	human_parent.verb_yell = initial(human_parent.verb_yell)
 	human_parent.bubble_icon = initial(human_parent.bubble_icon)
-	UnregisterSignal(human_parent, list(COMSIG_LIVING_TRY_SPEECH, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO, COMSIG_MOVABLE_TREAT_MESSAGE, COMSIG_MOB_SAY))
+	UnregisterSignal(human_parent, list(COMSIG_LIVING_TRY_SPEECH, COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOVABLE_USING_RADIO, COMSIG_MOVABLE_TREAT_MESSAGE, COMSIG_MOVABLE_SAY_QUOTE, COMSIG_MOB_SAY))
 
 /// Signal proc for [COMSIG_LIVING_TRY_SPEECH]
 /// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)
