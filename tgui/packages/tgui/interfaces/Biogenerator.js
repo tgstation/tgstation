@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Flex, Icon, Input, NoticeBox, NumberInput, ProgressBar, Section, Table, Tabs } from '../components';
+import { Box, Button, Dimmer, Stack, Icon, Input, NoticeBox, NumberInput, ProgressBar, Section, Table, Tabs, Divider } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -57,69 +57,76 @@ export const BiogeneratorContent = (props, context) => {
     // If none of that results in a list, return an empty list
     [];
   return (
-    <Section
-      title={
-        <Box inline color={biomass > 0 ? 'good' : 'bad'}>
-          {formatMoney(biomass)} Biomass
-        </Box>
-      }
-      buttons={
-        <>
-          Search
-          <Input
-            autoFocus
-            value={searchText}
-            onInput={(e, value) => setSearchText(value)}
-            mx={1}
-          />
-          <Button icon="eject" content="Eject" onClick={() => act('eject')} />
-          <Button
-            icon="cog"
-            content="Activate"
-            disabled={!can_process}
-            onClick={() => act('activate')}
-          />
-        </>
-      }>
-      <Flex>
+    <Box>
+      <Stack>
         {searchText.length === 0 && (
-          <Flex.Item>
-            <Tabs vertical>
-              {categories.map((category) => (
-                <Tabs.Tab
-                  key={category.name}
-                  selected={category.name === selectedCategory}
-                  onClick={() => setSelectedCategory(category.name)}>
-                  {category.name} ({category.items?.length || 0})
-                </Tabs.Tab>
-              ))}
-            </Tabs>
-            <Divider />
-            <div>Container Contents:</div>
-            <ProgressBar
-              mt={1}
-              value={beakerCurrentVolume}
-              maxValue={beakerMaxVolume}
-              backgroundColor="black"
-              color={reagent_color}>
-              <div>{beakerCurrentVolume + '/' + beakerMaxVolume}</div>
-            </ProgressBar>
-          </Flex.Item>
+          <Stack.Item minWidth="160px" shrink={0} basis={0}>
+            <Section title="Products">
+              <Tabs vertical>
+                {categories.map((category) => (
+                  <Tabs.Tab
+                    key={category.name}
+                    selected={category.name === selectedCategory}
+                    onClick={() => setSelectedCategory(category.name)}>
+                    {category.name} ({category.items?.length || 0})
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
+            </Section>
+            <Section
+             title="Biomass"
+             buttons={
+              <Button
+                icon="cog"
+                content="Process"
+                disabled={!can_process}
+                onClick={() => act('activate')}
+              />
+             }>
+              <Box color={biomass > 0 ? 'good' : 'bad'}>
+                {formatMoney(biomass)} available
+              </Box>
+            </Section>
+            <Section
+             title="Container"
+             buttons={
+              <Button icon="eject" content="Eject" onClick={() => act('eject')} />
+             }>
+              <ProgressBar
+                value={beakerCurrentVolume}
+                maxValue={beakerMaxVolume}
+                backgroundColor="black">
+                <Box textAlign="left">
+                  {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
+                </Box>
+              </ProgressBar>
+            </Section>
+          </Stack.Item>
         )}
-        <Flex.Item grow={1} basis={0}>
-          {items.length === 0 && (
-            <NoticeBox>
-              {searchText.length === 0
-                ? 'No items in this category.'
-                : 'No results found.'}
-            </NoticeBox>
-          )}
-          <Table>
-            <ItemList biomass={biomass} items={items} />
-          </Table>
-        </Flex.Item>
-      </Flex>
-    </Section>
+        <Stack.Item grow={1} basis={0}>
+          <Section>
+            <Input
+              fluid
+              autoFocus
+              placeholder="Search"
+              value={searchText}
+              onInput={(e, value) => setSearchText(value)}
+            />
+            <Divider />
+            {items.length === 0 && (
+              <NoticeBox>
+                {searchText.length === 0
+                  ? 'No items in this category.'
+                  : 'No results found.'}
+              </NoticeBox>
+            )}
+            <Table>
+              <ItemList biomass={biomass} items={items} />
+            </Table>
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </Box>
   );
 };
 

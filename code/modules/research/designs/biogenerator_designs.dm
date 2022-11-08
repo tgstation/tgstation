@@ -155,7 +155,7 @@
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
 
 /datum/design/cloth
-	name = "Roll of Cloth"
+	name = "Sheet of Cloth"
 	id = "cloth"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass= 50)
