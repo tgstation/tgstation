@@ -15,7 +15,7 @@
 	. = ..()
 	var/datum/action/cooldown/spell/touch/shock/to_modify =.
 
-	if(!istype(to_modify)) /// null or invalid
+	if(!istype(to_modify)) // null or invalid
 		return
 
 	if(GET_MUTATION_POWER(src) <= 1)
@@ -33,7 +33,7 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
-	///Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
+	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
 	///This var decides if the spell should chain, dictated by presence of power chromosome
 	var/chain = FALSE
 	///Affects damage, should do about 1 per limb
