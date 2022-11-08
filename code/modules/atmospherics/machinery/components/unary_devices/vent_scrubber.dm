@@ -26,15 +26,6 @@
 	///List of the turfs near the scrubber, used for widenet
 	var/list/turf/adjacent_turfs = list()
 
-	///Frequency id for connecting to the NTNet
-	var/frequency = FREQ_ATMOS_CONTROL
-	///Reference to the radio datum
-	var/datum/radio_frequency/radio_connection
-	///Radio connection to the air alarm
-	var/radio_filter_out
-	///Radio connection from the air alarm
-	var/radio_filter_in
-
 	//Enables the use of plunger_act for ending the vent clog random event
 	var/clogged = FALSE
 
@@ -60,9 +51,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/scrub_area = get_area(src)
 	scrub_area?.air_scrubbers -= src
-
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
 	adjacent_turfs.Cut()
 	return ..()
 
@@ -205,11 +193,6 @@
 	update_appearance(UPDATE_ICON)
 	update_power_usage()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_filter_types(list/new_filters)
 	var/list/new_filter_ids = list()
 
@@ -224,14 +207,6 @@
 		return
 	var/area/scrub_area = get_area(src)
 	name = "\proper [scrub_area.name] [name] [id_tag]"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/atmos_init()
-	radio_filter_in = frequency == initial(frequency) ? RADIO_FROM_AIRALARM : null
-	radio_filter_out = frequency == initial(frequency) ? RADIO_TO_AIRALARM : null
-	if(frequency)
-		set_frequency(frequency)
-	check_turfs()
-	. = ..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	if(welded || !is_operational)

@@ -433,20 +433,6 @@
 	else
 		return FALSE
 
-#ifdef MBTODO
-/obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
-	if(!radio_connection)
-		return FALSE
-
-	var/datum/signal/signal = new(command)
-	signal.data["tag"] = target
-	signal.data["sigtype"] = "command"
-	signal.data["user"] = user
-	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
-
-	return TRUE
-#endif
-
 /obj/machinery/airalarm/proc/get_mode_name(mode_value)
 	switch(mode_value)
 		if(AALARM_MODE_SCRUBBING)
