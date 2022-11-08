@@ -74,7 +74,7 @@
 	laser_act(target, user, params)
 
 /obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
-	if( !(user in (viewers(7,target))) )
+	if(!(user in viewers(CONFIG_GET(string/default_view), target)))
 		return
 	if (!diode)
 		to_chat(user, span_notice("You point [src] at [target], but nothing happens!"))

@@ -119,21 +119,39 @@
 
 ///Like remove_image_from_client, but will remove the image from a list of clients
 /proc/remove_images_from_clients(image/image_to_remove, list/show_to)
-	for(var/client/remove_from in show_to)
-		remove_from.images -= image_to_remove
+	for(var/client/remove_from as anything in show_to)
+		remove_from?.images -= image_to_remove
 
 ///Add an image to a list of clients and calls a proc to remove it after a duration
 /proc/flick_overlay(image/image_to_show, list/show_to, duration)
-	for(var/client/add_to in show_to)
-		add_to.images += image_to_show
+	for(var/client/add_to as anything in show_to)
+		add_to?.images += image_to_show
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, image_to_show, show_to), duration, TIMER_CLIENT_TIME)
 
-///wrapper for flick_overlay(), flicks to everyone who can see the target atom
+/**
+ * Flick overlay wrapper
+ *
+ * gets viewers everywhere this mob is
+ * and all cliented camera mobs (since these see through walls and AI and so is important)
+ */
 /proc/flick_overlay_view(image/image_to_show, atom/target, duration)
 	var/list/viewing = list()
-	for(var/mob/viewer as anything in viewers(target))
-		if(viewer.client)
+	//get player widescreen screen size
+	var/size = CONFIG_GET(string/default_view)
+	for(var/mob/viewer as anything in viewers(size, target))
+		if(viewer.client) //yes we check this twice but the extra iteration is only worth it at about 50% clientless mobs
 			viewing += viewer.client
+
+	if(!isarea(target))
+		//can actually be a turf as well because vis locs moment
+		var/atom/movable/vis_locs_access = target
+		for(var/atom/location as anything in vis_locs_access.vis_locs)
+			for(var/mob/viewer as anything in viewers(size, location))
+				if(viewer.client)
+					viewing += viewer.client
+
+	for(var/mob/camera/viewer as anything in GLOB.cliented_mob_cams)
+		viewing += viewer.client
 	flick_overlay(image_to_show, viewing, duration)
 
 ///Get active players who are playing in the round

@@ -1,4 +1,8 @@
-// Camera mob, used by AI camera and blob.
+///list of all /mob/camera instances with clients attached
+GLOBAL_LIST_EMPTY(cliented_mob_cams)
+
+
+/// Camera mob used for freestyle camera viewing. uses static to determine what it cannot see
 /mob/camera
 	name = "camera mob"
 	density = FALSE
@@ -14,6 +18,18 @@
 /mob/camera/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
+
+/mob/camera/Login()
+	. = ..()
+	if(!.)
+		return
+	GLOB.cliented_mob_cams += src
+
+/mob/camera/Logout()
+	. = ..()
+	if(!.)
+		return
+	GLOB.cliented_mob_cams += src
 
 /mob/camera/experience_pressure_difference()
 	return
