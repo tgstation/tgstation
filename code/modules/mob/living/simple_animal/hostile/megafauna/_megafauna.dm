@@ -140,6 +140,7 @@
 		span_userdanger("You feast on [L], restoring your health!"))
 	if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
+	L.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
 	L.gib()
 	return TRUE
 

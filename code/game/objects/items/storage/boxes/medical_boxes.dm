@@ -112,15 +112,6 @@
 		)
 	generate_items_inside(items_inside, src)
 
-/obj/item/storage/box/silver_sulf
-	name = "box of silver sulfadiazine patches"
-	desc = "Contains patches used to treat burns."
-	illustration = "firepatch"
-
-/obj/item/storage/box/silver_sulf/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/patch/aiuri(src)
-
 /obj/item/storage/box/evilmeds
 	name = "box of premium medicine"
 	desc = "Contains a large number of beakers filled with premium medical supplies. Straight from Interdyne Pharmaceutics!"

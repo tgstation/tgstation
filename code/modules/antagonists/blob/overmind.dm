@@ -173,12 +173,14 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		if(!(ROLE_BLOB in L.faction))
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
+			if(L.stat != DEAD)
+				L.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
 			L.fully_heal(admin_revive = FALSE)
 
-		for(var/area/A in GLOB.sortedAreas)
+		for(var/area/A in GLOB.areas)
 			if(!(A.type in GLOB.the_station_areas))
 				continue
 			if(!(A.area_flags & BLOBS_ALLOWED))

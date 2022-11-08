@@ -311,7 +311,7 @@
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-/obj/item/melee/baton/telescopic/suicide_act(mob/user)
+/obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/organ/internal/brain/our_brain = human_user.getorgan(/obj/item/organ/internal/brain)
 
@@ -329,7 +329,7 @@
 		human_user.internal_organs -= our_brain
 		qdel(our_brain)
 	new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -420,14 +420,14 @@
 /obj/item/melee/baton/security/get_cell()
 	return cell
 
-/obj/item/melee/baton/security/suicide_act(mob/user)
+/obj/item/melee/baton/security/suicide_act(mob/living/user)
 	if(cell?.charge && active)
 		user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
-		. = (FIRELOSS)
 		attack(user, user)
+		return FIRELOSS
 	else
 		user.visible_message(span_suicide("[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
-		. = (OXYLOSS)
+		return OXYLOSS
 
 /obj/item/melee/baton/security/Destroy()
 	if(cell)

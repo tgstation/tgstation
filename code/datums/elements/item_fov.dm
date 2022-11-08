@@ -1,6 +1,6 @@
 /// An element to unconditonally add a FOV trait to the wearer, removing it when an item is unequipped
 /datum/element/item_fov
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// Angle of the FoV we will apply when someone wears the clothing this element is attached to.
 	var/fov_angle

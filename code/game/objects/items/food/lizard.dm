@@ -412,6 +412,66 @@
 	foodtypes = VEGETABLES | MEAT | NUTS | GORE
 	boxtag = "Imperial Victory Flatbread"
 
+/obj/item/food/pizza/rawmeat_flatbread
+	name = "meatlovers flatbread"
+	desc = "Oddly enough, this Tiziran dish is actually a favorite of some health-minded humans."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "rawmeat_flatbread"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10)
+	tastes = list("bread" = 1, "meat" = 1,)
+	slice_type = null
+	foodtypes = MEAT | NUTS | RAW | GORE
+
+/obj/item/food/pizza/stinging_flatbread
+	name = "\improper Stinging flatbread"
+	desc = "The electric mix of jellyfish and bee larva makes for a flavor sensation that leaves you asking for more!"
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "stinging_flatbread"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 20, /datum/reagent/consumable/honey = 2)
+	tastes = list("bread" = 1, "sweetness" = 1, "stinging" = 1, "slime" = 1,)
+	slice_type = null
+	foodtypes = BUGS | NUTS | SEAFOOD | GORE
+
+/obj/item/food/pizza/zmorgast_flatbread // Name is based off of the Swedish dish Smörgåstårta
+	name = "\improper Zmorgast flatbread"
+	desc = "A Tiziran spin on the original Swedish sandwich cake, the Zmorgast is a common dish at family gatherings."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "zmorgast_flatbread"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 16, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("bread" = 1, "liver" = 1, "family" = 1,)
+	slice_type = null
+	foodtypes = VEGETABLES | NUTS | MEAT
+
+/obj/item/food/pizza/fish_flatbread
+	name = "\improper BBQ fish flatbread"
+	desc = "Superengine delamination, clown ops, too cold outside, I just want to grill for Tizira's sake!"
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "fish_flatbread"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/protein = 15, /datum/reagent/consumable/bbqsauce = 2)
+	tastes = list("bread" = 1, "fish" = 1,)
+	slice_type = null
+	foodtypes = SEAFOOD | NUTS
+
+/obj/item/food/pizza/mushroom_flatbread
+	name = "mushroom and tomato flatbread"
+	desc = "A simple alternative to the Italic flatbread, for when you've already filled up on meat elsewhere."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "mushroom_flatbread"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes =  list("bread" = 1, "mushroom" = 1, "tomatoes" = 1,)
+	slice_type = null
+	foodtypes = VEGETABLES | NUTS
+
+/obj/item/food/pizza/nutty_flatbread
+	name = "nut paste flatbread"
+	desc = "Modern advances in cuisine now allow for a double helping of the delicious taste of korta nuts, both as the base and as a topping on this flatbread."
+	icon = 'icons/obj/food/lizard.dmi'
+	icon_state = "nutty_flatbread"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
+	tastes =  list("bread" = 1, "nuts" = 2,)
+	slice_type = null
+	foodtypes = NUTS
+
 //Sandwiches/Toast Dishes
 /obj/item/food/emperor_roll
 	name = "emperor roll"

@@ -136,6 +136,7 @@
 								span_notice("You butcher [meat]."))
 	butcher_callback?.Invoke(butcher, meat)
 	meat.harvest(butcher)
+	meat.log_message("has been butchered by [key_name(butcher)]", LOG_ATTACK)
 	meat.gib(FALSE, FALSE, TRUE)
 
 ///Enables the butchering mechanic for the mob who has equipped us.

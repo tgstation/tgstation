@@ -466,8 +466,8 @@
 	update_wound_overlays()
 	var/list/needs_update = list()
 	var/limb_count_update = FALSE
-	var/obj/item/bodypart/l_leg/left_leg
-	var/obj/item/bodypart/r_leg/right_leg
+	var/obj/item/bodypart/leg/left/left_leg
+	var/obj/item/bodypart/leg/right/right_leg
 	var/old_left_leg_key
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
@@ -530,7 +530,7 @@
  * Returns a boolean, TRUE if the legs need to be redrawn, FALSE if they do not need to be redrawn.
  * Necessary so that we can ensure that modifications of legs cause overlay updates.
  */
-/mob/living/carbon/proc/update_legs(obj/item/bodypart/r_leg/right_leg, obj/item/bodypart/l_leg/left_leg, old_left_leg_key)
+/mob/living/carbon/proc/update_legs(obj/item/bodypart/leg/right/right_leg, obj/item/bodypart/leg/left/left_leg, old_left_leg_key)
 	var/list/left_leg_icons // yes it's actually a list, bet you didn't expect that, now did you?
 	var/legs_need_redrawn = FALSE
 	if(left_leg)
@@ -647,7 +647,7 @@
 
 	return .
 
-/obj/item/bodypart/r_leg/generate_icon_key()
+/obj/item/bodypart/leg/right/generate_icon_key()
 	RETURN_TYPE(/list)
 	. = ..()
 	if(left_leg_mask_key) // We do this so we can cache the versions with and without a mask, for when there's no left leg.
@@ -669,7 +669,7 @@
  *
  * Returns the `/image` of the right leg that was masked, or `null` if the mask didn't exist.
  */
-/obj/item/bodypart/r_leg/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state, image_dir)
+/obj/item/bodypart/leg/right/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state, image_dir)
 	RETURN_TYPE(/image)
 	if(!left_leg_mask_cache[left_leg_mask_key] || !right_leg_icon_file || !right_leg_icon_state)
 		return

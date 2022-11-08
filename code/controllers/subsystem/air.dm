@@ -445,8 +445,8 @@ SUBSYSTEM_DEF(air)
 				if(pipenetwarnings > 0)
 					log_mapping("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
 					pipenetwarnings--
-				if(pipenetwarnings == 0)
-					log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
+					if(pipenetwarnings == 0)
+						log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
 
 			net.members += item
 			border += item
@@ -523,7 +523,6 @@ SUBSYSTEM_DEF(air)
 	queued_for_activation.Cut()
 
 /datum/controller/subsystem/air/proc/setup_allturfs()
-	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 	var/list/active_turfs = src.active_turfs
 	times_fired++
 
@@ -537,7 +536,7 @@ SUBSYSTEM_DEF(air)
 	active_turfs.Cut()
 	var/time = 0
 
-	for(var/turf/T as anything in turfs_to_init)
+	for(var/turf/T as anything in ALL_TURFS())
 		if (!T.init_air)
 			continue
 		// We pass the tick as the current step so if we sleep the step changes
