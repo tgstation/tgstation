@@ -57,29 +57,3 @@
 
 	update_appearance()
 	src.updateDialog()
-
-/obj/machinery/embedded_controller/radio
-	var/frequency
-	var/datum/radio_frequency/radio_connection
-
-/obj/machinery/embedded_controller/radio/Destroy()
-	SSradio.remove_object(src,frequency)
-	return ..()
-
-/obj/machinery/embedded_controller/radio/Initialize(mapload)
-	. = ..()
-	set_frequency(frequency)
-
-#ifdef MBTODO
-/obj/machinery/embedded_controller/radio/post_signal(datum/signal/signal)
-	signal.transmission_method = TRANSMISSION_RADIO
-	if(radio_connection)
-		return radio_connection.post_signal(src, signal)
-	else
-		signal = null
-#endif
-
-/obj/machinery/embedded_controller/radio/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency)
