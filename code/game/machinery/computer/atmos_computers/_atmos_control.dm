@@ -164,39 +164,38 @@
 
 /obj/machinery/computer/atmos_control/ui_act(action, params)
 	. = ..()
-	if(. || !radio_connection || !(control || reconnecting))
+	if(. || !(control || reconnecting))
 		return
 
-	var/datum/signal/signal = new(list("sigtype" = "command", "user" = usr))
-	switch(action)
-		if("reconnect")
-			return reconnect(usr)
-		if("toggle_input")
-			if(!(params["chamber"] in atmos_chambers))
-				return FALSE
-			signal.data += list("tag" = params["chamber"] + "_in", "power_toggle" = TRUE)
-		if("toggle_output")
-			if(!(params["chamber"] in atmos_chambers))
-				return FALSE
-			signal.data += list("tag" = params["chamber"] + "_out", "power_toggle" = TRUE)
-		if("adjust_input")
-			if(!(params["chamber"] in atmos_chambers))
-				return FALSE
-			var/target = text2num(params["rate"])
-			if(isnull(target))
-				return FALSE
-			target = clamp(target, 0, MAX_TRANSFER_RATE)
-			signal.data += list("tag" = params["chamber"] + "_in", "set_volume_rate" = target)
-		if("adjust_output")
-			if(!(params["chamber"] in atmos_chambers))
-				return FALSE
-			var/target = text2num(params["rate"])
-			if(isnull(target))
-				return FALSE
-			target = clamp(target, 0, MAX_OUTPUT_PRESSURE)
-			signal.data += list("tag" = params["chamber"] + "_out", "set_internal_pressure" = target)
+	var/chamber = params["chamber"]
+	if (!(chamber in atmos_chambers))
+		return TRUE
 
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	switch(action)
+		if("toggle_input")
+			var/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/input = GLOB.objects_by_id_tag["[chamber]_in"]
+			input?.on = !input.on
+			input.update_appearance(UPDATE_ICON)
+		if("toggle_output")
+			var/obj/machinery/atmospherics/components/unary/vent_pump/output = GLOB.objects_by_id_tag["[chamber]_out"]
+			output?.on = !output.on
+			output.update_appearance(UPDATE_ICON)
+		if("adjust_input")
+			var/target = text2num(params["rate"])
+			if(isnull(target))
+				return TRUE
+			target = clamp(target, 0, MAX_TRANSFER_RATE)
+
+			var/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/input = GLOB.objects_by_id_tag["[chamber]_in"]
+			input?.volume_rate = clamp(target, 0, min(input.airs[1].volume, MAX_TRANSFER_RATE))
+		if("adjust_output")
+			var/target = text2num(params["rate"])
+			if(isnull(target))
+				return TRUE
+
+			var/obj/machinery/atmospherics/components/unary/vent_pump/output = GLOB.objects_by_id_tag["[chamber]_out"]
+			output?.internal_pressure_bound = clamp(target, 0, ATMOS_PUMP_MAX_PRESSURE)
+
 	return TRUE
 
 /obj/machinery/computer/atmos_control/nocontrol
