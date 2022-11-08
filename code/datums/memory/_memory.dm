@@ -87,7 +87,7 @@
 		memory_flags |= (MEMORY_FLAG_NOPERSISTENCE|MEMORY_NO_STORY)
 		return
 
-	name = pick(potential_names)
+	name = capitalize(pick(potential_names))
 
 /**
  * Selects a mood related verb for the memory.
@@ -138,7 +138,7 @@
  *
  * For example: "The Clown cracks his hands and honks his horn as he prepares to do a backflip".
  * You can use any information tidbits in your names to fill them out.
- * Starts should NOT be puncuated, as they follow with more story.
+ * If the memory is not [MEMORY_FLAG_NOMOOD], your starts should NOT be puncuated, as a mood phrase will follow.
  * They should also be in the present tense.
  */
 /datum/memory/proc/get_starts()
@@ -314,6 +314,7 @@
 	if(prob(75))
 		var/chosen_addition = pick(somethings)
 		chosen_addition = replacetext(chosen_addition, "%MEMORIZER", "[memorizer]")
+		chosen_addition = replacetext(chosen_addition, "%PROTAGONIST", protagonist_name)
 		chosen_addition = replacetext(chosen_addition, "%SOMETHING", initial(something.name))
 		chosen_addition = replacetext(chosen_addition, "%CREWMEMBER", build_story_character(crew_member))
 		chosen_addition = replacetext(chosen_addition, "%STORY_TYPE", story_type)
@@ -377,4 +378,5 @@
 		var/datum/mind/character_mind = character
 		return "\the [lowertext(initial(character_mind.assigned_role.title))]"
 
-	return "\the [character]"
+	// Generic result - mobs get "the guy", objs / turfs get "a thing"
+	return ismob(character) ? "\the [character]" : "\a [character]"

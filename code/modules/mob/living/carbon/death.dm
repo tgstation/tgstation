@@ -6,9 +6,8 @@
 
 	if(!gibbed)
 		INVOKE_ASYNC(src, .proc/emote, "deathgasp")
+		add_memory_in_range(src, 7, /datum/memory/witnessed_death, protagonist = src)
 	reagents.end_metabolization(src)
-
-	add_memory_in_range(src, 7, /datum/memory/witnessed_death, protagonist = src)
 
 	. = ..()
 

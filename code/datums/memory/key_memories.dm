@@ -51,7 +51,7 @@
 /datum/memory/key/captains_spare_code/get_starts()
 	return list(
 		"[protagonist_name] struggling at a wall safe, until finally entering [safe_code].",
-		"[safe_code][rand(0, 9)]. The numbers mason, what do they mean!?", // Same as the account code
+		"[safe_code][rand(0,9)]. The numbers mason, what do they mean!?", // Same as the account code
 	)
 
 
@@ -149,8 +149,8 @@
 
 /datum/memory/key/traitor_uplink/get_starts()
 	return list(
-		"[protagonist_name] punching in [uplink_code] into their [uplink_loc]",
-		"[protagonist_name] writing down [uplink_code] with their [uplink_loc] besides them, so as to not forget it",
+		"[protagonist_name] punching in [uplink_code] into their [uplink_loc].",
+		"[protagonist_name] writing down [uplink_code] with their [uplink_loc] besides them, so as to not forget it.",
 	)
 
 /datum/memory/key/traitor_uplink/implant
@@ -160,6 +160,6 @@
 
 /datum/memory/key/traitor_uplink/implant/get_starts()
 	return list(
-		"[protagonist_name] being implanted by a Scientist",
-		"[protagonist_name] having surgery done on them by a Scientist",
+		"[protagonist_name] being implanted by a scientist.",
+		"[protagonist_name] having surgery done on them by a scientist.",
 	)

@@ -47,15 +47,15 @@
 /datum/memory/bomb_planted/get_starts()
 	return list(
 		"[protagonist_name] pressing an ominous button, causing [antagonist_name] to begin beeping",
-		"[protagonist_name] slapping down a [antagonist_name]",
+		"[protagonist_name] slapping down [antagonist_name]",
 		"[antagonist_name] being armed by [protagonist_name]",
 	)
 
 /datum/memory/bomb_planted/get_moods()
 	return list(
-		"[protagonist_name] [mood_verb] and begins to walk away from [antagonist_name].",
-		"[protagonist_name] [mood_verb] as [antagonist_name] begins to tick.",
-		"[protagonist_name] [mood_verb] with [antagonist_name] winding down.",
+		"[protagonist_name] [mood_verb] and begins to walk away from it.",
+		"[protagonist_name] [mood_verb] as it begins to tick.",
+		"[protagonist_name] [mood_verb] with it winding down.",
 		"beep... beep... [protagonist_name] [mood_verb]."
 	)
 
@@ -172,9 +172,9 @@
 
 /datum/memory/was_slipped/get_starts()
 	return list(
-		"[protagonist_name] not being able to keep standing when faced with a [antagonist_name]",
-		"[protagonist_name] tumbling right over a [antagonist_name]",
-		"the perilous [antagonist_name] which took [protagonist_name] down a notch",
+		"[protagonist_name] not being able to keep standing when faced with [antagonist_name]",
+		"[protagonist_name] tumbling right over [antagonist_name]",
+		"[antagonist_name] which took [protagonist_name] down a notch",
 	)
 
 /datum/memory/was_slipped/get_moods()
@@ -185,6 +185,14 @@
 
 /datum/memory/was_slipped/get_sad_moods()
 	return list("doesn't even want to get up and looks depressed")
+
+/datum/memory/was_slipped/build_story_character(character)
+	// We can slip on turfs, so we should account for it
+	if(isturf(character))
+		var/turf/place = character
+		return "the [prob(50) ? "perilous " : ""][pick("wet", "lubed", "slippery", "cold")] [place.name]"
+
+	return ..()
 
 /// Had spaghetti fall from their pockets.
 /datum/memory/lost_spaghetti
@@ -523,8 +531,8 @@
 
 /datum/memory/held_at_gunpoint/get_starts()
 	return list(
-		"[protagonist_name] with a [antagonist_name] pressed to their skull by [deuteragonist_name]",
-		"[deuteragonist_name] whipping out a [antagonist_name] and pointing it at [protagonist_name]",
+		"[protagonist_name] with [antagonist_name] pressed to their skull by [deuteragonist_name]",
+		"[deuteragonist_name] whipping out [antagonist_name] and pointing it at [protagonist_name]",
 	)
 
 /datum/memory/held_at_gunpoint/get_moods()
@@ -556,13 +564,13 @@
 	// Antagonist - The vendor that crushed them
 
 /datum/memory/witness_vendor_crush/get_names()
-	return list("[protagonist_name] being crushed by a [antagonist_name].")
+	return list("[protagonist_name] being crushed by [antagonist_name].")
 
 /datum/memory/witness_vendor_crush/get_starts()
 	return list(
-		"[protagonist_name] being crushed by the a [antagonist_name]",
+		"[protagonist_name] being crushed by the [antagonist_name]",
 		"the [antagonist_name] that crashed on top of [protagonist_name]",
-		"the fall of a [antagonist_name] onto [protagonist_name]",
+		"the fall of [antagonist_name] onto [protagonist_name]",
 	)
 
 /datum/memory/witness_vendor_crush/get_moods()

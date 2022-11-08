@@ -18,7 +18,7 @@
 /// Unless you need to use this for an explicit reason, use the add_memory_in_range macro wrapper.
 /proc/_add_memory_in_range(atom/source, range = 7, list/memory_args)
 	for(var/mob/living/carbon/memorizer in hearers(range, source))
-		memorizer.mind?._add_memory(memory_args)
+		memorizer.mind?._add_memory(memory_args.Copy()) // One copy for each memory, since it mutates the list
 
 /**
  * Adds a memory to the target mob.
@@ -60,7 +60,7 @@
 	RETURN_TYPE(/datum/memory)
 	var/datum/memory/memory_type = memory_args[1]
 	if(!ispath(memory_type))
-		CRASH("add_memory called with an invalid memory type.")
+		CRASH("add_memory called with an invalid memory type. (Got: [memory_type || "null"])")
 
 	if(current)
 		var/new_memory_flags = initial(memory_type.memory_flags)
