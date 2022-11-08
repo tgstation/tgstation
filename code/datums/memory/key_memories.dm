@@ -80,7 +80,7 @@
 
 /// Tracks what medicines someone with the "allergies" quirk is allergic to
 /datum/memory/key/quirk_allergy
-	memory_flags = MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS|MEMORY_NO_STORY
+	memory_flags = MEMORY_FLAG_NOMOOD|MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS|MEMORY_NO_STORY // No story for this
 	var/allergy_string
 
 /datum/memory/key/quirk_allergy/New(
@@ -101,7 +101,7 @@
 
 /// Tracks what brand a smoker quirk user likes
 /datum/memory/key/quirk_smoker
-	memory_flags = MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS
+	memory_flags = MEMORY_FLAG_NOLOCATION|MEMORY_FLAG_NOPERSISTENCE|MEMORY_SKIP_UNCONSCIOUS // Does not have nomood
 	var/preferred_brand
 
 /datum/memory/key/quirk_smoker/New(
@@ -126,3 +126,40 @@
 
 /datum/memory/key/quirk_smoker/get_moods()
 	return list("[memorizer] [mood_verb] as they light another up.")
+
+/// Where our traitor uplink is, and what is its code
+/datum/memory/key/traitor_uplink
+	var/uplink_loc
+	var/uplink_code
+
+/datum/memory/key/traitor_uplink/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	uplink_loc,
+	uplink_code,
+)
+	src.uplink_loc = uplink_loc
+	src.uplink_code = uplink_code
+	return ..()
+
+/datum/memory/key/traitor_uplink/get_names()
+	return list("[protagonist_name]'s equipment uplink in their [uplink_loc], opened via [uplink_code].")
+
+/datum/memory/key/traitor_uplink/get_starts()
+	return list(
+		"[protagonist_name] punching in [uplink_code] into their [uplink_loc]",
+		"[protagonist_name] writing down [uplink_code] with their [uplink_loc] besides them, so as to not forget it",
+	)
+
+/datum/memory/key/traitor_uplink/implant
+
+/datum/memory/key/traitor_uplink/implant/get_names()
+	return list("[protagonist_name]'s equipment uplink implanted into their body.")
+
+/datum/memory/key/traitor_uplink/implant/get_starts()
+	return list(
+		"[protagonist_name] being implanted by a Scientist",
+		"[protagonist_name] having surgery done on them by a Scientist",
+	)
