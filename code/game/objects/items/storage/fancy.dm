@@ -474,6 +474,7 @@
 	spawn_count = 5
 	contents_tag = "pickle"
 	fold_result = null
+	custom_materials = list(/datum/material/glass = 2000)
 
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
 	. = ..()
