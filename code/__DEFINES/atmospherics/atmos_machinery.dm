@@ -18,3 +18,8 @@
 
 /// The max pressure of pumps.
 #define ATMOS_PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 50)
+
+/// Value of /obj/machinery/airalarm/var/danger_level
+#define AIR_ALARM_ALERT_NONE 0
+#define AIR_ALARM_ALERT_MINOR 1
+#define AIR_ALARM_ALERT_SEVERE 2

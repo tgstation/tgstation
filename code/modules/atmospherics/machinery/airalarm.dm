@@ -78,7 +78,10 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
-	var/danger_level = 0
+	/// Current alert level, found in code/__DEFINES/atmospherics/atmos_machinery.dm
+	/// AIR_ALARM_ALERT_NONE, AIR_ALARM_ALERT_MINOR, AIR_ALARM_ALERT_SEVERE
+	var/danger_level = AIR_ALARM_ALERT_NONE
+
 	var/mode = AALARM_MODE_SCRUBBING
 	///A reference to the area we are in
 	var/area/my_area
@@ -118,6 +121,8 @@
 		/datum/gas/halon = new/datum/tlv/dangerous
 	)
 
+GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
+
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	wires = new /datum/wires/airalarm(src)
@@ -143,13 +148,14 @@
 		/obj/item/circuit_component/air_alarm_vents
 	))
 
-
+	GLOB.air_alarms += src
 
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
 	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
+	GLOB.air_alarms -= src
 	return ..()
 
 /obj/machinery/airalarm/examine(mob/user)
@@ -403,6 +409,14 @@
 			mode = clamp(round(text2num(params["mode"])), AALARM_MODE_SCRUBBING, AALARM_MODE_MAX)
 			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 			apply_mode(user)
+		if ("threshold")
+			// MBTODO: threshold
+		if ("mode")
+			if (alarm_manager.send_alarm(ALARM_ATMOS))
+				danger_level = AIR_ALARM_ALERT_SEVERE
+		if ("reset")
+			if (alarm_manager.clear_alarm(ALARM_ATMOS))
+				danger_level = AIR_ALARM_ALERT_NONE
 
 	update_appearance()
 
@@ -656,28 +670,6 @@
 		mode = AALARM_MODE_SCRUBBING
 		INVOKE_ASYNC(src, .proc/apply_mode, src)
 
-
-#ifdef MBTODO
-/obj/machinery/airalarm/proc/post_alert(alert_level)
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/alert_signal = new(list(
-		"zone" = get_area_name(src, TRUE),
-		"type" = "Atmospheric"
-	))
-	if(alert_level==2)
-		alert_signal.data["alert"] = "severe"
-	else if (alert_level==1)
-		alert_signal.data["alert"] = "minor"
-	else if (alert_level==0)
-		alert_signal.data["alert"] = "clear"
-
-	frequency.post_signal(src, alert_signal, range = -1)
-#endif
-
 /obj/machinery/airalarm/proc/post_alert(alert_level)
 	// MBTODO
 
@@ -694,7 +686,7 @@
 	else
 		did_anything_happen = alarm_manager.clear_alarm(ALARM_ATMOS)
 	if(did_anything_happen) //if something actually changed
-		post_alert(new_area_danger_level)
+		danger_level = new_area_danger_level
 
 	update_appearance()
 
@@ -770,7 +762,7 @@
 						locked = FALSE
 						mode = 1
 						shorted = 0
-						post_alert(0)
+						danger_level = AIR_ALARM_ALERT_NONE
 						buildstage = AIRALARM_BUILD_COMPLETE
 						update_appearance()
 				return
@@ -1302,7 +1294,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
 	var/list/valid_filters = list()
 	for(var/info in gas_filter.value)
 		if(gas_id2path(info) == "")
