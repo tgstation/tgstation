@@ -276,3 +276,21 @@
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
 	mail_goodies = list(/obj/effect/spawner/random/food_or_drink/dinner)
+
+/datum/quirk/item_quirk/signer
+	name = "Signer"
+	desc = "You possess excellent communication skills in sign language."
+	icon = "sign-language"
+	value = 4
+	mail_goodies = list(/obj/item/clothing/gloves/radio)
+
+/datum/quirk/item_quirk/signer/add_unique()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.AddComponent(/datum/component/sign_language)
+	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
+	if(isplasmaman(human_holder))
+		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
+	give_item_to_holder(gloves_type, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+
+/datum/quirk/item_quirk/signer/remove()
+	qdel(quirk_holder.GetComponent(/datum/component/sign_language))
