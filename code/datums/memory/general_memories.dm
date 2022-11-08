@@ -44,7 +44,7 @@
 	atom/antagonist,
 	obj/bomb_type,
 )
-	src.bomb_type = bomb_type.name
+	src.bomb_type = build_story_character(bomb_type)
 	return ..()
 
 /datum/memory/bomb_planted/get_names()
@@ -306,9 +306,9 @@
 	atom/protagonist,
 	atom/deuteragonist,
 	atom/antagonist,
-	obj/item/lost_limb,
+	obj/item/bodypart/lost_limb,
 )
-	src.lost_limb = lost_limb.name
+	src.lost_limb = lost_limb.plaintext_zone
 	return ..()
 
 /datum/memory/was_dismembered/get_names()
@@ -348,7 +348,8 @@
 		"Without [deuteragonist_name], [protagonist_name] [mood_verb].",
 	)
 
-/// The revolution was triumphant
+/// The revolution was triumphant!
+/// Given to head revs and those nearby when the revs win a revolution.
 /datum/memory/revolutionary_victory
 	story_value = STORY_VALUE_LEGENDARY
 	memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLINDNESS|MEMORY_CHECK_DEAFNESS
@@ -382,10 +383,10 @@
 	atom/protagonist,
 	atom/deuteragonist,
 	atom/antagonist,
-	obj/item/medal,
+	obj/item/medal_type,
 	medal_text,
 )
-	src.medal_type = medal.name
+	src.medal_type = medal_type.name
 	src.medal_text = medal_text
 	return ..()
 

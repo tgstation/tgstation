@@ -31,6 +31,30 @@
 		"[remembered_id]. The numbers mason, what do they mean!?",
 	)
 
+/// The code to the captain's spare ID, ONLY give to the real captain.
+/datum/memory/key/captains_spare_code
+	var/safe_code
+
+/datum/memory/key/captains_spare_code/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	safe_code,
+)
+	src.safe_code = safe_code
+	return ..()
+
+/datum/memory/key/captains_spare_code/get_names()
+	return list("The code to the golden safe on the bridge, [safe_code].")
+
+/datum/memory/key/captains_spare_code/get_starts()
+	return list(
+		"[protagonist_name] struggling at a wall safe, until finally entering [safe_code].",
+		"[safe_code][rand(0, 9)]. The numbers mason, what do they mean!?", // Same as the account code
+	)
+
+
 /// The nuclear bomb code, for nuke ops
 /datum/memory/key/nuke_code
 	var/nuclear_code

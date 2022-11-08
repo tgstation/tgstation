@@ -42,10 +42,10 @@
 		protagonist = memorizer_mind.current
 
 	src.memorizer_mind = memorizer_mind
-	src.memorizer = build_story_mob(memorizer_mind)
-	src.protagonist_name = build_story_mob(protagonist)
-	src.deuteragonist_name = build_story_mob(deuteragonist)
-	src.antagonist_name = build_story_mob(antagonist)
+	src.memorizer = build_story_character(memorizer_mind)
+	src.protagonist_name = build_story_character(protagonist)
+	src.deuteragonist_name = build_story_character(deuteragonist)
+	src.antagonist_name = build_story_character(antagonist)
 
 	if(!(memory_flags & MEMORY_FLAG_NOLOCATION))
 		src.where = get_area_name(protagonist)
@@ -60,12 +60,16 @@
 
 	generate_memory_name()
 
+/datum/memory/Destroy(force, ...)
+	memorizer_mind = null
+	return ..()
+
 /datum/memory/proc/generate_memory_name()
-	var/potential_names = get_names()
+	var/list/potential_names = get_names()
 	if(!length(potential_names))
 		CRASH("[type] memory didn't have any memory names!")
 
-	name = potential_names
+	name = pick(potential_names)
 
 /datum/memory/proc/select_mood_verb(story_mood)
 	if(story_mood == MOODLESS_MEMORY)
@@ -232,7 +236,7 @@
 		var/chosen_addition = pick(somethings)
 		chosen_addition = replacetext(chosen_addition, "%MEMORIZER", "[memorizer]")
 		chosen_addition = replacetext(chosen_addition, "%SOMETHING", initial(something.name))
-		chosen_addition = replacetext(chosen_addition, "%CREWMEMBER", build_story_mob(crew_member))
+		chosen_addition = replacetext(chosen_addition, "%CREWMEMBER", build_story_character(crew_member))
 		chosen_addition = replacetext(chosen_addition, "%STORY_TYPE", story_type)
 
 		story_pieces += chosen_addition
@@ -275,7 +279,7 @@
  *
  * If the character has no mind or no assigned role, it'll just return their name,
  */
-/datum/memory/proc/build_story_mob(character)
+/datum/memory/proc/build_story_character(character)
 	if(isnull(character))
 		return
 	if(istext(character))
