@@ -214,7 +214,7 @@
 	var/datum/gas_mixture/air = pump?.return_air()
 	return air?.return_pressure()
 
-/obj/machinery/embedded_controller/radio/airlock_controller
+/obj/machinery/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
 	base_icon_state = "airlock_control"
@@ -231,9 +231,9 @@
 	var/sensor_tag
 	var/sanitize_external
 
-GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_controller/radio/airlock_controller)
+GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_controller)
 
-/obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
+/obj/machinery/airlock_controller/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		return
@@ -249,7 +249,7 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_contr
 	new_prog.master = src
 	program = new_prog
 
-/obj/machinery/embedded_controller/radio/airlock_controller/LateInitialize()
+/obj/machinery/airlock_controller/LateInitialize()
 	. = ..()
 
 	if (isnull(program))
@@ -260,26 +260,26 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_contr
 	airlock_program.exterior_door_ref = WEAKREF(GLOB.airlocks_by_id[exterior_door_tag])
 	airlock_program.pump_ref = WEAKREF(GLOB.vents_by_id[airpump_tag])
 
-/obj/machinery/embedded_controller/radio/airlock_controller/Destroy()
+/obj/machinery/airlock_controller/Destroy()
 	GLOB.airlock_controllers_by_id -= id_tag
 	return ..()
 
-/obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list) // needed to override obj/machinery/embedded_controller/Topic, dont think its actually used in game other than here but the code is still here
+/obj/machinery/airlock_controller/Topic(href, href_list) // needed to override obj/machinery/embedded_controller/Topic, dont think its actually used in game other than here but the code is still here
 
-/obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "AirlockController", src)
 		ui.open()
 
-/obj/machinery/embedded_controller/radio/airlock_controller/process(delta_time)
+/obj/machinery/airlock_controller/process(delta_time)
 	if(program)
 		program.process(delta_time)
 
 	update_appearance()
 	SStgui.update_uis(src)
 
-/obj/machinery/embedded_controller/radio/airlock_controller/ui_data(mob/user)
+/obj/machinery/airlock_controller/ui_data(mob/user)
 	var/list/data = list()
 
 	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
@@ -311,7 +311,7 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_contr
 
 	return data
 
-/obj/machinery/embedded_controller/radio/airlock_controller/ui_act(action, params)
+/obj/machinery/airlock_controller/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -320,7 +320,7 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_contr
 	return TRUE
 
 /// Starts an airlock cycle
-/obj/machinery/embedded_controller/radio/airlock_controller/proc/cycle()
+/obj/machinery/airlock_controller/proc/cycle()
 	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
 	if (isnull(airlock_program))
 		return
@@ -330,7 +330,7 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_contr
 	else
 		airlock_program.target_state = AIRLOCK_STATE_INOPEN
 
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix
+/obj/machinery/airlock_controller/incinerator_ordmix
 	name = "Incinerator Access Console"
 	airpump_tag = INCINERATOR_ORDMIX_DP_VENTPUMP
 	exterior_door_tag = INCINERATOR_ORDMIX_AIRLOCK_EXTERIOR
@@ -339,7 +339,7 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_contr
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_ORDMIX_AIRLOCK_SENSOR
 
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos
+/obj/machinery/airlock_controller/incinerator_atmos
 	name = "Incinerator Access Console"
 	airpump_tag = INCINERATOR_ATMOS_DP_VENTPUMP
 	exterior_door_tag = INCINERATOR_ATMOS_AIRLOCK_EXTERIOR
@@ -348,7 +348,7 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_contr
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_ATMOS_AIRLOCK_SENSOR
 
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_syndicatelava
+/obj/machinery/airlock_controller/incinerator_syndicatelava
 	name = "Incinerator Access Console"
 	airpump_tag = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
 	exterior_door_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_EXTERIOR
@@ -357,7 +357,7 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/embedded_contr
 	sanitize_external = TRUE
 	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 
-/obj/machinery/embedded_controller/radio/airlock_controller/update_icon_state()
+/obj/machinery/airlock_controller/update_icon_state()
 	if(on && program)
 		var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
 		icon_state = "[base_icon_state]_[airlock_program.processing ? "process" : "standby"]"

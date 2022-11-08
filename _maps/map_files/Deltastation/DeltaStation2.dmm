@@ -40482,7 +40482,7 @@
 	pixel_x = 8;
 	pixel_y = -24
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
+/obj/machinery/airlock_controller/incinerator_ordmix{
 	pixel_y = 32
 	},
 /obj/effect/mapping_helpers/airlock/locked,
@@ -45791,7 +45791,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos{
+/obj/machinery/airlock_controller/incinerator_atmos{
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/line{
