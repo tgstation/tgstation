@@ -369,8 +369,12 @@
 // you just dont get the same feeling with handwashed clothes
 /obj/item/clothing/machine_wash()
 	. = ..()
-	AddComponent(/datum/component/onwear_mood, 2 MINUTES, /datum/mood_event/fresh_laundry, \
-	"The [src] looks crisp and pristine.")
+	// it looks nicer to save it to a var then to try to do it all together
+	var/fresh_mood = AddComponent(/datum/component/onwear_mood, \
+		saved_event = /datum/mood_event/fresh_laundry, \
+		examine_string = "The [src] looks crisp and pristine.",)
+
+	QDEL_IN(fresh_mood, 2 MINUTES)
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)

@@ -5,18 +5,13 @@
 	/// examine string added to examine
 	var/examine_string
 
-/datum/component/onwear_mood/Initialize(clear_after, datum/mood_event/saved_event, examine_string)
+/datum/component/onwear_mood/Initialize(datum/mood_event/saved_event, examine_string)
 
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	if(istype(saved_event))
-		src.saved_event = saved_event
-
-	src.examine_string = examine_string
-
-	if(isnum(clear_after))
-		QDEL_IN(src, clear_after)
+	src.saved_event = saved_event
+	src.examine_string = examine_strine
 
 /datum/component/onwear_mood/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/affect_wearer)
