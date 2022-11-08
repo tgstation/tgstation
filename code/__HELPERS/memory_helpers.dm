@@ -21,66 +21,22 @@
  * * memory_flags: special specifications for skipping parts of the memory like moods for stories where showing moods doesn't make sense
  * Returns the datum memory created, null otherwise.
  */
-/datum/mind/proc/add_memory(memory_type, extra_info, story_value, memory_flags)
+/datum/mind/proc/add_memory(memory_type, ...)
 	if(current)
 		if(!(memory_flags & MEMORY_SKIP_UNCONSCIOUS) && current.stat >= UNCONSCIOUS)
 			return
-		var/is_blind = FALSE
 		if(memory_flags & MEMORY_CHECK_BLINDNESS && current.is_blind())
-			if(!(memory_flags & MEMORY_CHECK_DEAFNESS)) // Only check for blindness
-				return
-			is_blind = TRUE // Otherwise check if the mob is both blind and deaf
-		if(memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF) && (!(memory_flags & MEMORY_CHECK_BLINDNESS) || is_blind))
 			return
-
-	var/story_mood = MOODLESS_MEMORY
-	var/victim_mood = MOODLESS_MEMORY
-
-	extra_info[DETAIL_PROTAGONIST] = extra_info[DETAIL_PROTAGONIST] || current //If no victim is supplied, assume it happend to the memorizer.
-	var/atom/victim = extra_info[DETAIL_PROTAGONIST]
-	if(!(memory_flags & MEMORY_FLAG_NOLOCATION))
-		extra_info[DETAIL_WHERE] = get_area(victim)
-
-	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
-		if (current.mob_mood)
-			victim_mood = current.mob_mood.mood_level
-
-		if(victim == current)
-			story_mood = victim_mood
-		else if(current.mob_mood)
-			story_mood = current.mob_mood.mood_level
-
-	extra_info[DETAIL_PROTAGONIST_MOOD] = victim_mood
+		if(memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF))
+			return
 
 	var/datum/memory/replaced_memory = memories[memory_type]
 	if(replaced_memory)
 		qdel(replaced_memory)
 
-	var/extra_info_parsed = list()
-
-	for(var/key in extra_info)
-		var/detail = extra_info[key]
-		extra_info_parsed[key] = build_story_detail(detail)
-
-	memories[memory_type] = new /datum/memory(src, build_story_mob(current), memory_type, extra_info_parsed, story_mood, story_value, memory_flags)
+	var/list/memory_args = args.Copy(2)
+	memories[memory_type] = new memory_type(arglist(memory_args))
 	return memories[memory_type]
-
-///returns the story name of a mob
-/datum/mind/proc/build_story_mob(mob/living/target)
-	if(isanimal(target))
-		return "\the [target]"
-	if(target.mind?.assigned_role)
-		return  "\the [lowertext(initial(target.mind?.assigned_role.title))]"
-	return target
-
-///returns the story name of anything
-/datum/mind/proc/build_story_detail(detail)
-	if(!isatom(detail))
-		return detail //Its either text or deserves to runtime.
-	var/atom/target = detail
-	if(isliving(target))
-		return build_story_mob(target)
-	return lowertext(initial(target.name))
 
 ///sane proc for giving a mob with a mind the option to select one of their memories, returns the memory selected (null otherwise)
 /datum/mind/proc/select_memory(verbage)
