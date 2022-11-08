@@ -27,11 +27,14 @@
 	//Get all faxes, and save them to our list.
 	for(var/obj/machinery/fax/fax in GLOB.machines)
 		available_faxes += fax
+	
 	//Get all stamps
 	for(var/stamp in subtypesof(/obj/item/stamp))
-		var/obj/item/stamp/real_stamp = stamp 
-		if(length(initial(real_stamp.actions)) == 0)// try to remove chameleon, dont work.
-			stamp_list += list(list(initial(real_stamp.name), initial(real_stamp.icon_state)))
+		var/obj/item/stamp/real_stamp = new stamp()
+		if(!istype(real_stamp, /obj/item/stamp/chameleon) && !istype(real_stamp, /obj/item/stamp/mod))// try to remove chameleon, dont work.
+			var/stamp_detail = real_stamp.get_writing_implement_details()
+			stamp_list += list(list(real_stamp.name, real_stamp.icon_state, stamp_detail["stamp_class"]))
+	
 	//Give our paper special status, to read everywhere.
 	fax_paper.request_state = TRUE
 
@@ -103,17 +106,19 @@
 
 			fax_paper.clear_paper()
 			var/stamp 
+			var/stamp_class
 
 			for(var/needed_stamp in stamp_list)
 				if(needed_stamp[1] == params["stamp"])
 					stamp = needed_stamp[2]
+					stamp_class = needed_stamp[3]
 					break
 			
 			fax_paper.name = "paper — [default_paper_name]"
 			fax_paper.add_raw_text(params["rawText"])
 
 			if(stamp)
-				fax_paper.add_stamp("paper121x54 [stamp]", params["stampX"], params["stampY"], params["stampR"], stamp)
+				fax_paper.add_stamp(stamp_class, params["stampX"], params["stampY"], params["stampR"], stamp)
 			
 		if("send")
 			//copy
