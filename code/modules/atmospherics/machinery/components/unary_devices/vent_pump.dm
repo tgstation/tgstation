@@ -28,15 +28,6 @@
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	///Frequency id for connecting to the NTNet
-	var/frequency = FREQ_ATMOS_CONTROL
-	///Reference to the radio datum
-	var/datum/radio_frequency/radio_connection
-	///Radio connection to the air alarm
-	var/radio_filter_out
-	///Radio connection from the air alarm
-	var/radio_filter_in
-
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
@@ -53,8 +44,6 @@
 	if(vent_area)
 		vent_area.air_vents -= src
 
-	SSradio.remove_object(src,frequency)
-	radio_connection = null
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
@@ -145,104 +134,12 @@
 			air_contents.merge(removed)
 			update_parents()
 
-//Radio remote control
-
-/obj/machinery/atmospherics/components/unary/vent_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, radio_filter_in)
-
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
 	. = ..()
 	if(override_naming)
 		return
 	var/area/vent_area = get_area(src)
 	name = "\proper [vent_area.name] [name] [id_tag]"
-
-
-/obj/machinery/atmospherics/components/unary/vent_pump/atmos_init()
-	//some vents work his own spesial way
-	radio_filter_in = frequency==FREQ_ATMOS_CONTROL?(RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null
-	if(frequency)
-		set_frequency(frequency)
-	..()
-
-#ifdef MBTODO
-/obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
-	if(!is_operational)
-		return
-	// log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal([signal.debug_print()])")
-	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
-		return
-
-	var/atom/signal_sender = signal.data["user"]
-
-	if("purge" in signal.data)
-		pressure_checks &= ~EXT_BOUND
-		pump_direction = SIPHONING
-		investigate_log("pump direction was set to [pump_direction] by [key_name(signal_sender)]", INVESTIGATE_ATMOS)
-
-	if("stabilize" in signal.data)
-		pressure_checks |= EXT_BOUND
-		pump_direction = RELEASING
-		investigate_log("pump direction was set to [pump_direction] by [key_name(signal_sender)]", INVESTIGATE_ATMOS)
-
-	if("power" in signal.data)
-		on = text2num(signal.data["power"])
-
-	if("power_toggle" in signal.data)
-		on = !on
-
-	if("checks" in signal.data)
-		var/old_checks = pressure_checks
-		pressure_checks = text2num(signal.data["checks"])
-		if(pressure_checks != old_checks)
-			investigate_log(" pressure checks were set to [pressure_checks] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
-
-	if("checks_toggle" in signal.data)
-		pressure_checks = (pressure_checks?0:NO_BOUND)
-
-	if("direction" in signal.data)
-		pump_direction = text2num(signal.data["direction"])
-
-	if("set_internal_pressure" in signal.data)
-		var/old_pressure = internal_pressure_bound
-		internal_pressure_bound = clamp(text2num(signal.data["set_internal_pressure"]),0,ONE_ATMOSPHERE*50)
-		if(old_pressure != internal_pressure_bound)
-			investigate_log(" internal pressure was set to [internal_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
-
-	if("set_external_pressure" in signal.data)
-		var/old_pressure = external_pressure_bound
-		external_pressure_bound = clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
-		if(old_pressure != external_pressure_bound)
-			investigate_log(" external pressure was set to [external_pressure_bound] by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
-
-	if("reset_external_pressure" in signal.data)
-		external_pressure_bound = ONE_ATMOSPHERE
-
-	if("reset_internal_pressure" in signal.data)
-		internal_pressure_bound = 0
-
-	if("adjust_internal_pressure" in signal.data)
-		internal_pressure_bound = clamp(internal_pressure_bound + text2num(signal.data["adjust_internal_pressure"]),0,ONE_ATMOSPHERE*50)
-
-	if("adjust_external_pressure" in signal.data)
-		external_pressure_bound = clamp(external_pressure_bound + text2num(signal.data["adjust_external_pressure"]),0,ONE_ATMOSPHERE*50)
-
-	if("init" in signal.data)
-		name = signal.data["init"]
-		return
-
-	if("status" in signal.data)
-		broadcast_status()
-		return // do not update_appearance
-
-		// log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
-	broadcast_status()
-	update_appearance()
-#endif
 
 /obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()

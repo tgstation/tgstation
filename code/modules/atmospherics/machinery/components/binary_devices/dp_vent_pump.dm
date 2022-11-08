@@ -18,8 +18,6 @@
 	var/frequency = 0
 	///Variable for machinery that needs to directly interact with this pump, such as airlock controllers
 	var/id = null
-	///Stores the radio connection
-	var/datum/radio_frequency/radio_connection
 	///Indicates that the direction of the pump, if ATMOS_DIRECTION_SIPHONING is siphoning, if ATMOS_DIRECTION_RELEASING is releasing
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
 	///Set the maximum allowed external pressure
@@ -117,83 +115,6 @@ GLOBAL_LIST_EMPTY_TYPED(vents_by_id, /obj/machinery/atmospherics/components/bina
 
 		var/datum/pipeline/parent2 = parents[2]
 		parent2.update = TRUE
-
-	//Radio remote control
-
-/**
- * Called in atmos_init(), used to change or remove the radio frequency from the component
- * Arguments:
- * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
- */
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
-
-/**
- * Called in atmos_init(), send the component status to the radio device connected
- */
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
-	var/datum/signal/signal = new(list(
-		"tag" = id,
-		"device" = "ADVP",
-		"power" = on,
-		"direction" = pump_direction?("release"):("siphon"),
-		"checks" = pressure_checks,
-		"input" = input_pressure_min,
-		"output" = output_pressure_max,
-		"external" = external_pressure_bound,
-		"sigtype" = "status"
-	))
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/atmos_init()
-	..()
-	if(frequency)
-		set_frequency(frequency)
-	broadcast_status()
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return
-
-	if("power" in signal.data)
-		on = text2num(signal.data["power"])
-
-	if("power_toggle" in signal.data)
-		on = !on
-
-	if("set_direction" in signal.data)
-		pump_direction = text2num(signal.data["set_direction"])
-
-	if("checks" in signal.data)
-		pressure_checks = text2num(signal.data["checks"])
-
-	if("purge" in signal.data)
-		pressure_checks &= ~1
-		pump_direction = 0
-
-	if("stabilize" in signal.data)
-		pressure_checks |= 1
-		pump_direction = 1
-
-	if("set_input_pressure" in signal.data)
-		input_pressure_min = clamp(text2num(signal.data["set_input_pressure"]),0,ONE_ATMOSPHERE*50)
-
-	if("set_output_pressure" in signal.data)
-		output_pressure_max = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
-
-	if("set_external_pressure" in signal.data)
-		external_pressure_bound = clamp(text2num(signal.data["set_external_pressure"]),0,ONE_ATMOSPHERE*50)
-
-	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-
-	if(!("status" in signal.data)) //do not update_appearance
-		update_appearance()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "large dual-port air vent"
