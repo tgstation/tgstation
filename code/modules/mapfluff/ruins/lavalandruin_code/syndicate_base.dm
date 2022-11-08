@@ -37,6 +37,7 @@
 	new /obj/item/organ/internal/tongue/bone(src)
 	new /obj/item/organ/internal/tongue/robot(src) //DANGER! CRYSTAL HYPERSTRUCTURE-
 	new /obj/item/organ/internal/tongue/ethereal(src)
+	new /obj/item/organ/internal/tongue/tied(src)
 	new /obj/item/autosurgeon/syndicate/commsagent(src)
 	new	/obj/item/clothing/gloves/radio(src)
 

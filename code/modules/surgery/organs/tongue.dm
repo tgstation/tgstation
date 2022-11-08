@@ -478,3 +478,20 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/ethereal/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_ethereal
+
+/// Mute & Sign Language Tongue - yep, it still works!
+/obj/item/organ/internal/tongue/tied
+	name = "tied tongue"
+	desc = "If only one had a sword so we may finally untie this knot."
+	say_mod = "signs"
+	icon_state = "tonguetied"
+
+/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	ADD_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
+	signer.AddComponent(/datum/component/sign_language)
+
+/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
+	. = ..()
+	REMOVE_TRAIT(speaker, TRAIT_MUTE, ORGAN_TRAIT)
+	qdel(speaker.GetComponent(/datum/component/sign_language))
