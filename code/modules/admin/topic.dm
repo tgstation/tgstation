@@ -781,9 +781,9 @@
 		//Location
 		if(isturf(position))
 			if(isarea(position.loc))
-				location_description = "[subject.loc == position ? "at coordinates " : "in [position.loc] at coordinates"] [position.x], [position.y], [position.z] in area <b>[position.loc]</b>"
+				location_description = "[subject.loc == position ? "at coordinates" : "in [position.loc] at coordinates"] [position.x], [position.y], [position.z] in area <b>[position.loc]</b>"
 			else
-				location_description = "[subject.loc == position ? "at coordinates " : "in [subject.loc] at coordinates"] [position.x], [position.y], [position.z]"
+				location_description = "[subject.loc == position ? "at coordinates" : "in [subject.loc] at coordinates"] [position.x], [position.y], [position.z]"
 
 		//Job + antagonist
 		if(subject.mind)
@@ -816,14 +816,9 @@
 					status = "<font color='orange'><b>Unconscious and Dying</b></font>"
 				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
-			health_description = "<br>[FOURSPACES]- Status: [status]"
-			health_description += "<br>[FOURSPACES]- Brute: [lifer.getBruteLoss()]"
-			health_description += "<br>[FOURSPACES]- Burn: [lifer.getFireLoss()]"
-			health_description += "<br>[FOURSPACES]- Toxin: [lifer.getToxLoss()]"
-			health_description += "<br>[FOURSPACES]- Suffocation: [lifer.getOxyLoss()]"
-			health_description += "<br>[FOURSPACES]- Clone: [lifer.getCloneLoss()]"
-			health_description += "<br>[FOURSPACES]- Brain: [lifer.getOrganLoss(ORGAN_SLOT_BRAIN)]"
-			health_description += "<br>[FOURSPACES]- Stamina: [lifer.getStaminaLoss()]"
+			health_description = "Status: [status]"
+			health_description += "<br>Brute: [lifer.getBruteLoss()] - Burn: [lifer.getFireLoss()] - Toxin: [lifer.getToxLoss()] - Suffocation: [lifer.getOxyLoss()]"
+			health_description += "<br>Clone: [lifer.getCloneLoss()] - Brain: [lifer.getOrganLoss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.getStaminaLoss()]"
 		else
 			health_description = "This mob type has no health to speak of."
 
@@ -836,13 +831,11 @@
 
 		//Full Output
 		var/exportable_text = "[span_bold("Info about [subject.name]:")]<br>"
+		exportable_text += "Key - [span_bold(subject.key)]<br>"
 		exportable_text += "Mob Type - [subject.type]<br>"
 		exportable_text += "Gender - [gender_description]<br>"
-		exportable_text += "Damage - [health_description]<br>"
-		exportable_text += "Name - [span_bold(subject.name)]<br>"
-		exportable_text += "Real Name - [subject.real_name]<br>"
-		exportable_text += "Mind Name - [subject.mind?"[subject.mind.name]":""]<br>"
-		exportable_text += "Key - [span_bold(subject.key)]<br>"
+		exportable_text += "[health_description]<br>"
+		exportable_text += "Name: [span_bold(subject.name)] - Real Name: [subject.real_name] - Mind Name: [subject.mind?"[subject.mind.name]":""]<br>"
 		exportable_text += "Location is [location_description]<br>"
 		exportable_text += "[special_role_description]<br>"
 		exportable_text += ADMIN_FULLMONTY_NONAME(subject)
