@@ -24,7 +24,7 @@
 
 ///// Debride
 /datum/surgery_step/debride
-	name = "excise infection"
+	name = "excise infection (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCALPEL = 85,
@@ -108,7 +108,7 @@
 
 ///// Dressing burns
 /datum/surgery_step/dress
-	name = "bandage burns"
+	name = "bandage burns (gauze/tape)"
 	implements = list(
 		/obj/item/stack/medical/gauze = 100,
 		/obj/item/stack/sticky_tape/surgical = 100)

@@ -876,11 +876,11 @@
 "zj" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/west,
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = -10;
 	pixel_y = 9
 	},

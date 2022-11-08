@@ -139,14 +139,14 @@
 	list_reagents = list(/datum/reagent/consumable/salt = 20)
 	fill_icon_thresholds = null
 
-/obj/item/reagent_containers/condiment/saltshaker/suicide_act(mob/user)
+/obj/item/reagent_containers/condiment/saltshaker/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/newname = "[name]"
 	name = "[user.name]"
 	user.name = newname
 	user.real_name = newname
 	desc = "Salt. From dead crew, presumably."
-	return (TOXLOSS)
+	return TOXLOSS
 
 /obj/item/reagent_containers/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
 	. = ..()

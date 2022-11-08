@@ -25,6 +25,7 @@
 	user.adjustCloneLoss(20)
 	if(user.stat)
 		to_chat(user, span_userdanger("No... just one more try..."))
+		user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		user.gib()
 	else
 		user.visible_message(span_warning("[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"), "<span class='warning'>You feel a draining as you pull the lever, but you \

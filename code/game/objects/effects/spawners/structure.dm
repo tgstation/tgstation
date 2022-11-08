@@ -10,12 +10,8 @@ again.
 
 /obj/effect/spawner/structure/Initialize(mapload)
 	. = ..()
-
 	for(var/spawn_type in spawn_list)
 		new spawn_type(loc)
-
-	return INITIALIZE_HINT_QDEL
-
 
 //normal windows
 

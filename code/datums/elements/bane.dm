@@ -1,6 +1,6 @@
 /// Deals extra damage to mobs of a certain type or species.
 /datum/element/bane
-	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// can be a mob or a species.
 	var/target_type

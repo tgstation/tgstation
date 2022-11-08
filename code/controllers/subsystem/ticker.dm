@@ -272,10 +272,10 @@ SUBSYSTEM_DEF(ticker)
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
 
-	if(SSevents.holidays)
+	if(length(GLOB.holidays))
 		to_chat(world, span_notice("and..."))
-		for(var/holidayname in SSevents.holidays)
-			var/datum/holiday/holiday = SSevents.holidays[holidayname]
+		for(var/holidayname in GLOB.holidays)
+			var/datum/holiday/holiday = GLOB.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
 	PostSetup()
@@ -666,7 +666,7 @@ SUBSYSTEM_DEF(ticker)
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)
 	for(var/mob/M in GLOB.player_list)
-		if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
+		if(M.client.prefs.read_preference(/datum/preference/toggle/sound_endofround))
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	text2file(login_music, "data/last_round_lobby_music.txt")

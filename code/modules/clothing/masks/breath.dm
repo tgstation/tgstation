@@ -22,7 +22,7 @@
 
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
-	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		adjustmask(user)
 
 /obj/item/clothing/mask/breath/examine(mob/user)
