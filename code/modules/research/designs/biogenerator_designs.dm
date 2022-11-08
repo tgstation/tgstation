@@ -146,6 +146,14 @@
 	make_reagents = list(/datum/reagent/toxin/pestkiller/organic = 25)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BOTANY_CHEMICALS)
 
+/datum/design/leather
+	name = "Sheet of Leather"
+	id = "leather"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 150)
+	build_path = /obj/item/stack/sheet/leather
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
+
 /datum/design/cloth
 	name = "Roll of Cloth"
 	id = "cloth"
@@ -162,66 +170,18 @@
 	build_path = /obj/item/stack/sheet/cardboard
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
 
-/datum/design/rolling_paper_pack
-	name = "Rolling Paper Pack"
-	id = "rolling_paper_pack"
+/datum/design/paper
+	name = "Sheet of Paper"
+	id = "paper"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 50)
-	build_path = /obj/item/storage/fancy/rollingpapers
+	materials = list(/datum/material/biomass= 10)
+	build_path = /obj/item/paper
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
 
-/datum/design/leather
-	name = "Sheet of Leather"
-	id = "leather"
+/datum/design/rolling_paper
+	name = "Sheet of Rolling Paper"
+	id = "rollingpaper"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 150)
-	build_path = /obj/item/stack/sheet/leather
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-
-/datum/design/secbelt
-	name = "Security Belt"
-	id = "secbelt"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 300)
-	build_path = /obj/item/storage/belt/security
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-
-/datum/design/medbelt
-	name = "Medical Belt"
-	id = "medbel"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 300)
-	build_path = /obj/item/storage/belt/medical
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-
-/datum/design/janibelt
-	name = "Janitorial Belt"
-	id = "janibelt"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 300)
-	build_path = /obj/item/storage/belt/janitor
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-
-/datum/design/plantbelt
-	name = "Botanical Belt"
-	id = "plantbelt"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 300)
-	build_path = /obj/item/storage/belt/plant
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-
-/datum/design/s_holster
-	name = "Shoulder Holster"
-	id = "s_holster"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 400)
-	build_path = /obj/item/storage/belt/holster
-	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
-
-/datum/design/rice_hat
-	name = "Rice Hat"
-	id = "rice_hat"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 300)
-	build_path = /obj/item/clothing/head/costume/rice_hat
+	materials = list(/datum/material/biomass= 5)
+	build_path = /obj/item/rollingpaper
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_ORGANIC_MATERIALS)
