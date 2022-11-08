@@ -34,8 +34,8 @@
 /// clears the effects on the wearer
 /datum/component/onwear_mood/proc/clear_effects(atom/source, mob/living/target)
 	SIGNAL_HANDLER
-
-	target = target || source?.loc || parent.loc
+	var/obj/item/clothing = parent
+	target = target || source?.loc || clothing.loc
 	if(!istype(target))
 		return
 	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
