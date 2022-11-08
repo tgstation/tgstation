@@ -987,3 +987,20 @@
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
 	mail_goodies = list(/obj/item/pai_card) // can read things for you
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "For some reason you are completely unable to speak."
+	icon = "comment-slash"
+	value = -4
+	gain_text = span_danger("You find yourself unable to speak!")
+	lose_text = span_notice("You feel a growing strength in your vocal chords.")
+	medical_record_text = "The patient is unable to use their voice in any capacity."
+
+/datum/quirk/mute/add()
+	var/mob/living/carbon/human/user = quirk_holder
+	user.gain_trauma(new /datum/brain_trauma/severe/mute, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/mute/remove()
+	var/mob/living/carbon/human/user = quirk_holder
+	user?.cure_trauma_type(/datum/brain_trauma/severe/mute, TRAUMA_RESILIENCE_ABSOLUTE)
