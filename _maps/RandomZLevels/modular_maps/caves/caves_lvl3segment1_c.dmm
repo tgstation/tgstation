@@ -193,9 +193,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "dm" = (
-/obj/machinery/mineral/processing_unit_console{
-	machinedir = 2
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/awaymission/caves/misc/mining_post/smelter1)
 "dP" = (
@@ -1558,9 +1556,7 @@
 /area/awaymission/caves/misc/mining_post/diverter)
 "TH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/mineral/processing_unit_console{
-	machinedir = 2
-	},
+/obj/machinery/mineral/processing_unit_console,
 /turf/closed/wall,
 /area/awaymission/caves/misc/mining_post/smelter2)
 "TJ" = (

@@ -1006,7 +1006,7 @@
 /obj/structure/fluff{
 	desc = "A highly detailed visualization of a space carp, projected outwards via hologram.";
 	dir = 4;
-	icon = 'icons/mob/carp.dmi';
+	icon = 'icons/mob/simple/carp.dmi';
 	icon_state = "holocarp";
 	name = "hologram of a space carp"
 	},
@@ -1096,7 +1096,7 @@
 /obj/structure/table/abductor,
 /obj/structure/fluff{
 	desc = "A highly detailed visualization of a space carp, projected outwards via hologram.";
-	icon = 'icons/mob/carp.dmi';
+	icon = 'icons/mob/simple/carp.dmi';
 	icon_state = "holocarp";
 	name = "hologram of a space carp"
 	},
