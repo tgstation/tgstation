@@ -24,13 +24,12 @@
 								/area/station/cargo,
 								/area/station/science)
 
-	var/list/areas_affected = list()
+	var/list/areas_affected = list() //The list of areas the admins will recieve
 
 	for(var/i in 1 to severity)
 		var/picked_area = pick_n_take(potential_areas)
 		areas_affected += picked_area
-
-		for(var/area/area_to_check in GLOB.sortedAreas)
+		for(var/area/area_to_check in get_sorted_areas())
 			if(istype(area_to_check, picked_area))
 				areas_to_open += area_to_check
 
