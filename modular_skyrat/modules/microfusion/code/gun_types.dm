@@ -42,15 +42,6 @@
 	)
 */
 
-/obj/item/storage/box/ammo_box/microfusion/advanced
-	name = "advanced microfusion cell container"
-	desc = "A box filled with microfusion cells."
-
-/obj/item/storage/box/ammo_box/microfusion/advanced/PopulateContents()
-	new /obj/item/stock_parts/cell/microfusion/advanced(src)
-	new /obj/item/stock_parts/cell/microfusion/advanced(src)
-	new /obj/item/stock_parts/cell/microfusion/advanced(src)
-
 /*
 *	MICROFUSION SPAWNERS
 */
