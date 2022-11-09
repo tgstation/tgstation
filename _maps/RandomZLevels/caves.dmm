@@ -450,6 +450,11 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "bK" = (
 /obj/effect/decal/cleanable/blood/splatter,
+/obj/item/keycard{
+	desc = "An encrypted card with a small description reading 'Used for bypassing first-level lockdowns in emergency scenarios'.";
+	name = "Emergency Lower Level Access Card";
+	puzzle_id = "mininglvl1"
+	},
 /turf/open/misc/asteroid/snow{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -581,8 +586,9 @@
 	},
 /area/awaymission/caves/second_outpost/tunnel)
 "cp" = (
-/obj/structure/railing,
-/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
+	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "cs" = (
@@ -626,6 +632,12 @@
 "cA" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
@@ -690,6 +702,9 @@
 	network = list("caveslvl1")
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "cN" = (
@@ -1295,11 +1310,15 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research/living)
 "gc" = (
-/obj/structure/railing/corner,
-/obj/structure/railing/corner{
+/obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
+	},
+/obj/structure/chair{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "gf" = (
@@ -2519,8 +2538,10 @@
 /area/awaymission/caves/second_outpost/tunnel)
 "lc" = (
 /obj/effect/landmark/tram/caves/lower,
-/obj/structure/industrial_lift/tram,
 /obj/machinery/computer/tram_controls/caves,
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
+	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "le" = (
@@ -2788,6 +2809,9 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "mg" = (
@@ -2868,10 +2892,10 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "mG" = (
-/obj/structure/railing{
-	dir = 1
+/obj/effect/landmark/lift_id/caves,
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
 	},
-/obj/structure/industrial_lift/tram,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "mJ" = (
@@ -3493,6 +3517,7 @@
 "pr" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/rack,
+/obj/item/storage/box/donkpockets/donkpocketpizza,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha/living)
 "ps" = (
@@ -3521,7 +3546,7 @@
 	},
 /area/awaymission/caves/second_outpost/tunnel)
 "pz" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_three)
 "pA" = (
@@ -3581,8 +3606,15 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha/living)
 "pJ" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted,
-/obj/machinery/firealarm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "pK" = (
@@ -3638,6 +3670,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "pU" = (
@@ -3704,6 +3739,7 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/rack,
 /obj/machinery/airalarm/directional/north,
+/obj/item/storage/box/donkpockets/donkpocketspicy,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/secpost)
 "ql" = (
@@ -4451,6 +4487,10 @@
 /obj/item/folder/blue,
 /obj/item/pen,
 /obj/item/card/id/away/caves/engineer,
+/obj/item/card/id/away/caves/engineer{
+	pixel_x = 4;
+	pixel_y = 6
+	},
 /turf/open/floor/iron/grimy,
 /area/awaymission/caves/second_outpost/rest)
 "tD" = (
@@ -4692,14 +4732,14 @@
 	},
 /area/awaymission/caves/second_outpost/tunnel)
 "uO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/iron,
-/area/awaymission/caves/main_outpost/seconadry/research)
+/obj/item/card/id/away/caves,
+/turf/open/floor/iron{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/main_outpost/rec)
 "uP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -4748,7 +4788,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/caves/main_outpost/dorm)
 "vb" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "vc" = (
@@ -4767,7 +4807,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid)
 "ve" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "vf" = (
@@ -5458,13 +5498,11 @@
 	},
 /area/awaymission/caves/second_outpost/tunnel)
 "ya" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 1
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
 	},
-/obj/structure/cable,
-/turf/open/floor/iron,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "yd" = (
 /obj/effect/decal/cleanable/dirt,
@@ -5920,7 +5958,7 @@
 	},
 /area/awaymission/caves/second_outpost/tunnel)
 "Ao" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Ap" = (
@@ -5991,6 +6029,7 @@
 /obj/structure/sign/poster/contraband/cc64k_ad{
 	pixel_y = 32
 	},
+/obj/item/card/id/away/caves/robo,
 /turf/open/floor/carpet/black,
 /area/awaymission/caves/main_outpost/seconadry/mecha/living)
 "AJ" = (
@@ -6021,6 +6060,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
+/obj/item/stack/sheet/cardboard,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
 "AX" = (
@@ -6546,12 +6586,13 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/third_outpost/transit)
 "Dn" = (
-/obj/structure/railing{
-	dir = 5
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
-/obj/effect/landmark/lift_id/caves,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Do" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
@@ -6620,7 +6661,15 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "DI" = (
-/obj/effect/turf_decal/tile/purple/half/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "DK" = (
@@ -6655,11 +6704,6 @@
 	burn_damage = 125;
 	mob_name = "Elizabeth Q.";
 	oxy_damage = 75
-	},
-/obj/item/keycard{
-	desc = "An encrypted card with a small description reading 'Used for bypassing first-level lockdowns in emergency scenarios'.";
-	name = "Emergency Lower Level Access Card";
-	puzzle_id = "mininglvl1"
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/snow{
@@ -6789,6 +6833,10 @@
 	pixel_y = 3
 	},
 /obj/item/binoculars,
+/obj/item/paper{
+	default_raw_text = "In the event of an emergency level lockdown, please locate your nearest supervisor and await further instructions. In the event that proper evacutation from the level is required, all supervisors are required to carry an override acess key for the associated level's transit access. As per company policy, any personal belongings or loss of life are not covered by the Nanotrasen(tm) insurance policy in the event of external natural events not directly caused by Nanotrasen(tm) intervention.";
+	name = "Emergency Procedures"
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/storage)
 "EB" = (
@@ -6915,6 +6963,11 @@
 "Fd" = (
 /obj/structure/dresser,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/item/keycard{
+	desc = "An encrypted card with a small description reading 'Used for bypassing first-level lockdowns in emergency scenarios'.";
+	name = "Emergency Lower Level Access Card";
+	puzzle_id = "mininglvl1"
+	},
 /turf/open/floor/wood/parquet,
 /area/awaymission/caves/main_outpost/seconadry/research/living)
 "Fe" = (
@@ -6991,6 +7044,13 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"Fy" = (
+/obj/structure/flora/ash/chilly,
+/obj/structure/flora/rock/icy,
+/turf/open/misc/asteroid/snow{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/bmp_asteroid)
 "Fz" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
@@ -7209,6 +7269,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/item/card/id/away/caves/sci,
 /turf/open/floor/wood/parquet,
 /area/awaymission/caves/main_outpost/seconadry/research/living)
 "Gz" = (
@@ -7251,6 +7312,9 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "GK" = (
@@ -7497,7 +7561,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "Ie" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
@@ -7553,6 +7617,13 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/depo)
+"Ix" = (
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_y = 5;
+	pixel_x = -12
+	},
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/awaymission/caves/bmp_asteroid)
 "IA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -7581,6 +7652,12 @@
 /area/awaymission/caves/main_outpost/seconadry/gateway)
 "IK" = (
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "IL" = (
@@ -8128,7 +8205,7 @@
 /area/awaymission/caves/main_outpost/seconadry/secpost)
 "KW" = (
 /obj/structure/lattice,
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/indestructible/necropolis,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "KZ" = (
@@ -8248,8 +8325,8 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "LE" = (
-/obj/structure/flora/rock/pile,
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "LF" = (
@@ -8426,10 +8503,15 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
 "MA" = (
-/obj/structure/railing{
-	dir = 10
+/obj/structure/railing/corner{
+	dir = 1
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
+	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "MB" = (
@@ -8661,9 +8743,10 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Ny" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
 	},
+/obj/structure/tramwall/titanium,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "NA" = (
@@ -8801,6 +8884,15 @@
 /obj/structure/table,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
+	},
+/obj/item/boxcutter,
+/obj/item/boxcutter{
+	pixel_x = 9;
+	pixel_y = 10
+	},
+/obj/item/stack/sticky_tape{
+	pixel_y = 9;
+	pixel_x = -5
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
@@ -9068,6 +9160,7 @@
 /area/awaymission/caves/main_outpost/seconadry/gateway)
 "PD" = (
 /obj/structure/rack,
+/obj/item/wirecutters,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid)
 "PI" = (
@@ -9181,10 +9274,13 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/engineering)
 "Qq" = (
-/obj/structure/railing{
-	dir = 6
+/obj/structure/railing/corner{
+	dir = 4
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/railing/corner,
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
+	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Qr" = (
@@ -9396,12 +9492,11 @@
 /turf/open/floor/carpet,
 /area/awaymission/caves/second_outpost/barracks)
 "Ru" = (
-/obj/structure/railing{
-	dir = 9
+/obj/item/stack/sheet/cardboard{
+	amount = 5
 	},
-/obj/structure/industrial_lift/tram,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/research)
+/turf/open/floor/iron,
+/area/awaymission/caves/main_outpost/seconadry/storage)
 "Rv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -9562,13 +9657,15 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Sf" = (
-/obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/structure/railing/corner{
+/obj/structure/railing{
 	dir = 8
 	},
-/obj/structure/industrial_lift/tram,
+/obj/structure/industrial_lift/tram/caves{
+	icon_state = "titanium"
+	},
+/obj/structure/chair{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Sh" = (
@@ -9728,6 +9825,14 @@
 /obj/structure/sign/clock/directional/north,
 /obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/west,
+/obj/item/paper{
+	name = "supply manifest #223";
+	default_raw_text = "A sheet filled with a list of various produce and raw material being shipped in and out of the facility, nothing particularly interesting."
+	},
+/obj/item/paper{
+	name = "supply manifest #200";
+	default_raw_text = "A sheet filled with a list of various produce and raw material being shipped in and out of the facility, nothing particularly interesting."
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
 "SZ" = (
@@ -9827,7 +9932,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/main_outpost/seconadry/mecha/living)
 "Tx" = (
-/obj/structure/flora/rock,
+/obj/structure/flora/rock/style_random,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Ty" = (
@@ -9941,10 +10046,16 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/computer/tram_controls/caves{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "Uf" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_three)
 "Ug" = (
@@ -9991,7 +10102,7 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/awaymission/caves/third_outpost/pod)
 "Ut" = (
-/obj/structure/flora/rock/pile,
+/obj/structure/flora/rock/pile/style_random,
 /turf/open/indestructible/necropolis,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Uu" = (
@@ -10220,6 +10331,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "VI" = (
@@ -10245,12 +10359,10 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/main_outpost/dorm)
 "VT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/awaymission/caves/main_outpost/seconadry/research)
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/iron/smooth,
+/area/awaymission/caves/second_outpost/tunnel)
 "VV" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -10581,6 +10693,14 @@
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light/small/directional/west,
+/obj/item/paper{
+	name = "supply manifest #210";
+	default_raw_text = "A sheet filled with a list of various produce and raw material being shipped in and out of the facility, nothing particularly interesting."
+	},
+/obj/item/paper{
+	name = "supply manifest #156";
+	default_raw_text = "A sheet filled with a list of various produce and raw material being shipped in and out of the facility, nothing particularly interesting."
+	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/storage)
 "Xz" = (
@@ -11024,8 +11144,8 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/computer/tram_controls/caves{
-	dir = 4
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
@@ -13495,7 +13615,7 @@ EB
 EB
 EB
 vb
-IT
+DG
 Ln
 IT
 IT
@@ -15258,7 +15378,7 @@ aa
 aa
 Fk
 av
-sZ
+uO
 gq
 rE
 XD
@@ -15584,7 +15704,7 @@ aa
 IT
 aa
 aa
-IT
+aa
 aa
 aa
 aa
@@ -15841,7 +15961,7 @@ aa
 IT
 aa
 aa
-IT
+aa
 aa
 aa
 aa
@@ -16097,8 +16217,8 @@ yu
 yu
 yu
 aa
-IT
-IT
+aa
+aa
 aa
 aa
 aa
@@ -16354,8 +16474,8 @@ XO
 fD
 yu
 aa
-IT
-IT
+aa
+aa
 aa
 aa
 aa
@@ -16598,7 +16718,7 @@ EB
 EB
 EB
 EB
-ZZ
+IT
 nC
 yu
 yu
@@ -16611,8 +16731,8 @@ cu
 MJ
 yu
 aa
-IT
-IT
+aa
+aa
 aa
 aa
 aa
@@ -16855,8 +16975,8 @@ IT
 IT
 IT
 IT
-ZZ
-ZZ
+IT
+IT
 IT
 Qu
 Ar
@@ -16868,11 +16988,11 @@ yu
 yu
 yu
 aa
-IT
-IT
-IT
-tW
-tW
+aa
+aa
+aa
+aa
+aa
 tW
 tW
 tW
@@ -17086,7 +17206,7 @@ vb
 IT
 IT
 IT
-ZZ
+IT
 IT
 IT
 aa
@@ -17113,7 +17233,7 @@ aa
 aa
 IT
 IT
-ZZ
+IT
 IT
 Qu
 ZI
@@ -17126,10 +17246,10 @@ uK
 yu
 aa
 aa
-IT
+aa
 ZZ
-tW
-tW
+aa
+aa
 tW
 tW
 tW
@@ -17343,8 +17463,8 @@ IT
 IT
 IT
 IT
-ZZ
-ZZ
+IT
+IT
 IT
 aa
 aa
@@ -17368,10 +17488,10 @@ aa
 aa
 IT
 ZZ
-IT
-IT
 ZZ
 ZZ
+IT
+IT
 Qu
 Nh
 FC
@@ -17385,21 +17505,21 @@ IT
 aa
 ZZ
 ZZ
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
 aa
 aa
+tW
+tW
+tW
+tW
+tW
+tW
+tW
+tW
+tW
+tW
+IT
+IT
+IT
 IT
 IT
 IT
@@ -17599,8 +17719,8 @@ IT
 IT
 IT
 IT
-ZZ
-ZZ
+IT
+IT
 IT
 IT
 aa
@@ -17625,9 +17745,9 @@ aa
 aa
 IT
 ZZ
+ZZ
 IT
-ZZ
-ZZ
+IT
 IT
 Qu
 rw
@@ -17642,20 +17762,20 @@ ZZ
 ZZ
 ZZ
 aa
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
-tW
 aa
+aa
+tW
+tW
+tW
+tW
+tW
+tW
+tW
+tW
+tW
+IT
+IT
+IT
 IT
 IT
 IT
@@ -17684,7 +17804,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 ZZ
@@ -17857,7 +17977,7 @@ IT
 IT
 IT
 IT
-ZZ
+IT
 IT
 IT
 aa
@@ -17882,9 +18002,9 @@ aa
 aa
 IT
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
 IT
 yu
 yu
@@ -17899,21 +18019,21 @@ ZZ
 ZZ
 IT
 aa
+IT
 tW
-tW
-tW
-tW
+aa
+aa
 tW
 tW
 tW
 tW
 tW
 aa
-aa
-aa
 IT
 IT
 IT
+IT
+ZZ
 IT
 IT
 IT
@@ -17940,9 +18060,9 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -18113,7 +18233,7 @@ IT
 IT
 ZZ
 ZZ
-ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -18139,21 +18259,23 @@ aa
 aa
 IT
 ZZ
-ZZ
-ZZ
+IT
+IT
 Ln
 IT
+ZZ
+ZZ
+ZZ
+ZZ
+aa
+aa
+aa
+ZZ
+ZZ
+ZZ
+ZZ
 IT
 IT
-ZZ
-ZZ
-aa
-aa
-aa
-ZZ
-ZZ
-ZZ
-ZZ
 IT
 IT
 aa
@@ -18163,10 +18285,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+IT
+IT
 IT
 ZZ
 ZZ
@@ -18196,10 +18316,10 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -18370,7 +18490,7 @@ IT
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -18454,9 +18574,9 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -18627,7 +18747,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -18672,9 +18792,9 @@ IT
 IT
 IT
 IT
-IT
-IT
-IT
+aa
+aa
+aa
 IT
 IT
 IT
@@ -18695,7 +18815,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 ZZ
@@ -18884,7 +19004,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 ZZ
@@ -18933,10 +19053,10 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
 IT
 IT
 IT
+IT
 ZZ
 ZZ
 ZZ
@@ -18951,8 +19071,8 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -19140,8 +19260,8 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -19191,6 +19311,8 @@ ZZ
 ZZ
 ZZ
 ZZ
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -19205,17 +19327,15 @@ ZZ
 ZZ
 ZZ
 ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
+rs
+rs
+rs
 zg
 vU
 ei
@@ -19397,6 +19517,10 @@ ZZ
 ZZ
 ZZ
 ZZ
+IT
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -19444,12 +19568,8 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -19655,9 +19775,9 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -19912,8 +20032,8 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
+rs
+IT
 ZZ
 ZZ
 ZZ
@@ -19960,7 +20080,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 ZZ
@@ -20169,7 +20289,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -20240,14 +20360,14 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 rx
 kz
 Ny
-Ru
+MA
 Sf
 MA
-uO
+Ny
 pJ
 Vt
 fr
@@ -20426,7 +20546,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -20497,15 +20617,15 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 rx
 kz
-Ny
+ya
 mG
 lc
 cp
 ya
-CI
+Dn
 aY
 YU
 YU
@@ -20682,8 +20802,8 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
+rs
+rs
 ZZ
 ZZ
 ZZ
@@ -20754,14 +20874,14 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 rx
 kz
-VT
-Dn
+Ny
+Qq
 gc
 Qq
-ya
+Ny
 DI
 Vt
 Uw
@@ -20939,7 +21059,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -21017,7 +21137,7 @@ Vt
 cK
 Zw
 Ue
-Ue
+Zw
 pT
 IK
 Vt
@@ -21195,9 +21315,9 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -21214,7 +21334,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 ZZ
@@ -21246,7 +21366,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 ZZ
@@ -21451,6 +21571,11 @@ ZZ
 ZZ
 ZZ
 ZZ
+IT
+IT
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -21466,14 +21591,9 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -21500,10 +21620,10 @@ ZZ
 ZZ
 ZZ
 ZZ
+IT
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -21709,6 +21829,9 @@ ZZ
 ZZ
 ZZ
 ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -21724,14 +21847,11 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
+IT
+aa
+aa
+aa
+IT
 ZZ
 ZZ
 ZZ
@@ -21760,7 +21880,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 IT
@@ -21967,7 +22087,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -21984,11 +22104,11 @@ rs
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+aa
+aa
+IT
 ZZ
 ZZ
 ZZ
@@ -22224,7 +22344,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -22243,9 +22363,9 @@ rs
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -23237,8 +23357,8 @@ IT
 vb
 ve
 aa
-IT
-IT
+DG
+DG
 IT
 IT
 IT
@@ -23494,7 +23614,7 @@ IT
 IT
 IT
 IT
-IT
+DG
 IT
 IT
 IT
@@ -24579,7 +24699,7 @@ rK
 rK
 rK
 rK
-rK
+Ru
 rK
 rK
 we
@@ -25139,9 +25259,9 @@ ZZ
 ZZ
 vb
 IT
+DG
 IT
-IT
-IT
+DG
 vb
 IT
 IT
@@ -25397,7 +25517,7 @@ IT
 vb
 IT
 IT
-IT
+DG
 IT
 aa
 aa
@@ -26069,7 +26189,7 @@ IT
 IT
 IT
 IT
-IT
+DG
 IT
 IT
 IT
@@ -26319,7 +26439,7 @@ IT
 vb
 IT
 IT
-IT
+qJ
 IT
 IT
 vb
@@ -26328,7 +26448,7 @@ aa
 IT
 IT
 IT
-IT
+DG
 IT
 aa
 aa
@@ -26583,8 +26703,8 @@ IT
 IT
 aa
 IT
-IT
-IT
+DG
+DG
 IT
 IT
 IT
@@ -26831,8 +26951,8 @@ aa
 aa
 IT
 IT
-IT
-IT
+qJ
+qJ
 IT
 IT
 IT
@@ -27087,11 +27207,11 @@ IT
 IT
 IT
 IT
+qJ
+qJ
+qJ
 IT
-IT
-IT
-IT
-IT
+qJ
 aa
 aa
 aa
@@ -27343,8 +27463,8 @@ aa
 aa
 aa
 aa
-IT
-IT
+wq
+vb
 IT
 IT
 IT
@@ -27598,12 +27718,12 @@ aa
 aa
 aa
 aa
-aa
-aa
+wq
+wq
+wq
 IT
 IT
-IT
-IT
+wq
 IT
 IT
 IT
@@ -27852,20 +27972,20 @@ aa
 IT
 aa
 tW
-tW
-tW
-tW
-tW
-tW
-aa
+wq
+wq
+wq
+wq
+wq
+wq
+wq
+wq
+wq
+IT
+vb
 IT
 IT
 IT
-IT
-IT
-IT
-aa
-aa
 aa
 aa
 aa
@@ -28111,14 +28231,14 @@ aa
 tW
 tW
 tW
-tW
-tW
-tW
-aa
-IT
-IT
-vb
-ve
+wq
+wq
+wq
+wq
+wq
+wq
+wq
+wq
 IT
 IT
 aa
@@ -28371,13 +28491,13 @@ tW
 tW
 tW
 tW
-aa
-IT
-IT
-vb
-vb
-IT
-IT
+wq
+wq
+wq
+wq
+wq
+wq
+wq
 IT
 aa
 aa
@@ -28629,55 +28749,55 @@ tW
 tW
 tW
 aa
+wq
+IT
+wq
+wq
+wq
+wq
+wq
+wq
+IT
+IT
+IT
+aa
+aa
+aa
+aa
+IT
+IT
+IT
+IT
+IT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+IT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+IT
+IT
+IT
+IT
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 IT
 vb
-IT
-IT
-IT
-IT
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-IT
-IT
-IT
-IT
-IT
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-IT
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-IT
-IT
-IT
-IT
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-IT
-IT
 bW
 aa
 aa
@@ -28885,19 +29005,19 @@ tW
 tW
 tW
 tW
-aa
-aa
+wq
+wq
+IT
+wq
+wq
+wq
+wq
+wq
+wq
+wq
+vb
 IT
 IT
-IT
-IT
-IT
-IT
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -29143,17 +29263,17 @@ IT
 aa
 aa
 aa
+wq
+vb
+IT
+wq
+IT
+wq
+wq
+wq
+wq
 aa
-IT
-IT
-IT
-IT
-IT
-IT
-IT
-IT
-aa
-aa
+wq
 aa
 aa
 aa
@@ -29199,7 +29319,7 @@ bW
 bW
 BB
 na
-IT
+Ix
 IT
 aa
 aa
@@ -29403,15 +29523,15 @@ aa
 aa
 aa
 IT
+wq
 IT
-IT
-IT
-IT
-IT
-IT
-aa
-aa
-aa
+wq
+wq
+wq
+wq
+wq
+wq
+wq
 aa
 aa
 aa
@@ -29424,15 +29544,15 @@ IT
 IT
 IT
 IT
+qJ
+IT
+IT
+qJ
+qJ
 IT
 IT
 IT
 IT
-IT
-IT
-IT
-IT
-IT
 aa
 aa
 IT
@@ -29447,7 +29567,7 @@ aa
 aa
 aa
 aa
-IT
+vb
 IT
 IT
 aa
@@ -29496,8 +29616,8 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -29660,18 +29780,18 @@ aa
 aa
 aa
 IT
+wq
+vb
 IT
 IT
+wq
+wq
+wq
+wq
+wq
+aa
+aa
 IT
-IT
-IT
-IT
-aa
-aa
-aa
-aa
-aa
-aa
 ZZ
 ZZ
 ZZ
@@ -29684,12 +29804,12 @@ IT
 IT
 IT
 IT
+qJ
 IT
 IT
 IT
 IT
 IT
-IT
 aa
 aa
 IT
@@ -29704,7 +29824,7 @@ aa
 aa
 aa
 aa
-IT
+vb
 IT
 IT
 aa
@@ -29751,7 +29871,7 @@ IT
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 ZZ
@@ -29923,13 +30043,13 @@ IT
 IT
 IT
 IT
+wq
+wq
+wq
+wq
+wq
 IT
 IT
-aa
-aa
-aa
-aa
-aa
 ZZ
 ZZ
 ZZ
@@ -30179,14 +30299,14 @@ IT
 IT
 vb
 IT
-IT
-IT
-IT
-IT
+wq
+wq
+wq
+wq
 IT
 aa
-aa
-aa
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -30206,7 +30326,7 @@ IT
 IT
 IT
 IT
-IT
+DG
 IT
 IT
 IT
@@ -30437,9 +30557,9 @@ IT
 IT
 IT
 IT
+wq
 IT
-IT
-IT
+vb
 IT
 aa
 aa
@@ -30464,8 +30584,8 @@ aa
 aa
 IT
 IT
-IT
-IT
+DG
+DG
 IT
 vb
 IT
@@ -30538,9 +30658,9 @@ aa
 aa
 aa
 aa
+DG
 IT
-IT
-IT
+DG
 aa
 aa
 aa
@@ -30694,10 +30814,10 @@ IT
 IT
 IT
 IT
+wq
 IT
 IT
-IT
-IT
+DG
 aa
 aa
 aa
@@ -30721,7 +30841,7 @@ aa
 aa
 sV
 sV
-IT
+DG
 IT
 vb
 ve
@@ -30954,8 +31074,8 @@ IT
 IT
 IT
 IT
-IT
-IT
+DG
+DG
 IT
 aa
 aa
@@ -30964,8 +31084,8 @@ aa
 aa
 DG
 IT
-aa
-aa
+IT
+IT
 aa
 aa
 wq
@@ -31051,8 +31171,8 @@ aa
 aa
 aa
 aa
-IT
-IT
+DG
+DG
 IT
 IT
 aa
@@ -31217,11 +31337,11 @@ IT
 IT
 IT
 aa
-aa
-aa
-aa
-aa
-aa
+IT
+IT
+IT
+IT
+IT
 aa
 IT
 IT
@@ -31310,7 +31430,7 @@ aa
 IT
 IT
 IT
-IT
+DG
 IT
 aa
 aa
@@ -31465,6 +31585,7 @@ IT
 IT
 IT
 IT
+DG
 IT
 IT
 IT
@@ -31473,10 +31594,9 @@ IT
 IT
 IT
 IT
-aa
-aa
-aa
-aa
+IT
+IT
+IT
 aa
 aa
 aa
@@ -31730,10 +31850,10 @@ IT
 vb
 IT
 IT
-aa
-aa
-aa
-aa
+IT
+IT
+IT
+IT
 aa
 aa
 aa
@@ -31988,7 +32108,7 @@ IT
 IT
 IT
 IT
-aa
+IT
 aa
 aa
 aa
@@ -32063,7 +32183,7 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
+IT
 ZZ
 ZZ
 ZZ
@@ -32319,10 +32439,10 @@ IT
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
+IT
 ZZ
 ZZ
 IT
@@ -32575,11 +32695,11 @@ IT
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -32834,9 +32954,9 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -33015,7 +33135,7 @@ IT
 IT
 IT
 IT
-IT
+qJ
 aa
 aa
 aa
@@ -33272,7 +33392,7 @@ IT
 IT
 IT
 IT
-IT
+qJ
 aa
 aa
 aa
@@ -33784,7 +33904,7 @@ IT
 aa
 aa
 aa
-IT
+qJ
 IT
 IT
 aa
@@ -34311,7 +34431,7 @@ IT
 IT
 IT
 IT
-IT
+DG
 IT
 IT
 IT
@@ -34592,8 +34712,8 @@ IT
 IT
 IT
 IT
-IT
-IT
+vb
+vb
 IT
 IT
 aa
@@ -34827,7 +34947,7 @@ IT
 ve
 IT
 IT
-IT
+DG
 IT
 IT
 IT
@@ -35083,8 +35203,8 @@ IT
 IT
 IT
 IT
-IT
-IT
+DG
+DG
 vb
 vb
 vb
@@ -35145,8 +35265,8 @@ ZZ
 ZZ
 ZZ
 ZZ
-ZZ
-ZZ
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -35341,7 +35461,7 @@ aa
 aa
 aa
 aa
-IT
+DG
 IT
 IT
 IT
@@ -35400,10 +35520,10 @@ IT
 IT
 ZZ
 ZZ
+IT
 ZZ
-ZZ
-ZZ
-ZZ
+IT
+IT
 ZZ
 ZZ
 ZZ
@@ -36130,7 +36250,7 @@ aa
 IT
 IT
 IT
-IT
+XN
 aa
 aa
 aa
@@ -36898,11 +37018,11 @@ VP
 ab
 VP
 aa
+XN
 IT
 IT
 IT
-IT
-IT
+XN
 aa
 aa
 aa
@@ -36956,7 +37076,7 @@ IT
 IT
 IT
 vb
-IT
+DG
 IT
 vb
 IT
@@ -37156,7 +37276,7 @@ ab
 VP
 aa
 aa
-IT
+XN
 IT
 IT
 IT
@@ -37212,9 +37332,9 @@ aa
 aa
 aa
 IT
+DG
 IT
-IT
-IT
+DG
 IT
 IT
 aa
@@ -37413,7 +37533,7 @@ ab
 VP
 aa
 aa
-IT
+XN
 IT
 IT
 IT
@@ -38443,7 +38563,7 @@ tW
 tW
 aa
 aa
-IT
+vb
 IT
 IT
 IT
@@ -38700,7 +38820,7 @@ tW
 tW
 aa
 aa
-IT
+vb
 IT
 IT
 IT
@@ -38957,7 +39077,7 @@ tW
 tW
 aa
 aa
-IT
+vb
 IT
 IT
 IT
@@ -39730,7 +39850,7 @@ aa
 IT
 IT
 IT
-IT
+DG
 vb
 vb
 vb
@@ -39788,7 +39908,7 @@ To
 To
 Mj
 Mj
-bI
+Mj
 To
 To
 aa
@@ -39985,10 +40105,10 @@ tW
 tW
 aa
 IT
+DG
 IT
-IT
-IT
-IT
+DG
+DG
 ve
 vb
 aa
@@ -40043,7 +40163,7 @@ aa
 To
 To
 To
-Mj
+bI
 DO
 Mj
 Ie
@@ -40243,7 +40363,7 @@ tW
 aa
 IT
 IT
-IT
+DG
 IT
 IT
 IT
@@ -40299,8 +40419,8 @@ IT
 aa
 To
 Mj
-Mj
 bI
+Qw
 Mj
 Mj
 QI
@@ -40557,11 +40677,11 @@ aa
 To
 To
 bI
-Qw
+Mj
+Mj
+Mj
 bI
-Mj
-Mj
-Mj
+bI
 lw
 IT
 aa
@@ -40776,7 +40896,7 @@ IT
 IT
 IT
 IT
-IT
+XN
 aa
 aa
 aa
@@ -40815,7 +40935,7 @@ aa
 To
 To
 Mj
-Mj
+bI
 mc
 DQ
 Mj
@@ -41040,7 +41160,7 @@ aa
 aa
 aa
 aa
-IT
+DG
 IT
 IT
 IT
@@ -41073,7 +41193,7 @@ aa
 To
 Eb
 al
-QI
+Fy
 bK
 Mj
 QI
@@ -41286,6 +41406,7 @@ aa
 aa
 IT
 IT
+vb
 IT
 IT
 IT
@@ -41298,8 +41419,7 @@ IT
 IT
 IT
 IT
-IT
-IT
+DG
 aa
 aa
 aa
@@ -41542,8 +41662,8 @@ IT
 IT
 IT
 IT
-IT
-IT
+vb
+vb
 IT
 IT
 IT
@@ -41554,7 +41674,7 @@ IT
 IT
 IT
 IT
-IT
+DG
 IT
 aa
 aa
@@ -43813,7 +43933,7 @@ wd
 hw
 xV
 JI
-xV
+VT
 wd
 ba
 wp
@@ -49717,7 +49837,7 @@ HY
 HY
 Wq
 Wq
-Gj
+Wq
 Wq
 Wq
 dO
@@ -51776,7 +51896,7 @@ ad
 ad
 Wq
 Wq
-Gj
+Wq
 Wq
 Wq
 Wq
@@ -52544,7 +52664,7 @@ Wq
 Wq
 Wq
 Wq
-Wq
+Gj
 Wq
 Wq
 Wq
@@ -53821,7 +53941,7 @@ Wq
 Wq
 Wq
 Wq
-Wq
+Gj
 Wq
 ad
 ad

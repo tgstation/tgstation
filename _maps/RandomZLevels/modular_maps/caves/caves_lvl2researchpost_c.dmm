@@ -332,6 +332,7 @@
 /obj/item/paper/fluff/awaymissions/caves/researchfluff,
 /obj/item/paper/fluff/awaymissions/caves/researchfluff,
 /obj/item/paper/fluff/awaymissions/caves/researchfluff,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "gW" = (
@@ -477,6 +478,7 @@
 /obj/structure/filingcabinet,
 /obj/item/paper/fluff/awaymissions/caves/researchfluff,
 /obj/item/paper/fluff/awaymissions/caves/researchfluff,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -504,6 +506,7 @@
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/structure/sign/calendar/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "lN" = (
@@ -773,6 +776,8 @@
 /obj/structure/table,
 /obj/item/folder,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/calendar/directional/north,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1266,6 +1271,7 @@
 /obj/structure/filingcabinet,
 /obj/item/paper/fluff/awaymissions/caves/floralguide,
 /obj/item/paper/fluff/awaymissions/caves/researchfluff,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "Dw" = (
@@ -1406,6 +1412,7 @@
 	dir = 8
 	},
 /obj/structure/table,
+/obj/item/pai_card,
 /turf/open/floor/iron/cafeteria{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1424,6 +1431,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/awaymission/caves/second_outpost/researchcenter/engineering)
+"FB" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/clothing/suit/armor/reactive/stealth,
+/turf/open/floor/iron/cafeteria{
+	initial_gas_mix = "LAVALAND_ATMOS"
+	},
+/area/awaymission/caves/second_outpost/researchcenter/sitedirector)
 "FC" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -1455,6 +1474,12 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/researchcenter/dorm)
+"Gk" = (
+/obj/structure/table,
+/obj/structure/window/reinforced/spawner,
+/obj/item/reagent_containers/cup/glass/coffee,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/second_outpost/researchcenter/work)
 "Gw" = (
 /obj/structure/sink{
 	dir = 4;
@@ -1872,6 +1897,7 @@
 	pixel_y = 6
 	},
 /obj/structure/sign/clock/directional/north,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/kitchen{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -2097,6 +2123,7 @@
 /obj/structure/table,
 /obj/item/folder/blue,
 /obj/item/pen/fourcolor,
+/obj/structure/sign/calendar/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "Ui" = (
@@ -3015,7 +3042,7 @@ fO
 WK
 Ue
 so
-Cg
+Gk
 mL
 ro
 VD
@@ -3397,7 +3424,7 @@ fO
 PY
 SB
 dI
-xQ
+FB
 ze
 Sh
 PY

@@ -43,11 +43,27 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/template_noop)
+"cb" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "cu" = (
 /turf/closed/mineral/volcanic/lava_land_surface/hardened,
 /area/template_noop)
 "cW" = (
 /turf/open/chasm/lavaland,
+/area/template_noop)
+"dg" = (
+/obj/structure/marker_beacon/burgundy,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "dm" = (
 /obj/effect/turf_decal/stripes/line,
@@ -144,6 +160,8 @@
 	},
 /obj/effect/turf_decal/siding/wideplating_new,
 /obj/effect/decal/cleanable/blood/old,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/ash,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "kh" = (
@@ -178,6 +196,7 @@
 "mn" = (
 /obj/effect/decal/cleanable/blood/old,
 /mob/living/simple_animal/hostile/asteroid/goliath/beast,
+/obj/effect/decal/cleanable/ash,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "ms" = (
@@ -244,6 +263,7 @@
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "qn" = (
@@ -280,6 +300,12 @@
 /area/template_noop)
 "rb" = (
 /obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"rg" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/ash,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "rq" = (
@@ -439,6 +465,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot_red,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "yX" = (
@@ -511,11 +538,11 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "CD" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/siding/wideplating_new,
-/obj/effect/turf_decal/siding/wideplating_new{
-	dir = 1
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "CY" = (
@@ -560,6 +587,7 @@
 	dir = 1
 	},
 /obj/item/gun/energy/recharge/kinetic_accelerator,
+/obj/effect/decal/cleanable/ash,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "Gq" = (
@@ -621,6 +649,14 @@
 "Ka" = (
 /turf/open/lava/smooth/lava_land_surface,
 /area/template_noop)
+"Kq" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "Kr" = (
 /obj/structure/flora/ash/stem_shroom,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
@@ -651,10 +687,26 @@
 /obj/structure/marker_beacon/burgundy,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
+"Na" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
 "Ne" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mob_spawn/corpse/goliath,
 /obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Nx" = (
+/obj/structure/flora/rock/pile,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/ash,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "NF" = (
@@ -838,6 +890,16 @@
 	range_heavy = 0
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/template_noop)
+"Wz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wideplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating_new,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
 "WH" = (
 /obj/item/gibtonite{
@@ -1512,7 +1574,7 @@ IG
 Ii
 dx
 tb
-CD
+NF
 bT
 IG
 Ii
@@ -1866,7 +1928,7 @@ Uw
 rq
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -1984,7 +2046,7 @@ cu
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -2043,7 +2105,7 @@ lA
 aL
 rx
 tb
-CD
+NF
 bT
 rx
 Rc
@@ -2161,7 +2223,7 @@ Ii
 dx
 rx
 tb
-CD
+NF
 bT
 rb
 IG
@@ -2279,7 +2341,7 @@ cu
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rb
@@ -2397,7 +2459,7 @@ Kr
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -2515,7 +2577,7 @@ Ea
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -2633,7 +2695,7 @@ cu
 Vh
 rb
 tb
-CD
+NF
 bT
 rx
 rx
@@ -2751,7 +2813,7 @@ xu
 Vt
 rb
 tb
-CD
+NF
 bT
 rx
 bu
@@ -2869,7 +2931,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 qA
@@ -2987,7 +3049,7 @@ Ka
 Ka
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -3105,7 +3167,7 @@ rx
 rb
 rx
 tb
-CD
+NF
 bT
 Fq
 cu
@@ -3223,7 +3285,7 @@ rx
 rb
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -3341,7 +3403,7 @@ lA
 aL
 rx
 cW
-CD
+NF
 bT
 rx
 Rc
@@ -3429,7 +3491,7 @@ rx
 NH
 NH
 NH
-NH
+Ej
 NH
 NH
 NH
@@ -3459,7 +3521,7 @@ Ii
 vc
 cW
 cW
-CD
+NF
 bT
 rx
 IG
@@ -3577,7 +3639,7 @@ cW
 xB
 cW
 cW
-CD
+NF
 cW
 cW
 xB
@@ -3813,7 +3875,7 @@ rx
 xB
 cW
 cW
-CD
+NF
 cW
 cW
 xB
@@ -3931,7 +3993,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 cW
 rx
 rx
@@ -3990,7 +4052,7 @@ lA
 aL
 rx
 tb
-CD
+NF
 cW
 rx
 Rc
@@ -4108,7 +4170,7 @@ Ii
 dx
 rx
 tb
-CD
+NF
 bT
 rx
 IG
@@ -4226,7 +4288,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 bT
 Fq
 rx
@@ -4344,7 +4406,7 @@ rb
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rb
@@ -4462,7 +4524,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -4580,7 +4642,7 @@ rb
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 By
@@ -4698,7 +4760,7 @@ xu
 Vt
 rx
 tb
-CD
+NF
 bT
 rx
 bu
@@ -4816,7 +4878,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -4934,7 +4996,7 @@ rx
 rx
 fk
 dm
-CD
+NF
 bT
 rx
 rx
@@ -5052,7 +5114,7 @@ rx
 rx
 rx
 dm
-CD
+NF
 QL
 Mv
 rx
@@ -5344,13 +5406,13 @@ nI
 cu
 UD
 xu
-Vt
+dg
 rb
 Ax
-QS
+Wz
 qn
 rb
-bu
+cb
 xu
 Zk
 cu
@@ -5403,14 +5465,14 @@ nI
 cu
 IG
 Ii
-dx
+Na
 Vh
-Ax
+rg
 pP
-Vr
+Nx
 Vq
-IG
-Ii
+Kq
+CD
 dx
 cu
 cu
@@ -5819,7 +5881,7 @@ cu
 rb
 Vh
 tb
-CD
+NF
 bT
 rb
 Vh
@@ -5937,7 +5999,7 @@ lA
 nj
 rx
 Ax
-CD
+NF
 wV
 rb
 Rc
@@ -6055,7 +6117,7 @@ Ii
 dx
 rx
 tb
-CD
+NF
 Vr
 rx
 IG
@@ -6173,7 +6235,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -6291,7 +6353,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -6409,7 +6471,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -6468,7 +6530,7 @@ rx
 rx
 rx
 tb
-CD
+NF
 bT
 rx
 rx
@@ -6586,7 +6648,7 @@ lA
 aL
 rb
 tb
-CD
+NF
 bT
 rx
 Rc

@@ -266,7 +266,8 @@
 /obj/structure/stone_tile/slab,
 /obj/item/paper{
 	info = "The paper describes a podcast about 3 middle un-aged skeletons talking about various current topics. The main gimmick compared to the other podcasts that do this exact same thing is that they're all skeletons.";
-	name = "podcast pitch - My Skeleton, My Skeleton, & Me"
+	name = "podcast pitch - My Skeleton, My Skeleton, & Me";
+	default_raw_text = "its a podcast about 3 middle-aged skeleton brothers answering questions from other middle-aged ghosts. one of them talks about food they used to eat but can't now since they lack the digestive ability to do so."
 	},
 /turf/open/indestructible/boss,
 /area/template_noop)
@@ -496,6 +497,7 @@
 /obj/structure/closet/crate/grave,
 /obj/item/stack/sheet/bone,
 /obj/item/staff,
+/obj/item/clothing/head/costume/crown/fancy,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/template_noop)
 "Ji" = (
@@ -4454,7 +4456,7 @@ zJ
 (97,1,1) = {"
 DC
 DC
-GP
+DC
 DC
 DC
 zA
@@ -4491,9 +4493,9 @@ Ia
 zJ
 "}
 (98,1,1) = {"
-DC
-DC
-Kt
+xo
+xo
+xo
 xo
 DC
 DC
@@ -4532,7 +4534,7 @@ zJ
 (99,1,1) = {"
 TR
 DC
-if
+DC
 DC
 DC
 Gu

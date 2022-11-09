@@ -488,6 +488,7 @@
 /obj/structure/sign/poster/official/periodic_table{
 	pixel_x = 32
 	},
+/obj/item/reagent_containers/cup/glass/coffee,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "jf" = (
@@ -765,6 +766,7 @@
 /obj/structure/sign/poster/official/nanomichi_ad{
 	pixel_x = 32
 	},
+/obj/structure/sign/calendar/directional/south,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -944,10 +946,12 @@
 	},
 /obj/item/folder/blue,
 /obj/item/pen/fourcolor,
+/obj/structure/sign/calendar/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "rT" = (
 /obj/structure/table,
+/obj/structure/sign/calendar/directional/south,
 /turf/open/floor/iron/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1287,6 +1291,7 @@
 	},
 /obj/structure/table_frame,
 /obj/structure/cable,
+/obj/item/pai_card,
 /turf/open/floor/iron/cafeteria{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1338,16 +1343,12 @@
 /turf/closed/wall,
 /area/awaymission/caves/second_outpost/researchcenter)
 "BB" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = -2
-	},
 /obj/structure/mirror/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/freezer{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -1390,17 +1391,14 @@
 	},
 /obj/item/pen,
 /obj/structure/window/reinforced/spawner/east,
+/obj/structure/sign/calendar/directional/north,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/second_outpost/researchcenter/work)
 "Cf" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = -2
-	},
 /obj/structure/mirror/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/freezer{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -2282,6 +2280,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/second_outpost/researchcenter/messhall)
 "WJ" = (

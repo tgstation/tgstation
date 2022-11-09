@@ -210,23 +210,25 @@
 	name = "Map Maker"
 	desc = "A man in an engineering uniform, he looks tired."
 	icon_state = "map_maker"
-	loot = list(/obj/structure/closet/syndicate/resources/everything)
+	loot = list(/obj/item/gun/energy/meteorgun/pen)
 
 /mob/living/simple_animal/hostile/boss/clockmaster/map_maker/tell_them_my_evil_plan()
 	have_i_explained_my_evil_plan = TRUE
 	for(var/turf/target_tile as anything in RANGE_TURFS(1, src))
 		if(!(locate(/obj/structure/emergency_shield/clockmaster_plot_armor) in target_tile))
 			new /obj/structure/emergency_shield/clockmaster_plot_armor(target_tile)
-	say("Oh, you're here already? I thought I had at least another week..")
+	say("Shit... you finished already? I haven't even finished the other two variants yet..")
 	sleep(3 SECONDS)
-	say("Well, this part isn't exactly ready for public use yet. Wish you knew that before you fought through all that shit, huh?")
+	say("Well, whatever then. The big guy isn't quite ready for public reveal yet, so all you get is me currently.")
 	sleep(4 SECONDS)
-	say("Don't worry, I'll throw you some pity loot as compensation for making it this far. It won't be as good as the actual rewards once I'm done though.")
+	say("Since you're here anyway, mind leaving some feedback on my PR? I probably have a forum thread up if I didn't forget to post it.")
 	sleep(5 SECONDS)
-	say("There should be a feedback thread up by this point along with the github PR itself to leave any notes/criticsm you may have so far. I'd really appreciate it.")
+	say("Criticism is appreciated, just keep it constructive alright? I get enough of it from my other projects.")
+	sleep(4 SECONDS)
+	say("Alright, gotta go. Take the rift behind me to get back to the main mining post. I'll leave you my pen or whatever as compensation. You kids like pens right?")
 	sleep(6 SECONDS)
-	say("Alright, gotta go. Take the rift behind me to get back to the main mining post. Try not to distract the workers, they're busy making the arena.")
-	sleep(5 SECONDS)
+	say("Don't distract my workers while I'm gone, they got a lot of shit to catch up on.")
+	sleep(3 SECONDS)
 	for(var/obj/structure/emergency_shield/clockmaster_plot_armor/plot_armor in urange(1, src))
 		plot_armor.Destroy()
 	gib()

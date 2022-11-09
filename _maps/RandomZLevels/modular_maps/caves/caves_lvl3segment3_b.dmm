@@ -129,12 +129,6 @@
 /obj/structure/stone_tile/center/cracked,
 /turf/open/indestructible/boss,
 /area/template_noop)
-"aD" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 4
-	},
-/turf/open/indestructible/boss,
-/area/template_noop)
 "aE" = (
 /mob/living/simple_animal/hostile/asteroid/brimdemon,
 /turf/open/indestructible/necropolis,
@@ -166,12 +160,6 @@
 	name = "Unga"
 	},
 /turf/open/indestructible/necropolis,
-/area/template_noop)
-"aL" = (
-/obj/structure/stone_tile/surrounding_tile{
-	dir = 1
-	},
-/turf/open/indestructible/boss,
 /area/template_noop)
 "aM" = (
 /turf/closed/indestructible/riveted/boss,
@@ -206,9 +194,6 @@
 "aU" = (
 /obj/structure/legionturret,
 /turf/open/indestructible/necropolis,
-/area/template_noop)
-"aV" = (
-/turf/open/indestructible/boss,
 /area/template_noop)
 "aW" = (
 /obj/structure/stone_tile/surrounding,
@@ -341,7 +326,6 @@
 	name = "fluxating rift"
 	},
 /obj/effect/bump_teleporter{
-	id = null;
 	id_target = "lvl4spawn";
 	name = "lvl4 teleport"
 	},
@@ -362,14 +346,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/bronze/filled/lavaland,
-/area/template_noop)
-"QJ" = (
-/obj/structure/necropolis_arch,
-/obj/structure/stone_tile/slab,
-/obj/structure/necropolis_gate/legion_gate{
-	open = 1
-	},
-/turf/open/indestructible/boss,
 /area/template_noop)
 "RD" = (
 /obj/structure/stone_tile/block{
@@ -673,7 +649,7 @@ ai
 (9,1,1) = {"
 aM
 aM
-aV
+aM
 ay
 aW
 aH
@@ -705,9 +681,9 @@ ai
 "}
 (10,1,1) = {"
 aH
-aV
-aV
-aL
+aH
+aH
+aH
 aZ
 aH
 aS
@@ -739,7 +715,7 @@ ai
 (11,1,1) = {"
 az
 aH
-QJ
+aH
 ay
 ay
 ay
@@ -771,9 +747,9 @@ ai
 "}
 (12,1,1) = {"
 aH
-aV
-aV
-aD
+aH
+aH
+aH
 aZ
 aH
 aG
@@ -805,7 +781,7 @@ ai
 (13,1,1) = {"
 aM
 aM
-aV
+aM
 ax
 aW
 aH

@@ -639,7 +639,6 @@
 	name = "Builds-The-Arena";
 	faction = list("clockwork")
 	},
-/obj/item/clothing/head/hardhat,
 /turf/open/floor/bronze,
 /area/template_noop)
 "Rt" = (
@@ -765,15 +764,15 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "Yx" = (
-/obj/effect/bump_teleporter{
-	id_target = "riftexit";
-	name = "boss arena exit"
-	},
 /obj/structure/fluff{
 	desc = "You're not sure if walking into this is a great idea...";
 	icon = 'icons/effects/eldritch.dmi';
 	icon_state = "pierced_illusion";
 	name = "fluxating rift"
+	},
+/obj/effect/bump_teleporter{
+	id_target = "riftexit";
+	name = "boss arena exit"
 	},
 /turf/open/floor/bronze,
 /area/template_noop)
@@ -8829,10 +8828,10 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
+aM
+aM
+aM
+aM
 Dy
 Dy
 aM
@@ -8954,12 +8953,12 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-Dy
+aM
+HI
+lw
+aM
+aM
+aM
 aM
 lw
 bn
@@ -9079,13 +9078,13 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-Dy
 aM
+lw
+lw
+uU
+lw
+lw
+uU
 lw
 bn
 lw
@@ -9204,14 +9203,14 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-Dy
 aM
 Yx
+lw
+uU
+lw
+lw
+uU
+lw
 bn
 Rt
 lw
@@ -9329,12 +9328,12 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
-Dy
-Dy
+aM
+HI
+lw
+aM
+aM
+aM
 aM
 pe
 bn
@@ -9454,10 +9453,10 @@ Dy
 Dy
 Dy
 Dy
-Dy
-Dy
-Dy
-Dy
+aM
+aM
+aM
+aM
 Dy
 Dy
 aM

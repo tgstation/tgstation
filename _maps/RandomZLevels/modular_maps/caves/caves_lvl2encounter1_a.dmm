@@ -356,11 +356,6 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
-"AP" = (
-/obj/structure/necropolis_gate,
-/obj/structure/stone_tile/slab,
-/turf/open/indestructible/boss,
-/area/template_noop)
 "Bu" = (
 /obj/structure/stone_tile/block/cracked{
 	dir = 1
@@ -921,7 +916,7 @@ ux
 al
 nN
 yc
-AP
+Qd
 wF
 BN
 BN

@@ -932,6 +932,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/firealarm/directional/east,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
 "ra" = (
@@ -1600,6 +1601,15 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/awaymission/caves/misc/syndicate)
+"BG" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
 "BK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/smooth,
@@ -1770,6 +1780,18 @@
 	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/template_noop)
+"Ef" = (
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 11;
+	pixel_y = 12
+	},
+/obj/item/food/donut/berry,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
 "Ep" = (
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
@@ -1779,6 +1801,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
 "Ev" = (
@@ -2066,6 +2089,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate/barracks)
 "Jy" = (
@@ -2247,6 +2271,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate)
+"MP" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 10
+	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/awaymission/caves/misc/syndicate)
 "MR" = (
@@ -2515,6 +2546,7 @@
 "Sp" = (
 /obj/structure/table/reinforced,
 /obj/item/kitchen/rollingpin,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/kitchen,
 /area/awaymission/caves/misc/syndicate)
 "Sr" = (
@@ -2804,6 +2836,13 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/generic4,
 /turf/open/floor/plating,
 /area/awaymission/caves/misc/syndicate/vault)
+"XE" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/awaymission/caves/misc/syndicate/genetics)
 "XL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -4720,7 +4759,7 @@ dL
 dL
 lp
 uZ
-HV
+XE
 HV
 GZ
 HV
@@ -5032,7 +5071,7 @@ dL
 dL
 lp
 GT
-CR
+BG
 CR
 Dn
 CR
@@ -5144,7 +5183,7 @@ MR
 da
 cU
 Xi
-bR
+MP
 sO
 Gv
 vF
@@ -5219,7 +5258,7 @@ Js
 ec
 Th
 gU
-sM
+Ef
 sM
 eX
 CE

@@ -85,7 +85,9 @@
 /turf/open/indestructible/boss,
 /area/awaymission/caves/misc/ashwalker_village)
 "do" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/iron{
+	name = "sssplasssh zone"
+	},
 /obj/structure/stone_tile/slab/burnt,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
@@ -127,7 +129,7 @@
 "fr" = (
 /obj/structure/stone_tile/slab,
 /obj/structure/closet/crate{
-	name = "ritual supplies"
+	name = "ritual sssuppliesss"
 	},
 /obj/item/clothing/mask/cigarette/rollie/cannabis,
 /obj/item/clothing/mask/cigarette/rollie/cannabis,
@@ -191,7 +193,7 @@
 /turf/open/indestructible/boss,
 /area/awaymission/caves/misc/ashwalker_village)
 "gV" = (
-/obj/structure/bonfire/dense,
+/obj/structure/bonfire/prelit,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/template_noop)
 "gW" = (
@@ -323,7 +325,9 @@
 /turf/open/indestructible/boss,
 /area/awaymission/caves/misc/ashwalker_village)
 "ka" = (
-/obj/structure/statue/sandstone/assistant,
+/obj/structure/statue/sandstone/assistant{
+	name = "the tide master"
+	},
 /turf/open/misc/asteroid{
 	initial_gas_mix = "LAVALAND_ATMOS";
 	name = "ashen sand"
@@ -388,7 +392,9 @@
 /area/template_noop)
 "mW" = (
 /obj/structure/stone_tile/slab,
-/obj/structure/closet/crate/wooden,
+/obj/structure/closet/crate/wooden{
+	name = "jerky ssstorage"
+	},
 /obj/item/stack/sheet/animalhide/goliath_hide,
 /obj/item/stack/sheet/animalhide/goliath_hide,
 /obj/item/stack/sheet/animalhide/goliath_hide,
@@ -438,7 +444,9 @@
 /area/awaymission/caves/misc/ashwalker_village)
 "os" = (
 /obj/structure/stone_tile/slab,
-/obj/structure/statue/bananium/clown,
+/obj/structure/statue/bananium/clown{
+	name = "the funny man"
+	},
 /turf/open/indestructible/boss,
 /area/awaymission/caves/misc/ashwalker_village)
 "oR" = (
@@ -658,9 +666,17 @@
 /obj/item/cultivator/rake,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/misc/ashwalker_village)
+"xE" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/turf/open/indestructible/boss,
+/area/awaymission/caves/misc/ashwalker_village)
 "xN" = (
 /obj/structure/stone_tile/slab/burnt,
-/obj/structure/closet/crate/miningcar,
+/obj/structure/closet/crate/miningcar{
+	name = "ssshiniesss box"
+	},
 /obj/item/gun/energy/recharge/kinetic_accelerator,
 /obj/item/stack/sheet/mineral/diamond{
 	amount = 5
@@ -951,7 +967,9 @@
 /area/template_noop)
 "Kh" = (
 /obj/structure/stone_tile/slab/burnt,
-/obj/structure/closet/crate/trashcart,
+/obj/structure/closet/crate/trashcart{
+	name = "ssspacewalker foodiessss"
+	},
 /obj/item/food/sosjerky,
 /obj/item/food/sosjerky,
 /obj/item/food/no_raisin,
@@ -1112,7 +1130,9 @@
 /area/template_noop)
 "Ql" = (
 /obj/structure/stone_tile/slab/cracked,
-/obj/structure/closet/crate/secure/engineering,
+/obj/structure/closet/crate/secure/engineering{
+	name = "ssspacewalker toolsss"
+	},
 /obj/item/storage/toolbox/mechanical/old/clean,
 /obj/item/storage/belt/utility/full/powertools{
 	name = "power tools belt"
@@ -3696,9 +3716,9 @@ Wk
 Wk
 Wk
 Wk
-Wk
-Wk
-Wk
+PN
+QF
+sR
 Wk
 Wk
 WR
@@ -3755,9 +3775,9 @@ Wk
 Wk
 Wk
 Wk
-Wk
-Wk
-Wk
+Aq
+gV
+Bv
 Wk
 AY
 WR
@@ -3814,9 +3834,9 @@ Wk
 RS
 Lt
 RS
-Wk
-Wk
-Wk
+kf
+wX
+vz
 Wk
 AY
 WR
@@ -3910,7 +3930,7 @@ Wk
 ZU
 Sq
 ND
-bQ
+xE
 Rj
 Sq
 ZU
@@ -4931,9 +4951,9 @@ Wv
 Wk
 Wk
 Wk
-Wk
-Wk
-Wk
+PN
+QF
+sR
 Wk
 Wk
 Wv
@@ -4990,9 +5010,9 @@ Wv
 Wk
 Wk
 Wk
-RS
-Wk
-Wk
+Aq
+gV
+Bv
 Wk
 Wk
 Wv
@@ -5049,9 +5069,9 @@ Xs
 Wk
 Wk
 Wk
-Wk
-Wk
-Wk
+kf
+wX
+vz
 Wk
 Wk
 Wv
@@ -5587,9 +5607,9 @@ Wk
 CX
 Wv
 Wk
-Wk
-Wk
-Wk
+PN
+QF
+sR
 Wk
 Wk
 Wk
@@ -5646,9 +5666,9 @@ wv
 Mp
 Wk
 Wk
-Wk
-Wk
-Wk
+Aq
+gV
+Bv
 Wk
 Wk
 BT
@@ -5705,9 +5725,9 @@ nW
 Hf
 Wk
 Wk
-Wk
-Wk
-Wk
+kf
+wX
+vz
 Wk
 Wk
 Hf

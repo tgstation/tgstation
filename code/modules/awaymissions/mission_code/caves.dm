@@ -1,7 +1,6 @@
 //Modular Map marker
 /obj/modular_map_root/caves
 	config_file = "strings/modular_maps/caves.toml"
-	loadmap = TRUE
 
 //Map objects
 /obj/effect/mapping_helpers/ztrait_injector/caves
@@ -9,8 +8,8 @@
 	traits_to_add = list(ZTRAIT_SECRET, ZTRAIT_BASETURF = /turf/open/misc/asteroid/basalt/lava_land_surface)
 
 /obj/structure/clockcult_tower
-	name = "energy relay"
-	desc = "A strange bronze tower capable of transmitting energy through other towers."
+	name = "energy pylon"
+	desc = "A strange bronze pylon capable of transmitting energy through other pylons."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "clocktower_on"
 	density = TRUE
@@ -55,7 +54,7 @@
 
 /obj/structure/clockcult_tower/source
 	name = "energy generator"
-	desc = "A strange bronze tower capable of transmitting energy through other towers."
+	desc = "A strange bronze tower generating power to the nearby pylons."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	max_integrity = 200
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 50, ACID = 50)
@@ -70,8 +69,8 @@
 	. = ..()
 
 /obj/structure/clockcult_tower/target
-	name = "energy consumer"
-	desc = "A strange bronze tower capable of sucking up energy beams to power something really cool."
+	name = "energy blockade"
+	desc = "A strange bronze pylon capable of sucking up energy beams to block your path. Maybe try to turn off the other beams?"
 	var/active_beams = 1 //how many beams attached to us, will do something when it hits 0
 
 /obj/structure/clockcult_tower/target/link_up()
@@ -80,7 +79,7 @@
 /obj/structure/clockcult_tower/target/break_link()
 	active_beams--
 	if(active_beams < 1)
-		say("oye i die..")
+		say("The plyon falls apart as the last beam dissipates!")
 		qdel(src)
 
 //Cave tram controls for 1st floor
@@ -90,18 +89,25 @@
 /obj/effect/landmark/lift_id/caves
 	specific_lift_id = "caves 1st floor tram"
 
+/obj/structure/industrial_lift/tram/caves
+	horizontal_speed = 0.25
+	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | FIRE_PROOF | LAVA_PROOF
+
 /obj/effect/landmark/tram/caves/upper
 	name = "Delta Outpost Mining Dock"
+	specific_lift_id = "caves 1st floor tram"
 	destination_id = "caves_upper"
 	tgui_icons = list("Arrivals" = "plane-arrival")
 
 /obj/effect/landmark/tram/caves/middle
 	name = "Delta Outpost Storage & Robotics"
+	specific_lift_id = "caves 1st floor tram"
 	destination_id = "caves_middle"
 	tgui_icons = list("Arrivals" = "plane-arrival")
 
 /obj/effect/landmark/tram/caves/lower
 	name = "Delta Outpost Research Division"
+	specific_lift_id = "caves 1st floor tram"
 	destination_id = "caves_lower"
 	tgui_icons = list("Arrivals" = "plane-arrival")
 
@@ -187,6 +193,11 @@
 	dodge_prob = 15
 	footstep_type = FOOTSTEP_MOB_HEAVY
 
+/mob/living/simple_animal/hostile/clockminer/Move(atom/newloc)
+	if(newloc && newloc.z == z && (islava(newloc) || ischasm(newloc)))
+		return FALSE
+	return ..()
+
 /mob/living/simple_animal/hostile/clockminer/death()
 	if(prob(death_phrase_chance))
 		say(pick(death_phrases))
@@ -262,13 +273,13 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	say_phrases = list(
 		ITEM_REJECTED_PHRASE = list(
-			"Sorry, I'm not a fan of anything you're showing me. Give me something better and we'll talk."
+			"Isss.. thisss the bessst you have to offer? I figured you ssspace walkersss were better paid..."
 		),
 		ITEM_SELLING_CANCELED_PHRASE = list(
 			"What a ssshame, you know where to find me if you happen to... change your mind."
 		),
 		ITEM_SELLING_ACCEPTED_PHRASE = list(
-		"Thisss will make a great trinket for the brood mother..."
+			"Thisss will make a great trinket for the brood mother..."
 		),
 		INTERESTED_PHRASE = list(
 			"You.. I see you have ssshiny. Why not participate in some Nanotrasssen-approved capitalisssm?"
@@ -278,7 +289,8 @@
 		),
 		NO_CASH_PHRASE = list(
 			"Do you take me for a sssimpleton like my fellow walkersss? No casssh, no grasssss.",
-			"You ssseem a bit... light on fundsss. Maybe asssk bossssman for raissse?"
+			"You ssseem a bit... light on fundsss. Maybe asssk bossssman for raissse?",
+			"Come back when your, erm, a little richer?"
 		),
 		NO_STOCK_PHRASE = list(
 			"My ssstorage isss looking a bit... light on that currently. Perhapsss come by another time?"
