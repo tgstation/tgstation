@@ -7,12 +7,14 @@
 	circuit = /obj/item/circuitboard/machine/biogenerator
 	var/processing = FALSE
 	var/obj/item/reagent_containers/cup/beaker = null
-	var/points = 0
+	var/biomass = 0
 	var/efficiency = 0
 	var/productivity = 0
-	var/max_items = 40
+	var/max_items = 10
+	var/max_biomass = 1000
+	var/max_output = 50
 	var/datum/techweb/stored_research
-	var/list/show_categories = list(RND_CATEGORY_FOOD, RND_CATEGORY_BOTANY_CHEMICALS, RND_CATEGORY_ORGANIC_MATERIALS)
+	var/list/show_categories = list(RND_CATEGORY_BIO_FOOD, RND_CATEGORY_BIO_CHEMICALS, RND_CATEGORY_BIO_MATERIALS)
 	/// Currently selected category in the UI
 	var/selected_cat
 
@@ -47,20 +49,23 @@
 	. = ..()
 	var/E = 0
 	var/P = 0
-	var/max_storage = 40
+	var/I = 0
+	var/V = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		P += B.rating
-		max_storage = 40 * B.rating
+		I += 10 * B.rating
+		V += 1000 * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+		P += M.rating
 		E += M.rating
 	efficiency = E
 	productivity = P
-	max_items = max_storage
+	max_items = I
+	max_biomass = V
 
 /obj/machinery/biogenerator/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.")
+		. += span_notice("The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<br>And up to <b>[max_biomass]</b> units of biomass.")
 
 /obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
@@ -167,13 +172,19 @@
 	if(processing)
 		to_chat(user, span_warning("The biogenerator is in the process of working."))
 		return
+	if(biomass >= max_biomass)
+		say("Warning: The biomass storage is full!")
+		return
 	var/processing_time = 0
 	for(var/obj/item/food/grown/I in contents)
+		if(biomass >= max_biomass)
+			break
 		processing_time += 5
 		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
-			points += 1 * productivity
+			biomass += 1 * productivity
 		else
-			points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) * 10 * productivity
+			biomass += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) * 10 * productivity
+		biomass = min(biomass, max_biomass)
 		qdel(I)
 	if(processing_time)
 		processing = TRUE
@@ -184,57 +195,33 @@
 		processing = FALSE
 		update_appearance()
 
-/obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
+/obj/machinery/biogenerator/proc/use_biomass(list/materials, amount = 1, remove_biomass = TRUE)
 	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
 		return FALSE
-	if (materials[GET_MATERIAL_REF(/datum/material/biomass)]*multiplier/efficiency > points)
+	if (ROUND_UP(materials[GET_MATERIAL_REF(/datum/material/biomass)]*amount/efficiency) > biomass)
 		return FALSE
 	else
-		if(remove_points)
-			points -= materials[GET_MATERIAL_REF(/datum/material/biomass)]*multiplier/efficiency
+		if(remove_biomass)
+			biomass -= ROUND_UP(materials[GET_MATERIAL_REF(/datum/material/biomass)]*amount/efficiency)
 		update_appearance()
 		return TRUE
 
-/obj/machinery/biogenerator/proc/check_container_volume(list/reagents, multiplier = 1)
-	var/sum_reagents = 0
-	for(var/R in reagents)
-		sum_reagents += reagents[R]
-	sum_reagents *= multiplier
-
-	if(beaker.reagents.total_volume + sum_reagents > beaker.reagents.maximum_volume)
-		return FALSE
-
-	return TRUE
-
 /obj/machinery/biogenerator/proc/create_product(datum/design/D, amount)
-	if(!beaker || !loc)
-		return FALSE
-
-	if(ispath(D.build_path, /obj/item/stack))
-		if(!check_container_volume(D.make_reagents, amount))
+	if(D.make_reagents.len > 0)
+		if(!beaker)
 			return FALSE
-		if(!check_cost(D.materials, amount))
+		if(beaker.reagents.maximum_volume - beaker.reagents.total_volume < amount)
+			say("Warning: Attached container does not have enough free capacity!")
 			return FALSE
-
+		if(!use_biomass(D.materials, amount))
+			return FALSE
+		beaker.reagents.add_reagent(D.make_reagents[1], amount)
+	if(D.build_path)
+		if(!use_biomass(D.materials, amount))
+			return FALSE
 		new D.build_path(drop_location(), amount)
-		for(var/R in D.make_reagents)
-			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
-	else
-		var/i = amount
-		while(i > 0)
-			if(!check_container_volume(D.make_reagents))
-				say("Warning: Attached container does not have enough free capacity!")
-				return .
-			if(!check_cost(D.materials))
-				return .
-			if(D.build_path)
-				new D.build_path(loc)
-			for(var/R in D.make_reagents)
-				beaker.reagents.add_reagent(R, D.make_reagents[R])
-			. = 1
-			--i
 	update_appearance()
-	return .
+	return TRUE
 
 /*
  * Insert a new beaker into the biogenerator, replacing/swapping our current beaker if there is one.
@@ -301,9 +288,12 @@
 /obj/machinery/biogenerator/ui_data(mob/user)
 	var/list/data = list()
 	data["beaker"] = beaker ? TRUE : FALSE
-	data["biomass"] = points
+	data["biomass"] = biomass
+	data["max_biomass"] = max_biomass
 	data["processing"] = processing
-	if(locate(/obj/item/food/grown) in contents)
+	data["max_output"] = max_output
+	data["efficiency"] = efficiency
+	if(locate(/obj/item/food/grown) in contents && biomass < max_biomass)
 		data["can_process"] = TRUE
 	else
 		data["can_process"] = FALSE
@@ -335,7 +325,8 @@
 			cat["items"] += list(list(
 				"id" = D.id,
 				"name" = D.name,
-				"cost" = D.materials[GET_MATERIAL_REF(/datum/material/biomass)]/efficiency,
+				"is_reagent" = D.make_reagents.len > 0,
+				"cost" = ROUND_UP(D.materials[GET_MATERIAL_REF(/datum/material/biomass)]/efficiency),
 			))
 		data["categories"] += list(cat)
 
@@ -355,7 +346,7 @@
 			return TRUE
 		if("create")
 			var/amount = text2num(params["amount"])
-			amount = clamp(amount, 1, 10)
+			amount = clamp(amount, 1, max_output)
 			if(!amount)
 				return
 			var/id = params["id"]

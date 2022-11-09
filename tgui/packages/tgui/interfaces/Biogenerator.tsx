@@ -7,10 +7,14 @@ import { Section, NumberInput, Table, Tabs, LabeledList, NoticeBox, Button, Prog
 type BiogeneratorData = {
   processing: BooleanLike;
   beaker: BooleanLike;
+  reagent_color: string;
   biomass: number;
+  max_biomass: number;
   can_process: BooleanLike;
   beakerCurrentVolume: number;
   beakerMaxVolume: number;
+  max_output: number;
+  efficiency: number;
   categories: Category[];
 };
 
@@ -22,6 +26,7 @@ type Category = {
 type Design = {
   id: number;
   name: string;
+  is_reagent: BooleanLike;
   disable: BooleanLike;
   cost: number;
   amount: number;
@@ -32,10 +37,14 @@ export const Biogenerator = (props, context) => {
   const {
     processing,
     beaker,
+    reagent_color,
     biomass,
+    max_biomass,
     can_process,
     beakerCurrentVolume,
     beakerMaxVolume,
+    max_output,
+    efficiency,
     categories,
   } = data;
   const [selectedCategory, setSelectedCategory] = useLocalState<string>(
@@ -47,7 +56,7 @@ export const Biogenerator = (props, context) => {
     categories.find((category) => category.name === selectedCategory)?.items ||
     [];
   return (
-    <Window width={400} height={460}>
+    <Window width={400} height={480}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -68,9 +77,14 @@ export const Biogenerator = (props, context) => {
                 <ProgressBar
                   value={biomass}
                   minValue={0}
-                  maxValue={1000}
+                  maxValue={max_biomass}
                   color="good">
-                  {`${biomass} of ${1000} units`}
+                  <span
+                    style={{
+                      'text-shadow': '1px 1px 0 black',
+                    }}>
+                    {`${biomass} of ${max_biomass} units`}
+                  </span>
                 </ProgressBar>
               </LabeledList.Item>
               {!!beaker && (
@@ -88,8 +102,14 @@ export const Biogenerator = (props, context) => {
                   <ProgressBar
                     value={beakerCurrentVolume}
                     minValue={0}
-                    maxValue={beakerMaxVolume}>
-                    {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
+                    maxValue={beakerMaxVolume}
+                    color={reagent_color}>
+                    <span
+                      style={{
+                        'text-shadow': '1px 1px 0 black',
+                      }}>
+                      {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
+                    </span>
                   </ProgressBar>
                 </LabeledList.Item>
               )}
@@ -102,21 +122,31 @@ export const Biogenerator = (props, context) => {
               )}
             </LabeledList>
           </Stack.Item>
-          <Stack.Item grow>
-            <Section fill style={{ 'overflow': 'auto' }}>
-              <Tabs fluid>
-                {categories.map((category) => (
-                  <Tabs.Tab
-                    align="center"
-                    key={category.name}
-                    selected={category.name === selectedCategory}
-                    onClick={() => setSelectedCategory(category.name)}>
-                    {category.name} ({category.items?.length || 0})
-                  </Tabs.Tab>
-                ))}
-              </Tabs>
+          <Stack.Item>
+            <Tabs fluid>
+              {categories.map((category) => (
+                <Tabs.Tab
+                  align="center"
+                  key={category.name}
+                  selected={category.name === selectedCategory}
+                  onClick={() => setSelectedCategory(category.name)}>
+                  {category.name}
+                </Tabs.Tab>
+              ))}
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow mt={'2px'}>
+            <Section fill scrollable>
               <Table>
-                <ItemList biomass={biomass} items={items} />
+                <ItemList
+                  processing={processing}
+                  biomass={biomass}
+                  items={items}
+                  beaker={beaker}
+                  efficiency={efficiency}
+                  max_output={max_output}
+                  space={beaker ? beakerMaxVolume - beakerCurrentVolume : 1}
+                />
               </Table>
             </Section>
           </Stack.Item>
@@ -128,23 +158,27 @@ export const Biogenerator = (props, context) => {
 
 const ItemList = (props, context) => {
   const { act } = useBackend(context);
-  const [hoveredItem, setHoveredItem] = useLocalState<Design | null>(
-    context,
-    'hoveredItem',
-    null
-  );
-  const hoveredCost = hoveredItem?.cost || 0;
-  // Append extra hover data to items
   const items = props.items.map((item) => {
     const [amount, setAmount] = useLocalState(context, 'amount' + item.name, 1);
-    const notSameItem = hoveredItem?.name !== item.name;
-    // const notEnoughHovered =
-    //   props.biomass - hoveredCost * hoveredItem?.amount < item.cost * amount;
-    // const disabledDueToHovered = notSameItem && notEnoughHovered;
-    // const disabled = props.biomass < item.cost * amount || disabledDueToHovered;
+    const disabled =
+      props.processing ||
+      (item.is_reagent && !props.beaker) ||
+      (item.is_reagent && props.space < amount) ||
+      props.biomass < Math.ceil((item.cost * amount) / props.efficiency);
+    const max_amount_possible = Math.min(
+      Math.floor((props.efficiency * props.biomass) / item.cost),
+      props.max_output
+    );
+    const max_amount = Math.max(
+      1,
+      item.is_reagent
+        ? Math.min(props.space, max_amount_possible)
+        : max_amount_possible
+    );
     return {
       ...item,
-      // disabled,
+      disabled,
+      max_amount,
       amount,
       setAmount,
     };
@@ -165,7 +199,7 @@ const ItemList = (props, context) => {
           value={Math.round(item.amount)}
           width="35px"
           minValue={1}
-          maxValue={10}
+          maxValue={item.max_amount}
           onChange={(e, value) => item.setAmount(value)}
         />
       </Table.Cell>
@@ -173,10 +207,12 @@ const ItemList = (props, context) => {
         <Button
           fluid
           align="right"
-          content={item.cost * item.amount + ' ' + 'BIO'}
+          content={
+            Math.ceil((item.cost * item.amount) / props.efficiency) +
+            ' ' +
+            'BIO'
+          }
           disabled={item.disabled}
-          onmouseover={() => setHoveredItem(item)}
-          onmouseout={() => setHoveredItem(null)}
           onClick={() =>
             act('create', {
               id: item.id,
