@@ -49,8 +49,8 @@ jobs:
           bash tools/ci/install_auxlua.sh
       - name: Configure version
         run: |
-          echo "BYOND_MAJOR=${{ inputs.major }}"
-          echo "BYOND_MINOR=${{ inputs.minor }}"
+          echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
+          echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
         if: ${{ inputs.major }}
       - name: Compile Tests
         run: |
