@@ -52,7 +52,7 @@
 
 	if(istype(weapon, /obj/item/reagent_containers) || istype(mop))
 		update_appearance(UPDATE_OVERLAYS)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN // skip attack animations when refilling cart
+		return SECONDARY_ATTACK_CONTINUE_CHAIN // skip attack animations when refilling cart
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
