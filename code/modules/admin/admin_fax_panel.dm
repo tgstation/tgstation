@@ -140,4 +140,3 @@
 		if("createPaper")
 			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, usr.loc)
 			our_paper.name = fax_paper.name
-				
