@@ -151,7 +151,7 @@
 					viewing += viewer.client
 
 	for(var/mob/camera/viewer as anything in GLOB.cliented_mob_cams)
-		viewing += viewer.client
+		viewing |= viewer.client
 	flick_overlay(image_to_show, viewing, duration)
 
 ///Get active players who are playing in the round
