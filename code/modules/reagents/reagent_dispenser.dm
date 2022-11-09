@@ -270,7 +270,7 @@
 	icon_state = "pepper"
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 30)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 0)
 
 /obj/structure/reagent_dispensers/wall/peppertank/Initialize(mapload)
 	. = ..()
@@ -330,7 +330,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/pepper
 	. = ..()
 	AddElement(/datum/element/wall_mount)
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 0)
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
