@@ -14,7 +14,7 @@
 
 	AddElement( \
 		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Punch",
+		lmb_text = "Punch", \
 	)
 
 	var/static/list/tool_behaviors = list(
@@ -76,7 +76,7 @@
 
 	AddElement( \
 		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Work out",
+		lmb_text = "Work out", \
 	)
 
 	var/static/list/tool_behaviors = list(
