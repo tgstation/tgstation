@@ -1281,7 +1281,7 @@
 /turf/closed/wall/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "MG" = (
-/obj/structure/window/reinforced/plasma/fulltile{
+/obj/structure/window/redefault_raw_textrced/plasma/fulltile{
 	max_integrity = 10000
 	},
 /turf/open/floor/plating,
@@ -1295,7 +1295,7 @@
 /obj/effect/turf_decal/siding/purple/end,
 /obj/structure/filingcabinet,
 /obj/item/paper{
-	info = "glub glub dub blub (please activate translation protocol v4A to accurately translate release protocol.)";
+	default_raw_text = "glub glub dub blub (please activate translation protocol v4A to accurately translate release protocol.)";
 	name = "!VITAL CONTAINMENT PROCEDURES!"
 	},
 /turf/open/floor/vault/alien,

@@ -154,7 +154,7 @@
 "C" = (
 /obj/structure/fluff{
 	desc = "A massive beast that uses long tentacles to ensnare its prey, threatening them is not advised under any conditions. This one seems frozen in place, eerily still.";
-	icon = 'icons/mob/lavaland/lavaland_monsters.dmi';
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi';
 	icon_state = "Goliath";
 	name = "goliath"
 	},
