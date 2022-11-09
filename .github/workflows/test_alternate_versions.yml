@@ -1,0 +1,41 @@
+name: Test Alternate Versions
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
+jobs:
+  find_alternate_tests:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Find Alternate Tests
+    runs-on: ubuntu-20.04
+    outputs:
+      alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
+    concurrency:
+      group: find_all_maps-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Find Alternate Tests
+        id: alternate_test_finder
+        run: |
+          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>.+)$")]' .github/alternate_byond_versions.txt)
+          echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
+  run_alternate_tests:
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]'"
+    name: Alternate Tests
+    needs: [find_alternate_tests]
+    strategy:
+      fail-fast: false
+      matrix:
+        setup: ${{ fromJSON(needs.find_alternate_tests.outputs.alternate_tests) }}
+    concurrency:
+      group: run_alternate_tests-${{ github.ref }}-${{ matrix.setup.major }}.${{ matrix.setup.minor }}-${{ matrix.setup.map }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/run_integration_tests.yml
+    with:
+      map: ${{ matrix.setup.map }}
+      major: ${{ matrix.setup.major }}
+      minor: ${{ matrix.setup.minor }}
