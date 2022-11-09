@@ -5447,7 +5447,7 @@
 /obj/item/ammo_box/magazine/m556,
 /obj/item/ammo_box/magazine/m556,
 /obj/item/paper{
-	info = "Within this supply, you will find two (2) NT-ARG 'Boarder' assualt rifles and six (6) toploader magazines filled with 5.56mm ammunition, loaded with 30 bullets each. Please assure the local defense officer on site is able to properly account for inventory and provide appropriate training to the mining crew on safe operation and maintenance. If further armaments is required to deal with the local threat, please make a request through the Site Director.";
+	default_raw_text = "Within this supply, you will find two (2) NT-ARG 'Boarder' assualt rifles and six (6) toploader magazines filled with 5.56mm ammunition, loaded with 30 bullets each. Please assure the local defense officer on site is able to properly account for inventory and provide appropriate training to the mining crew on safe operation and maintenance. If further armaments is required to deal with the local threat, please make a request through the Site Director.";
 	name = "defense armaments"
 	},
 /turf/open/floor/iron,
@@ -6772,7 +6772,6 @@
 /area/awaymission/caves/third_outpost)
 "Eq" = (
 /obj/machinery/mineral/stacking_unit_console{
-	machinedir = 8;
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -6821,11 +6820,11 @@
 	},
 /obj/structure/noticeboard/directional/north,
 /obj/item/paper{
-	info = "Between our own blast mining and the shifting layers of rock, seismic activity whether it be quakes or splitting terrain are a danger all personnel on site should be keenly aware of and watch out for the warning signs of an upcoming event. It is heavily advised all personnel wear their jaunt devices in event of accidental falls. You'd much rather deal with the nausea of a rapid bluespace relocation over the alternative of whatever lies below a chasm.";
+	default_raw_text = "Between our own blast mining and the shifting layers of rock, seismic activity whether it be quakes or splitting terrain are a danger all personnel on site should be keenly aware of and watch out for the warning signs of an upcoming event. It is heavily advised all personnel wear their jaunt devices in event of accidental falls. You'd much rather deal with the nausea of a rapid bluespace relocation over the alternative of whatever lies below a chasm.";
 	name = "geothermal ruptures safety guidelines"
 	},
 /obj/item/paper{
-	info = "Further down from the surface of this planet, this region has unfortunely managed to settle within a uniquely... dense form of volanic rock. The typical kinetic accelerators used to blast rock to chunks and plasma cutters designed to slice through stone can't quite seem to get a good impact on the local structures. Pinpoint cracks with more simple mining tools do seem to still eventually get through, but at a longer than finanically viable time. Use on blasting caps and other controlled explosives are advised to properly dig out tunnels. Please consult your local defense officer for proper safety procedure and maintenance of these mining explosives before live use.";
+	default_raw_text = "Further down from the surface of this planet, this region has unfortunely managed to settle within a uniquely... dense form of volanic rock. The typical kinetic accelerators used to blast rock to chunks and plasma cutters designed to slice through stone can't quite seem to get a good impact on the local structures. Pinpoint cracks with more simple mining tools do seem to still eventually get through, but at a longer than finanically viable time. Use on blasting caps and other controlled explosives are advised to properly dig out tunnels. Please consult your local defense officer for proper safety procedure and maintenance of these mining explosives before live use.";
 	name = "geological assetment"
 	},
 /obj/item/binoculars{
@@ -9324,7 +9323,7 @@
 	},
 /obj/item/clipboard,
 /obj/item/paper{
-	info = "WARNING: Past this point, the lower regions of these caverns have not been fully cleared out and the contents of the region are mostly unknown. It is heavily advised to enable your suit sensors, travel in groups of at least 3 and make hourly reports to your assigned director as you scout and mark surroundings. Scouting teams will be supplied with basic scouting kits such as survival pods, medical hypos and backup short-range radios. Please see your local defense officer for further info on how to properly handle and maintain your self defense equipment if you do not feel fully addressed on any subjects.";
+	default_raw_text = "WARNING: Past this point, the lower regions of these caverns have not been fully cleared out and the contents of the region are mostly unknown. It is heavily advised to enable your suit sensors, travel in groups of at least 3 and make hourly reports to your assigned director as you scout and mark surroundings. Scouting teams will be supplied with basic scouting kits such as survival pods, medical hypos and backup short-range radios. Please see your local defense officer for further info on how to properly handle and maintain your self defense equipment if you do not feel fully addressed on any subjects.";
 	name = "Expansion Notice"
 	},
 /obj/item/pen/survival,

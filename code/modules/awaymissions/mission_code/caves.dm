@@ -299,9 +299,9 @@
 			"No thanksss, I think I'm good for now."
 		),
 		ITEM_IS_WORTHLESS_PHRASE = list(
-			 "...Perhapsss we do not ssshare sssimilar ideasss of.. worth?",
-			 "...What? Is thisss sssome sssort of ssspace joke? ",
-			 "You couldn't pay me to take thisss."
+			"...Perhapsss we do not ssshare sssimilar ideasss of.. worth?",
+			"...What? Is thisss sssome sssort of ssspace joke? ",
+			"You couldn't pay me to take thisss."
 		),
 		TRADER_HAS_ENOUGH_ITEM_PHRASE = list(
 			"Fellow kin already bring in enough of this to last two ssseasonsss. No thanksss."
