@@ -14,7 +14,7 @@ jobs:
     outputs:
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
     concurrency:
-      group: find_all_maps-${{ github.ref }}
+      group: find_alternate_tests-${{ github.ref }}
       cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
