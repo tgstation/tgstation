@@ -104,6 +104,7 @@ LINEN BINS
 	signal_sleeper = null
 
 // We need to do this in case someone picks up a bedsheet while a mob is covered up
+// otherwise the bedsheet will disappear while in our hands if the sleeper signals get activated by moving
 /obj/item/bedsheet/proc/on_pickup(datum/source, mob/grabber)
 	SIGNAL_HANDLER
 
