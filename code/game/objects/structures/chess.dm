@@ -9,7 +9,7 @@
 
 /obj/structure/chess/wrench_act(mob/user, obj/item/tool)
 	if(flags_1 & HOLOGRAM_1)
-		balloon_alert(user,"[tool] passes right through [src]!")
+		balloon_alert(user, "it goes right through!")
 		return TRUE
 	to_chat(user, span_notice("You start to take apart the chess piece."))
 	if(!do_after(user, 0.5 SECONDS, target = src))
