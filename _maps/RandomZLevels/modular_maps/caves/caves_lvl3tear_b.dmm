@@ -326,7 +326,6 @@
 /area/template_noop)
 "Lg" = (
 /mob/living/simple_animal/hostile/illusion{
-	deathmessage = "vanishes into thin air!";
 	multiply_chance = 25;
 	health = 25;
 	name = "architect";

@@ -1281,7 +1281,7 @@
 /turf/closed/wall/vault/alien,
 /area/awaymission/caves/misc/ayylmao)
 "MG" = (
-/obj/structure/window/redefault_raw_textrced/plasma/fulltile{
+/obj/structure/window/reinforced/plasma/fulltile{
 	max_integrity = 10000
 	},
 /turf/open/floor/plating,

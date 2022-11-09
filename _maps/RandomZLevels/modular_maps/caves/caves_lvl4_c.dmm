@@ -84,7 +84,6 @@
 /area/template_noop)
 "bb" = (
 /mob/living/simple_animal/hostile/illusion{
-	deathmessage = "vanishes into thin air!";
 	desc = "A humanoid-shaped silhouette made entirely of static noise.";
 	multiply_chance = 25;
 	name = "architect";
@@ -1310,7 +1309,6 @@
 	dir = 1
 	},
 /mob/living/simple_animal/hostile/illusion{
-	deathmessage = "vanishes into thin air!";
 	desc = "A humanoid-shaped silhouette made entirely of static noise.";
 	multiply_chance = 25;
 	name = "architect";
@@ -2204,7 +2202,6 @@
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/illusion{
-	deathmessage = "vanishes into thin air!";
 	desc = "A humanoid-shaped silhouette made entirely of static noise.";
 	multiply_chance = 25;
 	name = "architect";
@@ -4530,7 +4527,6 @@
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/door/firedoor,
 /mob/living/simple_animal/hostile/illusion{
-	deathmessage = "vanishes into thin air!";
 	desc = "A humanoid-shaped silhouette made entirely of static noise.";
 	multiply_chance = 25;
 	name = "architect";

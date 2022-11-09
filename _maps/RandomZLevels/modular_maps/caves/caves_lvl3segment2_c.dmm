@@ -1344,7 +1344,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/noticeboard/directional/north,
 /obj/item/paper{
-	info = "Due to recent reports of lowered morale during long-term recon missions, we have decided to borrow one of the very few popular Nanotrasen policies by hiring a rental clown. May the next upcoming 42 cycles be filled with laughter and joy as he entertains all of you. Reminder that he is a rental and the company we are hiring from expect him to come back alive and intact.";
+	default_raw_text = "Due to recent reports of lowered morale during long-term recon missions, we have decided to borrow one of the very few popular Nanotrasen policies by hiring a rental clown. May the next upcoming 42 cycles be filled with laughter and joy as he entertains all of you. Reminder that he is a rental and the company we are hiring from expect him to come back alive and intact.";
 	name = "morale update"
 	},
 /turf/open/floor/iron/dark,
