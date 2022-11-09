@@ -15,30 +15,35 @@
 
 /datum/component/onwear_mood/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/affect_wearer)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/clear_effects)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/onwear_mood/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_PARENT_EXAMINE))
 	clear_effects()
 
-/datum/component/onwear_mood/proc/affect_wearer(datum/source, mob/living/target)
+/datum/component/onwear_mood/proc/affect_wearer(datum/source, mob/living/target, slot)
 	SIGNAL_HANDLER
+	if(!(slot & ITEM_SLOT_ON_BODY))
+		return  // only affects "worn" slots
+
 	target.add_mood_event(REF(src), saved_event)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(target, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/clear_effects)
 
 /datum/component/onwear_mood/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
 	examine_text += span_notice(examine_string)
 
 /// clears the effects on the wearer
-/datum/component/onwear_mood/proc/clear_effects(atom/source, mob/living/target)
+/datum/component/onwear_mood/proc/clear_effects(mob/living/source, obj/item/dropped_item)
 	SIGNAL_HANDLER
 	var/obj/item/clothing = parent
-	target = target || source?.loc || clothing.loc
-	if(!istype(target))
+	if(dropped_item != clothing && source)
 		return
-	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
+	source = source || clothing.loc
+	if(!istype(source))
+		return
+	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_MOB_UNEQUIPPED_ITEM))
 	target.clear_mood_event(REF(src))
 
 /datum/component/onwear_mood/Destroy(force, silent)
