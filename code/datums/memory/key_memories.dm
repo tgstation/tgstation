@@ -1,7 +1,7 @@
 /**
  * I am affectionally titling these "key memories"
  *
- * These memories aren't particular special or interesting, but occuply an important role
+ * These memories aren't particularly special or interesting, but occuply an important role
  * in conveying information to the user about something important they need to check semi-often
  */
 /datum/memory/key

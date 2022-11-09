@@ -628,8 +628,11 @@
 	src.protagonist_held_card = protagonist_held_card.name
 
 	var/list/story_players = list()
-	for(var/mob/living/person as anything in other_players)
-		story_players += build_story_character(person)
+	for(var/mob/living/player as anything in other_players)
+		// This will result in some strange structure sometimes -
+		// "The assistant, the assistant, and the assistant playing a game",
+		// but meh. Someone can improve upon it in the future
+		story_players += build_story_character(player)
 
 	src.formatted_players_list = english_list(story_players, nothing_text = "no-one")
 	return ..()
