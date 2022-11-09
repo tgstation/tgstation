@@ -169,26 +169,26 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 /proc/RunUnitTests()
 	CHECK_TICK
 
-	// var/list/tests_to_run = subtypesof(/datum/unit_test)
-	// var/list/focused_tests = list()
-	// for (var/_test_to_run in tests_to_run)
-	// 	var/datum/unit_test/test_to_run = _test_to_run
-	// 	if (initial(test_to_run.focus))
-	// 		focused_tests += test_to_run
-	// if(length(focused_tests))
-	// 	tests_to_run = focused_tests
+	var/list/tests_to_run = subtypesof(/datum/unit_test)
+	var/list/focused_tests = list()
+	for (var/_test_to_run in tests_to_run)
+		var/datum/unit_test/test_to_run = _test_to_run
+		if (initial(test_to_run.focus))
+			focused_tests += test_to_run
+	if(length(focused_tests))
+		tests_to_run = focused_tests
 
-	// tests_to_run = sortTim(tests_to_run, /proc/cmp_unit_test_priority)
+	tests_to_run = sortTim(tests_to_run, /proc/cmp_unit_test_priority)
 
-	// var/list/test_results = list()
+	var/list/test_results = list()
 
-	// for(var/unit_path in tests_to_run)
-	// 	CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
-	// 	RunUnitTest(unit_path, test_results)
+	for(var/unit_path in tests_to_run)
+		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
+		RunUnitTest(unit_path, test_results)
 
-	// var/file_name = "data/unit_tests.json"
-	// fdel(file_name)
-	// file(file_name) << json_encode(test_results)
+	var/file_name = "data/unit_tests.json"
+	fdel(file_name)
+	file(file_name) << json_encode(test_results)
 
 	SSticker.force_ending = TRUE
 	//We have to call this manually because del_text can preceed us, and SSticker doesn't fire in the post game
