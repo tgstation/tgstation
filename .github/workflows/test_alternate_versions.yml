@@ -24,7 +24,7 @@ jobs:
           ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>.+)$")]' .github/alternate_byond_versions.txt)
           echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
   run_alternate_tests:
-    if: "!contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]'"
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && needs.find_alternate_tests.outputs.alternate_tests != '[]'"
     name: Alternate Tests
     needs: [find_alternate_tests]
     strategy:
