@@ -22,6 +22,7 @@
 	var/sending_fax_name = "Secret"
 	/// Default name of paper. paper - bluh-bluh. Used when field with paper name not edited.
 	var/default_paper_name = "Standart Report"
+	var/save_reminder = FALSE
 
 /datum/fax_panel_interface/New()
 	//Get all faxes, and save them to our list.
@@ -31,7 +32,7 @@
 	//Get all stamps
 	for(var/stamp in subtypesof(/obj/item/stamp))
 		var/obj/item/stamp/real_stamp = new stamp()
-		if(!istype(real_stamp, /obj/item/stamp/chameleon) && !istype(real_stamp, /obj/item/stamp/mod))// try to remove chameleon, dont work.
+		if(!istype(real_stamp, /obj/item/stamp/chameleon) && !istype(real_stamp, /obj/item/stamp/mod))
 			var/stamp_detail = real_stamp.get_writing_implement_details()
 			stamp_list += list(list(real_stamp.name, real_stamp.icon_state, stamp_detail["stamp_class"]))
 	
@@ -63,12 +64,16 @@
 
 /datum/fax_panel_interface/ui_static_data(mob/user)
 	var/list/data = list()
+
 	data["faxes"] = list()
 	data["stamps"] = list()
+
 	for(var/stamp in stamp_list)
 		data["stamps"] += list(stamp[1]) // send only names.
+	
 	for(var/obj/machinery/fax/another_fax as anything in available_faxes)
 		data["faxes"] += list(another_fax.fax_name)
+	
 	return data
 
 /datum/fax_panel_interface/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -88,6 +93,7 @@
 		if("follow")
 			if(!isobserver(usr))
 				usr.client?.admin_ghost()
+
 			usr.client?.admin_follow(action_fax)
 		
 		if("preview") // see saved variant
@@ -102,7 +108,9 @@
 			if(params["fromWho"])
 				sending_fax_name = params["fromWho"]
 			
-			fax_paper.ui_status(usr, UI_CLOSE) // i wannd reload, or close and open UI, but i dont know how. need help
+			if(!save_reminder)
+				to_chat(usr, span_info("Do not forget to close and open the preview after saving."))
+				save_reminder = TRUE
 
 			fax_paper.clear_paper()
 			var/stamp 
@@ -130,7 +138,6 @@
 			log_admin("[key_name(usr)] has send custom fax message to [action_fax.name]")
 		
 		if("createPaper")
-
 			var/obj/item/paper/our_paper = fax_paper.copy(/obj/item/paper, usr.loc)
 			our_paper.name = fax_paper.name
-			
+				

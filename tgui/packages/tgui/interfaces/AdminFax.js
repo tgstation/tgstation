@@ -69,6 +69,7 @@ export const FaxMainPanel = (props, context) => {
           <Button
             icon="eye"
             disabled={!saved}
+            tooltip="Do not forget to close and open the preview after saving."
             onClick={() =>
               act('preview', {
                 faxName: fax,
@@ -197,7 +198,6 @@ export const FaxMainPanel = (props, context) => {
             onClick={() =>
               act('send', {
                 faxName: fax,
-                fromWho: fromWho,
               })
             }>
             Send fax
@@ -206,6 +206,7 @@ export const FaxMainPanel = (props, context) => {
             icon="floppy-disk"
             mr="9px"
             color="green"
+            tooltip="Do not forget to close and open the preview after saving."
             onClick={() => {
               setSaved(true);
               act('save', {
@@ -216,6 +217,7 @@ export const FaxMainPanel = (props, context) => {
                 stampX: stampCoordX,
                 stampY: stampCoordY,
                 stampR: stampAngle,
+                fromWho: fromWho,
               });
             }}>
             Save changes
