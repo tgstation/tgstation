@@ -204,14 +204,14 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 		new/datum/stack_recipe("security belt", /obj/item/storage/belt/security, 2), \
 		new/datum/stack_recipe("shoulder holster", /obj/item/storage/belt/holster, 3), \
 		new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5), \
-		)),
+	)),
 	new/datum/stack_recipe_list("cowboy hats", list( \
 		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy/brown, 2), \
 		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy/black, 2), \
 		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy/white, 2), \
 		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy/red, 2), \
 		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy/grey, 2), \
-		)),
+	)),
 ))
 
 /obj/item/stack/sheet/leather/get_main_recipes()
