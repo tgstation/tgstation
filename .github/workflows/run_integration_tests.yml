@@ -7,6 +7,12 @@ on:
       map:
         required: true
         type: string
+      major:
+        required: false
+        type: string
+      minor:
+        required: false
+        type: string
 jobs:
   run_integration_tests:
     runs-on: ubuntu-20.04
@@ -41,6 +47,11 @@ jobs:
       - name: Install auxlua
         run: |
           bash tools/ci/install_auxlua.sh
+      - name: Configure version
+        run: |
+          echo "BYOND_MAJOR=${{ inputs.major }}"
+          echo "BYOND_MINOR=${{ inputs.minor }}"
+        if: ${{ inputs.major }}
       - name: Compile Tests
         run: |
           bash tools/ci/install_byond.sh
