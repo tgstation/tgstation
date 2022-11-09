@@ -289,8 +289,11 @@
 		var/mob/living/carbon/carbon_target = target
 		affecting_limb = carbon_target.get_bodypart(check_zone(selected_zone))
 
-	if ((surgery.surgery_flags & SURGERY_REQUIRE_LIMB) && isnull(affecting_limb))
-		target.balloon_alert(user, "patient has no [parse_zone(selected_zone)]!")
+	if ((surgery.surgery_flags & SURGERY_REQUIRE_LIMB) == isnull(affecting_limb))
+		if (surgery.requires_bodypart)
+			target.balloon_alert(user, "patient has no [parse_zone(selected_zone)]!")
+		else
+			target.balloon_alert(user, "patient has \a [parse_zone(selected_zone)]!")
 		return
 
 	if (!isnull(affecting_limb) && surgery.requires_bodypart_type && !(affecting_limb.bodytype & surgery.requires_bodypart_type))
