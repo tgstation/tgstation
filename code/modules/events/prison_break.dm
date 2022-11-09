@@ -24,7 +24,7 @@
 								/area/station/cargo,
 								/area/station/science)
 
-	var/list/areas_affected = list()
+	var/list/areas_affected = list() //The list of areas the admins will recieve
 
 	for(var/i in 1 to severity)
 		var/picked_area = pick_n_take(potential_areas)
