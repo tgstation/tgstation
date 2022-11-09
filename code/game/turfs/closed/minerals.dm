@@ -54,6 +54,9 @@
 		return
 
 	var/mob/living/bumping = bumped_atom
+	if(bumping.combat_mode) // We don't allow combat mode mining (note this prevents fauna from mining on their own. Yes this is very stupid)
+		return
+
 	var/obj/item/held_item = bumping.get_active_held_item()
 	// !held_item exists to be nice to snow. the other bit is for pickaxes obviously
 	if(!held_item || held_item.tool_behaviour == TOOL_MINING)
