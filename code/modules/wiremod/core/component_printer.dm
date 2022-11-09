@@ -90,7 +90,7 @@
 
 	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 	if (!(design.build_type & COMPONENT_PRINTER))
-		return "No design"
+		return
 
 	if (materials.on_hold())
 		return
