@@ -89,6 +89,8 @@ SUBSYSTEM_DEF(research)
 	//since the game will ever have only 1 master server we just return if that is offline
 	for(var/obj/machinery/rnd/server/master/master_server in master_servers)
 		if(!master_server.working)
+			///we still want to initialize the last time this method was called to prevent point gaines during the time the server was off
+			last_income = world.time
 			return
 
 	var/list/bitcoins = list()
