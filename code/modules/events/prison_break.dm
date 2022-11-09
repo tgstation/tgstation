@@ -22,8 +22,7 @@
 								/area/station/medical,
 								/area/station/security,
 								/area/station/cargo,
-								/area/station/science,
-								/area/station/service)
+								/area/station/science)
 
 	var/list/areas_affected = list()
 
