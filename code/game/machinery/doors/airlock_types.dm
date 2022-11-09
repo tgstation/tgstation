@@ -9,10 +9,12 @@
 	greyscale_colors = "#3e7bc1#3e7bc1#2a5b94#2a5b94#369de5#6d6565#2c5280"
 
 /obj/machinery/door/airlock/security
-	icon = 'icons/obj/doors/airlocks/station/security.dmi'
+	icon = 'icons/obj/doors/airlocks/tall/department/security.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
-	greyscale_colors = "#9f2828#9f2828#a51c1c#a51c1c#d27428#6d6565#8e2222"
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
