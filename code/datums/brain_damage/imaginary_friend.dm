@@ -1,3 +1,15 @@
+#ifndef PROC_REF // 515 compatibility but it's not merged yet so it's here in the meantime
+
+	#if DM_VERSION < 515
+	/// Call by name proc reference, checks if the proc exists on this type or as a global proc
+	#define PROC_REF(X) (.proc/##X)
+	#else
+	/// Call by name proc reference, checks if the proc exists on this type or as a global proc
+	#define PROC_REF(X) (nameof(.proc/##X))
+	#endif
+
+#endif
+
 /datum/brain_trauma/special/imaginary_friend
 	name = "Imaginary Friend"
 	desc = "Patient can see and hear an imaginary person."
@@ -260,7 +272,7 @@
 	bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, speech_bubble_recipients, 3 SECONDS)
 	LAZYADD(update_on_z, bubble)
-	addtimer(CALLBACK(src, PROC_REF(clear_saypopup, bubble)), 3.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(clear_saypopup), bubble), 3.5 SECONDS)
 
 	var/turf/center_turf = get_turf(src)
 	if(!center_turf)
