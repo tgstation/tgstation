@@ -29,6 +29,7 @@ LINEN BINS
 	var/list/dream_messages = list("white")
 	var/stack_amount = 3
 	var/bedsheet_type = BEDSHEET_SINGLE
+	var/datum/weakref/signal_sleeper //this is our goldylocks
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
@@ -83,7 +84,9 @@ LINEN BINS
 	balloon_alert(sleeper, "covered")
 	var/angle = sleeper.lying_prev
 	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
-	RegisterSignal(src, COMSIG_ITEM_PICKUP, .proc/smooth_sheets)
+
+	signal_sleeper = WEAKREF(sleeper)
+	RegisterSignal(src, COMSIG_ITEM_PICKUP, .proc/on_pickup)
 	RegisterSignal(sleeper, COMSIG_MOVABLE_MOVED, .proc/smooth_sheets)
 	RegisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION, .proc/smooth_sheets)
 	RegisterSignal(sleeper, COMSIG_PARENT_QDELETING, .proc/smooth_sheets)
@@ -95,10 +98,22 @@ LINEN BINS
 	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
 	UnregisterSignal(sleeper, COMSIG_PARENT_QDELETING)
-	if(istype(sleeper))
-		balloon_alert(sleeper, "smoothed sheets")
-		layer = initial(layer)
-		SET_PLANE_IMPLICIT(src, initial(plane))
+	balloon_alert(sleeper, "smoothed sheets")
+	layer = initial(layer)
+	SET_PLANE_IMPLICIT(src, initial(plane))
+	signal_sleeper = null
+
+// We need to do this in case someone picks up a bedsheet while a mob is covered up
+/obj/item/bedsheet/proc/on_pickup(datum/source, mob/grabber)
+	SIGNAL_HANDLER
+
+	var/mob/living/sleeper = signal_sleeper?.resolve()
+
+	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(sleeper, COMSIG_PARENT_QDELETING)
+	signal_sleeper = null
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
