@@ -26,14 +26,14 @@
 	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
 	mouse_control_probability = 100
 
-/obj/item/clothing/head/utility/chefhat/suicide_act(mob/user)
+/obj/item/clothing/head/utility/chefhat/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef."))
 	user.say("Bork Bork Bork!", forced = "chef hat suicide")
 	sleep(2 SECONDS)
 	user.visible_message(span_suicide("[user] climbs into an imaginary oven!"))
 	user.say("BOOORK!", forced = "chef hat suicide")
 	playsound(user, 'sound/machines/ding.ogg', 50, TRUE)
-	return(FIRELOSS)
+	return FIRELOSS
 
 /obj/item/clothing/head/utility/chefhat/relaymove(mob/living/user, direction)
 	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))

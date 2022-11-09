@@ -21,7 +21,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/item/bikehorn/rubberducky,
 /obj/structure/closet/crate/trashcart/filled,
-/obj/item/bodypart/r_arm/robot/surplus{
+/obj/item/bodypart/arm/right/robot/surplus{
 	name = "rusty robotic arm";
 	desc = "A rusted and decayed robotic arm. Probably still works... Probably."
 	},
