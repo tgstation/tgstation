@@ -116,7 +116,7 @@ Any sleeping behaviour that you need to perform inside a `SIGNAL_HANDLER` proc m
 Each atom can only register a signal on the same object once, or else you will get a runtime. Overriding signals is usually a bug, but if you are confident that it is not, you can silence this runtime with `override = TRUE`.
 
 ```dm
-RegisterSignal(fork, COMSIG_FORK_STAB, .proc/on_fork_stab, override = TRUE)
+RegisterSignal(fork, COMSIG_FORK_STAB, PROC_REF(on_fork_stab), override = TRUE)
 ```
 
 If you decide to do this, you should make it clear with a comment explaining why it is necessary. This helps us to understand that the signal override is not a bug, and may help us to remove it in the future if the assumptions change.

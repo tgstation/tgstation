@@ -195,7 +195,7 @@ To receive it in DM, you must register a delegate proc (callback) that will rece
 ```dm
 /datum/my_object/proc/initialize()
   // ...
-  window.subscribe(src, .proc/on_message)
+  window.subscribe(src, PROC_REF(on_message))
 
 /datum/my_object/proc/on_message(type, payload)
   if (type == "click")
