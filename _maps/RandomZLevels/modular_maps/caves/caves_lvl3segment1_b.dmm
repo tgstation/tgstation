@@ -843,7 +843,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/noticeboard/directional/north,
 /obj/item/paper{
-	info = "Due to a recent cave-in, the drill platform is currently inoperable. The tunnel ahead is blocked by dense debris that more than likely requires an explosive charge to properly blast through. While explosive charges have been requested in the next cargo depot, the Site Director has signed off on usable of gibtonite if any active shards are found in the lower region solely in the use of clearing the current debris.";
+	default_raw_text = "Due to a recent cave-in, the drill platform is currently inoperable. The tunnel ahead is blocked by dense debris that more than likely requires an explosive charge to properly blast through. While explosive charges have been requested in the next cargo depot, the Site Director has signed off on usable of gibtonite if any active shards are found in the lower region solely in the use of clearing the current debris.";
 	name = "drill platform notice"
 	},
 /turf/open/floor/plating/lavaland_atmos,
@@ -995,7 +995,7 @@
 "ZU" = (
 /obj/structure/rack,
 /obj/item/paper{
-	info = "The cavern ahead is infested with a parasitic species capable of hijacking a victim's body once they have succumbed to lethal wounds! DO NOT under any circumstances engage them without a well-equipped group, lest you only add to their numbers! The Site Director has already sent a request for heavy ordance to safely clear out the next so drill expansion may proceed unhindered.";
+	default_raw_text = "The cavern ahead is infested with a parasitic species capable of hijacking a victim's body once they have succumbed to lethal wounds! DO NOT under any circumstances engage them without a well-equipped group, lest you only add to their numbers! The Site Director has already sent a request for heavy ordance to safely clear out the next so drill expansion may proceed unhindered.";
 	name = "CAVE WARNING"
 	},
 /obj/effect/decal/cleanable/dirt,

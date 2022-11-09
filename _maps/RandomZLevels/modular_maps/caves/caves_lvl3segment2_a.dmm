@@ -265,9 +265,8 @@
 "sN" = (
 /obj/structure/stone_tile/slab,
 /obj/item/paper{
-	info = "The paper describes a podcast about 3 middle un-aged skeletons talking about various current topics. The main gimmick compared to the other podcasts that do this exact same thing is that they're all skeletons.";
-	name = "podcast pitch - My Skeleton, My Skeleton, & Me";
-	default_raw_text = "its a podcast about 3 middle-aged skeleton brothers answering questions from other middle-aged ghosts. one of them talks about food they used to eat but can't now since they lack the digestive ability to do so."
+	default_raw_text = "The paper describes a podcast about 3 middle un-aged skeletons talking about various current topics. The main gimmick compared to the other podcasts that do this exact same thing is that they're all skeletons.";
+	name = "podcast pitch - My Skeleton, My Skeleton, & Me"
 	},
 /turf/open/indestructible/boss,
 /area/template_noop)

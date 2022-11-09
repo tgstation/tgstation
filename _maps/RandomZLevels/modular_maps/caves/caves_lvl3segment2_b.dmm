@@ -424,7 +424,7 @@
 /obj/structure/fluff{
 	desc = "A highly detailed visualization of a space carp, projected outwards via hologram.";
 	dir = 8;
-	icon = 'icons/mob/carp.dmi';
+	icon = 'icons/mob/simple/carp.dmi';
 	icon_state = "holocarp";
 	name = "hologram of a space carp"
 	},
