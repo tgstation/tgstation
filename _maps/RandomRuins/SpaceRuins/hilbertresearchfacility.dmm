@@ -1893,12 +1893,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "PR" = (
-/obj/machinery/porta_turret/syndicate{
-	desc = "A ballistic machine gun auto-turret that fires bluespace bullets.";
-	lethal_projectile = /obj/projectile/magic/teleport;
-	name = "displacement turret";
-	stun_projectile = /obj/projectile/magic/teleport
-	},
+/obj/machinery/porta_turret/syndicate/teleport,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Qu" = (

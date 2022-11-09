@@ -647,3 +647,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/structure/showcase/machinery/tv/broken/Initialize(mapload)
 	. = ..()
 	add_overlay("television_broken")
+
+/obj/machinery/porta_turret/syndicate/teleport
+	name = "displacement turret"
+	desc = "A ballistic machine gun auto-turret that fires bluespace bullets."
+	lethal_projectile = /obj/projectile/magic/teleport
+	stun_projectile = /obj/projectile/magic/teleport
+	faction = list("turret")
