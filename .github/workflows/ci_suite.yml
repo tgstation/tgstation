@@ -105,6 +105,7 @@ jobs:
       group: run_all_tests-${{ github.ref }}-${{ matrix.map }}
       cancel-in-progress: true
     steps:
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/run_integration_tests.yml
       with:
         map: ${{ matrix.map }}
