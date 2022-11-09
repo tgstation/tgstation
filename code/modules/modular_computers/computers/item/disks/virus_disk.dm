@@ -61,7 +61,7 @@
  * Sends a false message, and blows the PDA up if the target responds to it (or opens their messenger before a timer)
  */
 /obj/item/computer_disk/virus/detomatix
-	name = "\improper D.E.T.O.M.A.T.attacking_item.X. disk"
+	name = "\improper D.E.T.O.M.A.T.I.X. disk"
 	charges = 6
 
 /obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)

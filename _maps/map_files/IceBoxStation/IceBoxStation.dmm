@@ -3844,6 +3844,7 @@
 	pixel_y = 4
 	},
 /obj/effect/turf_decal/tile/red/full,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/checkpoint/medical)
 "bjn" = (
@@ -8696,6 +8697,7 @@
 	pixel_y = -5
 	},
 /obj/structure/rack,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/station/security/office)
 "cBL" = (
@@ -24568,6 +24570,7 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Security - Equipment Room"
 	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /turf/open/floor/glass/reinforced,
 /area/station/security/lockers)
 "hwW" = (
@@ -49468,6 +49471,7 @@
 /obj/item/clothing/gloves/color/orange,
 /obj/item/restraints/handcuffs,
 /obj/item/reagent_containers/spray/pepper,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "pgL" = (

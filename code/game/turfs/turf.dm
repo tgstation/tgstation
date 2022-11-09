@@ -117,8 +117,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(T)
 			T.multiz_turf_new(src, UP)
 
-	// by default, vis_contents is inherited from the turf that was here before
-	vis_contents.Cut()
+	// by default, vis_contents is inherited from the turf that was here before.
+	// Checking length(vis_contents) in a proc this hot has huge wins for performance.
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 	assemble_baseturfs()
 
@@ -204,7 +206,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	requires_activation = FALSE
 	..()
 
-	vis_contents.Cut()
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 /// WARNING WARNING
 /// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS

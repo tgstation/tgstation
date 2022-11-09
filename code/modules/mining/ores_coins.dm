@@ -377,10 +377,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
 	var/index = sideslist.Find(coinflip)
-	if (index==2)//tails
+	if (index == 2)//tails
 		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] promptly falls over, dead!"))
 		user.adjustOxyLoss(200)
-		user.death(0)
+		user.death(FALSE)
 		user.set_suicide(TRUE)
 		user.suicide_log()
 	else

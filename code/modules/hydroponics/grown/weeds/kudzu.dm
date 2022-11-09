@@ -23,10 +23,10 @@
 	S.mutations = mutations.Copy()
 	return S
 
-/obj/item/seeds/kudzu/suicide_act(mob/user)
+/obj/item/seeds/kudzu/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows the pack of kudzu seeds! It looks like [user.p_theyre()] trying to commit suicide!"))
 	plant(user)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/seeds/kudzu/proc/plant(mob/user)
 	if(isspaceturf(user.loc))

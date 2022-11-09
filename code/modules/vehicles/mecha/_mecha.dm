@@ -164,6 +164,8 @@
 	var/leg_overload_mode = FALSE
 	///Energy use modifier for leg overload
 	var/leg_overload_coeff = 100
+	///stores value that we will add and remove from the mecha when toggling leg overload
+	var/speed_mod = 0
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
@@ -295,6 +297,7 @@
 			var/mob/living/silicon/ai/ai = occupant
 			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
 				unlucky_ai = occupant
+				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
 				ai.gib() //No wreck, no AI to recover
 			else
 				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI

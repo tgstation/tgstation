@@ -71,6 +71,7 @@
 /datum/species/dullahan/spec_life(mob/living/carbon/human/human, delta_time, times_fired)
 	if(QDELETED(my_head))
 		my_head = null
+		human.investigate_log("has been gibbed by the loss of [human.p_their()] head.", INVESTIGATE_DEATHS)
 		human.gib()
 		return
 
@@ -83,6 +84,7 @@
 	var/obj/item/bodypart/head/illegal_head = human.get_bodypart(BODY_ZONE_HEAD)
 	if(illegal_head)
 		my_head = null
+		human.investigate_log("has been gibbed by having an illegal head put on [human.p_their()] shoulders.", INVESTIGATE_DEATHS)
 		human.gib() // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/human)

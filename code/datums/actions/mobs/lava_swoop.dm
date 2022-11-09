@@ -100,6 +100,7 @@
 	for(var/mob/living/L in orange(1, owner) - owner)
 		if(L.stat)
 			owner.visible_message(span_warning("[owner] slams down on [L], crushing [L.p_them()]!"))
+			L.investigate_log("has been gibbed by lava swoop.", INVESTIGATE_DEATHS)
 			L.gib()
 		else
 			L.adjustBruteLoss(75)

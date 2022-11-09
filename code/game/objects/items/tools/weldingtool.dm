@@ -97,9 +97,9 @@
 	open_flame()
 
 
-/obj/item/weldingtool/suicide_act(mob/user)
+/obj/item/weldingtool/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (FIRELOSS)
+	return FIRELOSS
 
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
 	flamethrower_screwdriver(tool, user)

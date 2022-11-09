@@ -338,12 +338,14 @@
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
 	inserted_item = /obj/item/toy/crayon/mime
+	starting_programs = list(
+		/datum/computer_file/program/emojipedia,
+	)
 
 /obj/item/modular_computer/tablet/pda/mime/Initialize(mapload)
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
 		msg.mime_mode = TRUE
-		msg.allow_emojis = TRUE
 		msg.ringer_status = FALSE
 
 /obj/item/modular_computer/tablet/pda/curator
@@ -355,13 +357,13 @@
 	inserted_item = /obj/item/pen/fountain
 	long_ranged = TRUE
 	starting_programs = list(
+		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
 	)
 
 /obj/item/modular_computer/tablet/pda/curator/Initialize(mapload)
 	. = ..()
 	for(var/datum/computer_file/program/messenger/msg in stored_files)
-		msg.allow_emojis = TRUE
 		msg.ringer_status = FALSE
 
 /**

@@ -1,4 +1,0 @@
-author: "mc-oofert"
-delete-after: True
-changes:
-  - bugfix: "Fixes getting AIs with cores getting gibbed if their mech theyre controlling is destroyed"

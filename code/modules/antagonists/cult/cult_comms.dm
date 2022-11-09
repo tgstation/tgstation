@@ -7,7 +7,7 @@
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 
-/datum/action/innate/cult/IsAvailable()
+/datum/action/innate/cult/IsAvailable(feedback = FALSE)
 	if(!IS_CULTIST(owner))
 		return FALSE
 	return ..()
@@ -17,14 +17,14 @@
 	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
 	button_icon_state = "cult_comms"
 
-/datum/action/innate/cult/comm/IsAvailable()
+/datum/action/innate/cult/comm/IsAvailable(feedback = FALSE)
 	if(isshade(owner) && IS_CULTIST(owner))
 		return TRUE
 	return ..()
 
 /datum/action/innate/cult/comm/Activate()
 	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood")
-	if(!input || !IsAvailable())
+	if(!input || !IsAvailable(feedback = TRUE))
 		return
 
 	var/list/filter_result = CAN_BYPASS_FILTER(usr) ? null : is_ic_filtered(input)
@@ -68,7 +68,7 @@
 	name = "Spiritual Communion"
 	desc = "Conveys a message from the spirit realm that all cultists can hear."
 
-/datum/action/innate/cult/comm/spirit/IsAvailable()
+/datum/action/innate/cult/comm/spirit/IsAvailable(feedback = FALSE)
 	if(IS_CULTIST(owner.mind.current))
 		return TRUE
 	return ..()
@@ -89,7 +89,7 @@
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
 
-/datum/action/innate/cult/mastervote/IsAvailable()
+/datum/action/innate/cult/mastervote/IsAvailable(feedback = FALSE)
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C || C.cult_team.cult_vote_called || !ishuman(owner))
 		return FALSE
@@ -157,7 +157,7 @@
 				to_chat(B.current,span_cultlarge("[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!"))
 	return TRUE
 
-/datum/action/innate/cult/master/IsAvailable()
+/datum/action/innate/cult/master/IsAvailable(feedback = FALSE)
 	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master) || GLOB.cult_narsie)
 		return FALSE
 	return ..()
@@ -246,7 +246,7 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(cult_mark_cooldown)
 
-/datum/action/innate/cult/master/cultmark/IsAvailable()
+/datum/action/innate/cult/master/cultmark/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, cult_mark_cooldown)
 
 /datum/action/innate/cult/master/cultmark/InterceptClickOn(mob/caller, params, atom/clicked_on)
@@ -293,7 +293,7 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(cult_mark_cooldown)
 
-/datum/action/innate/cult/ghostmark/IsAvailable()
+/datum/action/innate/cult/ghostmark/IsAvailable(feedback = FALSE)
 	return ..() && isobserver(owner)
 
 /datum/action/innate/cult/ghostmark/Activate()
@@ -372,7 +372,7 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(pulse_cooldown)
 
-/datum/action/innate/cult/master/pulse/IsAvailable()
+/datum/action/innate/cult/master/pulse/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, pulse_cooldown)
 
 /datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
