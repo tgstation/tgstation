@@ -1,8 +1,7 @@
 /datum/surgery/organ_manipulation
 	name = "Organ manipulation"
-	target_mobtypes = list(/mob/living/carbon/human)
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
-	requires_real_bodypart = TRUE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -10,7 +9,8 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
@@ -20,7 +20,8 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/organ_manipulation/alien
 	name = "Alien organ manipulation"
@@ -32,14 +33,14 @@
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
 		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/organ_manipulation/mechanic
 	name = "Prosthesis organ manipulation"
-	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	lying_required = FALSE
-	self_operable = TRUE
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_LIMB
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -47,25 +48,42 @@
 		/datum/surgery_step/prepare_electronics,
 		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close)
+		/datum/surgery_step/mechanic_close,
+	)
 
 /datum/surgery/organ_manipulation/mechanic/soft
-	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	possible_locs = list(
+		BODY_ZONE_PRECISE_GROIN,
+		BODY_ZONE_PRECISE_EYES,
+		BODY_ZONE_PRECISE_MOUTH,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+	)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/prepare_electronics,
 		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/mechanic_close)
+		/datum/surgery_step/mechanic_close,
+	)
 
 /datum/surgery/organ_manipulation/external
 	name = "Feature manipulation"
-	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	possible_locs = list(
+		BODY_ZONE_CHEST,
+		BODY_ZONE_HEAD,
+		BODY_ZONE_PRECISE_GROIN,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_R_LEG,
+	)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/manipulate_organs/external,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
 ///Organ manipulation base class. Do not use, it wont work. Use it's subtypes
 /datum/surgery_step/manipulate_organs

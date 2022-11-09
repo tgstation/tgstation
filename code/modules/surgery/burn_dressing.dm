@@ -4,13 +4,20 @@
 ///// Debride burnt flesh
 /datum/surgery/debride
 	name = "Debride burnt flesh"
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
+	targetable_wound = /datum/wound/burn
+	possible_locs = list(
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_LEG,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_HEAD,
+	)
 	steps = list(
 		/datum/surgery_step/debride,
-		/datum/surgery_step/dress)
-	target_mobtypes = list(/mob/living/carbon/human)
-	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
-	requires_real_bodypart = TRUE
-	targetable_wound = /datum/wound/burn
+		/datum/surgery_step/dress,
+	)
 
 /datum/surgery/debride/can_start(mob/living/user, mob/living/carbon/target)
 	if(!istype(target))

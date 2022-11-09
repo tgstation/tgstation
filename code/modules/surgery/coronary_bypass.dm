@@ -1,5 +1,7 @@
 /datum/surgery/coronary_bypass
 	name = "Coronary Bypass"
+	organ_to_manipulate = ORGAN_SLOT_HEART
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -7,9 +9,8 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise_heart,
 		/datum/surgery_step/coronary_bypass,
-		/datum/surgery_step/close)
-	possible_locs = list(BODY_ZONE_CHEST)
-	organ_to_manipulate = ORGAN_SLOT_HEART
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/heart/target_heart = target.getorganslot(ORGAN_SLOT_HEART)

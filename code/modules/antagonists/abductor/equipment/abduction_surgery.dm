@@ -1,8 +1,15 @@
 /datum/surgery/organ_extraction
 	name = "Experimental organ replacement"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/extract_organ, /datum/surgery_step/gland_insert)
 	possible_locs = list(BODY_ZONE_CHEST)
-	ignore_clothes = 1
+	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/extract_organ,
+		/datum/surgery_step/gland_insert,
+	)
 
 /datum/surgery/organ_extraction/can_start(mob/user, mob/living/carbon/target)
 	if(!ishuman(user))

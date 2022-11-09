@@ -1,12 +1,13 @@
 /datum/surgery/lipoplasty
 	name = "Lipoplasty"
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/cut_fat,
 		/datum/surgery_step/remove_fat,
-		/datum/surgery_step/close)
-	possible_locs = list(BODY_ZONE_CHEST)
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
 	if(HAS_TRAIT(target, TRAIT_FAT) && target.nutrition >= NUTRITION_LEVEL_WELL_FED)

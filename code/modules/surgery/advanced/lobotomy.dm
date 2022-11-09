@@ -1,20 +1,20 @@
 /datum/surgery/advanced/lobotomy
 	name = "Lobotomy"
 	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
-	steps = list(
-	/datum/surgery_step/incise,
-	/datum/surgery_step/retract_skin,
-	/datum/surgery_step/saw,
-	/datum/surgery_step/clamp_bleeders,
-	/datum/surgery_step/lobotomize,
-	/datum/surgery_step/close)
-
-	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = 0
+	requires_bodypart_type = NONE
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/lobotomize,
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
@@ -28,7 +28,8 @@
 		/obj/item/melee/energy/sword = 55,
 		/obj/item/knife = 35,
 		/obj/item/shard = 25,
-		/obj/item = 20)
+		/obj/item = 20,
+	)
 	time = 100
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/scalpel2.ogg'
@@ -55,7 +56,7 @@
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	if(prob(75)) // 75% chance to get a trauma from this
-		switch(rand(1,3))//Now let's see what hopefully-not-important part of the brain we cut off
+		switch(rand(1, 3))//Now let's see what hopefully-not-important part of the brain we cut off
 			if(1)
 				target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
 			if(2)

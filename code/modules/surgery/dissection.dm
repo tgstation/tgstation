@@ -4,8 +4,8 @@
 		/mob/living/carbon/human,
 		/mob/living/carbon/alien,
 	)
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_real_bodypart = TRUE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,

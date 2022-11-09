@@ -1,13 +1,19 @@
 /datum/surgery/core_removal
 	name = "Core removal"
+	target_mobtypes = list(/mob/living/simple_animal/slime)
+	surgery_flags = SURGERY_IGNORE_CLOTHES
+	possible_locs = list(
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_LEG,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_HEAD,
+	)
 	steps = list(
 		/datum/surgery_step/incise,
-		/datum/surgery_step/extract_core)
-	target_mobtypes = list(/mob/living/simple_animal/slime)
-	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
-	lying_required = FALSE
-	ignore_clothes = TRUE
-	requires_bodypart = FALSE
+		/datum/surgery_step/extract_core,
+	)
 
 /datum/surgery/core_removal/can_start(mob/user, mob/living/target)
 	if(target.stat == DEAD)

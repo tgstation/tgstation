@@ -1,7 +1,8 @@
 /datum/surgery/advanced/bioware/ligament_hook
 	name = "Ligament Hook"
 	desc = "A surgical procedure which reshapes the connections between torso and limbs, making it so limbs can be attached manually if severed. \
-	However this weakens the connection, making them easier to detach as well."
+		However this weakens the connection, making them easier to detach as well."
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -9,8 +10,8 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/reshape_ligaments,
-		/datum/surgery_step/close)
-	possible_locs = list(BODY_ZONE_CHEST)
+		/datum/surgery_step/close,
+	)
 	bioware_target = BIOWARE_LIGAMENTS
 
 /datum/surgery_step/reshape_ligaments

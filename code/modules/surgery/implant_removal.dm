@@ -1,14 +1,13 @@
 /datum/surgery/implant_removal
 	name = "Implant removal"
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/extract_implant,
-		/datum/surgery_step/close)
-	target_mobtypes = list(/mob/living/carbon/human)
-	possible_locs = list(BODY_ZONE_CHEST)
-
+		/datum/surgery_step/close,
+	)
 
 //extract implant
 /datum/surgery_step/extract_implant

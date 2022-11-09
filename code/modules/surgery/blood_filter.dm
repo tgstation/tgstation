@@ -1,15 +1,13 @@
 /datum/surgery/blood_filter
 	name = "Filter blood"
-	steps = list(/datum/surgery_step/incise,
-				/datum/surgery_step/retract_skin,
-				/datum/surgery_step/incise,
-				/datum/surgery_step/filter_blood,
-				/datum/surgery_step/close)
-
-	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = TRUE
-	ignore_clothes = FALSE
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/filter_blood,
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/blood_filter/can_start(mob/user, mob/living/carbon/target)
 	if(HAS_TRAIT(target, TRAIT_HUSK)) //You can filter the blood of a dead person just not husked

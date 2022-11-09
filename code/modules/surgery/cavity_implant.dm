@@ -1,5 +1,6 @@
 /datum/surgery/cavity_implant
 	name = "Cavity implant"
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -7,9 +8,6 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/handle_cavity,
 		/datum/surgery_step/close)
-	target_mobtypes = list(/mob/living/carbon/human)
-	possible_locs = list(BODY_ZONE_CHEST)
-
 
 //handle cavity
 /datum/surgery_step/handle_cavity

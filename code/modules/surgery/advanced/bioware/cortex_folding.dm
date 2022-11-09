@@ -1,6 +1,7 @@
 /datum/surgery/advanced/bioware/cortex_folding
 	name = "Cortex Folding"
 	desc = "A surgical procedure which modifies the cerebral cortex into a complex fold, giving space to non-standard neural patterns."
+	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -8,9 +9,9 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/fold_cortex,
-		/datum/surgery_step/close)
-	possible_locs = list(BODY_ZONE_HEAD)
-	target_mobtypes = list(/mob/living/carbon/human)
+		/datum/surgery_step/close,
+	)
+
 	bioware_target = BIOWARE_CORTEX
 
 /datum/surgery/advanced/bioware/cortex_folding/can_start(mob/user, mob/living/carbon/target)

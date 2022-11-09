@@ -1,16 +1,15 @@
 /datum/surgery/brain_surgery
 	name = "Brain surgery"
-	steps = list(
-	/datum/surgery_step/incise,
-	/datum/surgery_step/retract_skin,
-	/datum/surgery_step/saw,
-	/datum/surgery_step/clamp_bleeders,
-	/datum/surgery_step/fix_brain,
-	/datum/surgery_step/close)
-
-	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = 0
+	requires_bodypart_type = NONE
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/fix_brain,
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery_step/fix_brain
 	name = "fix brain (hemostat)"

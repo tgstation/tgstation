@@ -1,11 +1,12 @@
 /datum/surgery/plastic_surgery
 	name = "Plastic surgery"
+	possible_locs = list(BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/reshape_face,
-		/datum/surgery_step/close)
-	possible_locs = list(BODY_ZONE_HEAD)
+		/datum/surgery_step/close,
+	)
 
 //reshape_face
 /datum/surgery_step/reshape_face

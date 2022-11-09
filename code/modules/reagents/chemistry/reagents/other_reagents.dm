@@ -1006,8 +1006,7 @@
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
 		surgery.speed_modifier = max(0.2, surgery.speed_modifier)
 
 /datum/reagent/iron

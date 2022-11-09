@@ -1,18 +1,14 @@
 /datum/surgery/stomach_pump
 	name = "Stomach Pump"
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/stomach_pump,
-		/datum/surgery_step/close)
-
-	target_mobtypes = list(/mob/living/carbon/human)
-	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = TRUE
-	ignore_clothes = FALSE
-	var/accumulated_experience = 0
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/stomach_pump/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/stomach/target_stomach = target.getorganslot(ORGAN_SLOT_STOMACH)

@@ -5,7 +5,7 @@
 	var/accept_hand = FALSE //does the surgery step require an open hand? If true, ignores implements. Compatible with accept_any_item.
 	var/accept_any_item = FALSE //does the surgery step accept any item? If true, ignores implements. Compatible with require_hand.
 	var/time = 10 //how long does the step take?
-	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or it used in surgery with `can_cancel = 1`. Or surgion will be stuck in the loop
+	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or else the surgeon will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
@@ -46,7 +46,7 @@
 
 	if(success)
 		if(target_zone == surgery.location)
-			if(get_location_accessible(target, target_zone) || surgery.ignore_clothes)
+			if(get_location_accessible(target, target_zone) || (surgery.surgery_flags & SURGERY_IGNORE_CLOTHES))
 				initiate(user, target, target_zone, tool, surgery, try_to_fail)
 			else
 				to_chat(user, span_warning("You need to expose [target]'s [parse_zone(target_zone)] to perform surgery on it!"))

@@ -1,15 +1,15 @@
 /datum/surgery/eye_surgery
 	name = "Eye surgery"
+	requires_bodypart_type = NONE
+	organ_to_manipulate = ORGAN_SLOT_EYES
+	possible_locs = list(BODY_ZONE_PRECISE_EYES)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/fix_eyes,
-		/datum/surgery_step/close)
-	target_mobtypes = list(/mob/living/carbon/human)
-	possible_locs = list(BODY_ZONE_PRECISE_EYES)
-	requires_bodypart_type = 0
-	organ_to_manipulate = ORGAN_SLOT_EYES
+		/datum/surgery_step/close,
+	)
 
 //fix eyes
 /datum/surgery_step/fix_eyes

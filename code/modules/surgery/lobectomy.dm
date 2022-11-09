@@ -1,14 +1,15 @@
 /datum/surgery/lobectomy
 	name = "Lobectomy" //not to be confused with lobotomy
+	organ_to_manipulate = ORGAN_SLOT_LUNGS
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/lobectomy,
-		/datum/surgery_step/close)
-	possible_locs = list(BODY_ZONE_CHEST)
-	organ_to_manipulate = ORGAN_SLOT_LUNGS
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/lobectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/lungs/target_lungs = target.getorganslot(ORGAN_SLOT_LUNGS)

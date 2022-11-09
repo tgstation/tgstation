@@ -1,17 +1,18 @@
 /datum/surgery/healing
+	target_mobtypes = list(/mob/living)
+	requires_bodypart_type = NONE
+	replaced_by = /datum/surgery
+	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/heal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
-	target_mobtypes = list(/mob/living)
-	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = FALSE
-	replaced_by = /datum/surgery
-	ignore_clothes = TRUE
 	var/healing_step_type
 	var/antispam = FALSE
 
@@ -63,8 +64,8 @@
 		var/datum/surgery/healing/the_surgery = surgery
 		if(!the_surgery.antispam)
 			display_results(user, target, span_notice("You attempt to patch some of [target]'s [woundtype]."),
-		span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
-		span_notice("[user] attempts to patch some of [target]'s [woundtype]."))
+			span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
+			span_notice("[user] attempts to patch some of [target]'s [woundtype]."))
 		display_pain(target, "Your [woundtype] sting like hell!")
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)

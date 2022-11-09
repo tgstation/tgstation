@@ -1,13 +1,13 @@
 /datum/surgery/advanced/wing_reconstruction
 	name = "Wing Reconstruction"
 	desc = "An experimental surgical procedure that reconstructs the damaged wings of moth people. Requires Synthflesh."
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/clamp_bleeders,
-		/datum/surgery_step/wing_reconstruction)
-	possible_locs = list(BODY_ZONE_CHEST)
-	target_mobtypes = list(/mob/living/carbon/human)
+		/datum/surgery_step/wing_reconstruction,
+	)
 
 /datum/surgery/advanced/wing_reconstruction/can_start(mob/user, mob/living/carbon/target)
 	if(!istype(target))
