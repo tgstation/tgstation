@@ -174,20 +174,23 @@
 	if(biomass >= max_biomass)
 		say("Warning: The biomass storage is full!")
 		return
-	var/processing_time = 0
+	var/potential_biomass = 0
 	for(var/obj/item/food/grown/I in contents)
-		if(biomass >= max_biomass)
+		if(biomass + potential_biomass >= max_biomass)
+			potential_biomass = max_biomass - biomass
 			break
-		processing_time += 5
+		potential_biomass += max(1, I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)) * productivity
 		biomass += max(1, I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)) * productivity
-		biomass = min(biomass, max_biomass)
 		qdel(I)
-	if(processing_time)
+	if(potential_biomass)
 		processing = TRUE
 		update_appearance()
 		playsound(loc, 'sound/machines/blender.ogg', 50, TRUE)
-		use_power(processing_time * active_power_usage * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
-		sleep(processing_time + 15 / productivity)
+		while(potential_biomass > 0)
+			use_power(active_power_usage * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+			potential_biomass -= 1
+			biomass += 1
+			sleep(2 / productivity)
 		processing = FALSE
 		update_appearance()
 
