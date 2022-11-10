@@ -180,7 +180,6 @@
 			potential_biomass = max_biomass - biomass
 			break
 		potential_biomass += max(1, I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)) * productivity
-		biomass += max(1, I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)) * productivity
 		qdel(I)
 	if(potential_biomass)
 		processing = TRUE
