@@ -2,7 +2,7 @@ import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toTitleCase } from 'common/string';
 import { useBackend } from '../backend';
-import { Box, ProgressBar, Button, Section, Table } from '../components';
+import { Tooltip, Box, ProgressBar, Button, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -51,25 +51,63 @@ export const SeedExtractor = (props, context) => {
             <Table.Row header>
               <Table.Cell />
               <Table.Cell collapsing p={1}>
-                Potency
+                <Tooltip
+                  content={
+                    'Determines the mass of a single product, its volume and potency.'
+                  }
+                  position="bottom-start">
+                  <Box>Potency</Box>
+                </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
-                Yield
+                <Tooltip
+                  content={
+                    'The number of products gathered in a single harvest.'
+                  }
+                  position="bottom-start">
+                  <Box>Yield</Box>
+                </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
-                Maturation
+                <Tooltip
+                  content={
+                    'The period of product regrowt after the first harvest.'
+                  }
+                  position="bottom-start">
+                  <Box>Instability</Box>
+                </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
-                Production
+                <Tooltip
+                  content={
+                    'The time needed for the plant for the first harvest.'
+                  }
+                  position="bottom-start">
+                  <Box>Maturation</Box>
+                </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
-                Endurance
+                <Tooltip
+                  content={
+                    'The period of product regrowt after the first harvest.'
+                  }
+                  position="bottom-start">
+                  <Box>Production</Box>
+                </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
-                Lifespan
+                <Tooltip
+                  content={'The age at which the plant starts taking damage.'}
+                  position="bottom-start">
+                  <Box>Lifespan</Box>
+                </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
-                Instability
+                <Tooltip
+                  content={'The health pool of the plant that delays death.'}
+                  position="bottom-start">
+                  <Box>Endurance</Box>
+                </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 Amount
@@ -83,33 +121,33 @@ export const SeedExtractor = (props, context) => {
                 <Table.Cell p={0.5} pl={1} pr={1}>
                   {item.name}
                 </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
                   <Level value={item.potency} max={100} />
                 </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
                   <Level value={item.yield} max={10} />
                 </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
-                  {item.maturation} ({item.maturation * 20}s)
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
-                  {item.production} ({item.production * 20}s)
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
-                  <Level value={item.endurance} max={100} />
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
-                  <Level value={item.lifespan} max={100} />
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
                   <Level value={item.instability} max={100} reverse />
                 </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
+                  {item.maturation} ({item.maturation * 20}s)
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
+                  {item.production} ({item.production * 20}s)
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
+                  {item.lifespan} ({item.lifespan * 20}s)
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
+                  <Level value={item.endurance} max={100} />
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
                   <Box textAlign="right">{item.amount}</Box>
                 </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1}>
+                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
                   <Button
-                    content="Vend"
+                    content="Take"
                     onClick={() =>
                       act('select', {
                         item: item.key,
