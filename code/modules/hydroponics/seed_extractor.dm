@@ -167,7 +167,7 @@
  * * O - seed to generate the string from
  */
 /obj/machinery/seed_extractor/proc/generate_seed_string(obj/item/seeds/O)
-	var icon = sanitize_css_class_name("[initial(O.icon)][initial(O.icon_state)]")
+	var/icon = sanitize_css_class_name("[initial(O.icon)][initial(O.icon_state)]")
 	return "name=[O.name];lifespan=[O.lifespan];endurance=[O.endurance];maturation=[O.maturation];production=[O.production];yield=[O.yield];potency=[O.potency];instability=[O.instability];icon=[icon]"
 
 /** Add Seeds Proc.

@@ -56,8 +56,7 @@ export const SeedExtractor = (props, context) => {
         <Section>
           <Table>
             <Table.Row header>
-              <Table.Cell />
-              <Table.Cell>
+              <Table.Cell colspan="2" p={1}>
                 <Input
                   autoFocus
                   placeholder={'Search...'}
@@ -166,6 +165,7 @@ export const SeedExtractor = (props, context) => {
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
                     <Button
+                      icon="eject"
                       content="Take"
                       onClick={() =>
                         act('select', {
@@ -177,7 +177,11 @@ export const SeedExtractor = (props, context) => {
                 </Table.Row>
               ))}
           </Table>
-          {seeds.length <= 0 && <NoticeBox>No seeds found.</NoticeBox>}
+          {seeds.length === 0 && (
+            <NoticeBox m={1} p={1}>
+              No seeds found.
+            </NoticeBox>
+          )}
         </Section>
       </Window.Content>
     </Window>
