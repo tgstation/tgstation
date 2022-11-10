@@ -432,7 +432,6 @@
 							"message" = html_decode(custommessage),
 							"ref" = REF(src),
 							"targets" = list(customrecepient),
-							"emojis" = FALSE,
 							"rigged" = FALSE,
 							"automated" = FALSE,
 						))

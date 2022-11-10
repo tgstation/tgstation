@@ -47,7 +47,7 @@
 	///How many minions we should spawn
 	var/minions_to_summon = 3
 
-/datum/action/boss/wizard_summon_minions/IsAvailable()
+/datum/action/boss/wizard_summon_minions/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

@@ -22,7 +22,7 @@
 	if(type == /datum/element)
 		return ELEMENT_INCOMPATIBLE
 	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
-	if(element_flags & ELEMENT_DETACH)
+	if(element_flags & ELEMENT_DETACH_ON_HOST_DESTROY)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/OnTargetDelete, override = TRUE)
 
 /datum/element/proc/OnTargetDelete(datum/source, force)

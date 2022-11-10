@@ -53,7 +53,7 @@
 		return
 
 	// EVERYTHING ELSE
-	else if(living_pawn.get_empty_held_index_for_side(LEFT_HANDS) || living_pawn.get_empty_held_index_for_side(RIGHT_HANDS))
+	else if(living_pawn.get_empty_held_indexes())
 		living_pawn.put_in_hands(target)
 		finish_action(controller, TRUE)
 		return

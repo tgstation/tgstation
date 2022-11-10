@@ -183,7 +183,8 @@
 		/obj/item/food/pizza/dank = 7,
 		/obj/item/food/pizza/sassysage = 10,
 		/obj/item/food/pizza/pineapple = 10,
-		/obj/item/food/pizza/arnold = 3
+		/obj/item/food/pizza/arnold = 3,
+		/obj/item/food/pizza/energy = 5
 	) //weighted by chance to disrupt eaters' rounds
 
 	for(var/obj/item/pizzabox/P in C)

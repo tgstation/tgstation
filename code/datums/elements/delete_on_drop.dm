@@ -2,7 +2,6 @@
  * Attaches to an item, if that item is dropped on the floor delete it
  */
 /datum/element/delete_on_drop
-	element_flags = ELEMENT_DETACH
 	var/list/myvar = list()
 
 /datum/element/delete_on_drop/Attach(datum/target)

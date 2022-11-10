@@ -114,7 +114,7 @@
 			var/list/ordered_paths = list()
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
 				for(var/amt in 1 to grocery_list[item])//every order amount
-					ordered_paths += item.item_instance.type
+					ordered_paths += item.item_path
 			podspawn(list(
 				"target" = get_turf(chef),
 				"style" = STYLE_BLUESPACE,

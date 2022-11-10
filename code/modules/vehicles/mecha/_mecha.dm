@@ -164,6 +164,8 @@
 	var/leg_overload_mode = FALSE
 	///Energy use modifier for leg overload
 	var/leg_overload_coeff = 100
+	///stores value that we will add and remove from the mecha when toggling leg overload
+	var/speed_mod = 0
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
@@ -289,17 +291,22 @@
 	spark_system?.start()
 	loc.assume_air(cabin_air)
 
-	var/mob/living/silicon/ai/unlucky_ais
+	var/mob/living/silicon/ai/unlucky_ai
 	for(var/mob/living/occupant as anything in occupants)
 		if(isAI(occupant))
-			unlucky_ais = occupant
-			occupant.gib() //No wreck, no AI to recover
+			var/mob/living/silicon/ai/ai = occupant
+			if(!ai.linked_core) // we probably shouldnt gib AIs with a core
+				unlucky_ai = occupant
+				ai.investigate_log("has been gibbed by having their mech destroyed.", INVESTIGATE_DEATHS)
+				ai.gib() //No wreck, no AI to recover
+			else
+				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
 		mob_exit(occupant, FALSE, TRUE)
 		occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
-		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ais)
+		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, unlucky_ai)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in flat_equipment)
 			if(E.detachable && prob(30))
 				WR.crowbar_salvage += E

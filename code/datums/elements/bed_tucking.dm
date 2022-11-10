@@ -1,6 +1,6 @@
 /// Tucking element, for things that can be tucked into bed.
 /datum/element/bed_tuckable
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// our pixel_x offset - how much the item moves x when in bed (+x is closer to the pillow)
 	var/x_offset = 0

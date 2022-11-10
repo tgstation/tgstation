@@ -59,7 +59,7 @@
  * Arguments
  * * victim - A mob who just got something stuck in their hand.
  */
-/datum/traitor_objective/demoralise/poster/proc/on_triggered_trap(mob/victim)
+/datum/traitor_objective/demoralise/poster/proc/on_triggered_trap(datum/source, mob/victim)
 	SIGNAL_HANDLER
 	on_mood_event(victim.mind)
 

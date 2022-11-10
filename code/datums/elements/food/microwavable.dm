@@ -27,7 +27,7 @@
  * Signal proc for [COMSIG_ITEM_MICROWAVE_ACT].
  * Handles the actual microwaving part.
  */
-/datum/element/microwavable/proc/on_microwaved(atom/source, obj/machinery/microwave/used_microwave, mob/microwaver)
+/datum/element/microwavable/proc/on_microwaved(atom/source, obj/machinery/microwave/used_microwave, mob/microwaver, randomize_pixel_offset)
 	SIGNAL_HANDLER
 
 	var/atom/result
@@ -56,6 +56,12 @@
 	var/recipe_result = COMPONENT_MICROWAVE_SUCCESS
 	if(istype(result, default_typepath))
 		recipe_result |= COMPONENT_MICROWAVE_BAD_RECIPE
+
+	if(randomize_pixel_offset && isitem(result))
+		var/obj/item/result_item = result
+		if(!(result_item.item_flags & NO_PIXEL_RANDOM_DROP))
+			result_item.pixel_x = result_item.base_pixel_x + rand(-6, 6)
+			result_item.pixel_y = result_item.base_pixel_y + rand(-5, 6)
 
 	return recipe_result
 

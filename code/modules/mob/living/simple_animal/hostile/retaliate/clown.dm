@@ -500,7 +500,7 @@
 	on_who.icon_state = initial(on_who.icon_state)
 	on_who.update_appearance(UPDATE_ICON)
 
-/datum/action/cooldown/regurgitate/IsAvailable()
+/datum/action/cooldown/regurgitate/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

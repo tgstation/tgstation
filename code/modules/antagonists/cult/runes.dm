@@ -347,6 +347,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(sacrificial)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
+		sacrificial.investigate_log("has been sacrificially gibbed by the cult.", INVESTIGATE_DEATHS)
 		sacrificial.gib()
 	return TRUE
 
@@ -616,7 +617,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			var/mob/dead/observer/C = pick(candidates)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
-			mob_to_revive.ghostize(0)
+			mob_to_revive.ghostize(FALSE)
 			mob_to_revive.key = C.key
 		else
 			fail_invoke()
@@ -890,7 +891,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		affecting.add_atom_colour(RUNE_COLOR_DARKRED, ADMIN_COLOUR_PRIORITY)
 		affecting.visible_message(span_warning("[affecting] freezes statue-still, glowing an unearthly red."), \
 						span_cult("You see what lies beyond. All is revealed. In this form you find that your voice booms louder and you can mark targets for the entire cult"))
-		var/mob/dead/observer/G = affecting.ghostize(1)
+		var/mob/dead/observer/G = affecting.ghostize(TRUE)
 		var/datum/action/innate/cult/comm/spirit/CM = new
 		var/datum/action/innate/cult/ghostmark/GM = new
 		G.name = "Dark Spirit of [G.name]"

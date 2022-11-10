@@ -5,7 +5,7 @@
  * before adding them to non-living movables.
  */
 /datum/element/movetype_handler
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 	var/list/attached_atoms = list()
 	var/list/paused_floating_anim_atoms = list()
