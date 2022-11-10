@@ -915,3 +915,79 @@
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	return TRUE
+
+/// Paradox Clone ruleset
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
+	name = "Paradox Clone"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/paradox_clone
+	antag_flag = ROLE_PARADOX_CLONE
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 3
+	repeatable = TRUE
+	var/list/possible_spawns = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
+	for(var/turf/warp_point in GLOB.xeno_spawn)
+		if(istype(warp_point.loc, /area/station/maintenance))
+			possible_spawns += warp_point
+	if(!possible_spawns.len)
+		message_admins("No valid spawn locations found for Paradox Clone event, aborting...")
+		return MAP_ERROR
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/carbon/human/clone = new ((pick(possible_spawns)))
+	player_mind.transfer_to(clone)
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/paradox_clone))
+	player_mind.special_role = ROLE_PARADOX_CLONE
+	player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
+
+	//cloning appearence/name/dna
+	var/datum/antagonist/paradox_clone/cloned = player_mind.has_antag_datum(/datum/antagonist/paradox_clone)
+	var/mob/living/carbon/carbon_cloned = cloned.original.current //target
+	var/mob/living/carbon/human/human_cloned = cloned.original.current
+
+	clone.fully_replace_character_name(null, carbon_cloned.dna.real_name)
+	clone.name = carbon_cloned.name
+	carbon_cloned.dna.transfer_identity(clone, transfer_SE=1)
+	clone.underwear = human_cloned.underwear
+	clone.undershirt = human_cloned.undershirt
+	clone.socks = human_cloned.socks
+	clone.updateappearance(mutcolor_update=1)
+	clone.domutcheck()
+
+	//cloning clothing/ID/bag
+	clone.mind.assigned_role = carbon_cloned.mind.assigned_role
+
+	if(isplasmaman(carbon_cloned))
+		clone.equipOutfit(carbon_cloned.mind.assigned_role.plasmaman_outfit)
+		clone.internal = clone.get_item_for_held_index(1)
+	clone.equipOutfit(carbon_cloned.mind.assigned_role.outfit)
+
+	var/obj/item/clothing/under/sensor_clothes = clone.w_uniform
+	var/obj/item/modular_computer/tablet/pda/messenger = locate(/obj/item/modular_computer/tablet/pda/) in clone
+	clone.backpack = human_cloned.backpack
+	if(sensor_clothes)
+		sensor_clothes.sensor_mode = SENSOR_OFF //dont want anyone noticing there's two now
+		clone.update_suit_sensors()
+	if(messenger)
+		messenger.invisible = TRUE //clone doesnt show up on PDA message list
+
+	message_admins("[ADMIN_LOOKUPFLW(clone)] has been made into a Paradox Clone by the midround ruleset.")
+	clone.log_message("was spawned as a Paradox Clone of [key_name(human_cloned)] by the midround ruleset.", LOG_GAME)
+	clone.key = applicant.key
+	playsound(clone, 'sound/weapons/zapbang.ogg', 30, TRUE)
+	new /obj/item/storage/toolbox/mechanical(clone.loc) //so they dont get stuck in maints
+	return clone
