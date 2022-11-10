@@ -22,7 +22,6 @@
 	var/sending_fax_name = "Secret"
 	/// Default name of paper. paper - bluh-bluh. Used when field with paper name not edited.
 	var/default_paper_name = "Standart Report"
-	var/save_reminder = FALSE
 
 /datum/fax_panel_interface/New()
 	//Get all faxes, and save them to our list.
@@ -99,7 +98,7 @@
 		if("preview") // see saved variant
 			if(!fax_paper)
 				return
-			
+			fax_paper.request_state = TRUE
 			fax_paper.ui_interact(usr)
 		
 		if("save") // save paper
@@ -108,9 +107,8 @@
 			if(params["fromWho"])
 				sending_fax_name = params["fromWho"]
 			
-			if(!save_reminder)
-				to_chat(usr, span_info("Do not forget to close and open the preview after saving."))
-				save_reminder = TRUE
+			if(fax_paper.ui_status(usr)) // Closes paper UI, for.. user handle re-open.
+				fax_paper.request_state = FALSE
 
 			fax_paper.clear_paper()
 			var/stamp 
