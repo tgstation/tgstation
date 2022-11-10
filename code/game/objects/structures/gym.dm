@@ -42,10 +42,10 @@
 /obj/structure/punching_bag/wrench_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
 	if(anchored)
-		balloon_alert(user, "unsecure")
+		balloon_alert(user, "unsecured")
 		anchored = FALSE
 	else
-		balloon_alert(user, "secure")
+		balloon_alert(user, "secured")
 		anchored = TRUE
 	return TRUE
 
@@ -134,10 +134,10 @@
 /obj/structure/weightmachine/wrench_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
 	if(anchored)
-		balloon_alert(user, "unsecure")
+		balloon_alert(user, "unsecured")
 		anchored = FALSE
 	else
-		balloon_alert(user, "secure")
+		balloon_alert(user, "secured")
 		anchored = TRUE
 	return TRUE
 
