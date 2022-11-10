@@ -102,27 +102,21 @@ export const SeedExtractor = (props, context) => {
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={
-                    'The age required for the first harvest, in 20 second long cycles.'
-                  }
+                  content={`The age required for the first harvest, in ${data.cycle} second long cycles.`}
                   position="bottom-start">
                   <Box>Maturation</Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={
-                    'The period of product regrowth, in 20 second long cycles.'
-                  }
+                  content={`The period of product regrowth, in ${data.cycle} second long cycles.`}
                   position="bottom-start">
                   <Box>Production</Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={
-                    'The age at which the plant starts decaying, in 20 second long cycles.'
-                  }
+                  content={`The age at which the plant starts decaying, in ${data.cycle} second long cycles.`}
                   position="bottom-start">
                   <Box>Lifespan</Box>
                 </Tooltip>

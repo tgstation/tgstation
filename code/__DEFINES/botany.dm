@@ -73,6 +73,8 @@
 
 // obj/machinery/hydroponics/var/plant_status defines
 
+#define HYDROTRAY_CYCLE_DELAY 200
+
 #define HYDROTRAY_NO_PLANT "missing"
 #define HYDROTRAY_PLANT_DEAD "dead"
 #define HYDROTRAY_PLANT_GROWING "growing"

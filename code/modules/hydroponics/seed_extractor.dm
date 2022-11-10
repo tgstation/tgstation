@@ -215,6 +215,7 @@
 
 	. = list()
 	.["seeds"] = V
+	.["cycle"] = HYDROTRAY_CYCLE_DELAY / 10
 
 /obj/machinery/seed_extractor/ui_act(action, params)
 	. = ..()
