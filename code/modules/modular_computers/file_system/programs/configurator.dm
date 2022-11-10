@@ -24,6 +24,7 @@
 	data["disk_size"] = computer.max_capacity
 	data["disk_used"] = computer.used_capacity
 	data["power_usage"] = computer.last_power_usage
+	data["battery"] = null
 	if(computer.internal_cell)
 		data["battery"] = list(
 			"max" = computer.internal_cell.maxcharge,

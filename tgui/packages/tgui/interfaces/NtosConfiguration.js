@@ -7,7 +7,7 @@ export const NtosConfiguration = (props, context) => {
   const {
     PC_device_theme,
     power_usage,
-    battery = {},
+    battery,
     disk_size,
     disk_used,
     hardware = [],
