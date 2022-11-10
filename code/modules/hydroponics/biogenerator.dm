@@ -15,15 +15,17 @@
 	var/max_output = 50
 	var/datum/techweb/stored_research
 	var/list/show_categories = list(RND_CATEGORY_BIO_FOOD, RND_CATEGORY_BIO_CHEMICALS, RND_CATEGORY_BIO_MATERIALS)
-	/// Currently selected category in the UI
 	var/selected_cat
+	var/datum/looping_sound/generator/soundloop
 
 /obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
+	soundloop = new(src, active)
 
 /obj/machinery/biogenerator/Destroy()
 	QDEL_NULL(beaker)
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/machinery/biogenerator/contents_explosion(severity, target)
@@ -183,14 +185,15 @@
 		qdel(I)
 	if(potential_biomass)
 		processing = TRUE
+		soundloop.start()
 		update_appearance()
-		playsound(loc, 'sound/machines/blender.ogg', 50, TRUE)
 		while(potential_biomass > 0)
 			use_power(active_power_usage * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 			potential_biomass -= 1
 			biomass += 1
 			sleep(2 / productivity)
 		processing = FALSE
+		soundloop.stop()
 		update_appearance()
 
 /obj/machinery/biogenerator/proc/use_biomass(list/materials, amount = 1, remove_biomass = TRUE)
