@@ -52,6 +52,9 @@
 	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, /mob/proc/emote, "me", 1, message, TRUE), SSspeech_controller)
 
 /mob/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!..())
+		return FALSE
 	var/list/filter_result
 	var/list/soft_filter_result
 	if(client && !forced && !filterproof)
