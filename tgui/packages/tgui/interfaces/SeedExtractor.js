@@ -2,7 +2,7 @@ import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toTitleCase } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, Section, Table } from '../components';
+import { Box, ProgressBar, Button, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -46,30 +46,68 @@ export const SeedExtractor = (props, context) => {
   return (
     <Window width={1000} height={400}>
       <Window.Content scrollable>
-        <Section title="Stored seeds:">
-          <Table cellpadding="3" textAlign="center">
+        <Section>
+          <Table>
             <Table.Row header>
-              <Table.Cell>Name</Table.Cell>
-              <Table.Cell>Lifespan</Table.Cell>
-              <Table.Cell>Endurance</Table.Cell>
-              <Table.Cell>Maturation</Table.Cell>
-              <Table.Cell>Production</Table.Cell>
-              <Table.Cell>Yield</Table.Cell>
-              <Table.Cell>Potency</Table.Cell>
-              <Table.Cell>Instability</Table.Cell>
-              <Table.Cell>Stock</Table.Cell>
+              <Table.Cell />
+              <Table.Cell collapsing p={1}>
+                Potency
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                Yield
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                Maturation
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                Production
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                Endurance
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                Lifespan
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                Instability
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                Amount
+              </Table.Cell>
+              <Table.Cell collapsing />
             </Table.Row>
             {seeds.map((item) => (
-              <Table.Row key={item.key}>
-                <Table.Cell bold>{item.name}</Table.Cell>
-                <Table.Cell>{item.lifespan}</Table.Cell>
-                <Table.Cell>{item.endurance}</Table.Cell>
-                <Table.Cell>{item.maturation}</Table.Cell>
-                <Table.Cell>{item.production}</Table.Cell>
-                <Table.Cell>{item.yield}</Table.Cell>
-                <Table.Cell>{item.potency}</Table.Cell>
-                <Table.Cell>{item.instability}</Table.Cell>
-                <Table.Cell>
+              <Table.Row
+                key={item.key}
+                style={{ 'border-top': '2px solid #222' }}>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  {item.name}
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  <Level value={item.potency} max={100} />
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  <Level value={item.yield} max={10} />
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  {item.maturation} ({item.maturation * 20}s)
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  {item.production} ({item.production * 20}s)
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  <Level value={item.endurance} max={100} />
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  <Level value={item.lifespan} max={100} />
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  <Level value={item.instability} max={100} reverse />
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
+                  <Box textAlign="right">{item.amount}</Box>
+                </Table.Cell>
+                <Table.Cell p={0.5} pl={1} pr={1}>
                   <Button
                     content="Vend"
                     onClick={() =>
@@ -78,7 +116,6 @@ export const SeedExtractor = (props, context) => {
                       })
                     }
                   />
-                  ({item.amount} left)
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -86,5 +123,32 @@ export const SeedExtractor = (props, context) => {
         </Section>
       </Window.Content>
     </Window>
+  );
+};
+
+const Level = (props) => {
+  return (
+    <ProgressBar
+      value={props.value}
+      maxValue={props.max}
+      ranges={
+        props.reverse
+          ? {
+            good: [0, props.max * 0.2],
+            average: [props.max * 0.2, props.max * 0.6],
+            bad: [props.max * 0.6, props.max],
+          }
+          : {
+            bad: [0, props.max * 0.2],
+            good: [props.max * 0.8, props.max],
+          }
+      }>
+      <span
+        style={{
+          'text-shadow': '1px 1px 0 black',
+        }}>
+        {props.value}
+      </span>
+    </ProgressBar>
   );
 };
