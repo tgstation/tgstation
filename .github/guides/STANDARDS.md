@@ -99,6 +99,50 @@ While we normally encourage (and in some cases, even require) bringing out of da
 
 ### RegisterSignal()
 
+#### PROC_REF Macros
+When referencing procs in RegisterSignal, Callback and other procs you should use PROC_REF,TYPE_PROC_REF and GLOBAL_PROC_REF macros. 
+They ensure compilation fails if the reffered to procs change names or get removed.
+The macro to be used depends on how the proc you're in relates to the proc you want to use:
+
+PROC_REF if the proc you want to use is defined on the current proc type or any of it's ancestor types.
+Example:
+```
+/mob/proc/funny()
+	to_chat(world,"knock knock")
+
+/mob/subtype/proc/very_funny()
+	to_chat(world,"who's there?")
+
+/mob/subtype/proc/do_something()
+	// Proc on our own type
+	RegisterSignal(x, COMSIG_OTHER_FAKE, PROC_REF(very_funny))
+	// Proc on ancestor type, /mob is parent type of /mob/subtype
+	RegisterSignal(x, COMSIG_FAKE, PROC_REF(funny))
+```
+
+TYPE_PROC_REF if the proc you want to use is defined on a different unrelated type
+Example:
+```
+/obj/thing/proc/funny()
+	to_chat(world,"knock knock")
+
+/mob/subtype/proc/do_something()
+	var/obj/thing/x = new()
+	// we're referring to /obj/thing proc inside /mob/subtype proc
+	RegisterSignal(x, COMSIG_FAKE, TYPE_PROC_REF(/obj/thing, funny)) 
+```
+
+GLOBAL_PROC_REF if the proc you want to use is a global proc.
+Example:
+```
+/proc/funny()
+	to_chat(world,"knock knock")
+
+/mob/subtype/proc/do_something()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(funny)), 100))
+```
+
+
 #### Signal Handlers
 
 All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
