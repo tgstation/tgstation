@@ -18,6 +18,10 @@
 	burns_in_oven = FALSE
 	slice_type = null
 
+/obj/item/food/pizza/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/item/food/pizza/raw/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
@@ -34,6 +38,15 @@
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy
+
+/obj/item/food/pizzaslice/Initialize(mapload)
+	. = ..()
+	var/static/list/tool_behaviors = list(
+		TOOL_ROLLINGPIN = list(
+			SCREENTIP_CONTEXT_LMB = "Flatten into sheetzza",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/item/food/pizzaslice/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE)
@@ -391,3 +404,12 @@
 	icon_state ="energypizzaslice"
 	tastes = list("pure electricity" = 4, "pizza" = 2)
 	foodtypes = TOXIC
+
+///screentips for pizza
+/obj/item/food/pizza/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+
+	if(held_item?.tool_behaviour == TOOL_KNIFE || TOOL_SCALPEL || TOOL_SAW)
+		if(slice_type == null)
+			return
+		context[SCREENTIP_CONTEXT_LMB] = "Slice pizza"
+		return CONTEXTUAL_SCREENTIP_SET

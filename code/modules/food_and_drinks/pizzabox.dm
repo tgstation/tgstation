@@ -132,7 +132,7 @@
 	if(pizza || bomb)
 		return
 	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
-	to_chat(user, span_notice("You fold [src] into [cardboard]."))
+	balloon_alert(user, "deconstructed")
 	user.put_in_active_hand(cardboard)
 	qdel(src)
 
@@ -143,13 +143,12 @@
 	if(open)
 		if(pizza)
 			user.put_in_hands(pizza)
-			to_chat(user, span_notice("You take [pizza] out of [src]."))
 			pizza = null
 			update_appearance()
 		else if(bomb)
 			if(wires.is_all_cut() && bomb_defused)
 				user.put_in_hands(bomb)
-				to_chat(user, span_notice("You carefully remove the [bomb] from [src]."))
+				balloon_alert(user, "removed bomb")
 				bomb = null
 				update_appearance()
 				return
@@ -160,13 +159,12 @@
 				bomb_defused = FALSE
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
-				to_chat(user, span_warning("You trap [src] with [bomb]."))
+				balloon_alert(user, "bomb set")
 				update_appearance()
 	else if(boxes.len)
 		var/obj/item/pizzabox/topbox = boxes[boxes.len]
 		boxes -= topbox
 		user.put_in_hands(topbox)
-		to_chat(user, span_notice("You remove the topmost [name] from the stack."))
 		topbox.update_appearance()
 		update_appearance()
 		user.regenerate_icons()
@@ -182,28 +180,26 @@
 				return
 			boxes += add
 			newbox.boxes.Cut()
-			to_chat(user, span_notice("You put [newbox] on top of [src]!"))
 			newbox.update_appearance()
 			update_appearance()
 			user.regenerate_icons()
 			if(boxes.len >= 5)
 				if(prob(10 * boxes.len))
-					to_chat(user, span_danger("You can't keep holding the stack!"))
+					balloon_alert(user, "dropped it!")
 					disperse_pizzas()
 				else
-					to_chat(user, span_warning("The stack is getting a little high..."))
+					balloon_alert(user, "looks unstable!")
 			return
 		else
-			to_chat(user, span_notice("Close [open ? src : newbox] first!"))
+			balloon_alert(user, "close it first!")
 	else if(istype(I, /obj/item/food/pizza))
 		if(open)
 			if(pizza)
-				to_chat(user, span_warning("[src] already has \a [pizza.name]!"))
+				balloon_alert(user, "it's full!")
 				return
 			if(!user.transferItemToLoc(I, src))
 				return
 			pizza = I
-			to_chat(user, span_notice("You put [I] in [src]."))
 			update_appearance()
 			return
 	else if(istype(I, /obj/item/bombcore/miniature/pizza))
@@ -212,11 +208,11 @@
 				return
 			wires = new /datum/wires/explosive/pizza(src)
 			bomb = I
-			to_chat(user, span_notice("You put [I] in [src]. Sneeki breeki..."))
+			balloon_alert(user, "bomb placed")
 			update_appearance()
 			return
 		else if(bomb)
-			to_chat(user, span_warning("[src] already has a bomb in it!"))
+			balloon_alert(user, "already rigged!")
 	else if(istype(I, /obj/item/pen))
 		if(!open)
 			if(!user.can_write(I))
@@ -225,7 +221,7 @@
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
 			if(!user.canUseTopic(src, be_close = TRUE))
 				return
-			to_chat(user, span_notice("You write with [I] on [src]."))
+			balloon_alert(user, "writing box tag...")
 			boxtag_set = TRUE
 			update_appearance()
 			return
@@ -233,7 +229,7 @@
 		if(wires && bomb)
 			wires.interact(user)
 	else if(istype(I, /obj/item/reagent_containers/cup))
-		to_chat(user, span_warning("That's not a pizza!"))
+		balloon_alert(user, "not a pizza!")
 	..()
 
 /obj/item/pizzabox/process(delta_time)
@@ -402,6 +398,8 @@
 		if(open)
 			if(pizza)
 				context [SCREENTIP_CONTEXT_LMB] = "Remove pizza"
+			else if(bomb && wires.is_all_cut() && bomb_defused)
+				context [SCREENTIP_CONTEXT_LMB] = "Remove bomb"
 		else
 			if(boxes.len > 0)
 				context [SCREENTIP_CONTEXT_LMB] = "Remove pizza box"

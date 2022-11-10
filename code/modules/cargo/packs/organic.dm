@@ -164,12 +164,12 @@
 	var/infinite_pizza_chance = 1
 	///Whether we've provided a bomb pizza box already this shift or not.
 	var/boombox_provided = FALSE
-	/// three percent chance for a pizza box to be the pizza bomb
+	/// three percent chance for a pizza box to be the pizza bomb box
 	var/bomb_pizza_chance = 3
 	/// 1 in 3 pizza bombs spawned will be a dud
 	var/bomb_dud_chance = 33
 
-	/// weighted list of pizza by how disruptive it would be
+	/// list of pizza that can randomly go inside of a crate, weighted by how disruptive it would be
 	var/list/pizza_types = list(
 		/obj/item/food/pizza/margherita = 10,
 		/obj/item/food/pizza/meat = 10,
@@ -232,7 +232,7 @@
 	new_pizza_box.boxtag_set = TRUE
 	new_pizza_box.update_appearance()
 
-/// tells crew that an infinite pizza box exists
+/// tells crew that an infinite pizza box exists, half of the time, based ona roll in the anamolous box proc
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
 	delivery. Please search all crates and manifests provided with the delivery and return the object if is located. The object resembles a standard <b>\[DATA EXPUNGED\]</b> and is to be \
