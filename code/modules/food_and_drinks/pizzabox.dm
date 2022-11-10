@@ -40,7 +40,7 @@
 	if(pizza)
 		pizza = new pizza
 	update_appearance()
-
+	register_context()
 
 /obj/item/pizzabox/Destroy()
 	unprocess()
@@ -124,13 +124,17 @@
 		audible_message(span_warning("[icon2html(src, hearers(src))] *beep*"))
 		bomb_active = TRUE
 		START_PROCESSING(SSobj, src)
-	else if(!open && !pizza && !bomb)
-		var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
-		to_chat(user, span_notice("You fold [src] into [cardboard]."))
-		user.put_in_active_hand(cardboard)
-		qdel(src)
-		return
 	update_appearance()
+
+/obj/item/pizzabox/attack_self_secondary(mob/user)
+	if(boxes.len > 0)
+		return
+	if(pizza || bomb)
+		return
+	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
+	to_chat(user, span_notice("You fold [src] into [cardboard]."))
+	user.put_in_active_hand(cardboard)
+	qdel(src)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user, list/modifiers)
@@ -389,3 +393,39 @@
 	boxtag_set = FALSE
 	update_appearance() //update our boxtag to match our new pizza
 	pizza.foodtypes = nommer.dna.species.liked_food //it's our favorite!
+
+///screentips for pizzaboxes
+/obj/item/pizzabox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		if(user.get_inactive_held_item() != src)
+			return
+		if(open)
+			if(pizza)
+				context [SCREENTIP_CONTEXT_LMB] = "Remove pizza"
+		else
+			if(boxes.len > 0)
+				context [SCREENTIP_CONTEXT_LMB] = "Remove pizza box"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item == src)
+		if(boxes.len > 0)
+			return
+		context [SCREENTIP_CONTEXT_LMB] = (open) ? "Close" : "Open"
+		if(!pizza && !bomb)
+			context [SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/pizzabox))
+		if(!open)
+			context [SCREENTIP_CONTEXT_LMB] = "Stack pizza box"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/food/pizza))
+		if(open && !pizza)
+			context [SCREENTIP_CONTEXT_LMB] = "Place pizza"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/pen))
+		if(!open)
+			context [SCREENTIP_CONTEXT_LMB] = "Write boxtag"
+		return CONTEXTUAL_SCREENTIP_SET
