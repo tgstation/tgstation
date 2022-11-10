@@ -28,8 +28,8 @@
 
 	for(var/i in 1 to severity)
 		var/picked_area = pick_n_take(potential_areas)
-		for(var/area/area_to_check as anything in GLOB.areas)
 		areas_affected += picked_area
+		for(var/area/area_to_check as anything in GLOB.areas)
 			if(istype(area_to_check, picked_area))
 				areas_to_open += area_to_check
 
