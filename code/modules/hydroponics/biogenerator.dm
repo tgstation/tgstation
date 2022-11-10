@@ -21,7 +21,7 @@
 /obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
-	soundloop = new(src, active)
+	soundloop = new(src, processing)
 
 /obj/machinery/biogenerator/Destroy()
 	QDEL_NULL(beaker)
