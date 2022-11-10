@@ -169,16 +169,11 @@ const ItemList = (props, context) => {
       (item.is_reagent && !props.beaker) ||
       (item.is_reagent && props.space < amount) ||
       props.biomass < Math.ceil((item.cost * amount) / props.efficiency);
-    const max_amount_possible = Math.min(
-      Math.floor((props.efficiency * props.biomass) / item.cost),
-      props.max_output
+    const max_possible = Math.floor(
+      (props.efficiency * props.biomass) / item.cost
     );
-    const max_amount = Math.max(
-      1,
-      item.is_reagent
-        ? Math.min(props.space, max_amount_possible)
-        : max_amount_possible
-    );
+    const max_capacity = item.is_reagent ? props.space : props.max_output;
+    const max_amount = Math.min(1, max_capacity, max_possible);
     return {
       ...item,
       disabled,
