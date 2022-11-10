@@ -167,8 +167,8 @@
  * * O - seed to generate the string from
  */
 /obj/machinery/seed_extractor/proc/generate_seed_string(obj/item/seeds/O)
-	return "name=[O.name];lifespan=[O.lifespan];endurance=[O.endurance];maturation=[O.maturation];production=[O.production];yield=[O.yield];potency=[O.potency];instability=[O.instability]"
-
+	var icon = sanitize_css_class_name("[initial(O.icon)][initial(O.icon_state)]")
+	return "name=[O.name];lifespan=[O.lifespan];endurance=[O.endurance];maturation=[O.maturation];production=[O.production];yield=[O.yield];potency=[O.potency];instability=[O.instability];icon=[icon]"
 
 /** Add Seeds Proc.
  *
@@ -241,3 +241,8 @@
 					found_seed.forceMove(drop_location())
 					visible_message(span_notice("[found_seed] falls onto the floor."), null, span_hear("You hear a soft clatter."), COMBAT_MESSAGE_RANGE)
 				. = TRUE
+
+/obj/machinery/seed_extractor/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/seeds)
+	)

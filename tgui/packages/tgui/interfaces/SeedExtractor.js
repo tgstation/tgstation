@@ -1,8 +1,10 @@
 import { sortBy } from 'common/collections';
+import { createSearch } from 'common/string';
+import { classes } from 'common/react';
 import { flow } from 'common/fp';
 import { toTitleCase } from 'common/string';
-import { useBackend } from '../backend';
-import { Tooltip, Box, ProgressBar, Button, Section, Table } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Input, Tooltip, Box, ProgressBar, Button, Section, Table, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -42,7 +44,12 @@ const createSeeds = (seedStrings) => {
 
 export const SeedExtractor = (props, context) => {
   const { act, data } = useBackend(context);
-  const seeds = createSeeds(data.seeds);
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const search = createSearch(searchText, (item) => {
+    return item.name;
+  });
+  const seed_data = createSeeds(data.seeds);
+  const seeds = searchText.length > 0 ? seed_data.filter(search) : seed_data;
   return (
     <Window width={1000} height={400}>
       <Window.Content scrollable>
@@ -50,10 +57,19 @@ export const SeedExtractor = (props, context) => {
           <Table>
             <Table.Row header>
               <Table.Cell />
+              <Table.Cell>
+                <Input
+                  autoFocus
+                  placeholder={'Search...'}
+                  value={searchText}
+                  onInput={(e, value) => setSearchText(value)}
+                  fluid
+                />
+              </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
-                    'Determines the mass of a single product, its volume and potency.'
+                    'Determines product mass, reagent volume and strength of effects.'
                   }
                   position="bottom-start">
                   <Box>Potency</Box>
@@ -79,30 +95,36 @@ export const SeedExtractor = (props, context) => {
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={'The age required for the first harvest.'}
+                  content={'The health pool of the plant that delays death.'}
+                  position="bottom-start">
+                  <Box>Endurance</Box>
+                </Tooltip>
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                <Tooltip
+                  content={
+                    'The age required for the first harvest, in 20 second long cycles.'
+                  }
                   position="bottom-start">
                   <Box>Maturation</Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={'The period of product regrowt.'}
+                  content={
+                    'The period of product regrowth, in 20 second long cycles.'
+                  }
                   position="bottom-start">
                   <Box>Production</Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={'The age at which the plant starts decaying.'}
+                  content={
+                    'The age at which the plant starts decaying, in 20 second long cycles.'
+                  }
                   position="bottom-start">
                   <Box>Lifespan</Box>
-                </Tooltip>
-              </Table.Cell>
-              <Table.Cell collapsing p={1}>
-                <Tooltip
-                  content={'The health pool of the plant that delays death.'}
-                  position="bottom-start">
-                  <Box>Endurance</Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
@@ -110,50 +132,58 @@ export const SeedExtractor = (props, context) => {
               </Table.Cell>
               <Table.Cell collapsing />
             </Table.Row>
-            {seeds.map((item) => (
-              <Table.Row
-                key={item.key}
-                style={{ 'border-top': '2px solid #222' }}>
-                <Table.Cell p={0.5} pl={1} pr={1}>
-                  {item.name}
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  <Level value={item.potency} max={100} />
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  <Level value={item.yield} max={10} />
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  <Level value={item.instability} max={100} reverse />
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  {item.maturation} ({item.maturation * 20}s)
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  {item.production} ({item.production * 20}s)
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  {item.lifespan} ({item.lifespan * 20}s)
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  <Level value={item.endurance} max={100} />
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  <Box textAlign="right">{item.amount}</Box>
-                </Table.Cell>
-                <Table.Cell p={0.5} pl={1} pr={1} collapsing>
-                  <Button
-                    content="Take"
-                    onClick={() =>
-                      act('select', {
-                        item: item.key,
-                      })
-                    }
-                  />
-                </Table.Cell>
-              </Table.Row>
-            ))}
+            {seeds.length > 0 &&
+              seeds.map((item) => (
+                <Table.Row
+                  key={item.key}
+                  style={{ 'border-top': '2px solid #222' }}>
+                  <Table.Cell collapsing>
+                    <Box
+                      mb={-2}
+                      className={classes(['seeds32x32', item.icon])}
+                    />
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1}>
+                    {item.name}
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Level value={item.potency} max={100} />
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Level value={item.yield} max={10} />
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Level value={item.instability} max={100} reverse />
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Level value={item.endurance} max={100} />
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Box textAlign="right">{item.maturation}</Box>
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Box textAlign="right">{item.production}</Box>
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Box textAlign="right">{item.lifespan}</Box>
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Box textAlign="right">{item.amount}</Box>
+                  </Table.Cell>
+                  <Table.Cell py={0.5} px={1} collapsing>
+                    <Button
+                      content="Take"
+                      onClick={() =>
+                        act('select', {
+                          item: item.key,
+                        })
+                      }
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              ))}
           </Table>
+          {seeds.length <= 0 && <NoticeBox>No seeds found.</NoticeBox>}
         </Section>
       </Window.Content>
     </Window>
