@@ -767,6 +767,13 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/seconadry/recycle)
+"dh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid)
 "di" = (
 /obj/machinery/atmospherics/components/tank/oxygen,
 /obj/structure/cable,
@@ -989,6 +996,13 @@
 /turf/open/floor/plating/elevatorshaft{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
+/area/awaymission/caves/bmp_asteroid)
+"en" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "eo" = (
 /obj/effect/turf_decal/loading_area{
@@ -1514,6 +1528,7 @@
 	dir = 6;
 	id = "caves_base"
 	},
+/obj/structure/railing,
 /turf/open/floor/plating,
 /area/awaymission/caves/main_outpost/depo)
 "gV" = (
@@ -2129,6 +2144,11 @@
 /obj/structure/sign/calendar/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research/living)
+"js" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid)
 "ju" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -4049,10 +4069,11 @@
 	},
 /area/awaymission/caves/main_outpost/rec)
 "rN" = (
-/obj/structure/railing{
-	dir = 10
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/railing,
+/obj/structure/railing/corner{
+	dir = 1
+	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "rP" = (
@@ -5404,11 +5425,10 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "xF" = (
-/obj/structure/railing/corner,
-/obj/structure/railing/corner{
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "xI" = (
@@ -6472,10 +6492,11 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/research)
 "CJ" = (
-/obj/structure/railing{
-	dir = 5
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/railing/corner,
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "CK" = (
@@ -7279,10 +7300,11 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/caves/second_outpost/barracks)
 "GA" = (
-/obj/structure/railing{
-	dir = 6
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/railing,
+/obj/structure/railing/corner{
+	dir = 4
+	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "GD" = (
@@ -7349,6 +7371,13 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/tunnel)
+"GT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid)
 "GU" = (
 /obj/machinery/door/airlock/external/glass{
 	name = "Mining External Airlock"
@@ -7536,6 +7565,13 @@
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/awaymission/caves/second_outpost/barracks)
+"HS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid)
 "HW" = (
 /turf/closed/wall/r_wall,
 /area/awaymission/caves/main_outpost/seconadry/storage)
@@ -7883,6 +7919,13 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted,
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/seconadry/mecha)
+"JN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid)
 "JQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/tank/internals/emergency_oxygen/empty,
@@ -9385,12 +9428,16 @@
 /area/awaymission/caves/second_outpost/tunnel)
 "QQ" = (
 /obj/structure/railing/corner{
-	dir = 1
-	},
-/obj/structure/railing/corner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/computer{
+	dir = 4;
+	name = "busted computer frame"
+	},
+/obj/structure/railing{
+	dir = 8
+	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "QT" = (
@@ -9417,6 +9464,13 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/caves/main_outpost/storage)
+"QW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid)
 "Ra" = (
 /obj/structure/grille/broken,
 /obj/item/shard,
@@ -9878,7 +9932,8 @@
 /area/awaymission/caves/main_outpost/rec)
 "Th" = (
 /obj/effect/landmark/tram/caves/upper,
-/turf/open/lava/smooth/lava_land_surface,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "Tj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -9909,6 +9964,11 @@
 /turf/closed/mineral/snowmountain/cavern{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	},
+/area/awaymission/caves/bmp_asteroid)
+"Tp" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "Tr" = (
 /obj/structure/stone_tile/burnt,
@@ -10272,6 +10332,13 @@
 /obj/structure/fans,
 /turf/open/floor/pod,
 /area/awaymission/caves/main_outpost/seconadry/gateway)
+"Vl" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/awaymission/caves/bmp_asteroid)
 "Vo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -10435,7 +10502,8 @@
 /area/awaymission/caves/bmp_asteroid)
 "Wh" = (
 /obj/effect/landmark/tram/caves/middle,
-/turf/open/lava/smooth/lava_land_surface,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "Wj" = (
 /obj/structure/toilet,
@@ -10954,15 +11022,13 @@
 /turf/closed/indestructible/riveted,
 /area/awaymission/caves/second_outpost/tunnel)
 "YE" = (
-/obj/structure/railing{
-	dir = 9
-	},
-/obj/item/stack/cable_coil/cut,
-/obj/structure/frame/computer{
-	dir = 4;
-	name = "busted computer frame"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
 /turf/open/floor/plating/lavaland_atmos,
 /area/awaymission/caves/bmp_asteroid)
 "YF" = (
@@ -20007,7 +20073,7 @@ ZZ
 ZZ
 ZZ
 rs
-Ro
+Tp
 CJ
 xF
 GA
@@ -20264,43 +20330,11 @@ ZZ
 ZZ
 ZZ
 ZZ
-rs
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-rs
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-rs
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-rs
-ZZ
-ZZ
-ZZ
-ZZ
+Vl
+dh
+dh
+dh
+en
 ZZ
 ZZ
 ZZ
@@ -20319,6 +20353,38 @@ ZZ
 ZZ
 ZZ
 ZZ
+ZZ
+rs
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+rs
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+rs
+rs
+Vl
+dh
+dh
+dh
+en
 ZZ
 ZZ
 ZZ
@@ -20521,15 +20587,23 @@ ZZ
 ZZ
 ZZ
 ZZ
-rs
-ZZ
+QW
+AF
 Th
+AF
+js
 ZZ
 ZZ
 ZZ
 ZZ
 ZZ
 ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+rs
 ZZ
 ZZ
 ZZ
@@ -20553,14 +20627,6 @@ ZZ
 ZZ
 ZZ
 ZZ
-rs
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
 ZZ
 ZZ
 ZZ
@@ -20570,13 +20636,13 @@ ZZ
 ZZ
 ZZ
 rs
-ZZ
-ZZ
-ZZ
+rs
+QW
+AF
 Wh
-ZZ
-ZZ
-ZZ
+AF
+js
+rs
 ZZ
 ZZ
 ZZ
@@ -20778,43 +20844,11 @@ ZZ
 ZZ
 ZZ
 ZZ
-rs
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-rs
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-rs
-rs
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-ZZ
-rs
-ZZ
-ZZ
-ZZ
-ZZ
+GT
+HS
+HS
+HS
+JN
 ZZ
 ZZ
 ZZ
@@ -20833,7 +20867,39 @@ ZZ
 ZZ
 ZZ
 ZZ
+rs
+rs
 ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+rs
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+ZZ
+rs
+rs
+GT
+HS
+HS
+HS
+JN
+rs
 ZZ
 ZZ
 ZZ
@@ -21035,11 +21101,11 @@ ZZ
 ZZ
 ZZ
 rs
-Ro
+Tp
 rs
-ZZ
-ZZ
-ZZ
+rs
+rs
+rs
 ZZ
 ZZ
 ZZ
@@ -21090,7 +21156,7 @@ YE
 QQ
 rN
 rs
-ZZ
+rs
 ZZ
 ZZ
 ZZ
