@@ -84,29 +84,46 @@ SUBSYSTEM_DEF(research)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/research/fire()
-	var/efficiency=0
+	var/can_synchronize=FALSE
 
 	//since the game will ever have only 1 master server we just return if that is offline
 	for(var/obj/machinery/rnd/server/master/master_server in master_servers)
+		can_synchronize=TRUE
 		if(!master_server.working)
 			///we still want to initialize the last time this method was called to prevent point gaines during the time the server was off
 			last_income = world.time
 			return
 
+	///master servers provide the benifit of synchronizing contributions of multiple servers & its state takes presedence over normal servers
+
+	var/load=1.0
+	var/efficiency=0
+	var/total_efficiency=0
 	var/list/bitcoins = list()
 	for(var/obj/machinery/rnd/server/miner as anything in servers)
 		///should check if it was not manually disabled & is working
 		if(miner.working)
-			efficiency=miner.calculate_efficiency()
-			bitcoins = single_server_income.Copy()
-			break //Just need one to work.
+			///initialize list only once
+			if(bitcoins.len==0)
+				bitcoins = single_server_income.Copy()
 
-	if (!isnull(last_income) && efficiency>0)
+			///if master is available combine contributions of all running servers in an diminishing way to simulate synchronization overhead
+			efficiency=miner.calculate_efficiency()
+			if(can_synchronize)
+				total_efficiency+=(efficiency/load)
+				load++
+			else
+				total_efficiency=efficiency
+				break  ///if cant synchronize because no master server then only one server contribution is used
+
+
+
+	if (!isnull(last_income) && total_efficiency>0)
 		var/income_time_difference = world.time - last_income
 		science_tech.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 
 		for(var/i in bitcoins)
-			bitcoins[i] *= (income_time_difference / 10) * income_modifier * efficiency
+			bitcoins[i] *= (income_time_difference / 10) * income_modifier * total_efficiency
 		science_tech.add_point_list(bitcoins)
 
 	last_income = world.time
