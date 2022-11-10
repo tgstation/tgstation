@@ -383,7 +383,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	slice_type = null
 
-/obj/item/food/pizza/flatbread/rustic_flatbread
+/obj/item/food/pizza/flatbread/rustic
 	name = "rustic flatbread"
 	desc = "A simple Tiziran country dish, popular as a side to meat or fish dishes. Topped with herbs and oil."
 	icon_state = "rustic_flatbread"
@@ -392,7 +392,7 @@
 	foodtypes = VEGETABLES | NUTS
 	boxtag = "Tiziran Flatbread"
 
-/obj/item/food/pizza/flatbread/italic_flatbread
+/obj/item/food/pizza/flatbread/italic
 	name = "\improper Italic flatbread"
 	desc = "The introduction of human foods to Tizira led to an advancement in lizard cooking- the Italic flatbread is now a common sight on the menus of takeout stores on the planet."
 	icon_state = "italic_flatbread"
@@ -401,7 +401,7 @@
 	foodtypes = VEGETABLES | NUTS | MEAT
 	boxtag = "Italic Flatbread"
 
-/obj/item/food/pizza/flatbread/imperial_flatbread
+/obj/item/food/pizza/flatbread/imperial
 	name = "\improper Imperial flatbread"
 	desc = "A flatbread topped with pate, pickled vegetables, and cubed headcheese. Not very suited to anyone's tastes but the lizards."
 	icon_state = "imperial_flatbread"
@@ -410,7 +410,7 @@
 	foodtypes = VEGETABLES | MEAT | NUTS | GORE
 	boxtag = "Imperial Victory Flatbread"
 
-/obj/item/food/pizza/flatbread/rawmeat_flatbread
+/obj/item/food/pizza/flatbread/rawmeat
 	name = "meatlovers flatbread"
 	desc = "Oddly enough, this Tiziran dish is actually a favorite of some health-minded humans."
 	icon_state = "rawmeat_flatbread"
@@ -418,7 +418,7 @@
 	tastes = list("bread" = 1, "meat" = 1,)
 	foodtypes = MEAT | NUTS | RAW | GORE
 
-/obj/item/food/pizza/flatbread/stinging_flatbread
+/obj/item/food/pizza/flatbread/stinging
 	name = "\improper Stinging flatbread"
 	desc = "The electric mix of jellyfish and bee larva makes for a flavor sensation that leaves you asking for more!"
 	icon_state = "stinging_flatbread"
@@ -426,7 +426,7 @@
 	tastes = list("bread" = 1, "sweetness" = 1, "stinging" = 1, "slime" = 1,)
 	foodtypes = BUGS | NUTS | SEAFOOD | GORE
 
-/obj/item/food/pizza/flatbread/zmorgast_flatbread // Name is based off of the Swedish dish Smörgåstårta
+/obj/item/food/pizza/flatbread/zmorgast  // Name is based off of the Swedish dish Smörgåstårta
 	name = "\improper Zmorgast flatbread"
 	desc = "A Tiziran spin on the original Swedish sandwich cake, the Zmorgast is a common dish at family gatherings."
 	icon_state = "zmorgast_flatbread"
@@ -434,7 +434,7 @@
 	tastes = list("bread" = 1, "liver" = 1, "family" = 1,)
 	foodtypes = VEGETABLES | NUTS | MEAT
 
-/obj/item/food/pizza/flatbread/fish_flatbread
+/obj/item/food/pizza/flatbread/fish
 	name = "\improper BBQ fish flatbread"
 	desc = "Superengine delamination, clown ops, too cold outside, I just want to grill for Tizira's sake!"
 	icon_state = "fish_flatbread"
@@ -442,7 +442,7 @@
 	tastes = list("bread" = 1, "fish" = 1,)
 	foodtypes = SEAFOOD | NUTS
 
-/obj/item/food/pizza/flatbread/mushroom_flatbread
+/obj/item/food/pizza/flatbread/mushroom
 	name = "mushroom and tomato flatbread"
 	desc = "A simple alternative to the Italic flatbread, for when you've already filled up on meat elsewhere."
 	icon_state = "mushroom_flatbread"
@@ -450,7 +450,7 @@
 	tastes =  list("bread" = 1, "mushroom" = 1, "tomatoes" = 1,)
 	foodtypes = VEGETABLES | NUTS
 
-/obj/item/food/pizza/flatbread/nutty_flatbread
+/obj/item/food/pizza/flatbread/nutty
 	name = "nut paste flatbread"
 	desc = "Modern advances in cuisine now allow for a double helping of the delicious taste of korta nuts, both as the base and as a topping on this flatbread."
 	icon_state = "nutty_flatbread"
