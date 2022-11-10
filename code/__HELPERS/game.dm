@@ -135,6 +135,8 @@
  * and all cliented camera mobs (since these see through walls and AI and so is important)
  */
 /proc/flick_overlay_view(image/image_to_show, atom/target, duration)
+	if(isarea(target))
+		CRASH("Dont use areas as targets in flick_overlay_view: area input: [target], [target.type]")
 	var/list/viewing = list()
 	//get player widescreen screen size
 	var/size = CONFIG_GET(string/default_view)
@@ -142,13 +144,12 @@
 		if(viewer.client) //yes we check this twice but the extra iteration is only worth it at about 50% clientless mobs
 			viewing += viewer.client
 
-	if(!isarea(target))
-		//can actually be a turf as well because vis locs moment
-		var/atom/movable/vis_locs_access = target
-		for(var/atom/location as anything in vis_locs_access.vis_locs)
-			for(var/mob/viewer as anything in viewers(size, location))
-				if(viewer.client)
-					viewing += viewer.client
+	//can actually be a turf as well because vis locs moment
+	var/atom/movable/vis_locs_access = target
+	for(var/atom/location as anything in vis_locs_access.vis_locs)
+		for(var/mob/viewer as anything in viewers(size, location))
+			if(viewer.client)
+				viewing += viewer.client
 
 	for(var/mob/camera/viewer as anything in GLOB.cliented_mob_cams)
 		viewing |= viewer.client

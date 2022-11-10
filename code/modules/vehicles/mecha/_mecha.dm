@@ -164,6 +164,8 @@
 	var/leg_overload_mode = FALSE
 	///Energy use modifier for leg overload
 	var/leg_overload_coeff = 100
+	///stores value that we will add and remove from the mecha when toggling leg overload
+	var/speed_mod = 0
 
 	//Bool for zoom on/off
 	var/zoom_mode = FALSE
