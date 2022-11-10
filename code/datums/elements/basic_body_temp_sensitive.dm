@@ -19,7 +19,7 @@
 	if(!isbasicmob(target))
 		return ELEMENT_INCOMPATIBLE
 
-	if(min_body_temp)
+	if(min_body_temp || min_body_temp == 0)
 		src.min_body_temp = min_body_temp
 	if(max_body_temp)
 		src.max_body_temp = max_body_temp
