@@ -98,7 +98,6 @@
 		if("preview") // see saved variant
 			if(!fax_paper)
 				return
-			fax_paper.request_state = TRUE
 			fax_paper.ui_interact(usr)
 		
 		if("save") // save paper
@@ -107,9 +106,6 @@
 			if(params["fromWho"])
 				sending_fax_name = params["fromWho"]
 			
-			if(fax_paper.ui_status(usr)) // Closes paper UI, for.. user handle re-open.
-				fax_paper.request_state = FALSE
-
 			fax_paper.clear_paper()
 			var/stamp 
 			var/stamp_class
@@ -125,6 +121,8 @@
 
 			if(stamp)
 				fax_paper.add_stamp(stamp_class, params["stampX"], params["stampY"], params["stampR"], stamp)
+			
+			fax_paper.update_static_data(usr) // OK, it's work, and update UI. 
 			
 		if("send")
 			//copy
