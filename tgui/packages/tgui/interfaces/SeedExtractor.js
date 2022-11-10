@@ -71,7 +71,7 @@ export const SeedExtractor = (props, context) => {
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
-                    'The period of product regrowt after the first harvest.'
+                    'The likelihood of the plant to randomize stats or mutate.'
                   }
                   position="bottom-start">
                   <Box>Instability</Box>
@@ -79,25 +79,21 @@ export const SeedExtractor = (props, context) => {
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={
-                    'The time needed for the plant for the first harvest.'
-                  }
+                  content={'The age required for the first harvest.'}
                   position="bottom-start">
                   <Box>Maturation</Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={
-                    'The period of product regrowt after the first harvest.'
-                  }
+                  content={'The period of product regrowt.'}
                   position="bottom-start">
                   <Box>Production</Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={'The age at which the plant starts taking damage.'}
+                  content={'The age at which the plant starts decaying.'}
                   position="bottom-start">
                   <Box>Lifespan</Box>
                 </Tooltip>
