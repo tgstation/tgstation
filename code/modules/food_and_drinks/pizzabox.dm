@@ -429,3 +429,13 @@
 		if(!open)
 			context [SCREENTIP_CONTEXT_LMB] = "Write boxtag"
 		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/bombcore/miniature/pizza))
+		if(open && !bomb)
+			context [SCREENTIP_CONTEXT_LMB] = "Place bomb"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(is_wire_tool(held_item))
+		if(open && bomb)
+			context [SCREENTIP_CONTEXT_LMB] = "Access wires"
+		return CONTEXTUAL_SCREENTIP_SET
