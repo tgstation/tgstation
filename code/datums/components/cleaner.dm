@@ -127,6 +127,7 @@
 	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
 	target.cut_overlay(low_bubble)
 	target.cut_overlay(high_bubble)
+	UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
 	REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
 
 /datum/component/cleaner/proc/cleaning_target_moved(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
