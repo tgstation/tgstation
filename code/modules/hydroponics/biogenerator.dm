@@ -11,7 +11,7 @@
 	var/efficiency = 0
 	var/productivity = 0
 	var/max_items = 10
-	var/max_biomass = 1000
+	var/max_biomass = 500
 	var/max_output = 50
 	var/datum/techweb/stored_research
 	var/list/show_categories = list(RND_CATEGORY_BIO_FOOD, RND_CATEGORY_BIO_CHEMICALS, RND_CATEGORY_BIO_MATERIALS)
@@ -53,7 +53,7 @@
 	var/V = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		I += 10 * B.rating
-		V += 1000 * B.rating
+		V += 500 * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		P += M.rating
 		E += M.rating
@@ -104,7 +104,6 @@
 			to_chat(user, span_warning("Close the maintenance panel first."))
 		else
 			insert_beaker(user, O)
-
 		return TRUE
 
 	else if(istype(O, /obj/item/storage/bag/plants))
@@ -120,12 +119,12 @@
 					break
 				if(PB.atom_storage.attempt_remove(G, src))
 					i++
-			if(i<max_items)
+			if(PB.contents.len == 0)
 				to_chat(user, span_info("You empty the plant bag into the biogenerator."))
-			else if(PB.contents.len == 0)
-				to_chat(user, span_info("You empty the plant bag into the biogenerator, filling it to its capacity."))
+			else if (i >= max_items)
+				to_chat(user, span_info("You fill the biogenerator from the plant bag to its capacity."))
 			else
-				to_chat(user, span_info("You fill the biogenerator to its capacity."))
+				to_chat(user, span_info("You fill the biogenerator from the plant bag."))
 		return TRUE //no afterattack
 
 	else if(istype(O, /obj/item/food/grown))
@@ -180,10 +179,7 @@
 		if(biomass >= max_biomass)
 			break
 		processing_time += 5
-		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
-			biomass += 1 * productivity
-		else
-			biomass += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) * 10 * productivity
+		biomass += max(1, I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)) * productivity
 		biomass = min(biomass, max_biomass)
 		qdel(I)
 	if(processing_time)
@@ -293,7 +289,7 @@
 	data["processing"] = processing
 	data["max_output"] = max_output
 	data["efficiency"] = efficiency
-	if(locate(/obj/item/food/grown) in contents && biomass < max_biomass)
+	if((locate(/obj/item/food/grown) in contents) && biomass < max_biomass)
 		data["can_process"] = TRUE
 	else
 		data["can_process"] = FALSE
@@ -326,7 +322,7 @@
 				"id" = D.id,
 				"name" = D.name,
 				"is_reagent" = D.make_reagents.len > 0,
-				"cost" = ROUND_UP(D.materials[GET_MATERIAL_REF(/datum/material/biomass)]/efficiency),
+				"cost" = D.materials[GET_MATERIAL_REF(/datum/material/biomass)]/efficiency,
 			))
 		data["categories"] += list(cat)
 

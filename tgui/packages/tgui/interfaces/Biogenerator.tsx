@@ -159,7 +159,11 @@ export const Biogenerator = (props, context) => {
 const ItemList = (props, context) => {
   const { act } = useBackend(context);
   const items = props.items.map((item) => {
-    const [amount, setAmount] = useLocalState(context, 'amount' + item.name, 1);
+    const [amount, setAmount] = useLocalState(
+      context,
+      'amount' + item.name,
+      item.is_reagent ? Math.min(Math.max(props.space, 1), 10) : 1
+    );
     const disabled =
       props.processing ||
       (item.is_reagent && !props.beaker) ||
@@ -196,7 +200,7 @@ const ItemList = (props, context) => {
       </Table.Cell>
       <Table.Cell collapsing>
         <NumberInput
-          value={Math.round(item.amount)}
+          value={item.amount}
           width="35px"
           minValue={1}
           maxValue={item.max_amount}
