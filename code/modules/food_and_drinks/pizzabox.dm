@@ -62,11 +62,11 @@
 			if(bomb_active)
 				desc = "[desc] It looks like it's about to go off!"
 	else
-		var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
-		if(boxes.len)
-			desc = "A pile of boxes suited for pizzas. There appear to be [boxes.len + 1] boxes in the pile."
+		var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
+		if(length(boxes))
+			desc = "A pile of boxes suited for pizzas. There appear to be [length(boxes) + 1] boxes in the pile."
 		if(box.boxtag != "")
-			desc = "[desc] The [boxes.len ? "top box" : "box"]'s tag reads: [box.boxtag]"
+			desc = "[desc] The [length(boxes) ? "top box" : "box"]'s tag reads: [box.boxtag]"
 
 /obj/item/pizzabox/update_icon_state()
 	if(!open)
@@ -98,7 +98,7 @@
 		box_overlay.pixel_y = box_offset
 		. += box_overlay
 
-	var/obj/item/pizzabox/box = LAZYLEN(boxes.len) ? boxes[boxes.len] : src
+	var/obj/item/pizzabox/box = LAZYLEN(length(boxes)) ? boxes[length(boxes)] : src
 	if(box.boxtag != "")
 		var/mutable_appearance/tag_overlay = mutable_appearance(icon, "pizzabox_tag")
 		tag_overlay.pixel_y = box_offset
@@ -117,7 +117,7 @@
 		. += M
 
 /obj/item/pizzabox/attack_self(mob/user)
-	if(boxes.len > 0)
+	if(length(boxes) > 0)
 		return
 	open = !open
 	if(open && !bomb_defused)
@@ -127,7 +127,7 @@
 	update_appearance()
 
 /obj/item/pizzabox/attack_self_secondary(mob/user)
-	if(boxes.len > 0)
+	if(length(boxes) > 0)
 		return
 	if(pizza || bomb)
 		return
@@ -161,8 +161,8 @@
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
 				balloon_alert(user, "bomb set")
 				update_appearance()
-	else if(boxes.len)
-		var/obj/item/pizzabox/topbox = boxes[boxes.len]
+	else if(length(boxes))
+		var/obj/item/pizzabox/topbox = boxes[length(boxes)]
 		boxes -= topbox
 		user.put_in_hands(topbox)
 		topbox.update_appearance()
@@ -183,12 +183,12 @@
 			newbox.update_appearance()
 			update_appearance()
 			user.regenerate_icons()
-			if(boxes.len >= 5)
-				if(prob(10 * boxes.len))
+			if(length(boxes) >= 5)
+				if(prob(10 * length(boxes)))
 					balloon_alert(user, "dropped it!")
 					disperse_pizzas()
 				else
-					balloon_alert(user, "looks unstable!")
+					balloon_alert(user, "looks unstable...")
 			return
 		else
 			balloon_alert(user, "close it first!")
@@ -217,7 +217,7 @@
 		if(!open)
 			if(!user.can_write(I))
 				return
-			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
+			var/obj/item/pizzabox/box = length(boxes) ? boxes[length(boxes)] : src
 			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
 			if(!user.canUseTopic(src, be_close = TRUE))
 				return
@@ -250,11 +250,11 @@
 
 /obj/item/pizzabox/attack(mob/living/target, mob/living/user, def_zone)
 	. = ..()
-	if(boxes.len >= 3 && prob(25 * boxes.len))
+	if(length(boxes) >= 3 && prob(25 * length(boxes)))
 		disperse_pizzas()
 
 /obj/item/pizzabox/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(boxes.len >= 2 && prob(20 * boxes.len))
+	if(length(boxes) >= 2 && prob(20 * length(boxes)))
 		disperse_pizzas()
 
 /obj/item/pizzabox/examine(mob/user)
@@ -401,14 +401,14 @@
 			else if(bomb && wires.is_all_cut() && bomb_defused)
 				context [SCREENTIP_CONTEXT_LMB] = "Remove bomb"
 		else
-			if(boxes.len > 0)
+			if(length(boxes) > 0)
 				context [SCREENTIP_CONTEXT_LMB] = "Remove pizza box"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item == src)
-		if(boxes.len > 0)
+		if(length(boxes) > 0)
 			return
-		context [SCREENTIP_CONTEXT_LMB] = (open) ? "Close" : "Open"
+		context [SCREENTIP_CONTEXT_LMB] = open ? "Close" : "Open"
 		if(!pizza && !bomb)
 			context [SCREENTIP_CONTEXT_RMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
