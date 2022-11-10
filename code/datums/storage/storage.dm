@@ -332,7 +332,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	if(resolve_location.contents.len >= max_slots)
-		if(messages && user)
+		if(messages && user && !silent_for_user)
 			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
 		return FALSE
 
@@ -342,7 +342,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		total_weight += thing.w_class
 
 	if(total_weight > max_total_storage)
-		if(messages && user)
+		if(messages && user && !silent_for_user)
 			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
 		return FALSE
 

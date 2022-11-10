@@ -52,4 +52,7 @@
 	box.open()
 	owner.visible_message(span_suicide("[owner] falls out of [box]! It looks like [owner.p_they()] committed suicide!"))
 	owner.throw_at(get_turf(owner))
+	if(isliving(owner))
+		var/mob/living/suicider = owner
+		suicider.suicide_log()
 	return OXYLOSS

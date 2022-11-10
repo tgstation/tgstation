@@ -459,6 +459,7 @@
 			if(do_after(user, 60, target = user))
 				to_chat(user, span_userdanger("You explode!"))
 				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
+				user.investigate_log("has been gibbed by an oil slime extract explosion.", INVESTIGATE_DEATHS)
 				user.gib()
 				return
 			to_chat(user, span_notice("You stop feeding [src], and the feeling passes."))

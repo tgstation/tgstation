@@ -255,8 +255,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	foodtypes = JUNKFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/cnds/suicide_act(mob/user)
-	. = ..()
+/obj/item/food/cnds/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is letting [src] melt in [user.p_their()] hand! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 

@@ -617,6 +617,7 @@ GLOBAL_VAR(station_nuke_source)
 		return FALSE
 
 	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
+	gibbed.investigate_log("has been gibbed by a nuclear blast.", INVESTIGATE_DEATHS)
 	gibbed.gib()
 	return TRUE
 

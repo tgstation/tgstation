@@ -83,7 +83,11 @@
 	. = ..()
 	if(prob(33))
 		visible_message(span_danger("[src] spews out a ton of space lube!"))
-		new /obj/effect/particle_effect/fluid/foam(loc) //YEET
+		var/datum/effect_system/fluid_spread/foam/foam = new
+		var/datum/reagents/foamreagent = new /datum/reagents(25)
+		foamreagent.add_reagent(/datum/reagent/lube, 25)
+		foam.set_up(4, holder = src, location = loc, carry = foamreagent)
+		foam.start()
 
 /obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
 	. = ..()

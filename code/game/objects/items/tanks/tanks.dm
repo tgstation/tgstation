@@ -148,7 +148,7 @@
 		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	return ..()
 
-/obj/item/tank/suicide_act(mob/user)
+/obj/item/tank/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
@@ -156,8 +156,7 @@
 		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		human_user.inflate_gib()
 		return MANUAL_SUICIDE
-	else
-		to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
+	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
 /obj/item/tank/attackby(obj/item/attacking_item, mob/user, params)

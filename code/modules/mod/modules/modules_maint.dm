@@ -53,6 +53,7 @@
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
 	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
+		mod.wearer.investigate_log("has been killed by [src].", INVESTIGATE_DEATHS)
 		mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
@@ -329,6 +330,7 @@
 	you_fucked_up = TRUE
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	to_chat(mod.wearer, span_userdanger("That was stupid."))
+	investigate_log("has flown off into space due to the [src].", INVESTIGATE_DEATHS)
 	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)
 	animate(mod.wearer, FLY_TIME, pixel_z = 256, alpha = 0)
 	QDEL_IN(mod.wearer, FLY_TIME)

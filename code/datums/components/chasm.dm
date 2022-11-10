@@ -185,6 +185,7 @@ GLOBAL_LIST_INIT(chasm_storage, list())
 	if (isliving(dropped_thing))
 		var/mob/living/fallen_mob = dropped_thing
 		if(fallen_mob.stat != DEAD)
+			fallen_mob.investigate_log("has died from falling into a chasm.", INVESTIGATE_DEATHS)
 			fallen_mob.death(TRUE)
 			fallen_mob.notransform = FALSE
 			fallen_mob.apply_damage(300)

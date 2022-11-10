@@ -445,6 +445,7 @@
 	updatehealth()
 	if(!whispered)
 		to_chat(src, span_notice("You have given up life and succumbed to death."))
+	investigate_log("has succumbed to death.", INVESTIGATE_DEATHS)
 	death()
 
 /**
