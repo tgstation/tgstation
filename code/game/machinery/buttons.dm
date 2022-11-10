@@ -324,6 +324,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
+	/// The specific lift id of the tram we're calling.
 	var/lift_id = MAIN_STATION_TRAM
 
 /obj/machinery/button/tram/setup_device()
