@@ -272,3 +272,47 @@
   - balance: Everyone is now able to send Emojis via PDA Messaging! It's no longer
       restricted to just mime and curators, so enjoy sending the classics such as
       :ai:, :1997:, :pslime:, and more!
+2022-11-08:
+  Fikou:
+  - qol: concussive gauntlets now launch you away from gibtonite
+  - qol: concussive guantlets can now mine basalt
+  Guillaume Prata:
+  - qol: Ore bag balloon alerts have a 2 second cooldown now and a spammy message
+      (hopefully the last) it send to your chat about being full was removed
+  Melbert:
+  - code_imp: Unremovable organs that are forcemoved out of a mob with an owner no
+      longer self terminate
+  SeigaSeiga:
+  - balance: Implants can no longer be destroyed by enough external explosions. Bomb
+      Suit Knights can wield their explosive lances with pride!
+  Tattle:
+  - admin: added investigate deaths to shed some more light on unusual demises, dustings,
+      and gibbings
+  Thunder12345:
+  - qol: Jukebox music can be controlled by a new seperate preference, and is no longer
+      linked to the instrument sound preference option.
+  - refactor: Sound related toggle preferences have been migrated away from the legacy
+      system. Pre-existing preferences should be safely migrated but players are advised
+      to check.
+  TiviPlus:
+  - bugfix: fixed a gygax speed exploit
+  VexingRaven:
+  - bugfix: Fixed a few balloon alerts for guns and moved a few more chat messages
+      to balloon alerts
+  - bugfix: Adding missing fire alarms to the Chapel and Funeral Room on Metastation
+  mc-oofert:
+  - bugfix: Fixes 1 tile foam in Foam Dispensers,Clown Cars, Hygiene Bots,Firebots,
+      Soap Suicide, Emagged cleanbots, and the clown plasmaman envirosuit
+  moocowswag:
+  - bugfix: Firebreath can no longer benefit from both power and energetic chromosomes
+      at the same time
+  private-tristan:
+  - bugfix: deltastation psychology office buttons are now reachable without opening
+      the locker
+  san7890:
+  - qol: When saving Experiment Log Recording Data to a data disk on either the Tachyon
+      Doppler or the Tank Compressor, Nanotrasen released a UI/UX update in order
+      to have the button that saves the data onto your disk... say "Save".
+2022-11-09:
+  MTandi:
+  - bugfix: made Kilo Xenobio guide visible from the north part of the room.

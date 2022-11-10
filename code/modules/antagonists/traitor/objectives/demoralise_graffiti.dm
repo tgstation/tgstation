@@ -210,8 +210,8 @@
 			user.balloon_alert(user, "all done!")
 
 /// Copying the functionality from normal spraycans, but doesn't need all the optional checks
-/obj/item/traitor_spraycan/suicide_act(mob/user)
-	if (expended)
+/obj/item/traitor_spraycan/suicide_act(mob/living/user)
+	if(expended)
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!"))
 		user.say("MEDIOCRE!!", forced="spraycan suicide")
 		return SHAME
@@ -221,8 +221,7 @@
 	user.say("WITNESS ME!!", forced="spraycan suicide")
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 	suicider.update_lips("spray_face", paint_color)
-
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/effect/decal/cleanable/traitor_rune
 	name = "syndicate graffiti"
