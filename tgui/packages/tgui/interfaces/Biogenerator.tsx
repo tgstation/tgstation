@@ -173,7 +173,7 @@ const ItemList = (props, context) => {
       (props.efficiency * props.biomass) / item.cost
     );
     const max_capacity = item.is_reagent ? props.space : props.max_output;
-    const max_amount = Math.min(1, max_capacity, max_possible);
+    const max_amount = Math.max(1, Math.min(max_capacity, max_possible));
     return {
       ...item,
       disabled,
