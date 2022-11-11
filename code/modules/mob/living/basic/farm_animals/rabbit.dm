@@ -92,7 +92,7 @@
 
 /mob/living/basic/rabbit/easter/space/Initialize(mapload)
 	. = ..()
-	// Cached List of suitable atmospherics conditions that we can survive in to pass to atmos_requirements element.
+	// string_assoc_list returns a cached list, which we then use as a static list to pass into the below AddElement
 	var/list/habitable_atmos = string_assoc_list(list(
 		"min_oxy" = 0,
 		"max_oxy" = 0,
