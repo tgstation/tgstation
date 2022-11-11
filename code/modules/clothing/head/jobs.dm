@@ -281,12 +281,12 @@
 	greyscale_colors = "#8D008F"
 	flags_1 = NONE
 
-/obj/item/clothing/head/beret/science/fancy
-	desc = "A science-themed beret for our hardworking scientists. This one comes with a fancy badge!"
+/obj/item/clothing/head/beret/science/rd
+	desc = "A purple badge with the insignia of the Research Director attached. For the paper-shuffler in you!"
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#8D008F#FFFFFF"
+	greyscale_colors = "#7e1980#c9cbcb"
 
 //Medical
 /obj/item/clothing/head/beret/medical
