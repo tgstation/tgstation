@@ -10,6 +10,8 @@
 #define SEE_THROUGH_MAP_THREE_X_TWO "3x2"
 ///One row of three tiles above the atom, but offset one tile to the left because of how billboards work
 #define SEE_THROUGH_MAP_BILLBOARD "billboard"
+///Two rows of three wide, but offset one tile to the left because thats how shipping containers work
+#define SEE_THROUGH_MAP_SHIPPING_CONTAINER "shipping_container"
 
 
 /**global statics for the see_through_component coordinate maps
@@ -52,9 +54,13 @@ GLOBAL_LIST_INIT(see_through_maps, list(
 	),
 
 	/// XXX
-	/// OAO
+	/// AOO
 	SEE_THROUGH_MAP_BILLBOARD = list(
 		list(0, 1, 0), list(1, 1, 0), list(2, 1, 0)
+	),
+	SEE_THROUGH_MAP_SHIPPING_CONTAINER = list(
+		list(0, 1, 0), list(1, 1, 0), list(2, 1, 0),
+		list(0, 0, 0), list(1, 0, 0), list(2, 0, 0)
 	)
 ))
 
