@@ -126,7 +126,7 @@
 	var/implant = FALSE
 
 	var/uplink_spawn_location = traitor_mob.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
-	var/cant_speak = if(HAS_TRAIT(traitor_mob, TRAIT_MUTE) || traitor_mob.mind?.assigned_role.title == JOB_MIME)
+	var/cant_speak = (HAS_TRAIT(traitor_mob, TRAIT_MUTE) || traitor_mob.mind?.assigned_role.title == JOB_MIME)
 	if(uplink_spawn_location == UPLINK_RADIO && cant_speak)
 		if(!silent)
 			to_chat(traitor_mob, span_warning("You have been deemed ineligable for a radio uplink. Supplying standard uplink intead."))
