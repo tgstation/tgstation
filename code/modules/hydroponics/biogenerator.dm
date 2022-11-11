@@ -3,9 +3,10 @@
 	desc = "Converts plants into biomass, which can be used to construct useful items."
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogenerator"
-	base_icon_state = "biogenerator"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/biogenerator
+	light_power = 1
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	var/processing = FALSE
 	var/obj/item/reagent_containers/cup/beaker = null
 	var/biomass = 0
@@ -70,37 +71,36 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<br>And up to <b>[max_biomass]</b> units of biomass.")
 
-/obj/machinery/biogenerator/update_icon_state()
-	if(panel_open)
-		icon_state = "biogenerator_panel"
-		return ..()
-	return ..()
+/obj/machinery/biogenerator/update_appearance()
+	. = ..()
+	if((machine_stat & (NOPOWER|BROKEN)) || panel_open)
+		luminosity = 0
+		return
+	luminosity = 1 + ROUND_UP(2 * biomass / max_biomass) + (processing & 1)
 
 /obj/machinery/biogenerator/update_overlays()
 	. = ..()
-	luminosity = 0
+	if(panel_open)
+		. += mutable_appearance(icon, "[icon_state]_o_panel", alpha = src.alpha)
 	if(beaker)
-		. += mutable_appearance(icon, "[base_icon_state]_o_container", alpha = src.alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_container", alpha = src.alpha)
 	if(biomass > 0)
 		var/biomass_level = min(ROUND_UP(7 * biomass / max_biomass), 7)
-		luminosity += 2 * biomass_level / 7
-		. += mutable_appearance(icon, "[base_icon_state]_o_biomass_[biomass_level]", alpha = src.alpha)
-		. += emissive_appearance(icon, "[base_icon_state]_o_biomass_[biomass_level]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", alpha = src.alpha)
+		. += emissive_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", src, alpha = src.alpha)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(processing)
-		luminosity += 1
-		. += mutable_appearance(icon, "[base_icon_state]_o_process", alpha = src.alpha)
-		. += emissive_appearance(icon, "[base_icon_state]_o_process", src, alpha = src.alpha)
-	luminosity += 1
-	. += mutable_appearance(icon, "[base_icon_state]_o_screen", alpha = src.alpha)
-	. += emissive_appearance(icon, "[base_icon_state]_o_screen", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_process", alpha = src.alpha)
+		. += emissive_appearance(icon, "[icon_state]_o_process", src, alpha = src.alpha)
+	. += mutable_appearance(icon, "[icon_state]_o_screen", alpha = src.alpha)
+	. += emissive_appearance(icon, "[icon_state]_o_screen", src, alpha = src.alpha)
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
 
-	if(default_deconstruction_screwdriver(user, "biogenerator_panel", "biogenerator", O))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
 		if(processing)
 			processing = FALSE
 			soundloop.stop()
