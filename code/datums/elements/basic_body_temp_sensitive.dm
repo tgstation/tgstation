@@ -19,14 +19,26 @@
 	if(!isbasicmob(target))
 		return ELEMENT_INCOMPATIBLE
 
-	if(min_body_temp || min_body_temp == 0)
+	if(isnum(min_body_temp))
 		src.min_body_temp = min_body_temp
-	if(max_body_temp)
+	else
+		stack_trace("Invalid min_body_temp [min_body_temp] for [target], this must be a number!")
+
+	if(isnum(max_body_temp))
 		src.max_body_temp = max_body_temp
-	if(cold_damage)
+	else
+		stack_trace("Invalid max_body_temp [max_body_temp] for [target], this must be a number!")
+
+	if(isnum(cold_damage))
 		src.cold_damage = cold_damage
-	if(heat_damage)
+	else
+		stack_trace("Invalid cold_damage [cold_damage] for [target], this must be a number!")
+
+	if(isnum(heat_damage))
 		src.heat_damage = heat_damage
+	else
+		stack_trace("Invalid heat_damage [heat_damage] for [target], this must be a number!")
+
 	RegisterSignal(target, COMSIG_LIVING_LIFE, .proc/on_life)
 
 /datum/element/basic_body_temp_sensitive/Detach(datum/source)
