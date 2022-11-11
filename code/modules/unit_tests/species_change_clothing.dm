@@ -23,18 +23,25 @@
 	var/obj/item/melee/energy/axe/hand_item = allocate(/obj/item/melee/energy/axe)
 
 	//Equip it all
-	morphing_human.equip_to_slot_or_del(swag_shoes, ITEM_SLOT_FEET)
-	morphing_human.equip_to_slot_or_del(pocket_item, ITEM_SLOT_LPOCKET)
+	morphing_human.equip_to_slot(swag_shoes, ITEM_SLOT_FEET)
+	TEST_ASSERT(morphing_human.get_item_by_slot(ITEM_SLOT_FEET), "Failed to equip shoes to Human.")
+
+	morphing_human.equip_to_slot(pocket_item, ITEM_SLOT_LPOCKET)
+	TEST_ASSERT(morphing_human.get_item_by_slot(ITEM_SLOT_LPOCKET), "Failed to equip a pocket item to Human.")
+
 	morphing_human.put_in_l_hand(hand_item)
+	TEST_ASSERT(morphing_human.get_item_for_held_index(LEFT_HANDS), "Failed to equip a hand item to Human.")
 
 	//Keep track of the shoes and make sure they will not fit.
 	var/obj/item/human_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
 	swag_shoes.supports_variations_flags = NONE //do not fit lizards at all costs.
 	morphing_human.dna.features["legs"] = DIGITIGRADE_LEGS
 
+	//now change the species
 	morphing_human.set_species(/datum/species/lizard)
 
+	//then finally, make sure everything we want to transfer over, properly transfered.
 	var/obj/item/lizard_shoes = morphing_human.get_item_by_slot(ITEM_SLOT_FEET)
 	TEST_ASSERT_NOTEQUAL(human_shoes, lizard_shoes, "Lizard still has shoes after changing species.")
-	TEST_ASSERT(!isnull(morphing_human.get_item_by_slot(ITEM_SLOT_LPOCKET)), "Lizard somehow lost their pocket items when changing species.")
-	TEST_ASSERT(!isnull(morphing_human.get_item_for_held_index(LEFT_HANDS)), "Lizard somehow lost their hand items when changing species.")
+	TEST_ASSERT(morphing_human.get_item_by_slot(ITEM_SLOT_LPOCKET), "Lizard somehow lost their pocket items when changing species.")
+	TEST_ASSERT(morphing_human.get_item_for_held_index(LEFT_HANDS), "Lizard somehow lost their hand items when changing species.")
