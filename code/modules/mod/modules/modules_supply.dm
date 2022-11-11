@@ -590,7 +590,7 @@
 	/// Time to explode from the priming
 	var/explosion_time = 1 SECONDS
 	/// Damage done on explosion.
-	var/damage = 15
+	var/damage = 12
 	/// Damage multiplier on hostile fauna.
 	var/fauna_boost = 4
 	/// Image overlaid on explosion.
