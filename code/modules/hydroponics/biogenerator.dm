@@ -86,10 +86,6 @@
 	if(user.combat_mode)
 		return ..()
 
-	if(processing)
-		to_chat(user, span_warning("The biogenerator is currently processing."))
-		return
-
 	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
 		if(beaker)
 			var/obj/item/reagent_containers/cup/B = beaker
