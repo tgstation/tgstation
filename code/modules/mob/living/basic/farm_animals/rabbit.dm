@@ -89,8 +89,6 @@
 	var/minimum_survivable_temperature = 0
 	// Maximum Allowable Body Temp, 1500 because we might overheat and die in said RABBIT SPACE MASK.
 	var/maximum_survivable_temperature = 1500
-	/// The amount of damage we incur for being in an unsuitable enviroment (too hot, too cold, not viable atmospherics). Low to account for low health.
-	var/unsuitable_environment_damage = 0.5
 
 /mob/living/basic/rabbit/easter/space/Initialize(mapload)
 	. = ..()
@@ -105,8 +103,9 @@
 		"min_n2" = 0,
 		"max_n2" = 0,
 	))
-	AddElement(/datum/element/atmos_requirements, atmos_requirements = habitable_atmos, unsuitable_atmos_damage = unsuitable_environment_damage)
-	AddElement(/datum/element/basic_body_temp_sensitive, min_body_temp = minimum_survivable_temperature, max_body_temp = maximum_survivable_temperature, cold_damage = 0, heat_damage = unsuitable_environment_damage)
+	AddElement(/datum/element/atmos_requirements, atmos_requirements = habitable_atmos, unsuitable_atmos_damage = 0)
+	// heat_damage is 0.5 here to account for low health on the rabbit.
+	AddElement(/datum/element/basic_body_temp_sensitive, min_body_temp = minimum_survivable_temperature, max_body_temp = maximum_survivable_temperature, cold_damage = 0, heat_damage = 0.5)
 
 /datum/ai_controller/basic_controller/rabbit/easter/space
 	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/rabbit/easter/space)
