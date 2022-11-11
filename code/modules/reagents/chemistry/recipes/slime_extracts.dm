@@ -149,9 +149,9 @@
 		var/obj/item/food_item = new chosen(T)
 		ADD_TRAIT(food_item, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 		if(prob(5))//Fry it!
-			var/obj/item/food/deepfryholder/fried
-			fried = new(T, food_item)
-			fried.fry() // actually set the name and colour it
+			AddElement(/datum/element/fried_item, rand(15, 60))
+		if(prob(5))//Grill it!
+			AddElement(/datum/element/grilled_item, rand(30, 100))
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(food_item, pick(NORTH,SOUTH,EAST,WEST))
