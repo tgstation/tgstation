@@ -74,6 +74,12 @@
 				var/title = initial(stamp_title.title)
 				. += span_info("Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for the [title].")
 
+/obj/item/paperwork/suicide_act(mob/living/user)
+	. = ..()
+
+	user.visible_message(span_suicide("[user] is looking too deep into the [src]. It looks like [user.p_theyre()] trying to commit suicide!"))
+	return OXYLOSS
+
 /**
  * Adds the stamp overlay and sets "stamped" to true
  *
