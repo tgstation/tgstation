@@ -65,6 +65,7 @@
 	productivity = P
 	max_items = I
 	max_biomass = V
+	update_appearance()
 
 /obj/machinery/biogenerator/examine(mob/user)
 	. = ..()
