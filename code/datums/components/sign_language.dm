@@ -52,7 +52,6 @@
 	if (caught_signal)
 		UnregisterSignal(human_parent, COMSIG_MOB_HUD_CREATED)
 	toggle_button = new /atom/movable/screen/sign_language(src)
-	toggle_button.add_atom_colour("#92b8e4", FIXED_COLOUR_PRIORITY)
 	toggle_button.icon = human_parent.hud_used.ui_style
 	toggle_button.hud = human_parent.hud_used
 	human_parent.hud_used.static_inventory += toggle_button
