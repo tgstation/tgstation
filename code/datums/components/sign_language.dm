@@ -61,7 +61,7 @@
 /atom/movable/screen/sign_language
 	name = "toggle sign language"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "talk_wheel"
+	icon_state = "speak_vocal"
 	screen_loc = ui_sign_language
 	var/datum/component/sign_language/linked_component
 
