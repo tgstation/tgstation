@@ -77,14 +77,6 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/effect/decal/necropolis_gate_decal
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "gate_dais"
-	flags_1 = ON_BORDER_1
-	appearance_flags = 0
-	pixel_x = -32
-	pixel_y = -32
-
 /obj/structure/opacity_blocker
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_blocker"
@@ -199,6 +191,14 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP, flashwindow = FALSE)
+
+/obj/effect/decal/necropolis_gate_decal
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "gate_dais"
+	flags_1 = ON_BORDER_1
+	appearance_flags = 0
+	pixel_x = -32
+	pixel_y = -32
 
 /obj/effect/temp_visual/necropolis
 	icon = 'icons/effects/96x96.dmi'
