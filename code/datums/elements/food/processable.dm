@@ -15,8 +15,7 @@
 	///Verb used in processing food (such as slice, flatten), defaults to process
 	var/screentip_verb
 
-/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type,
-	amount_created = 3, time_to_process = 2 SECONDS, table_required = FALSE, screentip_verb = "Process")
+/datum/element/processable/Attach(datum/target, tool_behaviour, result_atom_type, amount_created = 3, time_to_process = 2 SECONDS, table_required = FALSE, screentip_verb = "Process")
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -63,13 +62,15 @@
 	else
 		examine_list += span_notice("It can be turned into \a [initial(result_atom_type.name)] with <b>[tool_behaviour_name(tool_behaviour)]</b>!")
 
-///Adds context sensitivy directly to the processable file for screentips
-/datum/element/processable/proc/on_requesting_context_from_item(
-	datum/source,
-	list/context,
-	obj/item/held_item,
-	mob/user,
-)
+/**
+ * Adds context sensitivy directly to the processable file for screentips
+ * Arguments:
+ * * source - refers to item that will display its screentip
+ * * context - refers to, in this case, an item that can be proccessed into another item via add element proccessable
+ * * held_item - refers to tool used by add element proccessable to process one item into another item
+ * * user - refers to user who will see the screentip when the proper context and tool are there
+ */
+/datum/element/processable/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user,)
 	SIGNAL_HANDLER
 
 	if (isnull(held_item))
