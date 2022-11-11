@@ -305,3 +305,8 @@
 	. = ..()
 	for(var/i in 1 to 4)
 		new /obj/effect/spawner/random/decoration/generic(src)
+
+/obj/structure/closet/crate/gorlex
+	name = "gorlex security crate"
+	desc = "A military-grade crate emblazed with Gorlex insignia."
+	icon_state = "gorlexcrate"

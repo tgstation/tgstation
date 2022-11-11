@@ -322,7 +322,7 @@
 					/obj/item/clothing/head/helmet/rus_helmet,
 					/obj/item/clothing/shoes/russian,
 					/obj/item/clothing/gloves/tackler/combat,
-					/obj/item/clothing/under/syndicate/rus_army,
+//					/obj/item/clothing/under/syndicate/rus_army, // TODO-SYNDIE: FIX RUSKIE STUFF.
 					/obj/item/clothing/under/costume/soviet,
 					/obj/item/clothing/mask/russian_balaclava,
 					/obj/item/clothing/head/helmet/rus_ushanka,
@@ -342,7 +342,7 @@
 		effort by IS-ERI and Nanotrasen. Each set contains a suit, helmet, mask, combat belt, \
 		and combat gloves. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 7
-	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen = 2,
+	contains = list(/obj/item/clothing/head/helmet/swat = 2,
 					/obj/item/clothing/suit/armor/swat = 2,
 					/obj/item/clothing/mask/gas/sechailer/swat = 2,
 					/obj/item/storage/belt/military/assault = 2,

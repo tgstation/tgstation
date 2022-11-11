@@ -90,6 +90,11 @@
 	name = "marine medic helmet"
 	icon_state = "marine_medic"
 
+/obj/item/clothing/head/helmet/marine/medic/tt
+	name = "\improper Trauma Team helmet"
+	desc = "A white-painted helmet, with a speciality face-mask attached to block bio-hazardous materials and chemicals."
+	icon_state = "trauma_team"
+
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
@@ -188,9 +193,9 @@
 
 /obj/item/clothing/head/helmet/swat
 	name = "\improper SWAT helmet"
-	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
-	icon_state = "swatsyndie"
-	inhand_icon_state = "swatsyndie_helmet"
+	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
+	icon_state = "swat"
+	inhand_icon_state = "swat_helmet"
 	armor = list(MELEE = 40, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 50, BIO = 90, FIRE = 100, ACID = 100, WOUND = 15)
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
@@ -200,19 +205,15 @@
 	strip_delay = 80
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = null
-
-/obj/item/clothing/head/helmet/swat/nanotrasen
-	name = "\improper SWAT helmet"
-	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
-	icon_state = "swat"
-	inhand_icon_state = "swat_helmet"
-	clothing_flags = PLASMAMAN_HELMET_EXEMPT
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	heat_protection = HEAD
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
+
+/obj/item/clothing/head/helmet/swat/gorlex
+	name = "tactical helmet"
+	desc = "A full-head helmet, with a nefarious red stripe across the head. On the underside of the top is silk-screened: \"NOVA - Property of Gorlex Secutity Consulting, LLC.\""
+	icon_state = "marauder_helm"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	visor_flags_inv = HIDEEYES|HIDEFACE
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"

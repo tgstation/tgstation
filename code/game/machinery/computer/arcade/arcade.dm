@@ -2,7 +2,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/snappops = 2,
 		/obj/item/toy/talking/ai = 2,
 		/obj/item/toy/talking/codex_gigas = 2,
-		/obj/item/clothing/under/syndicate/tacticool = 2,
+//		/obj/item/clothing/under/syndicate/tacticool = 2, // TODO-SYNDIE
 		/obj/item/toy/sword = 2,
 		/obj/item/toy/gun = 2,
 		/obj/item/gun/ballistic/shotgun/toy/crossbow = 2,

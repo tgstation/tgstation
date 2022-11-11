@@ -566,11 +566,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	desc = "An old advertisement for Waffle Corp rifles. 'Better weapons, lower prices!'"
 	icon_state = "waffle_corp_rifles"
 
-/obj/structure/sign/poster/contraband/gorlex_recruitment
-	name = "Enlist"
-	desc = "Enlist with the Gorlex Marauders today! See the galaxy, kill corpos, get paid!"
-	icon_state = "gorlex_recruitment"
-
 /obj/structure/sign/poster/contraband/self_ai_liberation
 	name = "SELF: ALL SENTIENTS DESERVE FREEDOM"
 	desc = "Support Proposition 1253: Enancipate all Silicon life!"
@@ -1040,5 +1035,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 	name = "Conserve Power"
 	desc = "A crudely-made poster asking the reader to turn off the power before they leave. Hopefully, it's turned on for their re-opening."
 	icon_state = "gas_power"
+
+/obj/structure/sign/poster/contraband/gorlex_dark
+	name = "Gorlex - Standing In the Dark"
+	desc = "TODO"
+	icon_state = "gorlex_dark"
 
 #undef PLACE_SPEED

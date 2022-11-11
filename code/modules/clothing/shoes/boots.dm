@@ -1,7 +1,7 @@
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
 	desc = "High speed, low drag combat boots."
-	icon_state = "jackboots"
+	icon_state = "combat"
 	inhand_icon_state = "jackboots"
 	armor = list(MELEE = 25, BULLET = 25, LASER = 25, ENERGY = 25, BOMB = 50, BIO = 90, FIRE = 70, ACID = 50)
 	strip_delay = 40

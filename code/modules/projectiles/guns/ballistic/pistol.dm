@@ -36,11 +36,13 @@
 	install_suppressor(S)
 
 /obj/item/gun/ballistic/automatic/pistol/clandestine
-	name = "\improper Ansem pistol"
-	desc = "The spiritual successor of the Makarov, or maybe someone just dropped their gun in a bucket of paint. The gun is chambered in 10mm."
-	icon_state = "pistol_evil"
+	name = "\improper EP-10 \"Prokolot\""
+	desc = "Heavily regulated, and increasingly over-priced. Chambered in 10mm, the \"Enhanced Pistol - 10mm\" is a gun with all the frills attached. \
+			Nicknamed the \"Prokolot\", meaning penetration. It earned it's fame as the signature sidearm of government forces. But has now earned a second life, \
+			complete with complimentary black and red colouring. Property of Gorlex Security Consulting, LLC."
+	icon = 'icons/obj/weapons/guns/syndicate/ballistic.dmi'
+	icon_state = "prokolot"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
-	empty_indicator = TRUE
 	suppressor_x_offset = 12
 
 /obj/item/gun/ballistic/automatic/pistol/m1911

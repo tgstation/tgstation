@@ -50,8 +50,8 @@
 	new /obj/item/clothing/shoes/combat/swat(src)
 	new /obj/item/mod/control/pre_equipped/apocryphal(src)
 	new /obj/item/mod/control/pre_equipped/apocryphal(src)
-	new /obj/item/clothing/under/syndicate/tacticool(src)
-	new /obj/item/clothing/under/syndicate/tacticool(src)
+//	new /obj/item/clothing/under/syndicate/tacticool(src)
+//	new /obj/item/clothing/under/syndicate/tacticool(src)
 
 
 /obj/structure/closet/thunderdome

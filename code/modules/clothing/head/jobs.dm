@@ -159,10 +159,6 @@
 	desc = "A special beret with the Head of Security's insignia emblazoned on it. A symbol of excellence, a badge of courage, a mark of distinction."
 	greyscale_colors = "#3C485A#FFCE5B"
 
-/obj/item/clothing/head/hos/beret/syndicate
-	name = "syndicate beret"
-	desc = "A black beret with thick armor padding inside. Stylish and robust."
-
 /obj/item/clothing/head/hats/warden
 	name = "warden's police hat"
 	desc = "It's a special armored hat issued to the Warden of a security force. Protects the head from impacts."
@@ -388,6 +384,12 @@
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 100, ACID = 90, WOUND = 10)
 	strip_delay = 10 SECONDS
 
+//Syndicate
+
+/obj/item/clothing/head/caphat/beret/gorlex
+	name = "\improper Gorlex senior officer's beret"
+	desc = "A black beret adorned with Gorlex's logo carved from a bright piece of red ruby. Stylish and robust."
+	greyscale_colors = "#39393f#a52f29"
 
 #undef DRILL_DEFAULT
 #undef DRILL_SHOUTING

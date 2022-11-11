@@ -87,7 +87,7 @@
 
 /datum/outfit/syndicate/reinforcement/cybersun
 	name = "Syndicate Operative - Cybersun Reinforcement"
-	uniform = /obj/item/clothing/under/syndicate/combat
+	uniform = /obj/item/clothing/under/syndicate/cybersun/combat
 	suit = /obj/item/clothing/suit/jacket/oversized
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -104,26 +104,25 @@
 
 /datum/outfit/syndicate/reinforcement/waffle
 	name = "Syndicate Operative - Waffle Reinforcement"
-	uniform = /obj/item/clothing/under/syndicate/camo
+	uniform = /obj/item/clothing/under/syndicate // TODO-SYNDIE: ADD ACTUAL OUTFIT
 	suit = /obj/item/clothing/suit/armor/vest
 	head = /obj/item/clothing/head/helmet/blueshirt
 	glasses = /obj/item/clothing/glasses/welding/up
 	faction = "the Waffle Corporation"
 
 /datum/outfit/syndicate/reinforcement/interdyne
-	name = "Syndicate Operative - Interdyne Reinforcement"
-	uniform = /obj/item/clothing/under/syndicate/scrubs
-	suit = /obj/item/clothing/suit/toggle/labcoat/interdyne
-	head = /obj/item/clothing/head/beret/medical
-	gloves = /obj/item/clothing/gloves/color/latex
-	neck = /obj/item/clothing/neck/stethoscope
+	name = "Syndicate Operative - Interdyne Trauma Team"
+	uniform = /obj/item/clothing/under/syndicate/interdyne/tt
+	suit = /obj/item/clothing/suit/armor/vest/marine/medic/tt
+	head = /obj/item/clothing/head/helmet/marine/medic/tt
+	gloves = /obj/item/clothing/gloves/color/latex/nitrile/trauma
 	glasses = /obj/item/clothing/glasses/hud/health
 	mask = /obj/item/clothing/mask/breath/medical
 	faction = "Interdyne Pharmaceutics"
 
 /datum/outfit/syndicate/reinforcement/mi13
 	name = "Syndicate Operative - MI13 Reinforcement"
-	uniform = /obj/item/clothing/under/syndicate/sniper
+	uniform = /obj/item/clothing/under/syndicate/ // TODO-SYNDIE: GIVE STEALTH-OP SHIT
 	shoes = /obj/item/clothing/shoes/laceup
 	glasses = /obj/item/clothing/glasses/sunglasses/big
 	faction = "MI13"

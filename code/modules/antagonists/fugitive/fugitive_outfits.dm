@@ -112,10 +112,10 @@
 
 	// Let's give the Russians a bit of randomization for style.
 	var/static/list/alt_uniforms = list(
-		/obj/item/clothing/under/syndicate/soviet,
-		/obj/item/clothing/under/syndicate/combat,
-		/obj/item/clothing/under/syndicate/rus_army,
-		/obj/item/clothing/under/syndicate/camo,
+//		/obj/item/clothing/under/syndicate/soviet,
+//		/obj/item/clothing/under/syndicate/combat,
+//		/obj/item/clothing/under/syndicate/rus_army,
+//		/obj/item/clothing/under/syndicate/camo,
 	)
 	var/static/list/alt_suits = list(
 		/obj/item/clothing/suit/armor/vest/russian,

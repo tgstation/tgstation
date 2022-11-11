@@ -189,8 +189,8 @@
 /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	name = "combat gloves plus"
 	desc = "These tactical gloves are fireproof and electrically insulated, and through the use of nanochip technology will teach you the martial art of krav maga."
-	icon_state = "black"
-	greyscale_colors = "#2f2e31"
+	icon_state = "combat_plus"
+	greyscale_colors = "#3d3c40"
 	siemens_coefficient = 0
 	strip_delay = 80
 	cold_protection = HANDS

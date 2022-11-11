@@ -286,7 +286,7 @@
 
 /datum/outfit/syndicatespace
 	name = "Syndicate Ship Base"
-	uniform = /obj/item/clothing/under/syndicate/combat
+	uniform = /obj/item/clothing/under/syndicate/gorlex/combat
 	ears = /obj/item/radio/headset/syndicate/alt
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
@@ -307,9 +307,9 @@
 
 /datum/outfit/syndicatespace/syndicaptain
 	name = "Syndicate Ship Captain"
-	uniform = /obj/item/clothing/under/syndicate/combat
-	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	head = /obj/item/clothing/head/hos/beret/syndicate
+	uniform = /obj/item/clothing/under/syndicate/gorlex/enlisted/snr_officer
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/gorlex
+	head = /obj/item/clothing/head/caphat/beret/gorlex
 	ears = /obj/item/radio/headset/syndicate/alt/leader
 	r_pocket = /obj/item/knife/combat/survival
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id

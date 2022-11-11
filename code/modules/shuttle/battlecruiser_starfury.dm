@@ -1,13 +1,13 @@
 
 /// The Starfury map template itself.
 /datum/map_template/battlecruiser_starfury
-	name = "SBC Starfury"
+	name = "GBC Starfury"
 	mappath = "_maps/templates/battlecruiser_starfury.dmm"
 
 // Stationary docking ports for the Starfury's strike shuttles.
 /obj/docking_port/stationary/starfury_corvette
-	name = "SBC Starfury Corvette Bay"
-	shuttle_id = "SBC_corvette_bay"
+	name = "GBC Starfury Corvette Bay"
+	shuttle_id = "GBC_corvette_bay"
 	roundstart_template = /datum/map_template/shuttle/starfury/corvette
 	hidden = TRUE
 	width = 14
@@ -16,8 +16,8 @@
 	dir = NORTH
 
 /obj/docking_port/stationary/starfury_fighter
-	name = "SBC Starfury Fighter Bay"
-	shuttle_id = "SBC_fighter_bay"
+	name = "GBC Starfury Fighter Bay"
+	shuttle_id = "GBC_fighter_bay"
 	hidden = TRUE
 	width = 5
 	height = 7
@@ -25,18 +25,18 @@
 	dir = NORTH
 
 /obj/docking_port/stationary/starfury_fighter/fighter_one
-	name = "SBC Starfury Port Fighter Bay"
-	shuttle_id = "SBC_fighter1_bay"
+	name = "GBC Starfury Port Fighter Bay"
+	shuttle_id = "GBC_fighter1_bay"
 	roundstart_template = /datum/map_template/shuttle/starfury/fighter_one
 
 /obj/docking_port/stationary/starfury_fighter/fighter_two
-	name = "SBC Starfury Center Fighter Bay"
-	shuttle_id = "SBC_fighter2_bay"
+	name = "GBC Starfury Center Fighter Bay"
+	shuttle_id = "GBC_fighter2_bay"
 	roundstart_template = /datum/map_template/shuttle/starfury/fighter_two
 
 /obj/docking_port/stationary/starfury_fighter/fighter_three
-	name = "SBC Starfury Starboard Fighter Bay"
-	shuttle_id = "SBC_fighter3_bay"
+	name = "GBC Starfury Starboard Fighter Bay"
+	shuttle_id = "GBC_fighter3_bay"
 	roundstart_template = /datum/map_template/shuttle/starfury/fighter_three
 
 // Mobile docking ports for the Starfury's strike shuttles.
@@ -52,20 +52,20 @@
 	dwidth = 2
 
 /obj/docking_port/mobile/syndicate_fighter/fighter_one
-	name = "syndicate fighter one"
-	shuttle_id = "SBC_fighter1"
+	name = "gorlex fighter one"
+	shuttle_id = "GBC_fighter1"
 
 /obj/docking_port/mobile/syndicate_fighter/fighter_two
-	name = "syndicate fighter two"
-	shuttle_id = "SBC_fighter2"
+	name = "gorlex fighter two"
+	shuttle_id = "GBC_fighter2"
 
 /obj/docking_port/mobile/syndicate_fighter/fighter_three
-	name = "syndicate fighter three"
-	shuttle_id = "SBC_fighter3"
+	name = "gorlex fighter three"
+	shuttle_id = "GBC_fighter3"
 
 /obj/docking_port/mobile/syndicate_corvette
-	name = "syndicate corvette"
-	shuttle_id = "SBC_corvette"
+	name = "gorlex corvette"
+	shuttle_id = "GBC_corvette"
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	hidden = TRUE
 	dir = NORTH
@@ -75,68 +75,68 @@
 	dwidth = 6
 	height = 7
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter
-	name = "syndicate fighter navigation computer"
-	desc = "Used to pilot syndicate fighters to commence precision strikes."
+/obj/machinery/computer/camera_advanced/shuttle_docker/gorlex/fighter
+	name = "gorlex fighter navigation computer"
+	desc = "Used to pilot gorlex fighters to commence precision strikes."
 	x_offset = 0
 	y_offset = 3
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_one
-	shuttleId = "SBC_fighter1"
-	shuttlePortId = "SBC_fighter1_custom"
-	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter1_bay" = 1)
+/obj/machinery/computer/camera_advanced/shuttle_docker/gorlex/fighter/fighter_one
+	shuttleId = "GBC_fighter1"
+	shuttlePortId = "GBC_fighter1_custom"
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "GBC_fighter1_bay" = 1)
 	req_access = list(ACCESS_SYNDICATE)
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_two
-	shuttleId = "SBC_fighter2"
-	shuttlePortId = "SBC_fighter2_custom"
-	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter2_bay" = 1)
+/obj/machinery/computer/camera_advanced/shuttle_docker/gorlex/fighter/fighter_two
+	shuttleId = "GBC_fighter2"
+	shuttlePortId = "GBC_fighter2_custom"
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "GBC_fighter2_bay" = 1)
 	req_access = list(ACCESS_SYNDICATE)
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_three
-	shuttleId = "SBC_fighter3"
-	shuttlePortId = "SBC_fighter3_custom"
-	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter3_bay" = 1)
+/obj/machinery/computer/camera_advanced/shuttle_docker/gorlex/fighter/fighter_three
+	shuttleId = "GBC_fighter3"
+	shuttlePortId = "GBC_fighter3_custom"
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "GBC_fighter3_bay" = 1)
 	req_access = list(ACCESS_SYNDICATE)
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette
-	name = "syndicate corvette navigation computer"
-	desc = "Used to pilot the syndicate corvette to board enemy stations and ships."
-	shuttleId = "SBC_corvette"
-	shuttlePortId = "SBC_corvette_custom"
-	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_corvette_bay" = 1)
+/obj/machinery/computer/camera_advanced/shuttle_docker/gorlex/corvette
+	name = "gorlex corvette navigation computer"
+	desc = "Used to pilot the gorlex corvette to board enemy stations and ships."
+	shuttleId = "GBC_corvette"
+	shuttlePortId = "GBC_corvette_custom"
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "GBC_corvette_bay" = 1)
 	y_offset = 3
 	x_offset = 0
 
 /obj/machinery/computer/shuttle/starfury/fighter
-	name = "syndicate fighter control console"
-	desc = "A control computer which controls a shuttle which operates from the SBC Starfury.."
+	name = "gorlex fighter control console"
+	desc = "A control computer which controls a shuttle which operates from the GBC Starfury.."
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/shuttle/starfury/fighter/fighter_one
-	shuttleId = "SBC_fighter1"
-	possible_destinations = "SBC_fighter1_custom;SBC_fighter1_bay;SBC_fighter2_bay;SBC_fighter3_bay;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
+	shuttleId = "GBC_fighter1"
+	possible_destinations = "GBC_fighter1_custom;GBC_fighter1_bay;GBC_fighter2_bay;GBC_fighter3_bay;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/shuttle/starfury/fighter/fighter_two
-	shuttleId = "SBC_fighter2"
-	possible_destinations = "SBC_fighter2_custom;SBC_fighter1_bay;SBC_fighter2_bay;SBC_fighter3_bay;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
+	shuttleId = "GBC_fighter2"
+	possible_destinations = "GBC_fighter2_custom;GBC_fighter1_bay;GBC_fighter2_bay;GBC_fighter3_bay;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/shuttle/starfury/fighter/fighter_three
-	shuttleId = "SBC_fighter3"
-	possible_destinations = "SBC_fighter3_custom;SBC_fighter1_bay;SBC_fighter2_bay;SBC_fighter3_bay;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
+	shuttleId = "GBC_fighter3"
+	possible_destinations = "GBC_fighter3_custom;GBC_fighter1_bay;GBC_fighter2_bay;GBC_fighter3_bay;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/shuttle/starfury/corvette
-	name = "syndicate corvette control console"
-	desc = "A control computer which controls a shuttle which operates from the SBC Starfury.."
-	shuttleId = "SBC_corvette"
-	possible_destinations = "SBC_corvette_custom;SBC_corvette_bay;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
+	name = "gorlex corvette control console"
+	desc = "A control computer which controls a shuttle which operates from the GBC Starfury.."
+	shuttleId = "GBC_corvette"
+	possible_destinations = "GBC_corvette_custom;GBC_corvette_bay;syndicate_ne;syndicate_nw;syndicate_n;syndicate_se;syndicate_sw;syndicate_s"
 	req_access = list(ACCESS_SYNDICATE)
 
 /*
- * Summons the SBC Starfury, a large syndicate battlecruiser, in Deep Space.
+ * Summons the GBC Starfury, a large syndicate battlecruiser, in Deep Space.
  * It can be piloted into the station's area.
  */
 /proc/summon_battlecruiser(datum/team/battlecruiser/team)

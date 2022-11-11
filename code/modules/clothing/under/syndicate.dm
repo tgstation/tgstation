@@ -13,89 +13,68 @@
 	name = "tactical skirtleneck"
 	desc = "A non-descript and slightly suspicious looking skirtleneck."
 	icon_state = "syndicate_skirt"
-	inhand_icon_state = "bl_suit"
-	has_sensor = NO_SENSORS
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
-	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-/obj/item/clothing/under/syndicate/bloodred
-	name = "blood-red sneaksuit"
-	desc = "It still counts as stealth if there are no witnesses."
-	icon_state = "bloodred_pajamas"
-	inhand_icon_state = "bl_suit"
-	armor = list(MELEE = 10, BULLET = 10, LASER = 10,ENERGY = 10, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+/*
+
+	GORLEX SECURITY CONSULTING, LLC.
+	TODO: NOTHING.
+
+*/
+
+/obj/item/clothing/under/syndicate/gorlex
+	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. This one in particular makes you feel like a terrorist of some sort."
 	can_adjust = FALSE
 
-/obj/item/clothing/under/syndicate/bloodred/sleepytime
-	name = "blood-red pajamas"
-	desc = "Do operatives dream of nuclear sheep?"
-	icon_state = "bloodred_pajamas"
-	inhand_icon_state = "bl_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
+/obj/item/clothing/under/syndicate/gorlex/combat
+	name = "gorlex combat under"
+	desc = "A black undersuit, designed to be protect form the sharp inner-workings of spacesuits. Adorned on the right-shoulder is a Gorlex patch."
+	icon_state = "gorlex_combat"
 
-/obj/item/clothing/under/syndicate/tacticool
-	name = "tacticool turtleneck"
-	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
-	icon_state = "tactifool"
-	inhand_icon_state = "bl_suit"
-	has_sensor = HAS_SENSORS
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
+/obj/item/clothing/under/syndicate/gorlex/enlisted
+	name = "enlisted service uniform"
+	desc = "A high-collar service uniform for enlisted marauders. This one has a black collar."
+	icon_state = "gorlex_enlisted"
 
-/obj/item/clothing/under/syndicate/tacticool/skirt
-	name = "tacticool skirtleneck"
-	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
-	icon_state = "tactifool_skirt"
-	inhand_icon_state = "bl_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
-	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+/obj/item/clothing/under/syndicate/gorlex/enlisted/snr_officer
+	name = "senior officer service uniform"
+	desc = "A high-collar service uniform for senior officers. This one has a red collar, and a ruby medal attached to the chest."
+	icon_state = "gorlex_snr_officer"
 
-/obj/item/clothing/under/syndicate/sniper
-	name = "tactical turtleneck suit"
-	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."
-	icon_state = "tactical_suit"
-	inhand_icon_state = "bl_suit"
+/*
+
+	SABIASUN INDUSTRIES, INC.
+	TODO: SPRITES.
+
+*/
+
+/obj/item/clothing/under/syndicate/cybersun
+	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. This one in particular makes you feel like a terrorist of some sort."
 	can_adjust = FALSE
 
-/obj/item/clothing/under/syndicate/camo
-	name = "camouflage fatigues"
-	desc = "A green military camouflage uniform."
-	icon_state = "camogreen"
-	inhand_icon_state = "g_suit"
+/obj/item/clothing/under/syndicate/cybersun/combat
+	name = "gorlex combat under"
+
+/obj/item/clothing/under/syndicate/cybersun/enlisted
+	name = "enlisted service uniform"
+
+/*
+
+	INTERDYNE PHARMACEUTICALS, INC.
+	TODO: ADDITIONAL SPECIAL OUTFIT.
+
+*/
+
+/obj/item/clothing/under/syndicate/interdyne
+	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants. This one in particular makes you feel like a terrorist of some sort."
 	can_adjust = FALSE
 
-/obj/item/clothing/under/syndicate/soviet
-	name = "Ratnik 5 tracksuit"
-	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
-	icon_state = "trackpants"
-	can_adjust = FALSE
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
-	resistance_flags = NONE
+/obj/item/clothing/under/syndicate/interdyne/tt
+	name = "\improper Trauma Team scrubs"
+	desc = "A baggy Interdyne-blue coloured tactical uniform. Sewed from special synthetic fabrics designed to both protect the wearer, and repel bodily fluids."
+	icon_state = "interdyne_tt"
 
-/obj/item/clothing/under/syndicate/combat
-	name = "combat uniform"
-	desc = "With a suit lined with this many pockets, you are ready to operate."
-	icon_state = "syndicate_combat"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/syndicate/rus_army
-	name = "advanced military tracksuit"
-	desc = "Military grade tracksuits for frontline squatting."
-	icon_state = "rus_under"
-	can_adjust = FALSE
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
-	resistance_flags = NONE
-
-/obj/item/clothing/under/syndicate/scrubs
-	name = "tactical scrubs"
-	desc = "A deep burgundy set of scrubs, made tactically for tactical reasons."
-	icon = 'icons/obj/clothing/under/medical.dmi'
-	worn_icon = 'icons/mob/clothing/under/medical.dmi'
-	icon_state = "scrubswine"
-	can_adjust = FALSE
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 50, ACID = 40)
+/obj/item/clothing/under/syndicate/interdyne/add
+	name = "enlisted service uniform"

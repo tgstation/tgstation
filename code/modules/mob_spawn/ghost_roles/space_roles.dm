@@ -103,8 +103,8 @@
 ///battlecruiser stuff
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser
-	name = "Syndicate Battlecruiser Ship Operative"
-	you_are_text = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
+	name = "Gorlex Battlecruiser Ship Operative"
+	you_are_text = "You are a crewmember aboard Gorlex's flagship: the GBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the power flowing."
 	important_text = "The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives."
 	prompt_name = "a battlecruiser crewmember"
@@ -148,7 +148,7 @@
 /datum/antagonist/battlecruiser
 	name = "Battlecruiser Crewmember"
 	show_to_ghosts = TRUE
-	roundend_category = "battlecruiser syndicate operatives"
+	roundend_category = "Gorlex battlecruiser operatives"
 	suicide_cry = "FOR THE SYNDICATE!!!"
 	antag_hud_name = "battlecruiser_crew"
 	job_rank = ROLE_BATTLECRUISER_CREW
@@ -199,8 +199,8 @@
 	belt = /obj/item/storage/belt/military/assault
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/assault
-	name = "Syndicate Battlecruiser Assault Operative"
-	you_are_text = "You are an assault operative aboard the syndicate flagship: the SBC Starfury."
+	name = "Gorlex Battlecruiser Assault Operative"
+	you_are_text = "You are an assault operative aboard Gorlex's flagship: the GBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, keep intruders out of the ship, and assault Space Station 13. There is an armory, multiple assault ships, and beam cannons to attack the station with."
 	important_text = "Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!"
 	prompt_name = "a battlecruiser operative"
@@ -208,8 +208,8 @@
 	uses = 8
 
 /datum/outfit/syndicate_empty/battlecruiser/assault
-	name = "Syndicate Battlecruiser Assault Operative"
-	uniform = /obj/item/clothing/under/syndicate/combat
+	name = "Gorlex Battlecruiser Assault Operative"
+	uniform = /obj/item/clothing/under/syndicate/gorlex/combat
 	l_pocket = /obj/item/uplink/nuclear
 	r_pocket = /obj/item/modular_computer/tablet/nukeops
 	belt = /obj/item/storage/belt/military
@@ -219,8 +219,8 @@
 	mask = /obj/item/clothing/mask/gas/syndicate
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/captain
-	name = "Syndicate Battlecruiser Captain"
-	you_are_text = "You are the captain aboard the syndicate flagship: the SBC Starfury."
+	name = "Gorlex Battlecruiser Captain"
+	you_are_text = "You are the captain aboard Gorlex's flagship: the GBC Starfury."
 	flavour_text = "Your job is to oversee your crew, defend the ship, and destroy Space Station 13. The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal."
 	important_text = "As the captain, this whole operation falls on your shoulders. Help your assault operatives detonate a nuke on the station."
 	prompt_name = "a battlecruiser captain"
@@ -230,11 +230,11 @@
 	uses = 1
 
 /datum/outfit/syndicate_empty/battlecruiser/assault/captain
-	name = "Syndicate Battlecruiser Captain"
+	name = "Gorlex Battlecruiser Captain"
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic
-	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	suit_store = /obj/item/gun/ballistic/revolver/mateba
+	suit = /obj/item/clothing/suit/armor/vest/capcarapace/gorlex
+	suit_store = /obj/item/gun/ballistic/revolver/judge
 	back = /obj/item/storage/backpack/satchel/leather
 	head = /obj/item/clothing/head/hats/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana

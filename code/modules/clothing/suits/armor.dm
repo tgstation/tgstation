@@ -60,6 +60,11 @@
 	icon_state = "marine_medic"
 	body_parts_covered = CHEST|GROIN
 
+/obj/item/clothing/suit/armor/vest/marine/medic/tt
+	name = "\improper Trauma Team vest"
+	desc = "A titanium-fibre webbed vest, sewed with kevlar. It adorns the Interdyne logo on it's chest, and carries pouches for both weaponry and medical supplies."
+	icon_state = "tt_vest"
+
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"
 	desc = "Older generation Type 1 armored vest. Due to degradation over time the vest is far less maneuverable to move in."
@@ -153,10 +158,10 @@
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	name = "syndicate captain's vest"
-	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
-	icon_state = "syndievest"
+/obj/item/clothing/suit/armor/vest/capcarapace/gorlex
+	name = "gorlex officer's coat"
+	desc = "A durathread and leather overcoat, singed at the waist with a belt. It has a really excessively high collar."
+	icon_state = "gorlexcoat"
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade coat"
@@ -246,6 +251,13 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+// Marauder Corps / SyndieParatrooper Suit
+/obj/item/clothing/suit/armor/swat/gorlex
+	name = "tactical armour suit"
+	desc = "A tactical full-body armour suit, dubbed the \"NOVA\". Spaceproof, with a decent armour and emblazed with black and red colours. Property of Gorlex Security Consulting, LLC."
+	icon_state = "marauder_suit"
+	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 90, FIRE = 100, ACID = 100, WOUND = 10)
 
 //All of the armor below is mostly unused
 

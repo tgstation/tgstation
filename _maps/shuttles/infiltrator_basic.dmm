@@ -32,38 +32,38 @@
 /obj/item/clipboard,
 /obj/item/folder/red,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark/smooth_corner,
+/turf/open/floor/iron/dark/textured_corner,
 /area/shuttle/syndicate/bridge)
 "ah" = (
 /obj/item/storage/fancy/donut_box,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "ai" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "aj" = (
 /obj/machinery/computer/shuttle/syndicate,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "ak" = (
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/hallway)
 "al" = (
 /obj/machinery/computer/camera_advanced/syndie,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "am" = (
 /obj/machinery/button/door{
 	id = "syndieshutters";
 	name = "Cockpit View Control";
-	req_access = list("syndicate");
-	pixel_y = 24
+	pixel_y = 24;
+	req_access = list("syndicate")
 	},
 /obj/item/aicard,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
 /area/shuttle/syndicate/bridge)
@@ -74,7 +74,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/bridge)
 "ap" = (
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "aq" = (
 /obj/structure/chair/comfy/shuttle/tactical{
@@ -109,7 +109,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 "aD" = (
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/hallway)
 "aF" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
@@ -165,7 +165,7 @@
 	pixel_x = -6
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
 /area/shuttle/syndicate/airlock)
@@ -176,7 +176,7 @@
 /area/shuttle/syndicate/airlock)
 "aS" = (
 /obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
 /area/shuttle/syndicate/eva)
@@ -184,7 +184,7 @@
 /obj/machinery/light/directional/east,
 /obj/structure/rack,
 /obj/item/crowbar/red,
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
 /area/shuttle/syndicate/eva)
@@ -199,7 +199,7 @@
 	},
 /obj/item/sbeacondrop/bomb,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
 /area/shuttle/syndicate/airlock)
@@ -221,20 +221,15 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
 "aZ" = (
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/eva)
 "bc" = (
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/airlock)
 "bd" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
-"be" = (
-/obj/machinery/suit_storage_unit/syndicate,
-/obj/effect/turf_decal/bot_red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate/eva)
 "bg" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
@@ -251,7 +246,7 @@
 /area/shuttle/syndicate/engineering)
 "bk" = (
 /obj/structure/sign/poster/contraband/random/directional/west,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/hallway)
 "bm" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -268,8 +263,8 @@
 	pixel_y = 9
 	},
 /obj/item/toy/figure/syndie{
-	pixel_y = -2;
-	pixel_x = 11
+	pixel_x = 11;
+	pixel_y = -2
 	},
 /turf/open/floor/fakespace,
 /area/shuttle/syndicate/hallway)
@@ -287,10 +282,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/turf/open/floor/iron,
-/area/shuttle/syndicate/medical)
-"br" = (
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "bs" = (
 /obj/machinery/light/directional/north,
@@ -325,7 +317,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/iron/edge,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "bu" = (
 /obj/structure/table/reinforced,
@@ -335,7 +327,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/iron/edge,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "bv" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
@@ -449,7 +441,8 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 "bQ" = (
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/medical)
 "bR" = (
 /obj/structure/table/reinforced,
@@ -470,9 +463,7 @@
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 8
 	},
-/turf/open/floor/iron/edge{
-	dir = 8
-	},
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "bV" = (
 /obj/effect/spawner/structure/window/survival_pod,
@@ -485,9 +476,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "bX" = (
-/obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal/bot_red,
-/obj/structure/sign/poster/contraband/random/directional/west,
+/obj/machinery/suit_storage_unit/gorlex,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
 "bY" = (
@@ -495,7 +485,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "ce" = (
 /obj/machinery/cell_charger,
@@ -517,14 +507,14 @@
 	pixel_y = 9
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "cg" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "ch" = (
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "ci" = (
 /obj/effect/turf_decal/tile/yellow,
@@ -632,11 +622,11 @@
 	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/corner,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "df" = (
 /obj/machinery/newscaster/directional/south,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "dp" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
@@ -649,9 +639,7 @@
 /area/shuttle/syndicate/medical)
 "el" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 4
-	},
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/hallway)
 "fk" = (
 /obj/machinery/light/directional/east,
@@ -662,7 +650,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/smooth_edge,
+/turf/open/floor/iron/dark/textured_edge,
 /area/shuttle/syndicate/engineering)
 "gt" = (
 /obj/item/storage/box/handcuffs{
@@ -672,8 +660,8 @@
 /obj/item/storage/box/zipties,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark/smooth_corner{
-	dir = 2
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 8
 	},
 /area/shuttle/syndicate/airlock)
 "hT" = (
@@ -696,7 +684,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/smooth_edge,
+/turf/open/floor/iron/dark/textured_edge,
 /area/shuttle/syndicate/engineering)
 "lm" = (
 /obj/machinery/door/airlock/hatch,
@@ -705,7 +693,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "lo" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -724,7 +712,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/medical)
 "lU" = (
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
 /area/shuttle/syndicate/eva)
@@ -732,26 +720,24 @@
 /obj/effect/turf_decal/tile/red/half{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
 /area/shuttle/syndicate/airlock)
 "mr" = (
-/turf/open/floor/iron/dark/smooth_corner,
+/turf/open/floor/iron/dark/textured_corner,
 /area/shuttle/syndicate/hallway)
 "mZ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/turf/open/floor/iron/corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
 /area/shuttle/syndicate/medical)
 "nq" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark/smooth_edge{
-	dir = 8
-	},
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/hallway)
 "nN" = (
 /obj/structure/chair/comfy/shuttle/tactical{
@@ -791,7 +777,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/head/helmet/space/syndicate,
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
 /area/shuttle/syndicate/eva)
@@ -822,9 +808,7 @@
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/sign/poster/contraband/random/directional/south,
-/turf/open/floor/iron/edge{
-	dir = 1
-	},
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "vv" = (
 /obj/item/clothing/head/hats/hos/syndicate,
@@ -832,17 +816,17 @@
 	pixel_x = -7
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "vQ" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/bridge)
 "wK" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
 /area/shuttle/syndicate/eva)
@@ -859,7 +843,7 @@
 /obj/structure/chair/comfy/shuttle/tactical{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
 /area/shuttle/syndicate/airlock)
@@ -902,7 +886,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 8
+	},
 /area/shuttle/syndicate/bridge)
 "zR" = (
 /obj/effect/turf_decal/syndicateemblem/top/left,
@@ -922,7 +908,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/hallway)
 "BH" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -934,7 +920,7 @@
 	},
 /area/shuttle/syndicate/airlock)
 "Cu" = (
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
 /area/shuttle/syndicate/airlock)
@@ -942,7 +928,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/hallway)
 "DP" = (
 /obj/machinery/status_display/ai{
@@ -953,19 +939,21 @@
 /obj/machinery/computer/aifixer{
 	dir = 8
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 4
+	},
 /area/shuttle/syndicate/bridge)
 "Ed" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 1;
-	req_access = list("syndicate");
-	name = "Telecommunications Centre"
+	name = "Telecommunications Centre";
+	req_access = list("syndicate")
 	},
 /obj/effect/turf_decal/siding/red,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/smooth_edge,
+/turf/open/floor/iron/dark/textured_edge,
 /area/shuttle/syndicate/engineering)
 "Fe" = (
 /obj/effect/turf_decal/syndicateemblem/bottom/middle,
@@ -976,7 +964,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/anticorner,
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
 /area/shuttle/syndicate/bridge)
@@ -1013,7 +1001,7 @@
 /area/shuttle/syndicate/medical)
 "Km" = (
 /obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "KB" = (
 /obj/effect/turf_decal/tile/red/half{
@@ -1022,7 +1010,7 @@
 /obj/structure/chair/office/tactical{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
 /area/shuttle/syndicate/airlock)
@@ -1041,7 +1029,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/syndicate/medical)
 "Ma" = (
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
 /area/shuttle/syndicate/hallway)
@@ -1054,18 +1042,18 @@
 "Nr" = (
 /obj/machinery/computer/secure_data/laptop/syndie,
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/airlock)
 "NA" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
 /area/shuttle/syndicate/airlock)
 "Oa" = (
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 8
 	},
 /area/shuttle/syndicate/hallway)
@@ -1089,8 +1077,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "Ro" = (
-/obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/large,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/medical)
 "RO" = (
 /obj/effect/turf_decal/loading_area/red{
@@ -1103,13 +1090,13 @@
 /obj/machinery/door/airlock/hatch,
 /obj/effect/turf_decal/stripes/red/line,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/hallway)
 "TD" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
 /area/shuttle/syndicate/eva)
@@ -1127,12 +1114,12 @@
 /obj/structure/chair/comfy/shuttle/tactical{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_edge{
+/turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
 /area/shuttle/syndicate/eva)
 "YN" = (
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
 /area/shuttle/syndicate/hallway)
@@ -1143,13 +1130,13 @@
 /obj/effect/turf_decal/tile/red/anticorner{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/smooth_corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 4
 	},
 /area/shuttle/syndicate/bridge)
 "ZL" = (
 /obj/effect/turf_decal/tile/blue,
-/turf/open/floor/iron/corner,
+/turf/open/floor/iron/dark/textured_corner,
 /area/shuttle/syndicate/medical)
 
 (1,1,1) = {"
@@ -1211,11 +1198,11 @@ aa
 aa
 aa
 ax
-be
-be
-be
 bX
-be
+bX
+bX
+bX
+bX
 aJ
 dz
 lJ
@@ -1246,7 +1233,7 @@ bs
 Lh
 bQ
 mZ
-br
+Ro
 JQ
 pQ
 cu
@@ -1268,9 +1255,9 @@ wK
 aZ
 aJ
 bt
-br
 Ro
-br
+Ro
+Ro
 cT
 aK
 aJ
@@ -1293,9 +1280,9 @@ Xw
 lU
 aJ
 bu
-br
-br
-br
+Ro
+Ro
+Ro
 vl
 aJ
 aa

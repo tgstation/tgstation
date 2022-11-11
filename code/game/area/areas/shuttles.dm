@@ -187,7 +187,7 @@
 /area/shuttle/escape/meteor
 	name = "\proper a meteor with engines strapped to it"
 	luminosity = NONE
-	
+
 /area/shuttle/escape/engine
 	name = "Escape Shuttle Engine"
 
@@ -198,19 +198,19 @@
 	name = "Steel Rain"
 
 /area/shuttle/sbc_starfury
-	name = "SBC Starfury"
+	name = "GBC Starfury"
 
 /area/shuttle/sbc_fighter1
-	name = "SBC Fighter 1"
+	name = "GBC Fighter 1"
 
 /area/shuttle/sbc_fighter2
-	name = "SBC Fighter 2"
+	name = "GBC Fighter 2"
 
 /area/shuttle/sbc_fighter3
-	name = "SBC Fighter 3"
+	name = "GBC Fighter 3"
 
 /area/shuttle/sbc_corvette
-	name = "SBC corvette"
+	name = "GBC corvette"
 
 /area/shuttle/syndicate_scout
 	name = "Syndicate Scout"

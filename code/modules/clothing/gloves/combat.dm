@@ -1,8 +1,8 @@
 /obj/item/clothing/gloves/combat
 	name = "combat gloves"
 	desc = "These tactical gloves are fireproof and electrically insulated."
-	icon_state = "black"
-	greyscale_colors = "#2f2e31"
+	icon_state = "combat"
+	greyscale_colors = "#3d3c40"
 	siemens_coefficient = 0
 	strip_delay = 80
 	cold_protection = HANDS

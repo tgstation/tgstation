@@ -122,13 +122,14 @@
 // Bulldog shotgun //
 
 /obj/item/gun/ballistic/shotgun/bulldog
-	name = "\improper Bulldog Shotgun"
+	name = "\improper AS-BD \"Bulldog\" shotgun"
 	desc = "A semi-auto, mag-fed shotgun for combat in narrow corridors, nicknamed 'Bulldog' by boarding parties. Compatible only with specialized 8-round drum magazines. Can have a secondary magazine attached to quickly swap between ammo types, or just to keep shooting."
 	icon_state = "bulldog"
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon = 'icons/obj/weapons/guns/syndicate/ballistic.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	weapon_weight = WEAPON_MEDIUM
@@ -142,8 +143,6 @@
 	mag_display = TRUE
 	empty_indicator = TRUE
 	empty_alarm = TRUE
-	special_mags = TRUE
-	mag_display_ammo = TRUE
 	semi_auto = TRUE
 	internal_magazine = FALSE
 	tac_reloads = TRUE
@@ -173,9 +172,7 @@
 /obj/item/gun/ballistic/shotgun/bulldog/update_overlays()
 	. = ..()
 	if(secondary_magazine)
-		. += "[icon_state]_secondary_mag_[initial(secondary_magazine.icon_state)]"
-		if(!secondary_magazine.ammo_count())
-			. += "[icon_state]_secondary_mag_empty"
+		. += "[icon_state]_secondary_mag"
 	else
 		. += "[icon_state]_no_secondary_mag"
 
@@ -235,6 +232,7 @@
 
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
+
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
 /////////////////////////////

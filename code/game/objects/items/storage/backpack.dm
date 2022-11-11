@@ -646,7 +646,6 @@
 	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite MODsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
-	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/mod/control/pre_equipped/elite/flamethrower(src)
 	new /obj/item/gun/ballistic/automatic/pistol/aps(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)

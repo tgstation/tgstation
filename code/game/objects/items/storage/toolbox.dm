@@ -168,6 +168,7 @@
 	force = 15
 	throwforce = 18
 	material_flags = NONE
+	has_latches = FALSE
 
 /obj/item/storage/toolbox/syndicate/Initialize(mapload)
 	. = ..()

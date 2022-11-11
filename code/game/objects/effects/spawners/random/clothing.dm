@@ -57,16 +57,7 @@
 	icon_state = "syndicate"
 	loot = list(
 		/obj/item/clothing/under/syndicate,
-		/obj/item/clothing/under/syndicate/skirt,
-		/obj/item/clothing/under/syndicate/bloodred,
-		/obj/item/clothing/under/syndicate/tacticool,
-		/obj/item/clothing/under/syndicate/tacticool/skirt,
-		/obj/item/clothing/under/syndicate/sniper,
-		/obj/item/clothing/under/syndicate/camo,
-		/obj/item/clothing/under/syndicate/soviet,
-		/obj/item/clothing/under/syndicate/combat,
-		/obj/item/clothing/under/syndicate/rus_army,
-		/obj/item/clothing/under/syndicate/bloodred/sleepytime,
+		/obj/item/clothing/under/syndicate/skirt, // TODO-SYNDIE: ADD NEW OUTFITS
 	)
 
 /obj/effect/spawner/random/clothing/gloves

@@ -59,8 +59,8 @@
 	icon_state = "cybersun"
 
 /obj/structure/shipping_container/gorlex
-	name = "\improper Gorlex Securities shipping container"
-	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Gorlex Securities, and is probably carrying their primary export: war crimes."
+	name = "\improper Gorlex Security Consulting shipping container"
+	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Gorlex Security Consulting, and is probably carrying their primary export: war crimes."
 	icon_state = "gorlex"
 
 /obj/structure/shipping_container/gorlex/red

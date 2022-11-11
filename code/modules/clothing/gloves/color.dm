@@ -239,13 +239,12 @@
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FINGERPRINT_PASSTHROUGH)
 	resistance_flags = NONE
 
-/obj/item/clothing/gloves/color/latex/nitrile
-	name = "nitrile gloves"
-	desc = "Pricy sterile gloves that are thicker than latex. Excellent grip ensures very fast carrying of patients along with the faster use time of various chemical related items."
-	icon_state = "nitrile"
-	inhand_icon_state = "greyscale_gloves"
-	greyscale_colors = "#99eeff"
-	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+/obj/item/clothing/gloves/color/latex/nitrile/trauma
+	name = "trauma specialist gloves"
+	desc = "A pair of nitrile-alternative gloves used by Trauma Team specialists, with a unique (and expensive) acid-repellent coating to prevent damage handling chemical hazards. Wont protect the rest of your body, though."
+	icon_state = "trauma"
+	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/gloves/color/latex/engineering
 	name = "tinker's gloves"

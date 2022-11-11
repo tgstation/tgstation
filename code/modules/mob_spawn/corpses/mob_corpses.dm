@@ -1,6 +1,13 @@
 
 ///all the corpses meant as mob drops yes, these definitely could be sorted properly. i invite (you) to do it!!
 
+// TODO-SYNDIE: ALL OF THIS
+//
+//
+//
+//
+//
+
 /obj/effect/mob_spawn/corpse/human/syndicatesoldier
 	name = "Syndicate Operative"
 	hairstyle = "Bald"
@@ -65,6 +72,38 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /obj/effect/mob_spawn/corpse/human/pirate
 	name = "Pirate"
 	skin_tone = "caucasian1" //all pirates are white because it's easier that way
@@ -89,7 +128,6 @@
 	suit = /obj/item/clothing/suit/costume/pirate
 	head = /obj/item/clothing/head/costume/pirate
 
-
 /obj/effect/mob_spawn/corpse/human/russian
 	name = "Russian"
 	outfit = /datum/outfit/russiancorpse
@@ -104,8 +142,6 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	mask = /obj/item/clothing/mask/gas
 
-
-
 /obj/effect/mob_spawn/corpse/human/russian/ranged
 	outfit = /datum/outfit/russiancorpse/ranged
 
@@ -113,20 +149,18 @@
 	name = "Ranged Russian Corpse"
 	head = /obj/item/clothing/head/costume/ushanka
 
-
 /obj/effect/mob_spawn/corpse/human/russian/ranged/trooper
 	outfit = /datum/outfit/russiancorpse/ranged/trooper
 
 /datum/outfit/russiancorpse/ranged/trooper
 	name = "Ranged Russian Trooper Corpse"
-	uniform = /obj/item/clothing/under/syndicate/camo
+//	uniform = /obj/item/clothing/under/syndicate/camo // TODO-SYNDIE: FIGURE OUT REPLACEMENT/SUBSTITUTE FOR CAMO OUTFIT.
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/helmet/alt
 	mask = /obj/item/clothing/mask/balaclava
-
 
 /obj/effect/mob_spawn/corpse/human/russian/ranged/officer
 	name = "Russian Officer"
@@ -139,7 +173,6 @@
 	shoes = /obj/item/clothing/shoes/combat
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/costume/ushanka
-
 
 /obj/effect/mob_spawn/corpse/human/wizard
 	name = "Space Wizard Corpse"
@@ -156,7 +189,6 @@
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	head = /obj/item/clothing/head/wizard
 
-
 /obj/effect/mob_spawn/corpse/human/nanotrasensoldier
 	name = "\improper Nanotrasen Private Security Officer"
 	outfit = /datum/outfit/nanotrasensoldiercorpse2
@@ -171,7 +203,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/private_security/tradepost_officer
@@ -190,7 +222,7 @@
 	gloves = /obj/item/clothing/gloves/combat
 	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
-	head = /obj/item/clothing/head/helmet/swat/nanotrasen
+	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack/security
 	id = /obj/item/card/id/advanced/centcom
 	id_trim = /datum/id_trim/centcom/corpse/assault

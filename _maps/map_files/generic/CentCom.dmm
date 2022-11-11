@@ -2341,9 +2341,6 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 9
 	},
-/obj/structure/sign/poster/contraband/gorlex_recruitment{
-	pixel_y = 32
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "gM" = (
@@ -3057,7 +3054,7 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
-/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/head/helmet/swat,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3068,7 +3065,7 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
-/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/head/helmet/swat,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3173,7 +3170,7 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
-/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/head/helmet/swat,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -3184,7 +3181,7 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
-/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/head/helmet/swat,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -4302,11 +4299,13 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "mg" = (
-/obj/structure/sign/poster/contraband/gorlex_recruitment{
-	pixel_x = -32
+/obj/effect/light_emitter{
+	set_cap = 1;
+	set_luminosity = 4
 	},
-/turf/open/floor/mineral/titanium,
-/area/centcom/syndicate_mothership/control)
+/obj/structure/closet/crate/gorlex,
+/turf/open/misc/asteroid/snow/airless,
+/area/centcom/syndicate_mothership)
 "mi" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -4416,7 +4415,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/closet/cardboard/metal,
+/obj/structure/closet/crate/gorlex,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
 "mA" = (
@@ -10034,9 +10033,6 @@
 	dir = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
-/obj/structure/sign/poster/contraband/gorlex_recruitment{
-	pixel_y = -32
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "CU" = (
@@ -11460,13 +11456,9 @@
 /turf/open/space,
 /area/centcom/wizard_station)
 "GZ" = (
-/obj/structure/sign/poster/contraband/gorlex_recruitment{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark/textured_half{
-	dir = 8
-	},
-/area/centcom/syndicate_mothership/control)
+/obj/structure/closet/crate/gorlex,
+/turf/open/misc/asteroid/snow/airless,
+/area/centcom/syndicate_mothership)
 "Ha" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -14905,7 +14897,7 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
-/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/head/helmet/swat,
 /obj/item/crowbar/red,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -15984,7 +15976,7 @@
 /obj/structure/closet/secure_closet/security,
 /obj/item/storage/belt/security/full,
 /obj/item/gun/ballistic/automatic/wt550,
-/obj/item/clothing/head/helmet/swat/nanotrasen,
+/obj/item/clothing/head/helmet/swat,
 /obj/item/crowbar/red,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -17485,9 +17477,6 @@
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/structure/closet/syndicate/personal,
-/obj/structure/sign/poster/contraband/gorlex_recruitment{
-	pixel_y = 32
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 8
@@ -27562,7 +27551,7 @@ OO
 ng
 mV
 IR
-mg
+HN
 NR
 Wh
 VQ
@@ -31917,7 +31906,7 @@ Bz
 Bz
 Bz
 Bz
-Bz
+mg
 Bz
 Ff
 Ff
@@ -32175,13 +32164,13 @@ Bz
 Bz
 Bz
 Bz
-Ff
+GZ
 Ff
 Ff
 Ff
 nz
 xI
-GZ
+YR
 HG
 GK
 nz

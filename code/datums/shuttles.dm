@@ -459,7 +459,7 @@
 	description = "A luxurious casino packed to the brim with everything you need to start new gambling addicitions!"
 	admin_notes = "The ship is a bit chunky, so watch where you park it."
 	credit_cost = 7777
-	
+
 /datum/map_template/shuttle/emergency/shadow
 	suffix = "shadow"
 	name = "The NTSS Shadow"
@@ -707,19 +707,19 @@
 
 /datum/map_template/shuttle/starfury/fighter_one
 	suffix = "fighter1"
-	name = "SBC Starfury Fighter (1)"
+	name = "GBC Starfury Fighter (1)"
 
 /datum/map_template/shuttle/starfury/fighter_two
 	suffix = "fighter2"
-	name = "SBC Starfury Fighter (2)"
+	name = "GBC Starfury Fighter (2)"
 
 /datum/map_template/shuttle/starfury/fighter_three
 	suffix = "fighter3"
-	name = "SBC Starfury Fighter (3)"
+	name = "GBC Starfury Fighter (3)"
 
 /datum/map_template/shuttle/starfury/corvette
 	suffix = "corvette"
-	name = "SBC Starfury Corvette"
+	name = "GBC Starfury Corvette"
 
 /datum/map_template/shuttle/ruin/caravan_victim
 	suffix = "caravan_victim"

@@ -20,3 +20,9 @@
 /obj/item/ammo_box/magazine/internal/rus357/Initialize(mapload)
 	stored_ammo += new ammo_type(src)
 	. = ..()
+
+/obj/item/ammo_box/magazine/internal/cylinder/judge
+	name = "judge revolver cylinder"
+	ammo_type = /obj/item/ammo_casing/shotgun
+	caliber = CALIBER_SHOTGUN
+	max_ammo = 5

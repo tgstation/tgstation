@@ -138,6 +138,16 @@
 /obj/machinery/suit_storage_unit/industrial/loader
 	mod_type = /obj/item/mod/control/pre_equipped/loader
 
+/obj/machinery/suit_storage_unit/gorlex
+	name = "\improper Extra-Vehicular Stationing Unit"
+	icon_state = "gorlex"
+	base_icon_state = "gorlex"
+
+/obj/machinery/suit_storage_unit/gorlex/filled
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	storage_type = /obj/item/tank/jetpack/oxygen/harness
+	mod_type = /obj/item/mod/control/pre_equipped/nuclear
+
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)

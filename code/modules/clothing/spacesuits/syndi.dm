@@ -16,30 +16,6 @@
 	armor = list(MELEE = 40, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 80, ACID = 85)
 	cell = /obj/item/stock_parts/cell/hyper
 
-//Green syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/green
-	name = "green space helmet"
-	icon_state = "syndicate-helm-green"
-	inhand_icon_state = "space_helmet_syndicate"
-
-/obj/item/clothing/suit/space/syndicate/green
-	name = "green space suit"
-	icon_state = "syndicate-green"
-	inhand_icon_state = "syndicate-green"
-
-
-//Dark green syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/green/dark
-	name = "dark green space helmet"
-	icon_state = "syndicate-helm-green-dark"
-	inhand_icon_state = "syndicate-helm-green-dark"
-
-/obj/item/clothing/suit/space/syndicate/green/dark
-	name = "dark green space suit"
-	icon_state = "syndicate-green-dark"
-	inhand_icon_state = "syndicate-green-dark"
-
-
 //Orange syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/orange
 	name = "orange space helmet"
@@ -50,18 +26,6 @@
 	name = "orange space suit"
 	icon_state = "syndicate-orange"
 	inhand_icon_state = "syndicate-orange"
-
-//Blue syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/blue
-	name = "blue space helmet"
-	icon_state = "syndicate-helm-blue"
-	inhand_icon_state = "syndicate-helm-blue"
-
-/obj/item/clothing/suit/space/syndicate/blue
-	name = "blue space suit"
-	icon_state = "syndicate-blue"
-	inhand_icon_state = "syndicate-blue"
-
 
 //Black syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black
@@ -75,30 +39,6 @@
 	inhand_icon_state = "syndicate-black"
 
 
-//Black-green syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/green
-	name = "black space helmet"
-	icon_state = "syndicate-helm-black-green"
-	inhand_icon_state = "syndicate-helm-black-green"
-
-/obj/item/clothing/suit/space/syndicate/black/green
-	name = "black and green space suit"
-	icon_state = "syndicate-black-green"
-	inhand_icon_state = "syndicate-black-green"
-
-
-//Black-blue syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/blue
-	name = "black space helmet"
-	icon_state = "syndicate-helm-black-blue"
-	inhand_icon_state = "syndicate-helm-black-blue"
-
-/obj/item/clothing/suit/space/syndicate/black/blue
-	name = "black and blue space suit"
-	icon_state = "syndicate-black-blue"
-	inhand_icon_state = "syndicate-black-blue"
-
-
 //Black medical syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/med
 	name = "black space helmet"
@@ -110,19 +50,6 @@
 	icon_state = "syndicate-black-med"
 	inhand_icon_state = "syndicate-black"
 
-
-//Black-orange syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/orange
-	name = "black space helmet"
-	icon_state = "syndicate-helm-black-orange"
-	inhand_icon_state = "syndicate-helm-black"
-
-/obj/item/clothing/suit/space/syndicate/black/orange
-	name = "black and orange space suit"
-	icon_state = "syndicate-black-orange"
-	inhand_icon_state = "syndicate-black"
-
-
 //Black-red syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/red
 	name = "black space helmet"
@@ -133,6 +60,17 @@
 	name = "black and red space suit"
 	icon_state = "syndicate-black-red"
 	inhand_icon_state = "syndicate-black-red"
+
+//Black with yellow/red engineering syndicate space suit
+/obj/item/clothing/head/helmet/space/syndicate/black/engie
+	name = "black space helmet"
+	icon_state = "syndicate-helm-black-engie"
+	inhand_icon_state = "syndicate-helm-black"
+
+/obj/item/clothing/suit/space/syndicate/black/engie
+	name = "black engineering space suit"
+	icon_state = "syndicate-black-engie"
+	inhand_icon_state = "syndicate-black"
 
 //Black-red syndicate contract varient
 /obj/item/clothing/head/helmet/space/syndicate/contract
@@ -149,14 +87,3 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract"
 	inhand_icon_state = null
-
-//Black with yellow/red engineering syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/black/engie
-	name = "black space helmet"
-	icon_state = "syndicate-helm-black-engie"
-	inhand_icon_state = "syndicate-helm-black"
-
-/obj/item/clothing/suit/space/syndicate/black/engie
-	name = "black engineering space suit"
-	icon_state = "syndicate-black-engie"
-	inhand_icon_state = "syndicate-black"

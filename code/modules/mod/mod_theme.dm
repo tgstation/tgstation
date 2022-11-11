@@ -792,8 +792,8 @@
 	)
 
 /datum/mod_theme/syndicate
-	name = "syndicate"
-	desc = "A suit designed by Gorlex Marauders, offering armor ruled illegal in most of Spinward Stellar."
+	name = "hybris"
+	desc = "Property of Gorlex Security Consulting, LLC. Use only with license. All rights reserved.."
 	extended_desc = "An advanced combat suit adorned in a sinister crimson red color scheme, produced and manufactured \
 		for special mercenary operations. The build is a streamlined layering consisting of shaped Plasteel, \
 		and composite ceramic, while the under suit is lined with a lightweight Kevlar and durathread hybrid weave \
