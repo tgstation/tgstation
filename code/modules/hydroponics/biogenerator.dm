@@ -10,7 +10,7 @@
 	var/biomass = 0
 	var/efficiency = 0
 	var/productivity = 0
-	var/max_items = 10
+	var/max_items = 20
 	var/max_biomass = 500
 	var/max_output = 50
 	var/datum/techweb/stored_research
@@ -54,7 +54,7 @@
 	var/I = 0
 	var/V = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		I += 10 * B.rating
+		I += 20 * B.rating
 		V += 500 * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		P += M.rating
