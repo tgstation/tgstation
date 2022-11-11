@@ -114,7 +114,7 @@
 
 	return ..()
 
-/obj/item/disk/nuclear/suicide_act(mob/user)
+/obj/item/disk/nuclear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/machines/alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
@@ -126,7 +126,7 @@
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message(span_suicide("[user] is destroyed by the nuclear blast!"))
 	user.adjustOxyLoss(200)
-	user.death(0)
+	user.death(FALSE)
 
 /obj/item/disk/nuclear/fake
 	fake = TRUE

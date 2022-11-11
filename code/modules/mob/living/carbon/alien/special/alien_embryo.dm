@@ -125,6 +125,7 @@
 		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
 		owner.adjustBruteLoss(40)
 		owner.cut_overlay(overlay)
+	owner.investigate_log("has been gibbed by an alien larva.", INVESTIGATE_DEATHS)
 	qdel(src)
 
 

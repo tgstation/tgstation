@@ -65,7 +65,7 @@
 	else
 		return TRUE
 
-/obj/item/airlock_painter/suicide_act(mob/user)
+/obj/item/airlock_painter/suicide_act(mob/living/user)
 	var/obj/item/organ/internal/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)

@@ -81,6 +81,7 @@
 		movable_atom.forceMove(this_turf)
 		if(isliving(movable_atom))
 			var/mob/living/fucked_up_thing = movable_atom
+			fucked_up_thing.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			fucked_up_thing.gib()
 
 	SEND_SIGNAL(src, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, scanned_atoms)

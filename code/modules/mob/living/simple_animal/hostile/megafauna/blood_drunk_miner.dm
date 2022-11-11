@@ -142,6 +142,7 @@ Difficulty: Medium
 					adjustHealth(-L.maxHealth)
 				else
 					adjustHealth(-(L.maxHealth * 0.5))
+			L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			L.gib()
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)

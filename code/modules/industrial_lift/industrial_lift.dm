@@ -307,6 +307,7 @@ GLOBAL_LIST_EMPTY(lifts)
 				to_chat(crushed, span_userdanger("You are crushed by [src]!"))
 				if(violent_landing)
 					// Violent landing = gibbed. But the nicest kind of gibbing, keeping everything intact.
+					crushed.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 					crushed.gib(FALSE, FALSE, FALSE)
 				else
 					// Less violent landing simply crushes every bone in your body.

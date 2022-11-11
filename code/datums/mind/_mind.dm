@@ -161,7 +161,7 @@
 
 	if(key)
 		if(new_character.key != key) //if we're transferring into a body with a key associated which is not ours
-			new_character.ghostize(1) //we'll need to ghostize so that key isn't mobless.
+			new_character.ghostize(TRUE) //we'll need to ghostize so that key isn't mobless.
 	else
 		key = new_character.key
 

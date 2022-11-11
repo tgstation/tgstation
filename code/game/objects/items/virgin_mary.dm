@@ -54,4 +54,4 @@
 
 /obj/item/virgin_mary/proc/manual_suicide(mob/living/user)
 	user.adjustOxyLoss(200)
-	user.death(0)
+	user.death(FALSE)

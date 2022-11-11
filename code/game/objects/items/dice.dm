@@ -30,9 +30,9 @@
 	))
 	new picked(src)
 
-/obj/item/storage/dice/suicide_act(mob/user)
+/obj/item/storage/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/storage/dice/hazard
 
@@ -67,9 +67,9 @@
 		result = roll(sides)
 	update_appearance()
 
-/obj/item/dice/suicide_act(mob/user)
+/obj/item/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/dice/d1
 	name = "d1"
@@ -324,10 +324,12 @@
 		if(1)
 			//Dust
 			selected_turf.visible_message(span_userdanger("[user] turns to dust!"))
+			user.investigate_log("has been dusted by a die of fate.", INVESTIGATE_DEATHS)
 			user.dust()
 		if(2)
 			//Death
 			selected_turf.visible_message(span_userdanger("[user] suddenly dies!"))
+			user.investigate_log("has been killed by a die of fate.", INVESTIGATE_DEATHS)
 			user.death()
 		if(3)
 			//Swarm of creatures

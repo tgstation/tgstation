@@ -338,7 +338,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  * Arguments:
  * * user: The mob that is suiciding
  */
-/obj/item/proc/suicide_act(mob/user)
+/obj/item/proc/suicide_act(mob/living/user)
 	return
 
 /obj/item/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
