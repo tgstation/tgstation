@@ -53,8 +53,8 @@
 	. = ..()
 	var/E = 0
 	var/P = 0
-	var/I = 0
-	var/V = 0
+	var/I = 20
+	var/V = 500
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		I += 20 * B.rating
 		V += 500 * B.rating
