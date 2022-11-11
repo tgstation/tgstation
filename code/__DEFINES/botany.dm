@@ -73,7 +73,8 @@
 
 // obj/machinery/hydroponics/var/plant_status defines
 
-#define HYDROTRAY_CYCLE_DELAY 200
+/// How long to wait between plant age ticks, by default. See [/obj/machinery/hydroponics/var/cycledelay]
+#define HYDROTRAY_CYCLE_DELAY 20 SECONDS
 
 #define HYDROTRAY_NO_PLANT "missing"
 #define HYDROTRAY_PLANT_DEAD "dead"
