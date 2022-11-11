@@ -1,0 +1,4 @@
+author: "etherware-novice"
+delete-after: True
+changes:
+  - rscadd: "title screen examine text"

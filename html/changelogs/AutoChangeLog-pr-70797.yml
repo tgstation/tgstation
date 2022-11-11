@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Random bedsheet spawners will now give their orientation to their spawned bedsheet, for beds that aren't orientated in the regular direction. Mappers rejoice!"
