@@ -30,6 +30,7 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
+	butcher_results = list(/obj/item/food/meat/slab = 1)
 	ai_controller = /datum/ai_controller/basic_controller/rabbit
 	/// passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
