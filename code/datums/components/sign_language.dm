@@ -83,18 +83,16 @@
 		return TRUE
 
 	if(HAS_TRAIT(human_user, TRAIT_SIGN_LANG))
-		icon_state = "talk_wheel"
-		add_atom_colour("#92b8e4", FIXED_COLOUR_PRIORITY)
+		icon_state = "speak_vocal"
 		to_chat(human_user, span_green("You are no longer communicating with sign language."))
 	else
-		icon_state = "talk_wheel"
-		add_atom_colour("#ff0000", FIXED_COLOUR_PRIORITY)
+		icon_state = "speak_sign"
 		to_chat(human_user, span_green("You are now communicating with sign language."))
 
 	linked_component.toggle_sign_language()
 
 /// Signal proc for [COMSIG_TOGGLE_SIGNLANGUAGE]
-/// Toggles sign language on/off for the parent Human.
+/// Toggles sign language on/off for the parent Human. Only returns TRUE upon enabling.
 /datum/component/sign_language/proc/toggle_sign_language(toggle_off = FALSE)
 	SIGNAL_HANDLER
 
