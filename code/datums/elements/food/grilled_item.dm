@@ -29,3 +29,10 @@
 		ADD_TRAIT(this_food, TRAIT_FOOD_GRILLED, "boomers")
 	if(grill_time > 30)
 		this_food.AddComponent(/datum/component/edible, foodtypes = FRIED)
+
+/datum/element/grilled_item/Detach(atom/source, ...)
+	source.name = initial(source.name)
+	source.desc = initial(source.desc)
+	REMOVE_TRAIT(source, TRAIT_FOOD_GRILLED, "boomers")
+	// We will not bother making it un-edible again, it will get too messy
+	return ..()
