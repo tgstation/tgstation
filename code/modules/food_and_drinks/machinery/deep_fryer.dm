@@ -2,13 +2,14 @@
 #define DEEPFRYER_COOKTIME 60
 #define DEEPFRYER_BURNTIME 120
 
+/// Global typecache of things which should never be fried.
 GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/reagent_containers/cup,
 	/obj/item/reagent_containers/syringe,
 	/obj/item/reagent_containers/condiment,
-	/obj/item/storage,
 	/obj/item/delivery,
-	/obj/item/his_grace)))
+	/obj/item/his_grace,
+)))
 
 /obj/machinery/deepfryer
 	name = "deep fryer"
