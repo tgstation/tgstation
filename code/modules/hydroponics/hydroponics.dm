@@ -300,7 +300,7 @@
 		set_self_sustaining(FALSE)
 
 /obj/machinery/hydroponics/process(delta_time)
-	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
+	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(self_sustaining)
 		if(powered())
@@ -319,7 +319,7 @@
 			if(age < myseed.maturation)
 				lastproduce = age
 
-			needs_update = 1
+			needs_update = TRUE
 
 
 //Nutrients//////////////////////////////////////////////////////////////
@@ -493,6 +493,7 @@
 		else
 			var/t_growthstate = clamp(round((age / myseed.maturation) * myseed.growthstages), 1, myseed.growthstages)
 			plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
+	plant_overlay.pixel_y = myseed.plant_icon_offset
 	return plant_overlay
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()
