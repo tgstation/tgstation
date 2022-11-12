@@ -410,7 +410,24 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 			apply_mode(user)
 		if ("threshold")
-			// MBTODO: threshold
+			var/env = params["env"]
+			if(text2path(env))
+				env = text2path(env)
+
+			var/name = params["var"]
+			var/datum/tlv/tlv = TLV[env]
+			if(isnull(tlv))
+				return
+			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
+			if(!isnull(value) && !..())
+				if(value < 0)
+					tlv.vars[name] = -1
+				else
+					tlv.vars[name] = round(value, 0.01)
+				investigate_log(" treshold value for [env]:[name] was set to [value] by [key_name(usr)]",INVESTIGATE_ATMOS)
+				var/turf/our_turf = get_turf(src)
+				var/datum/gas_mixture/environment = our_turf.return_air()
+				check_air_dangerlevel(our_turf, environment, environment.temperature)
 		if ("mode")
 			if (alarm_manager.send_alarm(ALARM_ATMOS))
 				danger_level = AIR_ALARM_ALERT_SEVERE
