@@ -282,10 +282,10 @@
 	desc = "You possess excellent communication skills in sign language."
 	icon = "sign-language"
 	value = 4
+	mob_trait = TRAIT_CAN_SIGN_LANG
 	mail_goodies = list(/obj/item/clothing/gloves/radio)
 
 /datum/quirk/item_quirk/signer/add_unique()
-	ADD_TRAIT(quirk_holder, TRAIT_CAN_SIGN_LANG, TRAIT_GENERIC)
 	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
 	if(isplasmaman(quirk_holder))
 		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
