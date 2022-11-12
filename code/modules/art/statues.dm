@@ -125,6 +125,10 @@
 	name = "statue of the research director"
 	icon_state = "rd"
 
+/obj/structure/statue/gold/qm
+	name = "statue of the quartermaster"
+	icon_state = "qm"
+
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver

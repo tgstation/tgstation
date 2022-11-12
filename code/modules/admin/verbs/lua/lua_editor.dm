@@ -20,7 +20,7 @@
 	. = ..()
 	if(state)
 		current_state = state
-		LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+		LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -32,7 +32,7 @@
 /datum/lua_editor/Destroy(force, ...)
 	. = ..()
 	if(current_state)
-		LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+		LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 
 /datum/lua_editor/ui_state(mob/user)
 	return GLOB.debug_state
@@ -107,16 +107,16 @@
 				return TRUE
 			var/datum/lua_state/new_state = new(state_name)
 			SSlua.states += new_state
-			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+			LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 			current_state = new_state
-			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+			LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 			page = 0
 			return TRUE
 		if("switchState")
 			var/state_index = params["index"]
-			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+			LAZYREMOVEASSOC(SSlua.editors, text_ref(current_state), src)
 			current_state = SSlua.states[state_index]
-			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
+			LAZYADDASSOCLIST(SSlua.editors, text_ref(current_state), src)
 			page = 0
 			return TRUE
 		if("runCode")

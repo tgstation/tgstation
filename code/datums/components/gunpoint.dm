@@ -137,23 +137,13 @@
 		return
 	point_of_no_return = TRUE
 
-	if(!weapon.can_shoot() || !weapon.can_trigger_gun(shooter) || (weapon.weapon_weight == WEAPON_HEAVY && shooter.get_inactive_held_item()))
-		shooter.visible_message(span_danger("[shooter] fumbles [weapon]!"), \
-			span_danger("You fumble [weapon] and fail to fire at [target]!"), ignored_mobs = target)
-		to_chat(target, span_userdanger("[shooter] fumbles [weapon] and fails to fire at you!"))
-		qdel(src)
-		return
-
 	if(weapon.chambered && weapon.chambered.loaded_projectile)
 		weapon.chambered.loaded_projectile.damage *= damage_mult
 		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)
 			weapon.chambered.loaded_projectile.wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
 			weapon.chambered.loaded_projectile.bare_wound_bonus += damage_mult * GUNPOINT_BASE_WOUND_BONUS
 
-	if(weapon.check_botched(shooter))
-		return
-
-	var/fired = weapon.process_fire(target, shooter)
+	var/fired = weapon.fire_gun(target, shooter)
 	if(!fired && weapon.chambered?.loaded_projectile)
 		weapon.chambered.loaded_projectile.damage /= damage_mult
 		if(weapon.chambered.loaded_projectile.wound_bonus != CANT_WOUND)

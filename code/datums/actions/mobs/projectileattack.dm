@@ -21,6 +21,7 @@
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	attack_sequence(owner, target_atom)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/proc/attack_sequence(mob/living/firer, atom/target)
 	shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
@@ -286,9 +287,7 @@
 	cooldown_time = 2.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
-	attack_sequence(owner, target_atom)
-	StartCooldown()
+	. = ..()
 	Remove(owner)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/colossus_final/attack_sequence(mob/living/firer, atom/target)

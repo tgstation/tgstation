@@ -3,7 +3,7 @@
  * by a flat amount whenever a successful attack is performed against another living mob.
  */
 /datum/element/lifesteal
-	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// heals a constant amount every time a hit occurs
 	var/flat_heal

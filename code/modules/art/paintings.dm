@@ -75,7 +75,7 @@
 	base_pixel_x = 11
 	base_pixel_y = 10
 
-	custom_premium_price = PAYCHECK_CREW
+	custom_price = PAYCHECK_CREW
 
 /obj/item/canvas/Initialize(mapload)
 	. = ..()
@@ -372,7 +372,7 @@
 	framed_offset_y = 5
 
 /obj/item/canvas/twentyfour_twentyfour
-	name = "canvas (AI Universal Standard)"
+	name = "canvas (24x24) (AI Universal Standard)"
 	desc = "Besides being almost too large for a standard frame, the AI can accept these as a display from their internal database after you've hung it up."
 	icon_state = "24x24"
 	width = 24
@@ -399,7 +399,7 @@
 	pixels_per_unit = 20
 	w_class = WEIGHT_CLASS_BULKY
 
-	custom_premium_price = PAYCHECK_CREW * 1.25
+	custom_price = PAYCHECK_CREW * 1.25
 
 /obj/item/canvas/thirtysix_twentyfour/Initialize(mapload)
 	. = ..()
@@ -422,7 +422,7 @@
 	pixels_per_unit = 18
 	w_class = WEIGHT_CLASS_BULKY
 
-	custom_premium_price = PAYCHECK_CREW * 1.75
+	custom_price = PAYCHECK_CREW * 1.75
 
 /obj/item/canvas/fortyfive_twentyseven/Initialize(mapload)
 	. = ..()
@@ -626,6 +626,7 @@
 	icon_state = "frame-large-empty"
 	result_path = /obj/structure/sign/painting/large
 	pixel_shift = 0 //See [/obj/structure/sign/painting/large/proc/finalize_size]
+	custom_price = PAYCHECK_CREW * 1.25
 
 /obj/item/wallframe/painting/large/try_build(turf/on_wall, mob/user)
 	. = ..()

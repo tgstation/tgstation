@@ -117,6 +117,10 @@
 /datum/component/infective/proc/try_infect_streak(datum/source, list/directions, list/output_diseases)
 	SIGNAL_HANDLER
 
+	// This blood is not infectable / does not have a diseases list
+	if(!islist(output_diseases))
+		return
+
 	output_diseases |= diseases
 
 /datum/component/infective/proc/try_infect(mob/living/L, target_zone)

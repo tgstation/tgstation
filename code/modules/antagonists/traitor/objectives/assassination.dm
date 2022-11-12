@@ -99,7 +99,7 @@
 		return //your target please
 	if(equipper.stat != DEAD)
 		return //kill them please
-	if(!(slot & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)))	
+	if(!(slot & (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)))
 		return //in their pockets please
 	succeed_objective()
 
@@ -225,10 +225,6 @@
 /datum/traitor_objective/assassinate/ungenerate_objective()
 	UnregisterSignal(kill_target, COMSIG_LIVING_DEATH)
 	kill_target = null
-
-/datum/traitor_objective/assassinate/is_duplicate(datum/traitor_objective/assassinate/objective_to_compare)
-	. = ..()
-	return kill_target == objective_to_compare.kill_target
 
 ///proc for checking for special states that invalidate a target
 /datum/traitor_objective/assassinate/proc/special_target_filter(list/possible_targets)

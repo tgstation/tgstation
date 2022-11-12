@@ -65,7 +65,7 @@
 	belt = /obj/item/modular_computer/tablet/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	l_pocket = /obj/item/laser_pointer
+	l_pocket = /obj/item/laser_pointer/purple
 	l_hand = /obj/item/clipboard
 
 	backpack = /obj/item/storage/backpack/science

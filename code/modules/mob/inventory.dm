@@ -153,7 +153,7 @@
 	return !held_items[hand_index]
 
 /mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE)
-	if(hand_index == null || (!forced && !can_put_in_hand(I, hand_index)))
+	if(hand_index == null || !held_items.len || (!forced && !can_put_in_hand(I, hand_index)))
 		return FALSE
 
 	if(isturf(I.loc) && !ignore_anim)
@@ -479,9 +479,9 @@
 	else if(amt > old_limbs)
 		hand_bodyparts.len = amt
 		for(var/i in old_limbs+1 to amt)
-			var/path = /obj/item/bodypart/l_arm
+			var/path = /obj/item/bodypart/arm/left
 			if(!(i % 2))
-				path = /obj/item/bodypart/r_arm
+				path = /obj/item/bodypart/arm/right
 
 			var/obj/item/bodypart/BP = new path ()
 			BP.held_index = i

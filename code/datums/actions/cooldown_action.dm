@@ -71,7 +71,7 @@
 		ability.Remove(removed_from)
 	return ..()
 
-/datum/action/cooldown/IsAvailable()
+/datum/action/cooldown/IsAvailable(feedback = FALSE)
 	return ..() && (next_use_time <= world.time)
 
 /// Initializes any sequence actions
@@ -160,7 +160,7 @@
 
 /// Intercepts client owner clicks to activate the ability
 /datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	if(!target)
 		return FALSE

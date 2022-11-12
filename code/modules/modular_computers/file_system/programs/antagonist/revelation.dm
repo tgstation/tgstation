@@ -28,9 +28,7 @@
 		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
 		computer.enabled = FALSE
 		computer.update_appearance()
-		var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 		var/obj/item/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
-		qdel(hard_drive)
 		computer.take_damage(25, BRUTE, 0, 0)
 		if(battery_module && prob(25))
 			qdel(battery_module)

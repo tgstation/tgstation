@@ -17,6 +17,7 @@
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 
 	var/list/applicable_heads = list(
@@ -98,11 +99,6 @@
 
 /datum/traitor_objective/bug_room/ungenerate_objective()
 	bug = null
-
-/datum/traitor_objective/bug_room/is_duplicate(datum/traitor_objective/bug_room/objective_to_compare)
-	if(objective_to_compare.target_office == target_office)
-		return TRUE
-	return FALSE
 
 /obj/item/traitor_bug
 	name = "suspicious device"

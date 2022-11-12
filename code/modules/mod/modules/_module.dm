@@ -294,6 +294,9 @@
 
 /// Pins the module to the user's action buttons
 /obj/item/mod/module/proc/pin(mob/user)
+	if(module_type == MODULE_PASSIVE)
+		return
+
 	var/datum/action/item_action/mod/pinned_module/existing_action = pinned_to[REF(user)]
 	if(existing_action)
 		mod.remove_item_action(existing_action)

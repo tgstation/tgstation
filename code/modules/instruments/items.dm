@@ -30,9 +30,9 @@
 	if(user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
 		return STOP_PLAYING
 
-/obj/item/instrument/suicide_act(mob/user)
+/obj/item/instrument/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/instrument/attack_self(mob/user)
 	if(!ISADVANCEDTOOLUSER(user))

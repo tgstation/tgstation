@@ -63,6 +63,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 		for(var/obj/item/innerthing in food)
 			destroy_item(innerthing, TRUE)
 	for(var/mob/living/victim in thing)
+		if(victim.stat != DEAD)
+			victim.investigate_log("has been killed by a destructive analyzer.", INVESTIGATE_DEATHS)
 		victim.death()
 
 	qdel(thing)

@@ -232,7 +232,7 @@
 		"res_amount" = R.res_amount,
 		"max_res_amount" = R.max_res_amount,
 		"req_amount" = R.req_amount,
-		"ref" = "\ref[R]",
+		"ref" = text_ref(R),
 	)
 
 /**
@@ -704,10 +704,6 @@
 	add_hiddenprint_list(GET_ATOM_HIDDENPRINTS(from))
 	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
-
-/obj/item/stack/microwave_act(obj/machinery/microwave/M)
-	if(istype(M) && M.dirty < 100)
-		M.dirty += amount
 
 #undef STACK_CHECK_CARDINALS
 #undef STACK_CHECK_ADJACENT

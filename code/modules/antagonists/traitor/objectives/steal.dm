@@ -189,11 +189,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		UnregisterSignal(bug, list(COMSIG_TRAITOR_BUG_PLANTED_OBJECT, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT))
 	bug = null
 
-/datum/traitor_objective/steal_item/is_duplicate(datum/traitor_objective/steal_item/objective_to_compare)
-	if(objective_to_compare.target_item.type == target_item.type)
-		return TRUE
-	return FALSE
-
 /datum/traitor_objective/steal_item/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(special_equipment)

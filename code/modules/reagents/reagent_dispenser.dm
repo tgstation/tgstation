@@ -49,7 +49,7 @@
 /obj/structure/reagent_dispensers/Initialize(mapload)
 	. = ..()
 
-	if(icon_state == "water" && SSevents.holidays?[APRIL_FOOLS])
+	if(icon_state == "water" && check_holidays(APRIL_FOOLS))
 		icon_state = "water_fools"
 
 /obj/structure/reagent_dispensers/examine(mob/user)
@@ -246,7 +246,7 @@
 /obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
 	. = ..()
 
-	if(SSevents.holidays?[APRIL_FOOLS])
+	if(check_holidays(APRIL_FOOLS))
 		icon_state = "fuel_fools"
 
 /obj/structure/reagent_dispensers/fueltank/blob_act(obj/structure/blob/B)

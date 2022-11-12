@@ -195,7 +195,10 @@
 
 
 	vis_locs = null //clears this atom out of all viscontents
-	vis_contents.Cut()
+
+	// Checking length(vis_contents) before cutting has significant speed benefits
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 /atom/movable/proc/update_emissive_block()
 	if(!blocks_emissive)

@@ -1,6 +1,6 @@
 ///This proc is used by basic mobs to give them a simple ranged attack! In theory this could be extended to
 /datum/element/ranged_attacks
-	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	var/casingtype = /obj/item/ammo_casing/glockroach
 	var/projectilesound = 'sound/weapons/gun/pistol/shot.ogg'

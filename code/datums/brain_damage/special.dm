@@ -332,10 +332,6 @@
 												"Do you even exist?",\
 												"You simply fade away.")]</span>")
 	owner.forceMove(veil)
-	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
-	for(var/thing in owner)
-		var/atom/movable/AM = thing
-		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	COOLDOWN_START(src, crisis_cooldown, 1 MINUTES)
 	addtimer(CALLBACK(src, .proc/fade_in), duration)
 

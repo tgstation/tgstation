@@ -3,7 +3,6 @@
  */
 
 /datum/element/skittish
-	element_flags = ELEMENT_DETACH
 
 /datum/element/skittish/Attach(datum/target)
 	. = ..()

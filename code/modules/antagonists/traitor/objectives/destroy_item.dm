@@ -70,11 +70,6 @@
 		signals = list(COMSIG_MOB_EQUIPPED_ITEM = .proc/on_item_pickup))
 	return TRUE
 
-/datum/traitor_objective/destroy_item/is_duplicate(datum/traitor_objective/destroy_item/objective_to_compare)
-	if(objective_to_compare.target_item.type == target_item.type)
-		return TRUE
-	return FALSE
-
 /datum/traitor_objective/destroy_item/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(special_equipment)

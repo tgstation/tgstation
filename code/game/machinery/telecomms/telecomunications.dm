@@ -111,8 +111,10 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/LateInitialize()
 	..()
-	for(var/obj/machinery/telecomms/T in (long_range_link ? GLOB.telecomms_list : urange(20, src, 1)))
-		add_automatic_link(T)
+
+	for(var/obj/machinery/telecomms/telecomms_machine in GLOB.telecomms_list)
+		if (long_range_link || IN_GIVEN_RANGE(src, telecomms_machine, 20))
+			add_automatic_link(telecomms_machine)
 
 /obj/machinery/telecomms/Destroy()
 	GLOB.telecomms_list -= src

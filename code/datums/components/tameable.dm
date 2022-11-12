@@ -27,6 +27,7 @@
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_tame)
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, .proc/on_tame) //Instantly succeeds
+	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, .proc/on_tame) //Instantly succeeds
 
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER

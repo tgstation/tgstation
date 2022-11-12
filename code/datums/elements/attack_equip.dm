@@ -27,7 +27,7 @@
 	if(!attire.compare_zone_to_item_slot(targeted_zone))
 		return
 
-	if(attire.mob_can_equip(target, user,  attire.slot_flags, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
+	if(attire.mob_can_equip(target, attire.slot_flags, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
 		INVOKE_ASYNC(src, .proc/equip, attire, sharp_dresser, user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
@@ -42,9 +42,6 @@
 	attire.item_start_equip(sharp_dresser, attire, user)
 
 	if(!do_mob(user, sharp_dresser, equip_time))
-		return
-
-	if(QDELETED(src) || QDELETED(sharp_dresser))
 		return
 
 	if(!user.Adjacent(sharp_dresser)) // Due to teleporting shenanigans

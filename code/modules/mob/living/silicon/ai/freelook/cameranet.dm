@@ -123,8 +123,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
  * If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
  */
 /datum/cameranet/proc/majorChunkChange(atom/c, choice)
-	if(!c)
-		return
+	if(QDELETED(c) && choice == 1)
+		CRASH("Tried to add a qdeleting camera to the net")
 
 	var/turf/T = get_turf(c)
 	if(T)

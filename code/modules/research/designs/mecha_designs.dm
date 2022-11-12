@@ -484,8 +484,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_missile_rack
-	name = "BRM-6 Missile Rack"
-	desc = "Allows for the construction of an BRM-6 Breaching Missile Rack."
+	name = "PEP-6 Missile Rack"
+	desc = "Allows for the construction of an PEP-6 Breaching Missile Rack."
 	id = "mech_missile_rack"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
@@ -508,11 +508,11 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/mech_missile_rack_ammo
-	name = "BRM-6 Missile Rack Ammunition"
-	desc = "Ammunition for the BRM-6 Missile Rack."
+	name = "PEP-6 Missile Rack Ammunition"
+	desc = "Ammunition for the PEP-6 Missile Rack."
 	id = "mech_missile_rack_ammo"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_ammo/missiles_br
+	build_path = /obj/item/mecha_ammo/missiles_pep
 	materials = list(/datum/material/iron=8000,/datum/material/gold=500)
 	construction_time = 20
 	category = list(

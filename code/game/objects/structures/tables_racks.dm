@@ -24,6 +24,7 @@
 	layer = TABLE_LAYER
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
+	var/glass_shard_type = /obj/item/shard
 	var/buildstack = /obj/item/stack/sheet/iron
 	var/busy = FALSE
 	var/buildstackamount = 1
@@ -47,20 +48,30 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	register_context()
 
-	if (!(flags_1 & NODECONSTRUCT_1))
-		var/static/list/tool_behaviors = list(
-			TOOL_SCREWDRIVER = list(
-				SCREENTIP_CONTEXT_RMB = "Disassemble",
-			),
+/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
 
-			TOOL_WRENCH = list(
-				SCREENTIP_CONTEXT_RMB = "Deconstruct",
-			),
-		)
+	if(isnull(held_item))
+		return NONE
 
-		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
-		register_context()
+	if(istype(held_item, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = held_item
+		if(dealer_deck.wielded)
+			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
+			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	if(!(flags_1 & NODECONSTRUCT_1) && deconstruction_ready)
+		if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
+			. = CONTEXTUAL_SCREENTIP_SET
+		if(held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -271,15 +282,6 @@
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(istype(held_item, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = held_item
-		if(dealer_deck.wielded)
-			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
-			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
-			return CONTEXTUAL_SCREENTIP_SET
-	return NONE
-
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	return
 
@@ -390,23 +392,13 @@
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
-	var/list/debris = list()
 
 /obj/structure/table/glass/Initialize(mapload)
 	. = ..()
-	debris += new frame
-	if(buildstack == /obj/item/stack/sheet/plasmaglass)
-		debris += new /obj/item/shard/plasma
-	else
-		debris += new /obj/item/shard
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/structure/table/glass/Destroy()
-	QDEL_LIST(debris)
-	. = ..()
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -428,18 +420,18 @@
 	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
 		table_shatter(M)
 
-/obj/structure/table/glass/proc/table_shatter(mob/living/L)
+/obj/structure/table/glass/proc/table_shatter(mob/living/victim)
 	visible_message(span_warning("[src] breaks!"),
 		span_danger("You hear breaking glass."))
-	var/turf/T = get_turf(src)
-	playsound(T, SFX_SHATTER, 50, TRUE)
-	for(var/I in debris)
-		var/atom/movable/AM = I
-		AM.forceMove(T)
-		debris -= AM
-		if(istype(AM, /obj/item/shard))
-			AM.throw_impact(L)
-	L.Paralyze(100)
+
+	playsound(loc, SFX_SHATTER, 50, TRUE)
+
+	new frame(loc)
+
+	var/obj/item/shard/shard = new glass_shard_type(loc)
+	shard.throw_impact(victim)
+
+	victim.Paralyze(100)
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -450,16 +442,14 @@
 		else
 			var/turf/T = get_turf(src)
 			playsound(T, SFX_SHATTER, 50, TRUE)
-			for(var/X in debris)
-				var/atom/movable/AM = X
-				AM.forceMove(T)
-				debris -= AM
+
+			new frame(loc)
+			new glass_shard_type(loc)
+
 	qdel(src)
 
 /obj/structure/table/glass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
-	for(var/obj/item/shard/S in debris)
-		S.color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/table/glass/plasmaglass
 	name = "plasma glass table"
@@ -469,6 +459,7 @@
 	base_icon_state = "plasmaglass_table"
 	custom_materials = list(/datum/material/alloy/plasmaglass = 2000)
 	buildstack = /obj/item/stack/sheet/plasmaglass
+	glass_shard_type = /obj/item/shard/plasma
 	max_integrity = 100
 
 /*
@@ -593,6 +584,18 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor = list(MELEE = 10, BULLET = 30, LASER = 30, ENERGY = 100, BOMB = 20, BIO = 0, FIRE = 80, ACID = 70)
+
+/obj/structure/table/reinforced/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_WELDER)
+		context[SCREENTIP_CONTEXT_RMB] = deconstruction_ready ? "Strengthen" : "Weaken"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
 
 /obj/structure/table/reinforced/deconstruction_hints(mob/user)
 	if(deconstruction_ready)

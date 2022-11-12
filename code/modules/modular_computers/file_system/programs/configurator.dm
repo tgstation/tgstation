@@ -19,13 +19,12 @@
 	if(!computer)
 		return 0
 
-	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 	var/obj/item/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
 
 	var/list/data = get_header_data()
 
-	data["disk_size"] = hard_drive.max_capacity
-	data["disk_used"] = hard_drive.used_capacity
+	data["disk_size"] = computer.max_capacity
+	data["disk_used"] = computer.used_capacity
 	data["power_usage"] = computer.last_power_usage
 	data["battery_exists"] = battery_module ? 1 : 0
 	if(battery_module?.battery)

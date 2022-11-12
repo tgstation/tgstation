@@ -220,12 +220,13 @@
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize(mapload)
 	. = ..()
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+	if(check_holidays(APRIL_FOOLS))
 		icon_state = "honkmon"
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has died from a devastating explosion.", INVESTIGATE_DEATHS)
 			death()
 		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)

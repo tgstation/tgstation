@@ -1,5 +1,5 @@
 /datum/element/earhealing
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 	var/list/user_by_item = list()
 
 /datum/element/earhealing/Attach(datum/target)

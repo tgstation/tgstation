@@ -344,11 +344,15 @@
 	QDEL_NULL(dampening_field)
 
 /obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
 	projectile.damage *= damage_multiplier
 	projectile.speed *= speed_multiplier
 	projectile.add_overlay(projectile_effect)
 
 /obj/item/mod/module/projectile_dampener/proc/release_projectile(datum/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
 	projectile.damage /= damage_multiplier
 	projectile.speed /= speed_multiplier
 	projectile.cut_overlay(projectile_effect)

@@ -185,13 +185,11 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 		return
 
 	var/mob/living/carbon/carbon_source = source
-
-	var/obj/item/clothing/mask = carbon_source.wear_mask
-	if (!istype(mask))
-		return
-
-	if ((mask.clothing_flags & MASKINTERNALS) && istype(item, /obj/item/tank))
-		return isnull(carbon_source.internal) ? "enable_internals" : "disable_internals"
+	if (carbon_source.can_breathe_internals() && istype(item, /obj/item/tank))
+		if(carbon_source.internal != item)
+			return "enable_internals"
+		else
+			return "disable_internals"
 
 /proc/strippable_alternate_action_internals(obj/item/item, atom/source, mob/user)
 	var/obj/item/tank/tank = item
@@ -202,28 +200,26 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 	if (!istype(carbon_source))
 		return
 
-	var/obj/item/clothing/mask = carbon_source.wear_mask
-	if (!istype(mask) || !(mask.clothing_flags & MASKINTERNALS))
+	if (!carbon_source.can_breathe_internals())
 		return
 
 	carbon_source.visible_message(
-		span_danger("[user] tries to [isnull(carbon_source.internal) ? "open": "close"] the valve on [source]'s [item.name]."),
-		span_userdanger("[user] tries to [isnull(carbon_source.internal) ? "open": "close"] the valve on your [item.name]."),
+		span_danger("[user] tries to [(carbon_source.internal != item) ? "open" : "close"] the valve on [source]'s [item.name]."),
+		span_userdanger("[user] tries to [(carbon_source.internal != item) ? "open" : "close"] the valve on your [item.name]."),
 		ignored_mobs = user,
 	)
 
-	to_chat(user, span_notice("You try to [isnull(carbon_source.internal) ? "open": "close"] the valve on [source]'s [item.name]..."))
+	to_chat(user, span_notice("You try to [(carbon_source.internal != item) ? "open" : "close"] the valve on [source]'s [item.name]..."))
 
 	if(!do_mob(user, carbon_source, INTERNALS_TOGGLE_DELAY))
 		return
 
-	if(carbon_source.internal)
-		carbon_source.internal = null
-
-		// This isn't meant to be FALSE, it correlates to the icon's name.
+	if (carbon_source.internal == item)
+		carbon_source.close_internals()
+	// This isn't meant to be FALSE, it correlates to the item's name.
 	else if (!QDELETED(item))
-		if((carbon_source.wear_mask?.clothing_flags & MASKINTERNALS) || carbon_source.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			carbon_source.internal = item
+		if(!carbon_source.try_open_internals(item))
+			return
 
 	carbon_source.visible_message(
 		span_danger("[user] [isnull(carbon_source.internal) ? "closes": "opens"] the valve on [source]'s [item.name]."),

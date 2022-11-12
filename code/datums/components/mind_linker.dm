@@ -185,7 +185,7 @@
 	button_icon_state = linker.speech_action_icon_state
 	background_icon_state = linker.speech_action_background_icon_state
 
-/datum/action/innate/linked_speech/IsAvailable()
+/datum/action/innate/linked_speech/IsAvailable(feedback = FALSE)
 	return ..() && (owner.stat != DEAD)
 
 /datum/action/innate/linked_speech/Activate()

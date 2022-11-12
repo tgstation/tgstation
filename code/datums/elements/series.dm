@@ -5,7 +5,7 @@
  * used for mechas and rare collectable hats, should totally be used for way more ;)
  */
 /datum/element/series
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	id_arg_index = 2
 	var/list/subtype_list
 	var/series_name
