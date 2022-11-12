@@ -23,7 +23,8 @@
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Hospital Ship";
 	port_direction = 8;
-	preferred_direction = 4,
+	preferred_direction = 4
+	}
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)
 "ag" = (
