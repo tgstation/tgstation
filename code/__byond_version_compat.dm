@@ -1,11 +1,16 @@
 // This file contains defines allowing targeting byond versions newer than the supported
 
+// Keep savefile compatibilty at minimum supported level
+#if DM_VERSION >= 515
+/savefile/byond_version = MIN_COMPILER_VERSION
+#endif
+
+
 #if DM_VERSION < 515
 #define LIBCALL call
 #else
 #define LIBCALL call_ext
 #endif
-
 
 // So we want to have compile time guarantees these procs exist on local type, unfortunately 515 killed the .proc/procname syntax so we have to use nameof()
 #if DM_VERSION < 515
