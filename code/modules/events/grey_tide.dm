@@ -24,16 +24,12 @@
 								/area/station/cargo,
 								/area/station/science)
 
-	var/list/areas_affected = list() //The list of areas the admins will recieve
 
 	for(var/i in 1 to severity)
 		var/picked_area = pick_n_take(potential_areas)
-		areas_affected += picked_area
 		for(var/area/area_to_check as anything in GLOB.areas)
 			if(istype(area_to_check, picked_area))
 				areas_to_open += area_to_check
-
-	message_admins("Grey Tide event has selected the following areas to open: [english_list(areas_affected)]") //This returns paths, not names. Trying to pull the area's name with .name doesn't work
 
 /datum/round_event/grey_tide/announce(fake)
 	priority_announce("Gr3y.T1d3 virus detected in [station_name()] secure locking encryption subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert") //It affects more than just doors!
