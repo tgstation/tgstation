@@ -38,6 +38,8 @@
 	*/
 	var/red_distance_threshold = 33
 
+	GLOBAL_LIST_EMPTY(tram_signals)
+
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
@@ -49,6 +51,7 @@
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_travelling)
+		GLOB.tram_signals.Add(src)
 
 /obj/machinery/crossing_signal/Destroy()
 	. = ..()
