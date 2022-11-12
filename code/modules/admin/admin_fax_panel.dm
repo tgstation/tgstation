@@ -1,3 +1,6 @@
+/**
+ * If client have R_ADMIN flag, opens an admin fax panel.
+ */
 /client/proc/fax_panel()
 	set category = "Admin.Events"
 	set name = "Fax Panel"
@@ -8,12 +11,12 @@
 	var/datum/fax_panel_interface/ui = new(usr)
 	ui.ui_interact(usr)
 	
-/// Panel
+/// Admin Fax Panel. Tool for sending fax messages faster.
 /datum/fax_panel_interface
-	/// All faxes in game list
+	/// All faxes in from machinery list()
 	var/available_faxes = list()
 	/// List with available stamps
-	var/stamp_list = list() // I need to understand, how to remove chameleon stamps...
+	var/stamp_list = list()
 
 	/// Paper which admin edit and send.
 	var/obj/item/paper/fax_paper = new /obj/item/paper(null)
@@ -26,7 +29,7 @@
 /datum/fax_panel_interface/New()
 	//Get all faxes, and save them to our list.
 	for(var/obj/machinery/fax/fax in GLOB.machines)
-		available_faxes += fax
+		available_faxes += WEAKREF(fax)
 	
 	//Get all stamps
 	for(var/stamp in subtypesof(/obj/item/stamp))
@@ -47,9 +50,11 @@
 	if(!length(available_faxes))
 		return null
 
-	for(var/obj/machinery/fax/potential_fax as anything in available_faxes)
-		if(potential_fax.fax_name == name)
-			return potential_fax
+	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
+		var/obj/machinery/fax/potential_fax = weakrefed_fax.resolve()
+		if(potential_fax && istype(potential_fax))
+			if(potential_fax.fax_name == name)
+				return potential_fax
 	return null
 
 /datum/fax_panel_interface/ui_interact(mob/user, datum/tgui/ui)
@@ -70,8 +75,10 @@
 	for(var/stamp in stamp_list)
 		data["stamps"] += list(stamp[1]) // send only names.
 	
-	for(var/obj/machinery/fax/another_fax as anything in available_faxes)
-		data["faxes"] += list(another_fax.fax_name)
+	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
+		var/obj/machinery/fax/another_fax = weakrefed_fax.resolve()
+		if(another_fax && istype(another_fax))
+			data["faxes"] += list(another_fax.fax_name)
 	
 	return data
 
@@ -82,10 +89,10 @@
 	if(!check_rights(R_ADMIN))
 		return
 	
-	var/obj/machinery/fax/action_fax // fax what we find later
+	var/obj/machinery/fax/action_fax
 
 	if(params["faxName"])
-		action_fax = get_fax_by_name(params["faxName"]) // that is
+		action_fax = get_fax_by_name(params["faxName"]) 
 	
 	switch(action)
 
@@ -120,7 +127,7 @@
 			fax_paper.add_raw_text(params["rawText"])
 
 			if(stamp)
-				fax_paper.add_stamp(stamp_class, params["stampX"], params["stampY"], params["stampR"], stamp)
+				fax_paper.add_stamp(stamp_class, params["stampX"], params["stampY"], params["stampAngle"], stamp)
 			
 			fax_paper.update_static_data(usr) // OK, it's work, and update UI. 
 			

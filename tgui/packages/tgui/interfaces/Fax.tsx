@@ -32,7 +32,7 @@ type FaxSpecial = {
   fax_name: string;
   fax_id: string;
   color: string;
-  emag_need: boolean;
+  emag_needed: boolean;
 };
 
 export const Fax = (props, context) => {
@@ -77,9 +77,9 @@ export const Fax = (props, context) => {
         </Section>
         <Section title="Send">
           <Box mt={0.4}>
-            {(!data.syndicate_network
-              ? data.special_faxes.filter((fax: FaxSpecial) => !fax.emag_need)
-              : data.special_faxes
+            {(data.syndicate_network
+              ? data.special_faxes
+              : data.special_faxes.filter((fax: FaxSpecial) => !fax.emag_needed)
             ).map((special: FaxSpecial) => (
               <Button
                 key={special.fax_id}

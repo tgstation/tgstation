@@ -78,28 +78,24 @@ export const FaxMainPanel = (props, context) => {
           </Button>
         }>
         <Box fontSize="14px">
-          <Tooltip content="Paper name, which you when hover mouse on paper.">
-            <Input
-              mb="5px"
-              placeholder="Paper name..."
-              value={paperName}
-              width="100%"
-              onChange={(_, v) => setPaperName(v)}
-            />
-          </Tooltip>
+          <Input
+            mb="5px"
+            placeholder="Paper name..."
+            value={paperName}
+            width="100%"
+            onChange={(_, v) => setPaperName(v)}
+          />
           <Button
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setPaperName('Central Command Report')}
-            tooltip="Quick solution, that enter Central Command.">
+            onClick={() => setPaperName('Central Command Report')}>
             Central Command
           </Button>
           <Button
             icon="s"
             width="49%"
-            onClick={() => setPaperName('Syndicate Report')}
-            tooltip="Quick solutions, that enter Syndicate.">
+            onClick={() => setPaperName('Syndicate Report')}>
             Syndicate
           </Button>
         </Box>
@@ -109,7 +105,7 @@ export const FaxMainPanel = (props, context) => {
             <Input
               mb="5px"
               placeholder="From who..."
-              tooltip="Logs in fax logs"
+              tooltip="Name what be user in fax history"
               value={fromWho}
               width="100%"
               onChange={(_, v) => setFromWho(v)}
@@ -119,22 +115,17 @@ export const FaxMainPanel = (props, context) => {
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setFromWho('Central Command')}
-            tooltip="Quick solution, that enter Central Command.">
+            onClick={() => setFromWho('Central Command')}>
             Central Command
           </Button>
-          <Button
-            icon="s"
-            width="49%"
-            onClick={() => setFromWho('Syndicate')}
-            tooltip="Quick solutions, that enter Syndicate.">
+          <Button icon="s" width="49%" onClick={() => setFromWho('Syndicate')}>
             Syndicate
           </Button>
         </Box>
         <Divider />
         <Box mt="5px">
           <TextArea
-            placeholder="Type the message you want to send on fax..."
+            placeholder="Your message here..."
             height="200px"
             value={rawText}
             onInput={(e, value) => {
@@ -147,7 +138,7 @@ export const FaxMainPanel = (props, context) => {
           <Dropdown
             width="100%"
             options={data.stamps}
-            selected="Choose stamp(opitionable)"
+            selected="Choose stamp(optional)"
             onSelected={(v) => setStamp(v)}
           />
           {stamp && (
@@ -214,7 +205,7 @@ export const FaxMainPanel = (props, context) => {
                 stamp: stamp,
                 stampX: stampCoordX,
                 stampY: stampCoordY,
-                stampR: stampAngle,
+                stampAngle: stampAngle,
                 fromWho: fromWho,
               });
             }}>
@@ -228,7 +219,7 @@ export const FaxMainPanel = (props, context) => {
                 faxName: fax,
               })
             }>
-            Create paper on me
+            Create paper
           </Button>
         </Box>
       </Section>

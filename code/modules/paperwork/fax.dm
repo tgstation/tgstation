@@ -46,8 +46,8 @@
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
-		list(fax_name = "Central Command", fax_id = "central_command", color = "teal", emag_need = FALSE),
-		list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_need = TRUE),
+		list(fax_name = "Central Command", fax_id = "central_command", color = "teal", emag_needed = FALSE),
+		list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
 
 /obj/machinery/fax/Initialize(mapload)
