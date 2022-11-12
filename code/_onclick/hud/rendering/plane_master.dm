@@ -1,10 +1,6 @@
 // I hate this place
 INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
-// Thoughts:
-// If plane masters are gonna be "effectless" then the only thing that matters about them is ordering (with some exceptions)
-// We could route most PMs to 0 so they just render by plane order, and null out some of the intermediary ones based off prefs
-// Maybe a max multiz depth?
 /atom/movable/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
