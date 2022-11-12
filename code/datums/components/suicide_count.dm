@@ -58,7 +58,7 @@
 		examine_list += span_notice( \
 			is_holy \
 				? "You can sense a lost spirit, [last_person], who took their life with this." \
-				: "Looking at this somehow reminds you of [last_person]."
+				: "Looking at this somehow reminds you of [last_person]." \
 		)
 
 	if(count)
@@ -66,5 +66,5 @@
 		examine_list += span_notice( \
 			is_holy \
 				? "You can sense a collective of [count] lost souls who met the same fate." \
-				: "This item reminds you of [wrong_guess] others, you'd guess."
+				: "This item reminds you of [wrong_guess] others, you'd guess." \
 		)
