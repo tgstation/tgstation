@@ -16,7 +16,8 @@
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2,
+	port_direction = 2
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ae" = (

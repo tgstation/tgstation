@@ -579,7 +579,8 @@
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2,
+	port_direction = 2
+	},
 /obj/effect/turf_decal/stripes/white/box,
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,

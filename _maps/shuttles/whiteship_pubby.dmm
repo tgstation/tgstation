@@ -88,7 +88,8 @@
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 4,
+	port_direction = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "p" = (
