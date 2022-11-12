@@ -17,7 +17,7 @@
 	ADD_TRAIT(user, TRAIT_CAN_SIGN_LANG)
 
 /obj/item/book/granter/sign_language/can_learn(mob/living/user)
-	return ishuman(user)
+	return iscarbon(user)
 
 /obj/item/book/granter/sign_language/recoil(mob/living/user)
 	to_chat(user, span_warning("You can't read it, the pages are too faded and smudged!"))
