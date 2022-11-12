@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, NumberInput, LabeledList, Section } from '../components';
+import { Slider, ProgressBar, NoticeBox, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type IVDripData = {
@@ -10,57 +10,104 @@ type IVDripData = {
   maxInjectRate: number;
   mode: BooleanLike;
   connected: BooleanLike;
+  objectName: string;
   beakerAttached: BooleanLike;
+  beakerReagentColor: string;
+  beakerCurrentVolume: number;
+  beakerMaxVolume: number;
   useInternalStorage: BooleanLike;
 };
 
 export const IVDrip = (props, context) => {
   const { act, data } = useBackend<IVDripData>(context);
   return (
-    <Window width={380} height={230}>
+    <Window width={380} height={202}>
       <Window.Content>
-        <Section title="IV Status">
+        <Section>
           <LabeledList>
+            {!!data.beakerAttached && (
+              <LabeledList.Item
+                label="Container"
+                buttons={
+                  <Button
+                    my={1}
+                    width={8}
+                    lineHeight={2}
+                    align="center"
+                    icon="eject"
+                    content="Eject"
+                    onClick={() => act('eject')}
+                  />
+                }>
+                <ProgressBar
+                  value={data.beakerCurrentVolume}
+                  minValue={0}
+                  maxValue={data.beakerMaxVolume}
+                  color={data.beakerReagentColor}>
+                  <span
+                    style={{
+                      'text-shadow': '1px 1px 0 black',
+                    }}>
+                    {`${data.beakerCurrentVolume} of ${data.beakerMaxVolume} units`}
+                  </span>
+                </ProgressBar>
+              </LabeledList.Item>
+            )}
+            {!data.beakerAttached && (
+              <LabeledList.Item label="Container">
+                <NoticeBox my={0.7}>No container attached.</NoticeBox>
+              </LabeledList.Item>
+            )}
+            {!!data.connected && (
+              <LabeledList.Item
+                label="Object"
+                color={data.connected ? 'good' : 'bad'}
+                buttons={
+                  <Button
+                    disabled={!data.connected}
+                    my={1}
+                    width={8}
+                    lineHeight={2}
+                    align="center"
+                    icon="ban"
+                    content="Disconnect"
+                    onClick={() => act('detach')}
+                  />
+                }>
+                {data.connected ? data.objectName : 'Not connected'}
+              </LabeledList.Item>
+            )}
+            {!data.connected && (
+              <LabeledList.Item label="Object">
+                <NoticeBox my={0.7}>No object connected.</NoticeBox>
+              </LabeledList.Item>
+            )}
             <LabeledList.Item
-              label="Status"
-              color={data.connected ? 'good' : 'average'}>
-              {data.connected ? 'Connected' : 'Not Connected'}
+              label="Direction"
+              color={data.mode ? 'good' : 'bad'}
+              buttons={
+                <Button
+                  my={1}
+                  width={8}
+                  lineHeight={2}
+                  align="center"
+                  disabled={data.injectOnly}
+                  color={data.mode ? 'good' : 'bad'}
+                  content={data.mode ? 'Injecting' : 'Draining'}
+                  icon={data.mode ? 'syringe' : 'droplet'}
+                  onClick={() => act('changeMode')}
+                />
+              }>
+              {data.mode ? 'Reagents from container' : 'Blood into container'}
             </LabeledList.Item>
-            <LabeledList.Item label="Mode">
-              <Button
-                disabled={data.injectOnly}
-                content={data.mode ? 'Injecting' : 'Draining'}
-                icon={data.mode ? 'sign-in-alt' : 'sign-out-alt'}
-                onClick={() => act('changeMode')}
-              />
-            </LabeledList.Item>
-            <LabeledList.Item
-              label="Attached Container"
-              color={data.beakerAttached ? 'good' : 'average'}>
-              <Box as="span" mr={2}>
-                {data.beakerAttached
-                  ? 'Container Attached'
-                  : 'Container Not Attached'}
-              </Box>
-              <Button
-                disabled={!data.beakerAttached || data.useInternalStorage}
-                content="Eject"
-                icon="eject"
-                onClick={() => act('eject')}
-              />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-        <Section title="Injection Settings">
-          <LabeledList>
-            <LabeledList.Item label="Injection Rate">
-              <NumberInput
+            <LabeledList.Item label="Transfer Rate" buttons={'Units / Second'}>
+              <Slider
+                step={0.01}
+                my={1}
                 value={data.transferRate}
-                unit="u/sec"
                 minValue={data.minInjectRate}
                 maxValue={data.maxInjectRate}
-                step={0.1}
-                onChange={(e, value) =>
+                onDrag={(e, value) =>
                   act('changeRate', {
                     rate: value,
                   })

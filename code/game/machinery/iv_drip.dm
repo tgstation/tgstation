@@ -53,7 +53,7 @@
 /obj/machinery/iv_drip/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "IVDrip")
+		ui = new(user, src, "IVDrip", name)
 		ui.open()
 
 /obj/machinery/iv_drip/ui_data(mob/user)
@@ -64,7 +64,13 @@
 	data["minInjectRate"] = MIN_IV_TRANSFER_RATE
 	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
 	data["connected"] = attached ? TRUE : FALSE
+	if(attached)
+		data["objectName"] = attached.name
 	data["beakerAttached"] = reagent_container ? TRUE : FALSE
+	if(reagent_container)
+		data["beakerCurrentVolume"] = round(reagent_container.reagents.total_volume, 0.01)
+		data["beakerMaxVolume"] = reagent_container.reagents.maximum_volume
+		data["beakerReagentColor"] = mix_color_from_reagents(reagent_container.reagents.reagent_list)
 	data["useInternalStorage"] = use_internal_storage
 	return data
 
@@ -79,11 +85,16 @@
 		if("eject")
 			eject_beaker()
 			. = TRUE
+		if("detach")
+			if(attached)
+				visible_message(span_notice("[attached] is detached from [src]."))
+				detach_iv()
+			. = TRUE
 		if("changeRate")
 			var/target_rate = params["rate"]
 			if(text2num(target_rate) != null)
 				target_rate = text2num(target_rate)
-				transfer_rate = round(clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), 0.1)
+				transfer_rate = round(clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), 0.01)
 				. = TRUE
 	update_appearance()
 
@@ -182,6 +193,8 @@
 			var/obj/item/bodypart/chosen_limb = attached_mob.get_bodypart(arm_zones[1]) || attached_mob.get_bodypart(arm_zones[2]) || attached_mob.get_bodypart(BODY_ZONE_CHEST)
 			chosen_limb.receive_damage(3)
 			chosen_limb.force_wound_upwards(/datum/wound/pierce/moderate)
+		else
+			visible_message(span_warning("[attached] is detached from [src]."))
 		detach_iv()
 		return PROCESS_KILL
 
@@ -190,11 +203,7 @@
 		// Give blood
 		if(mode)
 			if(target_reagents.total_volume)
-				var/real_transfer_amount = transfer_rate
-				if(istype(reagent_container, /obj/item/reagent_containers/blood))
-					// speed up transfer on blood packs
-					// real_transfer_amount *= 2
-				target_reagents.trans_to(attached, real_transfer_amount * delta_time, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+				target_reagents.trans_to(attached, transfer_rate * delta_time, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 				update_appearance()
 
 		// Take blood
