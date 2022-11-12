@@ -51,9 +51,10 @@
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_travelling)
-		GLOB.tram_signals.Add(src)
+		GLOB.tram_signals += src
 
 /obj/machinery/crossing_signal/Destroy()
+	GLOB.tram_signals -= src
 	. = ..()
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
