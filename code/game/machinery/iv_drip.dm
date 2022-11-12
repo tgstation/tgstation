@@ -308,6 +308,16 @@
 
 	. += span_notice("[attached ? attached : "No one"] is attached.")
 
+/datum/crafting_recipe/iv_drip
+	name = "IV drip"
+	result = /obj/machinery/iv_drip
+	time = 30
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/rods = 2,
+		/obj/item/reagent_containers/syringe = 1,
+	)
+	category = CAT_CHEMISTRY
 
 /obj/machinery/iv_drip/saline
 	name = "saline drip"
