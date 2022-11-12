@@ -206,15 +206,19 @@
 		ui.open()
 
 /obj/machinery/seed_extractor/ui_data()
-	var/list/V = list()
-	for(var/key in piles)
-		if(piles[key])
-			var/len = length(piles[key])
-			if(len)
-				V[key] = len
-
+	var/list/seeds = list()
+	for(var/data_string in piles)
+		var/list/seed_data = list()
+		seed_data["key"] = data_string
+		seed_data["amount"] = length(piles[data_string])
+		var/list/fields = splittext(data_string, ";")
+		for(var/fieldstring in fields)
+			var/field = splittext(fieldstring, "=")
+			seed_data[field[1]] = field[2]
+		seed_data["name"] = capitalize(replacetext(seed_data["name"],"pack of ", ""));
+		seeds += list(seed_data)
 	. = list()
-	.["seeds"] = V
+	.["seeds"] = seeds
 	.["cycle"] = HYDROTRAY_CYCLE_DELAY / 10
 
 /obj/machinery/seed_extractor/ui_act(action, params)

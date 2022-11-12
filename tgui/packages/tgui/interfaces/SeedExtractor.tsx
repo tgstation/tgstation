@@ -1,18 +1,34 @@
-import { createSearch } from 'common/string';
 import { classes } from 'common/react';
+import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Input, Tooltip, Box, ProgressBar, Button, Section, Table, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
-// return flow([sortBy((item) => item.name)])(objs);
+type SeedExtractorData = {
+  seeds: SeedData[];
+  cycle: number;
+};
+
+type SeedData = {
+  key: string;
+  amount: number;
+  name: string;
+  lifespan: number;
+  endurance: number;
+  maturation: number;
+  production: number;
+  yield: number;
+  potency: number;
+  instability: number;
+  icon: string;
+};
+
 export const SeedExtractor = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<SeedExtractorData>(context);
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const search = createSearch(searchText, (item) => {
-    return item.name;
-  });
-  const seed_data = data.seeds;
-  const seeds = searchText.length > 0 ? seed_data.filter(search) : seed_data;
+  const search = createSearch(searchText, (item: string) => item);
+  // const seeds = filterSeedList(data.seeds, search);
+  const seeds = data.seeds;
   return (
     <Window width={1000} height={400}>
       <Window.Content scrollable>
