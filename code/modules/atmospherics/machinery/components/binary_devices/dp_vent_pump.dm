@@ -14,8 +14,6 @@
 
 	hide = TRUE
 
-	///Variable for radio frequency
-	var/frequency = 0
 	///Variable for machinery that needs to directly interact with this pump, such as airlock controllers
 	var/id = null
 	///Indicates that the direction of the pump, if ATMOS_DIRECTION_SIPHONING is siphoning, if ATMOS_DIRECTION_RELEASING is releasing
