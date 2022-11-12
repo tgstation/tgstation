@@ -1,6 +1,3 @@
-/// Signal for removing the sign language component from a Carbon.
-#define COMSIG_SIGNLANGUAGE_REMOVE "remove_sign_language"
-
 /// Defines used to determine whether a sign language user can sign or not, and if not, why they cannot.
 #define SIGN_OKAY 0
 #define SIGN_ONE_HAND 1
@@ -34,21 +31,12 @@
 	qdel(src)
 
 /datum/component/sign_language/RegisterWithParent()
-	linked_action = new /datum/action/innate/sign_language(src)
-	if(!HAS_TRAIT(parent, TRAIT_MUTE))
-		linked_action.Grant(parent)
-	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CAN_SIGN_LANG), .proc/add_action)
-	// The component's overrides can be toggled on/off via adding/removing TRAIT_SIGN_LANG.
-	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), .proc/disable_sign_language)
+	// Sign language Action is granted/removed via adding/removing TRAIT_CAN_SIGN_LANG.
+	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CAN_SIGN_LANG), .proc/learn_sign_language)
+	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CAN_SIGN_LANG), .proc/forget_sign_language)
+	// Sign language is toggled on/off via adding/removing TRAIT_SIGN_LANG.
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), .proc/enable_sign_language)
-	// Re-adds the toggle action if the Carbon loses TRAIT_MUTE.
-	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_MUTE), .proc/add_action)
-	// Removes the toggle action if the Carbon gains TRAIT_MUTE.
-	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE), .proc/remove_action)
-	RegisterSignal(parent, COMSIG_SIGNLANGUAGE_REMOVE, .proc/qdel_self)
-	// Enable by default if the Carbon has TRAIT_MUTE, for convenience.
-	if (HAS_TRAIT(parent, TRAIT_MUTE))
-		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
+	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), .proc/disable_sign_language)
 
 /// Deletes the sign language action and disables signing.
 /datum/component/sign_language/UnregisterFromParent()
@@ -56,26 +44,50 @@
 	if (linked_action.owner)
 		linked_action.Remove(parent)
 	UnregisterSignal(parent, list(
-		COMSIG_SIGNLANGUAGE_REMOVE,
-		SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG),
+		SIGNAL_ADDTRAIT(TRAIT_CAN_SIGN_LANG),
+		SIGNAL_REMOVETRAIT(TRAIT_CAN_SIGN_LANG),
 		SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG),
-		SIGNAL_REMOVETRAIT(TRAIT_MUTE),
-		SIGNAL_ADDTRAIT(TRAIT_MUTE)
+		SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG),
+		SIGNAL_ADDTRAIT(TRAIT_MUTE),
+		SIGNAL_REMOVETRAIT(TRAIT_MUTE)
 	))
 
 /// Signal handler for [removetrait mute]
 /// Adds the linked toggle action to the parent Carbon.
-/datum/component/sign_language/proc/add_action()
+/datum/component/sign_language/proc/learn_sign_language()
 	SIGNAL_HANDLER
 
-	linked_action.Grant(parent)
+	ADD_TRAIT(parent, TRAIT_CAN_SIGN_LANG, TRAIT_GENERIC)
+	// Enable by default if the Carbon has TRAIT_MUTE, for convenience.
+	if (HAS_TRAIT(parent, TRAIT_MUTE))
+		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
+	else
+		// Only allow toggling if the Carbon does NOT have TRAIT_MUTE.
+		add_action()
 
 /// Signal handler for [addtrait mute]
+/// Removes the linked toggle action from the parent Carbon.
+/datum/component/sign_language/proc/forget_sign_language()
+	SIGNAL_HANDLER
+
+	REMOVE_TRAIT(parent, TRAIT_CAN_SIGN_LANG, TRAIT_GENERIC)
+	remove_action()
+
+/// Adds the linked toggle action to the parent Carbon.
+/datum/component/sign_language/proc/add_action()
+		SIGNAL_HANDLER
+		linked_action.Grant(parent)
+		// Removes the toggle action if the Carbon gains TRAIT_MUTE.
+		RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE), .proc/remove_action)
+
 /// Removes the linked toggle action from the parent Carbon.
 /datum/component/sign_language/proc/remove_action()
 	SIGNAL_HANDLER
 
 	linked_action.Remove(parent)
+	if (HAS_TRAIT(parent, TRAIT_CAN_SIGN_LANG) && HAS_TRAIT(parent, TRAIT_MUTE))
+		// Re-adds the toggle action if the signing Carbon loses TRAIT_MUTE.
+		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_MUTE), .proc/add_action)
 
 /// Innate Action which allows a Carbon to toggle sign language on/off.
 /datum/action/innate/sign_language
@@ -90,12 +102,9 @@
 	active = TRUE
 
 /datum/action/innate/sign_language/Deactivate()
-	if(HAS_TRAIT(owner, TRAIT_MUTE))
-		to_chat(owner, span_warning("You can't stop signing, you can only communicate via sign language!"))
-	else
-		REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-		to_chat(owner, span_green("You have stopped using sign language."))
-		active = FALSE
+	REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
+	to_chat(owner, span_green("You have stopped using sign language."))
+	active = FALSE
 
 /datum/action/innate/sign_language/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
 	. = ..()
