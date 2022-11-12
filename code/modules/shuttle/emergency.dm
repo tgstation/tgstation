@@ -303,10 +303,6 @@
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
 	shuttle_id = "emergency"
-
-	dwidth = 9
-	width = 22
-	height = 11
 	dir = EAST
 	port_direction = WEST
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
@@ -571,9 +567,6 @@
 /obj/docking_port/mobile/pod
 	name = "escape pod"
 	shuttle_id = "pod"
-	dwidth = 1
-	width = 3
-	height = 4
 	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request(obj/docking_port/stationary/S)
@@ -633,9 +626,6 @@
 /obj/docking_port/stationary/random
 	name = "escape pod"
 	shuttle_id = "pod"
-	dwidth = 1
-	width = 3
-	height = 4
 	hidden = TRUE
 	var/target_area = /area/lavaland/surface/outdoors
 	var/edge_distance = 16
@@ -745,9 +735,6 @@
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
 	shuttle_id = "backup"
-	dwidth = 2
-	width = 8
-	height = 8
 	dir = EAST
 
 /obj/docking_port/mobile/emergency/backup/Initialize(mapload)

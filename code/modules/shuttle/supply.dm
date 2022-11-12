@@ -47,11 +47,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	dir = WEST
 	port_direction = EAST
-	width = 12
-	dwidth = 5
-	height = 7
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
-
 
 	//Export categories for this run, this is set by console sending the shuttle.
 	var/export_categories = EXPORT_CARGO

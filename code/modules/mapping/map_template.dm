@@ -77,6 +77,8 @@
 			continue
 
 		for(var/movable_in_turf in current_turf)
+			if(istype(movable_in_turf, /obj/docking_port/mobile))
+				continue // mobile docking ports need to be initialized after their template has finished loading, to ensure that their bounds are setup
 			movables += movable_in_turf
 			if(istype(movable_in_turf, /obj/structure/cable))
 				cables += movable_in_turf
