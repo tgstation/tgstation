@@ -1,5 +1,7 @@
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
+import { flow } from 'common/fp';
+import { sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import { Input, Tooltip, Box, ProgressBar, Button, Section, Table, NoticeBox } from '../components';
 import { Window } from '../layouts';
@@ -26,9 +28,14 @@ type SeedData = {
 export const SeedExtractor = (props, context) => {
   const { act, data } = useBackend<SeedExtractorData>(context);
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const search = createSearch(searchText, (item: string) => item);
-  // const seeds = filterSeedList(data.seeds, search);
-  const seeds = data.seeds;
+  const [sortField, setSortField] = useLocalState(context, 'sortField', 'name');
+  const search = createSearch(searchText, (item: SeedData) => item.name);
+  const seeds_filtered =
+    searchText.length > 0 ? data.seeds.filter(search) : data.seeds;
+  const seeds = flow([
+    sortBy((item: SeedData) => item[sortField as keyof SeedData]),
+  ])(seeds_filtered || []);
+  sortField !== 'name' && seeds.reverse();
   return (
     <Window width={1000} height={400}>
       <Window.Content scrollable>
@@ -48,61 +55,95 @@ export const SeedExtractor = (props, context) => {
                 <Tooltip
                   content={
                     'Determines product mass, reagent volume and strength of effects.'
-                  }
-                  position="bottom-start">
-                  <Box>Potency</Box>
+                  }>
+                  <Box
+                    style={{ 'cursor': 'pointer' }}
+                    onClick={(e) => setSortField('potency')}>
+                    Potency
+                  </Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
                     'The number of products gathered in a single harvest.'
-                  }
-                  position="bottom-start">
-                  <Box>Yield</Box>
+                  }>
+                  <Box
+                    style={{ 'cursor': 'pointer' }}
+                    onClick={(e) => setSortField('yield')}>
+                    Yield
+                  </Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
                   content={
                     'The likelihood of the plant to randomize stats or mutate.'
-                  }
-                  position="bottom-start">
-                  <Box>Instability</Box>
+                  }>
+                  <Box
+                    style={{ 'cursor': 'pointer' }}
+                    onClick={(e) => setSortField('instability')}>
+                    Instability
+                  </Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={'The health pool of the plant that delays death.'}
-                  position="bottom-start">
-                  <Box>Endurance</Box>
+                  content={'The health pool of the plant that delays death.'}>
+                  <Box
+                    style={{ 'cursor': 'pointer' }}
+                    onClick={(e) => setSortField('endurance')}>
+                    Endurance
+                  </Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={`The age at which the plant starts decaying, in ${data.cycle} second long cycles.`}
-                  position="bottom-start">
-                  <Box>Lifespan</Box>
+                  content={`The age at which the plant starts decaying, in ${data.cycle} second long cycles.`}>
+                  <Box
+                    style={{ 'cursor': 'pointer' }}
+                    onClick={(e) => setSortField('lifespan')}>
+                    Lifespan
+                  </Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={`The age required for the first harvest, in ${data.cycle} second long cycles.`}
-                  position="bottom-start">
-                  <Box>Maturation</Box>
+                  content={`The age required for the first harvest, in ${data.cycle} second long cycles.`}>
+                  <Box
+                    style={{ 'cursor': 'pointer' }}
+                    onClick={(e) => setSortField('maturation')}>
+                    Maturation
+                  </Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={`The period of product regrowth, in ${data.cycle} second long cycles.`}
-                  position="bottom-start">
-                  <Box>Production</Box>
+                  content={`The period of product regrowth, in ${data.cycle} second long cycles.`}>
+                  <Box
+                    style={{ 'cursor': 'pointer' }}
+                    onClick={(e) => setSortField('production')}>
+                    Production
+                  </Box>
                 </Tooltip>
               </Table.Cell>
               <Table.Cell collapsing p={1}>
-                Amount
+                <Box
+                  style={{ 'cursor': 'pointer' }}
+                  onClick={(e) => setSortField('amount')}>
+                  Amount
+                </Box>
               </Table.Cell>
-              <Table.Cell collapsing />
+              <Table.Cell collapsing>
+                {sortField !== 'name' && (
+                  <Button
+                    color="transparent"
+                    icon="refresh"
+                    textAlign="center"
+                    onClick={(e) => setSortField('name')}
+                  />
+                )}
+              </Table.Cell>
             </Table.Row>
             {seeds.length > 0 &&
               seeds.map((item) => (

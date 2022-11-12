@@ -208,13 +208,15 @@
 /obj/machinery/seed_extractor/ui_data()
 	var/list/seeds = list()
 	for(var/data_string in piles)
+		if (!length(piles[data_string]))
+			continue
 		var/list/seed_data = list()
 		seed_data["key"] = data_string
 		seed_data["amount"] = length(piles[data_string])
 		var/list/fields = splittext(data_string, ";")
 		for(var/fieldstring in fields)
 			var/field = splittext(fieldstring, "=")
-			seed_data[field[1]] = field[2]
+			seed_data[field[1]] = text2num(field[2]) || field[2]
 		seed_data["name"] = capitalize(replacetext(seed_data["name"],"pack of ", ""));
 		seeds += list(seed_data)
 	. = list()
