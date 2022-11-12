@@ -14,7 +14,7 @@
 
 /obj/item/book/granter/sign_language/on_reading_finished(mob/living/user)
 	to_chat(user, span_notice("You finish reading [name], you feel confident in your signing skills."))
-	ADD_TRAIT(user, TRAIT_CAN_SIGN_LANG)
+	ADD_TRAIT(user, TRAIT_CAN_SIGN_LANG, TRAIT_GENERIC)
 
 /obj/item/book/granter/sign_language/can_learn(mob/living/user)
 	return iscarbon(user)
