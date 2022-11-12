@@ -94,7 +94,7 @@
 /area/shuttle/labor)
 "q" = (
 /obj/docking_port/mobile{
-	dir = 8
+	dir = 8;
 	shuttle_id = "laborcamp";
 	name = "labor camp shuttle"
 	port_direction = 4
