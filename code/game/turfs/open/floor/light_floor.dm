@@ -106,7 +106,7 @@
 			icon_state = "light_off"
 	return ..()
 
-/turf/open/floor/light/ChangeTurf(path, new_baseturf, flags)
+/turf/open/floor/light/ChangeTurf(path, new_baseturfs, flags)
 	set_light(0)
 	return ..()
 
