@@ -96,7 +96,7 @@
 /obj/docking_port/mobile{
 	dir = 8;
 	shuttle_id = "laborcamp";
-	name = "labor camp shuttle"
+	name = "labor camp shuttle";
 	port_direction = 4
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
