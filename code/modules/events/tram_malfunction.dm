@@ -4,14 +4,16 @@
 #define TRAM_ASSOCIATED_MAP "Tramstation"
 
 var/specific_lift_id = MAIN_STATION_TRAM
-var/original_lethality = 1
+var/original_lethality
 
 /datum/round_event_control/tram_malfunction
 	name = "Tram Malfunction"
 	typepath = /datum/round_event/tram_malfunction
 	weight = 20
 	max_occurrences = 4
+	category = EVENT_CATEGORY_ENGINEERING
 
+//If manually triggered, make sure we're actually on Tramstation. If not, cancel the event.
 /datum/round_event_control/tram_malfunction/admin_setup()
 	if(SSmapping.config.map_name == TRAM_ASSOCIATED_MAP)
 		return ..()
