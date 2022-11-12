@@ -47,6 +47,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/plane_offset_blacklist
 	/// List of render targets that do not allow for offsetting
 	var/list/render_offset_blacklist
+	/// List of plane masters that are of critical priority
+	var/list/critical_planes
 	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
@@ -111,6 +113,7 @@ SUBSYSTEM_DEF(mapping)
 	plane_to_offset["[FLOAT_PLANE]"] = 0
 	plane_offset_blacklist = list()
 	render_offset_blacklist = list()
+	critical_planes = list()
 	create_plane_offsets(0, 0)
 	initialize_biomes()
 	loadWorld()
@@ -822,6 +825,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				render_offset_blacklist[render_target] = TRUE
 				if(plane_offset != 0)
 					continue
+
+			if(initial(master_type.critical) & PLANE_CRITICAL_DISPLAY)
+				critical_planes[string_plane] = TRUE
 
 			plane_offset_to_true[string_plane] = plane_to_use
 			plane_to_offset[string_plane] = plane_offset
