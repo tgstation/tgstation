@@ -41,7 +41,7 @@
 /mob/living
 	var/last_say_args_ref
 
-/// This unit test translates a string from one language to another depending on if the person can understand the
+/// This unit test translates a string from one language to another depending on if the person can understand the language
 /datum/unit_test/translate_language
 	var/mob/host_mob
 
@@ -101,6 +101,16 @@
 	// neither speaking or whispering should be hearable
 	conversation(distance=10)
 
+	// Language test
+	speaker.grant_language(/datum/language/beachbum)
+	listener.add_blocked_language(/datum/language/beachbum)
+	// speaking and whispering should be hearable
+	conversation(distance=1, /datum/language/beachbum)
+	// speaking should be hearable but not whispering
+	conversation(distance=5, /datum/language/beachbum)
+	// neither speaking or whispering should be hearable
+	conversation(distance=10, /datum/language/beachbum)
+
 #define NORMAL_HEARING_RANGE 7
 #define WHISPER_HEARING_RANGE 1
 
@@ -108,17 +118,27 @@
 	speaker.forceMove(run_loc_floor_bottom_left)
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + distance, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
+	var/pangram_quote = "The quick brown fox jumps over the lazy dog"
+
 	// speaking
-	speaker.say("The quick brown fox jumps over the lazy dog", language = language)
+	speaker.say(pangram_quote, language = language)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT_EQUAL(islist(handle_hearing_result), distance <= NORMAL_HEARING_RANGE, "Handle hearing signal was not fired")
+	
+	if(language)
+		if(listener.has_language(language))
+			TEST_ASSERT_EQUAL(pangram_quote, handle_hearing_result[HEARING_MESSAGE], "Language test failed. Mob was NOT supposed to understand: [pangram_quote] using language [language]")
+		else
+			TEST_ASSERT_NOTEQUAL(pangram_quote, handle_hearing_result[HEARING_MESSAGE], "Language test failed. Mob was supposed to understand: [pangram_quote] using language [language]")
+
 	handle_speech_result = null
 	handle_hearing_result = null
 
 	// whispering
-	speaker.whisper("The quick brown fox jumps over the lazy dog", language = language)
+	speaker.whisper(pangram_quote, language = language)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT_EQUAL(islist(handle_hearing_result), distance <= WHISPER_HEARING_RANGE, "Handle hearing signal was not fired")
+
 	handle_speech_result = null
 	handle_hearing_result = null
 
