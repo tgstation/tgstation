@@ -33,7 +33,7 @@
 			/datum/surgery_step/close)
 
 /datum/surgery_step/heal
-	name = "repair body"
+	name = "repair body (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 65,
@@ -167,7 +167,7 @@
 	return progress_text
 
 /datum/surgery_step/heal/brute/basic
-	name = "tend bruises"
+	name = "tend bruises (hemostat)"
 	brutehealing = 5
 	brute_multiplier = 0.07
 
@@ -232,7 +232,7 @@
 	return progress_text
 
 /datum/surgery_step/heal/burn/basic
-	name = "tend burn wounds"
+	name = "tend burn wounds (hemostat)"
 	burnhealing = 5
 	burn_multiplier = 0.07
 
@@ -303,7 +303,7 @@
 	return progress_text
 
 /datum/surgery_step/heal/combo
-	name = "tend physical wounds"
+	name = "tend physical wounds (hemostat)"
 	brutehealing = 3
 	burnhealing = 3
 	brute_multiplier = 0.07

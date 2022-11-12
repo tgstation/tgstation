@@ -192,9 +192,9 @@ if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo -e "${RED}ERROR: Variable editted /area path use detected in a map, please replace with a proper area path.${NC}"
     st=1
 fi;
-if grep -P '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
+if grep -P '\/turf\s*[,\){]' _maps/**/*.dmm; then
 	echo
-    echo -e "${RED}ERROR: Base /turf path use detected in maps, please replace a with proper turf path.${NC}"
+    echo -e "${RED}ERROR: Base /turf path use detected in maps, please replace it with a proper turf path.${NC}"
     st=1
 fi;
 if grep -Pzo '"\w+" = \(\n[^)]*?/turf/[/\w]*?,\n[^)]*?/turf/[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm; then

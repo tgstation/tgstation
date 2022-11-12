@@ -6,6 +6,8 @@
 		Try hiding some broken glass behind your poster before you hang it to give  \
 		do-gooders who try to take it down a hard time!"
 
+	progression_minimum = 0 MINUTES
+	duplicate_type = /datum/traitor_objective/demoralise/poster
 	/// Have we handed out a box of stuff yet?
 	var/granted_posters = FALSE
 	/// All of the posters the traitor gets, if this list is empty they've failed
@@ -57,7 +59,7 @@
  * Arguments
  * * victim - A mob who just got something stuck in their hand.
  */
-/datum/traitor_objective/demoralise/poster/proc/on_triggered_trap(mob/victim)
+/datum/traitor_objective/demoralise/poster/proc/on_triggered_trap(datum/source, mob/victim)
 	SIGNAL_HANDLER
 	on_mood_event(victim.mind)
 

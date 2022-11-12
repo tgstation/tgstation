@@ -548,7 +548,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/balloon_clusters = 2
 
 /obj/effect/mapping_helpers/ianbirthday/LateInitialize()
-	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
+	if(check_holidays("Ian's Birthday"))
 		birthday()
 	qdel(src)
 
@@ -616,7 +616,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "iansnewyrshelper"
 
 /obj/effect/mapping_helpers/iannewyear/LateInitialize()
-	if(SSevents.holidays && SSevents.holidays[NEW_YEAR])
+	if(check_holidays(NEW_YEAR))
 		fireworks()
 	qdel(src)
 

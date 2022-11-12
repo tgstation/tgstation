@@ -62,7 +62,7 @@
 		if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
 			playsound(src, 'sound/effects/adminhelp.ogg', 50, TRUE, -1)
 		user.adjustOxyLoss(200)
-		user.death(0)
+		user.death(FALSE)
 
 /obj/item/key/lasso
 	name = "bone lasso"

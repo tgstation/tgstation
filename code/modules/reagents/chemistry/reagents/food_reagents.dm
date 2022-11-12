@@ -481,7 +481,7 @@
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
-	if(methods & (INGEST | VAPOR))
+	if(methods & (TOUCH | VAPOR))
 		var/tear_proof = victim.is_eyes_covered()
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))

@@ -10,7 +10,7 @@
 		/obj/structure/spawner/lavaland = 2,
 		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30,
 		/obj/structure/spawner/lavaland/legion = 3,
-		SPAWN_MEGAFAUNA = 4,
+		SPAWN_MEGAFAUNA = 2,
 		/mob/living/simple_animal/hostile/asteroid/goldgrub = 10,
 		/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 20,
 		/mob/living/simple_animal/hostile/asteroid/brimdemon = 20,

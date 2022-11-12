@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - balance: "Tablet hard drives no longer exist. Applications are now stored directly onto the tablet."
-  - balance: "Building a modular computer with metal now should be a proper functioning computer."
-  - balance: "The R&D's Master system hard drive is now a data disk, if ever you need one that desperately."
-  - bugfix: "Tablets (not Cyborg ones) now have pens again, like they had before."

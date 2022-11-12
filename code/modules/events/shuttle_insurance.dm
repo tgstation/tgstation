@@ -16,6 +16,8 @@
 		return FALSE //They can't pay?
 	if(SSshuttle.shuttle_purchased == SHUTTLEPURCHASE_FORCED)
 		return FALSE //don't do it if there's nothing to insure
+	if(istype(SSshuttle.emergency, /obj/docking_port/mobile/emergency/shuttle_build))
+		return FALSE //this shuttle prevents the catastrophe event from happening making this event effectively useless
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return FALSE //catastrophes won't trigger so no point
 	return TRUE

@@ -4,7 +4,7 @@
  * Adds a trait to the movable's loc, and handles relocating the trait if the movable itself moves.
  */
 /datum/element/trait_loc
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH // handles if our movable is deleted
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY // handles if our movable is deleted
 	id_arg_index = 2
 	/// What trait to apply to the movable's loc.
 	var/trait_to_give

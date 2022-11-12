@@ -1,6 +1,5 @@
 /// An element that lets you engrave walls when right click is used
 /datum/element/wall_engraver
-	element_flags = ELEMENT_DETACH
 
 /datum/element/wall_engraver/Attach(datum/target)
 	. = ..()

@@ -1,7 +1,7 @@
 /// This hostile will not be able to attack a given typecache, and will receive
 /// a balloon alert when it tries to.
 /datum/element/prevent_attacking_of_types
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
 	/// The typecache of things this hostile can't attack

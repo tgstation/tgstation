@@ -2,7 +2,7 @@
  * Attached to movable atoms with opacity. Listens to them move and updates their old and new turf loc's opacity accordingly.
  */
 /datum/element/light_blocking
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 
 
 /datum/element/light_blocking/Attach(datum/target)

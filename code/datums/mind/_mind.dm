@@ -161,7 +161,7 @@
 
 	if(key)
 		if(new_character.key != key) //if we're transferring into a body with a key associated which is not ours
-			new_character.ghostize(1) //we'll need to ghostize so that key isn't mobless.
+			new_character.ghostize(TRUE) //we'll need to ghostize so that key isn't mobless.
 	else
 		key = new_character.key
 
@@ -427,11 +427,10 @@
 				var/objective_typepath = tgui_input_list(usr, "Select objective", "Select objective", all_objectives)
 				if(!objective_typepath)
 					return
-				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath)
+				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath, force = TRUE)
 				if(objective)
 					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective_typepath]).")
 					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective_typepath]).")
-					objective.forced = TRUE
 				else
 					to_chat(usr, span_warning("Failed to generate the objective!"))
 					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")

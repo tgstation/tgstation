@@ -54,7 +54,7 @@
 	maxHealth = 65
 	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
-	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/internal/eyes)
+	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/left, /obj/item/organ/internal/eyes)
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
 		/datum/action/cooldown/spell/list_target/telepathy/eldritch,
@@ -301,7 +301,7 @@
 	AttackingTarget()
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/AttackingTarget()
-	if(istype(target, /obj/item/bodypart/r_arm) || istype(target, /obj/item/bodypart/l_arm))
+	if(istype(target, /obj/item/bodypart/arm))
 		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
 		qdel(target)
 		heal()

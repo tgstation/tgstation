@@ -146,7 +146,7 @@
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
-	else if(istype(target, /turf/open/misc/asteroid))
+	else if(isasteroidturf(target))
 		var/turf/open/misc/asteroid/sand_turf = target
 		if(!sand_turf.can_dig(mod.wearer))
 			return
@@ -234,7 +234,7 @@
 	var/atom/game_renderer = mod.wearer.hud_used.get_plane_master(RENDER_PLANE_GAME)
 	var/matrix/render_matrix = matrix(game_renderer.transform)
 	render_matrix.Scale(1.25, 1.25)
-	animate(game_renderer, launch_time, flags = SINE_EASING|EASE_IN, transform = render_matrix)
+	animate(game_renderer, launch_time, transform = render_matrix)
 	var/current_time = world.time
 	mod.wearer.visible_message(span_warning("[mod.wearer] starts whirring!"), \
 		blind_message = span_hear("You hear a whirring sound."))

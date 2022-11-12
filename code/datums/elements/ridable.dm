@@ -7,7 +7,7 @@
  * just having the variables, behavior, and procs be standardized is still a big improvement.
  */
 /datum/element/ridable
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
 	id_arg_index = 2
 
 	/// The specific riding component subtype we're loading our instructions from, don't leave this as default please!

@@ -454,13 +454,13 @@
 		var/sound/song_played = sound(selection.song_path)
 
 		for(var/mob/M in range(10,src))
-			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			if(!M.client || !(M.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
 				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
 		for(var/mob/L in rangers)
-			if(get_dist(src,L) > 10)
+			if(get_dist(src,L) > 10 || !(L.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
 				rangers -= L
 				if(!L || !L.client)
 					continue

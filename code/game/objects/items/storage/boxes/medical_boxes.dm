@@ -111,12 +111,3 @@
 		/obj/item/stack/sheet/iron/ten = 1,
 		)
 	generate_items_inside(items_inside, src)
-
-/obj/item/storage/box/silver_sulf
-	name = "box of silver sulfadiazine patches"
-	desc = "Contains patches used to treat burns."
-	illustration = "firepatch"
-
-/obj/item/storage/box/silver_sulf/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/patch/aiuri(src)

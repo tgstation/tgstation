@@ -361,6 +361,7 @@
 /obj/item/modular_computer/tablet/pda
 	icon = 'icons/obj/modular_pda.dmi'
 	icon_state = "pda"
+	worn_icon_state = "pda"
 
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"

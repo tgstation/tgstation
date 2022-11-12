@@ -142,7 +142,7 @@
 
 	return ..()
 
-/datum/action/item_action/rune_shatter/IsAvailable()
+/datum/action/item_action/rune_shatter/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return

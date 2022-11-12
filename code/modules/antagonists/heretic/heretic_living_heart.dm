@@ -87,7 +87,7 @@
 
 	return ..()
 
-/datum/action/cooldown/track_target/IsAvailable()
+/datum/action/cooldown/track_target/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return

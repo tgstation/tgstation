@@ -297,7 +297,7 @@
 				return
 			compressor_record -= record
 			return TRUE
-		if("print_record")
+		if("save_record")
 			var/datum/data/compressor_record/record  = locate(params["ref"]) in compressor_record
 			if(!compressor_record || !(record in compressor_record))
 				return

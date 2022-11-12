@@ -679,7 +679,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "agZ" = (
 /obj/machinery/ntnet_relay,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -1523,6 +1523,7 @@
 /obj/item/bedsheet/dorms{
 	dir = 1
 	},
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "aqW" = (
@@ -1985,7 +1986,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "auJ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -4117,7 +4118,7 @@
 /obj/machinery/suit_storage_unit/security,
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "aWP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9723,11 +9724,6 @@
 /turf/open/floor/iron,
 /area/station/medical/medbay)
 "cky" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin/carbon{
-	pixel_x = -3;
-	pixel_y = 2
-	},
 /obj/machinery/button/door/directional/south{
 	id = "psych_shutters";
 	name = "Shutter Control";
@@ -9738,15 +9734,6 @@
 	pixel_x = 6
 	},
 /obj/machinery/airalarm/directional/west,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 15;
-	pixel_y = 7
-	},
-/obj/item/folder/white{
-	pixel_x = -2;
-	pixel_y = 3
-	},
-/obj/item/pen,
 /obj/machinery/button/door/directional/south{
 	id = "psych_bolt";
 	name = "Bolt Control";
@@ -9755,6 +9742,11 @@
 	pixel_y = -35;
 	req_access = list("psychology");
 	specialfunctions = 4
+	},
+/obj/structure/table/wood,
+/obj/machinery/computer/med_data/laptop{
+	dir = 1;
+	pixel_y = 4
 	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
@@ -13044,7 +13036,7 @@
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "dax" = (
 /obj/structure/window,
 /obj/structure/sink/directional/south,
@@ -15374,7 +15366,7 @@
 	},
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "dFg" = (
 /turf/open/floor/iron/chapel{
 	dir = 9
@@ -19117,10 +19109,10 @@
 /area/station/engineering/storage/tech)
 "eCO" = (
 /obj/item/stack/cable_coil,
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 3
 	},
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -3
 	},
 /obj/structure/table,
@@ -22151,7 +22143,6 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "fnA" = (
@@ -22367,7 +22358,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "fqx" = (
 /obj/effect/landmark/start/hangover/closet,
 /obj/structure/closet/crate,
@@ -22971,12 +22962,21 @@
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "fxP" = (
-/obj/structure/closet/secure_closet/psychology,
-/obj/item/toy/plush/beeplushie{
-	desc = "Maybe hugging this will make you feel better about yourself.";
-	name = "Therabee"
-	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/obj/structure/table/wood,
+/obj/item/folder/white{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/pen,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 9;
+	pixel_y = 5
+	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "fya" = (
@@ -23682,7 +23682,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/security/warden)
+/area/station/security/evidence)
 "fIg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -28528,7 +28528,7 @@
 /area/station/maintenance/fore)
 "gQa" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse/brown/tom,
+/mob/living/basic/mouse/brown/tom,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
 "gQd" = (
@@ -34012,7 +34012,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "ijx" = (
 /turf/open/floor/iron/white/side,
 /area/station/science/lobby)
@@ -39356,7 +39356,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/security/warden)
+/area/station/security/evidence)
 "jzb" = (
 /obj/machinery/door/poddoor/shutters{
 	dir = 4;
@@ -40454,7 +40454,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/station/security/warden)
+/area/station/security/evidence)
 "jLo" = (
 /obj/structure/rack,
 /obj/item/clothing/gloves/color/fyellow,
@@ -40685,6 +40685,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
+"jNM" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/evidence)
 "jNP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
@@ -42496,8 +42501,10 @@
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "kiQ" = (
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
@@ -43522,7 +43529,7 @@
 /area/station/security/execution/transfer)
 "kxm" = (
 /obj/machinery/light/directional/east,
-/mob/living/simple_animal/mouse/white,
+/mob/living/basic/mouse/white,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "kxs" = (
@@ -45860,10 +45867,10 @@
 "lbz" = (
 /obj/structure/table/reinforced,
 /obj/item/bodypart/chest/robot,
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 6
 	},
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -6
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -50609,12 +50616,12 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot{
+/obj/item/clothing/head/helmet/toggleable/riot,
+/obj/item/clothing/head/helmet/toggleable/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -51202,7 +51209,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "muh" = (
 /obj/structure/lattice/catwalk,
 /obj/item/stack/cable_coil,
@@ -56637,6 +56644,7 @@
 /obj/item/bedsheet/dorms,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/landmark/start/hangover,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "nKA" = (
@@ -57186,7 +57194,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "nRi" = (
 /obj/structure/sign/warning/secure_area/directional/south,
 /obj/structure/table,
@@ -57537,7 +57545,7 @@
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "nWw" = (
-/mob/living/simple_animal/mouse/gray,
+/mob/living/basic/mouse/gray,
 /turf/open/floor/iron,
 /area/station/security/prison)
 "nWF" = (
@@ -58437,7 +58445,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/security/warden)
+/area/station/security/evidence)
 "ohP" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=hall11";
@@ -60395,7 +60403,7 @@
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "oKr" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/supply)
@@ -60482,6 +60490,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
 /obj/machinery/status_display/evac/directional/east,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "oLT" = (
@@ -65392,6 +65401,7 @@
 	dir = 1
 	},
 /obj/machinery/status_display/evac/directional/north,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "pUp" = (
@@ -68783,7 +68793,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/full,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/security/warden)
+/area/station/security/evidence)
 "qKY" = (
 /obj/structure/table/wood,
 /obj/item/folder/yellow,
@@ -70775,7 +70785,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "rme" = (
 /obj/structure/table/wood,
 /obj/item/phone{
@@ -71700,7 +71710,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "ryC" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/stripes/line{
@@ -75314,7 +75324,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/east,
 /obj/item/clothing/suit/costume/justice,
-/obj/item/clothing/head/helmet/justice/escape{
+/obj/item/clothing/head/helmet/toggleable/justice/escape{
 	name = "justice helmet"
 	},
 /turf/open/floor/iron/dark,
@@ -77314,6 +77324,9 @@
 /obj/structure/sign/warning/no_smoking/directional/west,
 /turf/open/floor/iron/dark/textured_half,
 /area/station/science/robotics/lab)
+"sRd" = (
+/turf/closed/wall/r_wall,
+/area/station/security/evidence)
 "sRm" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/west,
@@ -81528,8 +81541,8 @@
 "tTe" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/blue,
-/obj/item/bodypart/l_leg/robot,
-/obj/item/bodypart/r_leg/robot,
+/obj/item/bodypart/leg/left/robot,
+/obj/item/bodypart/leg/right/robot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
@@ -84456,6 +84469,7 @@
 /obj/item/bedsheet/dorms_double,
 /obj/machinery/status_display/evac/directional/east,
 /obj/effect/landmark/start/hangover,
+/obj/item/pillow/random,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "uEv" = (
@@ -88028,15 +88042,15 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "vxc" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop{
-	dir = 1;
-	pixel_y = 4
-	},
 /obj/structure/sign/poster/official/help_others{
 	pixel_x = 32
 	},
 /obj/machinery/light/warm/directional/south,
+/obj/structure/closet/secure_closet/psychology,
+/obj/item/toy/plush/beeplushie{
+	desc = "Maybe hugging this will make you feel better about yourself.";
+	name = "Therabee"
+	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "vxf" = (
@@ -93084,7 +93098,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "wFc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -95060,7 +95074,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "xhE" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -95908,7 +95922,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/security/warden)
+/area/station/security/evidence)
 "xtg" = (
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
@@ -151231,9 +151245,9 @@ vgK
 wGg
 vgK
 vgK
-ufR
+sRd
 ohI
-ufR
+sRd
 ufR
 lra
 sle
@@ -152516,9 +152530,9 @@ cpA
 tLx
 tAJ
 vgK
-lra
+jNM
 jLm
-lra
+jNM
 bLs
 bLs
 bPw
@@ -153544,9 +153558,9 @@ mrD
 tAd
 uPg
 iDq
-ufR
-lra
-ufR
+sRd
+jNM
+sRd
 bLs
 aqW
 aEs

@@ -444,7 +444,7 @@
 	icon_state = "[skin]-control[active ? "-sealed" : ""]"
 	return ..()
 
-/obj/item/mod/control/proc/set_wearer(mob/user)
+/obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
 	wearer = user
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)

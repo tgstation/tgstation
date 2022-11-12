@@ -8,7 +8,7 @@
 	///checker on whether we have sent the crystal yet.
 	var/sent_crystal = FALSE
 
-/datum/traitor_objective/final/supermatter_cascade/can_take_final_objective()
+/datum/traitor_objective/final/supermatter_cascade/can_generate_objective(generating_for, list/possible_duplicates)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -20,13 +20,13 @@
 	return FALSE
 
 /datum/traitor_objective/final/supermatter_cascade/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!can_take_final_objective())
-		return
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		//remove areas too close to the destination, too obvious for our poor shmuck, or just unfair
 		if(istype(possible_area, /area/station/hallway) || istype(possible_area, /area/station/security))
 			possible_areas -= possible_area
+	if(length(possible_areas) == 0)
+		return FALSE
 	dest_crystal_area_pickup = pick(possible_areas)
 	replace_in_name("%AREA%", initial(dest_crystal_area_pickup.name))
 	return TRUE
