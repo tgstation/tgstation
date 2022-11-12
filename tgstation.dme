@@ -4600,6 +4600,7 @@
 #include "code\modules\uplink\uplink_items\implant.dm"
 #include "code\modules\uplink\uplink_items\job.dm"
 #include "code\modules\uplink\uplink_items\nukeops.dm"
+#include "code\modules\uplink\uplink_items\special.dm"
 #include "code\modules\uplink\uplink_items\species.dm"
 #include "code\modules\uplink\uplink_items\stealthy.dm"
 #include "code\modules\uplink\uplink_items\stealthy_tools.dm"

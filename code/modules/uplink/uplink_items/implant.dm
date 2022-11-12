@@ -55,17 +55,3 @@
 	uplink_box.name = "Uplink Implant Box"
 	new /obj/item/implanter/uplink(uplink_box, uplink_handler)
 	return uplink_box
-
-/datum/uplink_item/implants/autosurgeon
-	name = "Syndicate Autosurgeon"
-	desc = "A multi-use autosurgeon for implanting whatever you want into yourself. Rip that station apart and make it part of you."
-	item = /obj/item/autosurgeon/syndicate
-	cost = 5
-	cant_discount = TRUE
-	surplus = 0
-	purchasable_from = NONE
-
-/datum/uplink_item/implants/autosurgeon/New()
-	..()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
-		purchasable_from |= UPLINK_TRAITORS
