@@ -72,7 +72,7 @@
 	if(.)
 		return
 
-	var/obj/machinery/airlock_controller/airlock_controller = GLOB.airlock_controllers_by_id[master_tag]
+	var/obj/machinery/airlock_controller/airlock_controller = GLOB.objects_by_id_tag[master_tag]
 	airlock_controller?.cycle()
 
 	flick("airlock_sensor_cycle", src)

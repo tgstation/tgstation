@@ -5,9 +5,22 @@
 #define AIRLOCK_STATE_DEPRESSURIZE "depressurize"
 #define AIRLOCK_STATE_OUTOPEN "outopen"
 
-/datum/computer/file/embedded_program/airlock_controller
-	var/id_tag
-	var/sanitize_external //Before the interior airlock opens, do we first drain all gases inside the chamber and then repressurize?
+/obj/machinery/airlock_controller
+	icon = 'icons/obj/airlock_machines.dmi'
+	icon_state = "airlock_control_standby"
+	base_icon_state = "airlock_control"
+
+	name = "airlock console"
+	density = FALSE
+
+	power_channel = AREA_USAGE_ENVIRON
+
+	// Setup parameters only
+	var/exterior_door_tag
+	var/interior_door_tag
+	var/airpump_tag
+	var/sensor_tag
+	var/sanitize_external
 
 	var/datum/weakref/interior_door_ref
 	var/datum/weakref/exterior_door_ref
@@ -16,26 +29,30 @@
 
 	var/last_pressure = null
 
-	state = AIRLOCK_STATE_CLOSED
+	var/state = AIRLOCK_STATE_CLOSED
 	var/target_state = AIRLOCK_STATE_CLOSED
 
 	var/processing = FALSE
 
-/datum/computer/file/embedded_program/airlock_controller/proc/receive_user_command(command)
-	switch(command)
-		if("cycleClosed")
-			target_state = AIRLOCK_STATE_CLOSED
-		if("cycleExterior")
-			target_state = AIRLOCK_STATE_OUTOPEN
-		if("cycleInterior")
-			target_state = AIRLOCK_STATE_INOPEN
-		if("abort")
-			target_state = AIRLOCK_STATE_CLOSED
+/obj/machinery/airlock_controller/LateInitialize()
+	. = ..()
 
-/datum/computer/file/embedded_program/airlock_controller/process()
-	var/process_again = 1
+	// MBTODO: Delete airlocks_by_id and vents_by_id
+	interior_door_ref = WEAKREF(GLOB.airlocks_by_id[interior_door_tag])
+	exterior_door_ref = WEAKREF(GLOB.airlocks_by_id[exterior_door_tag])
+	pump_ref = WEAKREF(GLOB.vents_by_id[airpump_tag])
+	sensor_ref = WEAKREF(GLOB.objects_by_id_tag[sensor_tag])
+
+/obj/machinery/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AirlockController", src)
+		ui.open()
+
+/obj/machinery/airlock_controller/process(delta_time)
+	var/process_again = TRUE
 	while(process_again)
-		process_again = 0
+		process_again = FALSE
 		switch(state)
 			if(AIRLOCK_STATE_INOPEN)
 				if(target_state != state)
@@ -45,7 +62,7 @@
 
 					if(interior_airlock.density)
 						state = AIRLOCK_STATE_CLOSED
-						process_again = 1
+						process_again = TRUE
 					else
 						interior_airlock.secure_close()
 				else
@@ -70,7 +87,7 @@
 							interior_airlock?.secure_open()
 						else
 							state = AIRLOCK_STATE_INOPEN
-							process_again = 1
+							process_again = TRUE
 					else
 						var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
 						if (isnull(pump))
@@ -85,7 +102,7 @@
 						pump.update_appearance(UPDATE_ICON)
 				else
 					state = AIRLOCK_STATE_CLOSED
-					process_again = 1
+					process_again = TRUE
 
 			if(AIRLOCK_STATE_CLOSED)
 				if(target_state == AIRLOCK_STATE_OUTOPEN)
@@ -95,7 +112,7 @@
 
 					if(interior_airlock.density)
 						state = AIRLOCK_STATE_DEPRESSURIZE
-						process_again = 1
+						process_again = TRUE
 					else
 						interior_airlock?.secure_close()
 				else if(target_state == AIRLOCK_STATE_INOPEN)
@@ -105,7 +122,7 @@
 
 					if(exterior_airlock.density)
 						state = AIRLOCK_STATE_PRESSURIZE
-						process_again = 1
+						process_again = TRUE
 					else
 						exterior_airlock?.secure_close()
 				else
@@ -138,10 +155,10 @@
 							state = AIRLOCK_STATE_OUTOPEN
 					else
 						state = AIRLOCK_STATE_CLOSED
-						process_again = 1
+						process_again = TRUE
 				else if((target_state != AIRLOCK_STATE_OUTOPEN) && !sanitize_external)
 					state = AIRLOCK_STATE_CLOSED
-					process_again = 1
+					process_again = TRUE
 				else
 					var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
 					if (isnull(pump))
@@ -161,10 +178,10 @@
 					if(exterior_airlock.density)
 						if(sanitize_external)
 							state = AIRLOCK_STATE_DEPRESSURIZE
-							process_again = 1
+							process_again = TRUE
 						else
 							state = AIRLOCK_STATE_CLOSED
-							process_again = 1
+							process_again = TRUE
 					else
 						exterior_airlock.secure_close()
 				else
@@ -178,109 +195,30 @@
 
 	processing = state != target_state
 
-	return 1
-
-/// Returns the pressure over the pump, or null if it is deleted
-/datum/computer/file/embedded_program/airlock_controller/proc/sensor_pressure()
-	var/obj/machinery/airlock_sensor/sensor = sensor_ref.resolve()
-	if (!isnull(sensor) && !sensor.on)
-		return last_pressure
-
-	var/datum/gas_mixture/air = sensor?.return_air()
-	last_pressure = air?.return_pressure()
-	return last_pressure
-
-/obj/machinery/airlock_controller
-	icon = 'icons/obj/airlock_machines.dmi'
-	icon_state = "airlock_control_standby"
-	base_icon_state = "airlock_control"
-
-	name = "airlock console"
-	density = FALSE
-
-	power_channel = AREA_USAGE_ENVIRON
-
-	// Setup parameters only
-	var/exterior_door_tag
-	var/interior_door_tag
-	var/airpump_tag
-	var/sensor_tag
-	var/sanitize_external
-
-	// MBTODO: Clear needless typecasts, change this to just being part of the machine itself probably
-	var/datum/computer/file/embedded_program/airlock_controller/program
-
-GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_controller)
-
-/obj/machinery/airlock_controller/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		return
-
-	if (!isnull(id_tag))
-		GLOB.airlock_controllers_by_id[id_tag] = src
-
-	var/datum/computer/file/embedded_program/airlock_controller/new_prog = new
-
-	new_prog.id_tag = id_tag
-	new_prog.sanitize_external = sanitize_external
-
-	new_prog.master = src
-	program = new_prog
-
-/obj/machinery/airlock_controller/LateInitialize()
-	. = ..()
-
-	if (isnull(program))
-		return
-
-	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
-	// MBTODO: Delete airlocks_by_id and vents_by_id
-	airlock_program.interior_door_ref = WEAKREF(GLOB.airlocks_by_id[interior_door_tag])
-	airlock_program.exterior_door_ref = WEAKREF(GLOB.airlocks_by_id[exterior_door_tag])
-	airlock_program.pump_ref = WEAKREF(GLOB.vents_by_id[airpump_tag])
-	airlock_program.sensor_ref = WEAKREF(GLOB.objects_by_id_tag[sensor_tag])
-
-/obj/machinery/airlock_controller/Destroy()
-	GLOB.airlock_controllers_by_id -= id_tag
-	QDEL_NULL(program)
-	return ..()
-
-/obj/machinery/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "AirlockController", src)
-		ui.open()
-
-/obj/machinery/airlock_controller/process(delta_time)
-	if(program)
-		program.process(delta_time)
-
 	update_appearance()
 	SStgui.update_uis(src)
 
 /obj/machinery/airlock_controller/ui_data(mob/user)
 	var/list/data = list()
 
-	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
-	data["airlockState"] = airlock_program.state
+	data["airlockState"] = state
 
-	var/sensor_pressure = airlock_program.sensor_pressure()
+	var/sensor_pressure = sensor_pressure()
 	data["sensorPressure"] = isnull(sensor_pressure) ? "----" : round(sensor_pressure, 0.1)
 
-	var/obj/machinery/door/airlock/interior_airlock = airlock_program.interior_door_ref.resolve()
+	var/obj/machinery/door/airlock/interior_airlock = interior_door_ref.resolve()
 	if (isnull(interior_airlock))
 		data["interiorStatus"] = "----"
 	else
 		data["interiorStatus"] = interior_airlock.density ? "closed" : "open"
 
-	var/obj/machinery/door/airlock/exterior_airlock = airlock_program.exterior_door_ref.resolve()
+	var/obj/machinery/door/airlock/exterior_airlock = exterior_door_ref.resolve()
 	if (isnull(exterior_airlock))
 		data["exteriorStatus"] = "----"
 	else
 		data["exteriorStatus"] = exterior_airlock.density ? "closed" : "open"
 
-	var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = airlock_program.pump_ref.resolve()
+	var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = pump_ref.resolve()
 	switch (pump?.pump_direction)
 		if (null)
 			data["pumpStatus"] = "----"
@@ -295,20 +233,35 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_contro
 	. = ..()
 	if(.)
 		return
-	// no need for sanitisation, command just changes target_state and can't do anything else
-	program.receive_user_command(action)
+
+	switch(action)
+		if("cycleClosed")
+			target_state = AIRLOCK_STATE_CLOSED
+		if("cycleExterior")
+			target_state = AIRLOCK_STATE_OUTOPEN
+		if("cycleInterior")
+			target_state = AIRLOCK_STATE_INOPEN
+		if("abort")
+			target_state = AIRLOCK_STATE_CLOSED
+
 	return TRUE
 
 /// Starts an airlock cycle
 /obj/machinery/airlock_controller/proc/cycle()
-	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
-	if (isnull(airlock_program))
-		return
-
-	if (airlock_program.state < AIRLOCK_STATE_CLOSED)
-		airlock_program.target_state = AIRLOCK_STATE_OUTOPEN
+	if (state < AIRLOCK_STATE_CLOSED)
+		target_state = AIRLOCK_STATE_OUTOPEN
 	else
-		airlock_program.target_state = AIRLOCK_STATE_INOPEN
+		target_state = AIRLOCK_STATE_INOPEN
+
+/// Returns the pressure over the pump, or null if it is deleted
+/obj/machinery/airlock_controller/proc/sensor_pressure()
+	var/obj/machinery/airlock_sensor/sensor = sensor_ref.resolve()
+	if (!isnull(sensor) && !sensor.on)
+		return last_pressure
+
+	var/datum/gas_mixture/air = sensor?.return_air()
+	last_pressure = air?.return_pressure()
+	return last_pressure
 
 /obj/machinery/airlock_controller/incinerator_ordmix
 	name = "Incinerator Access Console"
@@ -338,6 +291,5 @@ GLOBAL_LIST_EMPTY_TYPED(airlock_controllers_by_id, /obj/machinery/airlock_contro
 	sensor_tag = INCINERATOR_SYNDICATELAVA_AIRLOCK_SENSOR
 
 /obj/machinery/airlock_controller/update_icon_state()
-	var/datum/computer/file/embedded_program/airlock_controller/airlock_program = program
-	icon_state = "[base_icon_state]_[airlock_program.processing ? "process" : "standby"]"
+	icon_state = "[base_icon_state]_[processing ? "process" : "standby"]"
 	return ..()
