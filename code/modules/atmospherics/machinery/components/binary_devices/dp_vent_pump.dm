@@ -29,20 +29,6 @@
 	///Set the flag for the pressure bound
 	var/pressure_checks = ATMOS_EXTERNAL_BOUND
 
-/// A list of all vents that have an id
-GLOBAL_LIST_EMPTY_TYPED(vents_by_id, /obj/machinery/atmospherics/components/binary/dp_vent_pump)
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/Initialize(mapload)
-	. = ..()
-
-	if (!isnull(id))
-		GLOB.vents_by_id[id] = src
-
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/Destroy()
-	SSradio.remove_object(src, frequency)
-	GLOB.vents_by_id -= id
-	return ..()
-
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)

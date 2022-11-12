@@ -151,9 +151,6 @@
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
-/// A list of all airlocks that have an id
-GLOBAL_LIST_EMPTY_TYPED(airlocks_by_id, /obj/machinery/door/airlock)
-
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 	init_network_id(NETWORK_DOOR_AIRLOCKS)
@@ -168,9 +165,6 @@ GLOBAL_LIST_EMPTY_TYPED(airlocks_by_id, /obj/machinery/door/airlock)
 		max_integrity = normal_integrity
 	if(damage_deflection == AIRLOCK_DAMAGE_DEFLECTION_N && security_level > AIRLOCK_SECURITY_IRON)
 		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
-
-	if (!isnull(id_tag))
-		GLOB.airlocks_by_id[id_tag] = src
 
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -349,7 +343,6 @@ GLOBAL_LIST_EMPTY_TYPED(airlocks_by_id, /obj/machinery/door/airlock)
 	QDEL_NULL(seal)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.remove_atom_from_hud(src)
-	GLOB.airlocks_by_id -= id_tag
 	return ..()
 
 /obj/machinery/door/airlock/handle_atom_del(atom/A)

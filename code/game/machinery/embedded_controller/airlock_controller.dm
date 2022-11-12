@@ -37,10 +37,9 @@
 /obj/machinery/airlock_controller/LateInitialize()
 	. = ..()
 
-	// MBTODO: Delete airlocks_by_id and vents_by_id
-	interior_door_ref = WEAKREF(GLOB.airlocks_by_id[interior_door_tag])
-	exterior_door_ref = WEAKREF(GLOB.airlocks_by_id[exterior_door_tag])
-	pump_ref = WEAKREF(GLOB.vents_by_id[airpump_tag])
+	interior_door_ref = WEAKREF(GLOB.objects_by_id_tag[interior_door_tag])
+	exterior_door_ref = WEAKREF(GLOB.objects_by_id_tag[exterior_door_tag])
+	pump_ref = WEAKREF(GLOB.objects_by_id_tag[airpump_tag])
 	sensor_ref = WEAKREF(GLOB.objects_by_id_tag[sensor_tag])
 
 /obj/machinery/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
