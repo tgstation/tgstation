@@ -270,3 +270,59 @@
 	// Put our filthy fingerprints all over the contents
 	for(var/obj/item/item in wallet)
 		item.add_fingerprint(living_mob, ignoregloves = TRUE)
+
+/datum/station_trait/cybernetic_revolution
+	name = "Cybernetic Revolution"
+	trait_type = STATION_TRAIT_POSITIVE
+	show_in_report = TRUE
+	weight = 1
+	report_message = "The new trends in cybernetics have come to the station! Everyone has some form of cybernetic implant."
+	/// List of all job types with the cybernetics they should receive.
+	var/static/list/job2cybernetic = list(
+		/datum/job/assistant = /obj/item/organ/internal/heart/cybernetic,
+		/datum/job/atmospheric_technician = /obj/item/organ/internal/cyberimp/mouth/breathing_tube,
+		/datum/job/bartender = /obj/item/organ/internal/liver/cybernetic/tier3,
+		/datum/job/botanist = /obj/item/organ/internal/cyberimp/chest/nutriment,
+		/datum/job/captain = /obj/item/organ/internal/heart/cybernetic/tier3,
+		/datum/job/cargo_technician = /obj/item/organ/internal/stomach/cybernetic/tier2,
+		/datum/job/chaplain = /obj/item/organ/internal/cyberimp/brain/anti_drop,
+		/datum/job/chemist = /obj/item/organ/internal/liver/cybernetic/tier2,
+		/datum/job/chief_engineer = /obj/item/organ/internal/cyberimp/chest/thrusters,
+		/datum/job/chief_medical_officer = /obj/item/organ/internal/cyberimp/chest/reviver,
+		/datum/job/clown = /obj/item/organ/internal/cyberimp/brain/anti_stun,
+		/datum/job/cook = /obj/item/organ/internal/cyberimp/chest/nutriment/plus,
+		/datum/job/curator = /obj/item/organ/internal/eyes/robotic/glow,
+		/datum/job/detective = /obj/item/organ/internal/lungs/cybernetic/tier3,
+		/datum/job/doctor = /obj/item/organ/internal/cyberimp/arm/surgery,
+		/datum/job/geneticist = /obj/item/organ/internal/fly,
+		/datum/job/head_of_personnel = /obj/item/organ/internal/eyes/robotic,
+		/datum/job/head_of_security = /obj/item/organ/internal/eyes/robotic/thermals,
+		/datum/job/janitor = /obj/item/organ/internal/eyes/robotic/xray,
+		/datum/job/lawyer = /obj/item/organ/internal/heart/cybernetic/tier2,
+		/datum/job/mime = /obj/item/organ/internal/tongue/robot,
+		/datum/job/paramedic = /obj/item/organ/internal/cyberimp/eyes/hud/medical,
+		/datum/job/prisoner = /obj/item/organ/internal/eyes/robotic/shield,
+		/datum/job/psychologist = /obj/item/organ/internal/ears/cybernetic/upgraded,
+		/datum/job/quartermaster = /obj/item/organ/internal/stomach/cybernetic/tier3,
+		/datum/job/research_director = /obj/item/organ/internal/cyberimp/bci,
+		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
+		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
+		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/flash,
+		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
+		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/toolset,
+		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,
+		/datum/job/warden = /obj/item/organ/internal/cyberimp/eyes/hud/security,
+	)
+
+/datum/station_trait/cybernetic_revolution/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+
+/datum/station_trait/cybernetic_revolution/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+
+	var/cybernetic_type = job2cybernetic[job.type]
+	if(!cybernetic_type)
+		return
+	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
+	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
