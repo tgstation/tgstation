@@ -2,10 +2,6 @@
 #define TRAM_MALFUNCTION_TIME_LOWER 240
 #define XING_STATE_GREEN 0
 #define TRAM_ASSOCIATED_MAP "Tramstation"
-
-var/specific_lift_id = MAIN_STATION_TRAM
-var/original_lethality
-
 /datum/round_event_control/tram_malfunction
 	name = "Tram Malfunction"
 	typepath = /datum/round_event/tram_malfunction
@@ -30,6 +26,8 @@ var/original_lethality
 /datum/round_event/tram_malfunction
 	announce_when = 1
 	end_when = TRAM_MALFUNCTION_TIME_LOWER
+	var/specific_lift_id = MAIN_STATION_TRAM
+	var/original_lethality
 
 /datum/round_event/tram_malfunction/setup()
 	end_when = rand(TRAM_MALFUNCTION_TIME_LOWER, TRAM_MALFUNCTION_TIME_UPPER)
