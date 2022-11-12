@@ -61,7 +61,6 @@ export const IVDrip = (props, context) => {
             {!!data.connected && (
               <LabeledList.Item
                 label="Object"
-                color={data.connected ? 'good' : 'bad'}
                 buttons={
                   <Button
                     disabled={!data.connected}
