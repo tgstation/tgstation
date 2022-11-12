@@ -93,6 +93,11 @@
 	item = /obj/item/sbeacondrop/emp
 	cost = 7
 
+/datum/uplink_item/explosives/syndicate_bomb/emp/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 2
+
 // High progression cost
 
 /datum/uplink_item/explosives/syndicate_bomb

@@ -322,7 +322,7 @@
 /datum/station_trait/cybernetic_revolution/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 
-	var/cybernetic_type = job2cybernetic[job.type]
+	var/cybernetic_type = job_to_cybernetic[job.type]
 	if(!cybernetic_type)
 		return
 	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
