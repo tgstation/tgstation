@@ -23,14 +23,6 @@
 		return COMPONENT_INCOMPATIBLE
 	linked_action = new /datum/action/innate/sign_language(src)
 
-/// Signal proc for [COMSIG_SIGNLANGUAGE_REMOVE]
-/// A convenient shortcut for removing the component.
-/// The qdel here eventually calls Destroy() and UnregisterFromParent()
-/datum/component/sign_language/proc/qdel_self()
-	SIGNAL_HANDLER
-
-	qdel(src)
-
 /datum/component/sign_language/RegisterWithParent()
 	// Sign language Action is granted/removed via adding/removing TRAIT_CAN_SIGN_LANG.
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CAN_SIGN_LANG), .proc/learn_sign_language)
