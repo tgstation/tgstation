@@ -86,6 +86,8 @@
 
 	linked_action.Remove(parent)
 	if (HAS_TRAIT(parent, TRAIT_CAN_SIGN_LANG) && HAS_TRAIT(parent, TRAIT_MUTE))
+		// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
+		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 		// Re-adds the toggle action if the signing Carbon loses TRAIT_MUTE.
 		RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_MUTE), .proc/add_action)
 
@@ -100,11 +102,13 @@
 	ADD_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	to_chat(owner, span_green("You are now communicating with sign language."))
 	active = TRUE
+	UpdateButtons()
 
 /datum/action/innate/sign_language/Deactivate()
 	REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	to_chat(owner, span_green("You have stopped using sign language."))
 	active = FALSE
+	UpdateButtons()
 
 /datum/action/innate/sign_language/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
 	. = ..()
