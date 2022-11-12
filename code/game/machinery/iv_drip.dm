@@ -66,6 +66,7 @@
 	data["connected"] = attached ? TRUE : FALSE
 	if(attached)
 		data["objectName"] = attached.name
+		data["canDrainBlood"] = isliving(attached)
 	data["beakerAttached"] = reagent_container ? TRUE : FALSE
 	if(reagent_container)
 		data["beakerCurrentVolume"] = round(reagent_container.reagents.total_volume, 0.01)
@@ -198,6 +199,9 @@
 		detach_iv()
 		return PROCESS_KILL
 
+	if(transfer_rate == 0)
+		return
+
 	var/datum/reagents/target_reagents = get_reagent_holder()
 	if(target_reagents)
 		// Give blood
@@ -209,12 +213,11 @@
 		// Take blood
 		else if (isliving(attached))
 			var/mob/living/attached_mob = attached
-			var/amount = target_reagents.maximum_volume - target_reagents.total_volume
-			amount = min(amount, 4) * delta_time * 0.5
+			var/amount = min(transfer_rate * delta_time, target_reagents.maximum_volume - target_reagents.total_volume)
 			// If the beaker is full, ping
 			if(!amount)
-				if(prob(5))
-					visible_message(span_hear("[src] pings."))
+				transfer_rate = 0
+				visible_message(span_hear("[src] pings."))
 				return
 
 			// If the human is losing too much blood, beep.
@@ -247,6 +250,8 @@
 		user.visible_message(span_warning("[usr] begins attaching [src] to [target]..."), span_warning("You begin attaching [src] to [target]."))
 		if(!do_after(usr, 1 SECONDS, target))
 			return
+	else
+		mode = IV_INJECTING
 	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	var/datum/reagents/container = get_reagent_holder()
 	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
@@ -298,6 +303,10 @@
 	if (!usr.canUseTopic())
 		return
 	if(usr.incapacitated())
+		return
+	// Prevent blood draining from non-living
+	if(!isliving(attached))
+		mode = IV_INJECTING
 		return
 	mode = !mode
 	to_chat(usr, span_notice("The IV drip is now [mode ? "injecting" : "taking blood"]."))

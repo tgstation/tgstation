@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Slider, ProgressBar, NoticeBox, Button, LabeledList, Section } from '../components';
+import { Box, Slider, ProgressBar, NoticeBox, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type IVDripData = {
@@ -11,6 +11,7 @@ type IVDripData = {
   mode: BooleanLike;
   connected: BooleanLike;
   objectName: string;
+  canDrainBlood: BooleanLike;
   beakerAttached: BooleanLike;
   beakerReagentColor: string;
   beakerCurrentVolume: number;
@@ -21,11 +22,11 @@ type IVDripData = {
 export const IVDrip = (props, context) => {
   const { act, data } = useBackend<IVDripData>(context);
   return (
-    <Window width={380} height={202}>
+    <Window width={380} height={220}>
       <Window.Content>
-        <Section>
+        <Section fill>
           <LabeledList>
-            {!!data.beakerAttached && (
+            {data.beakerAttached ? (
               <LabeledList.Item
                 label="Container"
                 buttons={
@@ -52,13 +53,30 @@ export const IVDrip = (props, context) => {
                   </span>
                 </ProgressBar>
               </LabeledList.Item>
-            )}
-            {!data.beakerAttached && (
+            ) : (
               <LabeledList.Item label="Container">
                 <NoticeBox my={0.7}>No container attached.</NoticeBox>
               </LabeledList.Item>
             )}
-            {!!data.connected && (
+            <LabeledList.Item
+              label="Direction"
+              color={data.mode ? 'good' : 'bad'}
+              buttons={
+                <Button
+                  my={1}
+                  width={8}
+                  lineHeight={2}
+                  align="center"
+                  disabled={data.injectOnly || !data.canDrainBlood}
+                  color={data.mode ? 'good' : 'bad'}
+                  content={data.mode ? 'Injecting' : 'Draining'}
+                  icon={data.mode ? 'syringe' : 'droplet'}
+                  onClick={() => act('changeMode')}
+                />
+              }>
+              {data.mode ? 'Reagents from container' : 'Blood into container'}
+            </LabeledList.Item>
+            {data.connected ? (
               <LabeledList.Item
                 label="Object"
                 buttons={
@@ -73,32 +91,15 @@ export const IVDrip = (props, context) => {
                     onClick={() => act('detach')}
                   />
                 }>
-                {data.connected ? data.objectName : 'Not connected'}
+                <Box maxHeight={'45px'} overflow={'hidden'}>
+                  {data.objectName}
+                </Box>
               </LabeledList.Item>
-            )}
-            {!data.connected && (
+            ) : (
               <LabeledList.Item label="Object">
                 <NoticeBox my={0.7}>No object connected.</NoticeBox>
               </LabeledList.Item>
             )}
-            <LabeledList.Item
-              label="Direction"
-              color={data.mode ? 'good' : 'bad'}
-              buttons={
-                <Button
-                  my={1}
-                  width={8}
-                  lineHeight={2}
-                  align="center"
-                  disabled={data.injectOnly}
-                  color={data.mode ? 'good' : 'bad'}
-                  content={data.mode ? 'Injecting' : 'Draining'}
-                  icon={data.mode ? 'syringe' : 'droplet'}
-                  onClick={() => act('changeMode')}
-                />
-              }>
-              {data.mode ? 'Reagents from container' : 'Blood into container'}
-            </LabeledList.Item>
             <LabeledList.Item label="Transfer Rate" buttons={'Units / Second'}>
               <Slider
                 step={0.01}
