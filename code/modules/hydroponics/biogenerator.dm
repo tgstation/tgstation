@@ -366,15 +366,7 @@
 				stack_trace("ID did not map to a researched datum [id]")
 				return
 			var/datum/design/D = SSresearch.techweb_design_by_id(id)
-			amount = clamp(
-				amount,
-				1,
-				(
-					D.make_reagents.len > 0 && beaker ?
-					beaker.reagents.maximum_volume - beaker.reagents.total_volume :
-					max_output
-				)
-			)
+			amount = clamp(amount, 1, (D.make_reagents.len > 0 && beaker ? beaker.reagents.maximum_volume - beaker.reagents.total_volume : max_output))
 			if(D && !istype(D, /datum/design/error_design))
 				create_product(D, amount)
 			else
