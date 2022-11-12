@@ -6,7 +6,8 @@
 /obj/docking_port/mobile/elevator{
 	dir = 4;
 	shuttle_id = "snowdin_mining";
-	name = "mining elevator",
+	name = "mining elevator"
+	},
 /turf/open/floor/plating,
 /area/shuttle/snowdin/elevator2)
 "b" = (
