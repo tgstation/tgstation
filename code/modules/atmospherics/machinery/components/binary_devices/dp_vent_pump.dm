@@ -14,8 +14,6 @@
 
 	hide = TRUE
 
-	///Variable for machinery that needs to directly interact with this pump, such as airlock controllers
-	var/id = null
 	///Indicates that the direction of the pump, if ATMOS_DIRECTION_SIPHONING is siphoning, if ATMOS_DIRECTION_RELEASING is releasing
 	var/pump_direction = ATMOS_DIRECTION_RELEASING
 	///Set the maximum allowed external pressure
@@ -133,13 +131,13 @@
 	icon_state = "dpvent_map_on-4"
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix
-	id = INCINERATOR_ORDMIX_DP_VENTPUMP
+	id_tag = INCINERATOR_ORDMIX_DP_VENTPUMP
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos
-	id = INCINERATOR_ATMOS_DP_VENTPUMP
+	id_tag = INCINERATOR_ATMOS_DP_VENTPUMP
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_syndicatelava
-	id = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
+	id_tag = INCINERATOR_SYNDICATELAVA_DP_VENTPUMP
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/layer2
 	piping_layer = 2
