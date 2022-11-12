@@ -1749,6 +1749,7 @@
 #include "code\game\objects\items\food\spaghetti.dm"
 #include "code\game\objects\items\granters\_granters.dm"
 #include "code\game\objects\items\granters\oragami.dm"
+#include "code\game\objects\items\granters\sign_language.dm"
 #include "code\game\objects\items\granters\crafting\_crafting_granter.dm"
 #include "code\game\objects\items\granters\crafting\bone_notes.dm"
 #include "code\game\objects\items\granters\crafting\cannon.dm"
