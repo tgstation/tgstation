@@ -285,12 +285,11 @@
 	mail_goodies = list(/obj/item/clothing/gloves/radio)
 
 /datum/quirk/item_quirk/signer/add_unique()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.AddComponent(/datum/component/sign_language)
+	ADD_TRAIT(quirk_holder, TRAIT_CAN_SIGN_LANG, TRAIT_GENERIC)
 	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
-	if(isplasmaman(human_holder))
+	if(isplasmaman(quirk_holder))
 		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
 	give_item_to_holder(gloves_type, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/item_quirk/signer/remove()
-	qdel(quirk_holder.GetComponent(/datum/component/sign_language))
+	REMOVE_TRAIT(quirk_holder, TRAIT_CAN_SIGN_LANG, TRAIT_GENERIC)
