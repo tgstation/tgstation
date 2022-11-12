@@ -18,9 +18,10 @@
 
 /datum/component/sign_language/Initialize()
 	// Non-Carbon mobs can't use sign language.
-	linked_action = new /datum/action/innate/sign_language(src)
 	if (!iscarbon(parent))
+		stack_trace("Acid component added to [parent] ([parent?.type]) which is not a /mob/living/carbon subtype.")
 		return COMPONENT_INCOMPATIBLE
+	linked_action = new /datum/action/innate/sign_language(src)
 
 /// Signal proc for [COMSIG_SIGNLANGUAGE_REMOVE]
 /// A convenient shortcut for removing the component.
@@ -75,10 +76,11 @@
 
 /// Adds the linked toggle action to the parent Carbon.
 /datum/component/sign_language/proc/add_action()
-		SIGNAL_HANDLER
-		linked_action.Grant(parent)
-		// Removes the toggle action if the Carbon gains TRAIT_MUTE.
-		RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE), .proc/remove_action)
+	SIGNAL_HANDLER
+	linked_action.active = HAS_TRAIT(parent, TRAIT_SIGN_LANG)
+	linked_action.Grant(parent)
+	// Removes the toggle action if the Carbon gains TRAIT_MUTE.
+	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE), .proc/remove_action)
 
 /// Removes the linked toggle action from the parent Carbon.
 /datum/component/sign_language/proc/remove_action()
