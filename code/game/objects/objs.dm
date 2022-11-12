@@ -59,7 +59,6 @@
 	AddComponent(/datum/component/ntnet_interface, network_id, id_tag)
 
 /// A list of all /obj by their id_tag
-// MBTODO: Remove the other stuff I added like this
 GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/Initialize(mapload)
