@@ -2,6 +2,8 @@
 #define XING_STATE_AMBER 1
 #define XING_STATE_RED 2
 
+GLOBAL_LIST_EMPTY(tram_signals)
+
 /// Pedestrian crossing signal for tram
 /obj/machinery/crossing_signal
 	name = "crossing signal"
@@ -37,8 +39,6 @@
 	* If the value is set too high, it will cause the lights to turn red when the tram arrives at another station. You want to optimize the amount of warning without turning it red unnessecarily.
 	*/
 	var/red_distance_threshold = 33
-
-	GLOBAL_LIST_EMPTY(tram_signals)
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()

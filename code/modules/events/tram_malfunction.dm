@@ -23,6 +23,9 @@
 
 // Check if there's a tram we can cause to malfunction.
 /datum/round_event_control/tram_malfunction/can_spawn_event()
+	. = ..()
+	if(!.)
+		return .
 	for(var/tram_id in GLOB.active_lifts_by_type)
 		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
 		if(!istype(tram_ref))
