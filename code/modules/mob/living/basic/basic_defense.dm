@@ -135,10 +135,8 @@
 		apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 	return TRUE
 
-/mob/living/basic/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
-	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src, 0, piercing_hit)
-	return BULLET_ACT_HIT
+/mob/living/basic/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
+	return 0
 
 /mob/living/basic/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
