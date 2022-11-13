@@ -34,4 +34,4 @@
 
 	for(var/obj/effect/bump_teleporter/teleporter in AllTeleporters)
 		if(teleporter.id == src.id_target)
-			do_teleport(concerned_party, teleporter.loc, channel = TELEPORT_CHANNEL_QUANTUM) //Teleport to location with correct id.
+			do_teleport(concerned_party, get_turf(teleporter), channel = TELEPORT_CHANNEL_QUANTUM) //Teleport to location with correct id.
