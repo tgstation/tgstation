@@ -216,6 +216,8 @@
 #define BB_TARGETTING_DATUM "targetting_datum"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+///List of mobs who have damaged us
+#define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
 
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"

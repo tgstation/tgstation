@@ -98,8 +98,7 @@
 	disky = WEAKREF(potential_disky)
 	mob_parent.update_icon()
 	mob_parent.balloon_alert(mob_parent, "disk secured!")
-	if(!potential_disky.fake)
-		mob_parent.client.give_award(/datum/award/achievement/misc/cayenne_disk, mob_parent)
+	SEND_SIGNAL(mob_parent, COMSIG_HANDLESS_MOB_COLLECTED_DISK, potential_disky)
 
 /// Uses the disk on clicked atom, or places it on the ground
 /datum/component/nuclear_bomb_operator/proc/try_put_down_disk(obj/item/disk/nuclear/held_disk, atom/attacked_target)

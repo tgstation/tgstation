@@ -3,7 +3,9 @@
  *
  * A migratory dwarf fortress reference who swim through space and sometimes bump into the space station.
  * Can be created in dehydrated form by traitors, and are also summoned through rifts by space dragons.
+ *
  * Have a limited ability to open teleportation rifts themselves, helping them migrate through the space station without spacing it.
+ * Begin regenerating their health after a short time without taking any damage, and will try to run away to do this if they get hurt.
  * Lethally attracted to loose plastic.
  *
  * Tameable by feeding them meat, and can follow basic instructions. Rideable.
@@ -37,6 +39,7 @@
 	response_disarm_simple = "gently push aside"
 	faction = list("carp")
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
+	ai_controller = /datum/ai_controller/basic_controller/carp
 
 	/// Cytology cells you can swab from this creature
 	var/cell_line = CELL_LINE_TABLE_CARP
@@ -44,6 +47,8 @@
 	var/tamed = FALSE
 	/// If true, randomise our colour from the following list
 	var/random_colour = TRUE
+	/// Icon state of overlay to display when we start regenerating
+	var/regenerate_icon_state = "regen_glow"
 	/// Weighted list of colours a carp can be
 	var/static/list/carp_colors = list(
 		"#aba2ff" = 7,
@@ -63,22 +68,23 @@
 		"#fdfbf3" = 1, // The rare silver carp
 	)
 
-	ai_controller = /datum/ai_controller/basic_controller/stickman
-
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	. = ..()
-	if (random_colour)
-		set_greyscale(colors= list(pick_weight(carp_colors)), new_config=/datum/greyscale_config/carp)
 	AddElement(/datum/element/simple_flying)
 	if (cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
+	AddComponent(/datum/component/regenerator, regen_start_overlay = image(icon = src.icon, icon_state = regenerate_icon_state), start_overlay_duration = 1 SECONDS)
 	if (tamer)
 		on_tamed(tamer)
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/on_tamed))
+
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+
+	if (random_colour)
+		set_greyscale(colors= list(pick_weight(carp_colors)), new_config=/datum/greyscale_config/carp)
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/proc/on_tamed(mob/tamer)
@@ -97,6 +103,7 @@
 	gold_core_spawnable = NO_SPAWN
 	random_colour = FALSE
 	basic_mob_flags = DEL_ON_DEATH
+	cell_line = NONE
 
 /**
  * Pet carp, abstract carp which just holds some shared properties.
@@ -105,9 +112,11 @@
 	speak_emote = list("squeaks")
 	gold_core_spawnable = NO_SPAWN
 	gender = FEMALE // Both current existing pet carp are female but you can remove this if someone else gets a male one?
+	ai_controller = /datum/ai_controller/basic_controller/carp/retaliate
 
 /mob/living/basic/carp/pet/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
 
 /**
@@ -141,3 +150,10 @@
 /mob/living/basic/carp/pet/cayenne/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/nuclear_bomb_operator, mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay") , mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth"))
+	RegisterSignal(src, COMSIG_HANDLESS_MOB_COLLECTED_DISK, .proc/got_disk)
+
+/// She did it! Treats for Cayenne!
+/mob/living/basic/carp/pet/cayenne/proc/got_disk(atom/source, obj/item/disk/nuclear/disky)
+	if (disky.fake) // Never mind she didn't do it
+		return
+	client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
