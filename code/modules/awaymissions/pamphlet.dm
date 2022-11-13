@@ -58,6 +58,7 @@
 /obj/item/paper/pamphlet/cybernetics/Initialize(mapload)
 	. = ..()
 	sample = new(src)
+	update_desc()
 
 /obj/item/paper/pamphlet/cybernetics/update_desc(updates)
 	. = ..()
