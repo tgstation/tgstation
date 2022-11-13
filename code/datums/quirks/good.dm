@@ -290,6 +290,3 @@
 	if(isplasmaman(quirk_holder))
 		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
 	give_item_to_holder(gloves_type, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-
-/datum/quirk/item_quirk/signer/remove()
-	REMOVE_TRAIT(quirk_holder, TRAIT_CAN_SIGN_LANG, TRAIT_GENERIC)
