@@ -405,5 +405,7 @@
 	timeout = 4 MINUTES
 
 /datum/mood_event/body_purist
-	description = "Bags never sit right on my back, this hurts like hell!"
-	mood_change = -20
+	description = "I feel cybernetics attached to me, and I HATE IT!"
+
+/datum/mood_event/body_purist/add_effects(power)
+	mood_change = power
