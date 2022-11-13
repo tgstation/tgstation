@@ -25,7 +25,7 @@
 		speed = 7 SECONDS, \
 		effectiveness = 100, \
 	)
-	tool_behaviour = TOOL_KNIFE
+
 	AddComponent(/datum/component/transforming, \
 		start_transformed = start_extended, \
 		force_on = 10, \
@@ -45,5 +45,6 @@
 
 	on = active
 	playsound(src, on_sound, 50)
+	tool_behaviour = (active ? TOOL_KNIFE : NONE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
