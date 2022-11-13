@@ -523,11 +523,11 @@
 	for(var/thing in contents)
 		if(istype(thing, /obj/item/reagent_containers/condiment/pack/sugar))
 			has_sugar = TRUE
-		if(istype(thing, /obj/item/reagent_containers/condiment/pack/astrotame))
+		else if(istype(thing, /obj/item/reagent_containers/condiment/pack/astrotame))
 			has_sweetener = TRUE
-		if(istype(thing, /obj/item/reagent_containers/condiment/creamer))
+		else if(istype(thing, /obj/item/reagent_containers/condiment/creamer))
 			has_creamer = TRUE
-		if(istype(thing, /obj/item/reagent_containers/condiment/chocolate))
+		else if(istype(thing, /obj/item/reagent_containers/condiment/chocolate))
 			has_chocolate = TRUE
 
 	if (has_sugar)
@@ -551,6 +551,7 @@
 	update_appearance()
 
 /obj/item/storage/fancy/coffee_condi_display/update_icon_state()
+	//The box does not use the is_open variable and we don't want the parent to check for it
 	SHOULD_CALL_PARENT(FALSE)
 	return
 

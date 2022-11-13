@@ -483,7 +483,6 @@
 
 //when you attack the syrup bottle with a container it refills it
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/attackby(obj/item/attacking_item, mob/user, params)
-	//SHOULD_CALL_PARENT(FALSE)
 
 	if(!cap_on)
 		return ..()

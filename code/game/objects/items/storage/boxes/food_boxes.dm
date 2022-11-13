@@ -506,7 +506,7 @@
 	for(var/i in 1 to 5)
 		var/obj/item/food/grown/coffee/bean = new beantype(src)
 		ADD_TRAIT(bean, TRAIT_DRIED, ELEMENT_TRAIT(type))
-		bean.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)	//give them the tan just like from the drying rack
+		bean.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY) //give them the tan just like from the drying rack
 
 /obj/item/storage/box/coffeepack/robusta
 	icon_state = "robusta_beans"
