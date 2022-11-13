@@ -113,9 +113,9 @@
 
 /obj/item/circuit_component/bci_core/populate_ports()
 
-	message = add_input_port("Message", PORT_TYPE_STRING)
+	message = add_input_port("Message", PORT_TYPE_STRING, trigger = null)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
-	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER)
+	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER, trigger = .proc/update_charge_action)
 
 	user_port = add_output_port("User", PORT_TYPE_ATOM)
 
@@ -124,6 +124,7 @@
 	return ..()
 
 /obj/item/circuit_component/bci_core/proc/update_charge_action()
+	CIRCUIT_TRIGGER
 	if (show_charge_meter.value)
 		if (charge_action)
 			return
@@ -138,7 +139,7 @@
 /obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
 	bci = shell
 
-	show_charge_meter.set_value(1) // Defaults to 1 which shows the charge meter.
+	show_charge_meter.set_value(TRUE) // Defaults to TRUE (1) which shows the charge meter.
 
 	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, .proc/on_organ_implanted)
 	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
@@ -155,16 +156,7 @@
 		COMSIG_ORGAN_REMOVED,
 	))
 
-/obj/item/circuit_component/bci_core/should_receive_input(datum/port/input/port)
-	if (COMPONENT_TRIGGERED_BY(message, port))
-		return FALSE
-	return ..()
-
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
-	if (COMPONENT_TRIGGERED_BY(show_charge_meter, port))
-		update_charge_action()
-		return
-
 	var/sent_message = trim(message.value)
 	if (!sent_message)
 		return
