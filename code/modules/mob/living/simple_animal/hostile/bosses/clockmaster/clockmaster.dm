@@ -17,7 +17,7 @@
  *
  *Cogscarab Swarm - Summons 4 cogscarabs to act as trash mobs to draw attention off him. Can have up to 8 cogscarabs at a time.
  *
- *When Clockmaster gets to half health on his first phase, he will trigger a mid-combat dialogue where he summons shields around himself and destroys any active clockwork mobs. 
+ *When Clockmaster gets to half health on his first phase, he will trigger a mid-combat dialogue where he summons shields around himself and destroys any active clockwork mobs.
  *All nearby players are stunned for the duration of the dialogue as he spawns in the phase two version of himself.
  *
  *PHASE TWO:
@@ -210,7 +210,7 @@
 	name = "Map Maker"
 	desc = "A man in an engineering uniform, he looks tired."
 	icon_state = "map_maker"
-	loot = list(/obj/item/gun/energy/meteorgun/pen)
+	loot = list(/obj/item/pen/fourcolor)
 
 /mob/living/simple_animal/hostile/boss/clockmaster/map_maker/tell_them_my_evil_plan()
 	have_i_explained_my_evil_plan = TRUE
