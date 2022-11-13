@@ -11,45 +11,48 @@ type IVDripData = {
   mode: BooleanLike;
   connected: BooleanLike;
   objectName: string;
-  canDrainBlood: BooleanLike;
-  beakerAttached: BooleanLike;
-  beakerReagentColor: string;
-  beakerCurrentVolume: number;
-  beakerMaxVolume: number;
+  containerAttached: BooleanLike;
+  containerReagentColor: string;
+  containerCurrentVolume: number;
+  containerMaxVolume: number;
   useInternalStorage: BooleanLike;
+  isContainerRemovable: BooleanLike;
 };
 
 export const IVDrip = (props, context) => {
   const { act, data } = useBackend<IVDripData>(context);
   return (
-    <Window width={380} height={220}>
+    <Window width={400} height={220}>
       <Window.Content>
         <Section fill>
           <LabeledList>
-            {data.beakerAttached ? (
+            {data.containerAttached || data.useInternalStorage ? (
               <LabeledList.Item
                 label="Container"
                 buttons={
-                  <Button
-                    my={1}
-                    width={8}
-                    lineHeight={2}
-                    align="center"
-                    icon="eject"
-                    content="Eject"
-                    onClick={() => act('eject')}
-                  />
+                  !data.useInternalStorage &&
+                  !!data.isContainerRemovable && (
+                    <Button
+                      my={1}
+                      width={8}
+                      lineHeight={2}
+                      align="center"
+                      icon="eject"
+                      content="Eject"
+                      onClick={() => act('eject')}
+                    />
+                  )
                 }>
                 <ProgressBar
-                  value={data.beakerCurrentVolume}
+                  value={data.containerCurrentVolume}
                   minValue={0}
-                  maxValue={data.beakerMaxVolume}
-                  color={data.beakerReagentColor}>
+                  maxValue={data.containerMaxVolume}
+                  color={data.containerReagentColor}>
                   <span
                     style={{
                       'text-shadow': '1px 1px 0 black',
                     }}>
-                    {`${data.beakerCurrentVolume} of ${data.beakerMaxVolume} units`}
+                    {`${data.containerCurrentVolume} of ${data.containerMaxVolume} units`}
                   </span>
                 </ProgressBar>
               </LabeledList.Item>
@@ -60,21 +63,25 @@ export const IVDrip = (props, context) => {
             )}
             <LabeledList.Item
               label="Direction"
-              color={data.mode ? 'good' : 'bad'}
+              color={!data.mode && 'bad'}
               buttons={
                 <Button
                   my={1}
                   width={8}
                   lineHeight={2}
                   align="center"
-                  disabled={data.injectOnly || !data.canDrainBlood}
-                  color={data.mode ? 'good' : 'bad'}
+                  disabled={data.injectOnly}
+                  color={!data.mode && 'bad'}
                   content={data.mode ? 'Injecting' : 'Draining'}
                   icon={data.mode ? 'syringe' : 'droplet'}
                   onClick={() => act('changeMode')}
                 />
               }>
-              {data.mode ? 'Reagents from container' : 'Blood into container'}
+              {data.mode
+                ? data.useInternalStorage
+                  ? 'Reagents from network'
+                  : 'Reagents from container'
+                : 'Blood into container'}
             </LabeledList.Item>
             {data.connected ? (
               <LabeledList.Item
@@ -100,20 +107,25 @@ export const IVDrip = (props, context) => {
                 <NoticeBox my={0.7}>No object connected.</NoticeBox>
               </LabeledList.Item>
             )}
-            <LabeledList.Item label="Transfer Rate" buttons={'Units / Second'}>
-              <Slider
-                step={0.01}
-                my={1}
-                value={data.transferRate}
-                minValue={data.minInjectRate}
-                maxValue={data.maxInjectRate}
-                onDrag={(e, value) =>
-                  act('changeRate', {
-                    rate: value,
-                  })
-                }
-              />
-            </LabeledList.Item>
+            {!!data.connected &&
+              (!!data.containerAttached || data.useInternalStorage) && (
+                <LabeledList.Item
+                  label="Transfer Rate"
+                  buttons={'Units / Second'}>
+                  <Slider
+                    step={0.01}
+                    my={1}
+                    value={data.transferRate}
+                    minValue={data.minInjectRate}
+                    maxValue={data.maxInjectRate}
+                    onDrag={(e, value) =>
+                      act('changeRate', {
+                        rate: value,
+                      })
+                    }
+                  />
+                </LabeledList.Item>
+              )}
           </LabeledList>
         </Section>
       </Window.Content>

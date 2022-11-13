@@ -14,12 +14,12 @@
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
-	///Who are we sticking our needle in?
+	///What are we sticking our needle in?
 	var/atom/attached
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
-	var/transfer_rate = MAX_IV_TRANSFER_RATE
+	var/transfer_rate = MIN_IV_TRANSFER_RATE
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -59,20 +59,21 @@
 /obj/machinery/iv_drip/ui_data(mob/user)
 	var/list/data = list()
 	data["transferRate"] = transfer_rate
-	data["injectOnly"] = inject_only ? TRUE : FALSE
 	data["maxInjectRate"] = MAX_IV_TRANSFER_RATE
 	data["minInjectRate"] = MIN_IV_TRANSFER_RATE
 	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
 	data["connected"] = attached ? TRUE : FALSE
 	if(attached)
 		data["objectName"] = attached.name
-		data["canDrainBlood"] = isliving(attached)
-	data["beakerAttached"] = reagent_container ? TRUE : FALSE
-	if(reagent_container)
-		data["beakerCurrentVolume"] = round(reagent_container.reagents.total_volume, 0.01)
-		data["beakerMaxVolume"] = reagent_container.reagents.maximum_volume
-		data["beakerReagentColor"] = mix_color_from_reagents(reagent_container.reagents.reagent_list)
+	data["injectOnly"] = inject_only || (attached && !isliving(attached)) ? TRUE : FALSE
+	data["containerAttached"] = reagent_container ? TRUE : FALSE
+	var/datum/reagents/drip_reagents = get_reagents()
+	if(drip_reagents)
+		data["containerCurrentVolume"] = round(drip_reagents.total_volume, 0.01)
+		data["containerMaxVolume"] = drip_reagents.maximum_volume
+		data["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
 	data["useInternalStorage"] = use_internal_storage
+	data["isContainerRemovable"] = !use_internal_storage && !istype(src, /obj/machinery/iv_drip/saline)
 	return data
 
 /obj/machinery/iv_drip/ui_act(action, params)
@@ -92,15 +93,16 @@
 				detach_iv()
 			. = TRUE
 		if("changeRate")
-			var/target_rate = params["rate"]
-			if(text2num(target_rate) != null)
-				target_rate = text2num(target_rate)
-				transfer_rate = round(clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), 0.01)
-				. = TRUE
+			if((use_internal_storage || reagent_container) && attached)
+				var/target_rate = params["rate"]
+				if(text2num(target_rate) != null)
+					target_rate = text2num(target_rate)
+					transfer_rate = round(clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), 0.01)
+					. = TRUE
 	update_appearance()
 
 /obj/machinery/iv_drip/update_icon_state()
-	if(attached)
+	if(transfer_rate > 0)
 		icon_state = "[base_icon_state]_[mode ? "injecting" : "donating"]"
 	else
 		icon_state = "[base_icon_state]_[mode ? "injectidle" : "donateidle"]"
@@ -113,7 +115,7 @@
 		return
 
 	. += attached ? "beakeractive" : "beakeridle"
-	var/datum/reagents/target_reagents = get_reagent_holder()
+	var/datum/reagents/target_reagents = get_reagents()
 	if(!target_reagents)
 		return
 
@@ -145,7 +147,7 @@
 	if(!isliving(usr))
 		to_chat(usr, span_warning("You can't do that!"))
 		return
-	if(!get_reagent_holder())
+	if(!get_reagents())
 		to_chat(usr, span_warning("There's nothing attached to the IV drip!"))
 		return
 	if(!target.reagents)
@@ -177,6 +179,24 @@
 	else
 		return ..()
 
+/obj/machinery/iv_drip/AltClick(mob/user)
+	if(!can_interact(user))
+		return ..()
+	if(istype(src, /obj/machinery/iv_drip/plumbing))
+		return ..()
+	if(!attached)
+		return ..()
+	if(!get_reagents())
+		return ..()
+
+	if(transfer_rate > MIN_IV_TRANSFER_RATE)
+		transfer_rate = MIN_IV_TRANSFER_RATE
+	else
+		transfer_rate = MAX_IV_TRANSFER_RATE
+	investigate_log("was set to [transfer_rate] u/sec. by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "transfer rate set to [transfer_rate] u/sec.")
+	update_appearance()
+
 /obj/machinery/iv_drip/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/sheet/iron(loc)
@@ -202,18 +222,18 @@
 	if(transfer_rate == 0)
 		return
 
-	var/datum/reagents/target_reagents = get_reagent_holder()
-	if(target_reagents)
-		// Give blood
+	var/datum/reagents/drip_reagents = get_reagents()
+	if(drip_reagents)
+		// Give reagents
 		if(mode)
-			if(target_reagents.total_volume)
-				target_reagents.trans_to(attached, transfer_rate * delta_time, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+			if(drip_reagents.total_volume)
+				drip_reagents.trans_to(attached, transfer_rate * delta_time, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 				update_appearance()
 
 		// Take blood
 		else if (isliving(attached))
 			var/mob/living/attached_mob = attached
-			var/amount = min(transfer_rate * delta_time, target_reagents.maximum_volume - target_reagents.total_volume)
+			var/amount = min(transfer_rate * delta_time, drip_reagents.maximum_volume - drip_reagents.total_volume)
 			// If the beaker is full, ping
 			if(!amount)
 				transfer_rate = 0
@@ -253,7 +273,7 @@
 	else
 		mode = IV_INJECTING
 	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
-	var/datum/reagents/container = get_reagent_holder()
+	var/datum/reagents/container = get_reagents()
 	log_combat(usr, target, "attached", src, "containing: ([container.get_reagent_log_string()])")
 	add_fingerprint(usr)
 	attached = target
@@ -265,11 +285,11 @@
 ///Called when an iv is detached. doesnt include chat stuff because there's multiple options and its better handled by the caller
 /obj/machinery/iv_drip/proc/detach_iv()
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
-
+	transfer_rate = MIN_IV_TRANSFER_RATE
 	attached = null
 	update_appearance()
 
-/obj/machinery/iv_drip/proc/get_reagent_holder()
+/obj/machinery/iv_drip/proc/get_reagents()
 	return use_internal_storage ? reagents : reagent_container?.reagents
 
 /obj/machinery/iv_drip/verb/eject_beaker()
@@ -304,11 +324,15 @@
 		return
 	if(usr.incapacitated())
 		return
+	if(inject_only)
+		mode = IV_INJECTING
+		return
 	// Prevent blood draining from non-living
-	if(!isliving(attached))
+	if(attached && !isliving(attached))
 		mode = IV_INJECTING
 		return
 	mode = !mode
+	transfer_rate = MIN_IV_TRANSFER_RATE
 	to_chat(usr, span_notice("The IV drip is now [mode ? "injecting" : "taking blood"]."))
 	update_appearance()
 
@@ -329,7 +353,7 @@
 	else
 		. += span_notice("No chemicals are attached.")
 
-	. += span_notice("[attached ? attached : "No one"] is attached.")
+	. += span_notice("[attached ? attached : "Nothing"] is connected.")
 
 /datum/crafting_recipe/iv_drip
 	name = "IV drip"
@@ -368,7 +392,6 @@
 	desc = "A modified IV drip with plumbing connects. Reagents received from the connect are injected directly into their bloodstream, blood that is drawn goes to the internal storage and then into the ducting."
 	icon_state = "plumb"
 	base_icon_state = "plumb"
-
 	density = TRUE
 	use_internal_storage = TRUE
 
