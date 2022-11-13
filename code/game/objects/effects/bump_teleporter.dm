@@ -34,4 +34,4 @@
 
 	for(var/obj/effect/bump_teleporter/teleporter in AllTeleporters)
 		if(teleporter.id == src.id_target)
-			concerned_party.do_teleport(teleporter.loc) //Teleport to location with correct id.
+			do_teleport(concerned_party, teleporter.loc) //Teleport to location with correct id.
