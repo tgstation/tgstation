@@ -523,7 +523,7 @@
 	for(var/thing in contents)
 		if(istype(thing, /obj/item/reagent_containers/condiment/pack/sugar))
 			has_sugar = TRUE
-		if(istype(thing, /obj/item/reagent_containers/condiment/pack/astrotame/))
+		if(istype(thing, /obj/item/reagent_containers/condiment/pack/astrotame))
 			has_sweetener = TRUE
 		if(istype(thing, /obj/item/reagent_containers/condiment/creamer))
 			has_creamer = TRUE

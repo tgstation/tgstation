@@ -486,10 +486,9 @@
 	//SHOULD_CALL_PARENT(FALSE)
 
 	if(!cap_on)
-		.=..()
-		return
+		return ..()
 
-	if(!check_allowed_items(attacking_item,target_self=1))
+	if(!check_allowed_items(attacking_item,target_self = TRUE))
 		return
 
 	if(attacking_item.is_refillable())

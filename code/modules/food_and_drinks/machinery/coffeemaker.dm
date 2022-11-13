@@ -155,7 +155,7 @@
 		. += "coffeemaker_pot"
 	if(cartridge)
 		. += "coffeemaker_cartidge"
-	return
+	return .
 
 /obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/cup/coffeepot/new_coffeepot)
 	if(!user)
@@ -205,7 +205,7 @@
 
 	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee_cup) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
 		var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = attack_item
-		if(new_cup.reagents.total_volume > 0 )
+		if(new_cup.reagents.total_volume > 0)
 			balloon_alert(user, "the cup must be empty!")
 			return TRUE
 		if(coffee_cups >= max_coffee_cups)
@@ -283,7 +283,7 @@
 	if(!coffeepot)
 		balloon_alert_to_viewers("no coffeepot inside!")
 		return FALSE
-	if(machine_stat & (NOPOWER|BROKEN) )
+	if(machine_stat & (NOPOWER|BROKEN))
 		balloon_alert_to_viewers("machine unpowered!")
 		return FALSE
 	if(coffeepot.reagents.total_volume >= coffeepot.reagents.maximum_volume)
@@ -394,7 +394,7 @@
 	if(!creamer_packs)
 		balloon_alert("no creamer left!")
 		return
-	var/obj/item/reagent_containers/condiment/creamer/new_pack = new(get_turf(src))
+	var/obj/item/reagent_containers/condiment/creamer/new_pack = new(drop_location())
 	user.put_in_hands(new_pack)
 	creamer_packs--
 	update_appearance()
@@ -541,7 +541,7 @@
 /obj/machinery/coffeemaker/impressa/examine(mob/user)
 	. = ..()
 	if(coffee)
-		. += span_notice("The internal grinder conatins [coffee.len] [coffee.len == 1 ? "scoop" : "scoops"] of coffee beans")
+		. += span_notice("The internal grinder conatins [coffee.len] scoop\s of coffee beans")
 	return
 
 /obj/machinery/coffeemaker/impressa/update_overlays()
@@ -574,7 +574,7 @@
 			. += "grinder_half"
 		else
 			. += "grinder_full"
-	return
+	return .
 
 /obj/machinery/coffeemaker/impressa/handle_atom_del(atom/A)
 	. = ..()
