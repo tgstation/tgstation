@@ -26,12 +26,12 @@
 /obj/effect/bump_teleporter/singularity_pull()
 	return
 
-/obj/effect/bump_teleporter/Bumped(atom/movable/AM)
-	if(!ismob(AM))
+/obj/effect/bump_teleporter/Bumped(atom/movable/concerned_party)
+	if(!ismob(concerned_party))
 		return
 	if(!id_target)
 		return
 
-	for(var/obj/effect/bump_teleporter/BT in AllTeleporters)
-		if(BT.id == src.id_target)
-			AM.forceMove(BT.loc) //Teleport to location with correct id.
+	for(var/obj/effect/bump_teleporter/teleporter in AllTeleporters)
+		if(teleporter.id == src.id_target)
+			concerned_party.do_teleport(teleporter.loc) //Teleport to location with correct id.
