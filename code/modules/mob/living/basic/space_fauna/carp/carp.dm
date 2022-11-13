@@ -68,7 +68,7 @@
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	. = ..()
 	if (random_colour)
-		set_greyscale(colors= list(pick_weight(carp_colors)) new_config=/datum/greyscale_config/carp)
+		set_greyscale(colors= list(pick_weight(carp_colors)), new_config=/datum/greyscale_config/carp)
 	AddElement(/datum/element/simple_flying)
 	if (cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -85,7 +85,7 @@
 	tamed = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
-	emote("spin")
+	spin(20, 1)
 	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
 
 /**
@@ -95,20 +95,29 @@
 	icon_state = "holocarp"
 	icon_living = "holocarp"
 	gold_core_spawnable = NO_SPAWN
-	random_color = FALSE
+	random_colour = FALSE
 	basic_mob_flags = DEL_ON_DEATH
 
 /**
- * Lia - Sometimes the pet of the Head of Security.
- * Has a lot more health than a normal carp because it's meant to be a mildly more threatening pet to have to assassinate than an aging corgi.
+ * Pet carp, abstract carp which just holds some shared properties.
  */
-/mob/living/basic/carp/lia
+/mob/living/basic/carp/pet
+	speak_emote = list("squeaks")
+	gold_core_spawnable = NO_SPAWN
+	gender = FEMALE // Both current existing pet carp are female but you can remove this if someone else gets a male one?
+
+/mob/living/basic/carp/pet/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/pet_bonus, "bloops happily!")
+
+/**
+ * Lia - Sometimes the pet of the Head of Security.
+ * Has a lot more health than a normal carp because she's meant to be a mildly more threatening pet to have to assassinate than an aging corgi.
+ */
+/mob/living/basic/carp/pet/lia
 	name = "Lia"
 	real_name = "Lia"
 	desc = "A failed experiment of Nanotrasen to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
-	gender = FEMALE
-	speak_emote = list("squeaks")
-	gold_core_spawnable = NO_SPAWN
 	faction = list("neutral")
 	maxHealth = 200
 	health = 200
@@ -116,40 +125,19 @@
 	icon_gib = "magicarp_gib"
 	icon_living = "magicarp"
 	icon_state = "magicarp"
-	random_color = FALSE
-
-/mob/living/basic/carp/lia/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
-
+	random_colour = FALSE
 
 /**
  * Cayenne - Loyal member of the nuclear operatives.
  * Spawns in the nuke op shuttle, can be made sapient if they want to do that for some reason.
  * Is very talented and also capable of holding the nuclear disk.
  */
-
-/mob/living/simple_animal/hostile/carp/cayenne
+/mob/living/basic/carp/pet/cayenne
 	name = "Cayenne"
 	real_name = "Cayenne"
 	desc = "A failed Syndicate experiment in weaponized space carp technology, it now serves as a lovable mascot."
-	gender = FEMALE
-	speak_emote = list("squeaks")
-	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
-	/**
-	 * TODO: see if i need to keep these
-	/// Keeping track of the nuke disk for the functionality of storing it.
-	var/obj/item/disk/nuclear/disky
-	/// Location of the file storing disk overlays
-	var/icon/disk_overlay_file = 'icons/mob/simple/carp.dmi'
-	/// Colored disk mouth appearance for adding it as a mouth overlay
-	var/mutable_appearance/colored_disk_mouth
-	 */
 
-/mob/living/simple_animal/hostile/carp/cayenne/Initialize(mapload)
+/mob/living/basic/carp/pet/cayenne/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
-	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) // Cayenne can smell the difference between real and fake nuclear disks.
-	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT) // Cayenne can play tug of war with Captains who think they should have the nuclear disk.
-	ADD_TRAIT(src, TRAIT_CAN_USE_NUKE, INNATE_TRAIT) // Cayenne has received several treats for her trained ability to enter an authentication code.
+	AddComponent(/datum/component/nuclear_bomb_operator, mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay") , mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth"))
