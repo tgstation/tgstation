@@ -103,15 +103,19 @@
 
 	var/datum/port/input/message
 	var/datum/port/input/send_message_signal
+	var/datum/port/input/show_charge_meter
 
 	var/datum/port/output/user_port
 
 	var/datum/weakref/user
 
+	var/obj/item/organ/internal/cyberimp/bci/bci
+
 /obj/item/circuit_component/bci_core/populate_ports()
 
 	message = add_input_port("Message", PORT_TYPE_STRING)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
+	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER)
 
 	user_port = add_output_port("User", PORT_TYPE_ATOM)
 
@@ -119,20 +123,32 @@
 	QDEL_NULL(charge_action)
 	return ..()
 
-/obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
+/obj/item/circuit_component/bci_core/proc/update_charge_action()
+	if (show_charge_meter.value)
+		if (charge_action)
+			return
+		charge_action = new(src)
+		bci.actions += charge_action
+	else
+		if (!charge_action)
+			return
+		bci.actions -= charge_action
+		QDEL_NULL(charge_action)
 
-	charge_action = new(src)
-	bci.actions += list(charge_action)
+/obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
+	bci = shell
+
+	show_charge_meter.set_value(1) // Defaults to 1 which shows the charge meter.
 
 	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, .proc/on_organ_implanted)
 	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
 /obj/item/circuit_component/bci_core/unregister_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
+	bci = shell
 
-	bci.actions -= charge_action
-	QDEL_NULL(charge_action)
+	if (charge_action)
+		bci.actions -= charge_action
+		QDEL_NULL(charge_action)
 
 	UnregisterSignal(shell, list(
 		COMSIG_ORGAN_IMPLANTED,
@@ -140,11 +156,15 @@
 	))
 
 /obj/item/circuit_component/bci_core/should_receive_input(datum/port/input/port)
-	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
+	if (COMPONENT_TRIGGERED_BY(message, port))
 		return FALSE
 	return ..()
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
+	if (COMPONENT_TRIGGERED_BY(show_charge_meter, port))
+		update_charge_action()
+		return
+
 	var/sent_message = trim(message.value)
 	if (!sent_message)
 		return
@@ -160,6 +180,8 @@
 
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
+
+	update_charge_action()
 
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
