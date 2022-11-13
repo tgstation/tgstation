@@ -102,9 +102,6 @@
 	wanted_types = list(/obj/item/assembly/signaler/anomaly/bluespace = TRUE)
 
 /datum/bounty/item/science/ref_anomaly/can_get(obj/O)
-	var/anomaly_type = wanted_types[1]
-	if(SSresearch.created_anomaly_types[anomaly_type] >= SSresearch.anomaly_hard_limit_by_type[anomaly_type])
-		return FALSE
 	return TRUE
 
 /datum/bounty/item/science/ref_anomaly/flux

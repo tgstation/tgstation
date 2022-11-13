@@ -53,19 +53,6 @@ SUBSYSTEM_DEF(research)
 	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
 	//Around 450000 points max???
 
-	/// The global list of raw anomaly types that have been refined, for hard limits.
-	var/list/created_anomaly_types = list()
-	/// The hard limits of cores created for each anomaly type. For faster code lookup without switch statements.
-	var/list/anomaly_hard_limit_by_type = list(
-		/obj/item/assembly/signaler/anomaly/bluespace = MAX_CORES_BLUESPACE,
-		/obj/item/assembly/signaler/anomaly/pyro = MAX_CORES_PYRO,
-		/obj/item/assembly/signaler/anomaly/grav = MAX_CORES_GRAVITATIONAL,
-		/obj/item/assembly/signaler/anomaly/vortex = MAX_CORES_VORTEX,
-		/obj/item/assembly/signaler/anomaly/flux = MAX_CORES_FLUX,
-		/obj/item/assembly/signaler/anomaly/hallucination = MAX_CORES_HALLUCINATION,
-		/obj/item/assembly/signaler/anomaly/bioscrambler = MAX_CORES_BIOSCRAMBLER,
-	)
-
 	/// Lookup list for ordnance briefers.
 	var/list/ordnance_experiments
 	/// Lookup list for scipaper partners.

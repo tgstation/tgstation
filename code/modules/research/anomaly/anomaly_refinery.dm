@@ -1,5 +1,4 @@
-#define MAX_RADIUS_REQUIRED 20 //maxcap
-#define MIN_RADIUS_REQUIRED 4 //1, 2, 4
+#define MAX_RADIUS_REQUIRED 18 //maxcap
 /// How long the compression test can last before the machine just gives up and ejects the items.
 #define COMPRESSION_TEST_TIME (SSOBJ_DT SECONDS * 5)
 
@@ -38,6 +37,9 @@
 	/// Here for the UI, tracks the amounts of reaction that has occured. 1 means valve opened but not reacted.
 	var/reaction_increment = 0
 
+	///number of ttv explosion tests before the manipulator gets fired & needs to be replaced
+	var/implosions_left=2
+
 /obj/machinery/research/anomaly_refinery/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/check_test)
@@ -56,19 +58,15 @@
  *
  * Returns null if the max amount has already been reached.
  *
- * Arguments:
- * * anomaly_type - anomaly type define
  */
-/obj/machinery/research/anomaly_refinery/proc/get_required_radius(anomaly_type)
-	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
-	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
-	if(already_made >= hard_limit)
-		return //return null
-	// my crappy autoscale formula
-	// linear scaling.
-	var/radius_span = MAX_RADIUS_REQUIRED - MIN_RADIUS_REQUIRED
-	var/radius_increase_per_core = radius_span / hard_limit
-	var/radius = clamp(round(MIN_RADIUS_REQUIRED + radius_increase_per_core * already_made, 1), MIN_RADIUS_REQUIRED, MAX_RADIUS_REQUIRED)
+/obj/machinery/research/anomaly_refinery/proc/get_required_radius()
+	var/radius=MAX_RADIUS_REQUIRED
+
+	var/rating=0
+	for(var/obj/item/stock_parts/scanning_module/module in component_parts)
+		rating+=module.rating
+	radius-=3*rating
+
 	return radius
 
 /obj/machinery/research/anomaly_refinery/attackby(obj/item/tool, mob/living/user, params)
@@ -83,8 +81,6 @@
 			to_chat(user, span_warning("[tool] is stuck to your hand."))
 			return
 		var/obj/item/raw_anomaly_core/raw_core = tool
-		if(!get_required_radius(raw_core.anomaly_type))
-			say("Unfortunately, due to diminishing supplies of condensed anomalous matter, [raw_core] and any cores of its type are no longer of a sufficient quality level to be compressed into a working core.")
 		inserted_core = raw_core
 		to_chat(user, span_notice("You insert [raw_core] into [src]."))
 		return
@@ -137,6 +133,11 @@
  * Starts a compression test.
  */
 /obj/machinery/research/anomaly_refinery/proc/start_test()
+	///manipulator got used up so reinstall new components
+	if(implosions_left==0)
+		say("ERROR: Manipulator is Fried,please install new manipulator")
+		return
+
 	if (active)
 		say("ERROR: Already running a compression test.")
 		return
@@ -197,11 +198,18 @@
 		say(message)
 	return
 
+///first time construction initialize implosions left
+/obj/machinery/research/anomaly_refinery/on_construction()
+	for(var/obj/item/stock_parts/manipulator/part in component_parts)
+		implosions_left=part.rating+1
+		break
+
 /**
  * Checks whether an internal explosion was sufficient to compress the core.
  */
 /obj/machinery/research/anomaly_refinery/proc/check_test(atom/source, list/arguments)
 	SIGNAL_HANDLER
+
 	if(!inserted_core)
 		test_status = "ERROR: No core present during detonation."
 		return COMSIG_CANCEL_EXPLOSION
@@ -210,7 +218,7 @@
 	var/medium = arguments[EXARG_KEY_HEAVY_RANGE]
 	var/light = arguments[EXARG_KEY_LIGHT_RANGE]
 	var/explosion_range = max(heavy, medium, light, 0)
-	var/required_range = get_required_radius(inserted_core.anomaly_type)
+	var/required_range = get_required_radius()
 	var/turf/location = get_turf(src)
 
 	var/cap_multiplier = SSmapping.level_trait(location.z, ZTRAIT_BOMBCAP_MULTIPLIER)
@@ -220,14 +228,26 @@
 	var/capped_medium = min(GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier, medium)
 	SSexplosions.shake_the_room(location, explosion_range, (capped_heavy * 15) + (capped_medium * 20), capped_heavy, capped_medium)
 
+	///implosions decrease with every successfull & unsuccessfull use
+	implosions_left--
+	///delete the manupulator so the user cannot remove & put it back. This simulates the manipulator getting used up every explosion
+	var/obj/item/stock_parts/manipulator/thePart=null
+	for(var/obj/item/stock_parts/manipulator/part in component_parts)
+		thePart=part
+		break
+	if(thePart)
+		component_parts-=thePart
+		qdel(thePart)
+
 	if(explosion_range < required_range)
 		test_status = "Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Items ejected."
 		return COMSIG_CANCEL_EXPLOSION
 
 	if(test_status)
 		return COMSIG_CANCEL_EXPLOSION
-	inserted_core = inserted_core.create_core(src, TRUE, TRUE)
+	inserted_core = inserted_core.create_core(src, TRUE)
 	test_status = "Success. Resultant detonation has theoretical range of [explosion_range]. Required radius was [required_range]. Core production complete."
+
 	return COMSIG_CANCEL_EXPLOSION
 
 /**
@@ -347,11 +367,11 @@
 	data["reactionIncrement"] = reaction_increment
 
 	data["core"] = inserted_core ? inserted_core.name : FALSE
-	data["requiredRadius"] = inserted_core ? get_required_radius(inserted_core.anomaly_type) : null
+	data["requiredRadius"] = inserted_core ? get_required_radius() : null
+	data["implosionsLeft"] = implosions_left
 
 	data["active"] = active
 
 	return data
 
 #undef MAX_RADIUS_REQUIRED
-#undef MIN_RADIUS_REQUIRED
