@@ -990,3 +990,57 @@
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
 	mail_goodies = list(/obj/item/pai_card) // can read things for you
+
+/datum/quirk/body_purist
+	name = "Body Purist"
+	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."
+	icon = "sun"
+	value = -3
+	mood_quirk = TRUE
+	gain_text = "<span class='danger'>You now begin to hate the idea of having artificial body parts.</span>"
+	lose_text = "<span class='notice'>Maybe artificial body parts aren't so bad. You now feel okay with augmentations and prosthetics.</span>"
+	medical_record_text = "This patient has disclosed an extreme hatred for unnatural body parts and augmentations."
+	hardcore_value = 3
+	mail_goodies = list(/obj/item/paper/pamphlet/cybernetics)
+
+/datum/quirk/body_purist/add()
+	check_cybernetics()
+	RegisterSignal(quirk_holder, list(
+		COMSIG_CARBON_GAIN_ORGAN,
+		COMSIG_CARBON_LOSE_ORGAN,
+		COMSIG_CARBON_ATTACH_LIMB,
+		COMSIG_CARBON_REMOVE_LIMB,
+	), .proc/check_cybernetics)
+
+/datum/quirk/body_purist/remove()
+	UnregisterSignal(quirk_holder, list(
+		COMSIG_CARBON_GAIN_ORGAN,
+		COMSIG_CARBON_LOSE_ORGAN,
+		COMSIG_CARBON_ATTACH_LIMB,
+		COMSIG_CARBON_REMOVE_LIMB,
+	))
+	quirk_holder.clear_mood_event("body_purist")
+
+/datum/quirk/body_purist/proc/check_cybernetics(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/carbon/owner = quirk_holder
+	if(!istype(owner))
+		return
+	var/has_cybernetics = FALSE
+	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
+		if(limb.bodytype & BODYTYPE_ROBOTIC)
+			has_cybernetics = TRUE
+			break
+	for(var/obj/item/organ/internal/organ as anything in owner.internal_organs)
+		if(organ.organ_flags & ORGAN_SYNTHETIC)
+			has_cybernetics = TRUE
+			break
+	for(var/obj/item/organ/external/organ as anything in owner.external_organs)
+		if(organ.organ_flags & ORGAN_SYNTHETIC)
+			has_cybernetics = TRUE
+			break
+	if(has_cybernetics)
+		owner.add_mood_event("body_purist", /datum/mood_event/body_purist)
+	else
+		owner.clear_mood_event("body_purist")

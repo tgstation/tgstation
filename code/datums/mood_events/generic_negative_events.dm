@@ -403,3 +403,7 @@
 	description = "Blast it! That stunt didn't go as planned!"
 	mood_change = -2
 	timeout = 4 MINUTES
+
+/datum/mood_event/body_purist
+	description = "Bags never sit right on my back, this hurts like hell!"
+	mood_change = -20
