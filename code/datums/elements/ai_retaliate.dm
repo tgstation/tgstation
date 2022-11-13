@@ -18,6 +18,7 @@
 	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
 	RegisterSignal(target, COMSIG_ATOM_HITBY, .proc/on_hitby)
 	RegisterSignal(target, COMSIG_ATOM_HULK_ATTACK, .proc/on_attack_hulk)
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_MECH, .proc/on_attack_mech)
 
 /datum/element/ai_retaliate/Detach(datum/source, ...)
 	. = ..()
@@ -62,8 +63,12 @@
 	SIGNAL_HANDLER
 	retaliate(target, attacker)
 
+/datum/element/ai_retaliate/proc/on_attack_mech(mob/target, obj/vehicle/sealed/mecha/mecha_attacker, mob/living/pilot)
+	SIGNAL_HANDLER
+	retaliate(target, mecha_attacker)
+
 /// Add the attacker to the victim's list of enemies on its blackboard, if it has one
-/datum/element/ai_retaliate/proc/retaliate(mob/victim, mob/new_enemy)
+/datum/element/ai_retaliate/proc/retaliate(mob/victim, atom/new_enemy)
 	if (!victim.ai_controller)
 		return
 	var/list/enemy_refs = victim.ai_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]

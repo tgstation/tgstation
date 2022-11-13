@@ -6,8 +6,8 @@
 	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list, BB_BASIC_MOB_RETALIATE_LIST, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
 /**
- * Picks a target from a provided list of people who have been pissing you off
- * You will probably need /datum/element/ai_retaliate to take advantage of this
+ * Picks a target from a provided list of atoms who have been pissing you off
+ * You will probably need /datum/element/ai_retaliate to take advantage of this unless you're populating the blackboard yourself
  */
 /datum/ai_behavior/target_from_retaliate_list
 	action_cooldown = 2 SECONDS
@@ -27,7 +27,7 @@
 
 	var/list/enemies_list = list()
 	for (var/datum/weakref/enemy_ref as anything in enemy_refs)
-		var/mob/enemy = enemy_ref.resolve()
+		var/atom/enemy = enemy_ref.resolve()
 		if (QDELETED(enemy))
 			controller.blackboard[shitlist_key] -= enemy_ref
 			continue

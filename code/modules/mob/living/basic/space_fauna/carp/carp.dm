@@ -47,8 +47,8 @@
 	var/tamed = FALSE
 	/// If true, randomise our colour from the following list
 	var/random_colour = TRUE
-	/// Icon state of overlay to display when we start regenerating
-	var/regenerate_icon_state = "regen_glow"
+	/// What colour is our 'healing' outline?
+	var/regenerate_colour = "#20e28e"
 	/// Weighted list of colours a carp can be
 	var/static/list/carp_colors = list(
 		"#aba2ff" = 7,
@@ -70,18 +70,18 @@
 
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+
 	if (cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/simple_flying)
 
-	AddComponent(/datum/component/regenerator, regen_start_overlay = image(icon = src.icon, icon_state = regenerate_icon_state), start_overlay_duration = 1 SECONDS)
 	if (tamer)
 		on_tamed(tamer)
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/on_tamed))
-
-	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
-	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 
 	if (random_colour)
 		set_greyscale(colors= list(pick_weight(carp_colors)), new_config=/datum/greyscale_config/carp)
@@ -104,6 +104,7 @@
 	random_colour = FALSE
 	basic_mob_flags = DEL_ON_DEATH
 	cell_line = NONE
+	regenerate_colour = "#ffffff"
 
 /**
  * Pet carp, abstract carp which just holds some shared properties.
@@ -149,7 +150,7 @@
 
 /mob/living/basic/carp/pet/cayenne/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/nuclear_bomb_operator, mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay") , mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth"))
+	AddComponent(/datum/component/nuclear_bomb_operator, mutable_appearance(icon, "disk_overlay") , mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth"))
 	RegisterSignal(src, COMSIG_HANDLESS_MOB_COLLECTED_DISK, .proc/got_disk)
 
 /// She did it! Treats for Cayenne!
