@@ -44,7 +44,7 @@
 	return TRUE
 
 /obj/item/assembly/igniter/attackby(obj/item/potential_igniter, mob/user, params)
-	if(istype(potential_igniter, /obj/item/assembly/igniter))
+	if(isigniter(potential_igniter))
 		to_chat(user, "You briefly consider attaching [potential_igniter] to [src], and then conclude that's a very silly thing to do and move on.")
 		return
 	..()
