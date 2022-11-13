@@ -365,6 +365,8 @@
 	if(channel != RADIO_CHANNEL_UPLINK)
 		return
 
+	. = COMPONENT_CANNOT_USE_RADIO // we're using uplink channel, cut all communication
+
 	if(!findtext(lowertext(message), lowertext(unlock_code)))
 		if(failsafe_code && findtext(lowertext(message), lowertext(failsafe_code)))
 			failsafe()
