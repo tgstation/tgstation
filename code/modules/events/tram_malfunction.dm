@@ -1,7 +1,7 @@
 #define TRAM_MALFUNCTION_TIME_UPPER 420
 #define TRAM_MALFUNCTION_TIME_LOWER 240
 #define XING_STATE_GREEN 0
-#define TRAM_ASSOCIATED_MAP "Tramstation"
+
 /datum/round_event_control/tram_malfunction
 	name = "Tram Malfunction"
 	typepath = /datum/round_event/tram_malfunction
@@ -9,19 +9,29 @@
 	max_occurrences = 4
 	category = EVENT_CATEGORY_ENGINEERING
 
-//If manually triggered, make sure we're actually on Tramstation. If not, cancel the event.
+// If manually triggered, check if there's a tram.
 /datum/round_event_control/tram_malfunction/admin_setup()
-	if(SSmapping.config.map_name == TRAM_ASSOCIATED_MAP)
-		return ..()
+	for(var/tram_id in GLOB.active_lifts_by_type)
+		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
+		if(!istype(tram_ref))
+			return ADMIN_CANCEL_EVENT
+
+		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
+			return
 
 	return ADMIN_CANCEL_EVENT
 
+// Check if there's a tram we can cause to malfunction.
 /datum/round_event_control/tram_malfunction/can_spawn_event()
-	if(SSmapping.config.map_name == TRAM_ASSOCIATED_MAP)
-		return TRUE
+	for(var/tram_id in GLOB.active_lifts_by_type)
+		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
+		if(!istype(tram_ref))
+			return FALSE
 
-	else
-		return FALSE
+		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
+			return TRUE
+
+	return FALSE
 
 /datum/round_event/tram_malfunction
 	announce_when = 1
