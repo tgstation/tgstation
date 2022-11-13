@@ -13,8 +13,8 @@
 /datum/round_event_control/tram_malfunction/admin_setup()
 	for(var/tram_id in GLOB.active_lifts_by_type)
 		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
-		if(!istype(tram_ref))
-			return ADMIN_CANCEL_EVENT
+		if(!tram_ref.specific_lift_id == MAIN_STATION_TRAM)
+			continue
 
 		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
 			return
@@ -28,8 +28,8 @@
 		return .
 	for(var/tram_id in GLOB.active_lifts_by_type)
 		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
-		if(!istype(tram_ref))
-			return FALSE
+		if(!tram_ref.specific_lift_id == MAIN_STATION_TRAM)
+			continue
 
 		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
 			return TRUE
