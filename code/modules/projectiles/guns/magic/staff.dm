@@ -44,21 +44,6 @@
 /obj/item/gun/magic/staff/change/unrestricted
 	allow_intruder_use = TRUE
 
-/obj/item/gun/magic/staff/change/pickup(mob/user)
-	. = ..()
-	if(!is_wizard_or_friend(user))
-		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>You don't feel strong enough to properly wield this staff!</span>"))
-		balloon_alert(user, "you feel weak holding this staff")
-
-/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
-	user.dropItemToGround(src, TRUE)
-	var/wabbajack_into = preset_wabbajack_type || pick(WABBAJACK_MONKEY, WABBAJACK_HUMAN, WABBAJACK_ANIMAL)
-	var/mob/living/new_body = user.wabbajack(wabbajack_into, preset_wabbajack_changeflag)
-	if(!new_body)
-		return
-
-	balloon_alert(new_body, "wabbajack, wabbajack!")
-
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
 	desc = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
