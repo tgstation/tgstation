@@ -31,7 +31,7 @@
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), .proc/enable_sign_language)
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), .proc/disable_sign_language)
 
-/// Deletes the sign language action and disables signing.
+/// Removes the sign language action and disables signing.
 /datum/component/sign_language/UnregisterFromParent()
 	disable_sign_language()
 	if (linked_action.owner)
@@ -43,63 +43,12 @@
 		SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG)
 	))
 
-/// Signal handler for [addtrait can_use_sign_language]
-/// Adds the linked toggle action to the parent Carbon.
-/datum/component/sign_language/proc/learn_sign_language()
-	SIGNAL_HANDLER
-
-	// Enable by default if the Carbon has TRAIT_MUTE, for convenience.
-	if (HAS_TRAIT(parent, TRAIT_MUTE))
-		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-	else
-		// Only add action if the Carbon does NOT have TRAIT_MUTE.
-		add_action()
-
-/// Signal handler for [removetrait can_use_sign_language]
-/// Removes the action and TRAIT_SIGN_LANG from the parent Carbon.
-/datum/component/sign_language/proc/forget_sign_language()
-	SIGNAL_HANDLER
-
-	REMOVE_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-	linked_action.Remove(parent)
-	UnregisterSignal(parent, list(
-		SIGNAL_ADDTRAIT(TRAIT_MUTE),
-		SIGNAL_REMOVETRAIT(TRAIT_MUTE)
-	))
-
-/// Signal handler for [addtrait mute]
-/datum/component/sign_language/proc/on_muted()
-	SIGNAL_HANDLER
-
-	// Re-adds the action if the signing Carbon loses TRAIT_MUTE.
-	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_MUTE), .proc/on_unmuted)
-	remove_action()
-	// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
-	ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-
-/// Signal handler for [removetrait mute]
-/datum/component/sign_language/proc/on_unmuted()
-	SIGNAL_HANDLER
-
-	add_action()
-
-/// Adds the linked action to the parent Carbon.
-/datum/component/sign_language/proc/add_action()
-	linked_action.active = HAS_TRAIT(parent, TRAIT_SIGN_LANG)
-	linked_action.Grant(parent)
-	// Removes the action if the Carbon gains TRAIT_MUTE.
-	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE), .proc/on_muted)
-
-/// Removes the linked action from the parent Carbon.
-/datum/component/sign_language/proc/remove_action()
-	linked_action.Remove(parent)
-	UnregisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE))
-
 /// Innate Action which allows a Carbon to toggle sign language on/off.
+/// Do Not Grant this action directly to a mob! Instead add TRAIT_CAN_SIGN_LANG
 /datum/action/innate/sign_language
 	name = "Sign Language"
-	icon_icon = 'icons/obj/fluff.dmi'
-	button_icon_state = "painting3"
+	icon_icon = 'icons/hud/actions.dmi'
+	button_icon_state = "sign_language"
 	desc = "Allows you to communicate via sign language."
 
 /datum/action/innate/sign_language/Activate()
@@ -116,12 +65,65 @@
 
 /datum/action/innate/sign_language/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
 	. = ..()
-	if(!. || !button) // no button available
+	if(!. || !button)
 		return
 	if(HAS_TRAIT(owner, TRAIT_SIGN_LANG))
 		button.icon_state = "template_active"
 	else
 		button.icon_state = "template"
+
+/// Adds the linked action to the parent Carbon.
+/datum/component/sign_language/proc/add_action()
+	linked_action.active = HAS_TRAIT(parent, TRAIT_SIGN_LANG)
+	linked_action.Grant(parent)
+	// Removes the action if the Carbon gains TRAIT_MUTE.
+	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE), .proc/on_muted)
+
+/// Removes the linked action from the parent Carbon.
+/datum/component/sign_language/proc/remove_action()
+	linked_action.Remove(parent)
+	UnregisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE))
+
+/// Signal handler for SIGNAL_ADDTRAIT(TRAIT_MUTE)
+/datum/component/sign_language/proc/on_muted()
+	SIGNAL_HANDLER
+
+	// Re-adds the action if the signing Carbon loses TRAIT_MUTE.
+	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_MUTE), .proc/on_unmuted)
+	remove_action()
+	// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
+	if (HAS_TRAIT(parent, TRAIT_CAN_SIGN_LANG))
+		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
+
+/// Signal handler for SIGNAL_REMOVETRAIT(TRAIT_MUTE)
+/datum/component/sign_language/proc/on_unmuted()
+	SIGNAL_HANDLER
+
+	add_action()
+
+/// Signal handler for [addtrait can_use_sign_language]
+/// Adds the linked toggle action to the parent Carbon.
+/datum/component/sign_language/proc/learn_sign_language()
+	SIGNAL_HANDLER
+
+	if (HAS_TRAIT(parent, TRAIT_MUTE))
+		// Convenience. Mute Carbons can only speak with sign language.
+		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
+	else
+		// Convenience. Only show toggle action if the Carbon isn't mute.
+		add_action()
+
+/// Signal handler for [removetrait can_use_sign_language]
+/// Removes the action and TRAIT_SIGN_LANG from the parent Carbon.
+/datum/component/sign_language/proc/forget_sign_language()
+	SIGNAL_HANDLER
+
+	REMOVE_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
+	linked_action.Remove(parent)
+	UnregisterSignal(parent, list(
+		SIGNAL_ADDTRAIT(TRAIT_MUTE),
+		SIGNAL_REMOVETRAIT(TRAIT_MUTE)
+	))
 
 /// Signal handler for [COMSIG_SIGNLANGUAGE_ENABLE]
 /// Enables signing for the parent Carbon, stopping them from speaking vocally.
