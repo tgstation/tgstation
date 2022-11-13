@@ -1025,7 +1025,7 @@
 	if(!istype(owner))
 		return
 	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
-		if(limb.bodytype & BODYTYPE_ROBOTIC)
+		if(!IS_ORGANIC_LIMB(limb))
 			cybernetics_level++
 	for(var/obj/item/organ/internal/organ as anything in owner.internal_organs)
 		if(organ.organ_flags & ORGAN_SYNTHETIC)
