@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Slider, ProgressBar, NoticeBox, Button, LabeledList, Section } from '../components';
+import { Tooltip, Box, Slider, ProgressBar, NoticeBox, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type IVDripData = {
@@ -58,7 +58,9 @@ export const IVDrip = (props, context) => {
               </LabeledList.Item>
             ) : (
               <LabeledList.Item label="Container">
-                <NoticeBox my={0.7}>No container attached.</NoticeBox>
+                <Tooltip content="Click the drip with a container in hand to attach.">
+                  <NoticeBox my={0.7}>No container attached.</NoticeBox>
+                </Tooltip>
               </LabeledList.Item>
             )}
             <LabeledList.Item
@@ -104,7 +106,9 @@ export const IVDrip = (props, context) => {
               </LabeledList.Item>
             ) : (
               <LabeledList.Item label="Object">
-                <NoticeBox my={0.7}>No object connected.</NoticeBox>
+                <Tooltip content="Drag the cursor from the drip and drop it on an object to connect.">
+                  <NoticeBox my={0.7}>No object connected.</NoticeBox>
+                </Tooltip>
               </LabeledList.Item>
             )}
             {!!data.connected &&
