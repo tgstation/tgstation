@@ -125,14 +125,19 @@
 
 /obj/item/circuit_component/bci_core/proc/update_charge_action()
 	CIRCUIT_TRIGGER
+	var/mob/living/carbon/resolved_owner = user?.resolve()
 	if (show_charge_meter.value)
 		if (charge_action)
 			return
 		charge_action = new(src)
+		if (resolved_owner)
+			charge_action.Grant(resolved_owner)
 		bci.actions += charge_action
 	else
 		if (!charge_action)
 			return
+		if (resolved_owner)
+			charge_action.Remove(resolved_owner)
 		bci.actions -= charge_action
 		QDEL_NULL(charge_action)
 
@@ -148,6 +153,9 @@
 	bci = shell
 
 	if (charge_action)
+		var/mob/living/carbon/resolved_owner = user?.resolve()
+		if (resolved_owner)
+			charge_action.Remove(resolved_owner)
 		bci.actions -= charge_action
 		QDEL_NULL(charge_action)
 
