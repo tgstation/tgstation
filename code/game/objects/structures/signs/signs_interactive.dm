@@ -103,7 +103,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 			continue
 		RegisterSignal(tram, COMSIG_TRAM_COLLISION, .proc/new_hit)
 		update_appearance()
-		break
 
 /obj/structure/sign/collision_counter/Destroy()
 	return ..()
