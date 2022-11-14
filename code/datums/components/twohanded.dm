@@ -167,6 +167,11 @@
 			user.dropItemToGround(parent, force=TRUE)
 		to_chat(user, span_warning("You don't have enough intact hands."))
 		return
+	if(ishuman(user))
+		var/mob/living/carbon/human/potential_chunky_fingers_human = user
+		if(potential_chunky_fingers_human.check_chunky_fingers())
+			potential_chunky_fingers_human.balloon_alert(potential_chunky_fingers_human, "fingers are too big!")
+			return
 
 	// wield update status
 	if(SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
