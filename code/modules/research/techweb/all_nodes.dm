@@ -826,6 +826,7 @@
 		"comp_bar_overlay",
 		"comp_bci_action",
 		"comp_counter_overlay",
+		"comp_install_detector",
 		"comp_object_overlay",
 		"comp_reagent_injector",
 		"comp_target_intercept",
