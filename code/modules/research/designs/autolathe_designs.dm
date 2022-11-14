@@ -1435,17 +1435,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
-/datum/design/cleaver
-	name = "Butcher's Cleaver"
-	id = "cleaver"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 18000)
-	build_path = /obj/item/knife/butcher
-	category = list(
-		RND_CATEGORY_HACKED,
-		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
-	)
-
 /datum/design/spraycan
 	name = "Spraycan"
 	id = "spraycan"
