@@ -280,13 +280,21 @@
 /datum/quirk/item_quirk/signer
 	name = "Signer"
 	desc = "You possess excellent communication skills in sign language."
-	icon = "sign-language"
+	icon = "hands"
 	value = 4
-	mob_trait = TRAIT_CAN_SIGN_LANG
 	mail_goodies = list(/obj/item/clothing/gloves/radio)
+	var/datum/action/innate/sign_language/linked_action
 
 /datum/quirk/item_quirk/signer/add_unique()
+	linked_action = new /datum/action/innate/sign_language(quirk_holder)
+	// Ensures that the action's TRAIT_SIGN_LANG isn't removed by something else.
+	linked_action.trait_source = QUIRK_TRAIT
+	linked_action.Grant(quirk_holder)
 	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
 	if(isplasmaman(quirk_holder))
 		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
 	give_item_to_holder(gloves_type, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+
+/datum/quirk/item_quirk/signer/remove()
+	// Removes both the action and its matching TRAIT_SIGN_LANG
+	linked_action.Remove(quirk_holder)
