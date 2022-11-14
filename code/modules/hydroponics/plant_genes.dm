@@ -2,6 +2,8 @@
 /datum/plant_gene
 	/// The name of the gene.
 	var/name
+	/// The font awesome icon name representing the gene in the seed extractor UI
+	var/icon = "dna"
 	/// Flags that determine if a gene can be modified.
 	var/mutability_flags
 
@@ -189,6 +191,7 @@
 /// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 /datum/plant_gene/trait/squash
 	name = "Liquid Contents"
+	icon = "droplet"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	trait_ids = THROW_IMPACT_ID | REAGENT_TRANSFER_ID | ATTACK_SELF_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -243,6 +246,7 @@
  */
 /datum/plant_gene/trait/slip
 	name = "Slippery Skin"
+	icon = "soap"
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -276,6 +280,7 @@
  */
 /datum/plant_gene/trait/cell_charge
 	name = "Electrical Activity"
+	icon = "bolt"
 	rate = 0.2
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -343,6 +348,7 @@
  */
 /datum/plant_gene/trait/glow
 	name = "Bioluminescence"
+	icon = "lightbulb-o"
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
 	trait_ids = GLOW_ID
@@ -371,6 +377,7 @@
  */
 /datum/plant_gene/trait/glow/shadow
 	name = "Shadow Emission"
+	icon = "lightbulb"
 	rate = 0.04
 	glow_color = "#AAD84B"
 
@@ -420,6 +427,7 @@
  */
 /datum/plant_gene/trait/teleport
 	name = "Bluespace Activity"
+	icon = "right-left"
 	rate = 0.1
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -483,6 +491,7 @@
  */
 /datum/plant_gene/trait/maxchem
 	name = "Densified Chemicals"
+	icon = "flask-vial"
 	rate = 2
 	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -503,6 +512,7 @@
 /// Allows a plant to be harvested multiple times.
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
+	icon = "cubes-stacked"
 	/// Don't allow replica pods to be multi harvested, please.
 	seed_blacklist = list(/obj/item/seeds/replicapod)
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -514,6 +524,7 @@
  */
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
+	icon = "battery-half"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// The number of cables needed to make a battery.
 	var/cables_needed_per_battery = 5
@@ -591,6 +602,7 @@
  */
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
+	icon = "syringe"
 	examine_line = "<span class='info'>It's quite prickley.</span>"
 	trait_ids = REAGENT_TRANSFER_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -627,6 +639,7 @@
 /// Explodes into reagent-filled smoke when squashed.
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
+	icon = "wind"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/smoke/on_new_plant(obj/item/our_plant, newloc)
@@ -658,6 +671,7 @@
 /// Makes the plant and its seeds fireproof. From lavaland plants.
 /datum/plant_gene/trait/fire_resistance
 	name = "Fire Resistance"
+	icon = "fire"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/fire_resistance/on_new_seed(obj/item/seeds/new_seed)
@@ -679,6 +693,7 @@
 /// Invasive spreading lets the plant jump to other trays, and the spreading plant won't replace plants of the same type.
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
+	icon = "virus"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
@@ -743,6 +758,7 @@
  */
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
+	icon = "wine-glass"
 	trait_ids = CONTENTS_CHANGE_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -753,6 +769,7 @@
  */
 /datum/plant_gene/trait/juicing
 	name = "Auto-Juicing Composition"
+	icon = "blender"
 	trait_ids = CONTENTS_CHANGE_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -763,6 +780,7 @@
  */
 /datum/plant_gene/trait/plant_laughter
 	name = "Hallucinatory Feedback"
+	icon = "face-laugh-squint"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Sounds that play when this trait triggers
 	var/list/sounds = list('sound/items/SitcomLaugh1.ogg', 'sound/items/SitcomLaugh2.ogg', 'sound/items/SitcomLaugh3.ogg')
@@ -797,6 +815,7 @@
  */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
+	icon = "eye"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Our googly eyes appearance.
 	var/mutable_appearance/googly
@@ -813,6 +832,7 @@
 /// Makes the plant embed on thrown impact.
 /datum/plant_gene/trait/sticky
 	name = "Prickly Adhesion"
+	icon = "bandage"
 	examine_line = "<span class='info'>It's quite sticky.</span>"
 	trait_ids = THROW_IMPACT_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -836,6 +856,7 @@
  */
 /datum/plant_gene/trait/chem_heating
 	name = "Exothermic Activity"
+	icon = "temperatyre-arrow-up"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -846,6 +867,7 @@
  */
 /datum/plant_gene/trait/chem_cooling
 	name = "Endothermic Activity"
+	icon = "temperature-arrow-down"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -863,6 +885,7 @@
 /// Traits for flowers, makes plants not decompose.
 /datum/plant_gene/trait/preserved
 	name = "Natural Insecticide"
+	icon = "shield-virus"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/preserved/on_new_plant(obj/item/our_plant, newloc)
@@ -876,6 +899,7 @@
 
 /datum/plant_gene/trait/carnivory
 	name = "Obligate Carnivory"
+	icon = "spider"
 
 /// Plant type traits. Incompatible with one another.
 /datum/plant_gene/trait/plant_type
@@ -886,11 +910,14 @@
 /// Weeds don't get annoyed by weeds in their tray.
 /datum/plant_gene/trait/plant_type/weed_hardy
 	name = "Weed Adaptation"
+	icon = "cannabis"
 
 /// Mushrooms need less light and have a minimum yield.
 /datum/plant_gene/trait/plant_type/fungal_metabolism
 	name = "Fungal Vitality"
+	icon = "heard"
 
 /// Currently unused and does nothing. Appears in strange seeds.
 /datum/plant_gene/trait/plant_type/alien_properties
 	name ="?????"
+	icon = "reddit-alien"

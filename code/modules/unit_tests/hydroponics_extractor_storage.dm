@@ -37,7 +37,7 @@
 	TEST_ASSERT_NOTNULL(apple_now_stored, "The apple seed was removed from the dummy's hands, but is not in the plant seed extractor's contents.")
 
 	// The apple seed's key should be in the extractor's "piles" list
-	var/apple_seed_key = extractor.generate_seed_string(apple_now_stored)
+	var/apple_seed_key = extractor.generate_seed_hash(apple_now_stored)
 	TEST_ASSERT(apple_seed_key in extractor.piles, "The apple seed was added to the plant seed extractor's contents correctly, but did not register in the piles list, and is unaccessible.")
 
 	// And it should be tracked in the piles list as a weakref
@@ -63,7 +63,7 @@
 		TEST_ASSERT_NOTNULL(seed_now_stored, "The plant bag transferred its [initial(seed_type.name)] somewhere, but they were not found in the plant seed extractor.")
 
 		// All keys shold be independently in the piles list
-		var/stored_seed_key = extractor.generate_seed_string(seed_now_stored)
+		var/stored_seed_key = extractor.generate_seed_hash(seed_now_stored)
 		TEST_ASSERT(stored_seed_key in extractor.piles, "The [initial(seed_type.name)] was added to the plant seed extractor's contents correctly, but did not register in the piles list, and is unaccessible.")
 
 		// And all seeds should be tracked as weakrefs

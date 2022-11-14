@@ -3,12 +3,17 @@ import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
 import { sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Input, Tooltip, Box, ProgressBar, Button, Section, Table, NoticeBox } from '../components';
+import { Input, Tooltip, Box, ProgressBar, Button, Section, Table, NoticeBox, Icon } from '../components';
 import { Window } from '../layouts';
 
-type SeedExtractorData = {
-  seeds: SeedData[];
-  cycle: number;
+type TraitData = {
+  name: string;
+  icon: string;
+};
+
+type ReagentData = {
+  name: string;
+  rate: string;
 };
 
 type SeedData = {
@@ -23,6 +28,13 @@ type SeedData = {
   potency: number;
   instability: number;
   icon: string;
+  traits: TraitData[];
+  reagents: ReagentData[];
+};
+
+type SeedExtractorData = {
+  seeds: SeedData[];
+  cycle: number;
 };
 
 export const SeedExtractor = (props, context) => {
@@ -37,7 +49,7 @@ export const SeedExtractor = (props, context) => {
   ])(seeds_filtered || []);
   sortField !== 'name' && seeds.reverse();
   return (
-    <Window width={1000} height={400}>
+    <Window width={1080} height={400}>
       <Window.Content scrollable>
         <Section>
           <Table>
@@ -50,6 +62,9 @@ export const SeedExtractor = (props, context) => {
                   onInput={(e, value) => setSearchText(value)}
                   fluid
                 />
+              </Table.Cell>
+              <Table.Cell collapsing p={1}>
+                Genes
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
@@ -160,6 +175,24 @@ export const SeedExtractor = (props, context) => {
                     {item.name}
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
+                    {!!item.reagents && (
+                      <Tooltip
+                        content={
+                          <ReagentTooltip
+                            reagents={item.reagents}
+                            potency={item.potency}
+                          />
+                        }>
+                        <Icon name="flask" m={0.5} />
+                      </Tooltip>
+                    )}
+                    {item.traits?.map((gene) => (
+                      <Tooltip key="" content={gene.name}>
+                        <Icon name={gene.icon} m={0.5} />
+                      </Tooltip>
+                    ))}
+                  </Table.Cell>
+                  <Table.Cell px={1} collapsing>
                     <Level value={item.potency} max={100} />
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
@@ -232,5 +265,23 @@ const Level = (props) => {
         {props.value}
       </span>
     </ProgressBar>
+  );
+};
+
+const ReagentTooltip = (props) => {
+  return (
+    <Table>
+      <Table.Row header>
+        <Table.Cell>Reagents</Table.Cell>
+      </Table.Row>
+      {props.reagents?.map((reagent) => (
+        <Table.Row key="">
+          <Table.Cell>{reagent.name}</Table.Cell>
+          <Table.Cell py={0.5} pl={2} textAlign={'right'}>
+            {Math.max(Math.round(reagent.rate * props.potency), 1)}u
+          </Table.Cell>
+        </Table.Row>
+      ))}
+    </Table>
   );
 };

@@ -166,9 +166,9 @@
  * Arguments:
  * * O - seed to generate the string from
  */
-/obj/machinery/seed_extractor/proc/generate_seed_string(obj/item/seeds/O)
-	var/icon = sanitize_css_class_name("[initial(O.icon)][initial(O.icon_state)]")
-	return "name=[O.name];lifespan=[O.lifespan];endurance=[O.endurance];maturation=[O.maturation];production=[O.production];yield=[O.yield];potency=[O.potency];instability=[O.instability];icon=[icon]"
+/obj/machinery/seed_extractor/proc/generate_seed_hash(obj/item/seeds/O)
+	var/traits = list2params(locate(/datum/plant_gene/trait) in O.genes)
+	return md5("[O.name][O.lifespan][O.endurance][O.maturation][O.production][O.yield][O.potency][O.instability][traits]")
 
 /** Add Seeds Proc.
  *
@@ -188,12 +188,23 @@
 	else if(!taking_from.atom_storage?.attempt_remove(to_add, src, silent = TRUE))
 		return FALSE
 
-	var/seed_string = generate_seed_string(to_add)
-	if(piles[seed_string])
-		piles[seed_string] += WEAKREF(to_add)
+	var/seed_id = generate_seed_hash(to_add)
+	if(piles[seed_id])
+		piles[seed_id]["refs"] += WEAKREF(to_add)
 	else
-		piles[seed_string] = list(WEAKREF(to_add))
-
+		var/list/seed_data = list()
+		seed_data["icon"] = sanitize_css_class_name("[initial(to_add.icon)][initial(to_add.icon_state)]")
+		seed_data["name"] = capitalize(replacetext(to_add.name,"pack of ", ""));
+		seed_data["lifespan"] = to_add.lifespan
+		seed_data["endurance"] = to_add.endurance
+		seed_data["maturation"] = to_add.maturation
+		seed_data["production"] = to_add.production
+		seed_data["yield"] = to_add.yield
+		seed_data["potency"] = to_add.potency
+		seed_data["instability"] = to_add.instability
+		seed_data["refs"] = list(WEAKREF(to_add))
+		seed_data["genes"] = to_add.genes.Copy()
+		piles[seed_id] = seed_data
 	return TRUE
 
 /obj/machinery/seed_extractor/ui_state(mob/user)
@@ -207,17 +218,24 @@
 
 /obj/machinery/seed_extractor/ui_data()
 	var/list/seeds = list()
-	for(var/data_string in piles)
-		if (!length(piles[data_string]))
+	for(var/seed_id in piles)
+		if (!length(piles[seed_id]["refs"]))
 			continue
-		var/list/seed_data = list()
-		seed_data["key"] = data_string
-		seed_data["amount"] = length(piles[data_string])
-		var/list/fields = splittext(data_string, ";")
-		for(var/fieldstring in fields)
-			var/field = splittext(fieldstring, "=")
-			seed_data[field[1]] = text2num(field[2]) || field[2]
-		seed_data["name"] = capitalize(replacetext(seed_data["name"],"pack of ", ""));
+		var/list/seed_data = piles[seed_id].Copy()
+		seed_data["key"] = seed_id
+		seed_data["amount"] = length(seed_data["refs"])
+		for(var/datum/plant_gene/trait/trait in seed_data["genes"])
+			seed_data["traits"] += list(list(
+				"name" = trait.name,
+				"icon" = trait.icon
+			))
+		for(var/datum/plant_gene/reagent/reagent in seed_data["genes"])
+			seed_data["reagents"] += list(list(
+				"name" = reagent.name,
+				"rate" = reagent.rate
+			))
+		seed_data.Remove("genes")
+		seed_data.Remove("refs")
 		seeds += list(seed_data)
 	. = list()
 	.["seeds"] = seeds
@@ -232,12 +250,12 @@
 		if("select")
 			var/item = params["item"]
 			if(piles[item] && length(piles[item]) > 0)
-				var/datum/weakref/found_seed_weakref = piles[item][1]
+				var/datum/weakref/found_seed_weakref = piles[item]["refs"][1]
 				var/obj/item/seeds/found_seed = found_seed_weakref.resolve()
 				if(!found_seed)
 					return
 
-				piles[item] -= found_seed_weakref
+				piles[item]["refs"] -= found_seed_weakref
 				if(usr)
 					var/mob/user = usr
 					if(user.put_in_hands(found_seed))
