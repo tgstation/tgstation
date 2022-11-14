@@ -109,9 +109,9 @@
 	if(.)
 		return
 
+	// Chunky fingers dropping our input
 	if(ishuman(usr) && fingers_check(usr))
 		return
-
 
 	switch(action)
 		if("PC_exit")

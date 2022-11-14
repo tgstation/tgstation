@@ -225,6 +225,7 @@
 	if(.)
 		return
 
+	// Chunky fingers dropping our input
 	if(ishuman(usr) && computer.fingers_check(usr))
 		return
 
