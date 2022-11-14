@@ -9,6 +9,7 @@ import { Window } from '../layouts';
 type TraitData = {
   name: string;
   icon: string;
+  description: string;
 };
 
 type ReagentData = {
@@ -28,6 +29,7 @@ type SeedData = {
   potency: number;
   instability: number;
   icon: string;
+  max_volume: number;
   traits: TraitData[];
   reagents: ReagentData[];
 };
@@ -172,9 +174,9 @@ export const SeedExtractor = (props, context) => {
                     {item.name}
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing textAlign={'right'}>
-                    {item.traits?.map((gene) => (
-                      <Tooltip key="" content={gene.name}>
-                        <Icon name={gene.icon} m={0.5} />
+                    {item.traits?.map((trait) => (
+                      <Tooltip key="" content={<TraitTooltip trait={trait} />}>
+                        <Icon name={trait.icon} m={0.5} />
                       </Tooltip>
                     ))}
                     {!!item.reagents && (
@@ -183,6 +185,7 @@ export const SeedExtractor = (props, context) => {
                           <ReagentTooltip
                             reagents={item.reagents}
                             potency={item.potency}
+                            max_volume={item.max_volume}
                           />
                         }>
                         <Icon name="blender" m={0.5} />
@@ -275,10 +278,34 @@ const ReagentTooltip = (props) => {
         <Table.Row key="">
           <Table.Cell>{reagent.name}</Table.Cell>
           <Table.Cell py={0.5} pl={2} textAlign={'right'}>
-            {Math.max(Math.round(reagent.rate * props.potency), 1)}u
+            {Math.max(
+              Math.round(
+                (reagent.rate * props.potency * props.max_volume) / 100
+              ),
+              1
+            )}
+            u
           </Table.Cell>
         </Table.Row>
       ))}
+    </Table>
+  );
+};
+
+const TraitTooltip = (props) => {
+  return (
+    <Table>
+      <Table.Row header>
+        <Table.Cell>
+          <Icon name={props.trait.icon} m={1} />
+          {props.trait.name}
+        </Table.Cell>
+      </Table.Row>
+      {!!props.trait.description && (
+        <Table.Row>
+          <Table.Cell>{props.trait.description}</Table.Cell>
+        </Table.Row>
+      )}
     </Table>
   );
 };

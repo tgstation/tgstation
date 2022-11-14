@@ -204,6 +204,7 @@
 		seed_data["instability"] = to_add.instability
 		seed_data["refs"] = list(WEAKREF(to_add))
 		seed_data["genes"] = to_add.genes.Copy()
+		seed_data["max_volume"] = locate(/datum/plant_gene/trait/maxchem) in to_add.genes ? PLANT_REAGENT_VOLUME : PLANT_REAGENT_VOLUME * 2
 		piles[seed_id] = seed_data
 	return TRUE
 
@@ -221,13 +222,14 @@
 	for(var/seed_id in piles)
 		if (!length(piles[seed_id]["refs"]))
 			continue
-		var/list/seed_data = piles[seed_id].Copy()
+		var/list/seed_data = piles[seed_id]
 		seed_data["key"] = seed_id
 		seed_data["amount"] = length(seed_data["refs"])
 		for(var/datum/plant_gene/trait/trait in seed_data["genes"])
 			seed_data["traits"] += list(list(
 				"name" = trait.name,
-				"icon" = trait.icon
+				"icon" = trait.icon,
+				"description" = trait.examine_line.strip_html
 			))
 		for(var/datum/plant_gene/reagent/reagent in seed_data["genes"])
 			seed_data["reagents"] += list(list(
