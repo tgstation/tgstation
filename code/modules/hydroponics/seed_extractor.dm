@@ -171,8 +171,10 @@
  * * O - seed to generate the string from
  */
 /obj/machinery/seed_extractor/proc/generate_seed_hash(obj/item/seeds/O)
-	var/traits = list2params(locate(/datum/plant_gene/trait) in O.genes)
-	return md5("[O.name][O.lifespan][O.endurance][O.maturation][O.production][O.yield][O.potency][O.instability][traits]")
+	var/traits = list()
+	for(var/datum/plant_gene/trait/trait in O.genes)
+		traits += trait.type
+	return md5("[O.name][O.lifespan][O.endurance][O.maturation][O.production][O.yield][O.potency][O.instability][traits]");
 
 /** Add Seeds Proc.
  *
@@ -207,8 +209,16 @@
 		seed_data["potency"] = to_add.potency
 		seed_data["instability"] = to_add.instability
 		seed_data["refs"] = list(WEAKREF(to_add))
-		seed_data["genes"] = to_add.genes.Copy()
-		seed_data["max_volume"] = (locate(/datum/plant_gene/trait/maxchem) in to_add.genes) ? PLANT_REAGENT_VOLUME : PLANT_REAGENT_VOLUME * 2
+		seed_data["traits"] = list()
+		for(var/datum/plant_gene/trait/trait in to_add.genes)
+			seed_data["traits"] += trait.type
+		seed_data["reagents"] = list()
+		for(var/datum/plant_gene/reagent/reagent in to_add.genes)
+			seed_data["reagents"] += list(list(
+				"name" = reagent.name,
+				"rate" = reagent.rate
+			))
+		seed_data["volume_mod"] = (locate(/datum/plant_gene/trait/maxchem) in to_add.genes) ? 2 : 1
 		piles[seed_id] = seed_data
 	return TRUE
 
@@ -229,23 +239,29 @@
 		var/list/seed_data = piles[seed_id].Copy()
 		seed_data["key"] = seed_id
 		seed_data["amount"] = length(seed_data["refs"])
-		for(var/datum/plant_gene/trait/trait in seed_data["genes"])
-			seed_data["traits"] += list(list(
-				"name" = trait.name,
-				"icon" = trait.icon,
-				"description" = trait.description
-			))
 		for(var/datum/plant_gene/reagent/reagent in seed_data["genes"])
-			seed_data["reagents"] += list(list(
-				"name" = reagent.name,
-				"rate" = reagent.rate
-			))
+			seed_data["reagents"][reagent.name] = reagent.rate
 		seed_data.Remove("genes")
 		seed_data.Remove("refs")
 		seeds += list(seed_data)
 	. = list()
 	.["seeds"] = seeds
 	.["cycle"] = HYDROTRAY_CYCLE_DELAY / 10
+
+/obj/machinery/seed_extractor/ui_static_data(mob/user)
+	var/list/data = list()
+	data["cycle_seconds"] = HYDROTRAY_CYCLE_DELAY / 10
+	data["trait_db"] = list()
+	for(var/trait_path in subtypesof(/datum/plant_gene/trait))
+		var/datum/plant_gene/trait/trait = new trait_path
+		var/trait_data = list(list(
+			"path" = trait_path,
+			"name" = trait.name,
+			"icon" = trait.icon,
+			"description" = trait.description
+		))
+		data["trait_db"] += trait_data
+	return data
 
 /obj/machinery/seed_extractor/ui_act(action, params)
 	. = ..()

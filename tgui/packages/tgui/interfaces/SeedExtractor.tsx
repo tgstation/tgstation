@@ -1,4 +1,4 @@
-import { classes } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
 import { sortBy } from 'common/collections';
@@ -7,6 +7,7 @@ import { Input, Tooltip, Box, ProgressBar, Button, Section, Table, NoticeBox, Ic
 import { Window } from '../layouts';
 
 type TraitData = {
+  path: string;
   name: string;
   icon: string;
   description: string;
@@ -29,14 +30,15 @@ type SeedData = {
   potency: number;
   instability: number;
   icon: string;
-  max_volume: number;
-  traits: TraitData[];
+  volume_mod: BooleanLike;
+  traits: string[];
   reagents: ReagentData[];
 };
 
 type SeedExtractorData = {
   seeds: SeedData[];
-  cycle: number;
+  trait_db: TraitData[];
+  cycle_seconds: number;
 };
 
 export const SeedExtractor = (props, context) => {
@@ -51,7 +53,7 @@ export const SeedExtractor = (props, context) => {
   ])(seeds_filtered || []);
   sortField !== 'name' && seeds.reverse();
   return (
-    <Window width={1000} height={400}>
+    <Window width={1080} height={400}>
       <Window.Content scrollable>
         <Section>
           <Table>
@@ -113,7 +115,7 @@ export const SeedExtractor = (props, context) => {
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={`The age at which the plant starts decaying, in ${data.cycle} second long cycles.`}>
+                  content={`The age at which the plant starts decaying, in ${data.cycle_seconds} second long cycles.`}>
                   <Box
                     style={{ 'cursor': 'pointer' }}
                     onClick={(e) => setSortField('lifespan')}>
@@ -123,7 +125,7 @@ export const SeedExtractor = (props, context) => {
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={`The age required for the first harvest, in ${data.cycle} second long cycles.`}>
+                  content={`The age required for the first harvest, in ${data.cycle_seconds} second long cycles.`}>
                   <Box
                     style={{ 'cursor': 'pointer' }}
                     onClick={(e) => setSortField('maturation')}>
@@ -133,7 +135,7 @@ export const SeedExtractor = (props, context) => {
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
-                  content={`The period of product regrowth, in ${data.cycle} second long cycles.`}>
+                  content={`The period of product regrowth, in ${data.cycle_seconds} second long cycles.`}>
                   <Box
                     style={{ 'cursor': 'pointer' }}
                     onClick={(e) => setSortField('production')}>
@@ -175,9 +177,11 @@ export const SeedExtractor = (props, context) => {
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing textAlign={'right'}>
                     {item.traits?.map((trait) => (
-                      <Tooltip key="" content={<TraitTooltip trait={trait} />}>
-                        <Icon name={trait.icon} m={0.5} />
-                      </Tooltip>
+                      <TraitTooltip
+                        key=""
+                        path={trait}
+                        trait_db={data.trait_db}
+                      />
                     ))}
                     {!!item.reagents && (
                       <Tooltip
@@ -185,7 +189,7 @@ export const SeedExtractor = (props, context) => {
                           <ReagentTooltip
                             reagents={item.reagents}
                             potency={item.potency}
-                            max_volume={item.max_volume}
+                            volume_mod={item.volume_mod}
                           />
                         }>
                         <Icon name="blender" m={0.5} />
@@ -280,7 +284,7 @@ const ReagentTooltip = (props) => {
           <Table.Cell py={0.5} pl={2} textAlign={'right'}>
             {Math.max(
               Math.round(
-                (reagent.rate * props.potency * props.max_volume) / 100
+                (reagent.rate * props.potency * props.volume_mod) / 100
               ),
               1
             )}
@@ -293,19 +297,28 @@ const ReagentTooltip = (props) => {
 };
 
 const TraitTooltip = (props) => {
+  const trait = props.trait_db.find((t) => {
+    return t.path === props.path;
+  });
   return (
-    <Table>
-      <Table.Row header>
-        <Table.Cell>
-          <Icon name={props.trait.icon} m={1} />
-          {props.trait.name}
-        </Table.Cell>
-      </Table.Row>
-      {!!props.trait.description && (
-        <Table.Row>
-          <Table.Cell>{props.trait.description}</Table.Cell>
-        </Table.Row>
-      )}
-    </Table>
+    <Tooltip
+      key=""
+      content={
+        <Table>
+          <Table.Row header>
+            <Table.Cell>
+              <Icon name={trait.icon} mr={1} />
+              {trait.name}
+            </Table.Cell>
+          </Table.Row>
+          {!!trait.description && (
+            <Table.Row>
+              <Table.Cell>{trait.description}</Table.Cell>
+            </Table.Row>
+          )}
+        </Table>
+      }>
+      <Icon name={trait.icon} m={0.5} />
+    </Tooltip>
   );
 };
