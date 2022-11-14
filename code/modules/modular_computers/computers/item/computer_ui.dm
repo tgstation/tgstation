@@ -228,9 +228,10 @@
 /obj/item/modular_computer/proc/fingers_check(mob/living/carbon/human/human_user)
 	if(human_user.check_chunky_fingers() && prob(75))
 		human_user.visible_message(
-			span_warning("[human_user] taps the screen of [src] repeatedly, the screen unchanging."),
+			span_warning("[human_user] taps [src] repeatedly, its screen unchanging."),
 			span_warning("Damn these [human_user.gloves ? "gloves, the" : "hands, my"] fingers are too big."),
 			span_hear("You hear frustrated tapping."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 		return TRUE
 
