@@ -100,6 +100,7 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = NONE
+	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 
 /obj/item/clothing/head/utility/bomb_hood/security
 	icon_state = "bombsuit_sec"
