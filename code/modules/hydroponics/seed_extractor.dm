@@ -236,17 +236,14 @@
 	for(var/seed_id in piles)
 		if (!length(piles[seed_id]["refs"]))
 			continue
-		var/list/seed_data = piles[seed_id].Copy()
+		var/list/seed_data = list()
+		seed_data = piles[seed_id].Copy()
 		seed_data["key"] = seed_id
 		seed_data["amount"] = length(seed_data["refs"])
-		for(var/datum/plant_gene/reagent/reagent in seed_data["genes"])
-			seed_data["reagents"][reagent.name] = reagent.rate
-		seed_data.Remove("genes")
 		seed_data.Remove("refs")
 		seeds += list(seed_data)
 	. = list()
 	.["seeds"] = seeds
-	.["cycle"] = HYDROTRAY_CYCLE_DELAY / 10
 
 /obj/machinery/seed_extractor/ui_static_data(mob/user)
 	var/list/data = list()
@@ -255,7 +252,7 @@
 	for(var/trait_path in subtypesof(/datum/plant_gene/trait))
 		var/datum/plant_gene/trait/trait = new trait_path
 		var/trait_data = list(list(
-			"path" = trait_path,
+			"path" = trait.type,
 			"name" = trait.name,
 			"icon" = trait.icon,
 			"description" = trait.description
