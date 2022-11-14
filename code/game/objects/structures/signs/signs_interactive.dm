@@ -129,7 +129,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 
 /obj/structure/sign/collision_counter/examine(mob/user)
 	. = ..()
-	. += span_info("The station has had [hit_count] incidents this shift.")
+	. += span_info("The station has had [hit_count] incident\s this shift.")
 	switch (hit_count)
 		if(0)
 			. += span_info("Fantastic! Champions of safety.")
