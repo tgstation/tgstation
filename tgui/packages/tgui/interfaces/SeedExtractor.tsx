@@ -49,12 +49,12 @@ export const SeedExtractor = (props, context) => {
   ])(seeds_filtered || []);
   sortField !== 'name' && seeds.reverse();
   return (
-    <Window width={1080} height={400}>
+    <Window width={1000} height={400}>
       <Window.Content scrollable>
         <Section>
           <Table>
             <Table.Row header>
-              <Table.Cell colspan="2" p={1}>
+              <Table.Cell colspan="3" p={1}>
                 <Input
                   autoFocus
                   placeholder={'Search...'}
@@ -62,9 +62,6 @@ export const SeedExtractor = (props, context) => {
                   onInput={(e, value) => setSearchText(value)}
                   fluid
                 />
-              </Table.Cell>
-              <Table.Cell collapsing p={1}>
-                Genes
               </Table.Cell>
               <Table.Cell collapsing p={1}>
                 <Tooltip
@@ -174,7 +171,12 @@ export const SeedExtractor = (props, context) => {
                   <Table.Cell py={0.5} px={1}>
                     {item.name}
                   </Table.Cell>
-                  <Table.Cell py={0.5} px={1} collapsing>
+                  <Table.Cell py={0.5} px={1} collapsing textAlign={'right'}>
+                    {item.traits?.map((gene) => (
+                      <Tooltip key="" content={gene.name}>
+                        <Icon name={gene.icon} m={0.5} />
+                      </Tooltip>
+                    ))}
                     {!!item.reagents && (
                       <Tooltip
                         content={
@@ -183,14 +185,9 @@ export const SeedExtractor = (props, context) => {
                             potency={item.potency}
                           />
                         }>
-                        <Icon name="flask" m={0.5} />
+                        <Icon name="blender" m={0.5} />
                       </Tooltip>
                     )}
-                    {item.traits?.map((gene) => (
-                      <Tooltip key="" content={gene.name}>
-                        <Icon name={gene.icon} m={0.5} />
-                      </Tooltip>
-                    ))}
                   </Table.Cell>
                   <Table.Cell px={1} collapsing>
                     <Level value={item.potency} max={100} />

@@ -246,7 +246,7 @@
  */
 /datum/plant_gene/trait/slip
 	name = "Slippery Skin"
-	icon = "soap"
+	icon = "person-falling"
 	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -524,7 +524,7 @@
  */
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
-	icon = "battery-half"
+	icon = "car-battery"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// The number of cables needed to make a battery.
 	var/cables_needed_per_battery = 5
@@ -639,7 +639,7 @@
 /// Explodes into reagent-filled smoke when squashed.
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
-	icon = "wind"
+	icon = "cloud"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/smoke/on_new_plant(obj/item/our_plant, newloc)
@@ -769,7 +769,7 @@
  */
 /datum/plant_gene/trait/juicing
 	name = "Auto-Juicing Composition"
-	icon = "blender"
+	icon = "glass-water"
 	trait_ids = CONTENTS_CHANGE_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -885,7 +885,7 @@
 /// Traits for flowers, makes plants not decompose.
 /datum/plant_gene/trait/preserved
 	name = "Natural Insecticide"
-	icon = "shield-virus"
+	icon = "bug-slash"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/preserved/on_new_plant(obj/item/our_plant, newloc)
@@ -910,12 +910,12 @@
 /// Weeds don't get annoyed by weeds in their tray.
 /datum/plant_gene/trait/plant_type/weed_hardy
 	name = "Weed Adaptation"
-	icon = "cannabis"
+	icon = "seedling"
 
 /// Mushrooms need less light and have a minimum yield.
 /datum/plant_gene/trait/plant_type/fungal_metabolism
 	name = "Fungal Vitality"
-	icon = "heard"
+	icon = "heart"
 
 /// Currently unused and does nothing. Appears in strange seeds.
 /datum/plant_gene/trait/plant_type/alien_properties
