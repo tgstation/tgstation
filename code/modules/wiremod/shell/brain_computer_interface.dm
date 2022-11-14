@@ -10,8 +10,6 @@
 /obj/item/organ/internal/cyberimp/bci/Initialize(mapload)
 	. = ..()
 
-	create_reagents(15, OPENCONTAINER) // This is used for the reagent injector component.
-
 	var/obj/item/integrated_circuit/circuit = new(src)
 	circuit.add_component(new /obj/item/circuit_component/equipment_action/bci(null, "One"))
 
