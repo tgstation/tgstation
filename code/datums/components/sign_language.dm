@@ -103,10 +103,10 @@
 	UnregisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE))
 
 /// Signal handler for SIGNAL_ADDTRAIT(TRAIT_MUTE)
+/// Removes the action if the signing Carbon gains TRAIT_MUTE.
 /datum/component/sign_language/proc/on_muted()
 	SIGNAL_HANDLER
 
-	// Re-adds the action if the signing Carbon loses TRAIT_MUTE.
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_MUTE), .proc/on_unmuted)
 	remove_action()
 	// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
@@ -114,6 +114,7 @@
 		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 
 /// Signal handler for SIGNAL_REMOVETRAIT(TRAIT_MUTE)
+/// Re-grants the action if the signing Carbon loses TRAIT_MUTE.
 /datum/component/sign_language/proc/on_unmuted()
 	SIGNAL_HANDLER
 
@@ -125,6 +126,10 @@
 	SIGNAL_HANDLER
 
 	if (HAS_TRAIT(parent, TRAIT_MUTE))
+		if (HAS_TRAIT(parent, TRAIT_SIGN_LANG))
+			// An edge-case. Somehow learned sign language while already using it!
+			// Example: Tongue-Tied-tongue user learned from a sign language book or gained the Signer quirk.
+			return
 		// Convenience. Mute Carbons can only speak with sign language.
 		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	else
