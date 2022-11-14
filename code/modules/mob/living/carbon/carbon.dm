@@ -7,7 +7,7 @@
 	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
-	// Carbons can use sign language if they have TRAIT_CAN_SIGN_LANG
+	// Allows Carbons to use sign language if they have TRAIT_SIGN_LANG
 	AddComponent(/datum/component/sign_language)
 
 	GLOB.carbon_list += src
