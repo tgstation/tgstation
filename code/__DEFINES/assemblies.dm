@@ -2,11 +2,11 @@
 #define ASSEMBLY_WIRE_RECEIVE (1<<0)
 /// This assembly pulses OTHER assemblies / its own wires when it pulses
 #define ASSEMBLY_WIRE_PULSE (1<<1)
-/// This assembly pulses OTHER assemblies / its own wires when it pulses, but in a special way
+/// This assembly pulses OTHER assemblies / its own wires when it pulses, but in a special way.
 #define ASSEMBLY_WIRE_PULSE_SPECIAL (1<<2)
-/// This assembly activates when it has ites wires pulsed BY RADIO
+/// This assembly can recieve activations via signal / radio
 #define ASSEMBLY_WIRE_RADIO_RECEIVE (1<<3)
-/// When combined in a holder, this cannot have duplicates
+/// When combined in a holder, blacklists duplicate assemblies
 #define ASSEMBLY_NO_DUPLICATES (1<<5)
 
 /// How loud do assemblies beep at

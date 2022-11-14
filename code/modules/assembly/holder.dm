@@ -73,7 +73,6 @@
  * * user - user we pass into attach()
  */
 /obj/item/assembly_holder/proc/add_assembly(obj/item/assembly/attached_assembly, mob/user)
-
 	attach(attached_assembly, user)
 	name = ""
 	for(var/obj/item/assembly/assembly as anything in assemblies)
