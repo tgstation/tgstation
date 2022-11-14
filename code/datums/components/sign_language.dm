@@ -13,7 +13,7 @@
 *
 * High-Level Theory of Operation:
 *  1. Component is added to a Carbon via AddComponent.
-*  2. React to presence of TRAIT_CAN_SIGN_LANG and TRAIT_SIGN_LANG:
+*  2. React to presence of TRAIT_SIGN_LANG:
 *  3. If TRAIT_SIGN_LANG is added, then enable sign language. Listen for speech signals and modify the mob's speech, say_mod verbs, and typing indicator.
 *
 * * Credits:

@@ -325,8 +325,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
 /// Indicates if the mob is currently speaking with sign language
 #define TRAIT_SIGN_LANG "sign_language"
-/// Indicates if the mob knows/is able to use sign language
-#define TRAIT_CAN_SIGN_LANG "can_use_sign_language"
 /// This mob is able to use sign language over the radio.
 #define TRAIT_CAN_SIGN_ON_COMMS "can_sign_on_comms"
 /// nobody can use martial arts on this mob
