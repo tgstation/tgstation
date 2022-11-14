@@ -192,7 +192,7 @@
 /datum/plant_gene/trait/squash
 	name = "Liquid Contents"
 	icon = "droplet"
-	description = "It has a lot of liquid contents inside."
+	description = "The plant may burst open from the internal pressure on impact."
 	trait_ids = THROW_IMPACT_ID | REAGENT_TRANSFER_ID | ATTACK_SELF_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -246,9 +246,9 @@
  */
 /datum/plant_gene/trait/slip
 	name = "Slippery Skin"
+	description = "Watch your step around this plant."
 	icon = "person-falling"
 	rate = 1.6
-	description = "It has a very slippery skin."
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/slip/on_new_plant(obj/item/our_plant, newloc)
@@ -280,6 +280,7 @@
  */
 /datum/plant_gene/trait/cell_charge
 	name = "Electrical Activity"
+	description = "The plant produce can electrocute on interaction or recharge batteries when eaten."
 	icon = "bolt"
 	rate = 0.2
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -427,6 +428,7 @@
  */
 /datum/plant_gene/trait/teleport
 	name = "Bluespace Activity"
+	description = "Causes people to teleport when interacted with the plant."
 	icon = "right-left"
 	rate = 0.1
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -491,6 +493,7 @@
  */
 /datum/plant_gene/trait/maxchem
 	name = "Densified Chemicals"
+	description = "Plant reagents are doubled, halving the yield instead."
 	icon = "flask-vial"
 	rate = 2
 	trait_flags = TRAIT_HALVES_YIELD
@@ -512,6 +515,7 @@
 /// Allows a plant to be harvested multiple times.
 /datum/plant_gene/trait/repeated_harvest
 	name = "Perennial Growth"
+	description = "The produce may be harvested multiple times from the same plant."
 	icon = "cubes-stacked"
 	/// Don't allow replica pods to be multi harvested, please.
 	seed_blacklist = list(/obj/item/seeds/replicapod)
@@ -524,6 +528,7 @@
  */
 /datum/plant_gene/trait/battery
 	name = "Capacitive Cell Production"
+	description = "Plant produce works like a power cell when wired properly."
 	icon = "car-battery"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// The number of cables needed to make a battery.
@@ -602,8 +607,8 @@
  */
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
+	description = "It stings, passing some reagents in the process."
 	icon = "syringe"
-	description = "It's quite prickley."
 	trait_ids = REAGENT_TRANSFER_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -639,6 +644,7 @@
 /// Explodes into reagent-filled smoke when squashed.
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
+	description = "When the plant has Liquid Contents, it can be smashed to turn its reagents into smoke."
 	icon = "cloud"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -671,6 +677,7 @@
 /// Makes the plant and its seeds fireproof. From lavaland plants.
 /datum/plant_gene/trait/fire_resistance
 	name = "Fire Resistance"
+	description = "Makes the seeds, plant and produce fireproof."
 	icon = "fire"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -693,6 +700,7 @@
 /// Invasive spreading lets the plant jump to other trays, and the spreading plant won't replace plants of the same type.
 /datum/plant_gene/trait/invasive
 	name = "Invasive Spreading"
+	description = "The plant attempts to spread around if not contained."
 	icon = "virus"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -758,6 +766,7 @@
  */
 /datum/plant_gene/trait/brewing
 	name = "Auto-Distilling Composition"
+	description = "Plant nutriments undergo fermentation."
 	icon = "wine-glass"
 	trait_ids = CONTENTS_CHANGE_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -769,6 +778,7 @@
  */
 /datum/plant_gene/trait/juicing
 	name = "Auto-Juicing Composition"
+	description = "Plant nutriments turn into juice."
 	icon = "glass-water"
 	trait_ids = CONTENTS_CHANGE_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
@@ -780,6 +790,7 @@
  */
 /datum/plant_gene/trait/plant_laughter
 	name = "Hallucinatory Feedback"
+	description = "The plant produce makes sounds when people slip on it."
 	icon = "face-laugh-squint"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Sounds that play when this trait triggers
@@ -815,6 +826,7 @@
  */
 /datum/plant_gene/trait/eyes
 	name = "Oculary Mimicry"
+	description = "The plant will watch after you."
 	icon = "eye"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Our googly eyes appearance.
@@ -832,8 +844,8 @@
 /// Makes the plant embed on thrown impact.
 /datum/plant_gene/trait/sticky
 	name = "Prickly Adhesion"
+	description = "It sticks to people when thrown, also passing reagents if stingy."
 	icon = "bandage"
-	description = "It's quite sticky."
 	trait_ids = THROW_IMPACT_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -856,6 +868,7 @@
  */
 /datum/plant_gene/trait/chem_heating
 	name = "Exothermic Activity"
+	description = "Plant nutriments are consumed to heat up other reagents, halving the yield."
 	icon = "temperatyre-arrow-up"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
@@ -867,6 +880,7 @@
  */
 /datum/plant_gene/trait/chem_cooling
 	name = "Endothermic Activity"
+	description = "Plant nutriments are consumed to cool down other reagents, halving the yield."
 	icon = "temperature-arrow-down"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
@@ -875,16 +889,19 @@
 /// Prevents species mutation, while still allowing wild mutation harvest and Floral Somatoray species mutation.  Trait acts as a tag for hydroponics.dm to recognise.
 /datum/plant_gene/trait/never_mutate
 	name = "Prosophobic Inclination"
+	description = "The plant does not mutate normally, but may give a mutated produce."
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /// Prevents stat mutation caused by instability.  Trait acts as a tag for hydroponics.dm to recognise.
 /datum/plant_gene/trait/stable_stats
 	name = "Symbiotic Resilience"
+	description = "High instability does not affect the plant stats anymore."
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /// Traits for flowers, makes plants not decompose.
 /datum/plant_gene/trait/preserved
 	name = "Natural Insecticide"
+	description = "The plant produce does not attract ants or decompose."
 	icon = "bug-slash"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -899,6 +916,7 @@
 
 /datum/plant_gene/trait/carnivory
 	name = "Obligate Carnivory"
+	description = "Pests have positive effect on the plant health."
 	icon = "spider"
 
 /// Plant type traits. Incompatible with one another.
@@ -910,11 +928,13 @@
 /// Weeds don't get annoyed by weeds in their tray.
 /datum/plant_gene/trait/plant_type/weed_hardy
 	name = "Weed Adaptation"
+	description = "The plant becomes a weed that needs no nutrients and doesn't suffer from other weeds."
 	icon = "seedling"
 
 /// Mushrooms need less light and have a minimum yield.
 /datum/plant_gene/trait/plant_type/fungal_metabolism
 	name = "Fungal Vitality"
+	description = "The plant becomes a mushroom that needs no water, less light and can't be overtaken by weeds."
 	icon = "heart"
 
 /// Currently unused and does nothing. Appears in strange seeds.

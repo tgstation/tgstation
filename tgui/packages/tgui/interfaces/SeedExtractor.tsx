@@ -36,7 +36,9 @@ type SeedData = {
 };
 
 type SeedExtractorData = {
+  // Dynamic
   seeds: SeedData[];
+  // Static
   trait_db: TraitData[];
   cycle_seconds: number;
 };
@@ -183,7 +185,7 @@ export const SeedExtractor = (props, context) => {
                         trait_db={data.trait_db}
                       />
                     ))}
-                    {!!item.reagents && (
+                    {item.reagents.length > 0 && (
                       <Tooltip
                         content={
                           <ReagentTooltip

@@ -5,6 +5,7 @@
 /// Holymelon's anti-magic trait. Charges based on potency.
 /datum/plant_gene/trait/anti_magic
 	name = "Anti-Magic Vacuoles"
+	description = "You can hide behind it from a fireball!"
 	icon = "hand-sparkles"
 	/// The amount of anti-magic blocking uses we have.
 	var/shield_uses = 1
@@ -116,6 +117,7 @@
 /// Novaflower's attack effects (sets people on fire) + degradation on attack
 /datum/plant_gene/trait/attack/novaflower_attack
 	name = "Heated Petals"
+	description = "Hitting with it may cause things to combust."
 	force_multiplier = 0.2
 	degrades_after_hit = TRUE
 	degradation_noun = "petals"
@@ -136,6 +138,7 @@
 /// Sunflower's attack effect (shows cute text)
 /datum/plant_gene/trait/attack/sunflower_attack
 	name = "Bright Petals"
+	description = "Makes others feel the power on hit."
 
 /datum/plant_gene/trait/attack/sunflower_attack/after_attack_effect(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
 	if(ismob(target))
@@ -150,6 +153,7 @@
 /// Normal nettle's force + degradation on attack
 /datum/plant_gene/trait/attack/nettle_attack
 	name = "Sharpened Leaves"
+	description = "The plant can become a very dangerous weapon."
 	force_multiplier = 0.2
 	degrades_after_hit = TRUE
 
@@ -193,6 +197,7 @@
 /// Rose's prick on backfire
 /datum/plant_gene/trait/backfire/rose_thorns
 	name = "Rose Thorns"
+	description = "Be careful when holding it without protection."
 	traits_to_check = list(TRAIT_PIERCEIMMUNE)
 
 /datum/plant_gene/trait/backfire/rose_thorns/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
@@ -209,6 +214,7 @@
 /// Novaflower's hand burn on backfire
 /datum/plant_gene/trait/backfire/novaflower_heat
 	name = "Burning Stem"
+	description = "Touching it may cause you to combust."
 	cancel_action_on_backfire = TRUE
 
 /datum/plant_gene/trait/backfire/novaflower_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
@@ -220,6 +226,7 @@
 /// Normal Nettle hannd burn on backfire
 /datum/plant_gene/trait/backfire/nettle_burn
 	name = "Stinging Stem"
+	description = "Handle this plant with protection."
 
 /datum/plant_gene/trait/backfire/nettle_burn/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	to_chat(user, span_danger("[our_plant] burns your bare hand!"))
@@ -243,6 +250,7 @@
 /// Ghost-Chili heating up on backfire
 /datum/plant_gene/trait/backfire/chili_heat
 	name = "Active Capsicum Glands"
+	description = "You may survive a cold winter with this in hand."
 	genes_to_check = list(/datum/plant_gene/trait/chem_heating)
 	/// The mob currently holding the chili.
 	var/datum/weakref/held_mob
@@ -298,6 +306,7 @@
 /// Bluespace Tomato squashing on the user on backfire
 /datum/plant_gene/trait/backfire/bluespace
 	name = "Bluespace Volatility"
+	description = "You may be spaced out if you pick this up unprotected."
 	cancel_action_on_backfire = TRUE
 	genes_to_check = list(/datum/plant_gene/trait/squash)
 
@@ -314,6 +323,8 @@
 /// Traits for plants that can be activated to turn into a mob.
 /datum/plant_gene/trait/mob_transformation
 	name = "Dormant Ferocity"
+	description = "Brings the plant to life when shaken in hand."
+	icon = "wave-pulse"
 	trait_ids = ATTACK_SELF_ID
 	/// Whether mobs spawned by this trait are dangerous or not.
 	var/dangerous = FALSE
@@ -446,6 +457,7 @@
 /// Traiit for plants eaten in 1 bite.
 /datum/plant_gene/trait/one_bite
 	name = "Large Bites"
+	description = "You can't hold off from eating this in one bite!"
 	icon = "drumstick-bite"
 
 /datum/plant_gene/trait/one_bite/on_new_plant(obj/item/our_plant, newloc)
@@ -460,6 +472,7 @@
 /// Traits for plants with a different base max_volume.
 /datum/plant_gene/trait/modified_volume
 	name = "Deep Vesicles"
+	description = "The plant has more reagents than usualy."
 	icon = "vials"
 	/// The new number we set the plant's max_volume to.
 	var/new_capcity = 100
@@ -486,6 +499,7 @@
 /// Plants that explode when used (based on their reagent contents)
 /datum/plant_gene/trait/bomb_plant
 	name = "Explosive Contents"
+	description = "Shaking the produce in hand will heat up the contents, causing it to explode."
 	icon = "bomb"
 	trait_ids = ATTACK_SELF_ID
 
@@ -593,6 +607,7 @@
 /// Can be generalized in the future to spawn any gas, but I don't think that's necessarily a good idea.
 /datum/plant_gene/trait/gas_production
 	name = "Miasma Gas Production"
+	description = "The plant expells miasma during the growth."
 	icon = "wind"
 	/// The location of our tray, if we have one.
 	var/datum/weakref/home_tray
