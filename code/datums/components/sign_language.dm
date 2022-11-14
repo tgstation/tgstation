@@ -13,13 +13,8 @@
 *
 * High-Level Theory of Operation:
 *  1. Component is added to a Carbon via AddComponent.
-*  2. Create and manage an instance of the Action "/datum/action/innate/sign_language".
-*  3. Criteria A. React to presence of TRAIT_CAN_SIGN_LANG and TRAIT_SIGN_LANG:
-*   A.1. If TRAIT_CAN_SIGN_LANG is added, then grant the Action.
-*   A.2. If TRAIT_SIGN_LANG is added, then enable sign language. Listen for speech signals and modify the mob's speech, say_mod verbs, and typing indicator.
-*  4. Criteria B. React to presence of trait TRAIT_MUTE for quality/convenience purposes:
-*   B.1. If criterion A.1 is met, and TRAIT_MUTE is then added, then add TRAIT_SIGN_LANG and remove the Action.
-*   B.2. If criterion B.1 is met, and TRAIT_MUTE is then removed, then grant the Action.
+*  2. React to presence of TRAIT_CAN_SIGN_LANG and TRAIT_SIGN_LANG:
+*  3. If TRAIT_SIGN_LANG is added, then enable sign language. Listen for speech signals and modify the mob's speech, say_mod verbs, and typing indicator.
 *
 * * Credits:
 * - Original Tongue Tied created by @Wallemations (https://github.com/tgstation/tgstation/pull/52907)
@@ -30,122 +25,29 @@
 	var/tonal_indicator = null
 	/// The timerid for our sign language tonal indicator.
 	var/tonal_timerid
-	/// The action for toggling sign language.
-	var/datum/action/innate/sign_language/linked_action
+	/// Any symbols to sanitize from signed messages.
+	var/regex/omissions = new ("\[!?\]", "g")
+
+/// Replace specific characters in the input string with periods.
+/datum/component/sign_language/proc/sanitize_message(input)
+	return replacetext(input, omissions, ".")
 
 /datum/component/sign_language/Initialize()
 	// Non-Carbon mobs can't use sign language.
 	if (!iscarbon(parent))
 		stack_trace("Sign Language component added to [parent] ([parent?.type]) which is not a /mob/living/carbon subtype.")
 		return COMPONENT_INCOMPATIBLE
-	linked_action = new /datum/action/innate/sign_language(src)
 
 /datum/component/sign_language/RegisterWithParent()
-	// Sign language Action is granted/removed via adding/removing TRAIT_CAN_SIGN_LANG.
-	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CAN_SIGN_LANG), .proc/learn_sign_language)
-	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CAN_SIGN_LANG), .proc/forget_sign_language)
 	// Sign language is toggled on/off via adding/removing TRAIT_SIGN_LANG.
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), .proc/enable_sign_language)
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), .proc/disable_sign_language)
 
-/// Removes the sign language action and disables signing.
 /datum/component/sign_language/UnregisterFromParent()
 	disable_sign_language()
-	if (linked_action.owner)
-		linked_action.Remove(parent)
 	UnregisterSignal(parent, list(
-		SIGNAL_ADDTRAIT(TRAIT_CAN_SIGN_LANG),
-		SIGNAL_REMOVETRAIT(TRAIT_CAN_SIGN_LANG),
 		SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG),
 		SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG)
-	))
-
-/// Allows a Carbon to toggle sign language on/off.
-/// Warning: Do Not Grant. Instead add TRAIT_CAN_SIGN_LANG.
-/// This Action must be managed by /datum/component/sign_language
-/datum/action/innate/sign_language
-	name = "Sign Language"
-	icon_icon = 'icons/hud/actions.dmi'
-	button_icon_state = "sign_language"
-	desc = "Allows you to communicate via sign language."
-
-/datum/action/innate/sign_language/Activate()
-	ADD_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-	to_chat(owner, span_green("You are now communicating with sign language."))
-	active = TRUE
-	UpdateButtons()
-
-/datum/action/innate/sign_language/Deactivate()
-	REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-	to_chat(owner, span_green("You have stopped using sign language."))
-	active = FALSE
-	UpdateButtons()
-
-/datum/action/innate/sign_language/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
-	. = ..()
-	if(!. || !button)
-		return
-	if(HAS_TRAIT(owner, TRAIT_SIGN_LANG))
-		button.icon_state = "template_active"
-	else
-		button.icon_state = "template"
-
-/// Adds the linked action to the parent Carbon.
-/datum/component/sign_language/proc/add_action()
-	linked_action.active = HAS_TRAIT(parent, TRAIT_SIGN_LANG)
-	linked_action.Grant(parent)
-	// Removes the action if the Carbon gains TRAIT_MUTE.
-	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE), .proc/on_muted)
-
-/// Removes the linked action from the parent Carbon.
-/datum/component/sign_language/proc/remove_action()
-	linked_action.Remove(parent)
-	UnregisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_MUTE))
-
-/// Signal handler for SIGNAL_ADDTRAIT(TRAIT_MUTE)
-/// Removes the action if the signing Carbon gains TRAIT_MUTE.
-/datum/component/sign_language/proc/on_muted()
-	SIGNAL_HANDLER
-
-	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_MUTE), .proc/on_unmuted)
-	remove_action()
-	// Enable sign language if the Carbon knows it and just gained TRAIT_MUTE
-	if (HAS_TRAIT(parent, TRAIT_CAN_SIGN_LANG))
-		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-
-/// Signal handler for SIGNAL_REMOVETRAIT(TRAIT_MUTE)
-/// Re-grants the action if the signing Carbon loses TRAIT_MUTE.
-/datum/component/sign_language/proc/on_unmuted()
-	SIGNAL_HANDLER
-
-	add_action()
-
-/// Signal handler for [addtrait can_use_sign_language]
-/// Adds the linked toggle action to the parent Carbon.
-/datum/component/sign_language/proc/learn_sign_language()
-	SIGNAL_HANDLER
-
-	if (HAS_TRAIT(parent, TRAIT_MUTE))
-		if (HAS_TRAIT(parent, TRAIT_SIGN_LANG))
-			// An edge-case. Somehow learned sign language while already using it!
-			// Example: Tongue-Tied-tongue user learned from a sign language book or gained the Signer quirk.
-			return
-		// Convenience. Mute Carbons can only speak with sign language.
-		ADD_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-	else
-		// Convenience. Only show toggle action if the Carbon isn't mute.
-		add_action()
-
-/// Signal handler for [removetrait can_use_sign_language]
-/// Removes the action and TRAIT_SIGN_LANG from the parent Carbon.
-/datum/component/sign_language/proc/forget_sign_language()
-	SIGNAL_HANDLER
-
-	REMOVE_TRAIT(parent, TRAIT_SIGN_LANG, TRAIT_GENERIC)
-	linked_action.Remove(parent)
-	UnregisterSignal(parent, list(
-		SIGNAL_ADDTRAIT(TRAIT_MUTE),
-		SIGNAL_REMOVETRAIT(TRAIT_MUTE)
 	))
 
 /// Signal handler for [COMSIG_SIGNLANGUAGE_ENABLE]
@@ -267,9 +169,6 @@
 
 	return SIGN_OKAY
 
-/datum/component/sign_language/proc/sanitize_message(input)
-	return replacetext(replacetext(input, "!", "."), "?", ".")
-
 /// Signal proc for [COMSIG_LIVING_TREAT_MESSAGE]
 /// Stars out our message if we only have 1 hand free.
 /datum/component/sign_language/proc/on_treat_living_message(atom/movable/source, list/message_args)
@@ -286,7 +185,7 @@
 	message_args[MOVABLE_SAY_QUOTE_MESSAGE] = sanitize_message(message_args[MOVABLE_SAY_QUOTE_MESSAGE])
 
 /// Signal proc for [COMSIG_MOVABLE_TREAT_MESSAGE]
-/// Removes exclamation/question marks if /atom/movable/proc/say_quote() isn't going to run.
+/// Removes exclamation/question marks only if /atom/movable/proc/say_quote() isn't going to run.
 /datum/component/sign_language/proc/on_treat_message(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 
