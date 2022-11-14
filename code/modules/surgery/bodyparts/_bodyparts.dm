@@ -1112,3 +1112,7 @@
 		owner.update_body_parts()
 	else
 		update_icon_dropped()
+
+///Called when a limb is used for an unarmed attack. Sometimes, limbs can have special effects when an unarmed attack occurs.
+/obj/item/bodypart/proc/limb_unarmedattack_effect(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return
