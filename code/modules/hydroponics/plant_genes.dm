@@ -348,7 +348,7 @@
  */
 /datum/plant_gene/trait/glow
 	name = "Bioluminescence"
-	icon = "lightbulb-o"
+	icon = "lightbulb"
 	rate = 0.03
 	examine_line = "<span class='info'>It emits a soft glow.</span>"
 	trait_ids = GLOW_ID
@@ -377,7 +377,7 @@
  */
 /datum/plant_gene/trait/glow/shadow
 	name = "Shadow Emission"
-	icon = "lightbulb"
+	icon = "lightbulb-o"
 	rate = 0.04
 	glow_color = "#AAD84B"
 
