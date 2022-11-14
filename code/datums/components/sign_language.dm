@@ -7,7 +7,24 @@
 #define SIGN_TRAIT_BLOCKED 5
 #define SIGN_CUFFED 6
 
-/// Sign Language component for Carbons. Adds a button to the HUD which toggles.
+/**
+* Reactive Sign Language Component for Carbons. Allows Carbons to speak with sign language if they have the relevant traits.
+* Implements sign language by incrementally overriding several critical functions, variables, and argument lists.
+*
+* High-Level Theory of Operation:
+*  1. Component is added to a Carbon via AddComponent.
+*  2. Create and manage an instance of the Action "/datum/action/innate/sign_language".
+*  3. Criteria A. React to presence of TRAIT_CAN_SIGN_LANG and TRAIT_SIGN_LANG:
+*   A.1. If TRAIT_CAN_SIGN_LANG is added, then grant the Action.
+*   A.2. If TRAIT_SIGN_LANG is added, then enable sign language. Listen for speech signals and modify the mob's speech, say_mod verbs, and typing indicator.
+*  4. Criteria B. React to presence of trait TRAIT_MUTE for quality/convenience purposes:
+*   B.1. If criterion A.1 is met, and TRAIT_MUTE is then added, then add TRAIT_SIGN_LANG and remove the Action.
+*   B.2. If criterion B.1 is met, and TRAIT_MUTE is then removed, then grant the Action.
+*
+* * Credits:
+* - Original Tongue Tied created by @Wallemations (https://github.com/tgstation/tgstation/pull/52907)
+* - Action sprite created by @Wallemations (icons/hud/actions.dmi:sign_language)
+*/
 /datum/component/sign_language
 	/// The tonal indicator shown when sign language users finish sending a message. If it's empty, none appears.
 	var/tonal_indicator = null
@@ -19,7 +36,7 @@
 /datum/component/sign_language/Initialize()
 	// Non-Carbon mobs can't use sign language.
 	if (!iscarbon(parent))
-		stack_trace("Acid component added to [parent] ([parent?.type]) which is not a /mob/living/carbon subtype.")
+		stack_trace("Sign Language component added to [parent] ([parent?.type]) which is not a /mob/living/carbon subtype.")
 		return COMPONENT_INCOMPATIBLE
 	linked_action = new /datum/action/innate/sign_language(src)
 
@@ -43,8 +60,9 @@
 		SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG)
 	))
 
-/// Innate Action which allows a Carbon to toggle sign language on/off.
-/// Do Not Grant this action directly to a mob! Instead add TRAIT_CAN_SIGN_LANG
+/// Allows a Carbon to toggle sign language on/off.
+/// Warning: Do Not Grant. Instead add TRAIT_CAN_SIGN_LANG.
+/// This Action must be managed by /datum/component/sign_language
 /datum/action/innate/sign_language
 	name = "Sign Language"
 	icon_icon = 'icons/hud/actions.dmi'
