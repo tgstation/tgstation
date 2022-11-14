@@ -233,7 +233,7 @@
 			seed_data["traits"] += list(list(
 				"name" = trait.name,
 				"icon" = trait.icon,
-				"description" = html_decode(trait.examine_line)
+				"description" = trait.description
 			))
 		for(var/datum/plant_gene/reagent/reagent in seed_data["genes"])
 			seed_data["reagents"] += list(list(

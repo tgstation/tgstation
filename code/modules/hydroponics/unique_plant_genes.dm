@@ -593,7 +593,7 @@
 /// Can be generalized in the future to spawn any gas, but I don't think that's necessarily a good idea.
 /datum/plant_gene/trait/gas_production
 	name = "Miasma Gas Production"
-	name = "wind"
+	icon = "wind"
 	/// The location of our tray, if we have one.
 	var/datum/weakref/home_tray
 	/// The seed emitting gas.

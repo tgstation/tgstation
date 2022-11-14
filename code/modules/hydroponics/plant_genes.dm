@@ -117,7 +117,7 @@
 	/// The rate at which this trait affects something. This can be anything really - why? I dunno.
 	var/rate = 0.05
 	/// Bonus lines displayed on examine.
-	var/examine_line = ""
+	var/description = ""
 	/// Flag - Traits that share an ID cannot be placed on the same plant.
 	var/trait_ids
 	/// Flag - Modifications made to the final product.
@@ -177,7 +177,7 @@
 		return FALSE
 
 	// Add on any bonus lines on examine
-	if(examine_line)
+	if(description)
 		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, .proc/examine)
 
 	return TRUE
@@ -186,13 +186,13 @@
 /datum/plant_gene/trait/proc/examine(obj/item/our_plant, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += examine_line
+	examine_list += "<span class='info'>[description]</span>"
 
 /// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 /datum/plant_gene/trait/squash
 	name = "Liquid Contents"
 	icon = "droplet"
-	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
+	description = "It has a lot of liquid contents inside."
 	trait_ids = THROW_IMPACT_ID | REAGENT_TRANSFER_ID | ATTACK_SELF_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -248,7 +248,7 @@
 	name = "Slippery Skin"
 	icon = "person-falling"
 	rate = 1.6
-	examine_line = "<span class='info'>It has a very slippery skin.</span>"
+	description = "It has a very slippery skin."
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/slip/on_new_plant(obj/item/our_plant, newloc)
@@ -350,7 +350,7 @@
 	name = "Bioluminescence"
 	icon = "lightbulb"
 	rate = 0.03
-	examine_line = "<span class='info'>It emits a soft glow.</span>"
+	description = "It emits a soft glow."
 	trait_ids = GLOW_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// The color of our bioluminesence.
@@ -603,7 +603,7 @@
 /datum/plant_gene/trait/stinging
 	name = "Hypodermic Prickles"
 	icon = "syringe"
-	examine_line = "<span class='info'>It's quite prickley.</span>"
+	description = "It's quite prickley."
 	trait_ids = REAGENT_TRANSFER_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -833,7 +833,7 @@
 /datum/plant_gene/trait/sticky
 	name = "Prickly Adhesion"
 	icon = "bandage"
-	examine_line = "<span class='info'>It's quite sticky.</span>"
+	description = "It's quite sticky."
 	trait_ids = THROW_IMPACT_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
