@@ -470,7 +470,6 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/head/golem/durathread/limb_unarmedattack_effect(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	. = ..()
 	target.apply_status_effect(/datum/status_effect/strandling)
 
 /obj/item/bodypart/chest/golem/durathread
@@ -483,7 +482,6 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/left/golem/durathread/limb_unarmedattack_effect(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	. = ..()
 	target.apply_status_effect(/datum/status_effect/strandling)
 
 /obj/item/bodypart/arm/right/golem/durathread
@@ -491,7 +489,6 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/right/golem/durathread/limb_unarmedattack_effect(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	. = ..()
 	target.apply_status_effect(/datum/status_effect/strandling)
 
 /obj/item/bodypart/leg/left/golem/durathread
@@ -499,7 +496,6 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/left/golem/durathread/limb_unarmedattack_effect(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	. = ..()
 	target.apply_status_effect(/datum/status_effect/strandling)
 
 /obj/item/bodypart/leg/right/golem/durathread
@@ -507,7 +503,6 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/right/golem/durathread/limb_unarmedattack_effect(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	. = ..()
 	target.apply_status_effect(/datum/status_effect/strandling)
 
 ///
