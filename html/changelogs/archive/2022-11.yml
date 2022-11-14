@@ -316,3 +316,6 @@
 2022-11-09:
   MTandi:
   - bugfix: made Kilo Xenobio guide visible from the north part of the room.
+2022-11-14:
+  Iamgoofball:
+  - bugfix: You can no longer attach igniters to igniters.
