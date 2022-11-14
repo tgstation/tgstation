@@ -227,7 +227,7 @@
 
 	// Chunky fingers dropping our input
 	if(ishuman(usr) && computer.fingers_check(usr))
-		return
+		return TRUE
 
 	if(computer)
 		switch(action)
