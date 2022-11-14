@@ -46,6 +46,24 @@
 	for(var/obj/item/assembly/assembly in assemblies)
 		assembly.on_attach()
 
+/obj/item/assembly_holder/proc/try_add_assembly(obj/item/assembly/attached_assembly, mob/user)
+	if(attached_assembly.secured)
+		balloon_alert(attached_assembly, "not attachable!")
+		return FALSE
+
+	if(LAZYLEN(assemblies) >= HOLDER_MAX_ASSEMBLIES)
+		balloon_alert(user, "too many assemblies!")
+		return FALSE
+
+	if(attached_assembly.assembly_flags & ASSEMBLY_NO_DUPLICATES)
+		if(locate(attached_assembly.type) in assemblies)
+			balloon_alert(user, "can't attach another of that!")
+			return FALSE
+
+	add_assembly(attached_assembly, user)
+	balloon_alert(user, "part attached")
+	return TRUE
+
 /**
  * Adds an assembly to the assembly holder
  *
@@ -55,6 +73,7 @@
  * * user - user we pass into attach()
  */
 /obj/item/assembly_holder/proc/add_assembly(obj/item/assembly/attached_assembly, mob/user)
+
 	attach(attached_assembly, user)
 	name = ""
 	for(var/obj/item/assembly/assembly as anything in assemblies)
@@ -118,12 +137,11 @@
 
 /obj/item/assembly_holder/attackby(obj/item/weapon, mob/user, params)
 	if(isassembly(weapon))
-		var/obj/item/assembly/attached_assembly = weapon
-		if(!attached_assembly.secured)
-			add_assembly(attached_assembly, user)
-			balloon_alert(user, "part added")
+		try_add_assembly(weapon, user)
 		return
+
 	return ..()
+
 /obj/item/assembly_holder/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
@@ -162,7 +180,7 @@
 	if(normal && LAZYLEN(assemblies) >= 2)
 		for(var/obj/item/assembly/assembly as anything in assemblies)
 			if(assembly != device)
-				assembly.pulsed(FALSE)
+				assembly.pulsed()
 	if(master)
 		master.receive_signal()
 	return TRUE
