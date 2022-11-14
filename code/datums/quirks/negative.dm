@@ -991,7 +991,7 @@
 /datum/quirk/mute
 	name = "Mute"
 	desc = "For some reason you are completely unable to speak."
-	icon = "comment-slash"
+	icon = "volume-xmark"
 	value = -4
 	mob_trait = TRAIT_MUTE
 	gain_text = span_danger("You find yourself unable to speak!")
