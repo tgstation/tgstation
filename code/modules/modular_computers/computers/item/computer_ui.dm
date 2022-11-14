@@ -16,12 +16,6 @@
 	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(human_user.check_chunky_fingers())
-			balloon_alert(human_user, "fingers are too big!")
-			return
-
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
 		if(ui)
@@ -114,6 +108,10 @@
 	. = ..()
 	if(.)
 		return
+
+	if(ishuman(usr) && fingers_check(usr))
+		return
+
 
 	switch(action)
 		if("PC_exit")
@@ -220,3 +218,20 @@
 	if(physical)
 		return physical
 	return src
+
+/**
+ * Check for chunky fingers done before the computer (or any of its program)'s UIs are interacted with (UI act).
+ *
+ * Return TRUE to stop the UI act from continuing.
+ * Return FALSE to let the UI act happen.
+ */
+/obj/item/modular_computer/proc/fingers_check(mob/living/carbon/human/human_user)
+	if(human_user.check_chunky_fingers() && prob(75))
+		human_user.visible_message(
+			span_warning("[human_user] taps the screen of [src] repeatedly, the screen unchanging."),
+			span_warning("Damn these [human_user.gloves ? "gloves, the" : "hands, my"] fingers are too big."),
+			span_hear("You hear frustrated tapping."),
+		)
+		return TRUE
+
+	return FALSE

@@ -225,6 +225,9 @@
 	if(.)
 		return
 
+	if(ishuman(usr) && computer.fingers_check(usr))
+		return
+
 	if(computer)
 		switch(action)
 			if("PC_exit")
