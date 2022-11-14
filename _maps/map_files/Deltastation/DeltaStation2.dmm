@@ -98358,7 +98358,7 @@
 /area/station/hallway/primary/central/fore)
 "xXq" = (
 /obj/structure/cable,
-/mob/living/simple_animal/hostile/carp/lia,
+/mob/living/basic/carp/pet/lia,
 /obj/effect/turf_decal/siding/dark_red{
 	dir = 1
 	},

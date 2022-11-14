@@ -45,7 +45,7 @@
 	//entirely independent vars (not related to the action or story type)
 
 	var/static/list/something_pool = list(
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/mushroom,
 		/mob/living/simple_animal/hostile/netherworld/statue,

@@ -38,7 +38,7 @@
 	maxHealth = 50
 	health = 50
 	gold_core_spawnable = NO_SPAWN
-	random_color = FALSE
+	// random_color = FALSE
 	/// List of all projectiles we can fire.
 	/// Non-static, because subtypes can have their own lists.
 	var/list/allowed_projectile_types = list(

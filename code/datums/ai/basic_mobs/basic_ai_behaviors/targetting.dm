@@ -44,3 +44,7 @@
 		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
 
 	finish_action(controller, TRUE)
+
+/// Returns the desired final target from the filtered list of targets
+/datum/ai_behavior/find_potential_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+	return pick(filtered_targets)

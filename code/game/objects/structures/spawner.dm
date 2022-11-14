@@ -10,7 +10,7 @@
 
 	var/max_mobs = 5
 	var/spawn_time = 30 SECONDS
-	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
+	var/mob_types = list(/mob/living/basic/carp)
 	var/spawn_text = "emerges from"
 	var/faction = list("hostile")
 	var/spawner_type = /datum/component/spawner

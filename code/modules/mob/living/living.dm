@@ -1300,7 +1300,7 @@
 
 		if(WABBAJACK_ANIMAL)
 			var/picked_animal = pick(
-				/mob/living/simple_animal/hostile/carp,
+				/mob/living/basic/carp,
 				/mob/living/simple_animal/hostile/bear,
 				/mob/living/simple_animal/hostile/mushroom,
 				/mob/living/simple_animal/hostile/netherworld/statue,

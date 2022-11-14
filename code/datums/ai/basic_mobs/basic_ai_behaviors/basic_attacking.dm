@@ -32,7 +32,6 @@
 	else
 		basic_mob.melee_attack(target)
 
-
 /datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	if(!succeeded)

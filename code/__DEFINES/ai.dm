@@ -214,12 +214,16 @@
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETTING_DATUM "targetting_datum"
-/// Separate targeting datum so that you can have different criteria for what you should try to move away from
-#define BB_FLEE_TARGETTING_DATUM "flee_targetting_datum"
 ///some behaviors that check current_target also set this on deep crit mobs
 #define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+
 ///List of mobs who have damaged us
 #define BB_BASIC_MOB_RETALIATE_LIST "BB_basic_mob_shitlist"
+
+/// Flag to set on or off if you want your mob to prioritise running away
+#define BB_BASIC_MOB_FLEEING "BB_basic_fleeing"
+#define BB_BASIC_MOB_FLEE_BELOW_HP_RATIO "BB_basic_mob_flee_below_HP_ratio"
+#define BB_BASIC_MOB_STOP_FLEE_AT_HP_RATIO "BB_basic_mob_stop_flee_above_HP_ratio"
 
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"

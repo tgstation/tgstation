@@ -49,7 +49,7 @@
 	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
 		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
 		if(isanimal_or_basicmob(target) || is_type_in_typecache(target, non_simple_animals) || ismonkey(target))
-			if(istype(target, /mob/living/simple_animal/hostile/carp))
+			if(istype(target, /mob/living/basic/carp))
 				carp_dna_loaded = TRUE
 			var/mob/living/living_target = target
 			if(stored_dna_animal[living_target.type])

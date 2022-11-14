@@ -637,7 +637,7 @@
 		/mob/living/simple_animal/pet/dog/pug,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/bee,
-		/mob/living/simple_animal/hostile/carp,
+		/mob/living/basic/carp,
 	)
 	for(var/counter in 1 to rand(1, 25))
 		var/mobType = pick(valid_animals)
