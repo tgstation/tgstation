@@ -485,13 +485,4 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	desc = "If only one had a sword so we may finally untie this knot."
 	say_mod = "signs"
 	icon_state = "tonguetied"
-
-/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	ADD_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
-	ADD_TRAIT(signer, TRAIT_CAN_SIGN_LANG, ORGAN_TRAIT)
-
-/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
-	. = ..()
-	REMOVE_TRAIT(speaker, TRAIT_MUTE, ORGAN_TRAIT)
-	REMOVE_TRAIT(speaker, TRAIT_CAN_SIGN_LANG, ORGAN_TRAIT)
+	organ_traits = list(TRAIT_MUTE, TRAIT_SIGN_LANG)
