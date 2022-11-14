@@ -177,12 +177,6 @@
 	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 	return
 
-/obj/item/assembly/signaler/anomaly
-	assembly_flags = ASSEMBLY_WIRE_RECEIVE | ASSEMBLY_WIRE_RADIO_RECEIVE
-
-/obj/item/assembly/signaler/anomaly/attack_self()
-	return
-
 /obj/item/assembly/signaler/cyborg
 
 /obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
