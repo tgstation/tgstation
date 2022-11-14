@@ -93,8 +93,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/delamination_counter, 32)
 	var/tram_id = TRAM_LIFT_ID
 
 /obj/structure/sign/collision_counter/Initialize(mapload)
-	. = ..()
-
+	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/sign/collision_counter/LateInitialize()
