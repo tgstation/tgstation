@@ -39,6 +39,7 @@
 
 	//This is essentially a death mark, use this to finish your opponent quicker.
 	if(HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(victim, TRAIT_NODEATH))
+		victim.investigate_log("has been killed by fiery rebirth.", INVESTIGATE_DEATHS)
 		victim.death()
 	victim.apply_damage(20, BURN)
 
