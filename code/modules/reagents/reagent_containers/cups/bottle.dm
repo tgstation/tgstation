@@ -479,6 +479,7 @@
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to toggle the pump cap.")
+	. += span_notice("Use a pen on it to rename it.")
 	return
 
 //when you attack the syrup bottle with a container it refills it
@@ -503,7 +504,11 @@
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [attacking_item]."))
 		flick("syrup_anim",src)
 
+	if(istype(attacking_item, /obj/item/pen))
+		rename(user, attacking_item)
+
 	attacking_item.update_appearance()
+	update_appearance()
 
 	return TRUE
 
@@ -522,6 +527,18 @@
 		to_chat(user, span_notice("You put the pump cap on."))
 	update_icon_state()
 	return ..()
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/rename(mob/user, obj/item/writing_instrument)
+	if(!user.can_write(writing_instrument))
+		return
+
+	var/inputvalue = tgui_input_text(user, "What would you like to label the syrup bottle?", "Syrup Bottle Labelling", max_length = MAX_NAME_LEN)
+
+	if(!inputvalue)
+		return
+
+	if(user.canUseTopic(src, be_close = TRUE))
+		name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
 
 //types of syrups
 
