@@ -867,7 +867,7 @@
  */
 /datum/plant_gene/trait/chem_heating
 	name = "Exothermic Activity"
-	description = "Its consumes nutriments to heat up other reagents, halving the yield."
+	description = "It consumes nutriments to heat up other reagents, halving the yield."
 	icon = "temperatyre-arrow-up"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
@@ -879,7 +879,7 @@
  */
 /datum/plant_gene/trait/chem_cooling
 	name = "Endothermic Activity"
-	description = "Its consumes nutriments to cool down other reagents, halving the yield."
+	description = "It consumes nutriments to cool down other reagents, halving the yield."
 	icon = "temperature-arrow-down"
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
