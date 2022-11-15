@@ -77,14 +77,14 @@
 		base_icon_state = "sus"
 		desc += " This one looks a bit sus..."
 
-	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, .proc/on_power_restore)
-	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, .proc/on_power_loss)
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(on_power_restore))
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, PROC_REF(on_power_loss))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
-	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
+	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
+	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
 	GetMergeGroup(merger_id, merger_typecache)
 	register_adjacent_turfs()
 
@@ -200,7 +200,7 @@
 	SIGNAL_HANDLER
 	if(new_merger.id != merger_id)
 		return
-	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, .proc/refresh_shared_turfs)
+	RegisterSignal(new_merger, COMSIG_MERGER_REFRESH_COMPLETE, PROC_REF(refresh_shared_turfs))
 
 /obj/machinery/door/firedoor/proc/merger_removing(obj/machinery/door/firedoor/us, datum/merger/old_merger)
 	SIGNAL_HANDLER
@@ -229,7 +229,7 @@
 		return
 
 	var/turf/our_turf = get_turf(loc)
-	RegisterSignal(our_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
+	RegisterSignal(our_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, PROC_REF(process_results))
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(our_turf, dir)
 
@@ -238,7 +238,7 @@
 		if(isclosedturf(checked_turf))
 			continue
 		process_results(checked_turf)
-		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
+		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, PROC_REF(process_results))
 
 
 /obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/old_loc)
@@ -338,7 +338,7 @@
 		return
 	if(code != FIRELOCK_ALARM_TYPE_GENERIC && !COOLDOWN_FINISHED(src, activation_cooldown)) // Non generic activation, subject to crowbar safety
 		// Properly activate once the timeleft's up
-		addtimer(CALLBACK(src, .proc/activate, code), COOLDOWN_TIMELEFT(src, activation_cooldown))
+		addtimer(CALLBACK(src, PROC_REF(activate), code), COOLDOWN_TIMELEFT(src, activation_cooldown))
 		return
 	active = TRUE
 	alarm_type = code
@@ -392,7 +392,7 @@
 	correct_state()
 
 	/// Please be called 3 seconds after the LAST open, rather then 3 seconds after the first
-	addtimer(CALLBACK(src, .proc/release_constraints), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(release_constraints)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /**
  * Reset our temporary alarm ignoring
@@ -424,7 +424,7 @@
 		var/obj/item/card/emag/doorjack/digital_crowbar = emag_type
 		digital_crowbar.use_charge(user)
 	obj_flags |= EMAGGED
-	INVOKE_ASYNC(src, .proc/open)
+	INVOKE_ASYNC(src, PROC_REF(open))
 
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
@@ -522,9 +522,9 @@
 		if(QDELETED(user))
 			being_held_open = FALSE
 			return
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
-		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
-		RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/handle_held_open_adjacency)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_held_open_adjacency))
+		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(handle_held_open_adjacency))
+		RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(handle_held_open_adjacency))
 		handle_held_open_adjacency(user)
 	else
 		close()
@@ -537,7 +537,7 @@
 	if(density)
 		open()
 		if(active)
-			addtimer(CALLBACK(src, .proc/correct_state), 2 SECONDS, TIMER_UNIQUE)
+			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 	else
 		close()
 
@@ -562,7 +562,7 @@
 	if(density)
 		open()
 		if(active)
-			addtimer(CALLBACK(src, .proc/correct_state), 2 SECONDS, TIMER_UNIQUE)
+			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 	else
 		close()
 	return TRUE
@@ -577,7 +577,7 @@
 		return
 	open()
 	if(active)
-		addtimer(CALLBACK(src, .proc/correct_state), 2 SECONDS, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
@@ -617,10 +617,10 @@
 	if(obj_flags & EMAGGED || being_held_open || QDELETED(src))
 		return //Unmotivated, indifferent, we have no real care what state we're in anymore.
 	if(active && !density) //We should be closed but we're not
-		INVOKE_ASYNC(src, .proc/close)
+		INVOKE_ASYNC(src, PROC_REF(close))
 		return
 	if(!active && density) //We should be open but we're not
-		INVOKE_ASYNC(src, .proc/open)
+		INVOKE_ASYNC(src, PROC_REF(open))
 		return
 
 /obj/machinery/door/firedoor/open()
