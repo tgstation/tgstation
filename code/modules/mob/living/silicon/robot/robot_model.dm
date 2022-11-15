@@ -192,7 +192,7 @@
 	cyborg.diag_hud_set_aishell()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
-	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
+	INVOKE_ASYNC(new_model, PROC_REF(do_transform_animation))
 	qdel(src)
 	return new_model
 
@@ -203,7 +203,7 @@
 		for(var/skin in borg_skins)
 			var/list/details = borg_skins[skin]
 			reskin_icons[skin] = image(icon = details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = details[SKIN_ICON_STATE])
-		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
+		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), cyborg, old_model), radius = 38, require_near = TRUE)
 		if(!borg_skin)
 			return FALSE
 		var/list/details = borg_skins[borg_skin]
@@ -396,7 +396,7 @@
 
 /datum/action/toggle_buffer/New(Target)
 	if(!allow_buffer_activate)
-		allow_buffer_activate = CALLBACK(src, .proc/allow_buffer_activate)
+		allow_buffer_activate = CALLBACK(src, PROC_REF(allow_buffer_activate))
 	return ..()
 
 /datum/action/toggle_buffer/Destroy()
@@ -409,7 +409,7 @@
 	. = ..()
 	wash_audio = new(owner)
 
-/datum/action/toggle_buffer/IsAvailable()
+/datum/action/toggle_buffer/IsAvailable(feedback = FALSE)
 	if(!iscyborg(owner))
 		return FALSE
 	return ..()
@@ -472,7 +472,7 @@
 	buffer_on = TRUE
 	// Slow em down a bunch
 	robot_owner.add_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-	RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, .proc/clean)
+	RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, PROC_REF(clean))
 	//This is basically just about adding a shake to the borg, effect should look ilke an engine's running
 	var/base_x = robot_owner.base_pixel_x
 	var/base_y = robot_owner.base_pixel_y
@@ -509,7 +509,7 @@
 	// Reset our animations
 	animate(pixel_x = base_x, pixel_y = base_y, time = 2)
 	addtimer(CALLBACK(wash_audio, /datum/looping_sound/proc/stop), time_left)
-	addtimer(CALLBACK(src, .proc/turn_off_wash), finished_by)
+	addtimer(CALLBACK(src, PROC_REF(turn_off_wash)), finished_by)
 
 /// Called by [deactivate_wash] on a timer to allow noises and animation to play out.
 /// Finally disables the buffer. Doesn't do everything mind, just the stuff that we wanted to delay

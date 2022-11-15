@@ -194,6 +194,7 @@
 #include "traitor.dm"
 #include "unit_test.dm"
 #include "verify_config_tags.dm"
+#include "verify_emoji_names.dm"
 #include "wizard_loadout.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

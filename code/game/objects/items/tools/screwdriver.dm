@@ -44,9 +44,9 @@
 		"yellow" = "#ffa500"
 	)
 
-/obj/item/screwdriver/suicide_act(mob/user)
+/obj/item/screwdriver/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is stabbing [src] into [user.p_their()] [pick("temple", "heart")]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/screwdriver/Initialize(mapload)
 	if(random_color)
@@ -105,7 +105,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -124,13 +124,13 @@
 	. = ..()
 	. += " It's fitted with a [tool_behaviour == TOOL_SCREWDRIVER ? "screw" : "bolt"] bit."
 
-/obj/item/screwdriver/power/suicide_act(mob/user)
+/obj/item/screwdriver/power/suicide_act(mob/living/user)
 	if(tool_behaviour == TOOL_SCREWDRIVER)
 		user.visible_message(span_suicide("[user] is putting [src] to [user.p_their()] temple. It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
 		user.visible_message(span_suicide("[user] is pressing [src] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/items/drill_use.ogg', 50, TRUE, -1)
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/screwdriver/cyborg
 	name = "automated screwdriver"

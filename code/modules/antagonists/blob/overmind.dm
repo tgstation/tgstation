@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
-		addtimer(CALLBACK(src, .proc/victory), 450)
+		addtimer(CALLBACK(src, PROC_REF(victory)), 450)
 	else if(!free_strain_rerolls && (last_reroll_time + BLOB_POWER_REROLL_FREE_TIME<world.time))
 		to_chat(src, "<b>[span_big("<font color=\"#EE4000\">You have gained another free strain re-roll.</font>")]</b>")
 		free_strain_rerolls = 1
@@ -173,6 +173,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 		if(!(ROLE_BLOB in L.faction))
 			playsound(L, 'sound/effects/splat.ogg', 50, TRUE)
+			if(L.stat != DEAD)
+				L.investigate_log("has died from blob takeover.", INVESTIGATE_DEATHS)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
