@@ -14,15 +14,15 @@
 
 /obj/item/binoculars/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, wield_callback = CALLBACK(src, .proc/on_wield), unwield_callback = CALLBACK(src, .proc/on_unwield))
+	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /obj/item/binoculars/Destroy()
 	listeningTo = null
 	return ..()
 
 /obj/item/binoculars/proc/on_wield(obj/item/source, mob/user)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_walk)
-	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_walk))
+	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, PROC_REF(rotate))
 	listeningTo = user
 	user.visible_message(span_notice("[user] holds [src] up to [user.p_their()] eyes."), span_notice("You hold [src] up to your eyes."))
 	inhand_icon_state = "binoculars_wielded"

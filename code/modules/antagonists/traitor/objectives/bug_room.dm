@@ -167,7 +167,7 @@
 	target.vis_contents += src
 	vis_flags |= VIS_INHERIT_PLANE
 	planted_on = target
-	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, .proc/handle_planted_on_deletion)
+	RegisterSignal(planted_on, COMSIG_PARENT_QDELETING, PROC_REF(handle_planted_on_deletion))
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, target)
 
 /obj/item/traitor_bug/proc/handle_planted_on_deletion()
@@ -202,7 +202,7 @@
 
 /obj/structure/traitor_bug/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/fade_out, 10 SECONDS), 3 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(fade_out), 10 SECONDS), 3 MINUTES)
 
 /obj/structure/traitor_bug/proc/fade_out(seconds)
 	animate(src, alpha = 30, time = seconds)
