@@ -949,14 +949,14 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(isnull(head.current) || head.current.stat == DEAD)
 			continue
-		. += mind
+		. += head
 
 /// Returns a list of minds of all heads of staff
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
 	for(var/datum/mind/head as anything in get_crewmember_minds())
 		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			. += mind
+			. += head
 
 /// Returns a list of minds of all security members who are alive
 /datum/controller/subsystem/job/proc/get_living_sec()
@@ -966,14 +966,14 @@ SUBSYSTEM_DEF(job)
 			continue
 		if(isnull(sec.current) || sec.current.stat == DEAD)
 			continue
-		. += mind
+		. += sec
 
 /// Returns a list of minds of all security members
 /datum/controller/subsystem/job/proc/get_all_sec()
 	. = list()
 	for(var/datum/mind/sec as anything in get_crewmember_minds())
 		if(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
-			. += mind
+			. += sec
 
 /datum/controller/subsystem/job/proc/JobDebug(message)
 	log_job_debug(message)
