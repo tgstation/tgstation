@@ -410,13 +410,13 @@
 
 	burn_amount -= 1
 	var/obj/effect/hotspot/hotspot = new hotspot_type(get_turf(src))
-	addtimer(CALLBACK(src, .proc/ignite_others), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(ignite_others)), 0.5 SECONDS)
 
 	if(!burn_amount)
 		qdel(src)
 		return
 
-	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, .proc/burn_process)
+	RegisterSignal(hotspot, COMSIG_PARENT_QDELETING, PROC_REF(burn_process))
 
 /**
  * Ignites other oil pools around itself.

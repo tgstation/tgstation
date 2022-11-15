@@ -4,7 +4,6 @@
  * Used for morphs and bileworms!
  */
 /datum/element/content_barfer
-	element_flags = ELEMENT_DETACH
 	id_arg_index = 2
 
 /datum/element/content_barfer/Attach(datum/target, tally_string)
@@ -13,7 +12,7 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_ON_WABBAJACKED), .proc/barf_contents)
+	RegisterSignal(target, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_ON_WABBAJACKED), PROC_REF(barf_contents))
 
 /datum/element/content_barfer/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_ON_WABBAJACKED))

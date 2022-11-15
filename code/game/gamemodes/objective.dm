@@ -947,7 +947,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = sort_list(subtypesof(/datum/objective), /proc/cmp_typepaths_asc)
+	var/list/allowed_types = sort_list(subtypesof(/datum/objective), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	for(var/datum/objective/goal as anything in allowed_types)
 		if(!initial(goal.admin_grantable))
@@ -963,7 +963,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/contract/proc/generate_dropoff()
 	var/found = FALSE
 	while (!found)
-		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		var/area/dropoff_area = pick(GLOB.areas)
 		if(dropoff_area && (dropoff_area.type in GLOB.the_station_areas) && !dropoff_area.outdoors)
 			dropoff = dropoff_area
 			found = TRUE

@@ -9,7 +9,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 
 /datum/highlander_controller/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(new_highlander))
 	sound_to_playing_players('sound/misc/highlander.ogg')
 	send_to_playing_players(span_boldannounce("<font size=6>THERE CAN BE ONLY ONE</font>"))
 	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
@@ -36,7 +36,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 			robot.gib()
 			continue
 		robot.make_scottish()
-	addtimer(CALLBACK(SSshuttle.emergency, /obj/docking_port/mobile/emergency.proc/request, null, 1), 50)
+	addtimer(CALLBACK(SSshuttle.emergency, TYPE_PROC_REF(/obj/docking_port/mobile/emergency, request), null, 1), 50)
 
 /datum/highlander_controller/Destroy(force, ...)
 	. = ..()
@@ -88,7 +88,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 	send_to_playing_players(span_userdanger("Bagpipes begin to blare. You feel Scottish pride coming over you."))
 	message_admins(span_adminnotice("[key_name_admin(usr)] used (delayed) THERE CAN BE ONLY ONE!"))
 	log_admin("[key_name(usr)] used delayed THERE CAN BE ONLY ONE.")
-	addtimer(CALLBACK(src, .proc/only_one, TRUE), 42 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(only_one), TRUE), 42 SECONDS)
 
 /mob/living/proc/make_scottish()
 	return

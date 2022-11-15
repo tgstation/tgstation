@@ -37,3 +37,16 @@
 	usage = TICK_USAGE;
 
 #define SET_COST_LINE(...) SET_COST("[__LINE__]")
+
+#define EXPORT_STATS_TO_FILE_LATER(filename, costs, counts) \
+	do { \
+		var/static/last_export = 0; \
+		if (world.time - last_export > 1.1 SECONDS) { \
+			last_export = world.time; \
+			/* spawn() is used here because this is often used to track init times, where timers act oddly. */ \
+			/* I was making timers and even after init times were complete, the timers didn't run :shrug: */ \
+			spawn (1 SECONDS) { \
+				stat_tracking_export_to_file_later(filename, costs, counts); \
+			} \
+		} \
+	} while (FALSE);
