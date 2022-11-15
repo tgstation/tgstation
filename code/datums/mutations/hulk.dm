@@ -25,9 +25,9 @@
 		part.variable_color = "#00aa00"
 	owner.update_body_parts()
 	owner.add_mood_event("hulk", /datum/mood_event/hulk)
-	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
-	RegisterSignal(owner, COMSIG_MOB_CLICKON, .proc/check_swing)
+	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(check_swing))
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -39,7 +39,7 @@
 	if(target.attack_hulk(owner))
 		if(world.time > (last_scream + scream_delay))
 			last_scream = world.time
-			INVOKE_ASYNC(src, .proc/scream_attack, source)
+			INVOKE_ASYNC(src, PROC_REF(scream_attack), source)
 		log_combat(source, target, "punched", "hulk powers")
 		source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 		source.changeNext_move(CLICK_CD_MELEE)
@@ -126,7 +126,7 @@
 			return
 
 	user.face_atom(clicked_atom)
-	INVOKE_ASYNC(src, .proc/setup_swing, user, possible_throwable)
+	INVOKE_ASYNC(src, PROC_REF(setup_swing), user, possible_throwable)
 	return(COMSIG_MOB_CANCEL_CLICKON)
 
 /// Do a short 2 second do_after before starting the actual swing
@@ -232,7 +232,7 @@
 		the_hulk.visible_message(span_danger("[the_hulk] loses [the_hulk.p_their()] momentum on [yeeted_person]!"), span_warning("You lose your momentum on swinging [yeeted_person]!"), ignored_mobs = yeeted_person)
 		to_chat(yeeted_person, span_userdanger("[the_hulk] loses [the_hulk.p_their()] momentum and lets go of you!"))
 	else
-		addtimer(CALLBACK(src, .proc/swing_loop, the_hulk, yeeted_person, step, original_dir), delay)
+		addtimer(CALLBACK(src, PROC_REF(swing_loop), the_hulk, yeeted_person, step, original_dir), delay)
 
 /// Time to toss the victim at high speed
 /datum/mutation/human/hulk/proc/finish_swing(mob/living/carbon/human/the_hulk, mob/living/carbon/yeeted_person, original_dir)
