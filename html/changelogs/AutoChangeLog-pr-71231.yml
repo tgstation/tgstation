@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Lobstrosity Rush Glands now correctly apply their action cooldown when they trigger from low health."
