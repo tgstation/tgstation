@@ -20,7 +20,7 @@
 
 	src.emote_message = emote_message
 	src.moodlet = moodlet
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 
 /datum/element/pet_bonus/Detach(datum/target)
 	. = ..()
