@@ -450,10 +450,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/game_mode/dynamic/, execute_roundstart_rule), rule), rule.delay)
 
 	if (!CONFIG_GET(flag/no_intercept_report))
-		addtimer(CALLBACK(src, .proc/send_intercept), rand(waittime_l, waittime_h))
+		addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(waittime_l, waittime_h))
 
 	..()
 
@@ -675,7 +675,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (forced_latejoin_rule.ready(TRUE))
 			if (!forced_latejoin_rule.repeatable)
 				latejoin_rules = remove_from_list(latejoin_rules, forced_latejoin_rule.type)
-			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, forced_latejoin_rule), forced_latejoin_rule.delay)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/game_mode/dynamic/, execute_midround_latejoin_rule), forced_latejoin_rule), forced_latejoin_rule.delay)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && (forced_injection || prob(latejoin_roll_chance)))

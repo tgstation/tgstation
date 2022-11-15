@@ -4613,7 +4613,7 @@
 /area/space/nearstation)
 "HN" = (
 /obj/item/bodypart/head/monkey,
-/obj/item/bodypart/l_leg/monkey{
+/obj/item/bodypart/leg/left/monkey{
 	pixel_x = 8;
 	pixel_y = -5
 	},
@@ -5026,7 +5026,7 @@
 	pixel_y = 17;
 	pixel_x = 10
 	},
-/obj/item/bodypart/r_leg/monkey{
+/obj/item/bodypart/leg/right/monkey{
 	pixel_x = -5
 	},
 /obj/item/bodypart/head/monkey{
@@ -7336,7 +7336,7 @@
 /obj/item/clothing/head/costume/cardborg,
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/costume/festive,
-/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/toggleable/riot,
 /obj/item/clothing/head/helmet/sec,
 /obj/item/clothing/head/costume/jester,
 /obj/item/clothing/head/chaplain/nun_hood,

@@ -17,7 +17,6 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
-	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_LAWYER
@@ -41,7 +40,7 @@
 	ears = /obj/item/radio/headset/headset_srvsec
 	shoes = /obj/item/clothing/shoes/laceup
 	neck = /obj/item/clothing/neck/tie/red/tied
-	l_pocket = /obj/item/laser_pointer
+	l_pocket = /obj/item/laser_pointer/red
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
 	l_hand = /obj/item/storage/briefcase/lawyer
 

@@ -1,6 +1,6 @@
 /// Adds crack overlays to an object when integrity gets low
 /datum/element/crackable
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	var/list/icon/crack_icons
 	/// The level at which the object starts showing cracks, 1 being at full health and 0.5 being at half health
@@ -18,7 +18,7 @@
 				var/icon/new_crack_icon = icon(crack_icon, state)
 				new_crack_icon.Turn(i * 10)
 				crack_icons += new_crack_icon
-	RegisterSignal(target, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/IntegrityChanged)
+	RegisterSignal(target, COMSIG_ATOM_INTEGRITY_CHANGED, PROC_REF(IntegrityChanged))
 
 /datum/element/crackable/proc/IntegrityChanged(obj/source, old_value, new_value)
 	SIGNAL_HANDLER
