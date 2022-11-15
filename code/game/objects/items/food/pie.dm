@@ -160,7 +160,7 @@
 	foodtypes = GRAIN | VEGETABLES | SUGAR
 
 /obj/item/food/pie/pumpkinpie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/pumpkin, 5, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/pumpkin, 5, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/pieslice/pumpkin
 	name = "pumpkin pie slice"
@@ -219,7 +219,7 @@
 	foodtypes = GRAIN | VEGETABLES
 
 /obj/item/food/pie/blumpkinpie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/blumpkin, 5, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/blumpkin, 5, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/pieslice/blumpkin
 	name = "blumpkin pie slice"
@@ -239,7 +239,7 @@
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/pie/dulcedebatata/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/dulcedebatata, 5, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/dulcedebatata, 5, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/pieslice/dulcedebatata
 	name = "dulce de batata slice"
@@ -266,7 +266,7 @@
 	foodtypes = NUTS | SUGAR
 
 /obj/item/food/pie/baklava/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/baklava, 6, 20, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/baklava, 6, 20, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/pieslice/baklava
 	name = "baklava dish"
@@ -292,7 +292,7 @@
 	foodtypes = GRAIN | DAIRY | SUGAR
 
 /obj/item/food/pie/frenchsilkpie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/frenchsilk, 5)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/frenchsilk, 5, screentip_verb = "Slice")
 
 /obj/item/food/pie/shepherds_pie
 	name = "shepherds pie"
@@ -311,4 +311,4 @@
 	foodtypes = MEAT | DAIRY | VEGETABLES
 
 /obj/item/food/pie/shepherds_pie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/shepherds_pie, 4)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/shepherds_pie, 4, screentip_verb = "Slice")
