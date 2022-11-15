@@ -206,8 +206,8 @@
 		if(OPEN_DOORS)
 			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, open))
 
-			if(CLOSE_DOORS)
-				INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, close))
+		if(CLOSE_DOORS)
+			INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, close))
 
 		else
 			stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")
