@@ -10,7 +10,7 @@
 	. = ..()
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ATOM_INTERCEPT_Z_FALL, .proc/intercept_z_fall)
+	RegisterSignal(target, COMSIG_ATOM_INTERCEPT_Z_FALL, PROC_REF(intercept_z_fall))
 
 /datum/element/soft_landing/Detach(datum/target)
 	. = ..()

@@ -273,7 +273,7 @@
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
 		w_class_on = WEIGHT_CLASS_NORMAL)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/pen/edagger/suicide_act(mob/living/user)
 	if(extended)
@@ -356,7 +356,7 @@
 		w_class_on = WEIGHT_CLASS_SMALL, \
 		sharpness_on = TRUE)
 
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/toggle_screwdriver)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(toggle_screwdriver))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 

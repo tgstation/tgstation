@@ -22,7 +22,7 @@
 	set_drunk_value(drunk_value)
 
 /datum/status_effect/inebriated/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/clear_drunkenness)
+	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(clear_drunkenness))
 	return TRUE
 
 /datum/status_effect/inebriated/on_remove()

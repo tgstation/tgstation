@@ -23,7 +23,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
 /obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
-	ev = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, .proc/triggerEvent))
+	ev = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, PROC_REF(triggerEvent)))
 
 /obj/machinery/keycard_auth/Destroy()
 	GLOB.keycard_events.clearEvent("triggerEvent", ev)
@@ -104,7 +104,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	event = event_type
 	waiting = TRUE
 	GLOB.keycard_events.fireEvent("triggerEvent", src)
-	addtimer(CALLBACK(src, .proc/eventSent), 20)
+	addtimer(CALLBACK(src, PROC_REF(eventSent)), 20)
 
 /obj/machinery/keycard_auth/proc/eventSent()
 	triggerer = null
@@ -114,7 +114,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 /obj/machinery/keycard_auth/proc/triggerEvent(source)
 	event_source = source
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/eventTriggered), 20)
+	addtimer(CALLBACK(src, PROC_REF(eventTriggered)), 20)
 
 /obj/machinery/keycard_auth/proc/eventTriggered()
 	event_source = null

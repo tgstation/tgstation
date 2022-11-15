@@ -512,9 +512,9 @@
 		return
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
-		INVOKE_ASYNC(attached_launchpad, /obj/machinery/launchpad.proc/doteleport, null, TRUE, parent.get_creator())
+		INVOKE_ASYNC(attached_launchpad, TYPE_PROC_REF(/obj/machinery/launchpad, doteleport), null, TRUE, parent.get_creator())
 		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
-		INVOKE_ASYNC(attached_launchpad, /obj/machinery/launchpad.proc/doteleport, null, FALSE, parent.get_creator())
+		INVOKE_ASYNC(attached_launchpad, TYPE_PROC_REF(/obj/machinery/launchpad, doteleport), null, FALSE, parent.get_creator())
 		retrieved.set_output(COMPONENT_SIGNAL)
