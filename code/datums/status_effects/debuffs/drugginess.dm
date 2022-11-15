@@ -8,7 +8,7 @@
 	return ..()
 
 /datum/status_effect/drugginess/on_apply()
-	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), .proc/remove_drugginess)
+	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), PROC_REF(remove_drugginess))
 
 	owner.add_mood_event(id, /datum/mood_event/high)
 	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/high)

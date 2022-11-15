@@ -25,7 +25,7 @@
 
 /obj/item/modular_computer/tablet/pda/heads/captain/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, .proc/tab_no_detonate)
+	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(tab_no_detonate))
 	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.spam_mode = TRUE
 
@@ -315,8 +315,8 @@
 
 /obj/item/modular_computer/tablet/pda/clown/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip), slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT))
-	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, .proc/after_sitcom_laugh))
+	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, PROC_REF(AfterSlip)), slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT))
+	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
 
 /obj/item/modular_computer/tablet/pda/clown/update_overlays()
 	. = ..()
