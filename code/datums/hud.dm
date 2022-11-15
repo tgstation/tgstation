@@ -58,7 +58,7 @@ GLOBAL_LIST_INIT(huds, list(
 		hud_atoms += list(list())
 		hud_users += list(list())
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, .proc/add_z_level_huds)
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, PROC_REF(add_z_level_huds))
 
 	if(uses_global_hud_category)
 		for(var/hud_icon in hud_icons)
@@ -144,12 +144,12 @@ GLOBAL_LIST_INIT(huds, list(
 		hud_users[their_turf.z][new_viewer] = TRUE
 		hud_users_all_z_levels[new_viewer] = 1
 
-		RegisterSignal(new_viewer, COMSIG_PARENT_QDELETING, .proc/unregister_atom, override = TRUE) //both hud users and hud atoms use these signals
-		RegisterSignal(new_viewer, COMSIG_MOVABLE_Z_CHANGED, .proc/on_atom_or_user_z_level_changed, override = TRUE)
+		RegisterSignal(new_viewer, COMSIG_PARENT_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud users and hud atoms use these signals
+		RegisterSignal(new_viewer, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_atom_or_user_z_level_changed), override = TRUE)
 
 		if(next_time_allowed[new_viewer] > world.time)
 			if(!queued_to_see[new_viewer])
-				addtimer(CALLBACK(src, .proc/show_hud_images_after_cooldown, new_viewer), next_time_allowed[new_viewer] - world.time)
+				addtimer(CALLBACK(src, PROC_REF(show_hud_images_after_cooldown), new_viewer), next_time_allowed[new_viewer] - world.time)
 				queued_to_see[new_viewer] = TRUE
 
 		else
@@ -197,8 +197,8 @@ GLOBAL_LIST_INIT(huds, list(
 	if(!atom_turf)
 		return
 
-	RegisterSignal(new_hud_atom, COMSIG_MOVABLE_Z_CHANGED, .proc/on_atom_or_user_z_level_changed, override = TRUE)
-	RegisterSignal(new_hud_atom, COMSIG_PARENT_QDELETING, .proc/unregister_atom, override = TRUE) //both hud atoms and hud users use these signals
+	RegisterSignal(new_hud_atom, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_atom_or_user_z_level_changed), override = TRUE)
+	RegisterSignal(new_hud_atom, COMSIG_PARENT_QDELETING, PROC_REF(unregister_atom), override = TRUE) //both hud atoms and hud users use these signals
 
 	hud_atoms[atom_turf.z] |= new_hud_atom
 	hud_atoms_all_z_levels[new_hud_atom] = TRUE
