@@ -36,7 +36,7 @@
 	if(!.)
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_RESEARCH_SCANNER, MOD_TRAIT)
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(sense_explosion))
 
 /obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE, deleting = FALSE)
 	. = ..()

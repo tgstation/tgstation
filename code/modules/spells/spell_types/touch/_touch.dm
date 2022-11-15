@@ -130,10 +130,10 @@
 /datum/action/cooldown/spell/touch/proc/register_hand_signals()
 	SHOULD_CALL_PARENT(TRUE)
 
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_hand_hit)
-	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, .proc/on_secondary_hand_hit)
-	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, .proc/on_hand_dropped)
-	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, .proc/on_hand_deleted)
+	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hand_hit))
+	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, PROC_REF(on_secondary_hand_hit))
+	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, PROC_REF(on_hand_dropped))
+	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, PROC_REF(on_hand_deleted))
 
 /// Unregisters all signal procs for the hand.
 /datum/action/cooldown/spell/touch/proc/unregister_hand_signals()
@@ -172,7 +172,7 @@
 	if(!can_hit_with_hand(victim, caster))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_hand_hit, source, victim, caster)
+	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, victim, caster)
 
 /**
  * Signal proc for [COMSIG_ITEM_AFTERATTACK_SECONDARY] from our attached hand.
@@ -188,7 +188,7 @@
 	if(!can_hit_with_hand(victim, caster))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_secondary_hand_hit, source, victim, caster)
+	INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, victim, caster)
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 /// Checks if the passed victim can be cast on by the caster.

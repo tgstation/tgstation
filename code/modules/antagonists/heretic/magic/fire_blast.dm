@@ -54,7 +54,7 @@
 	if(bounces >= 1)
 		playsound(to_beam, sound, 50, vary = TRUE, extrarange = -1)
 		// Chain continues shortly after. If they extinguish themselves in this time, the chain will stop anyways.
-		addtimer(CALLBACK(src, .proc/continue_beam, to_beam, bounces), beam_duration * 0.5)
+		addtimer(CALLBACK(src, PROC_REF(continue_beam), to_beam, bounces), beam_duration * 0.5)
 
 	else
 		playsound(to_beam, sound, 50, vary = TRUE, frequency = 12000)
@@ -146,7 +146,7 @@
 /obj/effect/ebeam/fire/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

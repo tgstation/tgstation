@@ -55,7 +55,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(loc_override || get_turf(jaunter), jaunter)
-	RegisterSignal(jaunt, COMSIG_MOB_EJECTED_FROM_JAUNT, .proc/on_jaunt_exited)
+	RegisterSignal(jaunt, COMSIG_MOB_EJECTED_FROM_JAUNT, PROC_REF(on_jaunt_exited))
 	spell_requirements |= SPELL_CASTABLE_WHILE_PHASED
 	ADD_TRAIT(jaunter, TRAIT_MAGICALLY_PHASED, REF(src))
 	ADD_TRAIT(jaunter, TRAIT_RUNECHAT_HIDDEN, REF(src))

@@ -52,8 +52,8 @@
 
 /datum/merger/proc/AddMember(atom/thing, connected_dir) // note that this fires for the origin of the merger as well
 	SEND_SIGNAL(thing, COMSIG_MERGER_ADDING, src)
-	RegisterSignal(thing, refresh_signals, .proc/QueueRefresh)
-	RegisterSignal(thing, COMSIG_PARENT_QDELETING, .proc/HandleMemberDel)
+	RegisterSignal(thing, refresh_signals, PROC_REF(QueueRefresh))
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(HandleMemberDel))
 	if(!thing.mergers)
 		thing.mergers = list()
 	else if(thing.mergers[id])
@@ -80,7 +80,7 @@
 
 /datum/merger/proc/QueueRefresh()
 	SIGNAL_HANDLER
-	addtimer(CALLBACK(src, .proc/Refresh), 1, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(Refresh)), 1, TIMER_UNIQUE)
 
 /datum/merger/proc/Refresh()
 	// List of turf -> list(interesting dir, found matching atoms)

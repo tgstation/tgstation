@@ -101,7 +101,7 @@
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
 			power_station.update_appearance()
-			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			return TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
@@ -247,7 +247,7 @@
 	if (istype(shell, /obj/machinery/computer/teleporter))
 		attached_console = shell
 
-		RegisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET, .proc/on_teleporter_new_target)
+		RegisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target))
 		update_targets()
 
 /obj/item/circuit_component/teleporter_control_console/unregister_usb_parent(atom/movable/shell)

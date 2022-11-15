@@ -330,8 +330,8 @@
 /obj/item/organ/external/antennae/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 
-	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, .proc/try_burn_antennae)
-	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, .proc/heal_antennae)
+	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_antennae))
+	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_antennae))
 
 /obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()

@@ -16,7 +16,7 @@
 
 /obj/structure/c_transit_tube/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
 
 /obj/structure/c_transit_tube/proc/can_wrench_in_loc(mob/user)
 	var/turf/source_turf = get_turf(loc)
@@ -45,7 +45,7 @@
 		return
 	to_chat(user, span_notice("You start attaching the [name]..."))
 	add_fingerprint(user)
-	if(I.use_tool(src, user, 2 SECONDS, volume=50, extra_checks=CALLBACK(src, .proc/can_wrench_in_loc, user)))
+	if(I.use_tool(src, user, 2 SECONDS, volume=50, extra_checks=CALLBACK(src, PROC_REF(can_wrench_in_loc), user)))
 		to_chat(user, span_notice("You attach the [name]."))
 		var/obj/structure/transit_tube/R = new build_type(loc, dir)
 		transfer_fingerprints_to(R)

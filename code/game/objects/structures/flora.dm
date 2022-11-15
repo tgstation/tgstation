@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 		desc = harvested_desc
 	harvested = TRUE
 	if(!delete_on_harvest && regrowth_time_high > 0)
-		addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
+		addtimer(CALLBACK(src, PROC_REF(regrow)), rand(regrowth_time_low, regrowth_time_high))
 
 /obj/structure/flora/proc/after_harvest(user)
 	if(delete_on_harvest)

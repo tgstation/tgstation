@@ -31,7 +31,7 @@
 	// and with every spell level, the cooldown duration of the spell goes up
 	if(level_spell())
 		var/reduction_timer = max(cooldown_time * spell_max_level * 0.5, 1.5 MINUTES)
-		addtimer(CALLBACK(src, .proc/delevel_spell), reduction_timer)
+		addtimer(CALLBACK(src, PROC_REF(delevel_spell)), reduction_timer)
 
 /datum/action/cooldown/spell/realignment/update_spell_name()
 	var/spell_title = ""

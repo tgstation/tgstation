@@ -52,7 +52,7 @@
 
 /datum/action/cooldown/spell/touch/flesh_surgery/register_hand_signals()
 	. = ..()
-	RegisterSignal(attached_hand, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/add_item_context)
+	RegisterSignal(attached_hand, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 	attached_hand.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
 
 /datum/action/cooldown/spell/touch/flesh_surgery/unregister_hand_signals()
@@ -85,7 +85,7 @@
 /// If cast on an organ, we'll restore it's health and even un-fail it.
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_organ(obj/item/melee/touch_attack/hand, obj/item/organ/to_heal, mob/living/carbon/caster)
 	to_heal.balloon_alert(caster, "healing organ...")
-	if(!do_after(caster, 1 SECONDS, to_heal, extra_checks = CALLBACK(src, .proc/heal_checks, hand, to_heal, caster)))
+	if(!do_after(caster, 1 SECONDS, to_heal, extra_checks = CALLBACK(src, PROC_REF(heal_checks), hand, to_heal, caster)))
 		to_heal.balloon_alert(caster, "interrupted!")
 		return FALSE
 
@@ -108,7 +108,7 @@
 /datum/action/cooldown/spell/touch/flesh_surgery/proc/heal_heretic_monster(obj/item/melee/touch_attack/hand, mob/living/to_heal, mob/living/carbon/caster)
 	var/what_are_we = ishuman(to_heal) ? "minion" : "summon"
 	to_heal.balloon_alert(caster, "healing [what_are_we]...")
-	if(!do_after(caster, 1 SECONDS, to_heal, extra_checks = CALLBACK(src, .proc/heal_checks, hand, to_heal, caster)))
+	if(!do_after(caster, 1 SECONDS, to_heal, extra_checks = CALLBACK(src, PROC_REF(heal_checks), hand, to_heal, caster)))
 		to_heal.balloon_alert(caster, "interrupted!")
 		return FALSE
 
@@ -181,7 +181,7 @@
 	carbon_victim.balloon_alert(caster, "extracting [chosen_organ]...")
 	playsound(victim, 'sound/weapons/slice.ogg', 50, TRUE)
 	carbon_victim.add_atom_colour(COLOR_DARK_RED, TEMPORARY_COLOUR_PRIORITY)
-	if(!do_after(caster, time_it_takes, carbon_victim, extra_checks = CALLBACK(src, .proc/extraction_checks, picked_organ, hand, victim, caster)))
+	if(!do_after(caster, time_it_takes, carbon_victim, extra_checks = CALLBACK(src, PROC_REF(extraction_checks), picked_organ, hand, victim, caster)))
 		carbon_victim.balloon_alert(caster, "interrupted!")
 		return FALSE
 
@@ -208,7 +208,7 @@
 		carbon_victim.emote("scream")
 
 	// We need to wait for the spell to actually finish casting to put the organ in their hands, hence, 1 ms timer.
-	addtimer(CALLBACK(caster, /mob.proc/put_in_hands, picked_organ), 1)
+	addtimer(CALLBACK(caster, TYPE_PROC_REF(/mob, put_in_hands), picked_organ), 1)
 	return TRUE
 
 /// Extra checks ran while we're extracting an organ to make sure we can continue to do.

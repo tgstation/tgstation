@@ -33,7 +33,7 @@
 ///Queues another lollipop to be fabricated if there is enough room for one
 /obj/item/borg/lollipop/proc/check_amount()
 	if(!charging && candy < candymax)
-		addtimer(CALLBACK(src, .proc/charge_lollipops), charge_delay)
+		addtimer(CALLBACK(src, PROC_REF(charge_lollipops)), charge_delay)
 		charging = TRUE
 
 ///Increases the amount of lollipops

@@ -64,4 +64,4 @@
 		return
 	if(unfreeze_object_duration == INFINITY) // Infinity duration = don't set an unfreeze timer
 		return
-	addtimer(CALLBACK(target_obj, /obj.proc/unfreeze), unfreeze_object_duration)
+	addtimer(CALLBACK(target_obj, TYPE_PROC_REF(/obj/, unfreeze)), unfreeze_object_duration)

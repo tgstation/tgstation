@@ -61,8 +61,8 @@
 	// but I guess a fading filter will have to do for now as walls have 0 depth (currently)
 	// damn though with 3/4ths walls this'll look sick just imagine it
 	new_wall.add_filter("rust_wall", 2, list("type" = "outline", "color" = "#85be299c", "size" = 2))
-	addtimer(CALLBACK(src, .proc/fade_wall_filter, new_wall), filter_duration * (1/20))
-	addtimer(CALLBACK(src, .proc/remove_wall_filter, new_wall), filter_duration)
+	addtimer(CALLBACK(src, PROC_REF(fade_wall_filter), new_wall), filter_duration * (1/20))
+	addtimer(CALLBACK(src,PROC_REF(remove_wall_filter), new_wall), filter_duration)
 
 	var/message_shown = FALSE
 	for(var/mob/living/living_mob in cast_on)
