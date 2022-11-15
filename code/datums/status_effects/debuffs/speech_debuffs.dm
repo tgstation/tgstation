@@ -8,7 +8,7 @@
 	return ..()
 
 /datum/status_effect/speech/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, .proc/handle_message)
+	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(handle_message))
 	return TRUE
 
 /datum/status_effect/speech/on_remove()

@@ -155,8 +155,8 @@
 		var/mob/living/carbon/carbon_owner = owner
 		QDEL_LAZYLIST(carbon_owner.all_scars)
 
-	RegisterSignal(owner, COMSIG_LIVING_IGNITED, .proc/on_ignited)
-	RegisterSignal(owner, COMSIG_LIVING_EXTINGUISHED, .proc/on_extinguished)
+	RegisterSignal(owner, COMSIG_LIVING_IGNITED, PROC_REF(on_ignited))
+	RegisterSignal(owner, COMSIG_LIVING_EXTINGUISHED, PROC_REF(on_extinguished))
 
 /datum/status_effect/fleshmend/on_remove()
 	UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_EXTINGUISHED))
@@ -292,6 +292,7 @@
 	healSnake.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain chemicals with minor healing properties."
 	new /obj/effect/decal/cleanable/ash(owner.loc)
 	new /obj/item/rod_of_asclepius(owner.loc)
+	owner.investigate_log("has been consumed by the Rod of Asclepius.", INVESTIGATE_DEATHS)
 	qdel(owner)
 
 

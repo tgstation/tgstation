@@ -20,7 +20,7 @@
 		return SHAME
 	user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] ear and starts [user.p_their()] motor! It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.say("Vroom vroom!!", forced="secway key suicide") //Not doing a shamestate here, because even if they fail to speak they're spinning.
-	addtimer(CALLBACK(user, /mob/living/.proc/gib), 20)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/, gib)), 20)
 	return MANUAL_SUICIDE
 
 /obj/item/key/janitor
@@ -36,14 +36,14 @@
 		if(SKILL_LEVEL_APPRENTICE to SKILL_LEVEL_JOURNEYMAN) //At least they tried
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has inefficiently become one with the janicart! It looks like [user.p_theyre()] trying to commit suicide!"))
 			user.AddElement(/datum/element/cleaning)
-			addtimer(CALLBACK(src, .proc/manual_suicide, user), 51)
+			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 51)
 			return MANUAL_SUICIDE
 		if(SKILL_LEVEL_EXPERT to SKILL_LEVEL_MASTER) //They are worthy enough, but can it go even further beyond?
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has skillfully become one with the janicart! It looks like [user.p_theyre()] trying to commit suicide!"))
 			user.AddElement(/datum/element/cleaning)
 			for(var/i in 1 to 100)
 				addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#a245bb" : "#7a7d82", ADMIN_COLOUR_PRIORITY), i)
-			addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
+			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 101)
 			return MANUAL_SUICIDE
 		if(SKILL_LEVEL_LEGENDARY to INFINITY) //Holy shit, look at that janny go!
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has epically become one with the janicart, and they're even in overdrive mode! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -52,7 +52,7 @@
 			user.reagents.add_reagent(/datum/reagent/drug/methamphetamine, 10) //Gotta go fast!
 			for(var/i in 1 to 150)
 				addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#a245bb" : "#7a7d82", ADMIN_COLOUR_PRIORITY), i)
-			addtimer(CALLBACK(src, .proc/manual_suicide, user), 151)
+			addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 151)
 			return MANUAL_SUICIDE
 
 /obj/item/key/proc/manual_suicide(mob/living/user)
@@ -62,7 +62,7 @@
 		if(user.mind?.get_skill_level(/datum/skill/cleaning) >= SKILL_LEVEL_LEGENDARY) //Janny janny janny janny janny
 			playsound(src, 'sound/effects/adminhelp.ogg', 50, TRUE, -1)
 		user.adjustOxyLoss(200)
-		user.death(0)
+		user.death(FALSE)
 
 /obj/item/key/lasso
 	name = "bone lasso"

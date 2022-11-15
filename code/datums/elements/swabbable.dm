@@ -21,7 +21,7 @@ This element is used in vat growing to allow for the object to be
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_SWAB_FOR_SAMPLES, .proc/GetSwabbed)
+	RegisterSignal(target, COMSIG_SWAB_FOR_SAMPLES, PROC_REF(GetSwabbed))
 
 	src.cell_line_define = cell_line_define
 	src.virus_define = virus_define

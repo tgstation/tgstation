@@ -9,7 +9,7 @@
 	return ..()
 
 /datum/status_effect/dizziness/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/clear_dizziness)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_dizziness))
 	return TRUE
 
 /datum/status_effect/dizziness/on_remove()

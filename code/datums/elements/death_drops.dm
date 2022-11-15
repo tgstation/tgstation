@@ -16,7 +16,7 @@
 	if(!loot)
 		stack_trace("[type] added to [target] with NO LOOT.")
 	src.loot = loot
-	RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/element/death_drops/Detach(datum/target)
 	. = ..()

@@ -15,7 +15,7 @@
 		owner.do_jitter_animation(duration / 10)
 		return FALSE
 
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/remove_jitter)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(remove_jitter))
 	owner.add_mood_event(id, /datum/mood_event/jittery)
 	return TRUE
 

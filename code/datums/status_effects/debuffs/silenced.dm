@@ -8,7 +8,7 @@
 	return ..()
 
 /datum/status_effect/silenced/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/clear_silence)
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_silence))
 	ADD_TRAIT(owner, TRAIT_MUTE, id)
 	return TRUE
 
