@@ -12,7 +12,7 @@
 /atom/proc/balloon_alert(mob/viewer, text)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	INVOKE_ASYNC(src, .proc/balloon_alert_perform, viewer, text)
+	INVOKE_ASYNC(src, PROC_REF(balloon_alert_perform), viewer, text)
 
 /// Create balloon alerts (text that floats up) to everything within range.
 /// Will only display to people who can see.
@@ -84,8 +84,8 @@
 	// These two timers are not the same
 	// One manages the relation to the atom that spawned us, the other to the client we're displaying to
 	// We could lose our loc, and still need to talk to our client, so they are done seperately
-	addtimer(CALLBACK(balloon_alert.loc, .proc/forget_balloon_alert, balloon_alert), BALLOON_TEXT_TOTAL_LIFETIME(duration_mult))
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_image_from_client, balloon_alert, viewer_client), BALLOON_TEXT_TOTAL_LIFETIME(duration_mult))
+	addtimer(CALLBACK(balloon_alert.loc, PROC_REF(forget_balloon_alert), balloon_alert), BALLOON_TEXT_TOTAL_LIFETIME(duration_mult))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_client), balloon_alert, viewer_client), BALLOON_TEXT_TOTAL_LIFETIME(duration_mult))
 
 /atom/proc/forget_balloon_alert(image/balloon_alert)
 	LAZYREMOVE(update_on_z, balloon_alert)
