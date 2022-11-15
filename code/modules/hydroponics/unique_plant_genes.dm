@@ -325,7 +325,7 @@
 /datum/plant_gene/trait/mob_transformation
 	name = "Dormant Ferocity"
 	description = "It comes to life when shaken in hand."
-	icon = "wave-pulse"
+	icon = "heart-pulse"
 	trait_ids = ATTACK_SELF_ID
 	/// Whether mobs spawned by this trait are dangerous or not.
 	var/dangerous = FALSE

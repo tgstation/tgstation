@@ -643,7 +643,7 @@
 /// Explodes into reagent-filled smoke when squashed.
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"
-	description = "It can be smashed to turn reagents into smoke, when it has Liquid Contents."
+	description = "It can be smashed to turn its Liquid Contents into smoke."
 	icon = "cloud"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
@@ -789,7 +789,7 @@
  */
 /datum/plant_gene/trait/plant_laughter
 	name = "Hallucinatory Feedback"
-	description = "It makes sounds when people slip on it."
+	description = "Makes sounds when people slip on it."
 	icon = "face-laugh-squint"
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 	/// Sounds that play when this trait triggers
@@ -934,7 +934,7 @@
 /datum/plant_gene/trait/plant_type/fungal_metabolism
 	name = "Fungal Vitality"
 	description = "It is a mushroom that needs no water, less light and can't be overtaken by weeds."
-	icon = "heart"
+	icon = "droplet-slash"
 
 /// Currently unused and does nothing. Appears in strange seeds.
 /datum/plant_gene/trait/plant_type/alien_properties
