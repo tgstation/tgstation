@@ -35,10 +35,10 @@
 	caster_mob.notransform = TRUE
 	caster_mob.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SHAPECHANGE_EFFECT)
 
-	RegisterSignal(owner, COMSIG_LIVING_PRE_WABBAJACKED, .proc/on_wabbajacked)
-	RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_shape_death)
-	RegisterSignal(caster_mob, COMSIG_LIVING_DEATH, .proc/on_caster_death)
-	RegisterSignal(caster_mob, COMSIG_PARENT_QDELETING, .proc/on_caster_deleted)
+	RegisterSignal(owner, COMSIG_LIVING_PRE_WABBAJACKED, PROC_REF(on_wabbajacked))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_shape_death))
+	RegisterSignal(caster_mob, COMSIG_LIVING_DEATH, PROC_REF(on_caster_death))
+	RegisterSignal(caster_mob, COMSIG_PARENT_QDELETING, PROC_REF(on_caster_deleted))
 
 	SEND_SIGNAL(caster_mob, COMSIG_LIVING_SHAPESHIFTED, owner)
 	return TRUE

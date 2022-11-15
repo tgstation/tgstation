@@ -56,9 +56,9 @@
 	signal = add_output_port("Shot", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/wiremod_gun/register_shell(atom/movable/shell)
-	RegisterSignal(shell, COMSIG_PROJECTILE_ON_HIT, .proc/handle_shot)
+	RegisterSignal(shell, COMSIG_PROJECTILE_ON_HIT, PROC_REF(handle_shot))
 	if(istype(shell, /obj/item/gun/energy))
-		RegisterSignal(shell, COMSIG_GUN_CHAMBER_PROCESSED, .proc/handle_chamber)
+		RegisterSignal(shell, COMSIG_GUN_CHAMBER_PROCESSED, PROC_REF(handle_chamber))
 
 /obj/item/circuit_component/wiremod_gun/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_GUN_CHAMBER_PROCESSED))

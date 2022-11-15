@@ -71,7 +71,7 @@
 		ready = TRUE
 		button_icon_state = "activate-ready"
 		UpdateButtons()
-		addtimer(CALLBACK(src, .proc/reset_ready), 3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(reset_ready)), 3 SECONDS)
 		return
 	var/obj/item/mod/control/mod = target
 	reset_ready()
@@ -134,9 +134,9 @@
 	desc = "Quickly activate [linked_module]."
 	icon_icon = linked_module.icon
 	button_icon_state = linked_module.icon_state
-	RegisterSignal(linked_module, COMSIG_MODULE_ACTIVATED, .proc/on_module_activate)
-	RegisterSignal(linked_module, COMSIG_MODULE_DEACTIVATED, .proc/on_module_deactivate)
-	RegisterSignal(linked_module, COMSIG_MODULE_USED, .proc/on_module_use)
+	RegisterSignal(linked_module, COMSIG_MODULE_ACTIVATED, PROC_REF(on_module_activate))
+	RegisterSignal(linked_module, COMSIG_MODULE_DEACTIVATED, PROC_REF(on_module_deactivate))
+	RegisterSignal(linked_module, COMSIG_MODULE_USED, PROC_REF(on_module_use))
 
 /datum/action/item_action/mod/pinned_module/Destroy()
 	module.pinned_to -= pinner_ref
@@ -170,7 +170,7 @@
 	if(!COOLDOWN_FINISHED(module, cooldown_timer))
 		var/image/cooldown_image = image(icon = 'icons/hud/radial.dmi', icon_state = "module_cooldown")
 		current_button.add_overlay(cooldown_image)
-		addtimer(CALLBACK(current_button, /image.proc/cut_overlay, cooldown_image), COOLDOWN_TIMELEFT(module, cooldown_timer))
+		addtimer(CALLBACK(current_button, TYPE_PROC_REF(/image, cut_overlay), cooldown_image), COOLDOWN_TIMELEFT(module, cooldown_timer))
 
 /datum/action/item_action/mod/pinned_module/proc/on_module_activate(datum/source)
 	SIGNAL_HANDLER
