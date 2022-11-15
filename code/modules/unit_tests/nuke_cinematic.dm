@@ -31,7 +31,7 @@
 
 	// Pause the check so we don't, y'know, end the round
 	SSticker.roundend_check_paused = TRUE
-	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, .proc/check_cinematic)
+	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, PROC_REF(check_cinematic))
 	// actually_explode calls really_actually_explode which sleeps, so this will take a moment.
 	var/nuke_result = nuke.actually_explode()
 

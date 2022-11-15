@@ -114,7 +114,7 @@
 		CRASH("Unusual error - [usr] attempted to start implanting of [inserted_skillchip] when the interface state should not have allowed it.")
 
 	working = TRUE
-	work_timer = addtimer(CALLBACK(src,.proc/implant),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
+	work_timer = addtimer(CALLBACK(src, PROC_REF(implant)),SKILLCHIP_IMPLANT_TIME,TIMER_STOPPABLE)
 	update_appearance()
 
 /// Finish implanting.
@@ -141,7 +141,7 @@
 		CRASH("Unusual error - [usr] attempted to start removal of [to_be_removed] when the interface state should not have allowed it.")
 
 	working = TRUE
-	work_timer = addtimer(CALLBACK(src,.proc/remove_skillchip,to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
+	work_timer = addtimer(CALLBACK(src, PROC_REF(remove_skillchip),to_be_removed),SKILLCHIP_REMOVAL_TIME,TIMER_STOPPABLE)
 	update_appearance()
 
 /// Finish removal.
