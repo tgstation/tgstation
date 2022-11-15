@@ -21,7 +21,7 @@
 		new /datum/data/mining_equipment("Soap", /obj/item/soap/nanotrasen, 200),
 		new /datum/data/mining_equipment("Laser Pointer", /obj/item/laser_pointer, 300),
 		new /datum/data/mining_equipment("Alien Toy", /obj/item/clothing/mask/facehugger/toy, 300),
-		new /datum/data/mining_equipment("Stabilizing Serum", /obj/item/hivelordstabilizer, 400),
+		new /datum/data/mining_equipment("Stabilizing Serum", /obj/item/mining_stabilizer, 400),
 		new /datum/data/mining_equipment("Fulton Beacon", /obj/item/fulton_core, 400),
 		new /datum/data/mining_equipment("Shelter Capsule", /obj/item/survivalcapsule, 400),
 		new /datum/data/mining_equipment("GAR Meson Scanners", /obj/item/clothing/glasses/meson/gar, 500),
@@ -189,7 +189,7 @@
 		option.info = span_boldnotice(current_set.description)
 		items[set_name] = option
 
-	var/selection = show_radial_menu(redeemer, src, items, custom_check = CALLBACK(src, .proc/check_menu, voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
+	var/selection = show_radial_menu(redeemer, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!selection)
 		return
 
@@ -255,28 +255,45 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /**********************Mining Point Card**********************/
-
+#define TO_USER_ID "To ID"
+#define TO_POINT_CARD "To Card"
 /obj/item/card/mining_point_card
-	name = "mining points card"
-	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
+	name = "mining point transfer card"
+	desc = "A small, reusable card for transferring mining points. Swipe your ID card over it to start the process."
 	icon_state = "data_1"
 	var/points = 500
 
 /obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
 	if(isidcard(I))
-		if(points)
-			var/obj/item/card/id/C = I
-			C.mining_points += points
-			to_chat(user, span_info("You transfer [points] points to [C]."))
-			points = 0
-		else
-			to_chat(user, span_alert("There's no points left on [src]."))
+		var/obj/item/card/id/swiped = I
+		balloon_alert(user, "starting transfer")
+		var/point_movement = tgui_alert(user, "To ID (from card) or to card (from ID)?", "Mining Points Transfer", list(TO_USER_ID, TO_POINT_CARD))
+		if(!point_movement)
+			return
+		var/amount = tgui_input_number(user, "How much do you want to transfer? ID Balance: [swiped.mining_points], Card Balance: [points]", "Transfer Points", min_value = 0, round_value = 1)
+		if(!amount)
+			return
+		switch(point_movement)
+			if(TO_USER_ID)
+				if(amount > points)
+					amount = points
+				swiped.mining_points += amount
+				points -= amount
+				to_chat(user, span_notice("You transfer [amount] mining points from [src] to [swiped]."))
+			if(TO_POINT_CARD)
+				if(amount > swiped.mining_points)
+					amount = swiped.mining_points
+				swiped.mining_points -= amount
+				points += amount
+				to_chat(user, span_notice("You transfer [amount] mining points from [swiped] to [src]."))
 	..()
 
 /obj/item/card/mining_point_card/examine(mob/user)
 	. = ..()
-	. += span_alert("There's [points] point\s on the card.")
+	. += span_notice("There's [points] point\s on the card.")
 
+#undef TO_POINT_CARD
+#undef TO_USER_ID
 /obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."

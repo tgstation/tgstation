@@ -142,7 +142,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	department_order = new(pack, name, rank, ckey, "", null, chosen_delivery_area, null)
 	SSshuttle.shopping_list += department_order
 	if(!already_signalled)
-		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, .proc/finalize_department_order)
+		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, PROC_REF(finalize_department_order))
 	say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
 	calculate_cooldown(pack.cost)
 

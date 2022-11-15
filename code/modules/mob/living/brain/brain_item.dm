@@ -251,6 +251,7 @@
 /obj/item/organ/internal/brain/on_life(delta_time, times_fired)
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
 		to_chat(owner, span_userdanger("The last spark of life in your brain fizzles out..."))
+		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
 		owner.death()
 
 /obj/item/organ/internal/brain/check_damage_thresholds(mob/M)
@@ -474,3 +475,11 @@
 		qdel(X)
 		amount_cured++
 	return amount_cured
+
+/// This proc lets the mob's brain decide what bodypart to attack with in an unarmed strike.
+/obj/item/organ/internal/brain/proc/get_attacking_limb(mob/living/carbon/human/target)
+	var/obj/item/bodypart/arm/active_hand = owner.get_active_hand()
+	if(target.body_position == LYING_DOWN && owner.usable_legs)
+		var/obj/item/bodypart/found_bodypart = owner.get_bodypart((active_hand.held_index % 2) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
+		return found_bodypart || active_hand
+	return active_hand

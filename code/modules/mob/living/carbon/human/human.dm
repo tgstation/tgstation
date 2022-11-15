@@ -13,7 +13,7 @@
 	prepare_huds() //Prevents a nasty runtime on human init
 
 	if(dna.species)
-		INVOKE_ASYNC(src, .proc/set_species, dna.species.type)
+		INVOKE_ASYNC(src, PROC_REF(set_species), dna.species.type)
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
@@ -21,14 +21,14 @@
 
 	. = ..()
 
-	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(clean_face))
 	AddComponent(/datum/component/personal_crafting)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
-	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
+	AddElement(/datum/element/strippable, GLOB.strippable_human_items, TYPE_PROC_REF(/mob/living/carbon/human/, should_strip))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	GLOB.human_list += src
@@ -81,15 +81,13 @@
 
 /mob/living/carbon/human/get_status_tab_items()
 	. = ..()
-	if (internal)
-		var/datum/gas_mixture/internal_air = internal.return_air()
-		if (!internal_air)
-			QDEL_NULL(internal)
-		else
-			. += ""
-			. += "Internal Atmosphere Info: [internal.name]"
-			. += "Tank Pressure: [internal_air.return_pressure()]"
-			. += "Distribution Pressure: [internal.distribute_pressure]"
+	var/obj/item/tank/target_tank = internal || external
+	if(target_tank)
+		var/datum/gas_mixture/internal_air = target_tank.return_air()
+		. += ""
+		. += "Internal Atmosphere Info: [target_tank.name]"
+		. += "Tank Pressure: [internal_air.return_pressure()]"
+		. += "Distribution Pressure: [target_tank.distribute_pressure]"
 	if(istype(wear_suit, /obj/item/clothing/suit/space))
 		var/obj/item/clothing/suit/space/S = wear_suit
 		. += "Thermal Regulator: [S.thermal_on ? "on" : "off"]"
@@ -366,7 +364,7 @@
 				var/counter = 1
 				while(target_record.fields[text("com_[]", counter)])
 					counter++
-				target_record.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), GLOB.year_integer+540, t1)
+				target_record.fields[text("com_[]", counter)] = text("Made by [] on [] [], []<BR>[]", allowed_access, station_time_timestamp(), time2text(world.realtime, "MMM DD"), CURRENT_STATION_YEAR, t1)
 				to_chat(human_user, span_notice("Successfully added comment."))
 				return
 
@@ -673,7 +671,7 @@
 			electrocution_skeleton_anim = mutable_appearance(icon, "electrocuted_base")
 			electrocution_skeleton_anim.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(electrocution_skeleton_anim)
-		addtimer(CALLBACK(src, .proc/end_electrocution_animation, electrocution_skeleton_anim), anim_duration)
+		addtimer(CALLBACK(src, PROC_REF(end_electrocution_animation), electrocution_skeleton_anim), anim_duration)
 
 	else //or just do a generic animation
 		flick_overlay_view(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), src, anim_duration)
@@ -1005,7 +1003,7 @@
 
 /mob/living/carbon/human/species/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/set_species, race)
+	INVOKE_ASYNC(src, PROC_REF(set_species), race)
 
 /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load)
 	. = ..()

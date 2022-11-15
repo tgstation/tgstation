@@ -19,7 +19,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/hilbertshotel/Initialize(mapload)
 	. = ..()
 	//Load templates
-	INVOKE_ASYNC(src, .proc/prepare_rooms)
+	INVOKE_ASYNC(src, PROC_REF(prepare_rooms))
 
 /obj/item/hilbertshotel/proc/prepare_rooms()
 	hotelRoomTemp = new()
@@ -325,12 +325,12 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		var/datum/action/peephole_cancel/PHC = new
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/.proc/check_eye, user)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/, check_eye), user)
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) >= 2)
 		for(var/datum/action/peephole_cancel/PHC in user.actions)
-			INVOKE_ASYNC(PHC, /datum/action/peephole_cancel.proc/Trigger)
+			INVOKE_ASYNC(PHC, TYPE_PROC_REF(/datum/action/peephole_cancel, Trigger))
 
 /datum/action/peephole_cancel
 	name = "Cancel View"
@@ -381,6 +381,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	// Let's gib the last person to have selected a room number in it.
 	if(unforeseen_consequences)
 		to_chat(unforeseen_consequences, span_warning("\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart."))
+		unforeseen_consequences.investigate_log("has been gibbed by using [H] while inside of it.", INVESTIGATE_DEATHS)
 		unforeseen_consequences.gib()
 
 	var/turf/targetturf = find_safe_turf()

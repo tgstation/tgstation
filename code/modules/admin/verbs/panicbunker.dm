@@ -10,7 +10,7 @@
 	var/time_rec = 0
 	var/message = ""
 	if(new_pb)
-		time_rec = input(src, "How many living minutes should they need to play?", "Shit's fucked isn't it", CONFIG_GET(number/panic_bunker_living)) as num
+		time_rec = input(src, "How many living minutes should they need to play? 0 to disable.", "Shit's fucked isn't it", CONFIG_GET(number/panic_bunker_living)) as num
 		message = input(src, "What should they see when they log in?", "MMM", CONFIG_GET(string/panic_bunker_message)) as text
 		message = replacetext(message, "%minutes%", time_rec)
 		CONFIG_SET(number/panic_bunker_living, time_rec)

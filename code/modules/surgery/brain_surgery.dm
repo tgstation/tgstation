@@ -13,7 +13,7 @@
 	requires_bodypart_type = 0
 
 /datum/surgery_step/fix_brain
-	name = "fix brain"
+	name = "fix brain (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 85,
 		TOOL_SCREWDRIVER = 35,

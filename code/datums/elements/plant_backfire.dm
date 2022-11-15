@@ -21,9 +21,9 @@
 	src.extra_traits = extra_traits
 	src.extra_genes = extra_genes
 
-	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/attack_safety_check)
-	RegisterSignal(target, COMSIG_ITEM_PICKUP, .proc/pickup_safety_check)
-	RegisterSignal(target, COMSIG_MOVABLE_PRE_THROW, .proc/throw_safety_check)
+	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, PROC_REF(attack_safety_check))
+	RegisterSignal(target, COMSIG_ITEM_PICKUP, PROC_REF(pickup_safety_check))
+	RegisterSignal(target, COMSIG_MOVABLE_PRE_THROW, PROC_REF(throw_safety_check))
 
 /datum/element/plant_backfire/Detach(datum/target)
 	. = ..()

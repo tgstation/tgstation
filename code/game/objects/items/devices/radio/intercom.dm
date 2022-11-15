@@ -24,7 +24,7 @@
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
-	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, .proc/AreaPowerCheck)
+	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
 	GLOB.intercoms_list += src
 
 /obj/item/radio/intercom/Destroy()
@@ -38,6 +38,15 @@
 		. += span_notice("It's <b>screwed</b> and secured to the wall.")
 	else
 		. += span_notice("It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.")
+
+	if(anonymize)
+		. += span_notice("Speaking through this intercom will anonymize your voice.")
+
+	if(freqlock == RADIO_FREQENCY_UNLOCKED)
+		if(obj_flags & EMAGGED)
+			. += span_warning("Its frequency lock has been shorted...")
+	else
+		. += span_notice("It has a frequency lock set to [frequency/10].")
 
 /obj/item/radio/intercom/screwdriver_act(mob/living/user, obj/item/tool)
 	if(unscrewed)
@@ -112,6 +121,29 @@
 	. = ..()
 	AreaPowerCheck() // Make sure the area/local APC is powered first before we actually turn back on.
 
+/obj/item/radio/intercom/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+
+	switch(freqlock)
+		// Emagging an intercom with an emaggable lock will remove the lock
+		if(RADIO_FREQENCY_EMAGGABLE_LOCK)
+			balloon_alert(user, "frequency lock cleared")
+			playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+			freqlock = RADIO_FREQENCY_UNLOCKED
+			obj_flags |= EMAGGED
+
+		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
+		if(RADIO_FREQENCY_LOCKED)
+			balloon_alert(user, "can't override frequency lock!")
+			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+
+		// Emagging an unlocked one will do nothing, for now
+		else
+			return
+
+	return ..()
+
 /obj/item/radio/intercom/update_icon_state()
 	icon_state = on ? initial(icon_state) : "intercom-p"
 	return ..()
@@ -148,7 +180,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 26)
 
 /obj/item/radio/intercom/chapel
 	name = "Confessional intercom"
+	desc = "Talk through this... to confess your many sins. Conceals your voice, to keep them secret."
 	anonymize = TRUE
+	freqlock = RADIO_FREQENCY_EMAGGABLE_LOCK
 
 /obj/item/radio/intercom/chapel/Initialize(mapload, ndir, building)
 	. = ..()
