@@ -107,3 +107,20 @@
 	if(holder)
 		return holder
 	return src
+
+/**
+ * Copies copy_from's access over to us.
+ *
+ * Returns whether or not the operation was successful.
+ * Arguments:
+ * * copy_from - The electronics to copy from.
+ */
+/obj/item/electronics/airlock/proc/copy_access_from(obj/item/electronics/airlock/copy_from)
+	if(!copy_from)
+		return FALSE
+	accesses = copy_from.accesses.Copy()
+	one_access = copy_from.one_access
+	unres_sides = copy_from.unres_sides
+	passed_name = copy_from.passed_name
+	passed_cycle_id = copy_from.passed_cycle_id
+	return TRUE

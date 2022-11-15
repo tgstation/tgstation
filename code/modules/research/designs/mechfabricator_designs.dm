@@ -1193,6 +1193,13 @@
 		RND_CATEGORY_MECHFAB_CYBORG_MODULES + RND_SUBCATEGORY_MECHFAB_CYBORG_MODULES_ENGINEERING
 	)
 
+/datum/design/borg_upgrade_material_app
+	name = "Material Apparatus"
+	id = "borg_upgrade_materialapp"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/material_app
+	materials = list(/datum/material/iron = 2000, /datum/material/gold = 500)
+
 /datum/design/borg_upgrade_beaker_app
 	name = "Secondary Beaker Storage"
 	id = "borg_upgrade_beakerapp"

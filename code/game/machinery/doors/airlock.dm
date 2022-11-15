@@ -1634,6 +1634,38 @@
 	var/area/source_area = get_area(src)
 	return source_area?.airlock_wires ? new source_area.airlock_wires(src) : new /datum/wires/airlock(src)
 
+/**
+ * Completely deletes our existing electronics and then replaces them with an (almost) exact copy of copy_from.
+ * Sets autoclose to TRUE. (Copied from /turf/open/floor/rcd_act())
+ *
+ * Returns whether or not the operation was successful.
+ * Arguments:
+ * * copy_from - The electronics to copy from.
+ */
+/obj/machinery/door/airlock/proc/copy_electronics_from(obj/item/electronics/airlock/copy_from)
+	if(!copy_from)
+		return FALSE
+	if(!electronics)
+		return FALSE
+	QDEL_NULL(electronics) //We're starting over from scratch
+	electronics = new(src)
+	electronics.copy_access_from(copy_from)
+	if(electronics.one_access)
+		req_one_access = electronics.accesses
+	else
+		req_access = electronics.accesses
+	if(electronics.unres_sides)
+		unres_sides = electronics.unres_sides
+		unres_sensor = TRUE
+	if(electronics.passed_name)
+		name = sanitize(electronics.passed_name)
+	if(electronics.passed_cycle_id)
+		closeOtherId = electronics.passed_cycle_id
+		update_other_id()
+	autoclose = TRUE
+	update_appearance()
+	return TRUE
+
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING
 #undef AIRLOCK_OPEN

@@ -162,6 +162,14 @@
 			name = "near finished airlock assembly"
 			electronics = W
 
+	else if(istype(W, /obj/item/electroadaptive_pseudocircuit) && state == AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)
+		var/obj/item/electroadaptive_pseudocircuit/pseudocircuit = W
+		user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
+								span_notice("You adapt an airlock circuit and slot it into the assembly."))
+		state = AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER
+		name = "near finished airlock assembly"
+		electronics = new(src)
+		electronics.copy_access_from(pseudocircuit.airlock_electronics)
 
 	else if((W.tool_behaviour == TOOL_CROWBAR) && state == AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER )
 		user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."), \

@@ -411,6 +411,23 @@
 			return TRUE
 	return FALSE
 
+/**
+ * Acts like a simplified, windoor version of /obj/machinery/door/airlock/proc/copy_electronics_from().
+ *
+ * Returns whether or not the operation was successful.
+ * Arguments:
+ * * copy_from - The electronics to copy from.
+ */
+/obj/machinery/door/window/proc/copy_access_from(obj/item/electronics/airlock/copy_from)
+	if(!copy_from)
+		return FALSE
+	name = copy_from.passed_name || initial(name)
+	if(copy_from.one_access)
+		req_one_access = copy_from.accesses.Copy()
+	else
+		req_access = copy_from.accesses.Copy()
+	autoclose = TRUE
+	update_appearance()
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

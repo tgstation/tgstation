@@ -696,6 +696,34 @@
 		if (C)
 			R.model.remove_module(C, TRUE)
 
+/obj/item/borg/upgrade/material_app
+	name = "material manipulation apparatus"
+	desc = "An engineering cyborg upgrade allowing for manipulation and usage of any material."
+	icon_state = "cyborg_upgrade3"
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+
+/obj/item/borg/upgrade/material_app/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/borg/apparatus/material/M = locate() in R.model.modules
+		if(M)
+			to_chat(user, span_warning("This unit is already equipped with a material apparatus!"))
+			return FALSE
+
+		M = new(R.model)
+		R.model.basic_modules += M
+		R.model.add_module(M, FALSE, TRUE)
+
+/obj/item/borg/upgrade/material_app/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/borg/apparatus/material/M = locate() in R.model.modules
+		if (M)
+			R.model.remove_module(M, TRUE)
+
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
 	desc = "A supplementary beaker storage apparatus for medical cyborgs."
