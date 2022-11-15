@@ -40,8 +40,8 @@
 
 /datum/component/sign_language/RegisterWithParent()
 	// Sign language is toggled on/off via adding/removing TRAIT_SIGN_LANG.
-	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), .proc/enable_sign_language)
-	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), .proc/disable_sign_language)
+	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), PROC_REF(enable_sign_language))
+	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), PROC_REF(disable_sign_language))
 
 /datum/component/sign_language/UnregisterFromParent()
 	disable_sign_language()
@@ -64,12 +64,12 @@
 	carbon_parent.verb_sing = "rythmically signs"
 	carbon_parent.verb_yell = "emphatically signs"
 	carbon_parent.bubble_icon = "signlang"
-	RegisterSignal(carbon_parent, COMSIG_LIVING_TRY_SPEECH, .proc/on_try_speech)
-	RegisterSignal(carbon_parent, COMSIG_LIVING_TREAT_MESSAGE, .proc/on_treat_living_message)
-	RegisterSignal(carbon_parent, COMSIG_MOVABLE_TREAT_MESSAGE, .proc/on_treat_message)
-	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, .proc/on_using_radio)
-	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, .proc/on_say_quote)
-	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, .proc/on_say)
+	RegisterSignal(carbon_parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
+	RegisterSignal(carbon_parent, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(on_treat_living_message))
+	RegisterSignal(carbon_parent, COMSIG_MOVABLE_TREAT_MESSAGE, PROC_REF(on_treat_message))
+	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_using_radio))
+	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, PROC_REF(on_say_quote))
+	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
 	return TRUE
 
 /// Signal handler for [COMSIG_SIGNLANGUAGE_DISABLE]
@@ -225,7 +225,7 @@
 	// If either an exclamation or question are found
 	if(!isnull(tonal_indicator) && carbon_parent.client?.typing_indicators)
 		carbon_parent.add_overlay(tonal_indicator)
-		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
+		tonal_timerid = addtimer(CALLBACK(src, PROC_REF(remove_tonal_indicator)), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	else // If we're not gonna use it, just be sure we get rid of it
 		tonal_indicator = null
 
