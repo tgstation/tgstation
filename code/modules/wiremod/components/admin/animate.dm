@@ -35,7 +35,7 @@
 	target = add_input_port("Target", PORT_TYPE_ATOM)
 	parallel = add_input_port("Parallel", PORT_TYPE_NUMBER, default = 1)
 	animation_loops = add_input_port("Loops", PORT_TYPE_NUMBER)
-	stop_all_animations = add_input_port("Stop All Animations", PORT_TYPE_SIGNAL, trigger = .proc/stop_animations)
+	stop_all_animations = add_input_port("Stop All Animations", PORT_TYPE_SIGNAL, trigger = PROC_REF(stop_animations))
 	animate_event = add_output_port("Perform Animation", PORT_TYPE_INSTANT_SIGNAL)
 
 /obj/item/circuit_component/begin_animation/pre_input_received(datum/port/input/port)

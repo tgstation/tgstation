@@ -18,15 +18,15 @@
 		relocate()
 
 /datum/component/stationloving/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/on_parent_pre_qdeleted)
-	RegisterSignal(parent, COMSIG_ITEM_IMBUE_SOUL, .proc/check_soul_imbue)
-	RegisterSignal(parent, COMSIG_ITEM_MARK_RETRIEVAL, .proc/check_mark_retrieval)
+	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, PROC_REF(on_parent_pre_qdeleted))
+	RegisterSignal(parent, COMSIG_ITEM_IMBUE_SOUL, PROC_REF(check_soul_imbue))
+	RegisterSignal(parent, COMSIG_ITEM_MARK_RETRIEVAL, PROC_REF(check_mark_retrieval))
 	// Relocate when we become unreachable
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_moved)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_moved))
 	// Relocate when our loc, or any of our loc's locs, becomes unreachable
 	var/static/list/loc_connections = list(
-		COMSIG_MOVABLE_MOVED = .proc/on_parent_moved,
-		SIGNAL_ADDTRAIT(TRAIT_SECLUDED_LOCATION) = .proc/on_loc_secluded,
+		COMSIG_MOVABLE_MOVED = PROC_REF(on_parent_moved),
+		SIGNAL_ADDTRAIT(TRAIT_SECLUDED_LOCATION) = PROC_REF(on_loc_secluded),
 	)
 	AddComponent(/datum/component/connect_containers, parent, loc_connections)
 
