@@ -81,7 +81,7 @@
 	. = ..()
 	src.class = class
 	if(timer)
-		addtimer(CALLBACK(src, .proc/remove), timer)
+		addtimer(CALLBACK(src, PROC_REF(remove)), timer)
 		timeout = timer
 	if(copymut && istype(copymut, /datum/mutation/human))
 		copy_mutation(copymut)
@@ -116,7 +116,7 @@
 		owner.apply_overlay(layer_used)
 	grant_power() //we do checks here so nothing about hulk getting magic
 	if(!modified)
-		addtimer(CALLBACK(src, .proc/modify, 0.5 SECONDS)) //gonna want children calling ..() to run first
+		addtimer(CALLBACK(src, PROC_REF(modify), 0.5 SECONDS)) //gonna want children calling ..() to run first
 
 /datum/mutation/human/proc/get_visual_indicator()
 	return
