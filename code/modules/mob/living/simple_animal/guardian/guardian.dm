@@ -77,9 +77,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 	summoner = to_who
 	Recall(TRUE)
-	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, .proc/on_owner_wabbajacked)
-	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, .proc/on_owner_shapeshifted)
-	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, .proc/on_owner_unshapeshifted)
+	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_owner_wabbajacked))
+	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_owner_shapeshifted))
+	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_owner_unshapeshifted))
 
 /// Signal proc for [COMSIG_LIVING_ON_WABBAJACKED], when our summoner is wabbajacked we should be alerted.
 /mob/living/simple_animal/hostile/guardian/proc/on_owner_wabbajacked(mob/living/source, mob/living/new_mob)
@@ -308,6 +308,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/ex_act(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 			gib()
 			return TRUE
 		if(EXPLODE_HEAVY)
@@ -318,6 +319,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/gib()
 	if(summoner)
 		to_chat(summoner, "[span_danger("<B>Your [src] was blown up!")]</B>")
+		summoner.investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 		summoner.gib()
 	ghostize()
 	qdel(src)
@@ -508,7 +510,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(chosen_guardian, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
 	to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[chosen_guardian.guardiancolor]\">[chosen_guardian.real_name]</font> has been successfully reset.</span>")
 	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
-	chosen_guardian.ghostize(0)
+	chosen_guardian.ghostize(FALSE)
 	chosen_guardian.guardianrecolor()
 	chosen_guardian.guardianrename() //give it a new color and name, to show it's a new person
 	chosen_guardian.key = candidate.key

@@ -1,6 +1,5 @@
 ///Attaching this element to something will make it float, get a special ai controller, and gives it a spooky outline.
 /datum/element/haunted
-	element_flags = ELEMENT_DETACH
 
 /datum/element/haunted/Attach(datum/target, haunt_color = "#f8f8ff")
 	. = ..()

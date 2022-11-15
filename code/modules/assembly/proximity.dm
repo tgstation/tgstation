@@ -9,7 +9,7 @@
 	var/scanning = FALSE
 	var/timing = FALSE
 	var/time = 20
-	var/sensitivity = 1
+	var/sensitivity = 0
 	var/hearing_range = 3
 	///Proximity monitor associated with this atom, needed for it to work.
 	var/datum/proximity_monitor/proximity_monitor
@@ -21,7 +21,8 @@
 
 /obj/item/assembly/prox_sensor/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	QDEL_NULL(proximity_monitor)
+	return ..()
 
 /obj/item/assembly/prox_sensor/examine(mob/user)
 	. = ..()
@@ -44,7 +45,7 @@
 	// assembly holder's attached object
 	// assembly holder itself
 	// us
-	proximity_monitor.set_host(connected?.holder || holder?.master || holder || src, src)
+	proximity_monitor?.set_host(connected?.holder || holder?.master || holder || src, src)
 
 /obj/item/assembly/prox_sensor/on_attach()
 	. = ..()

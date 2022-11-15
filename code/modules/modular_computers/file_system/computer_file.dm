@@ -11,8 +11,6 @@
 	var/uid
 	///Static ID to ensure all IDs are unique.
 	var/static/file_uid = 0
-	///The hard drive that has this computer file stored.
-	var/obj/item/computer_hardware/hard_drive/holder
 	///The modular computer hosting the file.
 	var/obj/item/modular_computer/computer
 
@@ -21,15 +19,9 @@
 	uid = file_uid++
 
 /datum/computer_file/Destroy(force)
-	if(!holder)
-		return ..()
-
-	holder.remove_file(src)
-	// holder.holder is the computer that has drive installed. If we are Destroy()ing program that's currently running kill it.
-	if(computer && computer.active_program == src)
-		computer.kill_program(forced = TRUE)
-	holder = null
-	computer = null
+	if(computer)
+		computer.remove_file(src)
+		computer = null
 	return ..()
 
 // Returns independent copy of this file.

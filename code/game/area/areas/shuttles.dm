@@ -187,6 +187,9 @@
 /area/shuttle/escape/meteor
 	name = "\proper a meteor with engines strapped to it"
 	luminosity = NONE
+	
+/area/shuttle/escape/engine
+	name = "Escape Shuttle Engine"
 
 /area/shuttle/transport
 	name = "Transport Shuttle"

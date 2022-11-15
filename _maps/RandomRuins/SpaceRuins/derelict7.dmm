@@ -275,7 +275,7 @@
 /obj/effect/turf_decal/trimline/neutral/warning{
 	dir = 1
 	},
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_disk/ordnance,
 /turf/open/floor/iron/dark/side/airless{
 	dir = 1
 	},

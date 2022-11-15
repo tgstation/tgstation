@@ -53,7 +53,7 @@
 		return
 
 	// EVERYTHING ELSE
-	else if(living_pawn.get_empty_held_index_for_side(LEFT_HANDS) || living_pawn.get_empty_held_index_for_side(RIGHT_HANDS))
+	else if(living_pawn.get_empty_held_indexes())
 		living_pawn.put_in_hands(target)
 		finish_action(controller, TRUE)
 		return
@@ -73,7 +73,7 @@
 	. = ..()
 	if(controller.blackboard[BB_MONKEY_PICKPOCKETING]) //We are pickpocketing, don't do ANYTHING!!!!
 		return
-	INVOKE_ASYNC(src, .proc/attempt_pickpocket, controller)
+	INVOKE_ASYNC(src, PROC_REF(attempt_pickpocket), controller)
 
 /datum/ai_behavior/monkey_equip/pickpocket/proc/attempt_pickpocket(datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
@@ -279,7 +279,7 @@
 		return
 
 	if(living_pawn.Adjacent(disposal))
-		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller, attack_target_key, disposal_target_key) //put him in!
+		INVOKE_ASYNC(src, PROC_REF(try_disposal_mob), controller, attack_target_key, disposal_target_key) //put him in!
 	else //This means we might be getting pissed!
 		return
 
@@ -320,9 +320,15 @@
 	var/list/enemies = controller.blackboard[enemies_key]
 	var/list/valids = list()
 	for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, controller.pawn))
+		if(possible_enemy == controller.pawn)
+			continue // don't target ourselves
 		var/datum/weakref/enemy_ref = WEAKREF(possible_enemy)
-		if(possible_enemy == controller.pawn || (!enemies[enemy_ref] && (!controller.blackboard[BB_MONKEY_AGGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
-			continue
+		if(enemy_ref in enemies)
+			continue // don't target enemies we already hate
+		if(!controller.blackboard[BB_MONKEY_AGGRESSIVE])
+			continue // don't target enemies if we're not aggressive
+		if(HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS])
+			continue // don't target monkeys if we're not supposed to
 		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
 		valids[enemy_ref] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
 

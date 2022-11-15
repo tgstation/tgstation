@@ -1181,7 +1181,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(isicon(icon) && isfile(icon))
 		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and arent really /icon objects,
 		///but they pass both isicon() and isfile() checks. theyre the easiest case since stringifying them gives us the path we want
-		var/icon_ref = "\ref[icon]"
+		var/icon_ref = text_ref(icon)
 		var/locate_icon_string = "[locate(icon_ref)]"
 
 		icon_path = locate_icon_string
@@ -1192,7 +1192,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		// the rsc reference returned by fcopy_rsc() will be stringifiable to "icons/path/to/dmi_file.dmi"
 		var/rsc_ref = fcopy_rsc(icon)
 
-		var/icon_ref = "\ref[rsc_ref]"
+		var/icon_ref = text_ref(rsc_ref)
 
 		var/icon_path_string = "[locate(icon_ref)]"
 
@@ -1202,7 +1202,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		var/rsc_ref = fcopy_rsc(icon)
 		//if its the text path of an existing dmi file, the rsc reference returned by fcopy_rsc() will be stringifiable to a dmi path
 
-		var/rsc_ref_ref = "\ref[rsc_ref]"
+		var/rsc_ref_ref = text_ref(rsc_ref)
 		var/rsc_ref_string = "[locate(rsc_ref_ref)]"
 
 		icon_path = rsc_ref_string
@@ -1387,7 +1387,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	GLOB.transformation_animation_objects[src] = transformation_objects
 	for(var/A in transformation_objects)
 		vis_contents += A
-	addtimer(CALLBACK(src,.proc/_reset_transformation_animation,filter_index),time)
+	addtimer(CALLBACK(src, PROC_REF(_reset_transformation_animation),filter_index),time)
 
 /*
  * Resets filters and removes transformation animations helper objects from vis contents.

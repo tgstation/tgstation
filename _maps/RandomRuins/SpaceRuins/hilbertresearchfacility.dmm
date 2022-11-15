@@ -2222,7 +2222,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WA" = (
 /obj/item/storage/bag/trash/bluespace,
-/mob/living/simple_animal/hostile/rat,
+/mob/living/basic/mouse/rat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
