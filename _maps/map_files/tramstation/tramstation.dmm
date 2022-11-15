@@ -48922,7 +48922,7 @@
 	c_tag = "Secure - AI Upper External North";
 	network = list("aicore")
 	},
-/obj/structure/cable/multilayer/connected,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/engine/hull/reinforced,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "rvd" = (
@@ -57130,7 +57130,7 @@
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "upj" = (
