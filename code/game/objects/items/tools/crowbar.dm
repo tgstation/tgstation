@@ -197,7 +197,7 @@
 	var/mech_dir = mech.dir
 	mech.balloon_alert(user, "prying open...")
 	playsound(mech, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
-	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, .proc/extra_checks, mech, mech_dir)))
+	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir)))
 		mech.balloon_alert(user, "interrupted!")
 		return
 	for(var/mob/living/occupant as anything in mech.occupants)
