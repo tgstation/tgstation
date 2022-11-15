@@ -1006,10 +1006,10 @@
 
 /datum/quirk/body_purist/add()
 	check_cybernetics()
-	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, .proc/on_organ_gain)
-	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/on_organ_lose)
-	RegisterSignal(quirk_holder, COMSIG_CARBON_ATTACH_LIMB, .proc/on_limb_gain)
-	RegisterSignal(quirk_holder, COMSIG_CARBON_REMOVE_LIMB, .proc/on_limb_lose)
+	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_lose))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(on_limb_gain))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_limb_lose))
 
 /datum/quirk/body_purist/remove()
 	UnregisterSignal(quirk_holder, list(
