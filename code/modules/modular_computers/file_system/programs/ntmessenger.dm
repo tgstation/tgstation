@@ -75,9 +75,9 @@
 
 	var/sortmode
 	if(sort_by_job)
-		sortmode = /proc/cmp_pdajob_asc
+		sortmode = GLOBAL_PROC_REF(cmp_pdajob_asc)
 	else
-		sortmode = /proc/cmp_pdaname_asc
+		sortmode = GLOBAL_PROC_REF(cmp_pdaname_asc)
 
 	for(var/obj/item/modular_computer/P in sort_list(GLOB.TabletMessengers, sortmode))
 		for(var/datum/computer_file/program/messenger/app in P.stored_files)
