@@ -8,7 +8,7 @@
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
+	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
 
 /datum/element/openspace_item_click_handler/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_ITEM_AFTERATTACK)
@@ -21,4 +21,4 @@
 		return
 	var/turf/turf_above = get_step_multiz(target, UP)
 	if(turf_above?.z == user.z)
-		INVOKE_ASYNC(source, /obj/item.proc/handle_openspace_click, turf_above, user, user.CanReach(turf_above, source), click_parameters)
+		INVOKE_ASYNC(source, TYPE_PROC_REF(/obj/item, handle_openspace_click), turf_above, user, user.CanReach(turf_above, source), click_parameters)
