@@ -37,7 +37,7 @@
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
 		message_admins("Generating z-level for heretic sacrifices...")
-		INVOKE_ASYNC(src, .proc/generate_heretic_z_level)
+		INVOKE_ASYNC(src, PROC_REF(generate_heretic_z_level))
 
 /// Generate the sacrifice z-level.
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/generate_heretic_z_level()
@@ -199,7 +199,7 @@
 		disembowel_target(sacrifice)
 
 /**
- * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].
+ * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].)
  *
  * Sets off a chain that sends the person sacrificed to the shadow realm to dodge hands to fight for survival.
  *
@@ -236,8 +236,8 @@
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
 
-	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation), SACRIFICE_SLEEP_DURATION * (1/3))
-	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation), SACRIFICE_SLEEP_DURATION * (2/3))
+	addtimer(CALLBACK(sac_target, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (1/3))
+	addtimer(CALLBACK(sac_target, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (2/3))
 
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
@@ -252,12 +252,12 @@
 	sac_target.AdjustParalyzed(SACRIFICE_SLEEP_DURATION * 1.2)
 	sac_target.AdjustImmobilized(SACRIFICE_SLEEP_DURATION * 1.2)
 
-	addtimer(CALLBACK(src, .proc/after_target_sleeps, sac_target, destination), SACRIFICE_SLEEP_DURATION * 0.5) // Teleport to the minigame
+	addtimer(CALLBACK(src, PROC_REF(after_target_sleeps), sac_target, destination), SACRIFICE_SLEEP_DURATION * 0.5) // Teleport to the minigame
 
 	return TRUE
 
 /**
- * This proc is called from [proc/begin_sacrifice] after the [sac_target] falls asleep, shortly after the sacrifice occurs.
+ * This proc is called from [proc/begin_sacrifice] after the [sac_target] falls asleep), shortly after the sacrifice occurs.
  *
  * Teleports the [sac_target] to the heretic room, asleep.
  * If it fails to teleport, they will be disemboweled and stop the chain.
@@ -290,13 +290,13 @@
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
-	addtimer(CALLBACK(src, .proc/after_target_wakes, sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
+	addtimer(CALLBACK(src, PROC_REF(after_target_wakes), sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
 
-	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, .proc/on_target_escape) // Cheese condition
-	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, .proc/on_target_death) // Loss condition
+	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_escape)) // Cheese condition
+	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death)) // Loss condition
 
 /**
- * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.
+ * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.)
  *
  * Begins the survival minigame, featuring the sacrifice targets.
  * Gives them Helgrasp, throwing cursed hands towards them that they must dodge to survive.
@@ -326,13 +326,13 @@
 	to_chat(sac_target, span_reallybig(span_hypnophrase("The grasp of the Mansus reveal themselves to you!")))
 	to_chat(sac_target, span_hypnophrase("You feel invigorated! Fight to survive!"))
 	// When it runs out, let them know they're almost home free
-	addtimer(CALLBACK(src, .proc/after_helgrasp_ends, sac_target), helgrasp_time)
+	addtimer(CALLBACK(src, PROC_REF(after_helgrasp_ends), sac_target), helgrasp_time)
 	// Win condition
-	var/win_timer = addtimer(CALLBACK(src, .proc/return_target, sac_target), SACRIFICE_REALM_DURATION, TIMER_STOPPABLE)
+	var/win_timer = addtimer(CALLBACK(src, PROC_REF(return_target), sac_target), SACRIFICE_REALM_DURATION, TIMER_STOPPABLE)
 	LAZYSET(return_timers, REF(sac_target), win_timer)
 
 /**
- * This proc is called from [proc/after_target_wakes] after the helgrasp runs out in the [sac_target].
+ * This proc is called from [proc/after_target_wakes] after the helgrasp runs out in the [sac_target].)
  *
  * It gives them a message letting them know it's getting easier and they're almost free.
  */
@@ -343,7 +343,7 @@
 	to_chat(sac_target, span_hypnophrase("The worst is behind you... Not much longer! Hold fast, or expire!"))
 
 /**
- * This proc is called from [proc/begin_sacrifice] if the target survived the shadow realm, or [COMSIG_LIVING_DEATH] if they don't.
+ * This proc is called from [proc/begin_sacrifice] if the target survived the shadow realm), or [COMSIG_LIVING_DEATH] if they don't.
  *
  * Teleports [sac_target] back to a random safe turf on the station (or observer spawn if it fails to find a safe turf).
  * Also clears their status effects, unregisters any signals associated with the shadow realm, and sends a message
@@ -431,7 +431,7 @@
 	disembowel_target(sac_target)
 
 /**
- * This proc is called from [proc/return_target] if the [sac_target] survives the shadow realm.
+ * This proc is called from [proc/return_target] if the [sac_target] survives the shadow realm.)
  *
  * Gives the sacrifice target some after effects upon ariving back to reality.
  */
@@ -457,7 +457,7 @@
 	sac_target.reagents?.add_reagent(/datum/reagent/medicine/epinephrine, 8)
 
 /**
- * This proc is called from [proc/return_target] if the target dies in the shadow realm.
+ * This proc is called from [proc/return_target] if the target dies in the shadow realm.)
  *
  * After teleporting the target back to the station (dead),
  * it spawns a special red broken illusion on their spot, for style.
@@ -481,6 +481,7 @@
 	sac_target.spill_organs()
 	sac_target.apply_damage(250, BRUTE)
 	if(sac_target.stat != DEAD)
+		sac_target.investigate_log("has been killed by heretic sacrifice.", INVESTIGATE_DEATHS)
 		sac_target.death()
 	sac_target.visible_message(
 		span_danger("[sac_target]'s organs are pulled out of [sac_target.p_their()] chest by shadowy hands!"),

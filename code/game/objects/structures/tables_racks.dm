@@ -24,6 +24,7 @@
 	layer = TABLE_LAYER
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
+	var/glass_shard_type = /obj/item/shard
 	var/buildstack = /obj/item/stack/sheet/iron
 	var/busy = FALSE
 	var/buildstackamount = 1
@@ -43,7 +44,7 @@
 	AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/table_carbon,
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -355,7 +356,7 @@
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
 	attached_items += I
-	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	RegisterSignal(I, COMSIG_MOVABLE_MOVED, PROC_REF(RemoveItemFromTable)) //Listen for the pickup event, unregister on pick-up so we aren't moved
 
 /obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
 	SIGNAL_HANDLER
@@ -391,23 +392,13 @@
 	max_integrity = 70
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
-	var/list/debris = list()
 
 /obj/structure/table/glass/Initialize(mapload)
 	. = ..()
-	debris += new frame
-	if(buildstack == /obj/item/stack/sheet/plasmaglass)
-		debris += new /obj/item/shard/plasma
-	else
-		debris += new /obj/item/shard
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/structure/table/glass/Destroy()
-	QDEL_LIST(debris)
-	. = ..()
 
 /obj/structure/table/glass/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -417,7 +408,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
+		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 5)
 	else
 		check_break(AM)
 
@@ -429,18 +420,18 @@
 	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
 		table_shatter(M)
 
-/obj/structure/table/glass/proc/table_shatter(mob/living/L)
+/obj/structure/table/glass/proc/table_shatter(mob/living/victim)
 	visible_message(span_warning("[src] breaks!"),
 		span_danger("You hear breaking glass."))
-	var/turf/T = get_turf(src)
-	playsound(T, SFX_SHATTER, 50, TRUE)
-	for(var/I in debris)
-		var/atom/movable/AM = I
-		AM.forceMove(T)
-		debris -= AM
-		if(istype(AM, /obj/item/shard))
-			AM.throw_impact(L)
-	L.Paralyze(100)
+
+	playsound(loc, SFX_SHATTER, 50, TRUE)
+
+	new frame(loc)
+
+	var/obj/item/shard/shard = new glass_shard_type(loc)
+	shard.throw_impact(victim)
+
+	victim.Paralyze(100)
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)
@@ -451,16 +442,14 @@
 		else
 			var/turf/T = get_turf(src)
 			playsound(T, SFX_SHATTER, 50, TRUE)
-			for(var/X in debris)
-				var/atom/movable/AM = X
-				AM.forceMove(T)
-				debris -= AM
+
+			new frame(loc)
+			new glass_shard_type(loc)
+
 	qdel(src)
 
 /obj/structure/table/glass/narsie_act()
 	color = NARSIE_WINDOW_COLOUR
-	for(var/obj/item/shard/S in debris)
-		S.color = NARSIE_WINDOW_COLOUR
 
 /obj/structure/table/glass/plasmaglass
 	name = "plasma glass table"
@@ -470,6 +459,7 @@
 	base_icon_state = "plasmaglass_table"
 	custom_materials = list(/datum/material/alloy/plasmaglass = 2000)
 	buildstack = /obj/item/stack/sheet/plasmaglass
+	glass_shard_type = /obj/item/shard/plasma
 	max_integrity = 100
 
 /*
@@ -712,8 +702,8 @@
 		if(computer)
 			computer.table = src
 			break
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/mark_patient)
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, .proc/unmark_patient)
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
+	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
 
 /obj/structure/table/optable/Destroy()
 	if(computer && computer.table == src)
@@ -733,7 +723,7 @@
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
-	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, .proc/recheck_patient)
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
 /// Unmark the potential patient.

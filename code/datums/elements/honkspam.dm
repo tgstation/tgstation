@@ -1,12 +1,11 @@
 /// Attachable to items. Plays a bikehorn sound whenever attack_self is called (with a cooldown).
 /datum/element/honkspam
-	element_flags = ELEMENT_DETACH
 
 /datum/element/honkspam/Attach(datum/target)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
 
 /datum/element/honkspam/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_ITEM_ATTACK_SELF)
