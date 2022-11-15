@@ -473,7 +473,7 @@
 /// Traits for plants with a different base max_volume.
 /datum/plant_gene/trait/modified_volume
 	name = "Deep Vesicles"
-	description = "It has more reagents than usualy."
+	description = "It has more reagents than usually."
 	icon = "vials"
 	/// The new number we set the plant's max_volume to.
 	var/new_capcity = 100
