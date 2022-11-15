@@ -88,10 +88,10 @@
 	. = ..()
 	if(cell)
 		install_cell(cell)
-	RegisterSignal(mod, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
-	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, .proc/on_wearer_set)
+	RegisterSignal(mod, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
+	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, PROC_REF(on_wearer_set))
 	if(mod.wearer)
 		on_wearer_set(mod, mod.wearer)
 
@@ -150,7 +150,7 @@
 /obj/item/mod/core/standard/proc/install_cell(new_cell)
 	cell = new_cell
 	cell.forceMove(src)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 
 /obj/item/mod/core/standard/proc/uninstall_cell()
 	if(!cell)
@@ -178,7 +178,7 @@
 	if(mod.seconds_electrified && charge_amount() && mod.shock(user))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(mod.open && mod.loc == user)
-		INVOKE_ASYNC(src, .proc/mod_uninstall_cell, user)
+		INVOKE_ASYNC(src, PROC_REF(mod_uninstall_cell), user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	return NONE
 
@@ -219,8 +219,8 @@
 /obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	RegisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
-	RegisterSignal(mod, COMSIG_MOD_WEARER_UNSET, .proc/on_wearer_unset)
+	RegisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
+	RegisterSignal(mod, COMSIG_MOD_WEARER_UNSET, PROC_REF(on_wearer_unset))
 
 /obj/item/mod/core/standard/proc/on_wearer_unset(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -293,7 +293,7 @@
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 
 /obj/item/mod/core/plasma/uninstall()
 	UnregisterSignal(mod, COMSIG_PARENT_ATTACKBY)

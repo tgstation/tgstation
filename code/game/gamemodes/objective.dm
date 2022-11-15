@@ -947,7 +947,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = sort_list(subtypesof(/datum/objective), /proc/cmp_typepaths_asc)
+	var/list/allowed_types = sort_list(subtypesof(/datum/objective), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	for(var/datum/objective/goal as anything in allowed_types)
 		if(!initial(goal.admin_grantable))
