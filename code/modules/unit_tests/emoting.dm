@@ -3,7 +3,7 @@
 
 /datum/unit_test/emoting/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
-	RegisterSignal(human, COMSIG_MOB_EMOTE, .proc/on_emote_used)
+	RegisterSignal(human, COMSIG_MOB_EMOTE, PROC_REF(on_emote_used))
 
 	human.say("*shrug")
 	TEST_ASSERT_EQUAL(emotes_used, 1, "Human did not shrug")

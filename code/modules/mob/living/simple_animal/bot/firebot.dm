@@ -224,7 +224,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, target_fire, 30, 1, id=access_card)
+		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
@@ -265,7 +265,9 @@
 
 /mob/living/simple_animal/bot/firebot/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(COOLDOWN_FINISHED(src, foam_cooldown))
-		new /obj/effect/particle_effect/fluid/foam/firefighting(loc)
+		var/datum/effect_system/fluid_spread/foam/firefighting/foam = new
+		foam.set_up(3, holder = src, location = loc)
+		foam.start()
 		COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
 /mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)
