@@ -152,7 +152,7 @@
 				return TRUE
 			// Copying paperwork
 			if(paperwork_copy)
-				do_copy_loop(CALLBACK(src, .proc/make_paperwork_copy), usr)
+				do_copy_loop(CALLBACK(src, PROC_REF(make_paperwork_copy)), usr)
 				return TRUE
 
 		// Remove the paper/photo/document from the photocopier.
