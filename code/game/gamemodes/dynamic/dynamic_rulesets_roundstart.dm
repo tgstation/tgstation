@@ -286,7 +286,7 @@
 	var/dead_wizards = 0
 	for(var/datum/antagonist/wizard/wiz in GLOB.antagonists)
 		existing_wizards++
-		if(!considered_alive(wiz))
+		if(!considered_alive(wiz.owner))
 			dead_wizards++
 
 	if(dead_wizards == existing_wizards)
