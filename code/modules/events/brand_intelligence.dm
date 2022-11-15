@@ -79,7 +79,7 @@
 			originMachine.visible_message(span_notice("[originMachine] beeps and seems lifeless."))
 		kill()
 		return
-	vendingMachines = remove_nulls_from_list(vendingMachines)
+	list_clear_nulls(vendingMachines)
 	if(!vendingMachines.len) //if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
 			if(!QDELETED(upriser))
