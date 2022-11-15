@@ -148,12 +148,12 @@
 	for(var/i in 1 to num_of_splitshots)
 		fire_splitshot(incoming_shot)
 
-/// Minor convenience function for creating each shrapnel piece with circle explosions, mostly stolen from the MIRV component
+/// Shoot an individual splitshot at a new target
 /obj/projectile/bullet/coin/proc/fire_splitshot(obj/projectile/bullet/marksman/incoming_shot)
 	var/atom/next_target = find_next_target()
 
-	ADD_TRAIT(next_target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT)
-	addtimer(TRAIT_CALLBACK_REMOVE(next_target, TRAIT_RECENTLY_COINED, ABSTRACT_ITEM_TRAIT), 0.5 SECONDS)
+	ADD_TRAIT(next_target, TRAIT_RECENTLY_COINED, "[type]")
+	addtimer(TRAIT_CALLBACK_REMOVE(next_target, TRAIT_RECENTLY_COINED, "[type]"), 0.5 SECONDS)
 	var/outgoing_ricoshot_level = incoming_shot.ricoshot_level + 1
 	var/obj/projectile/bullet/marksman/new_splitshot = new /obj/projectile/bullet/marksman(get_turf(src), null, outgoing_ricoshot_level)
 	//Shooting Code:
