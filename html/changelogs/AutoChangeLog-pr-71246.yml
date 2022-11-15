@@ -1,0 +1,4 @@
+author: "Sealed101"
+delete-after: True
+changes:
+  - bugfix: "fixed megafauna crusher kills and crusher achievements depending on megafauna having crusher loot. Legion Crusher should now be obtainable as a result."
