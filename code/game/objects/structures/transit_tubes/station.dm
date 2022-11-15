@@ -108,7 +108,7 @@
 	if(open_status == STATION_TUBE_CLOSED)
 		icon_state = "opening_[base_icon]"
 		open_status = STATION_TUBE_OPENING
-		addtimer(CALLBACK(src, .proc/finish_animation), OPEN_DURATION)
+		addtimer(CALLBACK(src, PROC_REF(finish_animation)), OPEN_DURATION)
 
 /obj/structure/transit_tube/station/proc/finish_animation()
 	switch(open_status)
@@ -131,7 +131,7 @@
 	if(open_status == STATION_TUBE_OPEN)
 		icon_state = "closing_[base_icon]"
 		open_status = STATION_TUBE_CLOSING
-		addtimer(CALLBACK(src, .proc/finish_animation), CLOSE_DURATION)
+		addtimer(CALLBACK(src, PROC_REF(finish_animation)), CLOSE_DURATION)
 
 /obj/structure/transit_tube/station/proc/launch_pod()
 	if(launch_cooldown >= world.time)
@@ -153,7 +153,7 @@
 
 /obj/structure/transit_tube/station/pod_stopped(obj/structure/transit_tube_pod/pod, from_dir)
 	pod_moving = TRUE
-	addtimer(CALLBACK(src, .proc/start_stopped, pod), 5)
+	addtimer(CALLBACK(src, PROC_REF(start_stopped), pod), 5)
 
 /obj/structure/transit_tube/station/proc/start_stopped(obj/structure/transit_tube_pod/pod)
 	if(QDELETED(pod))
@@ -162,7 +162,7 @@
 		pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
 	launch_cooldown = world.time + cooldown_delay
 	open_animation()
-	addtimer(CALLBACK(src, .proc/finish_stopped, pod), OPEN_DURATION + 2)
+	addtimer(CALLBACK(src, PROC_REF(finish_stopped), pod), OPEN_DURATION + 2)
 
 /obj/structure/transit_tube/station/proc/finish_stopped(obj/structure/transit_tube_pod/pod)
 	pod_moving = FALSE
