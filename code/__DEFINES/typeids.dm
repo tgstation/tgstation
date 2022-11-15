@@ -3,6 +3,6 @@
 #define TYPEID_NORMAL_LIST "f"
 //helper macros
 #define GET_TYPEID(ref) ( ( (length(ref) <= 10) ? "TYPEID_NULL" : copytext(ref, 4, -7) ) )
-#define IS_NORMAL_LIST(L) (GET_TYPEID("\ref[L]") == TYPEID_NORMAL_LIST)
+#define IS_NORMAL_LIST(L) (GET_TYPEID(text_ref(L)) == TYPEID_NORMAL_LIST)
 
 

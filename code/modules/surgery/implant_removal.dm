@@ -12,7 +12,7 @@
 
 //extract implant
 /datum/surgery_step/extract_implant
-	name = "extract implant"
+	name = "extract implant (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_CROWBAR = 65,

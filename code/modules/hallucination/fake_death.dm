@@ -65,9 +65,9 @@
 				"you too?",
 			)
 
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, hallucinator, span_deadsay("<b>DEAD: [who_is_salting.name]</b> says, \"[pick(dead_chat_salt)]\"")), delay)
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), hallucinator, span_deadsay("<b>DEAD: [who_is_salting.name]</b> says, \"[pick(dead_chat_salt)]\"")), delay)
 
-	addtimer(CALLBACK(src, .proc/wake_up), delay + rand(7 SECONDS, 9 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(wake_up)), delay + rand(7 SECONDS, 9 SECONDS))
 	return TRUE
 
 /datum/hallucination/death/proc/wake_up()

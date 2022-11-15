@@ -1277,6 +1277,13 @@
 			return round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 	return 0
 
+/datum/reagents/proc/get_multiple_reagent_amounts(list/reagents)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		if(cached_reagent.type in reagents)
+			return round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
+	return 0
+
 /// Get the purity of this reagent
 /datum/reagents/proc/get_reagent_purity(reagent)
 	var/list/cached_reagents = reagent_list

@@ -351,7 +351,7 @@
 			rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
 		vehicle.grinding = TRUE
 		vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
-		addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 2)
 	else
 		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
 	rider.spin(4, 1)

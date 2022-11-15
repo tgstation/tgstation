@@ -6,6 +6,7 @@
 	icon = 'icons/obj/implants.dmi'
 	icon_state = "generic" //Shows up as the action button icon
 	item_flags = DROPDEL
+	resistance_flags = INDESTRUCTIBLE
 	// This gives the user an action button that allows them to activate the implant.
 	// If the implant needs no action button, then null this out.
 	// Or, if you want to add a unique action button, then replace this.
@@ -24,7 +25,7 @@
 	SEND_SIGNAL(src, COMSIG_IMPLANT_ACTIVATED)
 
 /obj/item/implant/ui_action_click()
-	INVOKE_ASYNC(src, .proc/activate, "action_button")
+	INVOKE_ASYNC(src, PROC_REF(activate), "action_button")
 
 /obj/item/implant/item_action_slot_check(slot, mob/user)
 	return user == imp_in

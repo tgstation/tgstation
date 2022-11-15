@@ -33,13 +33,13 @@
 			if(!A.shorted)
 				A.shorted = TRUE
 				A.update_appearance()
-			addtimer(CALLBACK(A, /obj/machinery/airalarm.proc/reset, wire), 1200)
+			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 1200)
 		if(WIRE_IDSCAN) // Toggle lock.
 			A.locked = !A.locked
 		if(WIRE_AI) // Disable AI control for a while.
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-			addtimer(CALLBACK(A, /obj/machinery/airalarm.proc/reset, wire), 100)
+			addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/airalarm, reset), wire), 100)
 		if(WIRE_PANIC) // Toggle panic siphon.
 			if(!A.shorted)
 				if(A.mode == 1) // AALARM_MODE_SCRUB

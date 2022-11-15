@@ -17,7 +17,7 @@
 	if(!.) //if the bottle wasn't caught
 		smash(hit_atom, throwingdatum?.thrower, TRUE)
 
-/obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, ranged = FALSE)
+/obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, ranged = FALSE, break_top = FALSE)
 	if(!isGlass)
 		return
 	if(QDELING(src) || !target) //Invalid loc
@@ -26,7 +26,7 @@
 		return
 	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
-	B.mimic_broken(src, target)
+	B.mimic_broken(src, target, break_top)
 	qdel(src)
 	target.Bumped(B)
 

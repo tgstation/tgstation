@@ -185,9 +185,8 @@
 /obj/item/food/cake/birthday/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/birthday, 5, 3 SECONDS, table_required = TRUE)
 
-/obj/item/food/cake/birthday/microwave_act(obj/machinery/microwave/microwave) //super sekrit club
-	new /obj/item/clothing/head/utility/hardhat/cakehat(get_turf(src))
-	qdel(src)
+/obj/item/food/cake/birthday/make_microwavable() // super sekrit club
+	AddElement(/datum/element/microwavable, /obj/item/clothing/head/utility/hardhat/cakehat)
 
 /obj/item/food/cakeslice/birthday
 	name = "birthday cake slice"
@@ -209,6 +208,9 @@
 /obj/item/food/cake/birthday/energy/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/birthday/energy, 5, 3 SECONDS, table_required = TRUE)
 
+/obj/item/food/cake/birthday/energy/make_microwavable() //super sekriter club
+	AddElement(/datum/element/microwavable, /obj/item/clothing/head/utility/hardhat/cakehat/energycake)
+
 /obj/item/food/cake/birthday/energy/proc/energy_bite(mob/living/user)
 	to_chat(user, "<font color='red' size='5'>As you eat the cake, you accidentally hurt yourself on the embedded energy sword!</font>")
 	user.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
@@ -219,10 +221,6 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM) && target_mob != user) //Prevents pacifists from attacking others directly
 		return
 	energy_bite(target_mob, user)
-
-/obj/item/food/cake/birthday/energy/microwave_act(obj/machinery/microwave/M) //super sekriter club
-	new /obj/item/clothing/head/utility/hardhat/cakehat/energycake(get_turf(src))
-	qdel(src)
 
 /obj/item/food/cakeslice/birthday/energy
 	name = "energy cake slice"
@@ -480,6 +478,12 @@
 
 /obj/item/food/cake/pavlova/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova, 5, 3 SECONDS, table_required = TRUE)
+
+/obj/item/food/cake/pavlova/nuts
+	foodtypes = NUTS | FRUIT | SUGAR
+
+/obj/item/food/cake/pavlova/nuts/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova/nuts, 5, 30, table_required = TRUE)
 
 /obj/item/food/cakeslice/pavlova
 	name = "pavlova slice"
