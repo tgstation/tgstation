@@ -39,14 +39,13 @@
 	response_disarm_simple = "gently push aside"
 	faction = list("carp")
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 1)
+	greyscale_config = /datum/greyscale_config/carp
 	ai_controller = /datum/ai_controller/basic_controller/carp
 
 	/// Cytology cells you can swab from this creature
 	var/cell_line = CELL_LINE_TABLE_CARP
 	/// Is the carp tamed?
 	var/tamed = FALSE
-	/// If true, randomise our colour from the following list
-	var/random_colour = TRUE
 	/// What colour is our 'healing' outline?
 	var/regenerate_colour = "#20e28e"
 	/// Weighted list of colours a carp can be
@@ -70,6 +69,7 @@
 
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	. = ..()
+	apply_colour()
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
@@ -83,8 +83,11 @@
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/on_tamed))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 
-	if (random_colour)
-		set_greyscale(colors= list(pick_weight(carp_colors)), new_config=/datum/greyscale_config/carp)
+/// Set a random colour on the carp, override to do something else
+/mob/living/basic/carp/proc/apply_colour()
+	if (!greyscale_config)
+		return
+	set_greyscale(colors= list(pick_weight(carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/proc/on_tamed(mob/tamer)
@@ -101,7 +104,7 @@
 	icon_state = "holocarp"
 	icon_living = "holocarp"
 	gold_core_spawnable = NO_SPAWN
-	random_colour = FALSE
+	greyscale_config = NONE
 	basic_mob_flags = DEL_ON_DEATH
 	cell_line = NONE
 	regenerate_colour = "#ffffff"
@@ -135,7 +138,7 @@
 	icon_gib = "magicarp_gib"
 	icon_living = "magicarp"
 	icon_state = "magicarp"
-	random_colour = FALSE
+	greyscale_config = NONE
 
 /**
  * Cayenne - Loyal member of the nuclear operatives.
