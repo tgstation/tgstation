@@ -43,6 +43,13 @@
 	sparks.start()
 	return TRUE
 
+/obj/item/assembly/igniter/attackby(obj/item/potential_igniter, mob/user, params)
+	if(isigniter(potential_igniter))
+		to_chat(user, "You briefly consider attaching [potential_igniter] to [src], and then conclude that's a very silly thing to do and move on.")
+		return
+	return ..()
+
+
 /obj/item/assembly/igniter/attack_self(mob/user)
 	activate()
 	add_fingerprint(user)

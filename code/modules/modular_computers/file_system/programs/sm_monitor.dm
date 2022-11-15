@@ -39,7 +39,7 @@
 		if (!sm.include_in_cims || !isturf(sm.loc) || !(is_station_level(sm.z) || is_mining_level(sm.z) || sm.z == user_turf.z))
 			continue
 		supermatters += sm
-		RegisterSignal(sm, COMSIG_PARENT_QDELETING, .proc/clear_supermatter)
+		RegisterSignal(sm, COMSIG_PARENT_QDELETING, PROC_REF(clear_supermatter))
 
 /datum/computer_file/program/supermatter_monitor/ui_static_data(mob/user)
 	var/list/data = list()
@@ -93,7 +93,7 @@
 		return
 	if(focused_supermatter)
 		unfocus_supermatter()
-	RegisterSignal(sm, COMSIG_SUPERMATTER_DELAM_ALARM, .proc/send_alert)
+	RegisterSignal(sm, COMSIG_SUPERMATTER_DELAM_ALARM, PROC_REF(send_alert))
 	focused_supermatter = sm
 
 /datum/computer_file/program/supermatter_monitor/proc/unfocus_supermatter()

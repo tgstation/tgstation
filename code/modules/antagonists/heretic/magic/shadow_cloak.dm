@@ -49,7 +49,7 @@
 		StartCooldown(new_cd)
 
 	else
-		uncloak_timer = addtimer(CALLBACK(src, .proc/timed_uncloak, cast_on), uncloak_time, TIMER_STOPPABLE)
+		uncloak_timer = addtimer(CALLBACK(src, PROC_REF(timed_uncloak), cast_on), uncloak_time, TIMER_STOPPABLE)
 		cloak_mob(cast_on)
 		StartCooldown()
 
@@ -68,8 +68,8 @@
 	)
 
 	active_cloak = cast_on.apply_status_effect(/datum/status_effect/shadow_cloak)
-	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, .proc/on_early_cloak_loss)
-	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), .proc/on_focus_lost)
+	RegisterSignal(active_cloak, COMSIG_PARENT_QDELETING, PROC_REF(on_early_cloak_loss))
+	RegisterSignal(cast_on, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 
 /datum/action/cooldown/spell/shadow_cloak/proc/uncloak_mob(mob/living/cast_on, show_message = TRUE)
 	if(!QDELETED(active_cloak))
@@ -141,11 +141,11 @@
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/shadow_cloak)
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/shadow_cloak)
 	// Register signals to cause effects
-	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
-	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/on_body_position_change)
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
-	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, .proc/on_damaged)
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(owner, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_dir_change))
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(on_body_position_change))
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	return TRUE
 
 /datum/status_effect/shadow_cloak/on_remove()

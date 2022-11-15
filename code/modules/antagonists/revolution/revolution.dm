@@ -99,7 +99,7 @@
 
 /datum/antagonist/rev/get_admin_commands()
 	. = ..()
-	.["Promote"] = CALLBACK(src,.proc/admin_promote)
+	.["Promote"] = CALLBACK(src, PROC_REF(admin_promote))
 
 /datum/antagonist/rev/proc/admin_promote(mob/admin)
 	var/datum/mind/O = owner
@@ -119,10 +119,10 @@
 /datum/antagonist/rev/head/get_admin_commands()
 	. = ..()
 	. -= "Promote"
-	.["Take flash"] = CALLBACK(src,.proc/admin_take_flash)
-	.["Give flash"] = CALLBACK(src,.proc/admin_give_flash)
-	.["Repair flash"] = CALLBACK(src,.proc/admin_repair_flash)
-	.["Demote"] = CALLBACK(src,.proc/admin_demote)
+	.["Take flash"] = CALLBACK(src, PROC_REF(admin_take_flash))
+	.["Give flash"] = CALLBACK(src, PROC_REF(admin_give_flash))
+	.["Repair flash"] = CALLBACK(src, PROC_REF(admin_repair_flash))
+	.["Demote"] = CALLBACK(src, PROC_REF(admin_demote))
 
 /datum/antagonist/rev/head/proc/admin_take_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
@@ -348,7 +348,7 @@
 		var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 		R.objectives |= objectives
 
-	addtimer(CALLBACK(src,.proc/update_objectives),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(update_objectives)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 /datum/team/revolution/proc/head_revolutionaries()
 	. = list()
@@ -380,7 +380,7 @@
 				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
 				rev.promote()
 
-	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(update_heads)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 /datum/team/revolution/proc/save_members()
 	ex_headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
@@ -520,7 +520,7 @@
 		return FALSE
 
 	// Do it later so everyone has time to see the messages
-	addtimer(CALLBACK(src, .proc/perform_auto_shuttle_call), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(perform_auto_shuttle_call)), 20 SECONDS)
 
 	var/log = "REVOLUTION: Auto-calling the shuttle, [display_percent]% are revs"
 	log_game(log)
