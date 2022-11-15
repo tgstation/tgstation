@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	to_chat(user,span_notice("You begin to charge [src]"))
 	inhand_icon_state = "firelance_charging"
 	user.update_held_items()
-	if(do_after(user,windup_time,interaction_key="firelance",extra_checks = CALLBACK(src, .proc/windup_checks)))
+	if(do_after(user,windup_time,interaction_key="firelance",extra_checks = CALLBACK(src, PROC_REF(windup_checks))))
 		var/turf/start_turf = get_turf(user)
 		var/turf/last_turf = get_ranged_target_turf(start_turf,user.dir,melt_range)
 		start_turf.Beam(last_turf,icon_state="solar_beam",time=1 SECONDS)

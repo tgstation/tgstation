@@ -46,7 +46,7 @@
 	new /obj/effect/decal/necropolis_gate_decal(loc)
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -262,7 +262,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -285,7 +285,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	switch(fall_on_cross)
 		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
 			if((I && I.w_class >= WEIGHT_CLASS_BULKY) || (L && !(L.movement_type & FLYING) && L.mob_size >= MOB_SIZE_HUMAN)) //too heavy! too big! aaah!
-				INVOKE_ASYNC(src, .proc/collapse)
+				INVOKE_ASYNC(src, PROC_REF(collapse))
 		if(UNIQUE_EFFECT)
 			crossed_effect(AM)
 
@@ -304,7 +304,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	if(break_that_sucker)
 		QDEL_IN(src, 10)
 	else
-		addtimer(CALLBACK(src, .proc/rebuild), 55)
+		addtimer(CALLBACK(src, PROC_REF(rebuild)), 55)
 
 /obj/structure/stone_tile/proc/rebuild()
 	pixel_x = initial(pixel_x)

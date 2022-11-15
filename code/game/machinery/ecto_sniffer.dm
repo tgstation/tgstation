@@ -35,7 +35,7 @@
 	say("Reporting [pick(world.file2list("strings/spook_levels.txt"))] levels of paranormal activity!")
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
-		addtimer(CALLBACK(src, .proc/clear_residue, activator.ckey), 15 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(clear_residue), activator.ckey), 15 SECONDS)
 
 /obj/machinery/ecto_sniffer/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

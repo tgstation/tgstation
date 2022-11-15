@@ -8,14 +8,14 @@
 	//When we get into galloping mode, we stay there until both runs win less often than MIN_GALLOP consecutive times.
 #define MIN_GALLOP 7
 
-	//This is a global instance to allow much of this code to be reused. The interfaces are kept separately
+//This is a global instance to allow much of this code to be reused. The interfaces are kept separately
 GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 /datum/sort_instance
 	//The array being sorted.
 	var/list/L
 
 	//The comparator proc-reference
-	var/cmp = /proc/cmp_numeric_asc
+	var/cmp = GLOBAL_PROC_REF(cmp_numeric_asc)
 
 	//whether we are sorting list keys (0: L[i]) or associated values (1: L[L[i]])
 	var/associative = 0
