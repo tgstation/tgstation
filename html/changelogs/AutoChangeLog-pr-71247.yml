@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Plant-based cells will no longer show an error sprite if the plant it's made out of has its sprite located in a different file than all of the other plants."
