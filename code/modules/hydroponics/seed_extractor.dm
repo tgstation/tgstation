@@ -171,10 +171,8 @@
  * * O - seed to generate the string from
  */
 /obj/machinery/seed_extractor/proc/generate_seed_hash(obj/item/seeds/O)
-	var/traits = list()
-	for(var/datum/plant_gene/trait/trait in O.genes)
-		traits += trait.type
-	return md5("[O.name][O.lifespan][O.endurance][O.maturation][O.production][O.yield][O.potency][O.instability][traits]");
+	var/genes = list2params(O.genes)
+	return md5("[O.name][O.lifespan][O.endurance][O.maturation][O.production][O.yield][O.potency][O.instability][genes]");
 
 /** Add Seeds Proc.
  *
