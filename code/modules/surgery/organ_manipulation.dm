@@ -179,6 +179,8 @@
 			span_notice("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!"),
 			span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"))
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool] comes to life!")
+		else
+			target_organ.forceMove(target.loc)
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
