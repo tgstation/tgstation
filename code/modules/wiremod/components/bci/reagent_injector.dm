@@ -24,7 +24,7 @@
 
 /obj/item/circuit_component/reagent_injector/populate_ports()
 	. = ..()
-	inject = add_input_port("Inject", PORT_TYPE_SIGNAL, trigger = .proc/trigger_inject)
+	inject = add_input_port("Inject", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_inject))
 	injected = add_output_port("Injected", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/reagent_injector/proc/trigger_inject()
