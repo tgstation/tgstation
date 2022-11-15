@@ -10,7 +10,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	ADD_TRAIT(target, TRAIT_RADIATION_PROTECTED_CLOTHING, REF(src))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/radiation_protected_clothing/Detach(datum/source, ...)
 	REMOVE_TRAIT(source, TRAIT_RADIATION_PROTECTED_CLOTHING, REF(src))

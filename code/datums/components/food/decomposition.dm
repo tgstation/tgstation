@@ -33,16 +33,16 @@
 		handled = FALSE
 	src.produce_ants = ant_attracting
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_PICKUP, //person picks up an item
 		COMSIG_ATOM_ENTERED), //Object enters a storage object (boxes, etc.)
-		.proc/picked_up)
+		PROC_REF(picked_up))
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
 		COMSIG_ATOM_EXITED), //Object exits a storage object (boxes, etc)
-		.proc/dropped)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+		PROC_REF(dropped))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
 
 	if(custom_time) // We have a custom decomposition time, set it to that
 		original_time = custom_time
@@ -83,7 +83,7 @@
 			return
 
 	// If all other checks fail, then begin decomposition.
-	timerid = addtimer(CALLBACK(src, .proc/decompose), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(decompose)), time_remaining, TIMER_STOPPABLE | TIMER_UNIQUE)
 
 /datum/component/decomposition/Destroy()
 	remove_timer()
