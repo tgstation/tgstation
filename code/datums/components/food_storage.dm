@@ -18,9 +18,9 @@
 
 /datum/component/food_storage/Initialize(_minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_inserting_item)
-	RegisterSignal(parent, COMSIG_CLICK_CTRL, .proc/try_removing_item)
-	RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/consume_food_storage)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(try_inserting_item))
+	RegisterSignal(parent, COMSIG_CLICK_CTRL, PROC_REF(try_removing_item))
+	RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(consume_food_storage))
 
 	var/atom/food = parent
 	initial_volume = food.reagents.total_volume
@@ -70,7 +70,7 @@
 	user.visible_message(span_notice("[user.name] begins inserting [inserted_item.name] into \the [parent]."), \
 					span_notice("You start to insert the [inserted_item.name] into \the [parent]."))
 
-	INVOKE_ASYNC(src, .proc/insert_item, inserted_item, user)
+	INVOKE_ASYNC(src, PROC_REF(insert_item), inserted_item, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /** Begins the process of attempting to remove the stored item.
@@ -94,7 +94,7 @@
 	user.visible_message(span_notice("[user.name] begins tearing at \the [parent]."), \
 					span_notice("You start to rip into \the [parent]."))
 
-	INVOKE_ASYNC(src, .proc/begin_remove_item, user)
+	INVOKE_ASYNC(src, PROC_REF(begin_remove_item), user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /** Inserts the item into the food, after a do_after.
@@ -171,7 +171,7 @@
 		update_stored_item() //make sure if the item was changed, the reference changes as well
 
 	if(!QDELETED(stored_item) && discovered)
-		INVOKE_ASYNC(src, .proc/remove_item, user)
+		INVOKE_ASYNC(src, PROC_REF(remove_item), user)
 
 /** Updates the reference of the stored item.
  *

@@ -19,7 +19,7 @@
 	src.tracked = tracked
 
 /datum/component/connect_mob_behalf/RegisterWithParent()
-	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
+	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, PROC_REF(handle_tracked_qdel))
 	update_signals()
 
 /datum/component/connect_mob_behalf/UnregisterFromParent()
@@ -41,7 +41,7 @@
 	if(QDELETED(tracked?.mob))
 		return
 	tracked_mob = tracked.mob
-	RegisterSignal(tracked_mob, COMSIG_MOB_LOGOUT, .proc/on_logout)
+	RegisterSignal(tracked_mob, COMSIG_MOB_LOGOUT, PROC_REF(on_logout))
 	for (var/signal in connections)
 		parent.RegisterSignal(tracked_mob, signal, connections[signal])
 
