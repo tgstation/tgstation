@@ -194,7 +194,6 @@
 
 /// Signal proc for [COMSIG_MOVABLE_USING_RADIO]
 /// Disallows us from speaking on comms if we don't have the special trait.
-/// Being unable to sign, or having our message be starred out, is handled by the above two signal procs.
 /datum/component/sign_language/proc/on_using_radio(atom/movable/source, obj/item/radio/radio)
 	SIGNAL_HANDLER
 
