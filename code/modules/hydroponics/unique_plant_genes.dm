@@ -38,6 +38,7 @@
 /// Traits that turn a plant into a weapon, giving them force and effects on attack.
 /datum/plant_gene/trait/attack
 	name = "On Attack Trait"
+	description = "It is a very dangerous weapon."
 	icon = "hand-fist"
 	/// The multiplier we apply to the potency to calculate force. Set to 0 to not affect the force.
 	var/force_multiplier = 0
@@ -153,7 +154,6 @@
 /// Normal nettle's force + degradation on attack
 /datum/plant_gene/trait/attack/nettle_attack
 	name = "Sharpened Leaves"
-	description = "It is a very dangerous weapon."
 	force_multiplier = 0.2
 	degrades_after_hit = TRUE
 
