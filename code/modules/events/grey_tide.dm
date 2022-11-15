@@ -18,12 +18,12 @@
 	severity = rand(1,3)
 
 	var/list/potential_areas = list(/area/station/command,
-								/area/station/engineering,
-								/area/station/medical,
-								/area/station/security,
-								/area/station/cargo,
-								/area/station/science)
-
+		/area/station/engineering,
+		/area/station/medical,
+		/area/station/security,
+		/area/station/cargo,
+		/area/station/science,
+	)
 
 	for(var/i in 1 to severity)
 		var/picked_area = pick_n_take(potential_areas)
@@ -32,7 +32,7 @@
 				areas_to_open += area_to_check
 
 /datum/round_event/grey_tide/announce(fake)
-	priority_announce("Gr3y.T1d3 virus detected in [station_name()] secure locking encryption subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert") //It affects more than just doors!
+	priority_announce("Gr3y.T1d3 virus detected in [station_name()] secure locking encryption subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 
 /datum/round_event/grey_tide/start()
 	if(!length(areas_to_open))
