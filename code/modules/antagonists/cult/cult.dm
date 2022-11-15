@@ -309,6 +309,7 @@
 
 /datum/team/cult/add_member(datum/mind/new_member)
 	. = ..()
+	// A little hacky, but this checks that cult ghosts don't contribute to the size at maximum value.
 	if(is_unassigned_job(new_member.assigned_role))
 		return
 	size_at_maximum++
