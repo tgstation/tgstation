@@ -1,6 +1,6 @@
 /// Tucking element, for things that can be tucked into bed.
 /datum/element/bed_tuckable
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// our pixel_x offset - how much the item moves x when in bed (+x is closer to the pillow)
 	var/x_offset = 0
@@ -19,7 +19,7 @@
 	x_offset = x
 	y_offset = y
 	starting_angle = rotation
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_OBJ, .proc/tuck_into_bed)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(tuck_into_bed))
 
 /datum/element/bed_tuckable/Detach(obj/target)
 	. = ..()
@@ -48,7 +48,7 @@
 	if(starting_angle)
 		rotation_degree = target_bed.dir & EAST ? starting_angle + 180 : starting_angle
 		tucked.transform = turn(tucked.transform, rotation_degree)
-		RegisterSignal(tucked, COMSIG_ITEM_PICKUP, .proc/untuck)
+		RegisterSignal(tucked, COMSIG_ITEM_PICKUP, PROC_REF(untuck))
 
 	return COMPONENT_NO_AFTERATTACK
 

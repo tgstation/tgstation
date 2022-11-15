@@ -10,7 +10,7 @@
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/Remove(mob/remove_from)
 	. = ..()
@@ -20,7 +20,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(is_jaunting())
+	if(is_jaunting(owner))
 		return TRUE
 	var/turf/cast_turf = get_turf(owner)
 	if(cast_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)

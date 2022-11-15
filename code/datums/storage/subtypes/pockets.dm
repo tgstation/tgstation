@@ -61,7 +61,7 @@
 	. = ..()
 	if(ispickedupmob(to_insert))
 		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
-		if(locate(/mob/living/simple_animal/mouse) in mausholder.contents)
+		if(locate(/mob/living/basic/mouse) in mausholder.contents)
 			return
 		return FALSE
 
@@ -96,7 +96,8 @@
 		/obj/item/lighter,
 		/obj/item/match,
 		/obj/item/holochip,
-		/obj/item/toy/crayon),
+		/obj/item/toy/crayon,
+		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
 		/obj/item/ammo_casing/caseless/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,
@@ -129,7 +130,8 @@
 		/obj/item/match,
 		/obj/item/holochip,
 		/obj/item/toy/crayon,
-		/obj/item/bikehorn),
+		/obj/item/bikehorn,
+		/obj/item/reagent_containers/cup/glass/flask),
 		list(/obj/item/screwdriver/power,
 		/obj/item/ammo_casing/caseless/rocket,
 		/obj/item/clothing/mask/cigarette/pipe,

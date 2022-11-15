@@ -1,5 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - qol: "Add RMB hotkey to toggle lighting for flashlights.  Add contextual screentips for flashlights."
-  - soundadd: "Reuse existing sounds for flares to use `sound/items/match_strike.ogg` and glowsticks to use `sound/effects/wounds/crack2.ogg`"

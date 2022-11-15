@@ -10,13 +10,13 @@
 	var/time_to_remove = 3.5 SECONDS
 
 /datum/status_effect/strandling/on_apply()
-	RegisterSignal(owner, COMSIG_CARBON_PRE_BREATHE, .proc/on_breathe)
-	RegisterSignal(owner, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), .proc/on_cut)
-	RegisterSignal(owner, COMSIG_CARBON_PRE_HELP_ACT, .proc/on_self_check)
+	RegisterSignal(owner, COMSIG_CARBON_PRE_BREATHE, PROC_REF(on_breathe))
+	RegisterSignal(owner, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), PROC_REF(on_cut))
+	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(on_self_check))
 	return TRUE
 
 /datum/status_effect/strandling/on_remove()
-	UnregisterSignal(owner, list(COMSIG_CARBON_PRE_BREATHE, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), COMSIG_CARBON_PRE_HELP_ACT))
+	UnregisterSignal(owner, list(COMSIG_CARBON_PRE_BREATHE, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), COMSIG_CARBON_PRE_MISC_HELP))
 
 /datum/status_effect/strandling/get_examine_text()
 	return span_warning("[owner.p_they(TRUE)] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
@@ -37,18 +37,18 @@
 	if(DOING_INTERACTION(user, REF(src)))
 		return
 
-	INVOKE_ASYNC(src, .proc/try_remove_effect, user, tool)
+	INVOKE_ASYNC(src, PROC_REF(try_remove_effect), user, tool)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
-/// Signal proc for [COMSIG_CARBON_PRE_HELP_ACT], allowing someone to remove the effect by hand
+/// Signal proc for [COMSIG_CARBON_PRE_MISC_HELP], allowing someone to remove the effect by hand
 /datum/status_effect/strandling/proc/on_self_check(mob/living/carbon/source, mob/living/helper)
 	SIGNAL_HANDLER
 
 	if(DOING_INTERACTION(helper, REF(src)))
 		return
 
-	INVOKE_ASYNC(src, .proc/try_remove_effect, helper)
-	return COMPONENT_BLOCK_HELP_ACT
+	INVOKE_ASYNC(src, PROC_REF(try_remove_effect), helper)
+	return COMPONENT_BLOCK_MISC_HELP
 
 /**
  * Attempts a do_after to remove the effect and stop the strangling.

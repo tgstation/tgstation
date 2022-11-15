@@ -85,6 +85,8 @@
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
 	aim_dir = get_dir(user, bomb_target)
+	if(isdead(bomb_target))
+		return
 	if(!flag)
 		return
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))
@@ -117,7 +119,7 @@
 
 		target.add_overlay(plastic_overlay)
 		to_chat(user, span_notice("You plant the bomb. Timer counting down from [det_time]."))
-		addtimer(CALLBACK(src, .proc/detonate), det_time*10)
+		addtimer(CALLBACK(src, PROC_REF(detonate)), det_time*10)
 
 /obj/item/grenade/c4/proc/shout_syndicate_crap(mob/player)
 	if(!player)

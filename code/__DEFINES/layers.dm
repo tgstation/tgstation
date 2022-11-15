@@ -45,13 +45,13 @@
 #define O_LIGHTING_VISUAL_PLANE 11
 #define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
 
-///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 12
-
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_PLANE 14
 
 #define RENDER_PLANE_LIGHTING 15
+
+///Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 16
 
 ///---------------- MISC -----------------------
 
@@ -65,9 +65,6 @@
 #define HIGH_GAME_PLANE 22
 
 #define FULLSCREEN_PLANE 23
-
-///Visuals that represent sounds happening, and can be seen while blind.
-#define SOUND_EFFECT_VISUAL_PLANE 25
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
@@ -213,10 +210,11 @@
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
 
-///--------------- SOUND EFFECT VISUALS ------------
+#define FOV_EFFECT_LAYER 100
+
+///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 /// Bubble for typing indicators
-#define TYPING_LAYER 1
-#define FOV_EFFECTS_LAYER 2 //Blindness effects are not layer 4, they lie to you
+#define TYPING_LAYER 500
 
 #define RADIAL_BACKGROUND_LAYER 0
 ///1000 is an unimportant number, it's just to normalize copied layers

@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - admin: "Cross-server messages are now filtered against the server's word filter. If it's hard filtered, the message will not send. If it's soft-filtered, it will send slower to allow an admin more time to cancel it."

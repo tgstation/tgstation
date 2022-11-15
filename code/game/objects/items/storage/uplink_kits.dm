@@ -129,7 +129,7 @@
 			/obj/item/storage/backpack/duffelbag/syndie/sabotage
 			new /obj/item/camera_bug(src)
 			new /obj/item/sbeacondrop/powersink(src)
-			new /obj/item/computer_hardware/hard_drive/portable/virus/deto(src)
+			new /obj/item/computer_disk/virus/detomatix(src)
 			new /obj/item/storage/toolbox/syndicate(src)
 			new /obj/item/pizzabox/bomb(src)
 			new /obj/item/storage/box/syndie_kit/emp(src)

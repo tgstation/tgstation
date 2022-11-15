@@ -87,7 +87,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	new /atom/movable/screen/splash(null, C)
 
 	notransform = TRUE
-	sleep(29) //let the animation play
+	sleep(2.9 SECONDS) //let the animation play
 	notransform = FALSE
 
 	if(!C)

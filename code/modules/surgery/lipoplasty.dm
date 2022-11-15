@@ -16,7 +16,7 @@
 
 //cut fat
 /datum/surgery_step/cut_fat
-	name = "cut excess fat"
+	name = "cut excess fat (circular saw)"
 	implements = list(
 		TOOL_SAW = 100,
 		/obj/item/hatchet = 35,
@@ -39,7 +39,7 @@
 
 //remove fat
 /datum/surgery_step/remove_fat
-	name = "remove loose fat"
+	name = "remove loose fat (retractor)"
 	implements = list(
 		TOOL_RETRACTOR = 100,
 		TOOL_SCREWDRIVER = 45,
