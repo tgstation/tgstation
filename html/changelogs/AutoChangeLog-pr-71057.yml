@@ -1,6 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes:
-  - rscadd: "Added several new pepper spray refillers around the Security wing of Ice Box Station"
-  - bugfix: "Fixed missing pepper spray refiller in the Medbay Checkpoint on Ice Box Station"
-  - bugfix: "Fixed a doubled-up pepper spray refiller in the Security Office on Delta Station"

@@ -87,6 +87,12 @@
 	. = ..()
 	allowed += /obj/item/storage/bag/xeno
 
+/obj/item/clothing/suit/toggle/labcoat/research_director
+	name = "research director's coat"
+	desc = "A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric."
+	icon_state = "labcoat_rd"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 75, FIRE = 75, ACID = 75)
+
 /obj/item/clothing/suit/toggle/labcoat/roboticist
 	name = "roboticist labcoat"
 	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
@@ -96,4 +102,3 @@
 	name = "interdyne labcoat"
 	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
 	icon_state = "labcoat_robo"
-

@@ -104,7 +104,7 @@
 
 	replace_in_name("%TARGET%", victim_mind.name)
 	replace_in_name("%JOB TITLE%", victim_mind.assigned_role.title)
-	RegisterSignal(victim, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal)
+	RegisterSignal(victim, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_eye_removal))
 	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = COMSIG_PARENT_QDELETING)
 	return TRUE
 
@@ -167,12 +167,12 @@
 	victim.visible_message(
 		span_warning("[user] presses [src] against [victim]'s skull!"),
 		span_userdanger("[user] presses [src] against your skull!"))
-	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
+	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, victim)))
 		return
 
 	to_chat(victim, span_userdanger("You feel something forcing its way into your skull!"))
 	balloon_alert(user, "applying pressure...")
-	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
+	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, victim)))
 		return
 
 	var/datum/wound/blunt/severe/severe_wound_type = /datum/wound/blunt/severe
@@ -188,7 +188,7 @@
 	playsound(victim, "sound/effects/wounds/crackandbleed.ogg", 100)
 	log_combat(user, victim, "cracked the skull of (eye snatching)", src)
 
-	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, .proc/eyeballs_exist, eyeballies, head, victim)))
+	if(!do_after(user, 5 SECONDS, target = victim, extra_checks = CALLBACK(src, PROC_REF(eyeballs_exist), eyeballies, head, victim)))
 		return
 
 	if(!HAS_TRAIT(victim, TRAIT_BLIND))

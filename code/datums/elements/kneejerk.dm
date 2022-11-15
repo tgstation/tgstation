@@ -7,7 +7,7 @@
 	if (!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_item_attack)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 
 /datum/element/kneejerk/Detach(datum/source, ...)
 	. = ..()
