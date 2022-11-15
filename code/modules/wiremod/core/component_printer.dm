@@ -29,8 +29,8 @@
 
 		current_unlocked_designs[design.build_path] = design.id
 
-	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
-	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
+	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_research))
+	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_removed))
 
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
@@ -348,7 +348,7 @@
 
 /obj/machinery/module_duplicator/proc/print_module(list/design)
 	flick("module-fab-print", src)
-	addtimer(CALLBACK(src, .proc/finish_module_print, design), 1.6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_module_print), design), 1.6 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_print(list/design)
 	var/atom/movable/created_atom
@@ -412,7 +412,7 @@
 			return ..()
 
 	flick("module-fab-scan", src)
-	addtimer(CALLBACK(src, .proc/finish_module_scan, user, data), 1.4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_module_scan), user, data), 1.4 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
 	scanned_designs += list(data)

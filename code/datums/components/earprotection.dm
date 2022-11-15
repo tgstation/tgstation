@@ -1,7 +1,7 @@
 /datum/component/wearertargeting/earprotection
 	signals = list(COMSIG_CARBON_SOUNDBANG)
 	mobtype = /mob/living/carbon
-	proctype = .proc/reducebang
+	proctype = PROC_REF(reducebang)
 
 /datum/component/wearertargeting/earprotection/Initialize(_valid_slots)
 	. = ..()

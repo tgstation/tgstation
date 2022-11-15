@@ -78,9 +78,9 @@
 	. = ..()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
@@ -88,12 +88,12 @@
 	. = ..()
 	if(var_name == NAMEOF(src, mat_container_flags) && parent)
 		if(!(old_flags & MATCONTAINER_EXAMINE) && mat_container_flags & MATCONTAINER_EXAMINE)
-			RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+			RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 		else if(old_flags & MATCONTAINER_EXAMINE && !(mat_container_flags & MATCONTAINER_EXAMINE))
 			UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
 
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+			RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
 			UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
 
@@ -140,7 +140,7 @@
 				to_chat(user, span_warning("[parent] can't hold any more of [I] sheets."))
 				return
 			//split the amount we don't need off
-			INVOKE_ASYNC(stack_to_split, /obj/item/stack.proc/split_stack, user, stack_to_split.amount - sheets_to_insert)
+			INVOKE_ASYNC(stack_to_split, TYPE_PROC_REF(/obj/item/stack, split_stack), user, stack_to_split.amount - sheets_to_insert)
 		else
 			to_chat(user, span_warning("[I] contains more materials than [parent] has space to hold."))
 			return

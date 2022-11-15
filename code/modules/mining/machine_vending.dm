@@ -189,7 +189,7 @@
 		option.info = span_boldnotice(current_set.description)
 		items[set_name] = option
 
-	var/selection = show_radial_menu(redeemer, src, items, custom_check = CALLBACK(src, .proc/check_menu, voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
+	var/selection = show_radial_menu(redeemer, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!selection)
 		return
 
