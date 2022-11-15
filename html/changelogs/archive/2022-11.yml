@@ -313,3 +313,12 @@
   - qol: When saving Experiment Log Recording Data to a data disk on either the Tachyon
       Doppler or the Tank Compressor, Nanotrasen released a UI/UX update in order
       to have the button that saves the data onto your disk... say "Save".
+2022-11-09:
+  MTandi:
+  - bugfix: made Kilo Xenobio guide visible from the north part of the room.
+2022-11-14:
+  Iamgoofball:
+  - bugfix: You can no longer attach igniters to igniters.
+2022-11-15:
+  Iamgoofball:
+  - rscdel: You can no longer craft explosive lances.
