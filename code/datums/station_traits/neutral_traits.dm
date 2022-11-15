@@ -46,7 +46,7 @@
 		// Also gives him a couple extra lives to survive eventual tiders.
 		dog.deadchat_plays(DEMOCRACY_MODE|MUTE_DEMOCRACY_MESSAGES, 3 SECONDS)
 		dog.AddComponent(/datum/component/multiple_lives, 2)
-		RegisterSignal(dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
+		RegisterSignal(dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(do_corgi_respawn))
 
 		// The extended safety checks at time of writing are about chasms and lava
 		// if there are any chasms and lava on stations in the future, woah
@@ -84,7 +84,7 @@
 	new_dog.regenerate_icons()
 	new_dog.deadchat_plays(DEMOCRACY_MODE|MUTE_DEMOCRACY_MESSAGES, 3 SECONDS)
 	if(lives_left)
-		RegisterSignal(new_dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
+		RegisterSignal(new_dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, PROC_REF(do_corgi_respawn))
 
 	if(!gibbed) //The old dog will now disappear so we won't have more than one Ian at a time.
 		qdel(old_dog)
@@ -145,7 +145,7 @@
 
 /datum/station_trait/cargorilla/New()
 	. = ..()
-	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/replace_cargo)
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
 
 /// Replace some cargo equipment and 'personnel' with a gorilla.
 /datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
@@ -159,7 +159,7 @@
 	cargorilla.name = cargo_sloth.name
 	// We do a poll on roundstart, don't let ghosts in early
 	cargorilla.being_polled_for = TRUE
-	INVOKE_ASYNC(src, .proc/make_id_for_gorilla)
+	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
 
 	// hm our sloth looks funny today
 	qdel(cargo_sloth)
@@ -180,7 +180,7 @@
 	if(!cargorilla)
 		return
 
-	addtimer(CALLBACK(src, .proc/get_ghost_for_gorilla, cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
+	addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
 	cargorilla = null
 
 /// Get us a ghost for the gorilla.
