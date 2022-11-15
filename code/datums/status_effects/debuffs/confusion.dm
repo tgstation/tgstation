@@ -15,8 +15,8 @@
 	return ..()
 
 /datum/status_effect/confusion/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_confusion)
-	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/on_move)
+	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_confusion))
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(on_move))
 	return TRUE
 
 /datum/status_effect/confusion/on_remove()

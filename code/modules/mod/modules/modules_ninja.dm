@@ -23,10 +23,10 @@
 	if(!.)
 		return
 	if(bumpoff)
-		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, .proc/unstealth)
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
-	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
-	RegisterSignal(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
+		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, PROC_REF(unstealth))
+	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
+	RegisterSignal(mod.wearer, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), PROC_REF(unstealth))
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_power_cost)
 
@@ -90,7 +90,7 @@
 
 /obj/item/mod/module/welding/camera_vision/on_suit_activation()
 	. = ..()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 
 /obj/item/mod/module/welding/camera_vision/on_suit_deactivation(deleting = FALSE)
 	. = ..()
@@ -131,7 +131,7 @@
 	var/door_hack_counter = 0
 
 /obj/item/mod/module/hacker/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/hack)
+	RegisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(hack))
 
 /obj/item/mod/module/hacker/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
@@ -206,8 +206,8 @@
 
 /obj/item/mod/module/weapon_recall/proc/set_weapon(obj/item/weapon)
 	linked_weapon = weapon
-	RegisterSignal(linked_weapon, COMSIG_MOVABLE_IMPACT, .proc/catch_weapon)
-	RegisterSignal(linked_weapon, COMSIG_PARENT_QDELETING, .proc/deleted_weapon)
+	RegisterSignal(linked_weapon, COMSIG_MOVABLE_IMPACT, PROC_REF(catch_weapon))
+	RegisterSignal(linked_weapon, COMSIG_PARENT_QDELETING, PROC_REF(deleted_weapon))
 
 /obj/item/mod/module/weapon_recall/proc/recall_weapon(caught = FALSE)
 	linked_weapon.forceMove(get_turf(src))
@@ -235,7 +235,7 @@
 		return
 	if(hit_atom != mod.wearer)
 		return
-	INVOKE_ASYNC(src, .proc/recall_weapon, TRUE)
+	INVOKE_ASYNC(src, PROC_REF(recall_weapon), TRUE)
 	return COMPONENT_MOVABLE_IMPACT_NEVERMIND
 
 /obj/item/mod/module/weapon_recall/proc/deleted_weapon(obj/item/source)
@@ -262,6 +262,7 @@
 		return
 	var/mob/living/living_user = user
 	to_chat(living_user, span_danger("<B>fATaL EERRoR</B>: 382200-*#00CODE <B>RED</B>\nUNAUTHORIZED USE DETECteD\nCoMMENCING SUB-R0UTIN3 13...\nTERMInATING U-U-USER..."))
+	living_user.investigate_log("has been gibbed by using a MODsuit equipped with [src].", INVESTIGATE_DEATHS)
 	living_user.gib()
 
 /obj/item/mod/module/dna_lock/reinforced/on_emp(datum/source, severity)
@@ -409,10 +410,10 @@
 	mod.wearer.remove_status_effect(/datum/status_effect/speech/stutter)
 	mod.wearer.reagents.add_reagent(/datum/reagent/medicine/stimulants, 5)
 	reagents.remove_reagent(reagent_required, reagents.total_volume * 0.75)
-	addtimer(CALLBACK(src, .proc/boost_aftereffects, mod.wearer), 7 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(boost_aftereffects), mod.wearer), 7 SECONDS)
 
 /obj/item/mod/module/adrenaline_boost/on_install()
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 
 /obj/item/mod/module/adrenaline_boost/on_uninstall(deleting)
 	UnregisterSignal(mod, COMSIG_PARENT_ATTACKBY)

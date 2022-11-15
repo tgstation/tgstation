@@ -1,7 +1,7 @@
 /// This hostile will not be able to attack a given typecache, and will receive
 /// a balloon alert when it tries to.
 /datum/element/prevent_attacking_of_types
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
 	/// The typecache of things this hostile can't attack
@@ -19,7 +19,7 @@
 	src.alert_message = alert_message
 	src.typecache = typecache
 
-	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_pre_attacking_target)
+	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attacking_target))
 
 /datum/element/prevent_attacking_of_types/Detach(datum/source, ...)
 	UnregisterSignal(source, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)

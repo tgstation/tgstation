@@ -55,6 +55,8 @@
 
 	/// don't show any chat messages regarding inserting items
 	var/silent = FALSE
+	/// same as above but only for the user, useful to cut on chat spam without removing feedback for other players
+	var/silent_for_user = FALSE
 	/// play a rustling sound when interacting with the bag
 	var/rustle_sound = TRUE
 
@@ -109,26 +111,26 @@
 		qdel(src)
 		return
 
-	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), .proc/on_attack)
-	RegisterSignal(resolve_parent, COMSIG_MOUSEDROP_ONTO, .proc/on_mousedrop_onto)
-	RegisterSignal(resolve_parent, COMSIG_MOUSEDROPPED_ONTO, .proc/on_mousedropped_onto)
+	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
+	RegisterSignal(resolve_parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
+	RegisterSignal(resolve_parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(on_mousedropped_onto))
 
-	RegisterSignal(resolve_parent, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
-	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
-	RegisterSignal(resolve_parent, COMSIG_ITEM_PRE_ATTACK, .proc/on_preattack)
-	RegisterSignal(resolve_parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_deconstruct)
+	RegisterSignal(resolve_parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
+	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(resolve_parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_preattack))
+	RegisterSignal(resolve_parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
 
-	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, .proc/mass_empty)
+	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(mass_empty))
 
-	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), .proc/open_storage_on_signal)
-	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/open_storage_attackby_secondary)
+	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
+	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, PROC_REF(open_storage_attackby_secondary))
 
-	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, .proc/handle_enter)
-	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, .proc/handle_exit)
-	RegisterSignal(resolve_parent, COMSIG_MOVABLE_MOVED, .proc/close_distance)
-	RegisterSignal(resolve_parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
+	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, PROC_REF(handle_enter))
+	RegisterSignal(resolve_location, COMSIG_ATOM_EXITED, PROC_REF(handle_exit))
+	RegisterSignal(resolve_parent, COMSIG_MOVABLE_MOVED, PROC_REF(close_distance))
+	RegisterSignal(resolve_parent, COMSIG_ITEM_EQUIPPED, PROC_REF(update_actions))
 
-	RegisterSignal(resolve_parent, COMSIG_TOPIC, .proc/topic_handle)
+	RegisterSignal(resolve_parent, COMSIG_TOPIC, PROC_REF(topic_handle))
 
 	orient_to_hud()
 
@@ -214,8 +216,8 @@
 
 	UnregisterSignal(resolve_location, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED))
 
-	RegisterSignal(real, COMSIG_ATOM_ENTERED, .proc/handle_enter)
-	RegisterSignal(real, COMSIG_ATOM_EXITED, .proc/handle_exit)
+	RegisterSignal(real, COMSIG_ATOM_ENTERED, PROC_REF(handle_enter))
+	RegisterSignal(real, COMSIG_ATOM_EXITED, PROC_REF(handle_exit))
 
 	real_location = WEAKREF(real)
 
@@ -284,7 +286,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	var/datum/action/modeswitch_action = resolve_parent.add_item_action(/datum/action/item_action/storage_gather_mode)
-	RegisterSignal(modeswitch_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
+	RegisterSignal(modeswitch_action, COMSIG_ACTION_TRIGGER, PROC_REF(action_trigger))
 	modeswitch_action_ref = WEAKREF(modeswitch_action)
 
 /// Refreshes and item to be put back into the real world, out of storage.
@@ -330,7 +332,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	if(resolve_location.contents.len >= max_slots)
-		if(messages && user)
+		if(messages && user && !silent_for_user)
 			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
 		return FALSE
 
@@ -340,7 +342,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		total_weight += thing.w_class
 
 	if(total_weight > max_total_storage)
-		if(messages && user)
+		if(messages && user && !silent_for_user)
 			to_chat(user, span_warning("\The [to_insert] can't fit into \the [resolve_parent]! Make some space!"))
 		return FALSE
 
@@ -457,7 +459,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(rustle_sound)
 		playsound(resolve_parent, SFX_RUSTLE, 50, TRUE, -5)
 
-	to_chat(user, span_notice("You put [thing] [insert_preposition]to [resolve_parent]."))
+	if(!silent_for_user)
+		to_chat(user, span_notice("You put [thing] [insert_preposition]to [resolve_parent]."))
 
 	for(var/mob/viewing in oviewers(user, null))
 		if(in_range(user, viewing))
@@ -637,7 +640,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!isturf(thing.loc))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	INVOKE_ASYNC(src, .proc/collect_on_turf, thing, user)
+	INVOKE_ASYNC(src, PROC_REF(collect_on_turf), thing, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /**
@@ -664,7 +667,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/datum/progressbar/progress = new(user, amount, thing.loc)
 	var/list/rejections = list()
 
-	while(do_after(user, 1 SECONDS, resolve_parent, NONE, FALSE, CALLBACK(src, .proc/handle_mass_pickup, user, turf_things, thing.loc, rejections, progress)))
+	while(do_after(user, 1 SECONDS, resolve_parent, NONE, FALSE, CALLBACK(src, PROC_REF(handle_mass_pickup), user, turf_things, thing.loc, rejections, progress)))
 		stoplag(1)
 
 	progress.end_progress()
@@ -696,10 +699,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(over_object != user)
 			return
 
-		INVOKE_ASYNC(src, .proc/open_storage, user)
+		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 
 	else if(!istype(over_object, /atom/movable/screen))
-		INVOKE_ASYNC(src, .proc/dump_content_at, over_object, user)
+		INVOKE_ASYNC(src, PROC_REF(dump_content_at), over_object, user)
 
 /**
  * Dumps all of our contents at a specific location.
@@ -800,16 +803,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(ishuman(user))
 		var/mob/living/carbon/human/hum = user
 		if(hum.l_store == resolve_parent && !hum.get_active_held_item())
-			INVOKE_ASYNC(hum, /mob.proc/put_in_hands, resolve_parent)
+			INVOKE_ASYNC(hum, TYPE_PROC_REF(/mob, put_in_hands), resolve_parent)
 			hum.l_store = null
 			return
 		if(hum.r_store == resolve_parent && !hum.get_active_held_item())
-			INVOKE_ASYNC(hum, /mob.proc/put_in_hands, resolve_parent)
+			INVOKE_ASYNC(hum, TYPE_PROC_REF(/mob, put_in_hands), resolve_parent)
 			hum.r_store = null
 			return
 
 	if(resolve_parent.loc == user)
-		INVOKE_ASYNC(src, .proc/open_storage, user)
+		INVOKE_ASYNC(src, PROC_REF(open_storage), user)
 		return TRUE
 
 /// Generates the numbers on an item in storage to show stacking.
@@ -914,7 +917,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/open_storage_on_signal(datum/source, mob/to_show)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/open_storage, to_show)
+	INVOKE_ASYNC(src, PROC_REF(open_storage), to_show)
 	return COMPONENT_NO_AFTERATTACK
 
 /// Opens the storage to the mob, showing them the contents to their UI.
@@ -961,7 +964,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	attempt_remove(to_remove)
 
-	INVOKE_ASYNC(src, .proc/put_in_hands_async, to_show, to_remove)
+	INVOKE_ASYNC(src, PROC_REF(put_in_hands_async), to_show, to_remove)
 
 	if(!silent)
 		to_show.visible_message(span_warning("[to_show] draws [to_remove] from [resolve_parent]!"), span_notice("You draw [to_remove] from [resolve_parent]."))

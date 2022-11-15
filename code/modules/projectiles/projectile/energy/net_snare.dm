@@ -40,7 +40,7 @@
 		else
 			com.target_ref = null
 
-	addtimer(CALLBACK(src, .proc/pop, teletarget), 30)
+	addtimer(CALLBACK(src, PROC_REF(pop), teletarget), 30)
 
 /obj/effect/nettingportal/proc/pop(teletarget)
 	if(teletarget)
