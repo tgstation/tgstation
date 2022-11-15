@@ -72,7 +72,7 @@
 			break
 		if(body_position != LYING_DOWN && (operations.surgery_flags & SURGERY_REQUIRE_RESTING))
 			continue
-		if((operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
+		if(!(operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
 			continue
 		var/list/modifiers = params2list(params)
 		if(operations.next_step(user, modifiers))
