@@ -44,7 +44,7 @@
 	cast_on.blur_eyes(eye_blurry_amount)
 	if(cast_on.dna && blind_mutation_duration > 0 SECONDS)
 		cast_on.dna.add_mutation(/datum/mutation/human/blind)
-		addtimer(CALLBACK(src, .proc/fix_eyes, cast_on), blind_mutation_duration)
+		addtimer(CALLBACK(src, PROC_REF(fix_eyes), cast_on), blind_mutation_duration)
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/blind/proc/fix_eyes(mob/living/carbon/human/cast_on)

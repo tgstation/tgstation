@@ -104,7 +104,7 @@
 			return
 		if(toppaper)
 			UnregisterSignal(toppaper, COMSIG_ATOM_UPDATED_ICON)
-		RegisterSignal(weapon, COMSIG_ATOM_UPDATED_ICON, .proc/on_top_paper_change)
+		RegisterSignal(weapon, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_top_paper_change))
 		toppaper_ref = WEAKREF(weapon)
 		to_chat(user, span_notice("You clip [weapon] onto [src]."))
 	else if(istype(weapon, /obj/item/pen) && !pen)
