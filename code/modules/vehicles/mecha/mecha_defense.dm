@@ -203,7 +203,9 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/user, params)
+/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/living/user, params)
+	if(user.combat_mode)
+		return ..()
 	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
 			to_chat(user, span_notice("[src]-[W] interface initialized successfully."))
