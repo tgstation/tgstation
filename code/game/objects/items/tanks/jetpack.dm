@@ -17,8 +17,8 @@
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, .proc/get_user)
-	check_on_move = CALLBACK(src, .proc/allow_thrust, 0.01)
+	get_mover = CALLBACK(src, PROC_REF(get_user))
+	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
 	refresh_jetpack()
 
 /obj/item/tank/jetpack/Destroy()

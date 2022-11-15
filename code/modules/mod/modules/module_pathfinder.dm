@@ -117,7 +117,7 @@
 	ADD_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
 	animate(module.mod, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
 	module.mod.add_overlay(jet_icon)
-	RegisterSignal(module.mod, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(module.mod, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	balloon_alert(imp_in, "suit recalled")
 	return TRUE
 

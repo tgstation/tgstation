@@ -22,7 +22,7 @@
 /datum/action/cooldown/spell/summonitem/proc/mark_item(obj/to_mark)
 	name = "Recall [to_mark]"
 	marked_item = to_mark
-	RegisterSignal(marked_item, COMSIG_PARENT_QDELETING, .proc/on_marked_item_deleted)
+	RegisterSignal(marked_item, COMSIG_PARENT_QDELETING, PROC_REF(on_marked_item_deleted))
 
 /// Unset our current marked item
 /datum/action/cooldown/spell/summonitem/proc/unmark_item()

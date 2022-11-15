@@ -43,7 +43,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 		if(EXOSCAN_DEEP)
 			scan_power = GLOB.exoscanner_controller.get_scan_power(target)
 			scan_time = (BASE_DEEP_SCAN_TIME*target.distance)/scan_power
-	scan_timer = addtimer(CALLBACK(src,.proc/resolve_scan),scan_time,TIMER_STOPPABLE)
+	scan_timer = addtimer(CALLBACK(src, PROC_REF(resolve_scan)),scan_time,TIMER_STOPPABLE)
 
 /// Short description for in progress scan
 /datum/exoscan/proc/ui_description()
@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 /obj/machinery/computer/exoscanner_control/proc/create_scan(scan_type,target)
 	var/datum/exoscan/scan = GLOB.exoscanner_controller.create_scan(scan_type,target)
 	if(scan)
-		RegisterSignal(scan, COMSIG_EXOSCAN_INTERRUPTED, .proc/scan_failed)
+		RegisterSignal(scan, COMSIG_EXOSCAN_INTERRUPTED, PROC_REF(scan_failed))
 
 /obj/machinery/computer/exoscanner_control/proc/scan_failed()
 	SIGNAL_HANDLER
@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /obj/machinery/exoscanner/Initialize(mapload)
 	. = ..()
-	RegisterSignal(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED),.proc/scan_change)
+	RegisterSignal(GLOB.exoscanner_controller,list(COMSIG_EXOSCAN_STARTED,COMSIG_EXOSCAN_FINISHED), PROC_REF(scan_change))
 	update_readiness()
 
 /obj/machinery/exoscanner/proc/scan_change()
@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	if(length(GLOB.exoscanner_controller.tracked_dishes) <= 0 || (target && GLOB.exoscanner_controller.get_scan_power(target) <= 0))
 		return
 	current_scan = new(scan_type,target)
-	RegisterSignal(current_scan,COMSIG_PARENT_QDELETING,.proc/cleanup_current_scan)
+	RegisterSignal(current_scan,COMSIG_PARENT_QDELETING, PROC_REF(cleanup_current_scan))
 	SEND_SIGNAL(src,COMSIG_EXOSCAN_STARTED,current_scan)
 	return current_scan
 
