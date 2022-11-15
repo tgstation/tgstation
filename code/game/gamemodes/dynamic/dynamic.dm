@@ -292,7 +292,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(rule.flags & HIGH_IMPACT_RULESET)
 			rule.round_result()
 			// One was set, so we're done here
-			if(Ssticker.news_report)
+			if(SSticker.news_report)
 				return
 
 	return ..()

@@ -624,14 +624,15 @@ SUBSYSTEM_DEF(ticker)
 		// The station was nuked generically
 		if(STATION_NUKED)
 			// There was a blob on board, guess it was nuked to stop it
-			for(var/mob/camera/blob/overmind as anything in GLOB.overminds)
-				if(overmind.max_count < overmind.announcement_size)
-					continue
+			if(length(GLOB.overminds))
+				for(var/mob/camera/blob/overmind as anything in GLOB.overminds)
+					if(overmind.max_count < overmind.announcement_size)
+						continue
 
-				news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled \
-					burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, \
-					and are enjoying a relaxing vacation."
-				break
+					news_message = "[decoded_station_name] is currently undergoing decontanimation after a controlled \
+						burst of radiation was used to remove a biological ooze. All employees were safely evacuated prior, \
+						and are enjoying a relaxing vacation."
+					break
 			// A self destruct or something else
 			else
 				news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. \
@@ -646,7 +647,7 @@ SUBSYSTEM_DEF(ticker)
 				the sector surrounding [decoded_station_name]."
 
 	if(news_message)
-		send2otherserver(news_source, news_message,"News_Report")
+		send2otherserver(news_source, news_message, "News_Report")
 
 /datum/controller/subsystem/ticker/proc/GetTimeLeft()
 	if(isnull(SSticker.timeLeft))
