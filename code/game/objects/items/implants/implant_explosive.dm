@@ -18,7 +18,7 @@
 	// and the process of activating destroys the body, so let the other
 	// signal handlers at least finish. Also, the "delayed explosion"
 	// uses sleeps, which is bad for signal handlers to do.
-	INVOKE_ASYNC(src, .proc/activate, "death")
+	INVOKE_ASYNC(src, PROC_REF(activate), "death")
 
 /obj/item/implant/explosive/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -55,7 +55,8 @@
 	if(delay <= 7)
 		explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
 		if(imp_in)
-			imp_in.gib(1)
+			imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
+			imp_in.gib(TRUE)
 		qdel(src)
 		return
 	timed_explosion()
@@ -73,7 +74,7 @@
 
 	. = ..()
 	if(.)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /obj/item/implant/explosive/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()
@@ -95,7 +96,8 @@
 	sleep(delay*0.25)
 	explosion(src, devastation_range = heavy, heavy_impact_range = medium, light_impact_range = weak, flame_range = weak, flash_range = weak, explosion_cause = src)
 	if(imp_in)
-		imp_in.gib(1)
+		imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
+		imp_in.gib(TRUE)
 	qdel(src)
 
 /obj/item/implant/explosive/macro

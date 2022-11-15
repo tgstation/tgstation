@@ -1,5 +1,5 @@
 /datum/element/empprotection
-	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	id_arg_index = 2
 	var/flags = NONE
 
@@ -8,7 +8,7 @@
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	flags = _flags
-	RegisterSignal(target, COMSIG_ATOM_EMP_ACT, .proc/getEmpFlags)
+	RegisterSignal(target, COMSIG_ATOM_EMP_ACT, PROC_REF(getEmpFlags))
 
 /datum/element/empprotection/Detach(atom/target)
 	UnregisterSignal(target, COMSIG_ATOM_EMP_ACT)

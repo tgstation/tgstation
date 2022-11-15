@@ -45,6 +45,7 @@
 			new /obj/effect/gibspawner(get_turf(victim))
 			return TRUE
 
+	living_victim.investigate_log("has been gibbed by the smite spell.", INVESTIGATE_DEATHS)
 	living_victim.gib()
 	return TRUE
 

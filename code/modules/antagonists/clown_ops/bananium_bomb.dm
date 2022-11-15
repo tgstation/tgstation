@@ -31,7 +31,7 @@
 	return /datum/cinematic/nuke/fake
 
 /obj/machinery/nuclearbomb/syndicate/bananium/nuke_effects(list/affected_z_levels)
-	INVOKE_ASYNC(GLOBAL_PROC, /proc/callback_on_everyone_on_z, affected_z_levels, CALLBACK(GLOBAL_PROC, /proc/make_into_clown), src)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(callback_on_everyone_on_z), affected_z_levels, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(make_into_clown)), src)
 
 /**
  * Helper proc that handles making someone into a clown after a bananium nuke goes off.

@@ -4,7 +4,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "vortex_recall"
 
-/datum/action/item_action/vortex_recall/IsAvailable()
+/datum/action/item_action/vortex_recall/IsAvailable(feedback = FALSE)
 	var/area/current_area = get_area(target)
 	if(!current_area || current_area.area_flags & NOTELEPORT)
 		return FALSE

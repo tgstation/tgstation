@@ -73,18 +73,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/lance
-	name = "Explosive Lance (Grenade)"
-	result = /obj/item/spear/explosive
-	reqs = list(/obj/item/spear = 1,
-				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/spear/bonespear, /obj/item/spear/bamboospear)
-	parts = list(/obj/item/spear = 1,
-				/obj/item/grenade = 1)
-	time = 1.5 SECONDS
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
 	result = /obj/item/shield/riot/flash
@@ -338,8 +326,8 @@
 	reqs = list(/obj/item/robot_suit = 1,
 				/obj/item/clothing/head/helmet = 1,
 				/obj/item/clothing/suit/armor/vest = 1,
-				/obj/item/bodypart/l_leg/robot = 1,
-				/obj/item/bodypart/r_leg/robot = 1,
+				/obj/item/bodypart/leg/left/robot = 1,
+				/obj/item/bodypart/leg/right/robot = 1,
 				/obj/item/stack/sheet/iron = 1,
 				/obj/item/stack/cable_coil = 1,
 				/obj/item/gun/energy/disabler = 1,
@@ -355,7 +343,7 @@
 				/obj/item/clothing/head/helmet/sec = 1,
 				/obj/item/melee/baton/security/ = 1,
 				/obj/item/assembly/prox_sensor = 1,
-				/obj/item/bodypart/r_arm/robot = 1)
+				/obj/item/bodypart/arm/right/robot = 1)
 	tool_behaviors = list(TOOL_WELDER)
 	time = 6 SECONDS
 	category = CAT_ROBOT
@@ -365,7 +353,7 @@
 	result = /mob/living/simple_animal/bot/cleanbot
 	reqs = list(/obj/item/reagent_containers/cup/bucket = 1,
 				/obj/item/assembly/prox_sensor = 1,
-				/obj/item/bodypart/r_arm/robot = 1)
+				/obj/item/bodypart/arm/right/robot = 1)
 	parts = list(/obj/item/reagent_containers/cup/bucket = 1)
 	time = 4 SECONDS
 	category = CAT_ROBOT
@@ -376,7 +364,7 @@
 	reqs = list(/obj/item/storage/toolbox = 1,
 				/obj/item/stack/tile/iron = 10,
 				/obj/item/assembly/prox_sensor = 1,
-				/obj/item/bodypart/r_arm/robot = 1)
+				/obj/item/bodypart/arm/right/robot = 1)
 	time = 4 SECONDS
 	category = CAT_ROBOT
 
@@ -386,7 +374,7 @@
 	reqs = list(/obj/item/healthanalyzer = 1,
 				/obj/item/storage/medkit = 1,
 				/obj/item/assembly/prox_sensor = 1,
-				/obj/item/bodypart/r_arm/robot = 1)
+				/obj/item/bodypart/arm/right/robot = 1)
 	parts = list(
 		/obj/item/storage/medkit = 1,
 		/obj/item/healthanalyzer = 1,
@@ -418,7 +406,7 @@
 	name = "Honkbot"
 	result = /mob/living/simple_animal/bot/secbot/honkbot
 	reqs = list(/obj/item/storage/box/clown = 1,
-				/obj/item/bodypart/r_arm/robot = 1,
+				/obj/item/bodypart/arm/right/robot = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bikehorn/ = 1)
 	time = 4 SECONDS
@@ -428,7 +416,7 @@
 	name = "Firebot"
 	result = /mob/living/simple_animal/bot/firebot
 	reqs = list(/obj/item/extinguisher = 1,
-				/obj/item/bodypart/r_arm/robot = 1,
+				/obj/item/bodypart/arm/right/robot = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/clothing/head/utility/hardhat/red = 1)
 	time = 4 SECONDS
@@ -458,8 +446,8 @@
 	name = "Vim"
 	result = /obj/vehicle/sealed/car/vim
 	reqs = list(/obj/item/clothing/head/helmet/space/eva = 1,
-				/obj/item/bodypart/l_leg/robot = 1,
-				/obj/item/bodypart/r_leg/robot = 1,
+				/obj/item/bodypart/leg/left/robot = 1,
+				/obj/item/bodypart/leg/right/robot = 1,
 				/obj/item/flashlight = 1,
 				/obj/item/assembly/voice = 1)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
@@ -857,13 +845,13 @@
 
 /datum/crafting_recipe/extendohand_r
 	name = "Extendo-Hand (Right Arm)"
-	reqs = list(/obj/item/bodypart/r_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
+	reqs = list(/obj/item/bodypart/arm/right/robot = 1, /obj/item/clothing/gloves/boxing = 1)
 	result = /obj/item/extendohand
 	category = CAT_MISC
 
 /datum/crafting_recipe/extendohand_l
 	name = "Extendo-Hand (Left Arm)"
-	reqs = list(/obj/item/bodypart/l_arm/robot = 1, /obj/item/clothing/gloves/boxing = 1)
+	reqs = list(/obj/item/bodypart/arm/left/robot = 1, /obj/item/clothing/gloves/boxing = 1)
 	result = /obj/item/extendohand
 	category = CAT_MISC
 
@@ -1838,6 +1826,28 @@
 	toiletbong.loc = toilet.loc
 	qdel(toilet)
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
+
+/datum/crafting_recipe/pillow_suit
+	name = "pillow suit"
+	result = /obj/item/clothing/suit/pillow_suit
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sticky_tape = 10,
+		/obj/item/pillow = 5,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/pillow_hood
+	name = "pillow hood"
+	result = /obj/item/clothing/head/pillow_hood
+	tool_behaviors = list(TOOL_WIRECUTTER, TOOL_KNIFE)
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/pillow = 1,
+	)
+	category = CAT_CLOTHING
+
 
 /datum/crafting_recipe/house_edge
 	name = "House Edge"
