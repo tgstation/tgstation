@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - qol: "Ore bags are \"silent\" for the wearer and won't send pointless chat messages about what has been stored/removed from it. Other players will still get a chat message, so miners can't get away with surprise plasma ore bombs."

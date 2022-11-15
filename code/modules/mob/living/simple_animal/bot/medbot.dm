@@ -143,9 +143,9 @@
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
 		self_right_time = 3.5 MINUTES, \
-		pre_tipped_callback = CALLBACK(src, .proc/pre_tip_over), \
-		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
-		post_untipped_callback = CALLBACK(src, .proc/after_righted))
+		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
+		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
+		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -392,10 +392,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(src, patient, 30,id=access_card)
+		path = get_path_to(src, patient, max_distance=30, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, patient, 30,1,id=access_card)
+			path = get_path_to(src, patient, max_distance=30, mintargetdist=1, id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 

@@ -105,7 +105,7 @@
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/regenerate_limbs/IsAvailable()
+/datum/action/innate/regenerate_limbs/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -224,7 +224,7 @@
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/split_body/IsAvailable()
+/datum/action/innate/split_body/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -585,7 +585,7 @@
 	background_icon_state = "bg_alien"
 	var/activation_type = SLIME_ACTIVATE_MINOR
 
-/datum/action/innate/use_extract/IsAvailable()
+/datum/action/innate/use_extract/IsAvailable(feedback = FALSE)
 	if(..())
 		var/datum/species/jelly/luminescent/species = target
 		if(species && species.current_extract && (world.time > species.extract_cooldown))
@@ -712,7 +712,7 @@
 		stack_trace("[name] ([type]) was instantiated on a non-mind_linker target, this doesn't work.")
 		qdel(src)
 
-/datum/action/innate/link_minds/IsAvailable()
+/datum/action/innate/link_minds/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -737,7 +737,7 @@
 	to_chat(living_target, span_warning("You feel a foreign presence within your mind..."))
 	currently_linking = TRUE
 
-	if(!do_after(owner, 6 SECONDS, target = living_target, extra_checks = CALLBACK(src, .proc/while_link_callback, living_target)))
+	if(!do_after(owner, 6 SECONDS, target = living_target, extra_checks = CALLBACK(src, PROC_REF(while_link_callback), living_target)))
 		to_chat(owner, span_warning("You can't seem to link [living_target]'s mind."))
 		to_chat(living_target, span_warning("The foreign presence leaves your mind."))
 		currently_linking = FALSE
