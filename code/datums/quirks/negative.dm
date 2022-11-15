@@ -995,7 +995,7 @@
 	name = "Body Purist"
 	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."
 	icon = "person-rays"
-	value = 0 //for testmerge purposes REMOVE
+	value = -2
 	mood_quirk = TRUE
 	gain_text = "<span class='danger'>You now begin to hate the idea of having cybernetic implants.</span>"
 	lose_text = "<span class='notice'>Maybe cybernetics aren't so bad. You now feel okay with augmentations and prosthetics.</span>"
