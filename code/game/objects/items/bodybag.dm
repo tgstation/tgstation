@@ -33,7 +33,7 @@
 	moveToNullspace()
 	return item_bag
 
-/obj/item/bodybag/suicide_act(mob/user)
+/obj/item/bodybag/suicide_act(mob/living/user)
 	if(isopenturf(user.loc))
 		user.visible_message(span_suicide("[user] is crawling into [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		var/obj/structure/closet/body_bag/R = new unfoldedbag_path(user.loc)
@@ -41,8 +41,7 @@
 		qdel(src)
 		user.forceMove(R)
 		playsound(src, 'sound/items/zip.ogg', 15, TRUE, -3)
-		return (OXYLOSS)
-	..()
+		return OXYLOSS
 
 // Bluespace bodybag
 
