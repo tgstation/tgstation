@@ -194,12 +194,14 @@
 	if(!LAZYLEN(mech.occupants) || (LAZYLEN(mech.occupants) == 1 && mech.mecha_flags & SILICON_PILOT)) //if no occupants, or only an ai
 		mech.balloon_alert(user, "it's empty!")
 		return
+	user.log_message("tried to pry open [mech], located at [loc_name(mech)], which is currently occupied by [mech.occupants.Join(", ")].", LOG_ATTACK)
 	var/mech_dir = mech.dir
 	mech.balloon_alert(user, "prying open...")
 	playsound(mech, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
 	if(!use_tool(mech, user, mech.enclosed ? 5 SECONDS : 3 SECONDS, volume = 0, extra_checks = CALLBACK(src, PROC_REF(extra_checks), mech, mech_dir)))
 		mech.balloon_alert(user, "interrupted!")
 		return
+	user.log_message("pried open [mech], located at [loc_name(mech)], which is currently occupied by [mech.occupants.Join(", ")].", LOG_ATTACK)
 	for(var/mob/living/occupant as anything in mech.occupants)
 		if(isAI(occupant))
 			continue
