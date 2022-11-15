@@ -41,10 +41,6 @@
 		log_admin("[key_name(usr)] is changing the map to a custom map")
 		var/datum/map_config/VM = new
 
-		VM.map_name = input("Choose the name for the map", "Map Name") as null|text
-		if(isnull(VM.map_name))
-			VM.map_name = "Custom"
-
 		var/map_file = input("Pick file:", "Map File") as null|file
 		if(isnull(map_file))
 			return
@@ -68,28 +64,56 @@
 			return
 
 		qdel(M)
+		var/config_file = null
+		var/json_value = list()
+		var/config = tgui_alert(usr,"Would you like to upload an additional config for this map?", "Map Config", list("Yes", "No"))
+		if(config == "Yes")
+			config_file = input("Pick file:", "Config JSON File") as null|file
+			if(isnull(config_file))
+				return
+			if(copytext("[config_file]", -5) != ".json")
+				to_chat(src, span_warning("Filename must end in '.json': [config_file]"))
+				return
+			if(!fcopy(config_file, "_maps/custom/[config_file]"))
+				return
+			if (VM.LoadConfig("_maps/custom/[config_file]", TRUE) != TRUE)
+				to_chat(src, span_warning("Failed to load config: [config_file]. Check that the fields are filled out correctly. \"map_path\": \"custom\" and \"map_file\": \"your_map_name.dmm\""))
+				return
+			json_value = list(
+				"version" = MAP_CURRENT_VERSION,
+				"map_name" = VM.map_name,
+				"map_path" = VM.map_path,
+				"map_file" = VM.map_file,
+				"shuttles" = VM.shuttles,
+				"traits" = VM.traits,
+				"job_changes" = VM.job_changes,
+				"library_areas" = VM.job_changes
+			)
 
-		var/shuttles = tgui_alert(usr,"Do you want to modify the shuttles?", "Map Shuttles", list("Yes", "No"))
-		if(shuttles == "Yes")
-			for(var/s in VM.shuttles)
-				var/shuttle = input(s, "Map Shuttles") as null|text
-				if(!shuttle)
-					continue
-				if(!SSmapping.shuttle_templates[shuttle])
-					to_chat(usr, span_warning("No such shuttle as '[shuttle]' exists, using default."))
-					continue
-				VM.shuttles[s] = shuttle
+		if (config == "No")
+			VM = load_map_config()
+			VM.map_name = input("Choose the name for the map", "Map Name") as null|text
+			if(isnull(VM.map_name))
+				VM.map_name = "Custom"
 
-		VM.map_path = CUSTOM_MAP_PATH
-		VM.map_file = "[map_file]"
-		VM.config_filename = PATH_TO_NEXT_MAP_JSON
-		var/json_value = list(
-			"version" = MAP_CURRENT_VERSION,
-			"map_name" = VM.map_name,
-			"map_path" = VM.map_path,
-			"map_file" = VM.map_file,
-			"shuttles" = VM.shuttles
-		)
+			var/shuttles = tgui_alert(usr,"Do you want to modify the shuttles?", "Map Shuttles", list("Yes", "No"))
+			if(shuttles == "Yes")
+				for(var/s in VM.shuttles)
+					var/shuttle = input(s, "Map Shuttles") as null|text
+					if(!shuttle)
+						continue
+					if(!SSmapping.shuttle_templates[shuttle])
+						to_chat(usr, span_warning("No such shuttle as '[shuttle]' exists, using default."))
+						continue
+					VM.shuttles[s] = shuttle
+
+			json_value = list(
+				"version" = MAP_CURRENT_VERSION,
+				"map_name" = VM.map_name,
+				"map_path" = CUSTOM_MAP_PATH,
+				"map_file" = "[map_file]",
+				"shuttles" = VM.shuttles
+			)
 
 		// If the file isn't removed text2file will just append.
 		if(fexists(PATH_TO_NEXT_MAP_JSON))
