@@ -320,9 +320,15 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(. & EMP_PROTECT_SELF)
 		return
 	switch(severity)
-		if(1)
+		if(EMP_HEAVY)
 			Stun(160)
-		if(2)
+			if(prob(70) && !shell) // AI shell is ignored
+				lawupdate = FALSE
+				set_connected_ai(null)
+				src.add_ion_law(generate_ion_law())
+				log_silicon("A EMP changed laws of [key_name(src)] to [english_list(src.laws.get_law_list(TRUE, TRUE))]")
+
+		if(EMP_LIGHT)
 			Stun(60)
 
 /mob/living/silicon/robot/emag_act(mob/user)

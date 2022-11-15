@@ -31,8 +31,15 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
+
+	switch(severity)
+		if(EMP_HEAVY)
+			if(prob(70))
+				src.add_ion_law(generate_ion_law())
+				log_silicon("A EMP changed laws of [key_name(src)] to [english_list(src.laws.get_law_list(TRUE, TRUE))]")
+
 	disconnect_shell()
-	if (prob(30))
+	if(prob(30))
 		switch(pick(1,2))
 			if(1)
 				view_core()
