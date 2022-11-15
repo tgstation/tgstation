@@ -10920,7 +10920,7 @@
 	departmentType = 5;
 	name = "AI Requests Console"
 	},
-/obj/structure/cable/multilayer/connected,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "dQt" = (
@@ -44498,6 +44498,15 @@
 "pTr" = (
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
+"pTw" = (
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/line,
+/obj/machinery/status_display/ai/directional/south,
+/obj/structure/cable/multilayer/multiz,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "pTD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -114862,7 +114871,7 @@ hdG
 xvl
 xhB
 nNk
-ehS
+pTw
 waj
 waj
 eBr
