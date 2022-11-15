@@ -136,6 +136,11 @@
 	alive_bonus = 2
 
 /datum/traitor_objective/kidnapping/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+
+	if(handler.traitor_datum)
+		for(var/datum/objective/task in handler.traitor_datum.objectives)
+			possible_duplicates += task.target //Removing primary objective kill targets from the list
+
 	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		if(possible_target == generating_for)

@@ -50,6 +50,11 @@
 	heads_of_staff = TRUE
 
 /datum/traitor_objective/eyesnatching/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+
+	if(handler.traitor_datum)
+		for(var/datum/objective/task in handler.traitor_datum.objectives)
+			possible_duplicates += task.target //Removing primary objective kill targets from the list
+
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
 	if(generating_for.late_joiner)

@@ -814,8 +814,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	name = "destroy AI"
 	martyr_compatible = TRUE
 
-/datum/objective/destroy/find_target(dupe_search_range)
+/datum/objective/destroy/find_target(dupe_search_range, blacklist)
 	var/list/possible_targets = active_ais(1)
+	for(var/entry in possible_targets)
+		if(entry in blacklist)
+			possible_targets -= entry
 	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
 	target = target_ai.mind
 	update_explanation_text()

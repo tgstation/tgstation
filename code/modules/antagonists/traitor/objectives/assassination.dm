@@ -171,6 +171,10 @@
 
 /datum/traitor_objective/assassinate/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 
+	if(handler.traitor_datum)
+		for(var/datum/objective/task in handler.traitor_datum.objectives)
+			possible_duplicates += task.target //Removing primary objective kill targets from the list
+
 	var/parent_type = type2parent(type)
 	//don't roll head of staff types if you haven't completed the normal version
 	if(heads_of_staff && !handler.get_completion_count(parent_type))

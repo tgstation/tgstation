@@ -30,6 +30,8 @@
 	for(var/datum/traitor_objective/objective as anything in handler.potential_objectives)
 		objective.fail_objective()
 	user.playsound_local(get_turf(user), 'sound/traitor/final_objective.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
+	if(handler.traitor_datum)
+		handler.traitor_datum.final_objective = name
 
 /datum/traitor_objective/final/uplink_ui_data(mob/user)
 	. = ..()

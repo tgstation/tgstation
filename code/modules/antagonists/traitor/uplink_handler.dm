@@ -6,6 +6,8 @@
 /datum/uplink_handler
 	/// The owner of this uplink handler.
 	var/datum/mind/owner
+	/// The antag datum that we are linked to.
+	var/datum/antagonist/traitor/traitor_datum
 	/// The amount of telecrystals contained in this traitor has
 	var/telecrystals = 0
 	/// The current uplink flag of this uplink
