@@ -78,4 +78,4 @@
 	. = ..()
 	to_chat(user, span_notice("As you read the pamphlet, a free sample falls out!"))
 	sample.forceMove(drop_location())
-	playsound(sample, 'sound/misc/splort.ogg', 50, TRUE)
+	playsound(sample, 'sound/misc/splort.ogg', 50, vary = TRUE)
