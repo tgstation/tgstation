@@ -495,14 +495,7 @@
  * scan_range - how far away from [src] will be scanned, if nothing is found directly adjacent.
  */
 /mob/living/simple_animal/bot/proc/scan(list/scan_types, old_target, scan_range = DEFAULT_SCAN_RANGE)
-	var/turf/current_turf = get_turf(src)
-	if(!current_turf)
-		return
-	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
-	if(shuffle) //If we were on the same tile as another bot, let's randomize our choices so we dont both go the same way
-		adjacent = shuffle(adjacent)
-		shuffle = FALSE
-
+	var/list/adjacent = shuffle(view(1, src))
 	for(var/turf/scan as anything in adjacent) //Let's see if there's something right next to us first!
 		if(check_bot(scan)) //Is there another bot there? Then let's just skip it
 			continue
@@ -510,7 +503,7 @@
 		if(final_result)
 			return final_result
 
-	for(var/turf/scanned_turfs as anything in shuffle(view(scan_range, src)) - adjacent) //Search for something in range, minus what we already checked.
+	for(var/turf/scanned_turfs as anything in view(scan_range, src) - adjacent) //Search for something in range, minus what we already checked.
 		if(check_bot(scanned_turfs)) //Is there another bot there? Then let's just skip it
 			continue
 		var/final_result = checkscan(scanned_turfs, scan_types, old_target)
@@ -600,7 +593,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	//For giving the bot temporary all-access. This method is bad and makes me feel bad. Refactoring access to a component is for another PR.
 	var/obj/item/card/id/all_access = new /obj/item/card/id/advanced/gold/captains_spare()
-	set_path(get_path_to(src, waypoint, 200, id = all_access))
+	set_path(get_path_to(src, waypoint, max_distance=200, id = all_access))
 	qdel(all_access)
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
@@ -816,14 +809,14 @@ Pass a positive integer as an argument to override a bot's default speed.
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
 	check_bot_access()
-	set_path(get_path_to(src, patrol_target, 120, id=access_card, exclude=avoid))
+	set_path(get_path_to(src, patrol_target, max_distance=120, id=access_card, exclude=avoid))
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
 	INVOKE_ASYNC(src, .proc/do_calc_summon_path, avoid)
 
 /mob/living/simple_animal/bot/proc/do_calc_summon_path(turf/avoid)
-	set_path(get_path_to(src, summon_target, 150, id=access_card, exclude=avoid))
+	set_path(get_path_to(src, summon_target, max_distance=150, id=access_card, exclude=avoid))
 	if(!length(path)) //Cannot reach target. Give up and announce the issue.
 		speak("Summon command failed, destination unreachable.",radio_channel)
 		bot_reset()
