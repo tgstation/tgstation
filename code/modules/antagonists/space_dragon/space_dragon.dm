@@ -46,8 +46,8 @@
 	rift_ability = new
 	rift_ability.Grant(owner.current)
 	owner.current.faction |= "carp"
-	RegisterSignal(owner.current, COMSIG_LIVING_LIFE, .proc/rift_checks)
-	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, .proc/destroy_rifts)
+	RegisterSignal(owner.current, COMSIG_LIVING_LIFE, PROC_REF(rift_checks))
+	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, PROC_REF(destroy_rifts))
 
 /datum/antagonist/space_dragon/on_removal()
 	. = ..()
@@ -157,7 +157,7 @@
 	owner.current.fully_heal()
 	owner.current.add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
 	owner.current.add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
-	addtimer(CALLBACK(src, .proc/rift_depower), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(rift_depower)), 30 SECONDS)
 
 /**
  * Removes Space Dragon's rift speed buff.

@@ -6,5 +6,5 @@
 # Example:
 # 500.1337: runtimestation
 
-# AnturK uncomment this and then remove this line
-# 515.1594: runtimestation
+# Commented out until 515 is fully ready
+# 515.1595: runtimestation
