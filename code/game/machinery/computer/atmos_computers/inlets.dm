@@ -21,7 +21,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/on_deconstruction()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
+	INVOKE_ASYNC(src, PROC_REF(broadcast_destruction), src.frequency)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ui_act(action, params)
 	. = ..()
