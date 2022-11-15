@@ -282,15 +282,17 @@
 	return ..()
 
 /datum/dynamic_ruleset/roundstart/wizard/round_result()
-	var/existing_wizards = 0
-	var/dead_wizards = 0
 	for(var/datum/antagonist/wizard/wiz in GLOB.antagonists)
-		existing_wizards++
-		if(!considered_alive(wiz.owner))
-			dead_wizards++
+		var/mob/living/real_wiz = wiz.owner?.current
+		if(isnull(real_wiz))
+			continue
 
-	if(dead_wizards == existing_wizards)
-		SSticker.news_report = WIZARD_KILLED
+		var/turf/wiz_location = get_turf(real_wiz)
+		// If this wiz is alive AND not in an away level, then we know not all wizards are dead and can leave entirely
+		if(considered_alive(wiz.owner) && wiz_location && !is_away_level(wiz_location.z))
+			return
+
+	SSticker.news_report = WIZARD_KILLED
 
 /datum/dynamic_ruleset/roundstart/wizard/pre_execute()
 	. = ..()
