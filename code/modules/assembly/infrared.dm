@@ -18,7 +18,7 @@
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
 
 /obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
@@ -160,7 +160,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_ATOM_EXITED)
-	RegisterSignal(newloc, COMSIG_ATOM_EXITED, .proc/check_exit)
+	RegisterSignal(newloc, COMSIG_ATOM_EXITED, PROC_REF(check_exit))
 	listeningTo = newloc
 
 /obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/gone, direction)
@@ -174,7 +174,7 @@
 		var/obj/item/I = gone
 		if (I.item_flags & ABSTRACT)
 			return
-	INVOKE_ASYNC(src, .proc/refreshBeam)
+	INVOKE_ASYNC(src, PROC_REF(refreshBeam))
 
 /obj/item/assembly/infra/setDir()
 	. = ..()
@@ -228,7 +228,7 @@
 /obj/effect/beam/i_beam/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -240,4 +240,4 @@
 		var/obj/item/I = AM
 		if (I.item_flags & ABSTRACT)
 			return
-	INVOKE_ASYNC(master, /obj/item/assembly/infra.proc/trigger_beam, AM, get_turf(src))
+	INVOKE_ASYNC(master, TYPE_PROC_REF(/obj/item/assembly/infra, trigger_beam), AM, get_turf(src))

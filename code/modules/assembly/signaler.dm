@@ -94,7 +94,7 @@
 				to_chat(usr, span_warning("[src] is still recharging..."))
 				return
 			TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)
-			INVOKE_ASYNC(src, .proc/signal)
+			INVOKE_ASYNC(src, PROC_REF(signal))
 			. = TRUE
 		if("freq")
 			var/new_frequency = sanitize_frequency(unformat_frequency(params["freq"]), TRUE)
@@ -132,7 +132,7 @@
 		balloon_alert(user, "still recharging...")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)
-	INVOKE_ASYNC(src, .proc/signal)
+	INVOKE_ASYNC(src, PROC_REF(signal))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/assembly/signaler/proc/signal()

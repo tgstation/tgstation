@@ -79,7 +79,7 @@
 /obj/item/assembly/proc/pulsed(wire_flags = ASSEMBLY_WIRE_RECEIVE, mob/pulser)
 	// if we match flags, go ahead and activate
 	if(assembly_flags & wire_flags)
-		INVOKE_ASYNC(src, .proc/activate, pulser)
+		INVOKE_ASYNC(src, PROC_REF(activate), pulser)
 	SEND_SIGNAL(src, COMSIG_ASSEMBLY_PULSED)
 	return TRUE
 

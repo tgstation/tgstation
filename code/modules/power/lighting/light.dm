@@ -88,7 +88,7 @@
 	if(start_with_cell && !no_low_power)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
-	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -147,11 +147,11 @@
 	if(!.)
 		return
 	var/area/our_area =get_room_area(src)
-	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 
 /obj/machinery/light/on_enter_area(datum/source, area/area_to_register)
 	..()
-	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 	handle_fire(area_to_register, area_to_register.fire)
 
 /obj/machinery/light/on_exit_area(datum/source, area/area_to_unregister)
@@ -236,7 +236,7 @@
 		if(!start_only)
 			do_sparks(3, TRUE, src)
 		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
-		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(broken_sparks)), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process(delta_time)
 	if(has_power()) //If the light is being powered by the station.

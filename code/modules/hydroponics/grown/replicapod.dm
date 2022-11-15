@@ -64,9 +64,9 @@
 
 /obj/item/seeds/replicapod/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), .proc/on_reagent_add)
-	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, .proc/on_reagent_del)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_NEW_REAGENT), PROC_REF(on_reagent_add))
+	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del))
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles the seeds' reagents datum getting deleted.
 /obj/item/seeds/replicapod/proc/on_reagents_del(datum/reagents/reagents)
