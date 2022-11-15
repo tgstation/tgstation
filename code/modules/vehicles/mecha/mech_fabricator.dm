@@ -61,7 +61,7 @@
 	RegisterSignal(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
-		.proc/on_techweb_update
+		PROC_REF(on_techweb_update)
 	)
 	return ..()
 
@@ -70,7 +70,7 @@
 
 	// We're probably going to get more than one update (design) at a time, so batch
 	// them together.
-	addtimer(CALLBACK(src, .proc/update_menu_tech), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(update_menu_tech)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	. = ..()
