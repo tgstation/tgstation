@@ -113,6 +113,19 @@
 /turf/open/floor/bamboo/setup_broken_states()
 	return list("bamboodamaged")
 
+/turf/open/floor/bamboo/tatami
+	smoothing_flags = NONE
+	icon_state = "tatami_green"
+	floor_tile = /obj/item/stack/tile/bamboo/tatami
+
+/turf/open/floor/bamboo/tatami/purple
+	icon_state = "tatami_purple"
+	floor_tile = /obj/item/stack/tile/bamboo/tatami/purple
+
+/turf/open/floor/bamboo/tatami/black
+	icon_state = "tatami_black"
+	floor_tile = /obj/item/stack/tile/bamboo/tatami/black
+
 /turf/open/floor/grass
 	name = "grass patch"
 	desc = "You can't tell if this is real grass or just cheap plastic imitation."
