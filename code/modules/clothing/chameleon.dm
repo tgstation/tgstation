@@ -84,7 +84,7 @@
 		for(var/path in subtypesof(/datum/outfit/job))
 			var/datum/outfit/O = path
 			standard_outfit_options[initial(O.name)] = path
-		sortTim(standard_outfit_options, /proc/cmp_text_asc)
+		sortTim(standard_outfit_options, GLOBAL_PROC_REF(cmp_text_asc))
 	outfit_options = standard_outfit_options
 
 /datum/action/chameleon_outfit/Trigger(trigger_flags)
@@ -179,7 +179,7 @@
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/obj/item/picked_item
-	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon Settings", sort_list(chameleon_list, /proc/cmp_typepaths_asc))
+	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon Settings", sort_list(chameleon_list, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(picked_name))
 		return
 	if(isnull(chameleon_list[picked_name]))

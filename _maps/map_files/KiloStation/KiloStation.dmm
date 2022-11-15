@@ -2836,6 +2836,17 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
+"aNV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/door/airlock/research/glass{
+	name = "Slime Euthanization Chamber"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology)
 "aOc" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L1"
@@ -16506,6 +16517,23 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"eUb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/airlock_controller/incinerator_atmos{
+	pixel_y = -24
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/turf/open/floor/engine,
+/area/station/maintenance/disposal/incinerator)
 "eUd" = (
 /obj/structure/table,
 /obj/item/reagent_containers/condiment/peppermill{
@@ -31448,17 +31476,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
-"iQx" = (
-/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior{
-	name = "Burn Chamber Interior Airlock"
-	},
-/obj/machinery/airlock_controller/incinerator_ordmix{
-	pixel_x = -32
-	},
-/turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
 "iQK" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
@@ -37638,6 +37655,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
+"kKt" = (
+/obj/structure/sign/xenobio_guide,
+/turf/closed/wall/rust,
+/area/station/science/xenobiology)
 "kKw" = (
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/poddoor/preopen{
@@ -40826,6 +40847,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron/checker,
 /area/station/security/processing/cremation)
+"lBd" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/obj/machinery/monkey_recycler,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology)
 "lBj" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
@@ -47079,6 +47113,16 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
+"ntg" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/research/glass{
+	name = "Xenobiology Closet"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology)
 "nts" = (
 /obj/structure/janitorialcart,
 /obj/effect/turf_decal/delivery,
@@ -49360,19 +49404,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
-"odd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/door/airlock/research{
-	glass = 1;
-	name = "Slime Euthanization Chamber";
-	opacity = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "odA" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -49409,6 +49440,17 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
+"ofe" = (
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior{
+	name = "Burn Chamber Interior Airlock"
+	},
+/obj/machinery/airlock_controller/incinerator_ordmix{
+	pixel_x = -32
+	},
+/turf/open/floor/engine,
+/area/station/science/ordnance/burnchamber)
 "ofg" = (
 /turf/closed/wall,
 /area/station/medical/pharmacy)
@@ -72740,23 +72782,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
-"uJp" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/machinery/airlock_controller/incinerator_atmos{
-	pixel_y = -24
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
 "uJs" = (
 /obj/machinery/computer/security/telescreen/cmo{
 	dir = 1;
@@ -78964,22 +78989,6 @@
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/lab)
-"wqR" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/monkey_recycler,
-/obj/item/radio/intercom/directional/north,
-/obj/structure/sign/xenobio_guide/directional/north{
-	pixel_x = 32
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "wqZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -83997,16 +84006,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
-"xNu" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock/research{
-	name = "Xenobiology Closet"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "xNJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -112414,7 +112413,7 @@ vCV
 mLN
 ekp
 dtb
-uJp
+eUb
 yma
 yma
 kPK
@@ -122593,7 +122592,7 @@ mwp
 lth
 wpw
 iPY
-odd
+aNV
 wpw
 ffN
 hnw
@@ -123880,7 +123879,7 @@ dmA
 hvl
 mOt
 wpw
-wqR
+lBd
 puJ
 iKn
 ndz
@@ -124135,8 +124134,8 @@ iSS
 uLt
 wpw
 aQl
-xNu
-uXM
+ntg
+kKt
 doy
 hbe
 doy
@@ -127757,7 +127756,7 @@ nFN
 fLH
 apu
 pii
-iQx
+ofe
 lkB
 lkB
 lkB

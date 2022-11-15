@@ -231,3 +231,94 @@
       Station
   exymian:
   - bugfix: fixed the prox sensor
+2022-11-07:
+  A.C.M.O.:
+  - rscadd: Added the Deaf Personnel pin for users of the Deaf quirk.
+  Fikou:
+  - bugfix: flight potions no longer have white bottle overlays
+  - bugfix: fixes cursed katana not spawning
+  GoldenAlpharex:
+  - bugfix: SpaceMessenger was now updated to 6.4.8, bringing you more responsiveness
+      than ever (so long as ever is shorter than seven days ago)!
+  Jacquerel:
+  - qol: More actions should report why they are unavailable if pressed while they
+      are unavailable.
+  - qol: Giant Spider action buttons should now correctly display whether they are
+      available or not.
+  - bugfix: Spider broodmothers can now only lay one enriched egg per victim.
+  - bugfix: Spider broodmothers can no longer feed multiple times from the same corpse,
+      a bug they never previously needed to exploit because of the previous bug.
+  JohnFulpWillard:
+  - bugfix: Detomatix cartridges are no longer called attacking items.
+  Sealed101:
+  - bugfix: fixed mecha internal damage diagnostic HUD blip not appearing
+  - rscadd: Added a special suicide to the Experi-Scanner
+  ShizCalev:
+  - qol: Randomized the pixel offset of stuff when it comes out of a microwave
+  - bugfix: Fixed a runtime when NPC monkeys attempt to put items in the hands of
+      mobs with no hands (ie cyborgs, lizards, rats, ect.)
+  - bugfix: Monkeys will no longer attempt to put items in your pockets if you have
+      no pockets.
+  Striders13:
+  - bugfix: permanent one-use portals will no longer get used up when clicked by a
+      ghost
+  lizardqueenlexi:
+  - bugfix: Made the V8 Engine teach you the House Edge recipe.
+  - bugfix: Fixed an error related to the V8 Engine that caused an infinite progress
+      bar.
+  san7890, ZephyrTFA:
+  - bugfix: Emojipedia has been restored to tablets! Look for it in your local Nanotrasen
+      Software Hub.
+  - balance: Everyone is now able to send Emojis via PDA Messaging! It's no longer
+      restricted to just mime and curators, so enjoy sending the classics such as
+      :ai:, :1997:, :pslime:, and more!
+2022-11-08:
+  Fikou:
+  - qol: concussive gauntlets now launch you away from gibtonite
+  - qol: concussive guantlets can now mine basalt
+  Guillaume Prata:
+  - qol: Ore bag balloon alerts have a 2 second cooldown now and a spammy message
+      (hopefully the last) it send to your chat about being full was removed
+  Melbert:
+  - code_imp: Unremovable organs that are forcemoved out of a mob with an owner no
+      longer self terminate
+  SeigaSeiga:
+  - balance: Implants can no longer be destroyed by enough external explosions. Bomb
+      Suit Knights can wield their explosive lances with pride!
+  Tattle:
+  - admin: added investigate deaths to shed some more light on unusual demises, dustings,
+      and gibbings
+  Thunder12345:
+  - qol: Jukebox music can be controlled by a new seperate preference, and is no longer
+      linked to the instrument sound preference option.
+  - refactor: Sound related toggle preferences have been migrated away from the legacy
+      system. Pre-existing preferences should be safely migrated but players are advised
+      to check.
+  TiviPlus:
+  - bugfix: fixed a gygax speed exploit
+  VexingRaven:
+  - bugfix: Fixed a few balloon alerts for guns and moved a few more chat messages
+      to balloon alerts
+  - bugfix: Adding missing fire alarms to the Chapel and Funeral Room on Metastation
+  mc-oofert:
+  - bugfix: Fixes 1 tile foam in Foam Dispensers,Clown Cars, Hygiene Bots,Firebots,
+      Soap Suicide, Emagged cleanbots, and the clown plasmaman envirosuit
+  moocowswag:
+  - bugfix: Firebreath can no longer benefit from both power and energetic chromosomes
+      at the same time
+  private-tristan:
+  - bugfix: deltastation psychology office buttons are now reachable without opening
+      the locker
+  san7890:
+  - qol: When saving Experiment Log Recording Data to a data disk on either the Tachyon
+      Doppler or the Tank Compressor, Nanotrasen released a UI/UX update in order
+      to have the button that saves the data onto your disk... say "Save".
+2022-11-09:
+  MTandi:
+  - bugfix: made Kilo Xenobio guide visible from the north part of the room.
+2022-11-14:
+  Iamgoofball:
+  - bugfix: You can no longer attach igniters to igniters.
+2022-11-15:
+  Iamgoofball:
+  - rscdel: You can no longer craft explosive lances.

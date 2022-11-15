@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "code\__byond_version_compat.dm"
 #include "code\_compile_options.dm"
 #include "code\_debugger.dm"
 #include "code\world.dm"
@@ -2748,6 +2749,7 @@
 #include "code\modules\client\preferences\screentips.dm"
 #include "code\modules\client\preferences\security_department.dm"
 #include "code\modules\client\preferences\skin_tone.dm"
+#include "code\modules\client\preferences\sounds.dm"
 #include "code\modules\client\preferences\species.dm"
 #include "code\modules\client\preferences\statpanel.dm"
 #include "code\modules\client\preferences\tgui.dm"
@@ -2767,6 +2769,7 @@
 #include "code\modules\client\preferences\middleware\random.dm"
 #include "code\modules\client\preferences\middleware\species.dm"
 #include "code\modules\client\preferences\migrations\body_type_migration.dm"
+#include "code\modules\client\preferences\migrations\legacy_sound_toggles_migration.dm"
 #include "code\modules\client\preferences\migrations\tgui_prefs_migration.dm"
 #include "code\modules\client\preferences\species_features\basic.dm"
 #include "code\modules\client\preferences\species_features\ethereal.dm"

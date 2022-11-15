@@ -9342,6 +9342,28 @@
 "cfu" = (
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"cfw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+	dir = 4
+	},
+/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/airlock_controller/incinerator_atmos{
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
+/turf/open/floor/engine,
+/area/station/maintenance/disposal/incinerator)
 "cfy" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -9723,42 +9745,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/medical/medbay)
-"cky" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin/carbon{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/machinery/button/door/directional/south{
-	id = "psych_shutters";
-	name = "Shutter Control";
-	pixel_x = -4;
-	req_access = list("psychology")
-	},
-/obj/machinery/light_switch/directional/south{
-	pixel_x = 6
-	},
-/obj/machinery/airalarm/directional/west,
-/obj/item/flashlight/lamp/green{
-	pixel_x = 15;
-	pixel_y = 7
-	},
-/obj/item/folder/white{
-	pixel_x = -2;
-	pixel_y = 3
-	},
-/obj/item/pen,
-/obj/machinery/button/door/directional/south{
-	id = "psych_bolt";
-	name = "Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = -4;
-	pixel_y = -35;
-	req_access = list("psychology");
-	specialfunctions = 4
-	},
-/turf/open/floor/wood,
-/area/station/medical/psychology)
 "ckB" = (
 /obj/structure/closet/secure_closet/hop,
 /obj/item/clothing/suit/costume/ianshirt,
@@ -22970,15 +22956,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
-"fxP" = (
-/obj/structure/closet/secure_closet/psychology,
-/obj/item/toy/plush/beeplushie{
-	desc = "Maybe hugging this will make you feel better about yourself.";
-	name = "Therabee"
-	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/turf/open/floor/wood,
-/area/station/medical/psychology)
 "fya" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -40470,31 +40447,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
-"jLt" = (
-/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior{
-	name = "Burn Chamber Interior Airlock"
-	},
-/obj/machinery/button/ignition/incinerator/ordmix{
-	pixel_x = -6;
-	pixel_y = -24
-	},
-/obj/machinery/button/door/incinerator_vent_ordmix{
-	pixel_x = 8;
-	pixel_y = -24
-	},
-/obj/machinery/airlock_controller/incinerator_ordmix{
-	pixel_y = 32
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
-/turf/open/floor/engine,
-/area/station/science/ordnance/burnchamber)
 "jLx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -45781,28 +45733,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
-"lbh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer2,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
-	dir = 4
-	},
-/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/airlock_controller/incinerator_atmos{
-	pixel_y = -24
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
 "lbi" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/transit_tube/curved/flipped{
@@ -49378,6 +49308,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/captain/private)
+"lTC" = (
+/obj/structure/sign/poster/official/help_others{
+	pixel_x = 32
+	},
+/obj/machinery/light/warm/directional/south,
+/obj/structure/closet/secure_closet/psychology,
+/obj/item/toy/plush/beeplushie{
+	desc = "Maybe hugging this will make you feel better about yourself.";
+	name = "Therabee"
+	},
+/turf/open/floor/wood,
+/area/station/medical/psychology)
 "lTE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -53865,6 +53807,24 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/station/command/bridge)
+"nah" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/obj/structure/table/wood,
+/obj/item/folder/white{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/paper_bin/carbon{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/pen,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/station/medical/psychology)
 "nal" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/girder,
@@ -83343,6 +83303,33 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"uqf" = (
+/obj/machinery/button/door/directional/south{
+	id = "psych_shutters";
+	name = "Shutter Control";
+	pixel_x = -4;
+	req_access = list("psychology")
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = 6
+	},
+/obj/machinery/airalarm/directional/west,
+/obj/machinery/button/door/directional/south{
+	id = "psych_bolt";
+	name = "Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -4;
+	pixel_y = -35;
+	req_access = list("psychology");
+	specialfunctions = 4
+	},
+/obj/structure/table/wood,
+/obj/machinery/computer/med_data/laptop{
+	dir = 1;
+	pixel_y = 4
+	},
+/turf/open/floor/wood,
+/area/station/medical/psychology)
 "uqk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral,
@@ -88041,18 +88028,6 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/co2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"vxc" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/med_data/laptop{
-	dir = 1;
-	pixel_y = 4
-	},
-/obj/structure/sign/poster/official/help_others{
-	pixel_x = 32
-	},
-/obj/machinery/light/warm/directional/south,
-/turf/open/floor/wood,
-/area/station/medical/psychology)
 "vxf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -93849,6 +93824,31 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"wQJ" = (
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior{
+	name = "Burn Chamber Interior Airlock"
+	},
+/obj/machinery/button/ignition/incinerator/ordmix{
+	pixel_x = -6;
+	pixel_y = -24
+	},
+/obj/machinery/button/door/incinerator_vent_ordmix{
+	pixel_x = 8;
+	pixel_y = -24
+	},
+/obj/machinery/airlock_controller/incinerator_ordmix{
+	pixel_y = 32
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
+/turf/open/floor/engine,
+/area/station/science/ordnance/burnchamber)
 "wQN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -120361,7 +120361,7 @@ kvq
 qYo
 edx
 edx
-lbh
+cfw
 edx
 edx
 ltx
@@ -132033,7 +132033,7 @@ sBE
 hkU
 qgo
 qaA
-jLt
+wQJ
 oHM
 iLH
 pKR
@@ -141801,8 +141801,8 @@ dWt
 iAm
 uxB
 qGY
-fxP
-cky
+nah
+uqf
 dki
 lvZ
 jQB
@@ -142059,7 +142059,7 @@ xpW
 kfE
 mZk
 itY
-vxc
+lTC
 dki
 lcw
 gyn

@@ -71,10 +71,10 @@
 
 /mob/living/simple_animal/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
-		"speak" = CALLBACK(src, .proc/handle_automated_speech, TRUE),
-		"wear_hat" = CALLBACK(src, .proc/find_new_hat),
-		"drop_hat" = CALLBACK(src, .proc/drop_hat),
-		"spin" = CALLBACK(src, /mob.proc/emote, "spin")), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+		"speak" = CALLBACK(src, PROC_REF(handle_automated_speech), TRUE),
+		"wear_hat" = CALLBACK(src, PROC_REF(find_new_hat)),
+		"drop_hat" = CALLBACK(src, PROC_REF(drop_hat)),
+		"spin" = CALLBACK(src, TYPE_PROC_REF(/mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
@@ -552,6 +552,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
 	var/mob/living/simple_animal/pet/dog/corgi/narsie/N = new(loc)
 	N.setDir(dir)
+	investigate_log("has been gibbed by Nar'Sie.", INVESTIGATE_DEATHS)
 	gib()
 
 /mob/living/simple_animal/pet/dog/corgi/narsie
@@ -574,6 +575,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 			"<span class='cult big bold'>DELICIOUS SOULS</span>")
 			playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
 			narsie_act()
+			P.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			P.gib()
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/update_corgi_fluff()

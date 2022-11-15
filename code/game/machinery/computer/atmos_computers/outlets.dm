@@ -114,6 +114,33 @@
 	id_tag = chamber_id + "_out"
 	return ..()
 
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/Destroy()
+	INVOKE_ASYNC(src, PROC_REF(broadcast_destruction), src.frequency)
+	SSradio.remove_object(src, frequency)
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/on_deconstruction()
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(broadcast_destruction), src.frequency)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/set_frequency(new_frequency)
+	SSradio.remove_object(src, frequency)
+	frequency = new_frequency
+	if(new_frequency)
+		radio_connection = SSradio.add_object(src, new_frequency, RADIO_ATMOSIA)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/proc/broadcast_destruction(frequency)
+	var/datum/signal/signal = new(list(
+		"sigtype" = "destroyed",
+		"tag" = id_tag,
+		"timestamp" = world.time,
+	))
+	var/datum/radio_frequency/connection = SSradio.return_frequency(frequency)
+	connection.post_signal(null, signal, filter = RADIO_ATMOSIA)
+
+>>>>>>> upstream/master
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output
 	name = "air mix tank output inlet"
 	chamber_id = ATMOS_GAS_MONITOR_AIR

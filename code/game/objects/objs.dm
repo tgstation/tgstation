@@ -193,7 +193,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(machine)
 		unset_machine()
 	machine = O
-	RegisterSignal(O, COMSIG_PARENT_QDELETING, .proc/unset_machine)
+	RegisterSignal(O, COMSIG_PARENT_QDELETING, PROC_REF(unset_machine))
 	if(istype(O))
 		O.obj_flags |= IN_USE
 
@@ -317,7 +317,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		items += list("[reskin_option]" = item_image)
 	sort_list(items)
 
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, .proc/check_reskin_menu, M), radius = 38, require_near = TRUE)
+	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), M), radius = 38, require_near = TRUE)
 	if(!pick)
 		return
 	if(!unique_reskin[pick])

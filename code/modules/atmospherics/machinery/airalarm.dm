@@ -94,7 +94,7 @@
 	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
 	var/datum/alarm_handler/alarm_manager
 
-	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = .proc/check_air_dangerlevel)
+	var/static/list/atmos_connections = list(COMSIG_TURF_EXPOSE = PROC_REF(check_air_dangerlevel))
 
 	var/list/TLV = list( // Breathable air.
 		"pressure" = new/datum/tlv(HAZARD_LOW_PRESSURE, WARNING_LOW_PRESSURE, WARNING_HIGH_PRESSURE, HAZARD_HIGH_PRESSURE), // kPa. Values are hazard_min, warning_min, warning_max, hazard_max
@@ -682,10 +682,10 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	danger_level = max(pressure_dangerlevel, temperature_dangerlevel, gas_dangerlevel)
 
 	if(old_danger_level != danger_level)
-		INVOKE_ASYNC(src, .proc/apply_danger_level)
+		INVOKE_ASYNC(src, PROC_REF(apply_danger_level))
 	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		mode = AALARM_MODE_SCRUBBING
-		INVOKE_ASYNC(src, .proc/apply_mode, src)
+		INVOKE_ASYNC(src, PROC_REF(apply_mode), src)
 
 /obj/machinery/airalarm/proc/apply_danger_level()
 
@@ -974,9 +974,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_general/populate_ports()
 	mode = add_option_port("Mode", options_map, order = 1)
-	set_mode = add_input_port("Set Mode", PORT_TYPE_SIGNAL, trigger = .proc/set_mode)
-	enable_fire_alarm = add_input_port("Enable Alarm", PORT_TYPE_SIGNAL, trigger = .proc/trigger_alarm)
-	disable_fire_alarm = add_input_port("Disable Alarm", PORT_TYPE_SIGNAL, trigger = .proc/trigger_alarm)
+	set_mode = add_input_port("Set Mode", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_mode))
+	enable_fire_alarm = add_input_port("Enable Alarm", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_alarm))
+	disable_fire_alarm = add_input_port("Disable Alarm", PORT_TYPE_SIGNAL, trigger = PROC_REF(trigger_alarm))
 
 	fire_alarm_enabled = add_output_port("Alarm Enabled", PORT_TYPE_NUMBER)
 	current_mode = add_output_port("Current Mode", PORT_TYPE_STRING)
@@ -985,9 +985,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	. = ..()
 	if(istype(shell, /obj/machinery/airalarm))
 		connected_alarm = shell
-		RegisterSignal(connected_alarm.alarm_manager, COMSIG_ALARM_TRIGGERED, .proc/on_alarm_triggered)
-		RegisterSignal(connected_alarm.alarm_manager, COMSIG_ALARM_CLEARED, .proc/on_alarm_cleared)
-		RegisterSignal(shell, COMSIG_AIRALARM_UPDATE_MODE, .proc/on_mode_updated)
+		RegisterSignal(connected_alarm.alarm_manager, COMSIG_ALARM_TRIGGERED, PROC_REF(on_alarm_triggered))
+		RegisterSignal(connected_alarm.alarm_manager, COMSIG_ALARM_CLEARED, PROC_REF(on_alarm_cleared))
+		RegisterSignal(shell, COMSIG_AIRALARM_UPDATE_MODE, PROC_REF(on_mode_updated))
 		current_mode.set_value(connected_alarm.get_mode_name(connected_alarm.mode))
 
 /obj/item/circuit_component/air_alarm_general/unregister_usb_parent(atom/movable/shell)
@@ -1040,7 +1040,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	connected_alarm.mode = options_map[mode.value]
 	connected_alarm.investigate_log("was turned to [connected_alarm.get_mode_name(connected_alarm.mode)] by [parent.get_creator()]")
-	INVOKE_ASYNC(connected_alarm, /obj/machinery/airalarm.proc/apply_mode, src)
+	INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF(/obj/machinery/airalarm, apply_mode), src)
 
 /obj/item/circuit_component/air_alarm
 	display_name = "Air Alarm Core Control"
@@ -1078,7 +1078,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(action == "add_new_component")
 		var/obj/item/circuit_component/air_alarm/component = new /obj/item/circuit_component/air_alarm/duplicate(parent)
 		parent.add_component(component)
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/on_duplicate_removed)
+		RegisterSignal(component, COMSIG_PARENT_QDELETING, PROC_REF(on_duplicate_removed))
 		component.connected_alarm = connected_alarm
 		alarm_duplicates += component
 
@@ -1091,7 +1091,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	min_1 = add_input_port("Warning Minimum", PORT_TYPE_NUMBER, trigger = null)
 	max_1 = add_input_port("Warning Maximum", PORT_TYPE_NUMBER, trigger = null)
 	max_2 = add_input_port("Hazard Maximum", PORT_TYPE_NUMBER, trigger = null)
-	set_data = add_input_port("Set Limits", PORT_TYPE_SIGNAL, trigger = .proc/set_limits)
+	set_data = add_input_port("Set Limits", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_limits))
 	request_data = add_input_port("Request Data", PORT_TYPE_SIGNAL)
 
 	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
@@ -1233,7 +1233,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(action == "add_new_component")
 		var/obj/item/circuit_component/air_alarm_scrubbers/component = new /obj/item/circuit_component/air_alarm_scrubbers/duplicate(parent)
 		parent.add_component(component)
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/on_duplicate_removed)
+		RegisterSignal(component, COMSIG_PARENT_QDELETING, PROC_REF(on_duplicate_removed))
 		component.connected_alarm = connected_alarm
 		component.scrubbers.possible_options = extract_id_tags(connected_alarm.my_area.air_scrubbers)
 		scrubber_duplicates += component
@@ -1247,14 +1247,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_scrubbers/populate_ports()
 	gas_filter = add_input_port("Gas To Filter", PORT_TYPE_LIST(PORT_TYPE_STRING), trigger = null)
-	set_gas_filter = add_input_port("Set Filter", PORT_TYPE_SIGNAL, trigger = .proc/set_gas_to_filter)
-	enable_extended_range = add_input_port("Enable Extra Range", PORT_TYPE_SIGNAL, trigger = .proc/toggle_range)
-	disable_extended_range = add_input_port("Disable Extra Range", PORT_TYPE_SIGNAL, trigger = .proc/toggle_range)
-	enable_siphon = add_input_port("Enable Siphon", PORT_TYPE_SIGNAL, trigger = .proc/toggle_siphon)
-	disable_siphon = add_input_port("Disable Siphon", PORT_TYPE_SIGNAL, trigger = .proc/toggle_siphon)
-	enable = add_input_port("Enable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_scrubber)
-	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_scrubber)
-	request_update = add_input_port("Request Data", PORT_TYPE_SIGNAL, trigger = .proc/update_data)
+	set_gas_filter = add_input_port("Set Filter", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_gas_to_filter))
+	enable_extended_range = add_input_port("Enable Extra Range", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_range))
+	disable_extended_range = add_input_port("Disable Extra Range", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_range))
+	enable_siphon = add_input_port("Enable Siphon", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_siphon))
+	disable_siphon = add_input_port("Disable Siphon", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_siphon))
+	enable = add_input_port("Enable", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_scrubber))
+	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_scrubber))
+	request_update = add_input_port("Request Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(update_data))
 
 	enabled = add_output_port("Enabled", PORT_TYPE_NUMBER)
 	is_siphoning = add_output_port("Siphoning", PORT_TYPE_NUMBER)
@@ -1302,7 +1302,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/set_gas_to_filter(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/set_gas_filter_async, port)
+	INVOKE_ASYNC(src, PROC_REF(set_gas_filter_async), port)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/set_gas_filter_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1322,7 +1322,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_scrubber(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/toggle_scrubber_async, port)
+	INVOKE_ASYNC(src, PROC_REF(toggle_scrubber_async), port)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_scrubber_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1338,7 +1338,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_range(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/toggle_range_async, port)
+	INVOKE_ASYNC(src, PROC_REF(toggle_range_async), port)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_range_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1353,7 +1353,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_siphon(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/toggle_siphon_async, port)
+	INVOKE_ASYNC(src, PROC_REF(toggle_siphon_async), port)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_siphon_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1451,7 +1451,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(action == "add_new_component")
 		var/obj/item/circuit_component/air_alarm_vents/component = new /obj/item/circuit_component/air_alarm_vents/duplicate(parent)
 		parent.add_component(component)
-		RegisterSignal(component, COMSIG_PARENT_QDELETING, .proc/on_duplicate_removed)
+		RegisterSignal(component, COMSIG_PARENT_QDELETING, PROC_REF(on_duplicate_removed))
 		vent_duplicates += component
 		component.connected_alarm = connected_alarm
 		component.vents.possible_options = extract_id_tags(connected_alarm.my_area.air_vents)
@@ -1464,19 +1464,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	vents = add_option_port("Vent", null)
 
 /obj/item/circuit_component/air_alarm_vents/populate_ports()
-	external_pressure = add_input_port("External Pressure", PORT_TYPE_NUMBER, trigger = .proc/set_external_pressure)
-	internal_pressure = add_input_port("Internal Pressure", PORT_TYPE_NUMBER, trigger = .proc/set_internal_pressure)
+	external_pressure = add_input_port("External Pressure", PORT_TYPE_NUMBER, trigger = PROC_REF(set_external_pressure))
+	internal_pressure = add_input_port("Internal Pressure", PORT_TYPE_NUMBER, trigger = PROC_REF(set_internal_pressure))
 
-	enable_external = add_input_port("Enable External", PORT_TYPE_SIGNAL, trigger = .proc/toggle_external)
-	disable_external = add_input_port("Disable External", PORT_TYPE_SIGNAL, trigger = .proc/toggle_external)
-	enable_internal = add_input_port("Enable Internal", PORT_TYPE_SIGNAL, trigger = .proc/toggle_internal)
-	disable_internal = add_input_port("Disable Internal", PORT_TYPE_SIGNAL, trigger = .proc/toggle_internal)
+	enable_external = add_input_port("Enable External", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_external))
+	disable_external = add_input_port("Disable External", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_external))
+	enable_internal = add_input_port("Enable Internal", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_internal))
+	disable_internal = add_input_port("Disable Internal", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_internal))
 
-	enable_siphon = add_input_port("Enable Siphon", PORT_TYPE_SIGNAL, trigger = .proc/toggle_siphon)
-	disable_siphon = add_input_port("Disable Siphon", PORT_TYPE_SIGNAL, trigger = .proc/toggle_siphon)
-	enable = add_input_port("Enable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_vent)
-	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = .proc/toggle_vent)
-	request_update = add_input_port("Request Data", PORT_TYPE_SIGNAL, trigger = .proc/update_data)
+	enable_siphon = add_input_port("Enable Siphon", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_siphon))
+	disable_siphon = add_input_port("Disable Siphon", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_siphon))
+	enable = add_input_port("Enable", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_vent))
+	disable = add_input_port("Disable", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_vent))
+	request_update = add_input_port("Request Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(update_data))
 
 	enabled = add_output_port("Enabled", PORT_TYPE_NUMBER)
 	is_siphoning = add_output_port("Siphoning", PORT_TYPE_NUMBER)
@@ -1520,7 +1520,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_vent(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/toggle_vent_async, port)
+	INVOKE_ASYNC(src, PROC_REF(toggle_vent_async), port)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_vent_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1537,7 +1537,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_external(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/toggle_external_async, port)
+	INVOKE_ASYNC(src, PROC_REF(toggle_external_async), port)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_external_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1554,7 +1554,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_internal(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/toggle_internal_async, port)
+	INVOKE_ASYNC(src, PROC_REF(toggle_internal_async), port)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_internal_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1571,7 +1571,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_vents/proc/set_internal_pressure(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/set_internal_pressure_async, port)
+	INVOKE_ASYNC(src, PROC_REF(set_internal_pressure_async), port)
 
 /obj/item/circuit_component/air_alarm_vents/proc/set_internal_pressure_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1585,7 +1585,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_vents/proc/set_external_pressure(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/set_external_pressure_async, port)
+	INVOKE_ASYNC(src, PROC_REF(set_external_pressure_async), port)
 
 /obj/item/circuit_component/air_alarm_vents/proc/set_external_pressure_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
@@ -1599,7 +1599,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_siphon(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	INVOKE_ASYNC(src, .proc/toggle_siphon_async, port)
+	INVOKE_ASYNC(src, PROC_REF(toggle_siphon_async), port)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_siphon_async(datum/port/input/port)
 	if(!connected_alarm || connected_alarm.locked)
