@@ -45,7 +45,7 @@
 	reason_failed = add_output_port("Fail reason", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/pathfind/input_received(datum/port/input/port)
-	INVOKE_ASYNC(src, .proc/perform_pathfinding, port)
+	INVOKE_ASYNC(src, PROC_REF(perform_pathfinding), port)
 
 /obj/item/circuit_component/pathfind/proc/perform_pathfinding(datum/port/input/port)
 	var/target_X = input_X.value

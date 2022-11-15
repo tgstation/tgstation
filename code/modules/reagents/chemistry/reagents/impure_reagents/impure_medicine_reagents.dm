@@ -88,7 +88,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/hands = 1
 	var/time = 2 / delta_time
 	while(hands < delta_time) //we already made a hand now so start from 1
-		LAZYADD(timer_ids, addtimer(CALLBACK(src, .proc/spawn_hands, owner), (time*hands) SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
+		LAZYADD(timer_ids, addtimer(CALLBACK(src, PROC_REF(spawn_hands), owner), (time*hands) SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
 		hands += time
 	return ..()
 
@@ -141,8 +141,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/consumer = L
 	if(!consumer)
 		return
-	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
+	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
 	var/obj/item/organ/internal/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
@@ -368,8 +368,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/healing/convermol/on_mob_add(mob/living/owner, amount)
 	. = ..()
-	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
+	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
 	var/obj/item/organ/internal/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
@@ -697,8 +697,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	manual_heart.Insert(carbon_mob, special = TRUE)
 	//these last so instert doesn't call them
-	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
+	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
 	to_chat(owner, span_userdanger("You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!"))
 	..()
 
@@ -799,7 +799,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/owner, delta_time, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
 	to_chat(owner, span_warning("Your hearing seems to be a bit off!"))
 	..()
 
