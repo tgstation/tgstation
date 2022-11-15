@@ -5,20 +5,23 @@
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/spaghetti/Initialize(mapload)
-	. = ..()
-	if(!microwaved_type) // This isn't cooked, why would you put uncooked spaghetti in your pocket?
-		var/list/display_message = list(
-			span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
-			span_warning("Oh shit! All your pocket [name] fell out!"))
-		AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', MEMORY_SPAGHETTI_SPILL)
+// Why are you putting cooked spaghetti in your pockets?
+/obj/item/food/spaghetti/make_microwavable()
+	var/list/display_message = list(
+		span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
+		span_warning("Oh shit! All your pocket [name] fell out!"))
+	AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', MEMORY_SPAGHETTI_SPILL)
+
+	return ..()
 
 /obj/item/food/spaghetti/raw
 	name = "spaghetti"
 	desc = "Now that's a nic'e pasta!"
 	icon_state = "spaghetti"
-	microwaved_type = /obj/item/food/spaghetti/boiledspaghetti
 	tastes = list("pasta" = 1)
+
+/obj/item/food/spaghetti/raw/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/spaghetti/boiledspaghetti)
 
 /obj/item/food/spaghetti/boiledspaghetti
 	name = "boiled spaghetti"

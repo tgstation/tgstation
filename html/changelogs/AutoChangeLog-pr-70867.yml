@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes:
-  - qol: "The determination, universal indicator, and organic slurry reagents now have the REAGENT_CAN_BE_SYNTHESIZED flag, like most other reagents in the game. This allows those reagents to be harvested from corpses (if the corpse had them in their system when they died), to appear in randomized chemical plant traits, and to be replicated by Odysseuses (Odyssi?)."
