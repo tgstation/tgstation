@@ -14,7 +14,7 @@
 
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
+	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, PROC_REF(reflect_sect_in_icons)))
 	reflect_sect_in_icons()
 	GLOB.chaplain_altars += src
 	AddElement(/datum/element/climbable)
@@ -94,7 +94,7 @@
 	AddComponent(/datum/component/anti_magic, \
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		charges = 1, \
-		expiration = CALLBACK(src, .proc/expire), \
+		expiration = CALLBACK(src, PROC_REF(expire)), \
 	)
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
