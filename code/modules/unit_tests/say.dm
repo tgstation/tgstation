@@ -91,8 +91,8 @@
 	speaker = allocate(/mob/living/carbon/human)
 	listener = allocate(/mob/living/carbon/human)
 
-	RegisterSignal(speaker, COMSIG_MOB_SAY, .proc/handle_speech)
-	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 
 	// speaking and whispering should be hearable
 	conversation(distance=1)
@@ -124,7 +124,7 @@
 	speaker.say(pangram_quote, language = language)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT_EQUAL(islist(handle_hearing_result), distance <= NORMAL_HEARING_RANGE, "Handle hearing signal was not fired")
-	
+
 	if(language)
 		if(listener.has_language(language))
 			TEST_ASSERT_EQUAL(pangram_quote, handle_hearing_result[HEARING_MESSAGE], "Language test failed. Mob was NOT supposed to understand: [pangram_quote] using language [language]")
