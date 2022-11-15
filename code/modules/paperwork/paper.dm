@@ -301,9 +301,9 @@
 	add_fingerprint(usr)
 	update_static_data()
 
-/obj/item/paper/suicide_act(mob/user)
+/obj/item/paper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] scratches a grid on [user.p_their()] wrist with the paper! It looks like [user.p_theyre()] trying to commit sudoku..."))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/paper/examine(mob/user)
 	. = ..()

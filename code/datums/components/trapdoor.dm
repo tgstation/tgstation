@@ -53,13 +53,13 @@
 
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_TURF_CHANGE, .proc/turf_changed_pre)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_TURF_CHANGE, PROC_REF(turf_changed_pre))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	if(!src.assembly)
-		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
+		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, PROC_REF(on_link_requested))
 	else
-		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/try_unlink)
+		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -78,7 +78,7 @@
 		source.balloon_alert(user, "can't unlink trapdoor when its open")
 		return
 	source.balloon_alert(user, "unlinking trapdoor")
-	INVOKE_ASYNC(src, .proc/async_try_unlink, source, user, tool)
+	INVOKE_ASYNC(src, PROC_REF(async_try_unlink), source, user, tool)
 	return
 
 /datum/component/trapdoor/proc/async_try_unlink(turf/source, mob/user, obj/item/tool)
@@ -91,7 +91,7 @@
 	assembly.stored_decals = list()
 	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
 	UnregisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
-	RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
+	RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, PROC_REF(on_link_requested))
 	assembly = null
 	source.balloon_alert(user, "trapdoor unlinked")
 
@@ -123,8 +123,8 @@
 	src.assembly = assembly
 	assembly.linked = TRUE
 	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
-	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/try_unlink)
+	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, PROC_REF(toggle_trapdoor))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(try_unlink))
 
 ///signal called by our assembly being pulsed
 /datum/component/trapdoor/proc/toggle_trapdoor(datum/source)
@@ -140,7 +140,7 @@
 	var/turf/open/dying_trapdoor = parent
 	if((flags & CHANGETURF_TRAPDOOR_INDUCED) == 0) //not a process of the trapdoor
 		if(!IS_OPEN(parent) && !ispath(path, /turf/closed) && !ispath(path, /turf/open/openspace)) // allow people to place tiles on plating / change tiles without breaking the trapdoor
-			post_change_callbacks += CALLBACK(src, /datum/component/trapdoor.proc/carry_over_trapdoor, path, conspicuous, assembly)
+			post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), path, conspicuous, assembly)
 			return
 		// otherwise, break trapdoor
 		dying_trapdoor.visible_message(span_warning("The trapdoor mechanism in [dying_trapdoor] is broken!"))
@@ -149,7 +149,7 @@
 			assembly.stored_decals.Cut()
 			assembly = null
 		return
-	post_change_callbacks += CALLBACK(src, /datum/component/trapdoor.proc/carry_over_trapdoor, trapdoor_turf_path, conspicuous, assembly)
+	post_change_callbacks += CALLBACK(src, TYPE_PROC_REF(/datum/component/trapdoor, carry_over_trapdoor), trapdoor_turf_path, conspicuous, assembly)
 
 /**
  * ## carry_over_trapdoor
@@ -180,7 +180,7 @@
 	var/turf/open/trapdoor_turf = parent
 	///we want to save this turf's decals as they were right before deletion, so this is the point where we begin listening
 	if(assembly)
-		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
+		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, PROC_REF(decal_detached))
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message(span_warning("[trapdoor_turf] swings open!"))
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR | CHANGETURF_TRAPDOOR_INDUCED)

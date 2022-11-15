@@ -59,10 +59,10 @@
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
 
-	RegisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, .proc/check_pre_step)
-	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/check_pre_step)
-	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
-	RegisterSignal(src, COMSIG_MOB_CLIENT_MOVED, .proc/on_bot_step)
+	RegisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, PROC_REF(check_pre_step))
+	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(check_pre_step))
+	RegisterSignal(src, COMSIG_MOB_BOT_STEP, PROC_REF(on_bot_step))
+	RegisterSignal(src, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_bot_step))
 
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
 
@@ -549,7 +549,7 @@
 							buzz(SIGH)
 							mode = BOT_WAIT_FOR_NAV
 							blockcount = 0
-							addtimer(CALLBACK(src, .proc/process_blocked, next), 2 SECONDS)
+							addtimer(CALLBACK(src, PROC_REF(process_blocked), next), 2 SECONDS)
 							return
 						return
 				else
@@ -562,7 +562,7 @@
 
 		if(BOT_NAV) // calculate new path
 			mode = BOT_WAIT_FOR_NAV
-			INVOKE_ASYNC(src, .proc/process_nav)
+			INVOKE_ASYNC(src, PROC_REF(process_nav))
 
 /mob/living/simple_animal/bot/mulebot/proc/process_blocked(turf/next)
 	calc_path(avoid=next)
@@ -586,7 +586,7 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, 250, id=access_card, exclude=avoid)
+	path = get_path_to(src, target, max_distance=250, id=access_card, exclude=avoid)
 
 // sets the current destination
 // signals all beacons matching the delivery code
@@ -610,7 +610,7 @@
 /mob/living/simple_animal/bot/mulebot/proc/start_home()
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
-	INVOKE_ASYNC(src, .proc/do_start_home)
+	INVOKE_ASYNC(src, PROC_REF(do_start_home))
 
 /mob/living/simple_animal/bot/mulebot/proc/do_start_home()
 	set_destination(home_destination)
@@ -815,7 +815,7 @@
 
 	if(isobserver(AM))
 		visible_message(span_warning("A ghostly figure appears on [src]!"))
-		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
+		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
 		AM.forceMove(src)
 
 	else if(!wires.is_cut(WIRE_LOADCHECK))
