@@ -419,7 +419,7 @@
 			list_to_pick[item] = 0
 		total += list_to_pick[item]
 
-	total = rand(0, total)
+	total = rand(1, total)
 	for(item in list_to_pick)
 		total -= list_to_pick[item]
 		if(total <= 0 && list_to_pick[item])
