@@ -51,7 +51,7 @@
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = say_mod
 	if (modifies_speech)
-		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
+		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	tongue_owner.UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
 
 	/* This could be slightly simpler, by making the removal of the
@@ -68,7 +68,7 @@
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
-	tongue_owner.RegisterSignal(tongue_owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+	tongue_owner.RegisterSignal(tongue_owner, COMSIG_MOB_SAY, TYPE_PROC_REF(/mob/living/carbon/, handle_tongueless_speech))
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
@@ -121,7 +121,7 @@
 /datum/action/item_action/organ_action/statue/New(Target)
 	. = ..()
 	statue = new
-	RegisterSignal(statue, COMSIG_PARENT_QDELETING, .proc/statue_destroyed)
+	RegisterSignal(statue, COMSIG_PARENT_QDELETING, PROC_REF(statue_destroyed))
 
 /datum/action/item_action/organ_action/statue/Destroy()
 	UnregisterSignal(statue, COMSIG_PARENT_QDELETING)
@@ -164,7 +164,7 @@
 		statue.forceMove(get_turf(becoming_statue))
 		becoming_statue.forceMove(statue)
 		statue.update_integrity(becoming_statue.health)
-		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, .proc/human_left_statue)
+		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, PROC_REF(human_left_statue))
 
 	//somehow they used an exploit/teleportation to leave statue, lets clean up
 /datum/action/item_action/organ_action/statue/proc/human_left_statue(atom/movable/mover, atom/oldloc, direction)
@@ -509,9 +509,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	signer.verb_yell = "emphatically signs"
 	signer.bubble_icon = "signlang"
 	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	RegisterSignal(signer, COMSIG_LIVING_TRY_SPEECH, .proc/on_speech_check)
-	RegisterSignal(signer, COMSIG_LIVING_TREAT_MESSAGE, .proc/on_treat_message)
-	RegisterSignal(signer, COMSIG_MOVABLE_USING_RADIO, .proc/on_use_radio)
+	RegisterSignal(signer, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_speech_check))
+	RegisterSignal(signer, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(on_treat_message))
+	RegisterSignal(signer, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_use_radio))
 
 /obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
 	. = ..()
@@ -643,7 +643,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	// If either an exclamation or question are found
 	if(!isnull(tonal_indicator) && owner.client?.typing_indicators)
 		owner.add_overlay(tonal_indicator)
-		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
+		tonal_timerid = addtimer(CALLBACK(src, PROC_REF(remove_tonal_indicator)), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	else // If we're not gonna use it, just be sure we get rid of it
 		tonal_indicator = null
 

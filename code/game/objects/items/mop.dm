@@ -23,7 +23,7 @@
 
 /obj/item/mop/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, .proc/should_clean), on_cleaned_callback=CALLBACK(src, .proc/apply_reagents))
+	AddComponent(/datum/component/cleaner, mopspeed, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)), on_cleaned_callback=CALLBACK(src, PROC_REF(apply_reagents)))
 	create_reagents(max_reagent_volume)
 	GLOB.janitor_devices += src
 
