@@ -89,10 +89,10 @@ LINEN BINS
 	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
 
 	signal_sleeper = WEAKREF(sleeper)
-	RegisterSignal(src, COMSIG_ITEM_PICKUP, .proc/on_pickup)
-	RegisterSignal(sleeper, COMSIG_MOVABLE_MOVED, .proc/smooth_sheets)
-	RegisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION, .proc/smooth_sheets)
-	RegisterSignal(sleeper, COMSIG_PARENT_QDELETING, .proc/smooth_sheets)
+	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+	RegisterSignal(sleeper, COMSIG_MOVABLE_MOVED, PROC_REF(smooth_sheets))
+	RegisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(smooth_sheets))
+	RegisterSignal(sleeper, COMSIG_PARENT_QDELETING, PROC_REF(smooth_sheets))
 
 /obj/item/bedsheet/proc/smooth_sheets(mob/living/sleeper)
 	SIGNAL_HANDLER
