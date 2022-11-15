@@ -21,9 +21,11 @@
 	var/list/created_atoms = list()
 	//make sure this list is accounted for/cleared if you request it from ssatoms!
 
-	// vars for automatic ceiling generation
+	///If true, any openspace turfs above the template will be replaced with ceiling_turf when loading. Should probably be FALSE for lower levels of multi-z ruins.
 	var/has_ceiling = FALSE
+	///What turf to replace openspace with when has_ceiling is true
 	var/turf/ceiling_turf = /turf/open/floor/plating
+	///What baseturfs to set when replacing openspace when has_ceiling is true
 	var/list/ceiling_baseturfs = list()
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
@@ -129,14 +131,13 @@
 	var/x = round((world.maxx - width) * 0.5) + 1
 	var/y = round((world.maxy - height) * 0.5) + 1
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY)
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top)
+	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY, contain_turfs = FALSE)
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top, new_z = TRUE)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
 
-	repopulate_sorted_areas()
-
+	require_area_resort()
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 	smooth_zlevel(world.maxz)
@@ -177,8 +178,7 @@
 	if(!bounds)
 		return
 
-	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
-		repopulate_sorted_areas()
+	require_area_resort()
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)

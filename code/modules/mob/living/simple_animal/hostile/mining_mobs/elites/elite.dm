@@ -163,8 +163,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			if(boosted)
 				mychild.playsound_local(get_turf(mychild), 'sound/effects/magic.ogg', 40, 0)
 				to_chat(mychild, "<b>Someone has activated your tumor.  You will be returned to fight shortly, get ready!</b>")
-			addtimer(CALLBACK(src, .proc/return_elite), 30)
-			INVOKE_ASYNC(src, .proc/arena_checks)
+			addtimer(CALLBACK(src, PROC_REF(return_elite)), 30)
+			INVOKE_ASYNC(src, PROC_REF(arena_checks))
 		if(TUMOR_INACTIVE)
 			if(HAS_TRAIT(user, TRAIT_ELITE_CHALLENGER))
 				user.visible_message(span_warning("[user] reaches for [src] with [user.p_their()] arm, but nothing happens."),
@@ -175,7 +175,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			visible_message(span_boldwarning("[src] begins to convulse.  Your instincts tell you to step back."))
 			make_activator(user)
 			if(!boosted)
-				addtimer(CALLBACK(src, .proc/spawn_elite), 30)
+				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 30)
 				return
 			visible_message(span_boldwarning("Something within [src] stirs..."))
 			var/list/candidates = poll_candidates_for_mob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, src, POLL_IGNORE_LAVALAND_ELITE)
@@ -188,7 +188,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 					While the opponent might have an upper hand with  powerful mining equipment and tools, you have great power normally limited by AI mobs.\n\
 					If you want to win, you'll have to use your powers in creative ways to ensure the kill. It's suggested you try using them all as soon as possible.\n\
 					Should you win, you'll receive extra information regarding what to do after. Good luck!</b>")
-				addtimer(CALLBACK(src, .proc/spawn_elite, elitemind), 100)
+				addtimer(CALLBACK(src, PROC_REF(spawn_elite), elitemind), 100)
 			else
 				visible_message(span_boldwarning("The stirring stops, and nothing emerges.  Perhaps try again later."))
 				activity = TUMOR_INACTIVE
@@ -205,8 +205,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
 	mychild.log_message("has been awakened by [key_name(activator)]!", LOG_GAME, color="#960000")
 	icon_state = "tumor_popped"
-	RegisterSignal(mychild, COMSIG_PARENT_QDELETING, .proc/onEliteLoss)
-	INVOKE_ASYNC(src, .proc/arena_checks)
+	RegisterSignal(mychild, COMSIG_PARENT_QDELETING, PROC_REF(onEliteLoss))
+	INVOKE_ASYNC(src, PROC_REF(arena_checks))
 
 /obj/structure/elite_tumor/proc/return_elite()
 	mychild.forceMove(loc)
@@ -235,7 +235,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		return
 	activator = user
 	ADD_TRAIT(user, TRAIT_ELITE_CHALLENGER, REF(src))
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/clear_activator)
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(clear_activator))
 	user.log_message("has activated an elite tumor!", LOG_GAME, color="#960000")
 
 /obj/structure/elite_tumor/proc/clear_activator(mob/source)
@@ -258,8 +258,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/structure/elite_tumor/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
-	if(istype(attacking_item, /obj/item/organ/internal/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
-		var/obj/item/organ/internal/regenerative_core/core = attacking_item
+	if(istype(attacking_item, /obj/item/organ/internal/monster_core/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
+		var/obj/item/organ/internal/monster_core/regenerative_core/core = attacking_item
 		visible_message(span_boldwarning("As [user] drops the core into [src], [src] appears to swell."))
 		icon_state = "advanced_tumor"
 		boosted = TRUE
@@ -271,11 +271,11 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/arena_checks()
 	if(activity != TUMOR_ACTIVE || QDELETED(src))
 		return
-	INVOKE_ASYNC(src, .proc/fighters_check)  //Checks to see if our fighters died.
-	INVOKE_ASYNC(src, .proc/arena_trap)  //Gets another arena trap queued up for when this one runs out.
-	INVOKE_ASYNC(src, .proc/border_check)  //Checks to see if our fighters got out of the arena somehow.
+	INVOKE_ASYNC(src, PROC_REF(fighters_check))  //Checks to see if our fighters died.
+	INVOKE_ASYNC(src, PROC_REF(arena_trap))  //Gets another arena trap queued up for when this one runs out.
+	INVOKE_ASYNC(src, PROC_REF(border_check))  //Checks to see if our fighters got out of the arena somehow.
 	if(!QDELETED(src))
-		addtimer(CALLBACK(src, .proc/arena_checks), 50)
+		addtimer(CALLBACK(src, PROC_REF(arena_checks)), 50)
 
 /obj/structure/elite_tumor/proc/fighters_check()
 	if(QDELETED(mychild) || mychild.stat == DEAD)

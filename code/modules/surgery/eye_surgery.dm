@@ -13,7 +13,7 @@
 
 //fix eyes
 /datum/surgery_step/fix_eyes
-	name = "fix eyes"
+	name = "fix eyes (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_SCREWDRIVER = 45,

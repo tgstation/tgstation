@@ -6,7 +6,7 @@
 	inhand_icon_state = "retractor"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/silver = 3000)
+	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -26,7 +26,7 @@
 	inhand_icon_state = "hemostat"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500, /datum/material/silver = 2500)
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/glass = 2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -48,7 +48,7 @@
 	inhand_icon_state = "cautery"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 750, /datum/material/silver = 1250)
+	custom_materials = list(/datum/material/iron = 2500, /datum/material/glass = 750)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_TINY
@@ -88,7 +88,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -116,7 +116,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/silver = 5000)
+	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -134,19 +134,18 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 
-/obj/item/surgicaldrill/suicide_act(mob/user)
+/obj/item/surgicaldrill/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
-	addtimer(CALLBACK(user, /mob/living/carbon.proc/gib, null, null, TRUE, TRUE), 25)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, gib), null, null, TRUE, TRUE), 25)
 	user.SpinAnimation(3, 10)
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
-	return (MANUAL_SUICIDE)
+	return MANUAL_SUICIDE
 
 /obj/item/surgicaldrill/augment
 	desc = "Effectively a small power drill contained within your arm. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
-
 
 /obj/item/scalpel
 	name = "scalpel"
@@ -164,7 +163,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/silver = 2000)
+	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000)
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -187,10 +186,9 @@
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
 
-/obj/item/scalpel/suicide_act(mob/user)
+/obj/item/scalpel/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
-
+	return BRUTELOSS
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -209,7 +207,7 @@
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
-	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000, /datum/material/silver = 5000)
+	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 6000)
 	attack_verb_continuous = list("attacks", "slashes", "saws", "cuts")
 	attack_verb_simple = list("attack", "slash", "saw", "cut")
 	sharpness = SHARP_EDGED
@@ -264,7 +262,7 @@
 	if(!(slot & ITEM_SLOT_HANDS))
 		UnregisterSignal(user, COMSIG_SURGERY_STARTING)
 		return
-	RegisterSignal(user, COMSIG_SURGERY_STARTING, .proc/check_surgery)
+	RegisterSignal(user, COMSIG_SURGERY_STARTING, PROC_REF(check_surgery))
 
 /obj/item/surgical_processor/dropped(mob/user, silent)
 	. = ..()
@@ -326,7 +324,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -371,7 +369,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -464,8 +462,8 @@
 	for(var/obj/item/bodypart/thing in user.bodyparts)
 		if(thing.body_part == CHEST)
 			continue
-		addtimer(CALLBACK(thing, /obj/item/bodypart/.proc/dismember), timer)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, user, 'sound/weapons/bladeslice.ogg', 70), timer)
+		addtimer(CALLBACK(thing, TYPE_PROC_REF(/obj/item/bodypart/, dismember)), timer)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), user, 'sound/weapons/bladeslice.ogg', 70), timer)
 		timer += 1 SECONDS
 	sleep(timer)
 	return BRUTELOSS

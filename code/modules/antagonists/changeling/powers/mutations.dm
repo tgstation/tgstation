@@ -278,10 +278,9 @@
 	if(charges == 0)
 		qdel(src)
 
-/obj/item/gun/magic/tentacle/suicide_act(mob/user)
+/obj/item/gun/magic/tentacle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
-
+	return OXYLOSS
 
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
@@ -379,7 +378,7 @@
 						return BULLET_ACT_HIT
 				if(firer_combat_mode)
 					C.visible_message(span_danger("[L] is thrown towards [H] by a tentacle!"),span_userdanger("A tentacle grabs you and throws you towards [H]!"))
-					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, .proc/tentacle_grab, H, C))
+					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, PROC_REF(tentacle_grab), H, C))
 					return BULLET_ACT_HIT
 				else
 					C.visible_message(span_danger("[L] is grabbed by [H]'s tentacle!"),span_userdanger("A tentacle grabs you and pulls you towards [H]!"))
@@ -456,7 +455,7 @@
 \***************************************/
 /datum/action/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure. Costs 20 chemicals."
+	desc = "We grow an organic suit to protect ourselves from space exposure, including regulation of temperature and oxygen needs. Costs 20 chemicals."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
 	button_icon_state = "organic_suit"
 	chemical_cost = 20
@@ -507,7 +506,7 @@
 	inhand_icon_state = null
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	item_flags = DROPDEL
-	clothing_flags = STOPSPRESSUREDAMAGE
+	clothing_flags = STOPSPRESSUREDAMAGE | HEADINTERNALS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 90, ACID = 90)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 

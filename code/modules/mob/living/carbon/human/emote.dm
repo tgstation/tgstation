@@ -22,7 +22,7 @@
 		var/list/key_emotes = GLOB.emote_list["cry"]
 		for(var/datum/emote/living/carbon/human/cry/human_emote in key_emotes)
 			// The existing timer restarts if it is already running
-			addtimer(CALLBACK(human_emote, .proc/end_visual, human_user), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
+			addtimer(CALLBACK(human_emote, PROC_REF(end_visual), human_user), CRY_DURATION, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/emote/living/carbon/human/cry/proc/end_visual(mob/living/carbon/human/human_user)
 	if(!QDELETED(human_user))

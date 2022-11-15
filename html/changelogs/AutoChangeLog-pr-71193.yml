@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - bugfix: "fixed mecha components not taking damage from animals and xenos"

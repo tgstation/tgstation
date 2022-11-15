@@ -42,12 +42,12 @@
 	return ..()
 
 /datum/component/effect_remover/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_remove_effect)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, PROC_REF(try_remove_effect))
 
 	if(tip_text)
 		var/obj/item/item_parent = parent
 		item_parent.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
-		RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/add_item_context)
+		RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 
 /datum/component/effect_remover/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_EFFECT, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
@@ -62,7 +62,7 @@
 		return
 
 	if(effects_we_clear[target.type]) // Make sure we get all subtypes and everything
-		INVOKE_ASYNC(src, .proc/do_remove_effect, target, user)
+		INVOKE_ASYNC(src, PROC_REF(do_remove_effect), target, user)
 		return COMPONENT_NO_AFTERATTACK
 
 /*

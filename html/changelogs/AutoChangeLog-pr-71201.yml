@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "Bubbles no longer re-appear when you change z-levels after getting cleaned. Now they leave for good!"

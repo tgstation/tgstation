@@ -211,10 +211,10 @@
 	. = ..()
 	switch(spawn_when)
 		if(CORPSE_INSTANT)
-			INVOKE_ASYNC(src, .proc/create)
+			INVOKE_ASYNC(src, PROC_REF(create))
 		if(CORPSE_ROUNDSTART)
 			if(mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))
-				INVOKE_ASYNC(src, .proc/create)
+				INVOKE_ASYNC(src, PROC_REF(create))
 
 /obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob)
 	. = ..()
@@ -256,8 +256,7 @@
 		// We don't want corpse PDAs to show up in the messenger list.
 		var/obj/item/modular_computer/tablet/pda/messenger = locate() in spawned_human
 		if(messenger)
-			var/obj/item/computer_hardware/hard_drive/hdd = messenger.all_components[MC_HDD]
-			var/datum/computer_file/program/messenger/message_app = locate() in hdd.stored_files
+			var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
 			if(message_app)
 				message_app.invisible = TRUE
 		// Or on crew monitors

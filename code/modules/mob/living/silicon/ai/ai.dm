@@ -157,9 +157,9 @@
 	create_modularInterface()
 
 	if(client)
-		INVOKE_ASYNC(src, .proc/apply_pref_name, /datum/preference/name/ai, client)
+		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
 
-	INVOKE_ASYNC(src, .proc/set_core_display_icon)
+	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
 
 
 	holo_icon = getHologramIcon(icon('icons/mob/silicon/ai.dmi',"default"))
@@ -195,8 +195,8 @@
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, .proc/alarm_cleared)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -332,8 +332,7 @@
 
 	// hack to display shuttle timer
 	if(!EMERGENCY_IDLE_OR_RECALLED)
-		var/obj/machinery/computer/communications/C = locate() in GLOB.machines
-		if(C)
+		for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
 			C.post_status("shuttle")
 
 /mob/living/silicon/ai/can_interact_with(atom/A, treat_mob_as_adjacent)
@@ -1018,7 +1017,7 @@
 		return
 
 	else if(mind)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/disconnect_shell)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)

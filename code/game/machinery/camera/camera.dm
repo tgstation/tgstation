@@ -171,7 +171,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_appearance()
-			addtimer(CALLBACK(src, .proc/post_emp_reset, emped, network), 90 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), 90 SECONDS)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client?.eye == src)
@@ -191,7 +191,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 	emped = 0 //Resets the consecutive EMP count
-	addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)
@@ -335,11 +335,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		var/info = ""
 
 		var/obj/item/modular_computer/tablet/computer = attacking_item
-		var/obj/item/computer_hardware/hard_drive/hdd = computer.all_components[MC_HDD]
-		if(hdd)
-			for(var/datum/computer_file/program/notepad/notepad_app in hdd.stored_files)
-				info = notepad_app.written_note
-				break
+		for(var/datum/computer_file/program/notepad/notepad_app in computer.stored_files)
+			info = notepad_app.written_note
+			break
 
 		itemname = computer.name
 		itemname = sanitize(itemname)
@@ -496,7 +494,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		change_msg = "reactivates"
 		triggerCameraAlarm()
 		if(!QDELETED(src)) //We'll be doing it anyway in destroy
-			addtimer(CALLBACK(src, .proc/cancelCameraAlarm), 100)
+			addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
 	if(displaymessage)
 		if(user)
 			visible_message(span_danger("[user] [change_msg] [src]!"))

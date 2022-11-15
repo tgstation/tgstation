@@ -487,7 +487,7 @@
 		var/mob/M = locate(href_list["forcespeech"])
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.", confidential = TRUE)
-
+			return
 		var/speech = input("What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
@@ -495,6 +495,21 @@
 		speech = sanitize(speech) // Nah, we don't trust them
 		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins(span_adminnotice("[key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]"))
+
+	else if(href_list["applyquirks"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/carbon/human/target = locate(href_list["applyquirks"])
+		if(!istype(target))
+			to_chat(usr, "this can only be used on instances of type /mob/living/carbon/human.", confidential = TRUE)
+			return
+		if(!target.client)
+			to_chat(usr, "[target] has no client!", confidential = TRUE)
+			return
+		SSquirks.AssignQuirks(target, target.client)
+		log_admin("[key_name(usr)] applied client quirks to [key_name(target)].")
+		message_admins(span_adminnotice("[key_name_admin(usr)] applied client quirks to [key_name_admin(target)]."))
 
 	else if(href_list["sendtoprison"])
 		if(!check_rights(R_ADMIN))
@@ -563,7 +578,7 @@
 		L.Unconscious(100)
 		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdome1))
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Team 1)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(L)] to the thunderdome. (Team 1)")
 
@@ -589,7 +604,7 @@
 		L.Unconscious(100)
 		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdome2))
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Team 2)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(L)] to the thunderdome. (Team 2)")
 
@@ -612,7 +627,7 @@
 		L.Unconscious(100)
 		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdomeadmin))
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Admin.)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(L)] to the thunderdome. (Admin.)")
 
@@ -643,7 +658,7 @@
 		L.Unconscious(100)
 		sleep(0.5 SECONDS)
 		L.forceMove(pick(GLOB.tdomeobserve))
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), L, span_adminnotice("You have been sent to the Thunderdome.")), 5 SECONDS)
 		log_admin("[key_name(usr)] has sent [key_name(L)] to the thunderdome. (Observer.)")
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(L)] to the thunderdome. (Observer.)")
 
@@ -752,8 +767,8 @@
 		output_ai_laws()
 
 	else if(href_list["adminmoreinfo"])
-		var/mob/M = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
-		if(!ismob(M))
+		var/mob/subject = locate(href_list["adminmoreinfo"]) in GLOB.mob_list
+		if(!ismob(subject))
 			to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
 			return
 
@@ -761,32 +776,36 @@
 		var/special_role_description = ""
 		var/health_description = ""
 		var/gender_description = ""
-		var/turf/T = get_turf(M)
+		var/turf/position = get_turf(subject)
 
 		//Location
-		if(isturf(T))
-			if(isarea(T.loc))
-				location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z] in area <b>[T.loc]</b>)"
+		if(isturf(position))
+			if(isarea(position.loc))
+				location_description = "[subject.loc == position ? "at coordinates" : "in [position.loc] at coordinates"] [position.x], [position.y], [position.z] in area <b>[position.loc]</b>"
 			else
-				location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z])"
+				location_description = "[subject.loc == position ? "at coordinates" : "in [subject.loc] at coordinates"] [position.x], [position.y], [position.z]"
 
 		//Job + antagonist
-		if(M.mind)
-			special_role_description = "Role: <b>[M.mind.assigned_role.title]</b>; Antagonist: <font color='red'><b>"
-			var/i = 0
-			for(var/datum/antagonist/A in M.mind.antag_datums)
-				special_role_description += "[A.name]"
-				if(++i != length(M.mind.antag_datums))
-					special_role_description += ", "
-			special_role_description += "</b></font>"
+		if(subject.mind)
+			special_role_description = "Role: <b>[subject.mind.assigned_role.title]</b>; Antagonist: <font color='red'><b>"
+
+			if(subject.mind.antag_datums)
+				var/iterable = 0
+				for(var/datum/antagonist/role in subject.mind.antag_datums)
+					special_role_description += "[role.name]"
+					if(++iterable != length(subject.mind.antag_datums))
+						special_role_description += ", "
+				special_role_description += "</b></font>"
+			else
+				special_role_description += "None</b></font>"
 		else
 			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>"
 
 		//Health
-		if(isliving(M))
-			var/mob/living/L = M
+		if(isliving(subject))
+			var/mob/living/lifer = subject
 			var/status
-			switch (M.stat)
+			switch (subject.stat)
 				if(CONSCIOUS)
 					status = "Alive"
 				if(SOFT_CRIT)
@@ -797,24 +816,31 @@
 					status = "<font color='orange'><b>Unconscious and Dying</b></font>"
 				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
-			health_description = "Status = [status]"
-			health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getOrganLoss(ORGAN_SLOT_BRAIN)] - Stamina: [L.getStaminaLoss()]"
+			health_description = "Status: [status]"
+			health_description += "<br>Brute: [lifer.getBruteLoss()] - Burn: [lifer.getFireLoss()] - Toxin: [lifer.getToxLoss()] - Suffocation: [lifer.getOxyLoss()]"
+			health_description += "<br>Clone: [lifer.getCloneLoss()] - Brain: [lifer.getOrganLoss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.getStaminaLoss()]"
 		else
 			health_description = "This mob type has no health to speak of."
 
 		//Gender
-		switch(M.gender)
+		switch(subject.gender)
 			if(MALE,FEMALE,PLURAL)
-				gender_description = "[M.gender]"
+				gender_description = "[subject.gender]"
 			else
-				gender_description = "<font color='red'><b>[M.gender]</b></font>"
+				gender_description = "<font color='red'><b>[subject.gender]</b></font>"
 
-		to_chat(src.owner, "<b>Info about [M.name]:</b> ", confidential = TRUE)
-		to_chat(src.owner, "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]", confidential = TRUE)
-		to_chat(src.owner, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;", confidential = TRUE)
-		to_chat(src.owner, "Location = [location_description];", confidential = TRUE)
-		to_chat(src.owner, "[special_role_description]", confidential = TRUE)
-		to_chat(src.owner, ADMIN_FULLMONTY_NONAME(M), confidential = TRUE)
+		//Full Output
+		var/exportable_text = "[span_bold("Info about [subject.name]:")]<br>"
+		exportable_text += "Key - [span_bold(subject.key)]<br>"
+		exportable_text += "Mob Type - [subject.type]<br>"
+		exportable_text += "Gender - [gender_description]<br>"
+		exportable_text += "[health_description]<br>"
+		exportable_text += "Name: [span_bold(subject.name)] - Real Name: [subject.real_name] - Mind Name: [subject.mind?"[subject.mind.name]":""]<br>"
+		exportable_text += "Location is [location_description]<br>"
+		exportable_text += "[special_role_description]<br>"
+		exportable_text += ADMIN_FULLMONTY_NONAME(subject)
+
+		to_chat(src.owner, examine_block(exportable_text), confidential = TRUE)
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))

@@ -18,9 +18,9 @@
 	var/obj/item/storage/backpack/equipped_backpack = human_holder.back
 	if(istype(equipped_backpack))
 		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
-		RegisterSignal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
+		RegisterSignal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequipped_backpack))
 	else
-		RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
+		RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equipped_item))
 
 /datum/quirk/badback/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
@@ -38,7 +38,7 @@
 		return
 
 	quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
-	RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
+	RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequipped_backpack))
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
 	backpack = WEAKREF(equipped_item)
 
@@ -49,7 +49,7 @@
 	UnregisterSignal(source, COMSIG_ITEM_POST_UNEQUIP)
 	quirk_holder.clear_mood_event("back_pain")
 	backpack = null
-	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
+	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equipped_item))
 
 /datum/quirk/blooddeficiency
 	name = "Blood Deficiency"
@@ -136,7 +136,7 @@
 
 	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2 * delta_time)
 
-/datum/quirk/deafness
+/datum/quirk/item_quirk/deafness
 	name = "Deaf"
 	desc = "You are incurably deaf."
 	icon = "deaf"
@@ -147,6 +147,9 @@
 	medical_record_text = "Patient's cochlear nerve is incurably damaged."
 	hardcore_value = 12
 	mail_goodies = list(/obj/item/clothing/mask/whistle)
+
+/datum/quirk/item_quirk/deafness/add_unique()
+	give_item_to_holder(/obj/item/clothing/accessory/deaf_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/depression
 	name = "Depression"
@@ -264,6 +267,7 @@
 		/obj/item/clothing/head/costume/nightcap/red,
 		/obj/item/clothing/under/misc/pj/blue,
 		/obj/item/clothing/head/costume/nightcap/blue,
+		/obj/item/pillow/random,
 	)
 
 /datum/quirk/hypersensitive
@@ -339,7 +343,7 @@
 	mail_goodies = list(/obj/effect/spawner/random/engineering/flashlight)
 
 /datum/quirk/nyctophobia/add()
-	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 
 /datum/quirk/nyctophobia/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
@@ -467,16 +471,16 @@
 	var/obj/item/bodypart/prosthetic
 	switch(limb_slot)
 		if(BODY_ZONE_L_ARM)
-			prosthetic = new /obj/item/bodypart/l_arm/robot/surplus
+			prosthetic = new /obj/item/bodypart/arm/left/robot/surplus
 			slot_string = "left arm"
 		if(BODY_ZONE_R_ARM)
-			prosthetic = new /obj/item/bodypart/r_arm/robot/surplus
+			prosthetic = new /obj/item/bodypart/arm/right/robot/surplus
 			slot_string = "right arm"
 		if(BODY_ZONE_L_LEG)
-			prosthetic = new /obj/item/bodypart/l_leg/robot/surplus
+			prosthetic = new /obj/item/bodypart/leg/left/robot/surplus
 			slot_string = "left leg"
 		if(BODY_ZONE_R_LEG)
-			prosthetic = new /obj/item/bodypart/r_leg/robot/surplus
+			prosthetic = new /obj/item/bodypart/leg/right/robot/surplus
 			slot_string = "right leg"
 	human_holder.del_and_replace_bodypart(prosthetic)
 
@@ -494,10 +498,10 @@
 
 /datum/quirk/quadruple_amputee/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/l_arm/robot/surplus)
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/r_arm/robot/surplus)
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/l_leg/robot/surplus)
-	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/r_leg/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/left/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/arm/right/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/left/robot/surplus)
+	human_holder.del_and_replace_bodypart(new /obj/item/bodypart/leg/right/robot/surplus)
 
 /datum/quirk/quadruple_amputee/post_add()
 	to_chat(quirk_holder, span_boldannounce("All your limbs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. Additionally, \
@@ -574,9 +578,9 @@
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/add()
-	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
-	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
-	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, PROC_REF(eye_contact))
+	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, PROC_REF(looks_at_floor))
+	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 /datum/quirk/social_anxiety/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE, COMSIG_MOB_SAY))
@@ -642,7 +646,7 @@
 	if(prob(85) || (istype(mind_check) && mind_check.mind))
 		return
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, span_smallnotice("You make eye contact with [A].")), 3)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), quirk_holder, span_smallnotice("You make eye contact with [A].")), 3)
 
 /datum/quirk/social_anxiety/proc/eye_contact(datum/source, mob/living/other_mob, triggering_examiner)
 	SIGNAL_HANDLER
@@ -667,7 +671,7 @@
 			msg += "causing you to freeze up!"
 
 	quirk_holder.add_mood_event("anxiety_eyecontact", /datum/mood_event/anxiety_eyecontact)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, quirk_holder, span_userdanger("[msg]")), 3) // so the examine signal has time to fire and this will print after
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), quirk_holder, span_userdanger("[msg]")), 3) // so the examine signal has time to fire and this will print after
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/mood_event/anxiety_eyecontact
@@ -904,7 +908,7 @@
 	mail_goodies = list(/obj/item/reagent_containers/spray/pepper) // show me on the doll where the bad man touched you
 
 /datum/quirk/bad_touch/add()
-	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), .proc/uncomfortable_touch)
+	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), PROC_REF(uncomfortable_touch))
 
 /datum/quirk/bad_touch/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT))
@@ -986,3 +990,76 @@
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
 	mail_goodies = list(/obj/item/pai_card) // can read things for you
+
+/datum/quirk/body_purist
+	name = "Body Purist"
+	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."
+	icon = "person-rays"
+	value = -2
+	mood_quirk = TRUE
+	gain_text = "<span class='danger'>You now begin to hate the idea of having cybernetic implants.</span>"
+	lose_text = "<span class='notice'>Maybe cybernetics aren't so bad. You now feel okay with augmentations and prosthetics.</span>"
+	medical_record_text = "This patient has disclosed an extreme hatred for unnatural bodyparts and augmentations."
+	hardcore_value = 3
+	mail_goodies = list(/obj/item/paper/pamphlet/cybernetics)
+	var/cybernetics_level = 0
+
+/datum/quirk/body_purist/add()
+	check_cybernetics()
+	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_lose))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(on_limb_gain))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_limb_lose))
+
+/datum/quirk/body_purist/remove()
+	UnregisterSignal(quirk_holder, list(
+		COMSIG_CARBON_GAIN_ORGAN,
+		COMSIG_CARBON_LOSE_ORGAN,
+		COMSIG_CARBON_ATTACH_LIMB,
+		COMSIG_CARBON_REMOVE_LIMB,
+	))
+	quirk_holder.clear_mood_event("body_purist")
+
+/datum/quirk/body_purist/proc/check_cybernetics()
+	var/mob/living/carbon/owner = quirk_holder
+	if(!istype(owner))
+		return
+	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
+		if(!IS_ORGANIC_LIMB(limb))
+			cybernetics_level++
+	for(var/obj/item/organ/internal/organ as anything in owner.internal_organs)
+		if(organ.organ_flags & ORGAN_SYNTHETIC)
+			cybernetics_level++
+	for(var/obj/item/organ/external/organ as anything in owner.external_organs)
+		if(organ.organ_flags & ORGAN_SYNTHETIC)
+			cybernetics_level++
+	update_mood()
+
+/datum/quirk/body_purist/proc/update_mood()
+	quirk_holder.clear_mood_event("body_purist")
+	if(cybernetics_level)
+		quirk_holder.add_mood_event("body_purist", /datum/mood_event/body_purist, -cybernetics_level * 10)
+
+/datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
+	SIGNAL_HANDLER
+	if(new_organ.organ_flags & ORGAN_SYNTHETIC || new_organ.status == ORGAN_ROBOTIC) //why the fuck are there 2 of them
+		cybernetics_level++
+		update_mood()
+
+/datum/quirk/body_purist/proc/on_organ_lose(datum/source, obj/item/organ/old_organ, special)
+	SIGNAL_HANDLER
+	if(old_organ.organ_flags & ORGAN_SYNTHETIC || old_organ.status == ORGAN_ROBOTIC)
+		cybernetics_level--
+		update_mood()
+
+/datum/quirk/body_purist/proc/on_limb_gain(datum/source, obj/item/bodypart/new_limb, special)
+	SIGNAL_HANDLER
+	if(!IS_ORGANIC_LIMB(new_limb))
+		cybernetics_level++
+		update_mood()
+
+/datum/quirk/body_purist/proc/on_limb_lose(datum/source, obj/item/bodypart/old_limb, special)
+	SIGNAL_HANDLER
+	if(!IS_ORGANIC_LIMB(old_limb))
+		cybernetics_level--
+		update_mood()

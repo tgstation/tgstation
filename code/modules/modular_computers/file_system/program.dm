@@ -198,6 +198,8 @@
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	program_state = PROGRAM_STATE_KILLED
+	if(src in computer.idle_threads)
+		computer.idle_threads.Remove(src)
 	if(requires_ntnet)
 		var/obj/item/card/id/ID
 		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
