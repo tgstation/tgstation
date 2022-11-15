@@ -8,7 +8,7 @@
  * but its also hilarious and fun to watch locally.
  */
 /datum/unit_test/monkey_business
-	priority = TEST_MONKEY_BUSINESS
+	priority = TEST_LONGER
 	var/monkey_timer = 30 SECONDS
 	var/monkey_angry_nth = 5 // every nth monkey will be angry
 

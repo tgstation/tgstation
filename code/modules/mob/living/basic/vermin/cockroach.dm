@@ -57,8 +57,8 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
-		/datum/ai_planning_subtree/find_and_hunt_target
-)
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
+	)
 
 /obj/projectile/glockroachbullet
 	damage = 10 //same damage as a hivebot
@@ -91,7 +91,7 @@
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach, //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
@@ -120,7 +120,7 @@
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
-	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/basic/cockroach/hauberoach/.proc/on_squish)
+	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = TYPE_PROC_REF(/mob/living/basic/cockroach/hauberoach, on_squish))
 
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
@@ -136,7 +136,7 @@
 		/datum/ai_planning_subtree/random_speech/cockroach,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach,  //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target
+		/datum/ai_planning_subtree/find_and_hunt_target/roach,
 	)
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/hauberoach

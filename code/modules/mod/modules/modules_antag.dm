@@ -117,7 +117,7 @@
 /obj/item/mod/module/energy_shield/on_suit_activation()
 	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
 	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
+	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(shield_reaction))
 
 /obj/item/mod/module/energy_shield/on_suit_deactivation(deleting = FALSE)
 	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
@@ -261,7 +261,7 @@
 
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] || prob(1))
+	if(check_holidays(APRIL_FOOLS) || prob(1))
 		mod.set_mod_color("#b17f00")
 		mod.wearer.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
 		mod.wearer.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
@@ -287,7 +287,7 @@
 	flame.preparePixelProjectile(target, mod.wearer)
 	flame.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
-	INVOKE_ASYNC(flame, /obj/projectile.proc/fire)
+	INVOKE_ASYNC(flame, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_power_cost)
 
 ///Power kick - Lets the user launch themselves at someone to kick them.
@@ -315,24 +315,24 @@
 		blind_message = span_hear("You hear a charging sound."))
 	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
 	balloon_alert(mod.wearer, "you start charging...")
-	animate(mod.wearer, 0.3 SECONDS, pixel_z = 16, flags = ANIMATION_RELATIVE|SINE_EASING|EASE_OUT)
-	addtimer(CALLBACK(mod.wearer, /atom.proc/SpinAnimation, 3, 2), 0.3 SECONDS)
+	animate(mod.wearer, 0.3 SECONDS, pixel_z = 16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_OUT)
+	addtimer(CALLBACK(mod.wearer, TYPE_PROC_REF(/atom, SpinAnimation), 3, 2), 0.3 SECONDS)
 	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
-		animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE|SINE_EASING|EASE_IN)
+		animate(mod.wearer, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_IN)
 		return
 	animate(mod.wearer)
 	drain_power(use_power_cost)
 	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
 	var/angle = get_angle(mod.wearer, target) + 180
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
-	mod.wearer.throw_at(target, range = 7, speed = 2, thrower = mod.wearer, spin = FALSE, gentle = TRUE, callback = CALLBACK(src, .proc/on_throw_end, mod.wearer, -angle))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_IMPACT, PROC_REF(on_throw_impact))
+	mod.wearer.throw_at(target, range = 7, speed = 2, thrower = mod.wearer, spin = FALSE, gentle = TRUE, callback = CALLBACK(src, PROC_REF(on_throw_end), mod.wearer, -angle))
 
 /obj/item/mod/module/power_kick/proc/on_throw_end(mob/user, angle)
 	if(!user)
 		return
 	user.transform = user.transform.Turn(angle)
-	animate(user, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE|SINE_EASING|EASE_IN)
+	animate(user, 0.2 SECONDS, pixel_z = -16, flags = ANIMATION_RELATIVE, easing = SINE_EASING|EASE_IN)
 
 /obj/item/mod/module/power_kick/proc/on_throw_impact(mob/living/source, atom/target, datum/thrownthing/thrownthing)
 	SIGNAL_HANDLER
@@ -366,7 +366,7 @@
 	var/obj/item/current_disguise
 
 /obj/item/mod/module/chameleon/on_install()
-	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), /proc/cmp_typepaths_asc)
+	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	for(var/clothing_path in all_disguises)
 		var/obj/item/clothing = clothing_path
 		if(!initial(clothing.icon_state))
@@ -407,7 +407,7 @@
 	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
 	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
 	mod.wearer.update_clothing(mod.slot_flags)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/return_look)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(return_look))
 
 /obj/item/mod/module/chameleon/proc/return_look()
 	mod.name = "[mod.theme.name] [initial(mod.name)]"

@@ -190,9 +190,9 @@
 /obj/item/storage/box/tail_pin
 	name = "pin the tail on the corgi supplies"
 	desc = "For ages 10 and up. ...Why is this even on a space station? Aren't you a little old for babby games?" //Intentional typo.
+	custom_price = PAYCHECK_COMMAND * 1.25
 
 /obj/item/storage/box/tail_pin/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/poster/tail_board(src)
 		new /obj/item/tail_pin(src)
-

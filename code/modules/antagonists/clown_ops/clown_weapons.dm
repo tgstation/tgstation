@@ -84,7 +84,7 @@
 		attack_verb_continuous_on = list("slips"), \
 		attack_verb_simple_on = list("slip"), \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/energy/sword/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
@@ -119,7 +119,7 @@
 		return TRUE
 	return ..()
 
-/obj/item/melee/energy/sword/bananium/suicide_act(mob/user)
+/obj/item/melee/energy/sword/bananium/suicide_act(mob/living/user)
 	if(!blade_active)
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!"))
@@ -202,11 +202,11 @@
 	. = ..()
 	QDEL_NULL(bomb)
 
-/obj/item/grown/bananapeel/bombanana/suicide_act(mob/user)
+/obj/item/grown/bananapeel/bombanana/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is deliberately slipping on the [src.name]! It looks like \he's trying to commit suicide."))
 	playsound(loc, 'sound/misc/slip.ogg', 50, TRUE, -1)
 	bomb.arm_grenade(user, 0, FALSE)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 //TEARSTACHE GRENADE
 
@@ -234,7 +234,7 @@
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
-	addtimer(CALLBACK(src, .proc/unstick), unstick_time)
+	addtimer(CALLBACK(src, PROC_REF(unstick)), unstick_time)
 
 /obj/item/clothing/mask/fakemoustache/sticky/proc/unstick()
 	REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)

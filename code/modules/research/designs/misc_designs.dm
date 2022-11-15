@@ -486,6 +486,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
+/datum/design/light_replacer_blue
+	name = "Bluespace Light Replacer"
+	desc = "A device to automatically replace lights at a distance. Refill with working light bulbs."
+	id = "light_replacer_blue"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/silver = 150, /datum/material/glass = 3000, /datum/material/bluespace = 300)
+	build_path = /obj/item/lightreplacer/blue
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_JANITORIAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/buffer_upgrade
 	name = "Floor Buffer Upgrade"
 	desc = "A floor buffer that can be attached to vehicular janicarts."

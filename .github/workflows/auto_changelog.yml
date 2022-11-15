@@ -9,15 +9,16 @@ on:
 permissions:
   contents: write
 jobs:
-  auto_labeler:
+  auto_changelog:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    - name: Run auto labeler
+    - name: Run auto changelog
       uses: actions/github-script@v6
       with:
         script: |
           const { processAutoChangelog } = await import('${{ github.workspace }}/tools/pull_request_hooks/autoChangelog.js')
           await processAutoChangelog({ github, context })
+        github-token: ${{ secrets.COMFY_ORANGE_PAT || secrets.GITHUB_TOKEN }}

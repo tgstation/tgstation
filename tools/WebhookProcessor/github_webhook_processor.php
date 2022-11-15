@@ -772,6 +772,7 @@ function checkchangelog($payload) {
 				break;
 		}
 	}
+	return $tags;
 }
 
 function game_server_send($addr, $port, $str) {

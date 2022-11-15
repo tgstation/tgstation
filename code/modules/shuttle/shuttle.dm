@@ -651,7 +651,9 @@
 		if(!oldT || !istype(oldT.loc, area_type))
 			continue
 		var/area/old_area = oldT.loc
+		old_area.turfs_to_uncontain += oldT
 		underlying_area.contents += oldT
+		underlying_area.contained_turfs += oldT
 		oldT.transfer_area_lighting(old_area, underlying_area)
 		oldT.empty(FALSE)
 

@@ -65,7 +65,7 @@
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You remove %THEEFFECT.", \
 		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, .proc/after_clear_rune), \
+		on_clear_callback = CALLBACK(src, PROC_REF(after_clear_rune)), \
 		effects_we_clear = list(/obj/effect/heretic_rune))
 
 /*
@@ -81,7 +81,7 @@
 	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with eldritch energies. Fucking badass!")
 	remove_hand_with_no_refund(user)
 
-/obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/user)
+/obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/mob/living/carbon/carbon_user = user //iscarbon already used in spell's parent
 	var/datum/action/cooldown/spell/touch/mansus_grasp/source = locate() in user.actions

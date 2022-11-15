@@ -208,10 +208,10 @@
 //Health doll screws for human mobs
 #define SCREWYDOLL_HEAD /obj/item/bodypart/head
 #define SCREWYDOLL_CHEST /obj/item/bodypart/chest
-#define SCREWYDOLL_L_ARM /obj/item/bodypart/l_arm
-#define SCREWYDOLL_R_ARM /obj/item/bodypart/r_arm
-#define SCREWYDOLL_L_LEG /obj/item/bodypart/l_leg
-#define SCREWYDOLL_R_LEG /obj/item/bodypart/r_leg
+#define SCREWYDOLL_L_ARM /obj/item/bodypart/arm/left
+#define SCREWYDOLL_R_ARM /obj/item/bodypart/arm/right
+#define SCREWYDOLL_L_LEG /obj/item/bodypart/leg/left
+#define SCREWYDOLL_R_LEG /obj/item/bodypart/leg/right
 
 //Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66
@@ -362,6 +362,8 @@
 #define SHOCK_ILLUSION (1 << 2)
 ///The shock doesn't stun.
 #define SHOCK_NOSTUN (1 << 3)
+/// No default message is sent from the shock
+#define SHOCK_SUPPRESS_MESSAGE (1 << 4)
 
 #define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
 #define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows

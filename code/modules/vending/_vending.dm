@@ -682,10 +682,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(1) // shatter their legs and bleed 'em
 						crit_rebate = 60
 						C.bleed(150)
-						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
+						var/obj/item/bodypart/leg/left/l = C.get_bodypart(BODY_ZONE_L_LEG)
 						if(l)
 							l.receive_damage(brute=200)
-						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
+						var/obj/item/bodypart/leg/right/r = C.get_bodypart(BODY_ZONE_R_LEG)
 						if(r)
 							r.receive_damage(brute=200)
 						if(l || r)
@@ -1003,7 +1003,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			allowed_configs += "[initial(item.greyscale_config_inhand_right)]"
 
 	var/datum/greyscale_modify_menu/menu = new(
-		src, usr, allowed_configs, CALLBACK(src, .proc/vend_greyscale, params),
+		src, usr, allowed_configs, CALLBACK(src, PROC_REF(vend_greyscale), params),
 		starting_icon_state=initial(fake_atom.icon_state),
 		starting_config=initial(fake_atom.greyscale_config),
 		starting_colors=initial(fake_atom.greyscale_colors)
@@ -1424,34 +1424,6 @@ GLOBAL_LIST_EMPTY(vending_products)
 	machine_name = "Custom Vendor"
 	icon_state = "refill_custom"
 	custom_premium_price = PAYCHECK_CREW
-
-/obj/item/price_tagger
-	name = "price tagger"
-	desc = "This tool is used to set a price for items used in custom vendors."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "pricetagger"
-	custom_premium_price = PAYCHECK_CREW * 0.5
-	///the price of the item
-	var/price = 1
-
-/obj/item/price_tagger/attack_self(mob/user)
-	if(loc != user)
-		to_chat(user, span_warning("You must be holding the price tagger to continue!"))
-		return
-	var/chosen_price = tgui_input_number(user, "Set price", "Price", price)
-	if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
-		return
-	price = chosen_price
-	to_chat(user, span_notice(" The [src] will now give things a [price] cr tag."))
-
-/obj/item/price_tagger/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(isitem(target))
-		var/obj/item/I = target
-		I.custom_price = price
-		to_chat(user, span_notice("You set the price of [I] to [price] cr."))
 
 /obj/machinery/vending/custom/greed //name and like decided by the spawn
 	icon_state = "greed"
