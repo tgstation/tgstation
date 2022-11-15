@@ -303,6 +303,13 @@ do
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
 
+# Check for non-515 compatable .proc/ syntax
+if grep -P --exclude='__byond_version_compat.dm' '\.proc/' code/**/*.dm; then
+    echo
+    echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
+    st=1
+fi;
+
 if [ $st = 0 ]; then
     echo
     echo -e "${GREEN}No errors found using grep!${NC}"

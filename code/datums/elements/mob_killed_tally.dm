@@ -15,7 +15,7 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 	src.tally_string = tally_string
 

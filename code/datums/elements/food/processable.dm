@@ -30,9 +30,9 @@
 	var/atom/atom_target = target
 	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
-	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
-	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), .proc/try_process)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), PROC_REF(try_process))
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(OnExamine))
 
 /datum/element/processable/Detach(datum/target)
 	. = ..()
