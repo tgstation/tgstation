@@ -183,7 +183,7 @@
 			for(var/datum/computer_file/data/ordnance/ordnance_data in computer.stored_files)
 				if(ordnance_data.uid == params["selected_uid"])
 					selected_file = ordnance_data
-					RegisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED, .proc/recheck_file_presence)
+					RegisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED, PROC_REF(recheck_file_presence))
 					return TRUE
 		if("select_experiment")
 			var/ex_path = text2path(params["selected_expath"])

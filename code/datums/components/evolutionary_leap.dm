@@ -20,7 +20,7 @@
 
 	//don't setup timer yet, timer calc requires the round to have started
 	if(!SSticker.HasRoundStarted())
-		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, .proc/comp_on_round_start)
+		RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(comp_on_round_start))
 		return
 
 	//if the round has already taken long enough, just leap right away.
@@ -47,7 +47,7 @@
 	//in cases where this is calculating roundstart, world.time - SSticker.round_start_time should equal 0
 	var/sum = (world.time - SSticker.round_start_time)
 	var/mark = evolve_mark - sum
-	timer_id = addtimer(CALLBACK(src, .proc/leap, FALSE), mark, TIMER_STOPPABLE)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(leap), FALSE), mark, TIMER_STOPPABLE)
 
 /datum/component/evolutionary_leap/proc/leap(silent)
 	var/mob/living/old_mob = parent

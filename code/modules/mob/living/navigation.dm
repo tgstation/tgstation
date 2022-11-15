@@ -15,13 +15,13 @@
 	if(incapacitated())
 		return
 	if(length(client.navigation_images))
-		addtimer(CALLBACK(src, .proc/cut_navigation), world.tick_lag)
+		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
 		balloon_alert(src, "navigation path removed")
 		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
 		balloon_alert(src, "navigation on cooldown!")
 		return
-	addtimer(CALLBACK(src, .proc/create_navigation), world.tick_lag)
+	addtimer(CALLBACK(src, PROC_REF(create_navigation)), world.tick_lag)
 
 /mob/living/proc/create_navigation()
 	var/list/destination_list = list()
@@ -90,8 +90,8 @@
 		client.images += path_image
 		client.navigation_images += path_image
 		animate(path_image, 0.5 SECONDS, alpha = 150)
-	addtimer(CALLBACK(src, .proc/shine_navigation), 0.5 SECONDS)
-	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/cut_navigation)
+	addtimer(CALLBACK(src, PROC_REF(shine_navigation)), 0.5 SECONDS)
+	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(cut_navigation))
 	balloon_alert(src, "navigation path created")
 
 /mob/living/proc/shine_navigation()

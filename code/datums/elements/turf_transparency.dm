@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 /// We do not need to do this for non transparent holders, because they will have their abstract object cleared
 /// When a transparent holder comes back.
 /datum/z_pillar/proc/parent_cleared(turf/visual, turf/current_holder)
-	addtimer(CALLBACK(src, .proc/refresh_orphan, visual, current_holder))
+	addtimer(CALLBACK(src, PROC_REF(refresh_orphan), visual, current_holder))
 
 /// Runs the actual refresh of some formerly orphaned via vis_loc deletiong turf
 /// We'll only reup if we either have no souece, or if the source is a transparent turf
@@ -183,8 +183,8 @@ GLOBAL_LIST_EMPTY(pillars_by_z)
 
 	our_turf.layer = OPENSPACE_LAYER
 
-	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
-	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
+	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, PROC_REF(on_multiz_turf_del))
+	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, PROC_REF(on_multiz_turf_new))
 
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
