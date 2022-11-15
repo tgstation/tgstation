@@ -23,7 +23,7 @@
 	. = ..()
 	SSradio.remove_object(src, air_frequency)
 	air_connection = SSradio.add_object(src, air_frequency, RADIO_TO_AIRALARM)
-	INVOKE_ASYNC(src, .proc/open)
+	INVOKE_ASYNC(src, PROC_REF(open))
 
 /obj/machinery/door/airlock/alarmlock/receive_signal(datum/signal/signal)
 	..()

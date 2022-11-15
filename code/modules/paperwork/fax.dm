@@ -294,7 +294,7 @@
 			return FALSE
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
-		INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "send"))
+		INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "send"))
 		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 		return TRUE
 	return FALSE
@@ -309,10 +309,10 @@
  */
 /obj/machinery/fax/proc/receive(obj/item/loaded, sender_name)
 	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
-	INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "receive"))
+	INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "receive"))
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
-	addtimer(CALLBACK(src, .proc/vend_item, loaded), 1.9 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
 
 /**
  * Procedure for animating an object entering or leaving the fax machine.
@@ -325,7 +325,7 @@
 	icon_state = animation_state
 	var/mutable_appearance/overlay = mutable_appearance(icon, overlay_state)
 	overlays += overlay
-	addtimer(CALLBACK(src, .proc/travel_animation_complete, overlay), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(travel_animation_complete), overlay), 2 SECONDS)
 
 /**
  * Called when the travel animation should end. Reset animation and overlay states.

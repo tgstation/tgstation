@@ -1,7 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - qol: "More actions should report why they are unavailable if pressed while they are unavailable."
-  - qol: "Giant Spider action buttons should now correctly display whether they are available or not."
-  - bugfix: "Spider broodmothers can now only lay one enriched egg per victim."
-  - bugfix: "Spider broodmothers can no longer feed multiple times from the same corpse, a bug they never previously needed to exploit because of the previous bug."

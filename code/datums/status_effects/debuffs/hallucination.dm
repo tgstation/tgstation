@@ -28,11 +28,11 @@
 	if(!affects_silicons && issilicon(owner))
 		return FALSE
 
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_hallucinations)
-	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN, .proc/on_health_scan)
+	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_hallucinations))
+	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_health_scan))
 	if(iscarbon(owner))
-		RegisterSignal(owner, COMSIG_CARBON_CHECKING_BODYPART, .proc/on_check_bodypart)
-		RegisterSignal(owner, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, .proc/on_bump_airlock)
+		RegisterSignal(owner, COMSIG_CARBON_CHECKING_BODYPART, PROC_REF(on_check_bodypart))
+		RegisterSignal(owner, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, PROC_REF(on_bump_airlock))
 
 	return TRUE
 
