@@ -272,7 +272,7 @@
 			fax_paper.request_state = TRUE
 			fax_paper.loc = null
 
-			INVOKE_ASYNC(src, .proc/animate_object_travel, fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
+			INVOKE_ASYNC(src, PROC_REF(animate_object_travel), fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
 			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, vary = FALSE)
 
 			history_add("Send", params["name"])
