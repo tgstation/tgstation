@@ -73,18 +73,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/lance
-	name = "Explosive Lance (Grenade)"
-	result = /obj/item/spear/explosive
-	reqs = list(/obj/item/spear = 1,
-				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/spear/bonespear, /obj/item/spear/bamboospear)
-	parts = list(/obj/item/spear = 1,
-				/obj/item/grenade = 1)
-	time = 1.5 SECONDS
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
 	result = /obj/item/shield/riot/flash
@@ -1838,6 +1826,28 @@
 	toiletbong.loc = toilet.loc
 	qdel(toilet)
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
+
+/datum/crafting_recipe/pillow_suit
+	name = "pillow suit"
+	result = /obj/item/clothing/suit/pillow_suit
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sticky_tape = 10,
+		/obj/item/pillow = 5,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/pillow_hood
+	name = "pillow hood"
+	result = /obj/item/clothing/head/pillow_hood
+	tool_behaviors = list(TOOL_WIRECUTTER, TOOL_KNIFE)
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/pillow = 1,
+	)
+	category = CAT_CLOTHING
+
 
 /datum/crafting_recipe/house_edge
 	name = "House Edge"

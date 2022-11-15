@@ -18,7 +18,7 @@
 	return ..()
 
 /datum/component/surgery_initiator/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(initiate_surgery_moment))
 
 /datum/component/surgery_initiator/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
@@ -38,7 +38,7 @@
 	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
-	INVOKE_ASYNC(src, .proc/do_initiate_surgery_moment, target, user)
+	INVOKE_ASYNC(src, PROC_REF(do_initiate_surgery_moment), target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/surgery_initiator/proc/do_initiate_surgery_moment(mob/living/target, mob/user)
@@ -69,8 +69,8 @@
 	last_user_ref = WEAKREF(user)
 	surgery_target_ref = WEAKREF(target)
 
-	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, .proc/on_set_selected_zone)
-	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, .proc/on_mob_surgery_started)
+	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, PROC_REF(on_set_selected_zone))
+	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_mob_surgery_started))
 
 	ui_interact(user)
 

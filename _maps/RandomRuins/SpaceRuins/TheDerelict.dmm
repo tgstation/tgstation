@@ -7336,7 +7336,7 @@
 /obj/item/clothing/head/costume/cardborg,
 /obj/item/clothing/head/cone,
 /obj/item/clothing/head/costume/festive,
-/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/toggleable/riot,
 /obj/item/clothing/head/helmet/sec,
 /obj/item/clothing/head/costume/jester,
 /obj/item/clothing/head/chaplain/nun_hood,

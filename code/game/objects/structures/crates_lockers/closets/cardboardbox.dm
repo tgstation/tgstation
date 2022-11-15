@@ -34,7 +34,7 @@
 	var/oldloc = loc
 	step(src, direction)
 	if(oldloc != loc)
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
+		addtimer(CALLBACK(src, PROC_REF(ResetMoveDelay)), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
 	else
 		move_delay = FALSE
 
@@ -80,7 +80,7 @@
 	// We use this list to update plane values on parent z change, which is why we need the timer too
 	// I'm sorry :(
 	LAZYADD(update_on_z, alert_image)
-	addtimer(CALLBACK(src, .proc/forget_alert_image, alert_image), 0.8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(forget_alert_image), alert_image), 0.8 SECONDS)
 
 /atom/proc/forget_alert_image(image/alert_image)
 	LAZYREMOVE(update_on_z, alert_image)

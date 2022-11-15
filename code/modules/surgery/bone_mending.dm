@@ -89,7 +89,7 @@
 
 ///// Reset Compound Fracture (Crticial)
 /datum/surgery_step/reset_compound_fracture
-	name = "reset bone"
+	name = "reset bone (bonesetter)"
 	implements = list(
 		/obj/item/bonesetter = 100,
 		/obj/item/stack/sticky_tape/surgical = 60,

@@ -4,7 +4,7 @@
  */
 
 /datum/element/easily_fragmented
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
 	var/break_chance
@@ -16,7 +16,7 @@
 
 	src.break_chance = break_chance
 
-	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
+	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
 
 /datum/element/easily_fragmented/Detach(datum/target)
 	. = ..()

@@ -656,6 +656,39 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_transfer(atom/atom, methods = TOUCH, trans_volume)
+	if(!(methods & INGEST))
+		return ..()
+
+	if(src == atom.reagents.get_master_reagent() && istype(atom, /obj/item/reagent_containers/cup/glass/drinkingglass))
+		var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = atom
+		drink.tool_behaviour = TOOL_SCREWDRIVER
+		var/list/reagent_change_signals = list(
+			COMSIG_REAGENTS_ADD_REAGENT,
+			COMSIG_REAGENTS_NEW_REAGENT,
+			COMSIG_REAGENTS_REM_REAGENT,
+			COMSIG_REAGENTS_DEL_REAGENT,
+			COMSIG_REAGENTS_CLEAR_REAGENTS,
+			COMSIG_REAGENTS_REACTED,
+		)
+		RegisterSignal(drink.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
+
+	return ..()
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/proc/on_reagent_change(datum/reagents/reagents)
+	SIGNAL_HANDLER
+	if(src != reagents.get_master_reagent())
+		var/obj/item/reagent_containers/cup/glass/drinkingglass/drink = reagents.my_atom
+		drink.tool_behaviour = initial(drink.tool_behaviour)
+		UnregisterSignal(reagents, list(
+			COMSIG_REAGENTS_ADD_REAGENT,
+			COMSIG_REAGENTS_NEW_REAGENT,
+			COMSIG_REAGENTS_REM_REAGENT,
+			COMSIG_REAGENTS_DEL_REAGENT,
+			COMSIG_REAGENTS_CLEAR_REAGENTS,
+			COMSIG_REAGENTS_REACTED,
+		))
+
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
@@ -1043,7 +1076,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/demonsblood/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()
-	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED, .proc/pre_bloodcrawl_consumed)
+	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED, PROC_REF(pre_bloodcrawl_consumed))
 
 /datum/reagent/consumable/ethanol/demonsblood/on_mob_end_metabolize(mob/living/metabolizer)
 	. = ..()
@@ -1082,7 +1115,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/devilskiss/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()
-	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, .proc/on_bloodcrawl_consumed)
+	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, PROC_REF(on_bloodcrawl_consumed))
 
 /datum/reagent/consumable/ethanol/devilskiss/on_mob_end_metabolize(mob/living/metabolizer)
 	. = ..()
@@ -2233,7 +2266,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	var/minimum_name_percent = 0.35
 	name = ""
-	var/list/names_in_order = sortTim(names, /proc/cmp_numeric_dsc, TRUE)
+	var/list/names_in_order = sortTim(names, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
 	var/named = FALSE
 	for(var/fruit_name in names)
 		if(names[fruit_name] >= minimum_name_percent)

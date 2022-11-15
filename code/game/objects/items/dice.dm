@@ -30,9 +30,9 @@
 	))
 	new picked(src)
 
-/obj/item/storage/dice/suicide_act(mob/user)
+/obj/item/storage/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/storage/dice/hazard
 
@@ -67,9 +67,9 @@
 		result = roll(sides)
 	update_appearance()
 
-/obj/item/dice/suicide_act(mob/user)
+/obj/item/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/dice/d1
 	name = "d1"
@@ -242,11 +242,12 @@
 	. = ..()
 	. += "[icon_state]-[result]"
 
-/obj/item/dice/microwave_act(obj/machinery/microwave/M)
+/obj/item/dice/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
 	if(microwave_riggable)
 		rigged = DICE_BASICALLY_RIGGED
 		rigged_value = result
-	..(M)
+
+	return ..() | COMPONENT_MICROWAVE_SUCCESS
 
 // Die of fate stuff
 /obj/item/dice/d20/fate
@@ -307,7 +308,7 @@
 	var/turf/selected_turf = get_turf(src)
 	selected_turf.visible_message(span_userdanger("[src] flares briefly."))
 
-	addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(effect), user, .), 1 SECONDS)
 	COOLDOWN_START(src, roll_cd, 2.5 SECONDS)
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
@@ -323,10 +324,12 @@
 		if(1)
 			//Dust
 			selected_turf.visible_message(span_userdanger("[user] turns to dust!"))
+			user.investigate_log("has been dusted by a die of fate.", INVESTIGATE_DEATHS)
 			user.dust()
 		if(2)
 			//Death
 			selected_turf.visible_message(span_userdanger("[user] suddenly dies!"))
+			user.investigate_log("has been killed by a die of fate.", INVESTIGATE_DEATHS)
 			user.death()
 		if(3)
 			//Swarm of creatures

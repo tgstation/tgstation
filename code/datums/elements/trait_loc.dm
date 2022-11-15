@@ -4,7 +4,7 @@
  * Adds a trait to the movable's loc, and handles relocating the trait if the movable itself moves.
  */
 /datum/element/trait_loc
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH // handles if our movable is deleted
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY // handles if our movable is deleted
 	id_arg_index = 2
 	/// What trait to apply to the movable's loc.
 	var/trait_to_give
@@ -16,7 +16,7 @@
 
 	src.trait_to_give = trait_to_give
 
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_movable_relocated)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_movable_relocated))
 	if(target.loc)
 		ADD_TRAIT(target.loc, trait_to_give, REF(target))
 
