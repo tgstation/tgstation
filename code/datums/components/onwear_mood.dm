@@ -14,8 +14,8 @@
 	src.examine_string = examine_string
 
 /datum/component/onwear_mood/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/affect_wearer)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(affect_wearer))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/onwear_mood/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_PARENT_EXAMINE))
@@ -27,8 +27,8 @@
 		return  // only affects "worn" slots
 
 	target.add_mood_event(REF(src), saved_event)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/clear_effects)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(clear_effects))
 
 /datum/component/onwear_mood/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
