@@ -715,7 +715,7 @@
 	set_weedlevel(0, update_icon = FALSE)
 
 	var/message = span_warning("[oldPlantName] suddenly mutates into [myseed.plantname]!")
-	addtimer(CALLBACK(src, .proc/after_mutation, message), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
 /obj/machinery/hydroponics/proc/polymorph() // Polymorph a plant into another plant
 	if(!myseed || plant_status == HYDROTRAY_PLANT_DEAD)
@@ -732,7 +732,7 @@
 	set_weedlevel(0, update_icon = FALSE)
 
 	var/message = span_warning("[oldPlantName] suddenly polymorphs into [myseed.plantname]!")
-	addtimer(CALLBACK(src, .proc/after_mutation, message), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 
 /obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if( weedlevel > 5 )
@@ -746,7 +746,7 @@
 		set_weedlevel(0, update_icon = FALSE) // Reset
 
 		var/message = span_warning("The mutated weeds in [src] spawn some [myseed.plantname]!")
-		addtimer(CALLBACK(src, .proc/after_mutation, message), 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(after_mutation), message), 0.5 SECONDS)
 	else
 		to_chat(usr, span_warning("The few weeds in [src] seem to react, but only for a moment..."))
 /**
@@ -1214,23 +1214,23 @@
 	. = ..()
 	if(istype(parent, /obj/machinery/hydroponics))
 		attached_tray = parent
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_SEED, .proc/on_set_seed)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_SELFSUSTAINING, .proc/on_set_selfsustaining)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_WEEDLEVEL, .proc/on_set_weedlevel)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PESTLEVEL, .proc/on_set_pestlevel)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_WATERLEVEL, .proc/on_set_waterlevel)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_HEALTH, .proc/on_set_plant_health)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_TOXIC, .proc/on_set_toxic_level)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_STATUS, .proc/on_set_plant_status)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_ON_HARVEST, .proc/on_harvest)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_PLANT_DEATH, .proc/on_plant_death)
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_SEED, PROC_REF(on_set_seed))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_SELFSUSTAINING, PROC_REF(on_set_selfsustaining))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_WEEDLEVEL, PROC_REF(on_set_weedlevel))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PESTLEVEL, PROC_REF(on_set_pestlevel))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_WATERLEVEL, PROC_REF(on_set_waterlevel))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_HEALTH, PROC_REF(on_set_plant_health))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_TOXIC, PROC_REF(on_set_toxic_level))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_STATUS, PROC_REF(on_set_plant_status))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_ON_HARVEST, PROC_REF(on_harvest))
+		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_PLANT_DEATH, PROC_REF(on_plant_death))
 		var/list/reagents_holder_signals = list(
 			COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
 			COMSIG_REAGENTS_NEW_REAGENT,
 			COMSIG_REAGENTS_DEL_REAGENT,
 		)
-		RegisterSignal(attached_tray, reagents_holder_signals, .proc/update_reagents_level)
+		RegisterSignal(attached_tray, reagents_holder_signals, PROC_REF(update_reagents_level))
 
 /obj/item/circuit_component/hydroponics/unregister_usb_parent(atom/movable/parent)
 	attached_tray = null

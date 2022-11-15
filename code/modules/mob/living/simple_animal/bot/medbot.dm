@@ -143,9 +143,9 @@
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
 		self_right_time = 3.5 MINUTES, \
-		pre_tipped_callback = CALLBACK(src, .proc/pre_tip_over), \
-		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
-		post_untipped_callback = CALLBACK(src, .proc/after_righted))
+		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
+		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
+		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()

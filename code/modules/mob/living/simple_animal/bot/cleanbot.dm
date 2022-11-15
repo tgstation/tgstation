@@ -106,7 +106,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
-		on_cleaned_callback = CALLBACK(src, /atom/.proc/update_appearance, UPDATE_ICON))
+		on_cleaned_callback = CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance), UPDATE_ICON))
 
 	get_targets()
 	update_appearance(UPDATE_ICON)
@@ -173,7 +173,7 @@
 		weapon.force = weapon.force / 2
 	add_overlay(image(icon = weapon.lefthand_file, icon_state = weapon.inhand_icon_state))
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return TRUE
@@ -210,7 +210,7 @@
 		update_titles()
 
 	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	INVOKE_ASYNC(weapon, /obj/item.proc/attack, stabbed_carbon, src)
+	INVOKE_ASYNC(weapon, TYPE_PROC_REF(/obj/item, attack), stabbed_carbon, src)
 	stabbed_carbon.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/attacking_item, mob/living/user, params)

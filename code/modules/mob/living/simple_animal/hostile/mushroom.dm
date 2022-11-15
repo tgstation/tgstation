@@ -92,7 +92,7 @@
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		addtimer(CALLBACK(src, .proc/stop_retreat), 30)
+		addtimer(CALLBACK(src, PROC_REF(stop_retreat)), 30)
 	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
@@ -141,7 +141,7 @@
 	revive(full_heal = TRUE, admin_revive = FALSE)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)
+	addtimer(CALLBACK(src, PROC_REF(recovery_recharge)), 300)
 
 /mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
 	recovery_cooldown = 0

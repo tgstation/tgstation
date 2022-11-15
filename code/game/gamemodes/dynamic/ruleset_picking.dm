@@ -48,7 +48,7 @@
 	current_midround_rulesets = drafted_rules - rule
 
 	midround_injection_timer_id = addtimer(
-		CALLBACK(src, .proc/execute_midround_rule, rule), \
+		CALLBACK(src, PROC_REF(execute_midround_rule), rule), \
 		ADMIN_CANCEL_MIDROUND_TIME, \
 		TIMER_STOPPABLE, \
 	)
@@ -66,7 +66,7 @@
 	midround_injection_timer_id = null
 	if (!rule.repeatable)
 		midround_rules = remove_from_list(midround_rules, rule.type)
-	addtimer(CALLBACK(src, .proc/execute_midround_latejoin_rule, rule), rule.delay)
+	addtimer(CALLBACK(src, PROC_REF(execute_midround_latejoin_rule), rule), rule.delay)
 
 /// Executes a random latejoin ruleset from the list of drafted rules.
 /datum/game_mode/dynamic/proc/pick_latejoin_rule(list/drafted_rules)
@@ -75,7 +75,7 @@
 		return
 	if (!rule.repeatable)
 		latejoin_rules = remove_from_list(latejoin_rules, rule.type)
-	addtimer(CALLBACK(src, .proc/execute_midround_latejoin_rule, rule), rule.delay)
+	addtimer(CALLBACK(src, PROC_REF(execute_midround_latejoin_rule), rule), rule.delay)
 	return TRUE
 
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
