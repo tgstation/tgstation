@@ -213,7 +213,7 @@
 /obj/item/clothing/suit/hooded/cloak/godslayer/equipped(mob/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_OCLOTHING)
-		RegisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/resurrect)
+		RegisterSignal(user, COMSIG_MOB_STATCHANGE, PROC_REF(resurrect))
 		return
 	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
 

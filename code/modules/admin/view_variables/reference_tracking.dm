@@ -26,6 +26,10 @@
 
 	var/starting_time = world.time
 
+#if DM_VERSION >= 515
+	log_reftracker("Refcount for [type]: [refcount(src)]")
+#endif
+
 	//Time to search the whole game for our ref
 	DoSearchVar(GLOB, "GLOB", search_time = starting_time) //globals
 	log_reftracker("Finished searching globals")

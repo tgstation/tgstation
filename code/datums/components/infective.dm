@@ -17,23 +17,23 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/static/list/disease_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/try_infect_crossed,
+		COMSIG_ATOM_ENTERED = PROC_REF(try_infect_crossed),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
 
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/try_infect_collide)
-	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, .proc/try_infect_impact_zone)
+	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, PROC_REF(try_infect_buckle))
+	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(try_infect_collide))
+	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(try_infect_impact_zone))
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_infect_attack)
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/try_infect_equipped)
-		RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/try_infect_eat)
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, PROC_REF(try_infect_attack_zone))
+		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(try_infect_attack))
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(try_infect_equipped))
+		RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(try_infect_eat))
 		if(istype(parent, /obj/item/reagent_containers/cup))
-			RegisterSignal(parent, COMSIG_GLASS_DRANK, .proc/try_infect_drink)
+			RegisterSignal(parent, COMSIG_GLASS_DRANK, PROC_REF(try_infect_drink))
 	else if(istype(parent, /obj/effect/decal/cleanable/blood/gibs))
-		RegisterSignal(parent, COMSIG_GIBS_STREAK, .proc/try_infect_streak)
+		RegisterSignal(parent, COMSIG_GIBS_STREAK, PROC_REF(try_infect_streak))
 
 /datum/component/infective/proc/try_infect_eat(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER

@@ -95,7 +95,7 @@
 	var/datum/action/cooldown/spell/aoe/revenant/haunt_object/toolbox_go_bonk = new(src)
 	toolbox_go_bonk.Grant(src)
 
-	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
+	RegisterSignal(src, COMSIG_LIVING_BANED, PROC_REF(on_baned))
 	random_revenant_name()
 
 /mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
@@ -214,7 +214,7 @@
 		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"))
 	inhibited = TRUE
 	update_action_buttons_icon()
-	addtimer(CALLBACK(src, .proc/reset_inhibit), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(reset_inhibit)), 3 SECONDS)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
@@ -415,7 +415,7 @@
 
 /obj/item/ectoplasm/revenant/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/try_reform), 600)
+	addtimer(CALLBACK(src, PROC_REF(try_reform)), 600)
 
 /obj/item/ectoplasm/revenant/proc/scatter()
 	qdel(src)
