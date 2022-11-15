@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - admin: "Forcing the shuttle catastrophe event while an emergency shuttle is docked comes with a warning now."

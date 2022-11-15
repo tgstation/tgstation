@@ -45,7 +45,7 @@
 	else
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/weapons/genhit1.ogg', 100, TRUE)
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/chainsaw/attack_self(mob/user)
 	on = !on

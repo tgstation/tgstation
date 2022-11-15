@@ -142,6 +142,7 @@ Difficulty: Medium
 					adjustHealth(-L.maxHealth)
 				else
 					adjustHealth(-(L.maxHealth * 0.5))
+			L.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			L.gib()
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
@@ -167,7 +168,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/dir_setting/miner_death/Initialize(mapload, set_dir)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/fade_out)
+	INVOKE_ASYNC(src, PROC_REF(fade_out))
 
 /obj/effect/temp_visual/dir_setting/miner_death/proc/fade_out()
 	var/matrix/M = new

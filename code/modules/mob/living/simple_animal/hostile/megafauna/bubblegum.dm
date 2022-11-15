@@ -97,8 +97,8 @@ Difficulty: Hard
 	blood_warp.Grant(src)
 	hallucination_charge.spawn_blood = TRUE
 	hallucination_charge_surround.spawn_blood = TRUE
-	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
-	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
+	RegisterSignal(src, COMSIG_BLOOD_WARP, PROC_REF(blood_enrage))
+	RegisterSignal(src, COMSIG_FINISHED_CHARGE, PROC_REF(after_charge))
 	if(spawn_blood)
 		AddComponent(/datum/component/blood_walk, \
 			blood_type = /obj/effect/decal/cleanable/blood/bubblegum, \
@@ -159,7 +159,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
-		INVOKE_ASYNC(src, .proc/bloodattack, targets, prob(50))
+		INVOKE_ASYNC(src, PROC_REF(bloodattack), targets, prob(50))
 		return TRUE
 	return FALSE
 
@@ -225,7 +225,7 @@ Difficulty: Hard
 				var/turf/targetturf = get_step(src, dir)
 				L.forceMove(targetturf)
 				playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, TRUE, -1)
-				addtimer(CALLBACK(src, .proc/devour, L), 2)
+				addtimer(CALLBACK(src, PROC_REF(devour), L), 2)
 	SLEEP_CHECK_DEATH(1, src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/devour(mob/living/yummy_food)
@@ -255,9 +255,9 @@ Difficulty: Hard
 		return FALSE
 	enrage_till = world.time + enrage_time
 	update_approach()
-	INVOKE_ASYNC(src, .proc/change_move_delay, 3.75)
+	INVOKE_ASYNC(src, PROC_REF(change_move_delay), 3.75)
 	add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
-	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
+	var/datum/callback/cb = CALLBACK(src, PROC_REF(blood_enrage_end))
 	addtimer(cb, enrage_time)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/after_charge()

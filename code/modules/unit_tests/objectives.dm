@@ -16,7 +16,7 @@
 			TEST_FAIL("[objective_typepath] is not in a traitor category and isn't an abstract type! Place it into a [/datum/traitor_objective_category] or remove it from code.")
 		if(initial(objective_typepath.progression_minimum) == null)
 			TEST_FAIL("[objective_typepath] has not defined a minimum progression level and isn't an abstract type! Please define the progression minimum variable on the datum")
-		if(!ispath(objective_typepath, /datum/traitor_objective/final) && initial(objective_typepath.progression_reward) == 0 && initial(objective_typepath.telecrystal_reward) == 0)
+		if(!ispath(objective_typepath, /datum/traitor_objective/ultimate) && initial(objective_typepath.progression_reward) == 0 && initial(objective_typepath.telecrystal_reward) == 0)
 			TEST_FAIL("[objective_typepath] has not set either a progression reward or a telecrystal reward! Please set either a telecrystal or progression reward for this objective.")
 
 /datum/unit_test/objectives_category/proc/recursive_check_list(base_type, list/to_check, list/to_add_to)
