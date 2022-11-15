@@ -37,8 +37,6 @@
 
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.")
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the input and output direction.")
 
@@ -149,7 +147,7 @@
 
 	if(!console_notify_timer)
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
-		console_notify_timer = addtimer(CALLBACK(src, .proc/send_console_message), 5 SECONDS)
+		console_notify_timer = addtimer(CALLBACK(src, PROC_REF(send_console_message)), 5 SECONDS)
 
 /obj/machinery/mineral/ore_redemption/default_unfasten_wrench(mob/user, obj/item/I)
 	. = ..()

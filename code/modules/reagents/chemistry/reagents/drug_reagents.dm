@@ -71,7 +71,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/nicotine = 18) // 7.2 per 2 seconds
+	addiction_types = list(/datum/addiction/nicotine = 15) // 6 per 2 seconds
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -532,8 +532,8 @@
 	. = ..()
 
 	dancer.add_mood_event("vibing", /datum/mood_event/high, name)
-	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), .proc/on_flip)
-	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), .proc/on_spin)
+	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
+	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
 
 	if(!dancer.hud_used)
 		return
@@ -655,7 +655,7 @@
 	. = ..()
 	playsound(invisible_man, 'sound/chemistry/saturnx_fade.ogg', 40)
 	to_chat(invisible_man, span_nicegreen("You feel pins and needles all over your skin as your body suddenly becomes transparent!"))
-	addtimer(CALLBACK(src, .proc/turn_man_invisible, invisible_man), 10) //just a quick delay to synch up the sound.
+	addtimer(CALLBACK(src, PROC_REF(turn_man_invisible), invisible_man), 10) //just a quick delay to synch up the sound.
 	if(!invisible_man.hud_used)
 		return
 

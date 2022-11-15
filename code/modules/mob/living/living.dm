@@ -433,13 +433,19 @@
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
 	if (!CAN_SUCCUMB(src))
-		to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
-		return
+		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
+			if(whispered)
+				to_chat(src, text="You are unable to succumb to death! Unless you just press the UI button.", type=MESSAGE_TYPE_INFO)
+				return
+		else
+			to_chat(src, text="You are unable to succumb to death! This life continues.", type=MESSAGE_TYPE_INFO)
+			return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
 	adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 	updatehealth()
 	if(!whispered)
 		to_chat(src, span_notice("You have given up life and succumbed to death."))
+	investigate_log("has succumbed to death.", INVESTIGATE_DEATHS)
 	death()
 
 /**
@@ -751,7 +757,7 @@
 		reload_fullscreen()
 		. = TRUE
 		if(excess_healing)
-			INVOKE_ASYNC(src, .proc/emote, "gasp")
+			INVOKE_ASYNC(src, PROC_REF(emote), "gasp")
 			log_combat(src, src, "revived")
 	else if(admin_revive)
 		updatehealth()
@@ -991,7 +997,7 @@
 	set name = "Resist"
 	set category = "IC"
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_resist))
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
 
 ///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
 /mob/living/proc/execute_resist()
@@ -1319,7 +1325,7 @@
 				/mob/living/simple_animal/crab,
 				/mob/living/simple_animal/pet/dog/pug,
 				/mob/living/simple_animal/pet/cat,
-				/mob/living/simple_animal/mouse,
+				/mob/living/basic/mouse,
 				/mob/living/simple_animal/chicken,
 				/mob/living/basic/cow,
 				/mob/living/simple_animal/hostile/lizard,
@@ -1872,8 +1878,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!can_look_up())
 		return
 	changeNext_move(CLICK_CD_LOOK_UP)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_up) //We start looking again after we move.
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_look_up)) //We stop looking up if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(start_look_up)) //We start looking again after we move.
 	start_look_up()
 
 /mob/living/proc/start_look_up()
@@ -1922,8 +1928,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!can_look_up()) //if we cant look up, we cant look down.
 		return
 	changeNext_move(CLICK_CD_LOOK_UP)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_down) //We start looking again after we move.
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_look_down)) //We stop looking down if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(start_look_down)) //We start looking again after we move.
 	start_look_down()
 
 /mob/living/proc/start_look_down()

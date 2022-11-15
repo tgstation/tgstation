@@ -275,7 +275,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/armor/riot(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/head/helmet/riot(src)
+		new /obj/item/clothing/head/helmet/toggleable/riot(src)
 	for(var/i in 1 to 3)
 		new /obj/item/shield/riot(src)
 

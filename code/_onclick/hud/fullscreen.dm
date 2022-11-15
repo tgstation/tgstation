@@ -27,7 +27,7 @@
 
 	if(animated)
 		animate(screen, alpha = 0, time = animated)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen_after_animate, screen), animated, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen_after_animate), screen), animated, TIMER_CLIENT_TIME)
 	else
 		if(client)
 			client.screen -= screen

@@ -21,6 +21,11 @@
 	progression_reward = list(2 MINUTES, 4 MINUTES)
 	telecrystal_reward = list(1, 2)
 
+	/// The period of time until you can take another objective after taking 3 objectives.
+	var/objective_period = 15 MINUTES
+	/// The maximum number of objectives we can get within this period.
+	var/maximum_objectives_in_period = 3
+
 	/// The jobs that this objective is targetting.
 	var/list/target_jobs
 	/// The person we need to kidnap
@@ -34,7 +39,21 @@
 	/// All stripped victims belongings
 	var/list/victim_belogings = list()
 
+/datum/traitor_objective/kidnapping/supported_configuration_changes()
+	. = ..()
+	. += NAMEOF(src, objective_period)
+	. += NAMEOF(src, maximum_objectives_in_period)
+
+/datum/traitor_objective/kidnapping/New(datum/uplink_handler/handler)
+	. = ..()
+	AddComponent(/datum/component/traitor_objective_limit_per_time, \
+		/datum/traitor_objective/assassinate, \
+		time_period = objective_period, \
+		maximum_objectives = maximum_objectives_in_period \
+	)
+
 /datum/traitor_objective/kidnapping/common
+	progression_minimum = 0 MINUTES
 	progression_maximum = 30 MINUTES
 	target_jobs = list(
 		// Medical
@@ -62,12 +81,14 @@
 	)
 
 /datum/traitor_objective/kidnapping/less_common
+	progression_minimum = 0 MINUTES
 	progression_maximum = 15 MINUTES
 	target_jobs = list(
 		/datum/job/assistant
 	)
 
 /datum/traitor_objective/kidnapping/uncommon //Hard to fish out victims
+	progression_minimum = 0 MINUTES
 	progression_maximum = 45 MINUTES
 	target_jobs = list(
 		// Medical
@@ -191,7 +212,7 @@
 /datum/traitor_objective/kidnapping/proc/call_pod(mob/living/user)
 	pod_called = TRUE
 	var/obj/structure/closet/supplypod/extractionpod/new_pod = new()
-	RegisterSignal(new_pod, COMSIG_ATOM_ENTERED, .proc/enter_check)
+	RegisterSignal(new_pod, COMSIG_ATOM_ENTERED, PROC_REF(enter_check))
 	new /obj/effect/pod_landingzone(get_turf(user), new_pod)
 
 /datum/traitor_objective/kidnapping/proc/enter_check(obj/structure/closet/supplypod/extractionpod/source, entered_atom)
@@ -220,7 +241,7 @@
 
 	priority_announce("One of your crew was captured by a rival organisation - we've needed to pay their ransom to bring them back. As is policy we've taken a portion of the station's funds to offset the overall cost.", "Nanotrasen Asset Protection", has_important_message = TRUE)
 
-	addtimer(CALLBACK(src, .proc/handle_victim, sent_mob), 1.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(handle_victim), sent_mob), 1.5 SECONDS)
 
 	if(sent_mob != victim)
 		fail_objective(penalty_cost = telecrystal_penalty)
@@ -234,7 +255,7 @@
 	source.startExitSequence(source)
 
 /datum/traitor_objective/kidnapping/proc/handle_victim(mob/living/carbon/human/sent_mob)
-	addtimer(CALLBACK(src, .proc/return_victim, sent_mob), 3 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(return_victim), sent_mob), 3 MINUTES)
 	if(sent_mob.stat == DEAD)
 		return
 

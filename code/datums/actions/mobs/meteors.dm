@@ -9,6 +9,7 @@
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	create_meteors(target_atom)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/meteors/proc/create_meteors(atom/target)
 	if(!target)

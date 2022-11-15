@@ -30,7 +30,7 @@
 	retreat_distance = 3
 	minimum_distance = 3
 	pass_flags = PASSTABLE
-	loot = list(/obj/item/organ/internal/regenerative_core)
+	loot = list(/obj/item/organ/internal/monster_core/regenerative_core)
 	var/brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood
 	var/has_clickbox = TRUE
 
@@ -93,7 +93,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/death), 100)
+	addtimer(CALLBACK(src, PROC_REF(death)), 100)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
@@ -119,7 +119,7 @@
 	attack_sound = 'sound/weapons/pierce.ogg'
 	throw_message = "bounces harmlessly off of"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
-	loot = list(/obj/item/organ/internal/regenerative_core/legion)
+	loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	del_on_death = 1
 	stat_attack = HARD_CRIT
@@ -222,6 +222,7 @@
 	visible_message(span_warning("[name] burrows into the flesh of [H]!"))
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = make_legion(H)
 	visible_message(span_warning("[L] staggers to [L.p_their()] feet!"))
+	H.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	H.death()
 	H.adjustBruteLoss(1000)
 	L.stored_mob = H
@@ -264,7 +265,7 @@
 	layer = MOB_LAYER
 	del_on_death = TRUE
 	sentience_type = SENTIENCE_BOSS
-	loot = list(/obj/item/organ/internal/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 5)
+	loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 5)
 	move_to_delay = 14
 	vision_range = 5
 	aggro_vision_range = 9
@@ -291,7 +292,7 @@
 	icon_aggro = "snowlegion_alive"
 	icon_dead = "snowlegion"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
-	loot = list(/obj/item/organ/internal/regenerative_core/legion)
+	loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)

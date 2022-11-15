@@ -253,6 +253,9 @@
 		return
 	foaming.adjust_wet_stacks(2)
 
+/// A factory which produces firefighting foam
+/datum/effect_system/fluid_spread/foam/firefighting
+	effect_type = /obj/effect/particle_effect/fluid/foam/firefighting
 
 // Metal foam
 

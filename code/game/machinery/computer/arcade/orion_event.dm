@@ -120,7 +120,7 @@
 	game.food = rand(10,80) / rand(1,2)
 	game.fuel = rand(10,60) / rand(1,2)
 	if(game.electronics)
-		addtimer(CALLBACK(src, .proc/revert_random, game, oldfood, oldfuel), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(revert_random), game, oldfood, oldfuel), 1 SECONDS)
 
 /datum/orion_event/electronic_part/proc/revert_random(obj/machinery/computer/arcade/orion_trail/game, oldfood, oldfuel)
 	if(oldfuel > game.fuel && oldfood > game.food)
@@ -166,7 +166,7 @@
 		smashed.ScrapeAway()
 	game.say("Something slams into the floor around [game], exposing it to space!")
 	if(game.hull)
-		addtimer(CALLBACK(src, .proc/fix_floor, game), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(fix_floor), game), 1 SECONDS)
 
 /datum/orion_event/hull_part/proc/fix_floor(obj/machinery/computer/arcade/orion_trail/game)
 	game.say("A new floor suddenly appears around [game]. What the hell?")
