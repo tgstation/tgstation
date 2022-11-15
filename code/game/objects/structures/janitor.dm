@@ -19,14 +19,12 @@
 	. = ..()
 
 	if(istype(held_item, /obj/item/mop))
-		if(CART_HAS_MINIMUM_REAGENT_VOLUME && held_item.reagents.total_volume < held_item.reagents.maximum_volume)
-			context[SCREENTIP_CONTEXT_RMB] = "Wet [held_item]"
-			. = CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_RMB] = "Wet [held_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/reagent_containers))
-		if(held_item.reagents.total_volume && reagents.total_volume < reagents.maximum_volume)
-			context[SCREENTIP_CONTEXT_LMB] = "Fill mop bucket"
-			. = CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Fill mop bucket"
+		. = CONTEXTUAL_SCREENTIP_SET
 
 	return . || NONE
 
