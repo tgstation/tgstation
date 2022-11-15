@@ -21,7 +21,7 @@ It has a punishment variable that is what happens to the parent when they leave 
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/L = parent
-	RegisterSignal(L, list(COMSIG_MOVABLE_Z_CHANGED), .proc/punish)
+	RegisterSignal(L, list(COMSIG_MOVABLE_Z_CHANGED), PROC_REF(punish))
 	punishment = _punishment
 	message = _message
 	stuck_zlevel = L.z

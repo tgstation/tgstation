@@ -28,7 +28,7 @@
 
 /datum/job/prisoner/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/add_pref_crime)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(add_pref_crime))
 
 /datum/job/prisoner/proc/add_pref_crime(datum/source, mob/living/crewmember, rank)
 	SIGNAL_HANDLER

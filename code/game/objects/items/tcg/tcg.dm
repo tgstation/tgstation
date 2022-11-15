@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"Tap" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_tap"),
 		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -215,7 +215,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"Pickup" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_pickup"),
 		"Flip" = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_flip"),
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)

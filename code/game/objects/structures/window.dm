@@ -55,12 +55,12 @@
 	explosion_block = EXPLOSION_BLOCK_PROC
 
 	flags_1 |= ALLOW_DARK_PAINTS_1
-	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
+	RegisterSignal(src, COMSIG_OBJ_PAINTED, PROC_REF(on_painted))
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	if (flags_1 & ON_BORDER_1)
@@ -206,23 +206,23 @@
 	switch(state)
 		if(WINDOW_SCREWED_TO_FRAME)
 			to_chat(user, span_notice("You begin to unscrew the window from the frame..."))
-			if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_IN_FRAME
 				to_chat(user, span_notice("You unfasten the window from the frame."))
 		if(WINDOW_IN_FRAME)
 			to_chat(user, span_notice("You begin to screw the window to the frame..."))
-			if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_SCREWED_TO_FRAME
 				to_chat(user, span_notice("You fasten the window to the frame."))
 		if(WINDOW_OUT_OF_FRAME)
 			if(anchored)
 				to_chat(user, span_notice("You begin to unscrew the frame from the floor..."))
-				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 					set_anchored(FALSE)
 					to_chat(user, span_notice("You unfasten the frame from the floor."))
 			else
 				to_chat(user, span_notice("You begin to screw the frame to the floor..."))
-				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 					set_anchored(TRUE)
 					to_chat(user, span_notice("You fasten the frame to the floor."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -234,7 +234,7 @@
 		return FALSE
 
 	to_chat(user, span_notice("You begin to disassemble [src]..."))
-	if(!tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+	if(!tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 	if (!QDELETED(G))
@@ -251,12 +251,12 @@
 	switch(state)
 		if(WINDOW_IN_FRAME)
 			to_chat(user, span_notice("You begin to lever the window out of the frame..."))
-			if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_OUT_OF_FRAME
 				to_chat(user, span_notice("You pry the window out of the frame."))
 		if(WINDOW_OUT_OF_FRAME)
 			to_chat(user, span_notice("You begin to lever the window back into the frame..."))
-			if(tool.use_tool(src, user, 5 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+			if(tool.use_tool(src, user, 5 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 				state = WINDOW_SCREWED_TO_FRAME
 				to_chat(user, span_notice("You pry the window back into the frame."))
 
@@ -463,7 +463,7 @@
 					if(tool.use_tool(src, user, 15 SECONDS, volume = 100))
 						to_chat(user, span_notice("The security screws are glowing white hot and look ready to be removed."))
 						state = RWINDOW_BOLTS_HEATED
-						addtimer(CALLBACK(src, .proc/cool_bolts), 30 SECONDS)
+						addtimer(CALLBACK(src, PROC_REF(cool_bolts)), 30 SECONDS)
 			else if (tool.tool_behaviour)
 				to_chat(user, span_warning("The security screws need to be heated first!"))
 
@@ -520,7 +520,7 @@
 	if((flags_1 & NODECONSTRUCT_1) || (state != WINDOW_OUT_OF_FRAME))
 		return FALSE
 	to_chat(user, span_notice("You begin to lever the window back into the frame..."))
-	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 		state = RWINDOW_SECURE
 		to_chat(user, span_notice("You pry the window back into the frame."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS

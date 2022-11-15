@@ -120,4 +120,4 @@
 	var/level_counter = 0
 	for(var/list/turf_list in cone_turfs)
 		level_counter++
-		addtimer(CALLBACK(src, .proc/do_cone_effects, turf_list, caster, level_counter), delay_between_level * level_counter)
+		addtimer(CALLBACK(src, PROC_REF(do_cone_effects), turf_list, caster, level_counter), delay_between_level * level_counter)
