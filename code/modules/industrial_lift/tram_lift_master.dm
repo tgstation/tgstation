@@ -185,12 +185,12 @@
  * The tram doors are in a list of tram_doors and we apply the proc on that list.
  */
 /datum/lift_master/tram/proc/update_tram_doors(action)
-	for(var/obj/machinery/door/window/left/tram/tram_door in GLOB.machines)
+	for(var/obj/machinery/door/window/left/tram/tram_door in GLOB.airlocks)
 		if(tram_door.associated_lift != specific_lift_id)
 			continue
 		set_door_state(tram_door, action)
 
-	for(var/obj/machinery/door/window/right/tram/tram_door in GLOB.machines)
+	for(var/obj/machinery/door/window/right/tram/tram_door in GLOB.airlocks)
 		if(tram_door.associated_lift != specific_lift_id)
 			continue
 		set_door_state(tram_door, action)

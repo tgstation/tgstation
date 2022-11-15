@@ -412,7 +412,7 @@
  * * close: boolean, the state you want the curtains in.
  */
 /datum/mafia_controller/proc/toggle_night_curtains(close)
-	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
+	for(var/obj/machinery/door/poddoor/D in GLOB.airlocks) //I really dislike pathing of these
 		if(D.id != "mafia") //so as to not trigger shutters on station, lol
 			continue
 		if(close)
