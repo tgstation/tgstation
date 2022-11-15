@@ -23,7 +23,7 @@
 		qdel(src)
 		return
 	if(!friend.client && friend_initialized)
-		addtimer(CALLBACK(src, .proc/reroll_friend), 600)
+		addtimer(CALLBACK(src, PROC_REF(reroll_friend)), 600)
 
 /datum/brain_trauma/special/imaginary_friend/on_death()
 	..()
@@ -98,9 +98,9 @@
 	owner = imaginary_friend_owner
 
 	if(appearance_from_prefs)
-		INVOKE_ASYNC(src, .proc/setup_friend_from_prefs, appearance_from_prefs)
+		INVOKE_ASYNC(src, PROC_REF(setup_friend_from_prefs), appearance_from_prefs)
 	else
-		INVOKE_ASYNC(src, .proc/setup_friend)
+		INVOKE_ASYNC(src, PROC_REF(setup_friend))
 
 	join = new
 	join.Grant(src)
@@ -217,9 +217,9 @@
 		var/image/bubble = mutable_appearance('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
 		SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
 		bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/flick_overlay, bubble, list(owner.client), 30)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), bubble, list(owner.client), 30)
 		LAZYADD(update_on_z, bubble)
-		addtimer(CALLBACK(src, .proc/clear_saypopup, bubble), 3.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(clear_saypopup), bubble), 3.5 SECONDS)
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(M, owner)
