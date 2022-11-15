@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
 
 /turf/vv_edit_var(var_name, new_value)
-	var/static/list/banned_edits = list(NAMEOF(src, x), NAMEOF(src, y), NAMEOF(src, z))
+	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
 	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
@@ -117,8 +117,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(T)
 			T.multiz_turf_new(src, UP)
 
-	// by default, vis_contents is inherited from the turf that was here before
-	vis_contents.Cut()
+	// by default, vis_contents is inherited from the turf that was here before.
+	// Checking length(vis_contents) in a proc this hot has huge wins for performance.
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 	assemble_baseturfs()
 
@@ -204,7 +206,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	requires_activation = FALSE
 	..()
 
-	vis_contents.Cut()
+	if (length(vis_contents))
+		vis_contents.Cut()
 
 /// WARNING WARNING
 /// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS

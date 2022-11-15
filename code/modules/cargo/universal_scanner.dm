@@ -38,10 +38,11 @@
 		"price tagger" = image(icon = src.icon, icon_state = "price tagger"),
 		"sales tagger" = image(icon = src.icon, icon_state = "sales tagger"),
 ))
+	register_context()
 
 /obj/item/universal_scanner/attack_self(mob/user, modifiers)
 	. = ..()
-	var/choice = show_radial_menu(user, src , scale_mode, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	var/choice = show_radial_menu(user, src, scale_mode, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	if(icon_state == "[choice]")
@@ -117,7 +118,7 @@
 		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) || loc != user)
 			return
 		new_custom_price = chosen_price
-		to_chat(user, span_notice("The [src] will now give things a [new_custom_price] cr tag."))
+		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
 
 /obj/item/universal_scanner/CtrlClick(mob/user)
 	. = ..()
@@ -145,8 +146,21 @@
 			. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
 	if(scanning_mode == SCAN_PRICE_TAG)
-		. += span_notice("The current custom price is set to [new_custom_price] cr.")
+		. += span_notice("The current custom price is set to [new_custom_price] cr. <b>Right-click</b> to change.")
 
+/obj/item/universal_scanner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	switch(scanning_mode)
+		if(SCAN_SALES_TAG)
+			context[SCREENTIP_CONTEXT_LMB] = "Tag package"
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Change price"
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Clear target account"
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Change payout %"
+		if(SCAN_PRICE_TAG)
+			context[SCREENTIP_CONTEXT_LMB] = "Price item"
+			context[SCREENTIP_CONTEXT_RMB] = "Set price"
+		if(SCAN_EXPORTS)
+			context[SCREENTIP_CONTEXT_LMB] = "Scan for export value"
+	return CONTEXTUAL_SCREENTIP_SET
 /**
  * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
  */

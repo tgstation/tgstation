@@ -209,9 +209,10 @@ Alright, there's a few subsections here. This is how you are able to filter out 
 Alright, you saw something cool in a map that you wanted to expand upon codeside. So, you make the new path `/mob/living/basic/mouse/tom` with all sorts of nice behavior. However, you don't want to just replace all of the old `/mob/living/basic/mouse` paths with the new one, you want to only replace the ones that have a `name` variable of "Tom". You can do that by simply adding the following to your script:
 
 ```txt
-/mob/living/basic/mouse{name="Tom"} : /mob/living/basic/mouse/tom{name = @SKIP, @OLD}
+/mob/living/basic/mouse{name="Tom"} : /mob/living/basic/mouse/tom{@OLD;name=@SKIP}
 ```
-In this test example, you already set the name of the Mob to "Tom", so you don't need to worry about that, so you just insert `@SKIP` in order to skip adding that variable to the new path. However, maybe there's some other non-name variables that you do want to keep, so you add `@OLD` to the end of the new path. So, let's assume we have the following map file:
+
+In this test example, you already set the name of the Mob to "Tom", so you don't need to worry about that, so first you'll insert `@OLD`, because you want to retain all the other variables, and then add `@SKIP` in order to skip adding that variable to the new path. Its important that '@OLD' goes before '@SKIP', otherwise the script won't see the variables to skip and will just keep all of them anyway. So, let's assume we have the following map file:
 
 ```dm
 "a" = (

@@ -12,7 +12,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	var/name = "Camera Net"
 
 	/// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
-	var/list/cameras = list()
+	var/list/obj/machinery/camera/cameras = list()
 	/// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
 	var/ready = 0
@@ -24,7 +24,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 /datum/cameranet/New()
 	obscured_images = list()
 	update_offsets(SSmapping.max_plane_offset)
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_growth)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_growth))
 
 /datum/cameranet/proc/update_offsets(new_offset)
 	for(var/i in length(obscured_images) to new_offset)
@@ -123,8 +123,8 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
  * If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
  */
 /datum/cameranet/proc/majorChunkChange(atom/c, choice)
-	if(!c)
-		return
+	if(QDELETED(c) && choice == 1)
+		CRASH("Tried to add a qdeleting camera to the net")
 
 	var/turf/T = get_turf(c)
 	if(T)

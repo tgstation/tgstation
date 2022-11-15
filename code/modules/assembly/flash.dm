@@ -50,7 +50,7 @@
 	flashing = flash
 	. = ..()
 	if(flash)
-		addtimer(CALLBACK(src, /atom/.proc/update_icon), 5)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_icon)), 5)
 	holder?.update_icon(updates)
 
 /obj/item/assembly/flash/update_overlays()
@@ -118,7 +118,7 @@
 	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	set_light_on(TRUE)
-	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(flash_end)), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
 	times_used++
 	if(!flash_recharge())
 		return FALSE
@@ -298,7 +298,7 @@
 	//If this proc fires the mob must be a revhead
 	var/datum/antagonist/rev/head/converter = aggressor.mind.has_antag_datum(/datum/antagonist/rev/head)
 	if(converter.add_revolutionary(victim.mind))
-		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		if(prob(1) || check_holidays(APRIL_FOOLS))
 			victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 		times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 	else
@@ -345,7 +345,7 @@
 		to_chat(real_arm.owner, span_warning("Your photon projector implant overheats and deactivates!"))
 		real_arm.Retract()
 	overheat = TRUE
-	addtimer(CALLBACK(src, .proc/cooldown), flashcd * 2)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd * 2)
 
 /obj/item/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
@@ -354,7 +354,7 @@
 			to_chat(real_arm.owner, span_warning("Your photon projector is running too hot to be used again so quickly!"))
 		return FALSE
 	overheat = TRUE
-	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
+	addtimer(CALLBACK(src, PROC_REF(cooldown)), flashcd)
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	update_icon(ALL, TRUE)
 	return TRUE

@@ -44,8 +44,8 @@
 	var/list/body_parts = list(
 		/obj/item/bodypart/head/moth,
 		/obj/item/bodypart/chest/moth,
-		/obj/item/bodypart/l_arm/moth,
-		/obj/item/bodypart/r_arm/moth,
+		/obj/item/bodypart/arm/left/moth,
+		/obj/item/bodypart/arm/right/moth,
 	)
 
 	for (var/obj/item/bodypart/body_part in body_parts)
@@ -86,17 +86,11 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/moth_wings/init_possible_values()
-	var/list/icon/values = possible_values_for_sprite_accessory_list_for_body_part(
+	return possible_values_for_sprite_accessory_list_for_body_part(
 		GLOB.moth_wings_list,
 		"moth_wings",
 		list("BEHIND", "FRONT"),
 	)
-
-	// Moth wings are in a stupid dimension
-	for (var/name in values)
-		values[name].Crop(1, 1, 32, 32)
-
-	return values
 
 /datum/preference/choiced/moth_wings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_wings"] = value

@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(communications)
  * * user - Mob who called the meeting
  */
 /datum/controller/subsystem/communications/proc/can_make_emergency_meeting(mob/living/user)
-	if(!(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
+	if(!check_holidays(APRIL_FOOLS))
 		return FALSE
 	else if(COOLDOWN_FINISHED(src, emergency_meeting_cooldown))
 		return TRUE
@@ -66,7 +66,7 @@ SUBSYSTEM_DEF(communications)
 	message_admins("[ADMIN_LOOKUPFLW(user)] has called an emergency meeting.")
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
-	for(var/obj/machinery/computer/communications/C in GLOB.machines)
+	for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
 		if(!(C.machine_stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 			if(unique)
 				C.add_message(sending)

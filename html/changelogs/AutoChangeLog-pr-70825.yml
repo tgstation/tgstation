@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "holding someone up at gunpoint will no longer allow you to fire automatic weapons at double RPM."
-  - bugfix: "you can no longer one-shot kill people with the russian revolver by holding them up."

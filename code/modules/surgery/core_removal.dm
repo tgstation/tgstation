@@ -16,7 +16,7 @@
 
 //extract brain
 /datum/surgery_step/extract_core
-	name = "extract core"
+	name = "extract core (hemostat/crowbar)"
 	implements = list(
 		TOOL_HEMOSTAT = 100,
 		TOOL_CROWBAR = 100)

@@ -23,7 +23,7 @@
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/Remove(mob/remove_from)
 	. = ..()
@@ -87,7 +87,7 @@
 		jaunter.notransform = FALSE
 		return FALSE
 
-	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_icon_on_signal)
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
 	if(equip_blood_hands && iscarbon(jaunter))
 		jaunter.drop_all_held_items()
 		// Give them some bloody hands to prevent them from doing things
@@ -148,7 +148,7 @@
 
 	exited.add_atom_colour(new_color, TEMPORARY_COLOUR_PRIORITY)
 	// ...but only for a few seconds
-	addtimer(CALLBACK(exited, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, new_color), 6 SECONDS)
+	addtimer(CALLBACK(exited, TYPE_PROC_REF(/atom/, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, new_color), 6 SECONDS)
 
 /**
  * Slaughter demon's blood crawl
@@ -202,7 +202,7 @@
 
 /**
  * Consumes the [victim] from the [jaunter], fully healing them
- * and calling [proc/on_victim_consumed] if successful.
+ * and calling [proc/on_victim_consumed] if successful.)
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/consume_victim(mob/living/victim, mob/living/jaunter)
 	on_victim_start_consume(victim, jaunter)
@@ -222,6 +222,8 @@
 
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
+	if(victim.stat != DEAD)
+		victim.investigate_log("has been killed by being consumed by a slaugter demon.", INVESTIGATE_DEATHS)
 	victim.death()
 	on_victim_consumed(victim, jaunter)
 
@@ -258,7 +260,7 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Grant(mob/grant_to)
 	. = ..()
 	if(owner)
-		RegisterSignal(owner, COMSIG_LIVING_DEATH, .proc/on_death)
+		RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Remove(mob/living/remove_from)
 	UnregisterSignal(remove_from, COMSIG_LIVING_DEATH)
@@ -270,8 +272,8 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/on_victim_consumed(mob/living/victim, mob/living/jaunter)
 	to_chat(jaunter, span_clown("[victim] joins your party! Your health is fully restored."))
 	consumed_mobs += victim
-	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
-	RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/on_victim_deleted)
+	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, PROC_REF(on_victim_statchange))
+	RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(on_victim_deleted))
 
 /**
  * Signal proc for COMSIG_LIVING_DEATH and COMSIG_PARENT_QDELETING

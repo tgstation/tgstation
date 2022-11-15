@@ -34,7 +34,7 @@
 /obj/structure/bonfire/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -150,7 +150,7 @@
 			var/obj/burned_object = burn_target
 			if(grill && isitem(burned_object))
 				var/obj/item/grilled_item = burned_object
-				SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILLED, src, delta_time) //Not a big fan, maybe make this use fire_act() in the future.
+				SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, delta_time) //Not a big fan, maybe make this use fire_act() in the future.
 				continue
 			burned_object.fire_act(1000, 250 * delta_time)
 
