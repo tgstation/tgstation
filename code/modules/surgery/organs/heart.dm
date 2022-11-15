@@ -182,7 +182,8 @@
 /obj/item/organ/internal/heart/cybernetic
 	name = "basic cybernetic heart"
 	desc = "A basic electronic device designed to mimic the functions of an organic human heart."
-	icon_state = "heart-c"
+	icon_state = "heart-c-on"
+	base_icon_state = "heart-c"
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.75 //This also hits defib timer, so a bit higher than its less important counterparts
 
@@ -194,7 +195,8 @@
 /obj/item/organ/internal/heart/cybernetic/tier2
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma."
-	icon_state = "heart-c-u"
+	icon_state = "heart-c-u-on"
+	base_icon_state = "heart-c-u"
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
 	dose_available = TRUE
 	emp_vulnerability = 40
@@ -202,7 +204,8 @@
 /obj/item/organ/internal/heart/cybernetic/tier3
 	name = "upgraded cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. Also holds an emergency dose of epinephrine, used automatically after facing severe trauma. This upgraded model can regenerate its dose after use."
-	icon_state = "heart-c-u2"
+	icon_state = "heart-c-u2-on"
+	base_icon_state = "heart-c-u2"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	dose_available = TRUE
 	emp_vulnerability = 20

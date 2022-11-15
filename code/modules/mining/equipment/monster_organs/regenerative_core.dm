@@ -30,7 +30,7 @@
 	if (owner.health <= owner.crit_threshold)
 		trigger_organ_action()
 
-/obj/item/organ/internal/monster_core/regenerative_core/trigger_organ_action()
+/obj/item/organ/internal/monster_core/regenerative_core/on_triggered_internal()
 	owner.revive(HEAL_ALL)
 	qdel(src)
 
