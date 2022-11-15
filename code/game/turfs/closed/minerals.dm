@@ -57,7 +57,7 @@
 	var/obj/item/held_item = bumping.get_active_held_item()
 	// !held_item exists to be nice to snow. the other bit is for pickaxes obviously
 	if(!held_item || held_item.tool_behaviour == TOOL_MINING)
-		INVOKE_ASYNC(bumping, /mob.proc/ClickOn, src)
+		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), src)
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
@@ -149,7 +149,7 @@
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 	mined.update_visuals()
 
@@ -732,7 +732,7 @@
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	mined.update_visuals()
 
 /turf/closed/mineral/gibtonite/volcanic
@@ -790,7 +790,7 @@
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 	mined.update_visuals()
 	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!

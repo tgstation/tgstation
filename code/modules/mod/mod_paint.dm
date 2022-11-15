@@ -146,7 +146,7 @@
 	var/list/skins = list()
 	for(var/mod_skin in mod.theme.skins)
 		skins[mod_skin] = image(icon = mod.icon, icon_state = "[mod_skin]-control")
-	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, .proc/check_menu, mod, user), require_near = TRUE)
+	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), mod, user), require_near = TRUE)
 	if(!pick)
 		balloon_alert(user, "no skin picked!")
 		return
