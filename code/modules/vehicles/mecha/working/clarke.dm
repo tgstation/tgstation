@@ -69,7 +69,7 @@
 		hostmech.box?.dump_box_contents()
 		activated = TRUE
 
-#define SEARCH_COOLDOWN 1 MINUTES
+#define SEARCH_COOLDOWN (1 MINUTES)
 
 /datum/action/vehicle/sealed/mecha/mech_search_ruins
 	name = "Search for Ruins"

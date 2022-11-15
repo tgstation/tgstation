@@ -1,9 +1,9 @@
 // The knowledge and process of heretic sacrificing.
 
 /// How long we put the target so sleep for (during sacrifice).
-#define SACRIFICE_SLEEP_DURATION 12 SECONDS
+#define SACRIFICE_SLEEP_DURATION (12 SECONDS)
 /// How long sacrifices must stay in the shadow realm to survive.
-#define SACRIFICE_REALM_DURATION 2.5 MINUTES
+#define SACRIFICE_REALM_DURATION (2.5 MINUTES)
 
 /**
  * Allows the heretic to sacrifice living heart targets.

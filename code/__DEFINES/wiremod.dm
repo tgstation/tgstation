@@ -77,7 +77,7 @@
 #define COMP_COMPARISON_LESS_THAN_OR_EQUAL "<="
 
 // Clock component
-#define COMP_CLOCK_DELAY 0.9 SECONDS
+#define COMP_CLOCK_DELAY (0.9 SECONDS)
 
 // Shells
 

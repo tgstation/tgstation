@@ -1,4 +1,4 @@
-#define SHY_COMPONENT_CACHE_TIME 0.5 SECONDS
+#define SHY_COMPONENT_CACHE_TIME (0.5 SECONDS)
 
 /// You can't use items on anyone other than yourself if there are other living mobs around you
 /datum/component/shy
