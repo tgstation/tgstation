@@ -36,7 +36,7 @@
 /datum/tgui_say/New(client/client, id)
 	src.client = client
 	window = new(client, id)
-	window.subscribe(src, .proc/on_message)
+	window.subscribe(src, PROC_REF(on_message))
 	window.is_browser = TRUE
 
 /**

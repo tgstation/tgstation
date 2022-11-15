@@ -107,10 +107,10 @@
 	var/beam_color = line?.line_color || default_line_color
 	var/datum/beam/fishing_line/fishing_line_beam = new(user, target, icon_state = "fishing_line", beam_color = beam_color, override_target_pixel_y = target_py)
 	fishing_line_beam.lefthand = user.get_held_index_of_item(src) % 2 == 1
-	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, .proc/check_los)
-	RegisterSignal(fishing_line_beam, COMSIG_PARENT_QDELETING, .proc/clear_line)
+	RegisterSignal(fishing_line_beam, COMSIG_BEAM_BEFORE_DRAW, PROC_REF(check_los))
+	RegisterSignal(fishing_line_beam, COMSIG_PARENT_QDELETING, PROC_REF(clear_line))
 	fishing_lines += fishing_line_beam
-	INVOKE_ASYNC(fishing_line_beam, /datum/beam/.proc/Start)
+	INVOKE_ASYNC(fishing_line_beam, TYPE_PROC_REF(/datum/beam/, Start))
 	user.update_held_items()
 	return fishing_line_beam
 
@@ -137,7 +137,7 @@
 		return
 	currently_hooked_item = target_atom
 	hooked_item_fishing_line = create_fishing_line(target_atom)
-	RegisterSignal(hooked_item_fishing_line, COMSIG_FISHING_LINE_SNAPPED, .proc/clear_hooked_item)
+	RegisterSignal(hooked_item_fishing_line, COMSIG_FISHING_LINE_SNAPPED, PROC_REF(clear_hooked_item))
 
 /// Checks what can be hooked
 /obj/item/fishing_rod/proc/can_be_hooked(atom/movable/target)
@@ -444,7 +444,7 @@
 /datum/beam/fishing_line/Start()
 	update_offsets(origin.dir)
 	. = ..()
-	RegisterSignal(origin, COMSIG_ATOM_DIR_CHANGE, .proc/handle_dir_change)
+	RegisterSignal(origin, COMSIG_ATOM_DIR_CHANGE, PROC_REF(handle_dir_change))
 
 /datum/beam/fishing_line/Destroy()
 	UnregisterSignal(origin, COMSIG_ATOM_DIR_CHANGE)
@@ -453,7 +453,7 @@
 /datum/beam/fishing_line/proc/handle_dir_change(atom/movable/source, olddir, newdir)
 	SIGNAL_HANDLER
 	update_offsets(newdir)
-	INVOKE_ASYNC(src, /datum/beam/.proc/redrawing)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/beam/, redrawing))
 
 /datum/beam/fishing_line/proc/update_offsets(user_dir)
 	switch(user_dir)

@@ -29,7 +29,7 @@
 	src.animation_time = animation_time
 	src.perimeter_reset_timer = perimeter_reset_timer
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/dismantle_perimeter)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(dismantle_perimeter))
 
 	setup_perimeter(parent)
 
@@ -43,8 +43,8 @@
 		if(isnull(target))
 			continue
 
-		RegisterSignal(target, COMSIG_ATOM_ENTERED, .proc/on_entered)
-		RegisterSignal(target, COMSIG_ATOM_EXITED, .proc/on_exited)
+		RegisterSignal(target, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+		RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 
 		watched_turfs.Add(target)
 
@@ -58,7 +58,7 @@
 	var/mob/mob = entered
 
 	if(!mob.client)
-		RegisterSignal(mob, COMSIG_MOB_LOGIN, .proc/trick_mob)
+		RegisterSignal(mob, COMSIG_MOB_LOGIN, PROC_REF(trick_mob))
 		return
 
 	if(mob in tricked_mobs)
@@ -114,7 +114,7 @@
 	animate(user_overlay, alpha = target_alpha, time = animation_time)
 
 	tricked_mobs[fool] = user_overlay
-	RegisterSignal(fool, COMSIG_MOB_LOGOUT, .proc/on_client_disconnect)
+	RegisterSignal(fool, COMSIG_MOB_LOGOUT, PROC_REF(on_client_disconnect))
 
 
 ///Unrout ourselves after we somehow moved, and start a timer so we can re-restablish our behind area after standing still for a bit
@@ -151,7 +151,7 @@
 
 	tricked_mobs.Remove(fool)
 	UnregisterSignal(fool, COMSIG_MOB_LOGOUT)
-	RegisterSignal(fool, COMSIG_MOB_LOGIN, .proc/trick_mob)
+	RegisterSignal(fool, COMSIG_MOB_LOGIN, PROC_REF(trick_mob))
 	var/datum/hud/our_hud = fool.hud_used
 	var/atom/movable/screen/plane_master/seethrough = our_hud.get_plane_master(SEETHROUGH_PLANE)
 	seethrough.hide_plane(fool)
