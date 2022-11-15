@@ -1,4 +1,0 @@
-author: "Zergspower"
-delete-after: True
-changes:
-  - bugfix: "Fixes a possible oversight that prevented PKA upgrades being unable to be printed for borgs"

@@ -23,9 +23,9 @@
 
 /datum/map_generator/cave_generator/icemoon/deep
 	weighted_closed_turf_types = list(/turf/closed/mineral/random/snow/underground = 1)
-	weighted_mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/ice_demon = 50, /obj/structure/spawner/ice_moon/demonic_portal = 3, \
-						  /mob/living/simple_animal/hostile/asteroid/ice_whelp = 30, /obj/structure/spawner/ice_moon/demonic_portal/ice_whelp = 3, \
-						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /obj/structure/spawner/ice_moon/demonic_portal/snowlegion = 3, \
-						  SPAWN_MEGAFAUNA = 2)
+	weighted_mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/ice_demon = 100, /obj/structure/spawner/ice_moon/demonic_portal = 6, \
+						  /mob/living/simple_animal/hostile/asteroid/ice_whelp = 60, /obj/structure/spawner/ice_moon/demonic_portal/ice_whelp = 6, \
+						  /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 100, /obj/structure/spawner/ice_moon/demonic_portal/snowlegion = 6, \
+						  SPAWN_MEGAFAUNA = 1)
 	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/colossus = 1)
 	weighted_flora_spawn_list = list(/obj/structure/flora/rock/icy/style_random = 6, /obj/structure/flora/rock/pile/icy/style_random = 6, /obj/structure/flora/ash/chilly = 1)

@@ -64,9 +64,9 @@
 
 /obj/item/circuit_component/signal_handler/populate_ports()
 	instant = add_input_port("Instant", PORT_TYPE_NUMBER, order = 0.5, trigger = null, default = 1)
-	register = add_input_port("Register", PORT_TYPE_SIGNAL, order = 2, trigger = .proc/register_signals)
-	unregister = add_input_port("Unregister", PORT_TYPE_SIGNAL, order = 2, trigger = .proc/unregister_signals)
-	unregister_all = add_input_port("Unregister All", PORT_TYPE_SIGNAL, order = 2, trigger = .proc/unregister_signals_all)
+	register = add_input_port("Register", PORT_TYPE_SIGNAL, order = 2, trigger = PROC_REF(register_signals))
+	unregister = add_input_port("Unregister", PORT_TYPE_SIGNAL, order = 2, trigger = PROC_REF(unregister_signals))
+	unregister_all = add_input_port("Unregister All", PORT_TYPE_SIGNAL, order = 2, trigger = PROC_REF(unregister_signals_all))
 
 	add_source_entity()
 	event_triggered = add_output_port("Triggered", PORT_TYPE_INSTANT_SIGNAL, order = 2)
@@ -134,7 +134,7 @@
 	if(target_datum)
 		log_admin_circuit("[parent.get_creator()] registered the signal '[registered_signal]' on [target_datum]")
 		// We override because an admin may try registering a signal on the same object/datum again, so this prevents any runtimes from occuring
-		RegisterSignal(target_datum, registered_signal, .proc/handle_signal_received, override = TRUE)
+		RegisterSignal(target_datum, registered_signal, PROC_REF(handle_signal_received), override = TRUE)
 		registered_entities |= WEAKREF(target_datum)
 
 /obj/item/circuit_component/signal_handler/proc/load_new_ports(list/ports_to_load)
@@ -148,7 +148,7 @@
 	signal_ports = ports_to_load
 	for(var/list/data in signal_ports)
 		if(data["is_response"])
-			var/datum/port/input/bitflag_input = add_input_port(data["name"], PORT_TYPE_SIGNAL, order = 3, trigger = .proc/handle_bitflag_received)
+			var/datum/port/input/bitflag_input = add_input_port(data["name"], PORT_TYPE_SIGNAL, order = 3, trigger = PROC_REF(handle_bitflag_received))
 			input_signal_ports[bitflag_input] = data["bitflag"]
 		else
 			output_signal_ports += add_output_port(data["name"], data["type"], order = 1)

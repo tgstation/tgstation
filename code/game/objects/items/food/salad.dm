@@ -63,10 +63,12 @@
 	name = "ricebowl"
 	desc = "A bowl of raw rice."
 	icon_state = "ricebowl"
-	microwaved_type = /obj/item/food/salad/boiledrice
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN | RAW
+
+/obj/item/food/salad/ricebowl/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/salad/boiledrice)
 
 /obj/item/food/salad/boiledrice
 	name = "boiled rice"

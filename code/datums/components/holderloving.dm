@@ -30,14 +30,14 @@
 		src.del_parent_with_holder = del_parent_with_holder
 
 /datum/component/holderloving/RegisterWithParent()
-	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/check_my_loc)
-	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/holder_deleting)
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(check_my_loc))
+	RegisterSignal(holder, COMSIG_PARENT_QDELETING, PROC_REF(holder_deleting))
 	RegisterSignal(parent, list(
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_ATOM_ENTERED,
 		COMSIG_ATOM_EXITED,
-	), .proc/check_my_loc)
+	), PROC_REF(check_my_loc))
 
 /datum/component/holderloving/UnregisterFromParent()
 	UnregisterSignal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
