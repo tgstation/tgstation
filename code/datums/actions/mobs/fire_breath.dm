@@ -41,7 +41,7 @@
 /datum/action/cooldown/mob_cooldown/fire_breath/cone/attack_sequence(atom/target)
 	playsound(owner.loc, fire_sound, 200, TRUE)
 	for(var/offset in angles)
-		INVOKE_ASYNC(src, .proc/fire_line, target, offset)
+		INVOKE_ASYNC(src, PROC_REF(fire_line), target, offset)
 
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire
 	name = "Mass Fire"
@@ -59,5 +59,5 @@
 		playsound(owner.loc, fire_sound, 200, TRUE)
 		var/increment = 360 / spiral_count
 		for(var/j = 1 to spiral_count)
-			INVOKE_ASYNC(src, .proc/fire_line, target, j * increment + i * increment / 2)
+			INVOKE_ASYNC(src, PROC_REF(fire_line), target, j * increment + i * increment / 2)
 		SLEEP_CHECK_DEATH(delay_time, owner)
