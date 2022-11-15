@@ -147,7 +147,7 @@
 
 /mob/living/silicon/robot/model/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(model, /obj/item/robot_model.proc/transform_to, set_model, TRUE)
+	INVOKE_ASYNC(model, TYPE_PROC_REF(/obj/item/robot_model, transform_to), set_model, TRUE)
 
 /mob/living/silicon/robot/model/clown
 	set_model = /obj/item/robot_model/clown

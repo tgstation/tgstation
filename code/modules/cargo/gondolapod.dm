@@ -69,7 +69,7 @@
 /mob/living/simple_animal/pet/gondola/gondolapod/setOpened()
 	opened = TRUE
 	update_appearance()
-	addtimer(CALLBACK(src, /atom/.proc/setClosed), 50)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, setClosed)), 50)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setClosed()
 	opened = FALSE

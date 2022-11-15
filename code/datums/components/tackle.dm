@@ -45,7 +45,7 @@
 	var/mob/P = parent
 	to_chat(P, span_notice("You are now able to launch tackles! You can do so by activating throw intent, and clicking on your target with an empty hand."))
 
-	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 
 /datum/component/tackler/Destroy()
 	var/mob/P = parent
@@ -53,9 +53,9 @@
 	return ..()
 
 /datum/component/tackler/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/checkTackle)
-	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/sack)
-	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/registerTackle)
+	RegisterSignal(parent, COMSIG_MOB_CLICKON, PROC_REF(checkTackle))
+	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(sack))
+	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, PROC_REF(registerTackle))
 
 /datum/component/tackler/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
@@ -104,7 +104,7 @@
 
 
 	tackling = TRUE
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
 	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
@@ -119,7 +119,7 @@
 	user.Knockdown(base_knockdown, ignore_canstun = TRUE)
 	user.adjustStaminaLoss(stamina_cost)
 	user.throw_at(A, range, speed, user, FALSE)
-	addtimer(CALLBACK(src, .proc/resetTackle), base_knockdown, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(resetTackle)), base_knockdown, TIMER_STOPPABLE)
 	return(COMSIG_MOB_CANCEL_CLICKON)
 
 /**
@@ -151,7 +151,7 @@
 	user.toggle_throw_mode()
 	if(!iscarbon(hit))
 		if(hit.density)
-			INVOKE_ASYNC(src, .proc/splat, user, hit)
+			INVOKE_ASYNC(src, PROC_REF(splat), user, hit)
 		return
 
 	var/mob/living/carbon/target = hit
@@ -212,7 +212,7 @@
 			target.Paralyze(5)
 			target.Knockdown(30)
 			if(ishuman(target) && ishuman(user))
-				INVOKE_ASYNC(S.dna.species, /datum/species.proc/grab, S, T)
+				INVOKE_ASYNC(S.dna.species, TYPE_PROC_REF(/datum/species, grab), S, T)
 				S.setGrabState(GRAB_PASSIVE)
 
 		if(5 to INFINITY) // absolutely BODIED
@@ -226,7 +226,7 @@
 			target.Paralyze(5)
 			target.Knockdown(30)
 			if(ishuman(target) && ishuman(user))
-				INVOKE_ASYNC(S.dna.species, /datum/species.proc/grab, S, T)
+				INVOKE_ASYNC(S.dna.species, TYPE_PROC_REF(/datum/species, grab), S, T)
 				S.setGrabState(GRAB_AGGRESSIVE)
 
 

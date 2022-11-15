@@ -51,7 +51,7 @@
 	. = ..()
 	if(!pin)
 		pin = new
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/channel_blastwave)
+	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(channel_blastwave))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/blastcannon/Destroy()
@@ -161,15 +161,15 @@
 		return
 
 	if(!ismob(loc))
-		INVOKE_ASYNC(src, .proc/fire_dropped, heavy, medium, light)
+		INVOKE_ASYNC(src, PROC_REF(fire_dropped), heavy, medium, light)
 		return
 
 	var/mob/holding = loc
 	var/target = cached_target?.resolve()
 	if(target && (holding.get_active_held_item() == src) && cached_firer && (holding == cached_firer.resolve()))
-		INVOKE_ASYNC(src, .proc/fire_intentionally, target, holding, heavy, medium, light, cached_modifiers)
+		INVOKE_ASYNC(src, PROC_REF(fire_intentionally), target, holding, heavy, medium, light, cached_modifiers)
 	else
-		INVOKE_ASYNC(src, .proc/fire_accidentally, holding, heavy, medium, light)
+		INVOKE_ASYNC(src, PROC_REF(fire_accidentally), holding, heavy, medium, light)
 	return
 
 /**
