@@ -11,7 +11,7 @@
 		return ELEMENT_INCOMPATIBLE
 	var/atom/to_track = target
 	to_track.AddElement(/datum/element/connect_loc, pass_on)
-	RegisterSignal(to_track, COMSIG_MOVABLE_MOVED, .proc/react_to_move)
+	RegisterSignal(to_track, COMSIG_MOVABLE_MOVED, PROC_REF(react_to_move))
 
 	if(!mapload && isopenturf(to_track.loc))
 		var/turf/open/new_open = to_track.loc

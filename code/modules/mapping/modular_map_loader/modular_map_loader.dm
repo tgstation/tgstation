@@ -15,7 +15,7 @@ INITIALIZE_IMMEDIATE(/obj/modular_map_root)
 
 /obj/modular_map_root/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/load_map)
+	INVOKE_ASYNC(src, PROC_REF(load_map))
 
 /// Randonly selects a map file from the TOML config specified in config_file, loads it, then deletes itself.
 /obj/modular_map_root/proc/load_map()

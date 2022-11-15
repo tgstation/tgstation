@@ -123,6 +123,21 @@
 	number_of_variants = 2
 	harvest_message_true_thresholds = FALSE
 
+/obj/structure/flora/ash/fireblossom
+	name = "fire blossom"
+	desc = "An odd flower that grows commonly near bodies of lava."
+	icon_state = "fireblossom"
+	product_types = list(/obj/item/food/grown/ash_flora/fireblossom = 1)
+	harvested_name = "fire blossom stems"
+	harvested_desc = "A few fire blossom stems, missing their flowers."
+	harvest_amount_high = 3
+	harvest_message_low = "You pluck a single, suitable flower."
+	harvest_message_med = "You pluck a number of flowers, leaving a few unsuitable ones."
+	harvest_message_high = "You pluck quite a lot of suitable flowers."
+	regrowth_time_low = 2500
+	regrowth_time_high = 4000
+	number_of_variants = 2
+
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly
 	name = "springy grassy fruit"
@@ -194,6 +209,14 @@
 	desc = "Small, deeply flavourful mushrooms originally native to Tizira."
 	icon_state = "seraka_cap"
 	seed = /obj/item/seeds/lavaland/seraka
+	wine_power = 40
+
+/obj/item/food/grown/ash_flora/fireblossom
+	name = "fire blossom"
+	desc = "A flower from a fire blossom."
+	icon_state = "fireblossom"
+	slot_flags = ITEM_SLOT_HEAD
+	seed = /obj/item/seeds/lavaland/fireblossom
 	wine_power = 40
 
 //SEEDS
@@ -278,7 +301,6 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.06, /datum/reagent/consumable/vitfro = 0.04, /datum/reagent/drug/nicotine = 0.04)
 
-
 /obj/item/seeds/lavaland/inocybe
 	name = "pack of inocybe mycelium"
 	desc = "This mycelium grows into an inocybe mushroom, a species of Lavaland origin with hallucinatory and toxic effects."
@@ -312,6 +334,18 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/toxin/mushroom_powder = 0.1, /datum/reagent/medicine/coagulant/seraka_extract = 0.02)
 
+/obj/item/seeds/lavaland/fireblossom
+	name = "pack of fire blossom seeds"
+	desc = "These seeds grow into fire blossoms."
+	plantname = "Fire Blossom"
+	icon_state = "seed-fireblossom"
+	species = "fireblossom"
+	growthstages = 3
+	product = /obj/item/food/grown/ash_flora/fireblossom
+	genes = list(/datum/plant_gene/trait/fire_resistance, /datum/plant_gene/trait/glow/yellow)
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment = 0.03, /datum/reagent/carbon = 0.05)
+
 //CRAFTING
 
 /datum/crafting_recipe/mushroom_bowl
@@ -320,6 +354,7 @@
 	reqs = list(/obj/item/food/grown/ash_flora/shavings = 5)
 	time = 30
 	category = CAT_PRIMAL
+
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	name = "mushroom bowl"
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."

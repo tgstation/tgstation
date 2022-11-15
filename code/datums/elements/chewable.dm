@@ -26,8 +26,8 @@
 
 	src.slots_to_check = slots_to_check || target_item.slot_flags
 
-	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_dropped)
-	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+	RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
+	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 
 /datum/element/chewable/Detach(datum/source, force)
 	. = ..()
