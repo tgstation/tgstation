@@ -96,15 +96,15 @@
 
 	// Register some signals so our button's icon stays up to date
 	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
-		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
+		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_icon_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
+		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_icon_on_signal))
 	if(invocation_type == INVOCATION_EMOTE)
-		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), .proc/update_icon_on_signal)
+		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_icon_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
-		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), .proc/update_icon_on_signal)
+		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), PROC_REF(update_icon_on_signal))
 
-	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
+	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(update_icon_on_signal))
 	owner.client?.stat_panel.send_message("check_spells")
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
@@ -255,7 +255,7 @@
  *
  * Returns a bitflag.
  * - SPELL_CANCEL_CAST will stop the spell from being cast.
- * - SPELL_NO_FEEDBACK will prevent the spell from calling [proc/spell_feedback] on cast. (invocation, sounds)
+ * - SPELL_NO_FEEDBACK will prevent the spell from calling [proc/spell_feedback] on cast. (invocation), sounds)
  * - SPELL_NO_IMMEDIATE_COOLDOWN will prevent the spell from starting its cooldown between cast and before after_cast.
  */
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)

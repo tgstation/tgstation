@@ -49,7 +49,7 @@
 
 /datum/lift_master/tram/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	. = ..()
-	RegisterSignal(new_lift_platform, COMSIG_MOVABLE_BUMP, .proc/gracefully_break)
+	RegisterSignal(new_lift_platform, COMSIG_MOVABLE_BUMP, PROC_REF(gracefully_break))
 
 /datum/lift_master/tram/check_for_landmarks(obj/structure/industrial_lift/tram/new_lift_platform)
 	. = ..()
@@ -105,7 +105,7 @@
 	set_travelling(TRUE)
 	set_controls(LIFT_PLATFORM_LOCKED)
 	update_tram_doors(CLOSE_DOORS)
-	addtimer(CALLBACK(src, .proc/dispatch_tram, to_where), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(dispatch_tram), to_where), 2 SECONDS)
 
 /datum/lift_master/tram/proc/dispatch_tram(obj/effect/landmark/tram/to_where)
 	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, from_where, to_where)
@@ -123,7 +123,7 @@
 
 /datum/lift_master/tram/process(delta_time)
 	if(!travel_distance)
-		addtimer(CALLBACK(src, .proc/unlock_controls), 3 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 3 SECONDS)
 		return PROCESS_KILL
 	else if(world.time >= next_move)
 		var/start_time = TICK_USAGE
@@ -188,10 +188,10 @@
 			continue
 		switch(action)
 			if(OPEN_DOORS)
-				INVOKE_ASYNC(tram_door, /obj/machinery/door/window.proc/open)
+				INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, open))
 
 			if(CLOSE_DOORS)
-				INVOKE_ASYNC(tram_door, /obj/machinery/door/window.proc/close)
+				INVOKE_ASYNC(tram_door, TYPE_PROC_REF(/obj/machinery/door/window, close))
 
 			else
 				stack_trace("Tram doors update_tram_doors called with an improper action ([action]).")

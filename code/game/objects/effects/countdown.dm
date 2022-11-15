@@ -26,7 +26,7 @@
 	attached_to = A
 	var/turf/loc_turf = get_turf(A)
 	if(!loc_turf)
-		RegisterSignal(attached_to, COMSIG_MOVABLE_MOVED, .proc/retry_attach, TRUE)
+		RegisterSignal(attached_to, COMSIG_MOVABLE_MOVED, PROC_REF(retry_attach), TRUE)
 	else
 		forceMove(loc_turf)
 
