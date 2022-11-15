@@ -112,7 +112,12 @@
 		update_appearance()
 		return
 
+	var/turf/drop_location = drop_location()
 	if(default_deconstruction_crowbar(O))
+		if(biomass > 0)
+			drop_location.visible_message(span_warning("The biomass spills!"))
+			playsound(drop_location, 'sound/effects/slosh.ogg', 25, TRUE)
+			new /obj/effect/decal/cleanable/greenglow(drop_location)
 		return
 
 	if(istype(O, /obj/item/reagent_containers/cup))
