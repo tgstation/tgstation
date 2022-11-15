@@ -34,8 +34,8 @@
 /obj/effect/client_image_holder/hallucination/danger/Initialize(mapload, list/mobs_which_see_us, datum/hallucination/parent)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/atom_touched_holder,
-		COMSIG_ATOM_EXITED = .proc/atom_touched_holder,
+		COMSIG_ATOM_ENTERED = PROC_REF(atom_touched_holder),
+		COMSIG_ATOM_EXITED = PROC_REF(atom_touched_holder),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -77,7 +77,7 @@
 	to_chat(afflicted, span_userdanger("You fall into the chasm!"))
 	afflicted.visible_message(span_warning("[afflicted] falls to the ground suddenly!"), ignored_mobs = afflicted)
 	afflicted.Paralyze(4 SECONDS)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, afflicted, span_notice("...It's surprisingly shallow.")), 1.5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), afflicted, span_notice("...It's surprisingly shallow.")), 1.5 SECONDS)
 	QDEL_IN(src, 3 SECONDS)
 
 /obj/effect/client_image_holder/hallucination/danger/anomaly

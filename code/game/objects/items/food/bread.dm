@@ -298,8 +298,8 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	fake_swordplay = TRUE
 
-	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/on_sword_equipped)
-	RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/on_sword_dropped)
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_sword_equipped))
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_sword_dropped))
 
 /obj/item/food/baguette/proc/end_swordplay(mob/user)
 	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))

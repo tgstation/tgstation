@@ -224,7 +224,7 @@
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
 
-		path = get_path_to(src, target_fire, 30, 1, id=access_card)
+		path = get_path_to(src, target_fire, max_distance=30, mintargetdist=1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
