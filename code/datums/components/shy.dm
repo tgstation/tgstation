@@ -44,11 +44,11 @@
 		src.machine_whitelist = machine_whitelist
 
 /datum/component/shy/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/on_clickon)
-	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, .proc/on_try_pull)
-	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/on_unarmed_attack)
-	RegisterSignal(parent, COMSIG_TRY_STRIP, .proc/on_try_strip)
-	RegisterSignal(parent, COMSIG_TRY_ALT_ACTION, .proc/on_try_alt_action)
+	RegisterSignal(parent, COMSIG_MOB_CLICKON, PROC_REF(on_clickon))
+	RegisterSignal(parent, COMSIG_LIVING_TRY_PULL, PROC_REF(on_try_pull))
+	RegisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), PROC_REF(on_unarmed_attack))
+	RegisterSignal(parent, COMSIG_TRY_STRIP, PROC_REF(on_try_strip))
+	RegisterSignal(parent, COMSIG_TRY_ALT_ACTION, PROC_REF(on_try_alt_action))
 
 /datum/component/shy/UnregisterFromParent()
 	UnregisterSignal(parent, list(

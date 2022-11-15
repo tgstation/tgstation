@@ -116,7 +116,9 @@
 		AI.eyeobj?.UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 		AI.eyeobj?.forceMove(newloc) //kick the eye out as well
 		if(forced)//This should only happen if there are multiple AIs in a round, and at least one is Malf.
-			AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
+			if(!AI.linked_core) //if the victim AI has no core
+				AI.investigate_log("has been gibbed by being forced out of their mech by another AI.", INVESTIGATE_DEATHS)
+				AI.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			AI = null
 			mecha_flags &= ~SILICON_PILOT
 			return
@@ -152,9 +154,9 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit, TRUE)
-	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick, TRUE)
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble, TRUE)
+	RegisterSignal(M, COMSIG_LIVING_DEATH, PROC_REF(mob_exit), TRUE)
+	RegisterSignal(M, COMSIG_MOB_CLICKON, PROC_REF(on_mouseclick), TRUE)
+	RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(display_speech_bubble), TRUE)
 	. = ..()
 	update_appearance()
 

@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(goosement))
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
@@ -143,7 +143,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/proc/choke(obj/item/food/plastic)
 	if(stat == DEAD || choking)
 		return
-	addtimer(CALLBACK(src, .proc/suffocate), 300)
+	addtimer(CALLBACK(src, PROC_REF(suffocate)), 300)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/choke(obj/item/food/plastic)
 	if(stat == DEAD || choking)
@@ -151,9 +151,9 @@
 	if(prob(25))
 		visible_message(span_warning("[src] is gagging on \the [plastic]!"))
 		manual_emote("gags!")
-		addtimer(CALLBACK(src, .proc/vomit), 300)
+		addtimer(CALLBACK(src, PROC_REF(vomit)), 300)
 	else
-		addtimer(CALLBACK(src, .proc/suffocate), 300)
+		addtimer(CALLBACK(src, PROC_REF(suffocate)), 300)
 
 /mob/living/simple_animal/hostile/retaliate/goose/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
@@ -200,13 +200,13 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_prestart(duration)
 	flick("vomit_start",src)
-	addtimer(CALLBACK(src, .proc/vomit_start, duration), 13) //13 is the length of the vomit_start animation in gooseloose.dmi
+	addtimer(CALLBACK(src, PROC_REF(vomit_start), duration), 13) //13 is the length of the vomit_start animation in gooseloose.dmi
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_start(duration)
 	vomiting = TRUE
 	icon_state = "vomit"
 	vomit()
-	addtimer(CALLBACK(src, .proc/vomit_preend), duration)
+	addtimer(CALLBACK(src, PROC_REF(vomit_preend)), duration)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/proc/vomit_preend()
 	for (var/obj/item/consumed in contents) //Get rid of any food left in the poor thing
@@ -224,7 +224,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	. = ..()
 	if(vomiting)
-		INVOKE_ASYNC(src, .proc/vomit) // its supposed to keep vomiting if you move
+		INVOKE_ASYNC(src, PROC_REF(vomit)) // its supposed to keep vomiting if you move
 		return
 	if(prob(vomitCoefficient * 0.2))
 		vomit_prestart(vomitTimeBonus + 25)
@@ -234,9 +234,9 @@
 /// A proc to make it easier for admins to make the goose playable by deadchat.
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
-		"vomit" = CALLBACK(src, .proc/vomit_prestart, 25),
-		"honk" = CALLBACK(src, /atom/movable.proc/say, "HONK!!!"),
-		"spin" = CALLBACK(src, /mob.proc/emote, "spin")), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+		"vomit" = CALLBACK(src, PROC_REF(vomit_prestart), 25),
+		"honk" = CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), "HONK!!!"),
+		"spin" = CALLBACK(src, TYPE_PROC_REF(/mob, emote), "spin")), cooldown, CALLBACK(src, PROC_REF(stop_deadchat_plays)))
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return

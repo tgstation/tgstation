@@ -5,7 +5,7 @@
  * used for mechas and rare collectable hats, should totally be used for way more ;)
  */
 /datum/element/series
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
 	id_arg_index = 2
 	var/list/subtype_list
 	var/series_name
@@ -20,7 +20,7 @@
 	subtype_list = subtypesof(subtype)
 	src.series_name = series_name
 	var/atom/attached = target
-	RegisterSignal(attached, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(attached, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/series/Detach(datum/target)
 	. = ..()
