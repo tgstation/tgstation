@@ -806,6 +806,7 @@
 #include "code\datums\components\deployable.dm"
 #include "code\datums\components\drift.dm"
 #include "code\datums\components\earprotection.dm"
+#include "code\datums\components\echolocation.dm"
 #include "code\datums\components\edit_complainer.dm"
 #include "code\datums\components\effect_remover.dm"
 #include "code\datums\components\egg_layer.dm"

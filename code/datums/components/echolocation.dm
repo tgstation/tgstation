@@ -78,7 +78,7 @@
 	copied_appearance.color = list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
 	copied_appearance.filters += outline_filter(size = 1, color = COLOR_WHITE)
 	copied_appearance.pixel_x = 0
-	copied_appearance.pixel_x = 0
+	copied_appearance.pixel_y = 0
 	saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
 	return copied_appearance
 
