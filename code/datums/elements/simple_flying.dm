@@ -12,7 +12,7 @@
 		return ELEMENT_INCOMPATIBLE
 	var/mob/living/valid_target = target
 	on_stat_change(valid_target, new_stat = valid_target.stat) //immediately try adding flight if they're conscious
-	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
+	RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /datum/element/simple_flying/Detach(datum/target)
 	. = ..()

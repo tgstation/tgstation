@@ -89,7 +89,7 @@
 	UpdateButtons()
 	COOLDOWN_START(src, search_cooldown, SEARCH_COOLDOWN)
 	addtimer(VARSET_CALLBACK(src, button_icon_state, "mech_search_ruins"), SEARCH_COOLDOWN)
-	addtimer(CALLBACK(src, .proc/UpdateButtons), SEARCH_COOLDOWN)
+	addtimer(CALLBACK(src, PROC_REF(UpdateButtons)), SEARCH_COOLDOWN)
 	var/obj/pinpointed_ruin
 	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		if(ruin_landmark.z != chassis.z)
@@ -100,7 +100,7 @@
 		chassis.balloon_alert(living_owner, "no ruins!")
 		return
 	var/datum/status_effect/agent_pinpointer/ruin_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/ruin)
-	ruin_pinpointer.RegisterSignal(living_owner, COMSIG_MOVABLE_MOVED, /datum/status_effect/agent_pinpointer/ruin.proc/cancel_self)
+	ruin_pinpointer.RegisterSignal(living_owner, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/datum/status_effect/agent_pinpointer/ruin, cancel_self))
 	ruin_pinpointer.scan_target = pinpointed_ruin
 	chassis.balloon_alert(living_owner, "pinpointing nearest ruin")
 

@@ -58,7 +58,7 @@
 
 	if(jaunt_out_time > 0)
 		ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
-		addtimer(CALLBACK(src, .proc/do_jaunt_out, cast_on, holder), jaunt_out_time)
+		addtimer(CALLBACK(src, PROC_REF(do_jaunt_out), cast_on, holder), jaunt_out_time)
 	else
 		start_jaunt(cast_on, holder)
 
@@ -87,8 +87,8 @@
 		return
 
 	LAZYINITLIST(exit_point_list)
-	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_exit_point, target)
-	addtimer(CALLBACK(src, .proc/stop_jaunt, cast_on, holder, get_turf(holder)), jaunt_duration)
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_exit_point), target)
+	addtimer(CALLBACK(src, PROC_REF(stop_jaunt), cast_on, holder, get_turf(holder)), jaunt_duration)
 
 /**
  * The stopping of the jaunt.
@@ -137,7 +137,7 @@
 	if(2.5 SECONDS - jaunt_in_time <= 0)
 		do_jaunt_in(cast_on, holder, found_exit)
 	else
-		addtimer(CALLBACK(src, .proc/do_jaunt_in, cast_on, holder, found_exit), 2.5 SECONDS - jaunt_in_time)
+		addtimer(CALLBACK(src, PROC_REF(do_jaunt_in), cast_on, holder, found_exit), 2.5 SECONDS - jaunt_in_time)
 
 /**
  * The wind-up (wind-out?) of exiting the jaunt.
@@ -153,7 +153,7 @@
 	cast_on.setDir(holder.dir)
 
 	if(jaunt_in_time > 0)
-		addtimer(CALLBACK(src, .proc/end_jaunt, cast_on, holder, final_point), jaunt_in_time)
+		addtimer(CALLBACK(src, PROC_REF(end_jaunt), cast_on, holder, final_point), jaunt_in_time)
 	else
 		end_jaunt(cast_on, holder, final_point)
 
