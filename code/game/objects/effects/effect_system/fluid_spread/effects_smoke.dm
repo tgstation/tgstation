@@ -17,7 +17,7 @@
 	var/lifetime = 10 SECONDS
 	/// Makes the smoke react to changes on/of its turf.
 	var/static/loc_connections = list(
-		COMSIG_TURF_CALCULATED_ADJACENT_ATMOS = .proc/react_to_atmos_adjacency_changes
+		COMSIG_TURF_CALCULATED_ADJACENT_ATMOS = PROC_REF(react_to_atmos_adjacency_changes)
 	)
 
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
@@ -41,7 +41,7 @@
 	SSsmoke.stop_processing(src)
 	if (spread_bucket)
 		SSsmoke.cancel_spread(src)
-	INVOKE_ASYNC(src, .proc/fade_out)
+	INVOKE_ASYNC(src, PROC_REF(fade_out))
 	QDEL_IN(src, 1 SECONDS)
 
 /**
@@ -64,7 +64,7 @@
 
 	var/time_to_transparency = round(((alpha - 160) / alpha) * frames)
 	if(time_to_transparency >= 1)
-		addtimer(CALLBACK(src, /atom.proc/set_opacity, FALSE), time_to_transparency)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, set_opacity), FALSE), time_to_transparency)
 	else
 		set_opacity(FALSE)
 	animate(src, time = frames, alpha = 0)
@@ -196,7 +196,7 @@
 /obj/effect/particle_effect/fluid/smoke/bad/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
