@@ -76,9 +76,9 @@
 	if(mode == RESONATOR_MODE_MATRIX)
 		icon_state = "shield2"
 		name = "resonance matrix"
-		RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/burst)
+		RegisterSignal(src, COMSIG_ATOM_ENTERED, PROC_REF(burst))
 		var/static/list/loc_connections = list(
-			COMSIG_ATOM_ENTERED = .proc/burst,
+			COMSIG_ATOM_ENTERED = PROC_REF(burst),
 		)
 		AddElement(/datum/element/connect_loc, loc_connections)
 	. = ..()
@@ -92,7 +92,7 @@
 		transform = matrix()*0.75
 		animate(src, transform = matrix()*1.5, time = duration)
 	deltimer(timerid)
-	timerid = addtimer(CALLBACK(src, .proc/burst), duration, TIMER_STOPPABLE)
+	timerid = addtimer(CALLBACK(src, PROC_REF(burst)), duration, TIMER_STOPPABLE)
 
 /obj/effect/temp_visual/resonance/Destroy()
 	if(parent_resonator)

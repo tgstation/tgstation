@@ -11,8 +11,8 @@
 		return ELEMENT_INCOMPATIBLE
 
 	// Register signals for mob transformation to prevent premature halo removal
-	RegisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_MONKEY_HUMANIZE, COMSIG_HUMAN_MONKEYIZE), .proc/set_eyes)
-	addtimer(CALLBACK(src, .proc/set_eyes, target), initial_delay)
+	RegisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_MONKEY_HUMANIZE, COMSIG_HUMAN_MONKEYIZE), PROC_REF(set_eyes))
+	addtimer(CALLBACK(src, PROC_REF(set_eyes), target), initial_delay)
 
 /**
  * Cult eye setter proc
