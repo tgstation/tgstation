@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "MIME"
 
 	outfit = /datum/outfit/job/mime
 	plasmaman_outfit = /datum/outfit/plasmaman/mime
@@ -86,6 +87,7 @@
 	name = "Guide to Dank Mimery"
 	desc = "Teaches one of three classic pantomime routines, allowing a practiced mime to conjure invisible objects into corporeal existence. One use only."
 	icon_state = "bookmime"
+	starting_title = "Guide to Dank Mimery"
 
 /obj/item/book/mimery/attack_self(mob/user)
 	. = ..()
@@ -97,7 +99,7 @@
 		"Invisible Chair" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_chair"),
 		"Invisible Box" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_box")
 		)
-	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
 	var/datum/action/cooldown/spell/picked_spell_type
 	switch(picked_spell)
 		if("Invisible Wall")

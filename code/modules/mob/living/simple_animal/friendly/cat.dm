@@ -29,7 +29,7 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
-	var/mob/living/simple_animal/mouse/movement_target
+	var/mob/living/basic/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 	can_be_held = TRUE
@@ -231,16 +231,16 @@
 				if(!M.stat && Adjacent(M))
 					if (FACTION_RAT in M.faction)
 						//Jerry can never catch Tom snowflaking
-						if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
+						if(istype(M, /mob/living/basic/mouse/brown/tom) && inept_hunter)
 							if(COOLDOWN_FINISHED(src, emote_cooldown))
 								visible_message(span_warning("[src] chases [M] around, to no avail!"))
 								step(M, pick(GLOB.cardinals))
 								COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 							break
 						//Mouse splatting
-						if(istype(M, /mob/living/simple_animal/mouse))
+						if(ismouse(M))
 							manual_emote("splats \the [M]!")
-							var/mob/living/simple_animal/mouse/snack = M
+							var/mob/living/basic/mouse/snack = M
 							snack.splat()
 							movement_target = null
 							stop_automated_movement = 0

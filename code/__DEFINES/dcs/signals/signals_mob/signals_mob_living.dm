@@ -10,6 +10,8 @@
 #define COMSIG_ORGAN_WAG_TAIL "comsig_wag_tail"
 /// Called on the organ when it is removed from someone (mob/living/carbon/old_owner)
 #define COMSIG_ORGAN_REMOVED "comsig_organ_removed"
+/// Called when an organ is being regenerated with a new copy in species regenerate_organs (obj/item/organ/replacement)
+#define COMSIG_ORGAN_BEING_REPLACED "organ_being_replaced"
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"

@@ -143,7 +143,7 @@
 	desc = null //see examine()
 	icon_state = "nether"
 	max_integrity = 50
-	spawn_time = 600 //1 minute
+	spawn_time = 60 SECONDS
 	max_mobs = 15
 	icon = 'icons/mob/simple/lavaland/nest.dmi'
 	spawn_text = "crawls through"

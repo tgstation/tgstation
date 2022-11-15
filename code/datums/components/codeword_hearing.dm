@@ -28,7 +28,7 @@
 	return ..()
 
 /datum/component/codeword_hearing/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 
 /datum/component/codeword_hearing/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_HEAR)

@@ -24,8 +24,6 @@
 
 /obj/structure/chair/Initialize(mapload)
 	. = ..()
-	if(!anchored) //why would you put these on the shuttle?
-		addtimer(CALLBACK(src, .proc/RemoveFromLatejoin), 0)
 	if(prob(0.2))
 		name = "tactical [name]"
 	MakeRotate()
@@ -35,11 +33,8 @@
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
 
 /obj/structure/chair/Destroy()
-	RemoveFromLatejoin()
-	return ..()
-
-/obj/structure/chair/proc/RemoveFromLatejoin()
 	SSjob.latejoin_trackers -= src //These may be here due to the arrivals shuttle
+	return ..()
 
 /obj/structure/chair/deconstruct(disassembled)
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -365,7 +360,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.set_custom_materials(custom_materials)
 	TransferComponents(C)
-	C.setDir(dir)
+	C.setDir(user.dir)
 	qdel(src)
 
 /obj/item/chair/proc/smash(mob/living/user)
@@ -525,7 +520,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	Mob.pixel_y += 2
 	.=..()
 	if(iscarbon(Mob))
-		INVOKE_ASYNC(src, .proc/snap_check, Mob)
+		INVOKE_ASYNC(src, PROC_REF(snap_check), Mob)
 
 /obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
 	Mob.pixel_y -= 2

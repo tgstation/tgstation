@@ -2,8 +2,8 @@
 // **** Security gas mask ****
 
 // Cooldown times
-#define PHRASE_COOLDOWN 30
-#define OVERUSE_COOLDOWN 180
+#define PHRASE_COOLDOWN (3 SECONDS)
+#define OVERUSE_COOLDOWN (18 SECONDS)
 
 // Aggression levels
 #define AGGR_GOOD_COP 1
@@ -57,6 +57,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
+	COOLDOWN_DECLARE(hailer_cooldown)
 	var/aggressiveness = AGGR_BAD_COP
 	var/overuse_cooldown = FALSE
 	var/recent_uses = 0
@@ -129,7 +130,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
-	if(!isliving(usr) || !can_use(usr) || cooldown)
+	if(!isliving(usr) || !can_use(usr) || !COOLDOWN_FINISHED(src, hailer_cooldown))
 		return
 	if(broken_hailer)
 		to_chat(usr, span_warning("\The [src]'s hailing system is broken."))
@@ -171,16 +172,12 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return rand(aggressiveness == AGGR_BROKEN ? BROKE_PHRASES : EMAG_PHRASE + 1, upper_limit)
 
 /obj/item/clothing/mask/gas/sechailer/proc/play_phrase(mob/user, datum/hailer_phrase/phrase)
-	. = FALSE
-	if (!cooldown)
-		usr.audible_message("[usr]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(phrase.phrase_text)]</b></font>")
-		playsound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
-		cooldown = TRUE
-		addtimer(CALLBACK(src, /obj/item/clothing/mask/gas/sechailer/proc/reset_cooldown), PHRASE_COOLDOWN)
-		. = TRUE
-
-/obj/item/clothing/mask/gas/sechailer/proc/reset_cooldown()
-	cooldown = FALSE
+	if(!COOLDOWN_FINISHED(src, hailer_cooldown))
+		return
+	COOLDOWN_START(src, hailer_cooldown, PHRASE_COOLDOWN)
+	user.audible_message("[user]'s Compli-o-Nator: <font color='red' size='4'><b>[initial(phrase.phrase_text)]</b></font>")
+	playsound(src, "sound/runtime/complionator/[initial(phrase.phrase_sound)].ogg", 100, FALSE, 4)
+	return TRUE
 
 /obj/item/clothing/mask/gas/sechailer/proc/reset_overuse_cooldown()
 	overuse_cooldown = FALSE
@@ -194,12 +191,14 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	custom_price = PAYCHECK_COMMAND * 1.5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/halt)
+	COOLDOWN_DECLARE(whistle_cooldown)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
-	if(cooldown < world.time - 100)
-		usr.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-		playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
-		cooldown = world.time
+	if(!COOLDOWN_FINISHED(src, whistle_cooldown))
+		return
+	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
+	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
+	playsound(src, 'sound/misc/whistle.ogg', 75, FALSE, 4)
 
 /datum/action/item_action/halt
 	name = "HALT!"

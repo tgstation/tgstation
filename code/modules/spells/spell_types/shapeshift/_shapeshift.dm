@@ -64,7 +64,7 @@
 		cast_on,
 		cast_on,
 		shape_names_to_image,
-		custom_check = CALLBACK(src, .proc/check_menu, cast_on),
+		custom_check = CALLBACK(src, PROC_REF(check_menu), cast_on),
 		radius = 38,
 	)
 
@@ -127,6 +127,7 @@
 	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "Central Command")
 	// Gib our caster, and make sure to leave nothing behind
 	// (If we leave something behind, it'll drop on the turf of the pipe, which is kinda wrong.)
+	cast_on.investigate_log("has been gibbed by shapeshifting while ventcrawling.", INVESTIGATE_DEATHS)
 	cast_on.gib(TRUE, TRUE, TRUE)
 
 /// Callback for the radial that allows the user to choose their species.

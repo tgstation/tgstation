@@ -145,7 +145,7 @@
 			if(!is_weak && H.stat == DEAD)
 				Zombify(H)
 				break
-	if(!is_valid_z_level(get_turf(src), get_turf(factory)))
+	if(factory && !is_valid_z_level(get_turf(src), get_turf(factory)))
 		death()
 	return ..()
 

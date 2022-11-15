@@ -288,7 +288,7 @@
 		if("toggle_speaker")
 			radio.set_listening(!radio.get_listening())
 		if("set_frequency")
-			radio.set_frequency(sanitize_frequency(params["new_frequency"], radio.freerange))
+			radio.set_frequency(sanitize_frequency(params["new_frequency"], radio.freerange, radio.syndie))
 		if("repair_int_damage")
 			ui.close() //if doing this you're likely want to watch for bad people so close the UI
 			try_repair_int_damage(usr, params["flag"])

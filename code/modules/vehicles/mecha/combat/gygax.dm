@@ -38,11 +38,12 @@
 	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
 	chassis.log_message("Toggled leg actuators overload.", LOG_MECHA)
 	if(chassis.leg_overload_mode)
-		chassis.movedelay = min(1, round(chassis.movedelay * 0.5))
+		chassis.speed_mod = min(chassis.movedelay-1, round(chassis.movedelay * 0.5))
+		chassis.movedelay -= chassis.speed_mod
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
 		chassis.balloon_alert(owner,"leg actuators overloaded")
 	else
-		chassis.movedelay = initial(chassis.movedelay)
+		chassis.movedelay += chassis.speed_mod
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		chassis.balloon_alert(owner, "you disable the overload")
 	UpdateButtons()

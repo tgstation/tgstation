@@ -39,7 +39,6 @@
 	health = 50
 	gold_core_spawnable = NO_SPAWN
 	random_color = FALSE
-
 	/// List of all projectiles we can fire.
 	/// Non-static, because subtypes can have their own lists.
 	var/list/allowed_projectile_types = list(
@@ -52,6 +51,7 @@
 		/obj/projectile/magic/resurrection,
 		/obj/projectile/magic/spellblade,
 		/obj/projectile/magic/teleport,
+		/obj/projectile/magic/babel,
 	)
 
 /mob/living/simple_animal/hostile/carp/ranged/Initialize(mapload)

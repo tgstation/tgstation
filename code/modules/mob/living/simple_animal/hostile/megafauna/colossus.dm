@@ -82,8 +82,8 @@
 	shotgun_blast.Grant(src)
 	dir_shots.Grant(src)
 	colossus_final.Grant(src)
-	RegisterSignal(src, COMSIG_MOB_ABILITY_STARTED, .proc/start_attack)
-	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, .proc/finished_attack)
+	RegisterSignal(src, COMSIG_MOB_ABILITY_STARTED, PROC_REF(start_attack))
+	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(finished_attack))
 	AddElement(/datum/element/projectile_shield)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
@@ -137,13 +137,13 @@
 		spiral_shots.enraged = COLOSSUS_ENRAGED
 		telegraph()
 		icon_state = "eva_attack"
-		INVOKE_ASYNC(src, /atom/movable.proc/say, "Judgement.", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Judgement.", null, list("colossus", "yell"))
 	else if(activated == random_shots)
-		INVOKE_ASYNC(src, /atom/movable.proc/say, "Wrath.", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Wrath.", null, list("colossus", "yell"))
 	else if(activated == shotgun_blast)
-		INVOKE_ASYNC(src, /atom/movable.proc/say, "Retribution.", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Retribution.", null, list("colossus", "yell"))
 	else if(activated == dir_shots)
-		INVOKE_ASYNC(src, /atom/movable.proc/say, "Lament.", null, list("colossus", "yell"))
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Lament.", null, list("colossus", "yell"))
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
 	SIGNAL_HANDLER
@@ -161,6 +161,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/victim)
 	visible_message(span_colossus("[src] disintegrates [victim]!"))
+	victim.investigate_log("has been devoured by [src].", INVESTIGATE_DEATHS)
 	victim.dust()
 
 /obj/effect/temp_visual/at_shield
@@ -178,7 +179,7 @@
 /obj/effect/temp_visual/at_shield/Initialize(mapload, new_target)
 	. = ..()
 	target = new_target
-	INVOKE_ASYNC(src, /atom/movable.proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, orbit), target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /obj/projectile/colossus
 	name = "death bolt"
@@ -202,6 +203,7 @@
 	if(isliving(target))
 		var/mob/living/dust_mob = target
 		if(dust_mob.stat == DEAD)
+			dust_mob.investigate_log("has been dusted by a death bolt (colossus).", INVESTIGATE_DEATHS)
 			dust_mob.dust()
 		return
 	if(!explode_hit_objects || istype(target, /obj/vehicle/sealed))
@@ -571,6 +573,7 @@
 	if(holder_animal)
 		if(holder_animal.stat == DEAD)
 			dump_contents()
+			holder_animal.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 			holder_animal.gib()
 			return
 
@@ -591,7 +594,7 @@
 		escape.Grant(holder_animal)
 		remove_verb(holder_animal, /mob/living/verb/pulled)
 
-/obj/structure/closet/stasis/dump_contents(kill = 1)
+/obj/structure/closet/stasis/dump_contents(kill = TRUE)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
 		REMOVE_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
@@ -601,7 +604,8 @@
 			holder_animal.mind.transfer_to(L)
 			holder_animal.gib()
 		if(kill || !isanimal(loc))
-			L.death(0)
+			L.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
+			L.death(FALSE)
 	..()
 
 /obj/structure/closet/stasis/emp_act()
@@ -616,7 +620,7 @@
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "exit_possession"
 
-/datum/action/exit_possession/IsAvailable()
+/datum/action/exit_possession/IsAvailable(feedback = FALSE)
 	return ..() && isfloorturf(owner.loc)
 
 /datum/action/exit_possession/Trigger(trigger_flags)

@@ -29,7 +29,6 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INSSATOMS
 
 /datum/controller/subsystem/atoms/Initialize()
-	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' sequence
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD

@@ -191,23 +191,23 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
-	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
+	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=[text_ref(src)];[HrefToken()]'>\[Refresh\]</a><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 	dat += "Budgets (Roundstart/Midrounds): <b>[initial_round_start_budget]/[threat_level - initial_round_start_budget]</b><br/>"
 
-	dat += "Midround budget to spend: <b>[mid_round_budget]</b> <a href='?src=\ref[src];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=\ref[src];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
+	dat += "Midround budget to spend: <b>[mid_round_budget]</b> <a href='?src=[text_ref(src)];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=[text_ref(src)];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
 	dat += "<br/>"
 	dat += "Parameters: centre = [threat_curve_centre] ; width = [threat_curve_width].<br/>"
 	dat += "Split parameters: centre = [roundstart_split_curve_centre] ; width = [roundstart_split_curve_width].<br/>"
 	dat += "<i>On average, <b>[peaceful_percentage]</b>% of the rounds are more peaceful.</i><br/>"
-	dat += "Forced extended: <a href='?src=\ref[src];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
-	dat += "No stacking (only one round-ender): <a href='?src=\ref[src];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
-	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=\ref[src];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
+	dat += "Forced extended: <a href='?src=[text_ref(src)];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
+	dat += "No stacking (only one round-ender): <a href='?src=[text_ref(src)];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
+	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=[text_ref(src)];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
 	dat += "<br/>"
-	dat += "<A href='?src=\ref[src];[HrefToken()];force_latejoin_rule=1'>\[Force Next Latejoin Ruleset\]</A><br>"
+	dat += "<A href='?src=[text_ref(src)];[HrefToken()];force_latejoin_rule=1'>\[Force Next Latejoin Ruleset\]</A><br>"
 	if (forced_latejoin_rule)
-		dat += {"<A href='?src=\ref[src];[HrefToken()];clear_forced_latejoin=1'>-> [forced_latejoin_rule.name] <-</A><br>"}
-	dat += "<A href='?src=\ref[src];[HrefToken()];force_midround_rule=1'>\[Execute Midround Ruleset\]</A><br>"
+		dat += {"<A href='?src=[text_ref(src)];[HrefToken()];clear_forced_latejoin=1'>-> [forced_latejoin_rule.name] <-</A><br>"}
+	dat += "<A href='?src=[text_ref(src)];[HrefToken()];force_midround_rule=1'>\[Execute Midround Ruleset\]</A><br>"
 	dat += "<br />"
 	dat += "Executed rulesets: "
 	if (executed_rules.len > 0)
@@ -217,13 +217,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[get_heavy_midround_injection_chance(dry_run = TRUE)]%</b> heavy midround chance)<BR>"
-	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='?src=[text_ref(src)];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
 
 	var/next_injection = next_midround_injection()
 	if (next_injection == INFINITY)
 		dat += "All midrounds have been exhausted."
 	else
-		dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+		dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='?src=[text_ref(src)];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
@@ -294,7 +294,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return ..()
 
 /datum/game_mode/dynamic/proc/send_intercept()
-	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [GLOB.year_integer+540]:</i></b><hr>"
+	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>"
 	switch(round(shown_threat))
 		if(0 to 19)
 			var/show_core_territory = (GLOB.current_living_antags.len > 0)
@@ -450,10 +450,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/game_mode/dynamic/, execute_roundstart_rule), rule), rule.delay)
 
 	if (!CONFIG_GET(flag/no_intercept_report))
-		addtimer(CALLBACK(src, .proc/send_intercept), rand(waittime_l, waittime_h))
+		addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(waittime_l, waittime_h))
 
 	..()
 
@@ -675,7 +675,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if (forced_latejoin_rule.ready(TRUE))
 			if (!forced_latejoin_rule.repeatable)
 				latejoin_rules = remove_from_list(latejoin_rules, forced_latejoin_rule.type)
-			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, forced_latejoin_rule), forced_latejoin_rule.delay)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/game_mode/dynamic/, execute_midround_latejoin_rule), forced_latejoin_rule), forced_latejoin_rule.delay)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && (forced_injection || prob(latejoin_roll_chance)))

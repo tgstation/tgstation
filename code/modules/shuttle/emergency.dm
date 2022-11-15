@@ -105,7 +105,7 @@
 		return
 
 	var/old_len = authorized.len
-	addtimer(CALLBACK(src, .proc/clear_recent_action, user), SHUTTLE_CONSOLE_ACTION_DELAY)
+	addtimer(CALLBACK(src, PROC_REF(clear_recent_action), user), SHUTTLE_CONSOLE_ACTION_DELAY)
 
 	switch(action)
 		if("authorize")
@@ -491,7 +491,7 @@
 			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.areas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_WARMUP, areas)
 
@@ -503,7 +503,7 @@
 
 				//now move the actual emergency shuttle to its transit dock
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.areas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_LAUNCH, areas)
 				enterTransit()
@@ -511,7 +511,7 @@
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergency_escape_time * engine_coeff)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
-				INVOKE_ASYNC(SSticker, /datum/controller/subsystem/ticker.proc/poll_hearts)
+				INVOKE_ASYNC(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, poll_hearts))
 				SSmapping.mapvote() //If no map vote has been run yet, start one.
 
 		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
@@ -521,7 +521,7 @@
 		if(SHUTTLE_ESCAPE)
 			if(sound_played && time_left <= HYPERSPACE_END_TIME)
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.areas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_END, areas)
 			if(time_left <= PARALLAX_LOOP_TIME)
@@ -602,7 +602,7 @@
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_lock)
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_lock))
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
