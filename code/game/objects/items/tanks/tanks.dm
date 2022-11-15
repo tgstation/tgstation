@@ -98,7 +98,7 @@
 
 	// This is separate from the reaction recorder.
 	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
-	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
+	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, PROC_REF(merging_information))
 
 	START_PROCESSING(SSobj, src)
 
