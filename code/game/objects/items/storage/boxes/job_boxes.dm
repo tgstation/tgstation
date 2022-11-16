@@ -133,8 +133,8 @@
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, SFX_RUSTLE, 50, TRUE, -5)
-	user.visible_message(span_notice("[user] hugs \the [src]."),span_notice("You hug \the [src]."))
+	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
+	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/black
 	icon_state = "hugbox_black"
@@ -197,8 +197,8 @@
 /obj/item/storage/box/survival/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, SFX_RUSTLE, 50, TRUE, -5)
-	user.visible_message(span_notice("[user] hugs \the [src]."),span_notice("You hug \the [src]."))
+	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
+	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/plushes
 	name = "tactical cuddle kit"
