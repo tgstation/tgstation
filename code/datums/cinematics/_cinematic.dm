@@ -63,7 +63,7 @@
 		return
 
 	// Register a signal to handle what happens when a different cinematic tries to play over us.
-	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, .proc/handle_replacement_cinematics)
+	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, PROC_REF(handle_replacement_cinematics))
 
 	// Pause OOC
 	var/ooc_toggled = FALSE
@@ -74,7 +74,7 @@
 	// Place the /atom/movable/screen/cinematic into everyone's screens, and prevent movement.
 	for(var/mob/watching_mob in watchers)
 		show_to(watching_mob, GET_CLIENT(watching_mob))
-		RegisterSignal(watching_mob, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
+		RegisterSignal(watching_mob, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(show_to))
 		// Close watcher ui's, too, so they can watch it.
 		SStgui.close_user_uis(watching_mob)
 
@@ -82,7 +82,7 @@
 	play_cinematic()
 
 	// Cleans up after it's done playing.
-	addtimer(CALLBACK(src, .proc/clean_up_cinematic, ooc_toggled), cleanup_time)
+	addtimer(CALLBACK(src, PROC_REF(clean_up_cinematic), ooc_toggled), cleanup_time)
 
 /// Cleans up the cinematic after a set timer of it sticking on the end screen.
 /datum/cinematic/proc/clean_up_cinematic(was_ooc_toggled = FALSE)
@@ -121,7 +121,7 @@
 	watching += watching_client
 	watching_mob.overlay_fullscreen("cinematic", /atom/movable/screen/fullscreen/cinematic_backdrop)
 	watching_client.screen += screen
-	RegisterSignal(watching_client, COMSIG_PARENT_QDELETING, .proc/remove_watcher)
+	RegisterSignal(watching_client, COMSIG_PARENT_QDELETING, PROC_REF(remove_watcher))
 
 /// Simple helper for playing sounds from the cinematic.
 /datum/cinematic/proc/play_cinematic_sound(sound_to_play)

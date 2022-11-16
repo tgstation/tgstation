@@ -15,7 +15,7 @@
 /obj/machinery/power/apc/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/apc/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -52,7 +52,7 @@
 /obj/machinery/power/smes/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/smes/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -83,7 +83,7 @@
 /obj/item/stock_parts/cell/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/stock_parts/cell/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -108,7 +108,7 @@
 	to_chat(ninja, span_notice("Hacking \the [src]..."))
 	AI_notify_hack()
 	to_chat(ninja, span_notice("Encrypted source code detected. Overloading storage device..."))
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/rnd/server/master/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -127,7 +127,7 @@
 	if(!ninja || !hacking_module)
 		return NONE
 	to_chat(ninja, span_notice("Research notes detected. Corrupting data..."))
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/rnd/server/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -150,11 +150,11 @@
 		return NONE
 
 	AI_notify_hack()
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/secure_data/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, .proc/can_hack, ninja)))
+	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja)))
 		return
 	for(var/datum/data/record/rec in sort_record(GLOB.data_core.general, sortBy, order))
 		for(var/datum/data/record/security_record in GLOB.data_core.security)
@@ -184,7 +184,7 @@
 		return NONE
 	if(hacking_module.communication_console_hack_success)
 		return NONE
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/communications/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -204,7 +204,7 @@
 	if(!ninja || !hacking_module)
 		return NONE
 	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
-		INVOKE_ASYNC(src, /atom.proc/emag_act)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, emag_act))
 		hacking_module.door_hack_counter++
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)
@@ -218,7 +218,7 @@
 /obj/structure/cable/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	if(!ninja || !hacking_module)
 		return NONE
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/structure/cable/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -254,7 +254,7 @@
 	if(!ninja || !hacking_module)
 		return NONE
 	to_chat(occupants, "[icon2html(src, occupants)][span_danger("Warning: Unauthorized access through sub-route 4, block H, detected.")]")
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/vehicle/sealed/mecha/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -285,7 +285,7 @@
 		return NONE
 
 	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
-	INVOKE_ASYNC(src, .proc/ninjadrain_charge, ninja, hacking_module)
+	INVOKE_ASYNC(src, PROC_REF(ninjadrain_charge), ninja, hacking_module)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/silicon/robot/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)

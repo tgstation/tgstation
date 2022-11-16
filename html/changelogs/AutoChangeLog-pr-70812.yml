@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - rscadd: "A tram collision counter has been added, hopefully encouraging employees to be more careful. Don't become a statistic!"

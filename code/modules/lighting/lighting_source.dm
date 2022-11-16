@@ -80,7 +80,7 @@
 
 	LAZYADD(new_atom_host.light_sources, src)
 	if(ismovable(new_atom_host) && new_atom_host == source_atom)
-		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, .proc/update_host_lights)
+		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, PROC_REF(update_host_lights))
 	return TRUE
 
 ///remove this light source from old_atom_host's light_sources list, unsetting movement registrations

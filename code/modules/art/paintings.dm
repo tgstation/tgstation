@@ -237,7 +237,7 @@
 	var/list/radial_options = list()
 	for(var/frame_name in possible_frames)
 		radial_options[frame_name] = image(icon, "[icon_state]frame_[frame_name]")
-	var/result = show_radial_menu(user, loc, radial_options, radius = 60, custom_check = CALLBACK(src, .proc/can_select_frame, user), tooltips = TRUE)
+	var/result = show_radial_menu(user, loc, radial_options, radius = 60, custom_check = CALLBACK(src, PROC_REF(can_select_frame), user), tooltips = TRUE)
 	if(!result)
 		return
 	painting_metadata.frame_type = result
@@ -372,7 +372,7 @@
 	framed_offset_y = 5
 
 /obj/item/canvas/twentyfour_twentyfour
-	name = "canvas (AI Universal Standard)"
+	name = "canvas (24x24) (AI Universal Standard)"
 	desc = "Besides being almost too large for a standard frame, the AI can accept these as a display from their internal database after you've hung it up."
 	icon_state = "24x24"
 	width = 24
@@ -506,7 +506,7 @@
 /obj/structure/sign/painting/AltClick(mob/user)
 	. = ..()
 	if(current_canvas?.can_select_frame(user))
-		INVOKE_ASYNC(current_canvas, /obj/item/canvas.proc/select_new_frame, user)
+		INVOKE_ASYNC(current_canvas, TYPE_PROC_REF(/obj/item/canvas, select_new_frame), user)
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user, obj/item/canvas/new_canvas)
 	if(!(new_canvas.type in accepted_canvas_types))
