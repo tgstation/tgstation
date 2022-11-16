@@ -273,8 +273,8 @@
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
 		w_class_on = WEIGHT_CLASS_NORMAL)
-	RegisterSignal(src, COMSIG_DET_SCANNED, .proc/on_scan)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src, COMSIG_DET_SCANNED, PROC_REF(on_scan))
 
 /obj/item/pen/edagger/suicide_act(mob/living/user)
 	if(extended)
