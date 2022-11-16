@@ -53,7 +53,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	var/atom/new_target = pick(enemies_list)
+	var/atom/new_target = pick_final_target(controller, enemies_list)
 	controller.blackboard[target_key] = WEAKREF(new_target)
 
 	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, new_target)
@@ -62,3 +62,7 @@
 		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
 
 	finish_action(controller, TRUE)
+
+/// Returns the desired final target from the filtered list of enemies
+/datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
+	return pick(enemies_list)

@@ -35,7 +35,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	var/atom/target = pick(filtered_targets)
+	var/atom/target = pick_final_target(controller, filtered_targets)
 	controller.blackboard[target_key] = WEAKREF(target)
 
 	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, target)

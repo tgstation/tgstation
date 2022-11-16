@@ -705,7 +705,7 @@
 #include "code\datums\ai\basic_mobs\basic_subtrees\attack_target_while_healthy.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\find_food.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\flee_if_unhealthy.dm"
-#include "code\datums\ai\basic_mobs\basic_subtrees\flee_target_until_healed.dm"
+#include "code\datums\ai\basic_mobs\basic_subtrees\flee_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_attack_target.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_find_nearest_target_to_flee.dm"
 #include "code\datums\ai\basic_mobs\basic_subtrees\simple_find_target.dm"

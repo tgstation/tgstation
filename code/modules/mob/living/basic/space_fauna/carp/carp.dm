@@ -48,6 +48,10 @@
 	var/tamed = FALSE
 	/// What colour is our 'healing' outline?
 	var/regenerate_colour = "#20e28e"
+	/// Carp want to eat raw meat
+	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
+	/// Carp want to eat delicious six pack plastic rings
+	var/static/list/desired_trash = list(/obj/item/storage/cans)
 	/// Weighted list of colours a carp can be
 	var/static/list/carp_colors = list(
 		"#aba2ff" = 7,
@@ -76,12 +80,19 @@
 	if (cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/simple_flying)
+	setup_eating()
 
 	if (tamer)
 		on_tamed(tamer)
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
+
+/// Tell the elements and the blackboard what food we want to eat
+/mob/living/basic/carp/proc/setup_eating()
+	AddElement(/datum/element/basic_eating/heal, desired_food, 10)
+	AddElement(/datum/element/basic_eating/harm, desired_trash, 10) // We are killing our planet
+	ai_controller.blackboard[BB_BASIC_FOODS] = desired_food + desired_trash
 
 /// Set a random colour on the carp, override to do something else
 /mob/living/basic/carp/proc/apply_colour()
@@ -108,6 +119,10 @@
 	basic_mob_flags = DEL_ON_DEATH
 	cell_line = NONE
 	regenerate_colour = "#ffffff"
+
+/// Holocarp don't eat food
+/mob/living/basic/carp/holographic/setup_eating()
+	return FALSE
 
 /**
  * Pet carp, abstract carp which just holds some shared properties.
