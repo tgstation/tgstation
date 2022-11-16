@@ -409,7 +409,7 @@ proc_call_on_one_line(
 	arg1, // Only indent once! Remember to not align tabs.
 	arg2,
 	arg3, // End with a trailing comma
-)
+) // The parenthese should be on the same indentation level as the proc call
 ```
 
 For example:
