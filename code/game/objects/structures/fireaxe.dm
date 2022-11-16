@@ -8,10 +8,15 @@
 	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 0, FIRE = 90, ACID = 50)
 	max_integrity = 150
 	integrity_failure = 0.33
+	/// Do we need to be unlocked to be opened.
 	var/locked = TRUE
+	/// Are we opened, can someone take the held item out.
 	var/open = FALSE
+	/// The item we're holding.
 	var/obj/item/held_item
+	/// The path of the item we spawn and can hold.
 	var/item_path = /obj/item/fireaxe
+	/// Overlay we get when the item is inside us.
 	var/item_overlay = "axe"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
