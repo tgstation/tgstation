@@ -409,7 +409,7 @@
 	if(istype(parent,/obj/item/modular_computer/tablet))
 		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 	else if(istype(parent,/obj/item/radio))
-		return "[pick(GLOB.phonetic_alphabet)]"
+		return pick(GLOB.phonetic_alphabet)
 	else if(istype(parent,/obj/item/pen))
 		var/list/L = list()
 		for(var/i in 1 to PEN_ROTATIONS)
