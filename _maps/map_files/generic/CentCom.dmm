@@ -17,7 +17,9 @@
 /area/centcom/syndicate_mothership/control)
 "ag" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/bamboo/tatami,
+/turf/open/floor/bamboo/tatami{
+	dir = 1
+	},
 /area/centcom/central_command_areas/holding)
 "ai" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -895,7 +897,9 @@
 /area/centcom/tdome/administration)
 "cE" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/bamboo/tatami/black,
+/turf/open/floor/bamboo/tatami/black{
+	dir = 1
+	},
 /area/centcom/central_command_areas/holding)
 "cG" = (
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -1480,7 +1484,9 @@
 "ex" = (
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/bamboo/tatami,
+/turf/open/floor/bamboo/tatami{
+	dir = 1
+	},
 /area/centcom/central_command_areas/holding)
 "ez" = (
 /obj/effect/turf_decal/siding/thinplating_new/dark,
@@ -1675,7 +1681,7 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/toy/mecha/phazon,
 /turf/open/floor/bamboo/tatami/purple{
-	dir = 4
+	dir = 8
 	},
 /area/centcom/central_command_areas/holding)
 "fc" = (
@@ -2599,7 +2605,9 @@
 /area/centcom/central_command_areas/holding)
 "hL" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/bamboo/tatami/purple,
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 1
+	},
 /area/centcom/central_command_areas/holding)
 "hM" = (
 /obj/effect/light_emitter{
@@ -4638,7 +4646,7 @@
 "nI" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/bamboo/tatami/purple{
-	dir = 4
+	dir = 8
 	},
 /area/centcom/central_command_areas/holding)
 "nJ" = (
@@ -5821,6 +5829,11 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
+"qV" = (
+/turf/open/floor/bamboo/tatami/black{
+	dir = 1
+	},
+/area/centcom/central_command_areas/holding)
 "qW" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -7470,7 +7483,9 @@
 "wn" = (
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/bamboo/tatami/purple,
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 1
+	},
 /area/centcom/central_command_areas/holding)
 "wo" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
@@ -8814,6 +8829,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
+"Al" = (
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "Am" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -11232,7 +11252,7 @@
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/bamboo/tatami{
-	dir = 4
+	dir = 8
 	},
 /area/centcom/central_command_areas/holding)
 "He" = (
@@ -11358,6 +11378,11 @@
 "Hv" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/courtroom)
+"Hx" = (
+/turf/open/floor/bamboo/tatami{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "Hy" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/catwalk_floor,
@@ -13030,6 +13055,11 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"Nc" = (
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 1
+	},
+/area/centcom/central_command_areas/holding)
 "Nd" = (
 /turf/closed/indestructible/wood,
 /area/centcom/central_command_areas/holding)
@@ -13038,6 +13068,11 @@
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/observation)
+"Nf" = (
+/turf/open/floor/bamboo/tatami/black{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "Ng" = (
 /obj/item/storage/box/ids{
 	pixel_x = 3;
@@ -13378,7 +13413,9 @@
 /area/centcom/tdome/observation)
 "Og" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/bamboo/tatami/purple,
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 1
+	},
 /area/centcom/central_command_areas/holding)
 "Oh" = (
 /obj/structure/table/reinforced,
@@ -14551,6 +14588,14 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
+"Rq" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/bamboo/tatami{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "Rr" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -15719,7 +15764,7 @@
 	dir = 4
 	},
 /turf/open/floor/bamboo/tatami{
-	dir = 4
+	dir = 8
 	},
 /area/centcom/central_command_areas/holding)
 "UE" = (
@@ -15891,6 +15936,14 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
+"Vb" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 1
+	},
+/area/centcom/central_command_areas/holding)
 "Vc" = (
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/dark,
@@ -16067,6 +16120,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"VC" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "VF" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -38426,8 +38487,8 @@ hs
 pJ
 pJ
 Oi
-MW
-fz
+Rq
+Hx
 ej
 YC
 YC
@@ -39454,8 +39515,8 @@ pJ
 pJ
 pJ
 Oi
-yT
-JA
+VC
+Al
 dl
 YC
 YC
@@ -44850,9 +44911,9 @@ ds
 Cy
 ds
 fO
-AN
+Vb
 pA
-pA
+Nc
 AN
 fO
 XI
@@ -45107,10 +45168,10 @@ Cy
 xa
 Cy
 fO
-JA
+Al
+Nc
 pA
-pA
-JA
+Al
 fO
 Rk
 gV
@@ -45365,8 +45426,8 @@ FY
 CW
 fO
 JA
-JA
-JA
+Al
+Al
 JA
 fO
 dt
@@ -45621,10 +45682,10 @@ ds
 zd
 ds
 fO
+Al
 JA
 JA
-JA
-JA
+Al
 fO
 ZB
 RY
@@ -45879,7 +45940,7 @@ Nd
 Nd
 Nd
 JA
-pA
+Nc
 pA
 JA
 fO
@@ -45887,10 +45948,10 @@ QD
 Zt
 Iy
 RL
-AD
+Nf
+qV
 zU
-zU
-zU
+qV
 zU
 RL
 Iy
@@ -46137,7 +46198,7 @@ OL
 Nd
 hL
 pA
-pA
+Nc
 fu
 fO
 XN
@@ -46145,10 +46206,10 @@ Zt
 Zt
 bC
 AD
-AD
+Nf
+qV
 zU
-zU
-AD
+Nf
 RL
 fK
 Zt
@@ -46401,10 +46462,10 @@ df
 Zt
 fK
 RL
-AD
+Nf
 AD
 zU
-AD
+Nf
 AD
 RL
 fK
@@ -46659,10 +46720,10 @@ Zt
 fK
 RL
 AD
-zU
+qV
 zU
 AD
-AD
+Nf
 fI
 Zt
 Zt
@@ -46917,7 +46978,7 @@ fg
 Nd
 cE
 zU
-zU
+qV
 zU
 XF
 Nd
