@@ -217,26 +217,6 @@
 	. += mutable_appearance(icon, lights_overlay)
 	. += emissive_appearance(icon, "[lights_overlay]e", offset_spokesman = src, alpha = src.alpha)
 
-/// Shifted to NE corner for east side of southern passage.
-/obj/machinery/crossing_signal/northeast
-	pixel_x = 11
-	pixel_y = 22
-
-/// Shifted to NW corner for west side of southern passage.
-/obj/machinery/crossing_signal/northwest
-	pixel_x = -11
-	pixel_y = 22
-
-/// Shifted to SE corner for east side of northern passage.
-/obj/machinery/crossing_signal/southeast
-	pixel_x = 11
-	pixel_y = 6
-
-/// Shifted to SW corner for west side of northern passage.
-/obj/machinery/crossing_signal/southwest
-	pixel_x = -11
-	pixel_y = 6
-
 #undef XING_STATE_GREEN
 #undef XING_STATE_AMBER
 #undef XING_STATE_RED
