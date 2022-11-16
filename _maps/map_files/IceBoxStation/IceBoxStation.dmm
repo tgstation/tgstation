@@ -64433,6 +64433,7 @@
 /area/station/medical/storage)
 "tQJ" = (
 /obj/machinery/modular_computer/console/preset/civilian,
+/obj/structure/fireaxecabinet/mechremoval/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "tQM" = (
