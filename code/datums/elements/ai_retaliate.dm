@@ -11,10 +11,8 @@
 
 	// Boy this sure is a lot of ways to tell us that someone tried to attack us
 	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_generic))
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_generic))
-	RegisterSignal(target, COMSIG_MOB_ATTACK_ALIEN, PROC_REF(on_attack_generic))
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(on_attack_animal))
+	RegisterSignal(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_MOB_ATTACK_ALIEN), PROC_REF(on_attack_generic))
+	RegisterSignal(target, list(COMSIG_ATOM_ATTACK_BASIC_MOB, COMSIG_ATOM_ATTACK_ANIMAL), PROC_REF(on_attack_npc))
 	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
 	RegisterSignal(target, COMSIG_ATOM_HITBY, PROC_REF(on_hitby))
 	RegisterSignal(target, COMSIG_ATOM_HULK_ATTACK, PROC_REF(on_attack_hulk))
@@ -22,7 +20,7 @@
 
 /datum/element/ai_retaliate/Detach(datum/source, ...)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_MOB_ATTACK_ALIEN, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_MECH))
+	UnregisterSignal(source, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_BASIC_MOB, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_MOB_ATTACK_ALIEN, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_MECH))
 
 /datum/element/ai_retaliate/proc/on_attackby(mob/target, obj/item/weapon, mob/attacker)
 	SIGNAL_HANDLER
@@ -34,7 +32,7 @@
 	if((attacker.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)))
 		retaliate(target, attacker)
 
-/datum/element/ai_retaliate/proc/on_attack_animal(mob/target, mob/living/attacker)
+/datum/element/ai_retaliate/proc/on_attack_npc(mob/target, mob/living/attacker)
 	SIGNAL_HANDLER
 	if(attacker.melee_damage_upper > 0)
 		retaliate(target, attacker)

@@ -27,7 +27,9 @@
 /// Carp which bites back, but doesn't look for targets
 /datum/ai_controller/basic_controller/carp/retaliate
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction()
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_BASIC_MOB_FLEE_BELOW_HP_RATIO = 0.5,
+		BB_BASIC_MOB_STOP_FLEE_AT_HP_RATIO = 1
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/flee_if_unhealthy,
@@ -55,7 +57,7 @@
 /datum/ai_planning_subtree/basic_melee_attack_subtree/while_healthy/magicarp
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/while_healthy/carp/magic
 
-/// This got too nested for me to think of how to make it generic in a way which wasn't stupid
+// This got too nested for me to think of how to make it generic in a way which wasn't stupid
 /datum/ai_behavior/basic_melee_attack/while_healthy/carp/magic
 
 /datum/ai_behavior/basic_melee_attack/while_healthy/carp/magic/setup(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)

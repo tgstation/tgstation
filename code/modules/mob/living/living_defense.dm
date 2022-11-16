@@ -231,6 +231,7 @@
 		return TRUE
 
 /mob/living/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	. = ..()
 	if(user.melee_damage_upper == 0)
 		if(user != src)
 			visible_message(span_notice("\The [user] [user.friendly_verb_continuous] [src]!"), \
