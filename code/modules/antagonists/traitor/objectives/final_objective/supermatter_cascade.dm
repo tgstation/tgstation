@@ -13,11 +13,13 @@
 	if(!.)
 		return FALSE
 
-	for(var/obj/machinery/power/supermatter_crystal/engine/crystal in GLOB.machines)
-		if(is_station_level(crystal.z) || is_mining_level(crystal.z))
-			return TRUE
+	if(isnull(GLOB.main_supermatter_engine))
+		return FALSE
+	var/obj/machinery/power/supermatter_crystal/engine/crystal = locate() in GLOB.main_supermatter_engine
+	if(!is_station_level(crystal.z) && !is_mining_level(crystal.z))
+		return FALSE
 
-	return FALSE
+	return TRUE
 
 /datum/traitor_objective/ultimate/supermatter_cascade/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
