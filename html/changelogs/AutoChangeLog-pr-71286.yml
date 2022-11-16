@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Attacking a shocked door with an item that isn't conductive will not shock you."
+  - balance: "Attacking a shocked grille with any item that isn't conductive (not just glass shards) will not shock you."
+  - balance: "Attacking grilles with items no longer leaves behind a fingerprint on the grille (?)."
+  - balance: "Fire axe is now conductive."
