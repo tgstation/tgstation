@@ -129,7 +129,7 @@
 	var/cant_speak = (HAS_TRAIT(traitor_mob, TRAIT_MUTE) || traitor_mob.mind?.assigned_role.title == JOB_MIME)
 	if(uplink_spawn_location == UPLINK_RADIO && cant_speak)
 		if(!silent)
-			to_chat(traitor_mob, span_warning("You have been deemed ineligable for a radio uplink. Supplying standard uplink intead."))
+			to_chat(traitor_mob, span_warning("You have been deemed ineligible for a radio uplink. Supplying standard uplink instead."))
 		uplink_spawn_location = UPLINK_PDA
 	switch (uplink_spawn_location)
 		if(UPLINK_PDA)
