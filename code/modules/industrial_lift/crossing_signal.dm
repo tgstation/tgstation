@@ -7,7 +7,6 @@
 	name = "crossing signal"
 	desc = "Indicates to pedestrians if it's safe to cross the tracks."
 	icon = 'icons/obj/machines/crossing_signal.dmi'
-	icon_state = "crossing-base"
 	base_icon_state = "crossing-"
 	max_integrity = 250
 	integrity_failure = 0.25
@@ -37,6 +36,12 @@
 	* If the value is set too high, it will cause the lights to turn red when the tram arrives at another station. You want to optimize the amount of warning without turning it red unnessecarily.
 	*/
 	var/red_distance_threshold = 33
+
+/obj/machinery/crossing_signal/left
+	icon_state = "crossing-base-left"
+
+/obj/machinery/crossing_signal/right
+	icon_state = "crossing-base-right"
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
