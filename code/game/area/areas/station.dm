@@ -1190,10 +1190,16 @@
 	icon_state = "checkpoint"
 
 /area/station/security/checkpoint/auxiliary
+	name = "\improper Auxiliary Security Checkpoint"
 	icon_state = "checkpoint_aux"
 
 /area/station/security/checkpoint/escape
+	name = "\improper Departures Security Checkpoint"
 	icon_state = "checkpoint_esc"
+
+/area/station/security/checkpoint/arrivals
+	name = "\improper Arrivals Security Checkpoint"
+	icon_state = "checkpoint_arr"
 
 /area/station/security/checkpoint/supply
 	name = "Security Post - Cargo Bay"
