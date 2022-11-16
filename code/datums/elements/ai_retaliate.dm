@@ -10,15 +10,15 @@
 		return ELEMENT_INCOMPATIBLE
 
 	// Boy this sure is a lot of ways to tell us that someone tried to attack us
-	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_generic)
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_generic)
-	RegisterSignal(target, COMSIG_MOB_ATTACK_ALIEN, .proc/on_attack_generic)
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_ANIMAL, .proc/on_attack_animal)
-	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
-	RegisterSignal(target, COMSIG_ATOM_HITBY, .proc/on_hitby)
-	RegisterSignal(target, COMSIG_ATOM_HULK_ATTACK, .proc/on_attack_hulk)
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_MECH, .proc/on_attack_mech)
+	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_generic))
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_generic))
+	RegisterSignal(target, COMSIG_MOB_ATTACK_ALIEN, PROC_REF(on_attack_generic))
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(on_attack_animal))
+	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, PROC_REF(on_bullet_act))
+	RegisterSignal(target, COMSIG_ATOM_HITBY, PROC_REF(on_hitby))
+	RegisterSignal(target, COMSIG_ATOM_HULK_ATTACK, PROC_REF(on_attack_hulk))
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_MECH, PROC_REF(on_attack_mech))
 
 /datum/element/ai_retaliate/Detach(datum/source, ...)
 	. = ..()

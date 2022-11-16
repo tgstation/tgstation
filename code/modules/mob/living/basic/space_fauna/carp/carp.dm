@@ -80,7 +80,7 @@
 	if (tamer)
 		on_tamed(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/on_tamed))
+		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 
 /// Set a random colour on the carp, override to do something else
@@ -154,7 +154,7 @@
 /mob/living/basic/carp/pet/cayenne/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/nuclear_bomb_operator, mutable_appearance(icon, "disk_overlay") , mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth"))
-	RegisterSignal(src, COMSIG_HANDLESS_MOB_COLLECTED_DISK, .proc/got_disk)
+	RegisterSignal(src, COMSIG_HANDLESS_MOB_COLLECTED_DISK, PROC_REF(got_disk))
 
 /// She did it! Treats for Cayenne!
 /mob/living/basic/carp/pet/cayenne/proc/got_disk(atom/source, obj/item/disk/nuclear/disky)

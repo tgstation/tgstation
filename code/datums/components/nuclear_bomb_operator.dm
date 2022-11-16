@@ -29,11 +29,11 @@
 
 /datum/component/nuclear_bomb_operator/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
-	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, .proc/owner_attacked_atom) // This only works for players, but I am not sure this should have AI anyway
-	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/atom_exited_owner)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), PROC_REF(on_death))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(owner_attacked_atom)) // This only works for players, but I am not sure this should have AI anyway
+	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(atom_exited_owner))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	ADD_TRAIT(parent, TRAIT_DISK_VERIFIER, NUKE_OP_MINION_TRAIT) // Can identify the real disk
 	ADD_TRAIT(parent, TRAIT_CAN_STRIP, NUKE_OP_MINION_TRAIT) // Can take the disk off people
 	ADD_TRAIT(parent, TRAIT_CAN_USE_NUKE, NUKE_OP_MINION_TRAIT) // Can put the disk into the bomb
@@ -104,7 +104,7 @@
 /datum/component/nuclear_bomb_operator/proc/try_put_down_disk(obj/item/disk/nuclear/held_disk, atom/attacked_target)
 	var/mob/mob_parent = parent
 	if(!isopenturf(attacked_target))
-		INVOKE_ASYNC(held_disk, /obj/item.proc/melee_attack_chain, mob_parent, attacked_target)
+		INVOKE_ASYNC(held_disk, TYPE_PROC_REF(/obj/item, melee_attack_chain), mob_parent, attacked_target)
 		mob_parent.do_item_attack_animation(attacked_target, used_item = held_disk)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 

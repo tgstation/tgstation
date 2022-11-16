@@ -16,6 +16,7 @@
 	return ..()
 
 /datum/ai_behavior/flee_until_healthy/perform(delta_time, datum/ai_controller/controller, fleeing_key, flee_below_key, stop_flee_above_key)
+	controller.behavior_cooldowns[src] = world.time + action_cooldown
 	var/mob/living/living_pawn = controller.pawn
 	var/current_health_percentage = (living_pawn.health / living_pawn.maxHealth)
 	if (controller.blackboard[fleeing_key])

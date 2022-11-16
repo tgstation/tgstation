@@ -1,7 +1,6 @@
 /datum/ai_behavior/try_mob_ability
 
 /datum/ai_behavior/try_mob_ability/perform(delta_time, datum/ai_controller/controller, ability_key, target_key)
-
 	var/datum/action/cooldown/mob_cooldown/ability = controller.blackboard[ability_key]
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/mob/living/target = weak_target?.resolve()

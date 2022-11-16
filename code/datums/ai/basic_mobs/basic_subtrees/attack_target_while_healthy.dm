@@ -1,7 +1,7 @@
 /// Performs attacks until you drop under a certain health ratio
 /datum/ai_planning_subtree/basic_melee_attack_subtree/while_healthy
 
-/datum/ai_planning_subtree/basic_melee_attack_subtree/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/basic_melee_attack_subtree/while_healthy/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/atom/target = weak_target?.resolve()
 
@@ -28,7 +28,7 @@
 /// Performs attacks until you drop under a certain health ratio
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/while_healthy
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/basic_ranged_attack_subtree/while_healthy/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/atom/target = weak_target?.resolve()
 	if(!target || QDELETED(target))

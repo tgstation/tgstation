@@ -27,7 +27,7 @@
 
 /datum/component/regenerator/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
+	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 /datum/component/regenerator/UnregisterFromParent()
 	. = ..()
@@ -51,7 +51,7 @@
 	stop_regenerating()
 	if(no_regen_timer)
 		deltimer(no_regen_timer)
-	no_regen_timer = addtimer(CALLBACK(src, .proc/start_regenerating), regeneration_delay, TIMER_STOPPABLE)
+	no_regen_timer = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_STOPPABLE)
 
 /// Start processing health regeneration, and show animation if provided
 /datum/component/regenerator/proc/start_regenerating()

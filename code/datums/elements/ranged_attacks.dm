@@ -9,7 +9,7 @@
 /datum/element/ranged_attacks/Attach(atom/movable/target, casingtype, projectilesound, projectiletype)
 	. = ..()
 	if(!isbasicmob(target))
-		return COMPONENT_INCOMPATIBLE
+		return ELEMENT_INCOMPATIBLE
 
 	src.casingtype = casingtype
 	src.projectilesound = projectilesound

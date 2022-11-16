@@ -15,6 +15,7 @@
 	var/vision_range = 9
 
 /datum/ai_behavior/target_from_retaliate_list/perform(delta_time, datum/ai_controller/controller, shitlist_key, target_key, targetting_datum_key, hiding_location_key)
+	controller.behavior_cooldowns[src] = world.time + action_cooldown
 	var/mob/living/living_mob = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 	if(!targetting_datum)

@@ -228,6 +228,11 @@
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
 
+/// Carp AI keys
+#define BB_CARP_RIFT "BB_carp_rift"
+#define BB_CARP_SUMMON "BB_carp_summon"
+#define BB_MAGICARP_SPELL "BB_magicarp_spell"
+
 ///Bileworm AI keys
 
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"

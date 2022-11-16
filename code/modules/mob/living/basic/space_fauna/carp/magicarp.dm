@@ -1,3 +1,27 @@
+/// List of spells that a carp can cast
+#define MAGICARP_SPELL_LIST list(\
+		/obj/projectile/magic/animate = "dancing",\
+		/obj/projectile/magic/arcane_barrage = "arcane",\
+		/obj/projectile/magic/change = "transforming",\
+		/obj/projectile/magic/death = "grim",\
+		/obj/projectile/magic/door = "unbarred",\
+		/obj/projectile/magic/fireball = "blazing",\
+		/obj/projectile/magic/resurrection = "vital",\
+		/obj/projectile/magic/spellblade = "vorpal",\
+		/obj/projectile/magic/teleport = "warping",\
+		/obj/projectile/magic/babel = "babbling",\
+	)
+
+/// Filtered list of spells that a carp can cast if spawned from a xenobiology slime
+#define XENOBIOLOGY_MAGICARP_SPELL_LIST list(\
+		/obj/projectile/magic/animate = "dancing",\
+		/obj/projectile/magic/teleport = "warping",\
+		/obj/projectile/magic/door = "unbarred",\
+		/obj/projectile/magic/fireball = "blazing",\
+		/obj/projectile/magic/spellblade = "vorpal",\
+		/obj/projectile/magic/arcane_barrage = "arcane",\
+	)
+
 /**
  * # Magicarp
  *
@@ -13,33 +37,30 @@
 	health = 50
 	gold_core_spawnable = NO_SPAWN
 	greyscale_config = /datum/greyscale_config/carp_magic
-	/// Type of spell this fish can cast
-	var/spell_type
+	ai_controller = /datum/ai_controller/basic_controller/carp/ranged
 	/// Types of projectiles fish are allowed to throw, not static so that subtypes can modify this
 	/// Each spell corresponds to a name so we can update the fish name and colour
-	var/list/projectile_types = list(
-		/obj/projectile/magic/animate = "dancing",
-		/obj/projectile/magic/arcane_barrage = "arcane",
-		/obj/projectile/magic/change = "transforming",
-		/obj/projectile/magic/death = "grim",
-		/obj/projectile/magic/door = "unbarred",
-		/obj/projectile/magic/fireball = "blazing",
-		/obj/projectile/magic/resurrection = "vital",
-		/obj/projectile/magic/spellblade = "vorpal",
-		/obj/projectile/magic/teleport = "warping",
-		/obj/projectile/magic/babel = "babbling",
-	)
+	var/list/projectile_types = MAGICARP_SPELL_LIST
+	/// Our magic attack
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/spell
 
 /mob/living/basic/carp/magic/Initialize(mapload)
-	spell_type = pick(projectile_types)
-	name = "[projectile_types[spell_type]] [name]"
-	return ..()
+	. = ..()
+	assign_spell()
 
-/// Colour based on spell selection
-/mob/living/basic/carp/magic/apply_colour()
-	var/spell_colour = spell_to_colour(projectile_types[spell_type])
+/// Updates name based on chosen spell
+/mob/living/basic/carp/magic/proc/assign_spell()
+	var/obj/projectile/spell_type = pick(projectile_types)
+	name = "[projectile_types[spell_type]] [name]"
+
+	var/spell_colour = spell_to_colour(spell_type)
 	set_greyscale(colors= list(spell_colour))
-	update_appearance()
+
+	spell = new (src)
+	spell.projectile_type = spell_type
+	spell.button_icon_state = initial(spell_type.icon_state)
+	spell.Grant(src)
+	ai_controller.blackboard[BB_MAGICARP_SPELL] = spell
 
 /// Convert name of spell to colour
 /mob/living/basic/carp/magic/proc/spell_to_colour(spell_name)
@@ -56,3 +77,67 @@
 		"babbling" = "#ca805a",
 	)
 	return spell_colours[spell_name]
+
+/mob/living/basic/carp/magic/ranged_secondary_attack(atom/atom_target, modifiers)
+	spell.Trigger(target = atom_target)
+
+/***
+ * # Chaos Magicarp
+ *
+ * Fires a random spell (and changes colour) every time, also beefier.
+ * Sometimes actually more durable than the much larger megacarp. That's magic for you.
+ * They trade off for this with a tendency to fireball themselves.
+ */
+/mob/living/basic/carp/magic/chaos
+	name = "chaos magicarp"
+	desc = "50% carp, 100% magic, 150% horrible."
+	maxHealth = 75
+	health = 75
+
+/mob/living/basic/carp/magic/chaos/assign_spell()
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/chaos/chaos_bolt = new(src)
+	chaos_bolt.permitted_projectiles = projectile_types
+	chaos_bolt.Grant(src)
+	spell = chaos_bolt
+	ai_controller.blackboard[BB_MAGICARP_SPELL] = spell
+	RegisterSignal(spell, COMSIG_ACTION_TRIGGER, PROC_REF(apply_colour))
+
+/// Has a more limited spell pool but can appear from gold slime cores
+/mob/living/basic/carp/magic/xenobiology
+	gold_core_spawnable = HOSTILE_SPAWN
+	projectile_types = XENOBIOLOGY_MAGICARP_SPELL_LIST
+
+/mob/living/basic/carp/magic/chaos/xenobiology
+	gold_core_spawnable = HOSTILE_SPAWN
+	projectile_types = XENOBIOLOGY_MAGICARP_SPELL_LIST
+
+#undef MAGICARP_SPELL_LIST
+#undef XENOBIOLOGY_MAGICARP_SPELL_LIST
+
+/**
+ * Holder ability simply for "firing a projectile with a cooldown".
+ * Probably won't do anything if assigned via VV unless you also VV in a projectile for it.
+ */
+/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt
+	name = "Magicarp Blast"
+	desc = "Unleash a bolt of magical force at a target you click on."
+	icon_icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	button_icon_state = "arcane_barrage"
+	cooldown_time = 5 SECONDS
+	projectile_sound = 'sound/weapons/emitter.ogg'
+	melee_cooldown_time = 0 SECONDS // Without this they become extremely hesitant to bite anyone ever
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/chaos/attack_sequence(mob/living/firer, atom/target)
+	playsound(get_turf(firer), projectile_sound, 100, TRUE)
+	return ..()
+
+/// Chaos variant picks one from a list
+/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/chaos
+	/// List of things we can cast
+	var/list/permitted_projectiles = list()
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/chaos/attack_sequence(mob/living/firer, atom/target)
+	if (!length(permitted_projectiles))
+		return
+	projectile_type = pick(permitted_projectiles)
+	return ..()
