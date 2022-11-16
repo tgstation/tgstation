@@ -41,12 +41,15 @@ LINEN BINS
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	register_context()
 	register_item_context()
 
-/obj/item/bedsheet/examine(mob/user)
-	. = ..()
-	. += span_notice("The bedsheet looks like it can be <b>cut</b>.")
-	. += span_notice("The bedsheet can be rotated using AltClick.")
+/obj/item/bedsheet/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(istype(held_item) && (held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness()))
+		context[SCREENTIP_CONTEXT_LMB] = "Shred into cloth"
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
 	if(isliving(target) && target.body_position == LYING_DOWN)
