@@ -363,8 +363,8 @@ SUBSYSTEM_DEF(statpanels)
 	if(actively_tracking)
 		stop_turf_tracking()
 	var/static/list/connections = list(
-		COMSIG_MOVABLE_MOVED = .proc/on_mob_move,
-		COMSIG_MOB_LOGOUT = .proc/on_mob_logout,
+		COMSIG_MOVABLE_MOVED = PROC_REF(on_mob_move),
+		COMSIG_MOB_LOGOUT = PROC_REF(on_mob_logout),
 	)
 	AddComponent(/datum/component/connect_mob_behalf, parent, connections)
 	actively_tracking = TRUE

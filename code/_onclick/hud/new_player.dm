@@ -125,10 +125,10 @@
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
-			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/hide_ready_button)
+			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(hide_ready_button))
 		if(GAME_STATE_SETTING_UP)
 			set_button_status(FALSE)
-			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, .proc/show_ready_button)
+			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(show_ready_button))
 		else
 			set_button_status(FALSE)
 
@@ -136,13 +136,13 @@
 	SIGNAL_HANDLER
 	set_button_status(FALSE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP)
-	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, .proc/show_ready_button)
+	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(show_ready_button))
 
 /atom/movable/screen/lobby/button/ready/proc/show_ready_button()
 	SIGNAL_HANDLER
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP)
-	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/hide_ready_button)
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(hide_ready_button))
 
 /atom/movable/screen/lobby/button/ready/Click(location, control, params)
 	. = ..()
@@ -170,10 +170,10 @@
 	. = ..()
 	switch(SSticker.current_state)
 		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
-			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/show_join_button)
+			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(show_join_button))
 		if(GAME_STATE_SETTING_UP)
 			set_button_status(TRUE)
-			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, .proc/hide_join_button)
+			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(hide_join_button))
 		else
 			set_button_status(TRUE)
 
@@ -214,13 +214,13 @@
 	SIGNAL_HANDLER
 	set_button_status(TRUE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP)
-	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, .proc/hide_join_button)
+	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(hide_join_button))
 
 /atom/movable/screen/lobby/button/join/proc/hide_join_button()
 	SIGNAL_HANDLER
 	set_button_status(FALSE)
 	UnregisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP)
-	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, .proc/show_join_button)
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(show_join_button))
 
 /atom/movable/screen/lobby/button/observe
 	screen_loc = "TOP:-40,CENTER:-54"
@@ -234,7 +234,7 @@
 	if(SSticker.current_state > GAME_STATE_STARTUP)
 		set_button_status(TRUE)
 	else
-		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, .proc/enable_observing)
+		RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(enable_observing))
 
 /atom/movable/screen/lobby/button/observe/Click(location, control, params)
 	. = ..()

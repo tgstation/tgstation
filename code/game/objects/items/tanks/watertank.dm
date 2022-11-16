@@ -22,7 +22,7 @@
 	. = ..()
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
-	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, .proc/noz_move)
+	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -47,7 +47,7 @@
 
 	if(QDELETED(noz))
 		noz = make_noz()
-		RegisterSignal(noz, COMSIG_MOVABLE_MOVED, .proc/noz_move)
+		RegisterSignal(noz, COMSIG_MOVABLE_MOVED, PROC_REF(noz_move))
 	if(noz in src)
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
@@ -315,8 +315,8 @@
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		var/delay = 2
 		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/resin_stop_check)
-		RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/resin_landed)
+		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(resin_stop_check))
+		RegisterSignal(loop, COMSIG_PARENT_QDELETING, PROC_REF(resin_landed))
 		return
 
 	if(nozzle_mode == RESIN_FOAM)
@@ -331,7 +331,7 @@
 			var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new (get_turf(target))
 			foam.group.target_size = 0
 			metal_synthesis_cooldown++
-			addtimer(CALLBACK(src, .proc/reduce_metal_synth_cooldown), 10 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(reduce_metal_synth_cooldown)), 10 SECONDS)
 		else
 			balloon_alert(user, "still being synthesized!")
 			return

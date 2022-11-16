@@ -34,7 +34,7 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	RegisterSignal(
 		mind,
 		list(COMSIG_ANTAGONIST_GAINED, COMSIG_ANTAGONIST_REMOVED),
-		.proc/update_antag_hud_images
+		PROC_REF(update_antag_hud_images)
 	)
 
 	check_processing()

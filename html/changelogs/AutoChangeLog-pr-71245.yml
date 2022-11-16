@@ -1,0 +1,5 @@
+author: "flowercuco"
+delete-after: True
+changes:
+  - bugfix: "Boxcutter is only the knife tool when it is active"
+  - bugfix: "Switchblade is now a knife tool when it is active"

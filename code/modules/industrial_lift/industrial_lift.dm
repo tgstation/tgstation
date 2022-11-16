@@ -96,8 +96,8 @@ GLOBAL_LIST_EMPTY(lifts)
 ///set the movement registrations to our current turf(s) so contents moving out of our tile(s) are removed from our movement lists
 /obj/structure/industrial_lift/proc/set_movement_registrations(list/turfs_to_set)
 	for(var/turf/turf_loc as anything in turfs_to_set || locs)
-		RegisterSignal(turf_loc, COMSIG_ATOM_EXITED, .proc/UncrossedRemoveItemFromLift)
-		RegisterSignal(turf_loc, list(COMSIG_ATOM_ENTERED,COMSIG_ATOM_INITIALIZED_ON), .proc/AddItemOnLift)
+		RegisterSignal(turf_loc, COMSIG_ATOM_EXITED, PROC_REF(UncrossedRemoveItemFromLift))
+		RegisterSignal(turf_loc, list(COMSIG_ATOM_ENTERED,COMSIG_ATOM_INITIALIZED_ON), PROC_REF(AddItemOnLift))
 
 ///unset our movement registrations from turfs that no longer contain us (or every loc if turfs_to_unset is unspecified)
 /obj/structure/industrial_lift/proc/unset_movement_registrations(list/turfs_to_unset)
@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(isliving(new_lift_contents) && !HAS_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED))
 		ADD_TRAIT(new_lift_contents, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 	LAZYADD(lift_load, new_lift_contents)
-	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
+	RegisterSignal(new_lift_contents, COMSIG_PARENT_QDELETING, PROC_REF(RemoveItemFromLift))
 
 	return TRUE
 
@@ -407,8 +407,10 @@ GLOBAL_LIST_EMPTY(lifts)
 
 				collided.throw_at()
 				//if going EAST, will turn to the NORTHEAST or SOUTHEAST and throw the ran over guy away
-				var/datum/callback/land_slam = new(collided, /mob/living/.proc/tram_slam_land)
+				var/datum/callback/land_slam = new(collided, TYPE_PROC_REF(/mob/living/, tram_slam_land))
 				collided.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
+
+				SEND_SIGNAL(src, COMSIG_TRAM_COLLISION)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, going)
@@ -600,7 +602,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		user = user,
 		anchor = src,
 		choices = possible_directions,
-		custom_check = CALLBACK(src, .proc/can_open_lift_radial, user, starting_position),
+		custom_check = CALLBACK(src, PROC_REF(can_open_lift_radial), user, starting_position),
 		require_near = TRUE,
 		tooltips = TRUE,
 	)
@@ -735,7 +737,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		"NORTHWEST" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = WEST)
 		)
 
-	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/can_open_lift_radial, user, starting_position), require_near = TRUE, tooltips = FALSE)
+	var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(can_open_lift_radial), user, starting_position), require_near = TRUE, tooltips = FALSE)
 	if (!can_open_lift_radial(user,starting_position))
 		return	// nice try
 	if(!isnull(result) && result != "Cancel" && lift_master_datum.controls_locked)
@@ -811,7 +813,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	for(var/atom/movable/glider as anything in lift_load)
 		if(travelling)
 			glider.set_glide_size(glide_size_override)
-			RegisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/on_changed_glide_size)
+			RegisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(on_changed_glide_size))
 		else
 			LAZYREMOVE(changed_gliders, glider)
 			UnregisterSignal(glider, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
@@ -846,7 +848,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		new overlay(our_turf)
 		turfs += our_turf
 
-	addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
+	addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
 
 /obj/structure/industrial_lift/tram/proc/clear_turfs(list/turfs_to_clear, iterations)
 	for(var/turf/our_old_turf as anything in turfs_to_clear)
@@ -866,4 +868,4 @@ GLOBAL_LIST_EMPTY(lifts)
 		turfs += our_turf
 
 	if(iterations)
-		addtimer(CALLBACK(src, .proc/clear_turfs, turfs, iterations), 1)
+		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)

@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Tablets now use regular cells instead of computer cells."
+  - balance: "Tablets no longer need a power cell component to hold power cells."
