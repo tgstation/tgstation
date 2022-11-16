@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes:
+  - rscdel: "Nuke missing the station no longer locks down the shuttle"
