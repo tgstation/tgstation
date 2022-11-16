@@ -58,8 +58,8 @@
 
 /// This runs some simple speech tests on a speaker and listener and determines if a person can hear whispering or speaking as they are moved a distance away
 /datum/unit_test/speech
-	var/list/handle_speech_result
-	var/list/handle_hearing_result
+	var/list/handle_speech_result = null
+	var/list/handle_hearing_result = null
 	var/mob/living/carbon/human/speaker
 	var/mob/living/carbon/human/listener
 
