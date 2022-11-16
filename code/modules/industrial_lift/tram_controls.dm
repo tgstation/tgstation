@@ -28,9 +28,6 @@
 	if(tram_part)
 		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(update_tram_display))
 
-/obj/machinery/destination_sign/Destroy()
-	. = ..()
-
 /**
  * Finds the tram from the console
  *
@@ -124,10 +121,10 @@
 /obj/machinery/computer/tram_controls/proc/update_tram_display(obj/effect/landmark/tram/from_where, travelling)
 	SIGNAL_HANDLER
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
-	if(!travelling)
-		icon_screen = "[base_icon_state][tram_part.from_where.name]_idle"
-	else
+	if(travelling)
 		icon_screen = "[base_icon_state][tram_part.from_where.name]_active"
+	else
+		icon_screen = "[base_icon_state][tram_part.from_where.name]_idle"
 	update_appearance(UPDATE_ICON)
 	return PROCESS_KILL
 
