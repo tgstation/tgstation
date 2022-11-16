@@ -71,10 +71,6 @@
 	. = ..()
 	register_context()
 
-/obj/machinery/seed_extractor/proc/debug()
-	for(var/seed in subtypesof(/obj/item/seeds))
-		new seed(drop_location())
-
 /obj/machinery/seed_extractor/add_context(
 	atom/source,
 	list/context,
