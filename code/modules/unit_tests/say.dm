@@ -105,16 +105,16 @@
 	speaker.grant_language(/datum/language/beachbum)
 	listener.add_blocked_language(/datum/language/beachbum)
 	// speaking and whispering should be hearable
-	conversation(distance=1, /datum/language/beachbum)
+	conversation(distance=1, language=/datum/language/beachbum)
 	// speaking should be hearable but not whispering
-	conversation(distance=5, /datum/language/beachbum)
+	conversation(distance=5, language=/datum/language/beachbum)
 	// neither speaking or whispering should be hearable
-	conversation(distance=10, /datum/language/beachbum)
+	conversation(distance=10, language=/datum/language/beachbum)
 
 #define NORMAL_HEARING_RANGE 7
 #define WHISPER_HEARING_RANGE 1
 
-/datum/unit_test/speech/proc/conversation(distance = 0, datum/language/language = null)
+/datum/unit_test/speech/proc/conversation(distance = 0, datum/language/language)
 	speaker.forceMove(run_loc_floor_bottom_left)
 	listener.forceMove(locate(run_loc_floor_bottom_left.x + distance, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
