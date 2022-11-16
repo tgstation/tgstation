@@ -51,14 +51,14 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
-	INVOKE_ASYNC(src, .proc/open)
+	INVOKE_ASYNC(src, PROC_REF(open))
 	find_tram()
 
 /obj/machinery/door/window/right/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
-	INVOKE_ASYNC(src, .proc/open)
+	INVOKE_ASYNC(src, PROC_REF(open))
 	find_tram()
 
 /obj/machinery/door/window/left/tram/open_and_close()
