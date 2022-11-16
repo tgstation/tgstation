@@ -11,7 +11,7 @@ Slimecrossing Armor
 	icon_state = "slime"
 	inhand_icon_state = "b_mask"
 	body_parts_covered = NONE
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	clothing_traits = list(TRAIT_NOBREATH)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 50, FIRE = 0, ACID = 0)
 	flags_cover = MASKCOVERSMOUTH

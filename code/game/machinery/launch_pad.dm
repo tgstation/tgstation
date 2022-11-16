@@ -351,7 +351,7 @@
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	var/sending = TRUE
 	//A weakref to our linked pad
 	var/datum/weakref/pad

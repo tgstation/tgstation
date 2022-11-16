@@ -10,7 +10,7 @@
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	resistance_flags = FLAMMABLE
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	var/persistence_id
 

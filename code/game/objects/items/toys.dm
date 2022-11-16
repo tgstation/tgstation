@@ -671,7 +671,7 @@
 	desc = "A generic action figure modeled after nothing in particular."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "owlprize"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	var/cooldown = FALSE
 	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
 	var/span = "danger"
@@ -722,7 +722,7 @@
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/toy/talking/ai/generate_messages()
 	return list(generate_ion_law())
@@ -751,7 +751,7 @@
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 	chattering = TRUE
 	phomeme = "owl"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
@@ -760,7 +760,7 @@
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 	chattering = TRUE
 	phomeme = "griffin"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 
 /*
  * Fake nuke
@@ -813,7 +813,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "minimeteor"
 	inhand_icon_state = "minimeteor"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/toy/minimeteor/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
@@ -842,7 +842,7 @@
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
 	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "bigred"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	var/cooldown = 0
 
 /obj/item/toy/redbutton/attack_self(mob/user)
@@ -974,7 +974,7 @@
 	desc = "A colorful toy mouse!"
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "toy_mouse"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	var/cooldown = 0
 	resistance_flags = FLAMMABLE
 
@@ -989,7 +989,7 @@
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/toy/figure/Initialize(mapload)
 	. = ..()

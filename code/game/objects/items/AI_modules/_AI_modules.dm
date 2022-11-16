@@ -11,7 +11,7 @@
 	desc = "An AI Module for programming laws to an AI."
 	flags_1 = CONDUCT_1
 	force = 5
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

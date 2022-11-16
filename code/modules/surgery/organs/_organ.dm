@@ -2,7 +2,7 @@
 /obj/item/organ
 	name = "organ"
 	icon = 'icons/obj/medical/organs/organs.dmi'
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	///The mob that owns this organ.
 	var/mob/living/carbon/owner = null

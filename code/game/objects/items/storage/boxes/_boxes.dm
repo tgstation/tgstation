@@ -16,7 +16,7 @@
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	update_appearance()
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)

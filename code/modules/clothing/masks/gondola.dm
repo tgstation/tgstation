@@ -4,7 +4,7 @@
 	icon_state = "gondola"
 	inhand_icon_state = null
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/gondola/handle_speech(datum/source, list/speech_args)

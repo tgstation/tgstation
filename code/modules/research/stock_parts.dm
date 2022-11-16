@@ -223,7 +223,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "stock part"
 	desc = "What?"
 	icon = 'icons/obj/stock_parts.dmi'
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	var/rating = 1
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any manipulator and not just a micro-manipulator.
 	var/base_name

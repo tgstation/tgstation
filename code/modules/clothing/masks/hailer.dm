@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	inhand_icon_state = "sechailer"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	inhand_icon_state = null
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
 	custom_price = PAYCHECK_COMMAND * 1.5
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	actions_types = list(/datum/action/item_action/halt)
 	COOLDOWN_DECLARE(whistle_cooldown)
 

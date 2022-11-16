@@ -10,7 +10,7 @@
 	inhand_icon_state = null
 	attack_verb_continuous = list("prods", "pokes")
 	attack_verb_simple = list("prod", "poke")
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FIRE_PROOF
 	force = 0
 	var/start_extended = FALSE

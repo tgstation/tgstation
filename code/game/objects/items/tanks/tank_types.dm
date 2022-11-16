@@ -140,7 +140,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	volume = 6 //same size as the engineering ones but plasmamen have special lungs that consume less plasma per breath
-	w_class = WEIGHT_CLASS_SMALL //thanks i forgot this
+	w_class = WEIGHT_CLASS_TINY //thanks i forgot this
 
 /obj/item/tank/internals/plasmaman/belt/full/populate_gas()
 	air_contents.assert_gas(/datum/gas/plasma)
@@ -164,7 +164,7 @@
 	worn_icon = null
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	force = 4
 	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
 	volume = 3 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)

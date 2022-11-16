@@ -314,7 +314,7 @@
 	inhand_icon_state = null
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	item_flags = NONE
 	force = 0
 	attack_verb_continuous = list("hits", "pokes")

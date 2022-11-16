@@ -19,7 +19,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	///Current charge in cell units
 	var/charge = 0
 	///Maximum charge in cell units

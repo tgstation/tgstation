@@ -2,7 +2,7 @@
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
 	icon_state = "wallet"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
 

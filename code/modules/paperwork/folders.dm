@@ -3,7 +3,7 @@
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	pressure_resistance = 2
 	resistance_flags = FLAMMABLE
 	/// The background color for tgui in hex (with a `#`)

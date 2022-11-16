@@ -3,7 +3,7 @@
 	desc = "there's a lot of them in there, getting them out takes a while though"
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "bait_can"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	/// Tracking until we can take out another bait item
 	COOLDOWN_DECLARE(bait_removal_cooldown)
 	/// What bait item it produces

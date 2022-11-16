@@ -7,7 +7,7 @@
 	righthand_file = 'icons/mob/inhands/clothing/glasses_righthand.dmi'
 	clothing_flags = BLOCKS_SPEECH
 	flags_cover = MASKCOVERSMOUTH
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	equip_delay_other = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user, list/modifiers)

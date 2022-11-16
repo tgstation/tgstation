@@ -198,7 +198,7 @@
 	inhand_icon_state = "harmonica"
 	slot_flags = ITEM_SLOT_MASK
 	force = 5
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	actions_types = list(/datum/action/item_action/instrument)
 
 /obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)

@@ -164,7 +164,7 @@
 	inhand_icon_state = "syndicate_gasmask"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	strip_delay = 60
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/clown_hat
@@ -176,7 +176,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	dye_color = DYE_CLOWN
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
@@ -240,7 +240,7 @@
 	clothing_flags = MASKINTERNALS
 	icon_state = "mime"
 	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)

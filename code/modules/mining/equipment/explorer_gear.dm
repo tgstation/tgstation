@@ -68,7 +68,7 @@
 /obj/item/clothing/mask/gas/explorer/adjustmask(mob/user)
 	. = ..()
 	// adjusted = out of the way = smaller = can fit in boxes
-	w_class = mask_adjusted ? WEIGHT_CLASS_SMALL : WEIGHT_CLASS_NORMAL
+	w_class = mask_adjusted ? WEIGHT_CLASS_TINY : WEIGHT_CLASS_NORMAL
 	inhand_icon_state = mask_adjusted ? "[initial(inhand_icon_state)]_up" : initial(inhand_icon_state)
 	if(user)
 		user.update_held_items()
@@ -76,12 +76,12 @@
 
 /obj/item/clothing/mask/gas/explorer/examine(mob/user)
 	. = ..()
-	if(mask_adjusted || w_class == WEIGHT_CLASS_SMALL)
+	if(mask_adjusted || w_class == WEIGHT_CLASS_TINY)
 		return
 	. += span_notice("You could fit this into a box if you adjusted it.")
 
 /obj/item/clothing/mask/gas/explorer/folded
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()

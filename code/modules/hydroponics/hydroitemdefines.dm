@@ -424,7 +424,7 @@
 	flags_1 = CONDUCT_1
 	force = 5
 	throwforce = 7
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=50)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
@@ -462,7 +462,7 @@
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
-						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
+			span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
 /obj/item/hatchet
 	name = "hatchet"
@@ -567,7 +567,7 @@
 	flags_1 = CONDUCT_1
 	force = 5
 	throwforce = 6
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=4000)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")

@@ -8,7 +8,7 @@
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
 	item_flags = NOBLUDGEON
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER

@@ -186,7 +186,7 @@
 
 /obj/item/stack/package_wrap/small
 	desc = "You can use this to wrap items in. This roll looks a bit skimpy."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	amount = 5
 	merge_type = /obj/item/stack/package_wrap/small
 
