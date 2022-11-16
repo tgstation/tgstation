@@ -422,6 +422,40 @@ For example:
 	)
 ```
 
+This is not a strict rule and there may be times where you can place the lines in a more sensible spot. For example:
+
+```dm
+act(list(
+	// Fine!
+))
+
+act(
+	list(
+		// Fine, though verbose
+	)
+)
+
+act(x, list(
+	// Also fine!
+))
+
+act(x, list(
+
+), y) // Getting clunky, might want to split this up!
+```
+
+Occasionally, you will need to use backslashes to multiline. This happens when you are calling a macro. This comes up often with `AddComponent`. For example,
+
+```dm
+AddComponent( \
+	/datum/component/makes_sound, \
+	"chirp", \
+	volume = 10, \
+)
+```
+
+Backslashes should only be used when necessary, and they are only necessary for macros.
+
 ## Macros
 
 Macros are, in essence, direct copy and pastes into the code. They are one of the few zero cost abstractions we have in DM, and you will see them often. Macros have strange syntax requirements, so if you see lots of backslashes and semicolons and braces that you wouldn't normally see, that is why.
