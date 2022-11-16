@@ -4,14 +4,21 @@
 	var/datum/mood_event/saved_event
 	/// examine string added to examine
 	var/examine_string
+	/// what slots it needs to be equipped to to work
+	var/slot_equip
 
-/datum/component/onwear_mood/Initialize(datum/mood_event/saved_event, examine_string)
+/datum/component/onwear_mood/Initialize(datum/mood_event/saved_event, examine_string, slot_equip = ITEM_SLOT_ON_BODY)
 
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.saved_event = saved_event
 	src.examine_string = examine_string
+	if(!isnum(slot_equip))
+		stack_trace("Attempted to initialize onwear component with improper slot_equip [slot_equip]")
+		src.slot_equip = ITEM_SLOT_ON_BODY
+		return
+	src.slot_equip = slot_equip
 
 /datum/component/onwear_mood/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(affect_wearer))
@@ -23,8 +30,8 @@
 
 /datum/component/onwear_mood/proc/affect_wearer(datum/source, mob/living/target, slot)
 	SIGNAL_HANDLER
-	if(!(slot & ITEM_SLOT_ON_BODY))
-		return  // only affects "worn" slots
+	if(!(slot & slot_equip))
+		return  // only affects "worn" slots by default
 
 	target.add_mood_event(REF(src), saved_event)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
