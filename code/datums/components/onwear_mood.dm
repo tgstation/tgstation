@@ -38,13 +38,14 @@
 /datum/component/onwear_mood/proc/clear_effects(mob/living/source, obj/item/dropped_item)
 	SIGNAL_HANDLER
 	var/obj/item/clothing = parent
-	if(dropped_item != clothing && source)
+	// if called from a signal, check clothing
+	if(dropped_item && dropped_item != clothing)
 		return
 	source = source || clothing.loc
 	if(!istype(source))
 		return
 	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_MOB_UNEQUIPPED_ITEM))
-	target.clear_mood_event(REF(src))
+	source.clear_mood_event(REF(src))
 
 /datum/component/onwear_mood/Destroy(force, silent)
 	clear_effects()
