@@ -49,9 +49,10 @@
 			to_chat(src, span_warning("Filename must end in '.dmm': [map_file]"))
 			return
 
+		if(fexists("_maps/custom/[map_file]"))
+			fdel("_maps/custom/[map_file]")
 		if(!fcopy(map_file, "_maps/custom/[map_file]"))
 			return
-
 		// This is to make sure the map works so the server does not start without a map.
 		var/datum/parsed_map/M = new (map_file)
 		if(!M)
@@ -74,9 +75,11 @@
 			if(copytext("[config_file]", -5) != ".json")
 				to_chat(src, span_warning("Filename must end in '.json': [config_file]"))
 				return
-			if(!fcopy(config_file, "_maps/custom/[config_file]"))
+			if(fexists("data/custom_map_json/[config_file]"))
+				fdel("data/custom_map_json/[config_file]")
+			if(!fcopy(config_file, "data/custom_map_json/[config_file]"))
 				return
-			if (VM.LoadConfig("_maps/custom/[config_file]", TRUE) != TRUE)
+			if (VM.LoadConfig("data/custom_map_json/[config_file]", TRUE) != TRUE)
 				to_chat(src, span_warning("Failed to load config: [config_file]. Check that the fields are filled out correctly. \"map_path\": \"custom\" and \"map_file\": \"your_map_name.dmm\""))
 				return
 			json_value = list(
@@ -89,8 +92,7 @@
 				"job_changes" = VM.job_changes,
 				"library_areas" = VM.job_changes
 			)
-
-		if (config == "No")
+		if (config == "No" || isnull(config))
 			VM = load_map_config()
 			VM.map_name = input("Choose the name for the map", "Map Name") as null|text
 			if(isnull(VM.map_name))
@@ -123,6 +125,7 @@
 		if(SSmapping.changemap(VM))
 			message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")
 			SSmapping.map_force_chosen = TRUE
+		fdel("data/custom_map_json/[config_file]")
 	else
 		var/datum/map_config/VM = maprotatechoices[chosenmap]
 		message_admins("[key_name_admin(usr)] is changing the map to [VM.map_name]")
