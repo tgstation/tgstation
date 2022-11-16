@@ -43,7 +43,7 @@
 		item_harvest_time = 5 SECONDS, \
 		item_harvest_sound = 'sound/surgery/scalpel1.ogg', \
 	)
-	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, .proc/on_sacrificed)
+	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_sacrificed))
 
 /mob/living/basic/sheep/update_overlays()
 	. = ..()
@@ -65,7 +65,7 @@
 		to_chat(cultist, span_cultitalic("This feels a bit too cliché, don't you think?"))
 
 	cult_converted = TRUE
-	INVOKE_ASYNC(src, /atom/movable.proc/say, "BAAAAAAAAH!")
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "BAAAAAAAAH!")
 	update_appearance(UPDATE_ICON)
 	return STOP_SACRIFICE
 

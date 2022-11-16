@@ -54,7 +54,7 @@
 	color = "#B5651D"
 	turf_type = /turf/open/misc/asteroid/basalt/wasteland
 	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
-	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
+	icon = 'icons/turf/walls/rock_wall.dmi'
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 
