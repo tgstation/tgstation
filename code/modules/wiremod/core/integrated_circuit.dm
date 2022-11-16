@@ -221,7 +221,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  * Introspects through modules.
  *
  * Arguments:
- * * to_check - Self explanatory, just read the main description.
+ * * to_check - The component to check.
  **/
 /obj/item/integrated_circuit/proc/is_duplicate(obj/item/circuit_component/to_check)
 	for(var/component as anything in attached_components)
@@ -232,6 +232,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		if(istype(component, /obj/item/circuit_component/module))
 			var/obj/item/circuit_component/module/module = component
 			for(var/module_component as anything in module.internal_circuit.attached_components)
+				if(module_component == to_check)
+					continue
 				if(istype(module_component, to_check.type))
 					return TRUE
 	return FALSE
