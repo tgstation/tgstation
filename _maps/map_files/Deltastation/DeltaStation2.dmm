@@ -91817,10 +91817,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
-"wqA" = (
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/closed/wall,
-/area/station/commons/locker)
 "wqF" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -146912,7 +146908,7 @@ oCP
 mfP
 xsS
 aOH
-wqA
+oCP
 oCP
 oCP
 wMo
