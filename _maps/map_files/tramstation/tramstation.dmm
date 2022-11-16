@@ -6730,6 +6730,15 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
+"cvU" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/machinery/door/window/tram/right{
+	dir = 1
+	},
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "cvW" = (
 /obj/machinery/computer/security/qm{
 	dir = 4
@@ -10300,7 +10309,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_white"
 	},
-/obj/machinery/door/window/right/tram,
+/obj/machinery/door/window/tram/left,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "dFG" = (
@@ -31651,6 +31660,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/maintenance/tram/mid)
+"loz" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/machinery/door/window/tram/right,
+/turf/open/openspace,
+/area/station/hallway/primary/tram/center)
 "loD" = (
 /turf/open/floor/wood/parquet,
 /area/station/service/library)
@@ -41359,13 +41375,6 @@
 /obj/item/stack/cable_coil,
 /turf/open/floor/iron/white,
 /area/station/science/lab)
-"oPr" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
-/obj/machinery/door/window/left/tram,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "oPF" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -52062,13 +52071,6 @@
 "syv" = (
 /turf/closed/wall/r_wall,
 /area/station/security/checkpoint/science)
-"syy" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
-/obj/machinery/door/window/left/tram/directional/north,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "syF" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -61934,7 +61936,9 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_white"
 	},
-/obj/machinery/door/window/right/tram/directional/north,
+/obj/machinery/door/window/tram/left{
+	dir = 1
+	},
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "wbx" = (
@@ -165158,11 +165162,11 @@ mlx
 nfD
 dTr
 hmY
-syy
+wbt
 rPU
 sOY
 biX
-oPr
+dFz
 gqS
 lNQ
 vJF
@@ -165415,11 +165419,11 @@ beW
 vrF
 dhw
 vSM
-wbt
+cvU
 rPU
 kld
 biX
-dFz
+loz
 vIq
 mMY
 eHk
@@ -165929,11 +165933,11 @@ beW
 gKo
 dTr
 jJV
-syy
+wbt
 rPU
 lxf
 biX
-oPr
+dFz
 oCC
 pWt
 buT
@@ -166186,11 +166190,11 @@ gWq
 wMY
 dhw
 uvD
-wbt
+cvU
 rPU
 sOY
 biX
-dFz
+loz
 mnV
 dvI
 vJF
