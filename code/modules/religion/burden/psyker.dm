@@ -13,7 +13,7 @@
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED, TRAIT_BLIND)
+	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED, TRAIT_BLIND, TRAIT_UNINTELLIGIBLE_SPEECH)
 
 /mob/living/carbon/human/proc/psykerize()
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD))
@@ -29,7 +29,6 @@
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/organ/internal/brain/old_brain = getorganslot(ORGAN_SLOT_BRAIN)
 	var/obj/item/organ/internal/old_eyes = getorganslot(ORGAN_SLOT_EYES)
-	var/obj/item/organ/internal/old_tongue = getorganslot(ORGAN_SLOT_TONGUE)
 	if(stat == DEAD || !old_head || !old_brain)
 		return
 	to_chat(src, span_userdanger("Your head splits open! Your brain mutates!"))
@@ -46,9 +45,6 @@
 	psyker_brain.Insert(src, special = TRUE, drop_if_replaced = FALSE)
 	if(old_eyes)
 		qdel(old_eyes)
-	if(old_tongue)
-		var/obj/item/organ/internal/tongue/tied/new_tongue = new()
-		new_tongue.Insert(src, special = TRUE, drop_if_replaced = FALSE)
 
 /atom/movable/screen/fullscreen/echo
 	icon_state = "echo"
