@@ -290,9 +290,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 		if(speaker != src)
 			if(!radio_freq) //I'm about 90% sure there's a way to make this less cluttered
-				deaf_type = 1
+				deaf_type = MSG_VISUAL
 		else
-			deaf_type = 2
+			deaf_type = MSG_AUDIBLE
 
 		// Create map text prior to modifying message for goonchat, sign lang edition
 		if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && !(stat == UNCONSCIOUS || stat == HARD_CRIT || is_blind(src)) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
@@ -313,10 +313,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(speaker != src)
 		if(!radio_freq) //These checks have to be separate, else people talking on the radio will make "You can't hear yourself!" appear when hearing people over the radio while deaf.
 			deaf_message = "[span_name("[speaker]")] [speaker.verb_say] something but you cannot hear [speaker.p_them()]."
-			deaf_type = 1
+			deaf_type = MSG_VISUAL
 	else
 		deaf_message = span_notice("You can't hear yourself!")
-		deaf_type = 2 // Since you should be able to hear yourself without looking
+		deaf_type = MSG_AUDIBLE // Since you should be able to hear yourself without looking
 
 	var/is_custom_emote = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
 	if(!is_custom_emote) // we do not translate emotes
