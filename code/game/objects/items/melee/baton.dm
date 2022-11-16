@@ -120,6 +120,12 @@
 	if(clumsy_check(user, target))
 		return BATON_ATTACK_DONE
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/potential_chunky_finger_human = user
+		if(potential_chunky_finger_human.check_chunky_fingers())
+			potential_chunky_finger_human.balloon_alert(potential_chunky_finger_human, "fingers are too big!")
+			return BATON_ATTACK_DONE
+
 	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return BATON_DO_NORMAL_ATTACK
 
@@ -131,11 +137,6 @@
 
 	if(check_parried(target, user))
 		return BATON_ATTACK_DONE
-	if(ishuman(user))
-		var/mob/living/carbon/human/potential_chunky_finger_human = user
-		if(potential_chunky_finger_human.check_chunky_fingers())
-			potential_chunky_finger_human.balloon_alert(potential_chunky_finger_human, "fingers are too big!")
-			return BATON_ATTACK_DONE
 
 	if(HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user))) //no doublebaton abuse anon!
 		to_chat(user, span_danger("You fumble and miss [target]!"))
