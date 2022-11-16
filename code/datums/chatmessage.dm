@@ -278,8 +278,10 @@
 	if(runechat_flags & EMOTE_MESSAGE)
 		new /datum/chatmessage(raw_message, speaker, src, message_language, list("emote", "italics"))
 	else
-		var/raw_translation = translate_language(speaker, message_language, raw_message, spans)
-		new /datum/chatmessage(raw_translation, speaker, src, message_language, spans)
+		// we shouldn't need to translate it twice since the translation is done in say code
+		// regardless, test all places where create_chat_message is used to double check
+		// var/raw_translation = translate_language(speaker, message_language, raw_message, spans)
+		new /datum/chatmessage(raw_message, speaker, src, message_language, spans)
 
 // Tweak these defines to change the available color ranges
 #define CM_COLOR_SAT_MIN 0.6
