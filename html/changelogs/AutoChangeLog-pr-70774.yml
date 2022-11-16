@@ -1,0 +1,13 @@
+author: "LT3"
+delete-after: True
+changes:
+  - qol: "Tram destination sign is expanded and now properly says Central and Not In Service."
+  - qol: "Tram doors now open faster on arrival and mid travel, so you don't have to wait, and can also make a daring high speed escape from a tram in motion."
+  - bugfix: "Improved tram door logic so they don't end up open/closed at the wrong place."
+  - bugfix: "Tram doors are now their own subtype, it was backwards for some reason."
+  - bugfix: "Tram doors while idle at a station can only be interacted with by Engineering staff."
+  - rscadd: "Tram controls are now a responsive touchscreen."
+  - rscadd: "Tram crossings have their own holobarrier instead of using the generic atmos fire barrier."
+  - rscadd: "Tram now has a new set of doors in shiny titanium glass."
+  - rscadd: "Tram is now powered by linear induction motors."
+  - bugfix: "Deltastation's EVA windoor for magboots are no longer tram doors."
