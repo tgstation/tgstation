@@ -285,6 +285,16 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/atom/movable/virtualspeaker/holopad_speaker = speaker
 	var/avoid_highlight = src == (istype(holopad_speaker) ? holopad_speaker.source : speaker)
 
+	var/is_custom_emote = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
+	if(!is_custom_emote) // we do not translate emotes
+		raw_message = translate_language(src, message_language, raw_message) // translate
+
+	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
+	var/is_speaker_whispering = message_mods[WHISPER_MODE]
+	var/can_hear_whisper = get_dist(speaker, src) <= message_range
+	if(is_speaker_whispering && !can_hear_whisper && !isobserver(src)) // ghosts can hear all messages clearly
+		raw_message = stars(raw_message)
+
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
 		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
@@ -317,16 +327,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	else
 		deaf_message = span_notice("You can't hear yourself!")
 		deaf_type = MSG_AUDIBLE // Since you should be able to hear yourself without looking
-
-	var/is_custom_emote = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
-	if(!is_custom_emote) // we do not translate emotes
-		raw_message = translate_language(src, message_language, raw_message) // translate
-
-	// if someone is whispering we make an extra type of message that is obfuscated for people out of range
-	var/is_speaker_whispering = message_mods[WHISPER_MODE]
-	var/can_hear_whisper = get_dist(speaker, src) <= message_range
-	if(is_speaker_whispering && !can_hear_whisper && !isobserver(src)) // ghosts can hear all messages clearly
-		raw_message = stars(raw_message)
 
 	// Create map text prior to modifying message for goonchat
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (ismob(speaker) || client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs)) && can_hear())
