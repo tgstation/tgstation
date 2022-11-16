@@ -38867,6 +38867,10 @@
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/iron,
 /area/station/cargo/drone_bay)
+"nRC" = (
+/obj/structure/sign/collision_counter,
+/turf/closed/wall,
+/area/station/medical/medbay/lobby)
 "nRO" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -166703,7 +166707,7 @@ nbS
 tqy
 qjf
 vJF
-wyd
+nRC
 wyd
 rks
 rks

@@ -42,8 +42,8 @@
 	return ..()
 
 /datum/component/spin2win/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 
 /datum/component/spin2win/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_ATTACK_SECONDARY))
@@ -83,9 +83,9 @@
 		var/message = replacetext(start_spin_message, "%USER", spinning_user)
 		spinning_user.visible_message(message)
 	playsound(spinning_user, 'sound/weapons/fwoosh.ogg', 75, FALSE)
-	stop_spinning_timer_id = addtimer(CALLBACK(src, .proc/stop_spinning, spinning_user), 5 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_spin_equipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_spin_dropped)
+	stop_spinning_timer_id = addtimer(CALLBACK(src, PROC_REF(stop_spinning), spinning_user), 5 SECONDS, TIMER_STOPPABLE|TIMER_DELETE_ME)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_spin_equipped))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_spin_dropped))
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/spin2win/proc/stop_spinning(mob/living/user)
