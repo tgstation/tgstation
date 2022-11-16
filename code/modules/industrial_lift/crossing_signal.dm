@@ -37,12 +37,6 @@
 	*/
 	var/red_distance_threshold = 33
 
-/obj/machinery/crossing_signal/left
-	icon_state = "crossing-base-left"
-
-/obj/machinery/crossing_signal/right
-	icon_state = "crossing-base-right"
-
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
@@ -216,6 +210,30 @@
 
 	. += mutable_appearance(icon, lights_overlay)
 	. += emissive_appearance(icon, "[lights_overlay]e", offset_spokesman = src, alpha = src.alpha)
+
+/// Shifted to NE corner for east side of southern passage.
+/obj/machinery/crossing_signal/northeast
+	icon_state = "crossing-base-left"
+	pixel_x = -1
+	pixel_y = 3
+
+/// Shifted to NW corner for west side of southern passage.
+/obj/machinery/crossing_signal/northwest
+	icon_state = "crossing-base-right"
+	pixel_x = 1
+	pixel_y = 3
+
+/// Shifted to SE corner for east side of northern passage.
+/obj/machinery/crossing_signal/southeast
+	icon_state = "crossing-base-left"
+	pixel_x = -1
+	pixel_y = 24
+
+/// Shifted to SW corner for west side of northern passage.
+/obj/machinery/crossing_signal/southwest
+	icon_state = "crossing-base-right"
+	pixel_x = 1
+	pixel_y = 24
 
 #undef XING_STATE_GREEN
 #undef XING_STATE_AMBER
