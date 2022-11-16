@@ -283,7 +283,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		deaf_type = MSG_AUDIBLE
 
 	var/atom/movable/virtualspeaker/holopad_speaker = speaker
-	var/avoid_highlight = src == (istype(holopad_speaker) ? holopad_speaker.source : speaker))
+	var/avoid_highlight = src == (istype(holopad_speaker) ? holopad_speaker.source : speaker)
 
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
 		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
@@ -307,7 +307,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = deaf_message
 
 		show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
-		//SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 		return message
 
 	if(speaker != src)
@@ -318,13 +318,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		deaf_message = span_notice("You can't hear yourself!")
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
-	// Create map text prior to modifying message for goonchat
-	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (ismob(speaker) || client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs)) && can_hear())
-		if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
-			create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
-		else
-			create_chat_message(speaker, message_language, raw_message, spans)
-
 	var/is_custom_emote = message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]
 	if(!is_custom_emote) // we do not translate emotes
 		raw_message = translate_language(src, message_language, raw_message) // translate
@@ -334,6 +327,13 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/can_hear_whisper = get_dist(speaker, src) <= message_range
 	if(is_speaker_whispering && !can_hear_whisper && !isobserver(src)) // ghosts can hear all messages clearly
 		raw_message = stars(raw_message)
+
+	// Create map text prior to modifying message for goonchat
+	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && !(stat == UNCONSCIOUS || stat == HARD_CRIT) && (ismob(speaker) || client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs)) && can_hear())
+		if (message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+			create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
+		else
+			create_chat_message(speaker, message_language, raw_message, spans)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
