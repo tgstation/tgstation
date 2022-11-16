@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "Hilbert Research Facility tram buttons work now."
-  - qol: "Adds support for html in lore terminals, and makes Hilbert Research Facility emails use them."

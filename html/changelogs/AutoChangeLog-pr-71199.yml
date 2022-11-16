@@ -1,4 +1,0 @@
-author: "Kapu420"
-delete-after: True
-changes:
-  - bugfix: "makes masks not render when something is supposed to obscure them"
