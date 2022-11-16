@@ -252,7 +252,7 @@
 	name = "Mining Shuttle";
 	port_direction = 4;
 	preferred_direction = 8
-},
+	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)
 "kG" = (
