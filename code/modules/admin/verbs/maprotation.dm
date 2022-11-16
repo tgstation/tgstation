@@ -66,7 +66,7 @@
 
 		qdel(M)
 		var/config_file = null
-		var/json_value = list()
+		var/list/json_value = list()
 		var/config = tgui_alert(usr,"Would you like to upload an additional config for this map?", "Map Config", list("Yes", "No"))
 		if(config == "Yes")
 			config_file = input("Pick file:", "Config JSON File") as null|file
@@ -90,7 +90,7 @@
 				"shuttles" = VM.shuttles,
 				"traits" = VM.traits,
 				"job_changes" = VM.job_changes,
-				"library_areas" = VM.job_changes
+				"library_areas" = VM.job_changes,
 			)
 		if (config == "No" || isnull(config))
 			VM = load_map_config()
@@ -114,7 +114,7 @@
 				"map_name" = VM.map_name,
 				"map_path" = CUSTOM_MAP_PATH,
 				"map_file" = "[map_file]",
-				"shuttles" = VM.shuttles
+				"shuttles" = VM.shuttles,
 			)
 
 		// If the file isn't removed text2file will just append.
