@@ -41429,7 +41429,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
-/obj/machinery/door/window/left/tram/directional/west{
+/obj/machinery/door/window/left/directional/west{
 	name = "Magboot Storage";
 	req_access = list("eva")
 	},
