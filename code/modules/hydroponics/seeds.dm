@@ -24,6 +24,8 @@
 	var/icon_dead
 	/// Used to override harvest icon (default is `"[species]-harvest"`). If null, plant will use `[icon_grow][growthstages]`.
 	var/icon_harvest
+	/// Used to offset the plant sprite so that it appears at proper height in the tray
+	var/plant_icon_offset = 8
 	/// How long before the plant begins to take damage from age.
 	var/lifespan = 25
 	/// Amount of health the plant has.

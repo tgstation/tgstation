@@ -80,7 +80,7 @@
 	. = ..()
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/crawl = new crawl_type(src)
 	crawl.Grant(src)
-	RegisterSignal(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/on_crawl)
+	RegisterSignal(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(on_crawl))
 
 /// Whenever we enter or exit blood crawl, reset our bonus and hitstreaks.
 /mob/living/simple_animal/hostile/imp/slaughter/proc/on_crawl(datum/source)
@@ -89,7 +89,7 @@
 	// Grant us a speed boost if we're on the mortal plane
 	if(isturf(loc))
 		add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
-		addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(remove_movespeed_modifier), /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	// Reset our streaks
 	current_hitstreak = 0
@@ -220,12 +220,13 @@
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize(mapload)
 	. = ..()
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+	if(check_holidays(APRIL_FOOLS))
 		icon_state = "honkmon"
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has died from a devastating explosion.", INVESTIGATE_DEATHS)
 			death()
 		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)

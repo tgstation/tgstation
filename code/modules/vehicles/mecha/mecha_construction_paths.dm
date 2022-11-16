@@ -456,7 +456,7 @@
 	outer_plating_amount=1
 
 /datum/component/construction/mecha/gygax/action(datum/source, atom/used_atom, mob/user)
-	return INVOKE_ASYNC(src, .proc/check_step, used_atom,user)
+	return INVOKE_ASYNC(src, PROC_REF(check_step), used_atom,user)
 
 //CLARKE
 /datum/component/construction/unordered/mecha_chassis/clarke
@@ -622,7 +622,7 @@
 	if(istype(I, /obj/item/bikehorn))
 		playsound(parent, 'sound/items/bikehorn.ogg', 50, TRUE)
 		user.balloon_alert_to_viewers("HONK!")
-		return
+		return TRUE
 
 	//TODO: better messages.
 	switch(index)

@@ -131,10 +131,10 @@
 	else
 		chamber_round(replace_new_round = TRUE)
 	update_appearance()
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_reload)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_reload))
 
 /obj/item/gun/ballistic/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ballistic)
+	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_ballistic))
 
 /obj/item/gun/ballistic/fire_sounds()
 	var/frequency_to_use = sin((90/magazine?.max_ammo) * get_ammo())
@@ -383,7 +383,6 @@
 	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-
 	if(magazine && chambered.loaded_projectile && can_misfire && misfire_probability > 0)
 		if(prob(misfire_probability))
 			if(blow_up(user))
@@ -391,14 +390,13 @@
 
 	if (sawn_off)
 		bonus_spread += SAWN_OFF_ACC_PENALTY
-	. = ..()
+	return ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
 	if(can_misfire)
 		misfire_probability += misfire_percentage_increment
 		misfire_probability = clamp(misfire_probability, 0, misfire_probability_cap)
-
-	. = ..()
+	return ..()
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
@@ -539,11 +537,12 @@
 
 #define BRAINS_BLOWN_THROW_RANGE 3
 #define BRAINS_BLOWN_THROW_SPEED 1
-/obj/item/gun/ballistic/suicide_act(mob/user)
+
+/obj/item/gun/ballistic/suicide_act(mob/living/user)
 	var/obj/item/organ/internal/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if (B && chambered && chambered.loaded_projectile && can_trigger_gun(user) && !chambered.loaded_projectile.nodamage)
 		user.visible_message(span_suicide("[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
-		sleep(25)
+		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
 			var/turf/T = get_turf(user)
 			process_fire(user, user, FALSE, null, BODY_ZONE_HEAD)
@@ -551,16 +550,17 @@
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
 			B.forceMove(T)
-			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, user)
+			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_atom_to_turf), /obj/effect/gibspawner/generic, B, 1, FALSE, user)
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
-			return(BRUTELOSS)
+			return BRUTELOSS
 		else
 			user.visible_message(span_suicide("[user] panics and starts choking to death!"))
-			return(OXYLOSS)
+			return OXYLOSS
 	else
 		user.visible_message(span_suicide("[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
 		playsound(src, dry_fire_sound, 30, TRUE)
-		return (OXYLOSS)
+		return OXYLOSS
+
 #undef BRAINS_BLOWN_THROW_SPEED
 #undef BRAINS_BLOWN_THROW_RANGE
 

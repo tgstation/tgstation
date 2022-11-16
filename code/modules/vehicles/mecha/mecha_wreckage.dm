@@ -32,7 +32,7 @@
 		return
 	AI = AI_pilot
 	AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
-	INVOKE_ASYNC(AI, /mob/living/silicon.proc/death) //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
+	INVOKE_ASYNC(AI, TYPE_PROC_REF(/mob/living/silicon, death)) //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
 	AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
 	add_overlay(mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
 	AI.controlled_equipment = null

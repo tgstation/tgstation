@@ -12240,8 +12240,8 @@
 /area/awaymission/undergroundoutpost45/caves)
 "Yk" = (
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria{
 	dir = 5;

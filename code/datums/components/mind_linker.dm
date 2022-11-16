@@ -85,7 +85,7 @@
 
 /datum/component/mind_linker/RegisterWithParent()
 	if(signals_which_destroy_us)
-		RegisterSignal(parent, signals_which_destroy_us, .proc/destroy_link)
+		RegisterSignal(parent, signals_which_destroy_us, PROC_REF(destroy_link))
 
 /datum/component/mind_linker/UnregisterFromParent()
 	if(signals_which_destroy_us)
@@ -120,7 +120,7 @@
 	new_link.Grant(to_link)
 
 	linked_mobs[to_link] = new_link
-	RegisterSignal(to_link, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED), .proc/unlink_mob)
+	RegisterSignal(to_link, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED), PROC_REF(unlink_mob))
 
 	return TRUE
 
@@ -185,7 +185,7 @@
 	button_icon_state = linker.speech_action_icon_state
 	background_icon_state = linker.speech_action_background_icon_state
 
-/datum/action/innate/linked_speech/IsAvailable()
+/datum/action/innate/linked_speech/IsAvailable(feedback = FALSE)
 	return ..() && (owner.stat != DEAD)
 
 /datum/action/innate/linked_speech/Activate()

@@ -44,37 +44,41 @@
 	var/list/explosion_info
 	/// List containing reactions happening inside our tank.
 	var/list/reaction_info
+	/// Mob that is currently breathing from the tank.
+	var/mob/living/carbon/breathing_mob = null
+
+/// Closes the tank if dropped while open.
+/obj/item/tank/dropped(mob/living/user, silent)
+	. = ..()
+	// Close open air tank if its current user got sent to the shadowrealm.
+	if (QDELETED(breathing_mob))
+		breathing_mob = null
+		return
+	// Close open air tank if it got dropped by it's current user.
+	if (loc != breathing_mob)
+		breathing_mob.cutoff_internals()
+
+/// Closes the tank if given to another mob while open.
+/obj/item/tank/equipped(mob/living/user, slot, initial)
+	. = ..()
+	// Close open air tank if it was equipped by a mob other than the current user.
+	if (breathing_mob && (user != breathing_mob))
+		breathing_mob.cutoff_internals()
+
+/// Called by carbons after they connect the tank to their breathing apparatus.
+/obj/item/tank/proc/after_internals_opened(mob/living/carbon/carbon_target)
+	breathing_mob = carbon_target
+
+/// Called by carbons after they disconnect the tank from their breathing apparatus.
+/obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
+	breathing_mob = null
+
+/// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
+/obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
+	return mob_target.toggle_internals(src)
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
-
-/obj/item/tank/proc/toggle_internals(mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		return
-
-	if(H.internal == src)
-		to_chat(H, span_notice("You close [src] valve."))
-		H.internal = null
-	else
-		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			if(!H.wear_mask)
-				to_chat(H, span_warning("You need a mask!"))
-				return
-			var/is_clothing = isclothing(H.wear_mask)
-			if(is_clothing && H.wear_mask.mask_adjusted)
-				H.wear_mask.adjustmask(H)
-			if(!is_clothing || !(H.wear_mask.clothing_flags & MASKINTERNALS))
-				to_chat(H, span_warning("[H.wear_mask] can't use [src]!"))
-				return
-
-		if(H.internal)
-			to_chat(H, span_notice("You switch your internals to [src]."))
-		else
-			to_chat(H, span_notice("You open [src] valve."))
-		H.internal = src
-	H.update_action_buttons_icon()
-
 
 /obj/item/tank/Initialize(mapload)
 	. = ..()
@@ -94,7 +98,7 @@
 
 	// This is separate from the reaction recorder.
 	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
-	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
+	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, PROC_REF(merging_information))
 
 	START_PROCESSING(SSobj, src)
 
@@ -110,8 +114,8 @@
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
 	. = ..()
-	if(istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+	if(istype(loc, /obj/item/assembly))
+		icon = loc
 	if(!in_range(src, user) && !isobserver(user))
 		if(icon == src)
 			. += span_notice("If you want any more information you'll need to get closer.")
@@ -144,22 +148,21 @@
 		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	return ..()
 
-/obj/item/tank/suicide_act(mob/user)
-	var/mob/living/carbon/human/H = user
+/obj/item/tank/suicide_act(mob/living/user)
+	var/mob/living/carbon/human/human_user = user
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	if(!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
-		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
-		H.inflate_gib()
+	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= 1000)
+		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
+		human_user.inflate_gib()
 		return MANUAL_SUICIDE
-	else
-		to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
+	to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
-/obj/item/tank/attackby(obj/item/W, mob/user, params)
+/obj/item/tank/attackby(obj/item/attacking_item, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/assembly_holder))
-		bomb_assemble(W, user)
+	if(istype(attacking_item, /obj/item/assembly_holder))
+		bomb_assemble(attacking_item, user)
 		return TRUE
 	return ..()
 
@@ -187,10 +190,10 @@
 		"releasePressure" = round(distribute_pressure)
 	)
 
-	var/mob/living/carbon/C = user
-	if(!istype(C))
-		C = loc.loc
-	if(istype(C) && C.internal == src)
+	var/mob/living/carbon/carbon_user = user
+	if(!istype(carbon_user))
+		carbon_user = loc
+	if(istype(carbon_user) && (carbon_user.external == src || carbon_user.internal == src))
 		.["connected"] = TRUE
 
 /obj/item/tank/ui_act(action, params)

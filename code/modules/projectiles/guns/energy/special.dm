@@ -176,9 +176,12 @@
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
 
 	if(amount)
-		target.add_overlay(GLOB.welding_sparks)
+		var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
+		target.add_overlay(sparks)
+		LAZYADD(update_overlays_on_z, sparks)
 		. = ..()
-		target.cut_overlay(GLOB.welding_sparks)
+		LAZYREMOVE(update_overlays_on_z, sparks)
+		target.cut_overlay(sparks)
 	else
 		. = ..(amount=1)
 
@@ -284,7 +287,7 @@
 
 /obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/W, turf/target)
 	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null)
-	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	RegisterSignal(P, COMSIG_PARENT_QDELETING, PROC_REF(on_portal_destroy))
 	if(istype(W, /obj/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P

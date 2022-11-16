@@ -53,7 +53,8 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	RegisterSignal(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT),
-		.proc/clean_up)
+		PROC_REF(clean_up)
+	)
 
 /datum/component/creamed/UnregisterFromParent()
 	UnregisterSignal(parent, list(

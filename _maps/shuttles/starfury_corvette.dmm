@@ -119,7 +119,7 @@
 /area/shuttle/sbc_corvette)
 "ao" = (
 /obj/machinery/light/small/directional/west{
-	brightness = 3;
+	brightness = 3
 	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
@@ -317,7 +317,7 @@
 /area/shuttle/sbc_corvette)
 "aR" = (
 /obj/machinery/light/small/directional/west{
-	brightness = 3;
+	brightness = 3
 	},
 /obj/structure/chair/comfy/shuttle{
 	name = "tactical chair"
@@ -353,7 +353,7 @@
 /area/shuttle/sbc_corvette)
 "aU" = (
 /obj/machinery/light/small/directional/west{
-	brightness = 3;
+	brightness = 3
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/effect/turf_decal/siding/thinplating_new/dark{

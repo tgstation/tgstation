@@ -34,12 +34,12 @@
 	if(!isitem(target) && !isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
+	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, PROC_REF(severancePackage))
 	if(isitem(target))
-		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbed)
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
-		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, .proc/tryForceEmbed)
-		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, .proc/detachFromWeapon)
+		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(checkEmbed))
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(examined))
+		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, PROC_REF(tryForceEmbed))
+		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, PROC_REF(detachFromWeapon))
 		if(!initialized)
 			src.embed_chance = embed_chance
 			src.fall_chance = fall_chance
@@ -55,7 +55,7 @@
 			initialized = TRUE
 	else
 		payload_type = projectile_payload
-		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/checkEmbedProjectile)
+		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(checkEmbedProjectile))
 
 
 /datum/element/embed/Detach(obj/target)

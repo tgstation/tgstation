@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/simple_animal/parrot,
 	/mob/living/simple_animal/hostile/lizard,
 	/mob/living/simple_animal/sloth,
-	/mob/living/simple_animal/mouse/brown/tom,
+	/mob/living/basic/mouse/brown/tom,
 	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/simple_animal/chicken,
 	/mob/living/basic/cow,

@@ -16,7 +16,7 @@
 /datum/tgui_panel/New(client/client, id)
 	src.client = client
 	window = new(client, id)
-	window.subscribe(src, .proc/on_message)
+	window.subscribe(src, PROC_REF(on_message))
 
 /datum/tgui_panel/Del()
 	window.unsubscribe(src)
@@ -39,7 +39,7 @@
 /datum/tgui_panel/proc/initialize(force = FALSE)
 	set waitfor = FALSE
 	// Minimal sleep to defer initialization to after client constructor
-	sleep(1)
+	sleep(1 TICKS)
 	initialized_at = world.time
 	// Perform a clean initialization
 	window.initialize(
@@ -52,7 +52,7 @@
 	window.send_asset(get_asset_datum(/datum/asset/spritesheet/chat))
 	// Other setup
 	request_telemetry()
-	addtimer(CALLBACK(src, .proc/on_initialize_timed_out), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(on_initialize_timed_out)), 5 SECONDS)
 
 /**
  * private

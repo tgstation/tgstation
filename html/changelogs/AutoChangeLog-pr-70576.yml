@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - qol: "Bedsheets now have context screentips and will cover up mobs if they are attacked and lying down. Bedsheet can also be rotated with AltClick."
+  - bugfix: "Fix rotation and offsets to work properly on mobs, nuke disk, plushies, and bedsheets when placing something on a bed."

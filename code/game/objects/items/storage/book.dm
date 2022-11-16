@@ -17,11 +17,11 @@
 /obj/item/storage/book/attack_self(mob/user)
 	balloon_alert(user, "pages cut out!")
 
-GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light", "The God Delusion", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon", "Insulationism", "Guru Granth Sahib"))
+GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light", "The God Delusion", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon", "Insulationism", "Guru Granth Sahib", "Kojiki"))
 //If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
 // if your bible has no custom itemstate, use one of the existing ones
-GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "insuls", "gurugranthsahib"))
-GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "kingyellow", "gurugranthsahib"))
+GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "insuls", "gurugranthsahib", "kojiki"))
+GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "kingyellow", "gurugranthsahib", "kojiki"))
 
 /obj/item/storage/book/bible
 	name = "bible"
@@ -49,9 +49,9 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
 
-/obj/item/storage/book/bible/suicide_act(mob/user)
+/obj/item/storage/book/bible/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/storage/book/bible/attack_self(mob/living/carbon/human/user)
 	if(GLOB.bible_icon_state)
@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		var/image/bible_image = image(icon = 'icons/obj/storage/storage.dmi', icon_state = GLOB.biblestates[i])
 		skins += list("[GLOB.biblenames[i]]" = bible_image)
 
-	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
+	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 40, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	var/bible_index = GLOB.biblenames.Find(choice)

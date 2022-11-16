@@ -64,7 +64,7 @@
 	animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
 	if(thealert.timeout)
-		addtimer(CALLBACK(src, .proc/alert_timeout, thealert, category), thealert.timeout)
+		addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
 	return thealert
 
@@ -149,12 +149,12 @@
 
 /atom/movable/screen/alert/not_enough_plas
 	name = "Choking (No Plasma)"
-	desc = "You're not getting enough plasma. Find some good air before you pass out!"
+	desc = "You're not getting enough plasma. Find some good air before you pass out! The box in your backpack has a spare plasma tank."
 	icon_state = ALERT_NOT_ENOUGH_PLASMA
 
 /atom/movable/screen/alert/too_much_plas
 	name = "Choking (Plasma)"
-	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_PLASMA
 
 /atom/movable/screen/alert/not_enough_n2o
@@ -164,7 +164,7 @@
 
 /atom/movable/screen/alert/too_much_n2o
 	name = "Choking (N2O)"
-	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
+	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and breath mask in it."
 	icon_state = ALERT_TOO_MUCH_N2O
 
 //End gas alerts
@@ -346,7 +346,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	. = ..()
 	name = "[offerer] is offering a high-five!"
 	desc = "[offerer] is offering a high-five! Click this alert to slap it."
-	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
 
 /atom/movable/screen/alert/give/highfive/handle_transfer()
 	var/mob/living/carbon/taker = owner
@@ -365,7 +365,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	offerer.visible_message(span_notice("[rube] rushes in to high-five [offerer], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
 	to_chat(rube, span_nicegreen("You go in for [offerer]'s high-five, but-"))
-	addtimer(CALLBACK(src, .proc/too_slow_p2, offerer, rube), 0.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(too_slow_p2), offerer, rube), 0.5 SECONDS)
 
 /// Part two of the ultimate prank
 /atom/movable/screen/alert/give/highfive/proc/too_slow_p2()
@@ -413,8 +413,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!.)
 		return
 	var/mob/living/living_owner = owner
-	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
-	if(isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
+	var/last_whisper
+	if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
+		last_whisper = tgui_input_text(usr, "Do you have any last words?", "Goodnight, Sweet Prince")
+	if(isnull(last_whisper))
+		if(!HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
+			return
+	if(!CAN_SUCCUMB(living_owner) && !HAS_TRAIT(living_owner, TRAIT_SUCCUMB_OVERRIDE))
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")

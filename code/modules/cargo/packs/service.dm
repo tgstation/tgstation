@@ -9,7 +9,7 @@
 	cost = CARGO_CRATE_VALUE * 1.75
 	contains = list(/obj/item/stamp,
 					/obj/item/stamp/denied,
-					/obj/item/export_scanner,
+					/obj/item/universal_scanner,
 					/obj/item/dest_tagger,
 					/obj/item/hand_labeler,
 					/obj/item/stack/package_wrap,

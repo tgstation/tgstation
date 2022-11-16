@@ -51,7 +51,7 @@
 	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
 	var/key = dictionary_key ? dictionary_key : holder_type
 
-	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
+	RegisterSignal(holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdel))
 	if(randomize)
 		randomize()
 	else
