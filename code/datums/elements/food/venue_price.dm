@@ -10,7 +10,7 @@
 		stack_trace("A venue_price element was attached to something without specifying an actual price.")
 		return ELEMENT_INCOMPATIBLE
 	src.venue_price = venue_price
-	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/item_sold)
+	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, PROC_REF(item_sold))
 
 /datum/element/venue_price/Detach(datum/target)
 	. = ..()

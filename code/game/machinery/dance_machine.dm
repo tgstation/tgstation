@@ -311,7 +311,7 @@
 						glow.set_light_color(COLOR_SOFT_RED)
 					glow.even_cycle = !glow.even_cycle
 		if(prob(2))  // Unique effects for the dance floor that show up randomly to mix things up
-			INVOKE_ASYNC(src, .proc/hierofunk)
+			INVOKE_ASYNC(src, PROC_REF(hierofunk))
 		sleep(selection.song_beat)
 		if(QDELETED(src))
 			return
@@ -332,7 +332,7 @@
 
 /obj/machinery/jukebox/disco/proc/dance2(mob/living/M)
 	for(var/i in 0 to 9)
-		dance_rotate(M, CALLBACK(M, /mob.proc/dance_flip))
+		dance_rotate(M, CALLBACK(M, TYPE_PROC_REF(/mob, dance_flip)))
 		sleep(2 SECONDS)
 
 /mob/proc/dance_flip()
@@ -454,13 +454,13 @@
 		var/sound/song_played = sound(selection.song_path)
 
 		for(var/mob/M in range(10,src))
-			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			if(!M.client || !(M.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
 				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, sound_to_use = song_played, use_reverb = FALSE)
 		for(var/mob/L in rangers)
-			if(get_dist(src,L) > 10)
+			if(get_dist(src,L) > 10 || !(L.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox)))
 				rangers -= L
 				if(!L || !L.client)
 					continue

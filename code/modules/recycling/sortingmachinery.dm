@@ -8,7 +8,7 @@
 
 /obj/item/delivery/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, PROC_REF(disposal_handling))
 
 /**
  * Initial check if manually unwrapping

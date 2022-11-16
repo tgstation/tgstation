@@ -29,7 +29,7 @@
 	return TRUE
 
 /datum/surgery_step/revive
-	name = "shock brain"
+	name = "shock brain (defibrillator)"
 	implements = list(
 		/obj/item/shockpaddles = 100,
 		/obj/item/melee/touch_attack/shock = 100,

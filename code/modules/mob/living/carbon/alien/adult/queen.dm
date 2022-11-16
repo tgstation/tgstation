@@ -97,7 +97,7 @@
 
 	.[PANEL_DISPLAY_STATUS] = "PLASMA - [promotion_plasma_cost]"
 
-/datum/action/cooldown/alien/promote/IsAvailable()
+/datum/action/cooldown/alien/promote/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
