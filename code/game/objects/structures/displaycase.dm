@@ -130,7 +130,7 @@
 /obj/structure/displaycase/attackby(obj/item/tool, mob/living/user, params)
 	if(tool.GetID() && !broken)
 		if(allowed(user))
-			to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
+			to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
 			toggle_lock(user)
 		else
 			to_chat(user, span_alert("Access denied."))
@@ -157,7 +157,7 @@
 		else
 			to_chat(user, span_notice("You start to [open ? "close":"open"] [src]..."))
 			if(tool.use_tool(src, user, 20))
-				to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
+				to_chat(user, span_notice("You [open ? "close":"open"] [src]."))
 				toggle_lock(user)
 	else if(open && !showpiece)
 		insert_showpiece(tool, user)
@@ -184,7 +184,7 @@
 		to_chat(user, span_notice("You put [new_showpiece] on display."))
 		update_appearance()
 		if(uses_showpiece_cache)
-			showpiece_cache_base64 = icon2base64(getFlatIcon(showpiece,  no_anim=TRUE))
+			showpiece_cache_base64 = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
 	open = !open
@@ -205,7 +205,7 @@
 		add_fingerprint(user)
 		return
 	else
-	    //prevents remote "kicks" with TK
+		//prevents remote "kicks" with TK
 		if (!Adjacent(user))
 			return
 		if (!user.combat_mode)
@@ -327,7 +327,7 @@
 	holographic_showpiece = TRUE
 	update_appearance()
 	if(uses_showpiece_cache)
-		showpiece_cache_base64 = icon2base64(getFlatIcon(showpiece,  no_anim=TRUE))
+		showpiece_cache_base64 = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
 
 /obj/structure/displaycase/trophy/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/key/displaycase))
@@ -579,7 +579,7 @@
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(atom_integrity <= (integrity_failure *  max_integrity))
+	if(atom_integrity <= (integrity_failure * max_integrity))
 		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
 		if(do_after(user, 20, target = src))
 			broken = FALSE
