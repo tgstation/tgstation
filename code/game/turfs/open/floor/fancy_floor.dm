@@ -114,9 +114,13 @@
 	return list("bamboodamaged")
 
 /turf/open/floor/bamboo/tatami
-	smoothing_flags = NONE
+	desc = "A traditional Japanese floor mat."
 	icon_state = "tatami_green"
 	floor_tile = /obj/item/stack/tile/bamboo/tatami
+	smoothing_flags = NONE
+
+/turf/open/floor/bamboo/setup_broken_states()
+	return list("tatami-damaged")
 
 /turf/open/floor/bamboo/tatami/purple
 	icon_state = "tatami_purple"
