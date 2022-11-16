@@ -78,7 +78,8 @@
 	)
 	return spell_colours[spell_name]
 
-/mob/living/basic/carp/magic/ranged_secondary_attack(atom/atom_target, modifiers)
+/// Shoot when you click away from you
+/mob/living/basic/carp/magic/RangedAttack(atom/atom_target, modifiers)
 	spell.Trigger(target = atom_target)
 
 /***

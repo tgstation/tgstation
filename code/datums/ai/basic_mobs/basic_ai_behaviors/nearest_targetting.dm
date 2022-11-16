@@ -15,10 +15,7 @@
 			shortest_distance_targets = list()
 		shortest_distance_targets += target
 
-	var/picked = pick(shortest_distance_targets)
-	to_chat(world, "fleeing [picked]")
-
-	return picked
+	return pick(shortest_distance_targets)
 
 /// As above but targets have been filtered from the 'retaliate' blackboard list
 /datum/ai_behavior/target_from_retaliate_list/nearest
