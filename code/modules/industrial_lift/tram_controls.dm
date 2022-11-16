@@ -128,7 +128,7 @@
 		icon_screen = "[base_icon_state][tram_part.from_where.name]_idle"
 	else
 		icon_screen = "[base_icon_state][tram_part.from_where.name]_active"
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return PROCESS_KILL
 
 /obj/item/circuit_component/tram_controls
