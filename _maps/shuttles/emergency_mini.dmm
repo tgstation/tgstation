@@ -137,10 +137,7 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 8;
-	dwidth = 8;
-	height = 9;
-	name = "Mini emergency shuttle";
-	width = 21
+	name = "Mini emergency shuttle"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
