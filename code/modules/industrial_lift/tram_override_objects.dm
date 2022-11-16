@@ -68,10 +68,6 @@
 	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 		say("Emergency exit activated!")
 		return PROCESS_KILL
-	autoclose = TRUE
-	sleep(1 SECONDS)
-	if(!density && autoclose) //check for changed state
-		close()
 
 /obj/machinery/door/window/right/tram/open_and_close()
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
@@ -80,11 +76,6 @@
 	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
 		say("Emergency exit activated!")
 		return PROCESS_KILL
-	autoclose = TRUE
-	sleep(1 SECONDS)
-	if(!density && autoclose) //check for changed state
-		close()
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left/tram, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right/tram, 0)
-
