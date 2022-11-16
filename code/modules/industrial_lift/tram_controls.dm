@@ -26,7 +26,7 @@
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
-		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/update_tram_display)
+		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(update_tram_display))
 
 /obj/machinery/destination_sign/Destroy()
 	. = ..()
