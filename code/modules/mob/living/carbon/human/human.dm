@@ -674,7 +674,7 @@
 		addtimer(CALLBACK(src, PROC_REF(end_electrocution_animation), electrocution_skeleton_anim), anim_duration)
 
 	else //or just do a generic animation
-		flick_overlay_view(image(icon,src,"electrocuted_generic",ABOVE_MOB_LAYER), src, anim_duration)
+		flick_overlay_view("electrocuted_generic", src, anim_duration, ABOVE_MOB_LAYER)
 
 /mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")

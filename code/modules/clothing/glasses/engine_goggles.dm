@@ -108,7 +108,7 @@
 				pic = new('icons/turf/overlays.dmi', place, "greenOverlay", AREA_LAYER)
 			else
 				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
-			flick_overlay(pic, list(user.client), 8)
+			flick_overlay_global(pic, list(user.client), 8)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_connections()
 	var/mob/living/carbon/human/user = loc
@@ -132,7 +132,7 @@
 				PIPING_LAYER_DOUBLE_SHIFT(arrow, smart.piping_layer)
 				connection_images[smart][dir2text(direction)] = arrow
 			if(connection_images.len)
-				flick_overlay(connection_images[smart][dir2text(direction)], list(user.client), 1.5 SECONDS)
+				flick_overlay_global(connection_images[smart][dir2text(direction)], list(user.client), 1.5 SECONDS)
 
 /obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
@@ -204,7 +204,7 @@
 				pic.color = COLOR_RED
 		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		pic.alpha = 200
-		flick_overlay(pic, list(viewer.client), duration)
+		flick_overlay_global(pic, list(viewer.client), duration)
 
 
 #undef MODE_NONE
