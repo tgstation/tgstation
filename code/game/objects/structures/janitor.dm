@@ -20,7 +20,7 @@
 
 	if(istype(held_item, /obj/item/mop))
 		context[SCREENTIP_CONTEXT_RMB] = "Wet [held_item]"
-		. = CONTEXTUAL_SCREENTIP_SET
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/reagent_containers))
 		context[SCREENTIP_CONTEXT_LMB] = "Fill mop bucket"
