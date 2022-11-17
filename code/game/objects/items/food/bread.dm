@@ -11,6 +11,11 @@
 	AddElement(/datum/element/dunkable, 10)
 	AddComponent(/datum/component/food_storage)
 
+/obj/item/food/bread/MakeProcessable()
+	if (slice_type)
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 3 SECONDS, table_required = TRUE)
+		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 5, 4 SECONDS, table_required = TRUE)
+
 /obj/item/food/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
 	foodtypes = GRAIN
@@ -32,13 +37,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
+	slice_type = /obj/item/food/breadslice/plain
 
 /obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
-
-/obj/item/food/bread/plain/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 3 SECONDS, table_required = TRUE)
 
 // special subtype we use for the "Bread" Admin Smite (or the breadify proc)
 /obj/item/food/bread/plain/smite

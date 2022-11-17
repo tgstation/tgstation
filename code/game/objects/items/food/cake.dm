@@ -10,6 +10,9 @@
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
+/obj/item/food/cake/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 3 SECONDS, table_required = TRUE)
+
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
@@ -25,10 +28,7 @@
 	tastes = list("sweetness" = 2, "cake" = 5)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	burns_in_oven = TRUE
-
-
-/obj/item/food/cake/plain/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/plain, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/cakeslice/plain
 
 /obj/item/food/cakeslice/plain
 	name = "plain cake slice"

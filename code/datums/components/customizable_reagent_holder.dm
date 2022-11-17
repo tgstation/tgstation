@@ -122,11 +122,11 @@
 
 	// only accept valid ingredients
 	if (!valid_ingredient(ingredient))
-		to_chat(attacker, span_warning("[ingredient] doesn't belong on [parent]!"))
+		balloon_alert(attacker, "doesn't go on [parent]!")
 		return
 
 	if (LAZYLEN(ingredients) >= max_ingredients)
-		to_chat(attacker, span_warning("[parent] is too full for any more ingredients!"))
+		balloon_alert(attacker, "too full!")
 		return COMPONENT_NO_AFTERATTACK
 
 	var/atom/atom_parent = parent
