@@ -355,9 +355,11 @@
 /obj/item/clothing/machine_wash()
 	. = ..()
 	// it looks nicer to save it to a var then to try to do it all together
-	var/fresh_mood = AddComponent(/datum/component/onwear_mood, \
+	var/fresh_mood = AddComponent( \
+		/datum/component/onwear_mood, \
 		saved_event = /datum/mood_event/fresh_laundry, \
-		examine_string = "The [src] looks crisp and pristine.",)
+		examine_string = "[src] looks crisp and pristine.", \
+	)
 
 	QDEL_IN(fresh_mood, 2 MINUTES)
 
