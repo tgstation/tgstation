@@ -131,7 +131,6 @@
 
 /// Atom-wrapper for flick_overlay_global that converts an iconstate
 /atom/proc/flick_overlay(image_to_show, list/show_to, duration, layer)
-
 	var/image/passed_image = \
 		istext(image_to_show) \
 			? image(icon, src, image_to_show, layer) \
