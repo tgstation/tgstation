@@ -90,6 +90,9 @@
 /datum/unit_test/speech/Run()
 	speaker = allocate(/mob/living/carbon/human)
 	listener = allocate(/mob/living/carbon/human)
+	// Hear() requires a client otherwise it will early return
+	var/datum/client_interface/mock_client = new()
+	listener.mock_client = mock_client
 
 	RegisterSignal(speaker, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))

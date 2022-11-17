@@ -271,7 +271,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return TRUE
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
-	if(!client)
+	if(!GET_CLIENT(src))
 		return
 
 	var/deaf_message
