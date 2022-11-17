@@ -1,6 +1,8 @@
-/// LAVA
-/// PLASMA LAVA 
-/// MAFIA PLASMA LAVA
+/*
+ * LAVA
+ * PLASMA LAVA
+ * MAFIA PLASMA LAVA
+ */
 
 /turf/open/lava
 	name = "lava"
