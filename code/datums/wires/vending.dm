@@ -1,6 +1,7 @@
 /datum/wires/vending
 	holder_type = /obj/machinery/vending
 	proper_name = "Vending Unit"
+	var/language_iterator = 1
 
 /datum/wires/vending/New(atom/holder)
 	wires = list(
@@ -27,7 +28,7 @@
 	status += "The green light is [V.extended_inventory ? "on" : "off"]."
 	status += "A [V.scan_id ? "purple" : "yellow"] light is on."
 	status += "A white light is [V.age_restrictions ? "on" : "off"]."
-	status += "The speaker light is [V.shut_up ? "off" : "on"]."
+	status += "The speaker light is [V.shut_up ? "off" : "on"]. The language is set to [[language_holder.selected_language].name]."
 	return status
 
 /datum/wires/vending/on_pulse(wire)
@@ -42,7 +43,7 @@
 		if(WIRE_IDSCAN)
 			V.scan_id = !V.scan_id
 		if(WIRE_SPEAKER)
-			V.shut_up = !V.shut_up
+			language_holder.selected_language = language_holder.spoken_languages[language_iterator % length(language_holder.spoken_languages)]
 		if(WIRE_AGELIMIT)
 			V.age_restrictions = !V.age_restrictions
 
