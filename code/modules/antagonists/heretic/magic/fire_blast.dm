@@ -129,7 +129,7 @@
 /datum/status_effect/fire_blasted/on_apply()
 	if(owner.on_fire && animate_duration > 0 SECONDS)
 		var/image/warning_sign = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = BELOW_MOB_LAYER, loc = owner)
-		flick_overlay_view(warning_sign, owner, initial(duration))
+		owner.flick_overlay_view(warning_sign, initial(duration))
 		warning_sign.alpha = 50
 		animate(warning_sign, alpha = 255, time = animate_duration)
 
