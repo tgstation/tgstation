@@ -367,7 +367,7 @@
 /datum/action/vehicle/ridden/scooter/skateboard/kickflip
 	name = "Kickflip"
 	desc = "Kick your board up and catch it."
-	button_icon_state = "skateboard_ollie"  // youre still going up
+	button_icon_state = "skateboard_ollie"
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/vehicle/ridden/scooter/skateboard/kickflip/Trigger(trigger_flags)
