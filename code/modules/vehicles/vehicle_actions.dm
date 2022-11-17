@@ -364,13 +364,13 @@
 	passtable_off(rider, VEHICLE_TRAIT)
 	vehicle.pass_flags &= ~PASSTABLE
 
-/datum/action/vehicle/ridden/scooter/skateboard/kflip
+/datum/action/vehicle/ridden/scooter/skateboard/kickflip
 	name = "Kickflip"
 	desc = "Kick your board up and catch it."
 	button_icon_state = "skateboard_ollie"  // youre still going up
 	check_flags = AB_CHECK_CONSCIOUS
 
-/datum/action/vehicle/ridden/scooter/skateboard/kflip/Trigger(trigger_flags)
+/datum/action/vehicle/ridden/scooter/skateboard/kickflip/Trigger(trigger_flags)
 	var/obj/vehicle/ridden/scooter/skateboard/board = vehicle_target
 	var/mob/living/rider = owner
 
