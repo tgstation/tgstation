@@ -493,15 +493,15 @@
 
 	if(attacking_item.is_refillable())
 		if(!reagents.total_volume)
-			to_chat(user, span_warning("[src] is empty!"))
+			balloon_alert(user, "bottle empty!")
 			return TRUE
 
 		if(attacking_item.reagents.holder_full())
-			to_chat(user, span_warning("[attacking_item] is full."))
+			balloon_alert(user, "container full!")
 			return TRUE
 
-		var/trans = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [attacking_item]."))
+		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transfered_by = user)
+		balloon_alert(user, "transferred [transfer_amount] unit\s")
 		flick("syrup_anim",src)
 
 	if(istype(attacking_item, /obj/item/pen))
@@ -512,19 +512,19 @@
 
 	return TRUE
 
-//there is no action on afterattack
+//there is no action on afterattack cause all containers should be refilled by attackby()
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/afterattack(obj/target, mob/living/user, proximity)
-	SHOULD_CALL_PARENT(FALSE)
+	SHOULD_CALL_PARENT(FALSE) //silencing the linter
 	return TRUE
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/AltClick(mob/user)
 	cap_on = !cap_on
 	if(!cap_on)
 		icon_state = "syrup_open"
-		to_chat(user, span_notice("You remove the pump cap."))
+		balloon_alert(user, "removed pump cap")
 	else
 		icon_state = "syrup"
-		to_chat(user, span_notice("You put the pump cap on."))
+		balloon_alert(user, "put pump cap on")
 	update_icon_state()
 	return ..()
 

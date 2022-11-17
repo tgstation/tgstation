@@ -538,7 +538,6 @@
 	. = ..()
 	if(coffee)
 		. += span_notice("The internal grinder contains [coffee.len] scoop\s of coffee beans")
-	return
 
 /obj/machinery/coffeemaker/impressa/update_overlays()
 	. = ..()
