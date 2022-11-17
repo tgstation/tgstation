@@ -1,16 +1,10 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
+import { Box, LabeledList, ProgressBar, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosConfiguration = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    PC_device_theme,
-    power_usage,
-    battery,
-    disk_size,
-    disk_used,
-  } = data;
+  const { PC_device_theme, power_usage, battery, disk_size, disk_used } = data;
   return (
     <NtosWindow theme={PC_device_theme} width={420} height={630}>
       <NtosWindow.Content scrollable>
