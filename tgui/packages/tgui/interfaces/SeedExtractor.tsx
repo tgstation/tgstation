@@ -61,7 +61,7 @@ export const SeedExtractor = (props, context) => {
         <Section>
           <Table>
             <Table.Row header>
-              <Table.Cell colspan="3" p={1}>
+              <Table.Cell colspan="3" px={1} py={2}>
                 <Input
                   autoFocus
                   placeholder={'Search...'}
@@ -153,7 +153,7 @@ export const SeedExtractor = (props, context) => {
                   Amount
                 </Box>
               </Table.Cell>
-              <Table.Cell collapsing>
+              <Table.Cell collapsing p={1} textAlign="right">
                 {sortField !== 'name' && (
                   <Tooltip content="Reset sorting">
                     <Button
@@ -163,6 +163,9 @@ export const SeedExtractor = (props, context) => {
                     />
                   </Tooltip>
                 )}
+                <Box align="right" />
+              </Table.Cell>
+              <Table.Cell collapsing p={1} textAlign="right">
                 <Tooltip content={action ? 'Scrap seeds' : 'Take seeds'}>
                   <Button
                     icon={action ? 'trash' : 'eject'}
@@ -231,7 +234,12 @@ export const SeedExtractor = (props, context) => {
                   <Table.Cell py={0.5} px={1} collapsing>
                     <Box textAlign="right">{item.amount}</Box>
                   </Table.Cell>
-                  <Table.Cell py={0.5} px={1} collapsing>
+                  <Table.Cell
+                    py={0.5}
+                    px={1}
+                    collapsing
+                    colspan="2"
+                    textAlign="right">
                     {action ? (
                       <Button
                         icon="eject"
