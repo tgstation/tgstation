@@ -59,8 +59,8 @@
 #define MESSENGER_RINGTONE_SHITCURITY "justice"
 #define MESSENGER_RINGTONE_SUPPLY MESSENGER_RINGTONE_PAPER
 #define MESSENGER_RINGTONE_ENGINEERING "delam"
-#define MESSENGER_RINGTONE_MEDICAL "healing"
-#define MESSENGER_RINGTONE_SCIENCE "knowledge"
+#define MESSENGER_RINGTONE_MEDICAL "heartbeat"
+#define MESSENGER_RINGTONE_SCIENCE "blip"  // out of ideas
 #define MESSENGER_RINGTONE_COMMAND "fanfare"
 
 /// Ringtones for water or liquid based jobs (bartender, jani, chemmy)
