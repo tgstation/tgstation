@@ -20,5 +20,5 @@
 #define DETSCAN_ACCESS_ORDER list(REGION_SECURITY, REGION_ENGINEERING, REGION_SUPPLY, REGION_GENERAL, REGION_MEDBAY, \
 			REGION_COMMAND, REGION_RESEARCH, REGION_CENTCOM)
 
-// if any categories list has this entry, it will be hidden
+/// if any categories list has this entry, it will be hidden
 #define DETSCAN_BLOCK "DETSCAN_BLOCK"
