@@ -25,7 +25,7 @@
 	///The type of mining Z-level that should be loaded.
 	var/minetype = "lavaland"
 	///If no minetype is set, this will be the blacklist file used
-	var/blacklist_file = "lavaruinblacklist.txt"
+	var/blacklist_file
 
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
