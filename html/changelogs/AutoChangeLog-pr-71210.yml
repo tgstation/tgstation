@@ -1,0 +1,5 @@
+author: "etherware-novice"
+delete-after: True
+changes:
+  - rscadd: "New radio uplink! Simply speak your codeword into the :d channel to unlock it"
+  - code_imp: "new COMSIG_RADIO_NEW_MESSAGE signal"
