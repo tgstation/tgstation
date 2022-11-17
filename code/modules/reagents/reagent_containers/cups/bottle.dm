@@ -512,11 +512,6 @@
 
 	return TRUE
 
-//there is no action on afterattack cause all containers should be refilled by attackby()
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/afterattack(obj/target, mob/living/user, proximity)
-	SHOULD_CALL_PARENT(FALSE) //silencing the linter
-	return TRUE
-
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/AltClick(mob/user)
 	cap_on = !cap_on
 	if(!cap_on)
