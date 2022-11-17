@@ -117,7 +117,7 @@
 
 				for(var/datum/reagent/R in A.reagents.reagent_list)
 					LAZYADD(det_data[DETSCAN_CAT_DRINK], \
-					"Reagent: <font color='red'>[R.name]</font> Volume: <font color='red'>[reagents[R.volume]]</font>")
+						"Reagent: <font color='red'>[R.name]</font> Volume: <font color='red'>[reagents[R.volume]]</font>")
 
 					// Get blood data from the blood reagent.
 					if(istype(R, /datum/reagent/blood))
