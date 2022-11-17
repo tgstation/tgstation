@@ -2083,7 +2083,6 @@
 "aUw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/status_display/ai/directional/north,
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "aUA" = (
@@ -10588,7 +10587,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/event_spawn,
-/obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "dKV" = (
@@ -10906,7 +10905,6 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "dQq" = (
-/obj/structure/table/reinforced,
 /obj/item/cigbutt/cigarbutt{
 	pixel_x = 5;
 	pixel_y = -1
@@ -10921,6 +10919,7 @@
 	name = "AI Requests Console"
 	},
 /obj/structure/cable/multilayer/multiz,
+/obj/structure/table/reinforced,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "dQt" = (
@@ -19451,6 +19450,7 @@
 /mob/living/simple_animal/bot/secbot/pingsky{
 	dir = 1
 	},
+/obj/structure/cable/layer3,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "gWE" = (
@@ -24609,7 +24609,6 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "iSj" = (
@@ -25921,6 +25920,16 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
+"jpK" = (
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/yellow/corner{
+	dir = 8
+	},
+/obj/structure/cable/multilayer/multiz,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "jpV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -30841,6 +30850,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms,
 /obj/effect/mapping_helpers/airlock/access/any/command/ai_upload,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "kZK" = (
@@ -32689,6 +32699,7 @@
 	name = "AI Antechamber turret control";
 	pixel_y = -25
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "lHz" = (
@@ -35008,6 +35019,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "mxp" = (
@@ -37698,7 +37710,6 @@
 	dir = 9;
 	network = list("ss13","minisat")
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nti" = (
@@ -38032,6 +38043,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
+"nyY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable/layer3,
+/turf/open/floor/circuit,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "nza" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -38625,7 +38641,6 @@
 /area/station/commons/storage/primary)
 "nNk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "nNq" = (
@@ -44498,15 +44513,6 @@
 "pTr" = (
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
-"pTw" = (
-/obj/effect/turf_decal/trimline/white/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/yellow/line,
-/obj/machinery/status_display/ai/directional/south,
-/obj/structure/cable/multilayer/multiz,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "pTD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -50300,10 +50306,10 @@
 /area/station/commons/dorms)
 "rOT" = (
 /obj/machinery/airalarm/directional/north,
-/obj/structure/cable,
 /obj/machinery/camera/motion/directional/north{
 	c_tag = "Secure - AI Core South"
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "rOW" = (
@@ -52162,6 +52168,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/cable/layer3,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "sAh" = (
@@ -52347,6 +52354,7 @@
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "sEX" = (
@@ -57863,7 +57871,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "uBu" = (
@@ -60769,8 +60776,8 @@
 /area/station/medical/pharmacy)
 "vEj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /obj/structure/window/reinforced/spawner/north,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "vEq" = (
@@ -63873,6 +63880,7 @@
 /obj/machinery/computer/station_alert{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "wLC" = (
@@ -114871,7 +114879,7 @@ hdG
 xvl
 xhB
 nNk
-pTw
+ehS
 waj
 waj
 eBr
@@ -115127,8 +115135,8 @@ aur
 dnQ
 xvl
 sRL
-nNk
-tsc
+nyY
+jpK
 waj
 rIt
 bKK
