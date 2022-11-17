@@ -29,6 +29,8 @@
 	var/is_open = FALSE
 	/// What this container folds up into when it's empty.
 	var/obj/fold_result = /obj/item/stack/sheet/cardboard
+	/// Whether it supports open and closed state icons.
+	var/has_open_closed_states = TRUE
 
 /obj/item/storage/fancy/Initialize(mapload)
 	. = ..()
@@ -42,8 +44,8 @@
 		new spawn_type(src)
 
 /obj/item/storage/fancy/update_icon_state()
-	icon_state = "[base_icon_state][is_open ? contents.len : null]"
-	return ..()
+    icon_state = "[base_icon_state][has_open_closed_states && is_open ? contents.len : null]"
+    return ..()
 
 /obj/item/storage/fancy/examine(mob/user)
 	. = ..()
@@ -361,15 +363,11 @@
 	spawn_type = /obj/item/rollingpaper
 	spawn_count = 10
 	custom_price = PAYCHECK_LOWER
+	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/rollingpapers/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/rollingpaper))
-
-///Overrides to do nothing because fancy boxes are fucking insane.
-/obj/item/storage/fancy/rollingpapers/update_icon_state()
-	SHOULD_CALL_PARENT(FALSE)
-	return
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -476,13 +474,14 @@
 	contents_tag = "pickle"
 	fold_result = null
 	custom_materials = list(/datum/material/glass = 2000)
+	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
 	. = ..()
 	atom_storage.set_holdable(list(/obj/item/food/pickle))
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
-	SHOULD_CALL_PARENT(FALSE)
+	. = ..()
 	if(!contents.len)
 		icon_state = "[base_icon_state]_empty"
 	else
@@ -506,6 +505,7 @@
 	custom_materials = list(/datum/material/wood = 1000)
 	fold_result = /obj/item/stack/sheet/mineral/wood
 	is_open = TRUE
+	has_open_closed_states = FALSE
 
 /obj/item/storage/fancy/coffee_condi_display/Initialize(mapload)
 	. = ..()
@@ -554,8 +554,4 @@
 		new /obj/item/reagent_containers/condiment/chocolate(src)
 	update_appearance()
 
-/obj/item/storage/fancy/coffee_condi_display/update_icon_state()
-	//The box does not use the is_open variable and we don't want the parent to check for it
-	SHOULD_CALL_PARENT(FALSE)
-	return
 
