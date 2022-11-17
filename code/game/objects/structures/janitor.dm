@@ -24,7 +24,7 @@
 
 	if(istype(held_item, /obj/item/reagent_containers))
 		context[SCREENTIP_CONTEXT_LMB] = "Fill mop bucket"
-		. = CONTEXTUAL_SCREENTIP_SET
+		return CONTEXTUAL_SCREENTIP_SET
 
 	return . || NONE
 
