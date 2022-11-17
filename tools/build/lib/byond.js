@@ -66,7 +66,7 @@ const getDmPath = async (namedVersion) => {
 
 
 const getNamedByondVersionPath = (namedVersion) =>{
-  const all_entries = getMapFileContents(true)
+  const all_entries = getAllNamedDmVersions(true)
   const map_entry = all_entries.find(x => x.name === namedVersion);
   if(map_entry === undefined){
     Juke.logger.error(`No named byond version with name "${namedVersion}" found.`);
@@ -76,7 +76,7 @@ const getNamedByondVersionPath = (namedVersion) =>{
 }
 
 const getDefaultNamedByondVersionPath = () =>{
-  const all_entries = getMapFileContents(false)
+  const all_entries = getAllNamedDmVersions(false)
   const map_entry = all_entries.find(x => x.default == true);
   if(map_entry === undefined)
     return []
@@ -85,32 +85,32 @@ const getDefaultNamedByondVersionPath = () =>{
 
 
 /** @type {[{ name, path, default }]} */
-let mapFileContents;
+let namedDmVersionList;
 export const NamedVersionFile = "tools/build/dm_versions.json"
 
-const getMapFileContents = (throw_on_fail) => {
-  if(!mapFileContents){
+const getAllNamedDmVersions = (throw_on_fail) => {
+  if(!namedDmVersionList){
     if(!fs.existsSync(NamedVersionFile)){
       if(throw_on_fail){
         Juke.logger.error(`No byond version map file found.`);
         throw new Juke.ExitCode(1);
       }
-      mapFileContents = []
-      return mapFileContents;
+      namedDmVersionList = []
+      return namedDmVersionList;
     }
     try{
-      mapFileContents = JSON.parse(fs.readFileSync(NamedVersionFile));
+      namedDmVersionList = JSON.parse(fs.readFileSync(NamedVersionFile));
     }
     catch(err){
       if(throw_on_fail){
         Juke.logger.error(`Failed to parse byond version map file. ${err}`);
         throw new Juke.ExitCode(1);
       }
-      mapFileContents = []
-      return mapFileContents;
+      namedDmVersionList = []
+      return namedDmVersionList;
     }
   }
-  return mapFileContents;
+  return namedDmVersionList;
 }
 
 /**
