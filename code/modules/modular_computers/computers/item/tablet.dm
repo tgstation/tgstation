@@ -412,8 +412,7 @@
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
-	var/obj/item/computer_hardware/card_slot/card = all_components[MC_CARD]
-	if(card?.stored_card)
+	if(id_slot_one)
 		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
 		. += mutable_appearance(initial(icon), "light_overlay")
@@ -421,7 +420,3 @@
 /obj/item/modular_computer/tablet/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
 	return // we don't want ais or cyborgs using a private role tablet
-
-/obj/item/modular_computer/tablet/pda/Initialize(mapload)
-	. = ..()
-	install_component(new /obj/item/computer_hardware/card_slot)

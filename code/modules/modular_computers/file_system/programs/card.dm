@@ -78,17 +78,14 @@
 	if(.)
 		return
 
-	var/obj/item/computer_hardware/card_slot/card_slot
-	var/obj/item/computer_hardware/card_slot/card_slot2
-	if(computer)
-		card_slot = computer.all_components[MC_CARD]
-		card_slot2 = computer.all_components[MC_CARD2]
-		if(!card_slot || !card_slot2)
-			return
+	if(!computer)
+		return
+	if(!computer.id_slot_one || !computer.id_slot_two)
+		return
 
 	var/mob/user = usr
-	var/obj/item/card/id/user_id_card = card_slot.stored_card
-	var/obj/item/card/id/target_id_card = card_slot2.stored_card
+	var/obj/item/card/id/user_id_card = computer.id_slot_one
+	var/obj/item/card/id/target_id_card = computer.id_slot_two
 
 	switch(action)
 		// Log in.
@@ -133,25 +130,21 @@
 			return TRUE
 		// Eject the ID used to log on to the ID app.
 		if("PRG_ejectauthid")
-			if(!computer || !card_slot)
-				return TRUE
 			if(user_id_card)
-				return card_slot.try_eject(user)
+				return computer.RemoveID(skip_second_slot = TRUE)
 			else
 				var/obj/item/I = user.get_active_held_item()
 				if(isidcard(I))
-					return card_slot.try_insert(I, user)
+					return computer.InsertID(I, user)
 		// Eject the ID being modified.
 		if("PRG_ejectmodid")
-			if(!computer || !card_slot2)
-				return TRUE
 			if(target_id_card)
 				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment, target_id_card.get_trim_assignment())
-				return card_slot2.try_eject(user)
+				return computer.RemoveID()
 			else
 				var/obj/item/I = user.get_active_held_item()
 				if(isidcard(I))
-					return card_slot2.try_insert(I, user)
+					return computer.InsertID(I, user, skip_first_slot = TRUE)
 			return TRUE
 		// Used to fire someone. Wipes all access from their card and modifies their assignment.
 		if("PRG_terminate")
@@ -304,26 +297,12 @@
 
 	data["station_name"] = station_name()
 
-	var/obj/item/computer_hardware/card_slot/card_slot
-	var/obj/item/computer_hardware/card_slot/card_slot2
-
-	if(computer)
-		card_slot = computer.all_components[MC_CARD]
-		card_slot2 = computer.all_components[MC_CARD2]
-		data["have_auth_card"] = !!(card_slot)
-		data["have_id_slot"] = !!(card_slot2)
-	else
-		data["have_id_slot"] = FALSE
-
-	if(!card_slot2)
-		return data //We're just gonna error out on the js side at this point anyway
-
-	var/obj/item/card/id/auth_card = card_slot.stored_card
+	var/obj/item/card/id/auth_card = computer.id_slot_one
 	data["authIDName"] = auth_card ? auth_card.name : "-----"
 
 	data["authenticatedUser"] = authenticated_card
 
-	var/obj/item/card/id/id_card = card_slot2.stored_card
+	var/obj/item/card/id/id_card = computer.id_slot_two
 	data["has_id"] = !!id_card
 	data["id_name"] = id_card ? id_card.name : "-----"
 	if(id_card)

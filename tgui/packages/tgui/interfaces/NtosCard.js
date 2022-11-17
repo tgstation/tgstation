@@ -20,7 +20,6 @@ export const NtosCardContent = (props, context) => {
     regions = [],
     access_on_card = [],
     has_id,
-    have_id_slot,
     wildcardSlots,
     wildcardFlags,
     trimAccess,
@@ -29,14 +28,6 @@ export const NtosCardContent = (props, context) => {
     showBasic,
     templates = {},
   } = data;
-
-  if (!have_id_slot) {
-    return (
-      <NoticeBox>
-        This program requires an ID slot in order to function
-      </NoticeBox>
-    );
-  }
 
   const [selectedTab] = useSharedState(context, 'selectedTab', 'login');
 

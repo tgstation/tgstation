@@ -19,11 +19,9 @@
 /datum/computer_file/program/shipping/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
-	data["has_id_slot"] = !!card_slot
+	data["has_id_slot"] = !!computer.id_slot_one
 	data["paperamt"] = "[computer.stored_paper] / [computer.max_paper]"
-	data["card_owner"] = card_slot?.stored_card ? id_card.registered_name : "No Card Inserted."
+	data["card_owner"] = computer.id_slot_one || "No Card Inserted."
 	data["current_user"] = payments_acc ? payments_acc.account_holder : null
 	data["barcode_split"] = cut_multiplier * 100
 	return data
@@ -35,23 +33,17 @@
 	if(!computer)
 		return
 
-	// Get components
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
-	if(!card_slot) //We need both to successfully use this app.
+	if(!computer.id_slot_one) //We need an ID to successfully run
 		return
 
 	switch(action)
 		if("ejectid")
-			if(id_card)
-				card_slot.try_eject(usr, TRUE)
+			card_slot.try_eject(usr, TRUE)
 		if("selectid")
-			if(!id_card)
-				return
-			if(!id_card.registered_account)
+			if(!computer.id_slot_one.registered_account)
 				playsound(get_turf(ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
 				return
-			payments_acc = id_card.registered_account
+			payments_acc = computer.id_slot_one.registered_account
 			playsound(get_turf(ui_host()), 'sound/machines/ping.ogg', 50, TRUE, -1)
 		if("resetid")
 			payments_acc = null

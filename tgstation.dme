@@ -3939,7 +3939,6 @@
 #include "code\modules\modular_computers\file_system\programs\antagonist\dos.dm"
 #include "code\modules\modular_computers\file_system\programs\antagonist\revelation.dm"
 #include "code\modules\modular_computers\hardware\_hardware.dm"
-#include "code\modules\modular_computers\hardware\card_slot.dm"
 #include "code\modules\modular_computers\NTNet\NTNRC\conversation.dm"
 #include "code\modules\movespeed\_movespeed_modifier.dm"
 #include "code\modules\movespeed\modifiers\components.dm"
