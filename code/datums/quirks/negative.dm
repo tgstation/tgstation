@@ -1075,4 +1075,3 @@
 	if(!IS_ORGANIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
-    
