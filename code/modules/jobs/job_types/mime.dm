@@ -35,6 +35,8 @@
 	voice_of_god_power = 0.5 //Why are you speaking
 	voice_of_god_silence_power = 3
 
+	job_tone = "silence"
+
 
 /datum/job/mime/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

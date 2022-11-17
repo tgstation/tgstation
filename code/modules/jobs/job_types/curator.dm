@@ -37,6 +37,8 @@
 	voice_of_god_silence_power = 3
 	rpg_title = "Veteran Adventurer"
 
+	job_tone = MESSENGER_RINGTONE_PAPER
+
 /datum/outfit/job/curator
 	name = "Curator"
 	jobtype = /datum/job/curator

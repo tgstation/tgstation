@@ -48,6 +48,8 @@
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
+	job_tone = MESSENGER_RINGTONE_ENGINEERING
+
 
 /datum/job/chief_engineer/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"

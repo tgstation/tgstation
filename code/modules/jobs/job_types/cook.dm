@@ -45,6 +45,8 @@
 	rpg_title = "Tavern Chef"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
+	job_tone = "sizzle"  // nothing like a nice bbq
+
 /datum/job/cook/award_service(client/winner, award)
 	winner.give_award(award, winner.mob)
 
