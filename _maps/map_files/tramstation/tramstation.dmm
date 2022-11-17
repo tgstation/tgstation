@@ -42567,7 +42567,9 @@
 /area/station/maintenance/solars/starboard)
 "plU" = (
 /obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement{
+	dir = 1
+	},
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/structure/sign/poster/official/here_for_your_safety{
 	pixel_y = -32
