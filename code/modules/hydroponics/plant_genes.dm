@@ -176,7 +176,7 @@
 
 	// Add on any bonus lines on examine
 	if(examine_line)
-		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, .proc/examine)
+		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
 
 	return TRUE
 
@@ -199,9 +199,9 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
-	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/squash_plant)
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/squash_plant)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(squash_plant))
+	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(squash_plant))
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(squash_plant))
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,
@@ -262,7 +262,7 @@
 	if(!istype(our_plant, /obj/item/grown/bananapeel) && (!our_plant.reagents || !our_plant.reagents.has_reagent(/datum/reagent/lube)))
 		stun_len /= 3
 
-	our_plant.AddComponent(/datum/component/slippery, min(stun_len, 140), NONE, CALLBACK(src, .proc/handle_slip, our_plant))
+	our_plant.AddComponent(/datum/component/slippery, min(stun_len, 140), NONE, CALLBACK(src, PROC_REF(handle_slip), our_plant))
 
 /// On slip, sends a signal that our plant was slipped on out.
 /datum/plant_gene/trait/slip/proc/handle_slip(obj/item/food/grown/our_plant, mob/slipped_target)
@@ -287,11 +287,11 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(our_seed.get_gene(/datum/plant_gene/trait/squash))
 		// If we have the squash gene, let that handle slipping
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/zap_target)
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, PROC_REF(zap_target))
 	else
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/zap_target)
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(zap_target))
 
-	RegisterSignal(our_plant, COMSIG_FOOD_EATEN, .proc/recharge_cells)
+	RegisterSignal(our_plant, COMSIG_FOOD_EATEN, PROC_REF(recharge_cells))
 
 /*
  * Zaps the target with a stunning shock.
@@ -431,9 +431,9 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(our_seed.get_gene(/datum/plant_gene/trait/squash))
 		// If we have the squash gene, let that handle slipping
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/squash_teleport)
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, PROC_REF(squash_teleport))
 	else
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/slip_teleport)
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(slip_teleport))
 
 /*
  * When squashed, makes the target teleport.
@@ -524,8 +524,8 @@
 		return
 
 	our_plant.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-	RegisterSignal(our_plant, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
-	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
+	RegisterSignal(our_plant, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
+	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, PROC_REF(make_battery))
 
 /*
  * Signal proc for [COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM] to add context to plant batteries.
@@ -569,6 +569,7 @@
 
 	to_chat(user, span_notice("You add some cable to [our_plant] and slide it inside the battery encasing."))
 	var/obj/item/stock_parts/cell/potato/pocell = new /obj/item/stock_parts/cell/potato(user.loc)
+	pocell.icon = our_plant.icon // Just in case the plant icons get spread out in different files eventually, this trait won't cause error sprites (also yay downstreams)
 	pocell.icon_state = our_plant.icon_state
 	pocell.maxcharge = our_seed.potency * 20
 
@@ -576,6 +577,7 @@
 	var/datum/plant_gene/trait/cell_charge/electrical_gene = our_seed.get_gene(/datum/plant_gene/trait/cell_charge)
 	if(electrical_gene) // Cell charge max is now 40MJ or otherwise known as 400KJ (Same as bluespace power cells)
 		pocell.maxcharge *= (electrical_gene.rate * 100)
+
 	pocell.charge = pocell.maxcharge
 	pocell.name = "[our_plant.name] battery"
 	pocell.desc = "A rechargeable plant-based power cell. This one has a rating of [display_energy(pocell.maxcharge)], and you should not swallow it."
@@ -600,8 +602,8 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/prickles_inject)
-	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/prickles_inject)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(prickles_inject))
+	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, PROC_REF(prickles_inject))
 
 /*
  * Injects a target with a number of reagents from our plant.
@@ -634,7 +636,7 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/make_smoke)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, PROC_REF(make_smoke))
 
 /*
  * Makes a cloud of reagent smoke.
@@ -682,7 +684,7 @@
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
-	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_spread)
+	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, PROC_REF(try_spread))
 
 /datum/plant_gene/trait/invasive/on_removed(obj/item/seeds/old_seed)
 	UnregisterSignal(old_seed, COMSIG_SEED_ON_GROW)
@@ -776,7 +778,7 @@
 	if(istype(grown_plant) && ispath(grown_plant.trash_type, /obj/item/grown))
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/laughter)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, PROC_REF(laughter))
 
 /*
  * Play a sound effect from our plant.

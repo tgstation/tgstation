@@ -1,6 +1,6 @@
 /// Deals extra damage to mobs of a certain type or species.
 /datum/element/bane
-	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 	/// can be a mob or a species.
 	var/target_type
@@ -17,9 +17,9 @@
 		return ELEMENT_INCOMPATIBLE
 
 	if(ispath(target_type, /mob/living))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/mob_check)
+		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(mob_check))
 	else if(ispath(target_type, /datum/species))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/species_check)
+		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(species_check))
 	else
 		return ELEMENT_INCOMPATIBLE
 

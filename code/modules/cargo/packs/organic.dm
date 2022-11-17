@@ -183,7 +183,8 @@
 		/obj/item/food/pizza/dank = 7,
 		/obj/item/food/pizza/sassysage = 10,
 		/obj/item/food/pizza/pineapple = 10,
-		/obj/item/food/pizza/arnold = 3
+		/obj/item/food/pizza/arnold = 3,
+		/obj/item/food/pizza/energy = 5
 	) //weighted by chance to disrupt eaters' rounds
 
 	for(var/obj/item/pizzabox/P in C)
@@ -197,7 +198,7 @@
 				anomalous_box_provided = TRUE
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
 				if(prob(50))
-					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+					addtimer(CALLBACK(src, PROC_REF(anomalous_pizza_report)), rand(300, 1800))
 					message_admins("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
 				else
 					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")

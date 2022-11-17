@@ -21,13 +21,13 @@
 /datum/component/geiger_sound/RegisterWithParent()
 	sound = new(parent)
 
-	RegisterSignal(parent, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+	RegisterSignal(parent, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 
 	ADD_TRAIT(parent, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, REF(src))
 
 	if (isitem(parent))
 		var/atom/atom_parent = parent
-		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 		register_to_loc(atom_parent.loc)
 
 /datum/component/geiger_sound/UnregisterFromParent()
@@ -61,7 +61,7 @@
 	last_parent = new_loc
 
 	if (!isnull(new_loc))
-		RegisterSignal(new_loc, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+		RegisterSignal(new_loc, COMSIG_IN_RANGE_OF_IRRADIATION, PROC_REF(on_pre_potential_irradiation))
 
 /datum/looping_sound/geiger
 	mid_sounds = list(
