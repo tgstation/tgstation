@@ -137,7 +137,7 @@
 		? image(icon, src, image_to_show, layer) \
 		: image_to_show
 
-	flick_overlay_global(image_to_show, show_to, duration)
+	flick_overlay_global(passed_image, show_to, duration)
 
 ///wrapper for flick_overlay(), flicks to everyone who can see the atom
 /atom/proc/flick_overlay_view(image_to_show, duration)
