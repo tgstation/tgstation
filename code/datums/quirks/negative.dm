@@ -1100,3 +1100,11 @@
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
 	mail_goodies = list(/obj/item/pai_card) // can read things for you
+
+/datum/quirk/old_man_jenkins
+	name = "Old Man Jenkins"
+	desc = "You require a cane like object in your hand for mobility."
+	icon = "person-cane"
+	value = -8
+	medical_record_text = "Patient suffers from a lack of mobility without a support cane."
+	hardcore_value = 8
