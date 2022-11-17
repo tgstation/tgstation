@@ -45,7 +45,7 @@
 			balloon_alert(user, "mop bucket is empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		reagents.trans_to(mop, mop.reagents.maximum_volume, transfered_by = user)
-		balloon_alert(user, "wet [mop]")
+		balloon_alert(user, "wet mop")
 		playsound(src, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 
 	if(istype(weapon, /obj/item/reagent_containers) || istype(mop))
