@@ -21,4 +21,4 @@
 			REGION_COMMAND, REGION_RESEARCH, REGION_CENTCOM)
 
 // if any categories list has this entry, it will be hidden
-#define DETSCAN_BLOCK "do not pass go do not collect 200"
+#define DETSCAN_BLOCK "DETSCAN_BLOCK"
