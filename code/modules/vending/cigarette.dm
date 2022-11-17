@@ -46,6 +46,8 @@
 		/obj/item/lighter/greyscale = 4,
 		/obj/item/storage/fancy/rollingpapers = 5,
 	)
+	initial_language_holder = /datum/language_holder/universal
+	language_holder.selected_language = /datum/language/codespeak // this may need to be setup during init
 
 /obj/machinery/vending/cigarette/beach //Used in the lavaland_biodome_beach.dmm ruin
 	name = "\improper ShadyCigs Ultra"
@@ -68,6 +70,8 @@
 		/obj/item/clothing/mask/vape = 5,
 		/obj/item/lighter = 3,
 	)
+	initial_language_holder = /datum/language_holder/universal
+	language_holder.selected_language = /datum/language/beachbum // this may need to be setup during init
 
 /obj/item/vending_refill/cigarette
 	machine_name = "ShadyCigs Deluxe"
