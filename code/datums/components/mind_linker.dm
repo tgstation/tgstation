@@ -85,11 +85,7 @@
 
 /datum/component/mind_linker/RegisterWithParent()
 	if(signals_which_destroy_us)
-<<<<<<< HEAD
-		RegisterSignals(parent, signals_which_destroy_us, .proc/destroy_link)
-=======
-		RegisterSignal(parent, signals_which_destroy_us, PROC_REF(destroy_link))
->>>>>>> upstream/master
+		RegisterSignals(parent, signals_which_destroy_us, PROC_REF(destroy_link))
 
 /datum/component/mind_linker/UnregisterFromParent()
 	if(signals_which_destroy_us)
