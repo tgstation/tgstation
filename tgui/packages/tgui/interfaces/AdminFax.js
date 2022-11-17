@@ -32,7 +32,9 @@ export const FaxMainPanel = (props, context) => {
     0
   );
   const [stampAngle, setStampAngle] = useLocalState(context, 'stampAngle', 0);
-  Array.from(data.stamps).indexOf(0);
+  if (stamp && data.stamps[0] !== 'None') {
+    data.stamps.unshift('None');
+  }
   return (
     <div class="faxmenu">
       <Section
@@ -139,7 +141,15 @@ export const FaxMainPanel = (props, context) => {
             width="100%"
             options={data.stamps}
             selected="Choose stamp(optional)"
-            onSelected={(v) => setStamp(v)}
+            onSelected={(v) => {
+              if (v === 'None') {
+                v = 'Choose stamp(optional)';
+                setStamp('');
+                data.stamps.shift();
+              } else {
+                setStamp(v);
+              }
+            }}
           />
           {stamp && (
             <Box textAlign="center">
