@@ -19,6 +19,8 @@
 
 	var/open = FALSE
 	var/can_open_on_fall = TRUE //if FALSE, this pizza box will never open if it falls from a stack
+	/// Used so that you can not destroy the infinite pizza box
+	var/foldable = TRUE
 	var/boxtag = ""
 	///Used to make sure artisinal box tags aren't overwritten.
 	var/boxtag_set = FALSE
@@ -128,13 +130,13 @@
 
 /obj/item/pizzabox/attack_self_secondary(mob/user)
 	if(length(boxes) > 0)
-		return
-	if(pizza || bomb)
-		return
-	var/obj/item/stack/sheet/cardboard/cardboard = new /obj/item/stack/sheet/cardboard(user.drop_location())
-	balloon_alert(user, "deconstructed")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(pizza || bomb || !foldable)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/obj/item/stack/sheet/cardboard/cardboard = new(user.drop_location())
 	user.put_in_active_hand(cardboard)
 	qdel(src)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/pizzabox/attack_hand(mob/user, list/modifiers)
@@ -185,7 +187,7 @@
 			user.regenerate_icons()
 			if(length(boxes) >= 5)
 				if(prob(10 * length(boxes)))
-					balloon_alert(user, "dropped it!")
+					balloon_alert(user, "oops!")
 					disperse_pizzas()
 				else
 					balloon_alert(user, "looks unstable...")
@@ -327,6 +329,7 @@
 /obj/item/pizzabox/infinite
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF //hard to destroy
 	can_open_on_fall = FALSE
+	foldable = FALSE
 	boxtag = "Your Favourite" //used to give it a tag overlay, shouldn't be seen by players
 	///List of pizzas this box can spawn. Weighted by chance to be someone's favorite.
 	var/list/pizza_types = list(
@@ -394,46 +397,46 @@
 /obj/item/pizzabox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(!held_item)
 		if(user.get_inactive_held_item() != src)
-			return
+			return NONE
 		if(open)
 			if(pizza)
-				context [SCREENTIP_CONTEXT_LMB] = "Remove pizza"
+				context[SCREENTIP_CONTEXT_LMB] = "Remove pizza"
 			else if(bomb && wires.is_all_cut() && bomb_defused)
-				context [SCREENTIP_CONTEXT_LMB] = "Remove bomb"
+				context[SCREENTIP_CONTEXT_LMB] = "Remove bomb"
 		else
 			if(length(boxes) > 0)
-				context [SCREENTIP_CONTEXT_LMB] = "Remove pizza box"
+				context[SCREENTIP_CONTEXT_LMB] = "Remove pizza box"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item == src)
 		if(length(boxes) > 0)
-			return
-		context [SCREENTIP_CONTEXT_LMB] = open ? "Close" : "Open"
-		if(!pizza && !bomb)
-			context [SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+			return NONE
+		context[SCREENTIP_CONTEXT_LMB] = open ? "Close" : "Open"
+		if(!pizza && !bomb && foldable)
+			context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/pizzabox))
 		if(!open)
-			context [SCREENTIP_CONTEXT_LMB] = "Stack pizza box"
+			context[SCREENTIP_CONTEXT_LMB] = "Stack pizza box"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/food/pizza))
 		if(open && !pizza)
-			context [SCREENTIP_CONTEXT_LMB] = "Place pizza"
+			context[SCREENTIP_CONTEXT_LMB] = "Place pizza"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/pen))
 		if(!open)
-			context [SCREENTIP_CONTEXT_LMB] = "Write boxtag"
+			context[SCREENTIP_CONTEXT_LMB] = "Write boxtag"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/bombcore/miniature/pizza))
 		if(open && !bomb)
-			context [SCREENTIP_CONTEXT_LMB] = "Place bomb"
+			context[SCREENTIP_CONTEXT_LMB] = "Place bomb"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(is_wire_tool(held_item))
 		if(open && bomb)
-			context [SCREENTIP_CONTEXT_LMB] = "Access wires"
+			context[SCREENTIP_CONTEXT_LMB] = "Access wires"
 		return CONTEXTUAL_SCREENTIP_SET
