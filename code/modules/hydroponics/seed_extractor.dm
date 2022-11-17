@@ -260,7 +260,12 @@
 		return
 
 	switch(action)
-		if("select")
+		if("scrap")
+			var/item = params["item"]
+			if(piles[item])
+				piles.Remove(item)
+				. = TRUE
+		if("take")
 			var/item = params["item"]
 			if(piles[item] && length(piles[item]) > 0)
 				var/datum/weakref/found_seed_weakref = piles[item]["refs"][1]

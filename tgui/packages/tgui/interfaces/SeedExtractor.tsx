@@ -47,6 +47,7 @@ export const SeedExtractor = (props, context) => {
   const { act, data } = useBackend<SeedExtractorData>(context);
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [sortField, setSortField] = useLocalState(context, 'sortField', 'name');
+  const [action, toggleAction] = useLocalState(context, 'action', true);
   const search = createSearch(searchText, (item: SeedData) => item.name);
   const seeds_filtered =
     searchText.length > 0 ? data.seeds.filter(search) : data.seeds;
@@ -154,13 +155,21 @@ export const SeedExtractor = (props, context) => {
               </Table.Cell>
               <Table.Cell collapsing>
                 {sortField !== 'name' && (
-                  <Button
-                    color="transparent"
-                    icon="refresh"
-                    textAlign="center"
-                    onClick={(e) => setSortField('name')}
-                  />
+                  <Tooltip content="Reset sorting">
+                    <Button
+                      color="transparent"
+                      icon="refresh"
+                      onClick={(e) => setSortField('name')}
+                    />
+                  </Tooltip>
                 )}
+                <Tooltip content={action ? 'Scrap seeds' : 'Take seeds'}>
+                  <Button
+                    icon={action ? 'trash' : 'eject'}
+                    color={action ? 'bad' : ''}
+                    onClick={(e) => toggleAction(!action)}
+                  />
+                </Tooltip>
               </Table.Cell>
             </Table.Row>
             {seeds.length > 0 &&
@@ -223,15 +232,28 @@ export const SeedExtractor = (props, context) => {
                     <Box textAlign="right">{item.amount}</Box>
                   </Table.Cell>
                   <Table.Cell py={0.5} px={1} collapsing>
-                    <Button
-                      icon="eject"
-                      content="Take"
-                      onClick={() =>
-                        act('select', {
-                          item: item.key,
-                        })
-                      }
-                    />
+                    {action ? (
+                      <Button
+                        icon="eject"
+                        content="Take"
+                        onClick={() =>
+                          act('take', {
+                            item: item.key,
+                          })
+                        }
+                      />
+                    ) : (
+                      <Button
+                        icon="trash"
+                        content="Scrap"
+                        color="bad"
+                        onClick={() =>
+                          act('scrap', {
+                            item: item.key,
+                          })
+                        }
+                      />
+                    )}
                   </Table.Cell>
                 </Table.Row>
               ))}
