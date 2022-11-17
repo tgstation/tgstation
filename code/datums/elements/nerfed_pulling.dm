@@ -14,8 +14,8 @@
 
 	src.typecache = typecache
 
-	RegisterSignal(target, COMSIG_LIVING_PUSHING_MOVABLE, .proc/on_push_movable)
-	RegisterSignal(target, COMSIG_LIVING_UPDATING_PULL_MOVESPEED, .proc/on_updating_pull_movespeed)
+	RegisterSignal(target, COMSIG_LIVING_PUSHING_MOVABLE, PROC_REF(on_push_movable))
+	RegisterSignal(target, COMSIG_LIVING_UPDATING_PULL_MOVESPEED, PROC_REF(on_updating_pull_movespeed))
 
 /datum/element/nerfed_pulling/Detach(mob/living/source)
 	source.remove_movespeed_modifier(/datum/movespeed_modifier/nerfed_bump)

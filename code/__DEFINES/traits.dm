@@ -244,6 +244,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOSOFTCRIT "nosoftcrit"
 #define TRAIT_MINDSHIELD "mindshield"
 #define TRAIT_DISSECTED "dissected"
+/// Lets the user succumb even if they got NODEATH
+#define TRAIT_SUCCUMB_OVERRIDE "succumb_override"
 /// Can hear observers
 #define TRAIT_SIXTHSENSE "sixth_sense"
 #define TRAIT_FEARLESS "fearless"
@@ -898,6 +900,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_EMPTY_MAINT "station_trait_empty_maint"
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 #define STATION_TRAIT_BOTS_GLITCHED "station_trait_bot_glitch"
+#define STATION_TRAIT_CYBERNETIC_REVOLUTION "station_trait_cybernetic_revolution"
 
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"

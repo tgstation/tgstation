@@ -9,7 +9,7 @@
 
 /datum/action/changeling/lesserform/Grant(mob/granted_to)
 	. = ..()
-	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, .proc/swap_powers)
+	RegisterSignal(granted_to, COMSIG_HUMAN_MONKEYIZE, PROC_REF(swap_powers))
 
 /datum/action/changeling/lesserform/Remove(mob/remove_from)
 	UnregisterSignal(remove_from, COMSIG_HUMAN_MONKEYIZE)

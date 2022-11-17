@@ -15,7 +15,7 @@
 	src.projectilesound = projectilesound
 	src.projectiletype = projectiletype
 
-	RegisterSignal(target, COMSIG_MOB_ATTACK_RANGED, .proc/fire_ranged_attack)
+	RegisterSignal(target, COMSIG_MOB_ATTACK_RANGED, PROC_REF(fire_ranged_attack))
 
 	if(casingtype && projectiletype)
 		CRASH("Set both casing type and projectile type in [target]'s ranged attacks element! uhoh! stinky!")
@@ -26,7 +26,7 @@
 
 /datum/element/ranged_attacks/proc/fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/async_fire_ranged_attack, firer, target, modifiers)
+	INVOKE_ASYNC(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers)
 
 
 /datum/element/ranged_attacks/proc/async_fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)

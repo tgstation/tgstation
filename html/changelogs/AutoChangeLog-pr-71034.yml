@@ -1,4 +1,0 @@
-author: "Striders13"
-delete-after: True
-changes:
-  - bugfix: "permanent one-use portals will no longer get used up when clicked by a ghost"
