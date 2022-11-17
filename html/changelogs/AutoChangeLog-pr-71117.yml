@@ -1,0 +1,5 @@
+author: "etherware-novice"
+delete-after: True
+changes:
+  - bugfix: "fresh laundry mood is functional again"
+  - code_imp: "new component for controlling wearables granting mood"

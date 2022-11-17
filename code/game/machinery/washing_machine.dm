@@ -288,11 +288,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		if(!can_adjust && adjusted) //we deadjust the uniform if it's now unadjustable
 			toggle_jumpsuit_adjust()
 
-/obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/washer)
-	freshly_laundered = TRUE
-	addtimer(VARSET_CALLBACK(src, freshly_laundered, FALSE), 5 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
-	..()
-
 /obj/item/clothing/head/mob_holder/machine_wash(obj/machinery/washing_machine/washer)
 	..()
 	held_mob.machine_wash(washer)
@@ -405,7 +400,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
 		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/wash_cycle), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wash_cycle)), 20 SECONDS)
 	START_PROCESSING(SSfastprocess, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

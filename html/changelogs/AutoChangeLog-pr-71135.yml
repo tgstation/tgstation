@@ -1,0 +1,4 @@
+author: "antropod"
+delete-after: True
+changes:
+  - bugfix: "Containers visually update after crafting."
