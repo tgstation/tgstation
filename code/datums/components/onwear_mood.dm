@@ -1,7 +1,7 @@
 /// Add to clothing to give the wearer a mood buff and a unique examine text
 /datum/component/onwear_mood
 	/// the event the wearer experiences
-	var/datum/mood_event/saved_event
+	var/datum/mood_event/saved_event_type
 	/// examine string added to examine
 	var/examine_string
 	/// what slots it needs to be equipped to to work
@@ -12,12 +12,11 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	src.saved_event = saved_event
+	src.saved_event_type = saved_event_type
 	src.examine_string = examine_string
 	if(!isnum(slot_equip))
 		stack_trace("Attempted to initialize onwear component with improper slot_equip [slot_equip]")
-		src.slot_equip = ITEM_SLOT_ON_BODY
-		return
+		slot_equip = ITEM_SLOT_ON_BODY
 	src.slot_equip = slot_equip
 
 /datum/component/onwear_mood/RegisterWithParent()
@@ -33,7 +32,7 @@
 	if(!(slot & slot_equip))
 		return  // only affects "worn" slots by default
 
-	target.add_mood_event(REF(src), saved_event)
+	target.add_mood_event(REF(src), saved_event_type)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(clear_effects))
 

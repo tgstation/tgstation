@@ -356,7 +356,7 @@
 	. = ..()
 	var/fresh_mood = AddComponent( \
 		/datum/component/onwear_mood, \
-		saved_event = /datum/mood_event/fresh_laundry, \
+		saved_event_type = /datum/mood_event/fresh_laundry, \
 		examine_string = "[src] looks crisp and pristine.", \
 	)
 
