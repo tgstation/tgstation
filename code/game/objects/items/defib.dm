@@ -276,6 +276,25 @@
 	cooldowncheck()
 	return COMPONENT_DEFIB_STOP
 
+/obj/item/defibrillator/rusted
+	name = "rusted defibrillator"
+	desc = "A old and rusted medical defib, maybe it still works..?"
+	icon_state = "defibrusted"
+	inhand_icon_state = "defibrusted"
+	worn_icon_state = "defibunit"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	powered_state = "defibrusted-powered"
+	safety = 0
+	cell_removable = FALSE
+	emagged_state = null
+	cooldown_duration = 60 SECONDS
+
+/obj/item/defibrillator/rusted/Initialize(mapload)
+	. = ..()
+	cell = new /obj/item/stock_parts/cell/high(src)
+	update_power()
+
 /obj/item/defibrillator/compact
 	name = "compact defibrillator"
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
