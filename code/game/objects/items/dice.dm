@@ -160,7 +160,7 @@
 	icon_state = "d00"
 	sides = 10
 
-/obj/item/dice/d00/manip_result(original)
+/obj/item/dice/d00/manipulate_result(original)
 	return (original - 1)*10  // 10, 20, 30, etc
 
 /obj/item/dice/d12
@@ -234,7 +234,7 @@
 	if(sides == 20 && result == 20)
 		comment = "NAT 20!"  // maint wanted this hardcoded to nat20 don't blame me
 	update_appearance()
-	result = manip_result(result)
+	result = manipulate_result(result)
 	if(special_faces.len == sides)
 		comment = ""  // its not a number
 		result = special_faces[result]
@@ -259,7 +259,7 @@
 	..(M)
 
 /// A proc to modify the displayed result. (Does not affect what the icon_state is passed.)
-/obj/item/dice/proc/manip_result(original)
+/obj/item/dice/proc/manipulate_result(original)
 	return original
 
 // Die of fate stuff
