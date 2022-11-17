@@ -46,7 +46,6 @@
 
 	equipAntagOnDummy(mannequin, ert)
 
-	COMPILE_OVERLAYS(mannequin)
 	CHECK_TICK
 	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
@@ -78,9 +77,9 @@
 		ertemplate = new /datum/ert/centcom_official
 
 	var/list/settings = list(
-		"preview_callback" = CALLBACK(src, .proc/makeERTPreviewIcon),
+		"preview_callback" = CALLBACK(src, PROC_REF(makeERTPreviewIcon)),
 		"mainsettings" = list(
-		"template" = list("desc" = "Template", "callback" = CALLBACK(src, .proc/makeERTTemplateModified), "type" = "datum", "path" = "/datum/ert", "subtypesonly" = TRUE, "value" = ertemplate.type),
+		"template" = list("desc" = "Template", "callback" = CALLBACK(src, PROC_REF(makeERTTemplateModified)), "type" = "datum", "path" = "/datum/ert", "subtypesonly" = TRUE, "value" = ertemplate.type),
 		"teamsize" = list("desc" = "Team Size", "type" = "number", "value" = ertemplate.teamsize),
 		"mission" = list("desc" = "Mission", "type" = "string", "value" = ertemplate.mission),
 		"polldesc" = list("desc" = "Ghost poll description", "type" = "string", "value" = ertemplate.polldesc),

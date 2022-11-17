@@ -23,7 +23,7 @@
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
 	mutantheart = /obj/item/organ/internal/heart/vampire
@@ -34,7 +34,7 @@
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 
 /datum/species/vampire/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
@@ -56,6 +56,7 @@
 	vampire.blood_volume -= 0.125 * delta_time
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(vampire, span_danger("You ran out of blood!"))
+		vampire.investigate_log("has been dusted by a lack of blood (vampire).", INVESTIGATE_DEATHS)
 		vampire.dust()
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))

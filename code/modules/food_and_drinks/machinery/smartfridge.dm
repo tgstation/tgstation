@@ -66,7 +66,7 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 	if(!machine_stat)
-		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", alpha = src.alpha)
+		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/smartfridge/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -219,7 +219,7 @@
 				if(!desired)
 					return FALSE
 
-			if(QDELETED(src) || QDELETED(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) // Sanity checkin' in case stupid stuff happens while we wait for input()
+			if(QDELETED(src) || QDELETED(usr) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
 			for(var/obj/item/dispensed_item in src)
@@ -451,6 +451,10 @@
 	if(isorgan(O))
 		var/obj/item/organ/organ = O
 		organ.organ_flags |= ORGAN_FROZEN
+	if(isbodypart(O))
+		var/obj/item/bodypart/bodypart = O
+		for(var/obj/item/organ/stored in bodypart.contents)
+			stored.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	. = ..()
@@ -467,6 +471,10 @@
 	if(isorgan(gone))
 		var/obj/item/organ/O = gone
 		O.organ_flags &= ~ORGAN_FROZEN
+	if(isbodypart(gone))
+		var/obj/item/bodypart/bodypart = gone
+		for(var/obj/item/organ/stored in bodypart.contents)
+			stored.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------
 // Chemistry Medical Smartfridge

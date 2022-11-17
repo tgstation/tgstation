@@ -32,8 +32,10 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/powered/beach)
 "aF" = (
-/obj/machinery/vending/boozeomat{
-	set_obj_flags = "EMAGGED"
+/obj/machinery/vending/boozeomat,
+/obj/effect/mapping_helpers/atom_injector/obj_flag{
+	inject_flags = 1;
+	target_type = /obj/machinery/vending/boozeomat
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
@@ -953,7 +955,7 @@
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/item/clothing/suit/apron/chef,
-/obj/item/clothing/head/chefhat,
+/obj/item/clothing/head/utility/chefhat,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Gf" = (

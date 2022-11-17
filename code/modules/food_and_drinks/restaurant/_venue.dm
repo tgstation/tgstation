@@ -85,6 +85,7 @@
 	food_image.loc = customer_pawn
 	food_image.pixel_y = 32
 	food_image.pixel_x = 16
+	SET_PLANE_EXPLICIT(food_image, HUD_PLANE, customer_pawn)
 	food_image.plane = HUD_PLANE
 	food_image.appearance_flags = RESET_COLOR
 	customer_pawn.hud_to_show_on_hover = customer_pawn.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/food_demands, "food_thoughts", food_image)

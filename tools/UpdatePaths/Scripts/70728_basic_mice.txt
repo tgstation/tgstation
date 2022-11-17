@@ -1,0 +1,2 @@
+/mob/living/simple_animal/hostile/rat : /mob/living/basic/mouse/rat
+/mob/living/simple_animal/mouse/@SUBTYPES : /mob/living/basic/mouse/@SUBTYPES {@OLD}

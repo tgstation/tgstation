@@ -12,6 +12,7 @@
 	name = "medkit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "medkit"
+	inhand_icon_state = "medkit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
@@ -277,7 +278,7 @@
 
 //medibot assembly
 /obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
-	if((!istype(bodypart, /obj/item/bodypart/l_arm/robot)) && (!istype(bodypart, /obj/item/bodypart/r_arm/robot)))
+	if((!istype(bodypart, /obj/item/bodypart/arm/left/robot)) && (!istype(bodypart, /obj/item/bodypart/arm/right/robot)))
 		return ..()
 
 	//Making a medibot!
@@ -322,9 +323,9 @@
 	atom_storage.allow_quick_gather = TRUE
 	atom_storage.set_holdable(list(/obj/item/reagent_containers/pill))
 
-/obj/item/storage/pill_bottle/suicide_act(mob/user)
+/obj/item/storage/pill_bottle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (TOXLOSS)
+	return TOXLOSS
 
 /obj/item/storage/pill_bottle/multiver
 	name = "bottle of multiver pills"

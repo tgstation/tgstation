@@ -22,6 +22,7 @@
 		/obj/item/seeds/coffee = 3,
 		/obj/item/seeds/cotton = 3,
 		/obj/item/seeds/corn = 3,
+		/obj/item/seeds/cucumber = 3,
 		/obj/item/seeds/eggplant = 3,
 		/obj/item/seeds/garlic = 3,
 		/obj/item/seeds/grape = 3,
@@ -54,7 +55,6 @@
 		/obj/item/seeds/watermelon = 3,
 		/obj/item/seeds/wheat = 3,
 		/obj/item/seeds/whitebeet = 3,
-		/obj/item/seeds/cucumber = 3,
 	)
 	contraband = list(
 		/obj/item/seeds/amanita = 2,

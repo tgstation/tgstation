@@ -40,7 +40,7 @@ GLOBAL_VAR(antag_prototypes)
 	return parts.Join("<br>")
 
 /datum/antagonist/proc/antag_panel_objectives()
-	var/result = "<i><b>Objectives</b></i>:<br>"
+	var/result = "<i><b>Personal Objectives</b></i>:<br>"
 	if (objectives.len == 0)
 		result += "EMPTY<br>"
 	else
@@ -112,7 +112,7 @@ GLOBAL_VAR(antag_prototypes)
 				GLOB.antag_prototypes[cat_id] = list(A)
 			else
 				GLOB.antag_prototypes[cat_id] += A
-	sortTim(GLOB.antag_prototypes,/proc/cmp_text_asc,associative=TRUE)
+	sortTim(GLOB.antag_prototypes, GLOBAL_PROC_REF(cmp_text_asc),associative=TRUE)
 
 	var/list/sections = list()
 	var/list/priority_sections = list()

@@ -36,10 +36,12 @@
 /obj/item/clothing/mask/facehugger/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+
+	RegisterSignal(src, COMSIG_LIVING_TRYING_TO_PULL, PROC_REF(react_to_mob))
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
@@ -48,6 +50,12 @@
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
 	return O.attack_atom(src, user, params)
+
+/obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if((stat == CONSCIOUS && !sterile) && !isalien(user))
+		if(Leap(user))
+			return COMSIG_LIVING_CANCEL_PULL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
@@ -101,7 +109,7 @@
 		return
 	if(stat == CONSCIOUS)
 		icon_state = "[base_icon_state]_thrown"
-		addtimer(CALLBACK(src, .proc/clear_throw_icon_state), 15)
+		addtimer(CALLBACK(src, PROC_REF(clear_throw_icon_state)), 15)
 
 /obj/item/clothing/mask/facehugger/proc/clear_throw_icon_state()
 	if(icon_state == "[base_icon_state]_thrown")
@@ -170,7 +178,7 @@
 	// early returns and validity checks done: attach.
 	attached++
 	//ensure we detach once we no longer need to be attached
-	addtimer(CALLBACK(src, .proc/detach), MAX_IMPREGNATION_TIME)
+	addtimer(CALLBACK(src, PROC_REF(detach)), MAX_IMPREGNATION_TIME)
 
 
 	if(!sterile)
@@ -179,7 +187,7 @@
 
 	GoIdle() //so it doesn't jump the people that tear it off
 
-	addtimer(CALLBACK(src, .proc/Impregnate, M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
+	addtimer(CALLBACK(src, PROC_REF(Impregnate), M), rand(MIN_IMPREGNATION_TIME, MAX_IMPREGNATION_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/detach()
 	attached = 0
@@ -227,7 +235,7 @@
 	icon_state = "[base_icon_state]_inactive"
 	worn_icon_state = "[base_icon_state]_inactive"
 
-	addtimer(CALLBACK(src, .proc/GoActive), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
+	addtimer(CALLBACK(src, PROC_REF(GoActive)), rand(MIN_ACTIVE_TIME, MAX_ACTIVE_TIME))
 
 /obj/item/clothing/mask/facehugger/proc/Die()
 	if(stat == DEAD)
@@ -268,7 +276,7 @@
 
 /obj/item/clothing/mask/facehugger/impregnated
 	icon_state = "facehugger_impregnated"
-	inhand_icon_state = "facehugger_impregnated"
+	inhand_icon_state = null
 	worn_icon_state = "facehugger_impregnated"
 	stat = DEAD
 

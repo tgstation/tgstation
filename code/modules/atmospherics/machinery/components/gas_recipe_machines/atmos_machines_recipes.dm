@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	min_temp = 3
 	max_temp = 250
 	energy_release = -250000
-	requirements = list(/datum/gas/oxygen = 2000, /datum/gas/hypernoblium = 175)
+	requirements = list(/datum/gas/oxygen = 1000, /datum/gas/hypernoblium = 85)
 	products = list(/obj/item/hypernoblium_crystal = 1)
 
 /datum/gas_recipe/crystallizer/metallic_hydrogen

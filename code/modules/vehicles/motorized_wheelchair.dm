@@ -1,6 +1,8 @@
 /obj/vehicle/ridden/wheelchair/motorized
 	name = "motorized wheelchair"
 	desc = "A chair with big wheels. It seems to have a motor in it."
+	icon_state = "motorized_wheelchair"
+	overlay_icon = "motorized_wheelchair_overlay"
 	foldabletype = null
 	max_integrity = 150
 	///How "fast" the wheelchair goes only affects ramming
@@ -31,6 +33,12 @@
 	speed = 1 // Should never be under 1
 	for(var/obj/item/stock_parts/manipulator/M in contents)
 		speed += M.rating
+	var/chair_icon = "motorized_wheelchair[speed > delay_multiplier ? "_fast" : ""]"
+	if(icon_state != chair_icon)
+		wheels_overlay = image(icon, chair_icon + "_overlay", ABOVE_MOB_LAYER) 
+
+	icon_state = chair_icon
+
 	for(var/obj/item/stock_parts/capacitor/C in contents)
 		power_efficiency = C.rating
 
@@ -88,9 +96,9 @@
 	var/obj/item/stock_parts/newstockpart = I
 	for(var/obj/item/stock_parts/oldstockpart in contents)
 		var/type_to_check
-		for(var/pathtypes in required_parts)
-			if(ispath(oldstockpart.type, pathtypes))
-				type_to_check = oldstockpart.type
+		for(var/pathtype in required_parts)
+			if(ispath(oldstockpart.type, pathtype))
+				type_to_check = pathtype
 				break
 		if(istype(newstockpart, type_to_check) && istype(oldstockpart, type_to_check))
 			if(newstockpart.get_part_rating() > oldstockpart.get_part_rating())

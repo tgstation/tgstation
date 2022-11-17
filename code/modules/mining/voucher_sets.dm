@@ -64,7 +64,7 @@
 	set_items = list(
 		/mob/living/simple_animal/hostile/mining_drone,
 		/obj/item/weldingtool/hugetank,
-		/obj/item/clothing/head/welding,
+		/obj/item/clothing/head/utility/welding,
 		/obj/item/borg/upgrade/modkit/minebot_passthrough,
 		)
 

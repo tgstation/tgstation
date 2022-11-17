@@ -153,7 +153,7 @@
 	return !held_items[hand_index]
 
 /mob/proc/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE)
-	if(hand_index == null || (!forced && !can_put_in_hand(I, hand_index)))
+	if(hand_index == null || !held_items.len || (!forced && !can_put_in_hand(I, hand_index)))
 		return FALSE
 
 	if(isturf(I.loc) && !ignore_anim)
@@ -162,7 +162,7 @@
 		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
 	I.forceMove(src)
 	held_items[hand_index] = I
-	I.plane = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(I, ABOVE_HUD_PLANE, src)
 	I.equipped(src, ITEM_SLOT_HANDS)
 	if(QDELETED(I)) // this is here because some ABSTRACT items like slappers and circle hands could be moved from hand to hand then delete, which meant you'd have a null in your hand until you cleared it (say, by dropping it)
 		held_items[hand_index] = null
@@ -242,7 +242,7 @@
 		return FALSE
 	I.forceMove(drop_location())
 	I.layer = initial(I.layer)
-	I.plane = initial(I.plane)
+	SET_PLANE_EXPLICIT(I, initial(I.plane), drop_location())
 	I.dropped(src)
 	return FALSE
 
@@ -322,7 +322,7 @@
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
-		I.plane = initial(I.plane)
+		SET_PLANE_EXPLICIT(I, initial(I.plane), drop_location())
 		I.appearance_flags &= ~NO_CLIENT_COLOR
 		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
 			if (isnull(newloc))
@@ -374,7 +374,7 @@
 	var/obscured = NONE
 	var/hidden_slots = NONE
 
-	for(var/obj/item/I in get_equipped_items())
+	for(var/obj/item/I in get_all_worn_items())
 		hidden_slots |= I.flags_inv
 		if(transparent_protection)
 			hidden_slots |= I.transparent_protection
@@ -428,7 +428,7 @@
 	set name = "quick-equip"
 	set hidden = TRUE
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_quick_equip))
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_quick_equip)))
 
 ///proc extender of [/mob/verb/quick_equip] used to make the verb queuable if the server is overloaded
 /mob/proc/execute_quick_equip()
@@ -479,13 +479,13 @@
 	else if(amt > old_limbs)
 		hand_bodyparts.len = amt
 		for(var/i in old_limbs+1 to amt)
-			var/path = /obj/item/bodypart/l_arm
+			var/path = /obj/item/bodypart/arm/left
 			if(!(i % 2))
-				path = /obj/item/bodypart/r_arm
+				path = /obj/item/bodypart/arm/right
 
 			var/obj/item/bodypart/BP = new path ()
 			BP.held_index = i
-			add_bodypart(BP)
+			BP.try_attach_limb(src, TRUE)
 			hand_bodyparts[i] = BP
 	..() //Don't redraw hands until we have organs for them
 

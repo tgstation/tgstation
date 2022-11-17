@@ -39,7 +39,7 @@
 	dir = 4;
 	resistance_flags = 64
 	},
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /turf/closed/indestructible/syndicate,
@@ -129,7 +129,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ctf)
 "fa" = (
-/obj/structure/shuttle/engine/huge,
+/obj/machinery/power/shuttle_engine/huge,
 /turf/template_noop,
 /area/centcom/ctf)
 "fj" = (
@@ -219,7 +219,7 @@
 	dir = 1;
 	resistance_flags = 64
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/closed/indestructible/syndicate,
 /area/centcom/ctf)
 "lL" = (
@@ -310,13 +310,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/ctf)
 "rI" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/centcom/ctf)
 "rR" = (
-/obj/structure/shuttle/engine/large,
+/obj/machinery/power/shuttle_engine/large,
 /turf/open/floor/plating/airless,
 /area/centcom/ctf)
 "sc" = (
@@ -544,7 +544,7 @@
 	dir = 8;
 	resistance_flags = 64
 	},
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
 /turf/closed/indestructible/syndicate,
@@ -697,7 +697,7 @@
 /turf/open/floor/pod/light,
 /area/centcom/ctf)
 "KO" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -892,7 +892,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/centcom/ctf)
 "SS" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/centcom/ctf)
 "SU" = (
@@ -929,7 +929,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/ctf)
 "Wd" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

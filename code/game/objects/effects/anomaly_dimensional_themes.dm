@@ -286,7 +286,7 @@
 	sound = SFX_SHATTER
 
 /datum/dimension_theme/fancy
-	icon = 'icons/obj/clothing/hats.dmi'
+	icon = 'icons/obj/clothing/head/costume.dmi'
 	icon_state = "fancycrown"
 	replace_walls = /turf/closed/wall/mineral/wood/nonmetal
 

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Ruins blacklisted from icebox shouldn't also blacklist it from lavaland, and vice versa."

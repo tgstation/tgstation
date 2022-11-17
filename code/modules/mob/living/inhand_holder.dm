@@ -88,6 +88,10 @@
 /obj/item/clothing/head/mob_holder/container_resist_act()
 	release()
 
+/obj/item/clothing/head/mob_holder/Exited(atom/movable/gone, direction)
+	if(held_mob && held_mob == gone)
+		release()
+
 /obj/item/clothing/head/mob_holder/on_found(mob/finder)
 	if(held_mob?.will_escape_storage())
 		to_chat(finder, span_warning("\A [held_mob.name] pops out! "))

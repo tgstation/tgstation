@@ -103,10 +103,12 @@
 	data["direction"] = direction
 	data["connected"] = !!connected_port
 	data["pressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
-	data["target_pressure"] = round(target_pressure ? target_pressure : 0)
-	data["default_pressure"] = round(PUMP_DEFAULT_PRESSURE)
-	data["min_pressure"] = round(PUMP_MIN_PRESSURE)
-	data["max_pressure"] = round(PUMP_MAX_PRESSURE)
+	data["targetPressure"] = round(target_pressure ? target_pressure : 0)
+	data["defaultPressure"] = round(PUMP_DEFAULT_PRESSURE)
+	data["minPressure"] = round(PUMP_MIN_PRESSURE)
+	data["maxPressure"] = round(PUMP_MAX_PRESSURE)
+	data["hasHypernobCrystal"] = !!nob_crystal_inserted
+	data["reactionSuppressionEnabled"] = !!suppress_reactions
 
 	if(holding)
 		data["holding"] = list()
@@ -164,6 +166,15 @@
 			if(holding)
 				replace_tank(usr, FALSE)
 				. = TRUE
+		if("reaction_suppression")
+			if(!nob_crystal_inserted)
+				stack_trace("[usr] tried to toggle reaction suppression on a pump without a noblium crystal inside, possible href exploit attempt.")
+				return
+			suppress_reactions = !suppress_reactions
+			SSair.start_processing_machine(src)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			investigate_log("[key_name(usr)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+			. = TRUE
 	update_appearance()
 
 /obj/machinery/portable_atmospherics/pump/unregister_holding()

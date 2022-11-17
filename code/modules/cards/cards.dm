@@ -98,7 +98,7 @@
  * * obj/item/toy/singlecard/card (optional) - The card drawn from the hand
 **/
 /obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
-	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
+	if(!isliving(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
 		return
 
 	var/has_no_cards = !LAZYLEN(cards)

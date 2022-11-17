@@ -174,7 +174,7 @@
 			if(message1 == "" && message2 == "")
 				return
 
-	. += emissive_appearance(icon, "outline", alpha = src.alpha)
+	. += emissive_appearance(icon, "outline", src, alpha = src.alpha)
 
 // Timed process - performs nothing in the base class
 /obj/machinery/status_display/process()
@@ -448,9 +448,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		if(NAMEOF(src, shuttle_id))
 			update()
 
-/obj/machinery/status_display/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/status_display/shuttle/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(port)
-		shuttle_id = port.id
+		shuttle_id = port.shuttle_id
 	update()
 
 

@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/Initialize()
 	space_type_cache = typecacheof(/turf/open/space)
 	mobs = new(10)
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/flowcache
 	var/lcount
@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(pathfinder)
 		while(flow[free])
 			CHECK_TICK
 			free = (free % lcount) + 1
-		var/t = addtimer(CALLBACK(src, /datum/flowcache.proc/toolong, free), 150, TIMER_STOPPABLE)
+		var/t = addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/flowcache, toolong), free), 150, TIMER_STOPPABLE)
 		flow[free] = t
 		flow[t] = M
 		return free

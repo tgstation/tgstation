@@ -30,7 +30,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/onehalf/hallway)
 "al" = (
-/obj/machinery/sleeper/syndie{
+/obj/machinery/sleeper/self_control{
 	dir = 4
 	},
 /turf/open/floor/iron/white,

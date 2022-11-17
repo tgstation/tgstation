@@ -37,9 +37,7 @@
 /turf/open/floor/holofloor/beach,
 /area/template_noop)
 "Q" = (
-/mob/living/simple_animal/crab{
-	name = "Jon"
-	},
+/obj/effect/holodeck_effect/mobspawner/crab/jon,
 /turf/open/floor/holofloor/beach/coast_t,
 /area/template_noop)
 "R" = (

@@ -170,6 +170,8 @@
  *
  * This sets up a listening relationship such that when the target object emits a signal
  * the source datum this proc is called upon, will receive a callback to the given proctype
+ * Use PROC_REF(procname), TYPE_PROC_REF(type,procname) or GLOBAL_PROC_REF(procname) macros to validate the passed in proc at compile time.
+ * PROC_REF for procs defined on current type or it's ancestors, TYPE_PROC_REF for procs defined on unrelated type and GLOBAL_PROC_REF for global procs.
  * Return values from procs registered must be a bitfield
  *
  * Arguments:
@@ -192,7 +194,7 @@
 
 	for(var/sig_type in (islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)))
 		if(!override && target_procs[sig_type])
-			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+			log_signal("[sig_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [target] ([target.type]) Proc: [proctype]")
 
 		target_procs[sig_type] = proctype
 		var/list/looked_up = lookup[sig_type]

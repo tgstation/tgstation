@@ -29,8 +29,8 @@
 
 		current_unlocked_designs[design.build_path] = design.id
 
-	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
-	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
+	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_research))
+	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_removed))
 
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
@@ -128,8 +128,10 @@
 
 /obj/machinery/component_printer/ui_static_data(mob/user)
 	var/list/data = list()
-
 	var/list/designs = list()
+
+	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/size32x32 = "[spritesheet.name]32x32"
 
 	// for (var/datum/design/component/component_design_type as anything in subtypesof(/datum/design/component))
 	for (var/researched_design_id in techweb.researched_designs)
@@ -137,11 +139,16 @@
 		if (!(design.build_type & COMPONENT_PRINTER))
 			continue
 
+		var/icon_size = spritesheet.icon_size_id(design.id)
+
 		designs[researched_design_id] = list(
 			"name" = design.name,
-			"description" = design.desc,
-			"materials" = get_material_cost_data(design.materials),
+			"desc" = design.desc,
+			"cost" = get_material_cost_data(design.materials),
+			"id" = researched_design_id,
 			"categories" = design.category,
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
+			"constructionTime" = -1
 		)
 
 	data["designs"] = designs
@@ -228,7 +235,8 @@
 
 /obj/machinery/debug_component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet/research_designs)
 	)
 
 /obj/machinery/debug_component_printer/ui_act(action, list/params)
@@ -296,7 +304,8 @@
 
 /obj/machinery/module_duplicator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet/research_designs)
 	)
 
 /obj/machinery/module_duplicator/ui_act(action, list/params)
@@ -339,7 +348,7 @@
 
 /obj/machinery/module_duplicator/proc/print_module(list/design)
 	flick("module-fab-print", src)
-	addtimer(CALLBACK(src, .proc/finish_module_print, design), 1.6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_module_print), design), 1.6 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_print(list/design)
 	var/atom/movable/created_atom
@@ -403,13 +412,15 @@
 			return ..()
 
 	flick("module-fab-scan", src)
-	addtimer(CALLBACK(src, .proc/finish_module_scan, user, data), 1.4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_module_scan), user, data), 1.4 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
 	scanned_designs += list(data)
 
 	balloon_alert(user, "module has been saved.")
 	playsound(src, 'sound/machines/ping.ogg', 50)
+
+	update_static_data_for_all_viewers()
 
 /obj/machinery/module_duplicator/ui_data(mob/user)
 	var/list/data = list()
@@ -422,12 +433,15 @@
 	var/list/designs = list()
 
 	var/index = 1
+
 	for (var/list/design as anything in scanned_designs)
 		designs["[index]"] = list(
 			"name" = design["name"],
-			"description" = design["desc"],
-			"materials" = get_material_cost_data(design["materials"]),
-			"categories" = list("Circuitry"),
+			"desc" = design["desc"],
+			"cost" = get_material_cost_data(design["materials"]),
+			"id" = "[index]",
+			"icon" = "integrated_circuit",
+			"categories" = list("/Saved Circuits"),
 		)
 		index++
 

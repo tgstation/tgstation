@@ -15,6 +15,8 @@
 /obj/item/clothing/head/hooded/flashsuit
 	name = "flash button"
 	desc = "You will learn to fear the flash."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "flashsuit"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK|HIDESNOUT
@@ -23,7 +25,7 @@
 	name = "pirate coat"
 	desc = "Yarr."
 	icon_state = "pirate"
-	inhand_icon_state = "pirate"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum)
 	species_exception = list(/datum/species/golem)
@@ -38,7 +40,7 @@
 	name = "pirate captain coat"
 	desc = "Yarr."
 	icon_state = "hgpirate"
-	inhand_icon_state = "hgpirate"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/pirate/armored
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
@@ -50,7 +52,7 @@
 	name = "cyborg suit"
 	desc = "Suit for a cyborg costume."
 	icon_state = "death"
-	inhand_icon_state = "death"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	flags_1 = CONDUCT_1
 	fire_resist = T0C+5200
@@ -60,7 +62,7 @@
 	name = "justice suit"
 	desc = "this pretty much looks ridiculous" //Needs no fixing
 	icon_state = "justice"
-	inhand_icon_state = "justice"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
@@ -86,7 +88,7 @@
 	name = "purple bartender apron"
 	desc = "A fancy purple apron for a stylish person."
 	icon_state = "purplebartenderapron"
-	inhand_icon_state = "purplebartenderapron"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/syndicatefake
@@ -106,7 +108,7 @@
 	name = "\improper Hastur's robe"
 	desc = "Robes not meant to be worn by man."
 	icon_state = "hastur"
-	inhand_icon_state = "hastur"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -131,7 +133,7 @@
 	name = "monkey suit"
 	desc = "A suit that looks like a primate."
 	icon_state = "monkeysuit"
-	inhand_icon_state = "monkeysuit"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
@@ -141,7 +143,7 @@
 	icon_state = "owl_wings"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	inhand_icon_state = "owl_wings"
+	inhand_icon_state = null
 	toggle_noun = "wings"
 	body_parts_covered = ARMS|CHEST
 
@@ -153,7 +155,7 @@
 	name = "griffon cloak"
 	desc = "A plush white cloak made of synthetic feathers. Soft to the touch, stylish, and a 2 meter wing span that will drive your captives mad."
 	icon_state = "griffin_wings"
-	inhand_icon_state = "griffin_wings"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/cardborg
 	name = "cardborg suit"
@@ -166,18 +168,18 @@
 
 /obj/item/clothing/suit/costume/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(slot == ITEM_SLOT_OCLOTHING)
+	if(slot & ITEM_SLOT_OCLOTHING)
 		disguise(user)
 
 /obj/item/clothing/suit/costume/cardborg/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
 
-/obj/item/clothing/suit/costume/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/cardborg/borghead)
+/obj/item/clothing/suit/costume/cardborg/proc/disguise(mob/living/carbon/human/H, obj/item/clothing/head/costume/cardborg/borghead)
 	if(istype(H))
 		if(!borghead)
 			borghead = H.head
-		if(istype(borghead, /obj/item/clothing/head/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
+		if(istype(borghead, /obj/item/clothing/head/costume/cardborg)) //why is this done this way? because equipped() is called BEFORE THE ITEM IS IN THE SLOT WHYYYY
 			var/image/I = image(icon = 'icons/mob/silicon/robots.dmi' , icon_state = "robot", loc = H)
 			I.override = 1
 			I.add_overlay(mutable_appearance('icons/mob/silicon/robots.dmi', "robot_e")) //gotta look realistic
@@ -187,7 +189,7 @@
 	name = "snowman outfit"
 	desc = "Two white spheres covered in white glitter. 'Tis the season."
 	icon_state = "snowman"
-	inhand_icon_state = "snowman"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN
 	flags_inv = HIDEJUMPSUIT
 
@@ -195,26 +197,26 @@
 	name = "poncho"
 	desc = "Your classic, non-racist poncho."
 	icon_state = "classicponcho"
-	inhand_icon_state = "classicponcho"
+	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/poncho/green
 	name = "green poncho"
 	desc = "Your classic, non-racist poncho. This one is green."
 	icon_state = "greenponcho"
-	inhand_icon_state = "greenponcho"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/poncho/red
 	name = "red poncho"
 	desc = "Your classic, non-racist poncho. This one is red."
 	icon_state = "redponcho"
-	inhand_icon_state = "redponcho"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/poncho/ponchoshame
 	name = "poncho of shame"
 	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseparable. Literally."
 	icon_state = "ponchoshame"
-	inhand_icon_state = "ponchoshame"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/poncho/ponchoshame/Initialize(mapload)
 	. = ..()
@@ -244,6 +246,8 @@
 /obj/item/clothing/head/hooded/carp_hood
 	name = "carp hood"
 	desc = "A hood attached to a carp costume."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "carp_casual"
 	body_parts_covered = HEAD
 	cold_protection = HEAD
@@ -252,7 +256,7 @@
 
 /obj/item/clothing/head/hooded/carp_hood/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == ITEM_SLOT_HEAD)
+	if (slot & ITEM_SLOT_HEAD)
 		user.faction |= "carp"
 
 /obj/item/clothing/head/hooded/carp_hood/dropped(mob/living/carbon/human/user)
@@ -318,6 +322,8 @@
 /obj/item/clothing/head/hooded/ian_hood
 	name = "corgi hood"
 	desc = "A hood that looks just like a corgi's head, it won't guarantee dog biscuits."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "ian"
 	body_parts_covered = HEAD
 	//cold_protection = HEAD
@@ -338,11 +344,12 @@
 /obj/item/clothing/head/hooded/bee_hood
 	name = "bee hood"
 	desc = "A hood attached to a bee costume."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "bee"
 	body_parts_covered = HEAD
 	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEHAIR|HIDEEARS
-
 
 /obj/item/clothing/suit/hooded/bloated_human //OH MY GOD WHAT HAVE YOU DONE!?!?!?
 	name = "bloated human suit"
@@ -357,10 +364,11 @@
 	hoodtype = /obj/item/clothing/head/hooded/human_head
 	species_exception = list(/datum/species/golem) //Finally, flesh
 
-
 /obj/item/clothing/head/hooded/human_head
 	name = "bloated human head"
 	desc = "A horribly bloated and mismatched human head."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "lingspacehelmet"
 	body_parts_covered = HEAD
 	flags_cover = HEADCOVERSEYES
@@ -370,7 +378,7 @@
 	name = "shrine maiden's outfit"
 	desc = "Makes you want to exterminate some troublesome youkai."
 	icon_state = "shrine_maiden"
-	inhand_icon_state = "shrine_maiden"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
@@ -378,31 +386,31 @@
 	name = "striped sweater"
 	desc = "Reminds you of someone, but you just can't put your finger on it..."
 	icon_state = "waldo_shirt"
-	inhand_icon_state = "waldo_shirt"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/dracula
 	name = "dracula coat"
 	desc = "Looks like this belongs in a very old movie set."
 	icon_state = "draculacoat"
-	inhand_icon_state = "draculacoat"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/drfreeze_coat
 	name = "doctor freeze's labcoat"
 	desc = "A labcoat imbued with the power of features and freezes."
 	icon_state = "drfreeze_coat"
-	inhand_icon_state = "drfreeze_coat"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/gothcoat
 	name = "gothic coat"
 	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
-	inhand_icon_state = "gothcoat"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/costume/xenos
 	name = "xenos suit"
 	desc = "A suit made out of chitinous alien hide."
 	icon_state = "xenos"
-	inhand_icon_state = "xenos_helm"
+	inhand_icon_state = "xenos_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
@@ -411,35 +419,35 @@
 	name = "pharoah tunic"
 	desc = "Lavish space tomb not included."
 	icon_state = "pharoah"
-	inhand_icon_state = "pharoah"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN
 
 /obj/item/clothing/suit/costume/changshan_red
 	name = "red changshan"
 	desc = "A gorgeously embroidered silk shirt."
 	icon_state = "changshan_red"
-	inhand_icon_state = "changshan_red"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 /obj/item/clothing/suit/costume/changshan_blue
 	name = "blue changshan"
 	desc = "A gorgeously embroidered silk shirt."
 	icon_state = "changshan_blue"
-	inhand_icon_state = "changshan_blue"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 /obj/item/clothing/suit/costume/cheongsam_red
 	name = "red cheongsam"
 	desc = "A gorgeously embroidered silk dress."
 	icon_state = "cheongsam_red"
-	inhand_icon_state = "cheongsam_red"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 /obj/item/clothing/suit/costume/cheongsam_blue
 	name = "blue cheongsam"
 	desc = "A gorgeously embroidered silk dress."
 	icon_state = "cheongsam_blue"
-	inhand_icon_state = "cheongsam_blue"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 /obj/item/clothing/suit/costume/bronze
@@ -463,8 +471,10 @@
 /obj/item/clothing/head/hooded/mysticrobe
 	name = "mystic's hood"
 	desc = "The balance of reality tips towards order."
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "mystichood"
-	inhand_icon_state = "mystichood"
+	inhand_icon_state = null
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
 
@@ -474,14 +484,14 @@
 	icon_state = "capformal"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
-	inhand_icon_state = "capspacesuit"
+	inhand_icon_state = null
 	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50)
 
 /obj/item/clothing/suit/costume/hawaiian
 	name = "hawaiian overshirt"
 	desc = "A cool shirt for chilling on the beach."
 	icon_state = "hawaiian_blue"
-	inhand_icon_state = "hawaiian_blue"
+	inhand_icon_state = null
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/football_armor
@@ -503,7 +513,7 @@
 	name = "decker hoodie"
 	desc = "Based? Based on what?"
 	icon_state = "decker_suit"
-	inhand_icon_state = "decker_suit"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -511,21 +521,21 @@
 	name = "soviet armored coat"
 	desc = "Conscript reporting! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
 	icon_state = "soviet_suit"
-	inhand_icon_state = "soviet_suit"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 /obj/item/clothing/suit/costume/yuri
 	name = "yuri initiate coat"
 	desc = "Yuri is master! Sponsored by DonkSoft Co. for historical reenactment of the Third World War!"
 	icon_state = "yuri_coat"
-	inhand_icon_state = "yuri_coat"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/suit/costume/tmc
 	name = "\improper Lost M.C. cut"
 	desc = "Making sure everyone knows you're in the best biker gang this side of Alderney."
 	icon_state = "tmc_suit"
-	inhand_icon_state = "tmc_suit"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
@@ -533,6 +543,6 @@
 	name = "powder ganger jacket"
 	desc = "Remind Security of their mistakes in giving prisoners blasting charges."
 	icon_state = "pg_suit"
-	inhand_icon_state = "pg_suit"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON

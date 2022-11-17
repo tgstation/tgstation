@@ -21,7 +21,7 @@
 		if(SOUTH)
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			plane = GAME_PLANE_UPPER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		if(EAST)
 			target_pixel_x = 16
 		if(WEST)
@@ -36,12 +36,12 @@
 			target_pixel_x = 16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			plane = GAME_PLANE_UPPER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 		if(SOUTHWEST)
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-			plane = GAME_PLANE_UPPER
+			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
@@ -499,7 +499,7 @@
 	status = rcd_status
 	delay = rcd_delay
 	if (status == RCD_DECONSTRUCT)
-		addtimer(CALLBACK(src, /atom/.proc/update_appearance), 1.1 SECONDS)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 1.1 SECONDS)
 		delay -= 11
 		icon_state = "rcd_end_reverse"
 	else
@@ -525,7 +525,7 @@
 		qdel(src)
 	else
 		icon_state = "rcd_end"
-		addtimer(CALLBACK(src, .proc/end), 15)
+		addtimer(CALLBACK(src, PROC_REF(end)), 15)
 
 /obj/effect/constructing_effect/proc/end()
 	qdel(src)
@@ -562,6 +562,7 @@
 		return INITIALIZE_HINT_QDEL
 	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	mod_man = WEAKREF(looker)
 	add_mind(looker)
 

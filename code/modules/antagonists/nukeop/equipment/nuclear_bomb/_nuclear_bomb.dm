@@ -32,7 +32,7 @@ GLOBAL_VAR(station_nuke_source)
 	/// world time tracker for when we're going to explode
 	var/detonation_timer = null
 	/// The code we need to detonate this nuke. Starts as "admin", purposefully un-enterable
-	var/r_code = "ADMIN"
+	var/r_code = NUKE_CODE_UNSET
 	/// If TRUE, the correct code has been entered and we can start the nuke
 	var/yes_code = FALSE
 	/// Whether the nuke safety is on, can't explode if it is
@@ -501,7 +501,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /**
  * Begins the process of exploding the nuke.
- * [proc/explode] -> [proc/actually_explode] -> [proc/really_actually_explode]
+ * [proc/explode] -> [proc/actually_explode] -> [proc/really_actually_explode])
  *
  * Goes through a few timers and plays a cinematic.
  */
@@ -518,7 +518,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	if(SSticker?.mode)
 		SSticker.roundend_check_paused = TRUE
-	addtimer(CALLBACK(src, .proc/actually_explode), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(actually_explode)), 10 SECONDS)
 	return TRUE
 
 /obj/machinery/nuclearbomb/proc/actually_explode()
@@ -559,11 +559,6 @@ GLOBAL_VAR(station_nuke_source)
 	else
 		detonation_status = DETONATION_MISSED_STATION
 
-	// Missing the station will register a hostile environment, until it actually explodes
-	if(detonation_status == DETONATION_MISSED_STATION)
-		SSshuttle.registerHostileEnvironment(src)
-		SSshuttle.lockdown = TRUE
-
 	// Now go play the cinematic
 	GLOB.station_nuke_source = detonation_status
 	really_actually_explode(detonation_status)
@@ -590,7 +585,7 @@ GLOBAL_VAR(station_nuke_source)
 
 /// Cause nuke effects to the passed z-levels.
 /obj/machinery/nuclearbomb/proc/nuke_effects(list/affected_z_levels)
-	INVOKE_ASYNC(GLOBAL_PROC, /proc/callback_on_everyone_on_z, affected_z_levels, CALLBACK(GLOBAL_PROC, /proc/nuke_gib), src)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(callback_on_everyone_on_z), affected_z_levels, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(nuke_gib)), src)
 
 /// Gets what type of cinematic this nuke showcases depending on where we detonated.
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(detonation_status)
@@ -617,6 +612,7 @@ GLOBAL_VAR(station_nuke_source)
 		return FALSE
 
 	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
+	gibbed.investigate_log("has been gibbed by a nuclear blast.", INVESTIGATE_DEATHS)
 	gibbed.gib()
 	return TRUE
 

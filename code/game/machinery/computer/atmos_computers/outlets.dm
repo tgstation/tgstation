@@ -15,7 +15,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/on_deconstruction()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
+	INVOKE_ASYNC(src, PROC_REF(broadcast_destruction), src.frequency)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -140,13 +140,13 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/Destroy()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
+	INVOKE_ASYNC(src, PROC_REF(broadcast_destruction), src.frequency)
 	SSradio.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/on_deconstruction()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
+	INVOKE_ASYNC(src, PROC_REF(broadcast_destruction), src.frequency)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)

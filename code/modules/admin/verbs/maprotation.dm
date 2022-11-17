@@ -98,9 +98,11 @@
 
 		if(SSmapping.changemap(VM))
 			message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")
+			SSmapping.map_force_chosen = TRUE
 	else
 		var/datum/map_config/VM = maprotatechoices[chosenmap]
 		message_admins("[key_name_admin(usr)] is changing the map to [VM.map_name]")
 		log_admin("[key_name(usr)] is changing the map to [VM.map_name]")
 		if (SSmapping.changemap(VM))
 			message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")
+			SSmapping.map_force_chosen = TRUE

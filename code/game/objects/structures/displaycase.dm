@@ -458,7 +458,7 @@
 			if(!payments_acc)
 				to_chat(usr, span_notice("[src] hasn't been registered yet."))
 				return TRUE
-			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			if(!usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 				return TRUE
 			if(!potential_acc)
 				to_chat(usr, span_notice("No ID card detected."))
@@ -471,9 +471,9 @@
 				to_chat(usr, span_notice("You do not possess the funds to purchase this."))
 				return TRUE
 			else
-				account.adjust_money(-sale_price)
+				account.adjust_money(-sale_price, "Display Case: [capitalize(showpiece)]")
 				if(payments_acc)
-					payments_acc.adjust_money(sale_price)
+					payments_acc.adjust_money(sale_price, "Display Case: [capitalize(showpiece)]")
 				usr.put_in_hands(showpiece)
 				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] credits."))
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
@@ -514,7 +514,7 @@
 			if(payments_acc != potential_acc.registered_account)
 				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
-			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			if(!usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 				to_chat(usr, span_warning("You need to get closer!"))
 				return
 			sale_price = new_price_input

@@ -14,6 +14,7 @@
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "WARDEN"
 
 	outfit = /datum/outfit/job/warden
 	plasmaman_outfit = /datum/outfit/plasmaman/warden
@@ -21,7 +22,6 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SEC
 
-	mind_traits = list(TRAIT_DONUT_LOVER)
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM, TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_WARDEN
@@ -59,8 +59,8 @@
 	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/warden/red
-	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/hats/warden/red
+	shoes = /obj/item/clothing/shoes/jackboots/sec
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
 

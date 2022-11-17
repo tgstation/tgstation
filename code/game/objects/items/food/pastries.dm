@@ -88,7 +88,7 @@
 	trash_type = /obj/item/trash/waffles
 	bite_consumption = 4
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/drug/mushroomhallucinogen = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("waffle" = 1, "mushrooms" = 1)
+	tastes = list("waffles" = 1, "mushrooms" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -131,13 +131,13 @@
 	if (fortune)
 		fortune.forceMove(drop_location)
 		return fortune
-		
+
 	// Otherwise, use a generic one
 	var/obj/item/paperslip/fortune_slip = new trash_type(drop_location)
-	fortune_slip.name = "fortune slip"	
+	fortune_slip.name = "fortune slip"
 	// if someone adds lottery tickets in the future, be sure to add random numbers to this
 	fortune_slip.desc = pick(GLOB.wisdoms)
-	
+
 	return fortune_slip
 
 /obj/item/food/fortunecookie/MakeLeaveTrash()
@@ -204,7 +204,7 @@
 
 /obj/item/food/cookie/sugar/Initialize(mapload)
 	. = ..()
-	if(SSevents.holidays && SSevents.holidays[FESTIVE_SEASON])
+	if(check_holidays(FESTIVE_SEASON))
 		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
 		desc = "A sugar cookie in the shape of a [shape]. I hope Santa likes it!"
 		icon_state = "sugarcookie_[shape]"

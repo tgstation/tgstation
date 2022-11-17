@@ -36,10 +36,13 @@
 		user.update_held_items()
 		return 1
 
-/datum/action/changeling/weapon/sting_action(mob/living/user)
+/datum/action/changeling/weapon/sting_action(mob/living/carbon/user)
 	var/obj/item/held = user.get_active_held_item()
 	if(held && !user.dropItemToGround(held))
 		to_chat(user, span_warning("[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!"))
+		return
+	if(!istype(user))
+		to_chat(user, span_warning("You can't do that in this state!"))
 		return
 	..()
 	var/limb_regen = 0
@@ -278,10 +281,9 @@
 	if(charges == 0)
 		qdel(src)
 
-/obj/item/gun/magic/tentacle/suicide_act(mob/user)
+/obj/item/gun/magic/tentacle/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] coils [src] tightly around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (OXYLOSS)
-
+	return OXYLOSS
 
 /obj/item/ammo_casing/magic/tentacle
 	name = "tentacle"
@@ -379,7 +381,7 @@
 						return BULLET_ACT_HIT
 				if(firer_combat_mode)
 					C.visible_message(span_danger("[L] is thrown towards [H] by a tentacle!"),span_userdanger("A tentacle grabs you and throws you towards [H]!"))
-					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, .proc/tentacle_grab, H, C))
+					C.throw_at(get_step_towards(H,C), 8, 2, H, TRUE, TRUE, callback=CALLBACK(src, PROC_REF(tentacle_grab), H, C))
 					return BULLET_ACT_HIT
 				else
 					C.visible_message(span_danger("[L] is grabbed by [H]'s tentacle!"),span_userdanger("A tentacle grabs you and pulls you towards [H]!"))
@@ -456,7 +458,7 @@
 \***************************************/
 /datum/action/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure. Costs 20 chemicals."
+	desc = "We grow an organic suit to protect ourselves from space exposure, including regulation of temperature and oxygen needs. Costs 20 chemicals."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
 	button_icon_state = "organic_suit"
 	chemical_cost = 20
@@ -501,10 +503,13 @@
 
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "lingspacehelmet"
+	inhand_icon_state = null
 	desc = "A covering of pressure and temperature-resistant organic tissue with a glass-like chitin front."
 	item_flags = DROPDEL
-	clothing_flags = STOPSPRESSUREDAMAGE
+	clothing_flags = STOPSPRESSUREDAMAGE | HEADINTERNALS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 90, ACID = 90)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -518,7 +523,7 @@
 /datum/action/changeling/suit/armor
 	name = "Chitinous Armor"
 	desc = "We turn our skin into tough chitin to protect us from damage. Costs 20 chemicals."
-	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form."
+	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor provides decent protection against brute force and energy weapons. Cannot be used in lesser form."
 	button_icon_state = "chitinous_armor"
 	chemical_cost = 20
 	dna_cost = 1
@@ -534,6 +539,7 @@
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin."
 	icon_state = "lingarmor"
+	inhand_icon_state = null
 	item_flags = DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 10, BIO = 10, FIRE = 90, ACID = 90)
@@ -551,6 +557,7 @@
 	name = "chitinous mass"
 	desc = "A tough, hard covering of black chitin with transparent chitin in front."
 	icon_state = "lingarmorhelmet"
+	inhand_icon_state = null
 	item_flags = DROPDEL
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 10, BIO = 10, FIRE = 90, ACID = 90)
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEEYES|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT

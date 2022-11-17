@@ -90,7 +90,9 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 /obj/structure/flora/attackby(obj/item/used_item, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
-
+	if(flags_1 & HOLOGRAM_1)
+		balloon_alert(user, "it goes right through!")
+		return ..()
 	if(can_uproot && is_type_in_typecache(used_item, uprooting_tools))
 		if(uprooted)
 			user.visible_message(span_notice("[user] starts to replant [src]..."),
@@ -183,6 +185,8 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
  */
 /obj/structure/flora/proc/can_harvest(mob/user, obj/item/harvesting_item)
 
+	if(flags_1 & HOLOGRAM_1)
+		return FALSE
 	if(harvested || !harvestable)
 		return null
 
@@ -270,7 +274,7 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 		desc = harvested_desc
 	harvested = TRUE
 	if(!delete_on_harvest && regrowth_time_high > 0)
-		addtimer(CALLBACK(src, .proc/regrow), rand(regrowth_time_low, regrowth_time_high))
+		addtimer(CALLBACK(src, PROC_REF(regrow)), rand(regrowth_time_low, regrowth_time_high))
 
 /obj/structure/flora/proc/after_harvest(user)
 	if(delete_on_harvest)
@@ -323,6 +327,15 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	harvest_verb_suffix = "s down"
 	delete_on_harvest = TRUE
 	flora_flags = FLORA_HERBAL | FLORA_WOODEN
+
+/obj/structure/flora/tree/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/seethrough, get_seethrough_map())
+
+///Return a see_through_map, examples in seethrough.dm
+/obj/structure/flora/tree/proc/get_seethrough_map()
+	return SEE_THROUGH_MAP_DEFAULT
 
 /obj/structure/flora/tree/harvest(mob/living/user)
 	. = ..()
@@ -381,6 +394,9 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	pixel_x = -48
 	pixel_y = -20
 
+/obj/structure/flora/tree/jungle/get_seethrough_map()
+	return SEE_THROUGH_MAP_THREE_X_THREE
+
 /obj/structure/flora/tree/jungle/style_2
 	icon_state = "tree2"
 /obj/structure/flora/tree/jungle/style_3
@@ -400,6 +416,9 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
 	icon_state = "tree1"
+
+/obj/structure/flora/tree/jungle/small/get_seethrough_map()
+	return SEE_THROUGH_MAP_THREE_X_TWO
 
 /obj/structure/flora/tree/jungle/small/style_2
 	icon_state = "tree2"
@@ -424,6 +443,9 @@ GLOBAL_LIST_EMPTY(flora_uprooting_tools_typepaths)
 	desc = "A coniferous pine tree."
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
+
+/obj/structure/flora/tree/pine/get_seethrough_map()
+	return SEE_THROUGH_MAP_DEFAULT_TWO_TALL
 
 /obj/structure/flora/tree/pine/style_2
 	icon_state = "pine_2"

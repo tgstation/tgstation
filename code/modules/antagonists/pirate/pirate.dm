@@ -51,7 +51,7 @@
 	return ..()
 
 /datum/team/pirate
-	name = "Pirate crew"
+	name = "\improper Pirate crew"
 
 /datum/team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
@@ -84,7 +84,7 @@
 	//Lists notable loot.
 	if(!cargo_hold || !cargo_hold.total_report)
 		return "Nothing"
-	cargo_hold.total_report.total_value = sortTim(cargo_hold.total_report.total_value, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
+	cargo_hold.total_report.total_value = sortTim(cargo_hold.total_report.total_value, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	var/count = 0
 	var/list/loot_texts = list()
 	for(var/datum/export/E in cargo_hold.total_report.total_value)

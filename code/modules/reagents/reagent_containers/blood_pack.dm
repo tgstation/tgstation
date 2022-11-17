@@ -73,7 +73,7 @@
 		if(!user.can_write(tool))
 			return
 		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, MAX_NAME_LEN)
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 		if(user.get_active_held_item() != tool)
 			return

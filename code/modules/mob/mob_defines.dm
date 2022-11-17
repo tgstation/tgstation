@@ -7,7 +7,6 @@
  * Has a lot of the creature game world logic, such as health etc
  */
 /mob
-	datum_flags = DF_USE_TAG
 	density = TRUE
 	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
@@ -26,9 +25,6 @@
 	var/client/canon_client
 
 	var/shift_to_open_context_menu = TRUE
-
-	///when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
-	vis_flags = VIS_INHERIT_PLANE
 
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind

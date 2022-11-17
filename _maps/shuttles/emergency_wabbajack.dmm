@@ -272,11 +272,11 @@
 /turf/open/lava/smooth/airless,
 /area/shuttle/escape)
 "bf" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/lava/smooth/airless,
 /area/shuttle/escape)
 "bg" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bi" = (

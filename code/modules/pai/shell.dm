@@ -7,7 +7,6 @@
 /mob/living/silicon/pai/start_pulling(atom/movable/thing, state, force = move_force, supress_message = FALSE)
 	return FALSE
 
-
 /mob/living/silicon/pai/update_resting()
 	. = ..()
 	if(resting)
@@ -56,7 +55,7 @@
 		skins += list("[holochassis_option]" = item_image)
 	sort_list(skins)
 	var/atom/anchor = get_atom_on_turf(src)
-	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)
+	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), anchor), radius = 40, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	set_holochassis(choice)
@@ -89,7 +88,7 @@
 		mob_head.release(display_messages = FALSE)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
-		client.eye = card
+		client.set_eye(card)
 	var/turf/target = drop_location()
 	card.forceMove(target)
 	forceMove(card)
@@ -140,7 +139,7 @@
 	card.forceMove(src)
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
-		client.eye = src
+		client.set_eye(src)
 	set_light_on(FALSE)
 	icon_state = "[chassis]"
 	held_state = "[chassis]"

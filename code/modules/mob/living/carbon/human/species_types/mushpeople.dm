@@ -18,10 +18,6 @@
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
 
-	punchdamagelow = 6
-	punchdamagehigh = 14
-	punchstunthreshold = 14 //about 44% chance to stun
-
 	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING)
 
 	burnmod = 1.25
@@ -33,11 +29,11 @@
 	species_language_holder = /datum/language_holder/mushroom
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/mushroom,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/mushroom,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/mushroom,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/mushroom,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/mushroom,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/mushroom,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/mushroom,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/mushroom,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/mushroom,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/mushroom,
 	)
 

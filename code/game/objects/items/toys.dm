@@ -208,6 +208,8 @@
 	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "captainsaid_off"
+	custom_price = PAYCHECK_COMMAND * 1.25
+
 	/// List of modes it can cycle through
 	var/list/modes = list(
 		"off",
@@ -258,7 +260,7 @@
 	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.adjust_nutrition(50) // mmmm delicious
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), (3SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), (3SECONDS))
 	return MANUAL_SUICIDE
 
 /**
@@ -381,6 +383,7 @@
 	name = "toy sword"
 	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
 	icon_state = "e_sword"
+	inhand_icon_state = "e_sword"
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -398,7 +401,15 @@
 		throw_speed_on = throw_speed, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Change blade color"
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -407,13 +418,53 @@
  */
 /obj/item/toy/sword/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
-
-	if(active)
-		icon_state = "[icon_state]_[saber_color]"
-
 	balloon_alert(user, "[active ? "flicked out":"pushed in"] [src]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 20, TRUE)
+	update_appearance(UPDATE_ICON)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/toy/sword/examine(mob/user)
+	. = ..()
+	. += span_notice("It has a lighting dial currently set to [saber_color] which looks like it can be turned with a <b>screwdriver</b>.")
+
+/obj/item/toy/sword/screwdriver_act(mob/living/user, obj/item/tool)
+	switch(saber_color)
+		if("red")
+			saber_color = "blue"
+		if("blue")
+			saber_color = "green"
+		if("green")
+			saber_color = "purple"
+		if("purple")
+			saber_color = "red"
+		else
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+	balloon_alert(user, "changed to [saber_color]")
+	update_appearance(UPDATE_ICON)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/item/toy/sword/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, saber_color))
+		update_appearance(UPDATE_ICON)
+
+/obj/item/toy/sword/update_icon_state()
+	. = ..()
+	var/datum/component/transforming/transforming_comp = GetComponent(/datum/component/transforming)
+	var/active = transforming_comp?.active
+	var/last_part = active ? "_on[saber_color ? "_[saber_color]" : null]" : null
+	icon_state = "[initial(icon_state)][last_part]"
+	inhand_icon_state = "[initial(inhand_icon_state)][last_part]"
+
+/obj/item/toy/sword/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's already fabulous!"))
+		return
+	hacked = TRUE
+	saber_color = "rainbow"
+	to_chat(user, span_warning("RNBW_ENGAGE"))
+	update_appearance(UPDATE_ICON)
+
 
 // Copied from /obj/item/melee/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/weapon, mob/living/user, params)
@@ -434,13 +485,6 @@
 			qdel(weapon)
 			qdel(src)
 			user.put_in_hands(new_saber)
-	else if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(hacked)
-			to_chat(user, span_warning("It's already fabulous!"))
-		else
-			hacked = TRUE
-			saber_color = "rainbow"
-			to_chat(user, span_warning("RNBW_ENGAGE"))
 	else
 		return ..()
 
@@ -493,7 +537,7 @@
 		update_appearance()
 		playsound(src, 'sound/effects/pope_entry.ogg', 100)
 		Rumble()
-		addtimer(CALLBACK(src, .proc/stopRumble), 600)
+		addtimer(CALLBACK(src, PROC_REF(stopRumble)), 600)
 	else
 		to_chat(user, span_warning("[src] is already active!"))
 
@@ -594,7 +638,7 @@
 /obj/item/toy/snappop/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -616,7 +660,7 @@
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
+	addtimer(CALLBACK(src, PROC_REF(respawn)), respawn_time)
 
 /obj/effect/decal/cleanable/ash/snappop_phoenix/proc/respawn()
 	new /obj/item/toy/snappop/phoenix(get_turf(src))
@@ -645,7 +689,7 @@
 		activation_message(user)
 		playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 
-		INVOKE_ASYNC(src, .proc/do_toy_talk, user)
+		INVOKE_ASYNC(src, PROC_REF(do_toy_talk), user)
 
 		cooldown = TRUE
 		addtimer(VARSET_CALLBACK(src, cooldown, FALSE), recharge_time)
@@ -664,7 +708,7 @@
 /obj/item/toy/talking/proc/do_toy_talk(mob/user)
 	for(var/message in generate_messages())
 		toy_talk(user, message)
-		sleep(10)
+		sleep(1 SECONDS)
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
 	say(message, spans = list(span))
@@ -733,26 +777,26 @@
 	if (obj_flags & EMAGGED && cooldown < world.time)
 		cooldown = world.time + 600
 		user.visible_message(span_hear("You hear the click of a button."), span_notice("You activate [src], it plays a loud noise!"))
-		sleep(5)
+		sleep(0.5 SECONDS)
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(140)
+		sleep(14 SECONDS)
 		user.visible_message(span_alert("[src] violently explodes!"))
 		explosion(src, light_impact_range = 1)
 		qdel(src)
 	else if (cooldown < world.time)
 		cooldown = world.time + 600 //1 minute
 		user.visible_message(span_warning("[user] presses a button on [src]."), span_notice("You activate [src], it plays a loud noise!"), span_hear("You hear the click of a button."))
-		sleep(5)
+		sleep(0.5 SECONDS)
 		icon_state = "nuketoy"
 		playsound(src, 'sound/machines/alarm.ogg', 20, FALSE)
-		sleep(135)
+		sleep(13.5 SECONDS)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
 		icon_state = "nuketoyidle"
 	else
 		var/timeleft = (cooldown - world.time)
 		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
-		sleep(5)
+		sleep(0.5 SECONDS)
 
 /obj/item/toy/nuke/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
@@ -768,6 +812,7 @@
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "minimeteor"
+	inhand_icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/minimeteor/emag_act(mob/user)
@@ -809,7 +854,7 @@
 			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				// Short delay to match up with the explosion sound
 				// Shakes player camera 2 squares for 1 second.
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/shake_camera, M, 2, 1), 0.8 SECONDS)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(shake_camera), M, 2, 1), 0.8 SECONDS)
 
 	else
 		to_chat(user, span_alert("Nothing happens."))
@@ -913,7 +958,7 @@
 		cooldown = (world.time + 50) //5 second cooldown
 		user.visible_message(span_notice("[user] pulls back the string on [src]."))
 		icon_state = "[initial(icon_state)]_used"
-		sleep(5)
+		sleep(0.5 SECONDS)
 		audible_message(span_danger("[icon2html(src, viewers(src))] Hiss!"))
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
@@ -1214,7 +1259,7 @@
 	if(cooldown <= world.time)
 		cooldown = (world.time + 300)
 		user.visible_message(span_notice("[user] adjusts the dial on [src]."))
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/radiostatic.ogg', 50, FALSE), 0.5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/radiostatic.ogg', 50, FALSE), 0.5 SECONDS)
 	else
 		to_chat(user, span_warning("The dial on [src] jams up"))
 		return
@@ -1229,7 +1274,7 @@
 /obj/item/toy/braintoy/attack_self(mob/user)
 	if(cooldown <= world.time)
 		cooldown = (world.time + 10)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
 
 /*
  * Eldritch Toys
@@ -1331,6 +1376,8 @@ GLOBAL_LIST_EMPTY(intento_players)
 	desc = "Fundamentally useless for all intentsive purposes."
 	icon = 'icons/obj/toys/intents.dmi'
 	icon_state = "blank"
+	custom_price = PAYCHECK_COMMAND * 1.25
+
 	/// Current sequence of intents
 	var/list/current_sequence = list()
 	/// Sequence player inputs

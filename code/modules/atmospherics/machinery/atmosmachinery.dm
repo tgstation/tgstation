@@ -19,7 +19,7 @@
 	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
 	max_integrity = 200
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
+	obj_flags = CAN_BE_HIT
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
@@ -92,6 +92,7 @@
 	var/turf/turf_loc = null
 	if(isturf(loc))
 		turf_loc = loc
+		turf_loc.add_blueprints_preround(src)
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	return ..()
@@ -294,7 +295,7 @@
  * * obj/machinery/atmospherics/target - the machinery we want to connect to
  */
 /obj/machinery/atmospherics/proc/check_connectable_color(obj/machinery/atmospherics/target)
-	if(lowertext(target.pipe_color) == lowertext(pipe_color) || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || lowertext(target.pipe_color) == lowertext(COLOR_VERY_LIGHT_GRAY) || lowertext(pipe_color) == lowertext(COLOR_VERY_LIGHT_GRAY))
+	if(target.pipe_color == pipe_color || ((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) || target.pipe_color == COLOR_VERY_LIGHT_GRAY || pipe_color == COLOR_VERY_LIGHT_GRAY)
 		return TRUE
 	return FALSE
 
@@ -467,8 +468,7 @@
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer = PIPING_LAYER_DEFAULT)
 	if(can_unwrench)
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
-		pipe_color = obj_color
-	update_name()
+		set_pipe_color(obj_color)
 	set_piping_layer(set_layer)
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
@@ -544,7 +544,7 @@
 	var/client/our_client = user.client
 	if(!our_client)
 		return
-	our_client.eye = target_move
+	our_client.set_eye(target_move)
 	// Let's smooth out that movement with an animate yeah?
 	// If the new x is greater (move is left to right) we get a negative offset. vis versa
 	our_client.pixel_x = (x - target_move.x) * world.icon_size
@@ -567,7 +567,7 @@
 	return list()
 
 /obj/machinery/atmospherics/update_remote_sight(mob/user)
-	user.sight |= (SEE_TURFS|BLIND)
+	user.add_sight(SEE_TURFS|BLIND)
 
 /**
  * Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
@@ -588,3 +588,8 @@
  */
 /obj/machinery/atmospherics/proc/paint(paint_color)
 	return FALSE
+
+/// Setter for pipe color, so we can ensure it's all uniform and save cpu time
+/obj/machinery/atmospherics/proc/set_pipe_color(pipe_colour)
+	src.pipe_color = uppertext(pipe_colour)
+	update_name()

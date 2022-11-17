@@ -1763,7 +1763,7 @@
 /obj/item/stack/rods{
 	amount = 50
 	},
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/stock_parts/cell/high,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -2073,7 +2073,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/item/weldingtool/largetank,
 /obj/item/analyzer,
 /turf/open/floor/iron,

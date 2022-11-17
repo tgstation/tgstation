@@ -103,7 +103,7 @@
 			continue
 		if(door.density)
 			continue
-		INVOKE_ASYNC(door, /obj/machinery/door/window/brigdoor.proc/close)
+		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/window/brigdoor, close))
 
 	for(var/datum/weakref/closet_ref as anything in closets)
 		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
@@ -143,7 +143,7 @@
 			continue
 		if(!door.density)
 			continue
-		INVOKE_ASYNC(door, /obj/machinery/door/window/brigdoor.proc/open)
+		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/window/brigdoor, open))
 
 	for(var/datum/weakref/closet_ref as anything in closets)
 		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
@@ -201,7 +201,7 @@
 		if(!flasher)
 			flashers -= flash_ref
 			continue
-		if(flasher.last_flash && (flasher.last_flash + 15 SECONDS) > world.time)
+		if(!COOLDOWN_FINISHED(flasher, flash_cooldown))
 			data["flash_charging"] = TRUE
 			break
 	return data

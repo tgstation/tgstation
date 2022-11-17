@@ -59,6 +59,8 @@
 	. = ..()
 	if(contents.len)
 		return
+	if(!fold_result)
+		return
 	new fold_result(user.drop_location())
 	balloon_alert(user, "folded")
 	user.put_in_active_hand(fold_result)
@@ -154,7 +156,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candlebox5"
 	base_icon_state = "candlebox"
-	inhand_icon_state = "candlebox5"
+	inhand_icon_state = null
 	worn_icon_state = "cigpack"
 	throwforce = 2
 	slot_flags = ITEM_SLOT_BELT
@@ -471,6 +473,8 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 5
 	contents_tag = "pickle"
+	fold_result = null
+	custom_materials = list(/datum/material/glass = 2000)
 
 /obj/item/storage/fancy/pickles_jar/Initialize(mapload)
 	. = ..()
@@ -480,11 +484,11 @@
 	SHOULD_CALL_PARENT(FALSE)
 	if(!contents.len)
 		icon_state = "[base_icon_state]_empty"
-	else 
+	else
 		if(contents.len < 5)
 			icon_state = "[base_icon_state]_[contents.len]"
-		else	
+		else
 			icon_state = base_icon_state
 	return
 
-	
+

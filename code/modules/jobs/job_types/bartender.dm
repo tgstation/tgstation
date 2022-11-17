@@ -8,6 +8,7 @@
 	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "BARTENDER"
 
 	outfit = /datum/outfit/job/bartender
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
@@ -20,7 +21,7 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/reagent_containers/cup/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/cup/glass/shaker)
+	family_heirlooms = list(/obj/item/reagent_containers/cup/rag, /obj/item/clothing/head/hats/tophat, /obj/item/reagent_containers/cup/glass/shaker)
 
 	mail_goodies = list(
 		/obj/item/storage/box/rubbershot = 30,

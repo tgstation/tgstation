@@ -75,17 +75,17 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/atmospherics/pipe/(?<type>[/\w]*)
     echo -e "${RED}ERROR: Found multiple identical pipes on the same tile, please remove them.${NC}"
     st=1
 fi;
-if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/barricade/(?<type>[/\w]*),\n[^)]*?/obj/structure/barricade/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/barricade(?<type>[/\w]*),\n[^)]*?/obj/structure/barricade\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
 	echo
     echo -e "${RED}ERROR: Found multiple identical barricades on the same tile, please remove them.${NC}"
     st=1
 fi;
-if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/table/(?<type>[/\w]*),\n[^)]*?/obj/structure/table/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/table(?<type>[/\w]*),\n[^)]*?/obj/structure/table\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
 	echo
     echo -e "${RED}ERROR: Found multiple identical tables on the same tile, please remove them.${NC}"
     st=1
 fi;
-if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/chair/(?<type>[/\w]*),\n[^)]*?/obj/structure/chair/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/chair(?<type>[/\w]*),\n[^)]*?/obj/structure/chair\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
 	echo
     echo -e "${RED}ERROR: Found multiple identical chairs on the same tile, please remove them.${NC}"
     st=1
@@ -100,17 +100,17 @@ if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/door/firedoor[/\w]*?,\n[^)]*?/obj
     echo -e "${RED}ERROR: Found multiple firelocks on the same tile, please remove them.${NC}"
     st=1
 fi;
-if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/closet/(?<type>[/\w]*),\n[^)]*?/obj/structure/closet/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/closet(?<type>[/\w]*),\n[^)]*?/obj/structure/closet\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
 	echo
     echo -e "${RED}ERROR: Found multiple identical closets on the same tile, please remove them.${NC}"
     st=1
 fi;
-if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/grille/(?<type>[/\w]*),\n[^)]*?/obj/structure/grille/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/grille(?<type>[/\w]*),\n[^)]*?/obj/structure/grille/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
 	echo
     echo -e "${RED}ERROR: Found multiple identical grilles on the same tile, please remove them.${NC}"
     st=1
 fi;
-if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/girder/(?<type>[/\w]*),\n[^)]*?/obj/structure/girder/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/girder(?<type>[/\w]*),\n[^)]*?/obj/structure/girder\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
 	echo
     echo -e "${RED}ERROR: Found multiple identical girders on the same tile, please remove them.${NC}"
     st=1
@@ -192,9 +192,9 @@ if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo -e "${RED}ERROR: Variable editted /area path use detected in a map, please replace with a proper area path.${NC}"
     st=1
 fi;
-if grep -P '\W\/turf\s*[,\){]' _maps/**/*.dmm; then
+if grep -P '\/turf\s*[,\){]' _maps/**/*.dmm; then
 	echo
-    echo -e "${RED}ERROR: Base /turf path use detected in maps, please replace a with proper turf path.${NC}"
+    echo -e "${RED}ERROR: Base /turf path use detected in maps, please replace it with a proper turf path.${NC}"
     st=1
 fi;
 if grep -Pzo '"\w+" = \(\n[^)]*?/turf/[/\w]*?,\n[^)]*?/turf/[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm; then
@@ -244,6 +244,11 @@ done < <(find . -type f -name '*.dm')
 
 echo -e "${BLUE}Checking for common mistakes...${NC}"
 
+if grep -P 'to_chat\((?!.*,).*\)' code/**/*.dm; then
+	echo
+    echo -e "${RED}ERROR: to_chat() missing arguments.${NC}"
+    st=1
+fi;
 if grep -P 'addtimer\((?=.*TIMER_OVERRIDE)(?!.*TIMER_UNIQUE).*\)' code/**/*.dm; then
 	echo
     echo -e "${RED}ERROR: TIMER_OVERRIDE used without TIMER_UNIQUE.${NC}"
@@ -284,6 +289,11 @@ if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
     echo -e "${RED}ERROR: Custom icon helper found. Please include DMI files as standard assets instead for repository maps.${NC}"
     st=1
 fi;
+if grep -P '^/obj/docking_port/mobile.*\{\n[^}]*(width|height|dwidth|dheight)[^}]*\}' _maps/**/*.dmm; then
+	echo
+	echo -e "${RED}ERROR: Custom mobile docking_port sizes detected. This is done automatically and should not be varedits.${NC}"
+	st=1
+fi;
 for json in _maps/*.json
 do
     map_path=$(jq -r '.map_path' $json)
@@ -297,6 +307,13 @@ do
         fi
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
+
+# Check for non-515 compatable .proc/ syntax
+if grep -P --exclude='__byond_version_compat.dm' '\.proc/' code/**/*.dm; then
+    echo
+    echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
+    st=1
+fi;
 
 if [ $st = 0 ]; then
     echo

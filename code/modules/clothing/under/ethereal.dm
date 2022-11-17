@@ -8,6 +8,7 @@
 	greyscale_config = /datum/greyscale_config/eth_tunic
 	greyscale_config_worn = /datum/greyscale_config/eth_tunic_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+	can_adjust = FALSE
 
 /obj/item/clothing/under/ethereal_tunic/Initialize(mapload)
 	. = ..()
@@ -16,11 +17,11 @@
 /obj/item/clothing/under/ethereal_tunic/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance('icons/mob/clothing/under/ethereal.dmi', "eth_tunic_emissive_worn", alpha = src.alpha)
+		. += emissive_appearance('icons/mob/clothing/under/ethereal.dmi', "eth_tunic_emissive_worn", offset_spokesman = src, alpha = src.alpha)
 
 /obj/item/clothing/under/ethereal_tunic/update_overlays()
 	. = ..()
-	. += emissive_appearance('icons/obj/clothing/under/ethereal.dmi', "eth_tunic_emissive", alpha = src.alpha)
+	. += emissive_appearance('icons/obj/clothing/under/ethereal.dmi', "eth_tunic_emissive", offset_spokesman = src, alpha = src.alpha)
 
 /obj/item/clothing/under/ethereal_tunic/trailwarden
 	name = "trailwarden tunic"
@@ -29,7 +30,7 @@
 
 /obj/item/clothing/under/ethereal_tunic/trailwarden/equipped(mob/living/user, slot)
 	. = ..()
-	if(isethereal(user) && slot == ITEM_SLOT_ICLOTHING)
+	if(isethereal(user) && (slot & ITEM_SLOT_ICLOTHING))
 		var/mob/living/carbon/human/ethereal = user
 		to_chat(ethereal, span_notice("[src] gently quivers for a moment as you put it on."))
 		set_greyscale(ethereal.dna.species.fixed_mut_color)
