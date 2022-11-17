@@ -82,20 +82,20 @@
 /obj/machinery/biogenerator/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += mutable_appearance(icon, "[icon_state]_o_panel", alpha = src.alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_panel", alpha = alpha)
 	if(beaker)
-		. += mutable_appearance(icon, "[icon_state]_o_container", alpha = src.alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_container", alpha = alpha)
 	if(biomass > 0)
 		var/biomass_level = min(ROUND_UP(7 * biomass / max_biomass), 7)
-		. += mutable_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", alpha = src.alpha)
-		. += emissive_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", alpha = alpha)
+		. += emissive_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", src, alpha = alpha)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(processing)
-		. += mutable_appearance(icon, "[icon_state]_o_process", alpha = src.alpha)
-		. += emissive_appearance(icon, "[icon_state]_o_process", src, alpha = src.alpha)
-	. += mutable_appearance(icon, "[icon_state]_o_screen", alpha = src.alpha)
-	. += emissive_appearance(icon, "[icon_state]_o_screen", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_process", alpha = alpha)
+		. += emissive_appearance(icon, "[icon_state]_o_process", src, alpha = alpha)
+	. += mutable_appearance(icon, "[icon_state]_o_screen", alpha = alpha)
+	. += emissive_appearance(icon, "[icon_state]_o_screen", src, alpha = alpha)
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/living/user, params)
 	if(user.combat_mode)
@@ -116,7 +116,7 @@
 	if(default_deconstruction_crowbar(O))
 		if(biomass > 0)
 			drop_location.visible_message(span_warning("The biomass spills!"))
-			playsound(drop_location, 'sound/effects/slosh.ogg', 25, TRUE)
+			playsound(drop_location, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 			new /obj/effect/decal/cleanable/greenglow(drop_location)
 		return
 
@@ -200,16 +200,16 @@
 		soundloop.start()
 		update_appearance()
 		var/potential_biomass = 0
-		for(var/obj/item/food/grown/I in contents)
-			potential_biomass = max(1, I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)) * productivity
-			qdel(I)
+		for(var/obj/item/food/grown/plant in contents)
+			potential_biomass = max(1, plant.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)) * productivity
+			qdel(plant)
 			if(potential_biomass)
 				while(processing && potential_biomass > 0)
-					use_power(active_power_usage * 0.1) // .1 needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+					use_power(active_power_usage * (1 SECONDS)) // Seconds needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
 					potential_biomass -= 1
 					biomass += 1
-					sleep(2 / productivity)
-					update_appearance()
+					stoplag(2 / productivity)
+					update_appearance(UPDATE_ICON)
 		processing = FALSE
 		soundloop.stop()
 		update_appearance()
