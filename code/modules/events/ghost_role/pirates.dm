@@ -456,7 +456,7 @@
 /datum/export/pirate/ransom/find_loot()
 	var/list/head_minds = SSjob.get_living_heads()
 	var/list/head_mobs = list()
-	for(var/datum/mind/M in head_minds)
+	for(var/datum/mind/M as anything in head_minds)
 		head_mobs += M.current
 	if(head_mobs.len)
 		return pick(head_mobs)

@@ -360,7 +360,6 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize(mapload)
 	. = ..()
-	fire_cone.Remove(src)
 	meteors.Remove(src)
 	mass_fire.Remove(src)
 	lava_swoop.cooldown_time = 20 SECONDS
