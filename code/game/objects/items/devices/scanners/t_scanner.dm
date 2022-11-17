@@ -42,15 +42,7 @@
 /obj/item/t_scanner/proc/scan()
 	t_ray_scan(loc)
 
-/**
- * Performs a t-ray scan, showing the viewer any nearby undertiles
- *
- * viewer - the mob seeing the tray
- * flick_time - how long the scan lasts
- * distance - the radius around to scan
- * view_source - optional, around what atom do we look for undertiles. If not suppied, uses the viewer
- */
-/proc/t_ray_scan(mob/viewer, flick_time = 0.8 SECONDS, distance = 3, atom/view_source)
+/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 3)
 	if(!ismob(viewer) || !viewer.client)
 		return
 	var/list/t_ray_images = list()
