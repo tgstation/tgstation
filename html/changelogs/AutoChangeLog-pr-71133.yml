@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - qol: "Ore bag balloon alerts have a 2 second cooldown now and a spammy message (hopefully the last) it send to your chat about being full was removed"
