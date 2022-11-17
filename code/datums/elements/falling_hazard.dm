@@ -25,7 +25,7 @@
 	src.crushes_people = crushes
 	src.impact_sound = impact_sound
 
-	RegisterSignal(target, COMSIG_ATOM_ON_Z_IMPACT, .proc/fall_onto_stuff)
+	RegisterSignal(target, COMSIG_ATOM_ON_Z_IMPACT, PROC_REF(fall_onto_stuff))
 
 /datum/element/falling_hazard/Detach(datum/target)
 	. = ..()
