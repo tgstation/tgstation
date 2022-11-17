@@ -296,6 +296,10 @@
 		use_power(7500/severity)
 		new /obj/effect/temp_visual/emp(loc)
 
+		// if the machine set the language holder var then we can randomize languages
+		if(initial_language_holder != initial(initial_language_holder) && prob(70/severity))
+			language_holder.selected_language = language_holder.get_random_spoken_language()
+
 /**
  * Opens the machine.
  *
