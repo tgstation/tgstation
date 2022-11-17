@@ -1,6 +1,6 @@
 #define CART_HAS_MINIMUM_REAGENT_VOLUME !(reagents.total_volume < 1)
 
-/obj/structure/mopbucket
+/obj/structure/mop_bucket
 	name = "mop bucket"
 	desc = "Fill it with water, but don't forget a mop!"
 	icon = 'icons/obj/janitor.dmi'
@@ -10,12 +10,12 @@
 	/// The icon used for the water overlay
 	var/water_icon = "mopbucket_water"
 
-/obj/structure/mopbucket/Initialize(mapload)
+/obj/structure/mop_bucket/Initialize(mapload)
 	. = ..()
 	create_reagents(100, OPENCONTAINER)
 	register_context()
 
-/obj/structure/mopbucket/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/structure/mop_bucket/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
 	if(istype(held_item, /obj/item/mop))
@@ -28,14 +28,14 @@
 
 	return . || NONE
 
-/obj/structure/mopbucket/attackby(obj/item/weapon, mob/user, params)
+/obj/structure/mop_bucket/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/reagent_containers))
 		update_appearance(UPDATE_OVERLAYS)
 		return FALSE // skip attack animation when refilling cart
 
 	return ..()
 
-/obj/structure/mopbucket/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/structure/mop_bucket/attackby_secondary(obj/item/weapon, mob/user, params)
 	var/obj/item/mop/mop = weapon
 	if(istype(mop))
 		if(mop.reagents.total_volume >= mop.reagents.maximum_volume)
@@ -54,12 +54,12 @@
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/structure/mopbucket/update_overlays()
+/obj/structure/mop_bucket/update_overlays()
 	. = ..()
 	if(reagents.total_volume > 0)
 		. += water_icon
 
-/obj/structure/mopbucket/janitorialcart
+/obj/structure/mop_bucket/janitorialcart
 	name = "janitorial cart"
 	desc = "This is the alpha and omega of sanitation."
 	icon_state = "cart"
@@ -72,11 +72,11 @@
 	var/list/obj/item/clothing/suit/caution/held_signs = list()
 	var/max_signs = 4
 
-/obj/structure/mopbucket/janitorialcart/Initialize(mapload)
+/obj/structure/mop_bucket/janitorialcart/Initialize(mapload)
 	. = ..()
 	GLOB.janitor_devices += src
 
-/obj/structure/mopbucket/janitorialcart/Destroy()
+/obj/structure/mop_bucket/janitorialcart/Destroy()
 	GLOB.janitor_devices -= src
 	QDEL_NULL(myreplacer)
 	QDEL_NULL(myspray)
@@ -86,7 +86,7 @@
 	QDEL_LIST(held_signs)
 	return ..()
 
-/obj/structure/mopbucket/janitorialcart/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/obj/structure/mop_bucket/janitorialcart/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(istype(arrived, /obj/item/storage/bag/trash))
 		mybag = arrived
 	else if(istype(arrived, /obj/item/mop))
@@ -102,7 +102,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
-/obj/structure/mopbucket/janitorialcart/Exited(atom/movable/gone, direction)
+/obj/structure/mop_bucket/janitorialcart/Exited(atom/movable/gone, direction)
 	if(gone == mybag)
 		mybag = null
 	else if(gone == mymop)
@@ -119,7 +119,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
-/obj/structure/mopbucket/janitorialcart/examine(mob/user)
+/obj/structure/mop_bucket/janitorialcart/examine(mob/user)
 	. = ..()
 	if(contents.len)
 		. += span_bold(span_info("\nIt is carrying:"))
@@ -142,7 +142,7 @@
 		. += span_notice("<b>Right-click</b> with a <b>mop</b> to wet it.")
 		. += span_info("<b>Crowbar</b> it to dump its mop bucket onto [get_turf(src)].")
 
-/obj/structure/mopbucket/janitorialcart/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/structure/mop_bucket/janitorialcart/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
 	if(isnull(held_item) && contents.len)
@@ -182,7 +182,7 @@
 
 	return . || NONE
 
-/obj/structure/mopbucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/mop_bucket/janitorialcart/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/mop))
 		if(mymop)
 			balloon_alert(user, "already has \a [mymop]!")
@@ -227,7 +227,7 @@
 
 	return ..()
 
-/obj/structure/mopbucket/janitorialcart/crowbar_act(mob/living/user, obj/item/tool)
+/obj/structure/mop_bucket/janitorialcart/crowbar_act(mob/living/user, obj/item/tool)
 	if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 		balloon_alert(user, "mop bucket is empty!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
@@ -241,7 +241,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/mopbucket/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/structure/mop_bucket/janitorialcart/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -255,7 +255,7 @@
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/structure/mopbucket/janitorialcart/attack_hand(mob/user, list/modifiers)
+/obj/structure/mop_bucket/janitorialcart/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -323,7 +323,7 @@
 		else
 			return
 
-/obj/structure/mopbucket/janitorialcart/attack_hand_secondary(mob/user, list/modifiers)
+/obj/structure/mop_bucket/janitorialcart/attack_hand_secondary(mob/user, list/modifiers)
 	if(!mymop)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	balloon_alert(user, "removed [mymop]")
@@ -336,10 +336,10 @@
  * Arguments:
  * * user The mob interacting with a menu
  */
-/obj/structure/mopbucket/janitorialcart/proc/check_menu(mob/living/user)
+/obj/structure/mop_bucket/janitorialcart/proc/check_menu(mob/living/user)
 	return istype(user) && !user.incapacitated()
 
-/obj/structure/mopbucket/janitorialcart/update_overlays()
+/obj/structure/mop_bucket/janitorialcart/update_overlays()
 	. = ..()
 	if(mybag)
 		. += istype(mybag, /obj/item/storage/bag/trash/bluespace) ? "cart_bluespace_garbage" : "cart_garbage"

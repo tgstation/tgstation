@@ -53193,7 +53193,7 @@
 /area/station/security/brig)
 "sTZ" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/mopbucket/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
