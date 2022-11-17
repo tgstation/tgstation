@@ -222,3 +222,6 @@ libprof.so
 
 # Screenshot tests
 /artifacts
+
+# named byond versions config
+/tools/build/dm_versions.json
