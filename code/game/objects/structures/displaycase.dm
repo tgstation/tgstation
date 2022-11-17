@@ -161,6 +161,7 @@
 				toggle_lock(user)
 	else if(open && !showpiece)
 		insert_showpiece(tool, user)
+		return TRUE //cancel the attack chain, wether we successfully placed an item or not
 	else if(glass_fix && broken && istype(tool, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/glass_sheet = tool
 		if(glass_sheet.get_amount() < 2)
@@ -178,7 +179,7 @@
 /obj/structure/displaycase/proc/insert_showpiece(obj/item/new_showpiece, mob/user)
 	if(showpiece_type && !istype(new_showpiece, showpiece_type))
 		to_chat(user, span_notice("This doesn't belong in this kind of display."))
-		return TRUE
+		return
 	if(user.transferItemToLoc(new_showpiece, src))
 		showpiece = new_showpiece
 		to_chat(user, span_notice("You put [new_showpiece] on display."))
