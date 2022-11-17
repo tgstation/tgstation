@@ -1210,6 +1210,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/interrogation)
+"aBT" = (
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/line,
+/obj/machinery/status_display/ai/directional/south,
+/obj/structure/cable/multilayer/multiz,
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/aisat_interior)
 "aCd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
 /obj/machinery/button/door/directional/west{
@@ -10905,21 +10914,12 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "dQq" = (
-/obj/item/cigbutt/cigarbutt{
-	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/item/phone{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/machinery/requests_console/directional/north{
 	department = "AI";
 	departmentType = 5;
 	name = "AI Requests Console"
 	},
 /obj/structure/cable/multilayer/multiz,
-/obj/structure/table/reinforced,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "dQt" = (
@@ -25920,16 +25920,6 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/station/tcommsat/server)
-"jpK" = (
-/obj/effect/turf_decal/trimline/white/line{
-	dir = 5
-	},
-/obj/effect/turf_decal/trimline/yellow/corner{
-	dir = 8
-	},
-/obj/structure/cable/multilayer/multiz,
-/turf/open/floor/iron/dark,
-/area/station/ai_monitored/turret_protected/aisat_interior)
 "jpV" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 8
@@ -114878,8 +114868,8 @@ bya
 hdG
 xvl
 xhB
-nNk
-ehS
+nyY
+aBT
 waj
 waj
 eBr
@@ -115136,7 +115126,7 @@ dnQ
 xvl
 sRL
 nyY
-jpK
+tsc
 waj
 rIt
 bKK
