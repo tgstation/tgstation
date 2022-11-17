@@ -17,6 +17,21 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
+/obj/item/clothing/under/syndicate/tacticool
+	name = "tacticool turtleneck"
+	desc = "Just looking at it makes you want to buy an SKS, go into the woods, and -operate-."
+	icon_state = "tactifool"
+	inhand_icon_state = "bl_suit"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 50, ACID = 40)
+	has_sensor = HAS_SENSORS
+
+/obj/item/clothing/under/syndicate/tacticool/skirt
+	name = "tacticool skirtleneck"
+	icon_state = "tactifool_skirt"
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
 /*
 
 	GORLEX SECURITY CONSULTING, LLC.

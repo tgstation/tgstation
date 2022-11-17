@@ -239,6 +239,7 @@
 	head = /obj/item/clothing/head/hats/hos/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	ears = /obj/item/radio/headset/syndicate/alt/leader
-	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	glasses = /obj/item/clothing/glasses/thermal/sunglasses
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
-	id_trim = /datum/id_trim/battlecruiser/captain
+	id_trim = /datum/id_trim/syndicom/officer/captain
+

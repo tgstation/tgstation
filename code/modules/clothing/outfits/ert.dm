@@ -57,7 +57,7 @@
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 	)
-	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	glasses = /obj/item/clothing/glasses/thermal/sunglasses
 	l_pocket = /obj/item/melee/energy/sword/saber
 
 /datum/outfit/centcom/ert/security
@@ -428,7 +428,7 @@
 /datum/outfit/centcom/death_commando
 	name = "Death Commando"
 
-	id = /obj/item/card/id/advanced/black/deathsquad
+	id = /obj/item/card/id/advanced/centcom/deathsquad
 	id_trim = /datum/id_trim/centcom/deathsquad
 	uniform = /obj/item/clothing/under/rank/centcom/commander
 	back = /obj/item/mod/control/pre_equipped/apocryphal

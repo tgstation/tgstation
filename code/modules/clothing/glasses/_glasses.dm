@@ -500,11 +500,16 @@
 	. = ..()
 	desc = initial(desc)
 
-/obj/item/clothing/glasses/thermal/eyepatch
-	name = "optical thermal eyepatch"
-	desc = "An eyepatch with built-in thermal optics."
-	icon_state = "eyepatch"
-	inhand_icon_state = null
+/obj/item/clothing/glasses/thermal/sunglasses
+	name = "optical thermal sunglasses"
+	desc = "A pair of sunglasses with built-in thermal optics."
+	icon_state = "sun"
+	inhand_icon_state = "sunglasses"
+	darkness_view = 1
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/gray
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/glasses/cold
 	name = "cold goggles"

@@ -78,12 +78,12 @@
 		Support your allies, and remember: Down with Nanotrasen."))
 
 /datum/outfit/syndicate/reinforcement/gorlex
-	name = "Syndicate Operative - Gorlex Reinforcement"
-	suit = /obj/item/clothing/suit/armor/vest/alt
-	head = /obj/item/clothing/head/helmet/swat
+	name = "Syndicate Operative - Marauder Corps"
+	suit = /obj/item/clothing/suit/armor/swat/gorlex
+	head = /obj/item/clothing/head/helmet/swat/gorlex
 	neck = /obj/item/clothing/neck/large_scarf/syndie
 	glasses = /obj/item/clothing/glasses/cold
-	faction = "the Gorlex Marauders"
+	faction = "Gorlex Security Consulting, LLC."
 
 /datum/outfit/syndicate/reinforcement/cybersun
 	name = "Syndicate Operative - Cybersun Reinforcement"
@@ -92,7 +92,7 @@
 	gloves = /obj/item/clothing/gloves/fingerless
 	glasses = /obj/item/clothing/glasses/sunglasses
 	mask = /obj/item/clothing/mask/cigarette/cigar
-	faction = "Cybersun Industries"
+	faction = "Sabiasun Inc."
 
 /datum/outfit/syndicate/reinforcement/donk
 	name = "Syndicate Operative - Donk Reinforcement"
@@ -100,7 +100,7 @@
 	head = /obj/item/clothing/head/utility/hardhat/orange
 	shoes = /obj/item/clothing/shoes/workboots
 	glasses = /obj/item/clothing/glasses/meson
-	faction = "the Donk Corporation"
+	faction = "the DONK! Corporation"
 
 /datum/outfit/syndicate/reinforcement/waffle
 	name = "Syndicate Operative - Waffle Reinforcement"
@@ -108,15 +108,15 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	head = /obj/item/clothing/head/helmet/blueshirt
 	glasses = /obj/item/clothing/glasses/welding/up
-	faction = "the Waffle Corporation"
+	faction = "WaffleCorp"
 
 /datum/outfit/syndicate/reinforcement/interdyne
 	name = "Syndicate Operative - Interdyne Trauma Team"
 	uniform = /obj/item/clothing/under/syndicate/interdyne/tt
-	suit = /obj/item/clothing/suit/armor/vest/marine/medic/tt
-	head = /obj/item/clothing/head/helmet/marine/medic/tt
+	suit = /obj/item/clothing/suit/armor/vest/tt
+	head = /obj/item/clothing/head/helmet/swat/gorlex/tt
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile/trauma
-	glasses = /obj/item/clothing/glasses/hud/health
+	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 	mask = /obj/item/clothing/mask/breath/medical
 	faction = "Interdyne Pharmaceutics"
 

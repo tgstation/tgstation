@@ -34,6 +34,11 @@
 /obj/item/clothing/suit/armor/vest/alt/sec
 	icon_state = "armor_sec"
 
+/obj/item/clothing/suit/armor/vest/tt
+	name = "\improper Trauma Team vest"
+	desc = "A titanium-fibre webbed vest, sewed with kevlar. It adorns the Interdyne logo on it's chest, and carries pouches for both weaponry and medical supplies."
+	icon_state = "tt_vest"
+
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
 	desc = "A set of the finest mass produced, stamped plasteel armor plates, containing an environmental protection unit for all-condition door kicking."
@@ -59,11 +64,6 @@
 	name = "tactical medic's armor vest"
 	icon_state = "marine_medic"
 	body_parts_covered = CHEST|GROIN
-
-/obj/item/clothing/suit/armor/vest/marine/medic/tt
-	name = "\improper Trauma Team vest"
-	desc = "A titanium-fibre webbed vest, sewed with kevlar. It adorns the Interdyne logo on it's chest, and carries pouches for both weaponry and medical supplies."
-	icon_state = "tt_vest"
 
 /obj/item/clothing/suit/armor/vest/old
 	name = "degrading armor vest"

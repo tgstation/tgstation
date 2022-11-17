@@ -90,11 +90,6 @@
 	name = "marine medic helmet"
 	icon_state = "marine_medic"
 
-/obj/item/clothing/head/helmet/marine/medic/tt
-	name = "\improper Trauma Team helmet"
-	desc = "A white-painted helmet, with a speciality face-mask attached to block bio-hazardous materials and chemicals."
-	icon_state = "trauma_team"
-
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
 	desc = "Standard issue security helmet. Due to degradation the helmet's visor obstructs the users ability to see long distances."
@@ -214,6 +209,11 @@
 	icon_state = "marauder_helm"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEEYES|HIDEFACE
+
+/obj/item/clothing/head/helmet/swat/gorlex/tt
+	name = "\improper Trauma Team helmet"
+	desc = "A white-painted helmet, with a speciality face-mask attached to block bio-hazardous materials and chemicals."
+	icon_state = "trauma_team"
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"

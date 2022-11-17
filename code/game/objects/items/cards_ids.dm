@@ -1136,6 +1136,13 @@
 	registered_name = JOB_ERT_CLOWN
 	trim = /datum/id_trim/centcom/ert/clown
 
+/obj/item/card/id/advanced/centcom/deathsquad
+	name = "\improper Death Squad ID"
+	desc = "A Death Squad ID card."
+	registered_name = JOB_ERT_DEATHSQUAD
+	trim = /datum/id_trim/centcom/deathsquad
+	wildcard_slots = WILDCARD_LIMIT_DEATHSQUAD
+
 /obj/item/card/id/advanced/black
 	name = "black identification card"
 	desc = "This card is telling you one thing and one thing alone. The person holding this card is an utter badass."
@@ -1144,36 +1151,26 @@
 	assigned_icon_state = "assigned_syndicate"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
-/obj/item/card/id/advanced/black/deathsquad
-	name = "\improper Death Squad ID"
-	desc = "A Death Squad ID card."
-	registered_name = JOB_ERT_DEATHSQUAD
-	trim = /datum/id_trim/centcom/deathsquad
-	wildcard_slots = WILDCARD_LIMIT_DEATHSQUAD
-
 /obj/item/card/id/advanced/black/syndicate_command
 	name = "syndicate ID card"
-	desc = "An ID straight from the Syndicate."
+	desc = "An ID straight from Gorlex Security Consulting, LLC. All rights reserved."
 	registered_name = "Syndicate"
 	registered_age = null
 	trim = /datum/id_trim/syndicom
 	wildcard_slots = WILDCARD_LIMIT_SYNDICATE
 
 /obj/item/card/id/advanced/black/syndicate_command/crew_id
-	name = "syndicate ID card"
-	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
-	trim = /datum/id_trim/syndicom/crew
+	trim = /datum/id_trim/syndicom/private
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id
-	name = "syndicate captain ID card"
-	desc = "An ID straight from the Syndicate."
+	name = "Gorlex captain ID card"
+	desc = "An ID straight from Gorlex Security Consulting, LLC. All rights reserved."
 	registered_name = "Syndicate"
-	trim = /datum/id_trim/syndicom/captain
-
+	trim = /datum/id_trim/syndicom/officer/captain
 
 /obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare
-	name = "syndicate captain's spare ID"
+	name = "Gorlex captain's spare ID"
 	desc = "The spare ID of the Dark Lord himself."
 	registered_name = "Captain"
 	registered_age = null
