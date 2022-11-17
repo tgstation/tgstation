@@ -124,7 +124,7 @@
 	if(!length(access))
 		var/obj/item/card/id/accesscard
 		if(computer)
-			accesscard = id_slot_one?.GetID()
+			accesscard = computer.id_slot_one?.GetID()
 
 		if(!accesscard)
 			if(loud)

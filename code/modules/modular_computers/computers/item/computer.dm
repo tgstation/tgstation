@@ -463,17 +463,15 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(id_slot_one == gone)
 		id_slot_one = null
 		update_slot_icon()
-		if(ishuman(holder.loc))
-			var/mob/living/carbon/human/human_wearer = holder.loc
-			if(human_wearer.wear_id == holder)
-				human_wearer.sec_hud_set_ID()
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			human_wearer.sec_hud_set_ID()
 	if(id_slot_two == gone)
 		id_slot_two = null
 		update_slot_icon()
-		if(ishuman(holder.loc))
-			var/mob/living/carbon/human/human_wearer = holder.loc
-			if(human_wearer.wear_id == holder)
-				human_wearer.sec_hud_set_ID()
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			human_wearer.sec_hud_set_ID()
 	return ..()
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
