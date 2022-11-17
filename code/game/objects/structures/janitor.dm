@@ -36,19 +36,18 @@
 	return ..()
 
 /obj/structure/mop_bucket/attackby_secondary(obj/item/weapon, mob/user, params)
-	var/obj/item/mop/mop = weapon
-	if(istype(mop))
-		if(mop.reagents.total_volume >= mop.reagents.maximum_volume)
-			balloon_alert(user, "[mop] is already soaked!")
+	if(istype(weapon, /obj/item/mop))
+		if(weapon.reagents.total_volume >= weapon.reagents.maximum_volume)
+			balloon_alert(user, "mop is already soaked!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(!CART_HAS_MINIMUM_REAGENT_VOLUME)
 			balloon_alert(user, "mop bucket is empty!")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		reagents.trans_to(mop, mop.reagents.maximum_volume, transfered_by = user)
+		reagents.trans_to(weapon, weapon.reagents.maximum_volume, transfered_by = user)
 		balloon_alert(user, "wet mop")
 		playsound(src, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 
-	if(istype(weapon, /obj/item/reagent_containers) || istype(mop))
+	if(istype(weapon, /obj/item/reagent_containers) || istype(weapon, /obj/item/mop))
 		update_appearance(UPDATE_OVERLAYS)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN // skip attack animations when refilling cart
 
