@@ -397,7 +397,7 @@
 		span_notice("[rider] does a sick kickflip and catches [rider.p_their()] board in midair."),
 		span_notice("You do a sick kickflip, catching the board in midair! Stylish."),
 	)
-	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
+	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, vary = TRUE)
 	rider.spin(4, 1)
 	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
 	animate(board, pixel_y = -6, time = 0.3 SECONDS)
