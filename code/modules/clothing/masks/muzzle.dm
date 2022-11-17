@@ -50,7 +50,7 @@
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
-	. += "[span_notice("Use it on someone while not in combat mode!")]"
+	. += "[span_notice("Use it on someone while not in combat mode to tape their mouth closed!")]"
 
 /obj/item/clothing/mask/muzzle/tape/dropped(mob/living/user)
 	. = ..()
