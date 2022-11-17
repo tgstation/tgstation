@@ -44,8 +44,8 @@
 		new spawn_type(src)
 
 /obj/item/storage/fancy/update_icon_state()
-    icon_state = "[base_icon_state][has_open_closed_states && is_open ? contents.len : null]"
-    return ..()
+	icon_state = "[base_icon_state][has_open_closed_states && is_open ? contents.len : null]"
+	return ..()
 
 /obj/item/storage/fancy/examine(mob/user)
 	. = ..()
