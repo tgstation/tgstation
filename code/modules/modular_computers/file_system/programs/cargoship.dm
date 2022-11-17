@@ -38,7 +38,7 @@
 
 	switch(action)
 		if("ejectid")
-			card_slot.try_eject(usr, TRUE)
+			computer.RemoveID(skip_second_slot = TRUE)
 		if("selectid")
 			if(!computer.id_slot_one.registered_account)
 				playsound(get_turf(ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)

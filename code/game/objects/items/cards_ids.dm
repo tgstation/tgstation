@@ -964,9 +964,9 @@
 	if(istype(old_loc, /obj/item/modular_computer/tablet))
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
-	if(istype(source.loc, /obj/item/modular_computer/tablet))
-		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
-		RegisterSignal(source.loc, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
+	if(source)
+		RegisterSignal(source, COMSIG_ITEM_EQUIPPED, PROC_REF(update_intern_status))
+		RegisterSignal(source, COMSIG_ITEM_DROPPED, PROC_REF(remove_intern_status))
 
 /obj/item/card/id/advanced/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
