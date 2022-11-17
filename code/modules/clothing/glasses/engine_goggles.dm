@@ -99,9 +99,8 @@
 	if(!port)
 		return
 	var/list/shuttle_areas = port.shuttle_areas
-	for(var/r in shuttle_areas)
-		var/area/region = r
-		for(var/turf/place in region.contents)
+	for(var/area/region as anything in shuttle_areas)
+		for(var/turf/place as anything in region.get_contained_turfs())
 			if(get_dist(user, place) > 7)
 				continue
 			var/image/pic
@@ -109,7 +108,7 @@
 				pic = new('icons/turf/overlays.dmi', place, "greenOverlay", AREA_LAYER)
 			else
 				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
-			flick_overlay(pic, list(user.client), 8)
+			flick_overlay_global(pic, list(user.client), 8)
 
 /obj/item/clothing/glasses/meson/engine/proc/show_connections()
 	var/mob/living/carbon/human/user = loc
@@ -133,7 +132,7 @@
 				PIPING_LAYER_DOUBLE_SHIFT(arrow, smart.piping_layer)
 				connection_images[smart][dir2text(direction)] = arrow
 			if(connection_images.len)
-				flick_overlay(connection_images[smart][dir2text(direction)], list(user.client), 1.5 SECONDS)
+				flick_overlay_global(connection_images[smart][dir2text(direction)], list(user.client), 1.5 SECONDS)
 
 /obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
@@ -185,7 +184,7 @@
 		if(open.blocks_air)
 			continue
 		var/datum/gas_mixture/environment = open.return_air()
-		var/temp = round(environment.return_temperature()) 
+		var/temp = round(environment.return_temperature())
 		var/image/pic = image('icons/turf/overlays.dmi', open, "greyOverlay", ABOVE_ALL_MOB_LAYER)
 		// Lower than TEMP_SHADE_CYAN should be deep blue
 		switch(temp)
@@ -205,7 +204,7 @@
 				pic.color = COLOR_RED
 		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		pic.alpha = 200
-		flick_overlay(pic, list(viewer.client), duration)
+		flick_overlay_global(pic, list(viewer.client), duration)
 
 
 #undef MODE_NONE

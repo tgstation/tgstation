@@ -444,7 +444,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"SOUTH" = image(icon = 'icons/hud/radial.dmi', icon_state = "csouth"),
 		"WEST" = image(icon = 'icons/hud/radial.dmi', icon_state = "cwest")
 		)
-	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(computerdirs)
@@ -510,11 +510,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, remote_anchor || src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
+	var/airlockcat = show_radial_menu(user, remote_anchor || src, solid_or_glass_choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, PROC_REF(check_menu), user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
@@ -555,7 +555,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, PROC_REF(check_menu), user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
@@ -607,7 +607,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"Table" = image(icon = 'icons/hud/radial.dmi', icon_state = "table"),
 		"Glass Table" = image(icon = 'icons/hud/radial.dmi', icon_state = "glass_table")
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -705,7 +705,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			choices += list(
 			"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 			)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -774,7 +774,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
 		vibrating violently!</b></span>")
 	// 5 seconds to get rid of it
-	addtimer(CALLBACK(src, .proc/detonate_pulse_explode), 50)
+	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 50)
 
 /obj/item/construction/rcd/proc/detonate_pulse_explode()
 	explosion(src, light_impact_range = 3, flame_range = 1, flash_range = 1)
@@ -1120,7 +1120,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/plumbing/equipped(mob/user, slot, initial)
 	. = ..()
 	if(slot & ITEM_SLOT_HANDS)
-		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
+		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, PROC_REF(mouse_wheeled))
 	else
 		UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 
@@ -1144,7 +1144,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/image/duct_image = choices["fluid duct"]
 	duct_image.color = current_color
 
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!choice || !check_menu(user))
 		return
 
@@ -1253,7 +1253,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	)
 
 	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/choice = show_radial_menu(user, src, options_menu, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, options_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 
@@ -1275,7 +1275,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			GLOB.plumbing_layer_menu_options += list((layer_name) = image('icons/hud/radial.dmi', icon_state = "plumbing_layer[GLOB.plumbing_layers[layer_name]]"))
 
 	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/new_layer = show_radial_menu(user, src, GLOB.plumbing_layer_menu_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/new_layer = show_radial_menu(user, src, GLOB.plumbing_layer_menu_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!new_layer || !check_menu(user))
 		return
 
@@ -1294,7 +1294,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			GLOB.plumbing_color_menu_options += list((color_name) = image('icons/hud/radial.dmi', icon_state = color_name))
 
 	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/new_color = show_radial_menu(user, src, GLOB.plumbing_color_menu_options, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/new_color = show_radial_menu(user, src, GLOB.plumbing_color_menu_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!new_color || !check_menu(user))
 		return
 

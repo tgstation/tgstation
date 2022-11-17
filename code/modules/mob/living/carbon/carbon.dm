@@ -9,8 +9,8 @@
 
 	GLOB.carbon_list += src
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_PRESHOVE = .proc/disarm_precollide,
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/disarm_collision,
+		COMSIG_CARBON_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(disarm_collision),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -148,21 +148,19 @@
 /mob/proc/throw_item(atom/target)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CARBON_THROW_THING, src, target)
-	return
+	return TRUE
 
 /mob/living/carbon/throw_item(atom/target)
 	. = ..()
 	throw_mode_off(THROW_MODE_TOGGLE)
 	if(!target || !isturf(loc))
-		return
+		return FALSE
 	if(istype(target, /atom/movable/screen))
-		return
-
+		return FALSE
 	var/atom/movable/thrown_thing
-	var/obj/item/I = get_active_held_item()
+	var/obj/item/held_item = get_active_held_item()
 	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
-
-	if(!I)
+	if(!held_item)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
 			var/mob/living/throwable_mob = pulling
 			if(!throwable_mob.buckled)
@@ -172,32 +170,30 @@
 				stop_pulling()
 				if(HAS_TRAIT(src, TRAIT_PACIFISM))
 					to_chat(src, span_notice("You gently let go of [throwable_mob]."))
-					return
+					return FALSE
 	else
-		thrown_thing = I.on_thrown(src, target)
-
-	if(thrown_thing)
-
-		if(isliving(thrown_thing))
-			var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-			var/turf/end_T = get_turf(target)
-			if(start_T && end_T)
-				log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
-		var/power_throw = 0
-		if(HAS_TRAIT(src, TRAIT_HULK))
-			power_throw++
-		if(HAS_TRAIT(src, TRAIT_DWARF))
-			power_throw--
-		if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
-			power_throw++
-		if(neckgrab_throw)
-			power_throw++
-		visible_message(span_danger("[src] throws [thrown_thing][power_throw ? " really hard!" : "."]"), \
-						span_danger("You throw [thrown_thing][power_throw ? " really hard!" : "."]"))
-		log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
-		newtonian_move(get_dir(target, src))
-		thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
-
+		thrown_thing = held_item.on_thrown(src, target)
+	if(!thrown_thing)
+		return FALSE
+	if(isliving(thrown_thing))
+		var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+		var/turf/end_T = get_turf(target)
+		if(start_T && end_T)
+			log_combat(src, thrown_thing, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
+	var/power_throw = 0
+	if(HAS_TRAIT(src, TRAIT_HULK))
+		power_throw++
+	if(HAS_TRAIT(src, TRAIT_DWARF))
+		power_throw--
+	if(HAS_TRAIT(thrown_thing, TRAIT_DWARF))
+		power_throw++
+	if(neckgrab_throw)
+		power_throw++
+	visible_message(span_danger("[src] throws [thrown_thing][power_throw ? " really hard!" : "."]"), \
+					span_danger("You throw [thrown_thing][power_throw ? " really hard!" : "."]"))
+	log_message("has thrown [thrown_thing] [power_throw ? "really hard" : ""]", LOG_ATTACK)
+	newtonian_move(get_dir(target, src))
+	thrown_thing.safe_throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed + power_throw, src, null, null, null, move_force)
 
 /mob/living/carbon/proc/canBeHandcuffed()
 	return FALSE
@@ -381,7 +377,7 @@
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens
 		if(-INFINITY to 0) //attack yourself
-			INVOKE_ASYNC(I, /obj/item.proc/attack, src, src)
+			INVOKE_ASYNC(I, TYPE_PROC_REF(/obj/item, attack), src, src)
 		if(1 to 30) //throw it at yourself
 			I.throw_impact(src)
 		if(31 to 60) //Throw object in facing direction
@@ -849,6 +845,18 @@
 	update_worn_handcuffs()
 	update_hud_handcuffed()
 
+/mob/living/carbon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	if(excess_healing)
+		if(dna && !(NOBLOOD in dna.species.species_traits))
+			blood_volume += (excess_healing * 2) //1 excess = 10 blood
+
+		for(var/obj/item/organ/organ as anything in internal_organs)
+			if(organ.organ_flags & ORGAN_SYNTHETIC)
+				continue
+			organ.applyOrganDamage(excess_healing * -1) //1 excess = 5 organ damage healed
+
+	return ..()
+
 /mob/living/carbon/heal_and_revive(heal_to = 75, revive_message)
 	// We can't heal them if they're missing a heart
 	if(needs_heart() && !getorganslot(ORGAN_SLOT_HEART))
@@ -864,36 +872,46 @@
 
 	return ..()
 
-/mob/living/carbon/fully_heal(admin_revive = FALSE)
-	if(reagents)
-		reagents.clear_reagents()
-	if(mind)
-		for(var/addiction_type in subtypesof(/datum/addiction))
-			mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
-	for(var/obj/item/organ/organ as anything in internal_organs)
-		organ.setOrganDamage(0)
-	for(var/thing in diseases)
-		var/datum/disease/D = thing
-		if(D.severity != DISEASE_SEVERITY_POSITIVE)
-			D.cure(FALSE)
-	for(var/thing in all_wounds)
-		var/datum/wound/W = thing
-		W.remove_wound()
-	if(admin_revive)
-		suiciding = FALSE
+/mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
+
+	// Should be handled via signal on embedded, or via heal on bodypart
+	// Otherwise I don't care to give it a separate flag
+	remove_all_embedded_objects()
+
+	if(heal_flags & HEAL_NEGATIVE_DISEASES)
+		for(var/datum/disease/disease as anything in diseases)
+			if(disease.severity != DISEASE_SEVERITY_POSITIVE)
+				disease.cure(FALSE)
+
+	if(heal_flags & HEAL_WOUNDS)
+		for(var/datum/wound/wound as anything in all_wounds)
+			wound.remove_wound()
+
+	if(heal_flags & HEAL_LIMBS)
 		regenerate_limbs()
+
+	if(heal_flags & HEAL_ORGANS)
 		regenerate_organs()
+
+	if(heal_flags & HEAL_TRAUMAS)
+		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+		// Addictions are like traumas
+		if(mind)
+			for(var/addiction_type in subtypesof(/datum/addiction))
+				mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS) //Remove the addiction!
+
+	if(heal_flags & HEAL_RESTRAINTS)
 		QDEL_NULL(handcuffed)
 		QDEL_NULL(legcuffed)
 		set_handcuffed(null)
 		update_handcuffed()
-	cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
-	..()
+
+	return ..()
 
 /mob/living/carbon/can_be_revived()
-	. = ..()
 	if(!getorgan(/obj/item/organ/internal/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)) || HAS_TRAIT(src, TRAIT_HUSK))
 		return FALSE
+	return ..()
 
 /mob/living/carbon/proc/can_defib()
 
@@ -989,7 +1007,7 @@
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
-
+	old_bodypart.on_removal()
 	bodyparts -= old_bodypart
 	switch(old_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -1042,15 +1060,15 @@
 				if(BODY_ZONE_CHEST)
 					limbtypes = typesof(/obj/item/bodypart/chest)
 				if(BODY_ZONE_R_ARM)
-					limbtypes = typesof(/obj/item/bodypart/r_arm)
+					limbtypes = typesof(/obj/item/bodypart/arm/right)
 				if(BODY_ZONE_L_ARM)
-					limbtypes = typesof(/obj/item/bodypart/l_arm)
+					limbtypes = typesof(/obj/item/bodypart/arm/left)
 				if(BODY_ZONE_HEAD)
 					limbtypes = typesof(/obj/item/bodypart/head)
 				if(BODY_ZONE_L_LEG)
-					limbtypes = typesof(/obj/item/bodypart/l_leg)
+					limbtypes = typesof(/obj/item/bodypart/leg/left)
 				if(BODY_ZONE_R_LEG)
-					limbtypes = typesof(/obj/item/bodypart/r_leg)
+					limbtypes = typesof(/obj/item/bodypart/leg/right)
 			switch(edit_action)
 				if("remove")
 					if(BP)
@@ -1088,7 +1106,7 @@
 		for(var/i in artpaths)
 			var/datum/martial_art/M = i
 			artnames[initial(M.name)] = M
-		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sort_list(artnames, /proc/cmp_typepaths_asc)
+		var/result = input(usr, "Choose the martial art to teach","JUDO CHOP") as null|anything in sort_list(artnames, GLOBAL_PROC_REF(cmp_typepaths_asc))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1104,7 +1122,7 @@
 		if(!check_rights(NONE))
 			return
 		var/list/traumas = subtypesof(/datum/brain_trauma)
-		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in sort_list(traumas, /proc/cmp_typepaths_asc)
+		var/result = input(usr, "Choose the brain trauma to apply","Traumatize") as null|anything in sort_list(traumas, GLOBAL_PROC_REF(cmp_typepaths_asc))
 		if(!usr)
 			return
 		if(QDELETED(src))
@@ -1311,9 +1329,9 @@
 
 
 /mob/living/carbon/get_attack_type()
-	var/datum/species/species = dna?.species
-	if (species)
-		return species.attack_type
+	if(has_active_hand())
+		var/obj/item/bodypart/arm/active_arm = get_active_hand()
+		return active_arm.attack_type
 	return ..()
 
 

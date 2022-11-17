@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Fully heal can be passed a series of flags. As a result, some things which previously did a full heal might heal slightly less, or some things which did partial full heals might do slightly more."
+  - bugfix: "Adminordrazine will no longer completely break every facet of a person"
+  - admin: "Ahealing a changeling will refill all of their chems."

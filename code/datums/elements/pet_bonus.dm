@@ -5,7 +5,7 @@
  * I may have been able to make this work for carbons, but it would have been interjecting on some help mode interactions anyways.
  */
 /datum/element/pet_bonus
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
 
 	///optional cute message to send when you pet your pet!
@@ -20,7 +20,7 @@
 
 	src.emote_message = emote_message
 	src.moodlet = moodlet
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 
 /datum/element/pet_bonus/Detach(datum/target)
 	. = ..()

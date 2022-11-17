@@ -17,7 +17,7 @@
 	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50), wound_bonus=CANT_WOUND) //Damage the chest based on limb's existing damage
 	if(!silent)
 		limb_owner.visible_message(span_danger("<B>[limb_owner]'s [name] is violently dismembered!</B>"))
-	INVOKE_ASYNC(limb_owner, /mob.proc/emote, "scream")
+	INVOKE_ASYNC(limb_owner, TYPE_PROC_REF(/mob, emote), "scream")
 	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
 	limb_owner.add_mood_event("dismembered", /datum/mood_event/dismembered)
 	limb_owner.mind?.add_memory(MEMORY_DISMEMBERED, list(DETAIL_LOST_LIMB = src, DETAIL_PROTAGONIST = limb_owner), story_value = STORY_VALUE_AMAZING)
@@ -137,6 +137,9 @@
 				continue
 			organ.transfer_to_limb(src, phantom_owner)
 
+	for(var/trait in bodypart_traits)
+		REMOVE_TRAIT(phantom_owner, trait, bodypart_trait_source)
+
 	update_icon_dropped()
 	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
@@ -237,7 +240,7 @@
 	if(special)
 		return ..()
 
-/obj/item/bodypart/r_arm/drop_limb(special)
+/obj/item/bodypart/arm/right/drop_limb(special)
 	. = ..()
 
 	var/mob/living/carbon/arm_owner = owner
@@ -256,7 +259,7 @@
 		arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 
-/obj/item/bodypart/l_arm/drop_limb(special)
+/obj/item/bodypart/arm/left/drop_limb(special)
 	var/mob/living/carbon/arm_owner = owner
 	. = ..()
 	if(arm_owner && !special)
@@ -274,7 +277,7 @@
 		arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 
-/obj/item/bodypart/r_leg/drop_limb(special)
+/obj/item/bodypart/leg/right/drop_limb(special)
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location()) //At this point bodypart is still in nullspace
@@ -285,7 +288,7 @@
 			owner.dropItemToGround(owner.shoes, TRUE)
 	return ..()
 
-/obj/item/bodypart/l_leg/drop_limb(special) //copypasta
+/obj/item/bodypart/leg/left/drop_limb(special) //copypasta
 	if(owner && !special)
 		if(owner.legcuffed)
 			owner.legcuffed.forceMove(owner.drop_location())
@@ -384,9 +387,12 @@
 	if(can_be_disabled)
 		update_disabled()
 
+	for(var/trait in bodypart_traits)
+		ADD_TRAIT(owner, trait, bodypart_trait_source)
+
 	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
 	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
-	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, /proc/cmp_bodypart_by_body_part_asc)
+	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
 	synchronize_bodytypes(new_limb_owner)
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
@@ -459,22 +465,15 @@
 
 	carbon_owner.dna.species.bodytype = all_limb_flags
 
-//Regenerates all limbs. Returns amount of limbs regenerated
-/mob/living/proc/regenerate_limbs(list/excluded_zones = list())
-	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, excluded_zones)
-
-/mob/living/carbon/regenerate_limbs(list/excluded_zones = list())
-	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, excluded_zones)
+/mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
+	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)
 	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	if(length(excluded_zones))
 		zone_list -= excluded_zones
 	for(var/limb_zone in zone_list)
 		regenerate_limb(limb_zone)
 
-/mob/living/proc/regenerate_limb(limb_zone)
-	return
-
-/mob/living/carbon/regenerate_limb(limb_zone)
+/mob/living/carbon/proc/regenerate_limb(limb_zone)
 	var/obj/item/bodypart/limb
 	if(get_bodypart(limb_zone))
 		return FALSE

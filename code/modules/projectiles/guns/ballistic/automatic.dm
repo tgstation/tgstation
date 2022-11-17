@@ -272,7 +272,7 @@
 	if(!user.canUseTopic(src))
 		return
 	cover_open = !cover_open
-	to_chat(user, span_notice("You [cover_open ? "open" : "close"] [src]'s cover."))
+	balloon_alert(user, "cover [cover_open ? "opened" : "closed"]")
 	playsound(src, 'sound/weapons/gun/l6/l6_door.ogg', 60, TRUE)
 	update_appearance()
 
@@ -305,7 +305,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
-		balloon_alert(user, "close the cover!")
+		balloon_alert(user, "open the cover!")
 		return
 	..()
 
@@ -328,7 +328,7 @@
 	recoil = 2
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
-	fire_delay = 40
+	fire_delay = 4 SECONDS
 	burst_size = 1
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK
@@ -340,6 +340,13 @@
 /obj/item/gun/ballistic/automatic/sniper_rifle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2)
+
+/obj/item/gun/ballistic/automatic/sniper_rifle/reset_semicd()
+	. = ..()
+	if(suppressed)
+		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+	else
+		playsound(src, 'sound/machines/eject.ogg', 50, TRUE)
 
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"

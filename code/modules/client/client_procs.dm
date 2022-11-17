@@ -126,11 +126,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
 	//overloaded
-	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, .proc/_Topic, hsrc, href, href_list)))
+	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_Topic), hsrc, href, href_list)))
 		return
 	..() //redirect to hsrc.Topic()
 
-///dumb workaround because byond doesnt seem to recognize the .proc/Topic() typepath for /datum/proc/Topic() from the client Topic,
+///dumb workaround because byond doesnt seem to recognize the Topic() typepath for /datum/proc/Topic() from the client Topic,
 ///so we cant queue it without this
 /client/proc/_Topic(datum/hsrc, href, list/href_list)
 	return hsrc.Topic(href, href_list)
@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
-	stat_panel.subscribe(src, .proc/on_stat_panel_message)
+	stat_panel.subscribe(src, PROC_REF(on_stat_panel_message))
 
 	// Instantiate tgui panel
 	tgui_panel = new(src, "browseroutput")
@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		inline_js = file("html/statbrowser.js"),
 		inline_css = file("html/statbrowser.css"),
 	)
-	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// If we aren't already generating a ban cache, fire off a build request
 	// This way hopefully any users of request_ban_cache will never need to yield
 	if(!ban_cache_start && SSban_cache?.query_started)
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/build_ban_cache, src)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(build_ban_cache), src)
 
 	send_resources()
 
@@ -633,9 +633,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(!CONFIG_GET(flag/panic_bunker_interview))
 			// If we don't have panic_bunker_living set and the client is not in the DB, reject them.
 			// Otherwise, if we do have a panic_bunker_living set, check if they have enough minutes played.
-			if((!living_recs && !client_is_in_db) || living_recs >= minutes)
+			if((living_recs == 0 && !client_is_in_db) || living_recs >= minutes)
 				var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
-					[living_recs == -1 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
+					[living_recs == 0 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
 				log_access(reject_message)
 				message_admins(span_adminnotice("[reject_message]"))
 				var/message = CONFIG_GET(string/panic_bunker_message)
@@ -1004,7 +1004,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		if (CONFIG_GET(flag/asset_simple_preload))
-			addtimer(CALLBACK(SSassets.transport, /datum/asset_transport.proc/send_assets_slow, src, SSassets.transport.preload), 5 SECONDS)
+			addtimer(CALLBACK(SSassets.transport, TYPE_PROC_REF(/datum/asset_transport, send_assets_slow), src, SSassets.transport.preload), 5 SECONDS)
 
 		#if (PRELOAD_RSC == 0)
 		for (var/name in GLOB.vox_sounds)
@@ -1192,7 +1192,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		winset(src, "default.ShiftUp", "is-disabled=true")
 
 /client/proc/update_ambience_pref()
-	if(prefs.toggles & SOUND_AMBIENCE)
+	if(prefs.read_preference(/datum/preference/toggle/sound_ambience))
 		if(SSambience.ambience_listening_clients[src] > world.time)
 			return // If already properly set we don't want to reset the timer.
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.

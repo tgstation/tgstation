@@ -226,17 +226,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/name_part1
 	var/name_part2
 
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_halloween")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_halloween")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_halloween")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_halloween")
-	else if(SSevents.holidays && SSevents.holidays[CHRISTMAS])
+	else if(check_holidays(CHRISTMAS))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_xmas")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
-	else if(SSevents.holidays && SSevents.holidays[VALENTINES])
+	else if(check_holidays(VALENTINES))
 		name_action = pick_list(ARCADE_FILE, "rpg_action_valentines")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else
 			playsound(src, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3)
 
-	timer_id = addtimer(CALLBACK(src, .proc/enemy_action,player_stance,user),1 SECONDS,TIMER_STOPPABLE)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(enemy_action),player_stance,user),1 SECONDS,TIMER_STOPPABLE)
 	gameover_check(user)
 
 
@@ -578,6 +578,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(obj_flags & EMAGGED)
 			var/mob/living/living_user = user
 			if (istype(living_user))
+				living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
 				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 		user.lost_game()
@@ -659,7 +660,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	to_chat(user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
 	user.played_game()
 	var/obj/item/bodypart/chopchop = user.get_active_hand()
-	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, .proc/do_they_still_have_that_hand, user, chopchop)))
+	if(do_after(user, 5 SECONDS, target = src, extra_checks = CALLBACK(src, PROC_REF(do_they_still_have_that_hand), user, chopchop)))
 		playsound(src, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 		to_chat(user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		chopchop.dismember()
