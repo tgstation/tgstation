@@ -134,8 +134,8 @@
 
 	var/image/passed_image = \
 		istext(image_to_show) \
-		? image(icon, src, image_to_show, layer) \
-		: image_to_show
+			? image(icon, src, image_to_show, layer) \
+			: image_to_show
 
 	flick_overlay_global(passed_image, show_to, duration)
 
