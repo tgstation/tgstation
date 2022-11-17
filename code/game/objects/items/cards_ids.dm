@@ -959,7 +959,7 @@
 	is_intern = FALSE
 	update_label()
 
-/obj/item/card/id/advanced/proc/on_holding_card_slot_moved(/obj/item/modular_computer/tablet/source, atom/old_loc, dir, forced)
+/obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/modular_computer/tablet/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	if(istype(old_loc, /obj/item/modular_computer/tablet))
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
