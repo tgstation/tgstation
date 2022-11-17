@@ -387,8 +387,10 @@
 			rider.emote("scream")
 			rider.adjustBruteLoss(10)  // thats gonna leave a mark
 			return
-		rider.visible_message(span_userdanger("You fall flat onto the board!"), \
-		span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"))
+		rider.visible_message(
+			span_userdanger("You fall flat onto the board!"),
+			span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"),
+		)
 		return
 
 	rider.visible_message(
