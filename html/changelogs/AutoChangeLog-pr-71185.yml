@@ -1,0 +1,4 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - bugfix: "Made clown and mime survival boxes contain the correct internals tank for plasmamen."

@@ -4915,6 +4915,7 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
+/obj/structure/fireaxecabinet/mechremoval/directional/east,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "bLQ" = (
