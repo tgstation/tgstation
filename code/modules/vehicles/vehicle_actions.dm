@@ -376,7 +376,7 @@
 
 	rider.adjustStaminaLoss(board.instability)
 	if (rider.getStaminaLoss() >= 100)
-		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
+		playsound(src, 'sound/effects/bang.ogg', 20, vary = TRUE)
 		board.unbuckle_mob(rider)
 		rider.Paralyze(50)
 		if(prob(15))
