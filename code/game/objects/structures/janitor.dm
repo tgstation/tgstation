@@ -26,7 +26,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Fill mop bucket"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return . || NONE
+	return .
 
 /obj/structure/mop_bucket/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/reagent_containers))
