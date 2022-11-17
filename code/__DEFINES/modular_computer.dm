@@ -52,5 +52,31 @@
 
 /// The default ringtone of the Messenger app.
 #define MESSENGER_RINGTONE_DEFAULT "beep"
+
+// This is not an exhaustive list of all ringtones in game.
+
+// Department-default ringtones (besides service, and heads can use either their dept or command)
+#define MESSENGER_RINGTONE_SHITCURITY "justice"
+#define MESSENGER_RINGTONE_SUPPLY MESSENGER_RINGTONE_PAPER
+#define MESSENGER_RINGTONE_ENGINEERING "delam"
+#define MESSENGER_RINGTONE_MEDICAL "healing"
+#define MESSENGER_RINGTONE_SCIENCE "knowledge"
+#define MESSENGER_RINGTONE_COMMAND "fanfare"
+
+/// Ringtones for water or liquid based jobs (bartender, jani, chemmy)
+#define MESSENGER_RINGTONE_SPLASH "splash"
+/// Ringtones for jobs that blow up the station a lot (scientist, atmos, etc)
+#define MESSENGER_RINGTONE_EXPLOSION "boom"
+/// Jobs in tune with nature (botanist, miner)
+#define MESSENGER_RINGTONE_NATURAL "birdchirp"
+/// Paperwork jobs (supply and curator)
+#define MESSENGER_RINGTONE_PAPER "rustle"
+/// Dealing with criminals.
+#define MESSENGER_RINGTONE_LAW "thelaw"
+
+/// HONK (clown)
+#define MESSENGER_RINGTONE_HONK "honk"
+
+
 /// The maximum length of the ringtone of the Messenger app.
 #define MESSENGER_RINGTONE_MAX_LENGTH 20

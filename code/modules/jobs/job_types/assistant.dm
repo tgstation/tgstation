@@ -36,6 +36,8 @@ Assistant
 	rpg_title = "Lout"
 	config_tag = "ASSISTANT"
 
+	job_tone = "example"
+
 /datum/outfit/job/assistant
 	name = JOB_ASSISTANT
 	jobtype = /datum/job/assistant
