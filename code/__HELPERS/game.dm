@@ -129,7 +129,7 @@
 		add_to.images += image_to_show
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_images_from_clients), image_to_show, show_to), duration, TIMER_CLIENT_TIME)
 
-/// Atom-wrapper for flick_overlay_global that converts an iconstate to image
+/// Flicks a certain overlay onto an atom, handling icon_state strings
 /atom/proc/flick_overlay(image_to_show, list/show_to, duration, layer)
 	var/image/passed_image = \
 		istext(image_to_show) \
