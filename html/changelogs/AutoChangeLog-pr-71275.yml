@@ -1,5 +1,0 @@
-author: "skylord-a52"
-delete-after: True
-changes:
-  - refactor: "defines a new global proc, pick_weight_recursive()"
-  - code_imp: "languages can weight syllables, and galactic common's definition is easier to look at"

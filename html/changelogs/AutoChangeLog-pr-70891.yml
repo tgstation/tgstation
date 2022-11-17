@@ -1,6 +1,0 @@
-author: "Fikou, sprites by Halcyon"
-delete-after: True
-changes:
-  - refactor: "fire axe cabinets support items that aren't fire axes"
-  - balance: "mechs no longer eject you when you die in them"
-  - rscadd: "Adds a giant crowbar to robotics, it can break open mechs to eject their pilots."
