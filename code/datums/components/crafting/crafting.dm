@@ -1,6 +1,6 @@
 /datum/component/personal_crafting/Initialize()
 	if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
+		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(create_mob_button))
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	SIGNAL_HANDLER
@@ -10,7 +10,7 @@
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
+	RegisterSignal(C, COMSIG_CLICK, PROC_REF(component_ui_interact))
 
 /datum/component/personal_crafting
 	var/busy
@@ -276,6 +276,7 @@
 							RG.volume -= amt
 							data = RG.data
 							RC.reagents.conditional_update(RC)
+							RC.update_appearance(UPDATE_ICON)
 							RG = locate(RG.type) in Deletion
 							RG.volume = amt
 							RG.data += data
@@ -285,6 +286,7 @@
 							amt -= RG.volume
 							RC.reagents.reagent_list -= RG
 							RC.reagents.conditional_update(RC)
+							RC.update_appearance(UPDATE_ICON)
 							RGNT = locate(RG.type) in Deletion
 							RGNT.volume += RG.volume
 							RGNT.data += RG.data
@@ -362,7 +364,7 @@
 	SIGNAL_HANDLER
 
 	if(user == parent)
-		INVOKE_ASYNC(src, .proc/ui_interact, user)
+		INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
 /datum/component/personal_crafting/ui_state(mob/user)
 	return GLOB.not_incapacitated_turf_state

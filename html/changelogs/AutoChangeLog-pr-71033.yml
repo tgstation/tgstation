@@ -1,5 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Made the V8 Engine teach you the House Edge recipe."
-  - bugfix: "Fixed an error related to the V8 Engine that caused an infinite progress bar."

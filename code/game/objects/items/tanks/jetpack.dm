@@ -17,8 +17,8 @@
 
 /obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
-	get_mover = CALLBACK(src, .proc/get_user)
-	check_on_move = CALLBACK(src, .proc/allow_thrust, 0.01)
+	get_mover = CALLBACK(src, PROC_REF(get_user))
+	check_on_move = CALLBACK(src, PROC_REF(allow_thrust), 0.01)
 	refresh_jetpack()
 
 /obj/item/tank/jetpack/Destroy()
@@ -121,13 +121,13 @@
 		return null
 	return loc
 
-/obj/item/tank/jetpack/suicide_act(mob/user)
+/obj/item/tank/jetpack/suicide_act(mob/living/user)
 	if (!ishuman(user))
-		return ..()
+		return
 	var/mob/living/carbon/human/suffocater = user
 	suffocater.say("WHAT THE FUCK IS CARBON DIOXIDE?")
 	suffocater.visible_message(span_suicide("[user] is suffocating [user.p_them()]self with [src]! It looks like [user.p_they()] didn't read what that jetpack says!"))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/tank/jetpack/improvised
 	name = "improvised jetpack"
