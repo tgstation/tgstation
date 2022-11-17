@@ -119,7 +119,7 @@
 	floor_tile = /obj/item/stack/tile/bamboo/tatami
 	smoothing_flags = NONE
 
-/turf/open/floor/bamboo/setup_broken_states()
+/turf/open/floor/bamboo/tatami/setup_broken_states()
 	return list("tatami-damaged")
 
 /turf/open/floor/bamboo/tatami/purple
