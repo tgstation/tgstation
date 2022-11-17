@@ -71,7 +71,11 @@
 	TEST_ASSERT(speech_args[SPEECH_LANGUAGE], "Handle speech signal does not have a language arg")
 	TEST_ASSERT(speech_args[SPEECH_RANGE], "Handle speech signal does not have a range arg")
 
-	handle_speech_result = speech_args
+	// saving hearing_args directly via handle_speech_result = speech_args won't work since the arg list
+	// is a temporary variable that gets garbage collected after it's done being used by procs
+	// therefore we need to create a new list and transfer the args
+	handle_speech_result = list()
+	handle_speech_result += speech_args
 
 /datum/unit_test/speech/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
@@ -87,7 +91,11 @@
 	TEST_ASSERT(hearing_args[HEARING_SPANS], "Handle hearing signal does not have a spans arg")
 	TEST_ASSERT(hearing_args[HEARING_MESSAGE_MODE], "Handle hearing signal does not have a message mode arg")
 
-	handle_hearing_result = hearing_args
+	// saving hearing_args directly via handle_hearing_result = hearing_args won't work since the arg list
+	// is a temporary variable that gets garbage collected after it's done being used by procs
+	// therefore we need to create a new list and transfer the args
+	handle_hearing_result = list()
+	handle_hearing_result += hearing_args
 
 /datum/unit_test/speech/Run()
 	speaker = allocate(/mob/living/carbon/human)
@@ -100,48 +108,48 @@
 	RegisterSignal(listener, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 
 	// speaking and whispering should be hearable
-	conversation(distance=1)
+	conversation(distance = 1)
 	// speaking should be hearable but not whispering
-	conversation(distance=5)
+	conversation(distance = 5)
 	// neither speaking or whispering should be hearable
-	conversation(distance=10)
+	conversation(distance = 10)
 
 	// Language test
 	speaker.grant_language(/datum/language/beachbum)
+	speaker.language_holder.selected_language = /datum/language/beachbum
 	listener.add_blocked_language(/datum/language/beachbum)
 	// speaking and whispering should be hearable
-	conversation(distance=1, language=/datum/language/beachbum)
+	conversation(distance = 1)
 	// speaking should be hearable but not whispering
-	conversation(distance=5, language=/datum/language/beachbum)
+	conversation(distance = 5)
 	// neither speaking or whispering should be hearable
-	conversation(distance=10, language=/datum/language/beachbum)
+	conversation(distance = 10)
 
 #define NORMAL_HEARING_RANGE 7
 #define WHISPER_HEARING_RANGE 1
 
-/datum/unit_test/speech/proc/conversation(distance = 0, datum/language/language)
+/datum/unit_test/speech/proc/conversation(distance = 0)
 	speaker.forceMove(run_loc_floor_bottom_left)
 	listener.forceMove(locate((run_loc_floor_bottom_left.x + distance), run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 
 	var/pangram_quote = "The quick brown fox jumps over the lazy dog"
 
 	// speaking
-	speaker.say(pangram_quote, language = language)
+	speaker.say(pangram_quote)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT_EQUAL(islist(handle_hearing_result), distance <= NORMAL_HEARING_RANGE, "Handle hearing signal was not fired")
 
-	if(language && handle_hearing_result)
-		if(listener.has_language(language))
-			TEST_ASSERT_EQUAL(pangram_quote, handle_hearing_result[HEARING_RAW_MESSAGE], "Language test failed. Mob was supposed to understand: [pangram_quote] using language [language]")
+	if(handle_hearing_result)
+		if(listener.has_language(handle_speech_result[SPEECH_LANGUAGE]))
+			TEST_ASSERT_EQUAL(pangram_quote, handle_hearing_result[HEARING_RAW_MESSAGE], "Language test failed. Mob was supposed to understand: [pangram_quote] using language [handle_speech_result[SPEECH_LANGUAGE]]")
 		else
-			var/what_is_this = handle_hearing_result[HEARING_RAW_MESSAGE]
-			TEST_ASSERT_NOTEQUAL(pangram_quote, handle_hearing_result[HEARING_RAW_MESSAGE], "Language test failed. Mob was NOT supposed to understand: [pangram_quote] using language [language]")
+			TEST_ASSERT_NOTEQUAL(pangram_quote, handle_hearing_result[HEARING_RAW_MESSAGE], "Language test failed. Mob was NOT supposed to understand: [pangram_quote] using language [handle_speech_result[SPEECH_LANGUAGE]]")
 
 	handle_speech_result = null
 	handle_hearing_result = null
 
 	// whispering
-	speaker.whisper(pangram_quote, language = language)
+	speaker.whisper(pangram_quote)
 	TEST_ASSERT(handle_speech_result, "Handle speech signal was not fired")
 	TEST_ASSERT_EQUAL(islist(handle_hearing_result), distance <= WHISPER_HEARING_RANGE, "Handle hearing signal was not fired")
 
