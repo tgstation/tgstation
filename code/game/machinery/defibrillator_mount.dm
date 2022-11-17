@@ -51,8 +51,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 	if(!defib)
 		return
-
-	. += "defib"
+	if (defib.icon_state == "defibrusted")
+		. += "defib-rusted"
+	else if (defib.icon_state == "defibunit")
+		. += "defib"
 
 	if(defib.powered)
 		var/obj/item/stock_parts/cell/C = get_cell()
