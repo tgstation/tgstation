@@ -295,6 +295,11 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(is_speaker_whispering && !can_hear_whisper && !isobserver(src)) // ghosts can hear all messages clearly
 		raw_message = stars(raw_message)
 
+	// we need to send this signal before compose_message() is used since other signals need to modify
+	// the raw_message first. After the raw_message is passed through the various signals, it's ready to be formatted
+	// by compose_message() to be displayed in chat boxes for to_chat or runechat
+	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
+
 	if(HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) //Checks if speaker is using sign language
 		deaf_message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
@@ -317,7 +322,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = deaf_message
 
 		show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 		return message
 
 	if(speaker != src)
@@ -334,8 +338,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			create_chat_message(speaker, null, message_mods[MODE_CUSTOM_SAY_EMOTE], spans, EMOTE_MESSAGE)
 		else
 			create_chat_message(speaker, message_language, raw_message, spans)
-
-	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods)

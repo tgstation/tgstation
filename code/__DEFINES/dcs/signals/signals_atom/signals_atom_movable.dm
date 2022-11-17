@@ -49,7 +49,7 @@
 #define COMSIG_MOVABLE_Z_CHANGED "movable_ztransit"
 ///from base of atom/movable/Hear(): (proc args list(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range))
 #define COMSIG_MOVABLE_HEAR "movable_hear"
-	#define HEARING_MESSAGE 1
+	//#define HEARING_MESSAGE 1 - (I'm pretty sure this is never really used and can be gutted)
 	#define HEARING_SPEAKER 2
 	#define HEARING_LANGUAGE 3
 	#define HEARING_RAW_MESSAGE 4

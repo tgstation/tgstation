@@ -26,7 +26,7 @@
 	. = ..()
 	if(!density || !voice_activated || radio_freq)
 		return
-	if(findtext(raw_message,password))
+	if(findtext(raw_message, password))
 		open()
 
 /obj/machinery/door/password/Bumped(atom/movable/AM)
