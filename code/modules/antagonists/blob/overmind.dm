@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
-			L.fully_heal(admin_revive = FALSE)
+			L.fully_heal()
 
 		for(var/area/A in GLOB.areas)
 			if(!(A.type in GLOB.the_station_areas))
