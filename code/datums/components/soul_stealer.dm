@@ -13,8 +13,8 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/soul_stealer/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
 
 /datum/component/soul_stealer/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_AFTERATTACK))
@@ -43,7 +43,7 @@
 		return
 
 	if(ishuman(target))
-		INVOKE_ASYNC(src, .proc/try_capture, target, user)
+		INVOKE_ASYNC(src, PROC_REF(try_capture), target, user)
 
 	var/list/souls = recursive_list_resolve(weak_souls)
 

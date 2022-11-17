@@ -42,9 +42,9 @@
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/toolbox/suicide_act(mob/user)
+/obj/item/storage/toolbox/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"

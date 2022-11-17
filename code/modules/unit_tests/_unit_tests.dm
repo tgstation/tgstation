@@ -183,6 +183,7 @@
 #include "spell_shapeshift.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
+#include "station_trait_tests.dm"
 #include "stomach.dm"
 #include "strippable.dm"
 #include "subsystem_init.dm"
@@ -194,6 +195,7 @@
 #include "traitor.dm"
 #include "unit_test.dm"
 #include "verify_config_tags.dm"
+#include "verify_emoji_names.dm"
 #include "wizard_loadout.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

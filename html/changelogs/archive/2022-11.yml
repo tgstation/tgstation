@@ -231,3 +231,166 @@
       Station
   exymian:
   - bugfix: fixed the prox sensor
+2022-11-07:
+  A.C.M.O.:
+  - rscadd: Added the Deaf Personnel pin for users of the Deaf quirk.
+  Fikou:
+  - bugfix: flight potions no longer have white bottle overlays
+  - bugfix: fixes cursed katana not spawning
+  GoldenAlpharex:
+  - bugfix: SpaceMessenger was now updated to 6.4.8, bringing you more responsiveness
+      than ever (so long as ever is shorter than seven days ago)!
+  Jacquerel:
+  - qol: More actions should report why they are unavailable if pressed while they
+      are unavailable.
+  - qol: Giant Spider action buttons should now correctly display whether they are
+      available or not.
+  - bugfix: Spider broodmothers can now only lay one enriched egg per victim.
+  - bugfix: Spider broodmothers can no longer feed multiple times from the same corpse,
+      a bug they never previously needed to exploit because of the previous bug.
+  JohnFulpWillard:
+  - bugfix: Detomatix cartridges are no longer called attacking items.
+  Sealed101:
+  - bugfix: fixed mecha internal damage diagnostic HUD blip not appearing
+  - rscadd: Added a special suicide to the Experi-Scanner
+  ShizCalev:
+  - qol: Randomized the pixel offset of stuff when it comes out of a microwave
+  - bugfix: Fixed a runtime when NPC monkeys attempt to put items in the hands of
+      mobs with no hands (ie cyborgs, lizards, rats, ect.)
+  - bugfix: Monkeys will no longer attempt to put items in your pockets if you have
+      no pockets.
+  Striders13:
+  - bugfix: permanent one-use portals will no longer get used up when clicked by a
+      ghost
+  lizardqueenlexi:
+  - bugfix: Made the V8 Engine teach you the House Edge recipe.
+  - bugfix: Fixed an error related to the V8 Engine that caused an infinite progress
+      bar.
+  san7890, ZephyrTFA:
+  - bugfix: Emojipedia has been restored to tablets! Look for it in your local Nanotrasen
+      Software Hub.
+  - balance: Everyone is now able to send Emojis via PDA Messaging! It's no longer
+      restricted to just mime and curators, so enjoy sending the classics such as
+      :ai:, :1997:, :pslime:, and more!
+2022-11-08:
+  Fikou:
+  - qol: concussive gauntlets now launch you away from gibtonite
+  - qol: concussive guantlets can now mine basalt
+  Guillaume Prata:
+  - qol: Ore bag balloon alerts have a 2 second cooldown now and a spammy message
+      (hopefully the last) it send to your chat about being full was removed
+  Melbert:
+  - code_imp: Unremovable organs that are forcemoved out of a mob with an owner no
+      longer self terminate
+  SeigaSeiga:
+  - balance: Implants can no longer be destroyed by enough external explosions. Bomb
+      Suit Knights can wield their explosive lances with pride!
+  Tattle:
+  - admin: added investigate deaths to shed some more light on unusual demises, dustings,
+      and gibbings
+  Thunder12345:
+  - qol: Jukebox music can be controlled by a new seperate preference, and is no longer
+      linked to the instrument sound preference option.
+  - refactor: Sound related toggle preferences have been migrated away from the legacy
+      system. Pre-existing preferences should be safely migrated but players are advised
+      to check.
+  TiviPlus:
+  - bugfix: fixed a gygax speed exploit
+  VexingRaven:
+  - bugfix: Fixed a few balloon alerts for guns and moved a few more chat messages
+      to balloon alerts
+  - bugfix: Adding missing fire alarms to the Chapel and Funeral Room on Metastation
+  mc-oofert:
+  - bugfix: Fixes 1 tile foam in Foam Dispensers,Clown Cars, Hygiene Bots,Firebots,
+      Soap Suicide, Emagged cleanbots, and the clown plasmaman envirosuit
+  moocowswag:
+  - bugfix: Firebreath can no longer benefit from both power and energetic chromosomes
+      at the same time
+  private-tristan:
+  - bugfix: deltastation psychology office buttons are now reachable without opening
+      the locker
+  san7890:
+  - qol: When saving Experiment Log Recording Data to a data disk on either the Tachyon
+      Doppler or the Tank Compressor, Nanotrasen released a UI/UX update in order
+      to have the button that saves the data onto your disk... say "Save".
+2022-11-09:
+  MTandi:
+  - bugfix: made Kilo Xenobio guide visible from the north part of the room.
+2022-11-14:
+  Iamgoofball:
+  - bugfix: You can no longer attach igniters to igniters.
+2022-11-15:
+  Iamgoofball:
+  - rscdel: You can no longer craft explosive lances.
+2022-11-16:
+  Cheshify:
+  - bugfix: A few tiles on icebox's lavaland ruin aren't active turfs anymore.
+  Ebin-Halcyon:
+  - imageadd: the advanced military tracksuit has been resprited.
+  Fikou:
+  - qol: giant chains now go above mobs
+  - bugfix: Hilbert Research Facility tram buttons work now.
+  - qol: Adds support for html in lore terminals, and makes Hilbert Research Facility
+      emails use them.
+  - rscadd: 'New Station Trait: Cybernetic Revolution'
+  - rscadd: Body Purist Quirk
+  GoldenAlpharex:
+  - bugfix: Bubbles no longer re-appear when you change z-levels after getting cleaned.
+      Now they leave for good!
+  - bugfix: Plant-based cells will no longer show an error sprite if the plant it's
+      made out of has its sprite located in a different file than all of the other
+      plants.
+  - bugfix: After a lot of troubles, Nanotrasen's scientists finally managed to make
+      it possible to grow arms and legs out of the limb grower once more, giving sense
+      back to the machine's name.
+  Jacquerel:
+  - bugfix: Lobstrosity Rush Glands now correctly apply their action cooldown when
+      they trigger from low health.
+  Jolly:
+  - qol: On Icebox, the air supply pipes leading into the court room no longer run
+      under a window. You're welcome atmos techs.
+  Kapu420:
+  - bugfix: makes masks not render when something is supposed to obscure them
+  MTandi:
+  - bugfix: Cleanbots properly prioritize adjacent trash
+  - qol: Cleanbots now clean floor under the tables
+  - qol: Cleanbots now clean more types of trash
+  Rhials:
+  - spellcheck: the Organic Space Suit purchase text now informs the buyer that it
+      regulates oxygen needs automatically.
+  - bugfix: togglebuildmode now properly logs when given to other players.
+  Sealed101:
+  - bugfix: fixed megafauna crusher kills and crusher achievements depending on megafauna
+      having crusher loot. Legion Crusher should now be obtainable as a result.
+  ShizCalev:
+  - bugfix: Microwaves no longer shit out their upgraded parts when cooking stuff.
+  TiviPlus:
+  - bugfix: Fixes certain mech objects not attacking in combat mode
+  - bugfix: fixed mecha components not taking damage from animals and xenos
+  VexingRaven:
+  - bugfix: Soul Scythes can no longer phase through the floor into Centcom.
+  axietheaxolotl:
+  - rscadd: Brand-new RD labcoat and beret. Along with a pair of black gloves and
+      a set of jackboots.
+  - imageadd: Resprites RD turtleneck/skirtleneck.
+  carshalash:
+  - imageadd: Sprites of the grasshopper, martini and alexander amaretto have been
+      touched up.
+  san7890:
+  - admin: Whenever a simple_animal is forced to speak via handle_automated_speech,
+      their "FORCED" variable in logs should appropriately represent the proc it was
+      called from- instead of being "poly" for whatever reason.
+  - admin: '"adminmoreinfo", or the read-out of a mob that you can get when you hit
+      the (?) button next to the name of a given mob has been cleaned up a bit to
+      make the data-at-a-glance much more presentable.'
+  - bugfix: You can no longer fold a glass pickle jar into cardboard. It will also
+      no longer recycle into cardboard as well.
+  tattle:
+  - admin: death details of keyless mobs (like xenobio monkeys) are now omitted from
+      investigate deaths
+  tattle and triplezeta:
+  - rscadd: fire blossoms from far off worlds have started blooming on lavaland
+  tattle, nefarious6th:
+  - imageadd: updated a bunch of plant sprites
+  timothymtorres:
+  - bugfix: Fix pacifists being able to slice necks

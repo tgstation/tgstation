@@ -103,7 +103,9 @@
 					target.visible_message(span_warning("[target] slumps onto the ground."), \
 										   span_revenwarning("Violets lights, dancing in your vision, getting clo--"))
 					drained_mobs += REF(target)
-					target.death(0)
+					if(target.stat != DEAD)
+						target.investigate_log("has died from revenant harvest.", INVESTIGATE_DEATHS)
+					target.death(FALSE)
 				else
 					to_chat(src, span_revenwarning("[target ? "[target] has":"[target.p_theyve(TRUE)]"] been drawn out of your grasp. The link has been broken."))
 					if(target) //Wait, target is WHERE NOW?
@@ -248,7 +250,7 @@
 		light_sparks.set_up(4, 0, light)
 		light_sparks.start()
 		new /obj/effect/temp_visual/revenant(get_turf(light))
-		addtimer(CALLBACK(src, .proc/overload_shock, light, caster), 20)
+		addtimer(CALLBACK(src, PROC_REF(overload_shock), light, caster), 20)
 
 /datum/action/cooldown/spell/aoe/revenant/overload/proc/overload_shock(obj/machinery/light/to_shock, mob/living/simple_animal/revenant/caster)
 	flick("[to_shock.base_state]2", to_shock)

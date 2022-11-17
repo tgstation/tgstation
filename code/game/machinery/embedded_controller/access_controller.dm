@@ -53,7 +53,7 @@
 		if(A.idSelf == idSelf)
 			controller = A
 			break
-	for(var/obj/machinery/door/airlock/I in GLOB.machines)
+	for(var/obj/machinery/door/airlock/I in GLOB.airlocks)
 		if(I.id_tag == idDoor)
 			door = I
 			break
@@ -80,7 +80,7 @@
 		else
 			controller.onlyClose(door)
 		use_power(active_power_usage)
-		addtimer(CALLBACK(src, .proc/not_busy), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(not_busy)), 2 SECONDS)
 
 /obj/machinery/door_buttons/access_button/proc/not_busy()
 	busy = FALSE
@@ -208,7 +208,7 @@
 		goIdle(TRUE)
 		return
 	A.unbolt()
-	INVOKE_ASYNC(src, .proc/do_openDoor, A)
+	INVOKE_ASYNC(src, PROC_REF(do_openDoor), A)
 
 /obj/machinery/door_buttons/airlock_controller/proc/do_openDoor(obj/machinery/door/airlock/A)
 	if(A?.open())

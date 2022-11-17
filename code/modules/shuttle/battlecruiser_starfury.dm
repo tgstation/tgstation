@@ -47,9 +47,6 @@
 	hidden = TRUE
 	dir = NORTH
 	port_direction = SOUTH
-	width = 5
-	height = 7
-	dwidth = 2
 
 /obj/docking_port/mobile/syndicate_fighter/fighter_one
 	name = "gorlex fighter one"
@@ -71,9 +68,6 @@
 	dir = NORTH
 	port_direction = SOUTH
 	preferred_direction = WEST
-	width = 14
-	dwidth = 6
-	height = 7
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/gorlex/fighter
 	name = "gorlex fighter navigation computer"
