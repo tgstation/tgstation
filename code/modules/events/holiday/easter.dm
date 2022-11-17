@@ -30,9 +30,9 @@
 		if(R.name != "blobspawn")
 			if(prob(35))
 				if(isspaceturf(R.loc))
-					new /mob/living/simple_animal/rabbit/easter/space(R.loc)
+					new /mob/living/basic/rabbit/easter/space(R.loc)
 				else
-					new /mob/living/simple_animal/rabbit/easter(R.loc)
+					new /mob/living/basic/rabbit/easter(R.loc)
 
 //Easter Baskets
 /obj/item/storage/basket/easter

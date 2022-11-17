@@ -2,6 +2,7 @@
 	name = "pack of nettle seeds"
 	desc = "These seeds grow into nettles."
 	icon_state = "seed-nettle"
+	plant_icon_offset = 0
 	species = "nettle"
 	plantname = "Nettles"
 	product = /obj/item/food/grown/nettle

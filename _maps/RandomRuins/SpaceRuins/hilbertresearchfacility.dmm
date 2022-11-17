@@ -67,12 +67,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"cg" = (
-/turf/closed/mineral/asteroid,
-/area/ruin/space)
-"ch" = (
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "cE" = (
 /obj/structure/closet{
 	desc = "It's a storage unit for mining.";
@@ -170,10 +164,6 @@
 /obj/machinery/door/airlock/titanium,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"es" = (
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "ev" = (
 /obj/structure/table/reinforced,
 /obj/item/pen,
@@ -202,10 +192,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"eG" = (
-/obj/item/transfer_valve,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "fv" = (
 /obj/machinery/door/window/left/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -221,22 +207,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled/purple,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"gg" = (
-/obj/structure/frame/computer,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
-"gm" = (
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
-/obj/machinery/power/shuttle_engine/propulsion/tram{
-	dir = 4
-	},
-/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gv" = (
 /obj/structure/fluff/tram_rail,
@@ -268,20 +238,26 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/grass/fairy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"gR" = (
+/obj/machinery/computer/terminal/hilbert{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gU" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"gZ" = (
+/obj/item/assembly/signaler,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "ha" = (
 /obj/structure/statue/bone/rib{
 	dir = 1
 	},
 /turf/open/floor/cult,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"he" = (
-/obj/structure/flora/rock/pile/style_random,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "hk" = (
 /obj/structure/fluff/tram_rail{
 	dir = 1
@@ -360,6 +336,21 @@
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"in" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/turf/open/space/basic,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "io" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
@@ -412,10 +403,6 @@
 /obj/item/bedsheet/dorms,
 /turf/open/floor/carpet/black,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"ju" = (
-/obj/item/assembly/signaler,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "jC" = (
 /mob/living/simple_animal/slime{
 	colour = "bluespace";
@@ -424,12 +411,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"jF" = (
-/obj/structure/lattice/catwalk,
-/obj/item/paper/crumpled/ruins/note_institute,
-/obj/item/pen,
-/turf/template_noop,
-/area/ruin/space)
 "jJ" = (
 /obj/item/reagent_containers/cup/beaker/bluespace{
 	pixel_y = 5
@@ -450,6 +431,10 @@
 /obj/machinery/light/small/red/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"ke" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "kp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stack/sheet/iron,
@@ -535,6 +520,22 @@
 /obj/effect/turf_decal/siding/thinplating_new/light/end,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"mv" = (
+/obj/effect/turf_decal/trimline/brown/arrow_cw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/brown/mid_joiner{
+	dir = 1
+	},
+/obj/structure/sign/departments/cargo/directional/north,
+/obj/machinery/button/tram{
+	id = "middle_part_hilbert";
+	pixel_y = 4;
+	lift_id = "tram_hilbert"
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "mC" = (
 /obj/machinery/chem_mass_spec,
 /turf/open/floor/mineral/titanium/tiled/blue,
@@ -552,14 +553,6 @@
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"mY" = (
-/obj/machinery/light/floor{
-	brightness = 2;
-	bulb_colour = "#deefff";
-	bulb_power = 0.6
-	},
-/turf/closed/mineral/asteroid,
-/area/ruin/space)
 "nh" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/light/red/directional/west,
@@ -582,16 +575,6 @@
 /obj/machinery/light/red/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"nx" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space)
-"ny" = (
-/obj/structure/tank_dispenser,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "nB" = (
 /obj/structure/sign/departments/chemistry/directional/north,
 /obj/effect/turf_decal/trimline/blue/arrow_cw{
@@ -609,6 +592,24 @@
 "nU" = (
 /obj/structure/sign/warning/docking/directional/west,
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"oc" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 1
+	},
+/turf/open/space/basic,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "oi" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -655,6 +656,9 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"pE" = (
+/turf/template_noop,
+/area/ruin/space)
 "pI" = (
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -679,11 +683,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"qx" = (
-/obj/structure/lattice/catwalk,
-/obj/item/raw_anomaly_core/bluespace,
-/turf/template_noop,
-/area/ruin/space)
 "qI" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/stack/sheet/bluespace_crystal{
@@ -722,10 +721,6 @@
 /obj/item/reagent_containers/dropper,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"rg" = (
-/obj/item/keycard/hilbert,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "ru" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/titanium{
@@ -733,10 +728,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"rJ" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "rM" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 1
@@ -767,8 +758,25 @@
 "sj" = (
 /turf/open/floor/circuit/green/anim,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility/secretroom)
+"so" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "sz" = (
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"sB" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/space/basic,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "sO" = (
 /obj/effect/mob_spawn/corpse/human/monkey,
@@ -790,9 +798,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"tr" = (
-/turf/open/floor/plating/airless,
-/area/ruin/space)
 "ty" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/stock_parts/matter_bin/bluespace{
@@ -861,13 +866,6 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"va" = (
-/obj/machinery/research/anomaly_refinery,
-/turf/open/floor/plating/airless,
-/area/ruin/space)
-"vi" = (
-/turf/template_noop,
-/area/ruin/space)
 "vq" = (
 /obj/item/toy/plush/beeplushie,
 /turf/open/floor/plating/elevatorshaft,
@@ -946,6 +944,15 @@
 /obj/machinery/shower/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"wH" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_white"
+	},
+/turf/open/floor/engine,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "wI" = (
 /obj/machinery/door/poddoor/shutters/preopen,
 /obj/item/food/monkeycube,
@@ -989,16 +996,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/yellow,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"xI" = (
-/obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
-/obj/machinery/power/shuttle_engine/propulsion/tram{
-	dir = 4
-	},
-/turf/closed/indestructible/riveted/plastinum,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xO" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{
 	anchored = 0;
@@ -1016,6 +1013,9 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"xY" = (
+/turf/closed/indestructible/riveted/plastinum,
+/area/ruin/space)
 "yi" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/food/grown/banana,
@@ -1078,6 +1078,10 @@
 /obj/effect/decal/cleanable/food/tomato_smudge,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"yW" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "yZ" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -1105,21 +1109,6 @@
 /obj/structure/table/reinforced/rglass,
 /obj/item/food/grown/tomato/blue/bluespace,
 /turf/open/floor/glass,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"zu" = (
-/obj/effect/turf_decal/trimline/brown/arrow_cw{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/brown/mid_joiner{
-	dir = 1
-	},
-/obj/structure/sign/departments/cargo/directional/north,
-/obj/machinery/button/tram{
-	id = "middle_part_hilbert";
-	pixel_y = 4
-	},
-/obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "zw" = (
 /obj/effect/turf_decal/stripes/red/line{
@@ -1153,6 +1142,10 @@
 /obj/machinery/chem_dispenser,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ad" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "Af" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/light/warm/directional/south,
@@ -1220,12 +1213,27 @@
 "Bo" = (
 /turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Bz" = (
+/obj/structure/fluff/tram_rail,
+/obj/structure/industrial_lift/tram{
+	icon_state = "titanium_purple"
+	},
+/obj/structure/window/reinforced/survival_pod{
+	dir = 4
+	},
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/space/basic,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "BA" = (
 /obj/machinery/door/airlock/science{
 	name = "Hilbert's Office"
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"BB" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/space)
 "BF" = (
 /obj/machinery/door/window/survival_pod{
 	dir = 8
@@ -1288,6 +1296,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"CA" = (
+/obj/structure/frame/computer,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "CO" = (
 /turf/open/floor/glass,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1297,6 +1309,12 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"CR" = (
+/obj/structure/lattice/catwalk,
+/obj/item/paper/crumpled/ruins/note_institute,
+/obj/item/pen,
+/turf/template_noop,
+/area/ruin/space)
 "CV" = (
 /obj/machinery/light/cold/directional/north,
 /obj/effect/turf_decal/stripes/red/corner,
@@ -1358,6 +1376,18 @@
 	},
 /turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Em" = (
+/obj/machinery/button/tram{
+	id = "left_part_hilbert";
+	pixel_y = 4;
+	lift_id = "tram_hilbert"
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Eu" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
@@ -1384,6 +1414,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"EX" = (
+/obj/structure/tank_dispenser,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "EY" = (
 /obj/structure/closet/crate/bin,
 /obj/item/paper/crumpled/ruins/postdocs_memo,
@@ -1413,17 +1447,10 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Fo" = (
-/obj/machinery/button/tram{
-	id = "left_part_hilbert";
-	pixel_y = 4
-	},
-/obj/structure/table/reinforced/rglass,
-/obj/effect/turf_decal/stripes/red/line{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Fs" = (
+/obj/item/keycard/hilbert,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "Fv" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
@@ -1511,6 +1538,10 @@
 "Hf" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Hk" = (
+/obj/machinery/porta_turret/syndicate/teleport,
+/turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Hu" = (
 /obj/machinery/door/puzzle/keycard/hilbert,
@@ -1621,16 +1652,6 @@
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Jd" = (
-/obj/structure/fluff/tram_rail,
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
-/obj/machinery/power/shuttle_engine/propulsion/tram{
-	dir = 8
-	},
-/turf/closed/indestructible/riveted/plastinum,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Jh" = (
 /obj/structure/fluff/tram_rail/anchor,
 /turf/open/floor/engine,
@@ -1673,11 +1694,19 @@
 /obj/machinery/monkey_recycler,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"JX" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "Kd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/barricade/wooden,
 /turf/open/floor/mineral/titanium/tiled/purple,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ky" = (
+/obj/item/transfer_valve,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "KC" = (
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1733,18 +1762,6 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Mh" = (
-/obj/machinery/computer{
-	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out old messages.";
-	dir = 8;
-	name = "broken terminal"
-	},
-/obj/item/paper/fluff/ruins/romans_emails{
-	pixel_x = -10;
-	pixel_y = 1
-	},
-/turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Mv" = (
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1759,11 +1776,22 @@
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"MH" = (
+/turf/closed/mineral/asteroid,
+/area/ruin/space)
 "MN" = (
 /obj/machinery/door/airlock/science{
 	name = "Dormitories"
 	},
 /turf/open/floor/wood,
+/area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"MS" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "MX" = (
 /turf/closed/wall/mineral/titanium,
@@ -1775,10 +1803,6 @@
 /obj/item/kirbyplants/photosynthetic,
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Nh" = (
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/ruin/space)
 "Nl" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/food/grown/tomato/blue,
@@ -1832,9 +1856,16 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Of" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "Ok" = (
 /turf/closed/indestructible/riveted/plastinum/nodiagonal,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Ol" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space)
 "OA" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Dormitory 3"
@@ -1874,19 +1905,13 @@
 /obj/effect/turf_decal/trimline/white/mid_joiner,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"PJ" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "PL" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /turf/open/floor/iron/grimy,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"PR" = (
-/obj/machinery/porta_turret/syndicate{
-	desc = "A ballistic machine gun auto-turret that fires bluespace bullets.";
-	lethal_projectile = /obj/projectile/magic/teleport;
-	name = "displacement turret";
-	stun_projectile = /obj/projectile/magic/teleport
-	},
-/turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Qu" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -1958,9 +1983,6 @@
 /obj/effect/turf_decal/trimline/white/mid_joiner,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Rq" = (
-/turf/closed/indestructible/riveted/plastinum,
-/area/ruin/space)
 "Ru" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
@@ -2139,6 +2161,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Um" = (
+/obj/machinery/research/anomaly_refinery,
+/turf/open/floor/plating/airless,
+/area/ruin/space)
 "Ut" = (
 /turf/template_noop,
 /area/template_noop)
@@ -2252,15 +2278,19 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"WP" = (
-/obj/structure/lattice,
-/turf/template_noop,
-/area/ruin/space)
 "WY" = (
 /obj/effect/turf_decal/trimline/purple/arrow_cw,
 /obj/effect/turf_decal/trimline/purple/mid_joiner,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Xf" = (
+/obj/machinery/light/floor{
+	brightness = 2;
+	bulb_colour = "#deefff";
+	bulb_power = 0.6
+	},
+/turf/closed/mineral/asteroid,
+/area/ruin/space)
 "Xi" = (
 /obj/effect/turf_decal/stripes/red/line,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2312,10 +2342,6 @@
 /obj/structure/bedsheetbin,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Yi" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "Ym" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -2327,26 +2353,6 @@
 	},
 /obj/structure/table/reinforced/rglass,
 /turf/open/floor/wood,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Yt" = (
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_purple"
-	},
-/obj/machinery/power/shuttle_engine/propulsion/tram{
-	dir = 8
-	},
-/turf/closed/indestructible/riveted/plastinum,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"Yv" = (
-/obj/item/kirbyplants/random,
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "YF" = (
 /obj/structure/railing/corner{
@@ -2399,6 +2405,11 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
+"Zx" = (
+/obj/structure/lattice/catwalk,
+/obj/item/raw_anomaly_core/bluespace,
+/turf/template_noop,
+/area/ruin/space)
 "Zy" = (
 /obj/machinery/washing_machine,
 /obj/effect/turf_decal/siding/wood{
@@ -2566,7 +2577,7 @@ Ut
 Ut
 Ut
 Ut
-cg
+MH
 Bo
 xb
 zF
@@ -2605,7 +2616,7 @@ Ut
 Ut
 Ut
 Ut
-cg
+MH
 Bo
 Nl
 yQ
@@ -2643,8 +2654,8 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
+MH
+MH
 Bo
 ID
 eg
@@ -2682,8 +2693,8 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
+MH
+MH
 Bo
 yi
 yQ
@@ -2695,7 +2706,7 @@ Rj
 Zc
 Uc
 Bo
-ch
+PJ
 Ut
 Ut
 Ut
@@ -2722,7 +2733,7 @@ Ut
 Ut
 Ut
 Ut
-cg
+MH
 Bo
 zq
 yV
@@ -2734,7 +2745,7 @@ Rj
 Zc
 ID
 Bo
-ch
+PJ
 Ut
 Ut
 Ut
@@ -2760,8 +2771,8 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
+MH
+MH
 Bo
 yD
 eg
@@ -2773,8 +2784,8 @@ SR
 XY
 UK
 Bo
-Yi
-ch
+Ad
+PJ
 Ut
 Ut
 Ut
@@ -2798,9 +2809,9 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
+MH
+MH
+MH
 Bo
 yI
 yQ
@@ -2812,9 +2823,9 @@ Rj
 Zc
 UL
 Bo
-cg
-ch
-ch
+MH
+PJ
+PJ
 Ut
 Ut
 Ut
@@ -2851,12 +2862,12 @@ Rj
 QA
 Ok
 Ok
-cg
-cg
-he
-ch
-ch
-ch
+MH
+MH
+ke
+PJ
+PJ
+PJ
 Ut
 Ut
 Ut
@@ -2889,15 +2900,15 @@ mD
 gB
 QU
 Bo
-cg
-cg
-cg
-cg
-cg
-Yi
-ch
-ch
-ch
+MH
+MH
+MH
+MH
+MH
+Ad
+PJ
+PJ
+PJ
 Ut
 Ut
 Ut
@@ -2928,16 +2939,16 @@ CP
 Ok
 Bo
 Ok
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-he
-ch
-ch
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+ke
+PJ
+PJ
 Ut
 Ut
 Ut
@@ -2958,26 +2969,26 @@ jT
 qX
 rM
 Bo
-cg
-cg
+MH
+MH
 Bo
 rV
 nk
 rV
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-ch
-ch
-ch
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+PJ
+PJ
+PJ
 Ut
 Ut
 "}
@@ -2997,7 +3008,7 @@ nN
 qX
 rM
 Bo
-cg
+MH
 Ok
 Ok
 XP
@@ -3005,18 +3016,18 @@ XP
 XP
 Ok
 Ok
-cg
-cg
-cg
+MH
+MH
+MH
 Ok
 Bo
 Bo
 Bo
 Bo
 Bo
-ch
-Yi
-ch
+PJ
+Ad
+PJ
 Ut
 Ut
 "}
@@ -3040,7 +3051,7 @@ Bo
 Ok
 CV
 Ru
-Fo
+Em
 Ru
 LD
 Ok
@@ -3054,7 +3065,7 @@ Gl
 QV
 Bo
 Bo
-ch
+PJ
 mk
 Ut
 Ut
@@ -3205,12 +3216,12 @@ Bo
 Bo
 Bo
 Ok
-Mh
+gR
 Fv
 QV
 Af
 Bo
-ch
+PJ
 mk
 Ut
 Ut
@@ -3222,7 +3233,7 @@ Ut
 Ut
 Ut
 Ut
-cg
+MH
 Bo
 Bo
 Bo
@@ -3231,7 +3242,7 @@ Bo
 bi
 sz
 Bo
-cg
+MH
 Ok
 Ok
 Dy
@@ -3241,16 +3252,16 @@ Ok
 Ok
 Wg
 Bo
-cg
+MH
 Bo
-Yv
+MS
 pq
 Nw
 bO
 db
 Bo
-ch
-Yi
+PJ
+Ad
 Ut
 Ut
 "}
@@ -3260,18 +3271,18 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 vz
 te
 Bo
-cg
-cg
+MH
+MH
 Bo
 yj
 ae
@@ -3280,7 +3291,7 @@ Bo
 Hb
 WA
 Bo
-cg
+MH
 Ok
 Bo
 pI
@@ -3288,9 +3299,9 @@ eC
 KL
 Bo
 Ok
-cg
-cg
-ch
+MH
+MH
+PJ
 Ut
 "}
 (23,1,1) = {"
@@ -3299,18 +3310,18 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 Ok
 th
 Bo
-cg
-cg
+MH
+MH
 Bo
 hk
 KC
@@ -3319,17 +3330,17 @@ Bo
 RL
 Xq
 Bo
-cg
-cg
+MH
+MH
 Ok
 Bo
 Bo
 Bo
 Ok
-cg
-cg
-ch
-ch
+MH
+MH
+PJ
+PJ
 Ut
 "}
 (24,1,1) = {"
@@ -3337,19 +3348,19 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 Bo
 Ok
-cg
-cg
+MH
+MH
 Bo
 hk
 KC
@@ -3358,16 +3369,16 @@ Bo
 Rg
 RE
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-he
-ch
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+ke
+PJ
 Ut
 Ut
 "}
@@ -3376,19 +3387,19 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 Dy
 KC
@@ -3397,16 +3408,16 @@ Bo
 ZV
 Xt
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-ch
-ch
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+PJ
+PJ
 Ut
 Ut
 "}
@@ -3414,20 +3425,20 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
@@ -3436,16 +3447,16 @@ Bo
 NF
 RL
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-ch
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+PJ
 Ut
 Ut
 "}
@@ -3453,20 +3464,20 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
@@ -3475,15 +3486,15 @@ Mf
 ZV
 Rg
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -3491,21 +3502,21 @@ Ut
 (28,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
@@ -3514,37 +3525,37 @@ Bo
 RL
 Ok
 Ok
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (29,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-mY
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+Xf
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 Dy
 KC
@@ -3552,38 +3563,38 @@ Jh
 Bo
 RE
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (30,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
@@ -3598,18 +3609,18 @@ Bo
 Bo
 Bo
 Bo
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (31,1,1) = {"
 Ut
-cg
-cg
-cg
+MH
+MH
+MH
 Bo
 Bo
 Bo
@@ -3618,11 +3629,11 @@ Bo
 Bo
 Bo
 Ok
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
@@ -3637,17 +3648,17 @@ Bo
 yq
 Ha
 Bo
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (32,1,1) = {"
 Ut
-cg
-cg
+MH
+MH
 Bo
 Ok
 ln
@@ -3660,8 +3671,8 @@ Ok
 Bo
 Bo
 Ok
-cg
-cg
+MH
+MH
 Bo
 yj
 ae
@@ -3676,16 +3687,16 @@ Bo
 DO
 NJ
 Bo
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (33,1,1) = {"
 Ut
-cg
+MH
 Bo
 Ok
 cE
@@ -3699,7 +3710,7 @@ nU
 La
 ty
 Bo
-cg
+MH
 Ok
 Ok
 Dy
@@ -3715,16 +3726,16 @@ Bo
 EI
 Hx
 Bo
-cg
-cg
-cg
+MH
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (34,1,1) = {"
-cg
-cg
+MH
+MH
 Bo
 ao
 La
@@ -3755,15 +3766,15 @@ sO
 kw
 Bo
 Bo
-cg
-cg
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (35,1,1) = {"
-cg
-cg
+MH
+MH
 Bo
 qI
 wo
@@ -3778,11 +3789,11 @@ La
 La
 wo
 Bo
-zu
+mv
 Xi
-Yt
+in
 QS
-Jd
+sB
 YG
 Sa
 Bo
@@ -3794,15 +3805,15 @@ kp
 La
 TO
 Bo
-cg
-cg
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (36,1,1) = {"
-cg
-cg
+MH
+MH
 Bo
 el
 ZV
@@ -3833,15 +3844,15 @@ DR
 ig
 FC
 Bo
-cg
-cg
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (37,1,1) = {"
-cg
-cg
+MH
+MH
 Bo
 bK
 La
@@ -3858,9 +3869,9 @@ La
 Bo
 Ax
 Xi
-gm
+oc
 HN
-xI
+Bz
 YG
 Sp
 Bo
@@ -3872,15 +3883,15 @@ jC
 kw
 tL
 Bo
-cg
-cg
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (38,1,1) = {"
-cg
-cg
+MH
+MH
 Bo
 bN
 La
@@ -3897,7 +3908,7 @@ Ok
 Bo
 Ok
 BI
-hk
+wH
 KC
 Xw
 MD
@@ -3911,15 +3922,15 @@ La
 bM
 Bo
 Bo
-cg
-cg
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (39,1,1) = {"
-cg
-cg
+MH
+MH
 Bo
 Ok
 cQ
@@ -3933,7 +3944,7 @@ qb
 La
 ty
 Bo
-cg
+MH
 Ok
 Ok
 Dy
@@ -3941,7 +3952,7 @@ KC
 Jh
 Ok
 Ok
-cg
+MH
 Bo
 EI
 wI
@@ -3949,17 +3960,17 @@ Bo
 RX
 RX
 Bo
-cg
-cg
-cg
+MH
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (40,1,1) = {"
 Ut
-cg
-cg
+MH
+MH
 Bo
 Ok
 dq
@@ -3972,15 +3983,15 @@ Ok
 Bo
 Bo
 Ok
-cg
-cg
+MH
+MH
 Bo
 yj
 ae
 JL
 Bo
-cg
-cg
+MH
+MH
 Bo
 yK
 us
@@ -3988,18 +3999,18 @@ Bo
 BF
 WC
 Bo
-cg
-cg
-cg
+MH
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (41,1,1) = {"
 Ut
-cg
-cg
-cg
+MH
+MH
+MH
 Bo
 Bo
 Bo
@@ -4008,18 +4019,18 @@ Bo
 Bo
 Bo
 Ok
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
 Xw
 Bo
-cg
-cg
+MH
+MH
 Bo
 SH
 ZH
@@ -4027,38 +4038,38 @@ Bo
 pY
 SU
 Bo
-cg
-cg
-cg
+MH
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (42,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
 Xw
 Bo
-cg
-cg
+MH
+MH
 Bo
 Bo
 Bo
@@ -4066,312 +4077,312 @@ Bo
 Bo
 Bo
 Bo
-cg
-cg
-cg
+MH
+MH
+MH
 Ut
 Ut
 Ut
 "}
 (43,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 Dy
 KC
 Jh
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (44,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
 Xw
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (45,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
 Xw
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (46,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
 Xw
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (47,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 Dy
 KC
 Jh
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (48,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
 Xw
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (49,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-Rq
-Rq
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+xY
+xY
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 hk
 KC
 Xw
 Bo
-cg
-cg
-cg
+MH
+MH
+MH
 Ok
 Bo
 Bo
 Bo
 Ok
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
 (50,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-Rq
-cg
-ju
-Rq
-Rq
-Rq
-rg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+xY
+MH
+gZ
+xY
+xY
+xY
+Fs
+MH
+MH
+MH
+MH
 Bo
 yj
 ae
 JL
 Bo
-cg
-cg
-cg
+MH
+MH
+MH
 Bo
 Vn
 oI
@@ -4381,27 +4392,27 @@ Bo
 Bo
 Bo
 Ok
-cg
-cg
+MH
+MH
 Ut
 "}
 (51,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-ch
-es
-tr
-tr
-nx
-tr
-rJ
-Rq
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+PJ
+JX
+Of
+Of
+so
+Of
+yW
+xY
+MH
+MH
 Ok
 Ok
 Dy
@@ -4409,8 +4420,8 @@ KC
 Jh
 Ok
 Ok
-cg
-cg
+MH
+MH
 Bo
 Th
 jt
@@ -4420,27 +4431,27 @@ Vn
 JV
 ky
 Bo
-cg
-cg
+MH
+MH
 Ut
 "}
 (52,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-ch
-Rq
-tr
-jF
-WP
-Nh
-Rq
-tr
-va
-Rq
-cg
+MH
+MH
+MH
+PJ
+xY
+Of
+CR
+Ol
+BB
+xY
+Of
+Um
+xY
+MH
 Ok
 BM
 hk
@@ -4459,26 +4470,26 @@ Th
 jt
 az
 Bo
-cg
-cg
+MH
+MH
 Ut
 "}
 (53,1,1) = {"
 Ut
 Ut
 Ut
-ch
-cg
-ch
-tr
-tr
-WP
-vi
-vi
-WP
-tr
-Rq
-cg
+PJ
+MH
+PJ
+Of
+Of
+Ol
+pE
+pE
+Ol
+Of
+xY
+MH
 Bo
 AI
 Xi
@@ -4498,27 +4509,27 @@ Bo
 Bo
 RV
 Bo
-cg
-cg
+MH
+MH
 Ut
 "}
 (54,1,1) = {"
 Ut
 Ut
 Ut
-ch
-ch
-ch
-tr
-Nh
-WP
-vi
-vi
-WP
-Rq
-Rq
-cg
-cg
+PJ
+PJ
+PJ
+Of
+BB
+Ol
+pE
+pE
+Ol
+xY
+xY
+MH
+MH
 AX
 Xi
 hk
@@ -4545,19 +4556,19 @@ Bo
 Ut
 Ut
 Ut
-cg
-ch
-Rq
-tr
-tr
-vi
-WP
-Rq
-qx
-tr
-cg
-Rq
-cg
+MH
+PJ
+xY
+Of
+Of
+pE
+Ol
+xY
+Zx
+Of
+MH
+xY
+MH
 AX
 Xi
 DB
@@ -4583,19 +4594,19 @@ Bo
 (56,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-ch
-Rq
-gg
-tr
-tr
-tr
-tr
-es
-Rq
-cg
+MH
+MH
+MH
+PJ
+xY
+CA
+Of
+Of
+Of
+Of
+JX
+xY
+MH
 Bo
 Ok
 Gy
@@ -4621,21 +4632,21 @@ Bo
 "}
 (57,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-ch
-ch
-ch
-eG
-ny
-cg
-Rq
-cg
-Rq
-cg
+MH
+MH
+MH
+MH
+MH
+PJ
+PJ
+PJ
+Ky
+EX
+MH
+xY
+MH
+xY
+MH
 Ok
 Ok
 XP
@@ -4643,7 +4654,7 @@ XP
 XP
 Ok
 Ok
-cg
+MH
 Bo
 Zy
 sU
@@ -4660,29 +4671,29 @@ Bo
 "}
 (58,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-Rq
-cg
-Rq
-Rq
-Rq
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+xY
+MH
+xY
+xY
+xY
+MH
+MH
+MH
+MH
+MH
 Bo
 on
 on
 on
 Bo
-cg
-cg
+MH
+MH
 Ok
 Bo
 Bo
@@ -4699,31 +4710,31 @@ Bo
 "}
 (59,1,1) = {"
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-Rq
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+xY
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 Bo
 BA
 Bo
 Bo
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
 Bo
 Th
 jt
@@ -4731,28 +4742,28 @@ az
 Bo
 Gi
 Bo
-cg
-cg
+MH
+MH
 Ut
 Ut
 "}
 (60,1,1) = {"
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ok
 Ok
 Ee
@@ -4760,9 +4771,9 @@ sU
 Lr
 Ok
 Ok
-cg
-cg
-cg
+MH
+MH
+MH
 Bo
 Vn
 JV
@@ -4770,8 +4781,8 @@ ky
 Bo
 Bo
 Ok
-cg
-cg
+MH
+MH
 Ut
 Ut
 "}
@@ -4779,18 +4790,18 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ok
 Ok
 Eu
@@ -4800,17 +4811,17 @@ io
 Eu
 Ok
 Ok
-cg
-cg
+MH
+MH
 Ok
 Bo
 Bo
 Bo
 Ok
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
 Ut
 Ut
 "}
@@ -4819,17 +4830,17 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 KS
 pq
@@ -4839,16 +4850,16 @@ Lw
 pq
 ER
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -4860,15 +4871,15 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 TT
 GP
@@ -4878,16 +4889,16 @@ FB
 Sn
 SX
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -4901,13 +4912,13 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 fQ
 BO
@@ -4917,16 +4928,16 @@ BY
 Px
 BY
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -4942,11 +4953,11 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
 Ok
 Ok
 BL
@@ -4956,16 +4967,16 @@ BY
 PL
 Ok
 Ok
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -4982,11 +4993,11 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
 Ok
 Bo
 Ok
@@ -4994,16 +5005,16 @@ Hu
 Ok
 Bo
 Ok
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -5022,27 +5033,27 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
 Ic
 Bo
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -5061,9 +5072,9 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
+MH
+MH
+MH
 Ok
 Bo
 Bo
@@ -5078,10 +5089,10 @@ Bo
 Bo
 Bo
 Ok
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -5101,24 +5112,24 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
+MH
+MH
 Bo
 La
 IY
 IY
 Ih
 Bo
-PR
+Hk
 KC
 KC
-PR
+Hk
 KC
 KC
-PR
+Hk
 Ok
 Ok
-cg
+MH
 Iy
 BJ
 BJ
@@ -5140,8 +5151,8 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
+MH
+MH
 Bo
 Bh
 Bo
@@ -5179,8 +5190,8 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
+MH
+MH
 Bo
 La
 bE
@@ -5218,8 +5229,8 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
+MH
+MH
 Ok
 Bo
 Bo
@@ -5258,23 +5269,23 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
 Bo
-PR
+Hk
 KC
 KC
-PR
+Hk
 KC
 KC
-PR
+Hk
 Ok
 Ok
-cg
+MH
 Iy
 BJ
 BJ
@@ -5298,11 +5309,11 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
 Ok
 Bo
 Bo
@@ -5312,10 +5323,10 @@ Bo
 Bo
 Bo
 Ok
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -5340,20 +5351,20 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -5381,16 +5392,16 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
@@ -5422,11 +5433,11 @@ Ut
 Ut
 Ut
 Ut
-cg
-cg
-cg
-cg
-cg
+MH
+MH
+MH
+MH
+MH
 Ut
 Ut
 Ut
