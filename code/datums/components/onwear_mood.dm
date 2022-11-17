@@ -52,7 +52,3 @@
 		return
 	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_MOB_UNEQUIPPED_ITEM))
 	source.clear_mood_event(REF(src))
-
-/datum/component/onwear_mood/Destroy(force, silent)
-	clear_effects()
-	return ..()
