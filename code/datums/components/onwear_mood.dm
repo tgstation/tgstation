@@ -48,7 +48,7 @@
 	// if called from a signal, check clothing
 	if(dropped_item && dropped_item != clothing)
 		return
-	source = source || clothing.loc
+	source ||= clothing.loc
 	if(!istype(source))
 		return
 	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_MOB_UNEQUIPPED_ITEM))
