@@ -281,14 +281,14 @@
 	desc = "A old and rusted medical defib, maybe it still works..?"
 	icon_state = "defibrusted"
 	inhand_icon_state = "defibrusted"
-	worn_icon_state = "defibunit"
+	worn_icon_state = "defibunit-rusted"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	powered_state = "defibrusted-powered"
 	safety = 0
 	cell_removable = FALSE
 	emagged_state = null
-	cooldown_duration = 60 SECONDS
+	cooldown_duration = 120 SECONDS
 
 /obj/item/defibrillator/rusted/Initialize(mapload)
 	. = ..()
