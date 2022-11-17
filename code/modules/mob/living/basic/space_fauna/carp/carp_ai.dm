@@ -32,12 +32,13 @@
  * Carp which bites back, but doesn't look for targets.
  * 'Not hunting targets' includes food (and can rings), because they have been well trained.
  */
-/datum/ai_controller/basic_controller/carp/retaliate
+/datum/ai_controller/basic_controller/carp/pet
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
 		BB_BASIC_MOB_FLEE_BELOW_HP_RATIO = 0.5,
-		BB_BASIC_MOB_STOP_FLEE_AT_HP_RATIO = 1
+		BB_BASIC_MOB_STOP_FLEE_AT_HP_RATIO = 1,
 	)
+	idle_behavior = /datum/idle_behavior/idle_random_walk/go_home/carp
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/flee_if_unhealthy,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,

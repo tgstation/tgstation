@@ -228,7 +228,12 @@
 ///list of foods this mob likes
 #define BB_BASIC_FOODS "BB_basic_foods"
 
-/// Carp AI keys
+///Area that the mob considers that it belongs in
+#define BB_MOB_HOME_AREA "BB_mob_home_area"
+///Specific turf that the mob wants to return to
+#define BB_MOB_HOME_TURF "BB_mob_home_turf"
+
+///Carp AI keys
 #define BB_CARP_RIFT "BB_carp_rift"
 #define BB_CARP_SUMMON "BB_carp_summon"
 #define BB_MAGICARP_SPELL "BB_magicarp_spell"

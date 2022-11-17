@@ -141,7 +141,7 @@
 	speak_emote = list("squeaks")
 	gold_core_spawnable = NO_SPAWN
 	gender = FEMALE // Both current existing pet carp are female but you can remove this if someone else gets a male one?
-	ai_controller = /datum/ai_controller/basic_controller/carp/retaliate
+	ai_controller = /datum/ai_controller/basic_controller/carp/pet
 
 /mob/living/basic/carp/pet/Initialize(mapload)
 	. = ..()
@@ -164,6 +164,16 @@
 	icon_living = "magicarp"
 	icon_state = "magicarp"
 	greyscale_config = NONE
+
+/mob/living/basic/carp/pet/lia/Initialize(mapload)
+	. = ..()
+	if (mapload)
+		assign_home()
+
+/// Marks Lia's current location as her house
+/mob/living/basic/carp/pet/lia/proc/assign_home()
+		ai_controller.blackboard[BB_MOB_HOME_AREA] = get_area(src)
+		ai_controller.blackboard[BB_MOB_HOME_TURF] = WEAKREF(get_turf(src))
 
 /**
  * Cayenne - Loyal member of the nuclear operatives.
