@@ -85,13 +85,10 @@
 	},
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 4;
-	height = 9;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 4;
-	width = 9
+	port_direction = 4
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)

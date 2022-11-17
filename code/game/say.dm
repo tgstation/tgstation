@@ -13,6 +13,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_COMMAND]" = "comradio",
 	"[FREQ_AI_PRIVATE]" = "aiprivradio",
 	"[FREQ_SYNDICATE]" = "syndradio",
+	"[FREQ_UPLINK]" = "syndradio",  // this probably shouldnt appear ingame
 	"[FREQ_CENTCOM]" = "centcomradio",
 	"[FREQ_CTF_RED]" = "redteamradio",
 	"[FREQ_CTF_BLUE]" = "blueteamradio",

@@ -47,6 +47,10 @@
 	if(ishuman(M) && source.force && source.get_sharpness())
 		var/mob/living/carbon/human/H = M
 		if((user.pulling == H && user.grab_state >= GRAB_AGGRESSIVE) && user.zone_selected == BODY_ZONE_HEAD) // Only aggressive grabbed can be sliced.
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, span_warning("You don't want to harm other living beings!"))
+				return COMPONENT_CANCEL_ATTACK_CHAIN
+
 			if(H.has_status_effect(/datum/status_effect/neck_slice))
 				user.show_message(span_warning("[H]'s neck has already been already cut, you can't make the bleeding any worse!"), MSG_VISUAL, \
 								span_warning("Their neck has already been already cut, you can't make the bleeding any worse!"))

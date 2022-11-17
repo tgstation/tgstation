@@ -35,8 +35,6 @@
 	generic_canpass = FALSE
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
-	///What direction will the mech face when entered/powered on? Defaults to South.
-	var/dir_in = SOUTH
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/normal_step_energy_drain = 10
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
@@ -262,7 +260,7 @@
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
-		mob_exit(ejectee, TRUE, TRUE)
+		mob_exit(ejectee, silent = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -302,7 +300,7 @@
 			else
 				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
-		mob_exit(occupant, FALSE, TRUE)
+		mob_exit(occupant, forced = TRUE)
 		occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
@@ -519,8 +517,7 @@
 
 	for(var/mob/living/occupant as anything in occupants)
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
-			visible_message(span_warning("[occupant] tumbles out of the cockpit!"))
-			mob_exit(occupant) //bye bye
+			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
 		if(cell)
 			var/cellcharge = cell.charge/cell.maxcharge

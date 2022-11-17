@@ -187,7 +187,7 @@
 			to_chat(user, span_warning("CTF cannot be unloaded if it was not loaded in the first place"))
 			return
 		to_chat(user, span_warning("CTF is being unloaded"))
-		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 			CTF.unload()
 		log_admin("[key_name_admin(user)] has unloaded CTF.")
 		message_admins("[key_name_admin(user)] has unloaded CTF.")
@@ -214,7 +214,7 @@
 
 	var/ctf_enabled = FALSE
 	var/area/A
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 		if(activated_id != CTF.game_id)
 			continue
 		ctf_enabled = CTF.toggle_ctf()
@@ -276,12 +276,14 @@
 
 /obj/machinery/capture_the_flag/Initialize(mapload)
 	. = ..()
+	GLOB.ctf_panel.ctf_machines += src
 	SSpoints_of_interest.make_point_of_interest(src)
 	default_gear = ctf_gear
 	ctf_landmark = GLOB.ctf_spawner
 
 /obj/machinery/capture_the_flag/Destroy()
 	ctf_landmark = null
+	GLOB.ctf_panel.ctf_machines -= src
 	return ..()
 
 /obj/machinery/capture_the_flag/process(delta_time)
@@ -344,7 +346,7 @@
 		if(!(GLOB.ghost_role_flags & GHOSTROLE_MINIGAME))
 			to_chat(user, span_warning("CTF has been temporarily disabled by admins."))
 			return
-		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 			if(CTF.game_id != game_id && CTF.ctf_enabled)
 				to_chat(user, span_warning("There is already an ongoing game in the [get_area(CTF)]!"))
 				return
@@ -363,7 +365,7 @@
 		spawn_team_member(new_team_member)
 		return
 
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 		if(CTF.game_id != game_id || CTF == src || CTF.ctf_enabled == FALSE)
 			continue
 		if(user.ckey in CTF.team_members)
@@ -464,7 +466,7 @@
 				competitor.dropItemToGround(W)
 			competitor.dust()
 	control_point_reset()
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 		if(CTF.game_id != game_id)
 			continue
 		if(CTF.ctf_enabled == TRUE)
@@ -522,14 +524,14 @@
 	machine_reset(src)
 
 /obj/machinery/capture_the_flag/proc/instagib_mode()
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 		if(CTF.game_id != game_id)
 			continue
 		CTF.ctf_gear = CTF.instagib_gear
 		CTF.respawn_cooldown = INSTAGIB_RESPAWN
 
 /obj/machinery/capture_the_flag/proc/normal_mode()
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 		if(CTF.game_id != game_id)
 			continue
 		CTF.ctf_gear = CTF.default_gear
@@ -601,13 +603,13 @@
 
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
 	. = ..()
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 		if(CTF.game_id != game_id)
 			continue
 		CTF.dead_barricades += src
 
 /obj/effect/ctf/dead_barricade/Destroy()
-	for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+	for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 		if(CTF.game_id != game_id)
 			continue
 		CTF.dead_barricades -= src
@@ -649,7 +651,7 @@
 
 /obj/machinery/control_point/proc/capture(mob/user)
 	if(do_after(user, 30, target = src))
-		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 			if(CTF.ctf_enabled && (user.ckey in CTF.team_members))
 				controlling = CTF
 				icon_state = "dominator-[CTF.team]"
@@ -665,7 +667,7 @@
 		. = TRUE
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		for(var/obj/machinery/capture_the_flag/CTF in GLOB.machines)
+		for(var/obj/machinery/capture_the_flag/CTF as anything in GLOB.ctf_panel.ctf_machines)
 			if(H in CTF.spawned_mobs)
 				. = TRUE
 				break

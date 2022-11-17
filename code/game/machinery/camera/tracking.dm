@@ -1,6 +1,6 @@
 /mob/living/silicon/ai/proc/get_camera_list()
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+	for (var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		L.Add(C)
 
 	camera_sort(L)

@@ -77,7 +77,7 @@
 /obj/item/camera_bug/proc/get_cameras()
 	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
-		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
+		for(var/obj/machinery/camera/camera as anything in GLOB.cameranet.cameras)
 			if(camera.machine_stat || !camera.can_use())
 				continue
 			if(length(list("ss13","mine", "rd", "labor", "ordnance", "minisat") & camera.network))
