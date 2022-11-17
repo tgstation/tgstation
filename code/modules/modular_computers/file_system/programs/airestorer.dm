@@ -50,8 +50,9 @@
 	// Please don't forget to update health, otherwise the below if statements will probably always fail.
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
-		A.revive(full_heal = FALSE, admin_revive = FALSE)
+		A.revive()
 		stored_card.update_appearance()
+
 	// Finished restoring
 	if(A.health >= 100)
 		restoring = FALSE

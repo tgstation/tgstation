@@ -183,6 +183,7 @@
 #include "spell_shapeshift.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
+#include "station_trait_tests.dm"
 #include "stomach.dm"
 #include "strippable.dm"
 #include "subsystem_init.dm"

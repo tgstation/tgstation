@@ -588,4 +588,5 @@
 	key = "swear"
 	key_third_person = "swears"
 	message = "says a swear word!"
+	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE
