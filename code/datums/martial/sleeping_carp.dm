@@ -16,7 +16,7 @@
 	ADD_TRAIT(target, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(target, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(target, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 	target.faction |= "carp" //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)

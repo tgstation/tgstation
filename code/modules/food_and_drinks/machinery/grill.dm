@@ -68,8 +68,7 @@
 			return
 		else if(!grilled_item && user.transferItemToLoc(I, src))
 			grilled_item = I
-			RegisterSignal(grilled_item, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
-			ADD_TRAIT(grilled_item, TRAIT_FOOD_GRILLED, "boomers")
+			RegisterSignal(grilled_item, COMSIG_ITEM_GRILLED, PROC_REF(GrillCompleted))
 			to_chat(user, span_notice("You put the [grilled_item] on [src]."))
 			update_appearance()
 			grill_loop.start()
@@ -89,7 +88,7 @@
 			smoke.set_up(1, holder = src, location = loc)
 			smoke.start()
 	if(grilled_item)
-		SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILLED, src, delta_time)
+		SEND_SIGNAL(grilled_item, COMSIG_ITEM_GRILL_PROCESS, src, delta_time)
 		grill_time += delta_time
 		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 0.5 * delta_time)
 		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * delta_time
@@ -136,8 +135,8 @@
 
 /obj/machinery/grill/proc/finish_grill()
 	if(grilled_item)
-		SEND_SIGNAL(grilled_item, COMSIG_GRILL_FOOD, grilled_item, grill_time)
-		UnregisterSignal(grilled_item, COMSIG_GRILL_COMPLETED)
+		grilled_item.AddElement(/datum/element/grilled_item, grill_time)
+		UnregisterSignal(grilled_item, COMSIG_ITEM_GRILLED)
 	grill_time = 0
 	grill_loop.stop()
 
