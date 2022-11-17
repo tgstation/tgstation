@@ -354,7 +354,6 @@
 // you just dont get the same feeling with handwashed clothes
 /obj/item/clothing/machine_wash()
 	. = ..()
-	// it looks nicer to save it to a var then to try to do it all together
 	var/fresh_mood = AddComponent( \
 		/datum/component/onwear_mood, \
 		saved_event = /datum/mood_event/fresh_laundry, \
