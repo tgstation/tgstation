@@ -11,10 +11,8 @@
 	base_icon_state = "tablet"
 	worn_icon_state = "tablet"
 	hardware_flag = PROGRAM_TABLET
-	max_hardware_size = 1
 	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
-	max_bays = 3
 	steel_sheet_cost = 2
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!

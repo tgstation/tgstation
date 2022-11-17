@@ -82,15 +82,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
 
-	/// List of "connection ports" in this computer and the components with which they are plugged
-	var/list/all_components = list()
-	/// Lazy List of extra hardware slots that can be used modularly.
-	var/list/expansion_bays
-	/// Number of total expansion bays this computer has available.
-	var/max_bays = 0
-	///The w_class (size) hardware it can handle, laptops get extra, computers get more.
-	var/max_hardware_size = 0
-
 	///The full name of the stored ID card's identity. These vars should probably be on the PDA.
 	var/saved_identification
 	///The job title of the stored ID card
@@ -158,10 +149,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	wipe_program(forced = TRUE)
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
 		idle.kill_program(TRUE)
-	for(var/port in all_components)
-		var/obj/item/computer_hardware/component = all_components[port]
-		qdel(component)
-	all_components?.Cut()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
@@ -843,13 +830,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		bin.update_appearance()
 		return
 
-
-	// Insert items into the components
-	for(var/h in all_components)
-		var/obj/item/computer_hardware/H = all_components[h]
-		if(H.try_insert(attacking_item, user))
-			return
-
 	// Insert a data disk
 	if(istype(attacking_item, /obj/item/computer_disk))
 		if(!user.transferItemToLoc(attacking_item, src))
@@ -858,48 +838,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 		return
 
-	// Insert new hardware
-	if(istype(attacking_item, /obj/item/computer_hardware))
-		if(install_component(attacking_item, user))
-			playsound(src, 'sound/machines/card_slide.ogg', 50)
-			return
-
 	return ..()
-
-/obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
-	. = ..()
-	if((resistance_flags & INDESTRUCTIBLE) || (flags_1 & NODECONSTRUCT_1))
-		return
-	if(!length(all_components))
-		balloon_alert(user, "no components installed!")
-		return
-	var/list/component_names = list()
-	for(var/h in all_components)
-		var/obj/item/computer_hardware/H = all_components[h]
-		component_names.Add(H.name)
-
-	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
-	if(isnull(choice))
-		if(internal_cell)
-			user.put_in_hands(internal_cell)
-			to_chat(user, span_notice("You detach \the [internal_cell] from \the [src]."))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	if(!Adjacent(user))
-		return
-
-	var/obj/item/computer_hardware/H = find_hardware_by_name(choice)
-	if(!H)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-
-	tool.play_tool_sound(src, user, 20, volume=20)
-	uninstall_component(H, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/modular_computer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(length(all_components))
-		balloon_alert(user, "remove the other components!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
 	tool.play_tool_sound(src, user, 20, volume=20)
 	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
 	user.balloon_alert(user, "disassembled")

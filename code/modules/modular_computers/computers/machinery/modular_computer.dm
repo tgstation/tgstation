@@ -29,8 +29,6 @@
 	var/screen_icon_state_menu = "menu"
 	///Icon state overlay when the computer is powered, but not 'switched on'.
 	var/screen_icon_screensaver = "standby"
-	///Maximal hardware size. Currently, tablets have 1, laptops 2 and consoles 3. Limits what hardware types can be installed.
-	var/max_hardware_size = 0
 	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
 	var/steel_sheet_cost = 10
 	///Light luminosity when turned on
