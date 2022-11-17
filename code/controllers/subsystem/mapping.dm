@@ -537,7 +537,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	var/list/banned = generateMapList("spaceruinblacklist.txt")
 	if(config.minetype == "lavaland")
 		banned += generateMapList("lavaruinblacklist.txt")
-	else if(blacklist_file)
+	else if(config.blacklist_file)
 		banned += generateMapList(config.blacklist_file)
 
 	for(var/item in sort_list(subtypesof(/datum/map_template/ruin), GLOBAL_PROC_REF(cmp_ruincost_priority)))
