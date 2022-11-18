@@ -387,7 +387,7 @@
 
 	spell_level++
 	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0)
-	update_spell_name()
+	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
 /**
@@ -403,13 +403,10 @@
 
 	spell_level--
 	cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
-	update_spell_name()
+	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
-/**
- * Updates the spell's name based on its level.
- */
-/datum/action/cooldown/spell/proc/update_spell_name()
+/datum/action/cooldown/spell/update_button_name(atom/movable/screen/movable/action_button/button, force)
 	var/spell_title = ""
 	switch(spell_level)
 		if(2)
@@ -424,4 +421,4 @@
 			spell_title = "Ludicrous "
 
 	name = "[spell_title][initial(name)]"
-	build_all_button_icons()
+	return ..()

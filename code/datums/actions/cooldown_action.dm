@@ -33,6 +33,10 @@
 	var/unset_after_click = TRUE
 	/// What icon to replace our mouse cursor with when active. Optional
 	var/ranged_mousepointer
+	/// The base icon_state of this action's background
+	var/base_background_icon_state
+	/// The icon state the background uses when active
+	var/active_background_icon_state
 	/// The base icon_state of the overlay we apply
 	var/base_overlay_icon_state
 	/// The active icon_state of the overlay we apply
@@ -44,8 +48,12 @@
 
 /datum/action/cooldown/New(Target, original = TRUE)
 	. = ..()
-	base_overlay_icon_state ||= overlay_icon_state
-	base_icon_state ||= button_icon_state
+	if(active_background_icon_state)
+		base_background_icon_state ||= background_icon_state
+	if(active_overlay_icon_state)
+		base_overlay_icon_state ||= overlay_icon_state
+	if(active_icon_state)
+		base_icon_state ||= button_icon_state
 
 	if(isnull(melee_cooldown_time))
 		melee_cooldown_time = cooldown_time
@@ -75,6 +83,11 @@
 	if(active_icon_state || active_overlay_icon_state || !IsAvailable() || !is_action_active(button))
 		return
 	button.color = COLOR_GREEN
+
+/datum/action/cooldown/apply_button_background(atom/movable/screen/movable/action_button/current_button, force)
+	if(active_background_icon_state)
+		background_icon_state = is_action_active(current_button) ? active_background_icon_state : base_background_icon_state
+	return ..()
 
 /datum/action/cooldown/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
 	if(active_icon_state)
