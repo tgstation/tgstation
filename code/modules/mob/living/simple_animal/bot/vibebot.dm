@@ -64,7 +64,7 @@
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "funk"
 
-/datum/action/innate/vibe/IsAvailable(feedback = FALSE)
+/datum/action/innate/vibe/IsAvailable()
 	. = ..()
 	if(!.)
 		return FALSE

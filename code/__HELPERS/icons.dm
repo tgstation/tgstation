@@ -1387,7 +1387,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	GLOB.transformation_animation_objects[src] = transformation_objects
 	for(var/A in transformation_objects)
 		vis_contents += A
-	addtimer(CALLBACK(src, PROC_REF(_reset_transformation_animation),filter_index),time)
+	addtimer(CALLBACK(src,.proc/_reset_transformation_animation,filter_index),time)
 
 /*
  * Resets filters and removes transformation animations helper objects from vis contents.
@@ -1439,13 +1439,13 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	return image_to_center
 
 ///Flickers an overlay on an atom
-/atom/proc/flick_overlay_static(overlay_image, duration)
+/proc/flick_overlay_static(overlay_image, atom/source, duration)
 	set waitfor = FALSE
-	if(!overlay_image)
+	if(!source || !overlay_image)
 		return
-	add_overlay(overlay_image)
+	source.add_overlay(overlay_image)
 	sleep(duration)
-	cut_overlay(overlay_image)
+	source.cut_overlay(overlay_image)
 
 ///Perform a shake on an atom, resets its position afterwards
 /atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)

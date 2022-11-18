@@ -241,7 +241,8 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Donut emergency shuttle"
+	name = "Donut emergency shuttle";
+	width = 34
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

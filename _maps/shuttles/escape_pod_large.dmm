@@ -61,7 +61,10 @@
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile/pod{
-	port_direction = 2
+	dwidth = 2;
+	height = 6;
+	port_direction = 2;
+	width = 5
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)

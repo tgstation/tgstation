@@ -22,7 +22,7 @@
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_OBJ_HIDE, PROC_REF(hide))
+	RegisterSignal(target, COMSIG_OBJ_HIDE, .proc/hide)
 
 	src.invisibility_trait = invisibility_trait
 	src.invisibility_level = invisibility_level

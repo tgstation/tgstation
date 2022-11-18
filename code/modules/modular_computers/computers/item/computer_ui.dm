@@ -16,7 +16,7 @@
 	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
-	if(ishuman(user) && !allow_chunky)
+	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.check_chunky_fingers())
 			balloon_alert(human_user, "fingers are too big!")

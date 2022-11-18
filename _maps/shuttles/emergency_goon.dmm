@@ -36,7 +36,8 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	name = "NES Port"
+	name = "NES Port";
+	width = 19
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

@@ -1,10 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-# BYOND_MAJOR and BYOND_MINOR can be explicitly set, such as in alt_byond_versions.txt
-if [ -z "${BYOND_MAJOR+x}" ]; then
-  source dependencies.sh
-fi
+source dependencies.sh
 
 if [ -d "$HOME/BYOND/byond/bin" ] && grep -Fxq "${BYOND_MAJOR}.${BYOND_MINOR}" $HOME/BYOND/version.txt;
 then

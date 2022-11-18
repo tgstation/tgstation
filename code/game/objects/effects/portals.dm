@@ -183,5 +183,4 @@
 
 /obj/effect/portal/permanent/one_way/one_use/teleport(atom/movable/M, force = FALSE)
 	. = ..()
-	if (. && !isdead(M))
-		qdel(src)
+	qdel(src)

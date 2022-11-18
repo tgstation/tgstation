@@ -397,7 +397,10 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Cere emergency shuttle"
+	dwidth = 15;
+	height = 20;
+	name = "Cere emergency shuttle";
+	width = 42
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

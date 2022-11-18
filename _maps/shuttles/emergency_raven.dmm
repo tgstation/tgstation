@@ -2055,7 +2055,10 @@
 	name = "Emegency Shuttle External Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "CentCom Raven Cruiser"
+	dwidth = 14;
+	height = 21;
+	name = "CentCom Raven Cruiser";
+	width = 32
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

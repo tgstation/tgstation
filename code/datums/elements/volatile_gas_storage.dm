@@ -13,9 +13,9 @@
 /datum/element/volatile_gas_storage/Attach(datum/target, minimum_explosive_pressure=5000, max_explosive_pressure=100000, max_explosive_force=9)
 	. = ..()
 	if(istype(target, /obj/machinery/atmospherics/components))
-		RegisterSignal(target, COMSIG_ATOM_BREAK, PROC_REF(AtmosComponentBreak))
+		RegisterSignal(target, COMSIG_ATOM_BREAK, .proc/AtmosComponentBreak)
 	else if(isobj(target))
-		RegisterSignal(target, COMSIG_ATOM_BREAK, PROC_REF(ObjBreak))
+		RegisterSignal(target, COMSIG_ATOM_BREAK, .proc/ObjBreak)
 	else
 		return ELEMENT_INCOMPATIBLE
 

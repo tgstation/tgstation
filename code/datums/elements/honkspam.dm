@@ -5,7 +5,7 @@
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, PROC_REF(interact))
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
 
 /datum/element/honkspam/Detach(datum/source)
 	UnregisterSignal(source, COMSIG_ITEM_ATTACK_SELF)

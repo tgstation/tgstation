@@ -1,8 +1,10 @@
 name: Docker Build
+
 on:
-  schedule:
-  - cron: "19 1 * * *"
-  workflow_dispatch:
+  push:
+    branches:
+      - master
+
 jobs:
   publish:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"

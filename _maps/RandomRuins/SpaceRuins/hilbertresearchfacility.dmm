@@ -233,13 +233,10 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/obj/structure/window/reinforced/survival_pod{
+/obj/machinery/power/shuttle_engine/propulsion/tram{
 	dir = 4
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
-/turf/open/floor/engine,
+/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gv" = (
 /obj/structure/fluff/tram_rail,
@@ -997,11 +994,10 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/obj/structure/window/reinforced/survival_pod{
+/obj/machinery/power/shuttle_engine/propulsion/tram{
 	dir = 4
 	},
-/obj/structure/window/reinforced/survival_pod,
-/turf/open/floor/engine,
+/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xO" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{
@@ -1120,8 +1116,7 @@
 /obj/structure/sign/departments/cargo/directional/north,
 /obj/machinery/button/tram{
 	id = "middle_part_hilbert";
-	pixel_y = 4;
-	lift_id = "tram_hilbert"
+	pixel_y = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/mineral/plastitanium,
@@ -1421,8 +1416,7 @@
 "Fo" = (
 /obj/machinery/button/tram{
 	id = "left_part_hilbert";
-	pixel_y = 4;
-	lift_id = "tram_hilbert"
+	pixel_y = 4
 	},
 /obj/structure/table/reinforced/rglass,
 /obj/effect/turf_decal/stripes/red/line{
@@ -1632,11 +1626,10 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/obj/structure/window/reinforced/survival_pod{
+/obj/machinery/power/shuttle_engine/propulsion/tram{
 	dir = 8
 	},
-/obj/structure/window/reinforced/survival_pod,
-/turf/open/floor/engine,
+/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Jh" = (
 /obj/structure/fluff/tram_rail/anchor,
@@ -1741,8 +1734,14 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Mh" = (
-/obj/machinery/computer/terminal/hilbert{
-	dir = 8
+/obj/machinery/computer{
+	desc = "A computer long since rendered non-functional due to lack of maintenance. Spitting out old messages.";
+	dir = 8;
+	name = "broken terminal"
+	},
+/obj/item/paper/fluff/ruins/romans_emails{
+	pixel_x = -10;
+	pixel_y = 1
 	},
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
@@ -1881,7 +1880,12 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "PR" = (
-/obj/machinery/porta_turret/syndicate/teleport,
+/obj/machinery/porta_turret/syndicate{
+	desc = "A ballistic machine gun auto-turret that fires bluespace bullets.";
+	lethal_projectile = /obj/projectile/magic/teleport;
+	name = "displacement turret";
+	stun_projectile = /obj/projectile/magic/teleport
+	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Qu" = (
@@ -2331,20 +2335,17 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/obj/structure/window/reinforced/survival_pod{
+/obj/machinery/power/shuttle_engine/propulsion/tram{
 	dir = 8
 	},
-/obj/structure/window/reinforced/survival_pod{
-	dir = 1
-	},
-/turf/open/floor/engine,
+/turf/closed/indestructible/riveted/plastinum,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Yv" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "YF" = (

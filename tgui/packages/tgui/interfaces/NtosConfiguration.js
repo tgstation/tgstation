@@ -7,7 +7,8 @@ export const NtosConfiguration = (props, context) => {
   const {
     PC_device_theme,
     power_usage,
-    battery,
+    battery_exists,
+    battery = {},
     disk_size,
     disk_used,
     hardware = [],
@@ -25,8 +26,8 @@ export const NtosConfiguration = (props, context) => {
           <LabeledList>
             <LabeledList.Item
               label="Battery Status"
-              color={!battery && 'average'}>
-              {battery ? (
+              color={!battery_exists && 'average'}>
+              {battery_exists ? (
                 <ProgressBar
                   value={battery.charge}
                   minValue={0}

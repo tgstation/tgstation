@@ -17,12 +17,7 @@ export const Terminal = (props, context) => {
       <Window.Content scrollable>
         <NoticeBox textAlign="left">{uppertext}</NoticeBox>
         {messages.map((message) => {
-          return (
-            <Section
-              key={message.key}
-              dangerouslySetInnerHTML={{ __html: message }}
-            />
-          );
+          return <Section key={message.key}>{message}</Section>;
         })}
       </Window.Content>
     </Window>

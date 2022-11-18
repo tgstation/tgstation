@@ -64,13 +64,12 @@
 			reaping = FALSE
 		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
 			to_chat(M, span_hierophant("You lose, and the malevolent spirits smirk eerily as they surround your body."))
-			M.investigate_log("has lost rock paper scissors with the grim reaper and been dusted.", INVESTIGATE_DEATHS)
 			M.dust()
 			return
 		else //VICTORY ROYALE
 			to_chat(M, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
 			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
-			M.revive(HEAL_ALL)
+			M.revive(full_heal = TRUE, admin_revive = FALSE)
 			holder.del_reagent(type)
 			return
 

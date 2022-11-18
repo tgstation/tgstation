@@ -3,11 +3,10 @@
 	SSmobs.pause()
 
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
-	var/list/blacklisted_reagents = list(
-		/datum/reagent/eigenstate, //Creates clones after a delay which get into other tests
-	)
-	var/list/reagents_to_check = subtypesof(/datum/reagent) - blacklisted_reagents - GLOB.fake_reagent_blacklist
-	for (var/reagent_type in reagents_to_check)
+
+	for (var/reagent_type in subtypesof(/datum/reagent))
+		if(reagent_type in GLOB.fake_reagent_blacklist)
+			continue
 		test_reagent(human, reagent_type)
 
 /datum/unit_test/metabolization/proc/test_reagent(mob/living/carbon/C, reagent_type)

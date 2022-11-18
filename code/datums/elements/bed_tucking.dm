@@ -6,10 +6,8 @@
 	var/x_offset = 0
 	/// our pixel_y offset - how much the item move y when in bed (-y is closer to the middle)
 	var/y_offset = 0
-	/// our rotation degree - how many degrees we need to turn the item to get to the left/right side
+	/// our rotation degree - how much the item turns when in bed (+degrees turns it more parallel)
 	var/rotation_degree = 0
-	/// our starting angle for the item
-	var/starting_angle = 0
 
 /datum/element/bed_tuckable/Attach(obj/target, x = 0, y = 0, rotation = 0)
 	. = ..()
@@ -18,8 +16,8 @@
 
 	x_offset = x
 	y_offset = y
-	starting_angle = rotation
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_OBJ, PROC_REF(tuck_into_bed))
+	rotation_degree = rotation
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_OBJ, .proc/tuck_into_bed)
 
 /datum/element/bed_tuckable/Detach(obj/target)
 	. = ..()
@@ -42,13 +40,11 @@
 		return
 
 	to_chat(tucker, span_notice("You lay [tucked] out on [target_bed]."))
-	tucked.dir = target_bed.dir
-	tucked.pixel_x = target_bed.dir & EAST ? -x_offset : x_offset
+	tucked.pixel_x = x_offset
 	tucked.pixel_y = y_offset
-	if(starting_angle)
-		rotation_degree = target_bed.dir & EAST ? starting_angle + 180 : starting_angle
+	if(rotation_degree)
 		tucked.transform = turn(tucked.transform, rotation_degree)
-		RegisterSignal(tucked, COMSIG_ITEM_PICKUP, PROC_REF(untuck))
+		RegisterSignal(tucked, COMSIG_ITEM_PICKUP, .proc/untuck)
 
 	return COMPONENT_NO_AFTERATTACK
 

@@ -157,7 +157,6 @@
 	if(prob(bomb_armor))
 		adjustBruteLoss(500)
 	else
-		investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 		gib()
 
 /// Called when a heavy explosive acts on this mob

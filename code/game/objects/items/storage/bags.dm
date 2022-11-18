@@ -1,5 +1,3 @@
-#define ORE_BAG_BALOON_COOLDOWN (2 SECONDS)
-
 /*
  * These absorb the functionality of the plant bag, ore satchel, etc.
  * They use the use_to_pickup, quick_gather, and quick_empty functions
@@ -50,10 +48,10 @@
 	atom_storage.max_slots = 30
 	atom_storage.set_holdable(cant_hold_list = list(/obj/item/disk/nuclear))
 
-/obj/item/storage/bag/trash/suicide_act(mob/living/user)
+/obj/item/storage/bag/trash/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))
 	playsound(loc, 'sound/items/eatfood.ogg', 50, TRUE, -1)
-	return TOXLOSS
+	return (TOXLOSS)
 
 /obj/item/storage/bag/trash/update_icon_state()
 	switch(contents.len)
@@ -106,11 +104,8 @@
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
-	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
-	var/spam_protection = FALSE
+	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/mob/listeningTo
-	///Cooldown on balloon alerts when picking ore
-	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
 
 /obj/item/storage/bag/ore/Initialize(mapload)
 	. = ..()
@@ -128,7 +123,7 @@
 		return
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(pickup_ores))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/pickup_ores)
 	listeningTo = user
 
 /obj/item/storage/bag/ore/dropped()
@@ -166,10 +161,7 @@
 					continue
 	if(show_message)
 		playsound(user, SFX_RUSTLE, 50, TRUE)
-		if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
-			return
 
-		COOLDOWN_START(src, ore_bag_balloon_cooldown, ORE_BAG_BALOON_COOLDOWN)
 		if (box)
 			balloon_alert(user, "scoops ore into box")
 			user.visible_message(
@@ -376,7 +368,7 @@
 	var/delay = rand(2,4)
 	var/datum/move_loop/loop = SSmove_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
 	//This does mean scattering is tied to the tray. Not sure how better to handle it
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(change_speed))
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/change_speed)
 
 /obj/item/storage/bag/tray/proc/change_speed(datum/move_loop/source)
 	SIGNAL_HANDLER
@@ -541,5 +533,3 @@
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
 		new /obj/item/ammo_casing/caseless/harpoon(src)
-
-#undef ORE_BAG_BALOON_COOLDOWN

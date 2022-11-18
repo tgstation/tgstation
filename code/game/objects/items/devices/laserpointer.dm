@@ -190,7 +190,7 @@
 			to_chat(user, span_warning("[src]'s battery is overused, it needs time to recharge!"))
 			recharge_locked = TRUE
 
-	targloc.flick_overlay_view(I, 10)
+	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
 
 /obj/item/laser_pointer/process(delta_time)

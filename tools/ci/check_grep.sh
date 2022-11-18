@@ -289,11 +289,6 @@ if grep -i '/obj/effect/mapping_helpers/custom_icon' _maps/**/*.dmm; then
     echo -e "${RED}ERROR: Custom icon helper found. Please include DMI files as standard assets instead for repository maps.${NC}"
     st=1
 fi;
-if grep -P '^/obj/docking_port/mobile.*\{\n[^}]*(width|height|dwidth|dheight)[^}]*\}' _maps/**/*.dmm; then
-	echo
-	echo -e "${RED}ERROR: Custom mobile docking_port sizes detected. This is done automatically and should not be varedits.${NC}"
-	st=1
-fi;
 for json in _maps/*.json
 do
     map_path=$(jq -r '.map_path' $json)
@@ -307,13 +302,6 @@ do
         fi
     done < <(jq -r '[.map_file] | flatten | .[]' $json)
 done
-
-# Check for non-515 compatable .proc/ syntax
-if grep -P --exclude='__byond_version_compat.dm' '\.proc/' code/**/*.dm; then
-    echo
-    echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
-    st=1
-fi;
 
 if [ $st = 0 ]; then
     echo

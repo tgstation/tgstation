@@ -257,6 +257,7 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/docking_port/mobile/emergency{
+	height = 15;
 	name = "Mother Russia Bleeds"
 	},
 /obj/machinery/door/airlock/security/glass{

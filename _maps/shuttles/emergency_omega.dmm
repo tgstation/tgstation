@@ -47,7 +47,9 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Omega emergency shuttle"
+	dwidth = 5;
+	name = "Omega emergency shuttle";
+	width = 19
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4

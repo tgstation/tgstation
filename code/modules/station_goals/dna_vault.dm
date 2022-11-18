@@ -110,10 +110,11 @@
 	return ..()
 
 /obj/machinery/dna_vault/Destroy()
-	for(var/obj/structure/filler/filler as anything in fillers)
+	for(var/V in fillers)
+		var/obj/structure/filler/filler = V
 		filler.parent = null
 		qdel(filler)
-	return ..()
+	. = ..()
 
 /obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

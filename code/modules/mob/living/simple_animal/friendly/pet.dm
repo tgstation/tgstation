@@ -55,14 +55,12 @@
 		access_card = null
 	return ..()
 
-/mob/living/simple_animal/pet/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+/mob/living/simple_animal/pet/revive(full_heal = FALSE, admin_revive = FALSE)
 	. = ..()
-	if(!.)
-		return
-
-	if(collar_type)
-		collar_type = "[initial(collar_type)]"
-	regenerate_icons()
+	if(.)
+		if(collar_type)
+			collar_type = "[initial(collar_type)]"
+		regenerate_icons()
 
 /mob/living/simple_animal/pet/death(gibbed)
 	. = ..()

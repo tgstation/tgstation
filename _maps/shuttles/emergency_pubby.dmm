@@ -668,8 +668,11 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 8;
+	dwidth = 27;
+	height = 8;
 	name = "PubbyStation emergency shuttle";
-	port_direction = 4
+	port_direction = 4;
+	width = 46
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)

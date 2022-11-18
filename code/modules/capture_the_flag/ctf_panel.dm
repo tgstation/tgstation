@@ -1,8 +1,6 @@
 GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 
 /datum/ctf_panel
-	///List of all CTF machines
-	var/list/obj/machinery/capture_the_flag/ctf_machines = list()
 
 /datum/ctf_panel/ui_state(mob/user)
 	return GLOB.observer_state
@@ -17,7 +15,7 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 	var/list/data = list()
 	var/list/teams = list()
 
-	for(var/obj/machinery/capture_the_flag/team as anything in GLOB.ctf_panel.ctf_machines)
+	for(var/obj/machinery/capture_the_flag/team in GLOB.machines)
 		if (!team.ctf_enabled)
 			continue
 
@@ -81,7 +79,7 @@ GLOBAL_DATUM_INIT(ctf_panel, /datum/ctf_panel, new())
 			return TRUE
 
 /datum/ctf_panel/proc/ctf_enabled()
-	for (var/obj/machinery/capture_the_flag/ctf_machine as anything in GLOB.ctf_panel.ctf_machines)
+	for (var/obj/machinery/capture_the_flag/ctf_machine in GLOB.machines)
 		if (ctf_machine.ctf_enabled)
 			return TRUE
 

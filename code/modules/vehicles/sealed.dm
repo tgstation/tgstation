@@ -49,7 +49,7 @@
 /obj/vehicle/sealed/proc/mob_try_enter(mob/M)
 	if(!istype(M))
 		return FALSE
-	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(enter_checks), M)))
+	if(do_after(M, get_enter_delay(M), src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, .proc/enter_checks, M)))
 		mob_enter(M)
 		return TRUE
 	return FALSE
@@ -75,6 +75,7 @@
 	mob_exit(M, silent, randomstep)
 
 /obj/vehicle/sealed/proc/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
+	SIGNAL_HANDLER
 	if(!istype(M))
 		return FALSE
 	remove_occupant(M)
@@ -124,7 +125,7 @@
 
 /obj/vehicle/sealed/proc/dump_mobs(randomstep = TRUE)
 	for(var/i in occupants)
-		mob_exit(i, randomstep = randomstep)
+		mob_exit(i, null, randomstep)
 		if(iscarbon(i))
 			var/mob/living/carbon/Carbon = i
 			Carbon.Paralyze(40)
@@ -133,7 +134,7 @@
 	for(var/i in occupants)
 		if(!(occupants[i] & flag))
 			continue
-		mob_exit(i, randomstep = randomstep)
+		mob_exit(i, null, randomstep)
 		if(iscarbon(i))
 			var/mob/living/carbon/C = i
 			C.Paralyze(40)

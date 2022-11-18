@@ -92,7 +92,7 @@
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		addtimer(CALLBACK(src, PROC_REF(stop_retreat)), 30)
+		addtimer(CALLBACK(src, .proc/stop_retreat), 30)
 	. = ..()
 
 /mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
@@ -116,16 +116,14 @@
 		return TRUE
 	return ..()
 
-/mob/living/simple_animal/hostile/mushroom/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
-	. = ..()
-	if(!.)
-		return
-
-	icon_state = "mushroom_color"
-	UpdateMushroomCap()
+/mob/living/simple_animal/hostile/mushroom/revive(full_heal = FALSE, admin_revive = FALSE)
+	if(..())
+		icon_state = "mushroom_color"
+		UpdateMushroomCap()
+		. = 1
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
-	. = ..()
+	..(gibbed)
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
@@ -140,10 +138,10 @@
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
 	visible_message(span_notice("[src] slowly begins to recover."))
 	faint_ticker = 0
-	revive(HEAL_ALL)
+	revive(full_heal = TRUE, admin_revive = FALSE)
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	addtimer(CALLBACK(src, PROC_REF(recovery_recharge)), 300)
+	addtimer(CALLBACK(src, .proc/recovery_recharge), 300)
 
 /mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
 	recovery_cooldown = 0

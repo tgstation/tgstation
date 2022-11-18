@@ -31,7 +31,7 @@
 
 /datum/action/cooldown/spell/pointed/swap/InterceptClickOn(mob/living/caller, params, atom/click_target)
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-		if(!IsAvailable(feedback = TRUE))
+		if(!IsAvailable())
 			return FALSE
 		if(!target)
 			return FALSE

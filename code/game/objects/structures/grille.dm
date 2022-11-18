@@ -194,6 +194,7 @@
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
+	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/rods) && broken)
 		if(shock(user, 90))
 			return
@@ -251,10 +252,8 @@
 			return
 //window placing end
 
-	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
-		return
-
-	return ..()
+	else if(istype(W, /obj/item/shard) || !shock(user, 70))
+		return ..()
 
 /obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
