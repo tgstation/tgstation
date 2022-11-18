@@ -49,7 +49,7 @@
 	priority_announce("Our automated monitoring indicates the software controlling the tram is malfunctioning. Please take care as we diagnose and resolve the issue.", "CentCom Engineering Division")
 
 /datum/round_event/tram_malfunction/start()
-	for(var/obj/machinery/crossing_signal/signal in GLOB.tram_signals)
+	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
 		if(signal.obj_flags & EMAGGED)
 			return
 
