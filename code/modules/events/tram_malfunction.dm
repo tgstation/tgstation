@@ -58,7 +58,7 @@
 		if(signal.signal_state != XING_STATE_GREEN)
 			signal.set_signal_state(XING_STATE_GREEN)
 
-	for(var/obj/structure/industrial_lift/tram in GLOB.lifts)
+	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		original_lethality = tram.collision_lethality
 		tram.collision_lethality = 4
 
