@@ -66,7 +66,7 @@
 
 /// Handles whenever a mob clicks on something
 /datum/action/innate/proc/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		unset_ranged_ability(caller)
 		return FALSE
 	if(!clicked_on)

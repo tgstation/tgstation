@@ -5,7 +5,6 @@
 	base_icon_state = "gygax"
 	allow_diagonal_movement = TRUE
 	movedelay = 3
-	dir_in = 1 //Facing North.
 	max_integrity = 250
 	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 15, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	max_temperature = 25000
@@ -27,8 +26,6 @@
 /datum/action/vehicle/sealed/mecha/mech_overload_mode
 	name = "Toggle leg actuators overload"
 	button_icon_state = "mech_overload_off"
-	///stores value that we will add and remove from the mecha
-	var/speed_mod = 0
 
 /datum/action/vehicle/sealed/mecha/mech_overload_mode/Trigger(trigger_flags, forced_state = null)
 	if(!owner || !chassis || !(owner in chassis.occupants))
@@ -40,12 +37,12 @@
 	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
 	chassis.log_message("Toggled leg actuators overload.", LOG_MECHA)
 	if(chassis.leg_overload_mode)
-		speed_mod = min(chassis.movedelay-1, round(chassis.movedelay * 0.5))
-		chassis.movedelay -= speed_mod
+		chassis.speed_mod = min(chassis.movedelay-1, round(chassis.movedelay * 0.5))
+		chassis.movedelay -= chassis.speed_mod
 		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
 		chassis.balloon_alert(owner,"leg actuators overloaded")
 	else
-		chassis.movedelay += speed_mod
+		chassis.movedelay += chassis.speed_mod
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		chassis.balloon_alert(owner, "you disable the overload")
 	UpdateButtons()

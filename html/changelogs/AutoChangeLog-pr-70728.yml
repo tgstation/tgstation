@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Roaches will actually eat ants"
-  - bugfix: "Rats can be multicolored now, like mice"
-  - bugfix: "Rats, when they die, become pick-up-able items like mice"
-  - refactor: "Refactored mice / rats into basicmobs."

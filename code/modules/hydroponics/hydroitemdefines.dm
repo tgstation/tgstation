@@ -393,9 +393,9 @@
 	volume = 100
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
-/obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
+/obj/item/reagent_containers/spray/weedspray/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (TOXLOSS)
+	return TOXLOSS
 
 /obj/item/reagent_containers/spray/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
@@ -409,9 +409,9 @@
 	volume = 100
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
-/obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
+/obj/item/reagent_containers/spray/pestspray/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (TOXLOSS)
+	return TOXLOSS
 
 /obj/item/cultivator
 	name = "cultivator"
@@ -430,9 +430,9 @@
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/cultivator/suicide_act(mob/user)
+/obj/item/cultivator/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/cultivator/rake
 	name = "rake"
@@ -448,7 +448,7 @@
 /obj/item/cultivator/rake/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -492,10 +492,10 @@
 	effectiveness = 100, \
 	)
 
-/obj/item/hatchet/suicide_act(mob/user)
+/obj/item/hatchet/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/hatchet/wooden
 	desc = "A crude axe blade upon a short wooden handle."
@@ -530,7 +530,7 @@
 	effectiveness = 105, \
 	)
 
-/obj/item/scythe/suicide_act(mob/user)
+/obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -538,7 +538,7 @@
 		if(BP)
 			BP.drop_limb()
 			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
 	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))

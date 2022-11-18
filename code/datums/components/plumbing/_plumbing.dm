@@ -50,15 +50,15 @@
 	if(start)
 		//We're registering here because I need to check whether we start active or not, and this is just easier
 		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
-		RegisterSignal(parent, list(COMSIG_COMPONENT_ADDED), .proc/enable)
+		RegisterSignal(parent, list(COMSIG_COMPONENT_ADDED), PROC_REF(enable))
 
 /datum/component/plumbing/RegisterWithParent()
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/disable)
-	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
-	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
-	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
-	RegisterSignal(parent, list(COMSIG_ATOM_DIR_CHANGE), .proc/on_parent_dir_change) //called when placed on a shuttle and it moves, and other edge cases
-	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
+	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(disable))
+	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), PROC_REF(toggle_active))
+	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), PROC_REF(hide))
+	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), PROC_REF(create_overlays)) //called by lateinit on startup
+	RegisterSignal(parent, list(COMSIG_ATOM_DIR_CHANGE), PROC_REF(on_parent_dir_change)) //called when placed on a shuttle and it moves, and other edge cases
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), PROC_REF(change_ducting_layer))
 
 /datum/component/plumbing/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
@@ -337,7 +337,7 @@
 	if(recipient_reagents_holder)
 		UnregisterSignal(recipient_reagents_holder, COMSIG_PARENT_QDELETING) //stop tracking whoever we were tracking
 	if(receiver)
-		RegisterSignal(receiver, COMSIG_PARENT_QDELETING, .proc/handle_reagent_del) //on deletion call a wrapper proc that clears us, and maybe reagents too
+		RegisterSignal(receiver, COMSIG_PARENT_QDELETING, PROC_REF(handle_reagent_del)) //on deletion call a wrapper proc that clears us, and maybe reagents too
 
 	recipient_reagents_holder = receiver
 
@@ -358,7 +358,7 @@
 		return
 
 	// Defer to later frame because pixel_* is actually updated after all callbacks
-	addtimer(CALLBACK(parent_obj, /atom/.proc/update_appearance), 1)
+	addtimer(CALLBACK(parent_obj, TYPE_PROC_REF(/atom/, update_appearance)), 1)
 
 ///has one pipe input that only takes, example is manual output pipe
 /datum/component/plumbing/simple_demand

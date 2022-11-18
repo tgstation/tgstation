@@ -77,6 +77,8 @@
 			continue
 
 		for(var/movable_in_turf in current_turf)
+			if(istype(movable_in_turf, /obj/docking_port/mobile))
+				continue // mobile docking ports need to be initialized after their template has finished loading, to ensure that their bounds are setup
 			movables += movable_in_turf
 			if(istype(movable_in_turf, /obj/structure/cable))
 				cables += movable_in_turf
@@ -131,14 +133,13 @@
 	var/x = round((world.maxx - width) * 0.5) + 1
 	var/y = round((world.maxy - height) * 0.5) + 1
 
-	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY)
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top)
+	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY, contain_turfs = FALSE)
+	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top, new_z = TRUE)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
 
-	repopulate_sorted_areas()
-
+	require_area_resort()
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
 	smooth_zlevel(world.maxz)
@@ -179,8 +180,7 @@
 	if(!bounds)
 		return
 
-	if(!SSmapping.loading_ruins) //Will be done manually during mapping ss init
-		repopulate_sorted_areas()
+	require_area_resort()
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)

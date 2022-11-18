@@ -26,6 +26,12 @@
 	/// the item we need to destroy
 	var/obj/item/target_item
 
+	// The code below is for limiting how often you can get this objective. You will get this objective at a maximum of maximum_objectives_in_period every objective_period
+	/// The objective period at which we consider if it is an 'objective'. Set to 0 to accept all objectives.
+	var/objective_period = 10 MINUTES
+	/// The maximum number of objectives that can be taken in this period.
+	var/maximum_objectives_in_period = 2
+
 /datum/traitor_objective/destroy_heirloom/common
 	/// 30 minutes in, syndicate won't care about common heirlooms anymore
 	progression_minimum = 0 MINUTES
@@ -98,6 +104,14 @@
 	target_jobs = list(
 		/datum/job/head_of_security,
 		/datum/job/captain
+	)
+
+/datum/traitor_objective/destroy_heirloom/New(datum/uplink_handler/handler)
+	. = ..()
+	AddComponent(/datum/component/traitor_objective_limit_per_time, \
+		/datum/traitor_objective/destroy_heirloom, \
+		time_period = objective_period, \
+		maximum_objectives = maximum_objectives_in_period \
 	)
 
 /datum/traitor_objective/destroy_heirloom/generate_objective(datum/mind/generating_for, list/possible_duplicates)

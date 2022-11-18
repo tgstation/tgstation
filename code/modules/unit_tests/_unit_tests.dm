@@ -53,8 +53,8 @@
 
 #define TEST_PRE 0
 #define TEST_DEFAULT 1
-/// This should be one of the last tests to run, because we run it for a little bit over 30 seconds by design and we want to run all of the tests that take a trivial amount of time to complete beforehand.
-#define TEST_MONKEY_BUSINESS 10
+/// After most test steps, used for tests that run long so shorter issues can be noticed faster
+#define TEST_LONGER 10
 /// This must be the last test to run due to the inherent nature of the test iterating every single tangible atom in the game and qdeleting all of them (while taking long sleeps to make sure the garbage collector fires properly) taking a large amount of time.
 #define TEST_CREATE_AND_DESTROY INFINITY
 
@@ -78,6 +78,7 @@
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
+#include "area_contents.dm"
 #include "autowiki.dm"
 #include "barsigns.dm"
 #include "bespoke_id.dm"
@@ -137,6 +138,7 @@
 #include "ntnetwork_tests.dm"
 #include "nuke_cinematic.dm"
 #include "objectives.dm"
+#include "orderable_items.dm"
 #include "operating_table.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"
@@ -181,6 +183,7 @@
 #include "spell_shapeshift.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
+#include "station_trait_tests.dm"
 #include "stomach.dm"
 #include "strippable.dm"
 #include "subsystem_init.dm"
@@ -192,6 +195,7 @@
 #include "traitor.dm"
 #include "unit_test.dm"
 #include "verify_config_tags.dm"
+#include "verify_emoji_names.dm"
 #include "wizard_loadout.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

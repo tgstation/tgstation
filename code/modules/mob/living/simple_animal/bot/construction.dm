@@ -8,7 +8,7 @@
 	throw_range = 5
 	var/created_name
 	var/build_step = ASSEMBLY_FIRST_STEP
-	var/robot_arm = /obj/item/bodypart/r_arm/robot
+	var/robot_arm = /obj/item/bodypart/arm/right/robot
 
 /obj/item/bot_assembly/attackby(obj/item/I, mob/user, params)
 	..()
@@ -77,7 +77,7 @@
 
 /obj/item/bot_assembly/cleanbot/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
+	if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
 		if(!can_finish_build(W, user))
 			return
 		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location(), bucket_obj)
@@ -102,7 +102,7 @@
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP, ASSEMBLY_SECOND_STEP)
-			if(istype(W, /obj/item/bodypart/l_leg/robot) || istype(W, /obj/item/bodypart/r_leg/robot))
+			if(istype(W, /obj/item/bodypart/leg/left/robot) || istype(W, /obj/item/bodypart/leg/right/robot))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				to_chat(user, span_notice("You add [W] to [src]."))
@@ -241,7 +241,7 @@
 				update_appearance()
 
 		if(ASSEMBLY_SECOND_STEP)
-			if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
+			if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
 				if(!can_finish_build(W, user))
 					return
 				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location(), toolbox_color)
@@ -378,7 +378,7 @@
 					build_step--
 
 		if(ASSEMBLY_THIRD_STEP)
-			if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+			if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				to_chat(user, span_notice("You add [I] to [src]!"))
@@ -569,7 +569,7 @@
 		return
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(part, /obj/item/bodypart/l_leg/robot) || istype(part, /obj/item/bodypart/r_leg/robot))
+			if(istype(part, /obj/item/bodypart/leg/left/robot) || istype(part, /obj/item/bodypart/leg/right/robot))
 				if(!user.temporarilyRemoveItemFromInventory(part))
 					return
 				balloon_alert(user, "leg attached")

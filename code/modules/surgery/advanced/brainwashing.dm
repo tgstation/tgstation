@@ -26,7 +26,7 @@
 	return TRUE
 
 /datum/surgery_step/brainwash
-	name = "brainwash"
+	name = "brainwash (hemostat)"
 	implements = list(
 		TOOL_HEMOSTAT = 85,
 		TOOL_WIRECUTTER = 50,

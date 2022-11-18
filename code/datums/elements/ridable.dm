@@ -7,7 +7,7 @@
  * just having the variables, behavior, and procs be standardized is still a big improvement.
  */
 /datum/element/ridable
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
 	id_arg_index = 2
 
 	/// The specific riding component subtype we're loading our instructions from, don't leave this as default please!
@@ -28,11 +28,11 @@
 	riding_component_type = component_type
 	potion_boosted = potion_boost
 
-	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, .proc/check_mounting)
+	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(check_mounting))
 	if(isvehicle(target))
-		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, .proc/check_potion)
+		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, PROC_REF(check_potion))
 	if(ismob(target))
-		RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
+		RegisterSignal(target, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 
 /datum/element/ridable/Detach(atom/movable/target)
 	target.can_buckle = initial(target.can_buckle)

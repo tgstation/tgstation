@@ -46,6 +46,9 @@
 	if(random_color)
 		var/our_color = pick(wirecutter_colors)
 		set_greyscale(colors=list(wirecutter_colors[our_color]))
+
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+
 	return ..()
 
 /obj/item/wirecutters/attack(mob/living/carbon/attacked_carbon, mob/user)
@@ -56,10 +59,10 @@
 
 	return ..()
 
-/obj/item/wirecutters/suicide_act(mob/user)
+/obj/item/wirecutters/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is cutting at [user.p_their()] arteries with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, usesound, 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/wirecutters/abductor
 	name = "alien wirecutters"

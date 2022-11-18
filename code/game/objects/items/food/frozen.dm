@@ -239,19 +239,8 @@
 	update_icon() // make sure the popsicle overlay is primed so it's not just a stick until you start eating it
 
 /obj/item/food/popsicle/MakeEdible()
-	AddComponent(/datum/component/edible,\
-				initial_reagents = food_reagents,\
-				food_flags = food_flags,\
-				foodtypes = foodtypes,\
-				volume = max_volume,\
-				eat_time = eat_time,\
-				tastes = tastes,\
-				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness,\
-				after_eat = CALLBACK(src, .proc/after_bite))
-
+	. = ..()
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_bite)))
 
 /obj/item/food/popsicle/update_overlays()
 	. = ..()
