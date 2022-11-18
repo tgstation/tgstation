@@ -275,7 +275,7 @@
 
 /obj/machinery/coffeemaker/proc/take_cup(mob/user)
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
-		balloon_alert("no cups left!")
+		balloon_alert(user, "no cups left!")
 		return
 	balloon_alert_to_viewers("took cup")
 	var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = new(get_turf(src))
@@ -284,7 +284,7 @@
 
 /obj/machinery/coffeemaker/proc/take_sugar(mob/user)
 	if(!sugar_packs)
-		balloon_alert("no sugar left!")
+		balloon_alert(user, "no sugar left!")
 		return
 	balloon_alert_to_viewers("took sugar packet")
 	var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = new(get_turf(src))
@@ -293,7 +293,7 @@
 
 /obj/machinery/coffeemaker/proc/take_sweetener(mob/user)
 	if(!sweetener_packs)
-		balloon_alert("no sweetener left!")
+		balloon_alert(user, "no sweetener left!")
 		return
 	balloon_alert_to_viewers("took sweetener packet")
 	var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = new(get_turf(src))
@@ -302,7 +302,7 @@
 
 /obj/machinery/coffeemaker/proc/take_creamer(mob/user)
 	if(!creamer_packs)
-		balloon_alert("no creamer left!")
+		balloon_alert(user, "no creamer left!")
 		return
 	balloon_alert_to_viewers("took creamer packet")
 	var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = new(get_turf(src))
