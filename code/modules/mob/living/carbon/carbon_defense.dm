@@ -383,21 +383,15 @@
 		for(var/victim in shocking_queue)
 			var/mob/living/carbon/C = victim
 			C.electrocute_act(shock_damage*0.75, src, 1, flags)
-	//Stun
-	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
-	if(should_stun)
-		Paralyze(40)
+	//Knockdown
+	var/should_knockdown = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
+	if(should_knockdown)
+		Knockdown(80 * siemens_coeff)
 	//Jitter and other fluff.
 	do_jitter_animation(300)
 	adjust_jitter(20 SECONDS)
 	adjust_stutter(4 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(secondary_shock), should_stun), 2 SECONDS)
 	return shock_damage
-
-///Called slightly after electrocute act to apply a secondary stun.
-/mob/living/carbon/proc/secondary_shock(should_stun)
-	if(should_stun)
-		Paralyze(60)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper)
 	if(on_fire)
