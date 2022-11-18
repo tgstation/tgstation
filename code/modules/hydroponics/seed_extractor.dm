@@ -229,9 +229,10 @@
 	var/list/seeds = list()
 	for(var/seed_id in piles)
 		if (!length(piles[seed_id]["refs"]))
+			piles.Remove(seed_id) // This shouldn't happen but still
 			continue
-		var/list/seed_data = list()
-		seed_data = piles[seed_id].Copy()
+		var/list/seed_data = piles[seed_id]
+		seed_data = seed_data.Copy()
 		seed_data["key"] = seed_id
 		seed_data["amount"] = length(seed_data["refs"])
 		seed_data.Remove("refs")
