@@ -41,7 +41,7 @@
 	TEST_ASSERT(apple_seed_key in extractor.piles, "The apple seed was added to the plant seed extractor's contents correctly, but did not register in the piles list, and is unaccessible.")
 
 	// And it should be tracked in the piles list as a weakref
-	TEST_ASSERT_EQUAL(length(extractor.piles[apple_seed_key]), 1, "While 1 apple seed was added to the plant seed extractor, its weakref was not added to the piles list correctly.")
+	TEST_ASSERT_EQUAL(length(extractor.piles[apple_seed_key]["refs"]), 1, "While 1 apple seed was added to the plant seed extractor, its weakref was not added to the piles list correctly.")
 
 	// Let's test the plant bag now.
 	// If they fail to pick up the bag, we have an issue.
@@ -67,4 +67,4 @@
 		TEST_ASSERT(stored_seed_key in extractor.piles, "The [initial(seed_type.name)] was added to the plant seed extractor's contents correctly, but did not register in the piles list, and is unaccessible.")
 
 		// And all seeds should be tracked as weakrefs
-		TEST_ASSERT_EQUAL(length(extractor.piles[stored_seed_key]), num_seeds_to_make_of_each, "While [num_seeds_to_make_of_each] [initial(seed_type.name)]s were added to the plant seed extractor, not all weakrefs were added to the piles list correctly.")
+		TEST_ASSERT_EQUAL(length(extractor.piles[stored_seed_key]["refs"]), num_seeds_to_make_of_each, "While [num_seeds_to_make_of_each] [initial(seed_type.name)]s were added to the plant seed extractor, not all weakrefs were added to the piles list correctly.")
