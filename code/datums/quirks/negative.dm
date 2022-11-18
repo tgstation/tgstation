@@ -1105,6 +1105,124 @@
 	name = "Old Man Jenkins"
 	desc = "You require a cane like object in your hand for mobility."
 	icon = "person-cane"
-	value = -8
-	medical_record_text = "Patient suffers from a lack of mobility without a support cane."
-	hardcore_value = 8
+	value = -4
+	hardcore_value = 4
+	gain_text = "<span class='danger'>You feel old!</span>"
+	lose_text = "<span class='notice'>You feel young again.</span>"
+	medical_record_text = "Patient suffers from a lack of mobility without a cane as support."
+	mail_goodies = list(/obj/item/cane)
+	var/datum/weakref/left_cane
+	var/datum/weakref/right_cane
+
+/datum/quirk/old_man_jenkins/add_unique()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	var/turf/holder_turf = get_turf(human_holder)
+	var/obj/item/cane/spawn_cane = new /obj/item/cane(holder_turf)
+	human_holder.put_in_hands(spawn_cane)
+
+	var/obj/item/left_hand_item = human_holder.held_items[1]
+	var/obj/item/right_hand_item = human_holder.held_items[2]
+	var/is_cane_left_hand = istype(left_hand_item) && HAS_TRAIT(left_hand_item, TRAIT_CANE_TOOL)
+	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
+	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
+
+	if(!is_holding_cane)
+		human_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown) // TODO make this it's own modifier at some point
+	else if(is_holding_cane)
+		if(is_cane_left_hand)
+			left_cane = WEAKREF(left_hand_item)
+			RegisterSignal(left_hand_item, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
+			RegisterSignal(left_hand_item, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
+			RegisterSignal(left_hand_item, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
+		if(is_cane_right_hand)
+			right_cane = WEAKREF(right_hand_item)
+			RegisterSignal(right_hand_item, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
+			RegisterSignal(right_hand_item, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
+			RegisterSignal(right_hand_item, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
+
+	RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
+
+/datum/quirk/old_man_jenkins/remove()
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM))
+	var/obj/item/primary_cane = left_cane?.resolve()
+	var/obj/item/secondary_cane = right_cane?.resolve()
+
+	var/obj/item/left_hand_item = quirk_holder.held_items[1]
+	var/obj/item/right_hand_item = quirk_holder.held_items[2]
+	var/is_cane_left_hand = istype(left_hand_item) && HAS_TRAIT(left_hand_item, TRAIT_CANE_TOOL)
+	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
+	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
+
+	if(!is_holding_cane)
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+	else if(is_holding_cane)
+		if(primary_cane)
+			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+		if(secondary_cane)
+			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+
+	left_cane = null
+	right_cane = null
+
+/// Signal handler for when the badback quirk_holder equips an item
+/datum/quirk/old_man_jenkins/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
+	SIGNAL_HANDLER
+
+	var/obj/item/left_hand_item = quirk_holder.held_items[1]
+	var/obj/item/right_hand_item = quirk_holder.held_items[2]
+	var/is_cane_left_hand = istype(left_hand_item) && HAS_TRAIT(left_hand_item, TRAIT_CANE_TOOL)
+	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
+	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
+
+	if(!is_holding_cane)
+		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+	else if(is_holding_cane)
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+
+	var/obj/item/primary_cane = left_cane?.resolve()
+	var/obj/item/secondary_cane = right_cane?.resolve()
+
+	if(is_cane_left_hand)
+		if(primary_cane && (primary_cane != left_hand_item))
+			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+			left_cane = null
+		else if(!primary_cane)
+			left_cane = WEAKREF(left_hand_item)
+			primary_cane = left_hand_item
+			RegisterSignal(primary_cane, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
+			RegisterSignal(primary_cane, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
+			RegisterSignal(primary_cane, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
+	else if(primary_cane) // no cane in hand, time to remove the signal and weakref
+		UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+		left_cane = null
+
+	if(is_cane_right_hand)
+		if(secondary_cane && (secondary_cane != right_hand_item))
+			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+			right_cane = null
+		else if(!secondary_cane)
+			right_cane = WEAKREF(right_hand_item)
+			secondary_cane = right_hand_item
+			RegisterSignal(secondary_cane, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
+			RegisterSignal(secondary_cane, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
+			RegisterSignal(secondary_cane, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
+	else if(secondary_cane) // no cane in hand, time to remove the signal and weakref
+		UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+		right_cane = null
+
+/// Signal handler for when the quirk_holder unequips an equipped cane
+/datum/quirk/old_man_jenkins/proc/on_unequipped_cane(obj/item/source)
+	SIGNAL_HANDLER
+
+	// if they have dual canes then no need to change mood/speed
+	var/both_hands_have_canes = left_cane?.resolve() && right_cane?.resolve()
+
+	if(!both_hands_have_canes)
+		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+
+	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	if(left_cane?.resolve() == source)
+		left_cane = null
+	else if (right_cane?.resolve() == source)
+		right_cane = null
