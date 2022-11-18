@@ -67,10 +67,10 @@
 
 
 /// Checking to see if we're gonna embed into a human
-/datum/element/embed/proc/checkEmbed(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
+/datum/element/embed/proc/checkEmbed(obj/item/weapon, mob/living/carbon/victim, hit_zone, blocked, datum/thrownthing/throwingdatum, forced=FALSE)
 	SIGNAL_HANDLER
 
-	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
+	if((!forced && blocked) || !istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return
 
 	var/flying_speed = throwingdatum?.speed || weapon.throw_speed
