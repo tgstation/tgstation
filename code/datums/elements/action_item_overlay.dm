@@ -62,7 +62,6 @@
 			return
 		current_button.cut_overlay(item_appearance)
 
-	COMPILE_OVERLAYS(muse)
 	var/mutable_appearance/muse_appearance = new(muse.appearance)
 	muse_appearance.plane = FLOAT_PLANE
 	muse_appearance.layer = FLOAT_LAYER

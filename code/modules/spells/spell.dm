@@ -46,7 +46,6 @@
 	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "spell_default"
 	overlay_icon_state = "bg_spell_border"
-	base_overlay_icon_state = "bg_spell_border"
 	active_overlay_icon_state = "bg_spell_border_active_red"
 	check_flags = AB_CHECK_CONSCIOUS
 	panel = "Spells"

@@ -1,7 +1,7 @@
 /datum/action/item_action/mod
 	background_icon_state = "bg_mod"
-	icon_icon = 'icons/mob/actions/actions_mod.dmi'
-	overlay_icon_state = null
+	overlay_icon_state = "bg_mod_border"
+	button_icon = 'icons/mob/actions/actions_mod.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 	/// Whether this action is intended for the AI. Stuff breaks a lot if this is done differently.
 	var/ai_action = FALSE

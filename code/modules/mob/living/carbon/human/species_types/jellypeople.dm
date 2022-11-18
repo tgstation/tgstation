@@ -611,7 +611,7 @@
 
 	return species.current_extract
 
-/datum/action/innate/use_extract/IsAvailable()
+/datum/action/innate/use_extract/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return

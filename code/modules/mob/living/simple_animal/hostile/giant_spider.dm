@@ -362,7 +362,7 @@
 				qdel(web)
 				new /obj/structure/spider/stickyweb/sealed(spider_turf)
 			new /obj/structure/spider/stickyweb(spider_turf)
-		UpdateButtons()
+		build_all_button_icons()
 
 	spider.stop_automated_movement = FALSE
 
