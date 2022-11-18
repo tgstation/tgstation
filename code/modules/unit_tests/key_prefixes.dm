@@ -18,7 +18,7 @@
 	for(var/radio_key in GLOB.department_radio_keys)
 		if(radio_keys.Find(radio_key))
 			TEST_FAIL("[GLOB.department_radio_keys[radio_key]] radio channel has the same prefix key ([radio_key]) as [GLOB.department_radio_keys[radio_keys.Find(radio_key)]]")
-		radio_keys[radio_key] = GLOB.department_radio_keys[radio_Key]
+		radio_keys[radio_key] = GLOB.department_radio_keys[radio_key]
 
 	for(var/datum/saymode/say_type as anything in subtypesof(/datum/saymode))
 		if(initial(say_type.key) in radio_keys)
