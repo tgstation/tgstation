@@ -328,6 +328,8 @@
 		"whiteship_donut",
 		"whiteship_delta",
 		"whiteship_tram",
+		"whiteship_personalshuttle",
+		"whiteship_obelisk",
 	)
 
 /// Helper proc that tests to ensure all whiteship templates can spawn at their docking port, and logs their sizes
@@ -365,11 +367,11 @@
 			delta_width = max(theoretical_ship.width - theoretical_ship.dwidth, delta_width)
 			theoretical_ship.jumpToNullSpace()
 	qdel(port, TRUE)
-	log_world("Whitship sizing information. Use this to set the docking port, and the map size\n\
+	log_world("Whiteship sizing information. Use this to set the docking port, and the map size\n\
 		Max Height: [height] \n\
 		Max Width: [width] \n\
 		Max DHeight: [dheight] \n\
-		Max DHeight: [dwidth] \n\
+		Max DWidth: [dwidth] \n\
 		The following are the safest bet for map sizing. Anything smaller then this could in the worst case not fit in the docking port\n\
 		Max Combined Width: [height + dheight] \n\
 		Max Combinded Height [width + dwidth]")

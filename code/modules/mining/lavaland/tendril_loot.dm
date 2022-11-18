@@ -169,7 +169,7 @@
 		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
-		RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, .proc/check_health)
+		RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, PROC_REF(check_health))
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -282,7 +282,7 @@
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
 	if(ismob(thing))
-		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, .proc/update_user_sight)
+		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
 		var/mob/being = thing
 		being.update_sight()
 		to_chat(thing, span_notice("The wisp enhances your vision."))
@@ -436,7 +436,7 @@
 
 	user_ref = WEAKREF(user)
 
-	addtimer(CALLBACK(src, .proc/dissipate), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(dissipate)), 10 SECONDS)
 
 /obj/effect/immortality_talisman/proc/dissipate()
 	qdel(src)
@@ -513,21 +513,25 @@
 /obj/item/reagent_containers/cup/bottle/potion
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
+	fill_icon = 'icons/obj/lavaland/artefacts.dmi'
+	fill_icon_state = "potion_fill"
+	fill_icon_thresholds = list(0, 1)
+
+/obj/item/reagent_containers/cup/bottle/potion/update_overlays()
+	. = ..()
+	if(reagents?.total_volume)
+		. += "potionflask_cap"
 
 /obj/item/reagent_containers/cup/bottle/potion/flight
 	name = "strange elixir"
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
 	list_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/reagent_containers/cup/bottle/potion/update_icon_state()
-	icon_state = "potionflask[reagents?.total_volume ? null : "_empty"]"
-	return ..()
-
 /datum/reagent/flightpotion
 	name = "Flight Potion"
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
-	color = "#FFEBEB"
+	color = "#976230"
 
 /datum/reagent/flightpotion/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
 	. = ..()
@@ -595,8 +599,8 @@
 	. = ..()
 	if(slot & ITEM_SLOT_GLOVES)
 		tool_behaviour = TOOL_MINING
-		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
-		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
+		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(rocksmash))
+		RegisterSignal(user, COMSIG_MOVABLE_BUMP, PROC_REF(rocksmash))
 	else
 		stopmining(user)
 
@@ -609,11 +613,11 @@
 	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
 
-/obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
+/obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/user, atom/rocks, proximity)
 	SIGNAL_HANDLER
-	if(!ismineralturf(A))
+	if(!ismineralturf(rocks) && !isasteroidturf(rocks))
 		return
-	A.attackby(src, H)
+	rocks.attackby(src, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/suit/hooded/berserker
@@ -796,7 +800,7 @@
 	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
 
-/datum/action/cooldown/scan/IsAvailable()
+/datum/action/cooldown/scan/IsAvailable(feedback = FALSE)
 	return ..() && isliving(owner)
 
 /datum/action/cooldown/scan/Activate(atom/scanned)
@@ -817,11 +821,11 @@
 	living_scanned.set_jitter_if_lower(100 SECONDS)
 	to_chat(living_scanned, span_warning("You've been staggered!"))
 	living_scanned.add_filter("scan", 2, list("type" = "outline", "color" = COLOR_YELLOW, "size" = 1))
-	addtimer(CALLBACK(living_scanned, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
+	addtimer(CALLBACK(living_scanned, TYPE_PROC_REF(/atom/, remove_filter), "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
 	owner.balloon_alert(owner, "[living_scanned] scanned")
-	addtimer(CALLBACK(src, .proc/send_cooldown_end_message, cooldown_time))
+	addtimer(CALLBACK(src, PROC_REF(send_cooldown_end_message), cooldown_time))
 
 	StartCooldown()
 	return TRUE
@@ -917,13 +921,13 @@
 	var/list/input_list = list()
 	var/list/combo_strings = list()
 	var/static/list/combo_list = list(
-		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/strike),
-		ATTACK_SLICE = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/slice),
-		ATTACK_DASH = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/dash),
-		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/cut),
-		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = .proc/cloak),
-		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = .proc/shatter),
-		)
+		ATTACK_STRIKE = list(COMBO_STEPS = list(LEFT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(strike)),
+		ATTACK_SLICE = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(slice)),
+		ATTACK_DASH = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(dash)),
+		ATTACK_CUT = list(COMBO_STEPS = list(RIGHT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(cut)),
+		ATTACK_CLOAK = list(COMBO_STEPS = list(LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH), COMBO_PROC = PROC_REF(cloak)),
+		ATTACK_SHATTER = list(COMBO_STEPS = list(RIGHT_SLASH, LEFT_SLASH, RIGHT_SLASH, LEFT_SLASH), COMBO_PROC = PROC_REF(shatter)),
+	)
 
 /obj/item/cursed_katana/Initialize(mapload)
 	. = ..()
@@ -971,7 +975,7 @@
 		reset_inputs(null, TRUE)
 		return TRUE
 	else
-		timerid = addtimer(CALLBACK(src, .proc/reset_inputs, user, FALSE), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+		timerid = addtimer(CALLBACK(src, PROC_REF(reset_inputs), user, FALSE), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 		return ..()
 
 /obj/item/cursed_katana/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -999,7 +1003,7 @@
 		span_notice("You hilt strike [target]!"))
 	to_chat(target, span_userdanger("You've been struck by [user]!"))
 	playsound(src, 'sound/weapons/genhit3.ogg', 50, TRUE)
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/strike_throw_impact)
+	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, PROC_REF(strike_throw_impact))
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, 5, 3, user, FALSE, gentle = TRUE)
 	target.apply_damage(damage = 17, bare_wound_bonus = 10)
@@ -1045,8 +1049,9 @@
 	playsound(src, 'sound/magic/smoke.ogg', 50, TRUE)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/hostile_target = target
-		hostile_target.LoseTarget()
-	addtimer(CALLBACK(src, .proc/uncloak, user), 5 SECONDS, TIMER_UNIQUE)
+		if(hostile_target.target == user)
+			hostile_target.LoseTarget()
+	addtimer(CALLBACK(src, PROC_REF(uncloak), user), 5 SECONDS, TIMER_UNIQUE)
 
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
@@ -1097,7 +1102,7 @@
 	shattered = TRUE
 	moveToNullspace()
 	balloon_alert(user, "katana shattered")
-	addtimer(CALLBACK(src, .proc/coagulate, user), 45 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(coagulate), user), 45 SECONDS)
 
 /obj/item/cursed_katana/proc/coagulate(mob/user)
 	balloon_alert(user, "katana coagulated")

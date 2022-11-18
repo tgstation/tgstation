@@ -258,6 +258,7 @@
 	desc = "Unleash the ape!"
 	icon_state = "monkey_energy"
 	inhand_icon_state = "monkey_energy"
+	volume = 50
 	list_reagents = list(/datum/reagent/consumable/monkey_energy = 50)
 	drink_type = SUGAR | JUNKFOOD
 

@@ -19,7 +19,6 @@
 	var/credits = 0
 
 	// Device loadout
-	var/dev_battery = 1 // 1: Default, 2: Upgraded, 3: Advanced
 	var/dev_card = 0 // 0: None, 1: Standard
 
 // Removes all traces of old order and allows you to begin configuration from scratch.
@@ -32,32 +31,16 @@
 	if(fabricated_tablet)
 		qdel(fabricated_tablet)
 		fabricated_tablet = null
-	dev_battery = 1
 	dev_card = 0
 
 // Recalculates the price and optionally even fabricates the device.
 /obj/machinery/lapvend/proc/fabricate_and_recalc_price(fabricate = FALSE)
 	total_price = 0
 	if(devtype == 1) // Laptop, generally cheaper to make it accessible for most station roles
-		var/obj/item/computer_hardware/battery/battery_module = null
 		if(fabricate)
 			fabricated_laptop = new /obj/item/modular_computer/laptop/buildable(src)
 			fabricated_laptop.install_component(new /obj/item/computer_hardware/card_slot)
-			fabricated_laptop.install_component(new /obj/item/computer_hardware/battery)
-			battery_module = fabricated_laptop.all_components[MC_CELL]
 		total_price = 99
-		switch(dev_battery)
-			if(1) // Basic(750C)
-				if(fabricate)
-					battery_module.try_insert(new /obj/item/stock_parts/cell/computer)
-			if(2) // Upgraded(1100C)
-				if(fabricate)
-					battery_module.try_insert(new /obj/item/stock_parts/cell/computer/advanced)
-				total_price += 199
-			if(3) // Advanced(1500C)
-				if(fabricate)
-					battery_module.try_insert(new /obj/item/stock_parts/cell/computer/super)
-				total_price += 499
 		if(dev_card)
 			total_price += 199
 			if(fabricate)
@@ -65,35 +48,16 @@
 
 		return total_price
 	else if(devtype == 2) // Tablet, more expensive, not everyone could probably afford this.
-		var/obj/item/computer_hardware/battery/battery_module = null
 		if(fabricate)
 			fabricated_tablet = new(src)
-			fabricated_tablet.install_component(new /obj/item/computer_hardware/battery)
 			fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot)
-			battery_module = fabricated_tablet.all_components[MC_CELL]
 		total_price = 199
-		switch(dev_battery)
-			if(1) // Basic(300C)
-				if(fabricate)
-					battery_module.try_insert(new /obj/item/stock_parts/cell/computer/nano)
-			if(2) // Upgraded(500C)
-				if(fabricate)
-					battery_module.try_insert(new /obj/item/stock_parts/cell/computer/micro)
-				total_price += 199
-			if(3) // Advanced(750C)
-				if(fabricate)
-					battery_module.try_insert(new /obj/item/stock_parts/cell/computer)
-				total_price += 499
 		if(dev_card)
 			total_price += 199
 			if(fabricate)
 				fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot/secondary)
 		return total_price
 	return FALSE
-
-
-
-
 
 /obj/machinery/lapvend/ui_act(action, params)
 	. = ..()
@@ -119,10 +83,6 @@
 	switch(action)
 		if("confirm_order")
 			state = 2 // Wait for ID swipe for payment processing
-			fabricate_and_recalc_price(FALSE)
-			return TRUE
-		if("hw_battery")
-			dev_battery = text2num(params["battery"])
 			fabricate_and_recalc_price(FALSE)
 			return TRUE
 		if("hw_card")
@@ -185,7 +145,6 @@
 	data["state"] = state
 	if(state == 1)
 		data["devtype"] = devtype
-		data["hw_battery"] = dev_battery
 		data["hw_card"] = dev_card
 	if(state == 1 || state == 2)
 		data["totalprice"] = total_price
@@ -208,6 +167,6 @@
 			credits -= total_price
 			say("Enjoy your new product!")
 			state = 3
-			addtimer(CALLBACK(src, .proc/reset_order), 100)
+			addtimer(CALLBACK(src, PROC_REF(reset_order)), 100)
 			return TRUE
 		return FALSE

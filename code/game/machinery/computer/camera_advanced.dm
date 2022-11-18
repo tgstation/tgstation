@@ -141,7 +141,7 @@
 			if((!length(z_lock) || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
-				for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+				for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 					if(!C.can_use() || length(z_lock) && !(C.z in z_lock))
 						continue
 					var/list/network_overlap = networks & C.network
@@ -277,7 +277,7 @@
 
 	var/list/L = list()
 
-	for (var/obj/machinery/camera/cam in GLOB.cameranet.cameras)
+	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
 		if(length(origin.z_lock) && !(cam.z in origin.z_lock))
 			continue
 		L.Add(cam)
