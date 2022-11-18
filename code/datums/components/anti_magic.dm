@@ -133,7 +133,7 @@
 
 		user.mob_light(_range = 2, _color = antimagic_color, _duration = 5 SECONDS)
 		user.add_overlay(antimagic_effect)
-		addtimer(CALLBACK(user, /atom/proc/cut_overlay, antimagic_effect), 50)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 50)
 
 		if(ismob(parent))
 			return COMPONENT_MAGIC_BLOCKED

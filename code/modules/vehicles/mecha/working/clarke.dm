@@ -34,7 +34,7 @@
 	box = new(src)
 
 /obj/vehicle/sealed/mecha/working/clarke/Destroy()
-	INVOKE_ASYNC(box, /obj/structure/ore_box/proc/dump_box_contents)
+	INVOKE_ASYNC(box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
 	return ..()
 
 /obj/vehicle/sealed/mecha/working/clarke/generate_actions()
