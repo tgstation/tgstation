@@ -4818,10 +4818,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
-"bJx" = (
-/obj/machinery/door/poddoor/incinerator_atmos_aux,
-/turf/open/floor/engine,
-/area/station/maintenance/disposal/incinerator)
 "bJQ" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/bot,
@@ -4910,6 +4906,18 @@
 /obj/effect/turf_decal/trimline/brown/filled/warning,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"bLx" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/plasteel{
+	amount = 15
+	},
+/obj/item/assembly/prox_sensor{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/structure/fireaxecabinet/mechremoval/directional/east,
+/turf/open/floor/iron,
+/area/station/science/robotics/lab)
 "bLQ" = (
 /turf/closed/wall,
 /area/station/medical/coldroom)
@@ -5623,6 +5631,10 @@
 "cbz" = (
 /turf/closed/wall,
 /area/station/cargo/storage)
+"cbW" = (
+/obj/machinery/door/poddoor/incinerator_atmos_aux,
+/turf/open/floor/engine,
+/area/station/maintenance/disposal/incinerator)
 "cce" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
@@ -14767,18 +14779,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
-"fyX" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 15
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/structure/fireaxecabinet/mechremoval/directional/east,
-/turf/open/floor/iron,
-/area/station/science/robotics/lab)
 "fyY" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1;
@@ -15322,12 +15322,6 @@
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
-"fJi" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/obj/structure/noticeboard/directional/east,
-/turf/open/floor/wood,
-/area/station/service/library)
 "fJk" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -21549,6 +21543,14 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"hVS" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement{
+	dir = 8
+	},
+/obj/structure/noticeboard/directional/east,
+/turf/open/floor/wood,
+/area/station/service/library)
 "hVX" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -90423,7 +90425,7 @@ ohM
 ecO
 mjr
 erS
-fJi
+hVS
 dFJ
 qRf
 xrd
@@ -98156,7 +98158,7 @@ wsD
 cdq
 tKM
 eut
-fyX
+bLx
 uJe
 jtS
 osC
@@ -108179,7 +108181,7 @@ rDm
 smg
 crg
 xpY
-bJx
+cbW
 aaa
 aaa
 aav
