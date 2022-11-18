@@ -36,6 +36,8 @@
 	var/stun_animation = TRUE
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
+	/// Boolean on whether people with chunky fingers can use this baton.
+	var/chunky_finger_usable = FALSE
 
 	/// The context to show when the baton is active and targetting a living thing
 	var/context_living_target_active = "Stun"
@@ -120,7 +122,7 @@
 	if(clumsy_check(user, target))
 		return BATON_ATTACK_DONE
 
-	if(ishuman(user))
+	if(!chunky_finger_usable && ishuman(user))
 		var/mob/living/carbon/human/potential_chunky_finger_human = user
 		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src))
 			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
