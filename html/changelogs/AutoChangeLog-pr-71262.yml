@@ -1,0 +1,4 @@
+author: "twilightwanderer"
+delete-after: True
+changes:
+  - bugfix: "Fix crash of TGUI fax panel when there is no fax in the network"

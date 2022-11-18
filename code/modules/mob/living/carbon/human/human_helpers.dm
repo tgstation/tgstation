@@ -233,7 +233,7 @@
 
 /// Fully randomizes everything according to the given flags.
 /mob/living/carbon/human/proc/randomize_human_appearance(randomize_flags = ALL)
-	var/datum/preferences/preferences = new
+	var/datum/preferences/preferences = new(new /datum/client_interface)
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (!preference.included_in_randomization_flags(randomize_flags))

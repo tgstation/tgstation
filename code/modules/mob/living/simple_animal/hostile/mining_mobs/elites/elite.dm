@@ -212,7 +212,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	mychild.forceMove(loc)
 	visible_message(span_boldwarning("[mychild] emerges from [src]!"))
 	playsound(loc,'sound/effects/phasein.ogg', 200, 0, 50, TRUE, TRUE)
-	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
+	mychild.revive(HEAL_ALL)
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
 		mychild.health = mychild.maxHealth
@@ -324,7 +324,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/structure/elite_tumor/proc/onEliteWon()
 	activity = TUMOR_PASSIVE
 	clear_activator(activator)
-	mychild.revive(full_heal = TRUE, admin_revive = TRUE)
+	mychild.revive(HEAL_ALL)
 	if(boosted)
 		times_won++
 		mychild.maxHealth = mychild.maxHealth * 0.4
@@ -360,7 +360,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 			user.visible_message(span_notice("It appears [E] is unable to be revived right now.  Perhaps try again later."))
 			return
 		E.faction = list("[REF(user)]")
-		E.revive(full_heal = TRUE, admin_revive = TRUE)
+		E.revive(HEAL_ALL)
 		user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
 		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
 		to_chat(E, "<span class='userdanger'>You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span>")
