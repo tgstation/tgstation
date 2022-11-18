@@ -1,0 +1,4 @@
+author: "axietheaxolotl"
+delete-after: True
+changes:
+  - bugfix: "The RD coat is no longer incorrectly togglable, and lack of \"fill-in\" on turtleneck handholes."
