@@ -590,7 +590,7 @@
 	/// Time to explode from the priming
 	var/explosion_time = 1 SECONDS
 	/// Damage done on explosion.
-	var/damage = 15
+	var/damage = 12
 	/// Damage multiplier on hostile fauna.
 	var/fauna_boost = 4
 	/// Image overlaid on explosion.
@@ -624,7 +624,7 @@
 	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 2))
 		rock.gets_drilled()
 	for(var/mob/living/mob in range(1, src))
-		mob.apply_damage(12 * (ishostile(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
+		mob.apply_damage(damage * (ishostile(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
 		if(!ishostile(mob) || !firer)
 			continue
 		var/mob/living/simple_animal/hostile/hostile_mob = mob
