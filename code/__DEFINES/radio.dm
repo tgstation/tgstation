@@ -47,8 +47,8 @@
 #define RADIO_TOKEN_CENTCOM ":y"
 
 #define RADIO_CHANNEL_UPLINK "Uplink"
-#define RADIO_KEY_UPLINK "d"
-#define RADIO_TOKEN_UPLINK ":d"
+#define RADIO_KEY_UPLINK "z"
+#define RADIO_TOKEN_UPLINK ":z"
 
 #define RADIO_CHANNEL_CTF_RED "Red Team"
 #define RADIO_CHANNEL_CTF_BLUE "Blue Team"
