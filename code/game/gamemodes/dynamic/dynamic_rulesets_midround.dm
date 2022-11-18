@@ -985,7 +985,6 @@
 	if(messenger)
 		messenger.invisible = TRUE //clone doesnt show up on PDA message list
 
-	clone.key = applicant.key
 	message_admins("[ADMIN_LOOKUPFLW(clone)] has been made into a Paradox Clone by the midround ruleset.")
 	clone.log_message("was spawned as a Paradox Clone of [key_name(human_cloned)] by the midround ruleset.", LOG_GAME)
 	playsound(clone, 'sound/weapons/zapbang.ogg', 30, TRUE)
