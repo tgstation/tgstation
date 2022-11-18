@@ -184,7 +184,7 @@
 	singular_name = "green tatami floor tile"
 	icon_state = "tile_tatami_green"
 	turf_type = /turf/open/floor/bamboo/tatami
-	merge_type = null
+	merge_type = /obj/item/stack/tile/bamboo/tatami
 	tile_rotate_dirs = list(NORTH, EAST, SOUTH, WEST)
 
 /obj/item/stack/tile/bamboo/tatami/purple
@@ -192,12 +192,14 @@
 	singular_name = "purple tatami floor tile"
 	icon_state = "tile_tatami_purple"
 	turf_type = /turf/open/floor/bamboo/tatami/purple
+	merge_type = /obj/item/stack/tile/bamboo/tatami/purple
 
 /obj/item/stack/tile/bamboo/tatami/black
 	name = "Tatami with black rim"
 	singular_name = "black tatami floor tile"
 	icon_state = "tile_tatami_black"
 	turf_type = /turf/open/floor/bamboo/tatami/black
+	merge_type = /obj/item/stack/tile/bamboo/tatami/black
 
 //Basalt
 /obj/item/stack/tile/basalt
