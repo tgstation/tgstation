@@ -13,7 +13,7 @@ NC="\033[0m" # No Color
 st=0
 
 # error if not found
-command -v rg >/dev/null 2>&1 || { echo >&2 "ripgrep not found. Aborting."; exit 1; }
+command -v rg >/dev/null 2>&1 || { echo >&2 "ripgrep not found. If you have Rust installed, run cargo install ripgrep --features pcre2"; exit 1; }
 
 echo -e "${BLUE}Using ripgrep at $(which rg)${NC}"
 
