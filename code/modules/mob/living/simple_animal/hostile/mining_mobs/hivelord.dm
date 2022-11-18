@@ -93,7 +93,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/death), 100)
+	addtimer(CALLBACK(src, PROC_REF(death)), 100)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
@@ -294,6 +294,7 @@
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	loot = list(/obj/item/organ/internal/monster_core/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow/make_legion(mob/living/carbon/human/H)
 	return new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow(H.loc)
@@ -307,3 +308,4 @@
 	icon_living = "snowlegion_head"
 	icon_aggro = "snowlegion_head"
 	icon_dead = "snowlegion_head"
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)

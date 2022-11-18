@@ -21,7 +21,7 @@
 	if (owner.health <= HEALTH_DANGER_ZONE)
 		trigger_organ_action()
 
-/obj/item/organ/internal/monster_core/rush_gland/trigger_organ_action()
+/obj/item/organ/internal/monster_core/rush_gland/on_triggered_internal()
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
 
 /**
@@ -42,8 +42,8 @@
 
 /datum/status_effect/lobster_rush/on_apply()
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
-	RegisterSignal(owner, COMSIG_MOVABLE_BUMP, .proc/on_bump)
+	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_move))
+	RegisterSignal(owner, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))
 	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lobster_rush)
 	to_chat(owner, span_notice("You feel your blood pumping!"))

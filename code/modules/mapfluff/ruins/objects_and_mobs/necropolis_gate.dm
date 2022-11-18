@@ -6,7 +6,8 @@
 	icon_state = "gate_full"
 	flags_1 = ON_BORDER_1
 	appearance_flags = 0
-	layer = TABLE_LAYER
+	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	density = TRUE
 	pixel_x = -32
@@ -19,7 +20,6 @@
 	var/locked = FALSE
 	var/static/mutable_appearance/top_overlay
 	var/static/mutable_appearance/door_overlay
-	var/static/mutable_appearance/dais_overlay
 	var/obj/structure/opacity_blocker/sight_blocker
 	var/sight_blocker_distance = 1
 
@@ -42,15 +42,15 @@
 	door_overlay = mutable_appearance('icons/effects/96x96.dmi', "door")
 	door_overlay.layer = EDGED_TURF_LAYER
 	add_overlay(door_overlay)
-	dais_overlay = mutable_appearance('icons/effects/96x96.dmi', "gate_dais")
-	dais_overlay.layer = CLOSED_TURF_LAYER
-	add_overlay(dais_overlay)
+
+	new /obj/effect/decal/necropolis_gate_decal(loc)
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT_TWO_TALL)
 
 /obj/structure/necropolis_gate/Destroy(force)
 	qdel(sight_blocker)
@@ -192,6 +192,14 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP, flashwindow = FALSE)
 
+/obj/effect/decal/necropolis_gate_decal
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "gate_dais"
+	flags_1 = ON_BORDER_1
+	appearance_flags = 0
+	pixel_x = -32
+	pixel_y = -32
+
 /obj/effect/temp_visual/necropolis
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "door_closing"
@@ -211,7 +219,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "arch_full"
 	appearance_flags = 0
-	layer = TABLE_LAYER
+	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	pixel_x = -64
 	pixel_y = -40
@@ -225,6 +234,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	top_overlay = mutable_appearance('icons/effects/160x160.dmi', "arch_top")
 	top_overlay.layer = EDGED_TURF_LAYER
 	add_overlay(top_overlay)
+
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT_TWO_TALL)
 
 /obj/structure/necropolis_arch/singularity_pull()
 	return 0
@@ -251,7 +262,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -274,7 +285,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	switch(fall_on_cross)
 		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
 			if((I && I.w_class >= WEIGHT_CLASS_BULKY) || (L && !(L.movement_type & FLYING) && L.mob_size >= MOB_SIZE_HUMAN)) //too heavy! too big! aaah!
-				INVOKE_ASYNC(src, .proc/collapse)
+				INVOKE_ASYNC(src, PROC_REF(collapse))
 		if(UNIQUE_EFFECT)
 			crossed_effect(AM)
 
@@ -293,7 +304,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	if(break_that_sucker)
 		QDEL_IN(src, 10)
 	else
-		addtimer(CALLBACK(src, .proc/rebuild), 55)
+		addtimer(CALLBACK(src, PROC_REF(rebuild)), 55)
 
 /obj/structure/stone_tile/proc/rebuild()
 	pixel_x = initial(pixel_x)

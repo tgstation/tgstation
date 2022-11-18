@@ -458,7 +458,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
-	INVOKE_ASYNC(src, .proc/worn_items_fit_body_check, C)
+	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), C)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -1044,7 +1044,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(time_since_irradiated > RAD_MOB_HAIRLOSS && DT_PROB(RAD_MOB_HAIRLOSS_PROB, delta_time))
 		if(!(source.hairstyle == "Bald") && (HAIR in species_traits))
 			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
-			addtimer(CALLBACK(src, .proc/go_bald, source), 5 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(go_bald), source), 5 SECONDS)
 
 /**
  * Makes the target human bald.
@@ -1064,9 +1064,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //////////////////
 
 /datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
-	return
-
-/datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
 	return
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)

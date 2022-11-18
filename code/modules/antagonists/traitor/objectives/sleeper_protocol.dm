@@ -62,7 +62,7 @@
 
 /datum/traitor_objective/sleeper_protocol/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
-		signals = list(COMSIG_MOB_SURGERY_STEP_SUCCESS = .proc/on_surgery_success))
+		signals = list(COMSIG_MOB_SURGERY_STEP_SUCCESS = PROC_REF(on_surgery_success)))
 	return TRUE
 
 /datum/traitor_objective/sleeper_protocol/ungenerate_objective()
