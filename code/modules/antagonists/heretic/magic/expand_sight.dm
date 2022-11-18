@@ -10,7 +10,7 @@
 	/// A cooldown for the last time we toggled it, to prevent spam.
 	COOLDOWN_DECLARE(last_toggle)
 
-/datum/action/innate/expand_sight/IsAvailable()
+/datum/action/innate/expand_sight/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, last_toggle)
 
 /datum/action/innate/expand_sight/Activate()

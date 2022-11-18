@@ -27,7 +27,7 @@
 
 /obj/item/gun/magic/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
 
 
 /obj/item/gun/magic/fire_sounds()
@@ -94,7 +94,7 @@
 		chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_recharge))
 
 
 /obj/item/gun/magic/Destroy()
@@ -120,10 +120,10 @@
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, span_warning("The [name] whizzles quietly."))
 
-/obj/item/gun/magic/suicide_act(mob/user)
+/obj/item/gun/magic/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, fire_sound, 50, TRUE, -1)
-	return (FIRELOSS)
+	return FIRELOSS
 
 /obj/item/gun/magic/vv_edit_var(var_name, var_value)
 	. = ..()

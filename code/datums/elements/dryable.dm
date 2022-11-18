@@ -11,7 +11,7 @@
 		return ELEMENT_INCOMPATIBLE
 	src.dry_result = dry_result
 
-	RegisterSignal(target, COMSIG_ITEM_DRIED, .proc/finish_drying)
+	RegisterSignal(target, COMSIG_ITEM_DRIED, PROC_REF(finish_drying))
 	ADD_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 

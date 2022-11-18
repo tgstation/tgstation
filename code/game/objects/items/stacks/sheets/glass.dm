@@ -281,11 +281,9 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
 	embedding = list("embed_chance" = 65)
 
-
-/obj/item/shard/suicide_act(mob/user)
+/obj/item/shard/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide."))
-	return (BRUTELOSS)
-
+	return BRUTELOSS
 
 /obj/item/shard/Initialize(mapload)
 	. = ..()
@@ -312,7 +310,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
