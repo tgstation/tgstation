@@ -1192,7 +1192,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /obj/item/soap/nanotrasen,
 /obj/item/mop,
 /turf/open/floor/iron/dark,
