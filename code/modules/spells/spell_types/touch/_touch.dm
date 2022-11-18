@@ -90,6 +90,7 @@
 		reset_spell_cooldown()
 	else
 		StartCooldown()
+		build_all_button_icons()
 
 // Touch spells don't go on cooldown OR give off an invocation until the hand is used itself.
 /datum/action/cooldown/spell/touch/before_cast(atom/cast_on)
