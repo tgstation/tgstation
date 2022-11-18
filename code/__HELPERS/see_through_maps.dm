@@ -12,7 +12,7 @@
 #define SEE_THROUGH_MAP_BILLBOARD "billboard"
 ///Two rows of three wide, but offset one tile to the left because thats how shipping containers work
 #define SEE_THROUGH_MAP_SHIPPING_CONTAINER "shipping_container"
-///I'm not even gonna try and describe it
+///Seethrough component for the ratvar wreck, in shape of the ratvar wreck
 #define SEE_THROUGH_MAP_RATVAR_WRECK "ratvar"
 
 
