@@ -399,5 +399,5 @@
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot
 	if(delayed)
-		changeNext_move(CLICK_CD_RANGE)
+		changeNext_move(CLICK_CD_MELEE)
 	return
