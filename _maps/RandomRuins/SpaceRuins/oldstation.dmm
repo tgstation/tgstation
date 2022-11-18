@@ -4998,7 +4998,6 @@
 /obj/item/stock_parts/cell/high/empty,
 /obj/item/stock_parts/capacitor,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/warning/engine_safety/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "qn" = (
@@ -8756,6 +8755,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/charlie/hall)
+"Xh" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/sign/warning/engine_safety/directional/west,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ancientstation/beta/hall)
 "Xt" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/diagonal,
@@ -8880,6 +8886,9 @@
 "Yk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/poster/official/cleanliness{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Yl" = (
@@ -10660,7 +10669,7 @@ gT
 uP
 oM
 qA
-qA
+Xh
 oQ
 oS
 oV
