@@ -16,7 +16,7 @@
 	var/list/radio_keys = list()
 
 	for(var/radio_key in GLOB.department_radio_keys)
-		if(radio_keys.Find(radio_key))
+		if(radio_key in radio_keys)
 			TEST_FAIL("[GLOB.department_radio_keys[radio_key]] radio channel has the same prefix key ([radio_key]) as [GLOB.department_radio_keys[radio_keys.Find(radio_key)]]")
 		radio_keys[radio_key] = GLOB.department_radio_keys[radio_key]
 
