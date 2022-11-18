@@ -2398,6 +2398,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/spawner/random/food_or_drink/snack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/sec)
 "hY" = (
@@ -8293,7 +8294,6 @@
 /area/ruin/space/ancientstation/charlie/hydro)
 "Ss" = (
 /obj/machinery/smartfridge/food,
-/obj/effect/spawner/random/food_or_drink/snack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "Sv" = (
