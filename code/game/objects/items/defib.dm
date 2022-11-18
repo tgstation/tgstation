@@ -285,7 +285,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	powered_state = "defibrusted-powered"
-	safety = 0
+	safety = FALSE
 	cell_removable = FALSE
 	emagged_state = null
 	cooldown_duration = 120 SECONDS
