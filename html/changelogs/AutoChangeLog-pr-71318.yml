@@ -1,0 +1,4 @@
+author: "Tonriam"
+delete-after: True
+changes:
+  - spellcheck: "The pAI toggle button to quickly display the Crew Manifest works again."

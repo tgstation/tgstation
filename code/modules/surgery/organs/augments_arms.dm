@@ -274,7 +274,8 @@
 	active_item.set_light_on(TRUE)
 
 /obj/item/organ/internal/cyberimp/arm/flash/Retract()
-	active_item.set_light_on(FALSE)
+	if(active_item)
+		active_item.set_light_on(FALSE)
 	return ..()
 
 /obj/item/organ/internal/cyberimp/arm/baton

@@ -11,6 +11,8 @@
 	icon_state = null
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+	///The power cell, null by default as we use the APC we're in
+	var/internal_cell = null
 	///A flag that describes this device type
 	var/hardware_flag = NONE
 	///Power usage during last tick

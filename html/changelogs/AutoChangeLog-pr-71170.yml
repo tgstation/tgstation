@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - admin: "\"adminmoreinfo\", or the read-out of a mob that you can get when you hit the (?) button next to the name of a given mob has been cleaned up a bit to make the data-at-a-glance much more presentable."
