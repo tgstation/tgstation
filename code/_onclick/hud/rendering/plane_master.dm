@@ -58,6 +58,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// This is NOT done for parallax and other problem children, because the rules of BLEND_MULTIPLY appear to not behave as expected :(
 	/// This will also just make debugging harder, because we do fragile things in order to ensure things operate as epected. I'm sorry
 	/// Compile time
+	/// See [code\__DEFINES\layers.dm] for our bitflags
 	var/critical = NONE
 
 	/// If this plane master is outside of our visual bounds right now

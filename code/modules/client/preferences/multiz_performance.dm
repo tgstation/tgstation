@@ -1,14 +1,10 @@
-/// We expect at most 3 layers of multiz
-/// Increment this define if you make a huge map. this has a layer of wiggle room since I don't trust you all
-/// If you modify this, you'll need to modify the tsx file too
-#define MAX_EXPECTED_Z_DEPTH 3
 /// Boundary for how many z levels down to render properly before we start going cheapo mode
 /datum/preference/numeric/multiz_performance
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
 	savefile_key = "multiz_performance"
 	savefile_identifier = PREFERENCE_PLAYER
 
-	minimum = -1
+	minimum = MULTIZ_PERFORMANCE_DISABLE
 	maximum = MAX_EXPECTED_Z_DEPTH
 
 /datum/preference/numeric/multiz_performance/create_default_value()

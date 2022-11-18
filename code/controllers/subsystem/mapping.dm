@@ -797,6 +797,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 	generate_offset_lists(old_max + 1, max_plane_offset)
 	SEND_SIGNAL(src, COMSIG_PLANE_OFFSET_INCREASE, old_max, max_plane_offset)
+	// Sanity check
+	if(max_plane_offset > MAX_EXPECTED_Z_DEPTH)
+		stack_trace("We've loaded a map deeper then the max expected z depth. Preferences won't cover visually disabling all of it!")
 
 /// Takes an offset to generate misc lists to, and a base to start from
 /// Use this to react globally to maintain parity with plane offsets

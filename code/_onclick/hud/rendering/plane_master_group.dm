@@ -120,7 +120,7 @@
 	// We accept negatives so going down "zooms" away the drop above as it goes
 	for(var/offset in -SSmapping.max_plane_offset to SSmapping.max_plane_offset)
 		// Multiz boundaries disable transforms
-		if(multiz_boundary != -1 && (multiz_boundary < abs(offset)))
+		if(multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && (multiz_boundary < abs(offset)))
 			offsets += null
 			continue
 
@@ -147,7 +147,7 @@
 		// 31 with only barebones lower planes
 
 		// Basically uh, if we're showing something down X amount of levels, or up any amount of levels
-		if(multiz_boundary != -1 && (visual_offset > multiz_boundary || visual_offset < 0))
+		if(multiz_boundary != MULTIZ_PERFORMANCE_DISABLE && (visual_offset > multiz_boundary || visual_offset < 0))
 			plane.outside_bounds(our_mob)
 		else if(plane.is_outside_bounds)
 			plane.inside_bounds(our_mob)
