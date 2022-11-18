@@ -92,7 +92,7 @@
 				"job_changes" = virtual_map.job_changes,
 				"library_areas" = virtual_map.library_areas,
 			)
-		if (else)
+		else
 			virtual_map = load_map_config()
 			virtual_map.map_name = input("Choose the name for the map", "Map Name") as null|text
 			if(isnull(virtual_map.map_name))
