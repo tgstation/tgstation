@@ -50,7 +50,7 @@
 	AddComponent(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -80,12 +80,13 @@
 	adjust_health(-maxHealth)
 
 // On revival, re-add the mouse to the ratcap, or block it if we're at it
-/mob/living/basic/mouse/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/basic/mouse/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(!contributes_to_ratcap)
 		return ..()
 
+	var/aheal_included = full_heal_flags & HEAL_ADMIN
 	var/cap = CONFIG_GET(number/ratcap)
-	if(!admin_revive && !ckey && length(SSmobs.cheeserats) >= cap)
+	if(!aheal_included && !ckey && length(SSmobs.cheeserats) >= cap)
 		visible_message(span_warning("[src] twitches, but does not continue moving \
 			due to the overwhelming rodent population on the station!"))
 		return

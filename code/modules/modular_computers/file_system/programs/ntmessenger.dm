@@ -30,8 +30,6 @@
 	var/datum/picture/saved_image
 	/// Whether the user is invisible to the message list.
 	var/invisible = FALSE
-	/// Whether or not we allow emojis to be sent by the user.
-	var/allow_emojis = FALSE
 	/// Whether or not we're currently looking at the message list.
 	var/viewing_messages = FALSE
 	// Whether or not this device is currently hidden from the message monitor.
@@ -77,9 +75,9 @@
 
 	var/sortmode
 	if(sort_by_job)
-		sortmode = /proc/cmp_pdajob_asc
+		sortmode = GLOBAL_PROC_REF(cmp_pdajob_asc)
 	else
-		sortmode = /proc/cmp_pdaname_asc
+		sortmode = GLOBAL_PROC_REF(cmp_pdaname_asc)
 
 	for(var/obj/item/modular_computer/P in sort_list(GLOB.TabletMessengers, sortmode))
 		for(var/datum/computer_file/program/messenger/app in P.stored_files)
@@ -201,11 +199,8 @@
 	var/list/data = ..()
 
 	data["owner"] = computer.saved_identification
-	data["ringer_status"] = ringer_status
-	data["sending_and_receiving"] = sending_and_receiving
 	data["sortByJob"] = sort_by_job
 	data["isSilicon"] = issilicon(user)
-	data["viewing_messages"] = viewing_messages
 
 	return data
 
@@ -214,6 +209,9 @@
 
 	data["messages"] = messages
 	data["messengers"] = ScrubMessengerList()
+	data["ringer_status"] = ringer_status
+	data["sending_and_receiving"] = sending_and_receiving
+	data["viewing_messages"] = viewing_messages
 	data["photo"] = photo_path
 	data["canSpam"] = spam_mode
 
@@ -292,7 +290,6 @@
 		"message" = html_decode(message),
 		"ref" = REF(computer),
 		"targets" = targets,
-		"emojis" = allow_emojis,
 		"rigged" = rigged,
 		"photo" = photo_path,
 		"automated" = FALSE,
@@ -311,9 +308,8 @@
 			playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
-	if(allow_emojis)
-		message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
-		signal.data["message"] = emoji_parse(signal.data["message"])
+	message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
+	signal.data["message"] = emoji_parse(signal.data["message"])
 
 	// Log it in our logs
 	var/list/message_data = list()
@@ -382,8 +378,7 @@
 			reply = "\[Automated Message\]"
 
 		var/inbound_message = signal.format_message()
-		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
-			inbound_message = emoji_parse(inbound_message)
+		inbound_message = emoji_parse(inbound_message)
 
 		if(L.is_literate())
 			to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")

@@ -58,21 +58,28 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 	update_explanation_text()
 
-/datum/objective/proc/considered_escaped(datum/mind/M)
-	if(!considered_alive(M))
+/**
+ * Checks if the passed mind is considered "escaped".
+ *
+ * Escaped mobs are used to check certain antag objectives / results.
+ *
+ * Escaped includes minds with alive, non-exiled mobs generally.
+ */
+/proc/considered_escaped(datum/mind/escapee)
+	if(!considered_alive(escapee))
 		return FALSE
-	if(considered_exiled(M))
+	if(considered_exiled(escapee))
 		return FALSE
-	if(M.force_escaped)
+	if(escapee.force_escaped)
 		return TRUE
 	if(SSticker.force_ending || GLOB.station_was_nuked) // Just let them win.
 		return TRUE
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
-	var/area/current_area = get_area(M.current)
+	var/area/current_area = get_area(escapee.current)
 	if(!current_area || istype(current_area, /area/shuttle/escape/brig)) // Fails if they are in the shuttle brig
 		return FALSE
-	var/turf/current_turf = get_turf(M.current)
+	var/turf/current_turf = get_turf(escapee.current)
 	return current_turf.onCentCom() || current_turf.onSyndieBase()
 
 /datum/objective/proc/check_completion()
@@ -947,7 +954,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = sort_list(subtypesof(/datum/objective), /proc/cmp_typepaths_asc)
+	var/list/allowed_types = sort_list(subtypesof(/datum/objective), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	for(var/datum/objective/goal as anything in allowed_types)
 		if(!initial(goal.admin_grantable))
@@ -963,7 +970,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/contract/proc/generate_dropoff()
 	var/found = FALSE
 	while (!found)
-		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		var/area/dropoff_area = pick(GLOB.areas)
 		if(dropoff_area && (dropoff_area.type in GLOB.the_station_areas) && !dropoff_area.outdoors)
 			dropoff = dropoff_area
 			found = TRUE

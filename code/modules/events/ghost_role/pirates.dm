@@ -52,8 +52,8 @@
 			threat.title = "Business proposition"
 			threat.content = "Ahoy! This be the [ship_name]. Cough up [payoff] credits or you'll walk the plank."
 			threat.possible_answers = list("We'll pay.","We will not be extorted.")
-	threat.answer_callback = CALLBACK(GLOBAL_PROC, .proc/pirates_answered, threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/spawn_pirates, threat, ship_template, FALSE), response_max_time)
+	threat.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirates_answered), threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat, ship_template, FALSE), response_max_time)
 	SScommunications.send_message(threat,unique = TRUE)
 
 /proc/pirates_answered(datum/comm_message/threat, payoff, ship_name, initial_send_time, response_max_time, ship_template)
@@ -431,7 +431,7 @@
 	status_report = "Sending... "
 	pad.visible_message(span_notice("[pad] starts charging up."))
 	pad.icon_state = pad.warmup_state
-	sending_timer = addtimer(CALLBACK(src,.proc/send),warmup_time, TIMER_STOPPABLE)
+	sending_timer = addtimer(CALLBACK(src, PROC_REF(send)),warmup_time, TIMER_STOPPABLE)
 
 /obj/machinery/computer/piratepad_control/proc/stop_sending(custom_report)
 	if(!sending)
@@ -456,7 +456,7 @@
 /datum/export/pirate/ransom/find_loot()
 	var/list/head_minds = SSjob.get_living_heads()
 	var/list/head_mobs = list()
-	for(var/datum/mind/M in head_minds)
+	for(var/datum/mind/M as anything in head_minds)
 		head_mobs += M.current
 	if(head_mobs.len)
 		return pick(head_mobs)

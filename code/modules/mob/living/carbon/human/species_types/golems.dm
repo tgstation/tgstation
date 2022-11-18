@@ -134,6 +134,7 @@
 	if(H.bodytemperature > 850 && H.on_fire && prob(25))
 		explosion(H, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 		if(H)
+			H.investigate_log("has been gibbed as [H.p_their()] body explodes.", INVESTIGATE_DEATHS)
 			H.gib()
 	if(H.fire_stacks < 2) //flammable
 		H.adjust_fire_stacks(0.5 * delta_time)
@@ -540,7 +541,7 @@
 	///Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
 	var/is_charging = FALSE
 
-/datum/action/innate/unstable_teleport/IsAvailable()
+/datum/action/innate/unstable_teleport/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -554,7 +555,7 @@
 	is_charging = TRUE
 	UpdateButtons() //action icon looks unavailable
 	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, TRUE)
-	addtimer(CALLBACK(src, .proc/teleport, H), 15)
+	addtimer(CALLBACK(src, PROC_REF(teleport), H), 15)
 
 /datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
 	H.visible_message(span_warning("[H] disappears in a shower of sparks!"), span_danger("You teleport!"))
@@ -565,7 +566,7 @@
 	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 	is_charging = FALSE
-	addtimer(CALLBACK(src, .proc/UpdateButtons), cooldown + 5) //action icon looks available again
+	addtimer(CALLBACK(src, PROC_REF(UpdateButtons)), cooldown + 5) //action icon looks available again
 
 
 //honk
@@ -614,7 +615,7 @@
 	..()
 	COOLDOWN_START(src, honkooldown, 0)
 	COOLDOWN_START(src, banana_cooldown, banana_delay)
-	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
+	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	var/obj/item/organ/internal/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SPECIES_TRAIT)
@@ -879,7 +880,7 @@
 	icon_state = "pile_bandages"
 	resistance_flags = FLAMMABLE
 
-	var/revive_time = 900
+	var/revive_time = 90 SECONDS
 	var/mob/living/carbon/human/cloth_golem
 
 /obj/structure/cloth_pile/Initialize(mapload, mob/living/carbon/human/H)
@@ -889,7 +890,7 @@
 		H.forceMove(src)
 		cloth_golem = H
 		to_chat(cloth_golem, span_notice("You start gathering your life energy, preparing to rise again..."))
-		addtimer(CALLBACK(src, .proc/revive), revive_time)
+		addtimer(CALLBACK(src, PROC_REF(revive)), revive_time)
 	else
 		return INITIALIZE_HINT_QDEL
 
@@ -903,7 +904,7 @@
 	new /obj/effect/decal/cleanable/ash(get_turf(src))
 	..()
 
-/obj/structure/cloth_pile/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+/obj/structure/cloth_pile/proc/revive()
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
 		return
 	if(cloth_golem.suiciding)
@@ -912,8 +913,7 @@
 
 	invisibility = INVISIBILITY_MAXIMUM //disappear before the animation
 	new /obj/effect/temp_visual/mummy_animation(get_turf(src))
-	if(cloth_golem.revive(full_heal = TRUE, admin_revive = TRUE))
-		cloth_golem.grab_ghost() //won't pull if it's a suicide
+	cloth_golem.revive(ADMIN_HEAL_ALL)
 	sleep(2 SECONDS)
 	cloth_golem.forceMove(get_turf(src))
 	cloth_golem.visible_message(span_danger("[src] rises and reforms into [cloth_golem]!"),span_userdanger("You reform into yourself!"))
@@ -1252,7 +1252,7 @@
 			badtime.appearance_flags = RESET_COLOR
 			H.overlays_standing[FIRE_LAYER+0.5] = badtime
 			H.apply_overlay(FIRE_LAYER+0.5)
-			addtimer(CALLBACK(H, /mob/living/carbon/.proc/remove_overlay, FIRE_LAYER+0.5), 25)
+			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/, remove_overlay), FIRE_LAYER+0.5), 25)
 	else
 		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))

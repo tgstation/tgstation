@@ -79,25 +79,12 @@
 		QDEL_NULL(seed)
 	return ..()
 
-/obj/item/food/grown/MakeEdible()
-	AddComponent(/datum/component/edible,\
-				initial_reagents = food_reagents,\
-				food_flags = food_flags,\
-				foodtypes = foodtypes,\
-				volume = max_volume,\
-				eat_time = eat_time,\
-				tastes = tastes,\
-				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness)
-
 /obj/item/food/grown/proc/make_dryable()
 	AddElement(/datum/element/dryable, type)
 
 /obj/item/food/grown/MakeLeaveTrash()
 	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
+		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, TYPE_PROC_REF(/obj/item/food/grown/, generate_trash))
 	return
 
 /// Generates a piece of trash based on our plant item. Used by [/datum/element/food_trash].
