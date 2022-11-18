@@ -129,20 +129,20 @@
 							blood[blood_DNA] = blood_type
 
 		if(istype(A, /obj/item/card/id))
-			var/obj/item/card/id/userid = A
+			var/obj/item/card/id/user_id = A
 			for(var/region in DETSCAN_ACCESS_ORDER)
-				var/access_in_region = SSid_access.accesses_by_region[region] & userid.GetAccess()
+				var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
 				if(length(access_in_region))
 					LAZYADD(det_data[DETSCAN_CAT_ACCESS], "[region]:")
-					var/list/formatted_access = list()
+					var/list/access_names = list()
 					for(var/x in access_in_region)
-						formatted_access += SSid_access.get_access_desc(x)
-					LAZYADD(det_data[DETSCAN_CAT_ACCESS], english_list(formatted_access))
+						access_names += SSid_access.get_access_desc(x)
+					LAZYADD(det_data[DETSCAN_CAT_ACCESS], english_list(access_names))
 
-		// formats the blood field
-		for(var/B in blood)
+
+		for(var/bloodtype in blood)
 			LAZYADD(det_data[DETSCAN_CAT_BLOOD], \
-			"Type: <font color='red'>[blood[B]]</font> DNA (UE): <font color='red'>[B]</font>")
+			"Type: <font color='red'>[blood[bloodtype]]</font> DNA (UE): <font color='red'>[bloodtype]</font>")
 
 		// sends it off to be modified by the items
 		SEND_SIGNAL(A, COMSIG_DET_SCANNED, user, det_data)
