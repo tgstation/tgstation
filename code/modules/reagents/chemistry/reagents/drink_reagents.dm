@@ -891,6 +891,32 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
+/datum/reagent/consumable/strawberryshake
+	name = "Strawberry Shake"
+	description = "A strawberry milkshake."
+	color = "#ff7b7b"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	taste_description = "sweet strawberries and milk"
+	glass_icon_state = "strawberryshake"
+	glass_name = "strawberry shake"
+	glass_desc = "A strawberry flavored milkshake."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
+/datum/reagent/consumable/bananashake
+	name = "Banana Shake"
+	description = "A banana milkshake. Stuff that clowns drink at their honkday parties."
+	color = "#f2d554"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	taste_description = "thick banana"
+	glass_icon_state = "bananashake"
+	glass_name = "banana shake"
+	glass_desc = "A banana flavored milkshake."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
 /datum/reagent/consumable/pumpkin_latte
 	name = "Pumpkin Latte"
 	description = "A mix of pumpkin juice and coffee."

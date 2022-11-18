@@ -73,7 +73,8 @@
 	var/has_ever_been_ai = FALSE
 	var/last_death = 0
 
-	/// Set by Into The Sunset command of the shuttle manipulator
+	/// Set by Into The Sunset command of the shuttle manipulator.
+	/// If TRUE, the mob will always be considered "escaped" if they are alive and not exiled.
 	var/force_escaped = FALSE
 
 	var/list/learned_recipes //List of learned recipe TYPES.

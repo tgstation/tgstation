@@ -4915,6 +4915,7 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
+/obj/structure/fireaxecabinet/mechremoval/directional/east,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "bLQ" = (
@@ -15319,7 +15320,9 @@
 /area/station/science/ordnance/testlab)
 "fJi" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement{
+	dir = 8
+	},
 /obj/structure/noticeboard/directional/east,
 /turf/open/floor/wood,
 /area/station/service/library)

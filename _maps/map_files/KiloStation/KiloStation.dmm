@@ -56768,6 +56768,7 @@
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
+/obj/structure/fireaxecabinet/mechremoval/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "qiB" = (
