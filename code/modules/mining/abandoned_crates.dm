@@ -201,7 +201,7 @@
 		if(83 to 84)
 			new /obj/item/toy/plush/beeplushie(src)
 		if(85 to 86)
-			new /obj/item/defibrillator/compact(src)
+			new /obj/item/defibrillator/rusted(src)
 		if(87) //1% chance
 			new /obj/item/weed_extract(src)
 		if(88)
