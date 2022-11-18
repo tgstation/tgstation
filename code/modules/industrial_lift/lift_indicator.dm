@@ -52,7 +52,7 @@
 			continue
 
 		lift_ref = WEAKREF(possible_match)
-		RegisterSignal(possible_match, COMSIG_LIFT_SET_DIRECTION, .proc/on_lift_direction)
+		RegisterSignal(possible_match, COMSIG_LIFT_SET_DIRECTION, PROC_REF(on_lift_direction))
 
 /obj/machinery/lift_indicator/examine(mob/user)
 	. = ..()
