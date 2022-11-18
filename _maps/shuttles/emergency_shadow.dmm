@@ -862,10 +862,7 @@
 /obj/machinery/door/airlock/hatch,
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	dwidth = 5;
-	height = 13;
-	name = "NTSS Shadow emergency shuttle";
-	width = 41
+	name = "NTSS Shadow emergency shuttle"
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/escape)

@@ -92,7 +92,7 @@
 
 /datum/reagent/toxin/plasma/on_new(data)
 	. = ..()
-	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, .proc/on_temp_change)
+	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(on_temp_change))
 
 /datum/reagent/toxin/plasma/Destroy()
 	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
@@ -177,10 +177,10 @@
 	..()
 
 /datum/reagent/toxin/lexorin/on_mob_metabolize(mob/living/L)
-	RegisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, .proc/block_breath)
+	RegisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
 
 /datum/reagent/toxin/lexorin/on_mob_end_metabolize(mob/living/L)
-	UnregisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, .proc/block_breath)
+	UnregisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
 
 /datum/reagent/toxin/lexorin/proc/block_breath(mob/living/source)
 	SIGNAL_HANDLER
@@ -217,6 +217,7 @@
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(HAS_TRAIT(M, TRAIT_FAT))
+		M.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
 		M.inflate_gib()
 	return ..()
 
