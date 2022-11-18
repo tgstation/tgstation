@@ -3880,7 +3880,6 @@
 #include "code\modules\mod\modules\modules_visor.dm"
 #include "code\modules\modular_computers\laptop_vendor.dm"
 #include "code\modules\modular_computers\computers\item\computer.dm"
-#include "code\modules\modular_computers\computers\item\computer_damage.dm"
 #include "code\modules\modular_computers\computers\item\computer_files.dm"
 #include "code\modules\modular_computers\computers\item\computer_power.dm"
 #include "code\modules\modular_computers\computers\item\computer_ui.dm"

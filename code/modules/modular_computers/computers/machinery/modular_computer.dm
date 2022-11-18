@@ -33,7 +33,7 @@
 	var/steel_sheet_cost = 10
 	///Light luminosity when turned on
 	var/light_strength = 0
-	///Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
+	///Power usage when the computer is open (screen is active) and can be interacted with.
 	var/base_active_power_usage = 100
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
 	var/base_idle_power_usage = 10

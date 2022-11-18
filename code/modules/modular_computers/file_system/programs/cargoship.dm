@@ -52,7 +52,7 @@
 			cut_multiplier = potential_cut ? clamp(round(potential_cut/100, cut_min), cut_min, cut_max) : initial(cut_multiplier)
 		if("print")
 			if(computer.stored_paper <= 0)
-				to_chat(usr, span_notice("Hardware error: Printer is out of paper."))
+				to_chat(usr, span_notice("Printer is out of paper."))
 				return
 			if(!payments_acc)
 				to_chat(usr, span_notice("Software error: Please set a current user first."))

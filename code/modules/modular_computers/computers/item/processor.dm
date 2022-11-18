@@ -1,5 +1,5 @@
 // Held by /obj/machinery/modular_computer to reduce amount of copy-pasted code.
-//TODO: REFACTOR THIS SPAGHETTI CODE, MAKE IT A COMPUTER_HARDWARE COMPONENT OR REMOVE IT
+//TODO: REFACTOR THIS SPAGHETTI CODE
 /obj/item/modular_computer/processor
 	name = "processing unit"
 	desc = "An advanced computer." //modular PCs examine us

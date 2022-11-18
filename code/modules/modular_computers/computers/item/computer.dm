@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
 
-// This is the base type that does all the hardware stuff.
+// This is the base type of computer
 // Other types expand it - tablets and laptops are subtypes
 // consoles use "procssor" item that is held inside it.
 /obj/item/modular_computer
@@ -14,21 +14,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
-	///The power cell the computer uses to run on.
-	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
+	///The ID currently stored in the computer.
+	var/obj/item/card/id/computer_id_slot
 	///The disk in this PDA. If set, this will be inserted on Initialize.
 	var/obj/item/computer_disk/inserted_disk
-
-	///The ID in the first ID slot, held in the computer
-	var/obj/item/card/id/computer_id_slot
-	///The ID in the second ID slot, held in the computer
-	var/obj/item/card/id/id_slot_two
+	///The power cell the computer uses to run on.
+	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
+	///A pAI currently loaded into the modular computer.
+	var/obj/item/pai_card/inserted_pai
 
 	///The amount of storage space the computer starts with.
 	var/max_capacity = 128
 	///The amount of storage space we've got filled
 	var/used_capacity = 0
-	///List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+	///List of stored files on this drive. Use `store_file` and `remove_file` instead of modifying directly!
 	var/list/datum/computer_file/stored_files = list()
 
 	///Non-static list of programs the computer should recieve on Initialize.
@@ -40,13 +39,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		/datum/computer_file/program/filemanager,
 	)
 
+	///The program currently active on the tablet.
+	var/datum/computer_file/program/active_program
+	///Idle programs on background. They still receive process calls but can't be interacted with.
+	var/list/idle_threads = list()
+	/// Amount of programs that can be ran at once
+	var/max_idle_programs = 2
+
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = NONE
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
 
 	///Whether the icon state should be bypassed entirely, used for PDAs.
 	var/bypass_state = FALSE
-	///The theme, used for the main menu, some hardware config, and file browser apps.
+	///The theme, used for the main menu and file browser apps.
 	var/device_theme = "ntos"
 
 	///Bool on whether the computer is currently active or not.
@@ -68,12 +74,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	///The last recorded amount of power used.
 	var/last_power_usage = 0
-	///Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
+	///Power usage when the computer is open (screen is active) and can be interacted with.
 	var/base_active_power_usage = 75
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
 	var/base_idle_power_usage = 5
 
-	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
+	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
@@ -87,27 +93,17 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	///The job title of the stored ID card
 	var/saved_job
 
-	///The program currently active on the tablet.
-	var/datum/computer_file/program/active_program
-	///Idle programs on background. They still receive process calls but can't be interacted with.
-	var/list/idle_threads = list()
-	/// Amount of programs that can be ran at once
-	var/max_idle_programs = 2
-
 	///The 'computer' itself, as an obj. Primarily used for Adjacent() and UI visibility checks, especially for computers.
 	var/obj/physical
 	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
 	var/steel_sheet_cost = 5
 
-	///A pAI currently loaded into the modular computer.
-	var/obj/item/pai_card/inserted_pai
-	/// Allow people with chunky fingers to use?
-	var/allow_chunky = FALSE
-
 	///If hit by a Clown virus, remaining honks left until it stops.
 	var/honkvirus_amount = 0
 	///Whether the PDA can still use NTNet while out of NTNet's reach.
 	var/long_ranged = FALSE
+	/// Allow people with chunky fingers to use?
+	var/allow_chunky = FALSE
 
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
@@ -788,7 +784,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-
 /obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(atom_integrity == max_integrity)
@@ -806,6 +801,16 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/item/modular_computer/deconstruct(disassembled = TRUE)
+	break_apart()
+	return ..()
+
+/obj/item/modular_computer/proc/break_apart()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		physical.visible_message(span_notice("\The [src] breaks apart!"))
+		var/turf/newloc = get_turf(src)
+		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost / 2))
+	relay_qdel()
 
 // Used by processor to relay qdel() to machinery type.
 /obj/item/modular_computer/proc/relay_qdel()

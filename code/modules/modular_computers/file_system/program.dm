@@ -80,7 +80,8 @@
 /datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
 	return FALSE
 
-/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
+///Makes sure a program can run on this hardware (for apps limited to tablets/computers/laptops)
+/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = NONE, loud = FALSE, mob/user)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
 			to_chat(user, span_danger("\The [computer] flashes a \"Hardware Error - Incompatible software\" warning."))

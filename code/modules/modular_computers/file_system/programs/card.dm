@@ -116,7 +116,7 @@
 					contents += " [SSid_access.get_access_desc(A)]"
 
 			if(!computer.print_text(contents, "access report - [inserted_auth_card.registered_name ? inserted_auth_card.registered_name : "Unregistered"]"))
-				to_chat(usr, span_notice("Hardware error: Printer was unable to print the file. It may be out of paper."))
+				to_chat(usr, span_notice("Printer is out of paper."))
 				return TRUE
 			else
 				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
