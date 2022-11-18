@@ -1102,6 +1102,7 @@
 
 	if(!both_hands_have_canes)
 		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.do_jitter_animation(3 SECONDS)
 
 	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(left_cane?.resolve() == source)
