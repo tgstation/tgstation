@@ -25,7 +25,7 @@
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/Remove(mob/remove_from)
 	. = ..()
@@ -89,7 +89,7 @@
 		jaunter.notransform = FALSE
 		return FALSE
 
-	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_icon_on_signal))
+	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(equip_blood_hands && iscarbon(jaunter))
 		jaunter.drop_all_held_items()
 		// Give them some bloody hands to prevent them from doing things

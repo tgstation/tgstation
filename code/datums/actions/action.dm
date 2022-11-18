@@ -53,7 +53,7 @@
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref), override = TRUE)
 
 	if(isatom(target))
-		RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, PROC_REF(update_icon_on_signal))
+		RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_target_icon_update))
 
 	if(istype(target, /datum/mind))
 		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, PROC_REF(on_target_mind_swapped))
@@ -348,11 +348,24 @@
 			our_button.id = bitflag
 			return
 
-/// A general use signal proc that reacts to an event and updates our button icon in accordance
-/datum/action/proc/update_icon_on_signal(datum/source)
+/// Updates our buttons if our target's icon was updated
+/datum/action/proc/on_target_icon_update(datum/source, updates, updated)
 	SIGNAL_HANDLER
 
-	build_all_button_icons()
+	var/update_flag = NONE
+	var/forced = FALSE
+	if(updates & UPDATE_ICON_STATE)
+		update_flag |= UPDATE_BUTTON_ICON
+		forced = TRUE
+	if(updates & UPDATE_OVERLAYS)
+		update_flag |= UPDATE_BUTTON_OVERLAY
+		forced = TRUE
+	if(updates & (UPDATE_NAME|UPDATE_DESC))
+		update_flag |= UPDATE_BUTTON_NAME
+	// Status is not relevant, and background is not relevant. Neither will change
+
+	// Force the update if an icon state or overlay change was done
+	build_all_button_icons(update_flag, forced)
 
 /// A general use signal proc that reacts to an event and updates JUST our button's status
 /datum/action/proc/update_status_on_signal(datum/source)
