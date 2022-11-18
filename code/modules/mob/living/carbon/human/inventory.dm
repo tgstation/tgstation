@@ -397,6 +397,7 @@
 	var/obj/item/stored = real_location.contents[real_location.contents.len]
 	if(!stored || stored.on_found(src))
 		return
-	if(delayed && do_after(stored, 0.5 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE)))
-		stored.attack_hand(src) // take out thing from item in storage slot
+	stored.attack_hand(src) // take out thing from item in storage slot
+	if(delayed)
+		changeNext_move(CLICK_CD_MELEE)
 	return
