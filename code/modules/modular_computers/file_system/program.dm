@@ -87,11 +87,6 @@
 		return FALSE
 	return TRUE
 
-/datum/computer_file/program/proc/get_signal(specific_action = 0)
-	if(computer)
-		return computer.get_ntnet_status(specific_action)
-	return 0
-
 // Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick(delta_time)
 	return TRUE
@@ -203,13 +198,15 @@
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	program_state = PROGRAM_STATE_KILLED
+	if(src in computer.idle_threads)
+		computer.idle_threads.Remove(src)
 	if(requires_ntnet)
 		var/obj/item/card/id/ID
 		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
 		if(card_holder)
 			ID = card_holder.GetID()
-		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
-	return 1
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
+	return TRUE
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -252,7 +249,6 @@
 
 				if(user && istype(user))
 					computer.ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-
 
 /datum/computer_file/program/ui_host()
 	if(computer.physical)

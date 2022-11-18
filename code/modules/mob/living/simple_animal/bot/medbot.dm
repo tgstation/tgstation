@@ -143,9 +143,9 @@
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
 		self_right_time = 3.5 MINUTES, \
-		pre_tipped_callback = CALLBACK(src, .proc/pre_tip_over), \
-		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
-		post_untipped_callback = CALLBACK(src, .proc/after_righted))
+		pre_tipped_callback = CALLBACK(src, PROC_REF(pre_tip_over)), \
+		post_tipped_callback = CALLBACK(src, PROC_REF(after_tip_over)), \
+		post_untipped_callback = CALLBACK(src, PROC_REF(after_righted)))
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
@@ -232,20 +232,20 @@
 
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if(H.stat == DEAD)
-		return
-
+		return null
 	if((H == oldpatient) && (world.time < last_found + 200))
-		return
+		return null
+	if(!assess_patient(H))
+		return null
 
-	if(assess_patient(H))
-		last_found = world.time
-		if(COOLDOWN_FINISHED(src, last_newpatient_speak))
-			COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
-			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
-			var/message = pick(messagevoice)
-			speak(message)
-			playsound(src, messagevoice[message], 50, FALSE)
-		return H
+	last_found = world.time
+	if(COOLDOWN_FINISHED(src, last_newpatient_speak))
+		COOLDOWN_START(src, last_newpatient_speak, MEDBOT_NEW_PATIENTSPEAK_DELAY)
+		var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
+		var/message = pick(messagevoice)
+		speak(message)
+		playsound(src, messagevoice[message], 50, FALSE)
+	return H
 
 /*
  * Proc used in a callback for before this medibot is tipped by the tippable component.
@@ -392,10 +392,10 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = get_path_to(src, patient, 30,id=access_card)
+		path = get_path_to(src, patient, max_distance=30, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
-			path = get_path_to(src, patient, 30,1,id=access_card)
+			path = get_path_to(src, patient, max_distance=30, mintargetdist=1, id=access_card)
 			if(!path.len) //Do not chase a patient we cannot reach.
 				soft_reset()
 

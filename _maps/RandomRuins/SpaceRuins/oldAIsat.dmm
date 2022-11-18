@@ -551,7 +551,7 @@
 "bU" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/chair,
-/obj/item/clothing/under/rank/centcom/officer,
+/obj/item/clothing/under/rank/centcom/official,
 /obj/item/restraints/handcuffs,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/airless,

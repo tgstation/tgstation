@@ -110,7 +110,7 @@
 	manifest_paper.add_raw_text(manifest_text)
 
 	if(manifest_paper.errors & MANIFEST_ERROR_ITEM)
-		if(istype(container, /obj/structure/closet/crate/secure) || istype(container, /obj/structure/closet/crate/large))
+		if(HAS_TRAIT(container, TRAIT_NO_MISSING_ITEM_ERROR))
 			manifest_paper.errors &= ~MANIFEST_ERROR_ITEM
 		else
 			var/lost = max(round(container.contents.len / 10), 1)

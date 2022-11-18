@@ -8,7 +8,7 @@
 /obj/structure/closet/gmcloset/PopulateContents()
 	..()
 	var/static/items_inside = list(
-		/obj/item/clothing/head/that = 2,
+		/obj/item/clothing/head/hats/tophat = 2,
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/clothing/under/suit/sl = 2,
 		/obj/item/clothing/under/rank/civilian/bartender = 2,
@@ -41,7 +41,7 @@
 		/obj/item/circuitboard/machine/dish_drive = 1,
 		/obj/item/clothing/suit/toggle/chef = 1,
 		/obj/item/clothing/under/rank/civilian/chef = 1,
-		/obj/item/clothing/head/chefhat = 1,
+		/obj/item/clothing/head/utility/chefhat = 1,
 		/obj/item/reagent_containers/cup/rag = 1)
 	generate_items_inside(items_inside,src)
 
@@ -104,7 +104,7 @@
 	new /obj/item/clothing/under/rank/civilian/chaplain(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/chaplainsuit/nun(src)
-	new /obj/item/clothing/head/nun_hood(src)
+	new /obj/item/clothing/head/chaplain/nun_hood(src)
 	new /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit(src)
 	new /obj/item/clothing/suit/chaplainsuit/holidaypriest(src)
 	new /obj/item/storage/backpack/cultpack(src)
@@ -175,7 +175,7 @@
 		/obj/item/clothing/under/rank/engineering/engineer = 3,
 		/obj/item/clothing/suit/hazardvest = 3,
 		/obj/item/clothing/shoes/workboots = 3,
-		/obj/item/clothing/head/hardhat = 3)
+		/obj/item/clothing/head/utility/hardhat = 3)
 	generate_items_inside(items_inside,src)
 	return
 
@@ -189,7 +189,7 @@
 		/obj/item/storage/backpack/medic = 1,
 		/obj/item/storage/backpack/satchel/med = 1,
 		/obj/item/clothing/suit/hooded/wintercoat/medical = 1,
-		/obj/item/clothing/head/nursehat = 1,
+		/obj/item/clothing/head/costume/nursehat = 1,
 		/obj/item/clothing/under/rank/medical/scrubs/blue = 1,
 		/obj/item/clothing/under/rank/medical/scrubs/green = 1,
 		/obj/item/clothing/under/rank/medical/scrubs/purple = 1,

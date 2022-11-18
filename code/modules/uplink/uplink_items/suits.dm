@@ -9,13 +9,14 @@
 	surplus = 40
 
 /datum/uplink_item/suits/infiltrator_bundle
-	name = "Infiltrator Case"
-	desc = "Developed by Roseus Galactic in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
-			this suit proves to be cheaper than your standard issue MODsuit, with none of the movement restrictions of the outdated spacesuits employed by the company. \
-			Comes with an armor vest, helmet, sneaksuit, sneakboots, specialized combat gloves and a high-tech balaclava. The case is also rather useful as a storage container."
-	item = /obj/item/storage/toolbox/infiltrator
+	name = "Infiltrator MODsuit"
+	desc = "Developed by the Roseus Galactic Actors Guild in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
+			this suit proves to be cheaper than your standard issue MODsuit, with none of the movement restrictions of the space suits employed by the company. \
+			However, this greater mobility comes at a cost, and the suit is ineffective at protecting the wearer from the vacuum of space. \
+			The suit does come pre-equipped with a special psi-emitter stealth module that makes it impossible to recognize the wearer \
+			as well as causing significant demoralization amongst Nanotrasen crew."
+	item = /obj/item/mod/control/pre_equipped/infiltrator
 	cost = 6
-	limited_stock = 1 //you only get one so you don't end up with too many gun cases
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/suits/space_suit
@@ -59,7 +60,7 @@
 
 /datum/uplink_item/suits/plate_compression
 	name = "MODsuit Plate Compression Module"
-	desc = "A MODsuit module that lets the suit compress into a smaller size. Not compatible with storage modules."
+	desc = "A MODsuit module that lets the suit compress into a smaller size. Not compatible with storage modules or the Infiltrator MODsuit."
 	item = /obj/item/mod/module/plate_compression
 	progression_minimum = 20 MINUTES
 	cost = 2

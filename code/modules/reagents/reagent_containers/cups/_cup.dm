@@ -98,9 +98,9 @@
 	if(LAZYLEN(diseases_to_add))
 		AddComponent(/datum/component/infective, diseases_to_add)
 
-/obj/item/reagent_containers/cup/afterattack(obj/target, mob/living/user, proximity)
+/obj/item/reagent_containers/cup/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if((!proximity) || !check_allowed_items(target,target_self=1))
+	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
 		return
 
 	if(!spillable)
@@ -133,7 +133,7 @@
 	target.update_appearance()
 
 /obj/item/reagent_containers/cup/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
-	if((!proximity_flag) || !check_allowed_items(target,target_self=1))
+	if((!proximity_flag) || !check_allowed_items(target, target_self = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!spillable)
@@ -204,6 +204,8 @@
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "beaker"
 	inhand_icon_state = "beaker"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	worn_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass=500)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
@@ -304,10 +306,16 @@
 	name = "bucket"
 	desc = "It's a bucket."
 	icon = 'icons/obj/janitor.dmi'
+	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	icon_state = "bucket"
 	inhand_icon_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+	greyscale_colors = "#0085e5" //matches 1:1 with the original sprite color before gag-ification.
+	greyscale_config = /datum/greyscale_config/buckets
+	greyscale_config_worn = /datum/greyscale_config/buckets_worn
+	greyscale_config_inhand_left = /datum/greyscale_config/buckets_inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/buckets_inhands_right
 	custom_materials = list(/datum/material/iron=200)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
@@ -328,10 +336,20 @@
 		ITEM_SLOT_DEX_STORAGE
 	)
 
+/obj/item/reagent_containers/cup/bucket/Initialize(mapload, vol)
+	if(greyscale_colors == initial(greyscale_colors))
+		set_greyscale(pick(list("#0085e5", COLOR_OFF_WHITE, COLOR_ORANGE_BROWN, COLOR_SERVICE_LIME, COLOR_MOSTLY_PURE_ORANGE, COLOR_FADED_PINK, COLOR_RED, COLOR_YELLOW, COLOR_VIOLET, COLOR_WEBSAFE_DARK_GRAY)))
+	return ..()
+
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_config_inhand_left = null
+	greyscale_config_inhand_right = null
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 2)
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 50)
 	resistance_flags = FLAMMABLE
@@ -348,15 +366,15 @@
 	else if(isprox(O)) //This works with wooden buckets for now. Somewhat unintended, but maybe someone will add sprites for it soon(TM)
 		to_chat(user, span_notice("You add [O] to [src]."))
 		qdel(O)
-		qdel(src)
-		user.put_in_hands(new /obj/item/bot_assembly/cleanbot)
+		var/obj/item/bot_assembly/cleanbot/new_cleanbot_ass = new(null, src)
+		user.put_in_hands(new_cleanbot_ass)
 		return
 
 	return ..()
 
 /obj/item/reagent_containers/cup/bucket/equipped(mob/user, slot)
 	. = ..()
-	if (slot == ITEM_SLOT_HEAD)
+	if (slot & ITEM_SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, span_userdanger("[src]'s contents spill all over you!"))
 			reagents.expose(user, TOUCH)
@@ -429,7 +447,8 @@
 							else
 								grinded.on_grind()
 								reagents.add_reagent_list(grinded.grind_results)
-								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
 								QDEL_NULL(grinded)
 								return
@@ -437,7 +456,8 @@
 							if(grinded.grind_results)
 								grinded.on_grind()
 								reagents.add_reagent_list(grinded.grind_results)
-								grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
+								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
+									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
 								to_chat(user, span_notice("You break [grinded] into powder."))
 								QDEL_NULL(grinded)
 								return

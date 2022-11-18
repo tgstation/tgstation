@@ -167,7 +167,7 @@
 
 /datum/crafting_recipe/tv_helmet
 	name = "Television Helmet"
-	result = /obj/item/clothing/head/tv_head
+	result = /obj/item/clothing/head/costume/tv_head
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_CROWBAR)
 	reqs = list(/obj/item/wallframe/status_display = 1)
 	time = 2 SECONDS

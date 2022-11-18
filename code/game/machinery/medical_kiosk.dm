@@ -18,8 +18,6 @@
 	icon = 'icons/obj/machines/medical_kiosk.dmi'
 	icon_state = "kiosk"
 	base_icon_state = "kiosk"
-	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED
@@ -127,7 +125,7 @@
 	return ..()
 
 /obj/machinery/medical_kiosk/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE))
 		return
 	if(!scanner_wand)
 		to_chat(user, span_warning("The scanner wand is currently removed from the machine."))
@@ -277,7 +275,7 @@
 	for(var/datum/addiction/addiction_type as anything in patient.mind.active_addictions)
 		addict_list += list(list("name" = initial(addiction_type.name)))
 
-	if (patient.hallucinating())
+	if (patient.has_status_effect(/datum/status_effect/hallucination))
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
 	if(patient.stat == DEAD || HAS_TRAIT(patient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 200))  //Patient status checks.
@@ -288,8 +286,16 @@
 		patient_status = "Injured"
 	else if((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 20)
 		patient_status = "Lightly Injured"
-	if(pandemonium || user.hallucinating())
-		patient_status = pick("The only kiosk is kiosk, but is the only patient, patient?", "Breathing manually.","Constact NTOS site admin.","97% carbon, 3% natural flavoring","The ebb and flow wears us all in time.","It's Lupus. You have Lupus.","Undergoing monkey disease.")
+	if(pandemonium || user.has_status_effect(/datum/status_effect/hallucination))
+		patient_status = pick(
+			"The only kiosk is kiosk, but is the only patient, patient?",
+			"Breathing manually.",
+			"Constact NTOS site admin.",
+			"97% carbon, 3% natural flavoring",
+			"The ebb and flow wears us all in time.",
+			"It's Lupus. You have Lupus.",
+			"Undergoing monkey disease.",
+		)
 
 	if((brain_loss) >= 100)   //Brain status checks.
 		brain_status = "Grave brain damage detected."
@@ -300,9 +306,9 @@
 	else if((brain_loss) >= 1)
 		brain_status = "Mild brain damage detected."  //You may have a miiiild case of severe brain damage.
 
-	if(pandemonium == TRUE)
+	if(pandemonium)
 		chaos_modifier = 1
-	else if (user.hallucinating())
+	else if(user.has_status_effect(/datum/status_effect/hallucination))
 		chaos_modifier = 0.3
 
 	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))

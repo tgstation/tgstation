@@ -9,7 +9,7 @@
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 
-/datum/action/innate/cult/IsAvailable()
+/datum/action/innate/cult/IsAvailable(feedback = FALSE)
 	if(!IS_CULTIST(owner))
 		return FALSE
 	return ..()
@@ -19,14 +19,14 @@
 	desc = "Whispered words that all cultists can hear.<br><b>Warning:</b>Nearby non-cultists can still hear you."
 	button_icon_state = "cult_comms"
 
-/datum/action/innate/cult/comm/IsAvailable()
+/datum/action/innate/cult/comm/IsAvailable(feedback = FALSE)
 	if(isshade(owner) && IS_CULTIST(owner))
 		return TRUE
 	return ..()
 
 /datum/action/innate/cult/comm/Activate()
 	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood")
-	if(!input || !IsAvailable())
+	if(!input || !IsAvailable(feedback = TRUE))
 		return
 
 	var/list/filter_result = CAN_BYPASS_FILTER(usr) ? null : is_ic_filtered(input)
@@ -70,7 +70,7 @@
 	name = "Spiritual Communion"
 	desc = "Conveys a message from the spirit realm that all cultists can hear."
 
-/datum/action/innate/cult/comm/spirit/IsAvailable()
+/datum/action/innate/cult/comm/spirit/IsAvailable(feedback = FALSE)
 	if(IS_CULTIST(owner.mind.current))
 		return TRUE
 	return ..()
@@ -91,7 +91,7 @@
 	name = "Assert Leadership"
 	button_icon_state = "cultvote"
 
-/datum/action/innate/cult/mastervote/IsAvailable()
+/datum/action/innate/cult/mastervote/IsAvailable(feedback = FALSE)
 	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	if(!C || C.cult_team.cult_vote_called || !ishuman(owner))
 		return FALSE
@@ -114,7 +114,7 @@
 			if(!B.current.incapacitated())
 				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
 				to_chat(B.current, span_cultlarge("Acolyte [Nominee] has asserted that [Nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
-	sleep(100)
+	sleep(10 SECONDS)
 	var/list/asked_cultists = list()
 	for(var/datum/mind/B in team.members)
 		if(B.current && B.current != Nominee && !B.current.incapacitated())
@@ -159,7 +159,7 @@
 				to_chat(B.current,span_cultlarge("[Nominee] has won the cult's support and is now their master. Follow [Nominee.p_their()] orders to the best of your ability!"))
 	return TRUE
 
-/datum/action/innate/cult/master/IsAvailable()
+/datum/action/innate/cult/master/IsAvailable(feedback = FALSE)
 	if(!owner.mind || !owner.mind.has_antag_datum(/datum/antagonist/cult/master) || GLOB.cult_narsie)
 		return FALSE
 	return ..()
@@ -210,7 +210,7 @@
 									S.release_shades(owner)
 								B.current.setDir(SOUTH)
 								new /obj/effect/temp_visual/cult/blood(final)
-								addtimer(CALLBACK(B.current, /mob/.proc/reckon, final), 10)
+								addtimer(CALLBACK(B.current, TYPE_PROC_REF(/mob/, reckon), final), 10)
 		else
 			return
 	antag.cult_team.reckoning_complete = TRUE
@@ -248,7 +248,7 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(cult_mark_cooldown)
 
-/datum/action/innate/cult/master/cultmark/IsAvailable()
+/datum/action/innate/cult/master/cultmark/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, cult_mark_cooldown)
 
 /datum/action/innate/cult/master/cultmark/InterceptClickOn(mob/caller, params, atom/clicked_on)
@@ -261,7 +261,7 @@
 
 	return ..()
 
-/datum/action/innate/cult/master/cultmark/do_ability(mob/living/caller, params, atom/clicked_on)
+/datum/action/innate/cult/master/cultmark/do_ability(mob/living/caller, atom/clicked_on)
 	var/datum/antagonist/cult/cultist = caller.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
 	if(!cultist)
 		CRASH("[type] was casted by someone without a cult antag datum.")
@@ -278,7 +278,7 @@
 		unset_ranged_ability(caller, span_cult("The marking rite is complete! It will last for [DisplayTimeText(cult_mark_duration)] seconds."))
 		COOLDOWN_START(src, cult_mark_cooldown, cult_mark_cooldown_duration)
 		build_all_button_icons()
-		addtimer(CALLBACK(src, .proc/build_all_button_icons), cult_mark_cooldown_duration + 1)
+		addtimer(CALLBACK(src, PROC_REF(build_all_button_icons)), cult_mark_cooldown_duration + 1)
 		return TRUE
 
 	unset_ranged_ability(caller, span_cult("The marking rite failed!"))
@@ -295,7 +295,7 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(cult_mark_cooldown)
 
-/datum/action/innate/cult/ghostmark/IsAvailable()
+/datum/action/innate/cult/ghostmark/IsAvailable(feedback = FALSE)
 	return ..() && isobserver(owner)
 
 /datum/action/innate/cult/ghostmark/Activate()
@@ -328,7 +328,7 @@
 		to_chat(owner, span_cultbold("You have marked [mark_target] for the cult! It will last for [DisplayTimeText(cult_mark_duration)]."))
 		COOLDOWN_START(src, cult_mark_cooldown, cult_mark_cooldown_duration)
 		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
-		addtimer(CALLBACK(src, .proc/reset_button), cult_mark_cooldown_duration + 1)
+		addtimer(CALLBACK(src, PROC_REF(reset_button)), cult_mark_cooldown_duration + 1)
 		return TRUE
 
 	to_chat(owner, span_cult("The marking failed!"))
@@ -377,7 +377,7 @@
 	/// The actual cooldown tracked of the action
 	COOLDOWN_DECLARE(pulse_cooldown)
 
-/datum/action/innate/cult/master/pulse/IsAvailable()
+/datum/action/innate/cult/master/pulse/IsAvailable(feedback = FALSE)
 	return ..() && COOLDOWN_FINISHED(src, pulse_cooldown)
 
 /datum/action/innate/cult/master/pulse/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
@@ -393,7 +393,7 @@
 
 	return ..()
 
-/datum/action/innate/cult/master/pulse/do_ability(mob/living/caller, params, atom/clicked_on)
+/datum/action/innate/cult/master/pulse/do_ability(mob/living/caller, atom/clicked_on)
 	var/atom/throwee = throwee_ref?.resolve()
 
 	if(QDELETED(throwee))
@@ -436,7 +436,7 @@
 		caller.click_intercept = null
 		throwee_ref = null
 		build_all_button_icons()
-		addtimer(CALLBACK(src, .proc/build_all_button_icons), pulse_cooldown_duration + 1)
+		addtimer(CALLBACK(src, PROC_REF(build_all_button_icons)), pulse_cooldown_duration + 1)
 
 		return TRUE
 

@@ -1,8 +1,9 @@
 ///Delete one of every type, sleep a while, then check to see if anything has gone fucky
 /datum/unit_test/create_and_destroy
 	//You absolutely must run last
-	priority = TEST_DEL_WORLD
+	priority = TEST_CREATE_AND_DESTROY
 
+GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 /datum/unit_test/create_and_destroy/Run()
 	//We'll spawn everything here
 	var/turf/spawn_at = run_loc_floor_bottom_left
@@ -43,8 +44,11 @@
 	ignore += typesof(/obj/item/poster/wanted)
 	//This expects a seed, we can't pass it
 	ignore += typesof(/obj/item/food/grown)
-	//Nothing to hallucinate if there's nothing to hallicinate
-	ignore += typesof(/obj/effect/hallucination)
+	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
+	ignore += typesof(/obj/effect/client_image_holder)
+	//Same to above. Needs a client / mob / hallucination to observe it to exist.
+	ignore += typesof(/obj/projectile/hallucination)
+	ignore += typesof(/obj/item/hallucinated)
 	//These want fried food to take on the shape of, we can't pass that in
 	ignore += typesof(/obj/item/food/deepfryholder)
 	//Can't pass in a thing to glow
@@ -96,16 +100,21 @@
 	ignore += typesof(/obj/structure/industrial_lift)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
-	var/baseturf_count = length(spawn_at.baseturfs)
+	var/original_turf_type = spawn_at.type
+	var/original_baseturfs = islist(spawn_at.baseturfs) ? spawn_at.baseturfs.Copy() : spawn_at.baseturfs
+	var/original_baseturf_count = length(original_baseturfs)
 
+	GLOB.running_create_and_destroy = TRUE
 	for(var/type_path in typesof(/atom/movable, /turf) - ignore) //No areas please
 		if(ispath(type_path, /turf))
-			spawn_at.ChangeTurf(type_path, /turf/baseturf_skipover)
-			//We change it back to prevent pain, please don't ask
-			spawn_at.ChangeTurf(/turf/open/floor/wood, /turf/baseturf_skipover)
-			if(baseturf_count != length(spawn_at.baseturfs))
-				TEST_FAIL("[type_path] changed the amount of baseturfs we have [baseturf_count] -> [length(spawn_at.baseturfs)]")
-				baseturf_count = length(spawn_at.baseturfs)
+			spawn_at.ChangeTurf(type_path)
+			//We change it back to prevent baseturfs stacking and hitting the limit
+			spawn_at.ChangeTurf(original_turf_type, original_baseturfs)
+			if(original_baseturf_count != length(spawn_at.baseturfs))
+				TEST_FAIL("[type_path] changed the amount of baseturfs from [original_baseturf_count] to [length(spawn_at.baseturfs)]; [english_list(original_baseturfs)] to [islist(spawn_at.baseturfs) ? english_list(spawn_at.baseturfs) : spawn_at.baseturfs]")
+				//Warn if it changes again
+				original_baseturfs = islist(spawn_at.baseturfs) ? spawn_at.baseturfs.Copy() : spawn_at.baseturfs
+				original_baseturf_count = length(original_baseturfs)
 		else
 			var/atom/creation = new type_path(spawn_at)
 			if(QDELETED(creation))
@@ -122,6 +131,7 @@
 			for(var/atom/to_kill in to_del)
 				qdel(to_kill)
 
+	GLOB.running_create_and_destroy = FALSE
 	//Hell code, we're bound to have ended the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
 	//Prevent the garbage subsystem from harddeling anything, if only to save time

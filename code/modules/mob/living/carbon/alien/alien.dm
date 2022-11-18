@@ -4,7 +4,7 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list(ROLE_ALIEN)
-	sight = SEE_MOBS
+	sight = SEE_MOBS | SEE_BLACKNESS
 	see_in_dark = 4
 	verb_say = "hisses"
 	initial_language_holder = /datum/language_holder/alien

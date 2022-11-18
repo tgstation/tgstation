@@ -128,7 +128,7 @@
 	if (new_fax_name != fax_name)
 		if (fax_name_exist(new_fax_name))
 			// Being able to set the same name as another fax machine will give a lot of gimmicks for the traitor.
-			if (syndicate_network != TRUE && obj_flags != EMAGGED)
+			if (syndicate_network != TRUE && !(obj_flags & EMAGGED))
 				to_chat(user, span_warning("There is already a fax machine with this name on the network."))
 				return TOOL_ACT_TOOLTYPE_SUCCESS
 		user.log_message("renamed [fax_name] (fax machine) to [new_fax_name].", LOG_GAME)
@@ -294,7 +294,7 @@
 			return FALSE
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
-		INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "send"))
+		INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "send"))
 		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 		return TRUE
 	return FALSE
@@ -309,10 +309,10 @@
  */
 /obj/machinery/fax/proc/receive(obj/item/loaded, sender_name)
 	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
-	INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "receive"))
+	INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "receive"))
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
-	addtimer(CALLBACK(src, .proc/vend_item, loaded), 1.9 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
 
 /**
  * Procedure for animating an object entering or leaving the fax machine.
@@ -325,7 +325,7 @@
 	icon_state = animation_state
 	var/mutable_appearance/overlay = mutable_appearance(icon, overlay_state)
 	overlays += overlay
-	addtimer(CALLBACK(src, .proc/travel_animation_complete, overlay), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(travel_animation_complete), overlay), 2 SECONDS)
 
 /**
  * Called when the travel animation should end. Reset animation and overlay states.

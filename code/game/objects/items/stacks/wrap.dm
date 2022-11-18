@@ -9,6 +9,7 @@
 	desc = "Wrap packages with this festive paper to make gifts."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wrap_paper"
+	inhand_icon_state = "wrap_paper"
 	greyscale_config = /datum/greyscale_config/wrap_paper
 	item_flags = NOBLUDGEON
 	amount = 25
@@ -38,7 +39,7 @@
 /obj/item/stack/wrapping_paper/attack_hand_secondary(mob/user, modifiers)
 	var/new_base = input(user, "", "Select a base color", color) as color
 	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	set_greyscale(colors = list(new_base, new_ribbon))
 	return TRUE
@@ -194,6 +195,7 @@
 	desc = "A tube... of cardboard."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "c_tube"
+	inhand_icon_state = "c_tube"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3

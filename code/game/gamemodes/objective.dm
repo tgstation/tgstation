@@ -58,21 +58,28 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 	update_explanation_text()
 
-/datum/objective/proc/considered_escaped(datum/mind/M)
-	if(!considered_alive(M))
+/**
+ * Checks if the passed mind is considered "escaped".
+ *
+ * Escaped mobs are used to check certain antag objectives / results.
+ *
+ * Escaped includes minds with alive, non-exiled mobs generally.
+ */
+/proc/considered_escaped(datum/mind/escapee)
+	if(!considered_alive(escapee))
 		return FALSE
-	if(considered_exiled(M))
+	if(considered_exiled(escapee))
 		return FALSE
-	if(M.force_escaped)
+	if(escapee.force_escaped)
 		return TRUE
 	if(SSticker.force_ending || GLOB.station_was_nuked) // Just let them win.
 		return TRUE
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return FALSE
-	var/area/current_area = get_area(M.current)
+	var/area/current_area = get_area(escapee.current)
 	if(!current_area || istype(current_area, /area/shuttle/escape/brig)) // Fails if they are in the shuttle brig
 		return FALSE
-	var/turf/current_turf = get_turf(M.current)
+	var/turf/current_turf = get_turf(escapee.current)
 	return current_turf.onCentCom() || current_turf.onSyndieBase()
 
 /datum/objective/proc/check_completion()
@@ -684,7 +691,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
-	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
+	for(var/mob/living/carbon/alien/adult/M in A)//Aliens are worth twice as much as humans.
 		if(isalienqueen(M))//Queens are worth three times as much as humans.
 			if(M.stat == DEAD)
 				captured_amount+=1.5
@@ -794,20 +801,19 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb_changeling/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/M in owners)
-		if(!M)
-			continue
-		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
+	for(var/datum/mind/ling_mind as anything in owners)
+		var/datum/antagonist/changeling/changeling = ling_mind.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling)
 			continue
-		var/total_genetic_points = changeling.genetic_points
 
-		for(var/datum/action/changeling/p in changeling.purchased_powers)
-			total_genetic_points += p.dna_cost
+		var/total_genetic_points = changeling.genetic_points
+		for(var/power_path in changeling.purchased_powers)
+			var/datum/action/changeling/power = changeling.purchased_powers[power_path]
+			total_genetic_points += power.dna_cost
 
 		if(total_genetic_points > initial(changeling.genetic_points))
 			return TRUE
-	return FALSE
+	return completed
 
 //End Changeling Objectives
 
@@ -948,7 +954,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = sort_list(subtypesof(/datum/objective), /proc/cmp_typepaths_asc)
+	var/list/allowed_types = sort_list(subtypesof(/datum/objective), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	for(var/datum/objective/goal as anything in allowed_types)
 		if(!initial(goal.admin_grantable))
@@ -964,7 +970,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/contract/proc/generate_dropoff()
 	var/found = FALSE
 	while (!found)
-		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		var/area/dropoff_area = pick(GLOB.areas)
 		if(dropoff_area && (dropoff_area.type in GLOB.the_station_areas) && !dropoff_area.outdoors)
 			dropoff = dropoff_area
 			found = TRUE

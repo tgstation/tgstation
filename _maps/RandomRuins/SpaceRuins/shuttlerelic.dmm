@@ -39,7 +39,7 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "j" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 1
 	},
 /turf/template_noop,
@@ -82,15 +82,15 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered)
 "v" = (
-/obj/structure/shuttle/engine/propulsion/burst/left,
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
 /turf/template_noop,
 /area/ruin/powered)
 "w" = (
-/obj/structure/shuttle/engine/propulsion/burst/right,
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
 /turf/template_noop,
 /area/ruin/powered)
 "x" = (
-/obj/structure/shuttle/engine/propulsion/burst,
+/obj/machinery/power/shuttle_engine/propulsion/burst,
 /turf/template_noop,
 /area/ruin/powered)
 

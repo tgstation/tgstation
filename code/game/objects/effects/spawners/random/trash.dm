@@ -11,7 +11,7 @@
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
-		/obj/item/reagent_containers/cup = 5,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
 		/obj/item/broken_bottle = 5,
 		/obj/item/reagent_containers/cup/bowl = 5,
 		/obj/item/light/tube/broken = 5,

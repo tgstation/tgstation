@@ -34,7 +34,8 @@
 /// Used for direct injection of reagents.
 #define INJECT (1<<4)
 
-#define MIMEDRINK_SILENCE_DURATION 30  //ends up being 60 seconds given 1 tick every 2 seconds
+// How long do mime drinks silence the drinker (if they are a mime)?
+#define MIMEDRINK_SILENCE_DURATION 1 MINUTES
 ///Health threshold for synthflesh and rezadone to unhusk someone
 #define UNHUSK_DAMAGE_THRESHOLD 50
 ///Amount of synthflesh required to unhusk someone

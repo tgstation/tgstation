@@ -54,7 +54,7 @@
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ashen_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
 /datum/heretic_knowledge/ashen_grasp/on_lose(mob/user)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
@@ -158,7 +158,7 @@
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
 	next_knowledge = list(
-		/datum/heretic_knowledge/final/ash_final,
+		/datum/heretic_knowledge/ultimate/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/summon/rusty,
 	)
@@ -166,7 +166,7 @@
 	cost = 1
 	route = PATH_ASH
 
-/datum/heretic_knowledge/final/ash_final
+/datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
 	desc = "The ascension ritual of the Path of Ash. \
 		Bring 3 burning or husked corpses to a transumation rune to complete the ritual. \
@@ -188,7 +188,7 @@
 		TRAIT_NOFIRE,
 	)
 
-/datum/heretic_knowledge/final/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
+/datum/heretic_knowledge/ultimate/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
 	if(!.)
 		return
@@ -199,7 +199,7 @@
 		return TRUE
 	return FALSE
 
-/datum/heretic_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	priority_announce("[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 

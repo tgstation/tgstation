@@ -18,7 +18,7 @@
 
 /datum/proximity_monitor/advanced/projectile_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	..()
-	RegisterSignal(projector, COMSIG_PARENT_QDELETING, .proc/on_projector_del)
+	RegisterSignal(projector, COMSIG_PARENT_QDELETING, PROC_REF(on_projector_del))
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -45,8 +45,11 @@
 	effect.icon_state = overlay.icon_state
 	effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	effect.layer = ABOVE_ALL_MOB_LAYER
-	effect.plane = ABOVE_GAME_PLANE
+	SET_PLANE(effect, ABOVE_GAME_PLANE, target)
 	LAZYSET(edgeturf_effects, target, effect)
+
+/datum/proximity_monitor/advanced/projectile_dampener/on_z_change(datum/source)
+	recalculate_field()
 
 /datum/proximity_monitor/advanced/projectile_dampener/cleanup_edge_turf(turf/target)
 	. = ..()

@@ -4457,7 +4457,7 @@
 "ky" = (
 /obj/structure/table,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/structure/sign/warning/biohazard/directional/north,
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,
@@ -12240,8 +12240,8 @@
 /area/awaymission/undergroundoutpost45/caves)
 "Yk" = (
 /obj/structure/table,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
-/obj/item/computer_hardware/hard_drive/portable/ordnance,
+/obj/item/computer_disk/ordnance,
+/obj/item/computer_disk/ordnance,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria{
 	dir = 5;

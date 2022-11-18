@@ -22,7 +22,10 @@
 	var/space_ruin_levels = 7
 	var/space_empty_levels = 1
 
+	///The type of mining Z-level that should be loaded.
 	var/minetype = "lavaland"
+	///If no minetype is set, this will be the blacklist file used
+	var/blacklist_file
 
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(

@@ -35,7 +35,7 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
 "dZ" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -72,13 +72,10 @@
 	},
 /obj/docking_port/mobile{
 	dir = 2;
-	dwidth = 6;
-	height = 7;
 	shuttle_id = "caravansyndicate3";
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
-	preferred_direction = 4;
-	width = 15
+	preferred_direction = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -98,7 +95,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "mJ" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -204,13 +201,13 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "vQ" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/syndicate3)
 "wH" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{

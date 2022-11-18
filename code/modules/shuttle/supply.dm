@@ -47,11 +47,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	dir = WEST
 	port_direction = EAST
-	width = 12
-	dwidth = 5
-	height = 7
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
-
 
 	//Export categories for this run, this is set by console sending the shuttle.
 	var/export_categories = EXPORT_CARGO
@@ -113,7 +109,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		investigate_log("Chef's [SSshuttle.chef_groceries.len] sized produce order arrived. Cost was deducted from orderer, not cargo.", INVESTIGATE_CARGO)
 		for(var/datum/orderable_item/item as anything in SSshuttle.chef_groceries)//every order
 			for(var/amt in 1 to SSshuttle.chef_groceries[item])//every order amount
-				new item.item_instance.type(grocery_crate)
+				new item.item_path(grocery_crate)
 		SSshuttle.chef_groceries.Cut() //This lets the console know it can order another round.
 
 	if(!SSshuttle.shopping_list.len)
@@ -147,7 +143,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			else
 				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			if(paying_for_this)
-				if(!paying_for_this.adjust_money(-price))
+				if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
 					if(spawning_order.paying_account)
 						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
 					continue
@@ -223,13 +219,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/datum/export_report/ex = new
 
-	for(var/place in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
 		for(var/atom/movable/AM in shuttle_area)
 			if(iscameramob(AM))
 				continue
-			if(!AM.anchored)
-				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
+			if(AM.anchored)
+				continue
+			export_item_and_contents(AM, export_categories, dry_run = FALSE, external_report = ex)
 
 	if(ex.exported_atoms)
 		ex.exported_atoms += "." //ugh

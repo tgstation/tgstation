@@ -159,14 +159,7 @@
 	spawnableAtoms = list(/obj/structure/flora/bush/snow/style_random = 1)
 
 /datum/map_generator_module/snow/bunnies
-	spawnableAtoms = list(/mob/living/simple_animal/rabbit = 0.5)
+	spawnableAtoms = list(/mob/living/basic/rabbit = 0.5)
 
 /datum/map_generator_module/snow/rand_ice_rocks
 	spawnableAtoms = list(/obj/structure/flora/rock/icy/style_random = 5, /obj/structure/flora/rock/pile/icy/style_random = 5)
-
-/obj/effect/landmark/map_generator/snowy
-	mapGeneratorType = /datum/map_generator/snowy
-	endTurfX = 159
-	endTurfY = 157
-	startTurfX = 37
-	startTurfY = 35

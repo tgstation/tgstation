@@ -39,9 +39,21 @@
 		grant_passenger_actions(i) //refresh
 
 /**
+ * ## destroy_passenger_action_type
+ *
+ * Removes this action type from all occupants and stops autogranting it
+ * args:
+ * * actiontype: typepath of the action you want to remove from occupants and the autogrant list.
+ */
+/obj/vehicle/proc/destroy_passenger_action_type(actiontype)
+	autogrant_actions_passenger -= actiontype
+	for(var/i in occupants)
+		remove_action_type_from_mob(actiontype, i)
+
+/**
  * ## initialize_controller_action_type
  *
- * Gives any passenger that enters the mech this action... IF they have the correct vehicle control flag.
+ * Gives any passenger that enters the vehicle this action... IF they have the correct vehicle control flag.
  * This is used so passengers cannot press buttons only drivers should have, for example.
  * args:
  * * actiontype: typepath of the action you want to give occupants.
@@ -51,6 +63,19 @@
 	autogrant_actions_controller["[control_flag]"] += actiontype
 	for(var/i in occupants)
 		grant_controller_actions(i) //refresh
+
+/**
+ * ## destroy_controller_action_type
+ *
+ * As the name implies, removes the actiontype from autogrant and removes it from all occupants
+ * args:
+ * * actiontype: typepath of the action you want to remove from occupants and autogrant.
+ */
+/obj/vehicle/proc/destroy_controller_action_type(actiontype, control_flag)
+	autogrant_actions_controller["[control_flag]"] -= actiontype
+	UNSETEMPTY(autogrant_actions_controller["[control_flag]"])
+	for(var/i in occupants)
+		remove_action_type_from_mob(actiontype, i)
 
 /**
  * ## grant_action_type_to_mob
@@ -326,7 +351,7 @@
 			rider.client.give_award(/datum/award/achievement/misc/tram_surfer, rider)
 		vehicle.grinding = TRUE
 		vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
-		addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 2)
 	else
 		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
 	rider.spin(4, 1)

@@ -154,15 +154,22 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/silence/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	power_multiplier *= user.mind?.assigned_role?.voice_of_god_silence_power || 1
 	for(var/mob/living/carbon/target in listeners)
-		target.silent += (10 * power_multiplier)
+		target.adjust_silence(20 SECONDS * power_multiplier)
 
 /// This command makes the listeners see others as corgis, carps, skellies etcetera etcetera.
 /datum/voice_of_god_command/hallucinate
 	trigger = "see\\s*the\\s*truth|hallucinate"
 
 /datum/voice_of_god_command/hallucinate/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
-	for(var/mob/living/carbon/target in listeners)
-		new /datum/hallucination/delusion(target, TRUE, null, 150 * power_multiplier, 0)
+	for(var/mob/living/target in listeners)
+		target.cause_hallucination( \
+			get_random_valid_hallucination_subtype(/datum/hallucination/delusion/preset), \
+			"voice of god", \
+			duration = 15 SECONDS * power_multiplier, \
+			affects_us = FALSE, \
+			affects_others = TRUE, \
+			skip_nearby = FALSE, \
+		)
 
 /// This command wakes up the listeners.
 /datum/voice_of_god_command/wake_up
@@ -256,7 +263,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/who_are_you/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(src, .proc/state_name, target), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(src, PROC_REF(state_name), target), 0.5 SECONDS * iteration)
 		iteration++
 
 ///just states the target's name, but also includes the renaming funny.
@@ -332,7 +339,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	else if(findtext(message, right_words))
 		direction = EAST
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/_step, target, direction || pick(GLOB.cardinals)), 1 SECONDS * (iteration - 1))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step), target, direction || pick(GLOB.cardinals)), 1 SECONDS * (iteration - 1))
 		iteration++
 
 /// This command forces the listeners to switch to walk intent.
@@ -412,7 +419,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 		if(prob(25))
 			addtimer(CALLBACK(target, /atom/movable/proc/say, "HOW HIGH?!!"), 0.5 SECONDS * iteration)
 		else
-			addtimer(CALLBACK(target, /mob/living/.proc/emote, "jump"), 0.5 SECONDS * iteration)
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/, emote), "jump"), 0.5 SECONDS * iteration)
 		iteration++
 
 ///This command plays a bikehorn sound after 2 seconds and a half have passed, and also slips listeners if the user is a clown.
@@ -420,7 +427,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	trigger = "ho+nk"
 
 /datum/voice_of_god_command/honk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 2.5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(user), 'sound/items/bikehorn.ogg', 300, 1), 2.5 SECONDS)
 	if(is_clown_job(user.mind?.assigned_role))
 		. = COOLDOWN_STUN //it slips.
 		for(var/mob/living/carbon/target in listeners)
@@ -442,7 +449,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/emote/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, /mob/living/.proc/emote, emote_name), 0.5 SECONDS * iteration)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/, emote), emote_name), 0.5 SECONDS * iteration)
 		iteration++
 
 /datum/voice_of_god_command/emote/flip

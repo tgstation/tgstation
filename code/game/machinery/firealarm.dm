@@ -50,7 +50,7 @@
 	LAZYADD(my_area.firealarms, src)
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
 	soundloop = new(src, FALSE)
 
 	AddComponent(/datum/component/usb_port, list(
@@ -77,11 +77,11 @@
 	if(!.)
 		return
 	var/area/our_area = get_area(src)
-	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 
 /obj/machinery/firealarm/on_enter_area(datum/source, area/area_to_register)
 	..()
-	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, .proc/handle_fire)
+	RegisterSignal(area_to_register, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 	handle_fire(area_to_register, area_to_register.fire)
 
 /obj/machinery/firealarm/on_exit_area(datum/source, area/area_to_unregister)
@@ -126,34 +126,28 @@
 	if(machine_stat & NOPOWER)
 		return
 
-	. += "fire_overlay"
+	. += mutable_appearance(icon, "fire_overlay")
 	if(is_station_level(z))
-		. += "fire_[SSsecurity_level.get_current_level_as_number()]"
 		. += mutable_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]")
-		. += emissive_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_[SSsecurity_level.get_current_level_as_number()]", src, alpha = src.alpha)
 	else
-		. += "fire_[SEC_LEVEL_GREEN]"
 		. += mutable_appearance(icon, "fire_[SEC_LEVEL_GREEN]")
-		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_[SEC_LEVEL_GREEN]", src, alpha = src.alpha)
 
 	if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		if(my_area?.fire_detect) //If this is false, leave the green light missing. A good hint to anyone paying attention.
-			. += "fire_off"
 			. += mutable_appearance(icon, "fire_off")
-			. += emissive_appearance(icon, "fire_off", alpha = src.alpha)
+			. += emissive_appearance(icon, "fire_off", src, alpha = src.alpha)
 	else if(obj_flags & EMAGGED)
-		. += "fire_emagged"
 		. += mutable_appearance(icon, "fire_emagged")
-		. += emissive_appearance(icon, "fire_emagged", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_emagged", src, alpha = src.alpha)
 	else
-		. += "fire_on"
 		. += mutable_appearance(icon, "fire_on")
-		. += emissive_appearance(icon, "fire_on", alpha = src.alpha)
+		. += emissive_appearance(icon, "fire_on", src, alpha = src.alpha)
 
 	if(!panel_open && my_area?.fire_detect && my_area?.fire) //It just looks horrible with the panel open
-		. += "fire_detected"
 		. += mutable_appearance(icon, "fire_detected")
-		. += emissive_appearance(icon, "fire_detected", alpha = src.alpha) //Pain
+		. += emissive_appearance(icon, "fire_detected", src, alpha = src.alpha) //Pain
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -284,6 +278,9 @@
 
 		switch(buildstage)
 			if(2)
+				if(tool.tool_behaviour == TOOL_MULTITOOL)
+					toggle_fire_detect(user)
+					return
 				if(tool.tool_behaviour == TOOL_WIRECUTTER)
 					buildstage = 1
 					tool.play_tool_sound(src)
@@ -417,6 +414,9 @@
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("The control circuitry of [src] appears to be malfunctioning."))
 		return
+	toggle_fire_detect(user)
+
+/obj/machinery/firealarm/proc/toggle_fire_detect(mob/user)
 	my_area.fire_detect = !my_area.fire_detect
 	for(var/obj/machinery/firealarm/fire_panel in my_area.firealarms)
 		fire_panel.update_icon()
@@ -485,8 +485,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	. = ..()
 	if(istype(parent, /obj/machinery/firealarm))
 		attached_alarm = parent
-		RegisterSignal(parent, COMSIG_FIREALARM_ON_TRIGGER, .proc/on_firealarm_triggered)
-		RegisterSignal(parent, COMSIG_FIREALARM_ON_RESET, .proc/on_firealarm_reset)
+		RegisterSignal(parent, COMSIG_FIREALARM_ON_TRIGGER, PROC_REF(on_firealarm_triggered))
+		RegisterSignal(parent, COMSIG_FIREALARM_ON_RESET, PROC_REF(on_firealarm_reset))
 
 /obj/item/circuit_component/firealarm/unregister_usb_parent(atom/movable/parent)
 	attached_alarm = null

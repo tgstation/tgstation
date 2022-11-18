@@ -9,7 +9,7 @@
 	var/list/storable = list()
 
 /obj/item/borg/apparatus/Initialize(mapload)
-	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
+	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, PROC_REF(safedecon))
 	return ..()
 
 /obj/item/borg/apparatus/Destroy()
@@ -66,7 +66,7 @@
 			var/obj/item/item = atom
 			item.forceMove(src)
 			stored = item
-			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
+			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
 			update_appearance()
 			return
 	else
@@ -100,7 +100,7 @@
 
 /obj/item/borg/apparatus/beaker/Initialize(mapload)
 	add_glass()
-	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
+	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
 	update_appearance()
 	return ..()
 
@@ -132,7 +132,6 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = 0
 		stored.pixel_y = 0
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
@@ -176,7 +175,7 @@
 		return
 
 	if (!stored || force)
-		glass.AddComponent(/datum/component/reagent_refiller, power_draw_callback = CALLBACK(bro, /mob/living/silicon/robot.proc/draw_power))
+		glass.AddComponent(/datum/component/reagent_refiller, power_draw_callback = CALLBACK(bro, TYPE_PROC_REF(/mob/living/silicon/robot, draw_power)))
 
 /obj/item/borg/apparatus/beaker/service/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if (!istype(arrived, /obj/item/reagent_containers/cup/glass))
@@ -209,7 +208,6 @@
 	icon_state = null // hides the original icon (otherwise it's drawn underneath)
 	var/mutable_appearance/bag
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
 		stored_organ.layer = FLOAT_LAYER
 		stored_organ.plane = FLOAT_PLANE
@@ -247,7 +245,6 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		COMPILE_OVERLAYS(stored)
 		stored.pixel_x = -3
 		stored.pixel_y = 0
 		if(!istype(stored, /obj/item/circuitboard))

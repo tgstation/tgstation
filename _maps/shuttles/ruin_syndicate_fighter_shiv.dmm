@@ -82,21 +82,18 @@
 /obj/docking_port/mobile{
 	callTime = 50;
 	dir = 4;
-	dwidth = 4;
-	height = 5;
 	shuttle_id = "caravansyndicate1";
 	ignitionTime = 25;
 	name = "Syndicate Fighter";
 	port_direction = 2;
-	preferred_direction = 4;
-	width = 9
+	preferred_direction = 4
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate1)
 "YP" = (
-/obj/structure/shuttle/engine/propulsion/burst{
+/obj/machinery/power/shuttle_engine/propulsion/burst{
 	dir = 8
 	},
 /turf/closed/wall/mineral/plastitanium,

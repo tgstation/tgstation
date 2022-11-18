@@ -348,7 +348,7 @@
 					else
 						for(var/mob/living/carbon/C in targets)
 							if(!Discipline && DT_PROB(2.5, delta_time))
-								if(ishuman(C) || isalienhumanoid(C))
+								if(ishuman(C) || isalienadult(C))
 									set_target(C)
 									break
 
@@ -382,7 +382,7 @@
 				else if(!HAS_TRAIT(src, TRAIT_IMMOBILIZED) && isturf(loc) && prob(33))
 					step(src, pick(GLOB.cardinals))
 		else if(!AIproc)
-			INVOKE_ASYNC(src, .proc/AIprocess)
+			INVOKE_ASYNC(src, PROC_REF(AIprocess))
 
 /mob/living/simple_animal/slime/handle_automated_movement()
 	return //slime random movement is currently handled in handle_targets()

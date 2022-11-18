@@ -57,6 +57,9 @@
 	// when we get this many shards, we get a free bulb.
 	var/shards_required = 4
 
+	// whether it is "bluespace powered" (can be used at a range)
+	var/bluespace_toggle = FALSE
+
 /obj/item/lightreplacer/examine(mob/user)
 	. = ..()
 	. += status_string()
@@ -144,7 +147,7 @@
 	to_chat(user, status_string())
 
 /obj/item/lightreplacer/update_icon_state()
-	icon_state = "lightreplacer[(obj_flags & EMAGGED ? 1 : 0)]"
+	icon_state = "[initial(icon_state)][(obj_flags & EMAGGED ? 1 : 0)]"
 	return ..()
 
 /obj/item/lightreplacer/proc/status_string()
@@ -227,7 +230,7 @@
 
 /obj/item/lightreplacer/afterattack(atom/T, mob/U, proximity)
 	. = ..()
-	if(!proximity)
+	if(!proximity && !bluespace_toggle)
 		return
 	if(!isturf(T))
 		return
@@ -238,6 +241,9 @@
 			break
 		used = TRUE
 		if(istype(A, /obj/machinery/light))
+			if(!proximity && bluespace_toggle)
+				U.Beam(A, icon_state = "rped_upgrade", time = 1 SECONDS)
+				playsound(src, 'sound/items/pshoom.ogg', 40, 1)
 			ReplaceLight(A, U)
 
 	if(!used)
@@ -246,3 +252,12 @@
 /obj/item/lightreplacer/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
+/obj/item/lightreplacer/blue
+	name = "bluespace light replacer"
+	desc = "A modified light replacer that zaps lights into place. Refill with broken or working lightbulbs, or sheets of glass."
+	icon_state = "lightreplacer_blue0"
+	bluespace_toggle = TRUE
+
+/obj/item/lightreplacer/blue/emag_act()
+	return  // balancing against longrange explosions

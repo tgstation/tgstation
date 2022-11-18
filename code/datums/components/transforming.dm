@@ -80,9 +80,9 @@
 /datum/component/transforming/RegisterWithParent()
 	var/obj/item/item_parent = parent
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	if(item_parent.sharpness || sharpness_on)
-		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
+		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, PROC_REF(on_sharpen))
 
 /datum/component/transforming/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
@@ -140,7 +140,8 @@
  * user - the mob transforming the item
  */
 /datum/component/transforming/proc/default_transform_message(obj/item/source, mob/user)
-	source.balloon_alert(user, "[active ? "enabled" : "disabled"] [source]")
+	if(user)
+		source.balloon_alert(user, "[active ? "enabled" : "disabled"] [source]")
 	playsound(user ? user : source.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 /*
@@ -180,6 +181,10 @@
 	source.hitsound = hitsound_on
 	source.w_class = w_class_on
 	source.icon_state = "[source.icon_state]_on"
+	source.inhand_icon_state = "[source.inhand_icon_state]_on"
+	if(ismob(source.loc))
+		var/mob/loc_mob = source.loc
+		loc_mob.update_held_items()
 
 /*
  * Set our transformed item into its inactive state.
@@ -205,6 +210,10 @@
 	source.hitsound = initial(source.hitsound)
 	source.w_class = initial(source.w_class)
 	source.icon_state = initial(source.icon_state)
+	source.inhand_icon_state = initial(source.inhand_icon_state)
+	if(ismob(source.loc))
+		var/mob/loc_mob = source.loc
+		loc_mob.update_held_items()
 
 /*
  * If [clumsy_check] is set to TRUE, attempt to cause a side effect for clumsy people activating this item.

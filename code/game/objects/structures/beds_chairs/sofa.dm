@@ -8,9 +8,21 @@
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	. = ..()
-	armrest = mutable_appearance(initial(icon), "[icon_state]_armrest", ABOVE_MOB_LAYER)
-	armrest.plane = GAME_PLANE_UPPER
+	gen_armrest()
 	AddElement(/datum/element/soft_landing)
+
+/obj/structure/chair/sofa/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	cut_overlay(armrest)
+	QDEL_NULL(armrest)
+	gen_armrest()
+	return ..()
+
+/obj/structure/chair/sofa/proc/gen_armrest()
+	armrest = mutable_appearance(initial(icon), "[icon_state]_armrest", ABOVE_MOB_LAYER)
+	SET_PLANE_EXPLICIT(armrest, GAME_PLANE_UPPER, src)
+	update_armrest()
 
 /obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)

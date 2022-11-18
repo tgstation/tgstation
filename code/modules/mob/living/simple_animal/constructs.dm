@@ -404,7 +404,7 @@
 	icon_living = "harvester"
 	maxHealth = 40
 	health = 40
-	sight = SEE_MOBS
+	sight = SEE_MOBS | SEE_BLACKNESS
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	attack_verb_continuous = "butchers"

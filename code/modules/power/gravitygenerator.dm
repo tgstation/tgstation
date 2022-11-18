@@ -182,7 +182,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		if(count <= 3) // Their sprite is the top part of the generator
 			part.set_density(FALSE)
 			part.layer = WALL_OBJ_LAYER
-			part.plane = GAME_PLANE_UPPER
+			SET_PLANE(part, GAME_PLANE_UPPER, our_turf)
 		part.sprite_number = count
 		part.main_part = src
 		generator_parts += part
@@ -441,6 +441,13 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 	. = ..()
 	if(charge_count != 0 && charging_state != POWER_UP)
 		enable()
+
+/obj/machinery/gravity_generator/main/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	. = ..()
+	if(same_z_layer)
+		return
+	for(var/obj/machinery/gravity_generator/part as anything in generator_parts)
+		SET_PLANE(part, PLANE_TO_TRUE(part.plane), new_turf)
 
 //prevents shuttles attempting to rotate this since it messes up sprites
 /obj/machinery/gravity_generator/main/shuttleRotate(rotation, params)

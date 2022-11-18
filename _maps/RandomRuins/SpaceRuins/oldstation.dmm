@@ -1258,7 +1258,7 @@
 /obj/item/t_scanner,
 /obj/item/screwdriver/power,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/head/hardhat/weldhat,
+/obj/item/clothing/head/utility/hardhat/weldhat,
 /turf/open/floor/plating,
 /area/ruin/space/ancientstation/beta/supermatter)
 "ec" = (
@@ -2506,7 +2506,7 @@
 /area/ruin/space/ancientstation/charlie/engie)
 "hP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -6329,7 +6329,7 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/color/fyellow/old,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -8550,8 +8550,8 @@
 /obj/structure/closet/radiation,
 /obj/item/clothing/suit/utility/radiation,
 /obj/item/clothing/suit/utility/radiation,
-/obj/item/clothing/head/radiation,
-/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/utility/radiation,
+/obj/item/clothing/head/utility/radiation,
 /obj/item/geiger_counter,
 /obj/item/geiger_counter,
 /obj/machinery/light/small/broken/directional/north,

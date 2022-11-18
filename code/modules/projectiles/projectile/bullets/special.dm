@@ -33,6 +33,8 @@
 
 /obj/projectile/bullet/mime/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.silent = max(M.silent, 10)
+	if(!isliving(target))
+		return
+
+	var/mob/living/living_target = target
+	living_target.set_silence_if_lower(20 SECONDS)
