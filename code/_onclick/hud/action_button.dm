@@ -169,7 +169,9 @@
 /**
  * Quote, "This is the proc used to update all the action buttons."
  *
- * How is it different than the above one? I don't know.
+ * This proc handles going through and ensuring all of the mob's actions are on their screen
+ *
+ * If you just need to update existing buttons, use [/mob/proc/update_mob_action_buttons]
  */
 /mob/proc/update_action_buttons(reload_screen)
 	if(!hud_used || !client)

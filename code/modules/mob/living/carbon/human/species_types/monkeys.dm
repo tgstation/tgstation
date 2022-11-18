@@ -201,10 +201,6 @@
 		return
 
 	var/obj/item/organ/internal/brain/primate/monkey_brain = target
-	if(!istype(monkey_brain))
-		stack_trace("[type] was created on a non-monkey-brain object!")
-		return
-
 	if(monkey_brain.tripping)
 		monkey_brain.tripping = FALSE
 		background_icon_state = "bg_default"

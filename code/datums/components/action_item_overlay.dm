@@ -29,7 +29,7 @@
 	return ..()
 
 /datum/component/action_item_overlay/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ACTION_OVERLAY_APPLY, .proc/on_overlays_applied)
+	RegisterSignal(parent, COMSIG_ACTION_OVERLAY_APPLY, PROC_REF(on_overlays_applied))
 
 	var/datum/action/parent_action = parent
 	parent_action.build_all_button_icons(UPDATE_BUTTON_OVERLAY)
@@ -58,6 +58,7 @@
 		return
 
 	if(item_appearance)
+		// melbert todo; this won't detect changes in item overlays AFAIK.
 		if(item_appearance.icon == muse.icon && item_appearance.icon_state == muse.icon_state && !force)
 			return
 		current_button.cut_overlay(item_appearance)

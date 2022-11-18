@@ -531,7 +531,7 @@
 		unstable_teleport.Remove(C)
 	..()
 
-/datum/action/cooldown/unstable_teleport // melbert todo: why not cooldown
+/datum/action/cooldown/unstable_teleport
 	name = "Unstable Teleport"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "jaunt"

@@ -939,8 +939,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			// Handle actions
 			for(var/datum/action/action as anything in mob_eye.actions)
 				action.GiveAction(src)
-			RegisterSignal(mob_eye, COMSIG_MOB_GRANTED_ACTION, .proc/on_observing_action_granted)
-			RegisterSignal(mob_eye, COMSIG_MOB_REMOVED_ACTION, .proc/on_observing_action_removed)
+			RegisterSignal(mob_eye, COMSIG_MOB_GRANTED_ACTION, PROC_REF(on_observing_action_granted))
+			RegisterSignal(mob_eye, COMSIG_MOB_REMOVED_ACTION, PROC_REF(on_observing_action_removed))
 
 /mob/dead/observer/proc/on_observing_z_changed(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER

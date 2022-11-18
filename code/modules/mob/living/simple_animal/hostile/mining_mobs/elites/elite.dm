@@ -88,7 +88,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	return button
 
 /datum/action/innate/elite_attack/process()
-	if(!owner)
+	if(isnull(owner))
 		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
 		return
