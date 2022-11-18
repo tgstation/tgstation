@@ -58,8 +58,16 @@
 		return
 
 	if(item_appearance)
-		// melbert todo; this won't detect changes in item overlays AFAIK.
-		if(item_appearance.icon == muse.icon && item_appearance.icon_state == muse.icon_state && !force)
+		// For caching purposes, we will try not to update if we don't need to
+		// We don't need to if:
+		// - We're not being forced to
+		// - Our saved appearance's icon is the same as our item's icon
+		// - Our saved appeareance's icon state is the same as our item's icon state
+		// - Our icon has any overlays to copy (kind of a cop-out, but it's an easy way to tell if they have overlays that may have updated)
+		if(!force \
+			&& item_appearance.icon == muse.icon \
+			&& item_appearance.icon_state == muse.icon_state \
+			&& length(muse.overlays) <= 1)
 			return
 		current_button.cut_overlay(item_appearance)
 
