@@ -20,7 +20,7 @@
 	return TRUE
 
 /datum/surgery_step/viral_bond
-	name = "viral bond"
+	name = "viral bond (cautery)"
 	implements = list(
 		TOOL_CAUTERY = 100,
 		TOOL_WELDER = 50,

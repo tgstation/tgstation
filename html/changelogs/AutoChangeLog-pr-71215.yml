@@ -1,0 +1,4 @@
+author: "ATHATH"
+delete-after: True
+changes:
+  - balance: "The damage modsuit bombs do to objects has been reduced from 15 damage to 12, to match the damage they deal to non-hostile mobs."

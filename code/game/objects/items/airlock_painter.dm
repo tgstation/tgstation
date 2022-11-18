@@ -26,14 +26,15 @@
 		"Security" = /obj/machinery/door/airlock/security,
 		"Command" = /obj/machinery/door/airlock/command,
 		"Medical" = /obj/machinery/door/airlock/medical,
+		"Virology" = /obj/machinery/door/airlock/virology,
 		"Research" = /obj/machinery/door/airlock/research,
+		"Hydroponics" = /obj/machinery/door/airlock/hydroponics,
 		"Freezer" = /obj/machinery/door/airlock/freezer,
 		"Science" = /obj/machinery/door/airlock/science,
 		"Mining" = /obj/machinery/door/airlock/mining,
 		"Maintenance" = /obj/machinery/door/airlock/maintenance,
 		"External" = /obj/machinery/door/airlock/external,
 		"External Maintenance"= /obj/machinery/door/airlock/maintenance/external,
-		"Virology" = /obj/machinery/door/airlock/virology,
 		"Standard" = /obj/machinery/door/airlock
 	)
 
@@ -64,7 +65,7 @@
 	else
 		return TRUE
 
-/obj/item/airlock_painter/suicide_act(mob/user)
+/obj/item/airlock_painter/suicide_act(mob/living/user)
 	var/obj/item/organ/internal/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)

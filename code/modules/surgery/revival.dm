@@ -29,7 +29,7 @@
 	return TRUE
 
 /datum/surgery_step/revive
-	name = "shock brain"
+	name = "shock brain (defibrillator)"
 	implements = list(
 		/obj/item/shockpaddles = 100,
 		/obj/item/melee/touch_attack/shock = 100,
@@ -79,7 +79,7 @@
 	target.grab_ghost()
 	target.adjustOxyLoss(-50, 0)
 	target.updatehealth()
-	if(target.revive(full_heal = FALSE, admin_revive = FALSE))
+	if(target.revive())
 		target.visible_message(span_notice("...[target] wakes up, alive and aware!"))
 		target.emote("gasp")
 		target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50, 199) //MAD SCIENCE

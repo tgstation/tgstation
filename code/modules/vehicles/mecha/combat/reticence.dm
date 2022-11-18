@@ -4,7 +4,6 @@
 	icon_state = "reticence"
 	base_icon_state = "reticence"
 	movedelay = 2
-	dir_in = 1 //Facing North.
 	max_integrity = 100
 	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 15, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	max_temperature = 15000
@@ -12,7 +11,7 @@
 	operation_req_access = list(ACCESS_THEATRE)
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | QUIET_STEPS | QUIET_TURNS | MMI_COMPATIBLE
-	mech_type = EXOSUIT_MODULE_COMBAT
+	mech_type = EXOSUIT_MODULE_RETICENCE
 	max_equip_by_category = list(
 		MECHA_UTILITY = 1,
 		MECHA_POWER = 1,

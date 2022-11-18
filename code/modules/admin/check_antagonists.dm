@@ -67,7 +67,7 @@
 				all_antagonists -= X
 		sections += T.antag_listing_entry()
 
-	sortTim(all_antagonists, /proc/cmp_antag_category)
+	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
 
 	var/current_category
 	var/list/current_section = list()
@@ -130,36 +130,42 @@
 	var/drones = 0
 	var/security = 0
 	var/security_dead = 0
-	for(var/mob/M in GLOB.mob_list)
-		if(M.ckey)
-			if(isnewplayer(M))
+	for(var/mob/checked_mob in GLOB.mob_list)
+		if(checked_mob.ckey)
+			if(isnewplayer(checked_mob))
 				lobby_players++
 				continue
-			else if(M.mind && !isbrain(M))
-				if(M.stat != DEAD)
-					if(isdrone(M))
+			else if(checked_mob.mind && !isbrain(checked_mob) && !isobserver(checked_mob))
+				if(checked_mob.stat != DEAD)
+					if(isdrone(checked_mob))
 						drones++
 						continue
-					if(is_centcom_level(M.z))
+					if(is_centcom_level(checked_mob.z))
 						living_skipped++
 						continue
 					living_players++
-					if(M.client)
+					if(checked_mob.client)
 						living_players_connected++
+				else if (checked_mob.ckey)
+					// This finds all dead mobs that still have a ckey inside them
+					// Ie, they have died, but have not ghosted
+					observers++
+					if (checked_mob.client)
+						observers_connected++
 
-				if(M.mind.special_role)
+				if(checked_mob.mind.special_role)
 					antagonists++
-					if(M.stat == DEAD)
+					if(checked_mob.stat == DEAD)
 						antagonists_dead++
-				if(M.mind.assigned_role?.departments_list?.Find(/datum/job_department/security))
+				if(checked_mob.mind.assigned_role?.departments_list?.Find(/datum/job_department/security))
 					security++
-					if(M.stat == DEAD)
+					if(checked_mob.stat == DEAD)
 						security_dead++
-			else if(M.stat == DEAD || isobserver(M))
+			else if(checked_mob.stat == DEAD || isobserver(checked_mob))
 				observers++
-				if(M.client)
+				if(checked_mob.client)
 					observers_connected++
-			else if(isbrain(M))
+			else if(isbrain(checked_mob))
 				brains++
 			else
 				other_players++

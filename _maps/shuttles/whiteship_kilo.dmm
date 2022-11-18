@@ -21,7 +21,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/item/bikehorn/rubberducky,
 /obj/structure/closet/crate/trashcart/filled,
-/obj/item/bodypart/r_arm/robot/surplus{
+/obj/item/bodypart/arm/right/robot/surplus{
 	name = "rusty robotic arm";
 	desc = "A rusted and decayed robotic arm. Probably still works... Probably."
 	},
@@ -246,16 +246,12 @@
 	callTime = 250;
 	can_move_docking_ports = 1;
 	dir = 2;
-	dwidth = 7;
-	height = 17;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "Mining Shuttle";
 	port_direction = 4;
-	preferred_direction = 8;
-	width = 13;
-	dheight = 7
+	preferred_direction = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/cargo)

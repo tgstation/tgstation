@@ -456,23 +456,16 @@
 
 /datum/techweb/specialized/autounlocking
 	var/design_autounlock_buildtypes = NONE
-	var/design_autounlock_categories = list(RND_CATEGORY_INITIAL) //if a design has a buildtype that matches the abovea and either has a category in this or this is null, unlock it.
-	var/node_autounlock_ids = list() //autounlock nodes of this type.
 
 /datum/techweb/specialized/autounlocking/New()
 	..()
 	autounlock()
 
 /datum/techweb/specialized/autounlocking/proc/autounlock()
-	for(var/id in node_autounlock_ids)
-		research_node_id(id, TRUE, FALSE, FALSE)
 	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if(D.build_type & design_autounlock_buildtypes)
-			for(var/i in D.category)
-				if(i in design_autounlock_categories)
-					add_design_by_id(D.id)
-					break
+		var/datum/design/design = SSresearch.techweb_designs[id]
+		if((design.build_type & design_autounlock_buildtypes) && (RND_CATEGORY_INITIAL in design.category))
+			add_design_by_id(id)
 
 /datum/techweb/specialized/autounlocking/autolathe
 	design_autounlock_buildtypes = AUTOLATHE

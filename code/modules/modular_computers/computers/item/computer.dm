@@ -14,9 +14,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
+	///The power cell the computer uses to run on.
+	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
+
 	///The disk in this PDA. If set, this will be inserted on Initialize.
 	var/obj/item/computer_disk/inserted_disk
-
 	///The amount of storage space the computer starts with.
 	var/max_capacity = 128
 	///The amount of storage space we've got filled
@@ -62,7 +64,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	///The last recorded amount of power used.
 	var/last_power_usage = 0
 	///Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
-	var/base_active_power_usage = 50
+	var/base_active_power_usage = 75
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
 	var/base_idle_power_usage = 5
 
@@ -131,6 +133,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		add_item_action(/datum/action/item_action/toggle_computer_light)
 	if(inserted_disk)
 		inserted_disk = new inserted_disk(src)
+	if(internal_cell)
+		internal_cell = new internal_cell(src)
 
 	update_appearance()
 	register_context()
@@ -170,7 +174,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(active_program?.tap(A, user, params))
 		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
-		addtimer(CALLBACK(src, .proc/play_ping), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
+		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
@@ -192,6 +196,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
  */
 /obj/item/modular_computer/proc/play_ping()
 	playsound(loc, 'sound/machines/ping.ogg', get_clamped_volume(), FALSE, -1)
+
+/obj/item/modular_computer/get_cell()
+	return internal_cell
 
 /obj/item/modular_computer/AltClick(mob/user)
 	..()
@@ -438,6 +445,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		. += mutable_appearance(init_icon, "bsod")
 		. += mutable_appearance(init_icon, "broken")
 
+/obj/item/modular_computer/Exited(atom/movable/gone, direction)
+	if(internal_cell == gone)
+		internal_cell = null
+		if(enabled && !use_power())
+			shutdown_computer()
+	return ..()
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /obj/item/modular_computer/interact(mob/user)
@@ -549,12 +562,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/list/data = list()
 
 	data["PC_device_theme"] = device_theme
+	data["PC_showbatteryicon"] = !!internal_cell
 
-	var/obj/item/computer_hardware/battery/battery_module = all_components[MC_CELL]
-
-	data["PC_showbatteryicon"] = !!battery_module
-	if(battery_module && battery_module.battery)
-		switch(battery_module.battery.percent())
+	if(internal_cell)
+		switch(internal_cell.percent())
 			if(80 to 200) // 100 should be maximal but just in case..
 				data["PC_batteryicon"] = "batt_100.gif"
 			if(60 to 80)
@@ -567,7 +578,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 				data["PC_batteryicon"] = "batt_20.gif"
 			else
 				data["PC_batteryicon"] = "batt_5.gif"
-		data["PC_batterypercent"] = "[round(battery_module.battery.percent())]%"
+		data["PC_batterypercent"] = "[round(internal_cell.percent())]%"
 	else
 		data["PC_batteryicon"] = "batt_5.gif"
 		data["PC_batterypercent"] = "N/C"
@@ -592,7 +603,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		data["PC_programheaders"] = program_headers
 
 	data["PC_stationtime"] = station_time_timestamp()
-	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD")], [GLOB.year_integer+540]"
+	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD")], [CURRENT_STATION_YEAR]"
 	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
 	return data
 
@@ -752,6 +763,18 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		balloon_alert(user, "inserted pai")
 		return
 
+	if(istype(attacking_item, /obj/item/stock_parts/cell))
+		if(ismachinery(loc))
+			return
+		if(internal_cell)
+			to_chat(user, span_warning("You try to connect \the [attacking_item] to \the [src], but its connectors are occupied."))
+			return
+		if(user && !user.transferItemToLoc(attacking_item, src))
+			return
+		internal_cell = attacking_item
+		to_chat(user, span_notice("You plug \the [attacking_item] to \the [src]."))
+		return
+
 	// Check if any Applications need it
 	for(var/datum/computer_file/item_holding_app as anything in stored_files)
 		if(item_holding_app.try_insert(attacking_item, user))
@@ -821,7 +844,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
 	if(isnull(choice))
-		return
+		if(internal_cell)
+			user.put_in_hands(internal_cell)
+			to_chat(user, span_notice("You detach \the [internal_cell] from \the [src]."))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!Adjacent(user))
 		return
 

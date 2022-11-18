@@ -1014,10 +1014,7 @@
 "DO" = (
 /obj/docking_port/mobile/emergency{
 	dir = 2;
-	dwidth = 5;
-	height = 19;
-	name = "Casino emergency shuttle";
-	width = 35
+	name = "Casino emergency shuttle"
 	},
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
