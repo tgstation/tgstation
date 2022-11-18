@@ -143,7 +143,6 @@ export const FaxMainPanel = (props, context) => {
             selected="Choose stamp(optional)"
             onSelected={(v) => {
               if (v === 'None') {
-                v = 'Choose stamp(optional)';
                 setStamp('');
                 data.stamps.shift();
               } else {
