@@ -3,8 +3,7 @@
 /datum/unit_test/reagent_container_sanity
 
 /datum/unit_test/reagent_container_sanity/Run()
-	var/list/all_containers = typesof(/obj/item/reagent_containers)
-	for(var/entry in all_containers)
+	for(var/entry in subtypesof(/obj/item/reagent_containers))
 		var/obj/item/reagent_containers/container = allocate(entry)
 		var/initialized_volume = 0
 		if(!length(container.list_reagents))
