@@ -67,7 +67,7 @@
 		signal.obj_flags &= ~EMAGGED
 		signal.process()
 
-	for(var/obj/structure/industrial_lift/tram in GLOB.lifts)
+	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		tram.collision_lethality = original_lethality
 
 	priority_announce("We've successfuly reset the software of the tram, normal operations are now resuming. Sorry for the inconvienence.", "CentCom Engineering Division")
