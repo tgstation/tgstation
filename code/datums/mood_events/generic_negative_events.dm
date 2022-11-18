@@ -403,3 +403,9 @@
 	description = "Blast it! That stunt didn't go as planned!"
 	mood_change = -2
 	timeout = 4 MINUTES
+
+/datum/mood_event/body_purist
+	description = "I feel cybernetics attached to me, and I HATE IT!"
+
+/datum/mood_event/body_purist/add_effects(power)
+	mood_change = power

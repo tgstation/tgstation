@@ -28,6 +28,8 @@
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
+	// This fixes consoles to be ON the tables, rather than their keyboards floating a bit
+	pixel_y = 8
 	///The current title we're searching for
 	var/title = ""
 	///The category we're searching for
@@ -56,7 +58,7 @@
 /obj/machinery/computer/libraryconsole/Initialize(mapload)
 	. = ..()
 	category = DEFAULT_SEARCH_CATAGORY
-	INVOKE_ASYNC(src, .proc/update_db_info)
+	INVOKE_ASYNC(src, PROC_REF(update_db_info))
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -108,14 +110,14 @@
 			if(!prevent_db_spam())
 				say("Database cables refreshing. Please wait a moment.")
 				return
-			INVOKE_ASYNC(src, .proc/update_db_info)
+			INVOKE_ASYNC(src, PROC_REF(update_db_info))
 			return TRUE
 		if("switch_page")
 			if(!prevent_db_spam())
 				say("Database cables refreshing. Please wait a moment.")
 				return
 			search_page = sanitize_page_input(params["page"], search_page, page_count)
-			INVOKE_ASYNC(src, .proc/update_db_info)
+			INVOKE_ASYNC(src, PROC_REF(update_db_info))
 			return TRUE
 		if("clear_data") //The cap just walked in on your browsing, quick! delete it!
 			if(!prevent_db_spam())
@@ -125,7 +127,7 @@
 			author = initial(author)
 			category = DEFAULT_SEARCH_CATAGORY
 			search_page = 0
-			INVOKE_ASYNC(src, .proc/update_db_info)
+			INVOKE_ASYNC(src, PROC_REF(update_db_info))
 			return TRUE
 
 ///Checks if the machine is alloweed to make another db request yet. TRUE if so, FALSE otherwise
@@ -475,7 +477,7 @@
 			if(!(upload_category in SSlibrary.upload_categories)) //Nice try
 				upload_category = DEFAULT_UPLOAD_CATAGORY
 
-			INVOKE_ASYNC(src, .proc/upload_from_scanner, upload_category)
+			INVOKE_ASYNC(src, PROC_REF(upload_from_scanner), upload_category)
 			return TRUE
 		if("news_post")
 			if(!GLOB.news_network)
@@ -497,14 +499,14 @@
 			return TRUE
 		if("print_book")
 			var/id = params["book_id"]
-			attempt_print(CALLBACK(src, .proc/print_book, id))
+			attempt_print(CALLBACK(src, PROC_REF(print_book), id))
 			return TRUE
 		if("print_bible")
-			attempt_print(CALLBACK(src, .proc/print_bible))
+			attempt_print(CALLBACK(src, PROC_REF(print_bible)))
 			return TRUE
 		if("print_poster")
 			var/poster_name = params["poster_name"]
-			attempt_print(CALLBACK(src, .proc/print_poster, poster_name))
+			attempt_print(CALLBACK(src, PROC_REF(print_poster), poster_name))
 			return TRUE
 		if("lore_spawn")
 			if(obj_flags & EMAGGED && can_spawn_lore)
@@ -788,7 +790,7 @@
 	busy = TRUE
 	playsound(src, 'sound/machines/printer.ogg', 50)
 	flick("binder1", src)
-	addtimer(CALLBACK(src, .proc/bind_book, draw_from), 4.1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(bind_book), draw_from), 4.1 SECONDS)
 
 /obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)
 	busy = FALSE

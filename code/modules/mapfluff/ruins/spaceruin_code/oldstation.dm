@@ -147,10 +147,10 @@
 	if(!occupant || !mod_unit || busy)
 		return
 	set_busy(TRUE, "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"), 2.5 SECONDS)
-	addtimer(CALLBACK(src, .proc/play_install_sound), 2.5 SECONDS)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"), 5 SECONDS)
-	addtimer(CALLBACK(src, .proc/complete_process), 7.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_active"), 2.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(play_install_sound)), 2.5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_falling"), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(complete_process)), 7.5 SECONDS)
 
 /obj/machinery/mod_installer/proc/complete_process()
 	set_busy(FALSE)
@@ -183,7 +183,7 @@
 	if(!state_open)
 		return FALSE
 	..()
-	addtimer(CALLBACK(src, .proc/start_process), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_process)), 1 SECONDS)
 	return TRUE
 
 /obj/machinery/mod_installer/relaymove(mob/living/user, direction)

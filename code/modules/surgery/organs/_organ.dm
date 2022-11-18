@@ -57,7 +57,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			initial_reagents = food_reagents,\
 			foodtypes = RAW | MEAT | GORE,\
 			volume = reagent_vol,\
-			after_eat = CALLBACK(src, .proc/OnEatFrom))
+			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
 
 /*
  * Insert the organ into the select mob.
@@ -83,7 +83,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	owner = reciever
 	moveToNullspace()
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_owner_examine))
 	update_organ_traits(reciever)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(reciever)
@@ -237,7 +237,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		lungs.setOrganDamage(0)
 
 		var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-		if(!heart)
+		if(heart)
+			set_heartattack(FALSE)
+		else
 			heart = new()
 			heart.Insert(src)
 		heart.setOrganDamage(0)

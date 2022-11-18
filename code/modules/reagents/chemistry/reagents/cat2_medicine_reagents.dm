@@ -70,7 +70,7 @@
 		else //VICTORY ROYALE
 			to_chat(M, span_hierophant("You win, and the malevolent spirits fade away as well as your wounds."))
 			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
-			M.revive(full_heal = TRUE, admin_revive = FALSE)
+			M.revive(HEAL_ALL)
 			holder.del_reagent(type)
 			return
 

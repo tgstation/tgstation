@@ -19,7 +19,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/hilbertshotel/Initialize(mapload)
 	. = ..()
 	//Load templates
-	INVOKE_ASYNC(src, .proc/prepare_rooms)
+	INVOKE_ASYNC(src, PROC_REF(prepare_rooms))
 
 /obj/item/hilbertshotel/proc/prepare_rooms()
 	hotelRoomTemp = new()
@@ -325,12 +325,12 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		var/datum/action/peephole_cancel/PHC = new
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/.proc/check_eye, user)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/, check_eye), user)
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) >= 2)
 		for(var/datum/action/peephole_cancel/PHC in user.actions)
-			INVOKE_ASYNC(PHC, /datum/action/peephole_cancel.proc/Trigger)
+			INVOKE_ASYNC(PHC, TYPE_PROC_REF(/datum/action/peephole_cancel, Trigger))
 
 /datum/action/peephole_cancel
 	name = "Cancel View"
@@ -549,7 +549,6 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	I've left some of our effects in the Hotel. Room number <u>[uppertext(num2hex(GLOB.hhMysteryRoomNumber, 0))]</u>. To anyone who should know, that should make sense.<br>
 	Best of luck with the research. From all of us in the Hilbert Group, it's been a pleasure working with you.<br>
 	- David, Phil, Fiona and Jen"}
-
 	return ..()
 
 /obj/item/paper/crumpled/ruins/postdocs_memo
@@ -594,53 +593,64 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	In the meantime, I've taken to assembling the first prototype of the device. By exploiting the pocket's ability to create an infinite region of space within a finite area, I've made... well, I suppose it could be called a "Pocket Dimension". Within, I've created a nifty system that recursively produces subspace rooms, spatially linking them to any of the infinite points on the pocket's surface. Fiona says it's akin to a hotel, and I'm inclined to agree.<br>
 	Hilbert's Hotel. I like the sound of that.<br>"}
 
-/obj/item/paper/fluff/ruins/romans_emails
-	name = "e-mail readout - 14.05.2558"
-	default_raw_text = {"Logs of Roman P.<br>
-	<h4>New Job</h4><br>
-	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
-	Hello sis! Figured I should update you on what's going on with the career change.<br>
-	First day on the new job. It's a pretty boring position, but hey- it's not like I was finding anything in New Vladimir. I'm just glad to have something to pay the bills.<br>
-	Suppose I should say what's involved: I'm essentially playing housekeeper for some scientist and his cohort of student assistants. Far above my pay grade to understand what they do, but they seem excited enough. Talking about "pockets", for whatever reason. Maybe they're designing the next innovation in clothes?<br>
-	Anyway, that's pretty much it. I'm living on their station for pretty much the duration, so I'm not sure if I'll be able to make it to Mama's birthday. Sorry about that- I'll do my best to make it up to her (and you) when I get some leave.<br>
-	Hope to see you soon,<br>
-	Little Brother Roman<br>
-	<br>
-	<h4>Visitors</h4><br>
-	<i>Sent to: david_hilbert@physics.mit.edu</i><br>
-	Morning Doctor. Sorry to email you when you're on holiday, but you did tell me to update you on anything suspicious.<br>
-	There's been a ship that's been hanging around the facility for a few days. Figured that was odd enough, given how far from anything important we are, but it got stranger when one of them finally came over to talk.<br>
-	I know I'm not a native speaker, but I couldn't make out his accent. Wasn't like anything I've heard before, anyway.<br>
-	He kept asking where you were, and if he could come in to speak to you. Of course, I turned him away- even if you had been around I'd have been hesitant to let him in.<br>
-	As an aside, the postdocs told me to pass on a message. Apparently they've made a breakthrough, which sounds good and all.<br>
-	Regards,<br>
-	Roman<br>
-	<br>
-	<h4>Weird Times</h4><br>
-	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
-	Hi sis! How was Christmas? Are Mama and Papa doing well? I'm really sorry I couldn't be there, but I've been working my fingers to the bone at work.<br>
-	I figure I should tell you a bit about how it's been going here. I know, I know, you keep calling me a workaholic, but it's really... strange, I guess?<br>
-	I keep getting little glimpses into the research that's happening. They're messing around with bluespace- you know, the tech that makes FTL engines work? I'm not sure what exactly they're doing with it, but they're talking more and more about pockets every day now.<br>
-	Not only that, but I'm starting to hear strange noises from the labs I'm not allowed into. Nothing super terrifying, you know, we're not talking xenomorphs, but more like industrial sounds. Crashes, bangs, occasional high-pitched whining, you know the sort. Like a broken vacuum cleaner.<br>
-	I know it's not the instruments or I'd have heard it before, so it must be something new they've been working on. Exciting, I suppose, but I'm starting to wonder if I'm in over my head working here. Maybe I should start looking for a new job, somewhere closer to home.<br>
-	Hope to see you at Papa's birthday. I've requested leave for it, and I'm just waiting on the Doc's response.<br>
-	See you soon,<br>
-	Little Brother Roman<br>
-	<br>
-	<h4>End of Leave</h4><br>
-	<i>Sent to: david_hilbert@physics.mit.edu</i><br>
-	Morning Doctor. Where is everyone? I got back from leave and the station was empty. Have you all went on holiday without telling me?<br>
-	And what the hell happened to the ordnance lab? I couldn't even open the door to get in, it was fused shut!<br>
-	Look, I don't feel safe staying on the station with it in this state, so I'm calling an engineer and heading home until I hear back from you.<br>
-	Regards,<br>
-	Roman<br>
-	<br>
-	<h4>Looking for a New Job</h4><br>
-	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
-	Hi sis. First things first, sorry for missing your engagement party. There's been a... situation at work.<br>
-	In fact, that's most of why I'm writing this. I have absolutely no idea what happened, but the Doctor and the students are gone. Just up and left. The facility's abandoned.<br>
-	But like, it's clear they left in a hurry. Hell, there's still coffee in the cups. I'd question it further, but they were always kinda... odd, I guess? The whole thing gives me chills and I don't think I want to dig any deeper.<br>
-	I dropped his university an email and called in the authorities. All that's left now, I guess, is to find a new job. Would your boss happen to be hiring?<br>
-	See you soon,<br>
-	Little Brother Roman
-	"}
+/obj/machinery/computer/terminal/hilbert
+	upperinfo = "EMAIL READOUT - 14/05/2558"
+	content = list(
+		"<b>New Job</b><br> \
+		<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br> \
+		Hello sis! Figured I should update you on what's going on with the career change.<br> \
+		First day on the new job. It's a pretty boring position, but hey- it's not like I was finding anything in New Vladimir. I'm just glad to have something to pay the bills.<br> \
+		Suppose I should say what's involved: I'm essentially playing housekeeper for some scientist and his cohort of student assistants. Far above my pay grade to understand what they do, but they seem excited enough. Talking about \"pockets\", for whatever reason. Maybe they're designing the next innovation in clothes?<br> \
+		Anyway, that's pretty much it. I'm living on their station for pretty much the duration, so I'm not sure if I'll be able to make it to Mama's birthday. Sorry about that- I'll do my best to make it up to her (and you) when I get some leave.<br> \
+		Hope to see you soon,<br> \
+		Little Brother Roman",
+		"<b>Visitors</b><br> \
+		<i>Sent to: david_hilbert@physics.mit.edu</i><br> \
+		Morning Doctor. Sorry to email you when you're on holiday, but you did tell me to update you on anything suspicious.<br> \
+		There's been a ship that's been hanging around the facility for a few days. Figured that was odd enough, given how far from anything important we are, but it got stranger when one of them finally came over to talk.<br> \
+		I know I'm not a native speaker, but I couldn't make out his accent. Wasn't like anything I've heard before, anyway.<br> \
+		He kept asking where you were, and if he could come in to speak to you. Of course, I turned him away- even if you had been around I'd have been hesitant to let him in.<br> \
+		As an aside, the postdocs told me to pass on a message. Apparently they've made a breakthrough, which sounds good and all.<br> \
+		Regards,<br> \
+		Roman<br>",
+		"<b>Weird Times</b><br> \
+		<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br> \
+		Hi sis! How was Christmas? Are Mama and Papa doing well? I'm really sorry I couldn't be there, but I've been working my fingers to the bone at work.<br> \
+		I figure I should tell you a bit about how it's been going here. I know, I know, you keep calling me a workaholic, but it's really... strange, I guess?<br> \
+		I keep getting little glimpses into the research that's happening. They're messing around with bluespace- you know, the tech that makes FTL engines work? I'm not sure what exactly they're doing with it, but they're talking more and more about pockets every day now.<br> \
+		Not only that, but I'm starting to hear strange noises from the labs I'm not allowed into. Nothing super terrifying, you know, we're not talking xenomorphs, but more like industrial sounds. Crashes, bangs, occasional high-pitched whining, you know the sort. Like a broken vacuum cleaner.<br> \
+		I know it's not the instruments or I'd have heard it before, so it must be something new they've been working on. Exciting, I suppose, but I'm starting to wonder if I'm in over my head working here. Maybe I should start looking for a new job, somewhere closer to home.<br> \
+		Hope to see you at Papa's birthday. I've requested leave for it, and I'm just waiting on the Doc's response.<br> \
+		See you soon,<br> \
+		Little Brother Roman<br>",
+		"<b>End of Leave</b><br> \
+		<i>Sent to: david_hilbert@physics.mit.edu</i><br> \
+		Morning Doctor. Where is everyone? I got back from leave and the station was empty. Have you all went on holiday without telling me?<br> \
+		And what the hell happened to the ordnance lab? I couldn't even open the door to get in, it was fused shut!<br> \
+		Look, I don't feel safe staying on the station with it in this state, so I'm calling an engineer and heading home until I hear back from you.<br> \
+		Regards,<br> \
+		Roman<br>",
+		"<b>Looking for a New Job</b><br> \
+		<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br> \
+		Hi sis. First things first, sorry for missing your engagement party. There's been a... situation at work.<br> \
+		In fact, that's most of why I'm writing this. I have absolutely no idea what happened, but the Doctor and the students are gone. Just up and left. The facility's abandoned.<br> \
+		But like, it's clear they left in a hurry. Hell, there's still coffee in the cups. I'd question it further, but they were always kinda... odd, I guess? The whole thing gives me chills and I don't think I want to dig any deeper.<br> \
+		I dropped his university an email and called in the authorities. All that's left now, I guess, is to find a new job. Would your boss happen to be hiring?<br> \
+		See you soon,<br> \
+		Little Brother Roman",
+	)
+
+/obj/structure/showcase/machinery/tv/broken
+	name = "broken tv"
+	desc = "Nothing plays."
+
+/obj/structure/showcase/machinery/tv/broken/Initialize(mapload)
+	. = ..()
+	add_overlay("television_broken")
+
+/obj/machinery/porta_turret/syndicate/teleport
+	name = "displacement turret"
+	desc = "A ballistic machine gun auto-turret that fires bluespace bullets."
+	lethal_projectile = /obj/projectile/magic/teleport
+	stun_projectile = /obj/projectile/magic/teleport
+	faction = list("turret")
