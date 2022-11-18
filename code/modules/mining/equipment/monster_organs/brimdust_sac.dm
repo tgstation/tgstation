@@ -46,7 +46,7 @@
 	qdel(src)
 
 /// Make a cloud which applies brimdust to everyone nearby
-/obj/item/organ/internal/monster_core/brimdust_sac/trigger_organ_action()
+/obj/item/organ/internal/monster_core/brimdust_sac/on_triggered_internal()
 	var/turf/origin_turf = get_turf(owner)
 	do_smoke(range = 2, holder = owner, location = origin_turf, smoke_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
 

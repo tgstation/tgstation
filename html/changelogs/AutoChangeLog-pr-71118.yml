@@ -1,0 +1,5 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - rscadd: "Cryokinesis, Shocktouch, Chameleon, and Webbing mutations now have a higher potential"
+  - balance: "Cryokinesis and Shock touch appear to be weaker and more unstable by default"

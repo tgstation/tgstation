@@ -4,6 +4,7 @@
 	id = "hallucination"
 	alert_type = null
 	tick_interval = 2 SECONDS
+	remove_on_fullheal = TRUE
 	/// Can this hallucination apply to silicons?
 	var/affects_silicons = FALSE
 	/// The lower range of when the next hallucination will trigger after one occurs.
@@ -28,8 +29,7 @@
 	if(!affects_silicons && issilicon(owner))
 		return FALSE
 
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_hallucinations))
-	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_health_scan))
+	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN,  PROC_REF(on_health_scan))
 	if(iscarbon(owner))
 		RegisterSignal(owner, COMSIG_CARBON_CHECKING_BODYPART, PROC_REF(on_check_bodypart))
 		RegisterSignal(owner, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, PROC_REF(on_bump_airlock))
@@ -38,17 +38,10 @@
 
 /datum/status_effect/hallucination/on_remove()
 	UnregisterSignal(owner, list(
-		COMSIG_LIVING_POST_FULLY_HEAL,
 		COMSIG_LIVING_HEALTHSCAN,
 		COMSIG_CARBON_CHECKING_BODYPART,
 		COMSIG_CARBON_BUMPED_AIRLOCK_OPEN,
 	))
-
-/// Signal proc for [COMSIG_LIVING_POST_FULLY_HEAL], terminate on full heal
-/datum/status_effect/hallucination/proc/remove_hallucinations(datum/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 /// Signal proc for [COMSIG_LIVING_HEALTHSCAN]. Show we're hallucinating to (advanced) scanners.
 /datum/status_effect/hallucination/proc/on_health_scan(datum/source, list/render_list, advanced, mob/user, mode)
