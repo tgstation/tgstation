@@ -272,8 +272,8 @@ fi;
 part "docking_port varedits"
 if rg -U '^/obj/docking_port/mobile.*\{\n[^}]*(width|height|dwidth|dheight)[^}]*\}' -g *.dmm; then
 	echo
-	echo -e "${RED}ERROR: Custom mobile docking_port sizes detected. This is done automatically and should not be varedits.${NC}"
-	echo -e "\t\t${RED}Please remove the width, height, dwidth, and dheight varedits from the docking_port.${NC}"
+	echo -e "${RED}ERROR: Custom mobile docking_port sizes detected. This is done automatically and should not be varedits."
+	echo -e "\t\tPlease remove the width, height, dwidth, and dheight varedits from the docking_port.${NC}"
 	st=1
 fi;
 
