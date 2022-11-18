@@ -488,3 +488,55 @@
   zxaber:
   - bugfix: Fixed disposals pipes qdel-ing their contents when their integrity hits
       zero.
+2022-11-18:
+  1bw0kopy:
+  - bugfix: Fix emberfall sound looping forever
+  Fikou:
+  - bugfix: fixes hilbert's hotel tram
+  JohnFulpWillard:
+  - bugfix: Ruins blacklisted from icebox shouldn't also blacklist it from lavaland,
+      and vice versa.
+  - bugfix: Syndicate Cyborgs no longer have the PDA messaging app.
+  Jolly:
+  - qol: Library Consoles and Book Management Consoles should no longer have their
+      keyboards hanging over the edge of tables.
+  - bugfix: On most station maps, crew can now properly see the computer monitors
+      for library consoles and the like. We don't know how you guys saw the screens
+      before, but you did. Good on you, I suppose?
+  Melbert:
+  - refactor: Fully heal can be passed a series of flags. As a result, some things
+      which previously did a full heal might heal slightly less, or some things which
+      did partial full heals might do slightly more.
+  - bugfix: Adminordrazine will no longer completely break every facet of a person
+  - admin: Ahealing a changeling will refill all of their chems.
+  NamelessFairy:
+  - bugfix: Roundstart PDAs can once again be used by people with chunky fingers.
+  Paxilmaniac:
+  - rscadd: A variety of items, mainly tools, around the station might hurt if they
+      fall on your head, remember to wear your hardhat and to avoid standing under
+      large red X marks on the ground with a piano hanging above them.
+  Simplehorror:
+  - spellcheck: Fixed a spelling error in some fluff
+  Striders13:
+  - rscadd: Pubby whiteship replaced with a new one.
+  antropod:
+  - bugfix: Containers visually update after crafting.
+  distributivgesetz:
+  - spellcheck: Corrected a miswording in the power monitor UI.
+  etherware-novice:
+  - bugfix: flick_overlay is an atom proc
+  - bugfix: bluespace light replacer displays icon correctly
+  - bugfix: fresh laundry mood is functional again
+  - code_imp: new component for controlling wearables granting mood
+  mc-oofert:
+  - bugfix: You can no longer deconstruct the chess pieces or cut the trees in the
+      holodeck for free mats
+  - bugfix: Raw dimensional cores can now be refined properly
+  moocowswag:
+  - rscadd: Cryokinesis, Shocktouch, Chameleon, and Webbing mutations now have a higher
+      potential
+  - balance: Cryokinesis and Shock touch appear to be weaker and more unstable by
+      default
+  timothymtorres:
+  - code_imp: Move plasma lava turf code to be in lava.dm file instead of snowdin
+      mission code

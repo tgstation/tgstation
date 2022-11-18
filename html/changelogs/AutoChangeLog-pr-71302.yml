@@ -1,4 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes:
-  - bugfix: "On most station maps, crew can now properly see the computer monitors for library consoles and the like. We don't know how you guys saw the screens before, but you did. Good on you, I suppose?"

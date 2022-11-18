@@ -1,4 +1,0 @@
-author: "etherware-novice"
-delete-after: True
-changes:
-  - bugfix: "bluespace light replacer displays icon correctly"
