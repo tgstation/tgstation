@@ -64,7 +64,7 @@
 
 /datum/round_event/tram_malfunction/end()
 	for(var/obj/machinery/crossing_signal/signal in GLOB.tram_signals)
-		signal.obj_flags -= EMAGGED
+		signal.obj_flags &= ~EMAGGED
 		signal.process()
 
 	for(var/obj/structure/industrial_lift/tram in GLOB.lifts)
