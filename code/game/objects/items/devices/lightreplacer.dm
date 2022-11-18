@@ -147,7 +147,7 @@
 	to_chat(user, status_string())
 
 /obj/item/lightreplacer/update_icon_state()
-	icon_state = "lightreplacer[(obj_flags & EMAGGED ? 1 : 0)]"
+	icon_state = "[initial(icon_state)][(obj_flags & EMAGGED ? 1 : 0)]"
 	return ..()
 
 /obj/item/lightreplacer/proc/status_string()

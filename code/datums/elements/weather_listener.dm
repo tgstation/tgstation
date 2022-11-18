@@ -15,17 +15,18 @@
 	. = ..()
 	if(!weather_type)
 		weather_type = w_type
-		sound_change_signals = list(
-			COMSIG_WEATHER_TELEGRAPH(weather_type),
-			COMSIG_WEATHER_START(weather_type),
-			COMSIG_WEATHER_WINDDOWN(weather_type),
-			COMSIG_WEATHER_END(weather_type)
-		)
+		for(var/type in typesof(weather_type))
+			sound_change_signals += list(
+				COMSIG_WEATHER_TELEGRAPH(type),
+				COMSIG_WEATHER_START(type),
+				COMSIG_WEATHER_WINDDOWN(type),
+				COMSIG_WEATHER_END(type)
+			)
 		weather_trait = trait
 		playlist = weather_playlist
 
-	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/handle_z_level_change, override = TRUE)
-	RegisterSignal(target, COMSIG_MOB_LOGOUT, .proc/handle_logout, override = TRUE)
+	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(handle_z_level_change), override = TRUE)
+	RegisterSignal(target, COMSIG_MOB_LOGOUT, PROC_REF(handle_logout), override = TRUE)
 
 /datum/element/weather_listener/Detach(datum/source)
 	. = ..()
@@ -37,7 +38,7 @@
 	if(!(new_loc.z in fitting_z_levels))
 		return
 	var/datum/component/our_comp = source.AddComponent(/datum/component/area_sound_manager, playlist, list(), COMSIG_MOB_LOGOUT, fitting_z_levels)
-	our_comp.RegisterSignal(SSdcs, sound_change_signals, /datum/component/area_sound_manager/proc/handle_change)
+	our_comp.RegisterSignal(SSdcs, sound_change_signals, TYPE_PROC_REF(/datum/component/area_sound_manager, handle_change))
 
 /datum/element/weather_listener/proc/handle_logout(datum/source)
 	SIGNAL_HANDLER
