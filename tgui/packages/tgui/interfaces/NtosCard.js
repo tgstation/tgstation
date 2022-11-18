@@ -1,5 +1,5 @@
-import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Dropdown, Input, NumberInput, Section, Stack, Tabs } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Dropdown, Input, NumberInput, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
 
@@ -29,17 +29,11 @@ export const NtosCardContent = (props, context) => {
     templates = {},
   } = data;
 
-  const [selectedTab] = useSharedState(context, 'selectedTab', 'login');
-
   return (
     <>
       <Stack>
-        <Stack.Item>
-          <IDCardTabs />
-        </Stack.Item>
         <Stack.Item width="100%">
-          {(selectedTab === 'login' && <IDCardLogin />) ||
-            (selectedTab === 'modify' && <IDCardTarget />)}
+          <IdCardPage />
         </Stack.Item>
       </Stack>
       {!!has_id && !!authenticatedUser && (
@@ -95,42 +89,21 @@ export const NtosCardContent = (props, context) => {
   );
 };
 
-const IDCardTabs = (props, context) => {
-  const [selectedTab, setSelectedTab] = useSharedState(
-    context,
-    'selectedTab',
-    'login'
-  );
-
-  return (
-    <Tabs vertical fill>
-      <Tabs.Tab
-        minWidth={'100%'}
-        altSelection
-        selected={'login' === selectedTab}
-        color={'login' === selectedTab ? 'green' : 'default'}
-        onClick={() => setSelectedTab('login')}>
-        Login ID
-      </Tabs.Tab>
-      <Tabs.Tab
-        minWidth={'100%'}
-        altSelection
-        selected={'modify' === selectedTab}
-        color={'modify' === selectedTab ? 'green' : 'default'}
-        onClick={() => setSelectedTab('modify')}>
-        Target ID
-      </Tabs.Tab>
-    </Tabs>
-  );
-};
-
-export const IDCardLogin = (props, context) => {
+const IdCardPage = (props, context) => {
   const { act, data } = useBackend(context);
-  const { authenticatedUser, has_id, authIDName } = data;
+  const {
+    authenticatedUser,
+    id_rank,
+    id_owner,
+    has_id,
+    id_name,
+    id_age,
+    authIDName,
+  } = data;
 
   return (
     <Section
-      title="Login"
+      title={authenticatedUser ? 'Modify ID' : 'Login'}
       buttons={
         <>
           <Button
@@ -163,24 +136,6 @@ export const IDCardLogin = (props, context) => {
           Login: {authenticatedUser || '-----'}
         </Stack.Item>
       </Stack>
-    </Section>
-  );
-};
-
-const IDCardTarget = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { authenticatedUser, id_rank, id_owner, has_id, id_name, id_age } =
-    data;
-
-  return (
-    <Section title="Modify ID">
-      <Button
-        width="100%"
-        ellipsis
-        icon="eject"
-        content={id_name}
-        onClick={() => act('PRG_ejectmodid')}
-      />
       {!!(has_id && authenticatedUser) && (
         <>
           <Stack mt={1}>

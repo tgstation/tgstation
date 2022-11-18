@@ -19,9 +19,9 @@
 /datum/computer_file/program/shipping/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	data["has_id_slot"] = !!computer.id_slot_one
+	data["has_id_slot"] = !!computer.computer_id_slot
 	data["paperamt"] = "[computer.stored_paper] / [computer.max_paper]"
-	data["card_owner"] = computer.id_slot_one || "No Card Inserted."
+	data["card_owner"] = computer.computer_id_slot || "No Card Inserted."
 	data["current_user"] = payments_acc ? payments_acc.account_holder : null
 	data["barcode_split"] = cut_multiplier * 100
 	return data
@@ -33,17 +33,17 @@
 	if(!computer)
 		return
 
-	if(!computer.id_slot_one) //We need an ID to successfully run
+	if(!computer.computer_id_slot) //We need an ID to successfully run
 		return
 
 	switch(action)
 		if("ejectid")
-			computer.RemoveID(skip_second_slot = TRUE)
+			computer.RemoveID(usr)
 		if("selectid")
-			if(!computer.id_slot_one.registered_account)
+			if(!computer.computer_id_slot.registered_account)
 				playsound(get_turf(ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
 				return
-			payments_acc = computer.id_slot_one.registered_account
+			payments_acc = computer.computer_id_slot.registered_account
 			playsound(get_turf(ui_host()), 'sound/machines/ping.ogg', 50, TRUE, -1)
 		if("resetid")
 			payments_acc = null

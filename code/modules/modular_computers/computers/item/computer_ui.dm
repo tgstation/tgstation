@@ -59,7 +59,7 @@
 	data["device_theme"] = device_theme
 	data["login"] = list()
 
-	if(id_slot_one)
+	if(computer_id_slot)
 		var/stored_name = saved_identification
 		var/stored_title = saved_job
 		if(!stored_name)
@@ -71,8 +71,8 @@
 			IDJob = saved_job,
 		)
 		data["proposed_login"] = list(
-			IDName = id_slot_one.registered_name,
-			IDJob = id_slot_one.assignment,
+			IDName = computer_id_slot.registered_name,
+			IDJob = computer_id_slot.assignment,
 		)
 
 	data["removable_media"] = list()
@@ -81,8 +81,6 @@
 	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 	if(airestore_app?.stored_card)
 		data["removable_media"] += "intelliCard"
-	if(id_slot_two)
-		data["removable_media"] += "secondary RFID card"
 
 	data["programs"] = list()
 	for(var/datum/computer_file/program/P in stored_files)
@@ -178,18 +176,11 @@
 					if(airestore_app.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("ID")
-					if(!id_slot_one)
-						return
-					if(RemoveID(skip_second_slot = TRUE))
-						playsound(src, 'sound/machines/card_slide.ogg', 50)
-				if("secondary RFID card")
-					if(!id_slot_two)
-						return
 					if(RemoveID())
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 		if("PC_Imprint_ID")
-			saved_identification = id_slot_one.registered_name
-			saved_job = id_slot_one.assignment
+			saved_identification = computer_id_slot.registered_name
+			saved_job = computer_id_slot.assignment
 			UpdateDisplay()
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 

@@ -76,8 +76,8 @@
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
-	else if(istype(pda) && pda.id_slot_one)
-		. = pda.id_slot_one.registered_name
+	else if(istype(pda) && pda.computer_id_slot)
+		. = pda.computer_id_slot.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
 	return

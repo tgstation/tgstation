@@ -164,8 +164,6 @@
 		inserted_item = null
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
-	else
-		balloon_alert(user, "nothing to remove!")
 
 // Tablet 'splosion..
 
@@ -410,7 +408,7 @@
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
-	if(id_slot_one)
+	if(computer_id_slot)
 		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
 		. += mutable_appearance(initial(icon), "light_overlay")

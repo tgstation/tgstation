@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/obj/item/computer_disk/inserted_disk
 
 	///The ID in the first ID slot, held in the computer
-	var/obj/item/card/id/id_slot_one
+	var/obj/item/card/id/computer_id_slot
 	///The ID in the second ID slot, held in the computer
 	var/obj/item/card/id/id_slot_two
 
@@ -158,10 +158,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		QDEL_NULL(inserted_disk)
 	if(istype(inserted_pai))
 		QDEL_NULL(inserted_pai)
-	if(id_slot_one)
-		QDEL_NULL(id_slot_one)
-	if(id_slot_two)
-		QDEL_NULL(id_slot_two)
+	if(computer_id_slot)
+		QDEL_NULL(computer_id_slot)
 
 	physical = null
 	return ..()
@@ -203,7 +201,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(!user.canUseTopic(src, be_close = TRUE))
 		return FALSE
 
-	if(RemoveID())
+	if(RemoveID(user))
 		return TRUE
 
 	if(istype(inserted_pai)) // Remove pAI
@@ -214,49 +212,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
-	var/list/total_access
-	if(id_slot_one)
-		total_access = id_slot_one.GetAccess()
-	if(id_slot_two)
-		total_access |= id_slot_two.GetAccess()
-	return total_access
+	if(computer_id_slot)
+		return computer_id_slot.GetAccess()
+	return ..()
 
 /obj/item/modular_computer/GetID()
-	var/obj/item/card/id/first_id = id_slot_one?.GetID()
-	var/obj/item/card/id/second_id = id_slot_two?.GetID()
-
-	// We have two IDs, pick the one with the most command accesses, preferring the primary slot.
-	if(first_id && second_id)
-		var/first_id_tally = SSid_access.tally_access(first_id, ACCESS_FLAG_COMMAND)
-		var/second_id_tally = SSid_access.tally_access(second_id, ACCESS_FLAG_COMMAND)
-		return (first_id_tally >= second_id_tally) ? first_id : second_id
-
-	// If we don't have both ID slots filled, pick the one that is filled.
-	if(first_id)
-		return first_id
-	if(second_id)
-		return second_id
-
-	// Otherwise, we have no ID at all.
+	if(computer_id_slot)
+		return computer_id_slot
 	return ..()
 
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
-	if(!id_slot_one && !id_slot_two)
-		return
-
-	if(id_slot_one && id_slot_two)
-		. += "\The [src] is displaying [id_slot_one] and [id_slot_two]."
-		var/list/id_icons = list()
-		id_icons += id_slot_one.get_id_examine_strings(user)
-		id_icons += id_slot_two.get_id_examine_strings(user)
-		. += id_icons.Join(" ")
-	else if(id_slot_one)
-		. += "\The [src] is displaying [id_slot_one]."
-		. += id_slot_one.get_id_examine_strings(user)
-	else
-		. += "\The [src] is displaying [id_slot_two]."
-		. += id_slot_two.get_id_examine_strings(user)
+	if(computer_id_slot)
+		. += "\The [src] is displaying [computer_id_slot]."
+		. += computer_id_slot.get_id_examine_strings(user)
 
 /obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
 	if(!stored_paper)
@@ -270,33 +239,23 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	stored_paper--
 	return TRUE
 
-///Attempt to insert the ID card in either ID card slot.
 /**
  * InsertID
- * Attempt to insert the ID in either card slot, but attempt on the main (first) slot first
- * Then the second.
+ * Attempt to insert the ID in either card slot.
  * Args:
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
- * skip_first_slot - Whether to not add to the main slot first, skipping to the second
  */
-/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user, skip_first_slot)
+/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
 	//all slots taken
-	if(id_slot_one && id_slot_two)
+	if(computer_id_slot)
 		return FALSE
 
-	if(!id_slot_one && !skip_first_slot) //try to insert in the main slot first, if it's not forced to be the other
-		id_slot_one = inserting_id
-		to_chat(user, span_notice("You insert \the [inserting_id] into the primary card slot."))
-	else if(!id_slot_two)
-		id_slot_two = inserting_id
-		to_chat(user, span_notice("You insert \the [inserting_id] into the secondary card slot."))
-	else
-		return FALSE
-
+	computer_id_slot = inserting_id
 	if(user)
 		if(!user.transferItemToLoc(inserting_id, src))
 			return FALSE
+		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 	else
 		inserting_id.forceMove(src)
 
@@ -310,32 +269,23 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	return TRUE
 
 /**
- * Removes the ID card from the computer, starting with the secondary one.
- * If there is no secondary, remove the main one.
+ * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
  * Args:
- * skip_second_slot - Whether the second slot should be skipped and we should remove the first one
+ * user - The mob trying to remove the ID, if there is one
  */
-/obj/item/modular_computer/RemoveID(skip_second_slot)
-	if(!id_slot_one && !id_slot_two)
+/obj/item/modular_computer/RemoveID(mob/user)
+	if(!computer_id_slot)
 		return ..()
 
-	var/obj/item/card/id/removed_id
-	if(id_slot_two && !skip_second_slot) //remove the second one first. If forced, check if the forced one is the second.
-		removed_id = id_slot_two
-		id_slot_two = null
+	if(user)
+		if(!issilicon(user) && in_range(src, user))
+			user.put_in_hands(computer_id_slot)
+		balloon_alert(user, "removed ID")
+		to_chat(user, span_notice("You remove the card from the card slot."))
 	else
-		removed_id = id_slot_one
-		id_slot_one = null
+		computer_id_slot.forceMove(drop_location())
 
-	if(ismob(loc))
-		var/mob/mob_user = loc
-		if(!issilicon(mob_user) && in_range(src, mob_user))
-			mob_user.put_in_hands(removed_id)
-		balloon_alert(mob_user, "removed ID")
-		to_chat(mob_user, span_notice("You remove the card from the card slot."))
-	else
-		removed_id.forceMove(drop_location())
-
+	computer_id_slot = null
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
 	if(ishuman(loc))
@@ -344,7 +294,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			human_wearer.sec_hud_set_ID()
 	update_slot_icon()
 	update_appearance()
-	return removed_id
+	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -398,15 +348,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
 	. += span_notice("It has [max_capacity] GQ of storage capacity.")
 
-	if(id_slot_one || id_slot_two)
-		var/obj/item/card/id/first_ID = id_slot_one
-		var/obj/item/card/id/second_ID = id_slot_two
-		var/multiple_cards = (first_ID && second_ID)
+	if(computer_id_slot)
 		if(Adjacent(user))
-			. += "It has [multiple_cards ? "\the [first_ID] and [second_ID] cards" : "\the [first_ID || second_ID] card"] installed in its card slots."
+			. += "It has \the [computer_id_slot] card installed in its card slot."
 		else
-			. += "It has [multiple_cards ? "both identification card slots" : "one identification card slot"] currently occupied."
-		. += span_info("Alt-click [src] to eject the identification card[multiple_cards ? "s":""].")
+			. += "Its identification card slot is currently occupied."
+		. += span_info("Alt-click [src] to eject the identification card.")
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
@@ -422,7 +369,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	if(id_slot_one || id_slot_two) // IDs get removed first before pAIs
+	if(computer_id_slot) // ID get removed first before pAIs
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
 		. = CONTEXTUAL_SCREENTIP_SET
 	else if(inserted_pai)
@@ -460,14 +407,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		internal_cell = null
 		if(enabled && !use_power())
 			shutdown_computer()
-	if(id_slot_one == gone)
-		id_slot_one = null
-		update_slot_icon()
-		if(ishuman(loc))
-			var/mob/living/carbon/human/human_wearer = loc
-			human_wearer.sec_hud_set_ID()
-	if(id_slot_two == gone)
-		id_slot_two = null
+	if(computer_id_slot == gone)
+		computer_id_slot = null
 		update_slot_icon()
 		if(ishuman(loc))
 			var/mob/living/carbon/human/human_wearer = loc
@@ -770,8 +711,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return
 
 	// Check for cash next
-	if(id_slot_one && iscash(attacking_item))
-		var/obj/item/card/id/inserted_id = id_slot_one.GetID()
+	if(computer_id_slot && iscash(attacking_item))
+		var/obj/item/card/id/inserted_id = computer_id_slot.GetID()
 		if(inserted_id)
 			inserted_id.attackby(attacking_item, user) // If we do, try and put that attacking object in
 			return

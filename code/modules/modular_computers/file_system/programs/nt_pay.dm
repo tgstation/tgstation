@@ -64,7 +64,7 @@
 /datum/computer_file/program/nt_pay/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	current_user = computer.id_slot_one?.registered_account || null
+	current_user = computer.computer_id_slot?.registered_account || null
 	if(!current_user)
 		data["name"] = null
 	else

@@ -124,7 +124,7 @@
 	if(!length(access))
 		var/obj/item/card/id/accesscard
 		if(computer)
-			accesscard = computer.id_slot_one?.GetID()
+			accesscard = computer.computer_id_slot?.GetID()
 
 		if(!accesscard)
 			if(loud)
@@ -163,7 +163,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(can_run(user, 1))
 		if(requires_ntnet)
-			var/obj/item/card/id/ID = computer.id_slot_one?.GetID()
+			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
@@ -196,7 +196,7 @@
 	if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
 	if(requires_ntnet)
-		var/obj/item/card/id/ID = computer.id_slot_one?.GetID()
+		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 	return TRUE
 

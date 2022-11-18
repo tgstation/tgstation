@@ -39,8 +39,8 @@
 	if(!networked)
 		GLOB.allbountyboards += computer
 		networked = TRUE
-	if(computer.id_slot_one)
-		current_user = computer.id_slot_one?.registered_account
+	if(computer.computer_id_slot)
+		current_user = computer.computer_id_slot?.registered_account
 	for(var/i in GLOB.request_list)
 		if(!i)
 			continue
