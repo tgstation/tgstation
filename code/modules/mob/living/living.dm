@@ -727,47 +727,50 @@
 	else
 		clear_fullscreen("brute")
 
-//Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, excess_healing = 0)
+/**
+ * Proc used to resuscitate a mob, bringing them back to life.
+ *
+ * Note that, even if a mob cannot be revived, the healing from this proc will still be applied.
+ *
+ * Arguments
+ * * full_heal_flags - Optional. If supplied, [/mob/living/fully_heal] will be called with these flags before revival.
+ * * excess_healing - Optional. If supplied, this number will be used to apply a bit of healing to the mob. Currently, 1 "excess healing" translates to -1 oxyloss, -1 toxloss, +2 blood, -5 to all organ damage.
+ * * force_grab_ghost - We grab the ghost of the mob on revive. If TRUE, we force grab the ghost (includes suiciders). If FALSE, we do not. See [/mob/grab_ghost].
+ *
+ */
+/mob/living/proc/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(excess_healing)
-		if(iscarbon(src) && excess_healing)
-			var/mob/living/carbon/C = src
-			if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
-				C.blood_volume += (excess_healing*2)//1 excess = 10 blood
-
-			for(var/obj/item/organ/organ as anything in C.internal_organs)
-				if(organ.organ_flags & ORGAN_SYNTHETIC)
-					continue
-				organ.applyOrganDamage(excess_healing * -1)//1 excess = 5 organ damage healed
-
-		adjustOxyLoss(-20, TRUE)
-		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
+		adjustOxyLoss(-excess_healing, FALSE)
+		adjustToxLoss(-excess_healing, FALSE, TRUE) //slime friendly
 		updatehealth()
-		grab_ghost()
-	if(full_heal)
-		fully_heal(admin_revive = admin_revive)
+
+	grab_ghost(force_grab_ghost)
+	if(full_heal_flags)
+		fully_heal(full_heal_flags)
+
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
-		if(admin_revive)
+		if(full_heal_flags & HEAL_ADMIN)
 			get_up(TRUE)
 		update_sight()
 		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		reload_fullscreen()
 		. = TRUE
 		if(excess_healing)
-			INVOKE_ASYNC(src, .proc/emote, "gasp")
+			INVOKE_ASYNC(src, PROC_REF(emote), "gasp")
 			log_combat(src, src, "revived")
-	else if(admin_revive)
+
+	else if(full_heal_flags & HEAL_ADMIN)
 		updatehealth()
 		get_up(TRUE)
+
 	// The signal is called after everything else so components can properly check the updated values
-	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
+	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal_flags)
 
-
-/*
- * Heals up the [target] to up to [heal_to] of the main damage types.
+/**
+ * Heals up the mob up to [heal_to] of the main damage types.
  * EX: If heal_to is 50, and they have 150 brute damage, they will heal 100 brute (up to 50 brute damage)
  *
  * If the target is dead, also revives them and heals their organs / restores blood.
@@ -810,48 +813,65 @@
 
 	return stat != DEAD
 
-/mob/living/proc/remove_CC()
-	SetStun(0)
-	SetKnockdown(0)
-	SetImmobilized(0)
-	SetParalyzed(0)
-	SetSleeping(0)
-	setStaminaLoss(0)
-	SetUnconscious(0)
+/**
+ * A grand proc used whenever this mob is, quote, "fully healed".
+ * Fully healed could mean a number of things, such as "healing all the main damage types", "healing all the organs", etc
+ * So, you can pass flags to specify
+ *
+ * See [mobs.dm] for more information on the flags
+ *
+ * If you ever think "hey I'm adding something and want it to be reverted on full heal",
+ * consider handling it via signal instead of implementing it in this proc
+ */
+/mob/living/proc/fully_heal(heal_flags = HEAL_ALL)
+	SHOULD_CALL_PARENT(TRUE)
 
+	if(heal_flags & HEAL_TOX)
+		setToxLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_OXY)
+		setToxLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_CLONE)
+		setCloneLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_BRUTE)
+		setBruteLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_BURN)
+		setFireLoss(0, FALSE, TRUE)
+	if(heal_flags & HEAL_STAM)
+		setStaminaLoss(0, FALSE, TRUE)
 
-
-
-
-//proc used to completely heal a mob.
-//admin_revive = TRUE is used in other procs, for example mob/living/carbon/fully_heal()
-/mob/living/proc/fully_heal(admin_revive = FALSE)
-	restore_blood()
-	setToxLoss(0, 0) //zero as second argument not automatically call updatehealth().
-	setOxyLoss(0, 0)
-	setCloneLoss(0, 0)
-	remove_CC()
-	set_disgust(0)
-	losebreath = 0
+	// I don't really care to keep this under a flag
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	bodytemperature = get_body_temp_normal(apply_change=FALSE)
+
+	// These should be tracked by status effects
+	losebreath = 0
 	set_blindness(0)
 	set_blurriness(0)
+	set_drowsyness(0)
+	set_disgust(0)
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
-	extinguish_mob()
-	set_drowsyness(0)
+
+	if(heal_flags & HEAL_TEMP)
+		bodytemperature = get_body_temp_normal(apply_change = FALSE)
+	if(heal_flags & HEAL_BLOOD)
+		restore_blood()
+	if(reagents && (heal_flags & HEAL_ALL_REAGENTS))
+		reagents.clear_reagents()
+
+	if(heal_flags & HEAL_ADMIN)
+		suiciding = FALSE
+
+	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
-	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, admin_revive)
+	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
 
-
-//proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
+/// Checks if we are actually able to ressuscitate this mob.
+/// (We don't want to revive then to have them instantly die again)
 /mob/living/proc/can_be_revived()
-	. = TRUE
 	if(health <= HEALTH_THRESHOLD_DEAD)
 		return FALSE
+	return TRUE
 
 /mob/living/proc/update_damage_overlays()
 	return
@@ -997,7 +1017,7 @@
 	set name = "Resist"
 	set category = "IC"
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_resist))
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_resist)))
 
 ///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
 /mob/living/proc/execute_resist()
@@ -1878,8 +1898,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!can_look_up())
 		return
 	changeNext_move(CLICK_CD_LOOK_UP)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_up) //We start looking again after we move.
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_look_up)) //We stop looking up if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(start_look_up)) //We start looking again after we move.
 	start_look_up()
 
 /mob/living/proc/start_look_up()
@@ -1928,8 +1948,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(!can_look_up()) //if we cant look up, we cant look down.
 		return
 	changeNext_move(CLICK_CD_LOOK_UP)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_down) //We start looking again after we move.
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_look_down)) //We stop looking down if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(start_look_down)) //We start looking again after we move.
 	start_look_down()
 
 /mob/living/proc/start_look_down()

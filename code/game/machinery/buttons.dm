@@ -185,7 +185,7 @@
 		device.pulsed(pulser = user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
-	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 15)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 15)
 
 /obj/machinery/button/door
 	name = "door button"
@@ -324,11 +324,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 	device_type = /obj/item/assembly/control/tram
 	req_access = list()
 	id = 1
+	/// The specific lift id of the tram we're calling.
+	var/lift_id = MAIN_STATION_TRAM
 
 /obj/machinery/button/tram/setup_device()
 	var/obj/item/assembly/control/tram/tram_device = device
 	tram_device.initial_id = id
-	. = ..()
+	tram_device.specific_lift_id = lift_id
+	return ..()
 
 /obj/machinery/button/tram/examine(mob/user)
 	. = ..()

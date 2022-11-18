@@ -487,7 +487,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	outer_portal = new(T, 600, color)
 	set_light_range(4)
 	update_light()
-	addtimer(CALLBACK(src, .proc/close_portal), 600, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(close_portal)), 600, TIMER_UNIQUE)
 
 /obj/effect/rune/teleport/proc/close_portal()
 	QDEL_NULL(inner_portal)
@@ -608,8 +608,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 			fail_invoke()
 			return
 		sacrifices_used += SOULS_TO_REVIVE
-		mob_to_revive.revive(full_heal = TRUE, admin_revive = TRUE) //This does remove traits and such, but the rune might actually see some use because of it!
-		mob_to_revive.grab_ghost()
+		mob_to_revive.revive(ADMIN_HEAL_ALL) //This does remove traits and such, but the rune might actually see some use because of it! //Why did you think this was a good idea
+
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
 		var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [mob_to_revive.real_name], an inactive blood cultist?", ROLE_CULTIST, ROLE_CULTIST, 5 SECONDS, mob_to_revive)
@@ -869,7 +869,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		to_chat(user, span_cultitalic("Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely..."))
 		var/obj/structure/emergency_shield/cult/weak/N = new(T)
 		new_human.key = ghost_to_spawn.key
-		new_human.mind?.add_antag_datum(/datum/antagonist/cult)
+		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
+		created_cultist?.silent = TRUE
 		to_chat(new_human, span_cultitalic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))
 
 		while(!QDELETED(src) && !QDELETED(user) && !QDELETED(new_human) && (user in T))
@@ -885,7 +886,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 					span_cultlarge("Your link to the world fades. Your form breaks apart."))
 			for(var/obj/I in new_human)
 				new_human.dropItemToGround(I, TRUE)
+			new_human.mind?.remove_antag_datum(/datum/antagonist/cult)
 			new_human.dust()
+
 	else if(choice == "Ascend as a Dark Spirit")
 		affecting = user
 		affecting.add_atom_colour(RUNE_COLOR_DARKRED, ADMIN_COLOUR_PRIORITY)
@@ -984,11 +987,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
 				sec_hud.hide_from(M)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
+				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(hudFix), M), duration)
 			var/image/A = image('icons/mob/nonhuman-player/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
-			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"human_apoc",TRUE), duration)
+			addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"human_apoc",TRUE), duration)
 			images += A
 			SEND_SOUND(M, pick(sound('sound/ambience/antag/bloodcult.ogg'),sound('sound/voice/ghost_whisper.ogg'),sound('sound/misc/ghosty_wind.ogg')))
 		else
@@ -996,13 +999,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 			var/image/B = image('icons/mob/simple/mob.dmi',M,construct, ABOVE_MOB_LAYER)
 			B.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "mob_apoc", B, NONE)
-			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"mob_apoc",TRUE), duration)
+			addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"mob_apoc",TRUE), duration)
 			images += B
 		if(!IS_CULTIST(M))
 			if(M.client)
 				var/image/C = image('icons/effects/cult/effects.dmi',M,"bloodsparkles", ABOVE_MOB_LAYER)
 				add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/cult, "cult_apoc", C, NONE)
-				addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"cult_apoc",TRUE), duration)
+				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom/, remove_alt_appearance),"cult_apoc",TRUE), duration)
 				images += C
 		else
 			to_chat(M, span_cultlarge("An Apocalypse Rune was invoked in the [place.name], it is no longer available as a summoning site!"))
@@ -1012,44 +1015,53 @@ structure_check() searches for nearby cultist structures required for the invoca
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 10)
-				var/datum/round_event_control/disease_outbreak/D = new()
-				var/datum/round_event_control/mice_migration/M = new()
-				D.runEvent()
-				M.runEvent()
+				var/datum/round_event_control/disease_outbreak/covid_2562_event = locate() in SSevents.control
+				INVOKE_ASYNC(covid_2562_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				var/datum/round_event_control/mice_migration/stuart_big_event = locate() in SSevents.control
+				INVOKE_ASYNC(stuart_big_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+
 			if(11 to 20)
-				var/datum/round_event_control/radiation_storm/RS = new()
-				RS.runEvent()
+				var/datum/round_event_control/radiation_storm/my_skin_feels_funny_event = locate() in SSevents.control
+				INVOKE_ASYNC(my_skin_feels_funny_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+
 			if(21 to 30)
-				var/datum/round_event_control/brand_intelligence/BI = new()
-				BI.runEvent()
+				var/datum/round_event_control/brand_intelligence/product_placement_gone_rogue_event = locate() in SSevents.control
+				INVOKE_ASYNC(product_placement_gone_rogue_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+
 			if(31 to 40)
-				var/datum/round_event_control/immovable_rod/R = new()
-				R.runEvent()
-				R.runEvent()
-				R.runEvent()
+				var/datum/round_event_control/immovable_rod/huge_rod_event = locate() in SSevents.control //you've
+				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //got
+				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //a
+				INVOKE_ASYNC(huge_rod_event, TYPE_PROC_REF(/datum/round_event_control, runEvent)) //huge...
+
 			if(41 to 50)
-				var/datum/round_event_control/meteor_wave/MW = new()
-				MW.runEvent()
+				var/datum/round_event_control/meteor_wave/dinosaur_purge_event = locate() in SSevents.control
+				INVOKE_ASYNC(dinosaur_purge_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+
 			if(51 to 60)
-				var/datum/round_event_control/spider_infestation/SI = new()
-				SI.runEvent()
+				var/datum/round_event_control/spider_infestation/creepy_crawly_event = locate() in SSevents.control
+				INVOKE_ASYNC(creepy_crawly_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+
 			if(61 to 70)
-				var/datum/round_event_control/anomaly/anomaly_flux/AF
-				var/datum/round_event_control/anomaly/anomaly_grav/AG
-				var/datum/round_event_control/anomaly/anomaly_pyro/AP
-				var/datum/round_event_control/anomaly/anomaly_vortex/AV
-				AF.runEvent()
-				AG.runEvent()
-				AP.runEvent()
-				AV.runEvent()
+				var/datum/round_event_control/anomaly/anomaly_flux/flux_event = locate() in SSevents.control
+				INVOKE_ASYNC(flux_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				var/datum/round_event_control/anomaly/anomaly_grav/grav_event = locate() in SSevents.control
+				INVOKE_ASYNC(grav_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				var/datum/round_event_control/anomaly/anomaly_pyro/pyro_event = locate() in SSevents.control
+				INVOKE_ASYNC(pyro_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				var/datum/round_event_control/anomaly/anomaly_vortex/vortex_event = locate() in SSevents.control
+				INVOKE_ASYNC(vortex_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+
 			if(71 to 80)
-				var/datum/round_event_control/spacevine/SV = new()
-				var/datum/round_event_control/grey_tide/GT = new()
-				SV.runEvent()
-				GT.runEvent()
+				var/datum/round_event_control/spacevine/ivy_event = locate() in SSevents.control
+				INVOKE_ASYNC(ivy_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+				var/datum/round_event_control/grey_tide/grey_tide_nation_wide = locate() in SSevents.control
+				INVOKE_ASYNC(grey_tide_nation_wide, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+
 			if(81 to 100)
-				var/datum/round_event_control/portal_storm_narsie/N = new()
-				N.runEvent()
+				var/datum/round_event_control/portal_storm_narsie/total_not_a_xen_storm_event = locate() in SSevents.control
+				INVOKE_ASYNC(total_not_a_xen_storm_event, TYPE_PROC_REF(/datum/round_event_control, runEvent))
+
 	qdel(src)
 
 /obj/effect/rune/apocalypse/proc/image_handler(list/images, duration)

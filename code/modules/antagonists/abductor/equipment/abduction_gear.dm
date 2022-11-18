@@ -666,7 +666,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	user.visible_message(span_notice("[user] places down [src] and activates it."), span_notice("You place down [src] and activate it."))
 	user.dropItemToGround(src)
 	playsound(src, 'sound/machines/terminal_alert.ogg', 50)
-	addtimer(CALLBACK(src, .proc/try_spawn_machine), 30)
+	addtimer(CALLBACK(src, PROC_REF(try_spawn_machine)), 30)
 
 /obj/item/abductor_machine_beacon/proc/try_spawn_machine()
 	var/viable = FALSE
@@ -735,7 +735,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/item/clothing/head/helmet/abductor/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot_flags & slot)
-		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, .proc/can_track)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
 	else
 		UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
 
@@ -830,7 +830,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 /obj/structure/table/optable/abductor/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 

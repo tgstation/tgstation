@@ -240,7 +240,7 @@
 
 /obj/item/food/popsicle/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, .proc/after_bite))
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_bite)))
 
 /obj/item/food/popsicle/update_overlays()
 	. = ..()

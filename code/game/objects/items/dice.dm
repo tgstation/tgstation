@@ -308,7 +308,7 @@
 	var/turf/selected_turf = get_turf(src)
 	selected_turf.visible_message(span_userdanger("[src] flares briefly."))
 
-	addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(effect), user, .), 1 SECONDS)
 	COOLDOWN_START(src, roll_cd, 2.5 SECONDS)
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
@@ -382,7 +382,7 @@
 		if(12)
 			//Healing
 			selected_turf.visible_message(span_userdanger("[user] looks very healthy!"))
-			user.revive(full_heal = TRUE, admin_revive = TRUE)
+			user.revive(ADMIN_HEAL_ALL)
 		if(13)
 			//Mad Dosh
 			selected_turf.visible_message(span_userdanger("Mad dosh shoots out of [src]!"))

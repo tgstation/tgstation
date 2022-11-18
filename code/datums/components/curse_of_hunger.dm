@@ -31,13 +31,13 @@
 /datum/component/curse_of_hunger/RegisterWithParent()
 	. = ..()
 	var/obj/item/cursed_item = parent
-	RegisterSignal(cursed_item, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(cursed_item, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	//checking slot_equipment_priority is the better way to decide if it should be an equip-curse (alternative being if it has slot_flags)
 	//because it needs to know where to equip to (and stuff like buckets and cones can be on_pickup curses despite having slots to equip to)
 	if(cursed_item.slot_equipment_priority)
-		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	else
-		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)
+		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 
 /datum/component/curse_of_hunger/UnregisterFromParent()
 	. = ..()
@@ -87,9 +87,9 @@
 		cursed_item.item_flags |= DROPDEL
 		return
 	if(cursed_item.slot_equipment_priority)
-		RegisterSignal(cursed_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
+		RegisterSignal(cursed_item, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequip))
 	else
-		RegisterSignal(cursed_item, COMSIG_ITEM_DROPPED, .proc/on_drop)
+		RegisterSignal(cursed_item, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 
 /datum/component/curse_of_hunger/proc/the_curse_ends(mob/uncursed)
 	var/obj/item/at_least_item = parent
@@ -106,7 +106,7 @@
 
 	uncursed.dropItemToGround(at_least_item, force = TRUE)
 	if(!QDELETED(at_least_item)) //gives a head start for the person to get away from the cursed item before it begins hunting again!
-		addtimer(CALLBACK(src, .proc/seek_new_target), 10 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(seek_new_target)), 10 SECONDS)
 
 ///proc called after a timer to awaken the AI in the cursed item if it doesn't have a target already.
 /datum/component/curse_of_hunger/proc/seek_new_target()
