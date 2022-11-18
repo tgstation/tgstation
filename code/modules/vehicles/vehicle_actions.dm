@@ -398,7 +398,7 @@
 		span_notice("You do a sick kickflip, catching the board in midair! Stylish."),
 	)
 	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, vary = TRUE)
-	rider.spin(4, 1)
+	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
 	animate(board, pixel_y = -6, time = 0.3 SECONDS)
 	board.unbuckle_mob(rider)
