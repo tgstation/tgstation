@@ -7,6 +7,9 @@
 	if (controller.blackboard[BB_BASIC_MOB_FLEEING])
 		return // Too scared right now even to wander randomly
 
+	if (controller.pawn.pulledby)
+		return // Don't resist being taken somewhere else
+
 	var/area/home_area = controller.blackboard[BB_MOB_HOME_AREA]
 	if (!home_area)
 		return ..()
