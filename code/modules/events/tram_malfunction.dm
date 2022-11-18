@@ -53,7 +53,7 @@
 		if(signal.obj_flags & EMAGGED)
 			return
 
-		signal.obj_flags = EMAGGED
+		signal.obj_flags |= EMAGGED
 
 		if(signal.signal_state != XING_STATE_GREEN)
 			signal.set_signal_state(XING_STATE_GREEN)
