@@ -137,6 +137,7 @@
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/phys_scanner/medical,
+		/datum/computer_file/program/radar/telecrystal_signal_tracker,
 	)
 
 /obj/item/modular_computer/tablet/pda/warden

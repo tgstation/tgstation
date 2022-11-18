@@ -385,3 +385,42 @@
 			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),
 			span_notice("[computer] begins to vibrate rapidly. Wonder what that means..."),
 		)
+
+
+
+///Tracks telecrystal signals created after an uplink purchase
+/datum/computer_file/program/radar/telecrystal_signal_tracker
+	filename = "telecrystalsignaltrackerr"
+	filedesc = "Telecrystal Signal Tracker"
+	extended_desc = "This program allows for tracking of faint telecrystal teleportation signals."
+	requires_ntnet = TRUE
+	transfer_access = list(ACCESS_DETECTIVE)
+	available_on_ntnet = TRUE
+	program_icon = "broom"
+	size = 2
+	detomatix_resistance = DETOMATIX_RESIST_MINOR
+
+/datum/computer_file/program/radar/telecrystal_signal_tracker/find_atom()
+	return locate(selected) in GLOB.telecrystal_teleportation_signal
+
+/datum/computer_file/program/radar/telecrystal_signal_tracker/scan()
+	if(world.time < next_scan)
+		return
+	next_scan = world.time + (2 SECONDS)
+	objects = list()
+	for(var/obj/telecrystal_signal as anything in GLOB.telecrystal_teleportation_signal)
+		if(!trackable(telecrystal_signal))
+			continue
+		var/signal_name = telecrystal_signal.name
+
+		if(istype(telecrystal_signal, /obj/effect/abstract/active_telecrystal_signal))
+			var/obj/effect/abstract/active_telecrystal_signal/teleportation_signals = telecrystal_signal
+			signal_name = "[teleportation_signals.name]"
+
+		var/list/signal_information = list(
+			ref = REF(telecrystal_signal),
+			name = signal_name,
+		)
+		objects += list(signal_information)
+
+
