@@ -36,6 +36,7 @@ jobs:
           bash tools/ci/install_node.sh
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
+          sudo apt install pcregrep -y
       - name: Run Linters
         run: |
           bash tools/ci/check_filedirs.sh tgstation.dme
