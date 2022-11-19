@@ -16,7 +16,7 @@
 	for(var/tram_id in GLOB.active_lifts_by_type)
 		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
 		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
-			return ..()
+			return .
 
 	message_admins("Tram Malfunction rolled but there's no tram, choosing new event.")
 	return FALSE
