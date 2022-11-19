@@ -21,7 +21,6 @@
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
-	var/freshly_laundered = FALSE
 
 /obj/item/clothing/under/Initialize(mapload)
 	. = ..()
@@ -137,12 +136,6 @@
 		if(attached_accessory.above_suit)
 			H.update_worn_oversuit()
 
-/obj/item/clothing/under/equipped(mob/living/user, slot)
-	..()
-	if((slot & ITEM_SLOT_ICLOTHING) && freshly_laundered)
-		freshly_laundered = FALSE
-		user.add_mood_event("fresh_laundry", /datum/mood_event/fresh_laundry)
-
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
 		attached_accessory.on_uniform_dropped(src, user)
@@ -232,8 +225,6 @@
 
 /obj/item/clothing/under/examine(mob/user)
 	. = ..()
-	if(freshly_laundered)
-		. += "It looks fresh and clean."
 	if(can_adjust)
 		if(adjusted == ALT_STYLE)
 			. += "Alt-click on [src] to wear it normally."

@@ -1,4 +1,0 @@
-author: "tattle"
-delete-after: True
-changes:
-  - admin: "death details of keyless mobs (like xenobio monkeys) are now omitted from investigate deaths"
