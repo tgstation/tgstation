@@ -30,6 +30,7 @@
 
 	old_loc = get_turf(parent)
 	parent.forceMove(pick(GLOB.prisonwarp))
+	parent.focus = src
 	parent.admin_input_block_enabled = TRUE
 	to_chat(parent, span_adminnotice("You have been sent to Admin Prison!"), confidential=TRUE)
 	log_admin("[key_name(usr)] has sent [key_name(parent)] to Admin Prison!")
@@ -39,6 +40,7 @@
 	if(!parent || !old_loc)
 		return
 	parent.admin_input_block_enabled = FALSE
+	parent.focus = parent
 	parent.forceMove(old_loc)
 	to_chat(parent, span_adminnotice("You have been released from Admin Prison!"), confidential=TRUE)
 	log_admin("[key_name(usr)] has released [key_name(parent)] from Admin Prison!")
@@ -66,11 +68,6 @@
 	if(admin_input_block_enabled)
 		return
 	..()
-
-/mob/keyLoop(client/user)
-	if(admin_input_block_enabled)
-		return
-	return ..()
 
 /mob/forceMove(atom/destination)
 	if(admin_input_block_enabled)
