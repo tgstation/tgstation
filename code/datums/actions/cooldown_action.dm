@@ -78,10 +78,12 @@
 	else
 		button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
 
-	// If we don't change the icon state, or don't apply a special overlay,
-	// we need to show it's active somehow. So, make it greeeen
-	if(active_icon_state || active_overlay_icon_state || !IsAvailable() || !is_action_active(button))
+	if(!IsAvailable() || !is_action_active(button))
 		return
+	// If we don't change the icon state, or don't apply a special overlay,
+	if(active_background_icon_state || active_icon_state || active_overlay_icon_state)
+		return
+	// ...we need to show it's active somehow. So, make it greeeen
 	button.color = COLOR_GREEN
 
 /datum/action/cooldown/apply_button_background(atom/movable/screen/movable/action_button/current_button, force)
