@@ -184,6 +184,7 @@
 
 ///Opens and closes the display case
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
+	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	open = !open
 	update_appearance()
 
@@ -456,6 +457,19 @@
 	if(!broken && !open)
 		. += "[initial(icon_state)]_overlay"
 
+/obj/structure/displaycase/forsale/insert_showpiece(obj/item/new_showpiece, mob/user)
+	if(..())
+		return TRUE
+	update_static_data_for_all_viewers()
+
+/obj/structure/displaycase/forsale/dump()
+	..()
+	update_static_data_for_all_viewers()
+
+/obj/structure/displaycase/forsale/toggle_lock()
+	..()
+	SStgui.update_uis(src)
+
 /obj/structure/displaycase/forsale/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -465,21 +479,16 @@
 
 /obj/structure/displaycase/forsale/ui_data(mob/user)
 	var/list/data = list()
-	var/register = FALSE
-	if(payments_acc)
-		register = TRUE
-		data["owner_name"] = payments_acc.account_holder
-	if(showpiece)
-		data["product_name"] = capitalize(format_text(showpiece.name))
-	data["registered"] = register
+	data["owner_name"] = payments_acc ? payments_acc.account_holder : null
+	data["product_name"] = showpiece ?capitalize(format_text(showpiece.name)) : null
+	data["registered"] = payments_acc ? TRUE : FALSE
 	data["product_cost"] = sale_price
 	data["tray_open"] = open
 	return data
 
 /obj/structure/displaycase/forsale/ui_static_data(mob/user)
 	var/list/data = list()
-	if(showpiece)
-		data["product_icon"] = icon2base64(getFlatIcon(showpiece, no_anim=TRUE))
+	data["product_icon"] = showpiece ? icon2base64(getFlatIcon(showpiece, no_anim=TRUE)) : null
 	return data
 
 /obj/structure/displaycase/forsale/ui_act(action, params)
@@ -523,7 +532,7 @@
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
 				update_appearance()
-				SStgui.update_uis(src)
+				update_static_data_for_all_viewers()
 				return TRUE
 		if("Open")
 			if(!payments_acc)
@@ -535,7 +544,6 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 			toggle_lock()
-			SStgui.update_uis(src)
 		if("Register")
 			if(payments_acc)
 				return
@@ -574,7 +582,6 @@
 			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
 		if(payments_acc == potential_acc.registered_account)
-			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 			toggle_lock()
 			return
 	if(istype(I, /obj/item/modular_computer))
