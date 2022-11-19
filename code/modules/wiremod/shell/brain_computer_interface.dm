@@ -142,7 +142,7 @@
 /obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
 	bci = shell
 
-	show_charge_meter.set_value(TRUE) // Defaults to TRUE (1) which shows the charge meter.
+	show_charge_meter.set_value(TRUE)
 
 	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
 	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
