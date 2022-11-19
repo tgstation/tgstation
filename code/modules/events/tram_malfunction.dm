@@ -21,7 +21,7 @@
 		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
 			return .
 
-	message_admins("Tram Malfunction rolled but there's no tram, choosing new event.")
+	message_admins("Second pre-condition check for [name] failed, selecting new event.")
 	return FALSE
 
 /datum/round_event/tram_malfunction
