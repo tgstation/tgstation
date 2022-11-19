@@ -159,6 +159,8 @@
 				stack_trace("ERT shuttle loaded but found no spawnpoints, placing the ERT at wherever inside the shuttle instead.")
 
 				for(var/turf/open/floor/open_turf in shuttle_turfs)
+					if(!is_safe_turf(open_turf))
+						continue
 					spawn_turfs += open_turf
 
 
