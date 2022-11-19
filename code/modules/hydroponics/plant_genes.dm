@@ -185,7 +185,7 @@
 /datum/plant_gene/trait/proc/examine(obj/item/our_plant, mob/examiner, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += "<span class='info'>[description]</span>"
+	examine_list += span_info("[description]")
 
 /// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 /datum/plant_gene/trait/squash
