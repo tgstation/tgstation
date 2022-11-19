@@ -254,7 +254,10 @@
 		var/turf/rift_exit = rift.exit_locs[exit_count]
 		if (get_dist(rift_exit, target) >= distance_to_target)
 			continue
-		controller.current_movement_target = get_turf(rift)
+		var/turf/destination = get_turf(rift)
+		if (!destination)
+			return FALSE
+		controller.current_movement_target = destination
 		return TRUE
 	return FALSE
 

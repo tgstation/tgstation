@@ -15,10 +15,6 @@
 /datum/round_event/wizard/magicarp/setup()
 	start_when = rand(40, 60)
 
-	// TODO: remove test code
-	start_when = 0
-	// TODO: remove test code
-
 /datum/round_event/wizard/magicarp/announce(fake)
 	priority_announce("Unknown magical entities have been detected near [station_name()], please stand-by.", "Lifesign Alert")
 
@@ -36,11 +32,6 @@
 		if (!path_mid_point || !path_end_point)
 			continue
 		fish.ai_controller.blackboard[BB_CARP_MIGRATION_PATH] = list(WEAKREF(path_mid_point), WEAKREF(path_end_point))
-
-		// TODO: remove test code
-		fish_announce(fish)
-		return
-		// TODO: remove test code
 
 	fish_announce(fish)
 
