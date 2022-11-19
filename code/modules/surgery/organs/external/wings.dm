@@ -54,6 +54,9 @@
 
 	fly.Remove(organ_owner)
 
+	if(HAS_TRAIT_FROM(organ_owner, TRAIT_MOVE_FLYING, SPECIES_FLIGHT_TRAIT))
+		toggle_flight(organ_owner)
+
 /obj/item/organ/external/wings/functional/on_life(delta_time, times_fired)
 	. = ..()
 
