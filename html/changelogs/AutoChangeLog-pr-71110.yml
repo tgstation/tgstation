@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - refactor: "Added a particle editor to VV dropdown which can be used by coders and admins to edit particle values on the fly easily."

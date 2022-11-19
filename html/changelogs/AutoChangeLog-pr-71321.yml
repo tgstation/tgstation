@@ -1,0 +1,5 @@
+author: "Ebb-Real"
+delete-after: True
+changes:
+  - bugfix: "Tape pieces have the correct examine tip."
+  - bugfix: "Applying tape pieces by using it on someone will now actually warn them."

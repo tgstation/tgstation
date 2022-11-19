@@ -31,7 +31,6 @@ SUBSYSTEM_DEF(materials)
 	///List of stackcrafting recipes for materials using rigid recipes
 	var/list/rigid_stack_recipes = list(
 		new /datum/stack_recipe("Carving block", /obj/structure/carving_block, 5, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE),
-		new /datum/stack_recipe("Material Stairs", /obj/structure/stairs/material, 10, time = 10 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, applies_mats = TRUE),
 	)
 
 ///Ran on initialize, populated the materials and materials_by_category dictionaries with their appropiate vars (See these variables for more info)
@@ -156,7 +155,7 @@ SUBSYSTEM_DEF(materials)
 	for(var/x in materials_declaration)
 		var/datum/material/mat = x
 		combo_params += "[istype(mat) ? mat.id : mat]=[materials_declaration[mat] * multiplier]"
-	sortTim(combo_params, /proc/cmp_text_asc) // We have to sort now in case the declaration was not in order
+	sortTim(combo_params, GLOBAL_PROC_REF(cmp_text_asc)) // We have to sort now in case the declaration was not in order
 	var/combo_index = combo_params.Join("-")
 	var/list/combo = material_combos[combo_index]
 	if(!combo)

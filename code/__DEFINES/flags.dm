@@ -118,16 +118,14 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define XENOBIOLOGY_COMPATIBLE (1<<10)
 /// If Abductors are unable to teleport in with their observation console
 #define ABDUCTOR_PROOF (1<<11)
-/// If an area should be hidden from power consoles, power/atmosphere alerts, etc.
-#define NO_ALERTS (1<<12)
 /// If blood cultists can draw runes or build structures on this AREA.
-#define CULT_PERMITTED (1<<13)
+#define CULT_PERMITTED (1<<12)
 ///Whther this area is iluminated by starlight
-#define AREA_USES_STARLIGHT (1<<14)
+#define AREA_USES_STARLIGHT (1<<13)
 /// If engravings are persistent in this area
-#define PERSISTENT_ENGRAVINGS (1<<15)
+#define PERSISTENT_ENGRAVINGS (1<<14)
 /// Mobs that die in this area don't produce a dead chat message
-#define NO_DEATH_MESSAGE (1<<16)
+#define NO_DEATH_MESSAGE (1<<15)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

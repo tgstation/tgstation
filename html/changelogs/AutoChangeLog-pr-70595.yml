@@ -1,4 +1,0 @@
-author: "YakumoChen"
-delete-after: True
-changes: 
-  - bugfix: "Plastic explosives can no longer be planted on observer players when made visible."

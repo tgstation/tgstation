@@ -138,7 +138,7 @@
 	description = "Just somewhere quiet, where I can focus on my work with no interruptions."
 
 /datum/map_template/ruin/space/caravanambush
-	id = "space/caravanambush"
+	id = "caravanambush"
 	suffix = "caravanambush.dmm"
 	name = "Syndicate Ambush"
 	description = "A caravan route used by passing cargo freights has been ambushed by a salvage team manned by the syndicate. \

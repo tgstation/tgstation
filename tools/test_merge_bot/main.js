@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { createComment } from "./comment.js";
 
 const TEST_MERGE_COMMENT_HEADER = "<!-- test_merge_bot:";
 
@@ -79,45 +80,11 @@ export async function processTestMerges({ github, context }) {
 					comment.body.startsWith(TEST_MERGE_COMMENT_HEADER)
 			);
 
-		const roundIds = Object.values(servers)
-			.flat()
-			.map(({ round_id }) => round_id)
-			.sort()
-			.join(", ");
-
-		const newHeader = `<!-- test_merge_bot: ${roundIds} -->`;
-
-		if (existingComment && existingComment.body.startsWith(newHeader)) {
-			console.log(`Comment is up to date for #${prNumber}`);
+		const newBody = createComment(servers, existingComment?.body);
+		if (!newBody) {
+			console.log(`No changes for PR #${prNumber}`);
 			continue;
 		}
-
-		let totalRounds = 0;
-		let listOfRounds = "";
-
-		for (const [server, rounds] of Object.entries(servers).sort(
-			([a], [b]) => b - a
-		)) {
-			totalRounds += rounds.length;
-
-			listOfRounds += `${"\n"}### ${server}`;
-
-			for (const { datetime, round_id, url } of rounds.sort(
-				(a, b) => b.round_id - a.round_id
-			)) {
-				listOfRounds += `${"\n"}- [${round_id} @ ${datetime}](${url})`;
-			}
-
-			listOfRounds += "\n";
-		}
-
-		const newBody =
-			newHeader +
-			`\nThis pull request was test merged in ${totalRounds} round(s).` +
-			"\n" +
-			"<details><summary>Round list</summary>\n\n" +
-			listOfRounds +
-			"\n</details>\n";
 
 		if (existingComment === undefined) {
 			await github.rest.issues.createComment({

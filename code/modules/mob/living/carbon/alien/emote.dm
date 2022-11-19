@@ -14,7 +14,7 @@
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/alien/hiss/get_sound(mob/living/user)
-	if(isalienhumanoid(user))
+	if(isalienadult(user))
 		return SFX_HISS
 
 /datum/emote/living/alien/roar
@@ -26,5 +26,5 @@
 	vary = TRUE
 
 /datum/emote/living/alien/roar/get_sound(mob/living/user)
-	if(isalienhumanoid(user))
+	if(isalienadult(user))
 		return 'sound/voice/hiss5.ogg'

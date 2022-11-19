@@ -188,6 +188,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/suit/armor/vest/old = 1,
 		/obj/item/storage/belt/medical = 1,
 		/obj/item/storage/belt/utility = 1,
+		/obj/item/pen/screwdriver = 1,
 		) = 8,
 
 	list(//strange objects
@@ -298,7 +299,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/clothing/gloves/color/black = 1,
 		/obj/item/clothing/gloves/color/yellow = 1,
 		/obj/item/clothing/gloves/tackler/combat = 1,
-		/obj/item/clothing/head/helmet/justice = 1,
+		/obj/item/clothing/head/helmet/toggleable/justice = 1,
 		/obj/item/storage/belt/military/assault = 1,
 		/obj/item/storage/belt/security = 1,
 		) = 1,

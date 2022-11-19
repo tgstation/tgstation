@@ -153,7 +153,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /// This allows us to mirror any hidden sets from before we were created, no matter how low that chance is
 /atom/movable/screen/plane_master/proc/mirror_parent_hidden()
 	var/mob/our_mob = home?.our_hud?.mymob
-	var/atom/movable/screen/plane_master/true_plane = our_mob?.hud_used.get_plane_master(plane)
+	var/atom/movable/screen/plane_master/true_plane = our_mob?.hud_used?.get_plane_master(plane)
 	if(true_plane == src || !true_plane)
 		return
 
@@ -176,7 +176,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/offset_increased)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(offset_increased))
 	offset_increased(SSmapping, 0, SSmapping.max_plane_offset)
 
 /atom/movable/screen/plane_master/clickcatcher/proc/offset_increased(datum/source, old_off, new_off)
@@ -211,7 +211,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(offset != 0)
 		// You aren't the source? don't change yourself
 		return
-	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, .proc/on_offset_increase)
+	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(on_offset_increase))
 	offset_increase(0, SSmapping.max_plane_offset)
 
 /atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
@@ -301,7 +301,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Holds the seethrough versions (done using image overrides) of large objects. Mouse transparent, so you can click through them."
 	plane = SEETHROUGH_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list(GAME_PLANE)
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
 	start_hidden = TRUE
 
 /atom/movable/screen/plane_master/game_world_above
@@ -342,12 +342,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(offset != 0)
 		// You aren't the source? don't change yourself
 		return
-	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, .proc/handle_sight_value)
+	RegisterSignal(mymob, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(handle_sight_value))
 	handle_sight_value(mymob, mymob.sight, 0)
 	var/datum/hud/hud = home.our_hud
 	if(hud)
-		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
-	offset_change(0, hud.current_plane_offset)
+		RegisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
+	offset_change(0, hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/blackness/hide_from(mob/oldmob)
 	. = ..()
@@ -356,7 +356,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
 	var/datum/hud/hud = home.our_hud
 	if(hud)
-		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, .proc/on_offset_change)
+		UnregisterSignal(hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
 
 /// Reacts to some new plane master value
 /atom/movable/screen/plane_master/blackness/proc/handle_sight_value(datum/source, new_sight, old_sight)
@@ -506,14 +506,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(RENDER_PLANE_NON_GAME)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	allows_offsetting = FALSE
-
-/atom/movable/screen/plane_master/sound_effect_visual
-	name = "Sound Effect Visuals"
-	documentation = "Holds anything that is a game visual, but is displayed over fullscreen effects. \
-		<br>Displayed over fullscreen effects, but still under runechat and the HUD."
-	plane = SOUND_EFFECT_VISUAL_PLANE
-	render_relay_planes = list(RENDER_PLANE_NON_GAME)
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/runechat
 	name = "Runechat"

@@ -40,7 +40,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	if(can_attach(M, attach_right))
+	if(can_attach(M, attach_right, user))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return FALSE
 		if(special_attaching_interaction(attach_right, M, user))
@@ -48,7 +48,6 @@
 		attach(M, attach_right)
 		user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
 		return TRUE
-	to_chat(user, span_warning("You are unable to attach [src] to [M]!"))
 	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -113,31 +112,37 @@
 	if(!chassis)
 		return FALSE
 	chassis.use_power(energy_drain)
-	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target), interaction_key = interaction_key)
+	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target), interaction_key = interaction_key)
 
 ///Do after wrapper for mecha equipment
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
-	return do_after(user, delay, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target))
+	return do_after(user, delay, target, extra_checks = CALLBACK(src, PROC_REF(do_after_checks), target))
 
 /// do after checks for the mecha equipment do afters
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target)
 	return chassis && (get_dir(chassis, target) & chassis.dir)
 
-/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
-	return default_can_attach(M, attach_right)
+/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE, mob/user)
+	return default_can_attach(M, attach_right, user)
 
-/obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE, mob/user)
 	if(!(mech_flags & mech.mech_type))
+		to_chat(user, span_warning("\The [src] is incompatible with [mech]!"))
 		return FALSE
 	if(equipment_slot == MECHA_WEAPON)
 		if(attach_right)
-			if(mech.equip_by_category[MECHA_R_ARM] && (!special_attaching_interaction(attach_right, mech, checkonly = TRUE)))
+			if(mech.equip_by_category[MECHA_R_ARM] && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
+				to_chat(user, span_warning("\The [mech]'s right arm is full![mech.equip_by_category[MECHA_L_ARM] ? "" : " Try left arm!"]"))
 				return FALSE
 		else
-			if(mech.equip_by_category[MECHA_L_ARM] && (!special_attaching_interaction(attach_right, mech, checkonly = TRUE)))
+			if(mech.equip_by_category[MECHA_L_ARM] && (!special_attaching_interaction(attach_right, mech, user, checkonly = TRUE)))
+				to_chat(user, span_warning("\The [mech]'s left arm is full![mech.equip_by_category[MECHA_R_ARM] ? "" : " Try right arm!"]"))
 				return FALSE
 		return TRUE
-	return length(mech.equip_by_category[equipment_slot]) < mech.max_equip_by_category[equipment_slot]
+	if(length(mech.equip_by_category[equipment_slot]) == mech.max_equip_by_category[equipment_slot])
+		to_chat(user, span_warning("This equipment slot is already full!"))
+		return FALSE
+	return TRUE
 
 /**
  * Special Attaching Interaction, used to bypass normal attachment procs.

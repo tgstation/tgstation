@@ -160,6 +160,7 @@
 	for(var/i in 1 to projectiles_per_fire)
 		var/obj/projectile/to_fire = new projectile_type()
 		ready_projectile(to_fire, target, owner, i)
+		SEND_SIGNAL(owner, COMSIG_MOB_SPELL_PROJECTILE, src, target, to_fire)
 		to_fire.fire()
 	return TRUE
 
@@ -167,7 +168,7 @@
 	to_fire.firer = owner
 	to_fire.fired_from = src
 	to_fire.preparePixelProjectile(target, owner)
-	RegisterSignal(to_fire, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/on_cast_hit)
+	RegisterSignal(to_fire, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_cast_hit))
 
 	if(istype(to_fire, /obj/projectile/magic))
 		var/obj/projectile/magic/magic_to_fire = to_fire

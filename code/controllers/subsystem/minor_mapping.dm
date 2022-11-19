@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(minor_mapping)
 /datum/controller/subsystem/minor_mapping/proc/trigger_migration(num_mice=10)
 	var/list/exposed_wires = find_exposed_wires()
 
-	var/mob/living/simple_animal/mouse/mouse
+	var/mob/living/basic/mouse/mouse
 	var/turf/open/proposed_turf
 
 

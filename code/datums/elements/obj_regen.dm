@@ -1,7 +1,7 @@
 /** Object integrity regeneration element added by alien alloy.
  */
 /datum/element/obj_regen
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
 	id_arg_index = 2
 	/// The rate of regeneration as a function of maximum integrity.
 	var/rate
@@ -21,7 +21,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	rate = _rate
-	RegisterSignal(target, COMSIG_ATOM_TAKE_DAMAGE, .proc/on_take_damage)
+	RegisterSignal(target, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(on_take_damage))
 	if(target.get_integrity() < target.max_integrity)
 		if(!length(processing))
 			START_PROCESSING(SSobj, src)
