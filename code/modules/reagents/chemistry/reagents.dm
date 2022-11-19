@@ -251,7 +251,7 @@ Primarily used in reagents/reaction_agents
  * Arguments
  * * purity - Overrides the purity used for determining the inverse purity.
  */
-/datum/reagent/proc/get_inverse_purity(var/purity)
+/datum/reagent/proc/get_inverse_purity(purity)
 	if(!inverse_chem || !inverse_chem_val)
 		return
 	if(!purity)
