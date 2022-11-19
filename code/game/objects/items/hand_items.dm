@@ -271,13 +271,21 @@
 	playsound(slapped, 'sound/weapons/slap.ogg', slap_volume, TRUE, -1)
 	return
 
-/obj/item/hand_item/slapper/attack_atom(obj/O, mob/living/user, params)
-	if(!istype(O, /obj/structure/table))
+/obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, params)
+	if(!Adjacent(target) || !istype(target, /obj/structure/table))
 		return ..()
 
-	var/obj/structure/table/the_table = O
-	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	attack_table(target, user, TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/hand_item/slapper/pre_attack(atom/target, mob/living/user, params)
+	if(!Adjacent(target) || !istype(target, /obj/structure/table))
+		return ..()
+
+	attack_table(target, user, FALSE)
+	return TRUE
+
+/obj/item/hand_item/slapper/proc/attack_table(obj/structure/table/table, mob/living/user, right_click)
 	if(is_right_clicking && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
 		transform = transform.Scale(5) // BIG slap
 		if(HAS_TRAIT(user, TRAIT_HULK))
