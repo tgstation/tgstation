@@ -1,0 +1,9 @@
+author: "Riggle"
+delete-after: True
+changes:
+  - qol: "Imaginary friends now have runechat, typing indicators and emotes!"
+  - qol: "Imaginary friends can point and spin"
+  - bugfix: "Fixed a bug with imaginary friends where ghosts would stay after aghosting"
+  - refactor: "Imaginary friend code massively improved"
+  - refactor: "Imaginary friends now support multiple friends at the same time!"
+  - admin: "Imaginary friends no longer bypass filters"
