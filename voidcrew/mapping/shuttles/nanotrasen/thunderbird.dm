@@ -3,6 +3,7 @@
 	suffix = "nano_thunderbird"
 	short_name = "Thunderbird-Class"
 	faction_prefix = NANOTRASEN_SHIP
+	part_cost = 2
 
 	job_slots = list(
 		list(

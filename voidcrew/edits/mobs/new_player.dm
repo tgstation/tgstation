@@ -19,9 +19,12 @@
 		return
 
 	if(selected_ship == "Purchase")
-		var/datum/map_template/shuttle/template = SSmapping.ship_purchase_list[tgui_input_list(src, "Please select ship to purchase!", "Welcome, [used_name].", SSmapping.ship_purchase_list)]
+		var/datum/map_template/shuttle/voidcrew/template = SSmapping.ship_purchase_list[tgui_input_list(src, "Please select ship to purchase!", "Welcome, [used_name].", SSmapping.ship_purchase_list)]
 		if(!template)
 			return LateChoices()
+		if(!client.remove_ship_cost(initial(template.faction_prefix), initial(template.part_cost)))
+			tgui_alert(client, "You lack the parts needed to build this ship! (Required: [initial(template.part_cost)] [initial(template.faction_prefix)] part\s)")
+			return
 
 		to_chat(usr, span_danger("Your [initial(template.name)] is being prepared. Please be patient!"))
 		var/obj/docking_port/mobile/voidcrew/target = SSshuttle.create_ship(template)

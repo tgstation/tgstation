@@ -2,6 +2,7 @@
 	name = "Pill-class-B(lack) Suicide Device"
 	suffix = "pill_black"
 	short_name = "Blackpill-class"
+	part_cost = 1
 
 	job_slots = list(
 		list(

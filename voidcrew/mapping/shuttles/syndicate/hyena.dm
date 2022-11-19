@@ -3,6 +3,7 @@
 	suffix = "syndicate_hyena"
 	short_name = "Hyena-Class"
 	faction_prefix = SYNDICATE_SHIP
+	part_cost = 2
 
 	job_slots = list(
 		list(

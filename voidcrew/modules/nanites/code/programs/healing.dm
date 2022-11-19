@@ -235,7 +235,7 @@
 	if(check_revivable())
 		playsound(C, 'sound/machines/defib_success.ogg', 50, FALSE)
 		C.set_heartattack(FALSE)
-		C.revive(full_heal = FALSE, admin_revive = FALSE)
+		C.revive(full_heal_flags = HEAL_ADMIN)
 		C.emote("gasp")
 		C.set_timed_status_effect(10 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
 		SEND_SIGNAL(C, COMSIG_LIVING_MINOR_SHOCK)

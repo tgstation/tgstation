@@ -1,0 +1,2 @@
+//Carbon
+#define COMSIG_KB_CARBON_TAKESHIPPART_DOWN "keybinding_carbon_takeshippart_down"

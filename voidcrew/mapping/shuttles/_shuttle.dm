@@ -8,7 +8,7 @@
 	///Short name of the ship
 	var/short_name
 	///Cost of the ship
-	var/cost = 1
+	var/part_cost = 1
 
 	///List of job slots
 	var/list/job_slots = list()

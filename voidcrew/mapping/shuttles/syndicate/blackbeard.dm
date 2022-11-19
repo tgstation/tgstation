@@ -3,6 +3,7 @@
 	suffix = "syndicate_blackbeard"
 	short_name = "Blackbeard-Class"
 	faction_prefix = SYNDICATE_SHIP
+	part_cost = 1
 
 	job_slots = list(
 		list(

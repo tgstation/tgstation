@@ -2,6 +2,7 @@
 	name = "Resistance-Class IRA Safehouse"
 	suffix = "irish"
 	short_name = "Resistance-class"
+	part_cost = 2
 
 	job_slots = list(
 		list(

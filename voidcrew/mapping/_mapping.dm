@@ -4,11 +4,11 @@
  */
 /datum/controller/subsystem/mapping
 	///List of all ships that can be purchased.
-	var/list/ship_purchase_list = list()
+	var/list/datum/map_template/shuttle/voidcrew/ship_purchase_list = list()
 	///List of all Nanotrasen ships, one is randomly selected to spawn at start.
-	var/list/nt_ship_list = list()
+	var/list/datum/map_template/shuttle/voidcrew/nt_ship_list = list()
 	///List of all Syndicate ships, one is randomly selected to spawn at start.
-	var/list/syn_ship_list = list()
+	var/list/datum/map_template/shuttle/voidcrew/syn_ship_list = list()
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	load_ship_templates()
@@ -33,12 +33,10 @@
 		return
 
 	for(var/datum/map_template/shuttle/voidcrew/shuttles as anything in subtypesof(/datum/map_template/shuttle/voidcrew))
-		ship_purchase_list["[initial(shuttles.faction_prefix)] [initial(shuttles.name)] ([initial(shuttles.cost)] credits)"] = shuttles
+		ship_purchase_list["[initial(shuttles.name)] ([initial(shuttles.faction_prefix)] [initial(shuttles.part_cost)] part\s)"] = shuttles
 
 		switch(initial(shuttles.faction_prefix))
 			if(NANOTRASEN_SHIP)
 				nt_ship_list[initial(shuttles.name)] = shuttles
 			if(SYNDICATE_SHIP)
 				syn_ship_list[initial(shuttles.name)] = shuttles
-
-
