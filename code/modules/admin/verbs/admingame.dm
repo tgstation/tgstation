@@ -76,7 +76,10 @@
 
 	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[M.ckey]'>Notes | Messages | Watchlist</A> | "
 	if(M.client)
-		body += "| <A href='?_src_=holder;[HrefToken()];sendtoprison=[REF(M)]'>Prison</A> | "
+		if(M.admin_prison_holder)
+			body += "| <A href='?_src_=holder;[HrefToken()];releasefromprison=[REF(M)]'>Release from Prison</A> | "
+		else
+			body += "| <A href='?_src_=holder;[HrefToken()];sendtoprison=[REF(M)]'>Send to Prison</A> | "
 		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=[REF(M)]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
 		body += "<br><b>Mute: </b> "

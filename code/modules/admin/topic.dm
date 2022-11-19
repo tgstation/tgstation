@@ -523,14 +523,28 @@
 			to_chat(usr, "This cannot be used on instances of type /mob/living/silicon/ai.", confidential = TRUE)
 			return
 
-		if(tgui_alert(usr, "Send [key_name(M)] to Prison?", "Message", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, "Send [key_name(M)] to Admin Prison?", "Message", list("Yes", "No")) != "Yes")
+			return
+		
+		new /datum/admin_prison_watcher(M)
+		M.admin_prison_holder.send_to_admin_prison()
+
+	else if(href_list["releasefromprison"])
+		if(!check_rights(R_ADMIN))
 			return
 
-		M.forceMove(pick(GLOB.prisonwarp))
-		to_chat(M, span_adminnotice("You have been sent to Prison!"), confidential = TRUE)
+		var/mob/M = locate(href_list["releasefromprison"])
+		if(!ismob(M))
+			to_chat(usr, "This can only be used on instances of type /mob.", confidential = TRUE)
+			return
+		if(!M.admin_prison_holder)
+			to_chat(usr, "That mob does not appear to be in Admin Prison!", confidential = TRUE)
+			return
 
-		log_admin("[key_name(usr)] has sent [key_name(M)] to Prison!")
-		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to Prison!")
+		if(tgui_alert(usr, "Release [key_name(M)] from Admin Prison?", "Message", list("Yes", "No")) != "Yes")
+			return
+		
+		M.admin_prison_holder.release_from_admin_prison()
 
 	else if(href_list["sendbacktolobby"])
 		if(!check_rights(R_ADMIN))
