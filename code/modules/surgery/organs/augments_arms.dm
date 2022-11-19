@@ -233,7 +233,7 @@
 		/obj/item/weldingtool/largetank/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/wirecutters/cyborg,
-		/obj/item/multitool/cyborg
+		/obj/item/multitool/cyborg,
 	)
 
 /obj/item/organ/internal/cyberimp/arm/toolset/l
@@ -295,7 +295,7 @@
 		/obj/item/melee/energy/blade/hardlight,
 		/obj/item/gun/medbeam,
 		/obj/item/borg/stun,
-		/obj/item/assembly/flash/armimplant
+		/obj/item/assembly/flash/armimplant,
 	)
 
 /obj/item/organ/internal/cyberimp/arm/combat/Initialize(mapload)
@@ -317,7 +317,7 @@
 		/obj/item/surgicaldrill/augment,
 		/obj/item/scalpel/augment,
 		/obj/item/circular_saw/augment,
-		/obj/item/surgical_drapes
+		/obj/item/surgical_drapes,
 	)
 
 /obj/item/organ/internal/cyberimp/arm/surgery/emagged
@@ -331,5 +331,5 @@
 		/obj/item/scalpel/augment,
 		/obj/item/circular_saw/augment,
 		/obj/item/surgical_drapes,
-		/obj/item/knife/combat/cyborg
+		/obj/item/knife/combat/cyborg,
 	)

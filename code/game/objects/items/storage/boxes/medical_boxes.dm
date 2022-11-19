@@ -119,13 +119,13 @@
 	illustration = "beaker"
 
 /obj/item/storage/box/evilmeds/PopulateContents()
-	var/list/items_inside = list(
+	var/static/list/items_inside = list(
 		/obj/item/reagent_containers/cup/beaker/meta/omnizine = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/sal_acid = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/oxandrolone = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/pen_acid = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/atropine = 1,
 		/obj/item/reagent_containers/cup/beaker/meta/salbutamol = 1,
-		/obj/item/reagent_containers/cup/beaker/meta/rezadone = 1
-		)
+		/obj/item/reagent_containers/cup/beaker/meta/rezadone = 1,
+	)
 	generate_items_inside(items_inside, src)

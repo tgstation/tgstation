@@ -269,7 +269,7 @@
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/list/items_inside = list(
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 4,
@@ -280,7 +280,7 @@
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
-		/obj/item/cautery = 1
+		/obj/item/cautery = 1,
 	)
 	generate_items_inside(items_inside,src)
 
@@ -292,7 +292,7 @@
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(
+	var/static/list/items_inside = list(
 		/obj/item/stack/medical/suture/medicated = 2,
 		/obj/item/stack/medical/mesh/advanced = 2,
 		/obj/item/reagent_containers/pill/patch/libital = 3,
@@ -305,7 +305,7 @@
 		/obj/item/reagent_containers/hypospray/combat/empty = 1,
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/clothing/glasses/hud/health/night = 1
+		/obj/item/clothing/glasses/hud/health/night = 1,
 	)
 	generate_items_inside(items_inside,src)
 

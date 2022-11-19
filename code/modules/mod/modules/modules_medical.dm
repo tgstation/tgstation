@@ -399,5 +399,5 @@
 		/datum/surgery/advanced/bioware/ligament_hook,
 		/datum/surgery/advanced/bioware/ligament_reinforcement,
 		/datum/surgery/advanced/bioware/cortex_imprint,
-		/datum/surgery/advanced/bioware/cortex_folding
+		/datum/surgery/advanced/bioware/cortex_folding,
 	)
