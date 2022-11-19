@@ -99,8 +99,11 @@
 	var/armor = victim.run_armor_check(affecting, MELEE)
 
 	if(prob(MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE))
-		victim.visible_message(span_danger("[user]'s bite misses [victim]!"),
-			span_danger("You avoid [user]'s bite!"), span_hear("You hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
+		victim.visible_message( \
+			span_danger("[user]'s bite misses [victim]!"), \
+			span_danger("You avoid [user]'s bite!"), \
+			span_hear("You hear jaws snapping shut!"), \
+			COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("Your bite misses [victim]!"))
 		return TRUE
 
