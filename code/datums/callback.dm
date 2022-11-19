@@ -117,6 +117,10 @@
 	if (!object)
 		return
 
+	if(fexists(object))
+		to_chat(usr, "[object] may be an external library. Calling external libraries is disallowed.", confidential = TRUE)
+		return
+
 	var/list/calling_arguments = arguments
 	if (length(args))
 		if (length(arguments))
@@ -152,6 +156,10 @@
 				return world.push_usr(M, src)
 
 	if (!object)
+		return
+
+	if(fexists(object))
+		to_chat(usr, "[object] may be an external library. Calling external libraries is disallowed.", confidential = TRUE)
 		return
 
 	var/list/calling_arguments = arguments
