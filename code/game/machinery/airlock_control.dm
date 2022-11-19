@@ -7,6 +7,10 @@
 	var/frequency
 	var/datum/radio_frequency/radio_connection
 
+/obj/machinery/door/airlock/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_GREY_TIDE, PROC_REF(grey_tide))
+
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal)
 		return
@@ -83,7 +87,13 @@
 /obj/machinery/door/airlock/Destroy()
 	if(frequency)
 		SSradio.remove_object(src,frequency)
+	UnregisterSignal(src, COMSIG_GREY_TIDE)
 	return ..()
+
+/obj/machinery/door/airlock/proc/grey_tide()
+	if(critical_machine) //Skip doors in critical positions, such as the SM chamber.
+		return
+	prison_open()
 
 /obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'

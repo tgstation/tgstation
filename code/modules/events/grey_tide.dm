@@ -48,16 +48,8 @@
 /datum/round_event/grey_tide/end()
 	for(var/area/area_to_open in areas_to_open)
 		for(var/obj/object_to_open in area_to_open)
-			if(istype(object_to_open, /obj/structure/closet/secure_closet))
-				var/obj/structure/closet/secure_closet/chosen_closet = object_to_open
-				chosen_closet.locked = FALSE
-				chosen_closet.update_appearance()
-			else if(istype(object_to_open, /obj/machinery/door/airlock))
-				var/obj/machinery/door/airlock/chosen_airlock = object_to_open
-				if(chosen_airlock.critical_machine) //Skip doors in critical positions, such as the SM chamber.
-					continue
-				chosen_airlock.prison_open()
-			else if(istype(object_to_open, /obj/machinery/status_display/door_timer))
+			SEND_SIGNAL(object_to_open, COMSIG_GREY_TIDE)
+			if(istype(object_to_open, /obj/machinery/status_display/door_timer))
 				var/obj/machinery/status_display/door_timer/prison_timer = object_to_open
 				prison_timer.timer_end(forced = TRUE)
 			else if(istype(object_to_open, /obj/machinery/power/apc)) //Escape (or sneak in) under the cover of darkness
