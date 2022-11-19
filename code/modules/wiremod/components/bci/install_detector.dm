@@ -7,7 +7,7 @@
 
 /obj/item/circuit_component/install_detector
 	display_name = "Install Detector"
-	desc = "A component that detects when a BCI is installed or removed from it's user."
+	desc = "A component that detects when a BCI is installed or removed from its user."
 	category = "BCI"
 
 	required_shells = list(/obj/item/organ/internal/cyberimp/bci)
