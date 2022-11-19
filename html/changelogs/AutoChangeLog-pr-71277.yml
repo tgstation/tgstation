@@ -1,4 +1,0 @@
-author: "twilightwanderer"
-delete-after: True
-changes:
-  - admin: "Adding the ability to load the configuration of custom maps"

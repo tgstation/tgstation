@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes:
-  - bugfix: "Cans of monkey energy now have enough space to properly hold the quantity of the monkey energy reagent they spawn with."

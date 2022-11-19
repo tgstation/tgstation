@@ -1,5 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "fixed bamboo floor tile in-hand icons not being used"
-  - imageadd: "added tatami of 3 types to the bamboo floor variants"
