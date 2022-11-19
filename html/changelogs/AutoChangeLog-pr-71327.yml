@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "Canned Laughter, T-Borg's Tonic Water, and Soda Water cans should all come with the expected marketed 50 units of goodness, rather than cheaping out on materials for only 30 units of can volume."
