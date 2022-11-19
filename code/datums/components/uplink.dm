@@ -170,7 +170,6 @@
 		if(uplink_handler.traitor_datum)
 			for(var/datum/objective/task in uplink_handler.traitor_datum.objectives)
 				var/list/task_data = list()
-				task_data += task.name
 				task_data += task.explanation_text
 				primary_objectives += task_data
 		var/list/potential_objectives = list()

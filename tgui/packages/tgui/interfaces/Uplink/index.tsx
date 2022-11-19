@@ -1,11 +1,12 @@
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { GenericUplink, Item } from './GenericUplink';
-import { Component } from 'inferno';
+import { Component, Fragment } from 'inferno';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
 import { Box, Tabs, Button, Stack, Section, Tooltip } from '../../components';
+import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
 import { calculateProgression, calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
 
@@ -46,6 +47,8 @@ type UplinkData = {
 
   has_objectives: BooleanLike;
   has_progression: BooleanLike;
+  primary_objectives;
+  completed_final_objective;
   potential_objectives: Objective[];
   active_objectives: Objective[];
   maximum_active_objectives: number;
@@ -150,6 +153,8 @@ export class Uplink extends Component<{}, UplinkState> {
     const {
       telecrystals,
       progression_points,
+      primary_objectives,
+      completed_final_objective,
       active_objectives,
       potential_objectives,
       has_objectives,
@@ -313,15 +318,22 @@ export class Uplink extends Component<{}, UplinkState> {
                   <Stack.Item grow={1}>
                     <Tabs fluid textAlign="center">
                       {!!has_objectives && (
-                        <Tabs.Tab
-                          selected={currentTab === 0}
-                          onClick={() => this.setState({ currentTab: 0 })}>
-                          Objectives
-                        </Tabs.Tab>
+                        <Fragment>
+                          <Tabs.Tab
+                            selected={currentTab === 0}
+                            onClick={() => this.setState({ currentTab: 0 })}>
+                            Primary Objectives
+                          </Tabs.Tab>
+                          <Tabs.Tab
+                            selected={currentTab === 1}
+                            onClick={() => this.setState({ currentTab: 1 })}>
+                            Secondary Objectives
+                          </Tabs.Tab>
+                        </Fragment>
                       )}
                       <Tabs.Tab
-                        selected={currentTab === 1 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 1 })}>
+                        selected={currentTab === 2 || !has_objectives}
+                        onClick={() => this.setState({ currentTab: 2 })}>
                         Market
                       </Tabs.Tab>
                     </Tabs>
@@ -341,6 +353,11 @@ export class Uplink extends Component<{}, UplinkState> {
             </Stack.Item>
             <Stack.Item grow>
               {(currentTab === 0 && has_objectives && (
+                <PrimaryObjectiveMenu
+                  primary_objectives={primary_objectives}
+                  final_objective={completed_final_objective}
+                />
+              )) || (currentTab === 1 && has_objectives && (
                 <ObjectiveMenu
                   activeObjectives={active_objectives}
                   potentialObjectives={potential_objectives}
