@@ -1,5 +1,5 @@
-import { Component } from 'inferno';
-import { Box, Flex, Fragment, Icon, LabeledList, NoticeBox, Section, Stack, } from '../../components';
+import { Component, Fragment } from 'inferno';
+import { Box, Flex, NoticeBox, Section, Stack } from '../../components';
 
 type PrimaryObjectiveMenuProps = {
   primary_objectives,
@@ -12,7 +12,7 @@ export class PrimaryObjectiveMenu extends Component<
   render() {
     const {
       primary_objectives,
-      final_objective
+      final_objective,
     } = this.props;
     return (
       <Fragment>
@@ -22,8 +22,7 @@ export class PrimaryObjectiveMenu extends Component<
               width={"100%"}
               hight={"100%"}
               position="absolute"
-              className="UplinkObjective__EmptyObjective">
-            </Box>
+              className="UplinkObjective__EmptyObjective" />
             <NoticeBox
               position="absolute"
               width={"100%"}
@@ -49,13 +48,13 @@ export class PrimaryObjectiveMenu extends Component<
             {primary_objectives.map((objective, index) => (
               <Section
                 title={"Objective " + (index + 1)}
-                color={!!final_objective?"grey":"white"}>
+                color={final_objective?"grey":"white"}>
               {objective}
               </Section>
             ))}
           </Flex.Item>
         </Flex>
       </Fragment>
-    )
+    );
   }
 }
