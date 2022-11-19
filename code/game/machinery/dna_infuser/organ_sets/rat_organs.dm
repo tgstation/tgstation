@@ -2,6 +2,7 @@
 /datum/status_effect/organ_set_bonus/rat
 	organs_needed = 4
 	bonus_activate_text = "Rodent DNA is deeply infused with you! You've learned how to traverse ventilation!"
+	bonus_deactivate_text = "Your DNA is no longer majority rat, and so fades your ventilation skills..."
 
 /datum/status_effect/organ_set_bonus/rat/enable_bonus()
 	. = ..()

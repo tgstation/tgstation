@@ -54,7 +54,7 @@
 	///if the bonus is active
 	var/bonus_active = FALSE
 	var/bonus_activate_text = "??? DNA is deeply infused with you! You've learned how to make error reports!"
-	var/bonus_deactivate_text = "Your DNA is no longer majority rat, and so fades your ventilation skills..."
+	var/bonus_deactivate_text = "Your DNA is no longer majority ???. You did make an issue report, right?"
 
 /datum/status_effect/organ_set_bonus/proc/set_organs(new_value)
 	organs = new_value
