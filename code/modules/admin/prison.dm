@@ -1,5 +1,8 @@
-/// The admin prison watcher datum this mob has been assigned
-/mob/var/datum/admin_prison_watcher/admin_prison_holder
+/mob
+	/// The admin prison watcher datum this mob has been assigned
+	var/datum/admin_prison_watcher/admin_prison_holder
+	/// Whether this mob is currently blacklisted from using all input forms except Topics
+	var/admin_input_block_enabled = FALSE
 
 /// A datum dedicated to a mob to ensure they cannot perform any inputs until released from admin prison
 /datum/admin_prison_watcher
