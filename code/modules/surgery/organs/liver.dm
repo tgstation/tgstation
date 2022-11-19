@@ -93,7 +93,10 @@
 
 	if(!istype(liver_owner))
 		return
-	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM))//can't process reagents with a failing liver
+	if(HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) //You don't even have a metabolism
+		return
+	if(organ_flags & ORGAN_FAILING) //If you do have a metabolism but your liver is failing then we use the liverless version of metabolize
+		liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE, liverless=TRUE)
 		return
 
 	// How much damage to inflict on our liver
@@ -125,7 +128,7 @@
 
 
 /obj/item/organ/internal/liver/handle_failing_organs(delta_time)
-	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
 		return
 	return ..()
 
