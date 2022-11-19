@@ -163,6 +163,10 @@
 	port_id = "snowdin"
 	who_can_purchase = null
 
+/datum/map_template/shuttle/ert
+	port_id = "ert"
+	who_can_purchase = null
+
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/backup
@@ -459,7 +463,7 @@
 	description = "A luxurious casino packed to the brim with everything you need to start new gambling addicitions!"
 	admin_notes = "The ship is a bit chunky, so watch where you park it."
 	credit_cost = 7777
-	
+
 /datum/map_template/shuttle/emergency/shadow
 	suffix = "shadow"
 	name = "The NTSS Shadow"
@@ -744,5 +748,10 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+// Custom ERT shuttles
+/datum/map_template/shuttle/ert/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter ERT Shuttle"
 
 #undef EMAG_LOCKED_SHUTTLE_COST
