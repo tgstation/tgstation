@@ -15,7 +15,7 @@
 
 /obj/machinery/gibber/Initialize(mapload)
 	. = ..()
-	if(prob(1))
+	if(prob(5))
 		name = "meat grinder"
 		desc = "Okay, if I... if I chop you up in a meat grinder, and the only thing that comes out, that's left of you, is your eyeball, \
 				you'r- you're PROBABLY DEAD! You're probably going to - not you, I'm just sayin', like, if you- if somebody were to, like, \
