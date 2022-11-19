@@ -965,6 +965,8 @@
 	clone.underwear = human_cloned.underwear
 	clone.undershirt = human_cloned.undershirt
 	clone.socks = human_cloned.socks
+	for(var/datum/quirk/target_quirk as anything in human_cloned.quirks)
+		clone.add_quirk(target_quirk.type)
 	clone.updateappearance(mutcolor_update=1)
 	clone.domutcheck()
 
