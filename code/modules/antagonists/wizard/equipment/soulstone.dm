@@ -71,7 +71,7 @@
 
 	var/mob/living/simple_animal/shade/shade = locate() in src
 	if(shade)
-		// "(dull) soultone: Urist McCaptain"
+		// "(dull) soulstone: Urist McCaptain"
 		name = "[name]: [shade.real_name]"
 
 /obj/item/soulstone/update_desc(updates)
