@@ -286,7 +286,7 @@
 	return TRUE
 
 /obj/item/hand_item/slapper/proc/attack_table(obj/structure/table/table, mob/living/user, right_click)
-	if(is_right_clicking && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
+	if(right_click && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
 		transform = transform.Scale(5) // BIG slap
 		if(HAS_TRAIT(user, TRAIT_HULK))
 			transform = transform.Scale(2)
