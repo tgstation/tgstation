@@ -1157,6 +1157,7 @@
 #include "code\datums\mapgen\Cavegens\LavalandGenerator.dm"
 #include "code\datums\martial\_martial.dm"
 #include "code\datums\martial\boxing.dm"
+#include "code\datums\martial\carp_jaws.dm"
 #include "code\datums\martial\cqc.dm"
 #include "code\datums\martial\krav_maga.dm"
 #include "code\datums\martial\mushpunch.dm"

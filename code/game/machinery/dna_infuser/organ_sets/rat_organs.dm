@@ -105,7 +105,7 @@
 
 
 
-/// you occasionally squeak.
+/// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/internal/tongue/rat
 	name = "mutated rat-tongue"
 	desc = "Rat DNA infused into what was once a normal tongue."
@@ -122,6 +122,21 @@
 	var/message = lowertext(speech_args[SPEECH_MESSAGE])
 	if(message == "hi" || message == "hi.")
 		speech_args[SPEECH_MESSAGE] = "Cheesed to meet you!"
+	if(message == "hi?")
+		speech_args[SPEECH_MESSAGE] = "Um... cheesed to meet you?"
+
+/obj/item/organ/internal/tongue/rat/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
+	. = ..()
+	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, .proc/its_on_the_mouse)
+
+/obj/item/organ/internal/tongue/rat/Remove(mob/living/carbon/tongue_owner, special)
+	. = ..()
+	UnregisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN)
+
+/obj/item/organ/internal/tongue/rat/proc/its_on_the_mouse(mob/living/carbon/offerer, mob/living/taker, obj/item/given)
+	SIGNAL_HANDLER
+	offerer.say("For you, it's on the mouse.")
+	taker.add_mood_event("it_was_on_the_mouse", /datum/mood_event/it_was_on_the_mouse)
 
 /obj/item/organ/internal/tongue/rat/on_life(delta_time, times_fired)
 	. = ..()
