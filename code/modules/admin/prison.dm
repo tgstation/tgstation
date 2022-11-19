@@ -15,6 +15,7 @@
 	RegisterSignal(parent, COMSIG_MOB_LOGIN, PROC_REF(on_mob_login))
 
 /datum/admin_prison_watcher/Destroy()
+	parent?.admin_prison_watcher = null
 	if(parent && old_loc)
 		message_admins("The [type] assigned to [parent.ckey] has been qdel'd. This was probably not intentional!")
 		parent = null
