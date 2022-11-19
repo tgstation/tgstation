@@ -1,0 +1,4 @@
+author: "1bw0kopy"
+delete-after: True
+changes:
+  - bugfix: "Fix being unable to block embeds"
