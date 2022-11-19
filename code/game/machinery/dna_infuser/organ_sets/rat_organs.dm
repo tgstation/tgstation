@@ -24,7 +24,7 @@
 
 /obj/item/organ/internal/eyes/night_vision/rat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "has deep, shifty black pupils, surrounded by a sickening yellow sclera.", BODY_ZONE_HEAD)
+	AddElement(/datum/element/noticable_organ, "has deep, shifty black pupils, surrounded by a sickening yellow sclera.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 
