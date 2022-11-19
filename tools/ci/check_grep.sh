@@ -30,9 +30,6 @@ else
 	ignore_515_proc_marker="--exclude=__byond_version_compat.dm"
 fi
 
-# check for pcre2 support
-
-
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
 
 part=0
