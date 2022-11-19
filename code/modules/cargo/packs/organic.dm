@@ -232,7 +232,7 @@
 	new_pizza_box.boxtag_set = TRUE
 	new_pizza_box.update_appearance(UPDATE_ICON | UPDATE_DESC)
 
-/// tells crew that an infinite pizza box exists, half of the time, based ona roll in the anamolous box proc
+/// tells crew that an infinite pizza box exists, half of the time, based on a roll in the anamolous box proc
 /datum/supply_pack/organic/pizza/proc/anomalous_pizza_report()
 	print_command_report("[station_name()], our anomalous materials divison has reported a missing object that is highly likely to have been sent to your station during a routine cargo \
 	delivery. Please search all crates and manifests provided with the delivery and return the object if is located. The object resembles a standard <b>\[DATA EXPUNGED\]</b> and is to be \

@@ -187,7 +187,7 @@
 			user.regenerate_icons()
 			if(length(boxes) >= 5)
 				if(prob(10 * length(boxes)))
-					balloon_alert(user, "oops!")
+					user.balloon_alert_to_viewers("oops!")
 					disperse_pizzas()
 				else
 					balloon_alert(user, "looks unstable...")
@@ -230,8 +230,6 @@
 	else if(is_wire_tool(I))
 		if(wires && bomb)
 			wires.interact(user)
-	else if(istype(I, /obj/item/reagent_containers/cup))
-		balloon_alert(user, "not a pizza!")
 	..()
 
 /obj/item/pizzabox/process(delta_time)
