@@ -1,4 +1,0 @@
-author: "etherware-novice"
-delete-after: True
-changes:
-  - bugfix: "radio uplink now works, moved to .z because .d is reserved"
