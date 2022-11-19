@@ -433,6 +433,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/biogenerator,
+/obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "bD" = (
@@ -1217,6 +1218,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/backpack/old,
 /obj/structure/closet,
+/obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "eg" = (
@@ -1293,7 +1295,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hydroponics/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "ep" = (
@@ -1499,7 +1500,6 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "eR" = (
@@ -1516,11 +1516,7 @@
 "eS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/green,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/hydro)
-"eT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/greenglow,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "eU" = (
@@ -1919,10 +1915,11 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west{
-	start_charge = 0
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = -23
 	},
+/obj/effect/decal/cleanable/generic,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "gk" = (
@@ -1971,10 +1968,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hall)
 "gt" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Dining Area"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/material/glass,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/kitchen)
 "gw" = (
@@ -2043,7 +2038,10 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "gG" = (
@@ -2289,6 +2287,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "hJ" = (
@@ -3007,6 +3006,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/backpack/duffelbag,
 /obj/structure/closet,
+/obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "jU" = (
@@ -3188,8 +3188,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/bin,
-/obj/effect/spawner/random/maintenance,
+/obj/machinery/vending/coffee{
+	onstation = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "kt" = (
@@ -3248,13 +3249,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/beta/atmos)
-"kC" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/hydro)
 "kD" = (
 /obj/structure/table,
 /obj/item/crowbar,
@@ -3574,10 +3568,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 23
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "lI" = (
@@ -3877,6 +3868,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/backpack/old,
 /obj/structure/closet,
+/obj/effect/spawner/random/clothing/backpack,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "mA" = (
@@ -4211,8 +4203,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/backpack/old,
-/obj/structure/closet,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/dorms)
 "nt" = (
@@ -5511,6 +5501,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/hydroponics/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/charlie/hydro)
 "vp" = (
@@ -5788,11 +5779,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
-"wW" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/generic,
-/turf/open/floor/iron,
-/area/ruin/space/ancientstation/charlie/hydro)
 "xj" = (
 /obj/machinery/door/airlock/science{
 	name = "Biolab"
@@ -6216,10 +6202,6 @@
 /area/ruin/space/ancientstation/beta/mining)
 "Bf" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = 23
-	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/closet/crate/bin,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -7294,6 +7276,14 @@
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/engine/airless,
 /area/ruin/space/ancientstation/beta/supermatter)
+"JM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/all_access{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/open/floor/iron/cafeteria,
+/area/ruin/space/ancientstation/charlie/kitchen)
 "JT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -8129,6 +8119,13 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ancientstation/delta/rnd)
+"QQ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron,
+/area/ruin/space/ancientstation/charlie/dorms)
 "QR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -12643,7 +12640,7 @@ wb
 cQ
 cQ
 IB
-kC
+qc
 eQ
 gj
 wF
@@ -12777,7 +12774,7 @@ dp
 dR
 dR
 dQ
-wW
+dR
 wO
 gI
 LA
@@ -12909,7 +12906,7 @@ dq
 dR
 eq
 bC
-eT
+OU
 Sr
 gt
 ht
@@ -13039,7 +13036,7 @@ OT
 wG
 dp
 dR
-OU
+dR
 dQ
 dR
 wO
@@ -13177,7 +13174,7 @@ gF
 lU
 gY
 Bf
-ht
+JM
 ht
 Sv
 Fd
@@ -13188,7 +13185,7 @@ bU
 aG
 nk
 ks
-bN
+QQ
 jB
 pV
 jP
