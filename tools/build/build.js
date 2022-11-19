@@ -7,8 +7,10 @@
  */
 
 import fs from 'fs';
+import { get } from 'http';
+import { env } from 'process';
 import Juke from './juke/index.js';
-import { DreamDaemon, DreamMaker } from './lib/byond.js';
+import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
 import { yarn } from './lib/yarn.js';
 
 Juke.chdir('../..', import.meta.url);
@@ -33,6 +35,10 @@ export const PortParameter = new Juke.Parameter({
   type: 'string',
   alias: 'p',
 });
+
+export const DmVersionParameter = new Juke.Parameter({
+  type: 'string',
+})
 
 export const CiParameter = new Juke.Parameter({ type: 'boolean' });
 
@@ -59,7 +65,7 @@ export const DmMapsIncludeTarget = new Juke.Target({
 });
 
 export const DmTarget = new Juke.Target({
-  parameters: [DefineParameter],
+  parameters: [DefineParameter, DmVersionParameter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
@@ -71,21 +77,28 @@ export const DmTarget = new Juke.Target({
     'interface/**',
     'voidcrew/**', //voidcrew edit: adds our folder to build
     `${DME_NAME}.dme`,
+    NamedVersionFile,
   ],
-  outputs: [
-    `${DME_NAME}.dmb`,
-    `${DME_NAME}.rsc`,
-  ],
+  outputs: ({ get }) => {
+    if (get(DmVersionParameter)) {
+      return []; // Always rebuild when dm version is provided
+    }
+    return [
+      `${DME_NAME}.dmb`,
+      `${DME_NAME}.rsc`,
+    ]
+  },
   executes: async ({ get }) => {
     await DreamMaker(`${DME_NAME}.dme`, {
       defines: ['CBT', ...get(DefineParameter)],
       warningsAsErrors: get(WarningParameter).includes('error'),
+      namedDmVersion: get(DmVersionParameter),
     });
   },
 });
 
 export const DmTestTarget = new Juke.Target({
-  parameters: [DefineParameter],
+  parameters: [DefineParameter, DmVersionParameter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
@@ -94,10 +107,15 @@ export const DmTestTarget = new Juke.Target({
     await DreamMaker(`${DME_NAME}.test.dme`, {
       defines: ['CBT', 'CIBUILDING', ...get(DefineParameter)],
       warningsAsErrors: get(WarningParameter).includes('error'),
+      namedDmVersion: get(DmVersionParameter),
     });
     Juke.rm('data/logs/ci', { recursive: true });
+    const options = {
+      dmbFile : `${DME_NAME}.test.dmb`,
+      namedDmVersion: get(DmVersionParameter),
+    }
     await DreamDaemon(
-      `${DME_NAME}.test.dmb`,
+      options,
       '-close', '-trusted', '-verbose',
       '-params', 'log-directory=ci'
     );
@@ -114,7 +132,7 @@ export const DmTestTarget = new Juke.Target({
 });
 
 export const AutowikiTarget = new Juke.Target({
-  parameters: [DefineParameter],
+  parameters: [DefineParameter, DmVersionParameter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
   ],
@@ -126,12 +144,18 @@ export const AutowikiTarget = new Juke.Target({
     await DreamMaker(`${DME_NAME}.test.dme`, {
       defines: ['CBT', 'AUTOWIKI', ...get(DefineParameter)],
       warningsAsErrors: get(WarningParameter).includes('error'),
+      namedDmVersion: get(DmVersionParameter),
     });
     Juke.rm('data/autowiki_edits.txt');
     Juke.rm('data/autowiki_files', { recursive: true });
     Juke.rm('data/logs/ci', { recursive: true });
+
+    const options = {
+      dmbFile: `${DME_NAME}.test.dmb`,
+      namedDmVersion: get(DmVersionParameter),
+    }
     await DreamDaemon(
-      `${DME_NAME}.test.dmb`,
+      options,
       '-close', '-trusted', '-verbose',
       '-params', 'log-directory=ci',
     );
@@ -254,10 +278,14 @@ export const BuildTarget = new Juke.Target({
 });
 
 export const ServerTarget = new Juke.Target({
-  dependsOn: [BuildTarget],
+  dependsOn: [BuildTarget, DmVersionParameter],
   executes: async ({ get }) => {
     const port = get(PortParameter) || '1337';
-    await DreamDaemon(`${DME_NAME}.dmb`, port, '-trusted');
+    const options = {
+      dmbFile: `${DME_NAME}.dmb`,
+      namedDmVersion: get(DmVersionParameter),
+    }
+    await DreamDaemon(options, port, '-trusted');
   },
 });
 

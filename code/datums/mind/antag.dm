@@ -126,6 +126,11 @@
 	var/implant = FALSE
 
 	var/uplink_spawn_location = traitor_mob.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
+	var/cant_speak = (HAS_TRAIT(traitor_mob, TRAIT_MUTE) || traitor_mob.mind?.assigned_role.title == JOB_MIME)
+	if(uplink_spawn_location == UPLINK_RADIO && cant_speak)
+		if(!silent)
+			to_chat(traitor_mob, span_warning("You have been deemed ineligible for a radio uplink. Supplying standard uplink instead."))
+		uplink_spawn_location = UPLINK_PDA
 	switch (uplink_spawn_location)
 		if(UPLINK_PDA)
 			uplink_loc = PDA
@@ -164,7 +169,7 @@
 	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
 	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
 	if(uplink_loc == R)
-		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
+		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply speak \"[new_uplink.unlock_code]\" into frequency [RADIO_TOKEN_UPLINK] to unlock its hidden features."
 	else if(uplink_loc == PDA)
 		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
 	else if(uplink_loc == P)

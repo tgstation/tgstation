@@ -217,7 +217,7 @@
 		var/image/bubble = mutable_appearance('icons/mob/effects/talk.dmi', src, "default[say_test(message)]", FLY_LAYER)
 		SET_PLANE_EXPLICIT(bubble, ABOVE_GAME_PLANE, src)
 		bubble.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), bubble, list(owner.client), 30)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), bubble, list(owner.client), 30)
 		LAZYADD(update_on_z, bubble)
 		addtimer(CALLBACK(src, PROC_REF(clear_saypopup), bubble), 3.5 SECONDS)
 

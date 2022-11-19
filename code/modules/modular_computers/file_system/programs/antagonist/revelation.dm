@@ -28,10 +28,9 @@
 		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
 		computer.enabled = FALSE
 		computer.update_appearance()
-		var/obj/item/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
 		computer.take_damage(25, BRUTE, 0, 0)
-		if(battery_module && prob(25))
-			qdel(battery_module)
+		if(computer.internal_cell && prob(25))
+			QDEL_NULL(computer.internal_cell)
 			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()

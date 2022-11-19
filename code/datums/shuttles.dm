@@ -461,7 +461,7 @@
 	description = "A luxurious casino packed to the brim with everything you need to start new gambling addicitions!"
 	admin_notes = "The ship is a bit chunky, so watch where you park it."
 	credit_cost = 7777
-	
+
 /datum/map_template/shuttle/emergency/shadow
 	suffix = "shadow"
 	name = "The NTSS Shadow"
@@ -510,7 +510,7 @@
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
-	name = "NT White UFO"
+	name = "NT Science Vessel"
 
 /datum/map_template/shuttle/whiteship/cere
 	suffix = "cere"
@@ -535,6 +535,15 @@
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
+
+/datum/map_template/shuttle/whiteship/personalshuttle
+	suffix = "personalshuttle"
+	name = "Personal Travel Shuttle"
+
+/datum/map_template/shuttle/whiteship/obelisk
+	suffix = "obelisk"
+	name = "Obelisk"
+	admin_notes = "Not actually an obelisk, has nonsentient cult constructs."
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"

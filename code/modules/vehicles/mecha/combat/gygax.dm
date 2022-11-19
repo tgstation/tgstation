@@ -5,7 +5,6 @@
 	base_icon_state = "gygax"
 	allow_diagonal_movement = TRUE
 	movedelay = 3
-	dir_in = 1 //Facing North.
 	max_integrity = 250
 	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 15, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	max_temperature = 25000

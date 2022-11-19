@@ -1,4 +1,0 @@
-author: "tattle"
-delete-after: True
-changes:
-  - bugfix: "mimes no longer swear when using the *swear emote"

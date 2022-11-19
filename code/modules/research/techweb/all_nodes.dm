@@ -1122,12 +1122,6 @@
 	description = "How computer hardware is made."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"bat_advanced",
-		"bat_control",
-		"bat_micro",
-		"bat_nano",
-		"bat_normal",
-		"bat_super",
 		"cardslot",
 		"portadrive_advanced",
 		"portadrive_basic",
