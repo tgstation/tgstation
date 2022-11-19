@@ -189,9 +189,6 @@
 		data["active_objectives"] = active_objectives
 		data["completed_final_objective"] = uplink_handler.traitor_datum?.final_objective
 
-
-
-
 	var/list/stock_list = uplink_handler.item_stock.Copy()
 	var/list/extra_purchasable_stock = list()
 	var/list/extra_purchasable = list()
