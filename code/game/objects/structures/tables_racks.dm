@@ -314,6 +314,18 @@
 			return TRUE
 	return FALSE
 
+/obj/structure/table/calculate_adjacencies()
+	. = ..()
+	if(. == NONE)
+		return .
+	for(var/possible in GLOB.cardinals)
+		if(!(. & possible))
+			continue
+		var/turf/adjacency = get_step(src, possible)
+		if(!Adjacent(adjacency))
+			. &= ~possible
+	return .
+
 /obj/structure/table/proc/table_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
 	if(!shove_blocked)
