@@ -37,10 +37,10 @@
 		disarm_nuke()
 		return
 	if(is_station_level(bomb_location.z))
-		addtimer(CALLBACK(src, .proc/really_actually_explode), 11 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(really_actually_explode)), 11 SECONDS)
 	else
 		visible_message(span_notice("[src] fizzes ominously."))
-		addtimer(CALLBACK(src, .proc/local_foam), 11 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(local_foam)), 11 SECONDS)
 
 /obj/machinery/nuclearbomb/beer/disarm_nuke(mob/disarmer)
 	exploding = FALSE

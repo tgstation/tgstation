@@ -14,10 +14,10 @@
 
 	result_typepath = microwave_type || default_typepath
 
-	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, .proc/on_microwaved)
+	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, PROC_REF(on_microwaved))
 
 	if(!ispath(result_typepath, default_typepath))
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/microwavable/Detach(datum/source)
 	UnregisterSignal(source, list(COMSIG_ITEM_MICROWAVE_ACT, COMSIG_PARENT_EXAMINE))
