@@ -518,7 +518,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
-	metabolization_rate = 0.4 * REM
+	metabolization_rate = 0.2 * REM //Previously 0.35, which without REM multiplication amounted to 0.7 which was WAY, WAY TOO MUCH for a chemical this hard to get
 	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
