@@ -760,7 +760,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///stops someone from splashing their reagent_container on an object with this trait
 #define TRAIT_DO_NOT_SPLASH "do_not_splash"
 /// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
-#define CURRENTLY_CLEANING "currently_cleaning"
+#define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
