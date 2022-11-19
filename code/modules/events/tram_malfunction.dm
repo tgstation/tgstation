@@ -7,33 +7,18 @@
 	typepath = /datum/round_event/tram_malfunction
 	weight = 20
 	max_occurrences = 4
+	earliest_start = 15 MINUTES
 	category = EVENT_CATEGORY_ENGINEERING
 
-// If manually triggered, check if there's a tram.
-/datum/round_event_control/tram_malfunction/admin_setup()
-	for(var/tram_id in GLOB.active_lifts_by_type)
-		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
-		if(!tram_ref.specific_lift_id == MAIN_STATION_TRAM)
-			continue
-
-		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
-			return
-
-	return ADMIN_CANCEL_EVENT
-
-// Check if there's a tram we can cause to malfunction.
-/datum/round_event_control/tram_malfunction/can_spawn_event()
+//Check if there's a tram we can cause to malfunction.
+/datum/round_event_control/tram_malfunction/can_spawn_event(players_amt)
 	. = ..()
-	if(!.)
-		return .
 	for(var/tram_id in GLOB.active_lifts_by_type)
 		var/datum/lift_master/tram_ref = GLOB.active_lifts_by_type[tram_id][1]
-		if(!tram_ref.specific_lift_id == MAIN_STATION_TRAM)
-			continue
-
 		if(tram_ref.specific_lift_id == MAIN_STATION_TRAM)
-			return TRUE
+			return ..()
 
+	message_admins("Tram Malfunction rolled but there's no tram, choosing new event.")
 	return FALSE
 
 /datum/round_event/tram_malfunction
