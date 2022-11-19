@@ -168,6 +168,9 @@
 	if(can_be_disabled)
 		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_gain))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_loss))
+
+	RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(_attempt_feature_restyle))
+
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
 
@@ -343,10 +346,15 @@
 	if(IS_ORGANIC_LIMB(src))
 		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	seep_gauze(9999) // destroy any existing gauze if any exists
-	for(var/obj/item/organ/bodypart_organ in get_organs())
+	for(var/obj/item/organ/bodypart_organ in get_organs()) //external organs are already in the limb, but this way we are properly updated
 		bodypart_organ.transfer_to_limb(src, owner)
+	for(var/obj/item/organ/external/external in external_organs)
+		external.ownerlimb = null
 	for(var/obj/item/item_in_bodypart in src)
 		item_in_bodypart.forceMove(drop_loc)
+
+	external_organs.Cut()
+	update_icon_dropped()
 
 ///since organs aren't actually stored in the bodypart themselves while attached to a person, we have to query the owner for what we should have
 /obj/item/bodypart/proc/get_organs()

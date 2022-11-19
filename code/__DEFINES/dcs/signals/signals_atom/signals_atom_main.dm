@@ -93,3 +93,5 @@
 
 /// from internal loop in /atom/proc/propagate_radiation_pulse: (atom/pulse_source)
 #define COMSIG_ATOM_PROPAGATE_RAD_PULSE "atom_propagate_radiation_pulse"
+/// from cosmetic items to restyle certain mobs, objects or organs
+#define COMSIG_ATOM_RESTYLE "atom_restyle"

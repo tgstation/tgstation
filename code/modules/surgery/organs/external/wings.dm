@@ -7,7 +7,7 @@
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
 	layers = ALL_EXTERNAL_OVERLAYS
 
-	use_mob_sprite_as_obj_sprite = TRUE
+	use_mob_sprite_as_obj_sprite = BODY_BEHIND_LAYER
 	feature_key = "wings"
 
 /obj/item/organ/external/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
