@@ -62,6 +62,7 @@
 	if(showpiece)
 		. += span_notice("There's \a [showpiece] inside.")
 
+///Removes the showpiece from the displaycase
 /obj/structure/displaycase/proc/dump()
 	if(QDELETED(showpiece))
 		return
@@ -181,6 +182,7 @@
 		to_chat(user, span_notice("You put [new_showpiece] on display."))
 		update_appearance()
 
+///Opens and closes the display case
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
 	open = !open
 	update_appearance()
@@ -312,6 +314,7 @@
 	GLOB.trophy_cases -= src
 	return ..()
 
+///Creates a showpiece dummy to display, using persistent data
 /obj/structure/displaycase/trophy/proc/set_up_trophy(datum/trophy_data/chosen_trophy)
 	showpiece = new /obj/item/showpiece_dummy(src, text2path(chosen_trophy.path))
 	trophy_message = trim(chosen_trophy.message, MAX_PLAQUE_LEN)
@@ -335,16 +338,17 @@
 			QDEL_NULL(showpiece)
 			holographic_showpiece = FALSE
 		else
-			. = ..()
+			..()
 		placer_key = ""
 		trophy_message = null
 
 /obj/structure/displaycase/trophy/insert_showpiece(obj/item/new_showpiece, mob/user)
 	if(..())
-		return
+		return TRUE
 	if(showpiece == new_showpiece)
 		placer_key = user.ckey
 
+///Toggles the mode that shows the historian panel on the UI, enabling saving the looks and the trophy message of the current trophy
 /obj/structure/displaycase/trophy/proc/toggle_historian_mode(mob/user)
 	historian_mode = !historian_mode
 	balloon_alert(user, "[historian_mode ? "enabled" : "disabled"] historian mode.")
@@ -561,6 +565,7 @@
 			SStgui.update_uis(src)
 			return TRUE
 	. = TRUE
+
 /obj/structure/displaycase/forsale/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))
 		//Card Registration
@@ -576,7 +581,6 @@
 		return TRUE
 	SStgui.update_uis(src)
 	return ..()
-
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
