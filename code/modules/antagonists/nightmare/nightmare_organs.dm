@@ -7,7 +7,7 @@
 /obj/item/organ/internal/brain/shadow/nightmare
 	name = "tumorous mass"
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
-	icon_state = "brain-x-d"
+	icon_state = "brain"
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
 
 /obj/item/organ/internal/brain/shadow/nightmare/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
