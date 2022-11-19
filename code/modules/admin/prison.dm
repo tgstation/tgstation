@@ -51,13 +51,3 @@
 	SIGNAL_HANDLER
 
 	to_chat(parent, span_adminnotice("You are currently in prison. You may want to ask admins why."), confidential=TRUE)
-
-/mob/forceMove(atom/destination)
-	if(admin_input_block_enabled)
-		return
-	return ..()
-
-/mob/abstract_move(atom/destination)
-	if(admin_input_block_enabled)
-		return
-	return ..()

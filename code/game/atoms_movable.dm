@@ -485,6 +485,8 @@
  * most of the time you want forceMove()
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
+	if(block_inputs)
+		return FALSE
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
 	loc = new_loc
@@ -959,6 +961,8 @@
 
 /atom/movable/proc/forceMove(atom/destination)
 	. = FALSE
+	if(block_inputs)
+		return FALSE
 	if(destination)
 		. = doMove(destination)
 	else
