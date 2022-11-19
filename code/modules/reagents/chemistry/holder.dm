@@ -891,21 +891,13 @@
 					break
 				total_matching_catalysts++
 			if(cached_my_atom)
-				if(!reaction.required_container)
-					matching_container = TRUE
-				else
-					if(cached_my_atom.type == reaction.required_container)
-						matching_container = TRUE
-				if (isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
+				matching_container = reaction.required_container ? (cached_my_atom.type == reaction.required_container) : TRUE
+
+				if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 					matching_container = FALSE
-				if(!reaction.required_other)
-					matching_other = TRUE
 
-				else if(istype(cached_my_atom, /obj/item/slime_extract))
-					var/obj/item/slime_extract/extract = cached_my_atom
+				matching_other = reaction.required_other ? reaction.pre_reaction_other_checks(src) : TRUE
 
-					if(extract.Uses > 0) // added a limit to slime cores -- Muskets requested this
-						matching_other = TRUE
 			else
 				if(!reaction.required_container)
 					matching_container = TRUE

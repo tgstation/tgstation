@@ -3113,7 +3113,6 @@
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_salad.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_sandwich.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_seafood.dm"
-#include "code\modules\food_and_drinks\recipes\tablecraft\recipes_soup.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_spaghetti.dm"
 #include "code\modules\food_and_drinks\restaurant\_venue.dm"
 #include "code\modules\food_and_drinks\restaurant\custom_order.dm"
