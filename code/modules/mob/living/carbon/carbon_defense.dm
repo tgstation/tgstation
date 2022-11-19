@@ -271,6 +271,9 @@
 		target.Move(target_shove_turf, shove_dir)
 		if(get_turf(target) == target_old_turf)
 			shove_blocked = TRUE
+	
+	if(!shove_blocked)
+		target.setGrabState(GRAB_PASSIVE)
 
 	if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
 		target.Paralyze(SHOVE_CHAIN_PARALYZE)
