@@ -66,6 +66,8 @@ export const findCacheRoot = async () => {
 
 const onCacheRootFound = (cacheRoot) => {
   logger.log(`found cache at '${cacheRoot}'`);
+  // Plant a dummy browser window file, we'll be using this to avoid world topic
+  fs.closeSync(fs.openSync(cacheRoot + '/dummy', 'w'));
 };
 
 export const reloadByondCache = async (bundleDir) => {
