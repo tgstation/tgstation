@@ -248,12 +248,6 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 
 #define is_glass_sheet(O) (is_type_in_typecache(O, GLOB.glass_sheet_types))
 
-#define is_normal_glass(O) (istype(O, /obj/item/stack/sheet/glass))
-
-#define is_plasteel(O) (istype(O, /obj/item/stack/sheet/plasteel))
-
-#define is_cable_coil(O) (istype(O, /obj/item/stack/cable_coil))
-
 #define iseffect(O) (istype(O, /obj/effect))
 
 #define isholoeffect(O) (istype(O, /obj/effect/holodeck_effect))

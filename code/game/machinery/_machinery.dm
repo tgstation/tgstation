@@ -977,7 +977,7 @@
 		if(!printed_components[C.name])
 			count=part_count[C.name]
 			if(count>1)
-				if(!is_cable_coil(C) && isstack(C))
+				if(!istype(C,/obj/item/stack/cable_coil) && isstack(C))
 					suffix=" sheets"
 				else
 					suffix="s"
