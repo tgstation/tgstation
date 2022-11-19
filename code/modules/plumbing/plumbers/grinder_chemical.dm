@@ -38,21 +38,26 @@
 		return
 	if(reagents.holder_full())
 		return
-	if(!isitem(AM))
-		return
-	var/obj/item/I = AM
-	if(I.juice_results || I.grind_results)
-		use_power(active_power_usage)
-		if(I.juice_results)
-			I.on_juice()
-			reagents.add_reagent_list(I.juice_results)
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.juice_results || I.grind_results)
+			use_power(active_power_usage)
+			if(I.juice_results)
+				I.on_juice()
+				reagents.add_reagent_list(I.juice_results)
+				if(I.reagents)
+					I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
+				qdel(I)
+				return
+			I.on_grind()
+			reagents.add_reagent_list(I.grind_results)
 			if(I.reagents)
 				I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
 			qdel(I)
+	else if(isanimal_or_basicmob(AM))
+		var/mob/living/living_mob = AM
+		if(living_mob.stat != DEAD)
 			return
-		I.on_grind()
-		reagents.add_reagent_list(I.grind_results)
-		if(I.reagents)
-			I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = src)
-		qdel(I)
+		reagents.add_reagent(/datum/reagent/consumable/nutriment/protein, 100)
+		living_mob.gib(TRUE, TRUE, TRUE)
 

@@ -56,6 +56,9 @@
 #define CELL_LINE_TABLE_LEAPER	"cell_line_leaper_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
 
+//! Biopsy cell line types for Genetics
+#define CELL_LINE_TABLE_STICKMAN "cell_line_stickman_table"
+
 //! All cell virus types
 #define CELL_VIRUS_TABLE_GENERIC "cell_virus_generic_table"
 #define CELL_VIRUS_TABLE_GENERIC_MOB "cell_virus_generic_mob_table"

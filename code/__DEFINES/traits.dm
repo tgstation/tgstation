@@ -973,3 +973,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LEFT_ARM_TRAIT "left_arm"
 #define RIGHT_LEG_TRAIT "right_leg"
 #define LEFT_LEG_TRAIT "left_leg"
+
+// Traits for bugsnax genetics
+#define TRAIT_STICKMAN_FLAT "trait_stickman_flat"

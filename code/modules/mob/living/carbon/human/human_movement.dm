@@ -38,3 +38,10 @@
 	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
 		return TRUE
 	return ..()
+
+/mob/living/carbon/human/setDir(newdir)
+	if(HAS_TRAIT(src, TRAIT_STICKMAN_FLAT)) // Stickmen always face the camera.
+		SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, SOUTH)
+		dir = SOUTH
+		return
+	. = ..()

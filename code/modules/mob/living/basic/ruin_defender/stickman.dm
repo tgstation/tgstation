@@ -36,6 +36,8 @@
 	new /obj/effect/temp_visual/paper_scatter(get_turf(src))
 	AddElement(/datum/element/basic_body_temp_sensitive, cold_damage = 7.5, heat_damage = 7.5)
 	AddElement(/datum/element/atmos_requirements, atmos_requirements = habitable_atmos, unsuitable_atmos_damage = 7.5)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_STICKMAN, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
+
 
 /datum/ai_controller/basic_controller/stickman
 	blackboard = list(
