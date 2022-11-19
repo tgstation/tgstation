@@ -279,6 +279,7 @@
 		nearby_frog.faction = owner.faction.Copy()
 		uplifted_frog = TRUE
 		break
+	
 	if(uplifted_frog)
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them trash frogs!"))
 	else
@@ -310,6 +311,7 @@
 			nearby_roach.faction = owner.faction.Copy()
 			uplifted_roach = TRUE
 			break
+	
 	if(uplifted_roach)
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into sewer roaches!"))
 	else if(!uplifted_frog)
