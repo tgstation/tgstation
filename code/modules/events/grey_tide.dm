@@ -49,12 +49,3 @@
 	for(var/area/area_to_open in areas_to_open)
 		for(var/obj/object_to_open in area_to_open)
 			SEND_SIGNAL(object_to_open, COMSIG_GREY_TIDE)
-			if(istype(object_to_open, /obj/machinery/status_display/door_timer))
-				var/obj/machinery/status_display/door_timer/prison_timer = object_to_open
-				prison_timer.timer_end(forced = TRUE)
-			else if(istype(object_to_open, /obj/machinery/power/apc)) //Escape (or sneak in) under the cover of darkness
-				var/obj/machinery/power/apc/apc_to_trigger = object_to_open
-				apc_to_trigger.lighting = APC_CHANNEL_OFF
-				apc_to_trigger.update_appearance()
-				apc_to_trigger.update()
-

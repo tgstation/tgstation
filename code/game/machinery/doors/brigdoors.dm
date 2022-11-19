@@ -54,6 +54,8 @@
 	if(!length(doors) && !length(flashers) && length(closets))
 		atom_break()
 
+	RegisterSignal(src, COMSIG_GREY_TIDE, PROC_REF(grey_tide))
+
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
 // if it's less than 0, open door, reset timer
 // update the door_timer window and the icon
@@ -69,6 +71,10 @@
 	if(world.time - activation_time >= timer_duration)
 		timer_end() // open doors, reset timer, clear status screen
 	update_content()
+
+/obj/machinery/status_display/door_timer/Destroy()
+	. = ..()
+	UnregisterSignal(src, COMSIG_GREY_TIDE)
 
 /**
  * Update the display content.
@@ -260,6 +266,9 @@
 				activation_time = world.time
 		else
 			. = FALSE
+
+/obj/machinery/status_display/door_timer/proc/grey_tide()
+	timer_end(forced = TRUE)
 
 #undef PRESET_SHORT
 #undef PRESET_MEDIUM
