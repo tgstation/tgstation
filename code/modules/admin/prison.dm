@@ -50,7 +50,7 @@
 /datum/admin_prison_watcher/proc/on_mob_login()
 	SIGNAL_HANDLER
 
-	to_chat(parent, span_adminnotice("You are currently in prison. You may want to ask admins why.") confidential=TRUE)
+	to_chat(parent, span_adminnotice("You are currently in prison. You may want to ask admins why."), confidential=TRUE)
 
 /mob/DblClick(location, control, params)
 	if(admin_input_block_enabled)
