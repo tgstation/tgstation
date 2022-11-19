@@ -156,6 +156,8 @@
 	var/atom/orbit_target
 	///AI controller that controls this atom. type on init, then turned into an instance during runtime
 	var/datum/ai_controller/ai_controller
+	/// Whether this atom is refusing to acknowledge inputs created
+	var/block_inputs = FALSE
 
 	///any atom that uses integrity and can be damaged must set this to true, otherwise the integrity procs will throw an error
 	var/uses_integrity = FALSE
