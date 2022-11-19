@@ -1458,6 +1458,7 @@
 #include "code\game\machinery\computer\prisoner\gulag_teleporter.dm"
 #include "code\game\machinery\computer\prisoner\management.dm"
 #include "code\game\machinery\dna_infuser\dna_infuser.dm"
+#include "code\game\machinery\dna_infuser\organ_sets\fly_organs.dm"
 #include "code\game\machinery\dna_infuser\organ_sets\rat_organs.dm"
 #include "code\game\machinery\doors\airlock.dm"
 #include "code\game\machinery\doors\airlock_electronics.dm"

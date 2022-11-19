@@ -53,6 +53,8 @@
 	var/organs_needed = 5
 	///if the bonus is active
 	var/bonus_active = FALSE
+	var/bonus_activate_text = "??? DNA is deeply infused with you! You've learned how to make error reports!"
+	var/bonus_deactivate_text = "Your DNA is no longer majority rat, and so fades your ventilation skills..."
 
 /datum/status_effect/organ_set_bonus/proc/set_organs(new_value)
 	organs = new_value
@@ -67,7 +69,11 @@
 /datum/status_effect/organ_set_bonus/proc/enable_bonus()
 	SHOULD_CALL_PARENT(TRUE)
 	bonus_active = TRUE
+	if(bonus_activate_text)
+		to_chat(owner, span_notice(bonus_activate_text))
 
 /datum/status_effect/organ_set_bonus/proc/disable_bonus()
 	SHOULD_CALL_PARENT(TRUE)
 	bonus_active = FALSE
+	if(bonus_deactivate_text)
+		to_chat(owner, span_notice(bonus_deactivate_text))
