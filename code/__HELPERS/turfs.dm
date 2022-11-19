@@ -337,7 +337,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return pick(turfs)
 
 ///Returns a random turf on the station, excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
-/proc/get_safe_random_station_turf(list/areas_to_pick_from = GLOB.the_station_areas)
+/proc/get_safe_random_station_turf(list/areas_to_pick_from = GLOB.the_station_areas, z_level)
 	for (var/i in 1 to 5)
 		var/list/turf_list = get_area_turfs(pick(areas_to_pick_from))
 		var/turf/target
@@ -351,6 +351,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 					if(checked_object.density)
 						clear = FALSE
 						break
+				if(clear && z_level && checked_turf.z != z_level)
+					clear = FALSE
 				if(clear)
 					target = checked_turf
 			if (!target)

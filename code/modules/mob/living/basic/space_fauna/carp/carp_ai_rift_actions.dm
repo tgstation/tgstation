@@ -2,7 +2,8 @@
 #define MINIMUM_RIFT_SHORTCUT_DISTANCE 3
 
 /**
- * Perform a carp rift action, so basically teleport somewhere if the action is available
+ * # Make carp rift
+ * Plan a carp rift action, so basically teleport somewhere if the action is available
  */
 /datum/ai_planning_subtree/make_carp_rift
 	/// Chiefly describes where we are placing this teleport
@@ -29,7 +30,10 @@
 	if (finish_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-/// Teleport out of there, if you have a target you are scared of
+/**
+ * # Make carp rift (panic)
+ * Plan to teleport away from our target so they can't fuck us up
+ */
 /datum/ai_planning_subtree/make_carp_rift/panic_teleport
 	rift_behaviour = /datum/ai_behavior/make_carp_rift/away
 	finish_planning = TRUE
@@ -39,14 +43,29 @@
 		return
 	return ..()
 
-/// Carp rift towards something to bite them, but only if they're at the edge of our range
+/**
+ * # Make carp rift (aggressive)
+ * Plan to teleport towards our target so we can fuck them up
+ */
 /datum/ai_planning_subtree/make_carp_rift/aggressive_teleport
-	rift_behaviour = /datum/ai_behavior/make_carp_rift/towards
+	rift_behaviour = /datum/ai_behavior/make_carp_rift/towards/aggressive
 
 /**
- * Perform the actual behaviour of finding a target turf and placing a rift there
+ * # Make carp rift
+ * Make a carp rift somewhere
  */
 /datum/ai_behavior/make_carp_rift
+
+/datum/ai_behavior/make_carp_rift/setup(datum/ai_controller/controller, ability_key, target_key)
+	var/datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability = controller.blackboard[ability_key]
+	if (!ability)
+		return FALSE
+	var/datum/weakref/weak_target = controller.blackboard[target_key]
+	var/atom/target = weak_target?.resolve()
+
+	if (QDELETED(target))
+		return FALSE
+	return TRUE
 
 /datum/ai_behavior/make_carp_rift/perform(delta_time, datum/ai_controller/controller, ability_key, target_key)
 	. = ..()
@@ -78,29 +97,44 @@
 /datum/ai_behavior/make_carp_rift/proc/find_target_turf(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
 	CRASH("Called unimplemented target finding proc on carp rift behaviour")
 
-/// Create a carp rift in a direction away from your target
+/**
+ * # Make carp rift away
+ * Make a rift bringing you further away from your target
+ */
 /datum/ai_behavior/make_carp_rift/away
 
 /datum/ai_behavior/make_carp_rift/away/find_target_turf(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
 	var/run_direction = get_dir(controller.pawn, get_step_away(controller.pawn, target))
 	return get_ranged_target_turf(controller.pawn, run_direction, ability.max_range)
 
-/// Create a carp rift in a direction towards your target
+/**
+ * # Make carp rift forwards
+ * Make a rift bringing you closer to your target
+ */
 /datum/ai_behavior/make_carp_rift/towards
-	/// Drop rift at least this many tiles away from target, because you can appear in any space adjacent to it
-	var/teleport_buffer_distance = 2
+	/// Drop rift at least this many tiles away from target
+	var/teleport_buffer_distance = 0
+	/// Teleport simply if you are far away
+	var/teleport_if_far = TRUE
+	/// Teleport if the turf in front of you is blocked
+	var/teleport_if_blocked = TRUE
 
 /datum/ai_behavior/make_carp_rift/towards/validate_target(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
 	. = ..()
 	if (!.)
 		return FALSE
 
-	var/distance = get_dist(get_turf(controller.pawn), get_turf(target))
-	if (distance >= ability.max_range + teleport_buffer_distance) // Perform if we are far away
-		return TRUE
+	if (teleport_if_far)
+		var/distance = get_dist(get_turf(controller.pawn), get_turf(target))
+		if (distance >= ability.max_range + teleport_buffer_distance) // Perform if we are far away
+			return TRUE
 
-	var/turf/next_move = get_step_towards(controller.pawn, target)
-	return next_move.is_blocked_turf(exclude_mobs = TRUE) // Perform if target is behind cover
+	if (teleport_if_blocked)
+		var/turf/next_move = get_step_towards(controller.pawn, target)
+		if (next_move.is_blocked_turf(exclude_mobs = TRUE)) // Perform if target is behind cover
+			return TRUE
+
+	return FALSE
 
 /datum/ai_behavior/make_carp_rift/towards/find_target_turf(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
 	var/turf/target_turf = get_turf(target)
@@ -127,7 +161,60 @@
 
 	return chosen_turf
 
-/// If there's already a portal going your way don't make another one
+/**
+ * # Make carp rift forwards (aggressive)
+ * Make a rift towards your target if you are blocked from moving or if it is far away
+ */
+/datum/ai_behavior/make_carp_rift/towards/aggressive
+	teleport_buffer_distance = 2 // Don't aggressively drop carps directly on top of a target mob
+
+/**
+ * # Walk or rift home
+ * Plan to path slowly towards a BB location, or teleport if you are blocked
+ */
+/datum/ai_planning_subtree/walk_or_rift_home
+	/// Blackboard tag where you can find the home location
+	var/area_key = BB_MOB_HOME_AREA
+	/// Blackboard key to store a weakref to a specific turf inside, to avoid unnecessary recalculation
+	var/turf_key = BB_MOB_HOME_TURF
+
+/datum/ai_planning_subtree/walk_or_rift_home/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	. = ..()
+	var/area/home_area = controller.blackboard[area_key]
+	if (!home_area)
+		return
+	if (get_area(controller.pawn) == home_area)
+		return
+
+	var/datum/weakref/weak_turf = controller.blackboard[turf_key]
+	var/turf/target_turf = weak_turf?.resolve()
+	if (target_turf)
+		controller.queue_behavior(/datum/ai_behavior/make_carp_rift/towards/passive, BB_CARP_RIFT, turf_key)
+	controller.queue_behavior(/datum/ai_behavior/step_towards_turf/in_area, turf_key, area_key)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/**
+ * # Make carp rift forwards (passive)
+ * Make a rift towards your target if you are blocked from moving, then cancel further actions
+ */
+/datum/ai_behavior/make_carp_rift/towards/passive
+	teleport_if_far = FALSE // Only teleport if something is in the way
+
+/datum/ai_behavior/make_carp_rift/towards/passive/setup(datum/ai_controller/controller, ability_key, target_key)
+	. = ..()
+
+/datum/ai_behavior/make_carp_rift/towards/passive/perform(delta_time, datum/ai_controller/controller, ability_key, target_key)
+	. = ..()
+
+/datum/ai_behavior/make_carp_rift/towards/passive/finish_action(datum/ai_controller/controller, succeeded, ...)
+	. = ..()
+	if (succeeded)
+		controller.CancelActions()
+
+/**
+ * # Shortcut to target through carp rift
+ * If there's a carp rift heading your way, plan to ride it to your target
+ */
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift
 
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, delta_time)
@@ -136,16 +223,20 @@
 	if(QDELETED(target))
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/enter_nearby_rift, BB_BASIC_MOB_CURRENT_TARGET)
+	controller.queue_behavior(/datum/ai_behavior/enter_nearby_rift_towards_target, BB_BASIC_MOB_CURRENT_TARGET)
 
-/datum/ai_behavior/enter_nearby_rift
+/**
+ * # Enter nearby rift towards target
+ * Move into a nearby rift entrance, but only if it gets us nearer our current target
+ */
+/datum/ai_behavior/enter_nearby_rift_towards_target
 	required_distance = 0
 	action_cooldown = 0
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 	/// How far away do we look for rifts?
 	var/search_distance = 2
 
-/datum/ai_behavior/enter_nearby_rift/setup(datum/ai_controller/controller, target_key, hiding_location_key)
+/datum/ai_behavior/enter_nearby_rift_towards_target/setup(datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
@@ -167,8 +258,39 @@
 		return TRUE
 	return FALSE
 
+/datum/ai_behavior/enter_nearby_rift_towards_target/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)
+	. = ..()
+	finish_action(controller, TRUE)
+
+/**
+ * # Enter nearby rift and end actions
+ * Search for rift entrances nearby and enter the first one we find, then cancel anything we would do afterwards
+ * We've moved so we possibly need to recalculate what's going on
+ * Unfortunately couldn't find an easy way to make this and previous behaviour have a shared base type, decisions were too different
+ */
+/datum/ai_behavior/enter_nearby_rift_and_end_actions
+	required_distance = 0
+	action_cooldown = 0
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
+	/// How far away do we look for rifts?
+	var/search_distance = 2
+
+/datum/ai_behavior/enter_nearby_rift_and_end_actions/setup(datum/ai_controller/controller)
+	. = ..()
+
+	var/obj/effect/temp_visual/lesser_carp_rift/entrance/rift = locate(/obj/effect/temp_visual/lesser_carp_rift/entrance) in orange(controller.pawn, search_distance)
+	if (!rift)
+		return FALSE
+	controller.current_movement_target = get_turf(rift)
+	return TRUE
+
 /datum/ai_behavior/enter_nearby_rift/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()
 	finish_action(controller, TRUE)
+
+/datum/ai_behavior/enter_nearby_rift_and_end_actions/finish_action(datum/ai_controller/controller, succeeded, ...)
+	. = ..()
+	if (succeeded)
+		controller.CancelActions()
 
 #undef MINIMUM_RIFT_SHORTCUT_DISTANCE

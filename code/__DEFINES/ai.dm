@@ -237,6 +237,10 @@
 #define BB_CARP_RIFT "BB_carp_rift"
 #define BB_CARP_SUMMON "BB_carp_summon"
 #define BB_MAGICARP_SPELL "BB_magicarp_spell"
+/// List of weakrefs to turfs we want to travel to
+#define BB_CARP_MIGRATION_PATH "BB_carp_migration_path"
+/// Current target turf in your migration
+#define BB_CARP_MIGRATION_TARGET "BB_carp_migration_target"
 
 ///Bileworm AI keys
 

@@ -7,7 +7,6 @@
 	var/run_distance = 9
 
 /datum/ai_behavior/run_away_from_target/setup(datum/ai_controller/controller, target_key, hiding_location_key)
-	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 	if(!target)
@@ -19,6 +18,7 @@
 		return FALSE
 
 	controller.current_movement_target = target_destination
+	return ..()
 
 /datum/ai_behavior/run_away_from_target/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()

@@ -26,6 +26,7 @@
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/while_healthy/carp,
+		/datum/ai_planning_subtree/carp_migration,
 	)
 
 /**
@@ -38,7 +39,7 @@
 		BB_BASIC_MOB_FLEE_BELOW_HP_RATIO = 0.5,
 		BB_BASIC_MOB_STOP_FLEE_AT_HP_RATIO = 1,
 	)
-	idle_behavior = /datum/idle_behavior/idle_random_walk/go_home/carp
+	ai_traits = STOP_MOVING_WHEN_PULLED
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/flee_if_unhealthy,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
@@ -48,6 +49,7 @@
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/while_healthy/carp,
+		/datum/ai_planning_subtree/walk_or_rift_home,
 	)
 
 /**
@@ -66,4 +68,5 @@
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
 		/datum/ai_planning_subtree/targetted_mob_ability/magicarp,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/while_healthy/magicarp,
+		/datum/ai_planning_subtree/carp_migration,
 	)

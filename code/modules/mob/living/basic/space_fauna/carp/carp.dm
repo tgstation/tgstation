@@ -82,6 +82,7 @@
 	if (cell_line)
 		AddElement(/datum/element/swabable, cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/wall_smasher)
 	setup_eating()
 
 	if (tamer)
