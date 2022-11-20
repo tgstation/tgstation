@@ -15,6 +15,12 @@
 /obj/structure/railing/corner,
 /turf/open/floor/plating/icemoon,
 /area/centcom/syndicate_mothership/control)
+"ag" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/bamboo/tatami{
+	dir = 1
+	},
+/area/centcom/central_command_areas/holding)
 "ai" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
@@ -821,23 +827,6 @@
 	},
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
-"cv" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 4
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 4
-	},
-/area/centcom/central_command_areas/holding)
 "cw" = (
 /obj/structure/table/wood,
 /obj/item/folder/red,
@@ -907,24 +896,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/administration)
 "cE" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 5
-	},
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron/textured_half{
+/turf/open/floor/bamboo/tatami/black{
 	dir = 1
 	},
 /area/centcom/central_command_areas/holding)
@@ -1220,20 +1193,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
 "dB" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 5
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/textured_half{
+/turf/open/floor/bamboo/tatami{
 	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
@@ -1333,31 +1294,13 @@
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "dS" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 10
-	},
 /obj/item/bedsheet/syndie{
 	dir = 4
 	},
 /obj/structure/bed{
 	dir = 4
 	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
+/turf/open/floor/bamboo/tatami,
 /area/centcom/central_command_areas/holding)
 "dT" = (
 /obj/structure/table/wood/fancy/royalblue,
@@ -1501,23 +1444,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/central_command_areas/holding)
-"ep" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/centcom/central_command_areas/holding)
 "eq" = (
 /obj/structure/chair/bronze{
 	dir = 4
@@ -1556,22 +1482,10 @@
 /turf/open/misc/asteroid/snow/airless,
 /area/centcom/syndicate_mothership)
 "ex" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 9
-	},
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/textured_half{
-	dir = 4
+/turf/open/floor/bamboo/tatami{
+	dir = 1
 	},
 /area/centcom/central_command_areas/holding)
 "ez" = (
@@ -1764,22 +1678,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
 "fb" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 10
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/toy/mecha/phazon,
-/turf/open/floor/iron/textured_half{
-	dir = 4
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 8
 	},
 /area/centcom/central_command_areas/holding)
 "fc" = (
@@ -1883,23 +1785,9 @@
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)
 "fs" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 10
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/toy/figure/syndie,
-/turf/open/floor/iron/textured_half{
-	dir = 4
-	},
+/turf/open/floor/bamboo/tatami/purple,
 /area/centcom/central_command_areas/holding)
 "ft" = (
 /obj/structure/closet/crate,
@@ -1912,25 +1800,8 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "fu" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 6
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/bamboo/tatami/purple,
 /area/centcom/central_command_areas/holding)
 "fv" = (
 /obj/item/kirbyplants{
@@ -1956,6 +1827,11 @@
 	planetary_atmos = 0
 	},
 /area/awaymission/errorroom)
+"fz" = (
+/turf/open/floor/bamboo/tatami{
+	dir = 4
+	},
+/area/centcom/central_command_areas/holding)
 "fA" = (
 /obj/machinery/vending/cola,
 /obj/effect/turf_decal/delivery,
@@ -2137,21 +2013,9 @@
 	},
 /area/centcom/tdome/administration)
 "gi" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 6
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/syndie,
-/turf/open/floor/iron/textured_half{
+/turf/open/floor/bamboo/tatami/purple{
 	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
@@ -2455,30 +2319,12 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "hg" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 6
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/toy/katana{
 	desc = "As seen in your favourite Japanese cartoon.";
 	name = "anime katana"
 	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
+/turf/open/floor/bamboo/tatami,
 /area/centcom/central_command_areas/holding)
 "hh" = (
 /turf/closed/indestructible/rock/snow,
@@ -2758,20 +2604,9 @@
 /turf/open/floor/iron/sepia,
 /area/centcom/central_command_areas/holding)
 "hL" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
+/obj/machinery/light/directional/north,
+/turf/open/floor/bamboo/tatami/purple{
 	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 5
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
 "hM" = (
@@ -2867,26 +2702,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
-"ic" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e"
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/centcom/central_command_areas/holding)
 "id" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -4828,6 +4643,12 @@
 "nH" = (
 /turf/closed/indestructible/syndicate,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
+"nI" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "nJ" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/brown,
@@ -5536,6 +5357,9 @@
 	},
 /turf/open/space,
 /area/space)
+"pA" = (
+/turf/open/floor/bamboo/tatami/purple,
+/area/centcom/central_command_areas/holding)
 "pB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -6005,6 +5829,11 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
+"qV" = (
+/turf/open/floor/bamboo/tatami/black{
+	dir = 1
+	},
+/area/centcom/central_command_areas/holding)
 "qW" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/flowers_yw/style_random,
@@ -7651,6 +7480,13 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/holding)
+"wn" = (
+/obj/structure/dresser,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 1
+	},
+/area/centcom/central_command_areas/holding)
 "wo" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 4
@@ -8523,22 +8359,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
 "yT" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 1
-	},
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/turf/open/floor/iron/textured_half{
+/turf/open/floor/bamboo/tatami/purple{
 	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
@@ -8916,42 +8740,7 @@
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/briefing)
 "zU" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 10
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/centcom/central_command_areas/holding)
-"zW" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e"
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/textured_half{
-	dir = 4
-	},
+/turf/open/floor/bamboo/tatami/black,
 /area/centcom/central_command_areas/holding)
 "zX" = (
 /obj/machinery/shower/directional/east,
@@ -9040,6 +8829,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden/layer5,
 /turf/open/floor/iron,
 /area/centcom/syndicate_mothership/control)
+"Al" = (
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "Am" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -9158,18 +8952,7 @@
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "AD" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e"
-	},
-/turf/open/floor/iron/textured_half{
+/turf/open/floor/bamboo/tatami/black{
 	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
@@ -9234,6 +9017,12 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
+"AN" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
+	},
+/turf/open/floor/bamboo/tatami/purple,
+/area/centcom/central_command_areas/holding)
 "AO" = (
 /obj/machinery/computer/communications{
 	dir = 8
@@ -10939,26 +10728,10 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
 "FA" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 5
-	},
 /obj/structure/dresser,
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/textured_half{
-	dir = 1
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
 "FB" = (
@@ -11475,6 +11248,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"Hc" = (
+/obj/structure/dresser,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/bamboo/tatami{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "He" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/mineral/plastitanium,
@@ -11598,6 +11378,11 @@
 "Hv" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/courtroom)
+"Hx" = (
+/turf/open/floor/bamboo/tatami{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "Hy" = (
 /obj/machinery/recharge_station,
 /turf/open/floor/catwalk_floor,
@@ -12294,6 +12079,11 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"JA" = (
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 4
+	},
+/area/centcom/central_command_areas/holding)
 "JC" = (
 /obj/machinery/abductor/pad{
 	team_number = 2
@@ -13228,27 +13018,11 @@
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
 "MW" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 1
-	},
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
+/turf/open/floor/bamboo/tatami{
+	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
 "MX" = (
@@ -13282,24 +13056,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
 "Nc" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/textured_half{
+/turf/open/floor/bamboo/tatami/purple{
 	dir = 1
 	},
 /area/centcom/central_command_areas/holding)
@@ -13311,6 +13068,11 @@
 /obj/item/reagent_containers/cup/glass/trophy/gold_cup,
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/observation)
+"Nf" = (
+/turf/open/floor/bamboo/tatami/black{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "Ng" = (
 /obj/item/storage/box/ids{
 	pixel_x = 3;
@@ -13650,24 +13412,8 @@
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
 "Og" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 9
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/turf/open/floor/iron/textured_half{
+/turf/open/floor/bamboo/tatami/purple{
 	dir = 1
 	},
 /area/centcom/central_command_areas/holding)
@@ -13871,19 +13617,6 @@
 	name = "sand"
 	},
 /area/centcom/tdome/observation)
-"OF" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 4
-	},
-/area/centcom/central_command_areas/holding)
 "OG" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -14083,23 +13816,6 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/centcom/syndicate_mothership/control)
-"Pi" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 8
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 4
-	},
-/area/centcom/central_command_areas/holding)
 "Pj" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/tdome/administration)
@@ -14232,27 +13948,6 @@
 	name = "Professional camera"
 	},
 /turf/open/floor/wood/tile,
-/area/centcom/central_command_areas/holding)
-"PD" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 4
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
 /area/centcom/central_command_areas/holding)
 "PE" = (
 /obj/machinery/newscaster{
@@ -14893,6 +14588,14 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
+"Rq" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/bamboo/tatami{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "Rr" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -15423,23 +15126,6 @@
 "SZ" = (
 /turf/closed/indestructible/fakeglass,
 /area/centcom/tdome/observation)
-"Ta" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 9
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 4
-	},
-/area/centcom/central_command_areas/holding)
 "Tb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -15669,26 +15355,10 @@
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/three)
 "TA" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 6
-	},
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/toy/figure/ninja,
-/turf/open/floor/iron/textured_half{
-	dir = 1
+/turf/open/floor/bamboo/tatami{
+	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
 "TB" = (
@@ -15754,27 +15424,6 @@
 /obj/structure/sink/kitchen/directional/west,
 /obj/item/reagent_containers/cup/bucket,
 /turf/open/floor/catwalk_floor,
-/area/centcom/central_command_areas/holding)
-"TM" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 9
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
 /area/centcom/central_command_areas/holding)
 "TN" = (
 /obj/structure/lattice/catwalk,
@@ -15860,6 +15509,11 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron,
 /area/centcom/syndicate_mothership/control)
+"Ua" = (
+/obj/structure/bed,
+/obj/item/bedsheet/syndie,
+/turf/open/floor/bamboo/tatami/purple,
+/area/centcom/central_command_areas/holding)
 "Ub" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -16102,6 +15756,17 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/holding)
+"UD" = (
+/obj/item/bedsheet/syndie{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/bamboo/tatami{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "UE" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/paper_bin,
@@ -16271,21 +15936,12 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
-"UZ" = (
-/obj/effect/turf_decal/tile/yellow/half,
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 1
+"Vb" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-10"
 	},
-/obj/effect/turf_decal/tile/neutral/half,
-/obj/effect/turf_decal/tile/neutral/half{
+/turf/open/floor/bamboo/tatami/purple{
 	dir = 1
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 1
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
 "Vc" = (
@@ -16464,6 +16120,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"VC" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/bamboo/tatami/purple{
+	dir = 8
+	},
+/area/centcom/central_command_areas/holding)
 "VF" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -17284,25 +16948,9 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/centcom/syndicate_mothership/control)
 "XF" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 6
-	},
 /obj/machinery/light/directional/south,
-/turf/open/floor/iron/textured_half{
-	dir = 1
+/turf/open/floor/bamboo/tatami/black{
+	dir = 4
 	},
 /area/centcom/central_command_areas/holding)
 "XG" = (
@@ -17548,27 +17196,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
-"Yx" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 8
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/centcom/central_command_areas/holding)
 "Yy" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -17846,27 +17473,6 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
-"Zk" = (
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/half{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding{
-	color = "#2e2e2e";
-	dir = 1
-	},
-/turf/open/floor/iron/textured_half{
-	dir = 1
-	},
-/area/centcom/central_command_areas/holding)
 "Zl" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -38881,8 +38487,8 @@ hs
 pJ
 pJ
 Oi
-MW
-AD
+Rq
+Hx
 ej
 YC
 YC
@@ -39909,8 +39515,8 @@ pJ
 pJ
 pJ
 Oi
-yT
-ic
+VC
+Al
 dl
 YC
 YC
@@ -41708,8 +41314,8 @@ pJ
 pJ
 pJ
 Oi
-ex
-dS
+Hc
+UD
 sm
 YC
 YC
@@ -41966,7 +41572,7 @@ pJ
 pJ
 Oi
 MW
-AD
+fz
 SP
 YC
 YC
@@ -42222,7 +41828,7 @@ aU
 pJ
 hs
 Oi
-dB
+ag
 hg
 sm
 bO
@@ -42736,7 +42342,7 @@ pJ
 Zc
 pJ
 Oi
-Og
+nI
 fb
 sm
 bO
@@ -42994,7 +42600,7 @@ pJ
 pJ
 Oi
 yT
-ic
+JA
 RE
 bO
 bO
@@ -43250,8 +42856,8 @@ pJ
 pJ
 hs
 Oi
-FA
-gi
+wn
+Ua
 sm
 WA
 WA
@@ -45305,10 +44911,10 @@ ds
 Cy
 ds
 fO
-Iy
-Zt
-Zt
-Iy
+Vb
+pA
+Nc
+AN
 fO
 XI
 hb
@@ -45562,10 +45168,10 @@ Cy
 xa
 Cy
 fO
-Zt
-Zt
-Zt
-Zt
+Al
+Nc
+pA
+Al
 fO
 Rk
 gV
@@ -45819,10 +45425,10 @@ hZ
 FY
 CW
 fO
-Zt
-Zt
-Zt
-Zt
+JA
+Al
+Al
+JA
 fO
 dt
 hb
@@ -46076,10 +45682,10 @@ ds
 zd
 ds
 fO
-Ta
-Yx
-Pi
-zU
+Al
+JA
+JA
+Al
 fO
 ZB
 RY
@@ -46333,19 +45939,19 @@ Nd
 Nd
 Nd
 Nd
+JA
 Nc
-OF
-ep
-zW
+pA
+JA
 fO
 QD
 Zt
 Iy
 RL
-TM
-Pi
-Yx
-Pi
+Nf
+qV
+zU
+qV
 zU
 RL
 Iy
@@ -46591,19 +46197,19 @@ OL
 OL
 Nd
 hL
-PD
-cv
+pA
+Nc
 fu
 fO
 XN
 Zt
 Zt
 bC
-UZ
-ep
-OF
-ep
 AD
+Nf
+qV
+zU
+Nf
 RL
 fK
 Zt
@@ -46856,11 +46462,11 @@ df
 Zt
 fK
 RL
-Zk
-OF
-ep
-OF
-ic
+Nf
+AD
+zU
+Nf
+AD
 RL
 fK
 Zt
@@ -47113,11 +46719,11 @@ gk
 Zt
 fK
 RL
-UZ
-ep
-OF
-ep
 AD
+qV
+zU
+AD
+Nf
 fI
 Zt
 Zt
@@ -47371,9 +46977,9 @@ fg
 fg
 Nd
 cE
-cv
-PD
-cv
+zU
+qV
+zU
 XF
 Nd
 fg

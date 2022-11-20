@@ -1066,9 +1066,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
-	return
-
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(SEND_SIGNAL(target, COMSIG_CARBON_PRE_HELP, user, attacker_style) & COMPONENT_BLOCK_HELP_ACT)
 		return TRUE

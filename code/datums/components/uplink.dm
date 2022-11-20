@@ -400,7 +400,7 @@
 	if(istype(parent,/obj/item/modular_computer/tablet))
 		unlock_note = "<B>Uplink Passcode:</B> [unlock_code] ([P.name])."
 	else if(istype(parent,/obj/item/radio))
-		unlock_note = "<B>Radio Passcode:</B> [unlock_code] ([P.name], :d channel)."
+		unlock_note = "<B>Radio Passcode:</B> [unlock_code] ([P.name], [RADIO_TOKEN_UPLINK] channel)."
 	else if(istype(parent,/obj/item/pen))
 		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
 
