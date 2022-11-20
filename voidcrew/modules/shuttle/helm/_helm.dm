@@ -244,7 +244,7 @@
 					say(current_ship.overmap_object_act(usr, to_act))
 					return
 				if("toggle_engine")
-					var/obj/machinery/power/shuttle/engine/E = locate(params["engine"])
+					var/obj/machinery/power/shuttle_engine/ship/E = locate(params["engine"])
 					E.enabled = !E.enabled
 					current_ship.refresh_engines()
 					return

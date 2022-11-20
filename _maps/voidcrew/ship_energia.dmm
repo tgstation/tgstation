@@ -271,7 +271,7 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "ri" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -425,7 +425,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "xF" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -541,7 +541,7 @@
 /turf/open/floor/iron,
 /area/station/medical)
 "BW" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,

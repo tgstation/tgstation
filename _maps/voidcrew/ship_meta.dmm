@@ -165,7 +165,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "ax" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -305,7 +305,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "aL" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -2096,7 +2096,7 @@
 /turf/open/floor/iron/white,
 /area/station/cargo/warehouse)
 "Un" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,

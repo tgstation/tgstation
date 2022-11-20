@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(overmap)
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	/// Map of tiles at each radius around the sun
-	var/list/list/radius_tiles = list()
+	var/list/turf/radius_tiles = list()
 	/// List of all events
 	var/list/events = list()
 

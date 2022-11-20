@@ -629,7 +629,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "MQ" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -647,7 +647,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering/main)
 "Oa" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,

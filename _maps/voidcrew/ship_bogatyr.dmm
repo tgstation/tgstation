@@ -181,7 +181,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/central)
 "jT" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 1
 	},
 /obj/structure/cable,

@@ -548,7 +548,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "fU" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1202,7 +1202,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "mp" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -2897,7 +2897,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "Eu" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 1
 	},
 /obj/structure/cable,
@@ -4416,7 +4416,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "Wh" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 1
 	},
 /obj/structure/cable,

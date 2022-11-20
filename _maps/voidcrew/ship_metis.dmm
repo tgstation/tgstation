@@ -1154,7 +1154,7 @@
 /area/station/ai_monitored/aisat)
 "vh" = (
 /obj/structure/cable,
-/obj/machinery/power/shuttle/engine/fueled{
+/obj/machinery/power/shuttle_engine/fueled{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1782,7 +1782,7 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/commons/toilet)
 "Fr" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 1
 	},
 /obj/structure/cable,

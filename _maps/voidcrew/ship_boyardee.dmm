@@ -1203,7 +1203,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "Df" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -1964,7 +1964,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "Uq" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

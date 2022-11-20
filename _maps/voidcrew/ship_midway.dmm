@@ -5,7 +5,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/storage)
 "ao" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -160,7 +160,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "fs" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -603,7 +603,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "sN" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
@@ -1632,7 +1632,7 @@
 /turf/template_noop,
 /area/template_noop)
 "Zr" = (
-/obj/machinery/power/shuttle/engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

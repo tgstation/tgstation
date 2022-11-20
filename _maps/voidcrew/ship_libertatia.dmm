@@ -110,7 +110,7 @@
 /area/station/cargo/miningoffice)
 "eV" = (
 /obj/structure/cable,
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -715,7 +715,7 @@
 /area/station/commons/lounge)
 "Cd" = (
 /obj/structure/cable,
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 1
 	},
 /turf/open/floor/plating,

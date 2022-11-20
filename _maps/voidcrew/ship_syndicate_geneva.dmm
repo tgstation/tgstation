@@ -1166,7 +1166,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "Dl" = (
-/obj/machinery/power/shuttle/engine/liquid/oil,
+/obj/machinery/power/shuttle_engine/liquid/oil,
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
@@ -1174,7 +1174,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "Dm" = (
-/obj/machinery/power/shuttle/engine/liquid/oil,
+/obj/machinery/power/shuttle_engine/liquid/oil,
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/preopen{
@@ -1252,7 +1252,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "Ge" = (
-/obj/machinery/power/shuttle/engine/liquid/oil,
+/obj/machinery/power/shuttle_engine/liquid/oil,
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"

@@ -68,7 +68,7 @@
 /area/template_noop)
 "fJ" = (
 /obj/structure/cable,
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -702,7 +702,7 @@
 /turf/open/floor/iron,
 /area/station/science)
 "PX" = (
-/obj/machinery/power/shuttle/engine/electric{
+/obj/machinery/power/shuttle_engine/electric{
 	dir = 4
 	},
 /obj/structure/cable,
