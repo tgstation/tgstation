@@ -254,10 +254,7 @@
 		var/turf/rift_exit = rift.exit_locs[exit_count]
 		if (get_dist(rift_exit, target) >= distance_to_target)
 			continue
-		var/turf/destination = get_turf(rift)
-		if (!destination)
-			return FALSE
-		controller.current_movement_target = destination
+		controller.current_movement_target = rift
 		return TRUE
 	return FALSE
 
@@ -284,7 +281,7 @@
 	var/obj/effect/temp_visual/lesser_carp_rift/entrance/rift = locate(/obj/effect/temp_visual/lesser_carp_rift/entrance) in orange(controller.pawn, search_distance)
 	if (!rift)
 		return FALSE
-	controller.current_movement_target = get_turf(rift)
+	controller.current_movement_target = rift
 	return TRUE
 
 /datum/ai_behavior/enter_nearby_rift/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)

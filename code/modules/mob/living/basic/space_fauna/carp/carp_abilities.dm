@@ -130,6 +130,7 @@
 	cooldown_time = 5 SECONDS
 	projectile_sound = 'sound/weapons/emitter.ogg'
 	melee_cooldown_time = 0 SECONDS // Without this they become extremely hesitant to bite anyone ever
+	shared_cooldown = MOB_SHARED_COOLDOWN_2
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/chaos/attack_sequence(mob/living/firer, atom/target)
 	playsound(get_turf(firer), projectile_sound, 100, TRUE)

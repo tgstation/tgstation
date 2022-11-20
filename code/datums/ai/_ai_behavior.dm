@@ -19,8 +19,6 @@
 
 ///Called when the action is finished. This needs the same args as perform besides the default ones
 /datum/ai_behavior/proc/finish_action(datum/ai_controller/controller, succeeded, ...)
-	if (istype(controller.pawn, /mob/living/basic/carp/magic))
-		to_chat(world, "finished [src] [succeeded]")
 	LAZYREMOVE(controller.current_behaviors, src)
 	controller.behavior_args -= type
 	if(behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //If this was a movement task, reset our movement target if necessary

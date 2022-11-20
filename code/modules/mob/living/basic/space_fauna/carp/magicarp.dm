@@ -53,8 +53,8 @@
 	var/obj/projectile/spell_type = pick(projectile_types)
 	name = "[projectile_types[spell_type]] [name]"
 
-	var/spell_colour = spell_to_colour(spell_type)
-	set_greyscale(colors= list(spell_colour))
+	colour_by_spell(spell_type)
+	assign_spell_ai(spell_type)
 
 	spell = new (src)
 	spell.projectile_type = spell_type
@@ -63,20 +63,32 @@
 	ai_controller.blackboard[BB_MAGICARP_SPELL] = spell
 
 /// Convert name of spell to colour
-/mob/living/basic/carp/magic/proc/spell_to_colour(spell_name)
+/mob/living/basic/carp/magic/proc/colour_by_spell(spell_type)
 	var/static/list/spell_colours = list(
-		"dancing" = "#fd6767",
-		"arcane" = "#aba2ff",
-		"transforming" = "#da77a8",
-		"grim" = "#3a384d",
-		"unbarred" = "#70ff25",
-		"blazing" = "#dd5f34",
-		"vital" = "#7ef099",
-		"vorpal" = "#fdfbf3",
-		"warping" = "#df0afb",
-		"babbling" = "#ca805a",
+		/obj/projectile/magic/animate = "#fd6767",
+		/obj/projectile/magic/arcane_barrage = "#aba2ff",
+		/obj/projectile/magic/change = "#da77a8",
+		/obj/projectile/magic/death = "#3a384d",
+		/obj/projectile/magic/door = "#70ff25",
+		/obj/projectile/magic/fireball = "#dd5f34",
+		/obj/projectile/magic/resurrection = "#7ef099",
+		/obj/projectile/magic/spellblade = "#fdfbf3",
+		/obj/projectile/magic/teleport = "#df0afb",
+		/obj/projectile/magic/babel = "#ca805a",
 	)
-	return spell_colours[spell_name]
+
+	var/spell_colour = spell_colours[spell_type]
+	set_greyscale(colors= list(spell_colour))
+
+/// If you have certain spells, use a different targetting datum
+/mob/living/basic/carp/magic/proc/assign_spell_ai(spell_type)
+	var/static/list/spell_special_targetting = list(
+		/obj/projectile/magic/animate = MAGICARP_SPELL_OBJECTS,
+		/obj/projectile/magic/door = MAGICARP_SPELL_WALLS,
+		/obj/projectile/magic/resurrection = MAGICARP_SPELL_CORPSES,
+	)
+
+	ai_controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETTING] = spell_special_targetting[spell_type]
 
 /// Shoot when you click away from you
 /mob/living/basic/carp/magic/RangedAttack(atom/atom_target, modifiers)

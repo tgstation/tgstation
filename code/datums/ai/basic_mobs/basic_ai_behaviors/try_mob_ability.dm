@@ -13,8 +13,14 @@
 /datum/ai_behavior/try_mob_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
-	var/mob/living/target = weak_target?.resolve()
-	if(QDELETED(target) || target.stat >= UNCONSCIOUS)
+	var/atom/target = weak_target?.resolve()
+	if (QDELETED(target))
+		controller.blackboard[target_key] = null
+		return
+	if (!isliving(target))
+		return
+	var/mob/living/living_target = target
+	if(living_target.stat >= UNCONSCIOUS)
 		controller.blackboard[target_key] = null
 
 ///subtype of normal mob ability that moves the target into a special execution targetting.
@@ -24,3 +30,12 @@
 /datum/ai_behavior/try_mob_ability/and_plan_execute/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET] = controller.blackboard[target_key]
 	return ..()
+
+/// As supertype but don't hold onto your target
+/datum/ai_behavior/try_mob_ability/and_clear_target
+
+/datum/ai_behavior/try_mob_ability/and_clear_target/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
+	. = ..()
+	controller.blackboard[target_key] = null
+
+#undef MAGICARP_SPELL_TARGET_SEEK_RANGE

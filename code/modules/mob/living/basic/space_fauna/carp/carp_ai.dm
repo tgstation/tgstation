@@ -63,10 +63,11 @@
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
 		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/find_food,
+		/datum/ai_planning_subtree/find_nearest_magicarp_spell_target,
+		/datum/ai_planning_subtree/targetted_mob_ability/magicarp,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
 		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/targetted_mob_ability/magicarp,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/while_healthy/magicarp,
 		/datum/ai_planning_subtree/carp_migration,
 	)
