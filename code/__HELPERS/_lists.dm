@@ -87,7 +87,7 @@
 		var/list/__BIN_LIST = LIST;\
 		var/__BIN_CTTL = length(__BIN_LIST);\
 		if(!__BIN_CTTL) {\
-			UNTYPED_LIST_ADD(__BIN_LIST, INPUT);\
+			__BIN_LIST += INPUT;\
 		} else {\
 			var/__BIN_LEFT = 1;\
 			var/__BIN_RIGHT = __BIN_CTTL;\
@@ -122,7 +122,7 @@
 		var/list/__BIN_LIST = LIST;\
 		var/__BIN_CTTL = length(__BIN_LIST);\
 		if(!__BIN_CTTL) {\
-			UNTYPED_LIST_ADD(__BIN_LIST, INPUT);\
+			__BIN_LIST += INPUT;\
 		} else {\
 			var/__BIN_LEFT = 1;\
 			var/__BIN_RIGHT = __BIN_CTTL;\
@@ -160,7 +160,7 @@
 		var/list/__BIN_LIST = LIST;\
 		var/__BIN_CTTL = length(__BIN_LIST);\
 		if(!__BIN_CTTL) {\
-			UNTYPED_LIST_ADD(__BIN_LIST, INPUT);\
+			__BIN_LIST += INPUT;\
 		} else {\
 			var/__BIN_LEFT = 1;\
 			var/__BIN_RIGHT = __BIN_CTTL;\
