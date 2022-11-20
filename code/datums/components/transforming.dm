@@ -91,7 +91,7 @@
 
 /datum/component/transforming/proc/on_scan(datum/source, mob/user, list/extra_data)
 	SIGNAL_HANDLER
-	LAZYADD(extra_data[DETSCAN_CAT_ADD], "Readings suggest some form of state changing.")
+	LAZYADD(extra_data[DETSCAN_CATEGORY_ADD], "Readings suggest some form of state changing.")
 
 
 /*

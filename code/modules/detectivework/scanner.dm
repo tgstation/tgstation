@@ -96,7 +96,7 @@
 		// The keys are the headers used for it, and the value is a list of each line printed
 		var/list/det_data = list()
 		var/list/blood = GET_ATOM_BLOOD_DNA(A)
-		det_data[DETSCAN_CAT_FIBER] = GET_ATOM_BLOOD_DNA(A)
+		det_data[DETSCAN_CATEGORY_FIBER] = GET_ATOM_BLOOD_DNA(A)
 
 		var/target_name = A.name
 
@@ -106,17 +106,17 @@
 
 			var/mob/living/carbon/human/H = A
 			if(!H?.gloves)
-				LAZYADD(det_data[DETSCAN_CAT_FINGERS], md5(H.dna?.unique_identity))
+				LAZYADD(det_data[DETSCAN_CATEGORY_FINGERS], md5(H.dna?.unique_identity))
 
 		else if(!ismob(A))
 
-			det_data[DETSCAN_CAT_FINGERS] = GET_ATOM_FINGERPRINTS(A)
+			det_data[DETSCAN_CATEGORY_FINGERS] = GET_ATOM_FINGERPRINTS(A)
 
 			// Only get reagents from non-mobs.
 			if(A.reagents && A.reagents.reagent_list.len)
 
 				for(var/datum/reagent/R in A.reagents.reagent_list)
-					LAZYADD(det_data[DETSCAN_CAT_DRINK], \
+					LAZYADD(det_data[DETSCAN_CATEGORY_DRINK], \
 						"Reagent: <font color='red'>[R.name]</font> Volume: <font color='red'>[reagents[R.volume]]</font>")
 
 					// Get blood data from the blood reagent.
@@ -133,15 +133,15 @@
 			for(var/region in DETSCAN_ACCESS_ORDER)
 				var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
 				if(length(access_in_region))
-					LAZYADD(det_data[DETSCAN_CAT_ACCESS], "[region]:")
+					LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], "[region]:")
 					var/list/access_names = list()
 					for(var/x in access_in_region)
 						access_names += SSid_access.get_access_desc(x)
-					LAZYADD(det_data[DETSCAN_CAT_ACCESS], english_list(access_names))
+					LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], english_list(access_names))
 
 
 		for(var/bloodtype in blood)
-			LAZYADD(det_data[DETSCAN_CAT_BLOOD], \
+			LAZYADD(det_data[DETSCAN_CATEGORY_BLOOD], \
 			"Type: <font color='red'>[blood[bloodtype]]</font> DNA (UE): <font color='red'>[bloodtype]</font>")
 
 		// sends it off to be modified by the items
