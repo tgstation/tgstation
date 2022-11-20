@@ -60344,7 +60344,9 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "sBY" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement{
+	dir = 8
+	},
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/wood,
@@ -64433,6 +64435,7 @@
 /area/station/medical/storage)
 "tQJ" = (
 /obj/machinery/modular_computer/console/preset/civilian,
+/obj/structure/fireaxecabinet/mechremoval/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "tQM" = (

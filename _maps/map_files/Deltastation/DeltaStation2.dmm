@@ -27378,13 +27378,8 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/wood,
 /obj/machinery/light_switch/directional/east,
-/obj/item/newspaper{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/cup/glass/coffee{
-	pixel_x = -4;
-	pixel_y = 2
+/obj/machinery/computer/libraryconsole{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/library)
@@ -41429,7 +41424,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot,
-/obj/machinery/door/window/left/tram/directional/west{
+/obj/machinery/door/window/left/directional/west{
 	name = "Magboot Storage";
 	req_access = list("eva")
 	},
@@ -80399,7 +80394,14 @@
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/table/wood,
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/computer/libraryconsole,
+/obj/item/newspaper{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = -4;
+	pixel_y = 2
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "tEE" = (
@@ -92676,7 +92678,9 @@
 /area/station/cargo/warehouse)
 "wAe" = (
 /obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement{
+	dir = 1
+	},
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/station/security/prison)
@@ -94739,6 +94743,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/vending/wardrobe/robo_wardrobe,
 /obj/effect/turf_decal/bot,
+/obj/structure/fireaxecabinet/mechremoval/directional/west,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "xdY" = (

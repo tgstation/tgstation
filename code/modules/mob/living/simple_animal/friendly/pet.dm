@@ -64,6 +64,13 @@
 
 	remove_collar(drop_location(), update_visuals = FALSE)
 
+/mob/living/simple_animal/pet/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	if(!.)
+		return
+
+	update_icon(UPDATE_OVERLAYS)
+
 /mob/living/simple_animal/pet/death(gibbed)
 	. = ..()
 	add_memory_in_range(src, 7, MEMORY_PET_DEAD, list(DETAIL_DEUTERAGONIST = src), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_CHECK_BLIND_AND_DEAF) //Protagonist is the person memorizing it
