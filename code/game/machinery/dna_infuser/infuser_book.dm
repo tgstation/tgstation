@@ -27,7 +27,7 @@
 		ui = new(user, src, "InfuserBook")
 		ui.open()
 
-/obj/item/spellbook/ui_static_data(mob/user)
+/obj/item/infuser_book/ui_static_data(mob/user)
 	var/list/data = list()
 	// Collect all info from each intry.
 	var/list/entry_data = list()
@@ -42,11 +42,20 @@
 	data["entries"] = entry_data
 	return data
 
+
+
 /datum/infuser_entry
-	var/name = "Rejected Mutant"
-	var/infuse_mob_name = "Rejected creature DNA"
+	//info for the book
+
+	/// name of the mutant you become
+	var/name = "Rejected"
+	/// what you have to infuse to become it
+	var/infuse_mob_name = "rejected creature"
+	/// general desc
 	var/desc = "For whatever reason, when the body rejects DNA, the DNA goes sour, ending up as some kind of fly-like DNA jumble."
+	/// desc of what passing the threshold gets you
 	var/threshold_desc = "The DNA mess takes over, and you become a full-fledged flyperson."
+	/// various little bits
 	var/list/qualities = list(
 		"buzzy-like speech",
 		"vomit drinking",
@@ -54,9 +63,16 @@
 		"this is a bad idea",
 	)
 
+	//info for the machine
+
+	/// organs that the machine could spit out in relation
+	var/list/valid_organs = {
+
+	}
+
 /datum/infuser_entry/rat
-	name = "Rat Mutant"
-	infuse_mob_name = "Rodent DNA"
+	name = "Rat"
+	infuse_mob_name = "rodent"
 	desc = "Frail, small, positively cheesed to face the world. Easy to stuff yourself full of rat DNA, but perhaps not the best choice?"
 	threshold_desc = "You become lithe enough to crawl through ventilation."
 	qualities = list(
@@ -67,8 +83,8 @@
 	)
 
 /datum/infuser_entry/carp
-	name = "Carp Mutant"
-	infuse_mob_name = "Space-Cyprinidae DNA"
+	name = "Carp"
+	infuse_mob_name = "space-cyprinidae"
 	desc = "Carp-mutants are very well-prepared for long term deep space exploration. In fact, they can't stand not doing it!"
 	threshold_desc = "The DNA mess takes over, and you become a full-fledged flyperson."
 	qualities = list(

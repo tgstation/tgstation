@@ -76,7 +76,7 @@
 
 
 
-/// makes you smaller, walk over tables, and take double damage
+/// makes you smaller, walk over tables, and take 1.5x damage
 /obj/item/organ/internal/heart/rat
 	name = "mutated rat-heart"
 	desc = "Rat DNA infused into what was once a normal heart."
@@ -92,8 +92,8 @@
 		return
 	var/mob/living/carbon/human/human_reciever = reciever
 	human_reciever.dna.add_mutation(/datum/mutation/human/dwarfism)
-	//but double damage
-	human_reciever.physiology.damage_resistance -= 100
+	//but 1.5 damage
+	human_reciever.physiology.damage_resistance -= 50
 
 /obj/item/organ/internal/heart/rat/Remove(mob/living/carbon/heartless, special)
 	. = ..()
@@ -101,7 +101,7 @@
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
 	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
-	human_heartless.physiology.damage_resistance += 100
+	human_heartless.physiology.damage_resistance += 50
 
 
 

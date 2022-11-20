@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, Stack } from '../components';
+import { BlockQuote, Box, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Entry = {
@@ -18,38 +18,57 @@ export const InfuserBook = (props, context) => {
   const { data } = useBackend<DnaInfuserData>(context);
   const { entries } = data;
   return (
-    <Window width={620} height={340}>
-      <Window.Content>
-        <Section scrollable>
-          <Stack vertical fill>
-            {entries?.map((entry, index) => {
-              <Stack.Item key={index}>
-                <Stack vertical>
-                  <Stack.Item>
-                    <b>{entry.name}</b>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <b>{entry.infuse_mob_name}</b>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <b>{entry.desc}</b>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <b>{entry.threshold_desc}</b>
-                  </Stack.Item>
-                  <Section>
-                    <Stack vertical>
-                      {entry.qualities.map((quality) => {
-                        <Stack.Item key={quality}>- {quality}</Stack.Item>;
-                      })}
-                    </Stack>
-                  </Section>
-                </Stack>
-              </Stack.Item>;
-            })}
-          </Stack>
-        </Section>
+    <Window width={620} height={320}>
+      <Window.Content scrollable>
+        <Stack vertical>
+          {entries.map((entry) => {
+            return (
+              <Stack.Item key={entry.name}>
+                <InfuserEntry entry={entry} />
+              </Stack.Item>
+            );
+          })}
+        </Stack>
       </Window.Content>
     </Window>
+  );
+};
+
+type InfuserEntryProps = {
+  entry: Entry;
+};
+
+const InfuserEntry = (props: InfuserEntryProps, context) => {
+  const { entry } = props;
+  return (
+    <Section>
+      <Stack vertical>
+        <Stack.Item fontSize={'18px'}>{entry.name}</Stack.Item>
+        <Stack.Item>
+          <BlockQuote>
+            {entry.desc} If a subject infuses with enough DNA,{' '}
+            {entry.threshold_desc}
+          </BlockQuote>
+        </Stack.Item>
+        <Stack.Item>
+          Qualities:
+          {entry.qualities.map((quality) => {
+            return (
+              <Box color="label" key={quality}>
+                - {quality}
+              </Box>
+            );
+          })}
+        </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item>
+          Created from infusing{' '}
+          <Box inline color="green">
+            {entry.infuse_mob_name}
+          </Box>{' '}
+          into a subject.
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
