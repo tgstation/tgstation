@@ -70,16 +70,21 @@
 	c_tag = "Exosuit: unspecified"
 	network = list("ss13", "rd")
 	var/number
+	///Currently used name of the mech
+	var/current_name
 
 //Updates the c_tag of the mech while preventing duplicate c_tag usage due to having mechs with the same name
 /obj/machinery/camera/emp_proof/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
 	var/static/list/existing_mech_names = list()
-	var/mech_name = mech.name
+	var/mech_name = format_text(mech.name)
 
+	if(current_name && current_name != mech_name) //decrease by 1 to preserve correct naming numeration
+		existing_mech_names[current_name] -= 1
 	number = existing_mech_names[mech_name] + 1
 	existing_mech_names[mech_name] = number
 
-	c_tag = "Exosuit: [format_text(mech_name)] #[number]"
+	c_tag = "Exosuit: [mech_name] #[number]"
+	current_name = mech_name
 
 // UPGRADE PROCS
 
