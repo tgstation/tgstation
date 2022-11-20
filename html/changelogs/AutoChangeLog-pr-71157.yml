@@ -1,0 +1,5 @@
+author: "lizardqueenlexi"
+delete-after: True
+changes:
+  - rscdel: "Removed the useless \"plasmaburnt\" trait."
+  - bugfix: "Restored a broken interaction with plasma rivers that slowly transforms you into a plasmaman."

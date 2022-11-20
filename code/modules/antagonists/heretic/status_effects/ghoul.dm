@@ -48,7 +48,7 @@
 	var/mob/living/carbon/human/human_target = owner
 
 	RegisterSignal(human_target, COMSIG_LIVING_DEATH, PROC_REF(remove_ghoul_status))
-	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
+	human_target.revive(ADMIN_HEAL_ALL) // Have to do an admin heal here, otherwise they'll likely just die due to missing organs or limbs
 
 	if(new_max_health)
 		human_target.setMaxHealth(new_max_health)
