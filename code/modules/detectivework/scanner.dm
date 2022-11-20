@@ -105,7 +105,7 @@
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A
-			if(!H?.gloves)
+			if(!H.gloves)
 				LAZYADD(det_data[DETSCAN_CATEGORY_FINGERS], md5(H.dna?.unique_identity))
 
 		else if(!ismob(A))
