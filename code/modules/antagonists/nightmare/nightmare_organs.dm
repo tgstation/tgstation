@@ -7,6 +7,7 @@
 /obj/item/organ/internal/brain/shadow/nightmare
 	name = "tumorous mass"
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
 

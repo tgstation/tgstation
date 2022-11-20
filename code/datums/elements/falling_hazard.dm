@@ -1,7 +1,7 @@
 /// An element that will make a target thing do damage to any mob that it falls on from a z-level above
 /datum/element/falling_hazard
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// The amount of damage to do when the target falls onto a mob
 	var/fall_damage = 5

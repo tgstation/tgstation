@@ -451,6 +451,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	knockdown_time = 14 SECONDS
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	affect_cyborg = TRUE
+	chunky_finger_usable = TRUE
 
 	var/mode = BATON_STUN
 

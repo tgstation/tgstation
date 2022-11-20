@@ -1,0 +1,4 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "Airlocks will no longer 'deny' entry when bumped while depowered"
