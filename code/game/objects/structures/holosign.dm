@@ -104,6 +104,11 @@
 	name = "sturdy holofirelock"
 	max_integrity = 150
 
+/obj/structure/holosign/barrier/atmos/tram
+	name = "tram atmos barrier"
+	max_integrity = 150
+	icon_state = "holo_tram"
+
 /obj/structure/holosign/barrier/atmos/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)

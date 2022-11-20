@@ -394,3 +394,207 @@
   - imageadd: updated a bunch of plant sprites
   timothymtorres:
   - bugfix: Fix pacifists being able to slice necks
+2022-11-17:
+  1393F:
+  - bugfix: lesser dragon form can now spit fire again
+  Fikou, sprites by Halcyon:
+  - refactor: fire axe cabinets support items that aren't fire axes
+  - balance: mechs no longer eject you when you die in them
+  - rscadd: Adds a giant crowbar to robotics, it can break open mechs to eject their
+      pilots.
+  GoblinBackwards:
+  - rscdel: Nuke missing the station no longer locks down the shuttle
+  JohnFulpWillard:
+  - balance: Tablets now use regular cells instead of computer cells.
+  - balance: Tablets no longer need a power cell component to hold power cells.
+  - bugfix: Clown PDA virus disk can once again be installed in machines, computers,
+      and airlocks.
+  KathrinBailey:
+  - rscadd: Banana and strawberry milkshakes! Made by juicing berries and bananas
+      respectively, with ice and cream.
+  LT3:
+  - rscadd: A tram collision counter has been added, hopefully encouraging employees
+      to be more careful. Don't become a statistic!
+  - qol: Tram destination sign is expanded and now properly says Central and Not In
+      Service.
+  - qol: Tram doors now open faster on arrival and mid travel, so you don't have to
+      wait, and can also make a daring high speed escape from a tram in motion.
+  - bugfix: Improved tram door logic so they don't end up open/closed at the wrong
+      place.
+  - bugfix: Tram doors are now their own subtype, it was backwards for some reason.
+  - bugfix: Tram doors while idle at a station can only be interacted with by Engineering
+      staff.
+  - rscadd: Tram controls are now a responsive touchscreen.
+  - rscadd: Tram crossings have their own holobarrier instead of using the generic
+      atmos fire barrier.
+  - rscadd: Tram now has a new set of doors in shiny titanium glass.
+  - rscadd: Tram is now powered by linear induction motors.
+  - bugfix: Deltastation's EVA windoor for magboots are no longer tram doors.
+  Melbert:
+  - balance: Attacking a shocked door with an item that isn't conductive will not
+      shock you.
+  - balance: Attacking a shocked grille with any item that isn't conductive (not just
+      glass shards) will not shock you.
+  - balance: Attacking grilles with items no longer leaves behind a fingerprint on
+      the grille (?).
+  - balance: Fire axe is now conductive.
+  - qol: Successfully fending off a blob now has a cross station news report again.
+      More pressing reports will take priority over it, though.
+  - qol: Successfully killing a wizard (and all of their apprentices) now has a cross
+      station news report again.
+  - qol: If more than half of a cultist team manages to escape on the shuttle (rather
+      than summoning Nar'sie), they will send a unique cross station news report.
+      This is still a loss, by the way. Summon Nar'sie!
+  - qol: Nuclear Operatives successfully nuking the station now has its unique cross
+      station news report again, and no longer uses the generic "The station was nuked"
+      report.
+  - qol: Nuking the station to stop a blob infection now has a unique cross station
+      news report again. Good luck convincing admins to allow this.
+  - qol: Cult ghosts from "Spirit Realm" no longer persist on the cult's team after
+      being desummoned, meaning they will not show up on roundend report.
+  - qol: Heads of staff will now always show up on revolution roundend report - even
+      if their body was fully destroyed.
+  ShizCalev:
+  - bugfix: Fixed anomalies not spawning when invoking the apocalypse rune
+  etherware-novice:
+  - rscadd: New radio uplink! Simply speak your codeword into the :d channel to unlock
+      it
+  - code_imp: new COMSIG_RADIO_NEW_MESSAGE signal
+  flowercuco:
+  - bugfix: Boxcutter is only the knife tool when it is active
+  - bugfix: Switchblade is now a knife tool when it is active
+  - rscadd: the punching bag, bench press, and chest press are all able to be crafted
+      and unanchored.
+  - rscadd: crafting recipes for the above
+  - qol: changed a chat message into a balloon alert
+  - qol: adds screentips to equipment (thanks for suggesting i do this mothblocks!)
+  lizardqueenlexi:
+  - bugfix: Made clown and mime survival boxes contain the correct internals tank
+      for plasmamen.
+  san7890:
+  - bugfix: Dead Black Space Rabbits should now properly have a sprite.
+  skylord-a52:
+  - refactor: defines a new global proc, pick_weight_recursive()
+  - code_imp: languages can weight syllables, and galactic common's definition is
+      easier to look at
+  tattle:
+  - bugfix: mimes no longer swear when using the *swear emote
+  timothymtorres:
+  - bugfix: Fix snow legions not having plasma lava and snowstorm immunity
+  - qol: Bedsheets now have context screentips and will cover up mobs if they are
+      attacked and lying down. Bedsheet can also be rotated with AltClick.
+  - bugfix: Fix rotation and offsets to work properly on mobs, nuke disk, plushies,
+      and bedsheets when placing something on a bed.
+  zxaber:
+  - bugfix: Fixed disposals pipes qdel-ing their contents when their integrity hits
+      zero.
+2022-11-18:
+  1bw0kopy:
+  - bugfix: Fix emberfall sound looping forever
+  Fikou:
+  - bugfix: fixes hilbert's hotel tram
+  JohnFulpWillard:
+  - bugfix: Ruins blacklisted from icebox shouldn't also blacklist it from lavaland,
+      and vice versa.
+  - bugfix: Syndicate Cyborgs no longer have the PDA messaging app.
+  Jolly:
+  - qol: Library Consoles and Book Management Consoles should no longer have their
+      keyboards hanging over the edge of tables.
+  - bugfix: On most station maps, crew can now properly see the computer monitors
+      for library consoles and the like. We don't know how you guys saw the screens
+      before, but you did. Good on you, I suppose?
+  Melbert:
+  - refactor: Fully heal can be passed a series of flags. As a result, some things
+      which previously did a full heal might heal slightly less, or some things which
+      did partial full heals might do slightly more.
+  - bugfix: Adminordrazine will no longer completely break every facet of a person
+  - admin: Ahealing a changeling will refill all of their chems.
+  NamelessFairy:
+  - bugfix: Roundstart PDAs can once again be used by people with chunky fingers.
+  Paxilmaniac:
+  - rscadd: A variety of items, mainly tools, around the station might hurt if they
+      fall on your head, remember to wear your hardhat and to avoid standing under
+      large red X marks on the ground with a piano hanging above them.
+  Simplehorror:
+  - spellcheck: Fixed a spelling error in some fluff
+  Striders13:
+  - rscadd: Pubby whiteship replaced with a new one.
+  antropod:
+  - bugfix: Containers visually update after crafting.
+  distributivgesetz:
+  - spellcheck: Corrected a miswording in the power monitor UI.
+  etherware-novice:
+  - bugfix: flick_overlay is an atom proc
+  - bugfix: bluespace light replacer displays icon correctly
+  - bugfix: fresh laundry mood is functional again
+  - code_imp: new component for controlling wearables granting mood
+  mc-oofert:
+  - bugfix: You can no longer deconstruct the chess pieces or cut the trees in the
+      holodeck for free mats
+  - bugfix: Raw dimensional cores can now be refined properly
+  moocowswag:
+  - rscadd: Cryokinesis, Shocktouch, Chameleon, and Webbing mutations now have a higher
+      potential
+  - balance: Cryokinesis and Shock touch appear to be weaker and more unstable by
+      default
+  timothymtorres:
+  - code_imp: Move plasma lava turf code to be in lava.dm file instead of snowdin
+      mission code
+2022-11-19:
+  ATHATH:
+  - balance: The damage modsuit bombs do to objects has been reduced from 15 damage
+      to 12, to match the damage they deal to non-hostile mobs.
+  - bugfix: Cans of monkey energy now have enough space to properly hold the quantity
+      of the monkey energy reagent they spawn with.
+  Iamgoofball:
+  - balance: You can no longer use batons if you have chunky fingers.
+  JohnFulpWillard:
+  - bugfix: Abductors can now use their batons.
+  MTandi:
+  - bugfix: fixed bamboo floor tile in-hand icons not being used
+  - imageadd: added tatami of 3 types to the bamboo floor variants
+  Sealed101, Sheets for legion trophy (from a previous Legion desoul):
+  - imageadd: 'new sprites for Kinetic Crusher trophies for the following mobs: legion,
+      goliath, all three watchers, fire drake/ice whelp, wendigo, polar bear and polar
+      wolf'
+  Time-Green:
+  - qol: you can look behind shipping containers, ratvars wreck, through the necropolis
+      gate and behind the big bones
+  Tonriam:
+  - spellcheck: The pAI toggle button to quickly display the Crew Manifest works again.
+  axietheaxolotl:
+  - bugfix: The RD coat is no longer incorrectly togglable, and lack of "fill-in"
+      on turtleneck handholes.
+  etherware-novice:
+  - bugfix: radio uplink now works, moved to .z because .d is reserved
+  lizardqueenlexi:
+  - rscdel: Removed the useless "plasmaburnt" trait.
+  - bugfix: Restored a broken interaction with plasma rivers that slowly transforms
+      you into a plasmaman.
+  mc-oofert:
+  - rscadd: Added two new whiteships, the "Personal Transit Shuttle" and the "Obelisk"
+  twilightwanderer:
+  - bugfix: Fix crash of TGUI fax panel when there is no fax in the network
+  - admin: Adding the ability to load the configuration of custom maps
+2022-11-20:
+  1bw0kopy:
+  - bugfix: Fix being unable to block embeds
+  Ebb-Real:
+  - bugfix: Tape pieces have the correct examine tip.
+  - bugfix: Applying tape pieces by using it on someone will now actually warn them.
+  MTandi:
+  - qol: new seed extractor UI
+  Riggle:
+  - qol: Imaginary friends now have runechat, typing indicators and emotes!
+  - qol: Imaginary friends can point and spin
+  - bugfix: Fixed a bug with imaginary friends where ghosts would stay after aghosting
+  - refactor: Imaginary friend code massively improved
+  - refactor: Imaginary friends now support multiple friends at the same time!
+  - admin: Imaginary friends no longer bypass filters
+  TiviPlus:
+  - refactor: Added a particle editor to VV dropdown which can be used by coders and
+      admins to edit particle values on the fly easily.
+  san7890:
+  - bugfix: Canned Laughter, T-Borg's Tonic Water, and Soda Water cans should all
+      come with the expected marketed 50 units of goodness, rather than cheaping out
+      on materials for only 30 units of can volume.

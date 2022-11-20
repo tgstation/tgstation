@@ -1,7 +1,7 @@
 /// Atoms that can be microwaved from one type to another.
 /datum/element/microwavable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// The typepath we default to if we were passed no microwave result
 	var/atom/default_typepath = /obj/item/food/badrecipe
 	/// Resulting atom typepath on a completed microwave.

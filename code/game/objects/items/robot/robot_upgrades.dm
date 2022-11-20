@@ -779,7 +779,7 @@
 	else
 		playsound(loc, 'sound/machines/ping.ogg', 75, TRUE)
 
-	borgo.revive(full_heal = FALSE, admin_revive = FALSE)
+	borgo.revive()
 	borgo.logevent("WARN -- System recovered from unexpected shutdown.")
 	borgo.logevent("System brought online.")
 	return ..()

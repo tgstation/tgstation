@@ -233,16 +233,13 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium_purple"
 	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "gv" = (
 /obj/structure/fluff/tram_rail,
@@ -611,15 +608,6 @@
 "nN" = (
 /obj/effect/decal/cleanable/greenglow/ecto,
 /turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/powered/hilbertresearchfacility)
-"nS" = (
-/obj/structure/fluff/tram_rail{
-	dir = 1
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium_white"
-	},
-/turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "nU" = (
 /obj/structure/sign/warning/docking/directional/west,
@@ -1013,7 +1001,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced/survival_pod,
-/turf/open/space/basic,
+/turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "xO" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{
@@ -1648,7 +1636,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod,
-/turf/open/space/basic,
+/turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Jh" = (
 /obj/structure/fluff/tram_rail/anchor,
@@ -2349,7 +2337,7 @@
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/open/floor/engine,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Yv" = (
 /obj/item/kirbyplants/random,
@@ -3908,7 +3896,7 @@ Ok
 Bo
 Ok
 BI
-nS
+hk
 KC
 Xw
 MD

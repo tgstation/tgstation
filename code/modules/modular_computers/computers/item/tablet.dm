@@ -1,4 +1,4 @@
-/obj/item/modular_computer/tablet  //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
+/obj/item/modular_computer/tablet //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
 	name = "tablet computer"
 	icon = 'icons/obj/modular_tablet.dmi'
 	icon_state = "tablet-red"
@@ -371,14 +371,14 @@
 /obj/item/modular_computer/tablet/integrated/ui_state(mob/user)
 	return GLOB.reverse_contained_state
 
-/obj/item/modular_computer/tablet/integrated/syndicate
+/obj/item/modular_computer/tablet/integrated/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
 	icon_state_powered = "tablet-silicon-syndicate"
 	icon_state_unpowered = "tablet-silicon-syndicate"
 	device_theme = "syndicate"
 
 
-/obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
+/obj/item/modular_computer/tablet/integrated/cyborg/syndicate/Initialize(mapload)
 	. = ..()
 	if(iscyborg(silicon_owner))
 		var/mob/living/silicon/robot/robo = silicon_owner

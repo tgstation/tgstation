@@ -34,7 +34,7 @@
 			TEST_ASSERT_EQUAL(actual_wound.type, iter_test_wound, "Patient has wound of incorrect severity. Expected: [initial(iter_test_wound.name)] Got: [actual_wound]")
 			threshold_penalty = actual_wound.threshold_penalty
 		i++
-		victim.fully_heal(TRUE) // should clear all wounds between types
+		victim.fully_heal(ADMIN_HEAL_ALL) // should clear all wounds between types
 
 
 /// This test is used for making sure species with bones but no flesh (skeletons, plasmamen) can only suffer BONE_WOUNDS, and nothing tagged with FLESH_WOUND (it's possible to require both)
@@ -84,4 +84,4 @@
 				TEST_ASSERT_EQUAL(actual_wound.type, iter_test_wound, "Patient has wound of incorrect severity. Expected: [initial(iter_test_wound.name)] Got: [actual_wound]")
 				threshold_penalty = actual_wound.threshold_penalty
 		i++
-		victim.fully_heal(TRUE) // should clear all wounds between types
+		victim.fully_heal(ADMIN_HEAL_ALL) // should clear all wounds between types
