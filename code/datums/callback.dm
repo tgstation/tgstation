@@ -117,7 +117,7 @@
 	if (!object)
 		return
 
-	if(fexists(object))
+	if(istext(object) && object != GLOBAL_PROC)
 		to_chat(usr, "[object] may be an external library. Calling external libraries is disallowed.", confidential = TRUE)
 		return
 
@@ -158,7 +158,7 @@
 	if (!object)
 		return
 
-	if(fexists(object))
+	if(istext(object) && object != GLOBAL_PROC)
 		to_chat(usr, "[object] may be an external library. Calling external libraries is disallowed.", confidential = TRUE)
 		return
 
