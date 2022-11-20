@@ -18,20 +18,21 @@
 /datum/chemical_reaction/food/soup
 	required_temp = 450
 	optimal_temp = 480
-	overheat_temp = 600
+	overheat_temp = 540
 	optimal_ph_min = 1
 	optimal_ph_max = 14
 	required_reagents = list(/datum/reagent/water = 50)
 	mob_react = FALSE
-	require_other = TRUE
+	required_other = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
+	mix_message = "You smell something good coming from the steaming soup."
 
 	/// An assoc list of what ingredients are necessary to how much is needed
 	var/list/required_ingredients
 
 	/// What percent of nutriment is converted to "soup" (what percent does not stay final product)?
 	/// Raise this if your ingredients have a lot of nutriment and is overpowering your other reagents
-	/// Lower this if your ingredits have a small amount of nutriment and isn't filling enough per serving
+	/// Lower this if your ingredients have a small amount of nutriment and isn't filling enough per serving
 	var/percentage_of_nutriment_converted = 0.25
 
 /datum/chemical_reaction/food/soup/pre_reaction_other_checks(datum/reagents/holder)
@@ -61,7 +62,7 @@
 			return FALSE
 	return TRUE
 
-/datum/chemical_reaction/food/soup/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+/datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	if(!istype(pot))
@@ -71,12 +72,12 @@
 		// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
 		// Mainly done so that nutriment doesn't overpower the main course
 		var/amount_nutriment = ingredient.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
-		ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, amount * percentage_of_nutriment_converted)
+		ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, amount_nutriment * percentage_of_nutriment_converted)
 		// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
 		ingredient.reagents.trans_to(pot, ingredient.reagents.total_volume, 0.8, no_react = TRUE)
 
 		// Uh oh we reached the top of the pot, the soup's gonna boil over.
-		if(holder.reagents.total_volume >= holder.reagents.max_volume * 0.95)
+		if(pot.reagents.total_volume >= pot.reagents.maximum_volume * 0.95)
 			pot.visible_message(span_warning("[pot] starts to boil over!"))
 			// melbert todo; Put mess here (foam, dirt?)
 			break
@@ -383,7 +384,7 @@
 
 /datum/chemical_reaction/food/soup/zurek
 	required_reagents = list(
-		/datum/reagent/consumable/water = 40,
+		/datum/reagent/water = 40,
 		/datum/reagent/consumable/flour = 10,
 	)
 	required_ingredients = list(
@@ -395,7 +396,7 @@
 
 /datum/chemical_reaction/food/soup/cullen_skink
 	required_reagents = list(
-		/datum/reagent/consumable/water = 40,
+		/datum/reagent/water = 40,
 		/datum/reagent/consumable/milk = 10,
 		/datum/reagent/consumable/blackpepper = 4,
 	)
@@ -407,9 +408,9 @@
 
 // Lizard stuff
 
-/datum/crafting_recipe/food/soup/atrakor_dumplings
+/datum/chemical_reaction/food/soup/atrakor_dumplings
 	required_reagents = list(
-		/datum/reagent/consumable/water = 40,
+		/datum/reagent/water = 40,
 		/datum/reagent/consumable/soysauce = 10,
 	)
 	required_ingredients = list(
@@ -418,7 +419,7 @@
 		/obj/item/food/lizard_dumplings = 1,
 	)
 
-/datum/crafting_recipe/food/soup/meatball_noodles
+/datum/chemical_reaction/food/soup/meatball_noodles
 	required_ingredients = list(
 		/obj/item/food/meat/rawcutlet = 2,
 		/obj/item/food/grown/onion = 1,
@@ -427,9 +428,9 @@
 		/obj/item/food/grown/peanut = 1
 	)
 
-/datum/crafting_recipe/food/black_broth
+/datum/chemical_reaction/food/soup/black_broth
 	required_reagents = list(
-		/datum/reagent/consumable/water = 40,
+		/datum/reagent/water = 40,
 		/datum/reagent/consumable/vinegar = 8,
 		/datum/reagent/blood = 8,
 		/datum/reagent/consumable/ice = 4,
@@ -439,7 +440,7 @@
 		/obj/item/food/grown/onion = 1,
 	)
 
-/datum/crafting_recipe/food/jellyfish_stew
+/datum/chemical_reaction/food/soup/jellyfish_stew
 	required_ingredients = list(
 		/obj/item/food/canned_jellyfish = 1,
 		/obj/item/food/grown/soybeans = 1,
@@ -447,7 +448,7 @@
 		/obj/item/food/grown/potato = 1
 	)
 
-/datum/crafting_recipe/food/rootbread_soup
+/datum/chemical_reaction/food/soup/rootbread_soup
 	required_ingredients = list(
 		/obj/item/food/breadslice/root = 2,
 		/obj/item/food/grown/garlic = 1,

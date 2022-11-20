@@ -25,7 +25,6 @@
 		reagents.add_reagent(/datum/reagent/consumable/nutriment, 9)
 		reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 1)
 
-/*
 /obj/item/food/soup/meatball
 	name = "meatball soup"
 	desc = "You've got balls kid, BALLS!"
@@ -34,9 +33,7 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	venue_value = FOOD_PRICE_NORMAL
-*/
 
-/*
 /obj/item/food/soup/slime
 	name = "slime soup"
 	desc = "If no water is available, you may substitute tears."
@@ -45,7 +42,6 @@
 	tastes = list("slime" = 1)
 	foodtypes = TOXIC | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
-*/
 
 /obj/item/food/soup/blood
 	name = "tomato soup"
@@ -72,7 +68,6 @@
 	tastes = list("a bad joke" = 1)
 	foodtypes = FRUIT | SUGAR
 
-/*
 /obj/item/food/soup/vegetable
 	name = "vegetable soup"
 	desc = "A true vegan meal."
@@ -81,9 +76,7 @@
 	tastes = list("vegetables" = 1)
 	foodtypes = VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
-*/
 
-/*
 /obj/item/food/soup/nettle
 	name = "nettle soup"
 	desc = "To think, the botanist would've beat you to death with one of these."
@@ -92,7 +85,6 @@
 	tastes = list("nettles" = 1)
 	foodtypes = VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
-*/
 
 /obj/item/food/soup/mystery
 	name = "mystery soup"

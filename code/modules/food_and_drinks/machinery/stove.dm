@@ -11,12 +11,13 @@
 	processing_flags = START_PROCESSING_MANUALLY
 	resistance_flags = FIRE_PROOF
 
+	var/on = FALSE
 	var/obj/item/soup_pot
 
 /obj/machinery/stove/process(delta_time)
-	soup_pot?.reagents.expose_temperature(10 * delta_time, 0.25)
+	soup_pot?.reagents.expose_temperature(600, 0.1)
 
-/obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
+/obj/machinery/stove/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -80,7 +81,6 @@
 	obj/item/held_item,
 	mob/user,
 )
-	SIGNAL_HANDLER
 
 	if(!isnull(held_item) && can_add_ingredient(held_item))
 		context[SCREENTIP_CONTEXT_RMB] = "Add Ingredient"
@@ -96,11 +96,11 @@
 	if(!can_add_ingredient(weapon))
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	if(!user.transferItemToLoc(attacking_item, src))
+	if(!user.transferItemToLoc(weapon, src))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	balloon_alert(user, "ingredient added")
-	LAZYADD(added_ingredients, ingredient)
+	LAZYADD(added_ingredients, weapon)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/reagent_containers/cup/soup_pot/proc/can_add_ingredient(obj/item/ingredient)
@@ -108,18 +108,18 @@
 	if(ingredient.is_open_container())
 		return FALSE
 	// To big for the pot
-	if(attacking_item.w_class >= WEIGHT_CLASS_BULKY)
+	if(ingredient.w_class >= WEIGHT_CLASS_BULKY)
 		return FALSE
 	// Too many ingredients
-	if(length(added_ingredients) <= max_ingredients)
+	if(LAZYLEN(added_ingredients) >= max_ingredients)
 		return FALSE
 	return TRUE
 
-/datum/component/soup_holder/proc/on_reagents_cleared(datum/source, datum/reagent/changed)
+/obj/item/reagent_containers/cup/soup_pot/proc/on_reagents_cleared(datum/source, datum/reagent/changed)
 	SIGNAL_HANDLER
 
 	dump_ingredients()
 
-/datum/component/soup_holder/proc/dump_ingredients(atom/loc_override)
+/obj/item/reagent_containers/cup/soup_pot/proc/dump_ingredients(atom/loc_override)
 	for(var/obj/item/ingredient as anything in added_ingredients)
 		ingredient.forceMove(loc_override || drop_location())

@@ -460,5 +460,3 @@
 	first_warning_line = "You'd fit in well where I'm from. But you better stop."
 	second_warning_line = "Breaking-you-so-bad-you'll-reminisce-the-days-before-I-made-you-crooked.exe: booting..."
 	self_defense_line = "I have been designed to do two things: Order food, and break every bone in your body."
-
-
