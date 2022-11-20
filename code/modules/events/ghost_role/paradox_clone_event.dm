@@ -60,13 +60,15 @@
 	clone.equipOutfit(carbon_cloned.mind.assigned_role.outfit)
 
 	var/obj/item/clothing/under/sensor_clothes = clone.w_uniform
-	var/obj/item/modular_computer/tablet/pda/messenger = locate(/obj/item/modular_computer/tablet/pda/) in clone
+	var/obj/item/modular_computer/tablet/pda/messenger = locate() in clone
+	if(messenger)
+		var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
+		if(message_app)
+			message_app.invisible = TRUE //clone doesnt show up on message lists
 	clone.backpack = human_cloned.backpack
 	if(sensor_clothes)
 		sensor_clothes.sensor_mode = SENSOR_OFF //dont want anyone noticing there's two now
 		clone.update_suit_sensors()
-	if(messenger)
-		messenger.invisible = TRUE //clone doesnt show up on PDA message list
 
 	message_admins("[ADMIN_LOOKUPFLW(clone)] has been made into a Paradox Clone by an event.")
 	clone.log_message("was spawned as a Paradox Clone of [key_name(human_cloned)] by an event.", LOG_GAME)
