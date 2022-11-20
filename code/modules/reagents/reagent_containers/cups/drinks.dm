@@ -343,24 +343,11 @@
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
-		drink_type = NONE /// Why are drink types on the _container_? TODO: move these to the reagents //im waiting
+		drink_type = NONE /// Why are drink types on the _container_? TODO: move these to the reagents //im waiting //I moved them but left them here too
 		return
 
-	switch(reagents.get_master_reagent_id())
-		if(/datum/reagent/consumable/orangejuice)
-			drink_type = FRUIT | BREAKFAST
-		if(/datum/reagent/consumable/milk)
-			drink_type = DAIRY | BREAKFAST
-		if(/datum/reagent/consumable/applejuice)
-			drink_type = FRUIT
-		if(/datum/reagent/consumable/grapejuice)
-			drink_type = FRUIT
-		if(/datum/reagent/consumable/pineapplejuice)
-			drink_type = FRUIT | PINEAPPLE
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			drink_type = SUGAR
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			drink_type = MEAT
+	for(var/datum/reagent/consumable/foodlike_reagent in reagents.reagent_list)
+		drink_type |= foodlike_reagent.foodtypes
 
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton/update_name(updates)
 	. = ..()

@@ -1,3 +1,20 @@
+/// Abstract parent for soup reagents.
+/// These are the majority result from soup recipes,
+/// but bear in mind it will(should) have other reagents along side it.
+/datum/reagent/consumable/nutriment/soup
+	chemical_flags = NONE
+	var/bowl_icon_state
+
+/**
+ * ## Soup base chemical reaction.
+ *
+ * Somewhat important note! Keep in mind one serving of soup is roughly 20 units. Adjust your results according.
+ *
+ * Try to aim to have each reaction worth 3 servings of soup (60u).
+ * By default soup reactions require 50 units of water,
+ * and they will also inherent the reagents of the ingredients used,
+ * so you might end up with more nutrient than you expect.
+ */
 /datum/chemical_reaction/food/soup
 	required_temp = 450
 	optimal_temp = 480
@@ -9,7 +26,13 @@
 	require_other = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
 
+	/// An assoc list of what ingredients are necessary to how much is needed
 	var/list/required_ingredients
+
+	/// What percent of nutriment is converted to "soup" (what percent does not stay final product)?
+	/// Raise this if your ingredients have a lot of nutriment and is overpowering your other reagents
+	/// Lower this if your ingredits have a small amount of nutriment and isn't filling enough per serving
+	var/percentage_of_nutriment_converted = 0.25
 
 /datum/chemical_reaction/food/soup/pre_reaction_other_checks(datum/reagents/holder)
 	if(!length(required_ingredients))
@@ -38,27 +61,94 @@
 			return FALSE
 	return TRUE
 
+/datum/chemical_reaction/food/soup/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	. = ..()
+	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
+	if(!istype(pot))
+		return
+
+	for(var/obj/item/ingredient as anything in pot.added_ingredients)
+		// Some of the nutriment goes into "creating the soup reagent" itself, gets deleted.
+		// Mainly done so that nutriment doesn't overpower the main course
+		var/amount_nutriment = ingredient.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+		ingredient.reagents.remove_reagent(/datum/reagent/consumable/nutriment, amount * percentage_of_nutriment_converted)
+		// The other half of the nutriment, and the rest of the reagents, will get put directly into the pot
+		ingredient.reagents.trans_to(pot, ingredient.reagents.total_volume, 0.8, no_react = TRUE)
+
+		// Uh oh we reached the top of the pot, the soup's gonna boil over.
+		if(holder.reagents.total_volume >= holder.reagents.max_volume * 0.95)
+			pot.visible_message(span_warning("[pot] starts to boil over!"))
+			// melbert todo; Put mess here (foam, dirt?)
+			break
+
+	QDEL_LAZYLIST(pot.added_ingredients)
+
+// Meatball Soup
+/datum/reagent/consumable/nutriment/soup/meatball_soup
+	name = "Meatball Soup"
+	description = "You've got balls kid, BALLS!"
+	bowl_icon_state = "meatballsoup"
+	foodtypes = MEAT
+	data = list("meat" = 1)
+
 /datum/chemical_reaction/food/soup/meatballsoup
 	required_ingredients = list(
 		/obj/item/food/meatball = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/potato = 1,
 	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/meatball_soup = 30,
+		/datum/reagent/water = 9,
+		/*
+		/datum/reagent/consumable/nutriment = 8,
+		/datum/reagent/consumable/nutriment/protein = 8,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		*/
+	)
 
-/datum/chemical_reaction/food/soup/vegetablesoup
+// Vegetable Soup
+/datum/reagent/consumable/nutriment/soup/vegetable_soup
+	name = "Vegetable Soup"
+	description = "A true vegan meal."
+	bowl_icon_state = "vegetablesoup"
+	foodtypes = VEGETABLES
+	data = list("vegetables" = 1)
+
+/datum/chemical_reaction/food/soup/vegetable_soup
 	required_ingredients = list(
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/corn = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/obj/item/food/grown/potato = 1,
 	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/vegetable_soup = 30,
+		/datum/reagent/water = 9,
+		/*
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+		*/
+	)
 
+// Nettle soup - gains some omnizine to offset the acid damage
+/datum/reagent/consumable/nutriment/soup/nettle
+	name = "nettle soup"
+	description = "To think, the botanist would've beat you to death with one of these."
+	bowl_icon_state = "nettlesoup"
+	foodtypes = VEGETABLES
+	data = list("nettles" = 1)
 
 /datum/chemical_reaction/food/soup/nettlesoup
 	required_ingredients = list(
 		/obj/item/food/grown/nettle = 1,
 		/obj/item/food/grown/potato = 1,
 		/obj/item/food/boiledegg = 1
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/nettle = 30,
+		/datum/reagent/water = 9,
+		/datum/reagent/medicine/omnizine = 6,
 	)
 
 /datum/chemical_reaction/food/soup/wingfangchu
@@ -124,11 +214,35 @@
 		/obj/item/food/grown/tomato/blood = 2,
 	)
 
+// Slime soup
+/datum/reagent/consumable/nutriment/soup/slime
+	name = "slime soup"
+	description = "If no water is available, you may substitute tears."
+	bowl_icon_state = "slimesoup"
+	data = list("slime" = 1)
+
+
 /datum/chemical_reaction/food/soup/slimesoup
-	required_other = FALSE
 	required_reagents = list(
 		/datum/reagent/water = 40,
-		/datum/reagent/toxin/slimejelly = 10,
+	)
+	required_ingredients = list(
+		/obj/item/slime_extract = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/slime = 30,
+		/datum/reagent/toxin/slimejelly = 20,
+		/datum/reagent/consumable/nutriment = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 7,
+		/datum/reagent/water = 6,
+	)
+
+/datum/chemical_reaction/food/soup/slimesoup/alt
+	required_other = FALSE
+	// Pretty much just a normal chemical reaction at this point
+	required_reagents = list(
+		/datum/reagent/water = 40,
+		/datum/reagent/toxin/slimejelly = 20,
 	)
 
 /datum/chemical_reaction/food/soup/clownstears

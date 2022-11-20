@@ -1710,6 +1710,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "eggnog"
 	glass_desc = "For enjoying the most wonderful time of the year."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = MEAT
 
 
 /datum/reagent/consumable/ethanol/narsour

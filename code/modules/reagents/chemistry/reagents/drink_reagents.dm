@@ -14,6 +14,7 @@
 	glass_desc = "Vitamins! Yay!"
 	ph = 3.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = FRUIT|BREAKFAST
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getOxyLoss() && DT_PROB(16, delta_time))
@@ -94,6 +95,7 @@
 	color = "#ECFF56" // rgb: 236, 255, 86
 	taste_description = "apples"
 	ph = 3.2 // ~ 2.7 -> 3.7
+	foodtypes = FRUIT
 
 /datum/reagent/consumable/poisonberryjuice
 	name = "Poison Berry Juice"
@@ -210,6 +212,7 @@
 	color = "#290029" // dark purple
 	taste_description = "grape soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = FRUIT
 
 /datum/reagent/consumable/plumjuice
 	name = "Plum Juice"
@@ -220,6 +223,7 @@
 	glass_name = "glass of plum juice"
 	glass_desc = "Noice."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = FRUIT
 
 /datum/reagent/consumable/milk
 	name = "Milk"
@@ -231,6 +235,7 @@
 	glass_desc = "White and nutritious goodness!"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = DAIRY|BREAKFAST
 
 	// Milk is good for humans, but bad for plants. The sugars cannot be used by plants, and the milk fat harms growth. Not shrooms though. I can't deal with this now...
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -986,6 +991,7 @@
 	quality = DRINK_NICE
 	taste_description = "chocolate milk"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = DAIRY|SUGAR
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Coco"
@@ -997,6 +1003,7 @@
 	glass_name = "glass of hot coco"
 	glass_desc = "A favorite winter drink to warm you up."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = DAIRY|SUGAR
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
@@ -1053,6 +1060,7 @@
 	taste_description = "parsnip"
 	glass_name = "glass of parsnip juice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = FRUIT
 
 /datum/reagent/consumable/pineapplejuice
 	name = "Pineapple Juice"
@@ -1062,6 +1070,7 @@
 	glass_name = "glass of pineapple juice"
 	glass_desc = "Tart, tropical, and hotly debated."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = FRUIT|PINEAPPLE
 
 /datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
 	name = "Peach Juice"
@@ -1070,6 +1079,7 @@
 	taste_description = "peaches"
 	glass_name = "glass of peach juice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	foodtypes = FRUIT
 
 /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
