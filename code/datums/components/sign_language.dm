@@ -43,7 +43,6 @@
 		return COMPONENT_INCOMPATIBLE
 	linked_action = new(src)
 	linked_action.Grant(parent)
-	linked_action.UpdateButtons()
 
 /datum/component/sign_language/Destroy()
 	QDEL_NULL(linked_action)
