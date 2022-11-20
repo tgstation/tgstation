@@ -41,15 +41,23 @@
 	return TRUE
 
 /datum/surgery_step/lobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_notice("You begin to perform a lobotomy on [target]'s brain..."),
+	display_results(
+		user,
+		target,
+		span_notice("You begin to perform a lobotomy on [target]'s brain..."),
 		span_notice("[user] begins to perform a lobotomy on [target]'s brain."),
-		span_notice("[user] begins to perform surgery on [target]'s brain."))
+		span_notice("[user] begins to perform surgery on [target]'s brain."),
+	)
 	display_pain(target, "Your head pounds with unimaginable pain!")
 
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	display_results(user, target, span_notice("You succeed in lobotomizing [target]."),
-			span_notice("[user] successfully lobotomizes [target]!"),
-			span_notice("[user] completes the surgery on [target]'s brain."))
+	display_results(
+		user,
+		target,
+		span_notice("You succeed in lobotomizing [target]."),
+		span_notice("[user] successfully lobotomizes [target]!"),
+		span_notice("[user] completes the surgery on [target]'s brain."),
+	)
 	display_pain(target, "Your head goes totally numb for a moment, the pain is overwhelming!")
 
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
@@ -71,9 +79,13 @@
 /datum/surgery_step/lobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(target_brain)
-		display_results(user, target, span_warning("You remove the wrong part, causing more damage!"),
+		display_results(
+			user,
+			target,
+			span_warning("You remove the wrong part, causing more damage!"),
 			span_notice("[user] successfully lobotomizes [target]!"),
-			span_notice("[user] completes the surgery on [target]'s brain."))
+			span_notice("[user] completes the surgery on [target]'s brain."),
+		)
 		display_pain(target, "The pain in your head only seems to get worse!")
 		target_brain.applyOrganDamage(80)
 		switch(rand(1,3))

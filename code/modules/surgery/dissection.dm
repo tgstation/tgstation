@@ -68,7 +68,7 @@
 		target,
 		span_notice("You mess up, damaging some of the internal organs!"),
 		span_notice("[user] messes up, damaging some of the internal organs!"),
-		span_notice("[user] messes up, damaging some of your internal organs!")
+		span_notice("[user] messes up, damaging some of your internal organs!"),
 	)
 
 	target.adjustOrganLoss(pick(

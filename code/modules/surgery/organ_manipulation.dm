@@ -136,9 +136,13 @@
 
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
-		display_results(user, target, span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
+		display_results(
+			user,
+			target,
+			span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)]."),
-			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."))
+			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."),
+		)
 		display_pain(target, "You can feel your something being placed in your [parse_zone(target_zone)]!")
 
 
@@ -171,9 +175,13 @@
 				if(target_organ.organ_flags & ORGAN_UNREMOVABLE)
 					to_chat(user, span_warning("[target_organ] is too well connected to take out!"))
 					return SURGERY_STEP_FAIL
-				display_results(user, target, span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
+				display_results(
+					user,
+					target,
+					span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
 					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
-					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."))
+					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."),
+				)
 				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
 			else
 				return SURGERY_STEP_FAIL
@@ -192,24 +200,36 @@
 			target_organ = tool
 		user.temporarilyRemoveItemFromInventory(target_organ, TRUE)
 		target_organ.Insert(target)
-		display_results(user, target, span_notice("You insert [tool] into [target]'s [parse_zone(target_zone)]."),
+		display_results(
+			user,
+			target,
+			span_notice("You insert [tool] into [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!"),
-			span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"))
+			span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"),
+		)
 		display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool] comes to life!")
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
-			display_results(user, target, span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
+			display_results(
+				user,
+				target,
+				span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 				span_notice("[user] successfully extracts [target_organ] from [target]'s [parse_zone(target_zone)]!"),
-				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"))
+				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"),
+			)
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))
 		else
-			display_results(user, target, span_warning("You can't extract anything from [target]'s [parse_zone(target_zone)]!"),
+			display_results(
+				user,
+				target,
+				span_warning("You can't extract anything from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
-				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"))
+				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
+			)
 	return FALSE
 
 ///You can never use this MUHAHAHAHAHAHAH (because its the byond version of abstract)

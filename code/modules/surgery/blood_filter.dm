@@ -52,9 +52,13 @@
 	success_sound = 'sound/machines/ping.ogg'
 
 /datum/surgery_step/filter_blood/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_notice("You begin filtering [target]'s blood..."),
+	display_results(
+		user,
+		target,
+		span_notice("You begin filtering [target]'s blood..."),
 		span_notice("[user] uses [tool] to filter [target]'s blood."),
-		span_notice("[user] uses [tool] on [target]'s chest."))
+		span_notice("[user] uses [tool] on [target]'s chest."),
+	)
 	display_pain(target, "You feel a throbbing pain in your chest!")
 
 /datum/surgery_step/filter_blood/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
@@ -63,9 +67,13 @@
 		for(var/datum/reagent/chem as anything in target.reagents.reagent_list)
 			if(!length(bloodfilter.whitelist) || (chem.type in bloodfilter.whitelist))
 				target.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
-	display_results(user, target, span_notice("\The [tool] pings as it finishes filtering [target]'s blood."),
+	display_results(
+		user,
+		target,
+		span_notice("\The [tool] pings as it finishes filtering [target]'s blood."),
 		span_notice("\The [tool] pings as it stops pumping [target]'s blood."),
-		"\The [tool] pings as it stops pumping.")
+		span_notice("\The [tool] pings as it stops pumping."),
+	)
 
 	if(locate(/obj/item/healthanalyzer) in user.held_items)
 		chemscan(user, target)
@@ -73,7 +81,11 @@
 	return ..()
 
 /datum/surgery_step/filter_blood/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_warning("You screw up, bruising [target]'s chest!"),
+	display_results(
+		user,
+		target,
+		span_warning("You screw up, bruising [target]'s chest!"),
 		span_warning("[user] screws up, brusing [target]'s chest!"),
-		span_warning("[user] screws up!"))
+		span_warning("[user] screws up!"),
+	)
 	target.adjustBruteLoss(5)

@@ -23,7 +23,7 @@
 	else
 		to_chat(finder, span_notice("It's grown quite large, and writhes slightly as you look at it."))
 		if(prob(10))
-			AttemptGrow(0)
+			attempt_grow(gib_on_success = FALSE)
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_life(delta_time, times_fired)
 	. = ..()
@@ -73,12 +73,12 @@
 				continue
 			if(!istype(operations.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
 				continue
-			AttemptGrow(0)
+			attempt_grow(gib_on_success = FALSE)
 			return
-		AttemptGrow()
+		attempt_grow()
 
-
-/obj/item/organ/internal/body_egg/alien_embryo/proc/AttemptGrow(gib_on_success=TRUE)
+///Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
+/obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
 	if(!owner || bursting)
 		return
 
