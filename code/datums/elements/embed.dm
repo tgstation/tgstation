@@ -11,7 +11,7 @@
 
 /datum/element/embed
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/initialized = FALSE /// whether we can skip assigning all the vars (since these are bespoke elements, we don't have to reset the vars every time we attach to something, we already know what we are!)
 
 	// all of this stuff is explained in _DEFINES/combat.dm
