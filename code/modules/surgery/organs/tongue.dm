@@ -478,11 +478,3 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/ethereal/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_ethereal
-
-/// Mute & Sign Language Tongue - yep, it still works!
-/obj/item/organ/internal/tongue/tied
-	name = "tied tongue"
-	desc = "If only one had a sword so we may finally untie this knot."
-	say_mod = "signs"
-	icon_state = "tonguetied"
-	organ_traits = list(TRAIT_MUTE, TRAIT_SIGN_LANG)
