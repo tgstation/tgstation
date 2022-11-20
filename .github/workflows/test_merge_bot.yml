@@ -20,7 +20,7 @@ jobs:
           run: |
             unset SECRET_EXISTS
             if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
-            echo "::set-output name=GET_TEST_MERGES_URL::$SECRET_EXISTS"
+            echo "GET_TEST_MERGES_URL=$SECRET_EXISTS" >> $GITHUB_OUTPUT
         - name: Checkout
           if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
           uses: actions/checkout@v3

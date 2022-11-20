@@ -102,7 +102,7 @@
 		qdel(src)
 
 	else
-		addtimer(CALLBACK(src, .proc/mech_walk), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(mech_walk)), 1 SECONDS)
 
 /datum/hallucination/fake_sound/normal/wall_deconstruction
 	sound_type = 'sound/items/welder.ogg'

@@ -419,13 +419,50 @@
 			list_to_pick[item] = 0
 		total += list_to_pick[item]
 
-	total = rand(0, total)
+	total = rand(1, total)
 	for(item in list_to_pick)
 		total -= list_to_pick[item]
 		if(total <= 0 && list_to_pick[item])
 			return item
 
 	return null
+
+/**
+ * Like pick_weight, but allowing for nested lists.
+ *
+ * For example, given the following list:
+ * list(A = 1, list(B = 1, C = 1))
+ * A would have a 50% chance of being picked,
+ * and list(B, C) would have a 50% chance of being picked.
+ * If list(B, C) was picked, B and C would then each have a 50% chance of being picked.
+ * So the final probabilities would be 50% for A, 25% for B, and 25% for C.
+ *
+ * Weights should be integers. Entries without weights are assigned weight 1 (so unweighted lists can be used as well)
+ */
+/proc/pick_weight_recursive(list/list_to_pick)
+	var/result = pick_weight(fill_with_ones(list_to_pick))
+	while(islist(result))
+		result = pick_weight(fill_with_ones(result))
+	return result
+
+/**
+ * Given a list, return a copy where values without defined weights are given weight 1.
+ * For example, fill_with_ones(list(A, B=2, C)) = list(A=1, B=2, C=1)
+ * Useful for weighted random choices (loot tables, syllables in languages, etc.)
+ */
+/proc/fill_with_ones(list/list_to_pad)
+	if (!islist(list_to_pad))
+		return list_to_pad
+
+	var/list/final_list = list()
+
+	for (var/key in list_to_pad)
+		if (list_to_pad[key])
+			final_list[key] = list_to_pad[key]
+		else
+			final_list[key] = 1
+
+	return final_list
 
 /// Takes a weighted list (see above) and expands it into raw entries
 /// This eats more memory, but saves time when actually picking from it
@@ -550,12 +587,12 @@
 
 ///for sorting clients or mobs by ckey
 /proc/sort_key(list/ckey_list, order=1)
-	return sortTim(ckey_list, order >= 0 ? /proc/cmp_ckey_asc : /proc/cmp_ckey_dsc)
+	return sortTim(ckey_list, order >= 0 ? GLOBAL_PROC_REF(cmp_ckey_asc) : GLOBAL_PROC_REF(cmp_ckey_dsc))
 
 ///Specifically for record datums in a list.
 /proc/sort_record(list/record_list, field = "name", order = 1)
 	GLOB.cmp_field = field
-	return sortTim(record_list, order >= 0 ? /proc/cmp_records_asc : /proc/cmp_records_dsc)
+	return sortTim(record_list, order >= 0 ? GLOBAL_PROC_REF(cmp_records_asc) : GLOBAL_PROC_REF(cmp_records_dsc))
 
 ///sort any value in a list
 /proc/sort_list(list/list_to_sort, cmp=/proc/cmp_text_asc)
@@ -563,7 +600,7 @@
 
 ///uses sort_list() but uses the var's name specifically. This should probably be using mergeAtom() instead
 /proc/sort_names(list/list_to_sort, order=1)
-	return sortTim(list_to_sort.Copy(), order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
+	return sortTim(list_to_sort.Copy(), order >= 0 ? GLOBAL_PROC_REF(cmp_name_asc) : GLOBAL_PROC_REF(cmp_name_dsc))
 
 ///Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield_to_list(bitfield = 0, list/wordlist)
@@ -836,7 +873,7 @@
 		else
 			. += list(recursive_list_resolve_element(element))
 
-///Helper for /proc/recursive_list_resolve
+///Helper for recursive_list_resolve()
 /proc/recursive_list_resolve_element(element)
 	if(islist(element))
 		var/list/inner_list = element
@@ -1039,7 +1076,7 @@
 	return ret
 
 /// Runtimes if the passed in list is not sorted
-/proc/assert_sorted(list/list, name, cmp = /proc/cmp_numeric_asc)
+/proc/assert_sorted(list/list, name, cmp = GLOBAL_PROC_REF(cmp_numeric_asc))
 	var/last_value = list[1]
 
 	for (var/index in 2 to list.len)

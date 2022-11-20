@@ -3,10 +3,6 @@
 	id = SPECIES_MONKEY
 	say_mod = "chimpers"
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
-	attack_verb = "bite"
-	attack_effect = ATTACK_EFFECT_BITE
-	attack_sound = 'sound/weapons/bite.ogg'
-	miss_sound = 'sound/weapons/bite.ogg'
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey = "Monkey"
 	)
@@ -40,17 +36,14 @@
 	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
 	sexes = FALSE
-	punchdamagelow = 1
-	punchdamagehigh = 3
-	punchstunthreshold = 4 // no stun punches
 	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/monkey,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/monkey,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/monkey,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 	fire_overlay = "monkey"
@@ -82,7 +75,6 @@
 	C.dna.remove_mutation(/datum/mutation/human/race)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
-	. = ..()
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		if(!iscarbon(target))
 			return TRUE
@@ -99,23 +91,25 @@
 				span_danger("You avoid [user]'s bite!"), span_hear("You hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("Your bite misses [victim]!"))
 			return TRUE
-		victim.apply_damage(rand(punchdamagelow, punchdamagehigh), BRUTE, affecting, armor)
+		var/obj/item/bodypart/head/mouth = user.get_bodypart(BODY_ZONE_HEAD)
+		victim.apply_damage(rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high), BRUTE, affecting, armor)
 		victim.visible_message(span_danger("[name] bites [victim]!"),
 			span_userdanger("[name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, name)
 		to_chat(user, span_danger("You bite [victim]!"))
 		if(armor >= 2)
 			return TRUE
-		for(var/d in user.diseases)
-			var/datum/disease/bite_infection = d
+		for(var/datum/disease/bite_infection as anything in user.diseases)
 			if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 			victim.ForceContractDisease(bite_infection)
 		return TRUE
-	target.attack_paw(user, modifiers)
-	return TRUE
+	if(!ISADVANCEDTOOLUSER(user))
+		target.attack_paw(user, modifiers)
+		return TRUE
+	return ..()
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
+	if(check_holidays(MONKEYDAY))
 		return TRUE
 	return ..()
 
@@ -216,9 +210,9 @@
 
 /obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
-	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed, TRUE)
+	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
-/obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE)
+/obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE, no_id_transfer = FALSE)
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
 	return ..()
 
@@ -234,3 +228,6 @@
 	if(in_the_way_mob.pass_flags & PASSTABLE)
 		return
 	in_the_way_mob.knockOver(owner)
+
+/obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
+	return owner.get_bodypart(BODY_ZONE_HEAD)

@@ -32,6 +32,7 @@ GLOBAL_PROTECT(href_token)
 	var/deadmined
 
 	var/datum/filter_editor/filteriffic
+	var/datum/particle_editor/particle_test
 	var/datum/colorblind_tester/color_test = new
 	var/datum/plane_master_debug/plane_debug
 
@@ -139,7 +140,8 @@ GLOBAL_PROTECT(href_token)
 
 		return
 	else if (blocked_by_2fa)
-		sync_lastadminrank(client.ckey, client.key)
+		//previously blocked by 2fa but has now verified, sync the lastadminrank column on the player table.
+		sync_lastadminrank(client.ckey, client.key, src)
 
 	blocked_by_2fa = FALSE
 

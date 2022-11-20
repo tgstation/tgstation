@@ -13,7 +13,7 @@
 
 /obj/item/food/cheese/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
+	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_eat))
 
 /obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
@@ -61,12 +61,14 @@
 	name = "curd cheese"
 	desc = "Known by many names throughout human cuisine, curd cheese is useful for a wide variety of dishes."
 	icon_state = "curd_cheese"
-	microwaved_type = /obj/item/food/cheese/cheese_curds
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/cream = 1)
 	tastes = list("cream" = 1, "cheese" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
+
+/obj/item/food/curd_cheese/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/cheese/cheese_curds)
 
 /obj/item/food/cheese/cheese_curds
 	name = "cheese curds"

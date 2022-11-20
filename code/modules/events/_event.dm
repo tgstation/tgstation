@@ -51,7 +51,7 @@
 		return FALSE
 	if(players_amt < min_players)
 		return FALSE
-	if(holidayID && (!SSevents.holidays || !SSevents.holidays[holidayID]))
+	if(holidayID && !check_holidays(holidayID))
 		return FALSE
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
 		return FALSE
@@ -124,7 +124,7 @@ Runs the event
 	triggering = TRUE
 
 	if(!triggering)
-		RegisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT, .proc/stop_random_event)
+		RegisterSignal(SSdcs, COMSIG_GLOB_RANDOM_EVENT, PROC_REF(stop_random_event))
 		E.cancel_event = TRUE
 		return E
 

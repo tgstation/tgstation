@@ -20,13 +20,15 @@
 	contains = list(/obj/item/food/sandwich = 5)
 	crate_name = "outsourced food crate"
 
-/datum/supply_pack/exploration/catering/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/exploration/catering/fill(obj/structure/closet/crate/crate)
 	. = ..()
-	if(prob(30))
-		for(var/obj/item/food/F in C)
-			F.name = "spoiled [F.name]"
-			F.foodtypes |= GROSS
-			F.MakeEdible()
+	if(!prob(30))
+		return
+
+	for(var/obj/item/food/food_item in crate)
+		// makes all of our items GROSS
+		food_item.name = "spoiled [food_item.name]"
+		food_item.AddComponent(/datum/component/edible, foodtypes = GROSS)
 
 /datum/supply_pack/exploration/shrubbery
 	name = "Shrubbery Crate"

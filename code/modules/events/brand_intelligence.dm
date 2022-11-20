@@ -12,7 +12,7 @@
 
 /datum/round_event_control/brand_intelligence/admin_setup()
 	if(!check_rights(R_FUN))
-		return
+		return ADMIN_CANCEL_EVENT
 	if(tgui_alert(usr, "Select a specific vendor path?", "Capitalism-ho!", list("Yes", "No")) == "Yes")
 		var/list/vendors = list()
 		vendors += subtypesof(/obj/machinery/vending)
@@ -55,6 +55,7 @@
 			if(!is_station_level(vendor.z) || !istype(vendor, chosen_vendor))
 				continue
 			vendingMachines.Add(vendor)
+		brand_event.chosen_vendor = null //Event has a max_occurences of 1 but juuust in case
 	if(!length(vendingMachines)) //If no vendors are in vendingMachines, setup defaults back to randomly selecting one.
 		for(var/obj/machinery/vending/vendor in GLOB.machines)
 			if(!is_station_level(vendor.z))

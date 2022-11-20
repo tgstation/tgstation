@@ -28,12 +28,13 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	var/frying_burnt //If the object has been burnt
 	var/datum/looping_sound/deep_fryer/fry_loop
 	var/static/list/deepfry_blacklisted_items = typecacheof(list(
-	/obj/item/screwdriver,
-	/obj/item/crowbar,
-	/obj/item/wrench,
-	/obj/item/wirecutters,
-	/obj/item/multitool,
-	/obj/item/weldingtool))
+		/obj/item/screwdriver,
+		/obj/item/crowbar,
+		/obj/item/wrench,
+		/obj/item/wirecutters,
+		/obj/item/multitool,
+		/obj/item/weldingtool,
+	))
 
 /obj/machinery/deepfryer/Initialize(mapload)
 	. = ..()
@@ -86,7 +87,9 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", weapon)) //where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(weapon, deepfry_blacklisted_items) || is_type_in_typecache(weapon, GLOB.oilfry_blacklisted_items) || weapon.atom_storage || HAS_TRAIT(weapon, TRAIT_NODROP) || (weapon.item_flags & (ABSTRACT | DROPDEL)))
+		if(weapon.is_drainable())
+			return // so we skip the attack animation
+		else if(is_type_in_typecache(weapon, deepfry_blacklisted_items) || is_type_in_typecache(weapon, GLOB.oilfry_blacklisted_items) || weapon.atom_storage || HAS_TRAIT(weapon, TRAIT_NODROP) || (weapon.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(weapon, src))
 			fry(weapon, user)
@@ -142,6 +145,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		var/cold_multiplier = 1
 		if(target_temp < TCMB + 10) // a tiny bit of leeway
 			dunking_target.visible_message(span_userdanger("[dunking_target] explodes from the entropic difference! Holy fuck!"))
+			dunking_target.investigate_log("has been gibbed by entropic difference (being dunked into [src]).", INVESTIGATE_DEATHS)
 			dunking_target.gib()
 			log_combat(user, dunking_target, "blew up", null, "by dunking them into [src]")
 			return
@@ -161,8 +165,9 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		visible_message(span_userdanger("[src] starts glowing... Oh no..."))
 		playsound(src, 'sound/effects/pray_chaplain.ogg', 100)
 		add_filter("entropic_ray", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
-		addtimer(CALLBACK(src, .proc/blow_up), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(blow_up)), 5 SECONDS)
 	frying = new /obj/item/food/deepfryholder(src, frying_item)
+	ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user))
 	icon_state = "fryer_on"
 	fry_loop.start()
 

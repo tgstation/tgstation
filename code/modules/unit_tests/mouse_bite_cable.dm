@@ -2,19 +2,53 @@
 /datum/unit_test/mouse_bite_cable
 
 /datum/unit_test/mouse_bite_cable/Run()
-	var/mob/living/simple_animal/mouse/biter = allocate(/mob/living/simple_animal/mouse/cable_lover) // use special subtype that will bypass the probability check to bite on a cable
+	// use dummy subtype that will bypass the probability check to bite on a cable
+	var/mob/living/basic/mouse/biter = allocate(/mob/living/basic/mouse/cable_lover)
 	var/obj/structure/cable/wire = allocate(/obj/structure/cable)
-	biter.chew_probability = 100 // Make sure the mouse bites the cable!
-	wire.powernet = new /datum/powernet() // Make sure the cable has a powernet.
-	wire.powernet.avail = 100000 // Make sure the powernet has a good amount of power! handle_automated_action checks to see if there is ANY power in the powernet and passes fine, but better safe than sorry in this instance.
+	// Make sure the cable has a powernet.
+	wire.powernet = new()
+	// Make sure the powernet has a good amount of power!
+	// mice bites check if there is ANY power in the powernet  and passes fine, but better safe than sorry
+	wire.powernet.avail = 100000
 
 	var/turf/open/floor/stage = get_turf(wire)
-	stage.underfloor_accessibility = UNDERFLOOR_INTERACTABLE // the unit tests room has normal flooring so let's just make it be interactable for the sake of this test
-
+	// the unit tests room has normal flooring so let's just make it be interactable for the sake of this test
+	stage.underfloor_accessibility = UNDERFLOOR_INTERACTABLE
+	// relocate the rat
 	biter.forceMove(stage)
-	biter.handle_automated_action() // it's not so automated since we're forcing it and doing everything we can to ensure that mice fucking bites that wire but potato potato
 
-	TEST_ASSERT(QDELETED(biter), "Mouse did not die after biting a powered cable.") // we qdel the mouse mob on death
-	TEST_ASSERT(QDELETED(wire), "Cable was not deleted after being bitten by a mouse.")
+	// Ai controlling processes expect a delta_time, supply a real-fake dt
+	var/fake_dt = SSai_controllers.wait * 0.1
+	// Select behavior - this will queue finding the cable
+	biter.ai_controller.SelectBehaviors(fake_dt)
+	// Process behavior - this will execute the "locate the cable" behavior
+	biter.ai_controller.process(fake_dt)
+	// Check that the cable was found
+	TEST_ASSERT(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET] == WEAKREF(wire), "Mouse, after executing find, did not set the cable as a target.")
+	// Select behavior - this will queue hunting
+	biter.ai_controller.SelectBehaviors(fake_dt)
+	// Process behavior - this will execute the hunt for the cable and cause a bite (as we're in the min range)
+	biter.ai_controller.process(fake_dt)
+	// Check that the cable was removed, as it was hunted correctly
+	TEST_ASSERT_NULL(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET], "Mouse, after executing hunt, did not clear their target blackboard.")
 
-	stage.underfloor_accessibility = initial(stage.underfloor_accessibility) // reset the floor to its original state, to be nice to other tests in case that matters
+	// Now check that the bite went through - remember we qdel mice on death
+	TEST_ASSERT(QDELETED(biter), "Mouse, did not die after biting a powered cable.")
+	TEST_ASSERT(QDELETED(wire), "Cable, was not deleted after being bitten by a mouse.")
+
+	// reset the floor to its original state, to be nice to other tests in case that matters
+	stage.underfloor_accessibility = initial(stage.underfloor_accessibility)
+
+
+/// Dummy mouse that is guaranteed to die when biting shocked cables.
+/mob/living/basic/mouse/cable_lover
+	cable_zap_prob = 100
+	ai_controller = /datum/ai_controller/basic_controller/mouse/guaranteed_to_bite
+
+/// Dummy mouse's ai controller that is guaranteed to find and bite a cable beneath it
+/datum/ai_controller/basic_controller/mouse/guaranteed_to_bite
+	planning_subtrees = list(/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed)
+
+/// Cable hunting subtree that's guarantee to hunt its target.
+/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables/guaranteed
+	hunt_chance = 100

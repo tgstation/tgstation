@@ -39,7 +39,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(!isnull(haunt_duration))
-		addtimer(CALLBACK(src, .proc/clear_haunting), haunt_duration)
+		addtimer(CALLBACK(src, PROC_REF(clear_haunting)), haunt_duration)
 
 	if(!isnull(spawn_message))
 		haunted_item.visible_message(spawn_message)
@@ -75,7 +75,7 @@
 	return ..()
 
 /datum/component/haunted_item/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_hit_by_holy_tool)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_hit_by_holy_tool))
 
 /datum/component/haunted_item/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)

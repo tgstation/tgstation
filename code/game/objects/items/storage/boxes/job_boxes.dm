@@ -126,15 +126,15 @@
 	illustration = "heart"
 	foldable = null
 
-/obj/item/storage/box/hug/suicide_act(mob/user)
+/obj/item/storage/box/hug/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] clamps the box of hugs on [user.p_their()] jugular! Guess it wasn't such a hugbox after all.."))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, SFX_RUSTLE, 50, TRUE, -5)
-	user.visible_message(span_notice("[user] hugs \the [src]."),span_notice("You hug \the [src]."))
+	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
+	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/black
 	icon_state = "hugbox_black"
@@ -147,7 +147,7 @@
 	illustration = "clown"
 
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+	if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
 		if(contents.len) //prevent accidently deleting contents
 			balloon_alert(user, "items inside!")
 			return
@@ -161,7 +161,7 @@
 	else
 		return ..()
 
-/obj/item/storage/box/clown/suicide_act(mob/user)
+/obj/item/storage/box/clown/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
 	forceMove(user.drop_location())
@@ -175,30 +175,30 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
-// Clown survival box
-/obj/item/storage/box/hug/survival/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+//Clown survival box
+/obj/item/storage/box/survival/hug
+	name = "box of hugs"
+	desc = "A special box for sensitive people."
+	icon_state = "hugbox"
+	illustration = "heart"
+	foldable = null
+	mask_type = null
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+//Mime survival box
+/obj/item/storage/box/survival/hug/black
+	icon_state = "hugbox_black"
+	illustration = "heart_black"
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
-		new /obj/item/flashlight/flare(src)
-		new /obj/item/radio/off(src)
+//Duplicated suicide/attack self procs, since the survival boxes are a subtype of box/survival
+/obj/item/storage/box/survival/hug/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] clamps the box of hugs on [user.p_their()] jugular! Guess it wasn't such a hugbox after all.."))
+	return BRUTELOSS
 
-/obj/item/storage/box/hug/black/survival/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
-
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
-		new /obj/item/flashlight/flare(src)
-		new /obj/item/radio/off(src)
+/obj/item/storage/box/survival/hug/attack_self(mob/user)
+	..()
+	user.changeNext_move(CLICK_CD_MELEE)
+	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
+	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/plushes
 	name = "tactical cuddle kit"

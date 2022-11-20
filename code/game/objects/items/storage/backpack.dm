@@ -68,8 +68,9 @@
 	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
-	sleep(20)
+	sleep(2 SECONDS)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
+	user.suicide_log()
 	qdel(user)
 
 /obj/item/storage/backpack/santabag
@@ -88,12 +89,12 @@
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.max_total_storage = 60
 
-/obj/item/storage/backpack/santabag/suicide_act(mob/user)
+/obj/item/storage/backpack/santabag/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
-	addtimer(CALLBACK(src, .proc/regenerate_presents), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(regenerate_presents)), 30 SECONDS)
 
 	var/mob/user = get(loc, /mob)
 	if(!istype(user))
@@ -110,6 +111,7 @@
 	desc = "It's useful for both carrying extra gear and proudly declaring your insanity."
 	icon_state = "backpack-cult"
 	inhand_icon_state = "backpack"
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 
 /obj/item/storage/backpack/clown
 	name = "Giggles von Honkerton"
@@ -588,9 +590,9 @@
 	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/scattershot(src)
 	new /obj/item/mecha_ammo/scattershot(src)
-	new /obj/item/mecha_ammo/missiles_he(src)
-	new /obj/item/mecha_ammo/missiles_he(src)
-	new /obj/item/mecha_ammo/missiles_he(src)
+	new /obj/item/mecha_ammo/missiles_srm(src)
+	new /obj/item/mecha_ammo/missiles_srm(src)
+	new /obj/item/mecha_ammo/missiles_srm(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/c20rbundle
 	desc = "A large duffel bag containing a C-20r, some magazines, and a cheap looking suppressor."

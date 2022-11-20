@@ -17,7 +17,7 @@ jobs:
       run: |
         unset SECRET_EXISTS
         if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
-        echo "::set-output name=SECRETS_ENABLED::$SECRET_EXISTS"
+        echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
     - name: Checkout
       if: steps.secrets_set.outputs.SECRETS_ENABLED
       uses: actions/checkout@v3
