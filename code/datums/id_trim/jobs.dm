@@ -722,7 +722,7 @@
 /datum/id_trim/job/prisoner
 	assignment = "Prisoner"
 	trim_state = "trim_warden"
-	orbit_icon = "lock-keyhole"
+	orbit_icon = "lock"
 	department_color = COLOR_PRISONER_BLACK
 	subdepartment_color = COLOR_PRISONER_ORANGE
 	sechud_icon_state = SECHUD_PRISONER

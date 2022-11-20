@@ -13,7 +13,7 @@
 	//Also includes the </a> for AI hrefs, for convenience.
 	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
 
-/mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = FALSE)
+/mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	// AIs cannot speak if silent AI is on.
 	// Unless forced is set, as that's probably stating laws or something.
 	if(!forced && CONFIG_GET(flag/silent_ai))
@@ -153,7 +153,7 @@
 					stack_trace("[player_mob] ([player_mob.ckey]) has null prefs, which shouldn't be possible!")
 					continue
 
-				if(player_mob.can_hear() && (player_mob.client?.prefs.toggles & SOUND_ANNOUNCEMENTS))
+				if(player_mob.can_hear() && (player_mob.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
 					var/turf/T = get_turf(player_mob)
 					if(T.z == z_level)
 						SEND_SOUND(player_mob, voice)

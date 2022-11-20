@@ -66,6 +66,7 @@
 		"kitchen_knife",
 		"laptop",
 		"light_bulb",
+		"light_replacer",
 		"light_tube",
 		"mechfab",
 		"micro_mani",
@@ -93,7 +94,6 @@
 		"recorder",
 		"rglass",
 		"roll",
-		"salestagger",
 		"sec_38",
 		"sec_beanbag_slug",
 		"sec_dart",
@@ -408,7 +408,6 @@
 	design_ids = list(
 		"crewpinpointer",
 		"defibrillator_compact",
-		"detective_scanner",
 		"harvester",
 		"healthanalyzer_advanced",
 		"holobarrier_med",
@@ -944,6 +943,7 @@
 		"borg_upgrade_holding",
 		"borg_upgrade_lavaproof",
 		"borg_upgrade_rped",
+		"borg_upgrade_hypermod",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
@@ -1123,22 +1123,10 @@
 	description = "How computer hardware is made."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"bat_advanced",
-		"bat_control",
-		"bat_micro",
-		"bat_nano",
-		"bat_normal",
-		"bat_super",
 		"cardslot",
-		"hdd_advanced",
-		"hdd_basic",
-		"hdd_cluster",
-		"hdd_super",
 		"portadrive_advanced",
 		"portadrive_basic",
 		"portadrive_super",
-		"ssd_micro",
-		"ssd_small",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)  //they are really shitty
 
@@ -1281,6 +1269,11 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
+/datum/techweb_node/cyber_organs/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+
 /datum/techweb_node/cyber_organs_upgraded
 	id = "cyber_organs_upgraded"
 	display_name = "Upgraded Cybernetic Organs"
@@ -1294,6 +1287,11 @@
 		"cybernetic_stomach_tier3",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
+/datum/techweb_node/cyber_organs_upgraded/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/cyber_implants
 	id = "cyber_implants"
@@ -1311,6 +1309,11 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/cyber_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
 /datum/techweb_node/adv_cyber_implants
 	id = "adv_cyber_implants"
 	display_name = "Advanced Cybernetic Implants"
@@ -1323,6 +1326,11 @@
 		"ci-toolset",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/adv_cyber_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/combat_cyber_implants
 	id = "combat_cyber_implants"
@@ -1338,6 +1346,11 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/combat_cyber_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
 ////////////////////////Tools////////////////////////
 
 /datum/techweb_node/basic_mining
@@ -1346,17 +1359,20 @@
 	description = "Better than Efficiency V."
 	prereq_ids = list("engineering", "basic_plasma")
 	design_ids = list(
+		"borg_upgrade_cooldownmod",
+		"borg_upgrade_damagemod",
+		"borg_upgrade_rangemod",
 		"cargoexpress",
 		"cooldownmod",
 		"damagemod",
 		"drill",
+		"mecha_kineticgun",
 		"mining_equipment_vendor",
 		"ore_redemption",
 		"plasmacutter",
 		"rangemod",
 		"superresonator",
 		"triggermod",
-		"mecha_kineticgun",
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1386,7 +1402,7 @@
 		"buffer",
 		"vacuum",
 		"holobarrier_jani",
-		"light_replacer",
+		"light_replacer_blue",
 		"paint_remover",
 		"spraybottle",
 	)
@@ -2136,7 +2152,7 @@
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
 	if(!SSearly_assets.initialized)
-		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(register_uplink_items))
 	else
 		register_uplink_items()
 

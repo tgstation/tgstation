@@ -347,7 +347,7 @@
 			to_chat(user, span_warning("Wait for them to decide on whether to join or not!"))
 			return FALSE
 		if(!(possible_crusader in sect.possible_crusaders))
-			INVOKE_ASYNC(sect, /datum/religion_sect/honorbound.proc/invite_crusader, possible_crusader)
+			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect/honorbound, invite_crusader), possible_crusader)
 			to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
 			return FALSE
 		new_crusader = possible_crusader
@@ -656,7 +656,7 @@
 
 /datum/religion_rites/declare_arena/perform_rite(mob/living/user, atom/religious_tool)
 	var/list/filtered = list()
-	for(var/area/unfiltered_area as anything in GLOB.sortedAreas)
+	for(var/area/unfiltered_area as anything in get_sorted_areas())
 		if(istype(unfiltered_area, /area/centcom)) //youuu dont need thaaat
 			continue
 		if(!(unfiltered_area.area_flags & HIDDEN_AREA))

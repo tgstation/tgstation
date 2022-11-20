@@ -16,6 +16,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
+	mind_traits = list(TRAIT_NAIVE)
 	liver_traits = list(TRAIT_COMEDY_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CLOWN
@@ -66,7 +67,7 @@
 	satchel = /obj/item/storage/backpack/clown
 	duffelbag = /obj/item/storage/backpack/duffelbag/clown //strangely has a duffel
 
-	box = /obj/item/storage/box/hug/survival
+	box = /obj/item/storage/box/survival/hug
 	chameleon_extras = /obj/item/stamp/clown
 	implants = list(/obj/item/implant/sad_trombone)
 
@@ -93,7 +94,6 @@
 		return
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
-	ADD_TRAIT(H, TRAIT_NAIVE, JOB_TRAIT)
 	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE

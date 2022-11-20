@@ -74,7 +74,7 @@
 /datum/action/item_action/jetpack_stabilization
 	name = "Toggle Jetpack Stabilization"
 
-/datum/action/item_action/jetpack_stabilization/IsAvailable()
+/datum/action/item_action/jetpack_stabilization/IsAvailable(feedback = FALSE)
 	var/obj/item/tank/jetpack/linked_jetpack = target
 	if(!istype(linked_jetpack) || !linked_jetpack.on)
 		return FALSE

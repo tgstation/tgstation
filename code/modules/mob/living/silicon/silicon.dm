@@ -82,23 +82,24 @@
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
+	if(isAI(src))
+		modularInterface.saved_job = "AI"
+	if(ispAI(src))
+		modularInterface.saved_job = "pAI Messenger"
+
 	modularInterface.layer = ABOVE_HUD_PLANE
 	SET_PLANE_EXPLICIT(modularInterface, ABOVE_HUD_PLANE, src)
 	modularInterface.saved_identification = real_name || name
-	if(iscyborg(src))
+
+/mob/living/silicon/robot/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/cyborg(src)
 		modularInterface.saved_job = "Cyborg"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
-	if(isAI(src))
-		modularInterface.saved_job = "AI"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
-	if(ispAI(src))
-		modularInterface.saved_job = "pAI Messenger"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
+	return ..()
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
-		modularInterface.saved_identification = real_name
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/cyborg/syndicate(src)
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
@@ -124,7 +125,7 @@
 	if(in_cooldown)
 		return
 
-	addtimer(CALLBACK(src, .proc/show_alarms), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(show_alarms)), 3 SECONDS)
 
 /mob/living/silicon/proc/show_alarms()
 	if(length(alarms_to_show) < 5)

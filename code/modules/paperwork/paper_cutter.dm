@@ -18,7 +18,7 @@
 	update_appearance()
 
 
-/obj/item/papercutter/suicide_act(mob/user)
+/obj/item/papercutter/suicide_act(mob/living/user)
 	if(storedcutter)
 		user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		if(iscarbon(user))
@@ -27,11 +27,11 @@
 			if(BP)
 				BP.drop_limb()
 				playsound(loc, SFX_DESECRATION ,50, TRUE, -1)
-		return (BRUTELOSS)
+		return BRUTELOSS
 	else
 		user.visible_message(span_suicide("[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(loc, 'sound/items/gavel.ogg', 50, TRUE, -1)
-		return (BRUTELOSS)
+		return BRUTELOSS
 
 
 /obj/item/papercutter/update_icon_state()

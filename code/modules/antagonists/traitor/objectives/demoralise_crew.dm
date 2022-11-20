@@ -26,6 +26,11 @@
 	/// How many 'mood events' have happened so far?
 	var/demoralised_crew_events = 0
 
+/datum/traitor_objective/demoralise/can_generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(length(possible_duplicates) > 0)
+		return FALSE
+	return TRUE
+
 /datum/traitor_objective/demoralise/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	demoralised_crew_required = (clamp(rand(MIN_CREW_DEMORALISED, length(get_crewmember_minds()) * MAX_CREW_RATIO), MIN_CREW_DEMORALISED, MAX_CREW_DEMORALISED))
 	replace_in_name("%VIEWS%", demoralised_crew_required)

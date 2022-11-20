@@ -334,7 +334,7 @@
 	dir = 8
 	},
 /obj/item/plunger,
-/mob/living/simple_animal/mouse,
+/mob/living/basic/mouse,
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
