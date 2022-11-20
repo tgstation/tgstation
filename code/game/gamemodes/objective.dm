@@ -39,7 +39,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
-	possible_targets = list("Free objective", "Random") + sort_names(possible_targets)
+	possible_targets = list("Free Objective", "Random") + sort_names(possible_targets)
 
 
 	if(target?.current)
@@ -49,7 +49,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if (!new_target)
 		return
 
-	if (new_target == "Free objective")
+	if (new_target == "Free Objective")
 		target = null
 	else if (new_target == "Random")
 		find_target()
@@ -603,7 +603,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		give_special_equipment(targetinfo.special_equipment)
 		return steal_target
 	else
-		explanation_text = "Free objective"
+		explanation_text = "Free Objective"
 		return
 
 /datum/objective/steal/admin_edit(mob/admin)
@@ -723,7 +723,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(protect_target)
 		explanation_text = "Protect \the [protect_target] at all costs."
 	else
-		explanation_text = "Free objective."
+		explanation_text = "Free Objective."
 
 /datum/objective/protect_object/check_completion()
 	return !QDELETED(protect_target)
