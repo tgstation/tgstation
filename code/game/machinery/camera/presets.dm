@@ -71,7 +71,7 @@
 	network = list("ss13", "rd")
 	var/number
 	///Currently used name of the mech
-	var/current_name
+	var/current_name = null
 
 //Updates the c_tag of the mech while preventing duplicate c_tag usage due to having mechs with the same name
 /obj/machinery/camera/emp_proof/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
