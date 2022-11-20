@@ -777,7 +777,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	// Check if any Applications need it
 	for(var/datum/computer_file/item_holding_app as anything in stored_files)
-		if(item_holding_app.try_insert(attacking_item, user))
+		if(item_holding_app.application_attackby(attacking_item, user))
 			return
 
 	if(istype(attacking_item, /obj/item/paper))

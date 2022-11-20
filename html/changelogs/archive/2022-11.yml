@@ -576,3 +576,25 @@
   twilightwanderer:
   - bugfix: Fix crash of TGUI fax panel when there is no fax in the network
   - admin: Adding the ability to load the configuration of custom maps
+2022-11-20:
+  1bw0kopy:
+  - bugfix: Fix being unable to block embeds
+  Ebb-Real:
+  - bugfix: Tape pieces have the correct examine tip.
+  - bugfix: Applying tape pieces by using it on someone will now actually warn them.
+  MTandi:
+  - qol: new seed extractor UI
+  Riggle:
+  - qol: Imaginary friends now have runechat, typing indicators and emotes!
+  - qol: Imaginary friends can point and spin
+  - bugfix: Fixed a bug with imaginary friends where ghosts would stay after aghosting
+  - refactor: Imaginary friend code massively improved
+  - refactor: Imaginary friends now support multiple friends at the same time!
+  - admin: Imaginary friends no longer bypass filters
+  TiviPlus:
+  - refactor: Added a particle editor to VV dropdown which can be used by coders and
+      admins to edit particle values on the fly easily.
+  san7890:
+  - bugfix: Canned Laughter, T-Borg's Tonic Water, and Soda Water cans should all
+      come with the expected marketed 50 units of goodness, rather than cheaping out
+      on materials for only 30 units of can volume.

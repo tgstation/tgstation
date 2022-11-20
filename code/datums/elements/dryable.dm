@@ -1,7 +1,7 @@
 // If an item has this element, it can be dried on a drying rack.
 /datum/element/dryable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// The type of atom that is spawned by this element on drying.
 	var/dry_result
 
