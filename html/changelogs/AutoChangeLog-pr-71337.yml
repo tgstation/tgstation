@@ -1,0 +1,4 @@
+author: "Addust"
+delete-after: True
+changes:
+  - bugfix: "your local space explorer has removed the locks from all kilo-class mining vessel mining airlock bolt control panels. please report any surviving instances to central command so said space explorer can be dispatched to do the same exact thing."
