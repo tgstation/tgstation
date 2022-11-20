@@ -34,7 +34,7 @@
 	shuttlePortId = "cyborg_mothership"
 	jump_to_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "cyborg_mothership" = 1)
 	view_range = 10
-	x_offset = -12
+	x_offset = -23
 	y_offset = -12
 	designate_time = 100
 
@@ -110,29 +110,4 @@
 	name = "mothership AI core"
 	desc = "This AI core is connected to vessel #101011 as it's overseer."
 	anchored = TRUE
-	laws = datum/ai_laws/overlord
-
-/obj/item/robot_suit/mothership
-	name = "cyborg endoskeleton"
-	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
-	icon = 'icons/mob/augmentation/augments.dmi'
-	icon_state = "robo_suit"
-	var/locomotion = TRUE
-	lawsync = FALSE
-	aisync = FALSE
-	panel_locked = TRUE
-
-/obj/item/mmi/mothership
-	name = "\improper Mothership Man-Machine Interface"
-	desc = "This MMI is connected to vessel #101011."
-	overrides_aicore_laws = TRUE
-
-/obj/item/mmi/mothership/Initialize(mapload)
-	. = ..()
-	laws = new /datum/ai_laws/overlord()
-	// test if these ion laws can be added
-	// also add it to the holodisk as ion storm 
-	//laws += generate_ion_law()
-	//while (prob(75))
-	//	laws += generate_ion_law()
-	//laws = list()
+	laws = /datum/ai_laws/overlord

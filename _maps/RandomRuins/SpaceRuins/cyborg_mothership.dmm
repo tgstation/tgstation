@@ -54,7 +54,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "p" = (
-/obj/item/bodypart/r_leg/robot,
+/obj/item/bodypart/arm/left/robot,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "r" = (
@@ -83,15 +83,15 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "w" = (
-/obj/item/bodypart/l_leg/robot,
+/obj/item/bodypart/leg/left/robot,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "x" = (
-/obj/item/bodypart/l_arm/robot,
+/obj/item/bodypart/arm/right/robot,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "z" = (
-/obj/item/bodypart/r_arm/robot,
+/obj/item/bodypart/leg/right/robot,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "C" = (
@@ -676,11 +676,11 @@ W
 W
 W
 E
-x
+L
 k
 E
 L
-L
+x
 L
 L
 H
@@ -818,11 +818,11 @@ W
 W
 E
 L
-L
+p
 e
 L
 L
-p
+L
 G
 W
 W
@@ -1024,7 +1024,7 @@ a
 a
 W
 E
-p
+L
 W
 W
 K
@@ -2170,7 +2170,7 @@ W
 E
 L
 L
-z
+L
 i
 E
 W
@@ -2436,7 +2436,7 @@ W
 W
 K
 K
-L
+z
 L
 N
 L

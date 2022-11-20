@@ -67421,7 +67421,7 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 11;
-	height = 22;
+	height = 24;
 	name = "SS13: Auxiliary Dock, Station-Fore";
 	shuttle_id = "whiteship_home";
 	width = 35
