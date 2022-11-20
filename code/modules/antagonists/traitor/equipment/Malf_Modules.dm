@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door, hostile_lockdown), owner)
 		addtimer(CALLBACK(D, TYPE_PROC_REF(/obj/machinery/door, disable_lockdown)), 900)
 
-	var/obj/machinery/computer/communications/C = locate() in GLOB.machines
+	var/obj/machinery/computer/communications/C = locate() in GLOB.shuttle_caller_list
 	if(C)
 		C.post_status("alert", "lockdown")
 
@@ -560,7 +560,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/honk/Activate()
 	to_chat(owner, span_clown("The intercom system plays your prepared file as commanded."))
-	for(var/obj/item/radio/intercom/found_intercom in GLOB.intercoms_list)
+	for(var/obj/item/radio/intercom/found_intercom as anything in GLOB.intercoms_list)
 		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
 			continue
 		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
@@ -750,10 +750,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
-	for(var/V in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		if(!uses)
 			break
-		var/obj/machinery/camera/C = V
 		if(!C.status || C.view_range != initial(C.view_range))
 			C.toggle_cam(owner_AI, 0) //Reactivates the camera based on status. Badly named proc.
 			C.view_range = initial(C.view_range)
@@ -782,8 +781,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	AI.update_sight()
 
 	var/upgraded_cameras = 0
-	for(var/V in GLOB.cameranet.cameras)
-		var/obj/machinery/camera/C = V
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		var/obj/structure/camera_assembly/assembly = C.assembly_ref?.resolve()
 		if(assembly)
 			var/upgraded = FALSE

@@ -1,4 +1,4 @@
-/obj/item/modular_computer/tablet  //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
+/obj/item/modular_computer/tablet //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
 	name = "tablet computer"
 	icon = 'icons/obj/modular_tablet.dmi'
 	icon_state = "tablet-red"
@@ -66,6 +66,34 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	return ..()
+
+/obj/item/modular_computer/tablet/pre_attack(atom/target, mob/living/user, params)
+	if(!inserted_disk || !ismachinery(target))
+		return ..()
+
+	var/obj/machinery/target_machine = target
+	if(!target_machine.panel_open && !istype(target, /obj/machinery/computer))
+		return ..()
+
+	if(!istype(inserted_disk, /obj/item/computer_disk/virus/clown))
+		return ..()
+	var/obj/item/computer_disk/virus/clown/installed_cartridge = inserted_disk
+	if(!installed_cartridge.charges)
+		to_chat(user, span_notice("Out of virus charges."))
+		return ..()
+
+	to_chat(user, span_notice("You upload the virus to [target]!"))
+	var/sig_list = list(COMSIG_ATOM_ATTACK_HAND)
+	if(istype(target,/obj/machinery/door/airlock))
+		sig_list = list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
+
+	installed_cartridge.charges--
+	target.AddComponent(
+		/datum/component/sound_player, \
+		uses = rand(15,20), \
+		signal_list = sig_list, \
+	)
+	return TRUE
 
 /obj/item/modular_computer/tablet/interact(mob/user)
 	. = ..()
@@ -343,14 +371,14 @@
 /obj/item/modular_computer/tablet/integrated/ui_state(mob/user)
 	return GLOB.reverse_contained_state
 
-/obj/item/modular_computer/tablet/integrated/syndicate
+/obj/item/modular_computer/tablet/integrated/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
 	icon_state_powered = "tablet-silicon-syndicate"
 	icon_state_unpowered = "tablet-silicon-syndicate"
 	device_theme = "syndicate"
 
 
-/obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
+/obj/item/modular_computer/tablet/integrated/cyborg/syndicate/Initialize(mapload)
 	. = ..()
 	if(iscyborg(silicon_owner))
 		var/mob/living/silicon/robot/robo = silicon_owner
@@ -396,5 +424,4 @@
 
 /obj/item/modular_computer/tablet/pda/Initialize(mapload)
 	. = ..()
-	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
 	install_component(new /obj/item/computer_hardware/card_slot)

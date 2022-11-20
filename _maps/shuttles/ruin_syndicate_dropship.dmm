@@ -72,13 +72,10 @@
 	},
 /obj/docking_port/mobile{
 	dir = 2;
-	dwidth = 6;
-	height = 7;
 	shuttle_id = "caravansyndicate3";
 	name = "Syndicate Drop Ship";
 	port_direction = 8;
-	preferred_direction = 4;
-	width = 15
+	preferred_direction = 4
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,

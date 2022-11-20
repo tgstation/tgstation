@@ -1867,5 +1867,41 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/punching_bag
+	name = "Punching Bag"
+	result = /obj/structure/punching_bag
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/rods = 1,
+		/obj/item/pillow = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
+
+/datum/crafting_recipe/stacklifter
+	name = "Chest Press"
+	result = /obj/structure/weightmachine/stacklifter
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/chair = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
+
+/datum/crafting_recipe/weightlifter
+	name = "Bench Press"
+	result = /obj/structure/weightmachine/weightlifter
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/chair = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
+
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

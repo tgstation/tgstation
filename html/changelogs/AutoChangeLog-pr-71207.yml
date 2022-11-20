@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - admin: "Whenever a simple_animal is forced to speak via handle_automated_speech, their \"FORCED\" variable in logs should appropriately represent the proc it was called from- instead of being \"poly\" for whatever reason."
