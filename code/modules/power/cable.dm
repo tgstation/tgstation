@@ -49,7 +49,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	GLOB.cable_list += src //add it to the global cable list
 	Connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
-	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
+	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_eat))
 	if(isturf(loc))
 		var/turf/turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
@@ -397,7 +397,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(first)
 			first = FALSE
 			continue
-		addtimer(CALLBACK(O, .proc/auto_propagate_cut_cable, O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
+		addtimer(CALLBACK(O, PROC_REF(auto_propagate_cut_cable), O), 0) //so we don't rebuild the network X times when singulo/explosion destroys a line of X cables
 
 ///////////////////////////////////////////////
 // The cable coil object, used for laying cable
@@ -477,12 +477,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	icon_state = "[base_icon_state][amount < 3 ? amount : ""]"
 	inhand_icon_state = "coil_[cable_color]"
 
-/obj/item/stack/cable_coil/suicide_act(mob/user)
+/obj/item/stack/cable_coil/suicide_act(mob/living/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message(span_suicide("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
 		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(OXYLOSS)
+	return OXYLOSS
 
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
 	if(!istype(user))
@@ -511,7 +511,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	"Cable restraints" = restraints_icon
 	)
 
-	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(layer_result)
@@ -709,7 +709,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 			"Machinery" = image(icon = 'icons/obj/power.dmi', icon_state = "smes")
 			)
 
-	var/layer_result = show_radial_menu(user, src, GLOB.hub_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/layer_result = show_radial_menu(user, src, GLOB.hub_radial_layer_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	var/CL
@@ -757,7 +757,7 @@ GLOBAL_LIST(hub_radial_layer_list)
 
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
 	to_chat(user, span_warning("You push the reset button."))
-	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
+	addtimer(CALLBACK(src, PROC_REF(Reload)), 10, TIMER_UNIQUE) //spam protect
 
 // This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active
 /obj/structure/cable/multilayer/connected

@@ -53,6 +53,8 @@
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_HANDS)
 	AddElement(/datum/element/tool_flash, light_range)
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
+
 	create_reagents(max_fuel)
 	reagents.add_reagent(/datum/reagent/fuel, max_fuel)
 	update_appearance()
@@ -97,9 +99,9 @@
 	open_flame()
 
 
-/obj/item/weldingtool/suicide_act(mob/user)
+/obj/item/weldingtool/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (FIRELOSS)
+	return FIRELOSS
 
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
 	flamethrower_screwdriver(tool, user)

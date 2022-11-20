@@ -46,7 +46,7 @@
 	qdel(src)
 
 /// Make a cloud which applies brimdust to everyone nearby
-/obj/item/organ/internal/monster_core/brimdust_sac/trigger_organ_action()
+/obj/item/organ/internal/monster_core/brimdust_sac/on_triggered_internal()
 	var/turf/origin_turf = get_turf(owner)
 	do_smoke(range = 2, holder = owner, location = origin_turf, smoke_type = /obj/effect/particle_effect/fluid/smoke/bad/brimdust)
 
@@ -124,8 +124,8 @@
 	dust_overlay = mutable_appearance('icons/effects/weather_effects.dmi', "ash_storm")
 	dust_overlay.blend_mode = BLEND_INSET_OVERLAY
 	owner.add_overlay(dust_overlay)
-	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_cleaned)
-	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
+	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 /datum/status_effect/stacking/brimdust_coating/on_remove()
 	. = ..()
@@ -146,7 +146,7 @@
 	if(!COOLDOWN_FINISHED(src, explosion_cooldown))
 		return
 	owner.visible_message(span_boldwarning("The brimstone dust surrounding [owner] ignites!"))
-	addtimer(CALLBACK(src, .proc/explode), 0.25 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(explode)), 0.25 SECONDS)
 	COOLDOWN_START(src, explosion_cooldown, delay_between_explosions)
 
 /**

@@ -193,7 +193,7 @@
 		objective.update_progression_reward()
 
 /datum/uplink_handler/proc/abort_objective(datum/traitor_objective/to_abort)
-	if(istype(to_abort, /datum/traitor_objective/final))
+	if(istype(to_abort, /datum/traitor_objective/ultimate))
 		return
 	if(to_abort.objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
