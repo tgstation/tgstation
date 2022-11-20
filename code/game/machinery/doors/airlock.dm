@@ -356,6 +356,9 @@
 		update_appearance()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user)
+	if(!hasPower())
+		return
+
 	if(issilicon(user) || !iscarbon(user))
 		return ..()
 
