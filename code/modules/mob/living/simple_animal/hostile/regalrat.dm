@@ -266,12 +266,15 @@
 		var/mob/living/simple_animal/hostile/retaliate/frog/frog_path = /mob/living/simple_animal/hostile/retaliate/frog
 		if(nearby_frog.name == "frog")
 			nearby_frog.name = "trash frog"
+			nearby_frog.icon_state += "_trash"
+			nearby_frog.icon_living += "_trash"
+			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
 		else if(nearby_frog.name == "rare frog")
 			nearby_frog.name = "rare trash frog"
-		desc += " ...Except this one lives in a trash bag."
-		nearby_frog.icon_state += "_trash"
-		nearby_frog.icon_living += "_trash"
-		nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
+			nearby_frog.icon_state += "_trash"
+			nearby_frog.icon_living += "_trash"
+			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
+		nearby_frog.desc += " ...Except this one lives in a trash bag."
 		nearby_frog.health = initial(frog_path.health)
 		nearby_frog.maxHealth = initial(frog_path.maxHealth)
 		nearby_frog.melee_damage_lower = initial(frog_path.melee_damage_lower)
@@ -279,7 +282,7 @@
 		nearby_frog.faction = owner.faction.Copy()
 		uplifted_frog = TRUE
 		break
-	
+
 	if(uplifted_frog)
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them trash frogs!"))
 	else
@@ -287,31 +290,34 @@
 			// No need to convert when not on the same team.
 			if(nearby_roach.faction_check_mob(owner, TRUE))
 				continue
-			var/mob/living/basic/cockroach/sewer/roach_path
+			var/mob/living/basic/cockroach/roach_path = /mob/living/basic/cockroach/sewer
 			if(istype(nearby_roach, /mob/living/basic/cockroach/glockroach))
-				roach_path = /mob/living/basic/cockroach/sewer/glockroach
 				if(nearby_roach.name == "glockroach")
-					nearby_roach.name = initial(roach_path.name)
+					nearby_roach.name = "sewer glockroach"
+					nearby_roach.icon_state += "_sewer"
+					nearby_roach.melee_damage_lower += 0.5
+					nearby_roach.melee_damage_upper += 2
 			else if(istype(nearby_roach, /mob/living/basic/cockroach/hauberoach))
-				roach_path = /mob/living/basic/cockroach/sewer/hauberoach
 				if(nearby_roach.name == "hauberoach")
-					nearby_roach.name = initial(roach_path.name)
+					nearby_roach.name = "sewer hauberoach"
+					nearby_roach.icon_state += "_sewer"
+					nearby_roach.melee_damage_lower += 0.5
+					nearby_roach.melee_damage_upper += 2
 			else
-				roach_path = /mob/living/basic/cockroach/sewer
 				if(nearby_roach.name == "cockroach")
 					nearby_roach.name = initial(roach_path.name)
+					nearby_roach.icon_state += "_sewer"
+					nearby_roach.melee_damage_lower = initial(roach_path.melee_damage_lower)
+					nearby_roach.melee_damage_upper = initial(roach_path.melee_damage_upper)
 				nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
 				nearby_roach.obj_damage = initial(roach_path.obj_damage)
-			desc += " ...Except this one looks very robust."
-			nearby_roach.icon_state += "_sewer"
+			nearby_roach.desc += " ...Except this one looks very robust."
 			nearby_roach.health = initial(roach_path.health)
 			nearby_roach.maxHealth = initial(roach_path.maxHealth)
-			nearby_roach.melee_damage_lower = initial(roach_path.melee_damage_lower)
-			nearby_roach.melee_damage_upper = initial(roach_path.melee_damage_upper)
 			nearby_roach.faction = owner.faction.Copy()
 			uplifted_roach = TRUE
 			break
-	
+
 	if(uplifted_roach)
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into sewer roaches!"))
 	else if(!uplifted_frog)

@@ -170,32 +170,3 @@
 
 /datum/ai_behavior/basic_melee_attack/sewer
 	action_cooldown = 0.8 SECONDS
-
-/mob/living/basic/cockroach/sewer/glockroach
-	name = "sewer glockroach"
-	icon_state = "glockroach_sewer"
-	melee_damage_lower = 3
-	melee_damage_upper = 12
-	obj_damage = 10
-	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
-	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
-
-/mob/living/basic/cockroach/sewer/glockroach/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
-
-/mob/living/basic/cockroach/sewer/hauberoach
-	name = "sewer hauberoach"
-	icon_state = "hauberoach_sewer"
-	attack_verb_continuous = "rams its spike into"
-	attack_verb_simple = "ram your spike into"
-	melee_damage_lower = 3
-	melee_damage_upper = 12
-	obj_damage = 10
-	gold_core_spawnable = NO_SPAWN
-	attack_sound = 'sound/weapons/bladeslice.ogg'
-	attack_vis_effect = ATTACK_EFFECT_SLASH
-	sharpness = SHARP_POINTY
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
-	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH
