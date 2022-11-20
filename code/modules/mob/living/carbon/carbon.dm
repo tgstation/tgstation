@@ -7,9 +7,6 @@
 	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
-	// Allows Carbons to use sign language if they have TRAIT_SIGN_LANG
-	AddComponent(/datum/component/sign_language)
-
 	GLOB.carbon_list += src
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_PRESHOVE = PROC_REF(disarm_precollide),

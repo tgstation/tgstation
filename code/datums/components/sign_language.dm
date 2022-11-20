@@ -13,8 +13,10 @@
 *
 * High-Level Theory of Operation:
 *  1. Component is added to a Carbon via AddComponent.
-*  2. React to presence of TRAIT_SIGN_LANG:
-*  3. If TRAIT_SIGN_LANG is added, then enable sign language. Listen for speech signals and modify the mob's speech, say_mod verbs, and typing indicator.
+*  2. Component grants sign language action to its parent, which adds and removes TRAIT_SIGN_LANG.
+*  3. Component reacts to addition and removal of TRAIT_SIGN_LANG in parent:
+*  4. If TRAIT_SIGN_LANG is added, then enable sign language. Listen for speech signals and modify the mob's speech, say_mod verbs, and typing indicator.
+*  5. If TRAIT_SIGN_LANG is removed, then disable sign language. Unregister from speech signals and reset the mob's speech, say_mob verbs, and typing indicator.
 *
 * * Credits:
 * - Original Tongue Tied created by @Wallemations (https://github.com/tgstation/tgstation/pull/52907)
@@ -27,6 +29,8 @@
 	var/tonal_timerid
 	/// Any symbols to sanitize from signed messages.
 	var/regex/omissions = new ("\[!?\]", "g")
+	/// The action for toggling sign language.
+	var/datum/action/innate/sign_language/linked_action
 
 /// Replace specific characters in the input string with periods.
 /datum/component/sign_language/proc/sanitize_message(input)
@@ -37,6 +41,13 @@
 	if (!iscarbon(parent))
 		stack_trace("Sign Language component added to [parent] ([parent?.type]) which is not a /mob/living/carbon subtype.")
 		return COMPONENT_INCOMPATIBLE
+	linked_action = new(src)
+	linked_action.Grant(parent)
+	linked_action.UpdateButtons()
+
+/datum/component/sign_language/Destroy()
+	QDEL_NULL(linked_action)
+	return ..()
 
 /datum/component/sign_language/RegisterWithParent()
 	// Sign language is toggled on/off via adding/removing TRAIT_SIGN_LANG.

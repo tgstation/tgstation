@@ -1,6 +1,6 @@
 /// Sign language book adds the sign language component to the reading Human.
 /// Grants reader the ability to toggle sign language using a HUD button.
-/obj/item/book/granter/action/sign_language
+/obj/item/book/granter/sign_language
 	name = "Galactic Standard Sign Language"
 	desc = "A comprehensive guide to learning sign language and finger-spelling."
 	remarks = list(
@@ -9,13 +9,21 @@
 		"The way your palm faces?",
 		"With questions, the eyebrows are lowered...",
 		"Cool! Extensive coverage of common phrases!",
-		"You can communicate just about anything through signing...",
+		"Communicate just about anything through signing...",
 	)
-	granted_action = /datum/action/innate/sign_language
-	action_name = "sign language"
 
-/obj/item/book/granter/action/sign_language/can_learn(mob/living/user)
-	return iscarbon(user) && ..()
+/obj/item/book/granter/sign_language/can_learn(mob/living/user)
+	if (!iscarbon(user))
+		return
+	if (user.GetComponent(/datum/component/sign_language))
+		to_chat(user, span_warning("You already know all about sign language!"))
+		return
+	return TRUE
 
-/obj/item/book/granter/action/sign_language/recoil(mob/living/user)
+/obj/item/book/granter/sign_language/recoil(mob/living/user)
 	to_chat(user, span_warning("You can't read it, the pages are too faded and smudged!"))
+
+/// Called when the reading is completely finished. This is where the actual granting should happen.
+/obj/item/book/granter/sign_language/on_reading_finished(mob/living/user)
+	..()
+	user.AddComponent(/datum/component/sign_language)

@@ -15,8 +15,6 @@
 	button_icon_state = "sign_language"
 	desc = "Allows you to communicate via sign language."
 	owner_has_control = FALSE
-	/// Custom trait source. To prevent removal conflicts between the quirk, book, and tongue.
-	var/trait_source = TRAIT_GENERIC
 
 /datum/action/innate/sign_language/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force)
 	. = ..()
@@ -47,16 +45,16 @@
 		SIGNAL_ADDTRAIT(TRAIT_MUTE),
 		SIGNAL_REMOVETRAIT(TRAIT_MUTE)
 	))
-	REMOVE_TRAIT(grant_to, TRAIT_SIGN_LANG, trait_source)
+	REMOVE_TRAIT(grant_to, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 
 /datum/action/innate/sign_language/Activate()
 	active = TRUE
-	ADD_TRAIT(owner, TRAIT_SIGN_LANG, trait_source)
+	ADD_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	to_chat(owner, span_green("You are now communicating with sign language."))
 
 /datum/action/innate/sign_language/Deactivate()
 	active = FALSE
-	REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, trait_source)
+	REMOVE_TRAIT(owner, TRAIT_SIGN_LANG, TRAIT_GENERIC)
 	to_chat(owner, span_green("You have stopped using sign language."))
 
 /// Shows the linked action to the owner Carbon.
