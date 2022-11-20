@@ -67,7 +67,10 @@
 /obj/item/organ/external/proc/_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
+	if(restyle_flags & restyle_type)
+		INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
+	else
+		to_chat(trimmer, span_warning("This tool is incompatible with the [src.name]!"))
 
 ///Restyles the external organ from a list of valid options
 /obj/item/organ/external/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)

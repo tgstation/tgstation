@@ -106,8 +106,6 @@
 		organ_owner.external_organs.Remove(src)
 		organ_owner.update_body_parts()
 
-	ownerlimb = null
-
 ///Transfers the organ to the limb, and to the limb's owner, if it has one.
 /obj/item/organ/external/transfer_to_limb(obj/item/bodypart/bodypart, mob/living/carbon/bodypart_owner)
 	if(owner)
