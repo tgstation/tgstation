@@ -70,18 +70,16 @@
 	c_tag = "Exosuit: unspecified"
 	network = list("ss13", "rd")
 	var/number
-	///Reference to the exosuit this camera is in, if any
-	var/obj/vehicle/sealed/mecha/camera_chassis
 
+//Updates the c_tag of the mech while preventing duplicate c_tag usage due to having mechs with the same name
 /obj/machinery/camera/emp_proof/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
-	number = 1
-	if(mech)
-		for(var/obj/machinery/camera/emp_proof/exosuit/existing_mech_cam in GLOB.cameranet.cameras)
-			if(existing_mech_cam == src)
-				continue
-			if(existing_mech_cam.camera_chassis?.name == mech.name)
-				number = max(number, existing_mech_cam.number+1)
-		c_tag = "Exosuit: [format_text(mech.name)] #[number]"
+	var/static/list/existing_mech_names = list()
+	var/mech_name = mech.name
+
+	number = existing_mech_names[mech_name] + 1
+	existing_mech_names[mech_name] = number
+
+	c_tag = "Exosuit: [format_text(mech_name)] #[number]"
 
 // UPGRADE PROCS
 

@@ -421,7 +421,6 @@ Diagnostic HUDs!
 	else
 		holder.icon_state = "hudnobatt"
 
-
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechstat()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
@@ -453,7 +452,6 @@ Diagnostic HUDs!
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudcamera"
-
 
 /*~~~~~~~~~
 	Bots!
