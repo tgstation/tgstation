@@ -127,30 +127,30 @@
 			insert_beaker(user, O)
 		return TRUE
 
-	else if(istype(O, /obj/item/storage/bag/plants))
-		var/obj/item/storage/bag/plants/PB = O
+	else if(istype(O, /obj/item/storage/bag))
+		var/obj/item/storage/bag/bag = O
 		var/i = 0
-		for(var/obj/item/food/grown/G in contents)
+		for(var/obj/item/food/item in contents)
 			i++
 		if(i >= max_items)
 			to_chat(user, span_warning("The biogenerator is already full! Activate it."))
 		else
-			for(var/obj/item/food/grown/G in PB.contents)
+			for(var/obj/item/food/item in bag.contents)
 				if(i >= max_items)
 					break
-				if(PB.atom_storage.attempt_remove(G, src))
+				if(bag.atom_storage.attempt_remove(item, src))
 					i++
-			if(PB.contents.len == 0)
-				to_chat(user, span_info("You empty the plant bag into the biogenerator."))
+			if(bag.contents.len == 0)
+				to_chat(user, span_info("You empty the bag into the biogenerator."))
 			else if (i >= max_items)
-				to_chat(user, span_info("You fill the biogenerator from the plant bag to its capacity."))
+				to_chat(user, span_info("You fill the biogenerator from the bag to its capacity."))
 			else
-				to_chat(user, span_info("You fill the biogenerator from the plant bag."))
+				to_chat(user, span_info("You fill the biogenerator from the bag."))
 		return TRUE //no afterattack
 
-	else if(istype(O, /obj/item/food/grown))
+	else if(istype(O, /obj/item/food))
 		var/i = 0
-		for(var/obj/item/food/grown/G in contents)
+		for(var/obj/item/food/item in contents)
 			i++
 		if(i >= max_items)
 			to_chat(user, span_warning("The biogenerator is full! Activate it."))
@@ -179,7 +179,7 @@
 		eject_beaker(user)
 
 /**
- * activate: Activates biomass processing and converts all inserted grown products into biomass
+ * activate: Activates biomass processing and converts all inserted food products into biomass
  *
  * Arguments:
  * * user The mob starting the biomass processing
@@ -312,7 +312,7 @@
 	data["processing"] = processing
 	data["max_output"] = max_output
 	data["efficiency"] = efficiency
-	if((locate(/obj/item/food/grown) in contents) && biomass < max_biomass)
+	if((locate(/obj/item/food) in contents) && biomass < max_biomass)
 		data["can_process"] = TRUE
 	else
 		data["can_process"] = FALSE
