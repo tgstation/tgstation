@@ -110,6 +110,7 @@
 		"spoon",
 		"status_display_frame",
 		"sticky_tape",
+		"syrup_bottle",
 		"tablet",
 		"tape",
 		"tech_disk",
