@@ -190,7 +190,7 @@
 /// A simple proc to set the ringtone from a pda.
 /obj/item/modular_computer/tablet/proc/update_ringtone(new_ringtone)
 	if(!istext(new_ringtone))
-		CRASH("Expected a text for ringtone, received [new_ringtone]")
+		return
 	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.ringtone = new_ringtone
 
