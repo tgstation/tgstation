@@ -1,6 +1,8 @@
 #define XING_STATE_GREEN 0
 #define XING_STATE_AMBER 1
 #define XING_STATE_RED 2
+#define XING_SIGNAL_DIRECTION_WEST "west-"
+#define XING_SIGNAL_DIRECTION_EAST "east-"
 
 /// Pedestrian crossing signal for tram
 /obj/machinery/crossing_signal
@@ -36,6 +38,8 @@
 	* If the value is set too high, it will cause the lights to turn red when the tram arrives at another station. You want to optimize the amount of warning without turning it red unnessecarily.
 	*/
 	var/red_distance_threshold = 33
+	/// If the signal is facing east or west
+	var/signal_direction
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
@@ -206,34 +210,38 @@
 	if(!is_operational)
 		return
 
-	var/lights_overlay = "[base_icon_state][signal_state]"
+	var/lights_overlay = "[base_icon_state][signal_direction][signal_state]"
 
 	. += mutable_appearance(icon, lights_overlay)
 	. += emissive_appearance(icon, "[lights_overlay]e", offset_spokesman = src, alpha = src.alpha)
 
-/// Shifted to NE corner for east side of southern passage.
+/// Shifted to NE corner for east side of northern passage.
 /obj/machinery/crossing_signal/northeast
 	icon_state = "crossing-base-left"
-	pixel_x = -1
-	pixel_y = 3
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	pixel_x = -2
+	pixel_y = -1
 
-/// Shifted to NW corner for west side of southern passage.
+/// Shifted to NW corner for west side of northern passage.
 /obj/machinery/crossing_signal/northwest
 	icon_state = "crossing-base-right"
-	pixel_x = 1
-	pixel_y = 3
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = 2
+	pixel_y = -1
 
 /// Shifted to SE corner for east side of northern passage.
 /obj/machinery/crossing_signal/southeast
 	icon_state = "crossing-base-left"
-	pixel_x = -1
-	pixel_y = 24
+	signal_direction = XING_SIGNAL_DIRECTION_EAST
+	pixel_x = -2
+	pixel_y = 20
 
 /// Shifted to SW corner for west side of northern passage.
 /obj/machinery/crossing_signal/southwest
 	icon_state = "crossing-base-right"
-	pixel_x = 1
-	pixel_y = 24
+	signal_direction = XING_SIGNAL_DIRECTION_WEST
+	pixel_x = 2
+	pixel_y = 20
 
 #undef XING_STATE_GREEN
 #undef XING_STATE_AMBER
