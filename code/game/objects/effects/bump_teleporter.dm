@@ -29,16 +29,16 @@
 /obj/effect/bump_teleporter/singularity_pull()
 	return
 
-/obj/effect/bump_teleporter/Bumped(atom/movable/concerned_party)
-	if(!validate_setup(concerned_party))
+/obj/effect/bump_teleporter/Bumped(atom/movable/bumper)
+	if(!validate_setup(bumper))
 		return
 
 	for(var/obj/effect/bump_teleporter/teleporter in AllTeleporters)
-		if(teleporter.id == src.id_target)
-			concerned_party.forceMove(teleporter.loc)
+		if(teleporter.id == id_target)
+			teleport_action(bumper, get_turf(teleporter)) //Teleport to location with correct id.
 			return
 
-	stack_trace("Bump_teleporter [src] could not find a teleporter with id [src.id_target]!")
+	stack_trace("Bump_teleporter [src] could not find a teleporter with id [id_target]!")
 
 /// Check to see if our teleporter was set up correctly mapside. Return TRUE if everything is fine, FALSE if not.
 /obj/effect/bump_teleporter/proc/validate_setup(atom/movable/checkable)
@@ -55,19 +55,16 @@
 
 	return TRUE
 
+/// Actually move our target atom from one position to another. Return TRUE if everything is fine. Override this proc on subtypes for specific teleportation methods.
+/obj/effect/bump_teleporter/proc/teleport_action(atom/movable/target, turf/destination)
+	target.forceMove(destination)
+
 /// Subtype that uses do_teleport instead, to leverage any NO_TELEPORT traits that you might need to add in a given map
 /obj/effect/bump_teleporter/filtering
 	name = "bump teleporter (do_teleport)"
 	desc = "Use me for when you want to avoid moving mobs with certain traits, like NO_TELEPORT."
 	icon_state = "x4"
 
-/obj/effect/bump_teleporter/filtering/Bumped(atom/movable/concerned_party)
-	if(!validate_setup(concerned_party))
-		return
-
-	for(var/obj/effect/bump_teleporter/teleporter in AllTeleporters)
-		if(teleporter.id == src.id_target)
-			do_teleport(concerned_party, get_turf(teleporter), channel = TELEPORT_CHANNEL_QUANTUM) //Teleport to location with correct id.
-			return
-
-	stack_trace("Bump_teleporter [src] could not find a teleporter with id [src.id_target]!")
+/// As promised in the name of this subtype, use do_teleport to leverage all of the filtering checks that it does.
+/obj/effect/bump_teleporter/filtering/teleport_action(atom/movable/target, turf/destination)
+	do_teleport(target, destination, channel = TELEPORT_CHANNEL_QUANTUM)
