@@ -208,4 +208,4 @@
 	var/obj/item/organ/internal/monster_core/organ = target
 	if (!istype(organ))
 		return
-	organ.trigger_organ_action()
+	organ.on_triggered_internal()

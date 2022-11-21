@@ -91,7 +91,7 @@
 				span_danger("You avoid [user]'s bite!"), span_hear("You hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("Your bite misses [victim]!"))
 			return TRUE
-		var/obj/item/bodypart/arm/mouth = user.get_bodypart(BODY_ZONE_HEAD)
+		var/obj/item/bodypart/head/mouth = user.get_bodypart(BODY_ZONE_HEAD)
 		victim.apply_damage(rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high), BRUTE, affecting, armor)
 		victim.visible_message(span_danger("[name] bites [victim]!"),
 			span_userdanger("[name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, name)

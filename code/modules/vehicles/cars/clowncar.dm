@@ -263,7 +263,7 @@
 	if(modifiers[SHIFT_CLICK] || (ismovable(target) && !isturf(target.loc)))
 		return
 	var/mob/living/unlucky_sod = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
-	mob_exit(unlucky_sod, TRUE)
+	mob_exit(unlucky_sod, silent = TRUE)
 	flick("clowncar_recoil", src)
 	playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
 	unlucky_sod.throw_at(target, 10, 2)

@@ -100,7 +100,7 @@
 	if(isitem(AM))
 		var/obj/item/thrown_item = AM
 		var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
-		var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+		var/nosell_hit = SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
 		if(nosell_hit)
 			skipcatch = TRUE
 			hitpush = FALSE
@@ -485,7 +485,7 @@
 	var/image/gloveimg = image('icons/effects/effects.dmi', slapped, "slapglove", slapped.layer + 0.1)
 	gloveimg.pixel_y = 10 // should line up with head
 	gloveimg.pixel_x = 10
-	flick_overlay(gloveimg, GLOB.clients, 10)
+	flick_overlay_global(gloveimg, GLOB.clients, 10)
 
 	// And animate the attack!
 	animate(gloveimg, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 10, pixel_z = 0, time = 3)

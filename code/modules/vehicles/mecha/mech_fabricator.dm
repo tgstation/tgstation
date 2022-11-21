@@ -53,17 +53,30 @@
 	var/list/datum/design/cached_designs
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
-	stored_research = SSresearch.science_tech
+	if(!CONFIG_GET(flag/no_default_techweb_link))
+		connect_techweb(SSresearch.science_tech)
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	cached_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
-	update_menu_tech()
+	if(stored_research)
+		update_menu_tech()
+	return ..()
+
+/obj/machinery/mecha_part_fabricator/proc/connect_techweb(datum/techweb/new_techweb)
+	if(stored_research)
+		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
+
+	stored_research = new_techweb
 	RegisterSignal(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
 		PROC_REF(on_techweb_update)
 	)
-	return ..()
+
+/obj/machinery/mecha_part_fabricator/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		connect_techweb(tool.buffer)
+	return TRUE
 
 /obj/machinery/mecha_part_fabricator/proc/on_techweb_update()
 	SIGNAL_HANDLER
@@ -126,7 +139,6 @@
 	var/previous_design_count = cached_designs.len
 
 	cached_designs.Cut()
-
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(v)
 

@@ -624,7 +624,7 @@
 
 	var/heads_report = "<b>Heads of Staff</b><br>"
 	heads_report += "<table cellspacing=5>"
-	for(var/datum/mind/N in SSjob.get_living_heads())
+	for(var/datum/mind/N as anything in SSjob.get_living_heads())
 		var/mob/M = N.current
 		if(M)
 			heads_report += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"

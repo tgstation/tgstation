@@ -374,7 +374,7 @@
 	var/obscured = NONE
 	var/hidden_slots = NONE
 
-	for(var/obj/item/I in get_equipped_items())
+	for(var/obj/item/I in get_all_worn_items())
 		hidden_slots |= I.flags_inv
 		if(transparent_protection)
 			hidden_slots |= I.transparent_protection

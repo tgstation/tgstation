@@ -3689,7 +3689,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/displaycase{
 	start_showpiece_type = /obj/item/dice/d6/space;
-	trophy_message = "Stolen from dice collector before he could enjoy his day."
+	desc = "Contains an artifact stolen from dice collector before he could enjoy his day."
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)

@@ -3,6 +3,7 @@
 	id = "choke"
 	tick_interval = 0.2 SECONDS
 	alert_type = null
+	remove_on_fullheal = TRUE
 	/// Weakref to the thing we're choking on
 	var/datum/weakref/choking_on_ref
 	/// If the thing we're choking on is on fire
@@ -41,7 +42,6 @@
 		choking_on.forceMove(owner)
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_NOBREATH), PROC_REF(no_breathing))
 	RegisterSignal(owner, COMSIG_MOB_LOGOUT, PROC_REF(on_logout))
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_choke))
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	// Of note, this means plasma lovers lose some methods of vomiting up
 	RegisterSignal(owner, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
@@ -182,7 +182,7 @@
 		victim.balloon_alert(aggressor, "already helping!")
 		return
 	if(DOING_INTERACTION(aggressor, "heimlich"))
-		victim.balloon_alert(aggressor, "already helping someone!") 
+		victim.balloon_alert(aggressor, "already helping someone!")
 		return
 
 	if(!thrusting_continues(victim, aggressor, before_work = TRUE))

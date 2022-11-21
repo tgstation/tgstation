@@ -6,6 +6,19 @@
 	text_gain_indication = "<span class='notice'>Your skin feels webby.</span>"
 	instability = 15
 	power_path = /datum/action/cooldown/spell/lay_genetic_web
+	energy_coeff = 1
+
+/datum/mutation/human/webbing/modify()
+	. = ..()
+	var/datum/action/cooldown/spell/lay_genetic_web/to_modify =.
+
+	if(!istype(to_modify)) // null or invalid
+		return
+
+	if(GET_MUTATION_ENERGY(src) == 1) //energetic chromosome outputs a value less than 1 when present, 1 by default
+		to_modify.webbing_time = initial(to_modify.webbing_time)
+		return
+	to_modify.webbing_time = 2 SECONDS
 
 /datum/mutation/human/webbing/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
