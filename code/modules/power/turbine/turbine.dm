@@ -565,6 +565,7 @@
 	var/output_mix_heat_capacity = output_mix.heat_capacity()
 	if(!output_mix_heat_capacity)
 		return 0
+	work_done = min(work_done, (output_mix_heat_capacity * output_mix.temperature - output_mix_heat_capacity * TCMB) / TURBINE_HEAT_CONVERSION_MULTIPLIER)
 	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
 	return work_done
 
