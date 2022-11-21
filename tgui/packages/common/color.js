@@ -65,3 +65,13 @@ Color.lookup = (value, colors = []) => {
   const index = scaled | 0;
   return Color.lerp(colors[index], colors[index + 1], ratio);
 };
+
+// Darkens a colour by a given percent. Only takes hex values. Returns a color, which can have toString called to get it's rgba() css value.
+export const darkenColor = (color, percent) => {
+  percent = percent / 100;
+  color = Color.fromHex(color);
+  color.r -= color.r * percent;
+  color.g -= color.g * percent;
+  color.b -= color.b * percent;
+  return color;
+};

@@ -2,7 +2,8 @@ import { useBackend } from '../backend';
 import { Button, Stack, Box, Icon } from '../components';
 import { Window } from '../layouts';
 import { JOB2ICON } from './Orbit/constants';
-import { COLORS, darkenColor } from '../constants';
+import { COLORS } from '../constants';
+import { darkenColor } from 'common/color';
 
 type BaseVars = {
   name: string;
