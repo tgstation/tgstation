@@ -1757,7 +1757,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/list/wings = list()
 			for(var/W in wings_icons)
 				var/datum/sprite_accessory/S = GLOB.wings_list[W] //Gets the datum for every wing this species has, then prompts user with a radial menu
-				var/image/img = image(icon = 'icons/mob/clothing/wings.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND") //Process the HUD elements
+				var/image/img = image(icon = 'icons/mob/species/wings.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND") //Process the HUD elements
 				img.transform *= 0.5
 				img.pixel_x = -32
 				if(wings[S.name])
