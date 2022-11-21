@@ -8,15 +8,19 @@
 	var/list/fill_icon_thresholds = list(1,30,80)
 	var/list/temperature_icon_thresholds = list(0,50,100)
 	var/burning = FALSE
-	var/req_temp = T0C + 100 // water boiling temperature
-	var/heating_rate = 5 // degrees per second
-	var/distillation_rate = 5 // units per second
+	var/light_power = 1
+	/// Minimal mixture temperature for separation
+	var/required_temp = T0C + 100
+	/// Mixture heating speed in degrees per second
+	var/heating_rate = 5
+	/// Separation speed in units per second
+	var/distillation_rate = 5
 	var/datum/reagent/separating_reagent
 	var/obj/item/reagent_containers/beaker
 
 /obj/structure/chem_separator/Initialize(mapload)
-	create_reagents(200)
 	. = ..()
+	create_reagents(200)
 
 /obj/structure/chem_separator/Destroy()
 	if(burning)
@@ -29,15 +33,15 @@
 	..()
 	if(A == beaker)
 		beaker = null
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/structure/chem_separator/update_overlays()
 	. = ..()
-	set_light(burning ? 1 : 0)
+	set_light(burning ? light_power : 0)
 	// Burner overlay
 	if(burning)
-		. += mutable_appearance(icon, "[icon_state]_burn", alpha = alpha)
-		. += emissive_appearance(icon, "[icon_state]_burn", src, alpha = alpha)
+		. += mutable_appearance(icon, "[icon_state]_burn")
+		. += emissive_appearance(icon, "[icon_state]_burn", src)
 	// Separator reagents overlay
 	if(reagents.total_volume)
 		var/threshold = null
@@ -73,28 +77,29 @@
 		var/mutable_appearance/filling = mutable_appearance(icon_state, fill_name)
 		. += filling
 
-/obj/structure/chem_separator/proc/burn_attackby_check(obj/item/I, mob/living/user)
-	var/ignition_message = I.ignition_effect(src, user)
+/// Checks whether the item can ignite the separator
+/obj/structure/chem_separator/proc/ignite_with(obj/item/object, mob/living/user)
+	var/ignition_message = object.ignition_effect(src, user)
 	if(!ignition_message)
-		return
-	. = TRUE
+		return FALSE
 	user.visible_message(ignition_message)
-	fire_act(I.get_temperature())
+	fire_act(object.get_temperature())
+	return TRUE
 
-/obj/structure/chem_separator/attackby(obj/item/I, mob/user, params)
-	if(burn_attackby_check(I, user))
-		return
-	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		var/obj/item/reagent_containers/new_beaker = I
+/obj/structure/chem_separator/attackby(obj/item/item, mob/user, params)
+	if(ignite_with(item, user))
+		return TRUE // no afterattack
+	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
+		var/obj/item/reagent_containers/new_beaker = item
 		if(!user.transferItemToLoc(new_beaker, src))
-			return
+			return FALSE
 		replace_beaker(user, new_beaker)
-		to_chat(user, span_notice("You add [new_beaker] to [src]."))
-		update_appearance()
-		. = TRUE // no afterattack
-	else
-		return ..()
+		balloon_alert(user, "added beaker")
+		update_appearance(UPDATE_ICON)
+		return TRUE // no afterattack
+	return ..()
 
+/// Insert, replace or eject the container depending on the state and parameters
 /obj/structure/chem_separator/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
 		return FALSE
@@ -108,20 +113,21 @@
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/structure/chem_separator/fire_act(exposed_temperature, exposed_volume)
 	if(!burning)
 		start()
 		return
-	. = ..()
+	return ..()
 
 /obj/structure/chem_separator/extinguish()
 	if(burning)
 		stop()
-	. = ..()
+	return ..()
 
+/// Ignite the burner to start the separation process
 /obj/structure/chem_separator/proc/start()
 	if(!beaker)
 		return
@@ -131,15 +137,17 @@
 		return
 	separating_reagent = reagents.reagent_list[1].type
 	burning = TRUE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	START_PROCESSING(SSobj, src)
 
+/// Extinguish the burner to stop the separation process
 /obj/structure/chem_separator/proc/stop()
 	separating_reagent = null
 	burning = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	STOP_PROCESSING(SSobj, src)
 
+/// Fill internal storage with reagents from the container
 /obj/structure/chem_separator/proc/load()
 	if(burning)
 		return
@@ -150,8 +158,9 @@
 	if(reagents.total_volume >= reagents.maximum_volume)
 		return
 	beaker.reagents.trans_to(reagents, beaker.reagents.total_volume)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
+/// Drain internal reagents into the container
 /obj/structure/chem_separator/proc/unload()
 	if(burning)
 		return
@@ -162,7 +171,7 @@
 	if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
 	reagents.trans_to(beaker.reagents, reagents.total_volume)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/chem_separator/process(delta_time)
 	if(!burning)
@@ -182,12 +191,12 @@
 		location.hotspot_expose(exposed_temperature = 700, exposed_volume = 5)
 	if(reagents.chem_temp < req_temp)
 		reagents.adjust_thermal_energy(heating_rate * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume)
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return
 	if(reagents.chem_temp >= req_temp)
 		var/transfer_amount = distillation_rate * delta_time
 		reagents.trans_id_to(beaker.reagents, separating_reagent, transfer_amount)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/chem_separator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -211,7 +220,7 @@
 
 /obj/structure/chem_separator/ui_act(action, params)
 	if(..())
-		return
+		return TRUE
 	switch(action)
 		if("load")
 			load()
@@ -223,7 +232,7 @@
 			stop()
 		if("eject")
 			replace_beaker(usr)
-	. = TRUE
+	return TRUE
 
 /datum/crafting_recipe/chem_separator
 	name = "Chemical separator"
