@@ -259,9 +259,10 @@
 	var/uplifted_mice = FALSE
 	var/uplifted_frog = FALSE
 	var/uplifted_roach = FALSE
+	var/list/converted_check_list = list(FACTION_RAT)
 	for(var/mob/living/simple_animal/hostile/retaliate/frog/nearby_frog in oview(owner, 5))
 		// No need to convert when not on the same team.
-		if(nearby_frog.faction_check_mob(owner, TRUE))
+		if(faction_check(nearby_frog.faction, converted_check_list))
 			continue
 		var/mob/living/simple_animal/hostile/retaliate/frog/frog_path = /mob/living/simple_animal/hostile/retaliate/frog
 		if(nearby_frog.name == "frog")
@@ -288,7 +289,7 @@
 	else
 		for(var/mob/living/basic/cockroach/nearby_roach in oview(owner, 5))
 			// No need to convert when not on the same team.
-			if(nearby_roach.faction_check_mob(owner, TRUE))
+			if(faction_check(nearby_roach.faction, converted_check_list))
 				continue
 			var/mob/living/basic/cockroach/roach_path = /mob/living/basic/cockroach/sewer
 			if(istype(nearby_roach, /mob/living/basic/cockroach/glockroach))
