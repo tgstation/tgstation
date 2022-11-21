@@ -275,11 +275,11 @@
 /area/shuttle/syndicate/hallway)
 "bq" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/cup/beaker/large{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/cup/beaker,
 /obj/item/reagent_containers/dropper{
 	pixel_x = -4;
 	pixel_y = -8
@@ -453,18 +453,18 @@
 /area/shuttle/syndicate/medical)
 "bR" = (
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/multiver{
+/obj/item/reagent_containers/cup/bottle/multiver{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
+/obj/item/reagent_containers/cup/bottle/epinephrine{
 	pixel_x = 6
 	},
 /obj/effect/turf_decal/tile/yellow/half{
@@ -542,7 +542,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/syndicate/medical)
 "cr" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -560,7 +560,7 @@
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/engineering)
 "cu" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -568,22 +568,22 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cv" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cw" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cx" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/hallway)
 "cy" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
@@ -591,32 +591,32 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cz" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cA" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cB" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
 "cE" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cF" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
 "cG" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/engineering)
@@ -827,7 +827,7 @@
 	},
 /area/shuttle/syndicate/medical)
 "vv" = (
-/obj/item/clothing/head/hos/syndicate,
+/obj/item/clothing/head/hats/hos/syndicate,
 /obj/item/stamp/syndicate{
 	pixel_x = -7
 	},
@@ -876,11 +876,11 @@
 "zj" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/west,
-/obj/item/bodypart/l_arm/robot{
+/obj/item/bodypart/arm/left/robot{
 	pixel_x = -4;
 	pixel_y = 8
 	},
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = -10;
 	pixel_y = 9
 	},

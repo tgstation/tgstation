@@ -1,7 +1,7 @@
 /obj/item/stack/medical
 	name = "medical pack"
 	singular_name = "medical pack"
-	icon = 'icons/obj/stack_medical.dmi'
+	icon = 'icons/obj/medical/stack_medical.dmi'
 	amount = 6
 	max_amount = 6
 	w_class = WEIGHT_CLASS_TINY
@@ -116,9 +116,9 @@
 	grind_results = list(/datum/reagent/medicine/c2/libital = 10)
 	merge_type = /obj/item/stack/medical/bruise_pack
 
-/obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
+/obj/item/stack/medical/bruise_pack/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/stack/medical/gauze
 	name = "medical gauze"
@@ -361,13 +361,17 @@
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 	merge_type = /obj/item/stack/medical/aloe
 
+/obj/item/stack/medical/aloe/fresh
+	amount = 2
+
 /obj/item/stack/medical/bone_gel
 	name = "bone gel"
 	singular_name = "bone gel"
 	desc = "A potent medical gel that, when applied to a damaged bone in a proper surgical setting, triggers an intense melding reaction to repair the wound. Can be directly applied alongside surgical sticky tape to a broken bone in dire circumstances, though this is very harmful to the patient and not recommended."
 
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "bone-gel"
+	inhand_icon_state = "bone-gel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
@@ -381,14 +385,14 @@
 	to_chat(user, span_warning("Bone gel can only be used on fractured limbs!"))
 	return
 
-/obj/item/stack/medical/bone_gel/suicide_act(mob/user)
+/obj/item/stack/medical/bone_gel/suicide_act(mob/living/user)
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/C = user
 	C.visible_message(span_suicide("[C] is squirting all of [src] into [C.p_their()] mouth! That's not proper procedure! It looks like [C.p_theyre()] trying to commit suicide!"))
 	if(!do_after(C, 2 SECONDS))
 		C.visible_message(span_suicide("[C] screws up like an idiot and still dies anyway!"))
-		return (BRUTELOSS)
+		return BRUTELOSS
 
 	C.emote("scream")
 	for(var/i in C.bodyparts)
@@ -402,7 +406,7 @@
 		var/obj/item/bodypart/bone = i
 		bone.receive_damage(brute=60)
 	use(1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/stack/medical/bone_gel/four
 	amount = 4

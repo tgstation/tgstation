@@ -24,7 +24,7 @@
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), .proc/on_analyze)
+	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), PROC_REF(on_analyze))
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
@@ -38,7 +38,7 @@
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src))
+	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src))
 		return
 
 	if(cooldown)
@@ -194,7 +194,7 @@
 
 /obj/item/analyzer/ranged
 	desc = "A hand-held long-range environmental scanner which reports current gas levels."
-	name = "Long-range gas analyzer"
+	name = "long-range gas analyzer"
 	icon_state = "analyzerranged"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)
@@ -202,6 +202,6 @@
 
 /obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!can_see(user, target, 7))
+	if(!can_see(user, target, 15))
 		return
-	atmos_scan(user, target)
+	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))

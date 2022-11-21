@@ -1,7 +1,7 @@
 /mob/living/simple_animal/bot/vibebot
 	name = "\improper Vibebot"
 	desc = "A little robot. It's just vibing, doing its thing."
-	icon = 'icons/mob/aibots.dmi'
+	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "vibebot"
 	density = FALSE
 	anchored = FALSE
@@ -64,7 +64,7 @@
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "funk"
 
-/datum/action/innate/vibe/IsAvailable()
+/datum/action/innate/vibe/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

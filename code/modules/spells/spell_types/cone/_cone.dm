@@ -32,9 +32,9 @@
 
 		for(var/atom/movable/movable_content as anything in target_turf)
 			if(isobj(movable_content))
-				do_obj_cone_effect(movable_content, level)
+				do_obj_cone_effect(movable_content, caster, level)
 			else if(isliving(movable_content))
-				do_mob_cone_effect(movable_content, level)
+				do_mob_cone_effect(movable_content, caster, level)
 
 ///This proc deterimines how the spell will affect turfs.
 /datum/action/cooldown/spell/cone/proc/do_turf_cone_effect(turf/target_turf, atom/caster, level)
@@ -120,4 +120,4 @@
 	var/level_counter = 0
 	for(var/list/turf_list in cone_turfs)
 		level_counter++
-		addtimer(CALLBACK(src, .proc/do_cone_effects, turf_list, caster, level_counter), delay_between_level * level_counter)
+		addtimer(CALLBACK(src, PROC_REF(do_cone_effects), turf_list, caster, level_counter), delay_between_level * level_counter)

@@ -3,7 +3,7 @@
 	desc = "Better stay away from that thing."
 	density = FALSE
 	anchored = TRUE
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "uglymine"
 	/// We manually check to see if we've been triggered in case multiple atoms cross us in the time between the mine being triggered and it actually deleting, to avoid a race condition with multiple detonations
 	var/triggered = FALSE
@@ -17,16 +17,16 @@
 	if(arm_delay)
 		armed = FALSE
 		icon_state = "uglymine-inactive"
-		addtimer(CALLBACK(src, .proc/now_armed), arm_delay)
+		addtimer(CALLBACK(src, PROC_REF(now_armed)), arm_delay)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/mine/examine(mob/user)
 	. = ..()
 	if(!armed)
-		. += "\t<span class='information'>It appears to be inactive...</span>"
+		. += span_info("\tIt appears to be inactive...")
 
 /// The effect of the mine
 /obj/effect/mine/proc/mineEffect(mob/victim)
@@ -197,7 +197,7 @@
 	playsound(src, 'sound/weapons/armbomb.ogg', 70, TRUE)
 	to_chat(user, span_warning("You arm \the [src], causing it to shake! It will deploy in 3 seconds."))
 	active = TRUE
-	addtimer(CALLBACK(src, .proc/deploy_mine), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(deploy_mine)), 3 SECONDS)
 
 /// Deploys the mine and deletes itself
 /obj/item/minespawner/proc/deploy_mine()

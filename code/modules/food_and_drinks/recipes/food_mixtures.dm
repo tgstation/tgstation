@@ -2,6 +2,9 @@
 	var/real_parts
 	category = CAT_FOOD
 
+/datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
+	ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user))
+
 /datum/crafting_recipe/food/New()
 	real_parts = parts.Copy()
 	parts |= reqs
@@ -172,7 +175,7 @@
 
 /datum/chemical_reaction/food/ricebowl
 	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)
-	required_container = /obj/item/reagent_containers/glass/bowl
+	required_container = /obj/item/reagent_containers/cup/bowl
 	mix_message = "The rice absorbs the water."
 	reaction_flags = REACTION_INSTANT
 

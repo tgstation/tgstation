@@ -70,6 +70,7 @@
 	id = "miningsite-underground"
 	description = "Who knew ladders could be so useful?"
 	suffix = "icemoon_underground_mining_site.dmm"
+	has_ceiling = FALSE
 	unpickable = TRUE
 
 // below ground only

@@ -26,7 +26,7 @@
 
 	var/obj/item/radio/headset/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
-	R.freqlock = TRUE
+	R.freqlock = RADIO_FREQENCY_LOCKED
 	..()
 
 /datum/outfit/space
@@ -79,13 +79,13 @@
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
 	r_hand = /obj/item/mop
-	l_hand = /obj/item/reagent_containers/glass/bucket
+	l_hand = /obj/item/reagent_containers/cup/bucket
 
 /datum/outfit/tournament/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/reagent_containers/glass/bucket/bucket = H.get_item_for_held_index(1)
+	var/obj/item/reagent_containers/cup/bucket/bucket = H.get_item_for_held_index(1)
 	bucket.reagents.add_reagent(/datum/reagent/water,70)
 
 /datum/outfit/laser_tag
@@ -122,7 +122,7 @@
 	suit = /obj/item/clothing/suit/costume/pirate/armored
 	ears = /obj/item/radio/headset/syndicate
 	glasses = /obj/item/clothing/glasses/eyepatch
-	head = /obj/item/clothing/head/bandana/armored
+	head = /obj/item/clothing/head/costume/pirate/bandana/armored
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 
 /datum/outfit/pirate/post_equip(mob/living/carbon/human/equipped)
@@ -131,7 +131,7 @@
 	var/obj/item/radio/outfit_radio = equipped.ears
 	if(outfit_radio)
 		outfit_radio.set_frequency(FREQ_SYNDICATE)
-		outfit_radio.freqlock = TRUE
+		outfit_radio.freqlock = RADIO_FREQENCY_LOCKED
 
 	var/obj/item/card/id/outfit_id = equipped.wear_id
 	if(outfit_id)
@@ -139,11 +139,17 @@
 		outfit_id.update_label()
 		outfit_id.update_icon()
 
+	var/obj/item/clothing/under/pirate_uniform = equipped.w_uniform
+	if(pirate_uniform)
+		pirate_uniform.has_sensor = NO_SENSORS
+		pirate_uniform.sensor_mode = SENSOR_OFF
+		equipped.update_suit_sensors()
+
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
 
 	id_trim = /datum/id_trim/pirate/captain
-	head = /obj/item/clothing/head/pirate/armored
+	head = /obj/item/clothing/head/costume/pirate/armored
 
 /datum/outfit/pirate/space
 	name = "Space Pirate (EVA)"
@@ -174,7 +180,7 @@
 	name = "Silver Scale Captain"
 
 	id_trim = /datum/id_trim/pirate/captain/silverscale
-	head = /obj/item/clothing/head/crown
+	head = /obj/item/clothing/head/costume/crown
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
 
@@ -212,7 +218,7 @@
 	ears = /obj/item/radio/headset
 	glasses = /obj/item/clothing/glasses/thermal/monocle
 	gloves = /obj/item/clothing/gloves/color/latex
-	head = /obj/item/clothing/head/welding
+	head = /obj/item/clothing/head/utility/welding
 	mask = /obj/item/clothing/mask/surgical
 	l_pocket = /obj/item/knife/kitchen
 	r_pocket = /obj/item/scalpel
@@ -279,7 +285,7 @@
 	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-	head = /obj/item/clothing/head/centhat
+	head = /obj/item/clothing/head/hats/centhat
 	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
 	shoes = /obj/item/clothing/shoes/combat/swat
 	l_pocket = /obj/item/ammo_box/a357
@@ -378,7 +384,7 @@
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
-	head = /obj/item/clothing/head/pirate/captain
+	head = /obj/item/clothing/head/costume/pirate/captain
 	shoes = /obj/item/clothing/shoes/combat
 
 /datum/outfit/centcom/soviet/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

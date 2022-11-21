@@ -41,7 +41,7 @@
 
 /datum/emote/help
 	key = "help"
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/camera/imaginary_friend)
 
 /datum/emote/help/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -65,8 +65,8 @@
 	key = "flip"
 	key_third_person = "flips"
 	hands_use_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai)
+	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/camera/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/camera/imaginary_friend)
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
@@ -99,10 +99,10 @@
 	key = "spin"
 	key_third_person = "spins"
 	hands_use_check = TRUE
-	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer)
-	mob_type_ignore_stat_typecache = list(/mob/dead/observer)
+	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/camera/imaginary_friend)
+	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/camera/imaginary_friend)
 
-/datum/emote/spin/run_emote(mob/user, params ,  type_override, intentional)
+/datum/emote/spin/run_emote(mob/user, params,  type_override, intentional)
 	. = ..()
 	if(.)
 		user.spin(20, 1)
@@ -122,8 +122,8 @@
 
 	if(prob(BEYBLADE_DIZZINESS_PROBABILITY))
 		to_chat(user, span_warning("You feel woozy from spinning."))
-		user.set_timed_status_effect(BEYBLADE_DIZZINESS_DURATION, /datum/status_effect/dizziness, only_if_higher = TRUE)
-		user.adjust_timed_status_effect(BEYBLADE_CONFUSION_INCREMENT, /datum/status_effect/confusion, max_duration = BEYBLADE_CONFUSION_LIMIT)
+		user.set_dizzy_if_lower(BEYBLADE_DIZZINESS_DURATION)
+		user.adjust_confusion_up_to(BEYBLADE_CONFUSION_INCREMENT, BEYBLADE_CONFUSION_LIMIT)
 
 #undef BEYBLADE_PUKE_THRESHOLD
 #undef BEYBLADE_PUKE_NUTRIENT_LOSS

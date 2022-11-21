@@ -10,6 +10,8 @@
 	icon_state = "inspector"
 	worn_icon_state = "salestagger"
 	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -75,7 +77,7 @@
 	return ..()
 
 /obj/item/inspector/CtrlClick(mob/living/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || !cell_cover_open || !cell)
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands= !iscyborg(user)) || !cell_cover_open || !cell)
 		return ..()
 	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
 		span_notice("You remove [cell]."))
@@ -150,8 +152,11 @@
 	characters += GLOB.alphabet_upper
 	characters += GLOB.numerals
 
-	info = random_string(rand(180,220), characters)
-	info += "[prob(50) ? "=" : "=="]" //Based64 encoding
+	var/report_text = random_string(rand(180,220), characters)
+	report_text += "[prob(50) ? "=" : "=="]" //Based64 encoding
+
+	add_raw_text(report_text)
+	update_appearance()
 
 /obj/item/paper/report/examine(mob/user)
 	. = ..()
@@ -159,7 +164,7 @@
 		. += span_notice("\The [src] contains data on [scanned_area.name].")
 	else if(scanned_area)
 		. += span_notice("\The [src] contains data on a vague area on station, you should throw it away.")
-	else if(get_info_length())
+	else if(get_total_length())
 		icon_state = "slipfull"
 		. += span_notice("Wait a minute, this isn't an encrypted inspection report! You should throw it away.")
 	else
@@ -349,7 +354,8 @@
 				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "non-honk-clown-words")
 			if(1000)
 				new_info += pick_list_replacements(CLOWN_NONSENSE_FILE, "rare")
-	info += new_info.Join()
+	add_raw_text(new_info.Join())
+	update_appearance()
 
 /obj/item/paper/fake_report/examine(mob/user)
 	. = ..()
@@ -357,7 +363,7 @@
 		. += span_notice("\The [src] contains no data on [scanned_area.name].")
 	else if(scanned_area)
 		. += span_notice("\The [src] contains no data on a vague area on station, you should throw it away.")
-	else if(get_info_length())
+	else if(get_total_length())
 		. += span_notice("Wait a minute, this isn't an encrypted inspection report! You should throw it away.")
 	else
 		. += span_notice("Wait a minute, this thing's blank! You should throw it away.")
@@ -374,7 +380,7 @@
 	grind_results = list(/datum/reagent/water = 5)
 
 /obj/item/paper/fake_report/water/AltClick(mob/living/user, obj/item/I)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
 	var/datum/action/innate/origami/origami_action = locate() in user.actions
 	if(origami_action?.active) //Origami masters can fold water

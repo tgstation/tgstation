@@ -24,20 +24,21 @@
 /mob/living/carbon/human/species/monkey/angry/Initialize(mapload)
 	. = ..()
 	if(prob(10))
-		INVOKE_ASYNC(src, .proc/give_ape_escape_helmet)
+		INVOKE_ASYNC(src, PROC_REF(give_ape_escape_helmet))
 
 /// Gives our funny monkey an Ape Escape hat reference
 /mob/living/carbon/human/species/monkey/angry/proc/give_ape_escape_helmet()
-	var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
+	var/obj/item/clothing/head/helmet/toggleable/justice/escape/helmet = new(src)
 	equip_to_slot_or_del(helmet, ITEM_SLOT_HEAD)
 	helmet.attack_self(src) // todo encapsulate toggle
 
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
-/mob/living/carbon/human/species/monkey/punpun //except for a few special persistence features, pun pun is just a normal monkey
+/mob/living/carbon/human/species/monkey/punpun
 	name = "Pun Pun" //C A N O N
 	unique_name = FALSE
 	use_random_name = FALSE
+	ai_controller = /datum/ai_controller/monkey/pun_pun
 	/// If we had one of the rare names in a past life
 	var/ancestor_name
 	/// The number of times Pun Pun has died since he was last gibbed
@@ -127,7 +128,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 		file_data["relic_hat"] = null
 		file_data["relic_mask"] = null
 	else
-		file_data["ancestor_name"] = ancestor_name ? ancestor_name : name
+		file_data["ancestor_name"] = ancestor_name ? ancestor_name : real_name
 		file_data["ancestor_chain"] = dead ? ancestor_chain + 1 : ancestor_chain
 		file_data["relic_hat"] = head ? head.type : null
 		file_data["relic_mask"] = wear_mask ? wear_mask.type : null

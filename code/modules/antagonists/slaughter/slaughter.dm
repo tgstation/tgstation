@@ -13,7 +13,7 @@
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "imp"
 	icon_living = "imp"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -38,8 +38,8 @@
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	del_on_death = TRUE
-	deathmessage = "screams in agony as it sublimates into a sulfurous smoke."
-	deathsound = 'sound/magic/demon_dies.ogg'
+	death_message = "screams in agony as it sublimates into a sulfurous smoke."
+	death_sound = 'sound/magic/demon_dies.ogg'
 
 //////////////////The Man Behind The Slaughter
 
@@ -80,7 +80,7 @@
 	. = ..()
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/crawl = new crawl_type(src)
 	crawl.Grant(src)
-	RegisterSignal(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/on_crawl)
+	RegisterSignal(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(on_crawl))
 
 /// Whenever we enter or exit blood crawl, reset our bonus and hitstreaks.
 /mob/living/simple_animal/hostile/imp/slaughter/proc/on_crawl(datum/source)
@@ -89,7 +89,7 @@
 	// Grant us a speed boost if we're on the mortal plane
 	if(isturf(loc))
 		add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
-		addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(remove_movespeed_modifier), /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 	// Reset our streaks
 	current_hitstreak = 0
@@ -141,7 +141,7 @@
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."
 	gender = NEUTER
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "innards"
 	random_icon_states = null
 
@@ -149,13 +149,13 @@
 /obj/item/organ/internal/heart/demon
 	name = "demon heart"
 	desc = "Still it beats furiously, emanating an aura of utter hate."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "demon_heart-on"
 	decay_factor = 0
 
-/obj/item/organ/internal/heart/demon/ComponentInitialize()
-	. = ..()
+/obj/item/organ/internal/heart/demon/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	return ..()
 
 /obj/item/organ/internal/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
@@ -178,13 +178,13 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
-/obj/item/organ/internal/heart/demon/Insert(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/demon/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	// Gives a non-eat-people crawl to the new owner
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(M)
 	crawl.Grant(M)
 
-/obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/internal/heart/demon/Remove(mob/living/carbon/M, special = FALSE)
 	..()
 	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = locate() in M.actions
 	qdel(crawl)
@@ -206,11 +206,11 @@
 
 	attack_sound = 'sound/items/bikehorn.ogg'
 	attack_vis_effect = null
-	deathsound = 'sound/misc/sadtrombone.ogg'
+	death_sound = 'sound/misc/sadtrombone.ogg'
 
 	icon_state = "bowmon"
 	icon_living = "bowmon"
-	deathmessage = "fades out, as all of its friends are released from its \
+	death_message = "fades out, as all of its friends are released from its \
 		prison of hugs."
 	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
 
@@ -220,12 +220,13 @@
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/Initialize(mapload)
 	. = ..()
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+	if(check_holidays(APRIL_FOOLS))
 		icon_state = "honkmon"
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
+			investigate_log("has died from a devastating explosion.", INVESTIGATE_DEATHS)
 			death()
 		if(EXPLODE_HEAVY)
 			adjustBruteLoss(60)

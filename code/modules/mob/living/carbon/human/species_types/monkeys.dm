@@ -3,13 +3,10 @@
 	id = SPECIES_MONKEY
 	say_mod = "chimpers"
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
-	attack_verb = "bite"
-	attack_effect = ATTACK_EFFECT_BITE
-	attack_sound = 'sound/weapons/bite.ogg'
-	miss_sound = 'sound/weapons/bite.ogg'
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey = "Monkey"
 	)
+	mutantbrain = /obj/item/organ/internal/brain/primate
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
@@ -24,10 +21,8 @@
 		NOAUGMENTS,
 	)
 	inherent_traits = list(
-		TRAIT_CAN_STRIP,
 		TRAIT_GUN_NATURAL,
 		//TRAIT_LITERATE,
-		TRAIT_PRIMITIVE,
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
 	)
@@ -40,19 +35,15 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
-	damage_overlay_type = "monkey"
 	sexes = FALSE
-	punchdamagelow = 1
-	punchdamagehigh = 3
-	punchstunthreshold = 4 // no stun punches
 	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/monkey,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/monkey,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/monkey,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 	fire_overlay = "monkey"
@@ -60,6 +51,7 @@
 	gib_anim = "gibbed-m"
 
 	payday_modifier = 1.5
+	ai_controlled_species = TRUE
 
 
 
@@ -83,7 +75,6 @@
 	C.dna.remove_mutation(/datum/mutation/human/race)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
-	. = ..()
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		if(!iscarbon(target))
 			return TRUE
@@ -93,30 +84,32 @@
 		var/obj/item/bodypart/affecting = null
 		if(ishuman(victim))
 			var/mob/living/carbon/human/human_victim = victim
-			affecting = human_victim.get_bodypart(pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+			affecting = human_victim.get_bodypart(human_victim.get_random_valid_zone(even_weights = TRUE))
 		var/armor = victim.run_armor_check(affecting, MELEE)
 		if(prob(25))
 			victim.visible_message(span_danger("[user]'s bite misses [victim]!"),
 				span_danger("You avoid [user]'s bite!"), span_hear("You hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("Your bite misses [victim]!"))
 			return TRUE
-		victim.apply_damage(rand(punchdamagelow, punchdamagehigh), BRUTE, affecting, armor)
+		var/obj/item/bodypart/head/mouth = user.get_bodypart(BODY_ZONE_HEAD)
+		victim.apply_damage(rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high), BRUTE, affecting, armor)
 		victim.visible_message(span_danger("[name] bites [victim]!"),
 			span_userdanger("[name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, name)
 		to_chat(user, span_danger("You bite [victim]!"))
 		if(armor >= 2)
 			return TRUE
-		for(var/d in user.diseases)
-			var/datum/disease/bite_infection = d
+		for(var/datum/disease/bite_infection as anything in user.diseases)
 			if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 			victim.ForceContractDisease(bite_infection)
 		return TRUE
-	target.attack_paw(user, modifiers)
-	return TRUE
+	if(!ISADVANCEDTOOLUSER(user))
+		target.attack_paw(user, modifiers)
+		return TRUE
+	return ..()
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
+	if(check_holidays(MONKEYDAY))
 		return TRUE
 	return ..()
 
@@ -186,3 +179,55 @@
 	))
 
 	return to_add
+
+/obj/item/organ/internal/brain/primate //Ook Ook
+	name = "Primate Brain"
+	desc = "This wad of meat is small, but has enlaged occipital lobes for spotting bananas."
+	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE) // No literacy or advanced tool usage.
+	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
+	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
+	var/tripping = TRUE
+
+/datum/action/item_action/organ_action/toggle_trip
+	name = "Toggle Tripping"
+	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	button_icon_state = "lesser_form"
+	background_icon_state = "bg_default_on"
+
+/datum/action/item_action/organ_action/toggle_trip/Trigger(trigger_flags)
+	. = ..()
+	var/obj/item/organ/internal/brain/primate/monkey_brain = target
+	if(monkey_brain.tripping == TRUE)
+		monkey_brain.tripping = FALSE
+		background_icon_state = "bg_default"
+		to_chat(monkey_brain.owner, span_notice("You will now avoid stumbling while colliding with people who are in combat mode."))
+	else
+		monkey_brain.tripping = TRUE
+		background_icon_state = "bg_default_on"
+		to_chat(monkey_brain.owner, span_notice("You will now stumble while while colliding with people who are in combat mode."))
+	UpdateButtons()
+
+
+/obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE)
+	. = ..()
+	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
+
+/obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE, no_id_transfer = FALSE)
+	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
+	return ..()
+
+/obj/item/organ/internal/brain/primate/proc/on_crossed(datum/source, atom/movable/crossed)
+	SIGNAL_HANDLER
+	if(!tripping)
+		return
+	if(IS_DEAD_OR_INCAP(owner) || !isliving(crossed))
+		return
+	var/mob/living/in_the_way_mob = crossed
+	if(iscarbon(in_the_way_mob) && !in_the_way_mob.combat_mode)
+		return
+	if(in_the_way_mob.pass_flags & PASSTABLE)
+		return
+	in_the_way_mob.knockOver(owner)
+
+/obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
+	return owner.get_bodypart(BODY_ZONE_HEAD)

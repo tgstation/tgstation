@@ -278,7 +278,7 @@
 	if(!account || account.account_balance < money_cost)
 		to_chat(user, span_warning("This rite requires more money!"))
 		return FALSE
-	account.adjust_money(-money_cost)
+	account.adjust_money(-money_cost, "Church Donation: Rite")
 	. = ..()
 
 /datum/religion_rites/greed/vendatray
@@ -347,7 +347,7 @@
 			to_chat(user, span_warning("Wait for them to decide on whether to join or not!"))
 			return FALSE
 		if(!(possible_crusader in sect.possible_crusaders))
-			INVOKE_ASYNC(sect, /datum/religion_sect/honorbound.proc/invite_crusader, possible_crusader)
+			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect/honorbound, invite_crusader), possible_crusader)
 			to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
 			return FALSE
 		new_crusader = possible_crusader
@@ -426,7 +426,7 @@
 	for(var/obj/item/paper/could_writ in get_turf(religious_tool))
 		if(istype(could_writ, /obj/item/paper/holy_writ))
 			continue
-		if(could_writ.get_info_length()) //blank paper pls
+		if(could_writ.get_total_length()) //blank paper pls
 			continue
 		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
 		return ..()
@@ -457,7 +457,7 @@
 /obj/item/paper/holy_writ/Initialize(mapload)
 	add_filter("holy_outline", 9, list("type" = "outline", "color" = "#fdff6c"))
 	name = "[GLOB.deity]'s honorbound rules"
-	info = {"[GLOB.deity]'s honorbound rules:
+	default_raw_text = {"[GLOB.deity]'s honorbound rules:
 	<br>
 	1.) Thou shalt not attack the unready!<br>
 	Those who are not ready for battle should not be wrought low. The evil of this world must lose
@@ -510,7 +510,7 @@
 	user.emote("laughs")
 	ADD_TRAIT(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation")
 	//addiction sends some nasty mood effects but we want the maint adaption to be enjoyed like a fine wine
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "maint_adaptation", /datum/mood_event/maintenance_adaptation)
+	user.add_mood_event("maint_adaptation", /datum/mood_event/maintenance_adaptation)
 	if(iscarbon(user))
 		var/mob/living/carbon/vomitorium = user
 		vomitorium.vomit()
@@ -620,7 +620,7 @@
 
 /datum/religion_rites/sparring_contract/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/paper/could_contract in get_turf(religious_tool))
-		if(could_contract.get_info_length()) //blank paper pls
+		if(could_contract.get_total_length()) //blank paper pls
 			continue
 		contract_target = could_contract
 		return ..()
@@ -656,7 +656,7 @@
 
 /datum/religion_rites/declare_arena/perform_rite(mob/living/user, atom/religious_tool)
 	var/list/filtered = list()
-	for(var/area/unfiltered_area as anything in GLOB.sortedAreas)
+	for(var/area/unfiltered_area as anything in get_sorted_areas())
 		if(istype(unfiltered_area, /area/centcom)) //youuu dont need thaaat
 			continue
 		if(!(unfiltered_area.area_flags & HIDDEN_AREA))

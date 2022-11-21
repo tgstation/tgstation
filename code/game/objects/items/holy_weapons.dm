@@ -27,7 +27,7 @@
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \
 		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, .proc/on_cult_rune_removed), \
+		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune))
 
 	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
@@ -37,7 +37,7 @@
 			if(!initial(nullrod_type.chaplain_spawnable))
 				continue
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
-		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
+		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, PROC_REF(on_holy_weapon_picked)))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
 	GLOB.holy_weapon_type = holy_weapon_type
@@ -49,11 +49,11 @@
 
 	var/obj/effect/rune/target_rune = target
 	if(target_rune.log_when_erased)
-		log_game("[target_rune.cultist_name] rune erased by [key_name(user)] using a null rod.")
+		user.log_message("erased [target_rune.cultist_name] rune using a null rod", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
-/obj/item/nullrod/suicide_act(mob/user)
+/obj/item/nullrod/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
 
@@ -62,8 +62,8 @@
 	desc = "This hand of yours glows with an awesome power!"
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
-	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/touchspell_righthand.dmi'
 	slot_flags = null
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
@@ -189,7 +189,7 @@
 /obj/item/nullrod/claymore/saber
 	name = "light energy sword"
 	desc = "If you strike me down, I shall become more robust than you can possibly imagine."
-	icon = 'icons/obj/transforming_energy.dmi'
+	icon = 'icons/obj/weapons/transforming_energy.dmi'
 	icon_state = "e_sword_on_blue"
 	inhand_icon_state = "e_sword_on_blue"
 	worn_icon_state = "swordblue"
@@ -227,7 +227,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	menu_description = "An odd s(w)ord dealing a laughable amount of damage. Fits in pockets. Can be worn on the belt."
 
-/obj/item/nullrod/sord/suicide_act(mob/user) //a near-exact copy+paste of the actual sord suicide_act()
+/obj/item/nullrod/sord/suicide_act(mob/living/user) //a near-exact copy+paste of the actual sord suicide_act()
 	user.visible_message(span_suicide("[user] is trying to impale [user.p_them()]self with [src]! It might be a suicide attempt if it weren't so HOLY."), \
 	span_suicide("You try to impale yourself with [src], but it's TOO HOLY..."))
 	return SHAME
@@ -276,7 +276,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "spellblade"
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	menu_description = "A sharp blade which partially penetrates armor. Very effective at butchering bodies. Can be worn on the back."
 
@@ -362,7 +362,9 @@
 	desc = "Used for absolutely hilarious sacrifices."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "clownrender"
-	inhand_icon_state = "render"
+	inhand_icon_state = "cultdagger"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	worn_icon_state = "render"
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharpness = SHARP_EDGED
@@ -421,7 +423,10 @@
 	icon_state = "fedora"
 	inhand_icon_state = "fedora"
 	slot_flags = ITEM_SLOT_HEAD
-	icon = 'icons/obj/clothing/hats.dmi'
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing/hats_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/hats_righthand.dmi'
 	force = 0
 	throw_speed = 4
 	throw_range = 7
@@ -431,14 +436,14 @@
 	attack_verb_simple = list("enlighten", "redpill")
 	menu_description = "A sharp fedora dealing a very high amount of throw damage, but none of melee. Fits in pockets. Can be worn on the head, obviously."
 
-/obj/item/nullrod/fedora/suicide_act(mob/user)
+/obj/item/nullrod/fedora/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get further from god!"))
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
 	desc = "Particularly twisted deities grant gifts of dubious value."
-	icon = 'icons/obj/changeling_items.dmi'
+	icon = 'icons/obj/weapons/changeling_items.dmi'
 	icon_state = "arm_blade"
 	inhand_icon_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
@@ -468,7 +473,7 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/plushes.dmi'
+	icon = 'icons/obj/toys/plushes.dmi'
 	icon_state = "carpplush"
 	inhand_icon_state = "carp_plushie"
 	worn_icon_state = "nullrod"
@@ -495,7 +500,7 @@
 	hitsound = SFX_SWING_HIT
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "bostaff0"
 	inhand_icon_state = "bostaff0"
 	worn_icon_state = "bostaff0"
@@ -557,7 +562,7 @@
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"
 	desc = "A tutorial in mummification is carved into the staff. You could probably craft the wraps if you had some cloth."
-	icon = 'icons/obj/guns/magic.dmi'
+	icon = 'icons/obj/weapons/guns/magic.dmi'
 	icon_state = "pharoah_sceptre"
 	inhand_icon_state = "pharoah_sceptre"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
@@ -589,7 +594,7 @@
 /obj/item/nullrod/spear
 	name = "ancient spear"
 	desc = "An ancient spear made of brass, I mean gold, I mean bronze. It looks highly mechanical."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "ratvarian_spear"
 	inhand_icon_state = "ratvarian_spear"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'

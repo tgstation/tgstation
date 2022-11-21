@@ -42,12 +42,12 @@
 	playsound(targeted_turf, 'sound/magic/voidblink.ogg', 60, FALSE)
 
 	for(var/mob/living/living_mob in range(damage_radius, source_turf))
-		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == cast_on)
+		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == owner)
 			continue
 		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
 
 	for(var/mob/living/living_mob in range(damage_radius, targeted_turf))
-		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == cast_on)
+		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == owner)
 			continue
 		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
 

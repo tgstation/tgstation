@@ -3,6 +3,11 @@
 	mood_change = 1
 	timeout = 2 MINUTES
 
+/datum/mood_event/bear_hug
+	description = "I got squeezed very tightly, but it was quite nice."
+	mood_change = 1
+	timeout = 2 MINUTES
+
 /datum/mood_event/betterhug
 	description = "Someone was very nice to me."
 	mood_change = 3
@@ -181,6 +186,7 @@
 	description = "I just love my robotic friends!"
 	mood_change = 3
 	timeout = 5 MINUTES
+	required_job = list(/datum/job/research_director, /datum/job/scientist, /datum/job/roboticist, /datum/job/geneticist)
 
 /datum/mood_event/bottle_flip
 	description = "The bottle landing like that was satisfying."
@@ -272,6 +278,14 @@
 	mood_change = 10
 	timeout = 5 MINUTES
 
+/datum/mood_event/love_reagent
+	description = "This food reminds me of the good ol' days."
+	mood_change = 5
+
+/datum/mood_event/love_reagent/add_effects(duration)
+	if(isnum(duration))
+		timeout = duration
+
 /datum/mood_event/won_52_card_pickup
 	description = "HA! That loser will be picking cards up for a long time!"
 	mood_change = 3
@@ -310,3 +324,18 @@
 	description = "Fishing is relaxing."
 	mood_change = 5
 	timeout = 3 MINUTES
+
+/datum/mood_event/kobun
+	description = "You are all loved by the Universe. I’m not alone, and you aren’t either."
+	mood_change = 14
+	timeout = 10 SECONDS
+
+/datum/mood_event/sabrage_success
+	description = "I pulled that sabrage stunt off! Feels good to be a show-off."
+	mood_change = 2
+	timeout = 4 MINUTES
+
+/datum/mood_event/sabrage_witness
+	description = "I saw someone pop the cork off a champagne bottle in quite a radical fashion."
+	mood_change = 1
+	timeout = 2 MINUTES

@@ -4,8 +4,8 @@
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "mod-core"
 	inhand_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	/// MOD unit we are powering.
 	var/obj/item/mod/control/mod
 
@@ -88,10 +88,10 @@
 	. = ..()
 	if(cell)
 		install_cell(cell)
-	RegisterSignal(mod, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
-	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, .proc/on_wearer_set)
+	RegisterSignal(mod, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
+	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, PROC_REF(on_wearer_set))
 	if(mod.wearer)
 		on_wearer_set(mod, mod.wearer)
 
@@ -150,7 +150,7 @@
 /obj/item/mod/core/standard/proc/install_cell(new_cell)
 	cell = new_cell
 	cell.forceMove(src)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(on_exit))
 
 /obj/item/mod/core/standard/proc/uninstall_cell()
 	if(!cell)
@@ -178,7 +178,7 @@
 	if(mod.seconds_electrified && charge_amount() && mod.shock(user))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(mod.open && mod.loc == user)
-		INVOKE_ASYNC(src, .proc/mod_uninstall_cell, user)
+		INVOKE_ASYNC(src, PROC_REF(mod_uninstall_cell), user)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	return NONE
 
@@ -219,8 +219,8 @@
 /obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	RegisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
-	RegisterSignal(mod, COMSIG_MOD_WEARER_UNSET, .proc/on_wearer_unset)
+	RegisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
+	RegisterSignal(mod, COMSIG_MOD_WEARER_UNSET, PROC_REF(on_wearer_unset))
 
 /obj/item/mod/core/standard/proc/on_wearer_unset(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -283,17 +283,17 @@
 	name = "MOD plasma core"
 	icon_state = "mod-core-plasma"
 	desc = "Nanotrasen's attempt at capitalizing on their plasma research. These plasma cores are refueled \
-		through plasma ore, allowing for easy continued use by their mining squads."
+		through plasma fuel, allowing for easy continued use by their mining squads."
 	/// How much charge we can store.
 	var/maxcharge = 10000
 	/// How much charge we are currently storing.
 	var/charge = 10000
-	/// Charge per plasma ore.
-	var/charge_given = 1500
+	/// Associated list of charge sources and how much they charge, only stacks allowed.
+	var/list/charger_list = list(/obj/item/stack/ore/plasma = 1500, /obj/item/stack/sheet/mineral/plasma = 2000)
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 
 /obj/item/mod/core/plasma/uninstall()
 	UnregisterSignal(mod, COMSIG_PARENT_ATTACKBY)
@@ -345,12 +345,13 @@
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
 
-/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/ore/plasma/plasma, mob/user)
-	if(!istype(plasma))
+/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/stack/plasma, mob/user)
+	var/charge_given = is_type_in_list(plasma, charger_list, zebra = TRUE)
+	if(!charge_given)
 		return FALSE
-	var/uses_needed = min(plasma.amount, round((max_charge_amount() - charge_amount()) / charge_given))
+	var/uses_needed = min(plasma.amount, ROUND_UP((max_charge_amount() - charge_amount()) / charge_given))
 	if(!plasma.use(uses_needed))
 		return FALSE
-	add_charge(uses_needed*charge_given)
+	add_charge(uses_needed * charge_given)
 	balloon_alert(user, "core refueled")
 	return TRUE

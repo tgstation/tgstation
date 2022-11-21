@@ -1,0 +1,102 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"n" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"s" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"y" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/department/medical)
+"F" = (
+/obj/structure/closet/body_bag,
+/mob/living/simple_animal/hostile/skeleton,
+/obj/item/clothing/suit/hazardvest,
+/obj/item/clothing/head/utility/hardhat,
+/obj/item/paper/calling_card,
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"H" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"I" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/shovel,
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical)
+"N" = (
+/obj/item/pickaxe,
+/obj/item/stack/ore/iron{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/obj/item/stack/ore/iron{
+	pixel_x = 5;
+	pixel_y = -10
+	},
+/turf/open/misc/asteroid,
+/area/station/maintenance/department/medical)
+"P" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"T" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Morgue Storage"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/access/all/medical/morgue,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/medical)
+"V" = (
+/turf/open/misc/asteroid/dug,
+/area/station/maintenance/department/medical)
+
+(1,1,1) = {"
+y
+t
+a
+y
+"}
+(2,1,1) = {"
+y
+F
+V
+a
+"}
+(3,1,1) = {"
+N
+a
+n
+H
+"}
+(4,1,1) = {"
+a
+H
+P
+I
+"}
+(5,1,1) = {"
+a
+P
+P
+P
+"}
+(6,1,1) = {"
+s
+s
+T
+s
+"}

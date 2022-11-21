@@ -41,6 +41,16 @@
 		return
 	content = trim(html_encode(_content), MAX_PAPER_LENGTH)
 
+/datum/book_info/proc/set_content_using_paper(obj/item/paper/paper)
+	// Just the paper's raw data.
+	var/raw_content = ""
+
+	for(var/datum/paper_input/text_input as anything in paper.raw_text_inputs)
+		raw_content += text_input.raw_text
+
+	// Content from paper is never trusted. It it raw, unsanitised, unparsed user input.
+	content = trim(html_encode(raw_content), MAX_PAPER_LENGTH)
+
 /datum/book_info/proc/get_content(default="N/A")
 	return html_decode(content) || "N/A"
 
@@ -96,11 +106,13 @@
 	///Maximum icon state number
 	var/maximum_book_state = 8
 
-/obj/item/book/Initialize()
+/obj/item/book/Initialize(mapload)
 	. = ..()
 	book_data = new(starting_title, starting_author, starting_content)
 
-/obj/item/book/proc/on_read(mob/user)
+	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
+
+/obj/item/book/proc/on_read(mob/living/user)
 	if(book_data?.content)
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [book_data.author].</I></TT> <BR>" + "[book_data.content]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 
@@ -108,7 +120,7 @@
 		var/has_not_read_book = isnull(user.mind?.book_titles_read[starting_title])
 
 		if(has_not_read_book) // any new books give bonus mood
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+			user.add_mood_event("book_nerd", /datum/mood_event/book_nerd)
 			user.mind?.book_titles_read[starting_title] = TRUE
 		onclose(user, "book")
 	else
@@ -129,7 +141,7 @@
 
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
-		if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
+		if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
 			return
 		if(user.is_blind())
 			to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))
@@ -141,12 +153,12 @@
 		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
 		if(isnull(choice))
 			return
-		if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
+		if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
 			return
 		switch(choice)
 			if("Title")
 				var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
-				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
+				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
 					return
 				if (length_char(newtitle) > 30)
 					to_chat(user, span_warning("That title won't fit on the cover!"))
@@ -158,7 +170,7 @@
 				book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
 			if("Contents")
 				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", multiline = TRUE)
-				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
+				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
 					return
 				if(!content)
 					to_chat(user, span_warning("The content is invalid."))
@@ -166,7 +178,7 @@
 				book_data.set_content(html_decode(content))
 			if("Author")
 				var/author = tgui_input_text(user, "Write the author's name", "Author Name")
-				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
+				if(!user.canUseTopic(src, be_close = TRUE) || !user.can_write(I))
 					return
 				if(!author)
 					to_chat(user, span_warning("The name is invalid."))

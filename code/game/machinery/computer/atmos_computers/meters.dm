@@ -5,7 +5,7 @@
 	var/frequency = FREQ_ATMOS_STORAGE
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/meter/monitored/Initialize()
+/obj/machinery/meter/monitored/Initialize(mapload)
 	id_tag = chamber_id + "_sensor"
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 	return ..()
@@ -16,7 +16,7 @@
 
 /obj/machinery/meter/monitored/on_deconstruction()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/broadcast_destruction, src.frequency)
+	INVOKE_ASYNC(src, PROC_REF(broadcast_destruction), src.frequency)
 
 /obj/machinery/meter/monitored/proc/broadcast_destruction(frequency)
 	var/datum/signal/signal = new(list(
@@ -31,7 +31,7 @@
 	. = ..()
 	if(!radio_connection)
 		return
-	
+
 	var/datum/signal/signal = new(list(
 		"tag" = id_tag,
 		"device" = "AM",

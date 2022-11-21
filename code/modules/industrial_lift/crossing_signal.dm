@@ -2,6 +2,8 @@
 #define XING_STATE_AMBER 1
 #define XING_STATE_RED 2
 
+GLOBAL_LIST_EMPTY(tram_signals)
+
 /// Pedestrian crossing signal for tram
 /obj/machinery/crossing_signal
 	name = "crossing signal"
@@ -29,10 +31,14 @@
 	var/tram_id = MAIN_STATION_TRAM
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
-	/// Proximity threshold for amber warning (slow people may be in danger)
-	var/amber_distance_threshold = 40
-	/// Proximity threshold for red warning (running people will likely not be able to cross)
-	var/red_distance_threshold = 20
+	/// Proximity threshold for amber warning (slow people may be in danger).
+	/// This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
+	var/amber_distance_threshold = 60
+	/** Proximity threshold for red warning (running people will likely not be able to cross) This is specific to Tramstation and may need to be adjusted if the map changes in the distance between tram stops.
+	* This checks the distance between the tram and the signal, and based on the current Tramstation map this is the optimal number to prevent the lights from turning red for no reason for a few moments.
+	* If the value is set too high, it will cause the lights to turn red when the tram arrives at another station. You want to optimize the amount of warning without turning it red unnessecarily.
+	*/
+	var/red_distance_threshold = 33
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
@@ -44,9 +50,11 @@
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
-		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_travelling)
+		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
+		GLOB.tram_signals += src
 
 /obj/machinery/crossing_signal/Destroy()
+	GLOB.tram_signals -= src
 	. = ..()
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
@@ -140,9 +148,12 @@
 	// Check for stopped state.
 	// Will kill the process since tram starting up will restart process.
 	if(!tram.travelling)
-		// if super close, show red anyway since tram could suddenly start moving
+		// If super close, show red anyway since tram could suddenly start moving. If the tram could be approaching, show amber.
 		if(abs(approach_distance) < red_distance_threshold)
 			set_signal_state(XING_STATE_RED)
+			return PROCESS_KILL
+		if(abs(approach_distance) < amber_distance_threshold)
+			set_signal_state(XING_STATE_AMBER)
 			return PROCESS_KILL
 		set_signal_state(XING_STATE_GREEN)
 		return PROCESS_KILL
@@ -203,7 +214,7 @@
 	var/lights_overlay = "[base_icon_state][signal_state]"
 
 	. += mutable_appearance(icon, lights_overlay)
-	. += emissive_appearance(icon, "[lights_overlay]e", alpha = src.alpha)
+	. += emissive_appearance(icon, "[lights_overlay]e", offset_spokesman = src, alpha = src.alpha)
 
 /// Shifted to NE corner for east side of southern passage.
 /obj/machinery/crossing_signal/northeast

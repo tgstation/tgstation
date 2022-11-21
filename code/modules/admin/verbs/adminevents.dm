@@ -142,7 +142,7 @@
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
-	ion.announceChance = announce_ion_laws
+	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -287,7 +287,7 @@
 	if(!holder)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), /proc/cmp_typepaths_asc)
+	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!weather_type)
 		return
 
@@ -316,7 +316,7 @@
 
 	var/mob/living/marked_mob = holder.marked_datum
 
-	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	var/ability_type = tgui_input_list(usr, "Choose an ability", "Ability", all_mob_actions)
 

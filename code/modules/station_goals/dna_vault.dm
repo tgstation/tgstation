@@ -32,15 +32,17 @@
 			.++
 
 /datum/station_goal/dna_vault/get_report()
-	return {"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.
-		We need you to construct a DNA Vault aboard your station.
-
-		The DNA Vault needs to contain samples of:
-		[animal_count] unique animal data
-		[plant_count] unique non-standard plant data
-		[human_count] unique sapient humanoid DNA data
-
-		Base vault parts are available for shipping via cargo."}
+	return list(
+		"<blockquote>Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.",
+		"We need you to construct a DNA Vault aboard your station.",
+		"",
+		"The DNA Vault needs to contain samples of:",
+		"* [animal_count] unique animal data",
+		"* [plant_count] unique non-standard plant data",
+		"* [human_count] unique sapient humanoid DNA data",
+		"",
+		"Base vault parts are available for shipping via cargo.</blockquote>",
+	).Join("\n")
 
 
 /datum/station_goal/dna_vault/on_report()
@@ -108,11 +110,10 @@
 	return ..()
 
 /obj/machinery/dna_vault/Destroy()
-	for(var/V in fillers)
-		var/obj/structure/filler/filler = V
+	for(var/obj/structure/filler/filler as anything in fillers)
 		filler.parent = null
 		qdel(filler)
-	. = ..()
+	return ..()
 
 /obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -122,13 +123,14 @@
 		ui.open()
 
 /obj/machinery/dna_vault/proc/roll_powers(mob/user)
-	if(user in power_lottery)
+	var/datum/weakref/user_weakref = WEAKREF(user)
+	if((user_weakref in power_lottery) || isdead(user))
 		return
 	var/list/L = list()
 	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
 	L += pick_n_take(possible_powers)
 	L += pick_n_take(possible_powers)
-	power_lottery[user] = L
+	power_lottery[user_weakref] = L
 
 /obj/machinery/dna_vault/ui_data(mob/user) //TODO Make it % bars maybe
 	var/list/data = list()
@@ -143,7 +145,7 @@
 	data["choiceA"] = ""
 	data["choiceB"] = ""
 	if(user && completed)
-		var/list/L = power_lottery[user]
+		var/list/L = power_lottery[WEAKREF(user)]
 		if(L?.len)
 			data["used"] = FALSE
 			data["choiceA"] = L[1]
@@ -187,7 +189,8 @@
 		return ..()
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
-	if(!(upgrade_type in power_lottery[H])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
+	var/datum/weakref/human_weakref = WEAKREF(H)
+	if(!(upgrade_type in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
 	var/datum/species/S = H.dna.species
 	switch(upgrade_type)
@@ -220,5 +223,5 @@
 			to_chat(H, span_notice("Your arms move as fast as lightning."))
 			H.next_move_modifier = 0.5
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
-	power_lottery[H] = list()
+	power_lottery[human_weakref] = list()
 	use_power(active_power_usage)

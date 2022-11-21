@@ -4,8 +4,8 @@
 	cooldown_high = 1800
 	uses = -1
 	icon_state = "egg"
-	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/food_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/food_righthand.dmi'
 	mind_control_uses = 3
 	mind_control_duration = 1500
 

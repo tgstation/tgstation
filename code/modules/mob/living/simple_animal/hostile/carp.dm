@@ -3,7 +3,7 @@
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
-	icon = 'icons/mob/carp.dmi'
+	icon = 'icons/mob/simple/carp.dmi'
 	icon_state = "base"
 	icon_living = "base"
 	icon_dead = "base_dead"
@@ -85,13 +85,17 @@
 		else
 			make_tameable()
 
-/mob/living/simple_animal/hostile/carp/revive(full_heal, admin_revive)
-	if (tamed)
-		var/datum/weakref/friendref = ai_controller.blackboard[BB_HOSTILE_FRIEND]
-		var/mob/living/friend = friendref?.resolve()
-		if(friend)
-			tamed(friend)
-	return ..()
+/mob/living/simple_animal/hostile/carp/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	if(!. || !tamed)
+		return
+
+	var/datum/weakref/friendref = ai_controller.blackboard[BB_HOSTILE_FRIEND]
+	var/mob/living/friend = friendref?.resolve()
+	if(friend)
+		tamed(friend)
+
+	update_icon()
 
 /mob/living/simple_animal/hostile/carp/death(gibbed)
 	if (tamed)
@@ -99,7 +103,7 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/carp/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 /mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
 	tamed = TRUE
@@ -130,11 +134,6 @@
 		our_color = pick(carp_colors)
 		set_greyscale(colors=list(carp_colors[our_color]))
 
-/mob/living/simple_animal/hostile/carp/revive(full_heal = FALSE, admin_revive = FALSE)
-	. = ..()
-	if(.)
-		update_icon()
-
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
 	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
 	if(tasty_plastic && Adjacent(tasty_plastic))
@@ -164,7 +163,7 @@
 	return
 
 /mob/living/simple_animal/hostile/carp/megacarp
-	icon = 'icons/mob/broadMobs.dmi'
+	icon = 'icons/mob/simple/broadMobs.dmi'
 	name = "Mega Space Carp"
 	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
 	icon_state = "megacarp"
@@ -252,14 +251,13 @@
 	/// Keeping track of the nuke disk for the functionality of storing it.
 	var/obj/item/disk/nuclear/disky
 	/// Location of the file storing disk overlays
-	var/icon/disk_overlay_file = 'icons/mob/carp.dmi'
+	var/icon/disk_overlay_file = 'icons/mob/simple/carp.dmi'
 	/// Colored disk mouth appearance for adding it as a mouth overlay
 	var/mutable_appearance/colored_disk_mouth
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
-	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT) //carp can take the disk off the captain
 	ADD_TRAIT(src, TRAIT_CAN_USE_NUKE, INNATE_TRAIT) //carp SMART
@@ -317,6 +315,10 @@
 	. = ..()
 	if(!disky || stat == DEAD)
 		return
+
+	if (isnull(colored_disk_mouth))
+		colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
+
 	. += colored_disk_mouth
 	. += mutable_appearance(disk_overlay_file, "disk_overlay")
 

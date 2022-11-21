@@ -22,7 +22,7 @@
 
 /datum/action/cooldown/spell/pointed/cleave/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-	var/list/mob/living/carbon/human/nearby = list(cast_on)
+	var/list/mob/living/carbon/human/nearby = list()
 	for(var/mob/living/carbon/human/nearby_human in range(cleave_radius, cast_on))
 		nearby += nearby_human
 

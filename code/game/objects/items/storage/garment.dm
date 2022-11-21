@@ -1,6 +1,6 @@
 /obj/item/storage/bag/garment
 	name = "garment bag"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "garment_bag"
 	desc = "A bag for storing extra clothes and shoes."
 	slot_flags = NONE
@@ -30,7 +30,7 @@
 	name = "chief engineer's garment bag"
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the chief engineer."
 
-/obj/item/storage/bag/garment/Initialize()
+/obj/item/storage/bag/garment/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	atom_storage.numerical_stacking = FALSE
@@ -50,11 +50,11 @@
 	new /obj/item/clothing/suit/jacket/capjacket(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/giga(src)
 	new /obj/item/clothing/gloves/color/captain(src)
-	new /obj/item/clothing/head/caphat(src)
-	new /obj/item/clothing/head/caphat/parade(src)
-	new /obj/item/clothing/head/crown/fancy(src)
+	new /obj/item/clothing/head/hats/caphat(src)
+	new /obj/item/clothing/head/hats/caphat/parade(src)
+	new /obj/item/clothing/head/costume/crown/fancy(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 
 
@@ -63,7 +63,7 @@
 	new /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt(src)
 	new /obj/item/clothing/suit/armor/vest/hop(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/clothing/head/hopcap(src)
+	new /obj/item/clothing/head/hats/hopcap(src)
 	new /obj/item/clothing/neck/cloak/hop(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/hop(src)
@@ -80,10 +80,10 @@
 	new /obj/item/clothing/suit/armor/vest/leather(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga(src)
-	new /obj/item/clothing/head/hos(src)
+	new /obj/item/clothing/head/hats/hos(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
 	new /obj/item/clothing/neck/cloak/hos(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/security/hos(src)
+	new /obj/item/clothing/suit/armor/hos/trenchcoat/winter(src)
 
 /obj/item/storage/bag/garment/research_director/PopulateContents()
 	new /obj/item/clothing/under/rank/rnd/research_director(src)
@@ -92,16 +92,19 @@
 	new /obj/item/clothing/under/rank/rnd/research_director/alt/skirt(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
 	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt(src)
-	new /obj/item/clothing/suit/toggle/labcoat(src)
-	new /obj/item/clothing/head/beret/science(src)
+	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
+	new /obj/item/clothing/head/beret/science/rd(src)
 	new /obj/item/clothing/neck/cloak/rd(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/science/rd(src)
+	new /obj/item/clothing/gloves/color/black(src)
 
 /obj/item/storage/bag/garment/chief_medical/PopulateContents()
 	new /obj/item/clothing/head/beret/medical/cmo(src)
+	new /obj/item/clothing/head/utility/surgerycap/cmo(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
+	new /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)
 	new /obj/item/clothing/gloves/color/latex/nitrile(src)
 	new /obj/item/clothing/neck/cloak/cmo(src)
@@ -113,9 +116,8 @@
 	new /obj/item/clothing/under/rank/engineering/chief_engineer/skirt(src)
 	new /obj/item/clothing/glasses/meson/engine(src)
 	new /obj/item/clothing/gloves/color/chief_engineer(src)
-	new /obj/item/clothing/head/hardhat/white(src)
-	new /obj/item/clothing/head/hardhat/weldhat/white(src)
+	new /obj/item/clothing/head/utility/hardhat/white(src)
+	new /obj/item/clothing/head/utility/hardhat/weldhat/white(src)
 	new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering/ce(src)
-

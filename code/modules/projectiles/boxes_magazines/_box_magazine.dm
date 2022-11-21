@@ -2,7 +2,7 @@
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo."
-	icon = 'icons/obj/guns/ammo.dmi'
+	icon = 'icons/obj/weapons/guns/ammo.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	inhand_icon_state = "syringe_kit"
@@ -45,7 +45,7 @@
 		top_off(starting=TRUE)
 
 /obj/item/ammo_box/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_box)
+	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_box))
 
 /obj/item/ammo_box/proc/add_notes_box()
 	var/list/readout = list()
@@ -134,7 +134,7 @@
 				break
 		if(num_loaded)
 			AM.update_ammo_count()
-	if(istype(A, /obj/item/ammo_casing))
+	if(isammocasing(A))
 		var/obj/item/ammo_casing/AC = A
 		if(give_round(AC, replace_spent))
 			user.transferItemToLoc(AC, src, TRUE)

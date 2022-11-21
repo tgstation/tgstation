@@ -16,8 +16,8 @@
 	var/repeatable_weight_decrease = 2
 	/// List of players that are being drafted for this rule
 	var/list/mob/candidates = list()
-	/// List of players that were selected for this rule
-	var/list/datum/mind/assigned = list()
+	/// List of players that were selected for this rule. This can be minds, or mobs.
+	var/list/assigned = list()
 	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag.
 	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
@@ -31,7 +31,12 @@
 	/// If set, rule will only accept candidates from those roles. If on a roundstart ruleset, requires the player to have the correct antag pref enabled and any of the possible roles enabled.
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
-	var/list/enemy_roles = list()
+	var/list/enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)
 	/// The rule needs this many candidates (post-trimming) to be executed (example: Cult needs 4 players at round start)
@@ -104,15 +109,15 @@
 	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
 
 	if(minimum_players > population)
-		log_game("DYNAMIC: FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
+		log_dynamic("FAIL: [src] failed acceptable: minimum_players ([minimum_players]) > population ([population])")
 		return FALSE
 
 	if(maximum_players > 0 && population > maximum_players)
-		log_game("DYNAMIC: FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
+		log_dynamic("FAIL: [src] failed acceptable: maximum_players ([maximum_players]) < population ([population])")
 		return FALSE
 
 	if (threat_level < requirements[indice_pop])
-		log_game("DYNAMIC: FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
+		log_dynamic("FAIL: [src] failed acceptable: threat_level ([threat_level]) < requirement ([requirements[indice_pop]])")
 		return FALSE
 
 	return TRUE
@@ -189,7 +194,7 @@
 	if (required_candidates <= candidates.len)
 		return TRUE
 
-	log_game("DYNAMIC: FAIL: [src] does not have enough candidates ([required_candidates] needed, [candidates.len] found)")
+	log_dynamic("FAIL: [src] does not have enough candidates ([required_candidates] needed, [candidates.len] found)")
 	return FALSE
 
 /// Here you can remove candidates that do not meet your requirements.

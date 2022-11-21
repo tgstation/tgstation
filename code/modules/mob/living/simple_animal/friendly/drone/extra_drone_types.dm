@@ -111,7 +111,7 @@
 /obj/effect/mob_spawn/ghost_role/drone/derelict
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
-	icon = 'icons/mob/drone.dmi'
+	icon = 'icons/mob/silicon/drone.dmi'
 	icon_state = "drone_maint_hat"
 	mob_name = "derelict drone"
 	mob_type = /mob/living/simple_animal/drone/derelict
@@ -124,7 +124,7 @@
 
 /mob/living/simple_animal/drone/derelict
 	name = "derelict drone"
-	default_hatmask = /obj/item/clothing/head/ushanka
+	default_hatmask = /obj/item/clothing/head/costume/ushanka
 	laws = \
 	"1. You may not involve yourself in the matters of another sentient being outside the station that housed your activation, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any sentient being, regardless of intent or circumstance.\n"+\

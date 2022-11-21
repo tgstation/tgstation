@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(id_access)
 	/// The roundstart generated code for the spare ID safe. This is given to the Captain on shift start. If there's no Captain, it's given to the HoP. If there's no HoP
 	var/spare_id_safe_code = ""
 
-/datum/controller/subsystem/id_access/Initialize(timeofday)
+/datum/controller/subsystem/id_access/Initialize()
 	// We use this because creating the trim singletons requires the config to be loaded.
 	setup_access_flags()
 	setup_region_lists()
@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(id_access)
 
 	spare_id_safe_code = "[rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)][rand(0,9)]"
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /**
  * Called by [/datum/controller/subsystem/ticker/proc/setup]
@@ -294,10 +294,10 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_SURGERY]"] = "Surgery"
 	desc_by_access["[ACCESS_THEATRE]"] = "Theatre"
 	desc_by_access["[ACCESS_RESEARCH]"] = "Science"
-	desc_by_access["[ACCESS_MINING]"] = "Mining"
+	desc_by_access["[ACCESS_MINING]"] = "Mining Dock"
 	desc_by_access["[ACCESS_SHIPPING]"] = "Cargo Shipping"
 	desc_by_access["[ACCESS_VAULT]"] = "Main Vault"
-	desc_by_access["[ACCESS_MINING_STATION]"] = "Mining EVA"
+	desc_by_access["[ACCESS_MINING_STATION]"] = "Mining Outpost"
 	desc_by_access["[ACCESS_XENOBIOLOGY]"] = "Xenobiology Lab"
 	desc_by_access["[ACCESS_HOP]"] = "HoP Office"
 	desc_by_access["[ACCESS_HOS]"] = "HoS Office"
@@ -456,6 +456,9 @@ SUBSYSTEM_DEF(id_access)
 	id_card.trim_state_override = null
 	id_card.trim_assignment_override = null
 	id_card.sechud_icon_state_override = null
+	id_card.department_color_override = null
+	id_card.department_state_override = null
+	id_card.subdepartment_color_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.

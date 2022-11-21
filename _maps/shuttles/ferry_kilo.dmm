@@ -31,7 +31,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "h" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -40,7 +40,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "i" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -91,7 +91,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "p" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -150,17 +150,14 @@
 /obj/structure/fans/tiny,
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 2;
-	height = 11;
-	id = "ferry";
+	shuttle_id = "ferry";
 	name = "ferry shuttle";
-	preferred_direction = 4;
-	width = 5
+	preferred_direction = 4
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/transport)
 "u" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{

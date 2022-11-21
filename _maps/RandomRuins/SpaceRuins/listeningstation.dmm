@@ -35,7 +35,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "aP" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
@@ -89,7 +89,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/cerulean,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "cj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -99,7 +99,7 @@
 /obj/effect/turf_decal/bot,
 /obj/item/weldingtool/largetank,
 /obj/item/wrench,
-/obj/item/clothing/head/welding,
+/obj/item/clothing/head/utility/welding,
 /obj/structure/rack,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -164,7 +164,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "eW" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty{
+/obj/item/reagent_containers/cup/glass/bottle/beer/almost_empty{
 	name = "Use To Avert Loneliness";
 	desc = "It's been used...";
 	pixel_x = 8
@@ -204,7 +204,7 @@
 	desc = "The efficacy of this product is doubted."
 	},
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "hK" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/machinery/hydroponics/soil,
@@ -243,7 +243,9 @@
 /area/ruin/space/has_grav/listeningstation)
 "lk" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
-/obj/item/radio/intercom/directional/east,
+/obj/item/radio/intercom/directional/east{
+	freerange = 1
+	},
 /obj/machinery/computer/camera_advanced{
 	dir = 8
 	},
@@ -332,7 +334,7 @@
 "rE" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "rG" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation)
@@ -351,7 +353,7 @@
 "tl" = (
 /obj/structure/marker_beacon/cerulean,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "tm" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/airalarm/syndicate{
@@ -381,7 +383,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "vI" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "vP" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
@@ -411,7 +413,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "xh" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/computer/med_data/syndie{
@@ -483,7 +485,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "zp" = (
 /turf/closed/wall,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "zv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -500,7 +502,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "zZ" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
@@ -576,7 +578,7 @@
 "Dp" = (
 /obj/structure/table,
 /obj/item/flashlight/lantern/syndicate{
-	light_on = 1
+	on = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
@@ -619,7 +621,7 @@
 "EK" = (
 /obj/item/paper/fluff/ruins/listeningstation/reports/june,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Fy" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -684,7 +686,7 @@
 	pixel_y = -32
 	},
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "JB" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/listeningstation)
@@ -693,7 +695,7 @@
 	dir = 8;
 	dwidth = 4;
 	height = 5;
-	id = "caravansyndicate1_listeningpost";
+	shuttle_id = "caravansyndicate1_listeningpost";
 	name = "Syndicate Listening Post";
 	width = 9
 	},
@@ -774,7 +776,7 @@
 "NY" = (
 /obj/effect/mob_spawn/corpse/human/syndicatecommando/lessenedgear,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "Om" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
@@ -868,7 +870,7 @@
 	pixel_x = -32
 	},
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "TK" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/firealarm/directional/east,
@@ -919,12 +921,12 @@
 	dir = 8
 	},
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "VH" = (
 /obj/structure/table,
 /obj/item/paper_bin,
 /obj/item/pen/edagger,
-/obj/item/reagent_containers/food/drinks/waterbottle{
+/obj/item/reagent_containers/cup/glass/waterbottle{
 	pixel_x = 10;
 	pixel_y = 16
 	},
@@ -973,7 +975,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "Yz" = (
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "YV" = (
 /obj/item/stack/sheet/iron/twenty,
 /obj/item/stack/sheet/glass{

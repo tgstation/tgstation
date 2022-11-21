@@ -6,9 +6,10 @@
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the chief medical officer"
+	supervisors = SUPERVISOR_CMO
 	selection_color = "#ffeef0"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "PARAMEDIC"
 
 	outfit = /datum/outfit/job/paramedic
 	plasmaman_outfit = /datum/outfit/plasmaman/paramedic
@@ -55,7 +56,7 @@
 	head = /obj/item/clothing/head/soft/paramedic
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
 	shoes = /obj/item/clothing/shoes/sneakers/blue
-	l_pocket = /obj/item/modular_computer/tablet/pda/medical
+	l_pocket = /obj/item/modular_computer/tablet/pda/medical/paramedic
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

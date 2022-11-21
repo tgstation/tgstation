@@ -15,13 +15,13 @@
 /mob/living/silicon/ai
 	name = "AI"
 	real_name = "AI"
-	icon = 'icons/mob/ai.dmi'
+	icon = 'icons/mob/silicon/ai.dmi'
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
 	status_flags = CANSTUN|CANPUSH
 	combat_mode = TRUE //so we always get pushed instead of trying to swap
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_BLACKNESS
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	hud_type = /datum/hud/ai
 	med_hud = DATA_HUD_MEDICAL_BASIC
@@ -30,7 +30,6 @@
 	mob_size = MOB_SIZE_LARGE
 	radio = /obj/item/radio/headset/silicon/ai
 	can_buckle_to = FALSE
-	native_fov = null
 	var/battery = 200 //emergency power if the AI's APC is off
 	var/list/network = list("ss13")
 	var/obj/machinery/camera/current
@@ -68,7 +67,7 @@
 
 	var/datum/trackable/track = new
 
-	var/last_paper_seen = null
+	var/last_tablet_note_seen = null
 	var/can_shunt = TRUE
 	var/last_announcement = "" // For AI VOX, if enabled
 	var/turf/waypoint //Holds the turf of the currently selected waypoint.
@@ -105,7 +104,7 @@
 	var/datum/station_alert/alert_control
 	///remember AI's last location
 	var/atom/lastloc
-	interaction_range = null
+	interaction_range = INFINITY
 
 	var/atom/movable/screen/ai/modpc/interfaceButton
 	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
@@ -158,12 +157,12 @@
 	create_modularInterface()
 
 	if(client)
-		INVOKE_ASYNC(src, .proc/apply_pref_name, /datum/preference/name/ai, client)
+		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
 
-	INVOKE_ASYNC(src, .proc/set_core_display_icon)
+	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
 
 
-	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
+	holo_icon = getHologramIcon(icon('icons/mob/silicon/ai.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -196,8 +195,8 @@
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, .proc/alarm_cleared)
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
+	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -318,7 +317,7 @@
 		to_chat(usr, span_warning("Wireless control is disabled!"))
 		return
 
-	var/can_evac_or_fail_reason = SSshuttle.canEvac(src)
+	var/can_evac_or_fail_reason = SSshuttle.canEvac()
 	if(can_evac_or_fail_reason != TRUE)
 		to_chat(usr, span_alert("[can_evac_or_fail_reason]"))
 		return
@@ -333,29 +332,29 @@
 
 	// hack to display shuttle timer
 	if(!EMERGENCY_IDLE_OR_RECALLED)
-		var/obj/machinery/computer/communications/C = locate() in GLOB.machines
-		if(C)
+		for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
 			C.post_status("shuttle")
 
-/mob/living/silicon/ai/can_interact_with(atom/A)
+/mob/living/silicon/ai/can_interact_with(atom/A, treat_mob_as_adjacent)
 	. = ..()
-	var/turf/ai = get_turf(src)
-	var/turf/target = get_turf(A)
 	if (.)
 		return
+	var/turf/ai_turf = get_turf(src)
+	var/turf/target_turf = get_turf(A)
 
-	if(!target)
+	if(!target_turf)
 		return
 
-	if ((ai.z != target.z) && !is_station_level(ai.z))
+	if (!is_valid_z_level(ai_turf, target_turf))
 		return FALSE
 
 	if (istype(loc, /obj/item/aicard))
-		if (!ai || !target)
+		if (!ai_turf)
 			return FALSE
-		return ISINRANGE(target.x, ai.x - interaction_range, ai.x + interaction_range) && ISINRANGE(target.y, ai.y - interaction_range, ai.y + interaction_range)
+		return ISINRANGE(target_turf.x, ai_turf.x - interaction_range, ai_turf.x + interaction_range) \
+			&& ISINRANGE(target_turf.y, ai_turf.y - interaction_range, ai_turf.y + interaction_range)
 	else
-		return GLOB.cameranet.checkTurfVis(get_turf(A))
+		return GLOB.cameranet.checkTurfVis(target_turf)
 
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
@@ -457,9 +456,9 @@
 		play_vox_word(href_list["say_word"], null, src)
 		return
 #endif
-	if(href_list["show_paper"])
-		if(last_paper_seen)
-			src << browse(last_paper_seen, "window=show_paper")
+	if(href_list["show_tablet_note"])
+		if(last_tablet_note_seen)
+			src << browse(last_tablet_note_seen, "window=show_tablet")
 	//Carn: holopad requests
 	if(href_list["jump_to_holopad"])
 		var/obj/machinery/holopad/Holopad = locate(href_list["jump_to_holopad"]) in GLOB.machines
@@ -506,7 +505,7 @@
 			break
 		if(!can_dominate_mechs && !mech_has_controlbeacon)
 			message_admins("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
-			log_game("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
+			usr.log_message("possibly attempting href exploit - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.", LOG_ADMIN)
 			return
 
 		if(controlled_equipment)
@@ -520,6 +519,12 @@
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK, src, usr) //Called om the mech itself.
+	if(href_list["show_paper_note"])
+		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])
+		if(!paper_note)
+			return
+
+		paper_note.show_through_camera(usr)
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
@@ -609,12 +614,13 @@
 	var/mob/living/silicon/ai/U = usr
 
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
+		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
+
 		var/list/tempnetwork = C.network
-		if(!(is_station_level(C.z) || is_mining_level(C.z) || ("ss13" in tempnetwork)))
+		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || ("ss13" in tempnetwork)))
 			continue
 		if(!C.can_use())
 			continue
-
 		tempnetwork.Remove("rd", "ordnance", "prison")
 		if(length(tempnetwork))
 			for(var/i in C.network)
@@ -654,7 +660,7 @@
 					var/list/personnel_list = list()
 
 					for(var/datum/data/record/record_datum in GLOB.data_core.locked)//Look in data core locked.
-						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["image"]//Pull names, rank, and image.
+						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["character_appearance"]//Pull names, rank, and image.
 
 					if(!length(personnel_list))
 						tgui_alert(usr,"No suitable records found. Aborting.")
@@ -664,10 +670,13 @@
 						return
 					if(isnull(personnel_list[input]))
 						return
-					var/icon/character_icon = personnel_list[input]
+					var/mutable_appearance/character_icon = personnel_list[input]
 					if(character_icon)
 						qdel(holo_icon)//Clear old icon so we're not storing it in memory.
-						holo_icon = getHologramIcon(icon(character_icon))
+						character_icon.setDir(SOUTH)
+
+						var/icon/icon_for_holo = getFlatIcon(character_icon)
+						holo_icon = getHologramIcon(icon(icon_for_holo))
 
 				if("My Character")
 					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
@@ -684,19 +693,19 @@
 
 		if("Animal")
 			var/list/icon_list = list(
-			"bear" = 'icons/mob/animal.dmi',
-			"carp" = 'icons/mob/carp.dmi',
-			"chicken" = 'icons/mob/animal.dmi',
-			"corgi" = 'icons/mob/pets.dmi',
-			"cow" = 'icons/mob/animal.dmi',
-			"crab" = 'icons/mob/animal.dmi',
-			"fox" = 'icons/mob/pets.dmi',
-			"goat" = 'icons/mob/animal.dmi',
-			"cat" = 'icons/mob/pets.dmi',
-			"cat2" = 'icons/mob/pets.dmi',
-			"poly" = 'icons/mob/animal.dmi',
-			"pug" = 'icons/mob/pets.dmi',
-			"spider" = 'icons/mob/animal.dmi'
+			"bear" = 'icons/mob/simple/animal.dmi',
+			"carp" = 'icons/mob/simple/carp.dmi',
+			"chicken" = 'icons/mob/simple/animal.dmi',
+			"corgi" = 'icons/mob/simple/pets.dmi',
+			"cow" = 'icons/mob/simple/animal.dmi',
+			"crab" = 'icons/mob/simple/animal.dmi',
+			"fox" = 'icons/mob/simple/pets.dmi',
+			"goat" = 'icons/mob/simple/animal.dmi',
+			"cat" = 'icons/mob/simple/pets.dmi',
+			"cat2" = 'icons/mob/simple/pets.dmi',
+			"poly" = 'icons/mob/simple/animal.dmi',
+			"pug" = 'icons/mob/simple/pets.dmi',
+			"spider" = 'icons/mob/simple/animal.dmi'
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -716,11 +725,11 @@
 					holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
-				"default" = 'icons/mob/ai.dmi',
-				"floating face" = 'icons/mob/ai.dmi',
-				"xeno queen" = 'icons/mob/alien.dmi',
-				"horror" = 'icons/mob/ai.dmi',
-				"clock" = 'icons/mob/ai.dmi'
+				"default" = 'icons/mob/silicon/ai.dmi',
+				"floating face" = 'icons/mob/silicon/ai.dmi',
+				"xeno queen" = 'icons/mob/nonhuman-player/alien.dmi',
+				"horror" = 'icons/mob/silicon/ai.dmi',
+				"clock" = 'icons/mob/silicon/ai.dmi'
 				)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
@@ -772,11 +781,12 @@
 	var/list/obj/machinery/camera/add = list()
 	var/list/obj/machinery/camera/remove = list()
 	var/list/obj/machinery/camera/visible = list()
-	for (var/datum/camerachunk/CC in eyeobj.visibleCameraChunks)
-		for (var/obj/machinery/camera/C in CC.cameras)
-			if (!C.can_use() || get_dist(C, eyeobj) > 7 || !C.internal_light)
-				continue
-			visible |= C
+	for (var/datum/camerachunk/chunk as anything in eyeobj.visibleCameraChunks)
+		for (var/z_key in chunk.cameras)
+			for(var/obj/machinery/camera/camera as anything in chunk.cameras[z_key])
+				if (!camera.can_use() || get_dist(camera, eyeobj) > 7 || !camera.internal_light)
+					continue
+				visible |= camera
 
 	add = visible - lit_cameras
 	remove = lit_cameras - visible
@@ -914,40 +924,48 @@
 		modules_action.Grant(src)
 
 /mob/living/silicon/ai/reset_perspective(atom/new_eye)
+	SHOULD_CALL_PARENT(FALSE) // I hate you all
 	if(camera_light_on)
 		light_cameras()
 	if(istype(new_eye, /obj/machinery/camera))
 		current = new_eye
-	if(client)
-		if(ismovable(new_eye))
-			if(new_eye != GLOB.ai_camera_room_landmark)
-				end_multicam()
-			client.perspective = EYE_PERSPECTIVE
-			client.eye = new_eye
-		else
-			end_multicam()
-			if(isturf(loc))
-				if(eyeobj)
-					client.eye = eyeobj
-					client.perspective = EYE_PERSPECTIVE
-				else
-					client.eye = client.mob
-					client.perspective = MOB_PERSPECTIVE
-			else
-				client.perspective = EYE_PERSPECTIVE
-				client.eye = loc
-		update_sight()
-		if(client.eye != src)
-			var/atom/AT = client.eye
-			AT.get_remote_view_fullscreens(src)
-		else
-			clear_fullscreen("remote_view", 0)
+	if(!client)
+		return
 
-/mob/living/silicon/ai/revive(full_heal = FALSE, admin_revive = FALSE)
+	if(ismovable(new_eye))
+		if(new_eye != GLOB.ai_camera_room_landmark)
+			end_multicam()
+		client.perspective = EYE_PERSPECTIVE
+		client.set_eye(new_eye)
+	else
+		end_multicam()
+		if(isturf(loc))
+			if(eyeobj)
+				client.set_eye(eyeobj)
+				client.perspective = EYE_PERSPECTIVE
+			else
+				client.set_eye(client.mob)
+				client.perspective = MOB_PERSPECTIVE
+		else
+			client.perspective = EYE_PERSPECTIVE
+			client.set_eye(loc)
+	update_sight()
+	if(client.eye != src)
+		var/atom/AT = client.eye
+		AT.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
+
+	// I am so sorry
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
+
+/mob/living/silicon/ai/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
-	if(.) //successfully ressuscitated from death
-		set_core_display_icon(display_icon_override)
-		set_eyeobj_visible(TRUE)
+	if(!.) //successfully ressuscitated from death
+		return
+
+	set_core_display_icon(display_icon_override)
+	set_eyeobj_visible(TRUE)
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null
@@ -1001,7 +1019,7 @@
 		return
 
 	else if(mind)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/disconnect_shell)
+		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(disconnect_shell))
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)

@@ -164,6 +164,14 @@
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
 
+/// allow players to vote to re-do the map vote
+/datum/config_entry/flag/allow_rock_the_vote
+
+/// the number of times we allow players to rock the vote
+/datum/config_entry/number/max_rocking_votes
+	default = 1
+	min_val = 1
+
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
 	default = 6000
@@ -176,8 +184,8 @@
 	integer = FALSE
 	min_val = 0
 
-/// If disabled, no-voters will automatically have their votes added to certain vote options
-/// (For eample: restart votes will default to "no restart", map votes will default to their preferred map / default map)
+/// If disabled, non-voters will automatically have their votes added to certain vote options
+/// (For example: restart votes will default to "no restart", map votes will default to their preferred map / default map, rocking the vote will default to "no")
 /datum/config_entry/flag/default_no_vote
 
 /// Prevents dead people from voting.
@@ -344,6 +352,8 @@
 	protection = CONFIG_ENTRY_LOCKED | CONFIG_ENTRY_HIDDEN
 
 /datum/config_entry/flag/show_irc_name
+
+/datum/config_entry/flag/no_default_techweb_link
 
 /datum/config_entry/flag/see_own_notes //Can players see their own admin notes
 
@@ -626,3 +636,12 @@
 /datum/config_entry/flag/forbid_all_profiling
 
 /datum/config_entry/flag/forbid_admin_profiling
+
+
+/datum/config_entry/flag/morgue_cadaver_disable_nonhumans
+	default = FALSE
+
+/datum/config_entry/number/morgue_cadaver_other_species_probability
+	default = 50
+
+/datum/config_entry/string/morgue_cadaver_override_species

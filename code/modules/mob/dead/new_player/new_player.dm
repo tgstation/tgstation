@@ -26,8 +26,6 @@
 	else
 		forceMove(locate(1,1,1))
 
-	ComponentInitialize()
-
 	. = ..()
 
 	GLOB.new_player_list += src
@@ -371,9 +369,9 @@
 	var/area/joined_area = get_area(new_character.loc)
 	if(joined_area)
 		joined_area.on_joining_game(new_character)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CREWMEMBER_JOINED, new_character, new_character.mind.assigned_role.title)
 	new_character = null
 	qdel(src)
-
 
 /mob/dead/new_player/proc/ViewManifest()
 	if(!client)

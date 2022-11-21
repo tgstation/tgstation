@@ -5,11 +5,12 @@
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the research director"
+	supervisors = SUPERVISOR_RD
 	selection_color = "#ffeeff"
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "GENETICIST"
 
 	outfit = /datum/outfit/job/geneticist
 	plasmaman_outfit = /datum/outfit/plasmaman/genetics

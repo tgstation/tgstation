@@ -68,6 +68,7 @@
 #define BB_MONKEY_CURRENT_PRESS_TARGET "BB_monkey_current_press_target"
 #define BB_MONKEY_CURRENT_GIVE_TARGET "BB_monkey_current_give_target"
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
+#define BB_MONKEY_TARGET_MONKEYS "BB_monkey_target_monkeys"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
 
@@ -196,12 +197,9 @@
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep thats it
 
-
-//Hunting defines
-#define SUCCESFUL_HUNT_COOLDOWN 5 SECONDS
-
 ///Hunting BB keys
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
+#define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
 #define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
 
 ///Basic Mob Keys
@@ -216,3 +214,14 @@
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
 #define BB_TARGETTING_DATUM "targetting_datum"
+///some behaviors that check current_target also set this on deep crit mobs
+#define BB_BASIC_MOB_EXECUTION_TARGET "BB_basic_execution_target"
+
+///list of foods this mob likes
+#define BB_BASIC_FOODS "BB_basic_foods"
+
+///Bileworm AI keys
+
+#define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
+#define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
+#define BB_BILEWORM_DEVOUR "BB_bileworm_devour"

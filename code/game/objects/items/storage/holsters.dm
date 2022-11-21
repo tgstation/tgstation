@@ -10,14 +10,14 @@
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_BELT || ITEM_SLOT_SUITSTORE)
+	if(slot & (ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE))
 		ADD_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
 /obj/item/storage/belt/holster/dropped(mob/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_GUNFLIP, CLOTHING_TRAIT)
 
-/obj/item/storage/belt/holster/Initialize()
+/obj/item/storage/belt/holster/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 1
 	atom_storage.max_total_storage = 16
@@ -35,7 +35,7 @@
 	name = "thermal shoulder holsters"
 	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Meant to hold a twinned pair of thermal pistols, but can fit several kinds of energy handguns as well."
 
-/obj/item/storage/belt/holster/thermal/Initialize()
+/obj/item/storage/belt/holster/thermal/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 2
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -58,7 +58,7 @@
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/holster/detective/Initialize()
+/obj/item/storage/belt/holster/detective/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 3
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
@@ -117,7 +117,7 @@
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
-/obj/item/storage/belt/holster/chameleon/Initialize()
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
 	atom_storage.silent = TRUE
 
@@ -131,7 +131,7 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/storage/belt/holster/chameleon/Initialize()
+/obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 2
 	atom_storage.max_total_storage = WEIGHT_CLASS_NORMAL
@@ -161,7 +161,7 @@
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/belt/holster/nukie/Initialize()
+/obj/item/storage/belt/holster/nukie/Initialize(mapload)
 	. = ..()
 	atom_storage.max_slots = 2
 	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY

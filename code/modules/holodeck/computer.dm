@@ -185,14 +185,14 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			nerf(obj_flags & EMAGGED,FALSE)
 			obj_flags ^= EMAGGED
 			say("Safeties reset. Restarting...")
-			log_game("[key_name(usr)] disabled Holodeck safeties.")
+			usr.log_message("disabled Holodeck safeties.", LOG_GAME)
 
 ///this is what makes the holodeck not spawn anything on broken tiles (space and non engine plating / non holofloors)
 /datum/map_template/holodeck/update_blacklist(turf/placement, list/input_blacklist)
 	for(var/turf/possible_blacklist as anything in get_affected_turfs(placement))
 		if (possible_blacklist.holodeck_compatible)
 			continue
-		input_blacklist += possible_blacklist
+		input_blacklist[possible_blacklist] = TRUE
 
 ///loads the template whose id string it was given ("offline_program" loads datum/map_template/holodeck/offline)
 /obj/machinery/computer/holodeck/proc/load_program(map_id, force = FALSE, add_delay = TRUE)
@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
 
 	if(template.restricted)
-		log_game("[key_name(usr)] loaded a restricted Holodeck program: [program].")
+		usr.log_message("loaded a restricted Holodeck program: [program].", LOG_GAME)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program].")
 
 	spawned = template.created_atoms //populate the spawned list with the atoms belonging to the holodeck
@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			spawned -= holo_atom
 			continue
 
-		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
+		RegisterSignal(holo_atom, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
 		holo_atom.flags_1 |= HOLOGRAM_1
 
 		if(isholoeffect(holo_atom))//activates holo effects and transfers them from the spawned list into the effects list
@@ -283,10 +283,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			var/atom/holo_effect_product = holo_effect.activate(src)//change name
 			if(istype(holo_effect_product))
 				spawned += holo_effect_product // we want mobs or objects spawned via holoeffects to be tracked as objects
-				RegisterSignal(holo_effect_product, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
+				RegisterSignal(holo_effect_product, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
 			if(islist(holo_effect_product))
 				for(var/atom/atom_product as anything in holo_effect_product)
-					RegisterSignal(atom_product, COMSIG_PARENT_QDELETING, .proc/remove_from_holo_lists)
+					RegisterSignal(atom_product, COMSIG_PARENT_QDELETING, PROC_REF(remove_from_holo_lists))
 			continue
 
 		if(isobj(holo_atom))
@@ -368,7 +368,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 	if(toggleOn)
 		if(last_program && (last_program != offline_program))
-			addtimer(CALLBACK(src,.proc/load_program, last_program, TRUE), 25)
+			addtimer(CALLBACK(src, PROC_REF(load_program), last_program, TRUE), 25)
 		active = TRUE
 	else
 		last_program = program
@@ -377,7 +377,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 
 /obj/machinery/computer/holodeck/power_change()
 	. = ..()
-	INVOKE_ASYNC(src, .proc/toggle_power, !machine_stat)
+	INVOKE_ASYNC(src, PROC_REF(toggle_power), !machine_stat)
 
 ///shuts down the holodeck and force loads the offline_program
 /obj/machinery/computer/holodeck/proc/emergency_shutdown()
@@ -412,7 +412,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	obj_flags |= EMAGGED
 	to_chat(user, span_warning("You vastly increase projector power and override the safety and security protocols."))
 	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
-	log_game("[key_name(user)] emagged the Holodeck Control Console")
+	user.log_message("emagged the Holodeck Control Console.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(user)] emagged the Holodeck Control Console.")
 	nerf(!(obj_flags & EMAGGED),FALSE)
 
 /obj/machinery/computer/holodeck/emp_act(severity)

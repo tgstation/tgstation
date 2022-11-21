@@ -85,6 +85,7 @@
 	item = /obj/item/camera_bug
 	cost = 1
 	surplus = 90
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Chest Rig"
@@ -114,13 +115,14 @@
 			when used cause the targeted tablet to become a new uplink with zero TCs, and immediately become unlocked. \
 			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
-	item = /obj/item/computer_hardware/hard_drive/portable/virus/frame
+	item = /obj/item/computer_disk/virus/frame
 	cost = 4
 	restricted = TRUE
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/portable/virus/frame/target = .
+	var/obj/item/computer_disk/virus/frame/target = .
 	if(!target)
 		return
 	target.current_progression = uplink_handler.progression_points
@@ -167,7 +169,7 @@
 			and wavelength, which controls the delay before the effect kicks in."
 	item = /obj/item/healthanalyzer/rad_laser
 	cost = 3
-
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
@@ -248,6 +250,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop
 	cost = 10
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/powersink
 	name = "Power Sink"

@@ -3,7 +3,7 @@
  */
 /datum/element/basic_body_temp_sensitive
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	///Min body temp
 	var/min_body_temp = 250
@@ -19,15 +19,19 @@
 	if(!isbasicmob(target))
 		return ELEMENT_INCOMPATIBLE
 
-	if(min_body_temp)
+	if(isnum(min_body_temp))
 		src.min_body_temp = min_body_temp
-	if(max_body_temp)
+
+	if(isnum(max_body_temp))
 		src.max_body_temp = max_body_temp
-	if(cold_damage)
+
+	if(isnum(cold_damage))
 		src.cold_damage = cold_damage
-	if(heat_damage)
+
+	if(isnum(heat_damage))
 		src.heat_damage = heat_damage
-	RegisterSignal(target, COMSIG_LIVING_LIFE, .proc/on_life)
+
+	RegisterSignal(target, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /datum/element/basic_body_temp_sensitive/Detach(datum/source)
 	if(source)

@@ -393,9 +393,9 @@
 	volume = 100
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 100)
 
-/obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
+/obj/item/reagent_containers/spray/weedspray/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (TOXLOSS)
+	return TOXLOSS
 
 /obj/item/reagent_containers/spray/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
@@ -409,14 +409,14 @@
 	volume = 100
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 100)
 
-/obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
+/obj/item/reagent_containers/spray/pestspray/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (TOXLOSS)
+	return TOXLOSS
 
 /obj/item/cultivator
 	name = "cultivator"
 	desc = "It's used for removing weeds or scratching your back."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "cultivator"
 	inhand_icon_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -430,9 +430,9 @@
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/cultivator/suicide_act(mob/user)
+/obj/item/cultivator/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scratching [user.p_their()] back as hard as [user.p_they()] can with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/cultivator/rake
 	name = "rake"
@@ -448,7 +448,7 @@
 /obj/item/cultivator/rake/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -458,7 +458,7 @@
 		return
 	var/mob/living/carbon/human/H = AM
 	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
-		H.set_timed_status_effect(10 SECONDS, /datum/status_effect/confusion, only_if_higher = TRUE)
+		H.set_confusion_if_lower(10 SECONDS)
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
@@ -467,7 +467,7 @@
 /obj/item/hatchet
 	name = "hatchet"
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
 	icon_state = "hatchet"
 	inhand_icon_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
@@ -492,10 +492,10 @@
 	effectiveness = 100, \
 	)
 
-/obj/item/hatchet/suicide_act(mob/user)
+/obj/item/hatchet/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/hatchet/wooden
 	desc = "A crude axe blade upon a short wooden handle."
@@ -505,6 +505,7 @@
 
 /obj/item/scythe
 	icon_state = "scythe0"
+	inhand_icon_state = "scythe0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	name = "scythe"
@@ -529,7 +530,7 @@
 	effectiveness = 105, \
 	)
 
-/obj/item/scythe/suicide_act(mob/user)
+/obj/item/scythe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -537,7 +538,7 @@
 		if(BP)
 			BP.drop_limb()
 			playsound(src, SFX_DESECRATION ,50, TRUE, -1)
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
 	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
@@ -559,7 +560,7 @@
 	desc = "It's a tool for cutting grafts off plants."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
-	inhand_icon_state = "secateurs"
+	inhand_icon_state = null
 	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
@@ -582,7 +583,7 @@
 			to_chat(trimmer, span_warning("[pod] [pod.p_do()]n't have a head!"))
 			return
 		if(location == BODY_ZONE_HEAD && !trimmer.combat_mode)
-			if(!trimmer.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			if(!trimmer.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 				return
 			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
 			if(isnull(new_style))
@@ -609,7 +610,7 @@
 	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "genesheers"
-	inhand_icon_state = "secateurs"
+	inhand_icon_state = null
 	worn_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
@@ -628,47 +629,47 @@
 // *************************************
 
 
-/obj/item/reagent_containers/glass/bottle/nutrient
+/obj/item/reagent_containers/cup/bottle/nutrient
 	name = "bottle of nutrient"
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
-/obj/item/reagent_containers/glass/bottle/nutrient/Initialize(mapload)
+/obj/item/reagent_containers/cup/bottle/nutrient/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
 
 
-/obj/item/reagent_containers/glass/bottle/nutrient/ez
+/obj/item/reagent_containers/cup/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
 	desc = "Contains a fertilizer that causes mild mutations and gradual plant growth with each harvest."
 	list_reagents = list(/datum/reagent/plantnutriment/eznutriment = 50)
 
-/obj/item/reagent_containers/glass/bottle/nutrient/l4z
+/obj/item/reagent_containers/cup/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	desc = "Contains a fertilizer that lightly heals the plant but causes significant mutations in plants over generations."
 	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 50)
 
-/obj/item/reagent_containers/glass/bottle/nutrient/rh
+/obj/item/reagent_containers/cup/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
 	desc = "Contains a fertilizer that increases the yield of a plant while gradually preventing mutations."
 	list_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 50)
 
-/obj/item/reagent_containers/glass/bottle/nutrient/empty
+/obj/item/reagent_containers/cup/bottle/nutrient/empty
 	name = "bottle"
 
-/obj/item/reagent_containers/glass/bottle/killer
+/obj/item/reagent_containers/cup/bottle/killer
 	volume = 30
 	amount_per_transfer_from_this = 1
 	possible_transfer_amounts = list(1,2,5)
 
-/obj/item/reagent_containers/glass/bottle/killer/weedkiller
+/obj/item/reagent_containers/cup/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
 	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 30)
 
-/obj/item/reagent_containers/glass/bottle/killer/pestkiller
+/obj/item/reagent_containers/cup/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
 	list_reagents = list(/datum/reagent/toxin/pestkiller = 30)

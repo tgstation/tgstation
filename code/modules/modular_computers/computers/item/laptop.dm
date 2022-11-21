@@ -10,10 +10,8 @@
 	display_overlays = FALSE
 
 	hardware_flag = PROGRAM_LAPTOP
-	max_hardware_size = 2
 	max_idle_programs = 3
 	w_class = WEIGHT_CLASS_NORMAL
-	max_bays = 4
 
 	// No running around with open laptops in hands.
 	item_flags = SLOWS_WHILE_IN_HAND
@@ -87,7 +85,7 @@
 		return
 	if(!isturf(loc) && !ismob(loc)) // No opening it in backpack.
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 
 	toggle_open(user)

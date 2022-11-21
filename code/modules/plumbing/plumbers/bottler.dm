@@ -63,7 +63,7 @@
 		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
 	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = 100)
-	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return .
 	wanted_amount = new_amount
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
@@ -80,7 +80,7 @@
 	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
 		use_power(active_power_usage * delta_time)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
-		if((istype(AM, /obj/item/reagent_containers) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
+		if((is_reagent_container(AM) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
 			var/obj/item/reagent_containers/B = AM
 			///see if it would overflow else inject
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)

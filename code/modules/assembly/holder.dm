@@ -3,8 +3,8 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = "assembly_holder"
 	inhand_icon_state = "assembly"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -28,13 +28,23 @@
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
 
-
 /obj/item/assembly_holder/proc/assemble(obj/item/assembly/A, obj/item/assembly/A2, mob/user)
 	attach(A,user)
 	attach(A2,user)
 	name = "[A.name]-[A2.name] assembly"
 	update_appearance()
 	SSblackbox.record_feedback("tally", "assembly_made", 1, "[initial(A.name)]-[initial(A2.name)]")
+
+/**
+ * on_attach: Pass on_attach message to child assemblies
+ *
+ */
+/obj/item/assembly_holder/proc/on_attach()
+	var/obj/item/newloc = loc
+	if(!newloc.IsSpecialAssembly() && !newloc.IsAssemblyHolder())
+		return
+	for(var/obj/item/assembly/assembly in assemblies)
+		assembly.on_attach()
 
 /**
  * Adds an assembly to the assembly holder
@@ -104,7 +114,7 @@
 	if(.)
 		return
 	for(var/obj/item/assembly/assembly as anything in assemblies)
-		assembly.attack_hand()
+		assembly.attack_hand(user, modifiers) // Note override in assembly.dm to prevent side effects here
 
 /obj/item/assembly_holder/attackby(obj/item/weapon, mob/user, params)
 	if(isassembly(weapon))
@@ -151,7 +161,7 @@
 		return FALSE
 	if(normal && LAZYLEN(assemblies) >= 2)
 		for(var/obj/item/assembly/assembly as anything in assemblies)
-			if(LAZYACCESS(assemblies, assembly) != device)
+			if(assembly != device)
 				assembly.pulsed(FALSE)
 	if(master)
 		master.receive_signal()

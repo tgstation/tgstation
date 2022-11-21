@@ -61,7 +61,7 @@
 
 /datum/chemical_reaction/New()
 	. = ..()
-	SSticker.OnRoundstart(CALLBACK(src,.proc/update_info))
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(update_info)))
 
 /**
  * Updates information during the roundstart
@@ -267,10 +267,10 @@
 		else
 			if(setting_type)
 				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_away), X, T), 2)
 			else
 				if(step_towards(X, T) && moving_power > 1)
-					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_towards, X, T), 2)
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_step_towards), X, T), 2)
 
 //////////////////Generic explosions/failures////////////////////
 // It is HIGHLY, HIGHLY recomended that you consume all/a good volume of the reagents/products in an explosion - because it will just keep going forever until the reaction stops
@@ -479,7 +479,7 @@
 */
 /datum/chemical_reaction/proc/freeze_radius(datum/reagents/holder, datum/equilibrium/equilibrium, temp, radius = 2, freeze_duration = 50 SECONDS, snowball_chance = 0)
 	for(var/any_turf in circle_range_turfs(center = get_turf(holder.my_atom), radius = radius))
-		if(!istype(any_turf, /turf/open))
+		if(!isopenturf(any_turf))
 			continue
 		var/turf/open/open_turf = any_turf
 		open_turf.MakeSlippery(TURF_WET_PERMAFROST, freeze_duration, freeze_duration, freeze_duration)

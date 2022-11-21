@@ -178,7 +178,7 @@
 		return
 	..()
 
-/obj/item/gun/ballistic/revolver/russian/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/gun/ballistic/revolver/russian/fire_gun(atom/target, mob/living/user, flag, params)
 	. = ..(null, user, flag, params)
 
 	if(flag)
@@ -190,8 +190,10 @@
 		if(!can_trigger_gun(user))
 			return
 	if(target != user)
-		if(ismob(target))
-			to_chat(user, span_warning("A mechanism prevents you from shooting anyone but yourself!"))
+		playsound(src, dry_fire_sound, 30, TRUE)
+		user.visible_message(
+			span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."), \
+			span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at anyone but yourself!"))
 		return
 
 	if(ishuman(user))
@@ -232,19 +234,14 @@
 				else
 					user.visible_message(span_danger("[user.name] cowardly fires [src] at [user.p_their()] [affecting.name]!"), span_userdanger("You cowardly fire [src] at your [affecting.name]!"), span_hear("You hear a gunshot!"))
 				chambered = null
-				SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_lose", /datum/mood_event/russian_roulette_lose)
+				user.add_mood_event("russian_roulette_lose", /datum/mood_event/russian_roulette_lose)
 				return
 
 		if(loaded_rounds && is_target_face)
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
+			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
 
 		user.visible_message(span_danger("*click*"))
 		playsound(src, dry_fire_sound, 30, TRUE)
-
-/obj/item/gun/ballistic/revolver/russian/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	add_fingerprint(user)
-	playsound(src, dry_fire_sound, 30, TRUE)
-	user.visible_message(span_danger("[user.name] tries to fire \the [src] at the same time, but only succeeds at looking like an idiot."), span_danger("\The [src]'s anti-combat mechanism prevents you from firing it at the same time!"))
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)

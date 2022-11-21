@@ -55,7 +55,7 @@
 		try_keep_home(new_spawn)
 	else
 		new_spawn.mind.enslave_mind_to_creator(owner)
-		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
+		new_spawn.log_message("possessed a golem shell enslaved to [key_name(owner)].", LOG_GAME)
 		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
@@ -85,7 +85,7 @@
 			return
 		if(QDELETED(src) || uses <= 0)
 			return
-		log_game("[key_name(H)] golem-swapped into [src]")
+		H.log_message("golem-swapped into [src].", LOG_GAME)
 		H.visible_message(span_notice("A faint light leaves [H], moving to [src] and animating it!"),span_notice("You leave your old body behind, and transfer into [src]!"))
 		show_flavor = FALSE
 		var/mob/living/carbon/human/newgolem = create(newname = H.real_name)

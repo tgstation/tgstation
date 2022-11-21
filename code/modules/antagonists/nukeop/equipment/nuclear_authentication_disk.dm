@@ -66,7 +66,7 @@
 					if(disk_comfort_level >= 2)
 						visible_message(span_notice("[src] sleeps soundly. Sleep tight, disky."))
 					message_admins("[src] is unsecured in [ADMIN_VERBOSEJMP(new_turf)]. The weight of Lone Operative is now [loneop.weight].")
-				log_game("[src] is unsecured for too long in [loc_name(new_turf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+				log_game("[src] was left unsecured in [loc_name(new_turf)]. Weight of the Lone Operative event increased to [loneop.weight].")
 
 /obj/item/disk/nuclear/proc/is_secured()
 	if (last_secured_location == get_turf(src))
@@ -114,19 +114,19 @@
 
 	return ..()
 
-/obj/item/disk/nuclear/suicide_act(mob/user)
+/obj/item/disk/nuclear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/machines/alarm.ogg', 50, -1, TRUE)
 	for(var/i in 1 to 100)
 		addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#00FF00" : "#FF0000", ADMIN_COLOUR_PRIORITY), i)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 101)
 	return MANUAL_SUICIDE
 
 /obj/item/disk/nuclear/proc/manual_suicide(mob/living/user)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 	user.visible_message(span_suicide("[user] is destroyed by the nuclear blast!"))
 	user.adjustOxyLoss(200)
-	user.death(0)
+	user.death(FALSE)
 
 /obj/item/disk/nuclear/fake
 	fake = TRUE

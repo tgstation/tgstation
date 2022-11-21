@@ -9,7 +9,7 @@
 	var/smokeradius = 1
 	var/mutable_appearance/weed_overlay
 
-/obj/structure/toiletbong/Initialize()
+/obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
 	create_storage()
 	atom_storage.attack_hand_interact = FALSE
@@ -55,7 +55,7 @@
 					user.visible_message(span_danger("[user] spits out a mouse."))
 					user.adjust_disgust(50)
 					user.vomit(10)
-				var/mob/living/spawned_mob = new /mob/living/simple_animal/mouse(get_turf(user))
+				var/mob/living/spawned_mob = new /mob/living/basic/mouse(get_turf(user))
 				spawned_mob.faction |= "[REF(user)]"
 				if(prob(50))
 					for(var/j in 1 to rand(1, 3))

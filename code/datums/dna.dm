@@ -97,13 +97,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	return ..()
 
-/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
+/datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = FALSE, transfer_species = TRUE)
 	if(!istype(destination))
 		return
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.unique_identity = unique_identity
 	destination.dna.blood_type = blood_type
-	destination.set_species(species.type, icon_update=0)
 	destination.dna.unique_features = unique_features
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
@@ -111,6 +110,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(transfer_SE)
 		destination.dna.mutation_index = mutation_index
 		destination.dna.default_mutation_genes = default_mutation_genes
+	if(transfer_species)
+		destination.set_species(species.type, icon_update=0)
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -473,7 +474,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			new_race = mrace
 		else
 			return
-		deathsound = new_race.deathsound
+		death_sound = new_race.death_sound
 		dna.species.on_species_loss(src, new_race, pref_load)
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
@@ -483,6 +484,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			var/species_holder = initial(mrace.species_language_holder)
 			language_holder = new species_holder(src)
 		update_atom_languages()
+		log_mob_tag("SPECIES: [key_name(src)] \[[mrace]\]")
 
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
@@ -586,7 +588,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(dna.features["tail_cat"])
 		dna.features["tail_cat"] = GLOB.tails_list_human[deconstruct_block(get_uni_feature_block(features, DNA_TAIL_BLOCK), GLOB.tails_list_human.len)]
 	if(dna.features["tail_lizard"])
-		dna.features["tail_cat"] = GLOB.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_lizard.len)]
+		dna.features["tail_lizard"] = GLOB.tails_list_lizard[deconstruct_block(get_uni_feature_block(features, DNA_LIZARD_TAIL_BLOCK), GLOB.tails_list_lizard.len)]
 	if(dna.features["ears"])
 		dna.features["ears"] = GLOB.ears_list[deconstruct_block(get_uni_feature_block(features, DNA_EARS_BLOCK), GLOB.ears_list.len)]
 	if(dna.features["moth_wings"])
@@ -608,8 +610,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		external_organ.mutate_feature(features, src)
 
 	if(icon_update)
-		dna.species.handle_body(src) // We want 'update_body_parts()' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
-		update_hair(is_creating = TRUE)
+		dna.species.handle_body(src) // We want 'update_body_parts(update_limb_data = TRUE)' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
+		update_body_parts() //We can call this because it doesnt refresh limb data, and it handles hair and such.
 		if(mutcolor_update)
 			update_body_parts(update_limb_data = TRUE)
 		if(mutations_overlay_update)
@@ -836,11 +838,13 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	else
 		switch(rand(0,5))
 			if(0)
+				investigate_log("has been gibbed by DNA instability.", INVESTIGATE_DEATHS)
 				gib()
 			if(1)
+				investigate_log("has been dusted by DNA instability.", INVESTIGATE_DEATHS)
 				dust()
-
 			if(2)
+				investigate_log("has been killed by DNA instability.", INVESTIGATE_DEATHS)
 				death()
 				petrify(INFINITY)
 			if(3)
@@ -849,6 +853,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 					if(BP)
 						BP.dismember()
 					else
+						investigate_log("has been gibbed by DNA instability.", INVESTIGATE_DEATHS)
 						gib()
 				else
 					set_species(/datum/species/dullahan)
@@ -857,10 +862,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				spawn_gibs()
 				set_species(/datum/species/skeleton)
 				if(prob(90))
-					addtimer(CALLBACK(src, .proc/death), 30)
+					addtimer(CALLBACK(src, PROC_REF(death)), 30)
 			if(5)
 				to_chat(src, span_phobia("LOOK UP!"))
-				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)
+				addtimer(CALLBACK(src, PROC_REF(something_horrible_mindmelt)), 30)
 
 /mob/living/carbon/human/proc/something_horrible_mindmelt()
 	if(!is_blind())
@@ -870,4 +875,4 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		eyes.Remove(src)
 		qdel(eyes)
 		visible_message(span_notice("[src] looks up and their eyes melt away!"), span_userdanger("I understand now."))
-		addtimer(CALLBACK(src, .proc/adjustOrganLoss, ORGAN_SLOT_BRAIN, 200), 20)
+		addtimer(CALLBACK(src, PROC_REF(adjustOrganLoss), ORGAN_SLOT_BRAIN, 200), 20)

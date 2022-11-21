@@ -3,7 +3,7 @@
 	description = "There has been interest in using our engineering equipment to see what kind of new cooking appliances we can create"
 
 /datum/experiment/physical/meat_wall_explosion/register_events()
-	if(!istype(currently_scanned_atom, /turf/closed/wall))
+	if(!iswallturf(currently_scanned_atom))
 		linked_experiment_handler.announce_message("Incorrect object for experiment.")
 		return FALSE
 
@@ -11,7 +11,7 @@
 		linked_experiment_handler.announce_message("Object is not made out of the correct materials.")
 		return FALSE
 
-	RegisterSignal(currently_scanned_atom, COMSIG_ATOM_BULLET_ACT, .proc/check_experiment)
+	RegisterSignal(currently_scanned_atom, COMSIG_ATOM_BULLET_ACT, PROC_REF(check_experiment))
 	linked_experiment_handler.announce_message("Experiment ready to start.")
 	return TRUE
 
@@ -43,7 +43,7 @@
 		linked_experiment_handler.announce_message("Incorrect object for experiment.")
 		return FALSE
 
-	RegisterSignal(currently_scanned_atom, COMSIG_ARCADE_PRIZEVEND, .proc/win_arcade)
+	RegisterSignal(currently_scanned_atom, COMSIG_ARCADE_PRIZEVEND, PROC_REF(win_arcade))
 	linked_experiment_handler.announce_message("Experiment ready to start.")
 	return TRUE
 

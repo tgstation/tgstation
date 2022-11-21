@@ -34,12 +34,12 @@
 	glob_lists_deregister()
 	return ..()
 
-/obj/machinery/navbeacon/on_changed_z_level(turf/old_turf, turf/new_turf)
+/obj/machinery/navbeacon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if (GLOB.navbeacons["[old_turf?.z]"])
 		GLOB.navbeacons["[old_turf?.z]"] -= src
 	if (GLOB.navbeacons["[new_turf?.z]"])
 		GLOB.navbeacons["[new_turf?.z]"] += src
-	..()
+	return ..()
 
 // set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()
@@ -96,7 +96,7 @@
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
-	else if (istype(I, /obj/item/card/id) || istype(I, /obj/item/modular_computer/tablet))
+	else if (isidcard(I) || istype(I, /obj/item/modular_computer/tablet))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked

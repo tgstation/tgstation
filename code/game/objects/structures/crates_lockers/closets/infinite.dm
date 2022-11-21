@@ -26,7 +26,7 @@
 /obj/structure/closet/infinite/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(. && auto_close_time)
-		addtimer(CALLBACK(src, .proc/close_on_my_own), auto_close_time, TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(close_on_my_own)), auto_close_time, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 /obj/structure/closet/infinite/proc/close_on_my_own()
 	if(close())

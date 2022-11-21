@@ -4,9 +4,6 @@
 
 /////////////////////////////////// EYE_BLIND ////////////////////////////////////
 
-/mob/living/brain/blind_eyes() // no eyes to damage or heal
-	return
-
 /mob/living/brain/adjust_blindness()
 	return
 

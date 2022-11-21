@@ -62,6 +62,12 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/bioscrambler
 	icon_state = "rawcore_bioscrambler"
 
+/obj/item/raw_anomaly_core/dimensional
+	name = "raw dimensional core"
+	desc = "The raw core of a dimensional anomaly, vibrating with infinite potential."
+	anomaly_type = /obj/item/assembly/signaler/anomaly/dimensional
+	icon_state = "rawcore_dimensional"
+
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()
 	var/path = pick(subtypesof(/obj/item/raw_anomaly_core))

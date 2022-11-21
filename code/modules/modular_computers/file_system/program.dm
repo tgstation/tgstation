@@ -80,17 +80,13 @@
 /datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
 	return FALSE
 
-/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
+///Makes sure a program can run on this hardware (for apps limited to tablets/computers/laptops)
+/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = NONE, loud = FALSE, mob/user)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
 			to_chat(user, span_danger("\The [computer] flashes a \"Hardware Error - Incompatible software\" warning."))
 		return FALSE
 	return TRUE
-
-/datum/computer_file/program/proc/get_signal(specific_action = 0)
-	if(computer)
-		return computer.get_ntnet_status(specific_action)
-	return 0
 
 // Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick(delta_time)
@@ -128,10 +124,8 @@
 
 	if(!length(access))
 		var/obj/item/card/id/accesscard
-		var/obj/item/computer_hardware/card_slot/card_slot
 		if(computer)
-			card_slot = computer.all_components[MC_CARD]
-			accesscard = card_slot?.GetID()
+			accesscard = computer.computer_id_slot?.GetID()
 
 		if(!accesscard)
 			if(loud)
@@ -147,22 +141,30 @@
 		to_chat(user, span_danger("\The [computer] flashes an \"Access Denied\" warning."))
 	return FALSE
 
-// This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
-// always include the device here in this proc. This proc basically relays the request to whatever is running the program.
+/**
+ * This attempts to retrieve header data for UIs.
+ *
+ * If implementing completely new device of different type than existing ones
+ * always include the device here in this proc. This proc basically relays the request to whatever is running the program.
+ **/
 /datum/computer_file/program/proc/get_header_data()
 	if(computer)
 		return computer.get_header_data()
 	return list()
 
-// This is performed on program startup. May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
-// When implementing new program based device, use this to run the program.
+/**
+ * Called on program startup.
+ *
+ * May be overridden to add extra logic. Remember to include ..() call. Return 1 on success, 0 on failure.
+ * When implementing new program based device, use this to run the program.
+ * Arguments:
+ * * user - The mob that started the program
+ **/
 /datum/computer_file/program/proc/on_start(mob/living/user)
+	SHOULD_CALL_PARENT(TRUE)
 	if(can_run(user, 1))
 		if(requires_ntnet)
-			var/obj/item/card/id/ID
-			var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
-			if(card_holder)
-				ID = card_holder.GetID()
+			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
@@ -182,16 +184,22 @@
 /datum/computer_file/program/proc/run_emag()
 	return FALSE
 
-// Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
+/**
+ * Kills the running program
+ *
+ * Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
+ * Arguments:
+ * * forced - Boolean to determine if this was a forced close. Should be TRUE if the user did not willingly close the program.
+ **/
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
 	program_state = PROGRAM_STATE_KILLED
+	if(src in computer.idle_threads)
+		computer.idle_threads.Remove(src)
 	if(requires_ntnet)
-		var/obj/item/card/id/ID
-		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
-		if(card_holder)
-			ID = card_holder.GetID()
-		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
-	return 1
+		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
+	return TRUE
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -234,7 +242,6 @@
 
 				if(user && istype(user))
 					computer.ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-
 
 /datum/computer_file/program/ui_host()
 	if(computer.physical)

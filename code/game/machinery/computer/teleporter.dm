@@ -101,7 +101,7 @@
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
 			power_station.update_appearance()
-			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
+			addtimer(CALLBACK(src, PROC_REF(finish_calibration)), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			return TRUE
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
@@ -188,8 +188,7 @@
 		if(isnull(desc))
 			return
 		set_teleport_target(targets[desc])
-		var/turf/target_turf = get_turf(targets[desc])
-		log_game("[key_name(user)] has set the teleporter target to [targets[desc]] at [AREACOORD(target_turf)]")
+		user.log_message("set the teleporter target to [targets[desc]].]", LOG_GAME)
 	else
 		if (!length(targets))
 			to_chat(user, span_alert("No active connected stations located."))
@@ -202,7 +201,7 @@
 		if(!target_station || !target_station.teleporter_hub)
 			return
 		var/turf/target_station_turf = get_turf(target_station)
-		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(target_station_turf)]")
+		user.log_message("set the teleporter target to [target_station_turf].", LOG_GAME)
 		set_teleport_target(target_station.teleporter_hub)
 		lock_in_station(target_station)
 
@@ -248,7 +247,7 @@
 	if (istype(shell, /obj/machinery/computer/teleporter))
 		attached_console = shell
 
-		RegisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET, .proc/on_teleporter_new_target)
+		RegisterSignal(attached_console, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target))
 		update_targets()
 
 /obj/item/circuit_component/teleporter_control_console/unregister_usb_parent(atom/movable/shell)

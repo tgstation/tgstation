@@ -8,7 +8,7 @@
 /obj/item/grenade/clusterbuster
 	desc = "Use of this weapon may constitute a war crime in your area, consult your local captain."
 	name = "clusterbang"
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "clusterbang"
 	var/base_state = "clusterbang"
 	var/payload = /obj/item/grenade/flashbang/cluster
@@ -45,7 +45,7 @@
 /obj/item/grenade/clusterbuster/segment
 	desc = "A smaller segment of a clusterbang. Better run!"
 	name = "clusterbang segment"
-	icon = 'icons/obj/grenade.dmi'
+	icon = 'icons/obj/weapons/grenade.dmi'
 	icon_state = "clusterbang_segment"
 	base_state = "clusterbang_segment"
 
@@ -66,7 +66,7 @@
 	var/steps = rand(1, 4)
 	for(var/step in 1 to steps)
 		step_away(src, loc)
-	addtimer(CALLBACK(src, .proc/detonate), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
+	addtimer(CALLBACK(src, PROC_REF(detonate)), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
 
 /obj/item/grenade/clusterbuster/segment/detonate(mob/living/lanced_by)
 	new payload_spawner(drop_location(), payload, rand(min_spawned, max_spawned))

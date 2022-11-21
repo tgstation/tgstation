@@ -6,7 +6,6 @@
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_EXTERNAL_TAIL
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
-	organ_flags = ORGAN_EDIBLE
 	feature_key = "tail"
 	render_key = "tail"
 	dna_block = DNA_TAIL_BLOCK
@@ -27,16 +26,16 @@
 /obj/item/organ/external/tail/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 	if(.)
-		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, .proc/wag)
+		RegisterSignal(reciever, COMSIG_ORGAN_WAG_TAIL, PROC_REF(wag))
 		original_owner ||= reciever //One and done
 
-		SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "tail_lost")
-		SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "tail_balance_lost")
+		reciever.clear_mood_event("tail_lost")
+		reciever.clear_mood_event("tail_balance_lost")
 
 		if(original_owner == reciever)
-			SEND_SIGNAL(reciever, COMSIG_CLEAR_MOOD_EVENT, "wrong_tail_regained")
+			reciever.clear_mood_event("wrong_tail_regained")
 		else if(type in reciever.dna.species.external_organs)
-			SEND_SIGNAL(reciever, COMSIG_ADD_MOOD_EVENT, "wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
+			reciever.add_mood_event("wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
@@ -45,8 +44,8 @@
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
 	if(type in organ_owner.dna.species.external_organs)
-		SEND_SIGNAL(organ_owner, COMSIG_ADD_MOOD_EVENT, "tail_lost", /datum/mood_event/tail_lost)
-		SEND_SIGNAL(organ_owner, COMSIG_ADD_MOOD_EVENT, "tail_balance_lost", /datum/mood_event/tail_balance_lost)
+		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
+		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
 /obj/item/organ/external/tail/generate_icon_cache()
 	. = ..()
@@ -65,7 +64,7 @@
 		render_key = "wagging[initial(render_key)]"
 		wag_flags |= WAG_WAGGING
 		if(stop_after)
-			addtimer(CALLBACK(src, .proc/wag, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
+			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 	else
 		render_key = initial(render_key)
 		wag_flags &= ~WAG_WAGGING
@@ -78,6 +77,9 @@
 	color_source = ORGAN_COLOR_HAIR
 	wag_flags = WAG_ABLE
 
+/obj/item/organ/external/tail/cat/get_global_feature_list()
+	return GLOB.tails_list_human
+
 /obj/item/organ/external/tail/monkey
 	color_source = NONE
 
@@ -87,8 +89,12 @@
 	preference = "feature_lizard_tail"
 	feature_key = "tail_lizard"
 	wag_flags = WAG_ABLE
+	dna_block = DNA_LIZARD_TAIL_BLOCK
 	///A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
 	var/obj/item/organ/external/spines/paired_spines
+
+/obj/item/organ/external/tail/lizard/get_global_feature_list()
+	return GLOB.tails_list_lizard
 
 /obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -117,7 +123,7 @@
 		render_key = "wagging[initial(render_key)]"
 		wag_flags |= WAG_WAGGING
 		if(stop_after)
-			addtimer(CALLBACK(src, .proc/wag, FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
+			addtimer(CALLBACK(src, PROC_REF(wag), FALSE), stop_after, TIMER_STOPPABLE|TIMER_DELETE_ME)
 		if(paired_spines)
 			paired_spines.render_key = "wagging[initial(paired_spines.render_key)]"
 	else

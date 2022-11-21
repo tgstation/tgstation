@@ -43,7 +43,7 @@
 		return
 
 	. += mutable_appearance(icon, icon_screen)
-	. += emissive_appearance(icon, icon_screen)
+	. += emissive_appearance(icon, icon_screen, src)
 
 /obj/machinery/computer/power_change()
 	. = ..()
@@ -122,7 +122,7 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational)
+	if(!user.canUseTopic(src, be_close = !issilicon(user)) || !is_operational)
 		return
 
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)

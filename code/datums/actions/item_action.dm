@@ -19,11 +19,14 @@
 	var/obj/item/item_target = target
 	if(button_icon && button_icon_state)
 		// If set, use the custom icon that we set instead
-		// of the item appearence
+		// of the item appearance
 		..()
 	else if((target && current_button.appearance_cache != item_target.appearance) || force) //replace with /ref comparison if this is not valid.
 		var/old_layer = item_target.layer
 		var/old_plane = item_target.plane
+		// reset the x & y offset so that item is aligned center
+		item_target.pixel_x = 0
+		item_target.pixel_y = 0		
 		item_target.layer = FLOAT_LAYER //AAAH
 		item_target.plane = FLOAT_PLANE //^ what that guy said
 		current_button.cut_overlays()

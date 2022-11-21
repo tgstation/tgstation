@@ -1,7 +1,7 @@
 /obj/item/toy/cards/cardhand
 	name = "hand of cards"
 	desc = "A number of cards not in a deck, customarily held in ones hand."
-	icon = 'icons/obj/playing_cards.dmi'
+	icon = 'icons/obj/toys/playing_cards.dmi'
 	icon_state = "none"
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "card"
@@ -61,14 +61,14 @@
 	return NONE
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
-	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
+	if(!isliving(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE))
 		return
 
 	var/list/handradial = list()
 	for(var/obj/item/toy/singlecard/card in cards)
 		handradial[card] = image(icon = src.icon, icon_state = card.icon_state)
 
-	var/obj/item/toy/singlecard/choice = show_radial_menu(usr, src, handradial, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	var/obj/item/toy/singlecard/choice = show_radial_menu(usr, src, handradial, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 

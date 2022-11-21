@@ -252,8 +252,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot == ITEM_SLOT_HANDS)
-		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, .proc/mouse_wheeled)
+	if(slot & ITEM_SLOT_HANDS)
+		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, PROC_REF(mouse_wheeled))
 	else
 		UnregisterSignal(user,COMSIG_MOUSE_SCROLL_ON)
 
@@ -305,11 +305,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rpd_up)
 
-/obj/item/pipe_dispenser/suicide_act(mob/user)
+/obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
 	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, TRUE)
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/pipe_dispenser/ui_assets(mob/user)
 	return list(
@@ -365,7 +365,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(.)
 		return
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 	var/playeffect = TRUE
 	switch(action)

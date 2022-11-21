@@ -7,7 +7,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 	var/list/datum/greyscale_config/configurations = list()
 	var/list/datum/greyscale_layer/layer_types = list()
 
-/datum/controller/subsystem/processing/greyscale/Initialize(start_timeofday)
+/datum/controller/subsystem/processing/greyscale/Initialize()
 	for(var/datum/greyscale_layer/fake_type as anything in subtypesof(/datum/greyscale_layer))
 		layer_types[initial(fake_type.layer_type)] = fake_type
 
@@ -27,7 +27,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		var/datum/greyscale_config/config = configurations[greyscale_type]
 		config.CrossVerify()
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/processing/greyscale/proc/RefreshConfigsFromFile()
 	for(var/i in configurations)

@@ -75,6 +75,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/wand/fireball,
 	/obj/item/gun/magic/staff/healing,
 	/obj/item/gun/magic/staff/door,
+	/obj/item/gun/magic/staff/babel,
 	/obj/item/scrying,
 	/obj/item/warp_whistle,
 	/obj/item/immortality_talisman,
@@ -161,7 +162,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		if(user)
 			to_chat(user, span_warning("You summoned ghosts!"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] summoned ghosts!")
-			log_game("[key_name(user)] summoned ghosts!")
+			user.log_message("summoned ghosts!", LOG_GAME)
 		else
 			message_admins("Summon Ghosts was triggered!")
 			log_game("Summon Ghosts was triggered!")
@@ -180,7 +181,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	if(user)
 		to_chat(user, span_warning("You summoned magic!"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] summoned magic!")
-		log_game("[key_name(user)] summoned magic!")
+		user.log_message("summoned magic!", LOG_GAME)
 	else
 		message_admins("Summon Magic was triggered!")
 		log_game("Summon Magic was triggered!")
@@ -200,7 +201,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	if(user)
 		to_chat(user, span_warning("You summoned guns!"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] summoned guns!")
-		log_game("[key_name(user)] summoned guns!")
+		user.log_message("summoned guns!", LOG_GAME)
 	else
 		message_admins("Summon Guns was triggered!")
 		log_game("Summon Guns was triggered!")
@@ -226,7 +227,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		if(user)
 			to_chat(user, span_warning("You have intensified summon events, causing them to occur more often!"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] intensified summon events!")
-			log_game("[key_name(user)] intensified events!")
+			user.log_message("intensified events!", LOG_GAME)
 		else
 			log_game("Summon Events was intensified!")
 
@@ -241,7 +242,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		if(user)
 			to_chat(user, span_warning("You have cast summon events!"))
 			message_admins("[ADMIN_LOOKUPFLW(user)] summoned events!")
-			log_game("[key_name(user)] summoned events!")
+			user.log_message("summoned events!", LOG_GAME)
 		else
 			message_admins("Summon Events was triggered!")
 			log_game("Summon Events was triggered!")
@@ -268,7 +269,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	src.survivor_probability = survivor_probability
 	src.give_proc_path = give_proc_path
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/gear_up_new_crew)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(gear_up_new_crew))
 
 /datum/summon_things_controller/Destroy(force, ...)
 	. = ..()

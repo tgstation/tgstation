@@ -15,6 +15,7 @@
 		/obj/effect/wisp = FALSE,
 		/obj/effect/mob_spawn = FALSE,
 		/obj/effect/immovablerod = FALSE,
+		/obj/effect/meteor = FALSE,
 	))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
@@ -90,6 +91,7 @@
 
 	if(ismob(teleatom))
 		var/mob/M = teleatom
+		teleatom.log_message("teleported from [loc_name(curturf)] to [loc_name(destturf)].", LOG_GAME, log_globally = FALSE)
 		M.cancel_camera()
 
 	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT)

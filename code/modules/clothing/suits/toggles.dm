@@ -28,13 +28,13 @@
 	ToggleHood()
 
 /obj/item/clothing/suit/hooded/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_OCLOTHING)
-		return 1
+	if(slot & ITEM_SLOT_OCLOTHING)
+		return TRUE
 
 /obj/item/clothing/suit/hooded/equipped(mob/user, slot)
-	if(slot != ITEM_SLOT_OCLOTHING)
+	if(!(slot & ITEM_SLOT_OCLOTHING))
 		RemoveHood()
-	..()
+	return ..()
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
 	src.icon_state = "[initial(icon_state)]"
@@ -44,7 +44,7 @@
 		if(ishuman(hood.loc))
 			var/mob/living/carbon/human/H = hood.loc
 			H.transferItemToLoc(hood, src, TRUE)
-			H.update_inv_wear_suit()
+			H.update_worn_oversuit()
 		else
 			hood.forceMove(src)
 
@@ -77,7 +77,7 @@
 				return
 			hood_up = TRUE
 			icon_state = "[initial(icon_state)]_t"
-			H.update_inv_wear_suit()
+			H.update_worn_oversuit()
 			update_action_buttons()
 	else
 		RemoveHood()
@@ -97,7 +97,7 @@
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
 	..()
-	if(slot != ITEM_SLOT_HEAD)
+	if(!(slot & ITEM_SLOT_HEAD))
 		if(suit)
 			suit.RemoveHood()
 		else

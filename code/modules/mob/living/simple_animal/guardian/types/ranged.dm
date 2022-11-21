@@ -114,7 +114,7 @@
 /obj/effect/snare/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -122,7 +122,7 @@
 	SIGNAL_HANDLER
 	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
 		to_chat(spawner.summoner, "[span_danger("<B>[AM] has crossed surveillance snare, [name].")]</B>")
-		var/list/guardians = spawner.summoner.hasparasites()
+		var/list/guardians = spawner.summoner.get_all_linked_holoparasites()
 		for(var/para in guardians)
 			to_chat(para, "[span_danger("<B>[AM] has crossed surveillance snare, [name].")]</B>")
 

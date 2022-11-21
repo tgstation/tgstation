@@ -1,5 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - rscadd: "The results of the tile sprayer and decal painter can now only be removed by crowbarring the tile, just like map-start."
-  - bugfix: "Tile sprayer's \"white\" replaced with \"neutral\", the most common tile overlay color."

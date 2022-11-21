@@ -1,8 +1,10 @@
 /obj/item/clothing/head/soft
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteful brown colour."
+	icon = 'icons/obj/clothing/head/hats.dmi'
+	worn_icon = 'icons/mob/clothing/head/hats.dmi'
 	icon_state = "cargosoft"
-	inhand_icon_state = "helmet"
+	inhand_icon_state = "greyscale_softcap" //todo wip
 	var/soft_type = "cargo"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
@@ -23,7 +25,7 @@
 
 /obj/item/clothing/head/soft/AltClick(mob/user)
 	..()
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		flip(user)
 
 
@@ -36,7 +38,7 @@
 		else
 			icon_state = "[soft_type]soft"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
-		usr.update_inv_head() //so our mob-overlays update
+		usr.update_worn_head() //so our mob-overlays update
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()
@@ -118,6 +120,7 @@
 	name = "rainbow cap"
 	desc = "It's a baseball hat in a bright rainbow of colors."
 	icon_state = "rainbowsoft"
+	inhand_icon_state = "rainbow_softcap"
 	soft_type = "rainbow"
 	dog_fashion = null
 

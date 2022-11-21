@@ -68,7 +68,7 @@
 		say("Deposited [deposit_value] credits into storage.")
 		update_appearance()
 		return
-	if(istype(O, /obj/item/card/id))
+	if(isidcard(O))
 		var/obj/item/card/id/Card = O
 		if(Card.registered_account)
 			account = Card.registered_account
@@ -227,7 +227,7 @@
 	if(!account.has_money(deposit_value))
 		say("You do not possess enough credits.")
 		return
-	account.adjust_money(-deposit_value) //The money vanishes, not paid to any accounts.
+	account.adjust_money(-deposit_value, "Vending: B.E.P.I.S. Chamber") //The money vanishes, not paid to any accounts.
 	SSblackbox.record_feedback("amount", "BEPIS_credits_spent", deposit_value)
 	log_econ("[deposit_value] credits were inserted into [src] by [account.account_holder]")
 	banked_cash += deposit_value

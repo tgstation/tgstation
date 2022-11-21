@@ -34,11 +34,13 @@
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(exposed_carbon.get_blood_id() == /datum/reagent/blood && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
+		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
 				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
 				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+
+			exposed_carbon.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
 
 
 /datum/reagent/blood/on_new(list/data)
@@ -225,7 +227,7 @@
 		if(!isfelinid(exposed_mob))
 			return
 		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
-		SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "watersprayed", /datum/mood_event/watersprayed)
+		exposed_mob.add_mood_event("watersprayed", /datum/mood_event/watersprayed)
 
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -284,15 +286,15 @@
 		data = list("misc" = 0)
 
 	data["misc"] += delta_time SECONDS * REM
-	M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/jitter, max_duration = 20 SECONDS)
+	M.adjust_jitter_up_to(4 SECONDS * delta_time, 20 SECONDS)
 	if(IS_CULTIST(M))
 		for(var/datum/action/innate/cult/blood_magic/BM in M.actions)
 			to_chat(M, span_cultlarge("Your blood rites falter as holy water scours your body!"))
 			for(var/datum/action/innate/cult/blood_spell/BS in BM.spells)
 				qdel(BS)
 	if(data["misc"] >= (25 SECONDS)) // 10 units
-		M.adjust_timed_status_effect(4 SECONDS * delta_time, /datum/status_effect/speech/stutter, max_duration = 20 SECONDS)
-		M.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+		M.adjust_stutter_up_to(4 SECONDS * delta_time, 20 SECONDS)
+		M.set_dizzy_if_lower(10 SECONDS)
 		if(IS_CULTIST(M) && DT_PROB(10, delta_time))
 			M.say(pick("Av'te Nar'Sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"), forced = "holy water")
 			if(prob(10))
@@ -742,7 +744,6 @@
 	to_chat(H, span_warning("<b>You grit your teeth in pain as your body rapidly mutates!</b>"))
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
-	H.dna.update_dna_identity()
 
 /datum/reagent/aslimetoxin
 	name = "Advanced Mutation Toxin"
@@ -1005,8 +1006,7 @@
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
 		surgery.speed_modifier = max(0.2, surgery.speed_modifier)
 
 /datum/reagent/iron
@@ -1112,7 +1112,7 @@
 /datum/reagent/bluespace/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(current_cycle > 10 && DT_PROB(7.5, delta_time))
 		to_chat(M, span_warning("You feel unstable..."))
-		M.set_timed_status_effect(2 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+		M.set_jitter_if_lower(2 SECONDS)
 		current_cycle = 1
 		addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 30)
 	..()
@@ -1240,16 +1240,16 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/cryptobiolin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_timed_status_effect(2 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+	M.set_dizzy_if_lower(2 SECONDS)
 
 	// Cryptobiolin adjusts the mob's confusion down to 20 seconds if it's higher,
 	// or up to 1 second if it's lower, but will do nothing if it's in between
 	var/confusion_left = M.get_timed_status_effect_duration(/datum/status_effect/confusion)
 	if(confusion_left < 1 SECONDS)
-		M.set_timed_status_effect(1 SECONDS, /datum/status_effect/confusion)
+		M.set_confusion(1 SECONDS)
 
 	else if(confusion_left > 20 SECONDS)
-		M.set_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
+		M.set_confusion(20 SECONDS)
 
 	..()
 
@@ -1263,7 +1263,7 @@
 	addiction_types = list(/datum/addiction/opioids = 10)
 
 /datum/reagent/impedrezene/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_timed_status_effect(-5 SECONDS * delta_time, /datum/status_effect/jitter)
+	M.adjust_jitter(-5 SECONDS * delta_time)
 	if(DT_PROB(55, delta_time))
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2)
 	if(DT_PROB(30, delta_time))
@@ -1274,7 +1274,7 @@
 
 /datum/reagent/cyborg_mutation_nanomachines
 	name = "Nanomachines"
-	description = "Microscopic construction robots."
+	description = "Microscopic construction robots. Nanomachines son!"
 	color = "#535E66" // rgb: 83, 94, 102
 	taste_description = "sludge"
 	penetrates_skin = NONE
@@ -1427,156 +1427,9 @@
 		H.blood_volume = max(H.blood_volume - (10 * REM * delta_time), 0)
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 2
-		M.adjust_timed_status_effect(2 SECONDS, /datum/status_effect/confusion, max_duration = 5 SECONDS)
+		M.adjust_confusion_up_to(2 SECONDS, 5 SECONDS)
 	..()
 
-/datum/reagent/nitrium_high_metabolization
-	name = "Nitrosyl plasmide"
-	description = "A highly reactive byproduct that stops you from sleeping, while dealing increasing toxin damage over time."
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
-	color = "E1A116"
-	taste_description = "sourness"
-	ph = 1.8
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-	addiction_types = list(/datum/addiction/stimulants = 14)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/L)
-	. = ..()
-	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
-	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-
-/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
-	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	return ..()
-
-/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-	M.adjustToxLoss(0.1 * current_cycle * REM * delta_time, 0) // 1 toxin damage per cycle at cycle 10
-	return ..()
-
-/datum/reagent/nitrium_low_metabolization
-	name = "Nitrium"
-	description = "A highly reactive gas that makes you feel faster."
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
-	color = "90560B"
-	taste_description = "burning"
-	ph = 2
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/nitrium_low_metabolization/on_mob_metabolize(mob/living/L)
-	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
-
-/datum/reagent/nitrium_low_metabolization/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
-	return ..()
-
-/datum/reagent/freon
-	name = "Freon"
-	description = "A powerful heat absorbent."
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
-	color = "90560B"
-	taste_description = "burning"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/freon/on_mob_metabolize(mob/living/L)
-	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
-
-/datum/reagent/freon/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
-	return ..()
-
-/datum/reagent/hypernoblium
-	name = "Hyper-Noblium"
-	description = "A suppressive gas that stops gas reactions on those who inhale it."
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
-	color = "90560B"
-	taste_description = "searingly cold"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/hypernoblium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(isplasmaman(M))
-		M.set_timed_status_effect(10 SECONDS * REM * delta_time, /datum/status_effect/hypernob_protection)
-	..()
-
-/datum/reagent/healium
-	name = "Healium"
-	description = "A powerful sleeping agent with healing properties"
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "90560B"
-	taste_description = "rubbery"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/healium/on_mob_metabolize(mob/living/L)
-	. = ..()
-	L.PermaSleeping()
-
-/datum/reagent/healium/on_mob_end_metabolize(mob/living/L)
-	L.SetSleeping(10)
-	return ..()
-
-/datum/reagent/healium/on_mob_life(mob/living/breather, delta_time, times_fired)
-	breather.adjustFireLoss(-2 * REM * delta_time, FALSE)
-	breather.adjustToxLoss(-5 * REM * delta_time, FALSE)
-	breather.adjustBruteLoss(-2 * REM * delta_time, FALSE)
-	..()
-	return TRUE
-
-/datum/reagent/pluoxium
-	name = "Pluoxium"
-	description = "An Oxygen compound that delivers eight times more Oxygen"
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "90560B"
-	taste_description = "like air but better"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/pluoxium/on_mob_life(mob/living/breathing_mob, delta_time, times_fired)
-	. = ..()
-	breathing_mob.adjustOxyLoss(-2 * REM * delta_time, FALSE)
-
-/datum/reagent/halon
-	name = "Halon"
-	description = "A fire suppression gas that removes oxygen and cools down the area"
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "90560B"
-	taste_description = "minty"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/halon/on_mob_metabolize(mob/living/L)
-	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	ADD_TRAIT(L, TRAIT_RESISTHEAT, type)
-
-/datum/reagent/halon/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
-	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
-	return ..()
-
-/datum/reagent/zauker
-	name = "Zauker"
-	description = "An unstable gas that is toxic to all living beings."
-	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5
-	color = "90560B"
-	taste_description = "bitter"
-	chemical_flags = REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/zauker/on_mob_life(mob/living/breather, delta_time, times_fired)
-	breather.adjustBruteLoss(6 * REM * delta_time, FALSE)
-	breather.adjustOxyLoss(1 * REM * delta_time, FALSE)
-	breather.adjustFireLoss(2 * REM * delta_time, FALSE)
-	breather.adjustToxLoss(2 * REM * delta_time, FALSE)
-	..()
-	return TRUE
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
@@ -1725,7 +1578,7 @@
 	..()
 
 /datum/reagent/plantnutriment/eznutriment
-	name = "E-Z-Nutrient"
+	name = "E-Z Nutrient"
 	description = "Contains electrolytes. It's what plants crave."
 	color = "#376400" // RBG: 50, 100, 0
 	tox_prob = 5
@@ -2137,7 +1990,7 @@
 	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
-	color_callback = CALLBACK(src, .proc/UpdateColor)
+	color_callback = CALLBACK(src, PROC_REF(UpdateColor))
 	SSticker.OnRoundstart(color_callback)
 	return ..()
 
@@ -2172,7 +2025,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/hair_dye/New()
-	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(UpdateColor)))
 	return ..()
 
 /datum/reagent/hair_dye/proc/UpdateColor()
@@ -2186,7 +2039,7 @@
 	var/mob/living/carbon/human/exposed_human = exposed_mob
 	exposed_human.hair_color = pick(potential_colors)
 	exposed_human.facial_hair_color = pick(potential_colors)
-	exposed_human.update_hair()
+	exposed_human.update_body_parts()
 
 /datum/reagent/barbers_aid
 	name = "Barber's Aid"
@@ -2208,7 +2061,7 @@
 	to_chat(exposed_human, span_notice("Hair starts sprouting from your scalp."))
 	exposed_human.hairstyle = picked_hair
 	exposed_human.facial_hairstyle = picked_beard
-	exposed_human.update_hair(is_creating = TRUE)
+	exposed_human.update_body_parts()
 
 /datum/reagent/concentrated_barbers_aid
 	name = "Concentrated Barber's Aid"
@@ -2228,7 +2081,7 @@
 	to_chat(exposed_human, span_notice("Your hair starts growing at an incredible speed!"))
 	exposed_human.hairstyle = "Very Long Hair"
 	exposed_human.facial_hairstyle = "Beard (Very Long)"
-	exposed_human.update_hair(is_creating = TRUE)
+	exposed_human.update_body_parts()
 
 /datum/reagent/concentrated_barbers_aid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
@@ -2250,7 +2103,7 @@
 		else
 			message = span_notice("Your scalp mutates, a full head of hair sprouting from it.")
 		to_chat(M, message)
-		human_mob.update_hair(is_creating = TRUE)
+		human_mob.update_body_parts()
 
 /datum/reagent/baldium
 	name = "Baldium"
@@ -2270,7 +2123,7 @@
 	to_chat(exposed_human, span_danger("Your hair is falling out in clumps!"))
 	exposed_human.hairstyle = "Bald"
 	exposed_human.facial_hairstyle = "Shaved"
-	exposed_human.update_hair(is_creating = TRUE)
+	exposed_human.update_body_parts()
 
 /datum/reagent/saltpetre
 	name = "Saltpetre"
@@ -2526,6 +2379,14 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
+/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/ling)
+	..()
+	ADD_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+
+/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/ling)
+	..()
+	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
 	if(target.mind)
 		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -2547,8 +2408,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_timed_status_effect(3 SECONDS * REM * delta_time, /datum/status_effect/confusion, max_duration = 5 SECONDS)
-	M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/dizziness, max_duration = 12 SECONDS)
+	M.adjust_confusion_up_to(3 SECONDS * REM * delta_time, 5 SECONDS)
+	M.adjust_dizzy_up_to(6 SECONDS * REM * delta_time, 12 SECONDS)
 
 	if(DT_PROB(10, delta_time))
 		to_chat(M, "You feel confused and disoriented.")
@@ -2598,6 +2459,7 @@
 	taste_description = "insides"
 	taste_mult = 4
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/yuck_cycle = 0 //! The `current_cycle` when puking starts.
 
 /datum/reagent/yuck/on_mob_add(mob/living/L)
@@ -2721,7 +2583,7 @@
 /datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
 	. = ..()
 	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
-	addtimer(CALLBACK(exposed_obj, .proc/_RemoveElement, list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
+	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
 
 /datum/reagent/gravitum/on_mob_metabolize(mob/living/L)
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
@@ -2745,6 +2607,7 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~34 seconds
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	self_consuming = TRUE
 	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
 	var/significant = FALSE
@@ -2813,6 +2676,7 @@
 	description = "A solution that can be used to create pH paper booklets, or sprayed on things to colour them by their pH."
 	taste_description = "a strong chemical taste"
 	color = "#1f8016"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 //Colours things by their pH
 /datum/reagent/universal_indicator/expose_atom(atom/exposed_atom, reac_volume)
@@ -2947,3 +2811,39 @@
 		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
 		if(myseed)
 			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))
+
+// I made this food....with love.
+// Reagent added to food by chef's with a chef's kiss. Makes people happy.
+/datum/reagent/love
+	name = "Love"
+	description = "This food's been made... with love."
+	color = "#ff7edd"
+	taste_description = "love"
+	taste_mult = 10
+	overdose_threshold = 50 // too much love is a bad thing
+
+/datum/reagent/love/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	// A syringe is not grandma's cooking
+	if(methods & ~INGEST)
+		exposed_mob.reagents.del_reagent(type)
+
+/datum/reagent/love/on_mob_metabolize(mob/living/metabolizer)
+	. = ..()
+	metabolizer.add_mood_event(name, /datum/mood_event/love_reagent)
+
+/datum/reagent/love/on_mob_delete(mob/living/deleted_from)
+	. = ..()
+	// When we exit the system we'll leave the moodlet based on the amount we had
+	var/duration_of_moodlet = current_cycle * 20 SECONDS
+	deleted_from.clear_mood_event(name)
+	deleted_from.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)
+
+/datum/reagent/love/overdose_process(mob/living/metabolizer, delta_time, times_fired)
+	var/mob/living/carbon/carbon_metabolizer = metabolizer
+	if(!istype(carbon_metabolizer) || !carbon_metabolizer.can_heartattack() || carbon_metabolizer.undergoing_cardiac_arrest())
+		metabolizer.reagents.del_reagent(type)
+		return
+
+	if(DT_PROB(10, delta_time))
+		carbon_metabolizer.set_heartattack(TRUE)

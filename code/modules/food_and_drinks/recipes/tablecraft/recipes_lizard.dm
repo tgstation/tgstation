@@ -262,6 +262,67 @@
 	result = /obj/item/food/pizza/imperial_flatbread
 	subcategory = CAT_LIZARD
 
+/datum/crafting_recipe/food/rawmeat_flatbread
+	name = "Meatlovers flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+		/obj/item/food/meat/slab = 1
+	)
+	result = /obj/item/food/pizza/rawmeat_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/stinging_flatbread
+	name = "Stinging flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+		/obj/item/food/larvae = 1,
+		/obj/item/food/canned_jellyfish = 1
+	)
+	result = /obj/item/food/pizza/stinging_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/zmorgast_flatbread
+	name = "Zmorgast flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+		/obj/item/food/grown/cucumber = 2,
+		/obj/item/food/egg = 1,
+		/obj/item/organ/internal/liver = 1
+	)
+	result = /obj/item/food/pizza/zmorgast_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/fish_flatbread
+	name = "BBQ fish flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+		/obj/item/food/fishmeat = 2,
+		/datum/reagent/consumable/bbqsauce = 5
+	)
+	result = /obj/item/food/pizza/fish_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/mushroom_flatbread
+	name = "Mushroom and tomato flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+		/obj/item/food/grown/tomato = 1,
+		/obj/item/food/grown/mushroom = 3,
+		/datum/reagent/consumable/quality_oil = 3
+	)
+	result = /obj/item/food/pizza/mushroom_flatbread
+	subcategory = CAT_LIZARD
+
+/datum/crafting_recipe/food/nutty_flatbread
+	name = "Nut paste flatbread"
+	reqs = list(
+		/obj/item/food/root_flatbread = 1,
+		/datum/reagent/consumable/korta_flour = 5,
+		/datum/reagent/consumable/korta_milk = 5
+	)
+	result = /obj/item/food/pizza/nutty_flatbread
+	subcategory = CAT_LIZARD
+
 /datum/crafting_recipe/food/emperor_roll
 	name = "Emperor roll"
 	reqs = list(
@@ -288,7 +349,7 @@
 	name = "Atrakor dumpling soup"
 	reqs = list(
 		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/meat/rawcutlet = 2,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/lizard_dumplings = 1,
@@ -301,7 +362,7 @@
 	name = "Meatball noodle soup"
 	reqs = list(
 		/datum/reagent/water = 10,
-		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/meat/rawcutlet = 2,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/spaghetti/nizaya = 1,
@@ -314,7 +375,7 @@
 /datum/crafting_recipe/food/black_broth
 	name = "Tiziran black broth"
 	reqs = list(
-		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/tiziran_sausage = 1,
 		/obj/item/food/grown/onion = 1,
 		/datum/reagent/consumable/vinegar = 5,
@@ -327,7 +388,7 @@
 /datum/crafting_recipe/food/jellyfish_stew
 	name = "Jellyfish stew"
 	reqs = list(
-		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/canned_jellyfish = 1,
 		/obj/item/food/grown/soybeans = 1,
 		/obj/item/food/grown/redbeet = 1,
@@ -339,7 +400,7 @@
 /datum/crafting_recipe/food/rootbread_soup
 	name = "Rootbread soup"
 	reqs = list(
-		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/breadslice/root = 2,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/grown/chili = 1,
@@ -384,7 +445,7 @@
 /datum/crafting_recipe/food/korta_ice
 	name = "Korta ice"
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/sillycup = 1,
+		/obj/item/reagent_containers/cup/glass/sillycup = 1,
 		/datum/reagent/consumable/ice = 15,
 		/datum/reagent/consumable/korta_nectar = 5,
 		/obj/item/food/grown/berries = 1

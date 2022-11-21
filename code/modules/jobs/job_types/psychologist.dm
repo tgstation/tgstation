@@ -6,9 +6,10 @@
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of personnel and the chief medical officer"
+	supervisors = "the Head of Personnel and the Chief Medical Officer"
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "PSYCHOLOGIST"
 
 	outfit = /datum/outfit/job/psychologist
 	plasmaman_outfit = /datum/outfit/plasmaman/psychologist
