@@ -4,7 +4,7 @@
  */
 /datum/element/rust
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// The rust image itself, since the icon and icon state are only used as an argument
 	var/image/rust_overlay
 
