@@ -22,7 +22,6 @@
 	var/list/data = get_header_data()
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
-	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	if(current_user)
 		data["user"] = list()
 		data["user"]["name"] = current_user.account_holder
@@ -40,8 +39,8 @@
 	if(!networked)
 		GLOB.allbountyboards += computer
 		networked = TRUE
-	if(card_slot && card_slot.stored_card && card_slot.stored_card.registered_account)
-		current_user = card_slot.stored_card.registered_account
+	if(computer.computer_id_slot)
+		current_user = computer.computer_id_slot?.registered_account
 	for(var/i in GLOB.request_list)
 		if(!i)
 			continue

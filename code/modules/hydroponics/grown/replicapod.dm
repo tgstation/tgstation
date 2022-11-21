@@ -34,6 +34,7 @@
 	name = "pack of replica pod seeds"
 	desc = "These seeds grow into replica pods. They say these are used to harvest humans."
 	icon_state = "seed-replicapod"
+	plant_icon_offset = 2
 	species = "replicapod"
 	plantname = "Replica Pod"
 	product = /mob/living/carbon/human //verrry special -- Urist

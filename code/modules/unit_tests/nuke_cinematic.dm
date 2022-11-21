@@ -16,7 +16,7 @@
 /datum/unit_test/nuke_cinematic/Run()
 	var/obj/machinery/nuclearbomb/syndicate/nuke = allocate(/obj/machinery/nuclearbomb/syndicate)
 	var/mob/living/carbon/human/nuked = allocate(/mob/living/carbon/human)
-	var/datum/client_interface/mock_client = new()
+	var/datum/client_interface/mock_client = new
 	nuked.mock_client = mock_client
 	mock_client.mob = nuked
 
