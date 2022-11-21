@@ -46,7 +46,7 @@
 
 /mob/living/basic/carp/magic/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/pet_command/point_targetting/use_ability)
+	AddComponent(/datum/component/pet_command/point_targetting/use_ability, pointed_reaction = "starts glowing intensely")
 	assign_spell()
 
 /// Updates name based on chosen spell

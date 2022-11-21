@@ -26,8 +26,7 @@
 
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(try_tame))
-	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, PROC_REF(on_tame)) //Instantly succeeds
-	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, PROC_REF(on_tame)) //Instantly succeeds
+	RegisterSignal(parent, list(COMSIG_EXTERNAL_TAME_LIVING_MOB, COMSIG_SIMPLEMOB_SENTIENCEPOTION, COMSIG_SIMPLEMOB_TRANSFERPOTION), PROC_REF(on_tame)) //Instantly succeeds
 
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
@@ -54,17 +53,20 @@
 	SIGNAL_HANDLER
 	tame = TRUE
 
-	SEND_SIGNAL(parent, COMSIG_LIVING_TAMED, tamer)
+	SEND_SIGNAL(parent, COMSIG_ON_LIVING_TAMED, tamer)
 	after_tame?.Invoke(tamer)//Run custom behavior if needed
 
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
+		if (isliving(tamer))
+			living_parent.faction += "[REF(tamer)]"
 		if (living_parent.ai_controller)
 			var/list/friends = living_parent.ai_controller.blackboard[BB_PET_FRIENDS_LIST]
 			if (!friends)
 				friends = list()
-			friends += WEAKREF(tamer)
+			friends[WEAKREF(tamer)] = TRUE
 			living_parent.ai_controller.blackboard[BB_PET_FRIENDS_LIST] = friends
+			living_parent.ai_controller.CancelActions() // In case they are currently actively biting you
 
 	if(ishostile(parent) && isliving(tamer)) //Kinda shit check but this only applies to hostiles atm
 		var/mob/living/simple_animal/hostile/evil_but_now_not_evil = parent

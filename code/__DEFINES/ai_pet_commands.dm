@@ -1,7 +1,7 @@
 /// Blackboard field for the most recent command the pet was given
 #define BB_ACTIVE_PET_COMMAND "BB_active_pet_command"
 /// Follow your normal behaviour
-#define PET_COMMAND_NONE 0
+#define PET_COMMAND_NONE "pet_command_none"
 /// Don't take any actions at all
 #define PET_COMMAND_IDLE "pet_command_idle"
 /// Pursue and attack the pointed target
@@ -13,10 +13,10 @@
 
 /// Blackboard field for what we actually want the pet to target
 #define BB_CURRENT_PET_TARGET "BB_current_pet_target"
-/// List of weakrefs to mobs this mob is friends with, will follow their instructions and won't attack them
+/// Typecache of weakrefs to mobs this mob is friends with, will follow their instructions and won't attack them
 #define BB_PET_FRIENDS_LIST "BB_pet_friends_list"
 
 /// Signal sent when user makes an input requesting a radial command menu, contains a list to append radial data to
 #define COMSIG_REQUESTING_PET_COMMAND_RADIAL "requesting_pet_command_radial_menu"
-/// Signal sent when user selects a command on a radial menu, contains the key of the command selected
+/// Signal sent when user selects a command on a radial menu, contains the key of the command selected and the user who selected it
 #define COMSIG_RADIAL_PET_COMMAND_SELECTED "radial_pet_command_selected"

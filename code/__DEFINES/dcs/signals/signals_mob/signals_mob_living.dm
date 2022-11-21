@@ -125,5 +125,7 @@
 	/// Don't send a message for sacrificing this thing, we have our own
 	#define SILENCE_SACRIFICE_MESSAGE (1<<1)
 
+/// Called when we tame a mob through some means external to the component : (mob/living/tamer)
+#define COMSIG_EXTERNAL_TAME_LIVING_MOB "external_tame_living_mob"
 /// From /datum/component/tameable/on_tame() : (mob/living/tamer)
-#define COMSIG_LIVING_TAMED "living_tamed"
+#define COMSIG_ON_LIVING_TAMED "on_living_tamed"

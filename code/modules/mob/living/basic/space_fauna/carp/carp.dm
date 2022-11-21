@@ -85,15 +85,15 @@
 	AddElement(/datum/element/wall_smasher)
 	setup_eating()
 
-	if (tamer)
-		on_tamed(tamer)
-	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	AddComponent(/datum/component/pet_command/idle)
 	AddComponent(/datum/component/pet_command/free)
 	AddComponent(/datum/component/pet_command/follow, command_feedback = "bloops")
 	AddComponent(/datum/component/pet_command/point_targetting/attack)
+	AddComponent(/datum/component/pet_commands_menu)
+	if (tamer)
+		SEND_SIGNAL(src, COMSIG_EXTERNAL_TAME_LIVING_MOB, tamer)
 
 	teleport = new(src)
 	teleport.Grant(src)
@@ -112,10 +112,12 @@
 	set_greyscale(colors= list(pick_weight(carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
-/mob/living/basic/carp/proc/on_tamed(mob/tamer)
+/mob/living/basic/carp/proc/on_tamed(mob/tamer, feedback = TRUE)
 	tamed = TRUE
 	buckle_lying = 0
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
+	if (!feedback)
+		return
 	spin(20, 1)
 	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
 

@@ -63,7 +63,7 @@
 	if(owner)
 		spawned_mob.faction = list("[REF(owner)]")
 	for(var/mob/living/viewer in viewers(5, get_turf(src)))
-		to_chat(viewer, viewer == owner ? span_warning("You have a bad feeling about this.") : span_notice("The newly grown [spawned_mob.name] looks up at you with friendly eyes."))
+		to_chat(viewer, viewer != owner ? span_warning("You have a bad feeling about this.") : span_notice("The newly grown [spawned_mob.name] looks up at you with friendly eyes."))
 	qdel(src)
 
 /obj/item/toy/plush/carpplushie/dehy_carp/proc/owner_deleted(datum/source)
