@@ -3,12 +3,12 @@
 	desc = "A device that performs chemical separation by distillation."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "separator"
+	light_power = 1
 	var/fill_icon = 'icons/obj/reagentfillings.dmi'
 	var/fill_icon_state = "separator"
 	var/list/fill_icon_thresholds = list(1,30,80)
 	var/list/temperature_icon_thresholds = list(0,50,100)
 	var/burning = FALSE
-	var/light_power = 1
 	/// Minimal mixture temperature for separation
 	var/required_temp = T0C + 100
 	/// Mixture heating speed in degrees per second
@@ -189,11 +189,11 @@
 	if(isturf(loc))
 		var/turf/location = loc
 		location.hotspot_expose(exposed_temperature = 700, exposed_volume = 5)
-	if(reagents.chem_temp < req_temp)
+	if(reagents.chem_temp < required_temp)
 		reagents.adjust_thermal_energy(heating_rate * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume)
 		update_appearance(UPDATE_ICON)
 		return
-	if(reagents.chem_temp >= req_temp)
+	if(reagents.chem_temp >= required_temp)
 		var/transfer_amount = distillation_rate * delta_time
 		reagents.trans_id_to(beaker.reagents, separating_reagent, transfer_amount)
 	update_appearance(UPDATE_ICON)
