@@ -5,7 +5,7 @@
  */
 /datum/element/mob_killed_tally
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Which tally needs to be ticked up in the blackbox
 	var/tally_string
 

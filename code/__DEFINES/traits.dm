@@ -325,7 +325,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RDS_SUPPRESSED "rds_suppressed"
 /// overrides the update_fire proc to always add fire (for lava)
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
-/// Galactic Common Sign Language
+/// Indicates if the mob is currently speaking with sign language
 #define TRAIT_SIGN_LANG "sign_language"
 /// This mob is able to use sign language over the radio.
 #define TRAIT_CAN_SIGN_ON_COMMS "can_sign_on_comms"

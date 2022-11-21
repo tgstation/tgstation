@@ -20,8 +20,12 @@
 
 /obj/machinery/rnd/Initialize(mapload)
 	. = ..()
-	stored_research = SSresearch.science_tech
+	if(!CONFIG_GET(flag/no_default_techweb_link))
+		stored_research = SSresearch.science_tech
 	wires = new /datum/wires/rnd(src)
+
+/obj/machinery/rnd/proc/connect_techweb(datum/techweb/new_techweb)
+	stored_research = new_techweb
 
 /obj/machinery/rnd/Destroy()
 	stored_research = null
@@ -59,10 +63,14 @@
 /obj/machinery/rnd/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
 
-/obj/machinery/rnd/multitool_act(mob/living/user, obj/item/tool)
+/obj/machinery/rnd/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(panel_open)
 		wires.interact(user)
 		return TRUE
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		connect_techweb(tool.buffer)
+		return TRUE
+	return FALSE
 
 /obj/machinery/rnd/multitool_act_secondary(mob/living/user, obj/item/tool)
 	if(panel_open)

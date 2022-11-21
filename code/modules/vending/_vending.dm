@@ -663,7 +663,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	. = FALSE
 
-	if(in_range(fatty, src))
+	if(Adjacent(fatty))
 		for(var/mob/living/L in get_turf(fatty))
 			var/was_alive = (L.stat != DEAD)
 			var/mob/living/carbon/C = L
