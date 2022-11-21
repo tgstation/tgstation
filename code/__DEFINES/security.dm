@@ -22,7 +22,8 @@
 	DETSCAN_CATEGORY_HOLY, \
 	DETSCAN_CATEGORY_ILL, \
 	DETSCAN_CATEGORY_SYN, \
-	DETSCAN_CATEGORY_ADD)
+	DETSCAN_CATEGORY_ADD, \
+)
 
 // the order departments show up in for the id scan (its sorted by red to blue on the color wheel)
 #define DETSCAN_ACCESS_ORDER list(\
