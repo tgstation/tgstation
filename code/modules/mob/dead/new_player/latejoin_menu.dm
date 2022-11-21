@@ -2,33 +2,30 @@
 #define JOB_CHOICE_REROLL "Reroll"
 #define JOB_CHOICE_CANCEL "Cancel"
 
-/datum/latejoin_menu
-	var/mob/dead/new_player/owner
-
-/datum/latejoin_menu/New(/mob/dead/new_player/owner)
-	. = ..()
-	src.owner = owner
-
 /// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
-/datum/latejoin_menu/proc/fallback_ui()
+/datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
 	var/list/jobs = list("Random")
 	for(var/datum/job/job in SSjob.joinable_occupations)
 		jobs += job.title
 
-	var/input = tgui_input_list(owner, "Pick a job to join as:", "Latejoin Job Selection", jobs)
+	var/input = tgui_input_list(user, "Pick a job to join as:", "Latejoin Job Selection", jobs)
 
 	if(!input)
 		return
 
-	owner.AttemptLateSpawn(input)
+	user.AttemptLateSpawn(input)
 
 /datum/latejoin_menu/ui_interact(mob/user, datum/tgui/ui)
+	if(!isnewplayer(user))
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Job Selection", "Late Join Job Selection:")
 		ui.open()
 
 /datum/latejoin_menu/ui_data(mob/user)
+	var/mob/dead/new_player/owner = user
 	var/list/departments = list()
 	var/list/data = list(
 		"disable_jobs_for_non_observers" = SSlag_switch.measures[DISABLE_NON_OBSJOBS],
@@ -90,14 +87,10 @@
 /datum/latejoin_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 
-	if(src != usr)
+	if(!ui.user.client || ui.user.client.interviewee || !isnewplayer(ui.user))
 		return TRUE
 
-	if(!owner.client)
-		return TRUE
-
-	if(owner.client.interviewee)
-		return TRUE
+	var/mob/dead/new_player/owner = ui.user
 
 	if(action == "SelectedJob")
 		if(params["job"] == "Random")
