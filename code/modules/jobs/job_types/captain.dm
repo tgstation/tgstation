@@ -48,6 +48,8 @@
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
+	dept_jacket = /obj/item/clothing/suit/hooded/wintercoat/captain
+
 
 /datum/job/captain/get_captaincy_announcement(mob/living/captain)
 	return "Captain [captain.real_name] on deck!"
