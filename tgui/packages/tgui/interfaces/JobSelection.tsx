@@ -2,11 +2,10 @@ import { useBackend } from '../backend';
 import { Button, Stack, Box, Icon } from '../components';
 import { Window } from '../layouts';
 import { JOB2ICON } from './Orbit/constants';
-import { darkenColor } from '../constants';
+import { COLORS, darkenColor } from '../constants';
 
 type BaseVars = {
   name: string;
-  color: string;
   open_slots: number;
 };
 
@@ -22,6 +21,7 @@ type Job = BaseVars & {
 type Department = BaseVars & {
   jobs: Job[];
   open_slots: number;
+  color: string;
 };
 
 type Data = {
@@ -90,6 +90,9 @@ export const JobSelection = (props, context) => {
           }>
           <Box wrap="wrap" style={{ 'columns': '20em' }}>
             {departments.map((department) => {
+              department.color =
+                COLORS.department[department.name.toLowerCase()] ||
+                COLORS.department.other;
               return (
                 <Box key={department.name} minWidth="30%">
                   <DepartmentSection

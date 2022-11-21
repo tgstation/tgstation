@@ -7,7 +7,6 @@
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = SUPERVISOR_CMO
-	selection_color = "#ffeef0"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "PARAMEDIC"
 

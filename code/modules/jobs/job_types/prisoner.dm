@@ -6,7 +6,6 @@
 	total_positions = 0
 	spawn_positions = 2
 	supervisors = "the security team"
-	selection_color = "#ffe1c3"
 	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_LOWER
 	config_tag = "PRISONER"

@@ -68,7 +68,6 @@
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 		var/list/department_jobs = list()
 		var/list/department_data = list(
-			"color" = department.latejoin_color,
 			"name" = department.department_name,
 			"jobs" = department_jobs,
 			"open_slots" = 0,
@@ -84,7 +83,6 @@
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
 				"description" = job_datum.description,
 				"prioritized" = !!(job_datum in SSjob.prioritized_jobs),
-				"color" = job_datum.selection_color,
 				"name" = job_datum.title,
 				"used_slots" = job_datum.current_positions,
 				"open_slots" = job_datum.total_positions,
