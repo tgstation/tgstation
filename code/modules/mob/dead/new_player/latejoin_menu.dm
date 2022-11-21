@@ -12,7 +12,7 @@
 /// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
 /datum/latejoin_menu/proc/fallback_ui()
 	var/list/jobs = list("Random")
-	for(var/datum/job/job in SSJob.joinable_occupations)
+	for(var/datum/job/job in SSjob.joinable_occupations)
 		jobs += job.title
 
 	var/input = tgui_input_list(owner, "Pick a job to join as:", "Latejoin Job Selection", jobs)
