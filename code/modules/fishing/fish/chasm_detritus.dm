@@ -2,6 +2,8 @@
 #define NORMAL_CONTENTS "normal"
 /// Bodies-only default contents.
 #define BODIES_ONLY "bodies_only"
+/// No corpses (so there's still lobstrosities because they're the main threat with this).
+#define NO_CORPSES "no_corpses"
 
 /// An object which should replace itself on initialisation with something which fell into a chasm.
 /obj/item/chasm_detritus
@@ -25,6 +27,11 @@
 			/obj/effect/mob_spawn/corpse/human/skeleton = 3,
 			/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 1,
 		),
+		NO_CORPSES = list(
+			/obj/item/stack/ore/slag = 10,
+			/obj/item/stack/sheet/bone = 14,
+			/mob/living/simple_animal/hostile/asteroid/lobstrosity/lava = 1,
+		),
 	)
 
 /obj/item/chasm_detritus/Initialize(mapload)
@@ -42,7 +49,8 @@
 	detritus.forceMove(get_turf(src))
 	qdel(src)
 
-/// Instantiates something from the default list.
+
+/// Instantiates something in its place from the default_contents list.
 /obj/item/chasm_detritus/proc/create_default_object()
 	var/contents_type = pick(default_contents[default_contents_key])
 	new contents_type(get_turf(src))
@@ -84,6 +92,11 @@
 	return chasm_contents
 
 
+/obj/item/chasm_detritus/restricted/objects
+	default_contents_chance = 12.5
+	default_contents_key = NO_CORPSES
+
+
 /obj/item/chasm_detritus/restricted/bodies
 	default_contents_chance = 50
 	default_contents_key = BODIES_ONLY
@@ -92,3 +105,4 @@
 
 #undef NORMAL_CONTENTS
 #undef BODIES_ONLY
+#undef NO_CORPSES

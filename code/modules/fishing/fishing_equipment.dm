@@ -99,7 +99,7 @@
 	icon_state = "treasure"
 	fishing_hook_traits = FISHING_HOOK_MAGNETIC
 	rod_overlay_icon_state = "hook_treasure_overlay"
-	chasm_detritus_type = /obj/item/chasm_detritus/restricted
+	chasm_detritus_type = /obj/item/chasm_detritus/restricted/objects
 
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
