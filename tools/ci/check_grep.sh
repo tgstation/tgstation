@@ -16,7 +16,7 @@ st=0
 if command -v rg >/dev/null 2>&1; then
 	grep=rg
 	pcre2_support=1
-	if ! rg -P '' >/dev/null 2>&1; then
+	if [ ! rg -P '' >/dev/null 2>&1 ] ; then
 		pcre2_support=0
 	fi
 	code_files="-g *.dm"
