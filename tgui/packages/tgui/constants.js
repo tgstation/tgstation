@@ -4,6 +4,8 @@
  * @license MIT
  */
 
+import { Color } from 'common/color';
+
 // UI states, which are mirrored from the BYOND code.
 export const UI_INTERACTIVE = 2;
 export const UI_UPDATE = 1;
@@ -314,4 +316,14 @@ export const getGasFromId = (gasId) => {
 // Paths need to be exact matches so we dont need to lowercase stuffs.
 export const getGasFromPath = (gasPath) => {
   return GASES.find((gas) => gasPath === gas.path);
+};
+
+// Darkens a colour by a given percent. Only takes hex values. Returns a color, which can have toString called to get it's rgba() css value.
+export const darkenColor = (color, percent) => {
+  percent = percent / 100;
+  color = Color.fromHex(color);
+  color.r -= color.r * percent;
+  color.g -= color.g * percent;
+  color.b -= color.b * percent;
+  return color;
 };

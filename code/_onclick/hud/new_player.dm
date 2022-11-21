@@ -187,12 +187,12 @@
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
-	var/hpc = CONFIG_GET(number/hard_popcap)
-	var/epc = CONFIG_GET(number/extreme_popcap)
-	if(hpc && epc)
-		relevant_cap = min(hpc, epc)
+	var/hard_popcap = CONFIG_GET(number/hard_popcap)
+	var/extreme_popcap = CONFIG_GET(number/extreme_popcap)
+	if(hard_popcap && extreme_popcap)
+		relevant_cap = min(hard_popcap, extreme_popcap)
 	else
-		relevant_cap = max(hpc, epc)
+		relevant_cap = max(hard_popcap, extreme_popcap)
 
 	var/mob/dead/new_player/new_player = hud.mymob
 
@@ -208,7 +208,7 @@
 			SSticker.queued_players += new_player
 			to_chat(new_player, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
 		return
-	new_player.LateChoices()
+	new_player.ui_interact(new_player)
 
 /atom/movable/screen/lobby/button/join/proc/show_join_button()
 	SIGNAL_HANDLER
