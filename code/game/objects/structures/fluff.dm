@@ -192,10 +192,11 @@
 	desc = "A towering link of chains leading up to the ceiling."
 	icon = 'icons/effects/32x96.dmi'
 	icon_state = "chain"
-	layer = ABOVE_OBJ_LAYER
 	anchored = TRUE
 	density = TRUE
 	deconstructible = FALSE
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/structure/fluff/beach_towel
 	name = "beach towel"

@@ -5,7 +5,7 @@
  */
 /datum/element/bump_click
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///Tool behaviours to check for on the bumper's active held item before clicking the attached atom with it.
 	var/list/tool_behaviours
 	///Types (and their subtypes) of item to look for in the bumper's active hand before clicking the attached atom.
