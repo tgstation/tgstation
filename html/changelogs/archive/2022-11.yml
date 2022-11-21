@@ -598,3 +598,38 @@
   - bugfix: Canned Laughter, T-Borg's Tonic Water, and Soda Water cans should all
       come with the expected marketed 50 units of goodness, rather than cheaping out
       on materials for only 30 units of can volume.
+2022-11-21:
+  A.C.M.O.:
+  - rscdel: Removed the Tongue Tied quirk. The tongue can still be found and used
+      in-game.
+  - refactor: Refactored Tongue Tied's tongue to use the Sign Language and Mute traits.
+  - rscadd: Added Sign Language innate action. Granted by book or quirk.
+  - rscadd: Added the Galactic Common Sign Language book as rare maint and space loot.
+  - rscadd: Added the Signer quirk, which teaches you sign language in exchange for
+      4 quirk points.
+  - rscadd: Added the Mute quirk, which grants you 4 quirk points in exchange for
+      your voice.
+  - bugfix: Fixed sign language say_yell verb, which allows you to emphatically sign.
+  Addust:
+  - bugfix: your local space explorer has removed the locks from all kilo-class mining
+      vessel mining airlock bolt control panels. please report any surviving instances
+      to central command so said space explorer can be dispatched to do the same exact
+      thing.
+  Agameofscones:
+  - imageadd: Resprited rice, sugar, and flour sacks
+  Fikou:
+  - bugfix: fixes using body purist with quadruple amputee
+  Iamgoofball:
+  - balance: Hotkey-based inventory management now applies the click cooldown to prevent
+      it from being abusable in combat scenarios.
+  JohnFulpWillard:
+  - bugfix: Research servers now only show servers connected to their techweb.
+  Melbert:
+  - bugfix: Fullheals heal organ damage and oxy again.
+  Striders13:
+  - bugfix: fixed nightmare brains being invisible
+  ZephyrTFA:
+  - bugfix: Airlocks will no longer 'deny' entry when bumped while depowered
+  - bugfix: rcds will now prioritize completing a girder over making a new wall on
+      a turf
+  - bugfix: Vending machines will no longer crush you through windows!
