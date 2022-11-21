@@ -86,6 +86,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/list_dna,
 	/client/proc/list_fingerprints,
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
+	/datum/admins/proc/trophy_manager,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)

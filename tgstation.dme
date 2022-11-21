@@ -2095,6 +2095,7 @@
 #include "code\modules\admin\tag.dm"
 #include "code\modules\admin\team_panel.dm"
 #include "code\modules\admin\topic.dm"
+#include "code\modules\admin\trophy_manager.dm"
 #include "code\modules\admin\whitelist.dm"
 #include "code\modules\admin\callproc\callproc.dm"
 #include "code\modules\admin\smites\bad_luck.dm"
