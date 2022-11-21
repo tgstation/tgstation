@@ -1,6 +1,5 @@
 import { useBackend } from '../backend';
 import { Icon, Section, Stack } from '../components';
-import { COLORS } from '../constants';
 import { Window } from '../layouts';
 
 type Objective = {
@@ -12,18 +11,15 @@ type Objective = {
 type Info = {
   objectives: Objective[];
   nation: string;
-  nationDepartment: string;
+  nationColor: string;
 };
 
 export const AntagInfoSeparatist = (props, context) => {
   const { data } = useBackend<Info>(context);
-  const { nationDepartment } = data;
+  const { nationColor } = data;
   return (
     <Window width={620} height={450}>
-      <Window.Content
-        backgroundColor={
-          COLORS.department[nationDepartment] || COLORS.department.other
-        }>
+      <Window.Content backgroundColor={nationColor}>
         <Stack vertical fill>
           <Stack.Item grow>
             <IntroductionObjectives />
