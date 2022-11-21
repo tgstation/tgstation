@@ -25,9 +25,9 @@
 #define ADDITIVE_FISHING_MOD "additive"
 #define MULTIPLICATIVE_FISHING_MOD "multiplicative"
 
-#define FISHING_HOOK_MAGNETIC (1 << 0)
-#define FISHING_HOOK_SHINY (1 << 1)
-#define FISHING_HOOK_WEIGHTED (1 << 2)
+#define FISHING_HOOK_SHINY (1 << 0)
+#define FISHING_HOOK_WEIGHTED (1 << 1)
+#define FISHING_HOOK_RESCUE (1 << 2)
 
 #define FISHING_LINE_CLOAKED (1 << 0)
 #define FISHING_LINE_REINFORCED (1 << 1)
@@ -40,3 +40,8 @@
 #define FISHING_MINIGAME_RULE_HEAVY_FISH "heavy"
 #define FISHING_MINIGAME_RULE_WEIGHTED_BAIT "weighted"
 #define FISHING_MINIGAME_RULE_LIMIT_LOSS "limit_loss"
+
+/// The default additive value for fishing hook catch weight modifiers.
+#define FISHING_DEFAULT_HOOK_BONUS_ADDITIVE 0
+/// The default multiplicative value for fishing hook catch weight modifiers.
+#define FISHING_DEFAULT_HOOK_BONUS_MULTIPLICATIVE 1
