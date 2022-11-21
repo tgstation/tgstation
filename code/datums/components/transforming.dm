@@ -87,7 +87,7 @@
 	RegisterSignal(parent, COMSIG_DET_SCANNED, PROC_REF(on_scan))
 
 /datum/component/transforming/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
+	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT, COMSIG_DET_SCANNED))
 
 /datum/component/transforming/proc/on_scan(datum/source, mob/user, list/extra_data)
 	SIGNAL_HANDLER
