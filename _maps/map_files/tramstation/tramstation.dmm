@@ -9654,18 +9654,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"dvI" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/hallway/primary/tram/center)
 "dvK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -13070,7 +13058,6 @@
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "eED" = (
@@ -41542,9 +41529,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "oWe" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -65859,9 +65843,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "xAW" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -67026,9 +67007,6 @@
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/left)
 "xXq" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 1
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -166909,7 +166887,7 @@ dja
 wvE
 eSz
 ioF
-dvI
+ebF
 hZb
 rOu
 fGc
