@@ -6231,13 +6231,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bWv" = (
-/obj/structure/rack,
-/obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/integrated_circuit/loaded/hello_world,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/bci_implanter,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/office)
 "bWE" = (
@@ -71144,13 +71142,25 @@
 /area/station/engineering/atmos)
 "ujZ" = (
 /obj/structure/rack,
-/obj/item/controller,
-/obj/item/compact_remote,
-/obj/item/compact_remote,
+/obj/item/controller{
+	pixel_x = -7
+	},
+/obj/item/compact_remote{
+	pixel_x = -7
+	},
+/obj/item/compact_remote{
+	pixel_x = -7
+	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_x = 7
+	},
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = 7
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/office)
 "ukc" = (

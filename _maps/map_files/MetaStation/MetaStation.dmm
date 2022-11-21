@@ -34770,11 +34770,7 @@
 /turf/closed/wall/r_wall,
 /area/station/science/lab)
 "mvS" = (
-/obj/structure/table,
-/obj/machinery/airalarm/directional/south,
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 5
-	},
+/obj/machinery/bci_implanter,
 /turf/open/floor/iron,
 /area/station/science/explab)
 "mvY" = (
@@ -65294,7 +65290,9 @@
 "wVC" = (
 /obj/structure/rack,
 /obj/item/integrated_circuit/loaded/hello_world,
+/obj/item/storage/toolbox/electrical,
 /obj/item/integrated_circuit/loaded/speech_relay,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "wVO" = (
