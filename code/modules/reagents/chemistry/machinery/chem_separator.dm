@@ -3,6 +3,11 @@
 	desc = "A device that performs chemical separation by distillation."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "separator"
+	var/fill_icon = 'icons/obj/reagentfillings.dmi'
+	var/fill_icon_state = "separator"
+	var/list/fill_icon_thresholds = list(1,30,80)
+	var/list/temperature_icon_thresholds = list(0,50,100)
+	var/datum/looping_sound/generator/soundloop
 	var/burning = FALSE
 	var/req_temp = T0C + 100 // water boiling temperature
 	var/heating_rate = 5 // degrees per second
@@ -11,11 +16,20 @@
 	var/obj/item/reagent_containers/beaker
 
 /obj/structure/chem_separator/Initialize(mapload)
-	create_reagents(100)
+	create_reagents(200)
 	. = ..()
 
+/obj/structure/chem_separator/deconstruct(disassembled)
+	. = ..()
+	if(beaker && disassembled)
+		beaker.forceMove(drop_location())
+		beaker = null
+
 /obj/structure/chem_separator/Destroy()
-	QDEL_NULL(beaker)
+	if(burning)
+		STOP_PROCESSING(SSobj, src)
+	if(beaker)
+		QDEL_NULL(beaker)
 	return ..()
 
 /obj/structure/chem_separator/handle_atom_del(atom/A)
@@ -27,13 +41,56 @@
 /obj/structure/chem_separator/update_overlays()
 	. = ..()
 	set_light(burning ? 1 : 0)
-	if(beaker)
-		. += "[icon_state]_beaker"
+	// Burner overlay
 	if(burning)
 		. += mutable_appearance(icon, "[icon_state]_burn", alpha = alpha)
 		. += emissive_appearance(icon, "[icon_state]_burn", src, alpha = alpha)
+	// Separator reagents overlay
+	if(reagents.total_volume)
+		var/threshold = null
+		for(var/i in 1 to fill_icon_thresholds.len)
+			if(ROUND_UP(100 * reagents.total_volume / reagents.maximum_volume) >= fill_icon_thresholds[i])
+				threshold = i
+		if(threshold)
+			var/fill_name = "[fill_icon_state]_m_[fill_icon_thresholds[threshold]]"
+			var/mutable_appearance/filling = mutable_appearance(fill_icon, fill_name)
+			filling.color = mix_color_from_reagents(reagents.reagent_list)
+			. += filling
+	// Beaker overlay
+	if(beaker)
+		. += "[icon_state]_beaker"
+		// Beaker reagents overlay
+		if(beaker.reagents.total_volume)
+			var/threshold = null
+			for(var/i in 1 to fill_icon_thresholds.len)
+				if(ROUND_UP(100 * beaker.reagents.total_volume / beaker.reagents.maximum_volume) >= fill_icon_thresholds[i])
+					threshold = i
+			if(threshold)
+				var/fill_name = "[fill_icon_state]_b_[fill_icon_thresholds[threshold]]"
+				var/mutable_appearance/filling = mutable_appearance(fill_icon, fill_name)
+				filling.color = mix_color_from_reagents(beaker.reagents.reagent_list)
+				. += filling
+	// Thermometer overlay
+	var/threshold = null
+	for(var/i in 1 to temperature_icon_thresholds.len)
+		if(ROUND_UP(reagents.chem_temp - T0C) >= temperature_icon_thresholds[i])
+			threshold = i
+	if(threshold)
+		var/fill_name = "[icon_state]_temp_[temperature_icon_thresholds[threshold]]"
+		var/mutable_appearance/filling = mutable_appearance(icon_state, fill_name)
+		. += filling
+
+/obj/structure/chem_separator/proc/burn_attackby_check(obj/item/I, mob/living/user)
+	var/ignition_message = I.ignition_effect(src, user)
+	if(!ignition_message)
+		return
+	. = TRUE
+	user.visible_message(ignition_message)
+	fire_act(I.get_temperature())
 
 /obj/structure/chem_separator/attackby(obj/item/I, mob/user, params)
+	if(burn_attackby_check(I, user))
+		return
 	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/new_beaker = I
 		if(!user.transferItemToLoc(new_beaker, src))
@@ -100,6 +157,7 @@
 	if(reagents.total_volume >= reagents.maximum_volume)
 		return
 	beaker.reagents.trans_to(reagents, beaker.reagents.total_volume)
+	update_appearance()
 
 /obj/structure/chem_separator/proc/unload()
 	if(burning)
@@ -111,6 +169,7 @@
 	if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
 	reagents.trans_to(beaker.reagents, reagents.total_volume)
+	update_appearance()
 
 /obj/structure/chem_separator/process(delta_time)
 	if(!burning)
@@ -119,25 +178,23 @@
 	if(!beaker)
 		stop()
 		return
-	var/datum/reagents/beaker_reagents = beaker.reagents
-	if(beaker_reagents.total_volume >= beaker_reagents.maximum_volume)
+	if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		stop()
 		return
-	var/datum/reagents/own_reagents = reagents
-	var/amount_available = own_reagents.get_reagent_amount(separating_reagent)
-	if(!amount_available)
+	if(!reagents.get_reagent_amount(separating_reagent))
 		stop()
 		return
 	if(isturf(loc))
 		var/turf/location = loc
 		location.hotspot_expose(exposed_temperature = 700, exposed_volume = 5)
-	if(own_reagents.chem_temp < req_temp)
-		own_reagents.chem_temp += heating_rate * delta_time // TODO: heat capacity factor
+	if(reagents.chem_temp < req_temp)
+		reagents.adjust_thermal_energy(heating_rate * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume)
+		update_appearance()
 		return
 	if(reagents.chem_temp >= req_temp)
 		var/transfer_amount = distillation_rate * delta_time
-		own_reagents.trans_id_to(beaker_reagents, separating_reagent, transfer_amount)
-		// TODO: delete if needed
+		reagents.trans_id_to(beaker.reagents, separating_reagent, transfer_amount)
+	update_appearance()
 
 /obj/structure/chem_separator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -178,7 +235,6 @@
 		if("eject")
 			replace_beaker(usr)
 			. = TRUE
-	update_appearance()
 
 /datum/crafting_recipe/chem_separator
 	name = "Chemical separator"

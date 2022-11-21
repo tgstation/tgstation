@@ -80,9 +80,9 @@ export const ChemSeparator = (props, context) => {
                   style={{
                     'text-shadow': '1px 1px 0 black',
                   }}>
-                  {`${Math.round(data.own_total_volume)} of ${
+                  {`${Math.ceil(data.own_total_volume)} of ${
                     data.own_maximum_volume
-                  } units at ${Math.round(data.temperature)}°C`}
+                  } units at ${Math.ceil(data.temperature)}°C`}
                 </Box>
               </ProgressBar>
             </LabeledList.Item>
@@ -127,7 +127,7 @@ export const ChemSeparator = (props, context) => {
                     style={{
                       'text-shadow': '1px 1px 0 black',
                     }}>
-                    {`${Math.round(data.beaker_total_volume)} of ${
+                    {`${Math.ceil(data.beaker_total_volume)} of ${
                       data.beaker_maximum_volume
                     } units`}
                   </Box>
