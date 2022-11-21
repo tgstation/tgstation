@@ -72,22 +72,22 @@
 /datum/station_trait/strong_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 0.8
 
-/datum/station_trait/scarves
-	name = "Scarves"
+/datum/station_trait/wintergear
+	name = "Winter Gear"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
 	var/list/scarves
 
-/datum/station_trait/scarves/New()
+/datum/station_trait/wintergear/New()
 	. = ..()
 	report_message = pick(
-		"Nanotrasen is experimenting with seeing if neck warmth improves employee morale.",
+		"Nanotrasen is experimenting with seeing if warmth improves employee morale.",
 		"After Space Fashion Week, scarves are the hot new accessory.",
 		"Everyone was simultaneously a little bit cold when they packed to go to the station.",
 		"The station is definitely not under attack by neck grappling aliens masquerading as wool. Definitely not.",
-		"You all get free scarves. Don't ask why.",
-		"A shipment of scarves was delivered to the station.",
+		"You all get free winter gear. Don't ask why.",
+		"A shipment of winter gear was delivered to the station.",
 	)
 	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
 		/obj/item/clothing/neck/large_scarf/red,
@@ -98,7 +98,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
-/datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+/datum/station_trait/wintergear/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 	var/scarf_type = pick(scarves)
 
