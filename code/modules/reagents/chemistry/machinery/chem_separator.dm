@@ -173,19 +173,21 @@
 	reagents.trans_to(beaker.reagents, reagents.total_volume)
 	update_appearance(UPDATE_ICON)
 
-/obj/structure/chem_separator/process(delta_time)
+/// Check whether the separation can start
+/obj/structure/chem_separator/proc/can_process()
 	if(!burning)
-		stop()
-		return
+		return FALSE
 	if(!beaker)
-		stop()
-		return
+		return FALSE
 	if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-		stop()
-		return
+		return FALSE
 	if(!reagents.get_reagent_amount(separating_reagent))
-		stop()
-		return
+		return FALSE
+	return TRUE
+
+/obj/structure/chem_separator/process(delta_time)
+	if(!can_process())
+		return stop()
 	if(isturf(loc))
 		var/turf/location = loc
 		location.hotspot_expose(exposed_temperature = 700, exposed_volume = 5)
