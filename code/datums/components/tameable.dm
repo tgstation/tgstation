@@ -26,7 +26,8 @@
 
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(try_tame))
-	RegisterSignal(parent, list(COMSIG_EXTERNAL_TAME_LIVING_MOB, COMSIG_SIMPLEMOB_SENTIENCEPOTION, COMSIG_SIMPLEMOB_TRANSFERPOTION), PROC_REF(on_tame)) //Instantly succeeds
+	RegisterSignal(parent, list(COMSIG_SIMPLEMOB_SENTIENCEPOTION, COMSIG_SIMPLEMOB_TRANSFERPOTION) , PROC_REF(on_tame)) //Instantly succeeds
+	RegisterSignal(parent, COMSIG_EXTERNAL_TAME_LIVING_MOB, PROC_REF(tamed_externally)) //Instantly succeeds
 
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
@@ -48,7 +49,11 @@
 		tame_chance += bonus_tame_chance
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-///Ran once taming succeeds
+/// Run if something else wants to tell us they've tamed it instead, rude
+/datum/component/tameable/proc/tamed_externally(mob/living/source, mob/living/tamer)
+	on_tame(tamer)
+
+/// Ran once taming succeeds
 /datum/component/tameable/proc/on_tame(mob/living/tamer)
 	SIGNAL_HANDLER
 	tame = TRUE
