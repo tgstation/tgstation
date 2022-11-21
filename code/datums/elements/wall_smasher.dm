@@ -4,7 +4,7 @@
  */
 /datum/element/wall_smasher
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Whether you can smash RWalls or not
 	var/strength_flag
 
