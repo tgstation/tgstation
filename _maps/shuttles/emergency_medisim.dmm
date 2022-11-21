@@ -1047,10 +1047,7 @@
 	},
 /obj/docking_port/mobile/emergency{
 	dir = 1;
-	dwidth = 6;
-	height = 26;
-	name = "Medisim emergency shuttle";
-	width = 25
+	name = "Medisim emergency shuttle"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)

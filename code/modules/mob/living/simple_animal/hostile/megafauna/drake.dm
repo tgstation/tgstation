@@ -105,7 +105,7 @@
 	QDEL_NULL(lava_swoop)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -360,7 +360,6 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize(mapload)
 	. = ..()
-	fire_cone.Remove(src)
 	meteors.Remove(src)
 	mass_fire.Remove(src)
 	lava_swoop.cooldown_time = 20 SECONDS

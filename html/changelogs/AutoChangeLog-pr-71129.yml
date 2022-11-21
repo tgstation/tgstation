@@ -1,0 +1,5 @@
+author: "Vishenka0704"
+delete-after: True
+changes:
+  - rscadd: "A way to send faxes to CentCom/Syndicate"
+  - admin: "New fax panel(with stamps!!!)"

@@ -202,14 +202,14 @@
 //Set result and news report here
 /datum/game_mode/proc/set_round_result()
 	SSticker.mode_result = "undefined"
+	// Something nuked the station - it wasn't nuke ops (they set their own via their rulset)
 	if(GLOB.station_was_nuked)
-		SSticker.news_report = STATION_DESTROYED_NUKE
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-		SSticker.news_report = STATION_EVACUATED
-		if(SSshuttle.emergency.is_hijacked())
-			SSticker.news_report = SHUTTLE_HIJACK
+		SSticker.news_report = STATION_NUKED
 	if(SSsupermatter_cascade.cascade_initiated)
 		SSticker.news_report = SUPERMATTER_CASCADE
+	// Only show this one if we have nothing better to show
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED && !SSticker.news_report)
+		SSticker.news_report = SSshuttle.emergency?.is_hijacked() ? SHUTTLE_HIJACK : STATION_EVACUATED
 
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()

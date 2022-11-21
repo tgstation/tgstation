@@ -6,7 +6,7 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ac" = (
 /obj/machinery/porta_turret/syndicate/energy{
 	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "fire" = 100, "acid" = 100);
@@ -285,13 +285,13 @@
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "aY" = (
 /turf/template_noop,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "aZ" = (
 /turf/closed/indestructible/syndicate,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "ba" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "bb" = (
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
@@ -417,14 +417,14 @@
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bq" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "br" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bs" = (
 /turf/closed/mineral,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "bt" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
