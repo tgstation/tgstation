@@ -1,7 +1,7 @@
 /// This living will be slower when pulling/moving anything in the given typecache
 /datum/element/nerfed_pulling
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	/// The typecache of things that shouldn't be easily movable
 	var/list/typecache

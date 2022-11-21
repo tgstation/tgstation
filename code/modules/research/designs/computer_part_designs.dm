@@ -1,18 +1,6 @@
 ////////////////////////////////////////
 ///////////Computer Parts///////////////
 ////////////////////////////////////////
-// Card slot
-/datum/design/cardslot
-	name = "ID Card Slot"
-	id = "cardslot"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 600)
-	build_path = /obj/item/computer_hardware/card_slot
-	category = list(
-		RND_CATEGORY_MODULAR_COMPUTERS + RND_SUBCATEGORY_MODULAR_COMPUTERS_PARTS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
-
 // Data disks
 /datum/design/portabledrive/basic
 	name = "Data Disk"

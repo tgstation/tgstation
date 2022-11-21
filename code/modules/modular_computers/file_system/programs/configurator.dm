@@ -17,7 +17,7 @@
 /datum/computer_file/program/computerconfig/ui_data(mob/user)
 	// No computer connection, we can't get data from that.
 	if(!computer)
-		return 0
+		return FALSE
 
 	var/list/data = get_header_data()
 
@@ -31,28 +31,4 @@
 			"charge" = round(computer.internal_cell.charge),
 		)
 
-	var/list/all_entries[0]
-	for(var/I in computer.all_components)
-		var/obj/item/computer_hardware/H = computer.all_components[I]
-		all_entries.Add(list(list(
-		"name" = H.name,
-		"desc" = H.desc,
-		"enabled" = H.enabled,
-		"critical" = H.critical,
-		"powerusage" = H.power_usage,
-	)))
-
-	data["hardware"] = all_entries
 	return data
-
-
-/datum/computer_file/program/computerconfig/ui_act(action,params)
-	. = ..()
-	if(.)
-		return
-	switch(action)
-		if("PC_toggle_component")
-			var/obj/item/computer_hardware/H = computer.find_hardware_by_name(params["name"])
-			if(H && istype(H))
-				H.enabled = !H.enabled
-			. = TRUE

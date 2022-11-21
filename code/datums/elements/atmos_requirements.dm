@@ -5,7 +5,7 @@
  */
 /datum/element/atmos_requirements
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// An assoc list of "what atmos does this mob require to survive in".
 	var/list/atmos_requirements
 	/// How much (brute) damage we take from being in unsuitable atmos.

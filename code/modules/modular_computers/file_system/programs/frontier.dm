@@ -24,7 +24,16 @@
 
 /datum/computer_file/program/scipaper_program/on_start(mob/living/user)
 	. = ..()
-	linked_techweb = SSresearch.science_tech
+	if(!CONFIG_GET(flag/no_default_techweb_link))
+		linked_techweb = SSresearch.science_tech
+
+/datum/computer_file/program/scipaper_program/application_attackby(obj/item/attacking_item, mob/living/user)
+	if(!istype(attacking_item, /obj/item/multitool))
+		return FALSE
+	var/obj/item/multitool/attacking_tool = attacking_item
+	if(!QDELETED(attacking_tool.buffer) && istype(attacking_tool.buffer, /datum/techweb))
+		linked_techweb = attacking_tool.buffer
+	return TRUE
 
 /datum/computer_file/program/scipaper_program/proc/recheck_file_presence()
 	if(selected_file in computer.stored_files)
@@ -75,78 +84,84 @@
 /datum/computer_file/program/scipaper_program/ui_data()
 	// Program Headers:
 	var/list/data = get_header_data()
-	data["currentTab"]  = current_tab
+	data["currentTab"] = current_tab
+	data["has_techweb"] = !!linked_techweb
 
-	// First page. Form submission.
-	if(current_tab == 1)
-		data["fileList"] = list()
-		data["expList"] = list()
-		data["allowedTiers"] = list()
-		data["allowedPartners"] =  list()
-		// Both the file and experiment list are assoc lists. ID as value, display name as keys.
-		for(var/datum/computer_file/data/ordnance/ordnance_file in computer.stored_files)
-			data["fileList"] += list(ordnance_file.filename = ordnance_file.uid)
-		if(selected_file)
-			for (var/possible_experiment in selected_file.possible_experiments)
-				var/datum/experiment/ordnance/experiment = possible_experiment
-				data["expList"] += list(initial(experiment.name) = experiment)
-		data["allowedTiers"] = paper_to_be.calculate_tier()
-		for (var/partner in SSresearch.scientific_partners)
-			var/datum/scientific_partner/scientific_partner = partner
-			if(paper_to_be.experiment_path in scientific_partner.accepted_experiments)
-				data["allowedPartners"] += list(scientific_partner.name = scientific_partner.type)
+	switch(current_tab)
+		// First page. Form submission.
+		if(1)
+			data["fileList"] = list()
+			data["expList"] = list()
+			data["allowedTiers"] = list()
+			data["allowedPartners"] =  list()
+			// Both the file and experiment list are assoc lists. ID as value, display name as keys.
+			for(var/datum/computer_file/data/ordnance/ordnance_file in computer.stored_files)
+				data["fileList"] += list(ordnance_file.filename = ordnance_file.uid)
+			if(selected_file)
+				for (var/possible_experiment in selected_file.possible_experiments)
+					var/datum/experiment/ordnance/experiment = possible_experiment
+					data["expList"] += list(initial(experiment.name) = experiment)
+			data["allowedTiers"] = paper_to_be.calculate_tier()
+			for (var/partner in SSresearch.scientific_partners)
+				var/datum/scientific_partner/scientific_partner = partner
+				if(paper_to_be.experiment_path in scientific_partner.accepted_experiments)
+					data["allowedPartners"] += list(scientific_partner.name = scientific_partner.type)
 
-		data += paper_to_be.return_gist()
-		data["selectedFile"] = selected_file?.filename
-		// Renamed both of these to be more topical.
-		data["selectedExperiment"] = data["experimentName"]
-		data -= "experimentName"
-		data["selectedPartner"] = data["partner"]
-		data -= "partner"
+			data += paper_to_be.return_gist()
+			data["selectedFile"] = selected_file?.filename
+			// Renamed both of these to be more topical.
+			data["selectedExperiment"] = data["experimentName"]
+			data -= "experimentName"
+			data["selectedPartner"] = data["partner"]
+			data -= "partner"
 
-	// Second page. View previous
-	if(current_tab == 2)
-		data["publishedPapers"] = list()
-		for (var/experiment_types in linked_techweb.published_papers)
-			for (var/datum/scientific_paper/paper in linked_techweb.published_papers[experiment_types])
-				data["publishedPapers"] += list(paper.return_gist())
+		// Second page. View previous
+		if(2)
+			data["publishedPapers"] = list()
+			if(!linked_techweb)
+				return data
+			for (var/experiment_types in linked_techweb.published_papers)
+				for (var/datum/scientific_paper/paper in linked_techweb.published_papers[experiment_types])
+					data["publishedPapers"] += list(paper.return_gist())
 
-	if(current_tab == 4)
-		data["purchaseableBoosts"] = list()
-		data["relations"] = list()
-		var/list/visible_nodes = list()
-		visible_nodes += linked_techweb.get_available_nodes()
-		visible_nodes += linked_techweb.get_researched_nodes()
-		data["visibleNodes"] = list()
-		for (var/id in visible_nodes)
-			if(visible_nodes[id])
-				data["visibleNodes"] += id
+		if(4)
+			data["purchaseableBoosts"] = list()
+			data["relations"] = list()
+			data["visibleNodes"] = list()
+			if(!linked_techweb)
+				return data
+			var/list/visible_nodes = list()
+			visible_nodes += linked_techweb.get_available_nodes()
+			visible_nodes += linked_techweb.get_researched_nodes()
+			for (var/id in visible_nodes)
+				if(visible_nodes[id])
+					data["visibleNodes"] += id
 
-		for (var/datum/scientific_partner/partner as anything in SSresearch.scientific_partners)
-			var/relations = linked_techweb.scientific_cooperation[partner.type]
-			switch (round(relations / SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // We use points to determine these
-				if(-INFINITY to 0)
-					data["relations"][partner.type] = "Nonexistant"
-				if(1 to 2499)
-					data["relations"][partner.type] = "Negligible"
-				if(2500 to 4999)
-					data["relations"][partner.type] = "Limited"
-				if(5000 to 9999)
-					data["relations"][partner.type] = "Cordial"
-				if(10000 to 19999)
-					data["relations"][partner.type] = "Partners"
-				if(20000 to INFINITY)
-					data["relations"][partner.type] = "Devoted"
-				else
-					data["relations"][partner.type] = "Undefined"
-			data["purchaseableBoosts"][partner.type] = list()
-			for(var/node_id in linked_techweb.get_available_nodes())
-				// Not from our partner
-				if(!(node_id in partner.boosted_nodes))
-					continue
-				if(!partner.allowed_to_boost(linked_techweb, node_id))
-					continue
-				data["purchaseableBoosts"][partner.type] += node_id
+			for (var/datum/scientific_partner/partner as anything in SSresearch.scientific_partners)
+				var/relations = linked_techweb.scientific_cooperation[partner.type]
+				switch (round(relations / SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // We use points to determine these
+					if(-INFINITY to 0)
+						data["relations"][partner.type] = "Nonexistant"
+					if(1 to 2499)
+						data["relations"][partner.type] = "Negligible"
+					if(2500 to 4999)
+						data["relations"][partner.type] = "Limited"
+					if(5000 to 9999)
+						data["relations"][partner.type] = "Cordial"
+					if(10000 to 19999)
+						data["relations"][partner.type] = "Partners"
+					if(20000 to INFINITY)
+						data["relations"][partner.type] = "Devoted"
+					else
+						data["relations"][partner.type] = "Undefined"
+				data["purchaseableBoosts"][partner.type] = list()
+				for(var/node_id in linked_techweb.get_available_nodes())
+					// Not from our partner
+					if(!(node_id in partner.boosted_nodes))
+						continue
+					if(!partner.allowed_to_boost(linked_techweb, node_id))
+						continue
+					data["purchaseableBoosts"][partner.type] += node_id
 	return data
 
 /datum/computer_file/program/scipaper_program/ui_act(action, params)

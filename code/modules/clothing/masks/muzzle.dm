@@ -50,7 +50,7 @@
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
-	. += "[span_notice("Target mouth and use it on someone to tape their mouth closed.")]"
+	. += "[span_notice("Use it on someone while not in combat mode to tape their mouth closed!")]"
 
 /obj/item/clothing/mask/muzzle/tape/dropped(mob/living/user)
 	. = ..()
@@ -72,6 +72,7 @@
 		to_chat(attacker, span_notice("[victim] is already wearing somthing on their face."))
 		return
 	balloon_alert(attacker, "taping mouth...")
+	to_chat(victim, span_userdanger("[attacker] is attempting to tape your mouth closed!"))
 	if(!do_after(attacker, equip_delay_other, target = victim))
 		return
 	victim.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
