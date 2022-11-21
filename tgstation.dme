@@ -700,6 +700,7 @@
 #include "code\datums\ai\basic_mobs\base_basic_controller.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\attack_obstacle_in_path.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\basic_attacking.dm"
+#include "code\datums\ai\basic_mobs\basic_ai_behaviors\melee_attack_target_and_obstacles.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\nearest_targetting.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\run_away_from_target.dm"
 #include "code\datums\ai\basic_mobs\basic_ai_behaviors\step_towards_turf.dm"
