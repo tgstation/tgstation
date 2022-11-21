@@ -5,6 +5,10 @@
 /datum/ai_planning_subtree/pet_planning
 	/// Key for some kind of mob ability to use
 	var/pet_ability_key
+	/// Key used for targetting datum
+	var/pet_targetting_key = BB_PET_TARGETTING_DATUM
+	/// Attack behaviour to use, generally you will want to override this to add some kind of cooldown
+	var/attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 /datum/ai_planning_subtree/pet_planning/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/active_command = controller.blackboard[BB_ACTIVE_PET_COMMAND]
@@ -25,10 +29,10 @@
 			controller.queue_behavior(/datum/ai_behavior/pet_follow_friend, BB_CURRENT_PET_TARGET)
 			return SUBTREE_RETURN_FINISH_PLANNING
 
-/// Override to use a different attack behaviour or send different keys
+/// Override to send different keys
 /datum/ai_planning_subtree/pet_planning/proc/attack_target(datum/ai_controller/controller, delta_time)
 	// We don't check if the target exists because we want to 'sit attentively' if we've been instructed to attack but not given one yet
-	controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, BB_CURRENT_PET_TARGET, BB_TARGETTING_DATUM)
+	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, pet_targetting_key)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /// Override to use a different ability behaviour or send different keys

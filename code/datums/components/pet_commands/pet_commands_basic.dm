@@ -57,9 +57,37 @@
 	radial_icon_state = "bite"
 
 	command_key = PET_COMMAND_ATTACK
+	/// Blackboard key for targetting datum
+	var/targetting_key = BB_PET_TARGETTING_DATUM
+	/// Balloon alert to display if providing an invalid target
+	var/refuse_reaction
 
-/datum/component/pet_command/point_targetting/attack/Initialize(list/speech_commands = list("attack", "sic", "kill"), command_feedback = "growl", pointed_reaction = "growls")
+/datum/component/pet_command/point_targetting/attack/Initialize(list/speech_commands = list("attack", "sic", "kill"), command_feedback = "growl", pointed_reaction = "growls", refuse_reaction = "shakes head")
+	. = ..()
+	if (. == COMPONENT_INCOMPATIBLE)
+		return
+	src.refuse_reaction = refuse_reaction
+
+// Refuse to target things we can't target, chiefly other friends
+/datum/component/pet_command/point_targetting/attack/set_command_target(atom/target)
+	if (!target)
+		return
+	var/mob/living/living_parent = parent
+	if (!living_parent.ai_controller)
+		return
+	var/datum/targetting_datum/targeter = living_parent.ai_controller.blackboard[BB_PET_TARGETTING_DATUM]
+	if (!targeter)
+		return
+	if (!targeter.can_attack(living_parent, target))
+		refuse_target(target)
+		return
 	return ..()
+
+/// Display feedback about not targetting something
+/datum/component/pet_command/point_targetting/attack/proc/refuse_target(atom/target)
+	var/mob/living/living_parent = parent
+	living_parent.balloon_alert_to_viewers("[refuse_reaction]")
+	living_parent.visible_message(span_notice("[living_parent] refuses to attack [target]."))
 
 /**
  * # Pet Command: Targetted Ability

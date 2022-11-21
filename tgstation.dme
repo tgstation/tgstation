@@ -722,6 +722,7 @@
 #include "code\datums\ai\basic_mobs\pet_commands\pet_follow_friend.dm"
 #include "code\datums\ai\basic_mobs\pet_commands\pet_use_targetted_ability.dm"
 #include "code\datums\ai\basic_mobs\targetting_datums\basic_targetting_datum.dm"
+#include "code\datums\ai\basic_mobs\targetting_datums\dont_target_friends.dm"
 #include "code\datums\ai\cursed\cursed_behaviors.dm"
 #include "code\datums\ai\cursed\cursed_controller.dm"
 #include "code\datums\ai\cursed\cursed_subtrees.dm"

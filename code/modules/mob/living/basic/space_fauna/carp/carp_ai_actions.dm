@@ -67,6 +67,14 @@
 	target_key = BB_MAGICARP_SPELL_TARGET
 	use_ability_behaviour = /datum/ai_behavior/try_mob_ability/and_clear_target
 
+/// Command carp to fight
+/datum/ai_planning_subtree/pet_planning/carp
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack/carp
+
+/// Tamed carp do not flee when their health is low
+/datum/ai_behavior/basic_melee_attack/carp
+	action_cooldown = 1.5 SECONDS
+
 /// Allows you to command carp to use their spell on people
-/datum/ai_planning_subtree/pet_planning/magicarp
+/datum/ai_planning_subtree/pet_planning/carp/magic
 	pet_ability_key = BB_MAGICARP_SPELL
