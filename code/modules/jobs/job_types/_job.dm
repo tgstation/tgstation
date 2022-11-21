@@ -130,7 +130,7 @@
 
 	/// department's winter coat
 	var/dept_jacket = /obj/item/clothing/suit/hooded/wintercoat
-  
+
 	/// custom ringtone for this job
 	var/job_tone
 
