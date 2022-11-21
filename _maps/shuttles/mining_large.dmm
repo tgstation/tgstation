@@ -443,12 +443,9 @@
 	dir = 1
 	},
 /obj/docking_port/mobile{
-	dwidth = 3;
-	height = 10;
 	shuttle_id = "mining";
 	name = "mining shuttle";
-	port_direction = 2;
-	width = 7
+	port_direction = 2
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,

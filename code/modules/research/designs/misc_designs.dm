@@ -953,3 +953,14 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/syrup_bottle
+	name = "Syrup bottle"
+	id = "syrup_bottle"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/reagent_containers/cup/bottle/syrup_bottle
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE

@@ -2,17 +2,18 @@
 	id = "dizziness"
 	tick_interval = 2 SECONDS
 	alert_type = null
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/dizziness/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/dizziness/on_apply()
-	RegisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH), PROC_REF(clear_dizziness))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_dizziness))
 	return TRUE
 
 /datum/status_effect/dizziness/on_remove()
-	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_LIVING_DEATH))
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	// In case our client's offset is somewhere wacky from the dizziness effect
 	owner.client?.pixel_x = initial(owner.client?.pixel_x)
 	owner.client?.pixel_y = initial(owner.client?.pixel_y)

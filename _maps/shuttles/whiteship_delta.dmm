@@ -20,15 +20,12 @@
 /obj/docking_port/mobile{
 	callTime = 250;
 	dir = 2;
-	dwidth = 11;
-	height = 17;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Frigate";
 	port_direction = 8;
-	preferred_direction = 4;
-	width = 27
+	preferred_direction = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/crew)

@@ -1,7 +1,7 @@
 /// Adds crack overlays to an object when integrity gets low
 /datum/element/crackable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/list/icon/crack_icons
 	/// The level at which the object starts showing cracks, 1 being at full health and 0.5 being at half health
 	var/crack_integrity = 1

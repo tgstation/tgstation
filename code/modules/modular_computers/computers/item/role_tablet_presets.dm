@@ -13,10 +13,6 @@
 		/datum/computer_file/program/budgetorders,
 	)
 
-/obj/item/modular_computer/tablet/pda/heads/Initialize(mapload)
-	. = ..()
-	install_component(new /obj/item/computer_hardware/card_slot/secondary)
-
 /obj/item/modular_computer/tablet/pda/heads/captain
 	name = "captain PDA"
 	greyscale_config = /datum/greyscale_config/tablet/captain
