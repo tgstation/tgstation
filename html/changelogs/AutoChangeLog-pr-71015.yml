@@ -1,0 +1,5 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - refactor: "refactored trophy cases, to be more user friendly"
+  - admin: "created a trophy managment admin panel"

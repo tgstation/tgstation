@@ -1,8 +1,7 @@
 /datum/surgery/organ_manipulation
 	name = "Organ manipulation"
-	target_mobtypes = list(/mob/living/carbon/human)
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
-	requires_real_bodypart = TRUE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -10,7 +9,8 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
@@ -20,7 +20,8 @@
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/organ_manipulation/alien
 	name = "Alien organ manipulation"
@@ -32,14 +33,14 @@
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
 		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/organ_manipulation/mechanic
 	name = "Prosthesis organ manipulation"
-	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_bodypart_type = BODYTYPE_ROBOTIC
-	lying_required = FALSE
-	self_operable = TRUE
+	surgery_flags = SURGERY_SELF_OPERABLE | SURGERY_REQUIRE_LIMB
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -47,25 +48,42 @@
 		/datum/surgery_step/prepare_electronics,
 		/datum/surgery_step/manipulate_organs/internal,
 		/datum/surgery_step/mechanic_wrench,
-		/datum/surgery_step/mechanic_close)
+		/datum/surgery_step/mechanic_close,
+	)
 
 /datum/surgery/organ_manipulation/mechanic/soft
-	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	possible_locs = list(
+		BODY_ZONE_PRECISE_GROIN,
+		BODY_ZONE_PRECISE_EYES,
+		BODY_ZONE_PRECISE_MOUTH,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+	)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
 		/datum/surgery_step/prepare_electronics,
 		/datum/surgery_step/manipulate_organs/internal,
-		/datum/surgery_step/mechanic_close)
+		/datum/surgery_step/mechanic_close,
+	)
 
 /datum/surgery/organ_manipulation/external
 	name = "Feature manipulation"
-	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	possible_locs = list(
+		BODY_ZONE_CHEST,
+		BODY_ZONE_HEAD,
+		BODY_ZONE_PRECISE_GROIN,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_LEG,
+		BODY_ZONE_R_LEG,
+	)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/manipulate_organs/external,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
 ///Organ manipulation base class. Do not use, it wont work. Use it's subtypes
 /datum/surgery_step/manipulate_organs
@@ -118,9 +136,13 @@
 
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
-		display_results(user, target, span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
+		display_results(
+			user,
+			target,
+			span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)]."),
-			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."))
+			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."),
+		)
 		display_pain(target, "You can feel your something being placed in your [parse_zone(target_zone)]!")
 
 
@@ -153,9 +175,13 @@
 				if(target_organ.organ_flags & ORGAN_UNREMOVABLE)
 					to_chat(user, span_warning("[target_organ] is too well connected to take out!"))
 					return SURGERY_STEP_FAIL
-				display_results(user, target, span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
+				display_results(
+					user,
+					target,
+					span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
 					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
-					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."))
+					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."),
+				)
 				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
 			else
 				return SURGERY_STEP_FAIL
@@ -174,24 +200,36 @@
 			target_organ = tool
 		user.temporarilyRemoveItemFromInventory(target_organ, TRUE)
 		target_organ.Insert(target)
-		display_results(user, target, span_notice("You insert [tool] into [target]'s [parse_zone(target_zone)]."),
+		display_results(
+			user,
+			target,
+			span_notice("You insert [tool] into [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!"),
-			span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"))
+			span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"),
+		)
 		display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool] comes to life!")
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
-			display_results(user, target, span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
+			display_results(
+				user,
+				target,
+				span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 				span_notice("[user] successfully extracts [target_organ] from [target]'s [parse_zone(target_zone)]!"),
-				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"))
+				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"),
+			)
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))
 		else
-			display_results(user, target, span_warning("You can't extract anything from [target]'s [parse_zone(target_zone)]!"),
+			display_results(
+				user,
+				target,
+				span_warning("You can't extract anything from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
-				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"))
+				span_notice("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!"),
+			)
 	return FALSE
 
 ///You can never use this MUHAHAHAHAHAHAH (because its the byond version of abstract)
@@ -201,7 +239,7 @@
 ///Surgery step for internal organs, like hearts and brains
 /datum/surgery_step/manipulate_organs/internal
 	time = 6.4 SECONDS
-	name = "manipulate organs"
+	name = "manipulate organs (hemostat/organ)"
 
 ///only operate on internal organs
 /datum/surgery_step/manipulate_organs/internal/can_use_organ(mob/user, obj/item/organ/organ)
@@ -210,7 +248,7 @@
 ///Surgery step for external organs/features, like tails, frills, wings etc
 /datum/surgery_step/manipulate_organs/external
 	time = 3.2 SECONDS
-	name = "manipulate features"
+	name = "manipulate features (hemostat/feature)"
 
 ///Only operate on external organs
 /datum/surgery_step/manipulate_organs/external/can_use_organ(mob/user, obj/item/organ/organ)

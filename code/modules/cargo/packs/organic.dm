@@ -183,7 +183,8 @@
 		/obj/item/food/pizza/dank = 7,
 		/obj/item/food/pizza/sassysage = 10,
 		/obj/item/food/pizza/pineapple = 10,
-		/obj/item/food/pizza/arnold = 3
+		/obj/item/food/pizza/arnold = 3,
+		/obj/item/food/pizza/energy = 5
 	) //weighted by chance to disrupt eaters' rounds
 
 	for(var/obj/item/pizzabox/P in C)
@@ -197,7 +198,7 @@
 				anomalous_box_provided = TRUE
 				log_game("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
 				if(prob(50))
-					addtimer(CALLBACK(src, .proc/anomalous_pizza_report), rand(300, 1800))
+					addtimer(CALLBACK(src, PROC_REF(anomalous_pizza_report)), rand(300, 1800))
 					message_admins("An anomalous pizza box was provided in a pizza crate at during cargo delivery.")
 				else
 					message_admins("An anomalous pizza box was silently created with no command report in a pizza crate delivery.")
@@ -333,3 +334,27 @@
 				)
 	crate_name = "\improper Mothic Supply box"
 	crate_type = /obj/structure/closet/crate/cardboard/mothic
+
+/datum/supply_pack/organic/syrup
+	name = "Coffee Syrups Box"
+	desc = "A packaged box of various syrups, perfect for making your delicious coffee even more diabetic."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel,
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur,
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle/korta_nectar,
+	)
+	crate_name = "coffee syrups box"
+	crate_type = /obj/structure/closet/crate/cardboard
+
+/datum/supply_pack/organic/syrup_contraband
+	contraband = TRUE
+	name = "Contraband Syrups Box"
+	desc = "A packaged box containing illegal coffee syrups. Possession of these carries a penalty established in the galactic penal code."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup,
+		/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup,
+	)
+	crate_name = "illegal syrups box"
+	crate_type = /obj/structure/closet/crate/cardboard

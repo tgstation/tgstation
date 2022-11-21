@@ -381,6 +381,16 @@
 	id = "comp_counter_overlay"
 	build_path = /obj/item/circuit_component/counter_overlay
 
+/datum/design/component/bci/reagent_injector
+	name = "Reagent Injector Component"
+	id = "comp_reagent_injector"
+	build_path = /obj/item/circuit_component/reagent_injector
+
+/datum/design/component/bci/install_detector
+	name = "Install Detector Component"
+	id = "comp_install_detector"
+	build_path = /obj/item/circuit_component/install_detector
+
 /datum/design/component/foreach
 	name = "For Each Component"
 	id = "comp_foreach"

@@ -409,7 +409,7 @@
 		var/helium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/helium][MOLES])
 		if(helium_pp > helium_speech_min && !helium_speech)
 			helium_speech = TRUE
-			RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_helium_speech)
+			RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_helium_speech))
 		else if(helium_pp <= helium_speech_min && helium_speech)
 			helium_speech = FALSE
 			UnregisterSignal(owner, COMSIG_MOB_SAY)

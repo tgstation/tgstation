@@ -299,7 +299,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/clothing/gloves/color/black = 1,
 		/obj/item/clothing/gloves/color/yellow = 1,
 		/obj/item/clothing/gloves/tackler/combat = 1,
-		/obj/item/clothing/head/helmet/justice = 1,
+		/obj/item/clothing/head/helmet/toggleable/justice = 1,
 		/obj/item/storage/belt/military/assault = 1,
 		/obj/item/storage/belt/security = 1,
 		) = 1,
@@ -332,6 +332,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//misc
 		/obj/item/book/granter/crafting_recipe/pipegun_prime = 1,
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
+		/obj/item/book/granter/sign_language = 1,
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/skillchip/brainwashing = 1,
 		/obj/item/tattoo_kit = 1,

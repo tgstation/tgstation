@@ -3,6 +3,14 @@
 
 // The poster item
 
+/**
+ * The rolled up item form of a poster
+ *
+ * In order to create one of these for a specific poster, you must pass the structure form of the poster as an argument to /new().
+ * This structure then gets moved into the contents of the item where it will stay until the poster is placed by a player.
+ * The structure form is [obj/structure/sign/poster] and that's where all the specific posters are defined.
+ * If you just want a random poster, see [/obj/item/poster/random_official] or [/obj/item/poster/random_contraband]
+ */
 /obj/item/poster
 	name = "poorly coded poster"
 	desc = "You probably shouldn't be holding this."
@@ -22,6 +30,8 @@
 	)
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
+	if(new_poster_structure && (new_poster_structure.loc != src))
+		new_poster_structure.forceMove(src) //The poster structure *must* be in the item's contents for the exited() proc to properly clean up when placing the poster
 	poster_structure = new_poster_structure
 	if(!new_poster_structure && poster_type)
 		poster_structure = new poster_type(src)
@@ -81,6 +91,12 @@
 
 // The poster sign/structure
 
+/**
+ * The structure form of a poster.
+ *
+ * These are what get placed on maps as posters. They are also what gets created when a player places a poster on a wall.
+ * For the item form that can be spawned for players, see [/obj/item/poster]
+ */
 /obj/structure/sign/poster
 	name = "poster"
 	var/original_name
@@ -91,6 +107,8 @@
 	var/ruined = FALSE
 	var/random_basetype
 	var/never_random = FALSE // used for the 'random' subclasses.
+	///Whether the poster should be printable from library management computer. Mostly exists to keep directionals from being printed.
+	var/printable = FALSE
 
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
@@ -230,7 +248,7 @@
 	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
-	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, /obj/structure/sign/poster.proc/snowflake_wall_turf_check, src)))
+	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_wall_turf_check), src)))
 		to_chat(user, span_notice("The poster falls down!"))
 		placed_poster.roll_and_drop(user_drop_location)
 		return
@@ -726,6 +744,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
 	poster_item_icon_state = "rolled_legit"
+	printable = TRUE
 
 /obj/structure/sign/poster/official/random
 	name = "Random Official Poster (ROP)"
@@ -734,6 +753,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	never_random = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
+//This is being hardcoded here to ensure we don't print directionals from the library management computer because they act wierd as a poster item
+/obj/structure/sign/poster/official/random/directional
+	printable = FALSE
 
 /obj/structure/sign/poster/official/here_for_your_safety
 	name = "Here For Your Safety"

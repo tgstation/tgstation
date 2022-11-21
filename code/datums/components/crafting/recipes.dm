@@ -73,18 +73,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/lance
-	name = "Explosive Lance (Grenade)"
-	result = /obj/item/spear/explosive
-	reqs = list(/obj/item/spear = 1,
-				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/spear/bonespear, /obj/item/spear/bamboospear)
-	parts = list(/obj/item/spear = 1,
-				/obj/item/grenade = 1)
-	time = 1.5 SECONDS
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
 	result = /obj/item/shield/riot/flash
@@ -1839,6 +1827,28 @@
 	qdel(toilet)
 	to_chat(user, span_notice("[user] attaches the flamethrower to the repurposed toilet."))
 
+/datum/crafting_recipe/pillow_suit
+	name = "pillow suit"
+	result = /obj/item/clothing/suit/pillow_suit
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sticky_tape = 10,
+		/obj/item/pillow = 5,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/pillow_hood
+	name = "pillow hood"
+	result = /obj/item/clothing/head/pillow_hood
+	tool_behaviors = list(TOOL_WIRECUTTER, TOOL_KNIFE)
+	time = 2 SECONDS
+	reqs = list(
+		/obj/item/stack/sticky_tape = 5,
+		/obj/item/pillow = 1,
+	)
+	category = CAT_CLOTHING
+
+
 /datum/crafting_recipe/house_edge
 	name = "House Edge"
 	result = /obj/item/house_edge
@@ -1856,6 +1866,42 @@
 	time = 10 SECONDS
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/punching_bag
+	name = "Punching Bag"
+	result = /obj/structure/punching_bag
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/rods = 1,
+		/obj/item/pillow = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
+
+/datum/crafting_recipe/stacklifter
+	name = "Chest Press"
+	result = /obj/structure/weightmachine/stacklifter
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/chair = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
+
+/datum/crafting_recipe/weightlifter
+	name = "Bench Press"
+	result = /obj/structure/weightmachine/weightlifter
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/chair = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

@@ -11,6 +11,8 @@
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
+#define isgenerator(A) (istype(A, /generator))
+
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
@@ -53,6 +55,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define ischasm(A) (istype(A, /turf/open/chasm))
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
+
+#define isasteroidturf(A) (istype(A, /turf/open/misc/asteroid))
 
 #define istransparentturf(A) (HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
 

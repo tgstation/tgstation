@@ -50,23 +50,23 @@
 	src.start_experiment_callback = start_experiment_callback
 
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
-		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/ignored_handheld_experiment_attempt)
+		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(try_run_handheld_experiment))
+		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(ignored_handheld_experiment_attempt))
 	if(istype(parent, /obj/machinery/destructive_scanner))
-		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, .proc/try_run_destructive_experiment)
+		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, PROC_REF(try_run_destructive_experiment))
 	if(istype(parent, /obj/machinery/computer/operating))
-		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, .proc/try_run_dissection_experiment)
+		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, PROC_REF(try_run_dissection_experiment))
 
 	// Determine UI display mode
 	switch(config_mode)
 		if(EXPERIMENT_CONFIG_ATTACKSELF)
-			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(configure_experiment))
 		if(EXPERIMENT_CONFIG_ALTCLICK)
-			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
+			RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(configure_experiment))
 		if(EXPERIMENT_CONFIG_CLICK)
-			RegisterSignal(parent, COMSIG_ATOM_UI_INTERACT, .proc/configure_experiment_click)
+			RegisterSignal(parent, COMSIG_ATOM_UI_INTERACT, PROC_REF(configure_experiment_click))
 		if(EXPERIMENT_CONFIG_UI)
-			RegisterSignal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
+			RegisterSignal(parent, COMSIG_UI_ACT, PROC_REF(ui_handle_experiment))
 
 	// Auto connect to the first visible techweb (useful for always active handlers)
 	// Note this won't work at the moment for non-machines that have been included
@@ -90,7 +90,7 @@
 	SIGNAL_HANDLER
 	if (!should_run_handheld_experiment(source, target, user, params))
 		return
-	INVOKE_ASYNC(src, .proc/try_run_handheld_experiment_async, source, target, user, params)
+	INVOKE_ASYNC(src, PROC_REF(try_run_handheld_experiment_async), source, target, user, params)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /**
@@ -109,6 +109,8 @@
 /datum/component/experiment_handler/proc/should_run_handheld_experiment(datum/source, atom/target, mob/user, params)
 	// Check that there is actually an experiment selected
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
+		return
+	if (!linked_web)
 		return
 
 	// Determine if this experiment is actionable with this target
@@ -225,7 +227,7 @@
 	SIGNAL_HANDLER
 	switch(action)
 		if("open_experiments")
-			INVOKE_ASYNC(src, .proc/configure_experiment, null, usr)
+			INVOKE_ASYNC(src, PROC_REF(configure_experiment), null, usr)
 
 /**
  * Attempts to show the user the experiment configuration panel
@@ -235,7 +237,7 @@
  */
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/ui_interact, user)
+	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
 /**
  * Attempts to show the user the experiment configuration panel

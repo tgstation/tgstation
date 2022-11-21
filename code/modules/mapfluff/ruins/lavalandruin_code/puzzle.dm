@@ -284,6 +284,7 @@
 /obj/effect/sliding_puzzle/prison/Destroy()
 	if(prisoner)
 		to_chat(prisoner,span_userdanger("With the cube broken by force, you can feel your body falling apart."))
+		prisoner.investigate_log("has died from their prison puzzle being destroyed.", INVESTIGATE_DEATHS)
 		prisoner.death()
 		qdel(prisoner)
 	. = ..()

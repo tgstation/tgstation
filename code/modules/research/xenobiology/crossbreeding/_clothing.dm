@@ -65,7 +65,7 @@ Slimecrossing Armor
 	button_icon_state = "prismcolor"
 
 /datum/action/item_action/change_prism_colour/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
@@ -79,7 +79,7 @@ Slimecrossing Armor
 	button_icon_state = "lightprism"
 
 /datum/action/item_action/place_light_prism/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	if(locate(/obj/structure/light_prism) in get_turf(owner))
