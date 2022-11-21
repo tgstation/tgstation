@@ -172,6 +172,9 @@
 	if ("minetype" in json)
 		minetype = json["minetype"]
 
+	if ("blacklist_file" in json)
+		blacklist_file = json["blacklist_file"]
+
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
 	if ("job_changes" in json)
