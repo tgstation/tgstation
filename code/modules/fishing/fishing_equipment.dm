@@ -122,9 +122,9 @@
 /obj/item/fishing_hook/rescue
 	name = "rescue hook"
 	desc = "An unwieldy hook meant to help with the rescue of those that have fallen down in chasms. You can tell there's no way you'll catch any fish with this, and that it won't be of any use outside of chasms."
-	icon_state = "weighted"
+	icon_state = "rescue"
 	fishing_hook_traits = FISHING_HOOK_RESCUE
-	rod_overlay_icon_state = "hook_weighted_overlay"
+	rod_overlay_icon_state = "hook_rescue_overlay"
 
 
 // This hook can only fish in chasms.
