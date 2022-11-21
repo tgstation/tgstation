@@ -5,24 +5,24 @@
 #define DETSCAN_CATEGORY_ACCESS "ID Access"
 
 // custom categories go here
-#define DETSCAN_CATEGORY_ADD "Additional Notes"
-#define DETSCAN_CATEGORY_ILL "Illegal Tech"
-#define DETSCAN_CATEGORY_SYN "Syndicate Tech"
+#define DETSCAN_CATEGORY_NOTES "Additional Notes"
+#define DETSCAN_CATEGORY_ILLEGAL "Illegal Tech"
+#define DETSCAN_CATEGORY_SYNDIE "Syndicate Tech"
 #define DETSCAN_CATEGORY_HOLY "Holy Data"
-#define DETSCAN_CATEGORY_SET "Active"
+#define DETSCAN_CATEGORY_SETTINGS "Active Settings"
 
-// defines the order categories are displayed, with the standard ones first, then misc, then finally the closing remarks.
+/// defines the order categories are displayed, with the standard ones first, then misc, then finally the closing remarks.
 #define DETSCAN_DEFAULT_ORDER list(\
 	DETSCAN_CATEGORY_FINGERS, \
 	DETSCAN_CATEGORY_BLOOD, \
 	DETSCAN_CATEGORY_FIBER, \
 	DETSCAN_CATEGORY_DRINK, \
 	DETSCAN_CATEGORY_ACCESS, \
-	DETSCAN_CATEGORY_SET, \
+	DETSCAN_CATEGORY_SETTINGS, \
 	DETSCAN_CATEGORY_HOLY, \
-	DETSCAN_CATEGORY_ILL, \
-	DETSCAN_CATEGORY_SYN, \
-	DETSCAN_CATEGORY_ADD, \
+	DETSCAN_CATEGORY_ILLEGAL, \
+	DETSCAN_CATEGORY_SYNDIE, \
+	DETSCAN_CATEGORY_NOTES, \
 )
 
 // the order departments show up in for the id scan (its sorted by red to blue on the color wheel)

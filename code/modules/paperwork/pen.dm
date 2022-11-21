@@ -319,7 +319,7 @@
 
 /obj/item/pen/edagger/proc/on_scan(datum/source, mob/user, list/extra_data)
 	SIGNAL_HANDLER
-	LAZYADD(extra_data[DETSCAN_CATEGORY_ILL], "Hard-light generator detected.")
+	LAZYADD(extra_data[DETSCAN_CATEGORY_ILLEGAL], "Hard-light generator detected.")
 
 /obj/item/pen/survival
 	name = "survival pen"
