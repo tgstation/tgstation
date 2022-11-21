@@ -83,9 +83,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
 
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
-		surgery.speed_modifier = max(0.1*power_multiplier, surgery.speed_modifier)
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
+		surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
