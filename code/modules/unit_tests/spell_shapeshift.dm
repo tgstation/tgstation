@@ -62,7 +62,7 @@
 	var/mob/expected_shape = shift.shapeshift_type
 	if(!istype(dummy.loc, expected_shape))
 		return TEST_FAIL("Shapeshift spell: [shift.name] failed to transform the dummy into the shape [initial(expected_shape.name)]. \
-			([dummy] was located within [dummy.loc], which is a [dummy.loc.type]).")
+			([dummy] was located within [dummy.loc], which is a [dummy.loc?.type || "null"]).")
 
 	var/mob/living/shape = dummy.loc
 	if(!(shift in shape.actions))
