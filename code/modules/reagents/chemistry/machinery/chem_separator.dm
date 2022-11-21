@@ -223,7 +223,7 @@
 			stop()
 		if("eject")
 			replace_beaker(usr)
-		. = TRUE
+	. = TRUE
 
 /datum/crafting_recipe/chem_separator
 	name = "Chemical separator"
