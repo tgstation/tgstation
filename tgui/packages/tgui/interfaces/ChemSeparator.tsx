@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Tooltip, ProgressBar, NoticeBox, Button, LabeledList, Section } from '../components';
+import { Box, ProgressBar, NoticeBox, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -135,9 +135,7 @@ export const ChemSeparator = (props, context) => {
               </LabeledList.Item>
             ) : (
               <LabeledList.Item label="Container">
-                <Tooltip content="Drag the cursor from the drip and drop it on an object to connect.">
-                  <NoticeBox my={0.7}>No container inserted.</NoticeBox>
-                </Tooltip>
+                <NoticeBox my={0.7}>No container inserted.</NoticeBox>
               </LabeledList.Item>
             )}
           </LabeledList>

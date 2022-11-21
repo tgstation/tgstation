@@ -7,7 +7,6 @@
 	var/fill_icon_state = "separator"
 	var/list/fill_icon_thresholds = list(1,30,80)
 	var/list/temperature_icon_thresholds = list(0,50,100)
-	var/datum/looping_sound/generator/soundloop
 	var/burning = FALSE
 	var/req_temp = T0C + 100 // water boiling temperature
 	var/heating_rate = 5 // degrees per second
@@ -18,12 +17,6 @@
 /obj/structure/chem_separator/Initialize(mapload)
 	create_reagents(200)
 	. = ..()
-
-/obj/structure/chem_separator/deconstruct(disassembled)
-	. = ..()
-	if(beaker && disassembled)
-		beaker.forceMove(drop_location())
-		beaker = null
 
 /obj/structure/chem_separator/Destroy()
 	if(burning)
@@ -222,19 +215,15 @@
 	switch(action)
 		if("load")
 			load()
-			. = TRUE
 		if("unload")
 			unload()
-			. = TRUE
 		if("start")
 			start()
-			. = TRUE
 		if("stop")
 			stop()
-			. = TRUE
 		if("eject")
 			replace_beaker(usr)
-			. = TRUE
+		. = TRUE
 
 /datum/crafting_recipe/chem_separator
 	name = "Chemical separator"
