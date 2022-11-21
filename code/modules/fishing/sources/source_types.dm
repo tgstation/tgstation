@@ -36,13 +36,10 @@
 /datum/fish_source/chasm/roll_reward(obj/item/fishing_rod/rod, mob/fisherman)
 	var/rolled_reward = ..()
 
-	if(!rod.hook || !(rod.hook.fishing_hook_traits & FISHING_HOOK_RESCUE))
+	if(!rod.hook || !ispath(rolled_reward, /obj/item/chasm_detritus))
 		return rolled_reward
 
-	if(!ispath(rolled_reward, /obj/item/chasm_detritus))
-		return rolled_reward
-
-	return /obj/item/chasm_detritus/bodies
+	return rod.hook.chasm_detritus_type
 
 
 /datum/fish_source/lavaland

@@ -60,6 +60,8 @@
 	var/fishing_hook_traits = NONE
 	/// icon state added to main rod icon when this hook is equipped
 	var/rod_overlay_icon_state = "hook_overlay"
+	/// What subtype of `/obj/item/chasm_detritus` do we fish out of chasms? Defaults to `/obj/item/chasm_detritus`.
+	var/chasm_detritus_type = /obj/item/chasm_detritus
 
 
 /**
@@ -95,7 +97,9 @@
 	name = "magnetic hook"
 	desc = "Won't make catching fish any easier, but it might help with looking for other things."
 	icon_state = "treasure"
+	fishing_hook_traits = FISHING_HOOK_MAGNETIC
 	rod_overlay_icon_state = "hook_treasure_overlay"
+	chasm_detritus_type = /obj/item/chasm_detritus/restricted
 
 
 /obj/item/fishing_hook/magnet/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
@@ -125,6 +129,7 @@
 	icon_state = "rescue"
 	fishing_hook_traits = FISHING_HOOK_RESCUE
 	rod_overlay_icon_state = "hook_rescue_overlay"
+	chasm_detritus_type = /obj/item/chasm_detritus/restricted/bodies
 
 
 // This hook can only fish in chasms.
