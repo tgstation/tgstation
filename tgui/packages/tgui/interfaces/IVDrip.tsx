@@ -5,6 +5,7 @@ import { Window } from '../layouts';
 
 type IVDripData = {
   transferRate: number;
+  transferStep: number;
   injectOnly: BooleanLike;
   minInjectRate: number;
   maxInjectRate: number;
@@ -117,7 +118,7 @@ export const IVDrip = (props, context) => {
                   label="Transfer Rate"
                   buttons={'Units / Second'}>
                   <Slider
-                    step={0.01}
+                    step={data.transferStep}
                     my={1}
                     value={data.transferRate}
                     minValue={data.minInjectRate}
