@@ -398,7 +398,7 @@ fi
 
 if [ $st = 0 ]; then
     echo
-    echo -e "${GREEN}No errors found using ripgrep!${NC}"
+    echo -e "${GREEN}No errors found using $grep!${NC}"
 fi;
 
 if [ $st = 1 ]; then
