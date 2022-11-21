@@ -11,7 +11,7 @@
 	. = ..()
 	//we always have gravity.
 	has_gravity = TRUE
-	RegisterSignal(SSdcs, COMSIG_AREA_CREATED, .proc/on_area_creation)
+	RegisterSignal(SSdcs, COMSIG_AREA_CREATED, PROC_REF(on_area_creation))
 
 /area/station/Destroy()
 	station_ship = null
@@ -34,7 +34,7 @@
 	if(!(overwritten in created)) //not our ship? not our problem.
 		return
 
-	INVOKE_ASYNC(station_ship, /obj/docking_port/mobile/.proc/recalculate_bounds)
+	INVOKE_ASYNC(station_ship, TYPE_PROC_REF(/obj/docking_port/mobile/, recalculate_bounds))
 
 // VERY EXPENSIVE (I think)
 /obj/docking_port/mobile/proc/recalculate_bounds() //from shiptest

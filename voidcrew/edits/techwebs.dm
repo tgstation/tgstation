@@ -3,7 +3,11 @@
 	display_name = "Basic Shuttle Research"
 	description = "Research the technology required to create and use basic shuttles."
 	prereq_ids = list("bluespace_travel", "adv_engi")
-	design_ids = list("engine_plasma", "engine_ion", "shuttle_helm") //, "rapid_shuttle_designator")
+	design_ids = list(
+		"engine_plasma",
+		"engine_ion",
+		"shuttle_helm",
+	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /datum/techweb_node/exp_shuttle_tech
@@ -11,10 +15,20 @@
 	display_name = "Experimental Shuttle Research"
 	description = "A bunch of engines and related shuttle parts that are likely not really that useful, but could be in strange situations."
 	prereq_ids = list("basic_shuttle")
-	design_ids = list("engine_expulsion")
+	design_ids = list(
+		"engine_expulsion",
+	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
-
+/datum/techweb_node/survey_scanner
+	id = "survey_scanner"
+	display_name = "Survey Scanners"
+	description = "A machine that allows you to turn power into research points."
+	prereq_ids = list("engineering")
+	design_ids = list(
+		"surveyscanner",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/nanite_base
 	id = "nanite_base"

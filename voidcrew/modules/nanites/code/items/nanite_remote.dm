@@ -9,7 +9,7 @@
 	desc = "A device that can remotely control active nanites through wireless signals."
 	w_class = WEIGHT_CLASS_SMALL
 	req_access = list(ACCESS_ROBOTICS)
-	icon = 'icons/obj/device.dmi'
+	icon = 'voidcrew/modules/nanites/icons/device.dmi'
 	icon_state = "nanite_remote"
 	item_flags = NOBLUDGEON
 	var/locked = FALSE //Can be locked, so it can be given to users with a set code and mode

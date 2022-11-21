@@ -15,10 +15,24 @@
 	var/datum/techweb/linked_techweb
 
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
-	QDEL_LIST(cloud_backups) //rip backups
-	linked_techweb = null
 	eject()
+	QDEL_LIST(cloud_backups) //rip backups
+	unsync_research_servers()
 	return ..()
+
+/obj/machinery/computer/nanite_cloud_controller/unsync_research_servers()
+	if(linked_techweb)
+		linked_techweb.connected_machines -= src
+		linked_techweb = null
+
+/obj/machinery/computer/nanite_cloud_controller/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		linked_techweb.connected_machines -= src //disconnect old one
+
+		linked_techweb = tool.buffer
+		linked_techweb.connected_machines += src //connect new one
+		say("Linked to Server!")
+		return TRUE
 
 /obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
@@ -30,13 +44,6 @@
 				eject(user)
 			disk = N
 			return
-	if(istype(I, /obj/item/multitool))
-		var/obj/item/multitool/multi = I
-		if(istype(multi.buffer, /obj/machinery/rnd/server))
-			var/obj/machinery/rnd/server/serv = multi.buffer
-			linked_techweb = serv.stored_research
-			visible_message("Linked to Server!")
-		return
 	return ..()
 
 /obj/machinery/computer/nanite_cloud_controller/AltClick(mob/user)

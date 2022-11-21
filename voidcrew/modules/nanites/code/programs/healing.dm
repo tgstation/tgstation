@@ -217,7 +217,7 @@
 
 /datum/nanite_program/defib/on_trigger(comm_message)
 	host_mob.notify_ghost_cloning("Your heart is being defibrillated by nanites. Re-enter your corpse if you want to be revived!")
-	addtimer(CALLBACK(src, .proc/zap), 50)
+	addtimer(CALLBACK(src, PROC_REF(zap)), 50)
 
 /datum/nanite_program/defib/proc/check_revivable()
 	if(!iscarbon(host_mob)) //nonstandard biology

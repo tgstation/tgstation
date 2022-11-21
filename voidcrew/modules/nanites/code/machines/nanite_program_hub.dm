@@ -23,27 +23,34 @@
 	)
 
 /obj/machinery/nanite_program_hub/Destroy()
-	linked_techweb = null
-	. = ..()
+	unsync_research_servers()
+	return ..()
+
+/obj/machinery/nanite_program_hub/unsync_research_servers()
+	if(linked_techweb)
+		linked_techweb.connected_machines -= src
+		linked_techweb = null
+
+/obj/machinery/nanite_program_hub/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(linked_techweb && !QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		linked_techweb.connected_machines -= src //disconnect old one
+
+		linked_techweb = tool.buffer
+		linked_techweb.connected_machines += src //connect new one
+		say("Linked to Server!")
+		return TRUE
 
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
 		if(user.transferItemToLoc(N, src))
-			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
+			to_chat(user, span_notice("You insert [N] into [src]."))
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 			if(disk)
 				eject(user)
 			disk = N
-	if(istype(I, /obj/item/multitool))
-		var/obj/item/multitool/multi = I
-		if(istype(multi.buffer, /obj/machinery/rnd/server))
-			var/obj/machinery/rnd/server/serv = multi.buffer
-			linked_techweb = serv.stored_research
-			visible_message("Linked to Server!")
 		return
-	else
-		..()
+	return ..()
 
 /obj/machinery/nanite_program_hub/proc/eject(mob/living/user)
 	if(!disk)

@@ -5,7 +5,7 @@
 	build_type = NONE
 	construction_time = 50
 	category = list()
-	research_icon = 'icons/obj/device.dmi'
+	research_icon = 'voidcrew/modules/nanites/icons/device.dmi'
 	research_icon_state = "nanite_program"
 	///The nanite program researching this will unlock.
 	var/program_type = /datum/nanite_program
