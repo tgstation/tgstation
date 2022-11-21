@@ -17,7 +17,8 @@
 
 /obj/machinery/computer/operating/Initialize(mapload)
 	..()
-	linked_techweb = SSresearch.science_tech
+	if(!CONFIG_GET(flag/no_default_techweb_link))
+		linked_techweb = SSresearch.science_tech
 	find_table()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -37,7 +38,12 @@
 		if(table && table.computer == src)
 			table.computer = null
 	QDEL_NULL(experiment_handler)
-	. = ..()
+	return ..()
+
+/obj/machinery/computer/operating/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		linked_techweb = tool.buffer
+	return TRUE
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/disk/surgery))
@@ -51,6 +57,8 @@
 	return ..()
 
 /obj/machinery/computer/operating/proc/sync_surgeries()
+	if(!linked_techweb)
+		return
 	for(var/i in linked_techweb.researched_designs)
 		var/datum/design/surgery/D = SSresearch.techweb_design_by_id(i)
 		if(!istype(D))
@@ -76,14 +84,13 @@
 
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = list()
-	var/list/surgeries = list()
-	for(var/X in advanced_surgeries)
-		var/datum/surgery/S = X
+	var/list/all_surgeries = list()
+	for(var/datum/surgery/surgeries as anything in advanced_surgeries)
 		var/list/surgery = list()
-		surgery["name"] = initial(S.name)
-		surgery["desc"] = initial(S.desc)
-		surgeries += list(surgery)
-	data["surgeries"] = surgeries
+		surgery["name"] = initial(surgeries.name)
+		surgery["desc"] = initial(surgeries.desc)
+		all_surgeries += list(surgery)
+	data["surgeries"] = all_surgeries
 
 	//If there's no patient just hop to it yeah?
 	if(!table)

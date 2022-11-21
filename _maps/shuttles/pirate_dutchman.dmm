@@ -771,16 +771,12 @@
 	width = 17
 	},
 /obj/docking_port/mobile/pirate{
-	dheight = 7;
 	dir = 8;
-	dwidth = 18;
-	height = 6;
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "Pirate Ship";
 	port_direction = 4;
-	preferred_direction = 8;
-	width = 13
+	preferred_direction = 8
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)

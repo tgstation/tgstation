@@ -1,0 +1,5 @@
+author: "etherware-novice"
+delete-after: True
+changes:
+  - rscadd: "Re-adds legacy job ringtones (clown, mime, jani, lawyer, science, chaplain)"
+  - refactor: "update_ringtone was modifed to accept strings, moving the old functionality to update_ringtone_pref"

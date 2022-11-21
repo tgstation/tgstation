@@ -135,6 +135,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(autoplace_max_time && world.time >= autoplace_max_time)
 				place_blob_core(BLOB_RANDOM_PLACEMENT)
 		else
+			// If we get here, it means yes: the blob is kill
+			SSticker.news_report = BLOB_DESTROYED
 			qdel(src)
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
@@ -142,7 +144,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
-		addtimer(CALLBACK(src, .proc/victory), 450)
+		addtimer(CALLBACK(src, PROC_REF(victory)), 450)
 	else if(!free_strain_rerolls && (last_reroll_time + BLOB_POWER_REROLL_FREE_TIME<world.time))
 		to_chat(src, "<b>[span_big("<font color=\"#EE4000\">You have gained another free strain re-roll.</font>")]</b>")
 		free_strain_rerolls = 1
@@ -178,7 +180,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
-			L.fully_heal(admin_revive = FALSE)
+			L.fully_heal()
 
 		for(var/area/A in GLOB.areas)
 			if(!(A.type in GLOB.the_station_areas))

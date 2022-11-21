@@ -71,7 +71,7 @@
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food &= ~MEAT
 	species.disliked_food |= MEAT
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 /datum/quirk/vegetarian/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -113,7 +113,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food |= PINEAPPLE
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 /datum/quirk/pineapple_liker/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -145,7 +145,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.disliked_food |= PINEAPPLE
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 /datum/quirk/pineapple_hater/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -173,7 +173,7 @@
 	var/liked = species.liked_food
 	species.liked_food = species.disliked_food
 	species.disliked_food = liked
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 /datum/quirk/deviant_tastes/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -221,7 +221,7 @@
 	human_holder.eye_color_heterochromatic = TRUE
 	human_holder.eye_color_right = color
 	// We set override to TRUE as link to holder will be called whenever the preference is applied, given this quirk exists on the mob
-	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, .proc/check_eye_removal, override=TRUE)
+	RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_eye_removal), override=TRUE)
 
 	var/obj/item/organ/internal/eyes/eyes_of_the_holder = quirk_holder.getorgan(/obj/item/organ/internal/eyes)
 	if(!eyes_of_the_holder)
@@ -320,8 +320,8 @@
 	old_hair = human_holder.hairstyle
 	human_holder.hairstyle = "Bald"
 	human_holder.update_body_parts()
-	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, .proc/equip_hat)
-	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, .proc/unequip_hat)
+	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, PROC_REF(equip_hat))
+	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, PROC_REF(unequip_hat))
 
 /datum/quirk/item_quirk/bald/add_unique()
 	var/obj/item/clothing/head/wig/natural/baldie_wig = new(get_turf(quirk_holder))
@@ -357,50 +357,6 @@
 	SIGNAL_HANDLER
 
 	quirk_holder.add_mood_event("bad_hair_day", /datum/mood_event/bald)
-
-/datum/quirk/item_quirk/tongue_tied
-	name = "Tongue Tied"
-	desc = "Due to a past incident, your ability to communicate has been relegated to your hands."
-	icon = "sign-language"
-	value = 0
-	medical_record_text = "During physical examination, patient's tongue was found to be uniquely damaged."
-	mail_goodies = list(/obj/item/clothing/gloves/radio)
-
-/datum/quirk/item_quirk/tongue_tied/add_unique()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/organ/internal/tongue/old_tongue = human_holder.getorganslot(ORGAN_SLOT_TONGUE)
-	old_tongue.Remove(human_holder)
-	qdel(old_tongue)
-
-	var/obj/item/organ/internal/tongue/tied/new_tongue = new(get_turf(human_holder))
-	new_tongue.Insert(human_holder)
-	// Only tongues of people with this quirk can't be removed. Manually spawned or found tongues can be.
-	new_tongue.organ_flags |= ORGAN_UNREMOVABLE
-
-	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
-	if(isplasmaman(human_holder))
-		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
-	give_item_to_holder(gloves_type, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-
-/datum/quirk/item_quirk/tongue_tied/post_add()
-	to_chat(quirk_holder, span_boldannounce("Because you speak with your hands, having them full hinders your ability to communicate!"))
-
-/datum/quirk/item_quirk/tongue_tied/remove()
-	var/obj/item/organ/internal/tongue/tied/quirk_tongue = quirk_holder.getorganslot(ORGAN_SLOT_TONGUE)
-	if(!istype(quirk_tongue))
-		return
-
-	var/obj/item/organ/internal/tongue/new_tongue_type = /obj/item/organ/internal/tongue
-	if(iscarbon(quirk_holder))
-		var/mob/living/carbon/carbon_quirky = quirk_holder
-		new_tongue_type = carbon_quirky.dna?.species?.mutanttongue
-	if(!new_tongue_type)
-		return
-
-	var/obj/item/organ/internal/tongue/new_tongue = new new_tongue_type()
-	quirk_tongue.Remove(quirk_holder, TRUE)
-	new_tongue.Insert(quirk_holder, TRUE)
-	qdel(quirk_tongue)
 
 /datum/quirk/item_quirk/photographer
 	name = "Photographer"
@@ -462,10 +418,10 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = JUNKFOOD
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
-	RegisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME, .proc/won_game)
-	RegisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME, .proc/lost_game)
-	RegisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME, .proc/gamed)
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
+	RegisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME, PROC_REF(won_game))
+	RegisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME, PROC_REF(lost_game))
+	RegisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME, PROC_REF(gamed))
 
 /datum/quirk/gamer/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -482,7 +438,7 @@
 
 /datum/quirk/gamer/add_unique()
 	// The gamer starts off quelled
-	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
+	gaming_withdrawal_timer = addtimer(CALLBACK(src, PROC_REF(enter_withdrawal)), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
 
 /**
  * Gamer won a game
@@ -510,7 +466,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.add_mood_event("gamer_lost", /datum/mood_event/gamer_lost)
 	// Executed asynchronously due to say()
-	INVOKE_ASYNC(src, .proc/gamer_moment)
+	INVOKE_ASYNC(src, PROC_REF(gamer_moment))
 /**
  * Gamer is playing a game
  *
@@ -526,7 +482,7 @@
 	// Reset withdrawal timer
 	if (gaming_withdrawal_timer)
 		deltimer(gaming_withdrawal_timer)
-	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
+	gaming_withdrawal_timer = addtimer(CALLBACK(src, PROC_REF(enter_withdrawal)), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
 
 
 /datum/quirk/gamer/proc/gamer_moment()
