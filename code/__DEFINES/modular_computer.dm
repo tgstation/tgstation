@@ -1,9 +1,3 @@
-//Modular computer/NTNet defines
-
-//Modular computer part defines
-#define MC_CARD "CARD"
-#define MC_CARD2 "CARD2"
-
 //NTNet stuff, for modular computers
 // NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
 #define NTNET_SOFTWAREDOWNLOAD 1 // Downloads of software from NTNet

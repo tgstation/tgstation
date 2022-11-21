@@ -18347,6 +18347,7 @@
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
 	},
+/obj/machinery/bci_implanter,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "gCH" = (
@@ -30737,11 +30738,7 @@
 /area/station/science/lower)
 "kXw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/window/right/directional/north{
-	dir = 2;
-	name = "Research Test Chamber";
-	req_access = list("science")
-	},
+/obj/structure/window/reinforced,
 /turf/open/floor/engine,
 /area/station/science/explab)
 "kXI" = (

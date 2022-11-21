@@ -13953,9 +13953,21 @@
 "egT" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/rack,
-/obj/item/controller,
-/obj/item/compact_remote,
-/obj/item/compact_remote,
+/obj/item/controller{
+	pixel_x = -7
+	},
+/obj/item/compact_remote{
+	pixel_x = -7
+	},
+/obj/item/compact_remote{
+	pixel_x = -7
+	},
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_x = 7
+	},
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = 7
+	},
 /turf/open/floor/iron/white/corner,
 /area/station/science/explab)
 "egV" = (
@@ -40279,9 +40291,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
 "msi" = (
-/obj/structure/rack,
-/obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/integrated_circuit/loaded/hello_world,
+/obj/machinery/bci_implanter,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},

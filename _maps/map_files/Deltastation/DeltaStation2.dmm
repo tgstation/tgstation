@@ -24186,8 +24186,8 @@
 /area/station/maintenance/department/crew_quarters/bar)
 "fOV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/kirbyplants/random,
 /obj/structure/sign/warning/firing_range/directional/west,
+/obj/machinery/bci_implanter,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "fPf" = (
@@ -57785,6 +57785,7 @@
 "nZn" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/disposalpipe/segment,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
 "nZt" = (

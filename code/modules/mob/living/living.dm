@@ -35,6 +35,9 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
+	if(imaginary_group)
+		imaginary_group -= src
+		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LIST(surgeries)
 	return ..()
@@ -829,7 +832,7 @@
 	if(heal_flags & HEAL_TOX)
 		setToxLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_OXY)
-		setToxLoss(0, FALSE, TRUE)
+		setOxyLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_CLONE)
 		setCloneLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_BRUTE)

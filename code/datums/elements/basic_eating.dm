@@ -5,7 +5,7 @@
  */
 /datum/element/basic_eating
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///Path of the reagent added
 	var/heal_amt
 	/// Types the animal can eat.
