@@ -199,7 +199,7 @@
  * Arguments:
  * * ringtone_client - The client whose prefs we'll use to set the ringtone of this PDA.
  */
-/obj/item/modular_computer/tablet/proc/update_ringtone(client/ringtone_client)
+/obj/item/modular_computer/tablet/proc/update_ringtone_pref(client/ringtone_client)
 	if(!ringtone_client)
 		return
 
@@ -208,9 +208,15 @@
 	if(!new_ringtone || new_ringtone == MESSENGER_RINGTONE_DEFAULT)
 		return
 
+	update_ringtone(new_ringtone)
+
+
+/// A simple proc to set the ringtone from a pda.
+/obj/item/modular_computer/tablet/proc/update_ringtone(new_ringtone)
+	if(!istext(new_ringtone))
+		return
 	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.ringtone = new_ringtone
-
 
 // SUBTYPES
 

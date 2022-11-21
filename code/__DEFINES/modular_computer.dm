@@ -45,5 +45,6 @@
 
 /// The default ringtone of the Messenger app.
 #define MESSENGER_RINGTONE_DEFAULT "beep"
+
 /// The maximum length of the ringtone of the Messenger app.
 #define MESSENGER_RINGTONE_MAX_LENGTH 20
