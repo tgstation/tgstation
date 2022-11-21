@@ -19,8 +19,21 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link))
+		connect_techweb(SSresearch.science_tech)
 
-	techweb = SSresearch.science_tech
+	materials = AddComponent( \
+		/datum/component/remote_materials, \
+		"component_printer", \
+		mapload, \
+		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
+	)
+
+/obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
+	if(techweb)
+		UnregisterSignal(techweb, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
+
+	techweb = new_techweb
 
 	for (var/researched_design_id in techweb.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
@@ -29,15 +42,13 @@
 
 		current_unlocked_designs[design.build_path] = design.id
 
-	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
-	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
+	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_research))
+	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_removed))
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		"component_printer", \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+/obj/machinery/component_printer/multitool_act(mob/living/user, obj/item/multitool/tool)
+	if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
+		connect_techweb(tool.buffer)
+	return TRUE
 
 /obj/machinery/component_printer/proc/on_research(datum/source, datum/design/added_design, custom)
 	SIGNAL_HANDLER
@@ -348,7 +359,7 @@
 
 /obj/machinery/module_duplicator/proc/print_module(list/design)
 	flick("module-fab-print", src)
-	addtimer(CALLBACK(src, .proc/finish_module_print, design), 1.6 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_module_print), design), 1.6 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_print(list/design)
 	var/atom/movable/created_atom
@@ -412,7 +423,7 @@
 			return ..()
 
 	flick("module-fab-scan", src)
-	addtimer(CALLBACK(src, .proc/finish_module_scan, user, data), 1.4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_module_scan), user, data), 1.4 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
 	scanned_designs += list(data)

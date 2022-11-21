@@ -663,7 +663,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	. = FALSE
 
-	if(in_range(fatty, src))
+	if(Adjacent(fatty))
 		for(var/mob/living/L in get_turf(fatty))
 			var/was_alive = (L.stat != DEAD)
 			var/mob/living/carbon/C = L
@@ -1003,7 +1003,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			allowed_configs += "[initial(item.greyscale_config_inhand_right)]"
 
 	var/datum/greyscale_modify_menu/menu = new(
-		src, usr, allowed_configs, CALLBACK(src, .proc/vend_greyscale, params),
+		src, usr, allowed_configs, CALLBACK(src, PROC_REF(vend_greyscale), params),
 		starting_icon_state=initial(fake_atom.icon_state),
 		starting_config=initial(fake_atom.greyscale_config),
 		starting_colors=initial(fake_atom.greyscale_colors)

@@ -301,3 +301,16 @@
 	inhand_icon_state = null
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
+
+// Research Director
+
+/obj/item/clothing/suit/jacket/research_director
+	name = "research director's coat"
+	desc = "A mix between a labcoat and just a regular coat. It's made out of a special anti-bacterial, anti-acidic, and anti-biohazardous synthetic fabric."
+	icon_state = "labcoat_rd"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 75, FIRE = 75, ACID = 75)
+	body_parts_covered = CHEST|GROIN|ARMS
+
+/obj/item/clothing/suit/jacket/research_director/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/storage/bag/xeno

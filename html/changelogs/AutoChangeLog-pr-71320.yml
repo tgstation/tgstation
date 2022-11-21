@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "All modular computers now only have one ID slot, and cannot be upgraded."
+  - qol: "The HoP's access application now only has one app, logging in will directly modify the ID that's in it, making it less confusing to swap back and forth."

@@ -7,6 +7,7 @@
 /obj/item/organ/internal/brain/shadow/nightmare
 	name = "tumorous mass"
 	desc = "A fleshy growth that was dug out of the skull of a Nightmare."
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
 
@@ -84,7 +85,7 @@
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
-	owner.revive(full_heal = TRUE, admin_revive = FALSE)
+	owner.revive(HEAL_ALL)
 	if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 		var/mob/living/carbon/old_owner = owner
 		Remove(owner, HEART_SPECIAL_SHADOWIFY)

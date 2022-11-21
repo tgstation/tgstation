@@ -35,18 +35,36 @@
 	. = ..()
 
 	cached_designs = list()
-	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
-	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_CLINICAL, TRUE)
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		"lathe", \
+		mapload, \
+		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
+	)
+	AddComponent(
+		/datum/component/payment, \
+		0, \
+		SSeconomy.get_dep_account(payment_department), \
+		PAYMENT_CLINICAL, \
+		TRUE, \
+	)
 
 	create_reagents(0, OPENCONTAINER)
-	update_designs()
+	if(stored_research)
+		update_designs()
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
+
+/obj/machinery/rnd/production/connect_techweb(datum/techweb/new_techweb)
+	if(stored_research)
+		UnregisterSignal(stored_research, list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN))
+
+	. = ..()
 
 	RegisterSignal(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
-		.proc/on_techweb_update
+		PROC_REF(on_techweb_update)
 	)
 
 /obj/machinery/rnd/production/Destroy()
@@ -59,7 +77,7 @@
 
 	// We're probably going to get more than one update (design) at a time, so batch
 	// them together.
-	addtimer(CALLBACK(src, .proc/update_designs), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
@@ -314,8 +332,8 @@
 
 	var/time_coefficient = design.lathe_time_factor * efficiency_coeff
 
-	addtimer(CALLBACK(src, .proc/reset_busy), (30 * time_coefficient * print_quantity) ** 0.5)
-	addtimer(CALLBACK(src, .proc/do_print, design.build_path, print_quantity, efficient_mats, design.dangerous_construction), (32 * time_coefficient * print_quantity) ** 0.8)
+	addtimer(CALLBACK(src, PROC_REF(reset_busy)), (30 * time_coefficient * print_quantity) ** 0.5)
+	addtimer(CALLBACK(src, PROC_REF(do_print), design.build_path, print_quantity, efficient_mats, design.dangerous_construction), (32 * time_coefficient * print_quantity) ** 0.8)
 
 	return TRUE
 

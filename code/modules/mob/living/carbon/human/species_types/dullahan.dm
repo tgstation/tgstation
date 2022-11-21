@@ -210,9 +210,9 @@
 		return INITIALIZE_HINT_QDEL
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
-	RegisterSignal(owner, COMSIG_CLICK_SHIFT, .proc/examinate_check)
-	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
-	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
+	RegisterSignal(owner, COMSIG_CLICK_SHIFT, PROC_REF(examinate_check))
+	RegisterSignal(owner, COMSIG_CARBON_REGENERATE_LIMBS, PROC_REF(unlist_head))
+	RegisterSignal(owner, COMSIG_LIVING_REVIVE, PROC_REF(retrieve_head))
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/dullahan_relay/Destroy()
@@ -247,13 +247,15 @@
 	excluded_zones |= BODY_ZONE_HEAD
 
 ///Retrieving the owner's head for better ahealing.
-/obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal, admin_revive)
+/obj/item/dullahan_relay/proc/retrieve_head(datum/source, full_heal_flags)
 	SIGNAL_HANDLER
-	if(admin_revive)
-		var/obj/item/bodypart/head/head = loc
-		var/turf/body_turf = get_turf(owner)
-		if(head && istype(head) && body_turf && !(head in owner.get_all_contents()))
-			head.forceMove(body_turf)
+	if(!(full_heal_flags & HEAL_ADMIN))
+		return
+
+	var/obj/item/bodypart/head/head = loc
+	var/turf/body_turf = get_turf(owner)
+	if(head && istype(head) && body_turf && !(head in owner.get_all_contents()))
+		head.forceMove(body_turf)
 
 /obj/item/dullahan_relay/Destroy()
 	if(!QDELETED(owner))
