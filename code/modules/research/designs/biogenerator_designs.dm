@@ -6,7 +6,7 @@
 	name = "Milk"
 	id = "milk"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.2)
+	materials = list(/datum/material/biomass= 0.4)
 	make_reagents = list(/datum/reagent/consumable/milk = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
@@ -14,7 +14,7 @@
 	name = "Soy Milk"
 	id = "soymilk"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.2)
+	materials = list(/datum/material/biomass= 0.4)
 	make_reagents = list(/datum/reagent/consumable/soymilk = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
@@ -22,7 +22,7 @@
 	name = "Ethanol"
 	id = "ethanol"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.3)
+	materials = list(/datum/material/biomass= 0.6)
 	make_reagents = list(/datum/reagent/consumable/ethanol = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
@@ -30,7 +30,7 @@
 	name = "Cream"
 	id = "cream"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.3)
+	materials = list(/datum/material/biomass= 0.6)
 	make_reagents = list(/datum/reagent/consumable/cream = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
@@ -38,7 +38,7 @@
 	name = "Black Pepper"
 	id = "black_pepper"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.3)
+	materials = list(/datum/material/biomass= 0.6)
 	make_reagents = list(/datum/reagent/consumable/blackpepper = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
@@ -46,7 +46,7 @@
 	name = "Universal Enzyme"
 	id = "enzyme"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.3)
+	materials = list(/datum/material/biomass= 0.6)
 	make_reagents = list(/datum/reagent/consumable/enzyme = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
@@ -54,7 +54,7 @@
 	name = "Flour"
 	id = "flour_sack"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.3)
+	materials = list(/datum/material/biomass= 0.6)
 	make_reagents = list(/datum/reagent/consumable/flour = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
@@ -62,7 +62,7 @@
 	name = "Sugar"
 	id = "sugar"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.3)
+	materials = list(/datum/material/biomass= 0.6)
 	make_reagents = list(/datum/reagent/consumable/sugar = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_FOOD)
 
@@ -86,7 +86,7 @@
 	name = "E-Z Nutrient"
 	id = "ez_nut"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.05)
+	materials = list(/datum/material/biomass= 0.1)
 	make_reagents = list(/datum/reagent/plantnutriment/eznutriment = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
@@ -94,7 +94,7 @@
 	name = "Left 4 Zed"
 	id = "l4z_nut"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.05)
+	materials = list(/datum/material/biomass= 0.1)
 	make_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
@@ -102,7 +102,7 @@
 	name = "Robust Harvest"
 	id = "rh_nut"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.1)
+	materials = list(/datum/material/biomass= 0.2)
 	make_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
@@ -110,7 +110,7 @@
 	name = "Enduro Grow"
 	id = "end_gro"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.15)
+	materials = list(/datum/material/biomass= 0.3)
 	make_reagents = list(/datum/reagent/plantnutriment/endurogrow = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
@@ -118,7 +118,7 @@
 	name = "Liquid Earthquake"
 	id = "liq_earth"
 	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 0.15)
+	materials = list(/datum/material/biomass= 0.3)
 	make_reagents = list(/datum/reagent/plantnutriment/liquidearthquake = 1)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
