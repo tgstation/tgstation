@@ -124,6 +124,7 @@
 #include "limbsanity.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
+#include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "mecha_damage.dm"
 #include "medical_wounds.dm"
