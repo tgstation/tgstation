@@ -127,6 +127,9 @@
 	/// You'll probably break someone's config if you change this, so it's best to not to.
 	var/config_tag = ""
 
+	/// department's winter coat
+	var/dept_jacket = /obj/item/clothing/suit/hooded/wintercoat
+
 
 /datum/job/New()
 	. = ..()

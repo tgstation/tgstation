@@ -103,6 +103,8 @@
 	var/scarf_type = pick(scarves)
 
 	spawned.equip_to_slot_or_del(new scarf_type(spawned), ITEM_SLOT_NECK, initial = FALSE)
+	if(SSmapping.config?.map_name == "Ice Box Station")  // extra chilly out
+		spawned.equip_to_slot_or_del(new job.dept_jacket(spawned), ITEM_SLOT_OCLOTHING, initial = FALSE)
 
 
 /datum/station_trait/filled_maint
