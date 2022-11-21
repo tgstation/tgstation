@@ -34,9 +34,8 @@
 	shuttlePortId = "cyborg_mothership"
 	jump_to_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "cyborg_mothership" = 1)
 	view_range = 10
-	x_offset = -23
-	y_offset = -12
 	designate_time = 100
+	y_offset = -11
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/cyborg_mothership/Initialize(mapload)
 	. = ..()
@@ -105,9 +104,3 @@
 		SAY Connection lost. Dumping audio logs to disk.
 		DELAY 50
 	"}
-
-/obj/structure/ai_core/mothership
-	name = "mothership AI core"
-	desc = "This AI core is connected to vessel #101011 as it's overseer."
-	anchored = TRUE
-	laws = /datum/ai_laws/overlord

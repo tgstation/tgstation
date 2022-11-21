@@ -14,15 +14,14 @@
 /area/shuttle/abandoned)
 "aU" = (
 /obj/machinery/conveyor{
-	dir = 4;
+	dir = 8;
 	id = "mothership_main"
 	},
-/obj/structure/plasticflaps/opaque,
-/obj/machinery/door/poddoor/shutters/window{
-	id = "mothership_main"
+/obj/machinery/recycler{
+	dir = 1;
+	eat_dir = 4
 	},
-/obj/structure/cable,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "bE" = (
 /mob/living/simple_animal/bot/cleanbot,
@@ -30,20 +29,23 @@
 /area/shuttle/abandoned)
 "cU" = (
 /obj/machinery/conveyor{
-	id = "mothership_main"
+	id = "mothership_main";
+	dir = 6
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "dA" = (
-/obj/item/mmi,
-/turf/open/floor/circuit/green/airless,
+/obj/item/disk/holodisk/ruin/cyborg_mothership,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "dC" = (
 /obj/machinery/conveyor{
-	dir = 1;
-	id = "mothership_bottom"
+	id = "mothership_main";
+	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "dI" = (
@@ -64,23 +66,19 @@
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/abandoned)
 "eO" = (
-/obj/structure/lattice,
-/obj/item/stack/conveyor,
-/turf/template_noop,
-/area/shuttle/abandoned)
-"fB" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/table,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/machinery/camera/directional/east,
+/obj/structure/cable,
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "mothership_main"
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"fB" = (
+/obj/structure/sign/warning/vacuum/external/directional/west,
+/obj/structure/closet/emcloset/anchored,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "fV" = (
 /obj/structure/lattice/catwalk,
@@ -92,16 +90,15 @@
 /turf/open/space/basic,
 /area/shuttle/abandoned)
 "gc" = (
-/obj/machinery/door/window/right/directional/east,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mothership_left"
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "gG" = (
-/obj/machinery/ore_silo,
-/turf/open/floor/circuit/airless,
+/obj/machinery/light/small/directional/west,
+/obj/structure/ore_box,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "hs" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -115,26 +112,27 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "hx" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
+/obj/structure/cable,
+/obj/machinery/conveyor/inverted{
+	dir = 10;
+	id = "mothership_main"
 	},
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "hB" = (
-/obj/item/stack/rods,
-/obj/machinery/light/broken/directional/east,
-/obj/machinery/button/door/directional/east{
-	id = "mothership_right"
-	},
-/turf/open/floor/circuit/airless,
+/obj/machinery/light/small/directional/east,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "hR" = (
 /turf/template_noop,
 /area/template_noop)
 "il" = (
-/obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/structure/closet/emcloset/anchored,
-/obj/machinery/light/small/directional/west,
+/obj/structure/cable,
+/obj/machinery/conveyor{
+	id = "mothership_main";
+	dir = 9
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "iv" = (
@@ -151,26 +149,22 @@
 /turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "jx" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/storage/bag/ore,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
-/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "jH" = (
-/obj/structure/marker_beacon/cerulean,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/shuttle/abandoned)
-"jJ" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
-/obj/machinery/door/airlock/external/ruin{
-	id_tag = "caravanpirate_bolt_port"
-	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/iron/showroomfloor,
+/area/shuttle/abandoned)
+"jJ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "ks" = (
 /obj/machinery/holopad/secure,
@@ -178,10 +172,12 @@
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/abandoned)
 "ku" = (
-/obj/machinery/conveyor{
-	id = "Recycler"
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor_switch{
+	id = "Recycler";
+	name = "Recycler"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/space/basic,
 /area/shuttle/abandoned)
 "kz" = (
 /turf/closed/wall/mineral/titanium,
@@ -192,55 +188,48 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "li" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 9
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mothership_left"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "lv" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/item/storage/bag/ore,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
+/obj/structure/cable,
+/obj/machinery/conveyor{
+	id = "mothership_main";
+	dir = 5
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "lZ" = (
-/obj/structure/cable,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/obj/machinery/camera/directional/south,
+/turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "mc" = (
+/obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/catwalk_floor/titanium,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "mp" = (
-/obj/structure/window/reinforced{
-	dir = 4
+/obj/structure/lattice/catwalk,
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mothership_left"
 	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
+/obj/machinery/door/poddoor/shutters/window{
+	id = "mothership_left"
 	},
-/obj/item/electronics/airlock,
-/obj/item/stack/cable_coil,
-/obj/structure/windoor_assembly{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 10
-	},
+/obj/structure/plasticflaps,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "mC" = (
-/obj/machinery/space_heater,
-/obj/machinery/camera/directional/west,
-/obj/item/pipe_dispenser,
-/turf/open/floor/catwalk_floor/titanium,
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 4
+	},
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
 /area/shuttle/abandoned)
 "mN" = (
 /obj/machinery/conveyor{
@@ -253,22 +242,26 @@
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned)
-"mV" = (
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
 "no" = (
 /obj/item/stack/sheet/mineral/titanium,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "nM" = (
-/obj/machinery/camera/directional/east,
-/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/effect/spawner/random/engineering/material{
+	spawn_loot_count = 3;
+	spawn_loot_split = 1
+	},
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/obj/item/pickaxe,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "oe" = (
@@ -278,14 +271,19 @@
 /turf/open/floor/iron/solarpanel/airless,
 /area/shuttle/abandoned)
 "of" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "mothership_bottom"
+/obj/machinery/conveyor{
+	dir = 8;
+	id = "mothership_main"
 	},
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "oy" = (
-/obj/item/stack/cable_coil/cut,
+/obj/structure/cable,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "mothership_main"
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "oK" = (
@@ -301,60 +299,63 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "po" = (
-/obj/machinery/conveyor{
-	id = "mothership_main"
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "pz" = (
-/turf/open/floor/circuit/airless,
-/area/shuttle/abandoned)
-"pG" = (
-/obj/machinery/door/window/right/directional/west,
-/obj/structure/spacevine,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor_switch/oneway{
 	id = "mothership_right"
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
-"pL" = (
-/obj/machinery/light/cold/no_nightlight/directional/west,
-/obj/machinery/button/door/directional/west{
-	id = "mothership_left"
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
+"pG" = (
+/obj/structure/spacevine,
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/item/shard,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 6
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"pL" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
 "pY" = (
-/obj/item/disk/holodisk/ruin/cyborg_mothership,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit/airless,
+/obj/machinery/recharge_station,
+/obj/structure/sign/warning/vacuum/external/directional/east,
+/obj/machinery/camera/directional/east,
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "qc" = (
+/obj/machinery/mineral/stacking_machine{
+	input_dir = 2
+	},
 /obj/structure/lattice/catwalk,
-/obj/machinery/mineral/ore_redemption,
 /turf/open/space/basic,
 /area/shuttle/abandoned)
 "qn" = (
-/obj/structure/spacevine,
 /obj/machinery/conveyor{
-	dir = 4;
-	id = "mothership_main"
+	id = "mothership_main";
+	dir = 10
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "qV" = (
-/obj/machinery/conveyor_switch/oneway{
+/obj/structure/spacevine,
+/obj/machinery/conveyor{
+	dir = 4;
 	id = "mothership_main"
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/passive_vent,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
-	},
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ry" = (
 /obj/machinery/mecha_part_fabricator/maint{
@@ -383,55 +384,47 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "so" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit/airless,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 5
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "ss" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "mothership_right"
-	},
-/obj/structure/plasticflaps/opaque,
-/obj/structure/lattice/catwalk,
-/obj/machinery/door/poddoor/shutters/window{
-	id = "mothership_right"
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "mothership_main"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "td" = (
 /obj/structure/spacevine,
-/obj/machinery/conveyor{
-	id = "mothership_main"
-	},
 /obj/structure/cable,
+/obj/machinery/conveyor{
+	id = "mothership_main";
+	dir = 6
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "tr" = (
-/obj/machinery/recycler{
-	eat_dir = 2;
-	dir = 1
-	},
 /obj/structure/lattice/catwalk,
-/obj/machinery/conveyor{
-	id = "Recycler"
+/obj/machinery/conveyor_switch/oneway{
+	id = "mothership_main"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/space/basic,
 /area/shuttle/abandoned)
 "tW" = (
 /obj/machinery/conveyor{
-	dir = 8;
 	id = "mothership_main"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "uK" = (
-/obj/machinery/camera/directional/south,
-/obj/machinery/power/solar_control{
-	dir = 1;
-	id = "mothership_solar";
-	name = "Primary Solar Control"
+/obj/machinery/power/apc/auto_name/directional/north{
+	environ = 0;
+	equipment = 0;
+	lighting = 0;
+	locked = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/circuit/airless,
@@ -448,6 +441,7 @@
 	dir = 8;
 	id = "mothership_main"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "wk" = (
@@ -462,35 +456,55 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "wo" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "mothership_main"
+	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned)
-"wA" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
+"ww" = (
+/obj/machinery/conveyor_switch/oneway{
+	id = "mothership_left"
 	},
+/turf/open/floor/circuit/airless,
+/area/shuttle/abandoned)
+"wA" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/shovel,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "xz" = (
-/obj/machinery/camera/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "yd" = (
-/obj/structure/spacevine,
+/obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "yg" = (
-/mob/living/simple_animal/hostile/hivebot,
-/obj/structure/cable,
-/turf/open/floor/circuit/green/airless,
+/obj/item/stack/sheet/rglass{
+	amount = 2
+	},
+/turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "yA" = (
 /obj/structure/lattice/catwalk,
@@ -527,21 +541,19 @@
 /turf/open/space/basic,
 /area/shuttle/abandoned)
 "zD" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 5
+/obj/structure/spacevine,
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "mothership_right"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "zF" = (
-/obj/structure/spacevine,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/inverted{
+	dir = 6;
 	id = "mothership_main"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "zQ" = (
@@ -556,11 +568,13 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "Ai" = (
-/obj/machinery/atmospherics/components/tank/oxygen{
-	dir = 4
+/obj/structure/spacevine,
+/obj/machinery/conveyor{
+	id = "mothership_main";
+	dir = 10
 	},
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/catwalk_floor/titanium,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "BD" = (
 /obj/structure/cable,
@@ -568,24 +582,17 @@
 /turf/open/floor/iron/solarpanel/airless,
 /area/shuttle/abandoned)
 "BE" = (
-/obj/machinery/camera/directional/west,
+/obj/structure/cable,
 /obj/machinery/conveyor{
-	dir = 4;
 	id = "mothership_main"
 	},
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "BS" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/camera/directional/north,
 /obj/structure/cable,
-/obj/machinery/mineral/stacking_machine{
-	input_dir = 2;
-	output_dir = 2
-	},
-/obj/machinery/conveyor{
-	id = "Recycler"
+/obj/machinery/conveyor/inverted{
+	dir = 6;
+	id = "mothership_main"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -600,33 +607,27 @@
 /turf/open/space/basic,
 /area/shuttle/abandoned)
 "Dv" = (
-/obj/item/stack/sheet/rglass,
-/turf/open/floor/circuit/airless,
+/obj/structure/table_frame,
+/obj/item/ai_module/core/full/overlord,
+/turf/open/floor/circuit/green/airless,
 /area/shuttle/abandoned)
 "Em" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Eq" = (
-/obj/structure/plasticflaps/opaque,
-/obj/structure/lattice/catwalk,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mothership_left"
-	},
-/obj/machinery/door/poddoor/shutters/window{
-	id = "mothership_left"
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
-"Ex" = (
-/obj/machinery/door/airlock/hatch,
-/obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/atmospherics/components/binary/pump/off{
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/open/floor/plating/airless,
+/obj/machinery/door/airlock/external/ruin{
+	id_tag = "caravanpirate_bolt_port"
+	},
+/obj/effect/turf_decal/stripes/asteroid/line,
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
+"Ex" = (
+/obj/structure/cable,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned)
 "Ey" = (
 /obj/machinery/conveyor{
@@ -647,29 +648,47 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "Ge" = (
+/obj/structure/spacevine,
 /obj/machinery/conveyor{
 	dir = 1;
 	id = "mothership_main"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Gf" = (
-/obj/machinery/conveyor_switch/oneway{
+/obj/item/stack/rods,
+/obj/machinery/light/broken/directional/east,
+/obj/machinery/button/door/directional/east{
 	id = "mothership_right"
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "Hg" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/obj/machinery/conveyor{
+	id = "Recycler"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "HK" = (
-/obj/machinery/conveyor_switch{
-	id = "Recycler";
-	name = "Recycler"
+/mob/living/simple_animal/hostile/hivebot,
+/obj/item/circuitboard/aicore,
+/turf/open/floor/circuit/green/airless,
+/area/shuttle/abandoned)
+"HM" = (
+/obj/machinery/space_heater{
+	anchored = 1
 	},
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/obj/machinery/camera/directional/west,
+/obj/item/pipe_dispenser,
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/item/wrench,
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "IS" = (
 /obj/structure/lattice,
@@ -677,8 +696,8 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "Jj" = (
+/obj/structure/spacevine,
 /obj/machinery/conveyor{
-	dir = 4;
 	id = "mothership_main"
 	},
 /obj/structure/cable,
@@ -689,33 +708,32 @@
 /mob/living/simple_animal/hostile/hivebot/mechanic,
 /turf/template_noop,
 /area/shuttle/abandoned)
+"Ks" = (
+/obj/structure/cable,
+/obj/machinery/conveyor/inverted{
+	dir = 9;
+	id = "mothership_main"
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
 "KN" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/inverted{
+	dir = 6;
 	id = "mothership_main"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "KR" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
+/obj/structure/spacevine,
+/obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/obj/structure/ore_box,
+/obj/item/storage/bag/ore,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Ln" = (
 /obj/structure/cable,
 /turf/open/floor/circuit/airless,
-/area/shuttle/abandoned)
-"LO" = (
-/obj/machinery/power/apc/unlocked{
-	pixel_y = -6;
-	lighting = 0;
-	equipment = 0;
-	environ = 0
-	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
 "MB" = (
 /obj/machinery/computer/shuttle/cyborg_mothership{
@@ -724,32 +742,36 @@
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/abandoned)
 "MK" = (
-/obj/machinery/conveyor_switch/oneway{
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/obj/machinery/button/door/directional/west{
 	id = "mothership_left"
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "MZ" = (
-/obj/machinery/light/cold/no_nightlight/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/circuit/airless,
-/area/shuttle/abandoned)
-"Ng" = (
-/obj/structure/spacevine,
-/obj/machinery/conveyor{
-	dir = 8;
-	id = "mothership_main"
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
-"Nv" = (
 /obj/structure/cable,
 /obj/machinery/conveyor{
 	dir = 8;
 	id = "mothership_main"
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"Ng" = (
+/obj/item/mmi,
+/obj/structure/cable,
+/turf/open/floor/circuit/green/airless,
+/area/shuttle/abandoned)
+"Nv" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "mothership_main"
+	},
+/obj/machinery/door/poddoor/shutters/window{
+	id = "mothership_main"
+	},
+/obj/structure/cable,
+/obj/structure/plasticflaps,
+/turf/open/floor/iron/showroomfloor,
 /area/shuttle/abandoned)
 "Oq" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -764,26 +786,21 @@
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
 "Ou" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	id = "mothership_main"
-	},
-/obj/machinery/door/poddoor/shutters/window{
-	id = "mothership_main"
-	},
-/obj/structure/plasticflaps/opaque,
+/obj/machinery/camera/directional/west,
 /obj/structure/cable,
-/turf/open/floor/iron/showroomfloor,
+/obj/machinery/conveyor/inverted{
+	dir = 9;
+	id = "mothership_main"
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
-"OT" = (
-/obj/effect/decal/cleanable/dirt,
+"OR" = (
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 9
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "OY" = (
@@ -798,8 +815,12 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Pf" = (
-/obj/structure/table_frame,
-/turf/open/floor/circuit/green/airless,
+/obj/structure/window/reinforced,
+/obj/structure/closet/crate/solarpanel_small,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "PP" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -821,55 +842,41 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "Rv" = (
-/obj/structure/cable,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "mothership_main"
+/obj/structure/window/reinforced,
+/obj/structure/ore_box,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "RD" = (
-/obj/machinery/recharge_station,
-/obj/structure/sign/warning/vacuum/external/directional/east,
-/obj/machinery/camera/directional/east,
+/obj/machinery/camera/directional/west,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "RV" = (
-/obj/machinery/door/window/right/directional/south,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "mothership_main"
-	},
 /obj/structure/cable,
+/obj/machinery/conveyor{
+	id = "mothership_main";
+	dir = 6
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Sc" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/electrical{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/structure/cable,
+/obj/machinery/conveyor{
+	id = "mothership_main";
+	dir = 10
 	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/multitool,
-/obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Sy" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/effect/spawner/random/engineering/material{
-	spawn_loot_count = 3;
-	spawn_loot_split = 1
-	},
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/turf/open/floor/plating/airless,
+/obj/machinery/light/cold/no_nightlight/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "SV" = (
 /obj/machinery/power/shuttle_engine/heater,
@@ -887,110 +894,132 @@
 /obj/item/stack/sheet/mineral/titanium,
 /turf/template_noop,
 /area/shuttle/abandoned)
+"TZ" = (
+/obj/item/radio/intercom/directional/south,
+/obj/structure/ai_core,
+/turf/open/floor/circuit/green/airless,
+/area/shuttle/abandoned)
 "Uq" = (
 /obj/structure/cable,
 /obj/machinery/power/smes,
 /turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "UL" = (
-/obj/machinery/light/cold/no_nightlight/directional/west,
-/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "UU" = (
-/obj/machinery/door/airlock/external/ruin,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/docking_port/mobile{
-	callTime = 500;
-	shuttle_id = "cyborg_mothership";
-	launch_status = 0;
-	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
-	name = "Cyborg Mothership";
-	dwidth = 11;
-	height = 24;
-	width = 23;
-	dir = 2
-	},
-/turf/open/floor/plating,
-/area/shuttle/abandoned)
-"UV" = (
-/obj/machinery/door/window/right/directional/north,
 /obj/machinery/conveyor{
+	dir = 4;
 	id = "mothership_main"
 	},
 /obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"UV" = (
+/obj/structure/spacevine,
+/obj/structure/cable,
+/obj/machinery/conveyor{
+	id = "mothership_main";
+	dir = 5
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Vb" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/space/basic,
 /area/shuttle/abandoned)
-"VQ" = (
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
+"VC" = (
+/obj/structure/cable,
+/obj/machinery/conveyor/inverted{
+	dir = 5;
+	id = "mothership_main"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/shovel,
 /turf/open/floor/plating/airless,
+/area/shuttle/abandoned)
+"VQ" = (
+/obj/machinery/door/airlock/external/ruin,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/docking_port/mobile{
+	callTime = 250;
+	shuttle_id = "cyborg_mothership";
+	launch_status = 0;
+	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
+	name = "Cyborg Mothership";
+	dwidth = 11;
+	height = 23;
+	width = 23;
+	dir = 2
+	},
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "VU" = (
 /obj/structure/lattice/catwalk,
-/obj/machinery/conveyor{
-	id = "Recycler"
-	},
-/turf/open/floor/plating/airless,
+/obj/machinery/camera/directional/north,
+/obj/machinery/ore_silo,
+/turf/open/space/basic,
 /area/shuttle/abandoned)
 "WO" = (
-/obj/machinery/camera/directional/east,
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "mothership_main"
+/obj/structure/rack,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 3
 	},
-/obj/structure/cable,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light/small/directional/east,
+/obj/item/multitool,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Xm" = (
-/obj/machinery/door/window/right/directional/south,
-/obj/structure/spacevine,
-/obj/machinery/conveyor{
+/obj/structure/lattice/catwalk,
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/turf/open/space/basic,
+/area/shuttle/abandoned)
+"Yl" = (
+/obj/machinery/conveyor/inverted{
+	dir = 5;
 	id = "mothership_main"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
-"Yl" = (
-/obj/structure/spacevine,
-/obj/machinery/conveyor{
-	id = "mothership_main"
+"YC" = (
+/obj/machinery/camera/directional/east,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 8
 	},
+/obj/item/pickaxe,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "YL" = (
-/obj/structure/spacevine,
-/obj/effect/mapping_helpers/burnt_floor,
-/obj/item/shard,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 6
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "mothership_right"
 	},
+/obj/structure/lattice/catwalk,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "mothership_right"
+	},
+/obj/structure/plasticflaps,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "Zk" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/ore_box,
-/turf/open/floor/plating/airless,
+/obj/machinery/power/solar_control{
+	dir = 1;
+	name = "Primary Solar Control"
+	},
+/obj/structure/cable,
+/turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "ZB" = (
-/obj/structure/ai_core,
-/obj/item/radio/intercom/directional/south,
-/turf/open/floor/circuit/green/airless,
+/obj/machinery/light/cold/no_nightlight/directional/west,
+/turf/open/floor/circuit/airless,
 /area/shuttle/abandoned)
 "ZD" = (
-/obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating,
 /area/shuttle/abandoned)
 "ZI" = (
 /obj/structure/lattice,
@@ -1012,9 +1041,8 @@ hR
 hR
 kz
 kz
-dI
+SV
 zn
-hR
 hR
 hR
 hR
@@ -1037,11 +1065,10 @@ hR
 hR
 kz
 zZ
-Zk
+gG
 zZ
 SV
 zn
-hR
 hR
 hR
 hR
@@ -1061,14 +1088,13 @@ hR
 hR
 hR
 hR
-fB
 xz
-VQ
-lv
+RD
+wA
 jx
+Pf
 SV
 zn
-hR
 hR
 hR
 hR
@@ -1086,14 +1112,13 @@ Cq
 oe
 oe
 oe
-Jj
+lv
 oR
 oR
 oR
-RV
 oR
 oR
-hR
+il
 hR
 hR
 hR
@@ -1109,21 +1134,20 @@ hR
 hR
 hR
 oe
-qn
+UV
 oR
 oR
-Rv
+hx
 oK
-mp
 gc
 li
+OR
 oK
-tW
+of
 oe
 BD
 oe
 fV
-hR
 hR
 hR
 hR
@@ -1135,7 +1159,7 @@ hR
 hR
 hR
 oe
-Jj
+UU
 zh
 oK
 hR
@@ -1144,12 +1168,11 @@ az
 aB
 az
 hR
-tW
+BS
 oy
 oy
-oR
+il
 oe
-hR
 hR
 hR
 hR
@@ -1161,7 +1184,7 @@ hR
 hR
 hR
 oe
-qn
+qV
 iv
 oK
 oK
@@ -1171,11 +1194,10 @@ aB
 oK
 hR
 hR
-eO
+oK
 zh
-mV
+MZ
 oe
-hR
 hR
 hR
 hR
@@ -1185,23 +1207,22 @@ hR
 hR
 hR
 hR
-Jj
+lv
 oR
-WO
+eO
 hR
 oK
 JJ
 oK
 kz
-Eq
+mp
 kz
 hR
 QE
-eO
-eO
-tW
+oK
+oK
+of
 oe
-hR
 hR
 hR
 hR
@@ -1211,7 +1232,7 @@ hR
 hR
 hR
 kz
-Ou
+Nv
 zZ
 zZ
 kz
@@ -1225,12 +1246,11 @@ zZ
 kz
 oK
 hR
-KN
 zF
 Ge
-hR
-hR
-hR
+dC
+dI
+Vb
 hR
 "}
 (10,1,1) = {"
@@ -1244,97 +1264,93 @@ zZ
 kz
 kz
 zZ
-pL
 MK
-so
+ww
 UL
+ZB
 zZ
 kz
 hR
 hR
-hR
-KN
-dC
-dC
-dI
+qc
+of
+SV
 Vb
+hR
 "}
 (11,1,1) = {"
 yF
-il
+fB
 zZ
 Ey
-hx
+jH
 Fe
 yF
-mC
+HM
 yF
-Dv
 yg
+HK
 vy
-Pf
+Dv
 Ln
-gG
+Zk
 yF
-qc
-jH
-Hg
-KN
+oK
+az
+ss
 of
-KN
-dI
+dC
+SV
 Vb
 "}
 (12,1,1) = {"
-UU
-OT
+VQ
 jJ
+Eq
 Ey
-qV
 wo
 Ex
 mc
 ZD
+po
 yQ
 ks
-ZB
-LO
-Ln
+TZ
+zZ
 uK
 lZ
-BS
+zZ
 VU
 tr
-ku
+aU
 ku
 vL
-dI
-Vb
+pL
+Xm
 "}
 (13,1,1) = {"
 yF
-RD
+pY
 zZ
 Ey
-hx
+jH
 bE
 yF
-Ai
+hB
 yF
-pY
 dA
+Ng
 MB
 ey
 yG
 Uq
 yF
-qc
-jH
-HK
+oK
+az
 KN
 Hg
-KN
-dI
+qn
+OY
 Vb
 "}
 (14,1,1) = {"
@@ -1348,26 +1364,25 @@ zZ
 kz
 Em
 no
-hB
 Gf
 pz
-MZ
+Ln
+Sy
 zZ
 kz
 hR
 hR
-hR
-KN
-dC
-dC
-dI
+mC
+of
+OY
 Vb
+hR
 "}
 (15,1,1) = {"
 hR
 hR
 kz
-aU
+Nv
 zZ
 zZ
 kz
@@ -1381,12 +1396,11 @@ zZ
 kz
 oK
 hR
-po
 Yl
-Ng
-hR
-hR
-hR
+Jj
+Ai
+dI
+Vb
 hR
 "}
 (16,1,1) = {"
@@ -1394,22 +1408,21 @@ hR
 hR
 hR
 cU
-cU
 BE
+Ou
 hR
 oK
 lb
 Ty
 kz
-ss
+YL
 kz
 hR
 IS
 oK
 oK
-tW
+of
 oe
-hR
 hR
 hR
 hR
@@ -1421,10 +1434,10 @@ hR
 hR
 hR
 oe
-qn
+qV
 FQ
 oK
-eO
+oK
 hR
 oK
 zQ
@@ -1433,9 +1446,8 @@ hR
 hR
 oK
 zh
-tW
+of
 oe
-hR
 hR
 hR
 hR
@@ -1447,7 +1459,7 @@ hR
 hR
 hR
 BD
-qn
+qV
 rE
 iv
 hR
@@ -1456,12 +1468,11 @@ ZI
 yA
 ZI
 hR
-cU
-cU
-cU
+VC
 tW
+tW
+Sc
 oe
-hR
 hR
 hR
 hR
@@ -1474,20 +1485,19 @@ hR
 hR
 oe
 td
-td
-td
 Jj
+Jj
+Ks
 oK
-YL
 pG
 zD
+so
 oK
-Nv
+MZ
 BD
 oe
 oe
 Cq
-hR
 hR
 hR
 hR
@@ -1502,14 +1512,13 @@ fV
 oe
 oe
 oe
-mV
-cU
-UV
+RV
+tW
+tW
 rJ
-Xm
-cU
-Nv
-hR
+Jj
+tW
+Sc
 hR
 hR
 hR
@@ -1529,14 +1538,13 @@ hR
 hR
 hR
 hR
-Sy
 nM
-wA
+YC
 yd
 KR
+Rv
 OY
 Vb
-hR
 hR
 hR
 hR
@@ -1557,11 +1565,10 @@ hR
 hR
 kz
 zZ
-Sc
+WO
 zZ
 OY
 Vb
-hR
 hR
 hR
 hR
@@ -1586,7 +1593,6 @@ kz
 kz
 OY
 Vb
-hR
 hR
 hR
 hR

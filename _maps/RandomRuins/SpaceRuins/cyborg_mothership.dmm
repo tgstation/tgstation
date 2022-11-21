@@ -54,7 +54,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "p" = (
-/obj/item/bodypart/arm/left/robot,
+/obj/item/bodypart/arm/right/robot,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "r" = (
@@ -87,7 +87,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "x" = (
-/obj/item/bodypart/arm/right/robot,
+/obj/structure/ore_box,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "z" = (
@@ -116,6 +116,10 @@
 /area/space)
 "H" = (
 /obj/effect/spawner/random/maintenance,
+/turf/open/misc/asteroid/airless,
+/area/space)
+"I" = (
+/obj/item/bodypart/arm/left/robot,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "J" = (
@@ -517,7 +521,7 @@ a
 W
 W
 W
-L
+x
 d
 L
 a
@@ -680,7 +684,7 @@ L
 k
 E
 L
-x
+p
 L
 L
 H
@@ -818,7 +822,7 @@ W
 W
 E
 L
-p
+I
 e
 L
 L
@@ -1650,7 +1654,7 @@ L
 E
 E
 E
-L
+x
 S
 W
 L
