@@ -46,6 +46,7 @@
 
 /mob/living/basic/carp/magic/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/pet_command/point_targetting/use_ability)
 	assign_spell()
 
 /// Updates name based on chosen spell

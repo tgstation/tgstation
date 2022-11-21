@@ -66,3 +66,7 @@
 	ability_key = BB_MAGICARP_SPELL
 	target_key = BB_MAGICARP_SPELL_TARGET
 	use_ability_behaviour = /datum/ai_behavior/try_mob_ability/and_clear_target
+
+/// Allows you to command carp to use their spell on people
+/datum/ai_planning_subtree/pet_planning/magicarp
+	pet_ability_key = BB_MAGICARP_SPELL

@@ -6,6 +6,7 @@
 	var/mob/living/target = weak_target?.resolve()
 	if(!ability || QDELETED(target))
 		finish_action(controller, FALSE, ability_key, target_key)
+		return
 	var/mob/pawn = controller.pawn
 	var/result = ability.InterceptClickOn(pawn, null, target)
 	finish_action(controller, result, ability_key, target_key)
@@ -37,5 +38,3 @@
 /datum/ai_behavior/try_mob_ability/and_clear_target/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
 	controller.blackboard[target_key] = null
-
-#undef MAGICARP_SPELL_TARGET_SEEK_RANGE

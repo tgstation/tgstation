@@ -17,6 +17,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/flee_if_unhealthy,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
@@ -41,6 +42,7 @@
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/flee_if_unhealthy,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
@@ -58,6 +60,7 @@
  */
 /datum/ai_controller/basic_controller/carp/ranged
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning/magicarp,
 		/datum/ai_planning_subtree/flee_if_unhealthy,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,

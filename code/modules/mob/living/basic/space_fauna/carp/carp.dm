@@ -90,6 +90,10 @@
 	else
 		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
+	AddComponent(/datum/component/pet_command/idle)
+	AddComponent(/datum/component/pet_command/free)
+	AddComponent(/datum/component/pet_command/follow, command_feedback = "bloops")
+	AddComponent(/datum/component/pet_command/point_targetting/attack)
 
 	teleport = new(src)
 	teleport.Grant(src)

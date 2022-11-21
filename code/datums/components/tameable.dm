@@ -54,7 +54,17 @@
 	SIGNAL_HANDLER
 	tame = TRUE
 
+	SEND_SIGNAL(parent, COMSIG_LIVING_TAMED, tamer)
 	after_tame?.Invoke(tamer)//Run custom behavior if needed
+
+	if (isliving(parent))
+		var/mob/living/living_parent = parent
+		if (living_parent.ai_controller)
+			var/list/friends = living_parent.ai_controller.blackboard[BB_PET_FRIENDS_LIST]
+			if (!friends)
+				friends = list()
+			friends += WEAKREF(tamer)
+			living_parent.ai_controller.blackboard[BB_PET_FRIENDS_LIST] = friends
 
 	if(ishostile(parent) && isliving(tamer)) //Kinda shit check but this only applies to hostiles atm
 		var/mob/living/simple_animal/hostile/evil_but_now_not_evil = parent
