@@ -117,13 +117,6 @@
 	if(listening && on)
 		add_radio(src, new_frequency)
 
-// will be removed once #71045 is merged
-/obj/item/radio/proc/construct_flick_overlay(image_to_show)
-	if(!istype(image_to_show, /image))
-		image_to_show = image(icon, src, image_to_show)
-
-	flick_overlay_view(image_to_show, src, 2 SECONDS)
-
 /obj/item/radio/proc/recalculateChannels()
 	resetChannels()
 
@@ -266,7 +259,7 @@
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	construct_flick_overlay(overlay_mic_active)
+	flick_overlay_view(overlay_mic_active, 5 SECONDS)
 
 	/*
 	Roughly speaking, radios attempt to make a subspace transmission (which
@@ -373,7 +366,7 @@
 	return FALSE
 
 /obj/item/radio/proc/on_recieve_message()
-	construct_flick_overlay(overlay_speaker_active)
+	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
 
 /obj/item/radio/ui_state(mob/user)
 	return GLOB.inventory_state
