@@ -53,10 +53,10 @@
 	. = ..()
 	var/E = 0
 	var/P = 0
-	var/I = 20
-	var/V = 500
+	var/I = 10
+	var/V = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		I += 20 * B.rating
+		I += 10 * B.rating
 		V += 500 * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		P += M.rating
@@ -195,21 +195,22 @@
 	if(biomass >= max_biomass)
 		say("Warning: The biomass storage is full!")
 		return
-	if(locate(/obj/item/food/grown) in contents)
+	if(locate(/obj/item/food) in contents)
 		processing = TRUE
 		soundloop.start()
 		update_appearance()
-		var/potential_biomass = 0
-		for(var/obj/item/food/grown/plant in contents)
-			potential_biomass = max(1, plant.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)) * productivity
-			qdel(plant)
-			if(potential_biomass)
-				while(processing && potential_biomass > 0)
-					use_power(active_power_usage * (1 SECONDS)) // Seconds needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
-					potential_biomass -= 1
-					biomass += 1
-					stoplag(2 / productivity)
-					update_appearance(UPDATE_ICON)
+		for(var/obj/item/food/object in contents)
+			var/nutriments = 0
+			for(var/nutriment in typesof(/datum/reagent/consumable/nutriment))
+				nutriments += object.reagents.get_reagent_amount(nutriment)
+			qdel(object)
+			var/potential_biomass = max(1, nutriments) * productivity
+			while(processing && potential_biomass > 0)
+				use_power(active_power_usage * (1 SECONDS)) // Seconds needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+				potential_biomass -= 1
+				biomass += 1
+				stoplag(2 / productivity)
+				update_appearance(UPDATE_ICON)
 		processing = FALSE
 		soundloop.stop()
 		update_appearance()
