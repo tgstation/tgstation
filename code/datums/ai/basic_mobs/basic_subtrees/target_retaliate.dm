@@ -30,16 +30,16 @@
 	for (var/datum/weakref/enemy_ref as anything in enemy_refs)
 		var/atom/enemy = enemy_ref.resolve()
 		if (QDELETED(enemy))
-			remove_target_from_list(enemy_ref)
+			remove_target_from_list(controller, enemy_ref, shitlist_key)
 			continue
 		if (enemy == living_mob) // Avoid a self-targetting feedback loop
-			remove_target_from_list(enemy_ref)
+			remove_target_from_list(controller, enemy_ref, shitlist_key)
 			continue
 		if (!can_see(living_mob, enemy, vision_range))
-			remove_target_from_list(enemy_ref)
+			remove_target_from_list(controller, enemy_ref, shitlist_key)
 			continue
 		if (!targetting_datum.can_attack(living_mob, enemy))
-			remove_target_from_list(enemy_ref)
+			remove_target_from_list(controller, enemy_ref, shitlist_key)
 			continue
 		enemies_list += enemy
 
@@ -64,7 +64,7 @@
 	finish_action(controller, succeeded = TRUE)
 
 /// Removes a (weakref to a) target from our blackboard list, as it is no longer a valid target
-/datum/ai_behavior/target_from_retaliate_list/proc/remove_target_from_list(datum/weakref/enemy_ref, shitlist_key)
+/datum/ai_behavior/target_from_retaliate_list/proc/remove_target_from_list(datum/ai_controller/controller, datum/weakref/enemy_ref, shitlist_key)
 	controller.blackboard[shitlist_key] -= enemy_ref
 
 /// Returns the desired final target from the filtered list of enemies

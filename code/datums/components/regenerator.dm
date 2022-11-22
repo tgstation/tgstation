@@ -16,7 +16,7 @@
 	/// Colour of regeneration animation, or none if you don't want one
 	var/outline_colour
 	/// When this timer completes we start restoring health, it is a timer rather than a cooldown so we can do something on its completion
-	var/regeneration_delay
+	var/regeneration_start_timer
 
 /datum/component/regenerator/Initialize(regeneration_delay = 6 SECONDS, health_per_second = 2, ignore_damage_types = list(STAMINA), outline_colour)
 	if (!isliving(parent))
@@ -33,16 +33,16 @@
 
 /datum/component/regenerator/UnregisterFromParent()
 	. = ..()
-	if(regeneration_delay)
-		deltimer(regeneration_delay)
+	if(regeneration_start_timer)
+		deltimer(regeneration_start_timer)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	stop_regenerating()
 
 /datum/component/regenerator/Destroy(force, silent)
 	stop_regenerating()
 	. = ..()
-	if(regeneration_delay)
-		deltimer(regeneration_delay)
+	if(regeneration_start_timer)
+		deltimer(regeneration_start_timer)
 
 /// When you take damage, reset the cooldown and start processing
 /datum/component/regenerator/proc/on_take_damage(datum/source, damage, damagetype)
@@ -51,9 +51,9 @@
 	if (locate(damagetype) in ignore_damage_types)
 		return
 	stop_regenerating()
-	if(regeneration_delay)
-		deltimer(regeneration_delay)
-	regeneration_delay = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_STOPPABLE)
+	if(regeneration_start_timer)
+		deltimer(regeneration_start_timer)
+	regeneration_start_timer = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_STOPPABLE)
 
 /// Start processing health regeneration, and show animation if provided
 /datum/component/regenerator/proc/start_regenerating()
