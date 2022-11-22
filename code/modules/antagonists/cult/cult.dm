@@ -271,6 +271,8 @@
 
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE
+	///How large were we at max size.
+	var/size_at_maximum = 0
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -304,6 +306,13 @@
 				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
+
+/datum/team/cult/add_member(datum/mind/new_member)
+	. = ..()
+	// A little hacky, but this checks that cult ghosts don't contribute to the size at maximum value.
+	if(is_unassigned_job(new_member.assigned_role))
+		return
+	size_at_maximum++
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role

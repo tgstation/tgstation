@@ -297,7 +297,7 @@ Behavior that's still missing from this component that original food items had t
 	return TRUE
 
 /// Normal time to forcefeed someone something
-#define EAT_TIME_FORCE_FEED 3 SECONDS
+#define EAT_TIME_FORCE_FEED (3 SECONDS)
 /// Multiplier for eat time if the eater has TRAIT_VORACIOUS
 #define EAT_TIME_VORACIOUS_MULT 0.65 // voracious folk eat 35% faster
 /// Multiplier for how much longer it takes a voracious folk to eat while full

@@ -29,5 +29,5 @@
 			if(prob(25))//1/4 odds to get a spooky message instead of coughing out loud
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), onecoughman, span_warning("[pick("Your head hurts.", "Your head pounds.")]")), rand(30,150))
 			else
-				addtimer(CALLBACK(onecoughman, .mob/proc/emote, pick("cough", "sniff", "sneeze")), rand(30,150))//deliver the message with a slightly randomized time interval so there arent multiple people coughing at the exact same time
+				addtimer(CALLBACK(onecoughman, TYPE_PROC_REF(/mob, emote), pick("cough", "sniff", "sneeze")), rand(30,150))//deliver the message with a slightly randomized time interval so there arent multiple people coughing at the exact same time
 			fake_virus_victims -= onecoughman

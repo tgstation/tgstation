@@ -217,6 +217,28 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	on = new_value
 
 /**
+ * Used for checking if another component of to_check's type exists in the circuit.
+ * Introspects through modules.
+ *
+ * Arguments:
+ * * to_check - The component to check.
+ **/
+/obj/item/integrated_circuit/proc/is_duplicate(obj/item/circuit_component/to_check)
+	for(var/component as anything in attached_components)
+		if(component == to_check)
+			continue
+		if(istype(component, to_check.type))
+			return TRUE
+		if(istype(component, /obj/item/circuit_component/module))
+			var/obj/item/circuit_component/module/module = component
+			for(var/module_component as anything in module.internal_circuit.attached_components)
+				if(module_component == to_check)
+					continue
+				if(istype(module_component, to_check.type))
+					return TRUE
+	return FALSE
+
+/**
  * Adds a component to the circuitboard
  *
  * Once the component is added, the ports can be attached to other components
@@ -230,6 +252,11 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	if(!to_add.add_to(src))
 		return FALSE
+
+	if(to_add.circuit_flags & CIRCUIT_NO_DUPLICATES)
+		if(is_duplicate(to_add))
+			to_chat(user, span_danger("You can't insert multiple instances of this component into the same circuit!"))
+			return FALSE
 
 	var/success = FALSE
 	if(user)

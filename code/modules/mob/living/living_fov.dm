@@ -123,7 +123,7 @@
 		//when added as an image mutable_appearances act identically. we just make it an MA becuase theyre faster to change appearance
 
 	if(clients_shown)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_images_from_clients), fov_image, clients_shown), 30)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), fov_image, clients_shown), 30)
 
 /atom/movable/screen/fov_blocker
 	icon = 'icons/effects/fov/field_of_view.dmi'
