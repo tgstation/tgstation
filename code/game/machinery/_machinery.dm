@@ -957,34 +957,34 @@
 /obj/machinery/proc/display_parts(mob/user)
 	var/init_value=0
 	var/list/part_count = list()
-	for(var/obj/item/C in component_parts)
-		if(!part_count[C.name])
-			if(isstack(C))
-				var/obj/item/stack/stack_part=C
+	for(var/obj/item/component_part in component_parts)
+		if(!part_count[component_part.name])
+			if(isstack(component_part))
+				var/obj/item/stack/stack_part=component_part
 				init_value=stack_part.amount
 			else
 				init_value=1
-			part_count[C.name]=init_value
+			part_count[component_part.name]=init_value
 		else
-			part_count[C.name]++
+			part_count[component_part.name]++
 
-	var/count=0
-	var/suffix=""
+	var/count = 0
+	var/suffix = ""
 	var/list/printed_components = list()
 
 	var/text = span_notice("It contains the following parts:")
-	for(var/obj/item/C in component_parts)
-		if(!printed_components[C.name])
-			count=part_count[C.name]
+	for(var/obj/item/component_part in component_parts)
+		if(!printed_components[component_part.name])
+			count=part_count[component_part.name]
 			if(count>1)
-				if(!istype(C,/obj/item/stack/cable_coil) && isstack(C))
+				if(!istype(component_part,/obj/item/stack/cable_coil) && isstack(component_part))
 					suffix=" sheets"
 				else
 					suffix="s"
 			else
 				suffix=""
-			text+= span_notice("[icon2html(C, user)] [count] [C.name][suffix].")
-			printed_components[C.name]=TRUE
+			text+= span_notice("[icon2html(component_part, user)] [count] [component_part.name][suffix].")
+			printed_components[component_part.name]=TRUE
 
 	return text
 
