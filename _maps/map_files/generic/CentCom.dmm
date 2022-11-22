@@ -3344,20 +3344,15 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
-"jS" = (
-/obj/machinery/computer/prisoner/management,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/prison)
 "jT" = (
-/obj/machinery/computer/security,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/north,
+/obj/machinery/computer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "jU" = (
-/obj/machinery/computer/secure_data,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "jV" = (
@@ -63637,7 +63632,7 @@ jw
 lL
 jG
 Mz
-jS
+jU
 lL
 kx
 kT
