@@ -172,7 +172,7 @@
 	if(SEND_SIGNAL(parent, COMSIG_TWOHANDED_WIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
 		return // blocked wield from item
 	wielded = TRUE
-	ADD_TRAIT(parent,TRAIT_WIELDED,src)
+	ADD_TRAIT(parent, TRAIT_WIELDED, REF(src))
 	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_swap_hands))
 	wield_callback?.Invoke(parent, user)
 
@@ -221,7 +221,7 @@
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
-	REMOVE_TRAIT(parent,TRAIT_WIELDED,src)
+	REMOVE_TRAIT(parent, TRAIT_WIELDED, REF(src))
 	unwield_callback?.Invoke(parent, user)
 
 	// update item stats

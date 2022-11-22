@@ -82,7 +82,7 @@
 	mode_change_message(user)
 
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
-	if(HAS_TRAIT(target, DO_NOT_SPLASH))
+	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
 	if(!user.combat_mode)
 		return ..()

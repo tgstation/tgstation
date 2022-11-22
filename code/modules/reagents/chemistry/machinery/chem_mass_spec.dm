@@ -37,7 +37,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 /obj/machinery/chem_mass_spec/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, DO_NOT_SPLASH, src.type)
+	ADD_TRAIT(src, TRAIT_DO_NOT_SPLASH, INNATE_TRAIT)
 	if(mapload)
 		beaker2 = new /obj/item/reagent_containers/cup/beaker/large(src)
 
