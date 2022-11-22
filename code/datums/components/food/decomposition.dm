@@ -34,11 +34,11 @@
 	src.produce_ants = ant_attracting
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(handle_movement))
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_ITEM_PICKUP, //person picks up an item
 		COMSIG_ATOM_ENTERED), //Object enters a storage object (boxes, etc.)
 		PROC_REF(picked_up))
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
 		COMSIG_ATOM_EXITED), //Object exits a storage object (boxes, etc)
 		PROC_REF(dropped))
