@@ -11,5 +11,5 @@
 	to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 	defender.apply_damage(15, BRUTE, affecting, wound_bonus=10)
 	playsound(get_turf(defender), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(attacker, defender, "punched (Sleeping Carp)")
+	log_combat(attacker, defender, "bitten (Carp Jaws)")
 	return TRUE
