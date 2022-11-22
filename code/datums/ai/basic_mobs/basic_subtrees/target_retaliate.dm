@@ -56,13 +56,13 @@
 
 /// Removes a (weakref to a) target from our blackboard list, as it is no longer a valid target
 /datum/ai_behavior/target_from_retaliate_list/proc/can_attack_target(mob/living/living_mob, atom/target)
-	if (!enemy)
+	if (!target)
 		return FALSE
-	if (enemy == living_mob)
+	if (target == living_mob)
 		return FALSE
-	if (!can_see(living_mob, enemy, vision_range))
+	if (!can_see(living_mob, target, vision_range))
 		return FALSE
-	return targetting_datum.can_attack(living_mob, enemy)
+	return targetting_datum.can_attack(living_mob, target)
 
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)
