@@ -230,7 +230,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 /obj/machinery/crossing_signal/northwest
 	icon_state = "crossing-base-right"
 	signal_direction = XING_SIGNAL_DIRECTION_WEST
-	pixel_x = 2
+	pixel_x = -32
 	pixel_y = -1
 
 /// Shifted to SE corner for east side of northern passage.
@@ -244,7 +244,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 /obj/machinery/crossing_signal/southwest
 	icon_state = "crossing-base-right"
 	signal_direction = XING_SIGNAL_DIRECTION_WEST
-	pixel_x = 2
+	pixel_x = -32
 	pixel_y = 20
 
 #undef XING_STATE_GREEN
