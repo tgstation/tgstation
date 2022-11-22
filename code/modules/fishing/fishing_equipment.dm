@@ -1,6 +1,8 @@
 /// Multipilier to the fishing weights of anything that's not a fish nor a dud
 /// for the magnet hook.
 #define MAGNET_HOOK_BONUS_MULTIPLIER 5
+/// Multiplier for the fishing weights of fish for the rescue hook.
+#define RESCUE_HOOK_FISH_MULTIPLIER 0
 
 // Reels
 
@@ -90,14 +92,13 @@
  * * target_fish_source - The /datum/fish_source we're trying to fish in.
  */
 /obj/item/fishing_hook/proc/reason_we_cant_fish(datum/fish_source/target_fish_source)
-	return
+	return null
 
 
 /obj/item/fishing_hook/magnet
 	name = "magnetic hook"
 	desc = "Won't make catching fish any easier, but it might help with looking for other things."
 	icon_state = "treasure"
-	fishing_hook_traits = FISHING_HOOK_MAGNETIC
 	rod_overlay_icon_state = "hook_treasure_overlay"
 	chasm_detritus_type = /obj/item/chasm_detritus/restricted/objects
 
@@ -127,7 +128,6 @@
 	name = "rescue hook"
 	desc = "An unwieldy hook meant to help with the rescue of those that have fallen down in chasms. You can tell there's no way you'll catch any fish with this, and that it won't be of any use outside of chasms."
 	icon_state = "rescue"
-	fishing_hook_traits = FISHING_HOOK_RESCUE
 	rod_overlay_icon_state = "hook_rescue_overlay"
 	chasm_detritus_type = /obj/item/chasm_detritus/restricted/bodies
 
@@ -135,7 +135,7 @@
 // This hook can only fish in chasms.
 /obj/item/fishing_hook/rescue/reason_we_cant_fish(datum/fish_source/target_fish_source)
 	if(istype(target_fish_source, /datum/fish_source/chasm))
-		return
+		return ..()
 
 	return "The hook on your fishing rod wasn't meant for traditional fishing, rendering it useless at doing so!"
 
@@ -143,7 +143,7 @@
 /obj/item/fishing_hook/rescue/get_hook_bonus_multiplicative(fish_type, datum/fish_source/source)
 	// Sorry, you won't catch fish with this.
 	if(ispath(fish_type, /obj/item/fish))
-		return NONE
+		return RESCUE_HOOK_FISH_MULTIPLIER
 
 	return ..()
 
@@ -199,3 +199,4 @@
 
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
+#undef RESCUE_HOOK_FISH_MULTIPLIER
