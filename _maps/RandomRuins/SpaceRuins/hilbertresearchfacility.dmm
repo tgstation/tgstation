@@ -2212,7 +2212,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Wg" = (
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "Wm" = (

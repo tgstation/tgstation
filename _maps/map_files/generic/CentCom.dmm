@@ -2627,7 +2627,7 @@
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/admin)
 "hU" = (
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /obj/item/mop,
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/centcom/syndicate_mothership/control)

@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "shoving someone away from you correctly breaks your grab on them"

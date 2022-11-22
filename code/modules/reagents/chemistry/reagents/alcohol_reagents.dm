@@ -670,7 +670,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			COMSIG_REAGENTS_CLEAR_REAGENTS,
 			COMSIG_REAGENTS_REACTED,
 		)
-		RegisterSignal(drink.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
+		RegisterSignals(drink.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
 
 	return ..()
 

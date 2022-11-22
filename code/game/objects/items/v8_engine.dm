@@ -1,5 +1,5 @@
-#define ENGINE_COOLDOWN 5 SECONDS
-#define DASH_COOLDOWN 2.5 SECONDS
+#define ENGINE_COOLDOWN (5 SECONDS)
+#define DASH_COOLDOWN (2.5 SECONDS)
 #define HOUSE_EDGE_ICONS_MAX 3
 #define HOUSE_EDGE_ICONS_MIN 0
 
@@ -69,7 +69,7 @@
 /obj/item/house_edge/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
-	RegisterSignal(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
+	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
 /obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

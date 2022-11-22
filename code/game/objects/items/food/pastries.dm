@@ -142,7 +142,7 @@
 
 /obj/item/food/fortunecookie/MakeLeaveTrash()
 	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, food_flags, /obj/item/food/fortunecookie/proc/get_fortune)
+		AddElement(/datum/element/food_trash, trash_type, food_flags, TYPE_PROC_REF(/obj/item/food/fortunecookie, get_fortune))
 
 /obj/item/food/poppypretzel
 	name = "poppy pretzel"
