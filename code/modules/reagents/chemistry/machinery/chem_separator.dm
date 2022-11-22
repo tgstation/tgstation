@@ -9,6 +9,8 @@
 	var/list/fill_icon_thresholds = list(1,30,80)
 	var/list/temperature_icon_thresholds = list(0,50,100)
 	var/burning = FALSE
+	var/boiling = FALSE
+	var/datum/looping_sound/boiling/soundloop
 	/// Minimal mixture temperature for separation
 	var/required_temp = T0C + 100
 	/// Mixture heating speed in degrees per second
@@ -21,12 +23,14 @@
 /obj/structure/chem_separator/Initialize(mapload)
 	. = ..()
 	create_reagents(200)
+	soundloop = new(src, boiling)
 
 /obj/structure/chem_separator/Destroy()
 	if(burning)
 		STOP_PROCESSING(SSobj, src)
 	if(beaker)
 		QDEL_NULL(beaker)
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/structure/chem_separator/handle_atom_del(atom/A)
@@ -108,11 +112,13 @@
 			stop()
 		if(!issilicon(user) && in_range(src, user))
 			user.put_in_hands(beaker)
+			playsound(src, 'sound/items/handling/drinkglass_pickup.ogg', PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 		else
 			beaker.forceMove(drop_location())
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
+		playsound(src, 'sound/items/handling/drinkglass_drop.ogg', DROP_SOUND_VOLUME, ignore_walls = FALSE)
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
@@ -135,6 +141,7 @@
 		return
 	if(!reagents.total_volume)
 		return
+	sort_list(reagents.reagent_list)
 	separating_reagent = reagents.reagent_list[1].type
 	burning = TRUE
 	update_appearance(UPDATE_ICON)
@@ -144,6 +151,9 @@
 /obj/structure/chem_separator/proc/stop()
 	separating_reagent = null
 	burning = FALSE
+	if(boiling)
+		boiling = FALSE
+		soundloop.stop()
 	update_appearance(UPDATE_ICON)
 	STOP_PROCESSING(SSobj, src)
 
@@ -196,8 +206,14 @@
 		update_appearance(UPDATE_ICON)
 		return
 	if(reagents.chem_temp >= required_temp)
+		if(!boiling)
+			boiling = TRUE
+			soundloop.start()
 		var/transfer_amount = distillation_rate * delta_time
 		reagents.trans_id_to(beaker.reagents, separating_reagent, transfer_amount)
+	else if (boiling)
+		boiling = FALSE
+		soundloop.stop()
 	update_appearance(UPDATE_ICON)
 
 /obj/structure/chem_separator/ui_interact(mob/user, datum/tgui/ui)
@@ -229,6 +245,7 @@
 		if("unload")
 			unload()
 		if("start")
+			playsound(src, 'sound/effects/pop.ogg', 15, TRUE)
 			start()
 		if("stop")
 			stop()
