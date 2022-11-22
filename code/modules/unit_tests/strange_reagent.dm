@@ -16,6 +16,7 @@
 		/mob/living/basic,
 	))
 	types_to_check -= /mob/living/simple_animal/pet/gondola/gondolapod // need a pod, which we don't have
+	types_to_check -= typesof(/mob/living/simple_animal/hostile/megafauna) // no
 	types_to_check -= typesof(/mob/living/basic/mouse) // qdel themselves on death; why dont they use DEL_ON_DEATH you might ask. I-unno
 
 	for(var/mob/living/type as anything in types_to_check)
@@ -67,8 +68,8 @@
 
 /datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
-	target.adjustBruteLoss(damage)
-	target.adjustFireLoss(damage)
+	target.setBruteLoss(damage)
+	target.setFireLoss(damage)
 	update_amounts(target)
 	if(percent >= 1)
 		target.death()
