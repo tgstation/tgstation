@@ -2523,6 +2523,15 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"pm" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer/atmos_control/noreconnect{
+	dir = 1;
+	atmos_chambers = list("lavalandsyndieo2"="Oxygen Supply","lavalandsyndien2"="Nitrogen Supply","lavalandsyndieco2"="Carbon Dioxide Supply","lavalandsyndieplasma"="Plasma Supply")
+	},
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/engineering)
 "pI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
 	dir = 4
@@ -3049,6 +3058,30 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/ruin/syndicate_lava_base/engineering)
+"yh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
+/obj/machinery/airlock_controller/incinerator_syndicatelava{
+	pixel_x = -8;
+	pixel_y = -26
+	},
+/obj/machinery/button/ignition/incinerator/syndicatelava{
+	pixel_x = 6;
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/button/door/incinerator_vent_syndicatelava_aux{
+	pixel_x = -8;
+	pixel_y = -40
+	},
+/obj/machinery/button/door/incinerator_vent_syndicatelava_main{
+	pixel_x = 6;
+	pixel_y = -40
+	},
+/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "yk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -3591,15 +3624,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/dormitories)
-"IA" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/atmos_control/noreconnect{
-	dir = 1;
-	atmos_chambers = list("lavalandsyndieo2"="Oxygen Supply","lavalandsyndien2"="Nitrogen Supply","lavalandsyndieco2"="Carbon Dioxide Supply","lavalandsyndieplasma"="Plasma Supply")
-	},
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/engineering)
 "IB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
@@ -4437,30 +4461,6 @@
 	dir = 8
 	},
 /area/ruin/syndicate_lava_base/chemistry)
-"Wd" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/obj/machinery/airlock_controller/incinerator_syndicatelava{
-	pixel_x = -8;
-	pixel_y = -26
-	},
-/obj/machinery/button/ignition/incinerator/syndicatelava{
-	pixel_x = 6;
-	pixel_y = -24
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/button/door/incinerator_vent_syndicatelava_aux{
-	pixel_x = -8;
-	pixel_y = -40
-	},
-/obj/machinery/button/door/incinerator_vent_syndicatelava_main{
-	pixel_x = 6;
-	pixel_y = -40
-	},
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron,
-/area/ruin/syndicate_lava_base/engineering)
 "Wf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /turf/open/floor/iron,
@@ -6600,7 +6600,7 @@ wv
 Rh
 Vp
 Xr
-Wd
+yh
 nE
 PZ
 rO
@@ -6752,7 +6752,7 @@ Wf
 RK
 VR
 RK
-IA
+pm
 ju
 oH
 ju
