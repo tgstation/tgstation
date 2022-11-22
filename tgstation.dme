@@ -157,6 +157,7 @@
 #include "code\__DEFINES\reactions.dm"
 #include "code\__DEFINES\reagents.dm"
 #include "code\__DEFINES\reagents_specific_heat.dm"
+#include "code\__DEFINES\regex.dm"
 #include "code\__DEFINES\religion.dm"
 #include "code\__DEFINES\research.dm"
 #include "code\__DEFINES\resonator.dm"

@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	clear_projection()
 
 	template = SSmapping.holodeck_templates[offline_program]
-	INVOKE_ASYNC(template, /datum/map_template/proc/load, bottom_left) //this is what actually loads the holodeck simulation into the map
+	INVOKE_ASYNC(template, TYPE_PROC_REF(/datum/map_template, load), bottom_left) //this is what actually loads the holodeck simulation into the map
 
 /obj/machinery/computer/holodeck/proc/clear_projection()
 	//clear the items from the previous program

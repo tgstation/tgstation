@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		if(our_replacement_heart)
 			// Throw our current heart out of our chest, violently
 			user.visible_message(span_boldwarning("[user]'s [our_new_heart.name] bursts suddenly out of [user.p_their()] chest!"))
-			INVOKE_ASYNC(user, /mob/proc/emote, "scream")
+			INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 			// And put our organic heart in its place
 			our_replacement_heart.Insert(user, TRUE, TRUE)

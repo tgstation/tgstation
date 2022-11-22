@@ -445,7 +445,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
 	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
-	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam/proc/delaminate, src)
+	INVOKE_ASYNC(delamination_strategy, TYPE_PROC_REF(/datum/sm_delam, delaminate), src)
 
 /**
  * Count down, spout some messages, and then execute the delam itself.
