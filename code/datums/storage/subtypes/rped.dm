@@ -9,17 +9,21 @@
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	numerical_stacking = TRUE
 
-	///as of now only these stack components are required to build machines like[thermomaachine,crystallizer,electrolyzer]
-	///so we limit the rped to pick up only these stack types so players dont cheat and use this as a general storage medium
+	/**
+	 * as of now only these stack components are required to build machines like[thermomaachine,crystallizer,electrolyzer]
+	 * so we limit the rped to pick up only these stack types so players dont cheat and use this as a general storage medium
+	 */
 	var/static/list/allowed_material_types=list(
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/sheet/plasteel,
 		/obj/item/stack/cable_coil,
 	)
 
-	///we check if the user is trying to insert any of these bluespace crystal types into the RPED
-	///at any point the total sum of all these types in the RPED must be 30
-	///for example 10 refined crystals + 15 artifical crystals + 5 sheets=30 or any other combination like this
+	/**
+	 * we check if the user is trying to insert any of these bluespace crystal types into the RPED
+	 * at any point the total sum of all these types in the RPED must be 30
+	 * for example 10 refined crystals + 15 artifical crystals + 5 sheets=30 or any other combination like this
+	 */
 	var/static/list/allowed_bluespace_types=list(
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stack/ore/bluespace_crystal/refined,
@@ -31,9 +35,9 @@
 /datum/storage/rped/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
 	. = ..()
 
-	///we check how much of glass,plasteel & cable the user can insert
+	//we check how much of glass,plasteel & cable the user can insert
 	if(isstack(to_insert))
-		///user tried to insert invalid stacktype
+		//user tried to insert invalid stacktype
 		if(!is_type_in_list(to_insert,allowed_material_types) && !is_type_in_list(to_insert,allowed_bluespace_types))
 			return FALSE
 
@@ -46,7 +50,7 @@
 		var/max_amount=30
 		//how much space is available
 		var/available=0
-		///stacks type
+		//stacks type
 		var/obj/item/stack/things
 
 		//not a real location so dont bother
@@ -54,15 +58,15 @@
 		if(!resolve_location)
 			return FALSE
 
-		///we try to count & limit how much the user can insert of each type to prevent them from using it as an normal storage medium
+		//we try to count & limit how much the user can insert of each type to prevent them from using it as an normal storage medium
 		for(var/obj/item/thing in resolve_location.contents)
-			///try convert to stack else skip loop as we are only intrested in counting stacks
+			//try convert to stack else skip loop as we are only intrested in counting stacks
 			if(isstack(thing))
 				things=thing
 			else
 				continue
 
-			///count how many of this stacktype is already in storage. One type of bluespace crystal takes space for all other bluespace types as well
+			//count how many of this stacktype is already in storage. One type of bluespace crystal takes space for all other bluespace types as well
 			if(is_type_in_list(to_insert,allowed_bluespace_types))
 				if(is_type_in_list(things,allowed_bluespace_types))
 					present_amount+=things.amount
@@ -71,7 +75,7 @@
 				break
 
 
-		///no more storage for this specific stack type
+		//no more storage for this specific stack type
 		if(max_amount-present_amount==0)
 			to_chat(usr,span_alert("No more [to_insert.name] can be added!"))
 			return FALSE
@@ -83,7 +87,7 @@
 			return FALSE
 
 
-	///check normal insertion of other stock parts
+	//check normal insertion of other stock parts
 	else if(!to_insert.get_part_rating())
 		return FALSE
 
