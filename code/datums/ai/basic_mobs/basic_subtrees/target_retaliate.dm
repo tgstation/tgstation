@@ -29,7 +29,7 @@
 	var/list/enemies_list = list()
 	for (var/datum/weakref/enemy_ref as anything in enemy_refs)
 		var/atom/enemy = enemy_ref.resolve()
-		if (!can_attack_target(living_mob, enemy))
+		if (!can_attack_target(living_mob, enemy, targetting_datum))
 			controller.blackboard[shitlist_key] -= enemy_ref
 			continue
 		enemies_list += enemy
@@ -55,7 +55,7 @@
 	finish_action(controller, succeeded = TRUE)
 
 /// Removes a (weakref to a) target from our blackboard list, as it is no longer a valid target
-/datum/ai_behavior/target_from_retaliate_list/proc/can_attack_target(mob/living/living_mob, atom/target)
+/datum/ai_behavior/target_from_retaliate_list/proc/can_attack_target(mob/living/living_mob, atom/target, datum/targetting_datum/targetting_datum)
 	if (!target)
 		return FALSE
 	if (target == living_mob)
