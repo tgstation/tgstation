@@ -132,7 +132,7 @@
 		var/fill_name = "[fill_icon_state][fill_icon_thresholds[threshold]]"
 		var/mutable_appearance/filling = mutable_appearance(icon, fill_name)
 		filling.color = mix_color_from_reagents(container_reagents.reagent_list)
-			. += filling
+		. += filling
 
 /obj/machinery/iv_drip/MouseDrop(atom/target)
 	. = ..()
