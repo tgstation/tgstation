@@ -38,11 +38,18 @@
 	var/static/list/exotic_types = list(
 		/obj/item/food/pizzaslice,
 		/obj/item/food/root_flatbread,
+		/obj/item/food/pizza/flatbread,
+		/obj/item/food/breadslice,
 		/obj/item/food/salami,
 		/obj/item/throwing_star,
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
-		/obj/item/card
+		/obj/item/card,
+	)
+	/// List with a fake-networks(not a fax actually), for request manager.
+	var/list/special_networks = list(
+		list(fax_name = "Central Command", fax_id = "central_command", color = "teal", emag_needed = FALSE),
+		list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
 
 /obj/machinery/fax/Initialize(mapload)
@@ -227,6 +234,7 @@
 	data["syndicate_network"] = (syndicate_network || (obj_flags & EMAGGED))
 	data["has_paper"] = !!loaded_item_ref?.resolve()
 	data["fax_history"] = fax_history
+	data["special_faxes"] = special_networks
 	return data
 
 /obj/machinery/fax/ui_act(action, list/params)
@@ -245,6 +253,7 @@
 			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
 			update_appearance()
 			return TRUE
+		
 		if("send")
 			var/obj/item/loaded = loaded_item_ref?.resolve()
 			if (!loaded)
@@ -255,6 +264,27 @@
 				loaded_item_ref = null
 				update_appearance()
 				return TRUE
+		
+		if("send_special")
+			var/obj/item/paper/fax_paper = loaded_item_ref?.resolve()
+			if(!istype(fax_paper))
+				to_chat(usr, icon2html(src.icon, usr) + span_warning("Fax cannot send all above paper on this protected network, sorry."))
+				return 
+			
+			fax_paper.request_state = TRUE
+			fax_paper.loc = null
+
+			INVOKE_ASYNC(src, PROC_REF(animate_object_travel), fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
+			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, vary = FALSE)
+
+			history_add("Send", params["name"])
+			
+			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", fax_paper)
+			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [params["name"]]")] [ADMIN_SHOW_PAPER(fax_paper)]"), confidential = TRUE)
+			log_fax(fax_paper, params["id"], params["name"])
+			loaded_item_ref = null
+			update_appearance()
+				
 		if("history_clear")
 			history_clear()
 			return TRUE
@@ -294,7 +324,7 @@
 			return FALSE
 		FAX.receive(loaded, fax_name)
 		history_add("Send", FAX.fax_name)
-		INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "send"))
+		INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "send"))
 		playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, FALSE)
 		return TRUE
 	return FALSE
@@ -309,10 +339,10 @@
  */
 /obj/machinery/fax/proc/receive(obj/item/loaded, sender_name)
 	playsound(src, 'sound/machines/printer.ogg', 50, FALSE)
-	INVOKE_ASYNC(src, .proc/animate_object_travel, loaded, "fax_receive", find_overlay_state(loaded, "receive"))
+	INVOKE_ASYNC(src, PROC_REF(animate_object_travel), loaded, "fax_receive", find_overlay_state(loaded, "receive"))
 	say("Received correspondence from [sender_name].")
 	history_add("Receive", sender_name)
-	addtimer(CALLBACK(src, .proc/vend_item, loaded), 1.9 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(vend_item), loaded), 1.9 SECONDS)
 
 /**
  * Procedure for animating an object entering or leaving the fax machine.
@@ -325,7 +355,7 @@
 	icon_state = animation_state
 	var/mutable_appearance/overlay = mutable_appearance(icon, overlay_state)
 	overlays += overlay
-	addtimer(CALLBACK(src, .proc/travel_animation_complete, overlay), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(travel_animation_complete), overlay), 2 SECONDS)
 
 /**
  * Called when the travel animation should end. Reset animation and overlay states.
@@ -473,3 +503,4 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return .
+

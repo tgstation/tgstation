@@ -101,15 +101,19 @@
 
 	var/datum/port/input/message
 	var/datum/port/input/send_message_signal
+	var/datum/port/input/show_charge_meter
 
 	var/datum/port/output/user_port
 
 	var/datum/weakref/user
 
+	var/obj/item/organ/internal/cyberimp/bci/bci
+
 /obj/item/circuit_component/bci_core/populate_ports()
 
-	message = add_input_port("Message", PORT_TYPE_STRING)
+	message = add_input_port("Message", PORT_TYPE_STRING, trigger = null)
 	send_message_signal = add_input_port("Send Message", PORT_TYPE_SIGNAL)
+	show_charge_meter = add_input_port("Show Charge Meter", PORT_TYPE_NUMBER, trigger = PROC_REF(update_charge_action))
 
 	user_port = add_output_port("User", PORT_TYPE_ATOM)
 
@@ -117,30 +121,46 @@
 	QDEL_NULL(charge_action)
 	return ..()
 
+/obj/item/circuit_component/bci_core/proc/update_charge_action()
+	CIRCUIT_TRIGGER
+	var/mob/living/carbon/resolved_owner = user?.resolve()
+	if (show_charge_meter.value)
+		if (charge_action)
+			return
+		charge_action = new(src)
+		if (resolved_owner)
+			charge_action.Grant(resolved_owner)
+		bci.actions += charge_action
+	else
+		if (!charge_action)
+			return
+		if (resolved_owner)
+			charge_action.Remove(resolved_owner)
+		bci.actions -= charge_action
+		QDEL_NULL(charge_action)
+
 /obj/item/circuit_component/bci_core/register_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
+	bci = shell
 
-	charge_action = new(src)
-	bci.actions += list(charge_action)
+	show_charge_meter.set_value(TRUE)
 
-	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, .proc/on_organ_implanted)
-	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, PROC_REF(on_organ_implanted))
+	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, PROC_REF(on_organ_removed))
 
 /obj/item/circuit_component/bci_core/unregister_shell(atom/movable/shell)
-	var/obj/item/organ/internal/cyberimp/bci/bci = shell
+	bci = shell
 
-	bci.actions -= charge_action
-	QDEL_NULL(charge_action)
+	if (charge_action)
+		var/mob/living/carbon/resolved_owner = user?.resolve()
+		if (resolved_owner)
+			charge_action.Remove(resolved_owner)
+		bci.actions -= charge_action
+		QDEL_NULL(charge_action)
 
 	UnregisterSignal(shell, list(
 		COMSIG_ORGAN_IMPLANTED,
 		COMSIG_ORGAN_REMOVED,
 	))
-
-/obj/item/circuit_component/bci_core/should_receive_input(datum/port/input/port)
-	if (!COMPONENT_TRIGGERED_BY(send_message_signal, port))
-		return FALSE
-	return ..()
 
 /obj/item/circuit_component/bci_core/input_received(datum/port/input/port)
 	var/sent_message = trim(message.value)
@@ -159,12 +179,14 @@
 /obj/item/circuit_component/bci_core/proc/on_organ_implanted(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
 
+	update_charge_action()
+
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
 
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
-	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(on_borg_charge))
+	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
 /obj/item/circuit_component/bci_core/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
@@ -404,9 +426,9 @@
 	locked = TRUE
 
 	set_busy(TRUE, "[initial(icon_state)]_raising")
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"), 1 SECONDS)
-	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"), 2 SECONDS)
-	addtimer(CALLBACK(src, .proc/complete_process, locked_state), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_active"), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(set_busy), TRUE, "[initial(icon_state)]_falling"), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(complete_process), locked_state), 3 SECONDS)
 
 /obj/machinery/bci_implanter/proc/complete_process(locked_state)
 	update_use_power(IDLE_POWER_USE)
@@ -457,7 +479,7 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 			return FALSE
 
-	addtimer(CALLBACK(src, .proc/start_process), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(start_process)), 1 SECONDS)
 	return TRUE
 
 /obj/machinery/bci_implanter/relaymove(mob/living/user, direction)

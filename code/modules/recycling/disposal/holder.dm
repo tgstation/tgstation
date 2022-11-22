@@ -36,7 +36,7 @@
 		if(M.client)
 			M.reset_perspective(src)
 		hasmob = TRUE
-		RegisterSignal(M, COMSIG_LIVING_RESIST, .proc/struggle_prep, M)
+		RegisterSignal(M, COMSIG_LIVING_RESIST, PROC_REF(struggle_prep), M)
 
 	//Checks 1 contents level deep. This means that players can be sent through disposals mail...
 	//...but it should require a second person to open the package. (i.e. person inside a wrapped locker)
@@ -75,9 +75,9 @@
 	var/delay = world.tick_lag
 	var/datum/move_loop/our_loop = SSmove_manager.move_disposals(src, delay = delay, timeout = delay * count)
 	if(our_loop)
-		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
-		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/try_expel)
-		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/movement_stop)
+		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, PROC_REF(pre_move))
+		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(try_expel))
+		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, PROC_REF(movement_stop))
 		current_pipe = loc
 
 /obj/structure/disposalholder/proc/pre_move(datum/move_loop/source)
@@ -109,7 +109,7 @@
 	if(escapee.loc != src)
 		UnregisterSignal(escapee, COMSIG_LIVING_RESIST)
 		return //Somehow they got out without telling us
-	INVOKE_ASYNC(src, .proc/struggle_free, escapee)
+	INVOKE_ASYNC(src, PROC_REF(struggle_free), escapee)
 
 /**
  * Completes the struggle code

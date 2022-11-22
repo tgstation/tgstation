@@ -226,7 +226,6 @@
 	if(target)
 		if(loc == target || loc == get_turf(target))
 			if(check_bot(target)) //Target is not defined at the parent
-				shuffle = TRUE
 				if(prob(50)) //50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
 					path = list()
@@ -242,15 +241,15 @@
 				else
 					F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 				audible_message(span_danger("[src] makes an excited booping sound."))
-				addtimer(CALLBACK(src, .proc/go_idle), 0.5 SECONDS)
+				addtimer(CALLBACK(src, PROC_REF(go_idle)), 0.5 SECONDS)
 			path = list()
 			return
 		if(!length(path))
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, TL, max_distance=30, id=access_card,simulated_only = FALSE)
 			else
-				path = get_path_to(src, target, 30, id=access_card,simulated_only = FALSE)
+				path = get_path_to(src, target, max_distance=30, id=access_card,simulated_only = FALSE)
 
 			if(!bot_move(target))
 				add_to_ignore(target)

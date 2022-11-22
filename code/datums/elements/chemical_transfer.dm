@@ -12,8 +12,8 @@
  * victim_message uses %ATTACKER for the same.
  */
 /datum/element/chemical_transfer
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	///chance for the chemical transfer to proc.
 	var/transfer_prob
 	///message attacker gets when the chemical transfer procs
@@ -28,8 +28,8 @@
 	src.transfer_prob = transfer_prob
 	src.attacker_message = attacker_message
 	src.victim_message = victim_message
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_attack)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/chemical_transfer/Detach(datum/target)
 	. = ..()

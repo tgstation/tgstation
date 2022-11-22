@@ -150,7 +150,6 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
-
 	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 	for(var/thing in diseases)
@@ -163,15 +162,16 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	for(var/datum/surgery/S in surgeries)
-		if(body_position == LYING_DOWN || !S.lying_required)
-			if(!user.combat_mode)
-				if(S.next_step(user, modifiers))
-					return TRUE
+	for(var/datum/surgery/operations as anything in surgeries)
+		if(user.combat_mode)
+			break
+		if(body_position != LYING_DOWN && (operations.surgery_flags & SURGERY_REQUIRE_RESTING))
+			continue
+		if(operations.next_step(user, modifiers))
+			return TRUE
 
-	for(var/i in all_wounds)
-		var/datum/wound/W = i
-		if(W.try_handling(user))
+	for(var/datum/wound/wounds as anything in all_wounds)
+		if(wounds.try_handling(user))
 			return TRUE
 
 	return FALSE
@@ -271,6 +271,9 @@
 		target.Move(target_shove_turf, shove_dir)
 		if(get_turf(target) == target_old_turf)
 			shove_blocked = TRUE
+	
+	if(!shove_blocked)
+		target.setGrabState(GRAB_PASSIVE)
 
 	if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
 		target.Paralyze(SHOVE_CHAIN_PARALYZE)
@@ -391,7 +394,7 @@
 	do_jitter_animation(300)
 	adjust_jitter(20 SECONDS)
 	adjust_stutter(4 SECONDS)
-	addtimer(CALLBACK(src, .proc/secondary_shock, should_stun), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(secondary_shock), should_stun), 2 SECONDS)
 	return shock_damage
 
 ///Called slightly after electrocute act to apply a secondary stun.
@@ -738,8 +741,8 @@
 	grasped_part = grasping_part
 	grasped_part.grasped_by = src
 	grasped_part.refresh_bleed_rate()
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/qdel_void)
-	RegisterSignal(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_PARENT_QDELETING), .proc/qdel_void)
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(qdel_void))
+	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_PARENT_QDELETING), PROC_REF(qdel_void))
 
 	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name], trying to stop the bleeding."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
 	playsound(get_turf(src), 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)

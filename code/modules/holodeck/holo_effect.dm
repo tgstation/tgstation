@@ -65,7 +65,7 @@
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)
 		our_mob.vars[v] = null
-	RegisterSignal(our_mob, COMSIG_PARENT_QDELETING, .proc/handle_mob_delete)
+	RegisterSignal(our_mob, COMSIG_PARENT_QDELETING, PROC_REF(handle_mob_delete))
 	return our_mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(obj/machinery/computer/holodeck/HC)
@@ -85,7 +85,7 @@
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/chick/holo,
 		/mob/living/simple_animal/pet/fox,
-		/mob/living/simple_animal/rabbit,
+		/mob/living/basic/rabbit,
 	)
 	mobtype += pick(
 		/mob/living/simple_animal/pet/dog/corgi,

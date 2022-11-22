@@ -47,11 +47,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	dir = WEST
 	port_direction = EAST
-	width = 12
-	dwidth = 5
-	height = 7
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
-
 
 	//Export categories for this run, this is set by console sending the shuttle.
 	var/export_categories = EXPORT_CARGO
@@ -113,7 +109,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		investigate_log("Chef's [SSshuttle.chef_groceries.len] sized produce order arrived. Cost was deducted from orderer, not cargo.", INVESTIGATE_CARGO)
 		for(var/datum/orderable_item/item as anything in SSshuttle.chef_groceries)//every order
 			for(var/amt in 1 to SSshuttle.chef_groceries[item])//every order amount
-				new item.item_instance.type(grocery_crate)
+				new item.item_path(grocery_crate)
 		SSshuttle.chef_groceries.Cut() //This lets the console know it can order another round.
 
 	if(!SSshuttle.shopping_list.len)
