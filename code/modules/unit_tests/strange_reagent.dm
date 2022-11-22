@@ -16,6 +16,7 @@
 		/mob/living/basic,
 	))
 	types_to_check -= /mob/living/simple_animal/pet/gondola/gondolapod // need a pod, which we don't have
+	types_to_check -= typesof(/mob/living/basic/mouse) // qdel themselves on death; why dont they use DEL_ON_DEATH you might ask. I-unno
 
 	for(var/mob/living/type as anything in types_to_check)
 		var/mob/living/target = allocate_new_target(type)
@@ -70,6 +71,7 @@
 	target.adjustFireLoss(damage)
 	update_amounts(target)
 	if(percent >= 1)
+		target.death()
 		TEST_ASSERT_EQUAL(target.stat, DEAD, "Target type [target.type] should be dead but isnt")
 		return FALSE
 	return TRUE
