@@ -2,7 +2,7 @@
 #define IV_INJECTING 1
 #define MIN_IV_TRANSFER_RATE 0
 #define MAX_IV_TRANSFER_RATE 5
-#define IV_TRANSFER_STEP 0.01
+#define IV_TRANSFER_RATE_STEP 0.01
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
@@ -61,7 +61,7 @@
 /obj/machinery/iv_drip/ui_data(mob/user)
 	var/list/data = list()
 	data["transferRate"] = transfer_rate
-	data["transferStep"] = IV_TRANSFER_STEP
+	data["transferStep"] = IV_TRANSFER_RATE_STEP
 	data["maxInjectRate"] = MAX_IV_TRANSFER_RATE
 	data["minInjectRate"] = MIN_IV_TRANSFER_RATE
 	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
@@ -72,7 +72,7 @@
 	data["containerAttached"] = reagent_container ? TRUE : FALSE
 	var/datum/reagents/drip_reagents = get_reagents()
 	if(drip_reagents)
-		data["containerCurrentVolume"] = round(drip_reagents.total_volume, IV_TRANSFER_STEP)
+		data["containerCurrentVolume"] = round(drip_reagents.total_volume, IV_TRANSFER_RATE_STEP)
 		data["containerMaxVolume"] = drip_reagents.maximum_volume
 		data["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
 	data["useInternalStorage"] = use_internal_storage
@@ -104,7 +104,7 @@
 		return
 	if(!new_rate)
 		return
-	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_STEP)
+	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(transfer_rate > 0)
