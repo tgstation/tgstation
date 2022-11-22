@@ -858,7 +858,6 @@
 		// jitter immediately, after four seconds, and after eight seconds
 		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 4 SECONDS)
 		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 8 SECONDS)
-		full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE
 		addtimer(CALLBACK(
 			exposed_mob,
 			TYPE_PROC_REF(/mob/living, revive),
