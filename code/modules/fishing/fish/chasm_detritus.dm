@@ -73,6 +73,8 @@
 /// Variant of the chasm detritus that allows for an easier time at fishing out
 /// bodies, and sometimes less desireable monsters too.
 /obj/item/chasm_detritus/restricted
+	/// What type do we check for in the contents of the `/obj/effect/abstract/chasm_storage`
+	/// contained in the `GLOB.chasm_storage` global list in `find_chasm_contents()`.
 	var/chasm_storage_restricted_type = /obj
 
 

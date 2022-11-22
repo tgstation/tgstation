@@ -97,7 +97,7 @@
  */
 /obj/item/fishing_rod/proc/reason_we_cant_fish(datum/fish_source/target_fish_source)
 	if(!hook)
-		return
+		return null
 
 	return hook.reason_we_cant_fish(target_fish_source)
 
