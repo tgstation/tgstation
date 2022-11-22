@@ -181,10 +181,12 @@
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/mob/living/carbon/human/human_owner = owner
 			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
-				to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
 			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES))
-				to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
 
 	else
@@ -208,6 +210,7 @@
 /**
  * Check if the target we're casting on is a valid target.
  * For self-casted spells, the target being checked (cast_on) is the caster.
+ * For click_to_activate spells, the target being checked is the clicked atom.
  *
  * Return TRUE if cast_on is valid, FALSE otherwise
  */
@@ -384,7 +387,7 @@
 		return FALSE
 
 	spell_level++
-	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0)
+	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0.25 SECONDS) // 0 second CD starts to break things.
 	update_spell_name()
 	return TRUE
 
@@ -400,7 +403,11 @@
 		return FALSE
 
 	spell_level--
-	cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	if(cooldown_reduction_per_rank > 0 SECONDS)
+		cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	else
+		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+
 	update_spell_name()
 	return TRUE
 

@@ -50,14 +50,15 @@
  * This is only ever called once per heretic.
  *
  * Arguments
- * * user - the heretic who researched something
+ * * user - The heretic who researched something
+ * * our_heretic - The antag datum of who researched us. This should never be null.
  */
-/datum/heretic_knowledge/proc/on_research(mob/user)
+/datum/heretic_knowledge/proc/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
-	on_gain(user)
+	on_gain(user, our_heretic)
 
 /**
  * Called when the knowledge is applied to a mob.
@@ -66,8 +67,9 @@
  *
  * Arguments
  * * user - the heretic which we're applying things to
+ * * our_heretic - The antag datum of who gained us. This should never be null.
  */
-/datum/heretic_knowledge/proc/on_gain(mob/user)
+/datum/heretic_knowledge/proc/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	return
 
 /**
@@ -76,8 +78,9 @@
  *
  * Arguments
  * * user - the heretic which we're removing things from
+ * * our_heretic - The antag datum of who is losing us. This should never be null.
  */
-/datum/heretic_knowledge/proc/on_lose(mob/user)
+/datum/heretic_knowledge/proc/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	return
 
 /**
@@ -165,7 +168,7 @@
 		selected_atoms -= sacrificed
 		qdel(sacrificed)
 
-/*
+/**
  * A knowledge subtype that grants the heretic a certain spell.
  */
 /datum/heretic_knowledge/spell
@@ -179,7 +182,7 @@
 	QDEL_NULL(created_spell_ref)
 	return ..()
 
-/datum/heretic_knowledge/spell/on_gain(mob/user)
+/datum/heretic_knowledge/spell/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	// Added spells are tracked on the body, and not the mind,
 	// because we handle heretic mind transfers
 	// via the antag datum (on_gain and on_lose).
@@ -187,11 +190,11 @@
 	created_spell.Grant(user)
 	created_spell_ref = WEAKREF(created_spell)
 
-/datum/heretic_knowledge/spell/on_lose(mob/user)
+/datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
 	created_spell?.Remove(user)
 
-/*
+/**
  * A knowledge subtype for knowledge that can only
  * have a limited amount of it's resulting atoms
  * created at once.
@@ -225,7 +228,7 @@
 		LAZYADD(created_items, WEAKREF(created_thing))
 	return TRUE
 
-/*
+/**
  * A knowledge subtype for limited_amount knowledge
  * used for base knowledge (the ones that make blades)
  *
@@ -247,11 +250,12 @@
 			continue
 		banned_knowledge += final_knowledge_type
 
-/datum/heretic_knowledge/limited_amount/starting/on_research(mob/user)
+/datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
+	our_heretic.heretic_path = route
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
 
-/*
+/**
  * A knowledge subtype for heretic knowledge
  * that applies a mark on use.
  *
@@ -264,11 +268,11 @@
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 
-/datum/heretic_knowledge/mark/on_gain(mob/user)
+/datum/heretic_knowledge/mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 
-/datum/heretic_knowledge/mark/on_lose(mob/user)
+/datum/heretic_knowledge/mark/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /**
@@ -316,7 +320,7 @@
 	mark.on_effect()
 	return TRUE
 
-/*
+/**
  * A knowledge subtype for heretic knowledge that
  * upgrades their sickly blade, either on melee or range.
  *
@@ -327,11 +331,11 @@
 	mutually_exclusive = TRUE
 	cost = 2
 
-/datum/heretic_knowledge/blade_upgrade/on_gain(mob/user)
+/datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, PROC_REF(on_ranged_eldritch_blade))
 
-/datum/heretic_knowledge/blade_upgrade/on_lose(mob/user)
+/datum/heretic_knowledge/blade_upgrade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_HERETIC_RANGED_BLADE_ATTACK))
 
 
@@ -369,7 +373,7 @@
 /datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	return
 
-/*
+/**
  * A knowledge subtype lets the heretic curse someone with a ritual.
  */
 /datum/heretic_knowledge/curse
@@ -492,7 +496,7 @@
 
 	chosen_mob.remove_filter(name)
 
-/*
+/**
  * A knowledge subtype lets the heretic summon a monster with the ritual.
  */
 /datum/heretic_knowledge/summon
@@ -540,7 +544,7 @@
 /// The amount of knowledge points the knowledge ritual gives on success.
 #define KNOWLEDGE_RITUAL_POINTS 4
 
-/*
+/**
  * A subtype of knowledge that generates random ritual components.
  */
 /datum/heretic_knowledge/knowledge_ritual
@@ -599,7 +603,7 @@
 	// 1 uncommon item.
 	required_atoms[pick(potential_uncommoner_items)] += 1
 
-/datum/heretic_knowledge/knowledge_ritual/on_research(mob/user)
+/datum/heretic_knowledge/knowledge_ritual/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 
 	var/list/requirements_string = list()
@@ -634,7 +638,7 @@
 
 #undef KNOWLEDGE_RITUAL_POINTS
 
-/*
+/**
  * The special final tier of knowledges that unlocks ASCENSION.
  */
 /datum/heretic_knowledge/ultimate
@@ -644,16 +648,15 @@
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
 
-/datum/heretic_knowledge/ultimate/on_research(mob/user)
+/datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/total_points = 0
-	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(heretic_datum.researched_knowledge))
+	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(our_heretic.researched_knowledge))
 		total_points += knowledge.cost
 
 	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [worldtime2text()]. \
-		They have [length(heretic_datum.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
-		and have sacrificed [heretic_datum.total_sacrifices] people ([heretic_datum.high_value_sacrifices] of which were high value)")
+		They have [length(our_heretic.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
+		and have sacrificed [our_heretic.total_sacrifices] people ([our_heretic.high_value_sacrifices] of which were high value)")
 
 /datum/heretic_knowledge/ultimate/can_be_invoked(datum/antagonist/heretic/invoker)
 	if(invoker.ascended)
@@ -688,6 +691,9 @@
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.ascended = TRUE
+
+	// Show the cool red gradiant in our UI
+	heretic_datum.update_static_data(user)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
