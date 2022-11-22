@@ -140,6 +140,6 @@
 
 /obj/item/organ/internal/tongue/rat/on_life(delta_time, times_fired)
 	. = ..()
-	if(DT_PROB(5, delta_time))
+	if(prob(5))
 		owner.emote("squeaks")
 		playsound(owner, 'sound/effects/mousesqueek.ogg', 100)
