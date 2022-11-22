@@ -206,7 +206,7 @@
 			qdel(object)
 			var/potential_biomass = max(1, nutriments) * productivity
 			while(processing && potential_biomass > 0)
-				use_power(active_power_usage * (1 SECONDS)) // Seconds needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules
+				use_power(active_power_usage * (0.01 SECONDS)) // Seconds needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules)
 				potential_biomass -= 1
 				biomass += 1
 				stoplag(2 / productivity)
