@@ -38,24 +38,24 @@
 	if (isindestructiblewall(target))
 		return
 
-	. = COMPONENT_HOSTILE_NO_ATTACK
 	puncher.changeNext_move(CLICK_CD_MELEE)
 	puncher.do_attack_animation(target)
 
 	if (ismineralturf(target))
 		var/turf/closed/mineral/mineral_wall = target
 		mineral_wall.gets_drilled(puncher)
-		return
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	if (!iswallturf(target)) // In case you're some kind of non-wall non-mineral closed turf yet to be invented
-		return
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	var/turf/closed/wall/wall_turf = target
 
 	if (istype(wall_turf, /turf/closed/wall/r_wall) && strength_flag != ENVIRONMENT_SMASH_RWALLS)
 		playsound(wall_turf, 'sound/effects/bang.ogg', 50, TRUE)
 		wall_turf.balloon_alert(puncher, span_warning("too tough!"))
-		return
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 	wall_turf.dismantle_wall(1)
 	playsound(wall_turf, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	return COMPONENT_HOSTILE_NO_ATTACK

@@ -48,20 +48,20 @@
 /// Eating desired foods will heal you
 /datum/element/basic_eating/heal
 	/// Amount of healing to do
-	var/heal_amt
+	var/heal_amount
 
-/datum/element/basic_eating/heal/Attach(datum/target, food_types = list(), heal_amt = 0)
+/datum/element/basic_eating/heal/Attach(datum/target, food_types = list(), heal_amount = 0)
 	. = ..()
 	if (. == ELEMENT_INCOMPATIBLE)
 		return
 
-	src.heal_amt = heal_amt
+	src.heal_amount = heal_amount
 
 /datum/element/basic_eating/heal/on_eaten(mob/living/eater, atom/target)
 	var/eat_verb = pick("bite","chew","nibble","gnaw","gobble","chomp")
-	var/healed = heal_amt && eater.health < eater.maxHealth
-	if(heal_amt)
-		eater.heal_overall_damage(heal_amt)
+	var/healed = heal_amount && eater.health < eater.maxHealth
+	if(heal_amount)
+		eater.heal_overall_damage(heal_amount)
 	eater.visible_message(span_notice("[eater] [eat_verb]s [target]."), span_notice("You [eat_verb] [target][healed ? ", restoring some health" : ""]."))
 
 /// Eating desired foods will hurt you

@@ -24,7 +24,7 @@
 	/// Shown above the mob's head when it hears you
 	var/command_feedback
 
-/datum/component/pet_command/Initialize(list/speech_commands = list(), command_feedback)
+/datum/component/pet_command/Initialize(list/speech_commands, command_feedback)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -44,12 +44,15 @@
 
 /datum/component/pet_command/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ON_LIVING_TAMED))
+	return ..()
+
+/datum/component/pet_command/Destroy(force, silent)
+	. = ..()
 	for (var/datum/weakref/weak_friend as anything in friends)
 		var/mob/living/tamer = weak_friend.resolve()
-		if (QDELETED(tamer))
+		if (!tamer)
 			continue
 		UnregisterSignal(tamer, COMSIG_MOB_SAY)
-	return ..()
 
 /// Register a new guy we want to listen to
 /datum/component/pet_command/proc/new_friend(mob/living/source, mob/living/tamer)
@@ -130,7 +133,7 @@
 	/// Text describing an action we perform upon receiving a new target
 	var/pointed_reaction
 
-/datum/component/pet_command/point_targetting/Initialize(list/speech_commands = list(), command_feedback, pointed_reaction)
+/datum/component/pet_command/point_targetting/Initialize(list/speech_commands, command_feedback, pointed_reaction)
 	. = ..()
 	if (. == COMPONENT_INCOMPATIBLE)
 		return
@@ -140,10 +143,10 @@
 	. = ..()
 	RegisterSignal(tamer, COMSIG_MOB_POINTED, PROC_REF(look_for_target))
 
-/datum/component/pet_command/point_targetting/UnregisterFromParent()
+/datum/component/pet_command/point_targetting/Destroy(force, silent)
 	for (var/datum/weakref/weak_friend as anything in friends)
 		var/mob/living/tamer = weak_friend.resolve()
-		if (QDELETED(tamer))
+		if (!tamer)
 			continue
 		UnregisterSignal(tamer, COMSIG_MOB_POINTED)
 	return ..()

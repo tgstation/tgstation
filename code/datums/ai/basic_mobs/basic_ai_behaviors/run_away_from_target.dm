@@ -22,4 +22,4 @@
 
 /datum/ai_behavior/run_away_from_target/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()
-	finish_action(controller, TRUE)
+	finish_action(controller, succeeded = TRUE)

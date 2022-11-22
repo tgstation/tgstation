@@ -17,11 +17,11 @@
 
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/mob/living/target = weak_target?.resolve()
-	if(QDELETED(target))
+	if (!target)
 		return
 
 	var/datum/action/cooldown/using_action = controller.blackboard[BB_CARP_RIFT]
-	if(QDELETED(using_action))
+	if (QDELETED(using_action))
 		return
 	if (!using_action.IsAvailable())
 		return
@@ -62,10 +62,7 @@
 		return FALSE
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
-
-	if (QDELETED(target))
-		return FALSE
-	return TRUE
+	return target
 
 /datum/ai_behavior/make_carp_rift/perform(delta_time, datum/ai_controller/controller, ability_key, target_key)
 	. = ..()
@@ -73,7 +70,7 @@
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 
-	if(!validate_target(controller, target, ability))
+	if (!validate_target(controller, target, ability))
 		finish_action(controller, FALSE, ability_key, target_key)
 		return
 
@@ -89,7 +86,7 @@
 /datum/ai_behavior/make_carp_rift/proc/validate_target(datum/ai_controller/controller, atom/target, datum/action/cooldown/mob_cooldown/lesser_carp_rift/ability)
 	if (!ability)
 		return FALSE
-	if (QDELETED(target))
+	if (!target)
 		return FALSE
 	return TRUE
 
@@ -220,7 +217,7 @@
 /datum/ai_planning_subtree/shortcut_to_target_through_carp_rift/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/datum/weakref/weak_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
 	var/mob/living/target = weak_target?.resolve()
-	if(QDELETED(target))
+	if (!target)
 		return
 
 	controller.queue_behavior(/datum/ai_behavior/enter_nearby_rift_towards_target, BB_BASIC_MOB_CURRENT_TARGET)
@@ -240,7 +237,7 @@
 	. = ..()
 	var/datum/weakref/weak_target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
-	if(QDELETED(target))
+	if (!target)
 		return FALSE
 
 	var/distance_to_target = get_dist(controller.pawn, target)
@@ -260,7 +257,7 @@
 
 /datum/ai_behavior/enter_nearby_rift_towards_target/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()
-	finish_action(controller, TRUE)
+	finish_action(controller, succeeded = TRUE)
 
 /**
  * # Enter nearby rift and end actions
@@ -286,7 +283,7 @@
 
 /datum/ai_behavior/enter_nearby_rift/perform(delta_time, datum/ai_controller/controller, target_key, hiding_location_key)
 	. = ..()
-	finish_action(controller, TRUE)
+	finish_action(controller, succeeded = TRUE)
 
 /datum/ai_behavior/enter_nearby_rift_and_end_actions/finish_action(datum/ai_controller/controller, succeeded, ...)
 	. = ..()

@@ -21,7 +21,7 @@
 	var/current_health_percentage = (living_pawn.health / living_pawn.maxHealth)
 	if (controller.blackboard[fleeing_key])
 		controller.blackboard[fleeing_key] = current_health_percentage < controller.blackboard[stop_flee_above_key]
-		finish_action(controller, TRUE)
+		finish_action(controller, succeeded = TRUE)
 		return
 	controller.blackboard[fleeing_key] = current_health_percentage <= controller.blackboard[flee_below_key]
-	finish_action(controller, TRUE)
+	finish_action(controller, succeeded = TRUE)

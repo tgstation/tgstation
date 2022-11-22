@@ -32,7 +32,7 @@
  * Gets passed all of the arguments from `setup`
  */
 /datum/ai_behavior/step_towards_turf/proc/find_destination_turf()
-	return NONE
+	return null
 
 /**
  * Figure out where we're going to move to, which isn't all the way to the destination in one go
@@ -48,7 +48,7 @@
 // We actually only wanted the movement so if we've arrived we're done
 /datum/ai_behavior/step_towards_turf/perform(delta_time, datum/ai_controller/controller, area_key, turf_key)
 	. = ..()
-	finish_action(controller, TRUE)
+	finish_action(controller, succeeded = TRUE)
 
 /**
  * # Step towards turf in area
@@ -72,4 +72,4 @@
 		if (potential_target.is_blocked_turf(exclude_mobs = TRUE))
 			continue
 		return potential_target
-	return NONE
+	return null

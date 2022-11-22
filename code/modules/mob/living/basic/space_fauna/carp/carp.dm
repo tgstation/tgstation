@@ -109,7 +109,7 @@
 /mob/living/basic/carp/proc/apply_colour()
 	if (!greyscale_config)
 		return
-	set_greyscale(colors= list(pick_weight(carp_colors)))
+	set_greyscale(colors = list(pick_weight(carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/proc/on_tamed(mob/tamer, feedback = TRUE)
@@ -118,7 +118,7 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
 	if (!feedback)
 		return
-	spin(20, 1)
+	spin(spintime = 10, speed = 1)
 	visible_message("[src] spins in a circle as it seems to bond with [tamer].")
 
 /// Teleport when you right click away from you
@@ -179,8 +179,8 @@
 
 /// Marks Lia's current location as her house
 /mob/living/basic/carp/pet/lia/proc/assign_home()
-		ai_controller.blackboard[BB_MOB_HOME_AREA] = get_area(src)
-		ai_controller.blackboard[BB_MOB_HOME_TURF] = WEAKREF(get_turf(src))
+	ai_controller.blackboard[BB_MOB_HOME_AREA] = get_area(src)
+	ai_controller.blackboard[BB_MOB_HOME_TURF] = WEAKREF(get_turf(src))
 
 /**
  * Cayenne - Loyal member of the nuclear operatives.

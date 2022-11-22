@@ -1,3 +1,5 @@
+#define REGENERATION_FILTER "healing_glow"
+
 /**
  * # Regenerator component
  *
@@ -13,10 +15,10 @@
 	var/list/ignore_damage_types
 	/// Colour of regeneration animation, or none if you don't want one
 	var/outline_colour
-	/// If this is active we can't regenerate health
-	var/no_regen_timer
+	/// When this timer completes we start restoring health, it is a timer rather than a cooldown so we can do something on its completion
+	var/regeneration_delay
 
-/datum/component/regenerator/Initialize(regeneration_delay = 6 SECONDS, health_per_second = 2, list/ignore_damage_types = list(STAMINA), outline_colour)
+/datum/component/regenerator/Initialize(regeneration_delay = 6 SECONDS, health_per_second = 2, ignore_damage_types = list(STAMINA), outline_colour)
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -31,16 +33,16 @@
 
 /datum/component/regenerator/UnregisterFromParent()
 	. = ..()
-	if(no_regen_timer)
-		deltimer(no_regen_timer)
+	if(regeneration_delay)
+		deltimer(regeneration_delay)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	stop_regenerating()
 
 /datum/component/regenerator/Destroy(force, silent)
 	stop_regenerating()
 	. = ..()
-	if(no_regen_timer)
-		deltimer(no_regen_timer)
+	if(regeneration_delay)
+		deltimer(regeneration_delay)
 
 /// When you take damage, reset the cooldown and start processing
 /datum/component/regenerator/proc/on_take_damage(datum/source, damage, damagetype)
@@ -49,9 +51,9 @@
 	if (locate(damagetype) in ignore_damage_types)
 		return
 	stop_regenerating()
-	if(no_regen_timer)
-		deltimer(no_regen_timer)
-	no_regen_timer = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_STOPPABLE)
+	if(regeneration_delay)
+		deltimer(regeneration_delay)
+	regeneration_delay = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_STOPPABLE)
 
 /// Start processing health regeneration, and show animation if provided
 /datum/component/regenerator/proc/start_regenerating()
@@ -64,15 +66,15 @@
 	START_PROCESSING(SSobj, src)
 	if (!outline_colour)
 		return
-	living_parent.add_filter("healing_glow", 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
-	var/filter = living_parent.get_filter("healing_glow")
+	living_parent.add_filter(REGENERATION_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
+	var/filter = living_parent.get_filter(REGENERATION_FILTER)
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.5 SECONDS)
 
 /datum/component/regenerator/proc/stop_regenerating()
 	STOP_PROCESSING(SSobj, src)
 	var/mob/living/living_parent = parent
-	living_parent.remove_filter("healing_glow")
+	living_parent.remove_filter(REGENERATION_FILTER)
 
 /datum/component/regenerator/process(delta_time = SSMOBS_DT)
 	var/mob/living/living_parent = parent
@@ -83,3 +85,5 @@
 		stop_regenerating()
 		return
 	living_parent.heal_overall_damage(health_per_second * delta_time)
+
+#undef REGENERATION_FILTER

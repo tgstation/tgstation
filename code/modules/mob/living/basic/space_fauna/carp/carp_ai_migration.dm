@@ -48,10 +48,10 @@
 		var/turf/potential_destination = weak_destination.resolve()
 		if (!QDELETED(potential_destination) && get_dist(controller.pawn, potential_destination) > CARP_DESTINATION_SEARCH_RANGE)
 			controller.blackboard[target_key] = weak_destination
-			finish_action(controller, TRUE)
+			finish_action(controller, succeeded = TRUE)
 			return
 		controller.blackboard[path_key] = potential_migration_points.Copy()
 
-	finish_action(controller, FALSE)
+	finish_action(controller, succeeded = FALSE)
 
 #undef CARP_DESTINATION_SEARCH_RANGE

@@ -20,7 +20,18 @@
 
 /datum/element/ai_retaliate/Detach(datum/source, ...)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_BASIC_MOB, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_MOB_ATTACK_ALIEN, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_MECH))
+	UnregisterSignal(source, list(
+		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_ATTACK_PAW,
+		COMSIG_ATOM_ATTACK_BASIC_MOB,
+		COMSIG_ATOM_ATTACK_ANIMAL,
+		COMSIG_MOB_ATTACK_ALIEN,
+		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_HITBY,
+		COMSIG_ATOM_HULK_ATTACK,
+		COMSIG_ATOM_ATTACK_MECH,
+	))
 
 /datum/element/ai_retaliate/proc/on_attackby(mob/target, obj/item/weapon, mob/attacker)
 	SIGNAL_HANDLER
@@ -29,7 +40,7 @@
 
 /datum/element/ai_retaliate/proc/on_attack_generic(mob/target, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
-	if((attacker.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK)))
+	if(attacker.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
 		retaliate(target, attacker)
 
 /datum/element/ai_retaliate/proc/on_attack_npc(mob/target, mob/living/attacker)

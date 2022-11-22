@@ -64,7 +64,7 @@
 	if (isliving(parent))
 		var/mob/living/living_parent = parent
 		if (isliving(tamer))
-			living_parent.faction += "[REF(tamer)]"
+			living_parent.faction += REF(tamer)
 		if (living_parent.ai_controller)
 			var/list/friends = living_parent.ai_controller.blackboard[BB_PET_FRIENDS_LIST]
 			if (!friends)

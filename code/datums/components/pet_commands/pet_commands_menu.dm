@@ -16,7 +16,7 @@
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(display_menu))
 
 /datum/component/pet_commands_menu/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_CLICK_ALT))
+	UnregisterSignal(parent, COMSIG_CLICK_ALT)
 
 /// Displays a radial menu of commands
 /datum/component/pet_commands_menu/proc/display_menu(datum/source, mob/living/clicker)

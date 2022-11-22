@@ -81,7 +81,8 @@
 /obj/effect/temp_visual/lesser_carp_rift/entrance/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered)
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/temp_visual/lesser_carp_rift/entrance/proc/on_entered(datum/source, atom/movable/entered_atom)
@@ -99,7 +100,7 @@
 		return
 
 	var/turf/destination = pick(exit_locs)
-	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC,)
+	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC)
 	playsound(src, 'sound/magic/wand_teleport.ogg', 50)
 	playsound(destination, 'sound/magic/wand_teleport.ogg', 50)
 
@@ -133,7 +134,7 @@
 	shared_cooldown = MOB_SHARED_COOLDOWN_2
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/magicarp_bolt/chaos/attack_sequence(mob/living/firer, atom/target)
-	playsound(get_turf(firer), projectile_sound, 100, TRUE)
+	playsound(get_turf(firer), projectile_sound, 100, vary = TRUE)
 	return ..()
 
 /// Chaos variant picks one from a list

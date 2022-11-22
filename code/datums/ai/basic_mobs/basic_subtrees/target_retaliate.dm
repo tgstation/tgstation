@@ -23,34 +23,34 @@
 
 	var/list/enemy_refs = controller.blackboard[shitlist_key]
 	if (!length(enemy_refs))
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	var/list/enemies_list = list()
 	for (var/datum/weakref/enemy_ref as anything in enemy_refs)
 		var/atom/enemy = enemy_ref.resolve()
 		if (QDELETED(enemy))
-			controller.blackboard[shitlist_key] -= enemy_ref
+			remove_target_from_list(enemy_ref)
 			continue
 		if (enemy == living_mob) // Avoid a self-targetting feedback loop
-			controller.blackboard[shitlist_key] -= enemy_ref
+			remove_target_from_list(enemy_ref)
 			continue
 		if (!can_see(living_mob, enemy, vision_range))
-			controller.blackboard[shitlist_key] -= enemy_ref
+			remove_target_from_list(enemy_ref)
 			continue
 		if (!targetting_datum.can_attack(living_mob, enemy))
-			controller.blackboard[shitlist_key] -= enemy_ref
+			remove_target_from_list(enemy_ref)
 			continue
 		enemies_list += enemy
 
 	if (!length(enemies_list))
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
 	if (target && (locate(target) in enemies_list)) // Don't bother changing
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	var/atom/new_target = pick_final_target(controller, enemies_list)
@@ -61,7 +61,11 @@
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.blackboard[hiding_location_key] = WEAKREF(potential_hiding_location)
 
-	finish_action(controller, TRUE)
+	finish_action(controller, succeeded = TRUE)
+
+/// Removes a (weakref to a) target from our blackboard list, as it is no longer a valid target
+/datum/ai_behavior/target_from_retaliate_list/proc/remove_target_from_list(datum/weakref/enemy_ref, shitlist_key)
+	controller.blackboard[shitlist_key] -= enemy_ref
 
 /// Returns the desired final target from the filtered list of enemies
 /datum/ai_behavior/target_from_retaliate_list/proc/pick_final_target(datum/ai_controller/controller, list/enemies_list)

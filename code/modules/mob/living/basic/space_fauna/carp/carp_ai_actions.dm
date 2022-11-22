@@ -24,7 +24,7 @@
 	if (QDELETED(using_action))
 		return ..()
 	if (!controller.blackboard[BB_MAGICARP_SPELL_SPECIAL_TARGETTING] && using_action.IsAvailable())
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 	return ..()
 

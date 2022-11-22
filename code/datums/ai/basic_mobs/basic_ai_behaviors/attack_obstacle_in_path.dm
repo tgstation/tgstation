@@ -23,12 +23,12 @@
 	var/atom/target = weak_target?.resolve()
 
 	if (!target)
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	var/turf/next_step = get_step_towards(basic_mob, target)
 	if (next_step == get_turf(basic_mob))
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	var/dir_to_next_step = get_dir(basic_mob, next_step)
@@ -46,14 +46,14 @@
 		if (attack_in_direction(controller, basic_mob, direction))
 			return
 
-	finish_action(controller, FALSE)
+	finish_action(controller, succeeded = FALSE)
 
 /datum/ai_behavior/attack_obstacle_in_path/proc/attack_in_direction(datum/ai_controller/controller, mob/living/basic/basic_mob, direction)
 	var/turf/next_step = get_step(basic_mob, direction)
 	if (!next_step.is_blocked_turf(exclude_mobs = TRUE))
 		return FALSE
 
-	for (var/obj/object in next_step.contents)
+	for (var/obj/object as anything in next_step.contents)
 		if (!ismachinery(object) && !isstructure(object))
 			continue
 		if (!object.density)
@@ -61,11 +61,11 @@
 		if (object.IsObscured())
 			continue
 		basic_mob.melee_attack(object)
-		finish_action(controller, TRUE)
+		finish_action(controller, succeeded = TRUE)
 		return TRUE
 
 	if (attack_walls) // A basic mob will need the wall_smasher element for this to do anything
 		basic_mob.melee_attack(next_step)
-		finish_action(controller, TRUE)
+		finish_action(controller, succeeded = TRUE)
 		return TRUE
 	return FALSE

@@ -16,7 +16,7 @@
 	var/atom/target = weak_target?.resolve()
 
 	if (!target)
-		finish_action(controller, FALSE, target_key)
+		finish_action(controller, succeeded = FALSE, target_key)
 		return
 
 	if (get_dist(basic_mob, target) <= required_distance)
@@ -45,7 +45,7 @@
 	if (!next_step.is_blocked_turf(exclude_mobs = TRUE))
 		return FALSE
 
-	for (var/obj/object in next_step.contents)
+	for (var/obj/object as anything in next_step.contents)
 		if (!can_smash_object(basic_mob, object))
 			continue
 		basic_mob.melee_attack(object)
@@ -66,7 +66,11 @@
 	return TRUE // It's in our way, let's get it out of our way
 
 /**
- * The same but returns if your health gets too low
+ * # Attack target & obstacles while healthy
+ * Maintain and move towards your current target, bite them in range
+ * Checks if your health is above a certain ratio every perform and aborts if this is not true
+ * Check for impediments in front of the mob every perform and attack those if it cannot reach the target
+ * The obstacle attack check bypasses the targetting datum, otherwise usually the mob would aggro onto random windows instead of enemies
  */
 /datum/ai_behavior/basic_melee_attack/attack_obstacles/while_healthy
 
@@ -79,6 +83,6 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/current_health_ratio = (living_pawn.health / living_pawn.maxHealth)
 	if (current_health_ratio < controller.blackboard[health_ratio_key])
-		finish_action(controller, FALSE)
+		finish_action(controller, succeeded = FALSE)
 		return
 	return ..()

@@ -1,26 +1,26 @@
 /// List of spells that a carp can cast
 #define MAGICARP_SPELL_LIST list(\
-		/obj/projectile/magic/animate = "dancing",\
-		/obj/projectile/magic/arcane_barrage = "arcane",\
-		/obj/projectile/magic/change = "transforming",\
-		/obj/projectile/magic/death = "grim",\
-		/obj/projectile/magic/door = "unbarred",\
-		/obj/projectile/magic/fireball = "blazing",\
-		/obj/projectile/magic/resurrection = "vital",\
-		/obj/projectile/magic/spellblade = "vorpal",\
-		/obj/projectile/magic/teleport = "warping",\
-		/obj/projectile/magic/babel = "babbling",\
-	)
+	/obj/projectile/magic/animate = "dancing",\
+	/obj/projectile/magic/arcane_barrage = "arcane",\
+	/obj/projectile/magic/change = "transforming",\
+	/obj/projectile/magic/death = "grim",\
+	/obj/projectile/magic/door = "unbarred",\
+	/obj/projectile/magic/fireball = "blazing",\
+	/obj/projectile/magic/resurrection = "vital",\
+	/obj/projectile/magic/spellblade = "vorpal",\
+	/obj/projectile/magic/teleport = "warping",\
+	/obj/projectile/magic/babel = "babbling",\
+)
 
 /// Filtered list of spells that a carp can cast if spawned from a xenobiology slime
 #define XENOBIOLOGY_MAGICARP_SPELL_LIST list(\
-		/obj/projectile/magic/animate = "dancing",\
-		/obj/projectile/magic/teleport = "warping",\
-		/obj/projectile/magic/door = "unbarred",\
-		/obj/projectile/magic/fireball = "blazing",\
-		/obj/projectile/magic/spellblade = "vorpal",\
-		/obj/projectile/magic/arcane_barrage = "arcane",\
-	)
+	/obj/projectile/magic/animate = "dancing",\
+	/obj/projectile/magic/teleport = "warping",\
+	/obj/projectile/magic/door = "unbarred",\
+	/obj/projectile/magic/fireball = "blazing",\
+	/obj/projectile/magic/spellblade = "vorpal",\
+	/obj/projectile/magic/arcane_barrage = "arcane",\
+)
 
 /**
  * # Magicarp

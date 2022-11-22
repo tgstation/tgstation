@@ -46,6 +46,10 @@
 	REMOVE_TRAIT(parent, TRAIT_CAN_USE_NUKE, NUKE_OP_MINION_TRAIT)
 	drop_disky()
 
+/datum/component/nuclear_bomb_operator/Destroy(force, silent)
+	QDEL_NULL(disky)
+	return ..()
+
 /// Drop the disk on the floor, if we have it
 /datum/component/nuclear_bomb_operator/proc/drop_disky()
 	var/obj/item/disk/nuclear/held_disk = disky?.resolve()
@@ -118,8 +122,6 @@
 /datum/component/nuclear_bomb_operator/proc/atom_exited_owner(atom/parent_atom, atom/movable/gone)
 	SIGNAL_HANDLER
 	var/obj/item/disk/nuclear/held_disk = disky?.resolve()
-	if (!held_disk)
-		return
 	if (held_disk != gone)
 		return
 	disky = null
