@@ -1,4 +1,5 @@
 ///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
+
 /obj/machinery/plumbing/reaction_chamber
 	name = "mixing chamber"
 	desc = "Keeps chemicals separated until given conditions are met."
@@ -84,27 +85,37 @@
 /obj/machinery/plumbing/reaction_chamber/ui_act(action, params)
 	. = ..()
 	if(.)
-		return
+		return TRUE
+
+	. = FALSE
 	switch(action)
+		if("add")
+			var/selected_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.chemical_name_list)
+			if(!selected_reagent)
+				return TRUE
+
+			var/input_reagent = get_chem_id(selected_reagent)
+			if(!input_reagent)
+				return TRUE
+
+			if(!required_reagents.Find(input_reagent))
+				var/input_amount = text2num(params["amount"])
+				if(input_amount)
+					required_reagents[input_reagent] = input_amount
+
+			. = TRUE
+
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
-				. = TRUE
-		if("add")
-			var/input_reagent = get_chem_id(params["chem"])
-			if(input_reagent && !required_reagents.Find(input_reagent))
-				var/input_amount = text2num(params["amount"])
-				if(input_amount)
-					required_reagents[input_reagent] = input_amount
-					. = TRUE
+			. = TRUE
+
 		if("temperature")
-			var/target = params["target"]
-			if(text2num(target) != null)
-				target = text2num(target)
-				. = TRUE
-			if(.)
-				target_temperature = clamp(target, 0, 1000)
+			var/target = text2num(params["target"])
+			if(target != null)
+				target_temperature=clamp(target, 0, 1000)
+			.=TRUE
 
 ///Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting
 /obj/machinery/plumbing/reaction_chamber/chem
@@ -154,17 +165,17 @@
 	.["ph"] = round(reagents.ph, 0.01)
 	.["reagentAcidic"] = acidic_limit
 	.["reagentAlkaline"] = alkaline_limit
-	return .
 
 /obj/machinery/plumbing/reaction_chamber/chem/ui_act(action, params)
 	. = ..()
 	if (.)
 		return
+
 	switch(action)
 		if("acidic")
 			acidic_limit = round(text2num(params["target"]))
-			. = TRUE
 		if("alkaline")
 			alkaline_limit = round(text2num(params["target"]))
-			. = TRUE
+
+	return TRUE
 
