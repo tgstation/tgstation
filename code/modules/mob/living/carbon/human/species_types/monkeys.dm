@@ -100,11 +100,13 @@
 	var/armor = victim.run_armor_check(affecting, MELEE)
 
 	if(prob(MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE))
-		victim.visible_message( \
-			span_danger("[user]'s bite misses [victim]!"), \
-			span_danger("You avoid [user]'s bite!"), \
-			span_hear("You hear jaws snapping shut!"), \
-			COMBAT_MESSAGE_RANGE, user)
+		victim.visible_message(
+			span_danger("[user]'s bite misses [victim]!"),
+			span_danger("You avoid [user]'s bite!"),
+			span_hear("You hear jaws snapping shut!"),
+			COMBAT_MESSAGE_RANGE,
+			user,
+		)
 		to_chat(user, span_danger("Your bite misses [victim]!"))
 		return TRUE
 
@@ -115,11 +117,13 @@
 	var/damage_roll = rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high)
 	victim.apply_damage(damage_roll, BRUTE, affecting, armor)
 
-	victim.visible_message( \
-		span_danger("[name] bites [victim]!"), \
-		span_userdanger("[name] bites you!"), \
-		span_hear("You hear a chomp!"), \
-		COMBAT_MESSAGE_RANGE, name)
+	victim.visible_message(
+		span_danger("[name] bites [victim]!"),
+		span_userdanger("[name] bites you!"),
+		span_hear("You hear a chomp!"),
+		COMBAT_MESSAGE_RANGE,
+		name,
+	)
 	to_chat(user, span_danger("You bite [victim]!"))
 
 	if(armor >= 2) // if they have basic armor on the limb we bit, don't spread diseases
