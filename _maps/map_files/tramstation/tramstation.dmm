@@ -28229,7 +28229,9 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	pixel_x = 5
+	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
