@@ -103,7 +103,7 @@
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount
 
-			.=TRUE
+			. = TRUE
 
 		if("remove")
 			var/reagent = get_chem_id(params["chem"])
