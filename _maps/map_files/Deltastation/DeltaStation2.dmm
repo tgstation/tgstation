@@ -87086,7 +87086,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/engineering{
-	name = "Starboard Quarter Solar Access"
+	name = "Port Bow Solar Access"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
