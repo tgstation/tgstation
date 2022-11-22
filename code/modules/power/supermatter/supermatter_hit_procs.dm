@@ -42,7 +42,7 @@
 	)
 	message_admins(
 		source \
-			? "[src] [ADMIN_JMP(src)] has been powered for the first time by [cause ? ADMIN_FULLMONTY(source) + (fired_from_str) : (source ? source : "environmental factors")]." \
+			? "[src] [ADMIN_JMP(src)] has been powered for the first time by [cause ? ADMIN_FULLMONTY(source) + (fired_from_str) : (cause ? source : "environmental factors")]." \
 			: "[src] [ADMIN_JMP(src)] has been powered for the first time."
 	)
 
