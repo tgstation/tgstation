@@ -18,7 +18,7 @@
 	/// When this timer completes we start restoring health, it is a timer rather than a cooldown so we can do something on its completion
 	var/regeneration_start_timer
 
-/datum/component/regenerator/Initialize(regeneration_delay = 6 SECONDS, health_per_second = 2, ignore_damage_types = list(STAMINA), outline_colour)
+/datum/component/regenerator/Initialize(regeneration_delay = 6 SECONDS, health_per_second = 2, ignore_damage_types = list(STAMINA), outline_colour = COLOR_PALE_GREEN)
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -46,6 +46,8 @@
 
 /// When you take damage, reset the cooldown and start processing
 /datum/component/regenerator/proc/on_take_damage(datum/source, damage, damagetype)
+	SIGNAL_HANDLER
+
 	if (damage <= 0)
 		return
 	if (locate(damagetype) in ignore_damage_types)
@@ -74,6 +76,8 @@
 /datum/component/regenerator/proc/stop_regenerating()
 	STOP_PROCESSING(SSobj, src)
 	var/mob/living/living_parent = parent
+	var/filter = living_parent.get_filter(REGENERATION_FILTER)
+	animate(filter)
 	living_parent.remove_filter(REGENERATION_FILTER)
 
 /datum/component/regenerator/process(delta_time = SSMOBS_DT)

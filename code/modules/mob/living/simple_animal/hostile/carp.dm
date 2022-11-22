@@ -69,7 +69,7 @@
 	/// Is the carp tamed?
 	var/tamed = FALSE
 	/// What colour is our 'healing' outline?
-	var/regenerate_colour = "#20e28e"
+	var/regenerate_colour = COLOR_PALE_GREEN
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
 	AddElement(/datum/element/simple_flying)
@@ -117,7 +117,6 @@
 		ai_current_controller.befriend(tamer)
 		can_have_ai = FALSE
 		toggle_ai(AI_OFF)
-
 
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
