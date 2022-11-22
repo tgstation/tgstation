@@ -828,7 +828,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 /mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
 	check_bot_access()
-	var/datum/callback/path_complete = CALLBACK(src, .proc/on_summon_path_finish)
+	var/datum/callback/path_complete = CALLBACK(src, PROC_REF(on_summon_path_finish))
 	SSpathfinder.pathfind(src, summon_target, max_distance=150, id=access_card, exclude=avoid, on_finish = path_complete)
 
 /mob/living/simple_animal/bot/proc/on_summon_path_finish(list/path)
