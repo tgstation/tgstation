@@ -444,8 +444,8 @@ Behavior that's still missing from this component that original food items had t
 
 		//Invoke the eater's stomach's after_eat callback if valid
 		if(iscarbon(eater))
-			var/mob/living/carbon/C = eater
-			var/obj/item/organ/internal/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
+			var/mob/living/carbon/carbon_eater = eater
+			var/obj/item/organ/internal/stomach/stomach = carbon_eater.getorganslot(ORGAN_SLOT_STOMACH)
 			if(istype(stomach))
 				stomach.after_eat(owner)
 
