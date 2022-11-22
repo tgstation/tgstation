@@ -38,9 +38,9 @@
 
 /datum/component/cleaner/RegisterWithParent()
 	if(isbot(parent))
-		RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, .proc/on_unarmed_attack)
+		RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 		return
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_afterattack))
 
 /datum/component/cleaner/UnregisterFromParent()
 	if(isbot(parent))
@@ -74,7 +74,7 @@
 		clean_target = pre_clean_callback?.Invoke(source, target, user)
 		if(clean_target == DO_NOT_CLEAN)
 			return
-	INVOKE_ASYNC(src, .proc/clean, source, target, user, clean_target) //signal handlers can't have do_afters inside of them
+	INVOKE_ASYNC(src, PROC_REF(clean), source, target, user, clean_target) //signal handlers can't have do_afters inside of them
 
 /**
  * Cleans something using this cleaner.
@@ -88,11 +88,11 @@
  * * clean_target set this to false if the target should not be washed and if experience should not be awarded to the user
  */
 /datum/component/cleaner/proc/clean(datum/source, atom/target, mob/living/user, clean_target = TRUE)
-	if(!HAS_TRAIT(target, CURRENTLY_CLEANING)) //add the trait and overlay
-		ADD_TRAIT(target, CURRENTLY_CLEANING, src)
+	if(!HAS_TRAIT(target, TRAIT_CURRENTLY_CLEANING)) //add the trait and overlay
+		ADD_TRAIT(target, TRAIT_CURRENTLY_CLEANING, REF(src))
 
 		// We need to update our planes on overlay changes
-		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/cleaning_target_moved)
+		RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cleaning_target_moved))
 		var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, GAME_PLANE)
 		var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
 		if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
@@ -127,7 +127,8 @@
 	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", FLOOR_CLEAN_LAYER, target, ABOVE_GAME_PLANE)
 	target.cut_overlay(low_bubble)
 	target.cut_overlay(high_bubble)
-	REMOVE_TRAIT(target, CURRENTLY_CLEANING, src)
+	UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
+	REMOVE_TRAIT(target, TRAIT_CURRENTLY_CLEANING, REF(src))
 
 /datum/component/cleaner/proc/cleaning_target_moved(atom/movable/source, turf/old_turf, turf/new_turf, same_z_layer)
 	if(same_z_layer)

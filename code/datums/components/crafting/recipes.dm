@@ -73,18 +73,6 @@
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
-/datum/crafting_recipe/lance
-	name = "Explosive Lance (Grenade)"
-	result = /obj/item/spear/explosive
-	reqs = list(/obj/item/spear = 1,
-				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/spear/bonespear, /obj/item/spear/bamboospear)
-	parts = list(/obj/item/spear = 1,
-				/obj/item/grenade = 1)
-	time = 1.5 SECONDS
-	category = CAT_WEAPONRY
-	subcategory = CAT_WEAPON
-
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
 	result = /obj/item/shield/riot/flash
@@ -495,6 +483,8 @@
 	result = /obj/item/ammo_casing/shotgun/meteorslug
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/rcd_ammo = 1,
+				/datum/reagent/gunpowder = 10,
+				/datum/reagent/consumable/ethanol/rum = 10,
 				/obj/item/stock_parts/manipulator = 2)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 0.5 SECONDS
@@ -1878,6 +1868,42 @@
 	time = 10 SECONDS
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/punching_bag
+	name = "Punching Bag"
+	result = /obj/structure/punching_bag
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 2,
+		/obj/item/stack/rods = 1,
+		/obj/item/pillow = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
+
+/datum/crafting_recipe/stacklifter
+	name = "Chest Press"
+	result = /obj/structure/weightmachine/stacklifter
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/chair = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
+
+/datum/crafting_recipe/weightlifter
+	name = "Bench Press"
+	result = /obj/structure/weightmachine/weightlifter
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	reqs = list(
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/chair = 1,
+	)
+	category = CAT_STRUCTURE
+	time = 10 SECONDS
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

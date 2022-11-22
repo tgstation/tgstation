@@ -314,7 +314,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
 
 /datum/action/innate/spider/lay_web/Remove(mob/removed_from)
 	. = ..()
@@ -383,7 +383,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignal(owner, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
+	RegisterSignals(owner, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
 
 /datum/action/cooldown/wrap/Remove(mob/removed_from)
 	. = ..()
@@ -438,7 +438,7 @@
 		return FALSE
 
 	StartCooldown(wrap_time)
-	INVOKE_ASYNC(src, .proc/cocoon, to_wrap)
+	INVOKE_ASYNC(src, PROC_REF(cocoon), to_wrap)
 	return TRUE
 
 /datum/action/cooldown/wrap/proc/cocoon(atom/movable/to_wrap)
@@ -472,6 +472,7 @@
 					span_notice("You suck the nutriment out of [living_wrapped], feeding you enough to lay a cluster of enriched eggs."),
 				)
 			ADD_TRAIT(living_wrapped, TRAIT_SPIDER_CONSUMED, TRAIT_GENERIC)
+			living_wrapped.investigate_log("has been killed by being wrapped in a cocoon.", INVESTIGATE_DEATHS)
 			living_wrapped.death() //you just ate them, they're dead.
 			log_combat(owner, living_wrapped, "spider cocooned")
 		else
@@ -495,7 +496,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), .proc/update_icon_on_signal)
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
 
 /datum/action/innate/spider/lay_eggs/Remove(mob/removed_from)
 	. = ..()

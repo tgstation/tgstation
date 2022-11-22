@@ -35,6 +35,8 @@
 	voice_of_god_power = 0.5 //Why are you speaking
 	voice_of_god_silence_power = 3
 
+	job_tone = "silence"
+
 
 /datum/job/mime/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
@@ -65,7 +67,7 @@
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime
 
-	box = /obj/item/storage/box/hug/black/survival
+	box = /obj/item/storage/box/survival/hug/black
 	chameleon_extras = /obj/item/stamp/mime
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -99,7 +101,7 @@
 		"Invisible Chair" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_chair"),
 		"Invisible Box" = image(icon = 'icons/mob/actions/actions_mime.dmi', icon_state = "invisible_box")
 		)
-	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
 	var/datum/action/cooldown/spell/picked_spell_type
 	switch(picked_spell)
 		if("Invisible Wall")

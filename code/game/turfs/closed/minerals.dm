@@ -2,8 +2,6 @@
 
 /**********************Mineral deposits**************************/
 
-#define MINERAL_WALL_OFFSET -4
-
 /turf/closed/mineral //wall piece
 	name = "rock"
 	icon = MAP_SWITCH('icons/turf/smoothrocks.dmi', 'icons/turf/mining.dmi')
@@ -17,10 +15,10 @@
 	plane = GAME_PLANE_UPPER
 	base_icon_state = "smoothrocks"
 
-	base_pixel_x = MINERAL_WALL_OFFSET
-	base_pixel_y = MINERAL_WALL_OFFSET
-	pixel_x = MAP_SWITCH(MINERAL_WALL_OFFSET, 0)
-	pixel_y = MAP_SWITCH(MINERAL_WALL_OFFSET, 0)
+	// This is static
+	// Done like this to avoid needing to make it dynamic and save cpu time
+	// 4 to the left, 4 down
+	transform = MAP_SWITCH(TRANSLATE_MATRIX(-4, -4), matrix())
 
 	temperature = TCMB
 	var/turf/open/floor/plating/turf_type = /turf/open/misc/asteroid/airless
@@ -35,7 +33,6 @@
 	///How long it takes to mine this turf without tools, if it's weak.
 	var/hand_mine_speed = 15 SECONDS
 
-#undef MINERAL_WALL_OFFSET
 
 /turf/closed/mineral/Initialize(mapload)
 	var/static/list/smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_MINERAL_WALLS)
@@ -57,7 +54,7 @@
 	var/obj/item/held_item = bumping.get_active_held_item()
 	// !held_item exists to be nice to snow. the other bit is for pickaxes obviously
 	if(!held_item || held_item.tool_behaviour == TOOL_MINING)
-		INVOKE_ASYNC(bumping, /mob.proc/ClickOn, src)
+		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), src)
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
@@ -149,7 +146,7 @@
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 	mined.update_visuals()
 
@@ -177,6 +174,9 @@
 
 /turf/closed/mineral/ex_act(severity, target)
 	. = ..()
+	if(target == src)
+		gets_drilled(null, FALSE)
+		return
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			gets_drilled(null, FALSE)
@@ -186,7 +186,6 @@
 		if(EXPLODE_LIGHT)
 			if(prob(75))
 				gets_drilled(null, FALSE)
-	return
 
 /turf/closed/mineral/blob_act(obj/structure/blob/B)
 	if(prob(50))
@@ -652,11 +651,16 @@
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
 	. = ..()
 
-/turf/closed/mineral/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) && stage == 1)
-		user.visible_message(span_notice("[user] holds [I] to [src]..."), span_notice("You use [I] to locate where to cut off the chain reaction and attempt to stop it..."))
+/turf/closed/mineral/gibtonite/attackby(obj/item/attacking_item, mob/living/user, params)
+	var/previous_stage = stage
+	if(istype(attacking_item, /obj/item/mining_scanner) || istype(attacking_item, /obj/item/t_scanner/adv_mining_scanner) && stage == GIBTONITE_ACTIVE)
+		user.visible_message(span_notice("[user] holds [attacking_item] to [src]..."), span_notice("You use [attacking_item] to locate where to cut off the chain reaction and attempt to stop it..."))
 		defuse()
 	..()
+	if(istype(attacking_item, /obj/item/clothing/gloves/gauntlets) && previous_stage == GIBTONITE_UNSTRUCK && stage == GIBTONITE_ACTIVE && istype(user))
+		user.Immobilize(0.5 SECONDS)
+		user.throw_at(get_ranged_target_turf(src, get_dir(src, user), 5), range = 5, speed = 3, spin = FALSE)
+		user.visible_message(span_danger("[user] hit gibtonite with [attacking_item.name], launching [user.p_them()] back!"), span_danger("You've struck gibtonite! Your [attacking_item.name] launched you back!"))
 
 /turf/closed/mineral/gibtonite/proc/explosive_reaction(mob/user = null)
 	if(stage == GIBTONITE_UNSTRUCK)
@@ -680,7 +684,7 @@
 /turf/closed/mineral/gibtonite/proc/countdown(notify_admins = FALSE)
 	set waitfor = FALSE
 	while(istype(src, /turf/closed/mineral/gibtonite) && stage == GIBTONITE_ACTIVE && det_time > 0 && mineralAmt >= 1)
-		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), src, 5) //makes the animation pulse one time per tick
+		flick_overlay_view(image('icons/turf/smoothrocks.dmi', src, "rock_Gibtonite_active"), 5) //makes the animation pulse one time per tick
 		det_time--
 		sleep(0.5 SECONDS)
 	if(istype(src, /turf/closed/mineral/gibtonite))
@@ -725,7 +729,7 @@
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	mined.update_visuals()
 
 /turf/closed/mineral/gibtonite/volcanic
@@ -783,7 +787,7 @@
 	if(defer_change) // TODO: make the defer change var a var for any changeturf flag
 		flags = CHANGETURF_DEFER_CHANGE
 	var/turf/open/mined = ScrapeAway(null, flags)
-	addtimer(CALLBACK(src, .proc/AfterChange, flags, old_type), 1, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 	mined.update_visuals()
 	H.mind?.adjust_experience(/datum/skill/mining, 100) //yay!

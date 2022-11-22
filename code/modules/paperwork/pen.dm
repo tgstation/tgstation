@@ -32,9 +32,9 @@
 	embedding = list(embed_chance = 50)
 	sharpness = SHARP_POINTY
 
-/obj/item/pen/suicide_act(mob/user)
+/obj/item/pen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku..."))
-	return(BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -273,15 +273,15 @@
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
 		w_class_on = WEIGHT_CLASS_NORMAL)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
-/obj/item/pen/edagger/suicide_act(mob/user)
-	. = BRUTELOSS
+/obj/item/pen/edagger/suicide_act(mob/living/user)
 	if(extended)
 		user.visible_message(span_suicide("[user] forcefully rams the pen into their mouth!"))
 	else
 		user.visible_message(span_suicide("[user] is holding a pen up to their mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
 		attack_self(user)
+	return BRUTELOSS
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -356,7 +356,7 @@
 		w_class_on = WEIGHT_CLASS_SMALL, \
 		sharpness_on = TRUE)
 
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/toggle_screwdriver)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(toggle_screwdriver))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 

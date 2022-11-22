@@ -316,6 +316,9 @@ ALLOW_HOLIDAYS
 ## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
+## Uncomment to prevent machines syncing to the Science techweb by default.
+#NO_DEFAULT_TECHWEB_LINK
+
 ##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
 ##	This also controls the client network update rate, as well as the default client fps
 TICKLAG 0.5

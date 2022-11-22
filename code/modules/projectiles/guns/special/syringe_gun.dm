@@ -154,7 +154,7 @@
 	if(istype(A, /obj/item/dnainjector))
 		var/obj/item/dnainjector/D = A
 		if(D.used)
-			balloon_alert("[D.name] is used up!")
+			balloon_alert(user, "[D.name] is used up!")
 			return
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(D, src))

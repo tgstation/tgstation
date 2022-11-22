@@ -29,12 +29,12 @@
 #define MATTER_POWER_CONVERSION 10 //Crystal converts 1/this value of stored matter into energy.
 
 //These would be what you would get at point blank, decreases with distance
-#define DETONATION_HALLUCINATION 20 MINUTES
+#define DETONATION_HALLUCINATION (20 MINUTES)
 
 /// All humans within this range will be irradiated
 #define DETONATION_RADIATION_RANGE 20
 
-#define SUPERMATTER_WARNING_DELAY 60 SECONDS
+#define SUPERMATTER_WARNING_DELAY (60 SECONDS)
 
 #define SM_HALLUCINATION_RANGE(P) (min(7, round(P ** 0.25)))
 
@@ -46,10 +46,10 @@
 #define VORTEX_ANOMALY "vortex_anomaly"
 #define DIMENSIONAL_ANOMALY "dimensional_anomaly"
 
-#define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
+#define SUPERMATTER_COUNTDOWN_TIME (30 SECONDS)
 
 ///to prevent accent sounds from layering
-#define SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN 2 SECONDS
+#define SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN (2 SECONDS)
 
 #define DEFAULT_ZAP_ICON_STATE "sm_arc"
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"

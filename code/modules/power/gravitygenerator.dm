@@ -187,7 +187,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		part.main_part = src
 		generator_parts += part
 		part.update_appearance()
-		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /obj/machinery/gravity_generator/part/proc/on_update_icon)
+		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, TYPE_PROC_REF(/obj/machinery/gravity_generator/part, on_update_icon))
 
 /obj/machinery/gravity_generator/main/set_broken()
 	. = ..()
