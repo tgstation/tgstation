@@ -54,18 +54,18 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 
 /mob/living/simple_animal/hostile/carp/ranged/Initialize(mapload)
 	. = ..()
+	allowed_projectile_types = spell_list()
 	assign_spell()
 
-/// Stores the list of spells we are allowed to cast
-/mob/living/simple_animal/hostile/carp/ranged/proc/set_spell_list()
-	allowed_projectile_types = GLOB.magicarp_spell_types
+/// Returns the list of spells we are allowed to cast
+/mob/living/simple_animal/hostile/carp/ranged/proc/spell_list()
+	return GLOB.magicarp_spell_types
 
 /// Pick a random spell then update name and colour based on which one we picked
 /mob/living/simple_animal/hostile/carp/ranged/proc/assign_spell()
-	set_spell_list()
 	projectiletype = pick(allowed_projectile_types)
 	name = "[GLOB.magicarp_spell_types[projectiletype]] [name]"
-	set_greyscale(colors= list(GLOB.magicarp_spell_colours[projectiletype]))
+	set_greyscale(colors = list(GLOB.magicarp_spell_colours[projectiletype]))
 
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/assign_spell()
-	set_spell_list()
+	return
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot()
 	projectiletype = pick(allowed_projectile_types)
@@ -87,11 +87,11 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 /mob/living/simple_animal/hostile/carp/ranged/xenobiology // these are for the xenobio gold slime pool
 	gold_core_spawnable = HOSTILE_SPAWN
 
-/mob/living/simple_animal/hostile/carp/ranged/xenobiology/set_spell_list()
-	allowed_projectile_types = GLOB.xenobiology_magicarp_spell_types
+/mob/living/simple_animal/hostile/carp/ranged/xenobiology/spell_list()
+	return GLOB.xenobiology_magicarp_spell_types
 
 /mob/living/simple_animal/hostile/carp/ranged/chaos/xenobiology
 	gold_core_spawnable = HOSTILE_SPAWN
 
-/mob/living/simple_animal/hostile/carp/ranged/chaos/xenobiology/set_spell_list()
-	allowed_projectile_types = GLOB.xenobiology_magicarp_spell_types
+/mob/living/simple_animal/hostile/carp/ranged/chaos/xenobiology/spell_list()
+	return GLOB.xenobiology_magicarp_spell_types
