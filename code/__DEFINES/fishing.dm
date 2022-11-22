@@ -25,10 +25,16 @@
 #define ADDITIVE_FISHING_MOD "additive"
 #define MULTIPLICATIVE_FISHING_MOD "multiplicative"
 
-#define FISHING_HOOK_MAGNETIC (1 << 0)
-#define FISHING_HOOK_SHINY (1 << 1)
-#define FISHING_HOOK_WEIGHTED (1 << 2)
-#define FISHING_HOOK_RESCUE (1 << 3)
+// These defines are intended for use to interact with fishing hooks when going
+// through the fishing rod, and not the hook itself. They could probably be
+// handled differently, but for now that's how they work. It's grounds for
+// a future refactor, however.
+/// Fishing hook trait that signifies that it's shiny. Useful for fishes
+/// that care about shiner hooks more.
+#define FISHING_HOOK_SHINY (1 << 0)
+/// Fishing hook trait that's used to make the bait more weighted, for the
+/// fishing minigame itself.
+#define FISHING_HOOK_WEIGHTED (1 << 1)
 
 #define FISHING_LINE_CLOAKED (1 << 0)
 #define FISHING_LINE_REINFORCED (1 << 1)
