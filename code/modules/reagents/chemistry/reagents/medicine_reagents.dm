@@ -878,7 +878,7 @@
 
 	// during unit tests, we want it to happen immediately
 	if(instant)
-		exposed_mob.revive(NONE, excess_healing, FALSE)
+		exposed_mob.revive(NONE, healing, FALSE)
 	else
 		// jitter immediately, after four seconds, and after eight seconds
 		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 4 SECONDS)
@@ -887,7 +887,7 @@
 			exposed_mob,
 			TYPE_PROC_REF(/mob/living, revive),
 			/* full_heal_flags = */ NONE,
-			/* excess_healing = */ excess_healing,
+			/* excess_healing = */ healing,
 			/* force_grab_ghost = */ FALSE
 		), 7 SECONDS)
 
