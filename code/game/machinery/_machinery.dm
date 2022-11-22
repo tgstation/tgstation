@@ -955,7 +955,7 @@
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
-	var/init_value=0
+	var/init_value = 0
 	var/list/part_count = list()
 	for(var/obj/item/component_part in component_parts)
 		if(!part_count[component_part.name])
@@ -963,7 +963,7 @@
 				var/obj/item/stack/stack_part=component_part
 				init_value=stack_part.amount
 			else
-				init_value=1
+				init_value = 1
 			part_count[component_part.name]=init_value
 		else
 			part_count[component_part.name]++

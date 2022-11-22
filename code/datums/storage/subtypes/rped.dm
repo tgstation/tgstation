@@ -1,6 +1,10 @@
 /**
  *Storage component used for RPEDs. Rather than manually setting everything with a get_part_rating() value, we just check if it has the variable required for insertion.
  */
+
+//Maximum amount of an specified stack type[see allowed types below] the RPED can carry
+# define MAX_STACK_PICKUP 30
+
 /datum/storage/rped
 	allow_quick_empty = TRUE
 	allow_quick_gather = TRUE
@@ -45,8 +49,6 @@
 		var/insert_amount=the_stack.amount
 		//how much of this stack type is currently in the stack
 		var/present_amount=0
-		//what is the maximum allowed amount for this stack type in storage
-		var/max_amount=30
 		//how much space is available
 		var/available=0
 		//stacks type
@@ -74,12 +76,12 @@
 				break
 
 		//no more storage for this specific stack type
-		if(max_amount-present_amount==0)
+		if(MAX_STACK_PICKUP-present_amount==0)
 			to_chat(usr,span_alert("No more [to_insert.name] can be added!"))
 			return FALSE
 
 		//we want the user to insert the exact stack amount which is available so we dont have to bother subtracting & leaving left overs for the user
-		available=max_amount-present_amount
+		available = MAX_STACK_PICKUP-present_amount
 		if(available-insert_amount<0)
 			to_chat(usr,span_alert("You can only insert exact [available] more of [to_insert.name]!"))
 			return FALSE
@@ -89,3 +91,5 @@
 		return FALSE
 
 	return TRUE
+
+#undef MAX_STACK_PICKUP
