@@ -356,13 +356,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
+	slice_type = /obj/item/food/breadslice/root
 
 /obj/item/food/bread/root/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
-
-/obj/item/food/bread/root/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/root, 5, 3 SECONDS, table_required = TRUE)
 
 /obj/item/food/breadslice/root
 	name = "rootbread slice"
@@ -558,9 +556,7 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 20, /datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/korta_nectar = 15)
 	tastes = list("peppery heat" = 1, "sweetness" = 1)
 	foodtypes = NUTS | SUGAR
-
-/obj/item/food/cake/korta_brittle/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/korta_brittle, 5, 3 SECONDS, table_required = TRUE)
+	slice_type = /obj/item/food/cakeslice/korta_brittle
 
 /obj/item/food/cakeslice/korta_brittle
 	name = "korta brittle slice"
