@@ -18,9 +18,9 @@
 	if(prob(5))
 		name = "meat grinder"
 		desc = "Okay, if I... if I chop you up in a meat grinder, and the only thing that comes out, that's left of you, is your eyeball, \
-				you'r- you're PROBABLY DEAD! You're probably going to - not you, I'm just sayin', like, if you- if somebody were to, like, \
-				push you into a meat grinder, and, like, your- one of your finger bones is still intact, they're not gonna pick it up and go, \
-				Well see, yeah it wasn't deadly, it wasn't an instant kill move! You still got, like, this part of your finger left!"
+		you'r- you're PROBABLY DEAD! You're probably going to - not you, I'm just sayin', like, if you- if somebody were to, like, \
+		push you into a meat grinder, and, like, your- one of your finger bones is still intact, they're not gonna pick it up and go, \
+		Well see, yeah it wasn't deadly, it wasn't an instant kill move! You still got, like, this part of your finger left!"
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
