@@ -39,7 +39,6 @@
 	controller.blackboard[BB_BASIC_MOB_EXECUTION_TARGET] = controller.blackboard[target_key]
 	return ..()
 
-/// As supertype but don't hold onto your target
 /**
  * # Try Mob Ability and clear target
  * Attempts to use a mob's cooldown ability on a target and releases the target when the action completes
