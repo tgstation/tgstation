@@ -1,5 +1,7 @@
 /// Checks to ensure strange reagent works as expected
 /datum/unit_test/strange_reagent
+	priority = TEST_LONGER
+
 	var/datum/reagent/medicine/strange_reagent/strange_reagent
 	var/mob/living/target
 	var/target_max_health
@@ -12,6 +14,7 @@
 	var/list/types_to_check = typecacheof(list(
 		/mob/living/carbon/human,
 		/mob/living/simple_animal,
+		/mob/living/basic,
 	))
 	types_to_check -= /mob/living/simple_animal/pet/gondola/gondolapod // need a pod, which we don't have
 

@@ -811,6 +811,10 @@
 	ph = 0.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/healing_per_reagent_unit = 5
+	var/instant = FALSE
+
+/datum/reagent/medicine/strange_reagent/instant
+	instant = TRUE
 
 // FEED ME SEYMOUR
 /datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -848,16 +852,20 @@
 	var/excess_healing = healing_per_reagent_unit * (reac_volume - needed_to_revive)
 
 	// during unit tests, we want it to happen immediately
-	#ifdef UNIT_TESTS
-	exposed_mob.revive(NONE, excess_healing, FALSE)
-	#else
-
-	// jitter immediately, after four seconds, and after eight seconds
-	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 4 SECONDS)
-	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 8 SECONDS)
-	// KEEP THIS IN LINE WITH THE ARGUMENTS FOR REVIVE! (see code\modules\mob\living\living.dm:744)
-	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, revive), NONE, excess_healing, FALSE), 7 SECONDS)
-	#endif
+	if(instant)
+		exposed_mob.revive(NONE, excess_healing, FALSE)
+	else
+		// jitter immediately, after four seconds, and after eight seconds
+		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 4 SECONDS)
+		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 8 SECONDS)
+		full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE
+		addtimer(CALLBACK(
+			exposed_mob,
+			TYPE_PROC_REF(/mob/living, revive),
+			/* full_heal_flags = */ NONE,
+			/* excess_healing = */ excess_healing,
+			/* force_grab_ghost = */ FALSE
+		), 7 SECONDS)
 
 	return ..()
 
