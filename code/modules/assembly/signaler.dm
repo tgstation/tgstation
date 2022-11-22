@@ -9,7 +9,6 @@
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
-	assembly_flags = ASSEMBLY_WIRE_RECEIVE | ASSEMBLY_WIRE_RADIO_RECEIVE | ASSEMBLY_WIRE_PULSE
 
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
@@ -155,8 +154,6 @@
 	if(!signal)
 		return
 	if(signal.data["code"] != code)
-		return
-	if(!(assembly_flags & ASSEMBLY_WIRE_RADIO_RECEIVE))
 		return
 	if(suicider)
 		manual_suicide(suicider)

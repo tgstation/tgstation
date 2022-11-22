@@ -182,7 +182,7 @@
 	icon_state = "[skin]1"
 
 	if(device)
-		device.pulsed(pulser = user)
+		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 15)

@@ -19,7 +19,7 @@
 	 */
 	var/is_position_sensitive = FALSE
 	/// Flags related to this assembly. See [assemblies.dm]
-	var/assembly_flags = ASSEMBLY_WIRE_RECEIVE | ASSEMBLY_WIRE_PULSE
+	var/assembly_flags = NONE
 	var/secured = TRUE
 	var/list/attached_overlays = null
 	var/obj/item/assembly_holder/holder = null
@@ -73,13 +73,10 @@
 /**
  * Pulsed: This device was pulsed by another device
  *
- * * wire_flags: What flags to check assembly flags for. Should either be ASSEMBLY_WIRE_RECEIVE or ASSEMBLY_WIRE_RADIO_RECEIVE
  * * pulser: Who triggered the pulse
  */
-/obj/item/assembly/proc/pulsed(wire_flags = ASSEMBLY_WIRE_RECEIVE, mob/pulser)
-	// if we match flags, go ahead and activate
-	if(assembly_flags & wire_flags)
-		INVOKE_ASYNC(src, PROC_REF(activate), pulser)
+/obj/item/assembly/proc/pulsed(mob/pulser)
+	INVOKE_ASYNC(src, PROC_REF(activate), pulser)
 	SEND_SIGNAL(src, COMSIG_ASSEMBLY_PULSED)
 	return TRUE
 
@@ -88,15 +85,11 @@
  */
 /obj/item/assembly/proc/pulse()
 	// if we have connected wires and are a pulsing assembly, pulse it
-	if(connected && (assembly_flags & (ASSEMBLY_WIRE_PULSE|ASSEMBLY_WIRE_PULSE_SPECIAL)))
+	if(connected)
 		connected.pulse_assembly(src)
 	// otherwise if we're attached to a holder, process the activation of it with our flags
 	else if(holder)
-		holder.process_activation(
-			device = src,
-			normal = (assembly_flags & ASSEMBLY_WIRE_PULSE),
-			special = (assembly_flags & ASSEMBLY_WIRE_PULSE_SPECIAL),
-		)
+		holder.process_activation(src)
 	return TRUE
 
 /// What the device does when turned on

@@ -170,13 +170,11 @@
  * send a pulse to the assembly holder, which then calls this proc that actually activates the assemblies
  * Arguments:
  * * /obj/device - the device we sent the pulse from which called this proc
- * * normal - 	if this is a normal activation
- * * special - if this is a special activation
  */
-/obj/item/assembly_holder/proc/process_activation(obj/device, normal = TRUE, special = TRUE)
+/obj/item/assembly_holder/proc/process_activation(obj/device)
 	if(!device)
 		return FALSE
-	if(normal && LAZYLEN(assemblies) >= 2)
+	if(LAZYLEN(assemblies) >= 2)
 		for(var/obj/item/assembly/assembly as anything in assemblies)
 			if(assembly != device)
 				assembly.pulsed()
