@@ -869,6 +869,15 @@
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
 
+/mob/living/proc/do_strange_reagent_revival(healing_amount)
+	var/brute_healing = healing_amount - getBruteLoss()
+	healing_amount -= brute_healing
+	var/burn_healing = healing_amount - getFireLoss()
+	healing_amount -= burn_healing
+	adjustBruteLoss(-brute_healing, FALSE, TRUE)
+	adjustFireLoss(-burn_healing, FALSE, TRUE)
+	revive(NONE, healing_amount, FALSE)
+
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)
 /mob/living/proc/can_be_revived()

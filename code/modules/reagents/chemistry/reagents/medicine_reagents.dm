@@ -813,7 +813,7 @@
 	/// The amount of damage a single unit of this will heal
 	var/healing_per_reagent_unit = 5
 	/// The ratio of the excess reagent used to contribute to excess healing
-	var/excess_healing_ratio = 0.5
+	var/excess_healing_ratio = 0.8
 	/// Do we instantly revive
 	var/instant = FALSE
 
@@ -843,7 +843,7 @@
 		return 1
 
 	var/amount_needed_to_revive = calculate_amount_needed_to_revive(benefactor)
-	var/expected_amount_to_full_heal = CEILING(max_health, healing_per_reagent_unit) * (1 / excess_healing_ratio)
+	var/expected_amount_to_full_heal = CEILING(max_health, healing_per_reagent_unit) / excess_healing_ratio
 	return amount_needed_to_revive + expected_amount_to_full_heal
 
 /datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -874,22 +874,16 @@
 	var/healing = needed_to_revive * healing_per_reagent_unit
 	// but excessive healing is penalized, to reward doctors who use the perfect amount
 	reac_volume -= needed_to_revive
-	healing += (reac_volume * healing_per_reagent_unit) / excess_healing_ratio
+	healing += (reac_volume * healing_per_reagent_unit) * excess_healing_ratio
 
 	// during unit tests, we want it to happen immediately
 	if(instant)
-		exposed_mob.revive(NONE, healing, FALSE)
+		exposed_mob.do_strange_reagent_revival(healing)
 	else
 		// jitter immediately, after four seconds, and after eight seconds
 		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 4 SECONDS)
+		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_strange_reagent_revival), healing), 7 SECONDS)
 		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 8 SECONDS)
-		addtimer(CALLBACK(
-			exposed_mob,
-			TYPE_PROC_REF(/mob/living, revive),
-			/* full_heal_flags = */ NONE,
-			/* excess_healing = */ healing,
-			/* force_grab_ghost = */ FALSE
-		), 7 SECONDS)
 
 	return ..()
 

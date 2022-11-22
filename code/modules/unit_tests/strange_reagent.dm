@@ -88,7 +88,7 @@
 	target.death()
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive)
-	TEST_ASSERT_EQUAL(target_max_health, target.get_organic_health(), "Strange Reagent did not revive a dead target type [target.type].")
+	TEST_ASSERT_NOTEQUAL(target.stat, DEAD, "Strange Reagent did not revive a dead target type [target.type].")
 
 /datum/unit_test/strange_reagent/proc/test_death_with_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
@@ -108,7 +108,7 @@
 	target.death()
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive - 1)
-	TEST_ASSERT_NOTEQUAL(target.stat, DEAD, "Strange Reagent did not revive a dead target type [target.type].")
+	TEST_ASSERT_EQUAL(target.stat, DEAD, "Strange Reagent revived a dead target type [target.type] without enough reagent.")
 
 /datum/unit_test/strange_reagent/proc/test_death_with_full_heal(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
@@ -135,5 +135,5 @@
 		return
 
 	update_amounts(target)
-	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive + 1)
+	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Strange Reagent revived a target type [target.type] with more than double their max health in damage.")
