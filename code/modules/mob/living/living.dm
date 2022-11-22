@@ -869,13 +869,23 @@
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
 
+/**
+ * Called by strange_reagent, with the amount of healing the strange reagent is doing
+ * It uses the healing amount on brute/fire damage, and then uses the excess healing for revive
+ */
 /mob/living/proc/do_strange_reagent_revival(healing_amount)
-	var/brute_healing = max(healing_amount - getBruteLoss(), 0)
-	healing_amount -= brute_healing
-	var/burn_healing = max(healing_amount - getFireLoss(), 0)
-	healing_amount -= burn_healing
-	adjustBruteLoss(-brute_healing, FALSE, TRUE)
-	adjustFireLoss(-burn_healing, FALSE, TRUE)
+	var/brute_loss = getBruteLoss()
+	if(brute_loss)
+		var/brute_healing = min(healing_amount, brute_loss)
+		adjustBruteLoss(-brute_healing)
+		healing_amount = max(0, healing_amount - brute_healing)
+
+	var/fire_loss = getFireLoss()
+	if(fire_loss && healing_amount)
+		var/fire_healing = min(healing_amount, fire_loss)
+		adjustFireLoss(-fire_healing)
+		healing_amount = max(0, healing_amount - fire_healing)
+
 	revive(NONE, max(healing_amount, 0), FALSE)
 
 /// Checks if we are actually able to ressuscitate this mob.
