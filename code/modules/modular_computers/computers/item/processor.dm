@@ -1,5 +1,5 @@
 // Held by /obj/machinery/modular_computer to reduce amount of copy-pasted code.
-//TODO: REFACTOR THIS SPAGHETTI CODE, MAKE IT A COMPUTER_HARDWARE COMPONENT OR REMOVE IT
+//TODO: REFACTOR THIS SPAGHETTI CODE
 /obj/item/modular_computer/processor
 	name = "processing unit"
 	desc = "An advanced computer." //modular PCs examine us
@@ -8,7 +8,6 @@
 	icon_state_unpowered = null
 	icon_state_menu = null
 	hardware_flag = 0
-	max_bays = 4
 
 	///The modular computer MACHINE that hosts us.
 	var/obj/machinery/modular_computer/machinery_computer
@@ -27,7 +26,6 @@
 	machinery_computer.cpu = src
 	internal_cell = machinery_computer.internal_cell
 	hardware_flag = machinery_computer.hardware_flag
-	max_hardware_size = machinery_computer.max_hardware_size
 	steel_sheet_cost = machinery_computer.steel_sheet_cost
 	max_idle_programs = machinery_computer.max_idle_programs
 	update_integrity(machinery_computer.get_integrity())
