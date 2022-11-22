@@ -11,13 +11,12 @@ type Data = {
 type Props = {
   title: string;
   list: string[];
-  buttonTitle: string;
   buttonColor: string;
 };
 
 export const ChemFilterPane = (props: Props, context) => {
   const { act } = useBackend(context);
-  const { title, list, buttonTitle, buttonColor } = props;
+  const { title, list, buttonColor } = props;
   const titleKey = title.toLowerCase();
 
   return (
@@ -26,8 +25,8 @@ export const ChemFilterPane = (props: Props, context) => {
       minHeight="240px"
       buttons={
         <Button
-          content={buttonTitle}
-          width="150px"
+          content="Add Reagent"
+          icon="plus"
           color={buttonColor}
           onClick={() =>
             act('add', {
@@ -64,20 +63,10 @@ export const ChemFilter = (props, context) => {
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow>
-            <ChemFilterPane
-              title="Left"
-              list={left}
-              buttonTitle="Add Left Reagent"
-              buttonColor="yellow"
-            />
+            <ChemFilterPane title="Left" list={left} buttonColor="yellow" />
           </Stack.Item>
           <Stack.Item grow>
-            <ChemFilterPane
-              title="Right"
-              list={right}
-              buttonTitle="Add Right Reagent"
-              buttonColor="red"
-            />
+            <ChemFilterPane title="Right" list={right} buttonColor="red" />
           </Stack.Item>
         </Stack>
       </Window.Content>
