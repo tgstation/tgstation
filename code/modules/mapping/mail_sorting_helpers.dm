@@ -4,15 +4,15 @@
 	var/sort_type = SORT_TYPE_WASTE
 
 /obj/effect/mapping_helpers/mail_sorting/Initialize(mapload)
-	.=..()
+	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/mapping_helpers/mail_sorting/LateInitialize()
 	var/obj/structure/disposalpipe/sorting/mail/mail_sorter = locate(/obj/structure/disposalpipe/sorting/mail) in loc
-	if(!mail_sorter)
-		log_mapping("[src] failed to find a mail sorting disposal pipe at [AREACOORD(src)]")
-	else
+	if(mail_sorter)
 		mail_sorter.sortTypes |= sort_type
+	else
+		log_mapping("[src] failed to find a mail sorting disposal pipe at [AREACOORD(src)]")
 	qdel(src)
 
 /obj/effect/mapping_helpers/mail_sorting/supply
@@ -23,7 +23,7 @@
 
 /obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay
 	sort_type = SORT_TYPE_CARGO_BAY
-	
+
 /obj/effect/mapping_helpers/mail_sorting/supply/qm_office
 	sort_type = SORT_TYPE_QM_OFFICE
 
