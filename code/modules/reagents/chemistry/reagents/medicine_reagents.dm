@@ -810,7 +810,11 @@
 	harmful = TRUE
 	ph = 0.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// The amount of damage a single unit of this will heal
 	var/healing_per_reagent_unit = 5
+	/// The ratio of the excess reagent used to contribute to excess healing
+	var/excess_healing_ratio = 0.5
+	/// Do we instantly revive
 	var/instant = FALSE
 
 /datum/reagent/medicine/strange_reagent/instant
@@ -822,6 +826,25 @@
 	. = ..()
 	if(chems.has_reagent(type, 1))
 		mytray.spawnplant()
+
+/// Calculates the amount of reagent to at a bare minimum make the target not dead
+/datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_revive(mob/living/benefactor)
+	var/their_health = benefactor.get_organic_health()
+	if(their_health > 0)
+		return 1
+
+	return CEILING(-amount_needed, healing_per_reagent_unit)
+
+/// Calculates the amount of reagent that will be needed to both revive and full heal the target. Looks at healing_per_reagent_unit and excess_healing_ratio
+/datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_full_heal(mob/living/benefactor)
+	var/their_health = benefactor.get_organic_health()
+	var/max_health = benefactor.getMaxHealth()
+	if(their_health >= max_health)
+		return 1
+
+	var/amount_needed_to_revive = calculate_amount_needed_to_revive(benefactor)
+	var/expected_amount_to_full_heal = CEILING(max_health, healing_per_reagent_unit) * (1 / excess_healing_ratio)
+	return amount_needed_to_revive + expected_amount_to_full_heal
 
 /datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	if(exposed_mob.stat != DEAD || !(exposed_mob.mob_biotypes & MOB_ORGANIC))
@@ -837,9 +860,7 @@
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body lets off a puff of smoke..."))
 		return
 
-	var/mob_current_health = exposed_mob.get_organic_health()
-	var/needed_to_revive = (mob_current_health > 0) ? 1 : abs(FLOOR(mob_current_health, healing_per_reagent_unit)) + 1
-
+	var/needed_to_revive = calculate_amount_needed_to_revive(exposed_mob)
 	if(reac_volume < needed_to_revive)
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses a bit, and then falls still once more."))
 		exposed_mob.do_jitter_animation(10)
@@ -849,8 +870,11 @@
 	exposed_mob.notify_ghost_cloning("Your body is being revived with Strange Reagent!")
 	exposed_mob.do_jitter_animation(10)
 
-	// any excess reagent will simply heal the body and organs
-	var/excess_healing = healing_per_reagent_unit * (reac_volume - needed_to_revive)
+	// we factor in healing needed when determing if we do anything
+	var/healing = needed_to_revive * healing_per_reagent_unit
+	// but excessive healing is penalized, to reward doctors who use the perfect amount
+	reac_volume -= needed_to_revive
+	healing += (reac_volume * healing_per_reagent_unit) / excess_healing_ratio
 
 	// during unit tests, we want it to happen immediately
 	if(instant)

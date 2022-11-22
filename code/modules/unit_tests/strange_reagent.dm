@@ -52,7 +52,7 @@
 		return
 
 	if(pre_allocated?.type == type)
-		pre_allocated.revive(HEAL_ADMIN)
+		pre_allocated.revive(ALL) // for some reason HEAL_ADMIN doesn't work?
 		return pre_allocated
 
 	pre_allocated = allocate(type)
@@ -61,11 +61,8 @@
 	return pre_allocated
 
 /datum/unit_test/strange_reagent/proc/update_amounts(mob/living/target)
-	var/damage = target_max_health - target.get_organic_health()
-	amount_needed_to_full_heal = CEILING(damage, strange_reagent.healing_per_reagent_unit) + 1
-	amount_needed_to_revive = CEILING(-target.get_organic_health(), strange_reagent.healing_per_reagent_unit) + 1
-	if(amount_needed_to_revive <= 0)
-		amount_needed_to_revive = 1
+	amount_needed_to_full_heal = strange_reagent.calculate_amount_needed_to_full_heal()
+	amount_needed_to_revive = strange_reagent.calculate_amount_needed_to_revive()
 
 /datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
