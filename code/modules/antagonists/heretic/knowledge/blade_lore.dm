@@ -92,7 +92,7 @@
 	playsound(get_turf(target), 'sound/weapons/guillotine.ogg', 100, TRUE)
 
 /// The cooldown duration between trigers of blade dance
-#define BLADE_DANCE_COOLDOWN 20 SECONDS
+#define BLADE_DANCE_COOLDOWN (20 SECONDS)
 
 /datum/heretic_knowledge/blade_dance
 	name = "Dance of the Brand"

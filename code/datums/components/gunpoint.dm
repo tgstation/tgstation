@@ -1,9 +1,9 @@
 /// How many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
 /// How long it takes from the gunpoint is initiated to reach stage 2
-#define GUNPOINT_DELAY_STAGE_2 2.5 SECONDS
+#define GUNPOINT_DELAY_STAGE_2 (2.5 SECONDS)
 /// How long it takes from stage 2 starting to move up to stage 3
-#define GUNPOINT_DELAY_STAGE_3 7.5 SECONDS
+#define GUNPOINT_DELAY_STAGE_3 (7.5 SECONDS)
 /// If the projectile doesn't have a wound_bonus of CANT_WOUND, we add (this * the stage mult) to their wound_bonus and bare_wound_bonus upon triggering
 #define GUNPOINT_BASE_WOUND_BONUS 5
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1

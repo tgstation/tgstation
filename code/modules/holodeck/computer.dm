@@ -22,8 +22,8 @@ created from them: make sure you handle that list correctly! Either copy them by
 and clear when youre done! if you dont i will use :newspaper2: on you
 */
 
-#define HOLODECK_CD 2 SECONDS
-#define HOLODECK_DMG_CD 5 SECONDS
+#define HOLODECK_CD (2 SECONDS)
+#define HOLODECK_DMG_CD (5 SECONDS)
 
 /// typecache for turfs that should be considered ok during floorchecks.
 /// A linked turf being anything not in this typecache will cause the holodeck to perform an emergency shutdown.
