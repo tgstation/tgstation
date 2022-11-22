@@ -31,7 +31,6 @@
 		/obj/item/stack/sheet/bluespace_crystal,
 	)
 
-
 /datum/storage/rped/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = FALSE)
 	. = ..()
 
@@ -74,7 +73,6 @@
 				present_amount=things.amount
 				break
 
-
 		//no more storage for this specific stack type
 		if(max_amount-present_amount==0)
 			to_chat(usr,span_alert("No more [to_insert.name] can be added!"))
@@ -85,7 +83,6 @@
 		if(available-insert_amount<0)
 			to_chat(usr,span_alert("You can only insert exact [available] more of [to_insert.name]!"))
 			return FALSE
-
 
 	//check normal insertion of other stock parts
 	else if(!to_insert.get_part_rating())
