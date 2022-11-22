@@ -700,8 +700,8 @@
 	slice_type = /obj/item/food/breadslice/corn
 
 /obj/item/food/bread/corn/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6)
-	AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6)
+	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, screentip_verb = "Slice")
+	AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, screentip_verb = "Slice")
 
 /obj/item/food/breadslice/corn
 	name = "cornbread slice"
@@ -733,7 +733,7 @@
 	slice_type = /obj/item/food/cakeslice/mothmallow
 
 /obj/item/food/cake/mothmallow/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6)
+	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, screentip_verb = "Slice")
 
 /obj/item/food/cakeslice/mothmallow
 	name = "mothmallow"

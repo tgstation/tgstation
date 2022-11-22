@@ -14,7 +14,7 @@
 
 /obj/item/food/cake/MakeProcessable()
 	if (slice_type)
-	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
