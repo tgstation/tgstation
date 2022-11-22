@@ -1,7 +1,12 @@
+///IV drip operation mode when it sucks blood from the object
 #define IV_TAKING 0
+///IV drip operation mode when it injects reagents into the object
 #define IV_INJECTING 1
+///Minimum possible IV drip transfer rate in units per second
 #define MIN_IV_TRANSFER_RATE 0
+///Maximum possible IV drip transfer rate in units per second
 #define MAX_IV_TRANSFER_RATE 5
+///What the transfer rate value is rounded to
 #define IV_TRANSFER_RATE_STEP 0.01
 
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
@@ -11,7 +16,9 @@
 	icon = 'icons/obj/medical/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
+	///icon_state for the reagent fill overlay
 	var/fill_icon_state = "reagent"
+	///The thresholds used to determine the reagent fill icon
 	var/list/fill_icon_thresholds = list(0,10,25,50,75,80,90)
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
