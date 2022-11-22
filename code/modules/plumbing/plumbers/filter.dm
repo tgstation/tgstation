@@ -37,7 +37,7 @@
 	. = TRUE
 	switch(action)
 		if("add")
-			var/which=params["which"]
+			var/which = params["which"]
 			var/selected_reagent = tgui_input_list(usr, "Select [which] reagent", "Reagent", GLOB.chemical_name_list)
 			if(!selected_reagent)
 				return TRUE
