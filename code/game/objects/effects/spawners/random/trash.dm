@@ -142,7 +142,7 @@
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
-		/obj/structure/mopbucket = 2,
+		/obj/structure/mop_bucket = 2,
 		/mob/living/simple_animal/axolotl = 1,
 	)
 
@@ -187,7 +187,7 @@
 	spawn_loot_count = 2
 	spawn_loot_double = FALSE
 	loot = list(
-		/obj/structure/mopbucket = 10,
+		/obj/structure/mop_bucket = 10,
 		/obj/item/mop = 5,
 		/obj/item/clothing/suit/caution = 3,
 		/obj/item/reagent_containers/cup/bucket = 1,

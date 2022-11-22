@@ -42,14 +42,14 @@
 		return
 
 	// generate a normal playing card deck
-	cards += new /obj/item/toy/singlecard(src, "Joker Clown", src)
-	cards += new /obj/item/toy/singlecard(src, "Joker Mime", src)
+	initial_cards += "Joker Clown"
+	initial_cards += "Joker Mime"
 	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
-		cards += new /obj/item/toy/singlecard(src, "Ace of [suit]", src)
+		initial_cards += "Ace of [suit]"
 		for(var/i in 2 to 10)
-			cards += new /obj/item/toy/singlecard(src, "[i] of [suit]", src)
+			initial_cards += "[i] of [suit]"
 		for(var/person in list("Jack", "Queen", "King"))
-			cards += new /obj/item/toy/singlecard(src, "[person] of [suit]", src)
+			initial_cards += "[person] of [suit]"
 
 /// triggered on wield of two handed item
 /obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)
@@ -71,13 +71,17 @@
 /obj/item/toy/cards/deck/examine(mob/user)
 	. = ..()
 
-	if(cards.len > 0)
-		var/obj/item/toy/singlecard/card = cards[1]
-		if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
-			. += span_notice("You scan the deck with your x-ray vision and the top card reads: [card.cardname].")
+	if(HAS_TRAIT(user, TRAIT_XRAY_VISION) && count_cards() > 0)
+		. += span_notice("You scan the deck with your x-ray vision and the top card reads: [fetch_card_atoms()[1].cardname].")
+
+	// This can only happen if card_atoms have been generated
+	if(LAZYLEN(card_atoms) > 0)
+		var/obj/item/toy/singlecard/card = fetch_card_atoms()[1]
+
 		var/marked_color = card.getMarkedColor(user)
 		if(marked_color)
 			. += span_notice("The top card of the deck has a [marked_color] mark on the corner!")
+
 	. += span_notice("Click and drag the deck to yourself to pickup.") // This should be a context screentip
 
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -113,7 +117,7 @@
 	if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
 		return
 	COOLDOWN_START(src, shuffle_cooldown, shuffle_time)
-	cards = shuffle(cards)
+	shuffle_inplace(fetch_card_atoms())
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 	user.balloon_alert_to_viewers("shuffles the deck")
 	addtimer(CALLBACK(src, PROC_REF(CardgameEvent), user), 60 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
@@ -172,7 +176,7 @@
 	return ..()
 
 /obj/item/toy/cards/deck/update_icon_state()
-	switch(cards.len)
+	switch(count_cards())
 		if(27 to INFINITY)
 			icon_state = "deck_[deckstyle]_full"
 		if(11 to 27)
@@ -190,7 +194,7 @@
 		card.Flip(CARD_FACEDOWN)
 	if(istype(card_item, /obj/item/toy/cards/cardhand))
 		var/obj/item/toy/cards/cardhand/cardhand = card_item
-		for(var/obj/item/toy/singlecard/card in cardhand.cards)
+		for(var/obj/item/toy/singlecard/card in cardhand.fetch_card_atoms())
 			card.Flip(CARD_FACEDOWN)
 	. = ..()
 

@@ -45,7 +45,7 @@
 	sound.last_radiation_pulse = pulse_information
 	sound.start()
 
-	addtimer(CALLBACK(sound, /datum/looping_sound/proc/stop), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(sound, TYPE_PROC_REF(/datum/looping_sound,stop)), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/component/geiger_sound/proc/on_moved(atom/source)
 	SIGNAL_HANDLER

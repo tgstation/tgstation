@@ -22,19 +22,7 @@
 			psy_coeff = 1
 		external_power_immediate += projectile.damage * bullet_energy + kiss_power
 		if(!has_been_powered)
-			var/fired_from_str = projectile.fired_from ? " with [projectile.fired_from]" : ""
-			investigate_log(
-				projectile.firer \
-					? "has been powered for the first time by [key_name(projectile.firer)][fired_from_str]." \
-					: "has been powered for the first time.",
-				INVESTIGATE_ENGINE
-			)
-			message_admins(
-				projectile.firer \
-					? "[src] [ADMIN_JMP(src)] has been powered for the first time by [ADMIN_FULLMONTY(projectile.firer)][fired_from_str]." \
-					: "[src] [ADMIN_JMP(src)] has been powered for the first time."
-			)
-			has_been_powered = TRUE
+			log_activation(cause = projectile.fired_from, source = projectile.firer)
 	else
 		external_damage_immediate += projectile.damage * bullet_energy
 		// Stop taking damage at emergency point, yell to players at danger point.
@@ -43,6 +31,22 @@
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 	return BULLET_ACT_HIT
+
+/obj/machinery/power/supermatter_crystal/proc/log_activation(source, cause)
+	var/fired_from_str = cause ? " with [cause]" : ""
+	investigate_log(
+		source \
+			? "has been powered for the first time by [key_name(source)][fired_from_str]." \
+			: "has been powered for the first time.",
+		INVESTIGATE_ENGINE
+	)
+	message_admins(
+		source \
+			? "[src] [ADMIN_JMP(src)] has been powered for the first time by [cause ? ADMIN_FULLMONTY(source) + (fired_from_str) : (cause ? source : "environmental factors")]." \
+			: "[src] [ADMIN_JMP(src)] has been powered for the first time."
+	)
+
+	has_been_powered = TRUE
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100
@@ -81,6 +85,8 @@
 			to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
 			new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
 			external_power_trickle += 800
+			if(!has_been_powered)
+				log_activation(source = scalpel, cause = user)
 			scalpel.usesLeft--
 			if (!scalpel.usesLeft)
 				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
@@ -108,6 +114,8 @@
 			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
 			external_damage_immediate += 100
 			external_power_trickle += 500
+			if(!has_been_powered)
+				log_activation(source = destabilizing_crystal, cause = user)
 			qdel(destabilizing_crystal)
 		return
 

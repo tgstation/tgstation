@@ -9,7 +9,7 @@
 
 ///Cooldown on planning if planning failed last time
 
-#define AI_FAILED_PLANNING_COOLDOWN 1.5 SECONDS
+#define AI_FAILED_PLANNING_COOLDOWN (1.5 SECONDS)
 
 ///Flags for ai_behavior new()
 #define AI_CONTROLLER_INCOMPATIBLE (1<<0)
@@ -142,7 +142,7 @@
 /// Basically, what is our vision/hearing range.
 #define BB_HOSTILE_VISION_RANGE 10
 /// After either being given a verbal order or a pointing order, ignore further of each for this duration
-#define AI_HOSTILE_COMMAND_COOLDOWN 2 SECONDS
+#define AI_HOSTILE_COMMAND_COOLDOWN (2 SECONDS)
 
 // hostile command modes (what pointing at something/someone does depending on the last order the carp heard)
 /// Don't do anything (will still react to stuff around them though)
@@ -169,13 +169,13 @@
 /// What are the odds someone petting us will become our friend?
 #define AI_DOG_PET_FRIEND_PROB 15
 /// After this long without having fetched something, we clear our ignore list
-#define AI_FETCH_IGNORE_DURATION 30 SECONDS
+#define AI_FETCH_IGNORE_DURATION (30 SECONDS)
 /// After being ordered to heel, we spend this long chilling out
-#define AI_DOG_HEEL_DURATION 20 SECONDS
+#define AI_DOG_HEEL_DURATION (20 SECONDS)
 /// After either being given a verbal order or a pointing order, ignore further of each for this duration
-#define AI_DOG_COMMAND_COOLDOWN 2 SECONDS
+#define AI_DOG_COMMAND_COOLDOWN (2 SECONDS)
 /// If the dog is set to harass someone but doesn't bite them for this long, give up
-#define AI_DOG_HARASS_FRUSTRATE_TIME 50 SECONDS
+#define AI_DOG_HARASS_FRUSTRATE_TIME (50 SECONDS)
 
 // dog command modes (what pointing at something/someone does depending on the last order the dog heard)
 /// Don't do anything (will still react to stuff around them though)
