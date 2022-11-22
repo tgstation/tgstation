@@ -330,8 +330,8 @@
 /obj/item/organ/external/antennae/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 
-	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, .proc/try_burn_antennae)
-	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, .proc/heal_antennae)
+	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_antennae))
+	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_antennae))
 
 /obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special, moving)
 	. = ..()
@@ -360,10 +360,13 @@
 	set_sprite("Burnt Off")
 
 ///heal our antennae back up!!
-/obj/item/organ/external/antennae/proc/heal_antennae()
+/obj/item/organ/external/antennae/proc/heal_antennae(datum/source, heal_flags)
 	SIGNAL_HANDLER
 
-	if(burnt)
+	if(!burnt)
+		return
+
+	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
 		burnt = FALSE
 		set_sprite(original_sprite)
 
@@ -397,4 +400,3 @@
 /obj/item/organ/external/pod_hair/override_color(rgb_value)
 	var/list/rgb_list = rgb2num(rgb_value)
 	return rgb(255 - rgb_list[1], 255 - rgb_list[2], 255 - rgb_list[3])
-

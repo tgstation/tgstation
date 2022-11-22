@@ -126,11 +126,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
 	//overloaded
-	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, .proc/_Topic, hsrc, href, href_list)))
+	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_Topic), hsrc, href, href_list)))
 		return
 	..() //redirect to hsrc.Topic()
 
-///dumb workaround because byond doesnt seem to recognize the .proc/Topic() typepath for /datum/proc/Topic() from the client Topic,
+///dumb workaround because byond doesnt seem to recognize the Topic() typepath for /datum/proc/Topic() from the client Topic,
 ///so we cant queue it without this
 /client/proc/_Topic(datum/hsrc, href, list/href_list)
 	return hsrc.Topic(href, href_list)
@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
-	stat_panel.subscribe(src, .proc/on_stat_panel_message)
+	stat_panel.subscribe(src, PROC_REF(on_stat_panel_message))
 
 	// Instantiate tgui panel
 	tgui_panel = new(src, "browseroutput")
@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		inline_js = file("html/statbrowser.js"),
 		inline_css = file("html/statbrowser.css"),
 	)
-	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	// If we aren't already generating a ban cache, fire off a build request
 	// This way hopefully any users of request_ban_cache will never need to yield
 	if(!ban_cache_start && SSban_cache?.query_started)
-		INVOKE_ASYNC(GLOBAL_PROC, /proc/build_ban_cache, src)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(build_ban_cache), src)
 
 	send_resources()
 
@@ -1004,7 +1004,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		if (CONFIG_GET(flag/asset_simple_preload))
-			addtimer(CALLBACK(SSassets.transport, /datum/asset_transport.proc/send_assets_slow, src, SSassets.transport.preload), 5 SECONDS)
+			addtimer(CALLBACK(SSassets.transport, TYPE_PROC_REF(/datum/asset_transport, send_assets_slow), src, SSassets.transport.preload), 5 SECONDS)
 
 		#if (PRELOAD_RSC == 0)
 		for (var/name in GLOB.vox_sounds)
@@ -1180,6 +1180,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(holder)
 		holder.filteriffic = new /datum/filter_editor(in_atom)
 		holder.filteriffic.ui_interact(mob)
+
+///opens the particle editor UI for the in_atom object for this client
+/client/proc/open_particle_editor(atom/movable/in_atom)
+	if(holder)
+		holder.particle_test = new /datum/particle_editor(in_atom)
+		holder.particle_test.ui_interact(mob)
 
 /client/proc/set_right_click_menu_mode(shift_only)
 	if(shift_only)

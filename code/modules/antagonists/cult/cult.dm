@@ -184,9 +184,9 @@
 
 /datum/antagonist/cult/get_admin_commands()
 	. = ..()
-	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
-	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
-	.["Remove Dagger and Metal"] = CALLBACK(src, .proc/admin_take_all)
+	.["Dagger"] = CALLBACK(src, PROC_REF(admin_give_dagger))
+	.["Dagger and Metal"] = CALLBACK(src, PROC_REF(admin_give_metal))
+	.["Remove Dagger and Metal"] = CALLBACK(src, PROC_REF(admin_take_all))
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
 	if(!equip_cultist(metal=FALSE))
@@ -271,6 +271,8 @@
 
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE
+	///How large were we at max size.
+	var/size_at_maximum = 0
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -304,6 +306,13 @@
 				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
+
+/datum/team/cult/add_member(datum/mind/new_member)
+	. = ..()
+	// A little hacky, but this checks that cult ghosts don't contribute to the size at maximum value.
+	if(is_unassigned_job(new_member.assigned_role))
+		return
+	size_at_maximum++
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role
@@ -358,9 +367,9 @@
 		update_explanation_text()
 		// Register a bunch of signals to both the target mind and its body
 		// to stop cult from softlocking everytime the target is deleted before being actually sacrificed.
-		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_mind_transfer)
-		RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-		RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, PROC_REF(on_mind_transfer))
+		RegisterSignal(target.current, COMSIG_PARENT_QDELETING, PROC_REF(on_target_body_del))
+		RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(on_possible_mindswap))
 	else
 		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
 		sacced = TRUE // Prevents another hypothetical softlock. This basically means every PC is a cultist.
@@ -373,30 +382,30 @@
 
 /datum/objective/sacrifice/proc/on_target_body_del()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/find_target)
+	INVOKE_ASYNC(src, PROC_REF(find_target))
 
 /datum/objective/sacrifice/proc/on_mind_transfer(datum/source, mob/previous_body)
 	SIGNAL_HANDLER
 	//If, for some reason, the mind was transferred to a ghost (better safe than sorry), find a new target.
 	if(!isliving(target.current))
-		INVOKE_ASYNC(src, .proc/find_target)
+		INVOKE_ASYNC(src, PROC_REF(find_target))
 		return
 	UnregisterSignal(previous_body, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
-	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, PROC_REF(on_target_body_del))
+	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(on_possible_mindswap))
 
 /datum/objective/sacrifice/proc/on_possible_mindswap(mob/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	//we check if the mind is bodyless only after mindswap shenanigeans to avoid issues.
-	addtimer(CALLBACK(src, .proc/do_we_have_a_body), 0 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(do_we_have_a_body)), 0 SECONDS)
 
 /datum/objective/sacrifice/proc/do_we_have_a_body()
 	if(!target.current) //The player was ghosted and the mind isn't probably going to be transferred to another mob at this point.
 		find_target()
 		return
-	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, PROC_REF(on_target_body_del))
+	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(on_possible_mindswap))
 
 /datum/objective/sacrifice/check_completion()
 	return sacced || completed
@@ -501,7 +510,7 @@
 		return FALSE
 
 	blood_target = new_target
-	RegisterSignal(blood_target, COMSIG_PARENT_QDELETING, .proc/unset_blood_target_and_timer)
+	RegisterSignal(blood_target, COMSIG_PARENT_QDELETING, PROC_REF(unset_blood_target_and_timer))
 	var/area/target_area = get_area(new_target)
 
 	blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', new_target, "glow", ABOVE_MOB_LAYER)
@@ -519,7 +528,7 @@
 		SEND_SOUND(cultist.current, sound(pick('sound/hallucinations/over_here2.ogg','sound/hallucinations/over_here3.ogg'), 0, 1, 75))
 		cultist.current.client.images += blood_target_image
 
-	blood_target_reset_timer = addtimer(CALLBACK(src, .proc/unset_blood_target), duration, TIMER_STOPPABLE)
+	blood_target_reset_timer = addtimer(CALLBACK(src, PROC_REF(unset_blood_target)), duration, TIMER_STOPPABLE)
 	return TRUE
 
 /// Unsets out blood target, clearing the images from all the cultists.

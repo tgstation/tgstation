@@ -9,6 +9,11 @@
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bone
 
+/obj/structure/statue/bone/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT)
+
 /obj/structure/statue/bone/rib
 	name = "colossal rib"
 	desc = "It's staggering to think that something this big could have lived, let alone died."

@@ -76,10 +76,8 @@
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
-	else if(istype(pda))
-		var/obj/item/computer_hardware/card_slot/card_slot = pda.all_components[MC_CARD]
-		if(card_slot?.stored_card)
-			. = card_slot.stored_card.registered_name
+	else if(istype(pda) && pda.computer_id_slot)
+		. = pda.computer_id_slot.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
 	return
@@ -233,7 +231,7 @@
 
 /// Fully randomizes everything according to the given flags.
 /mob/living/carbon/human/proc/randomize_human_appearance(randomize_flags = ALL)
-	var/datum/preferences/preferences = new
+	var/datum/preferences/preferences = new(new /datum/client_interface)
 
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (!preference.included_in_randomization_flags(randomize_flags))

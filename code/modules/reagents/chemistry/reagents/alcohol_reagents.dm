@@ -83,9 +83,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/power_multiplier = boozepwr / 65 // Weak alcohol has less sterilizing power
 
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
-		surgery.speed_modifier = max(0.1*power_multiplier, surgery.speed_modifier)
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
+		surgery.speed_modifier = max(0.1 * power_multiplier, surgery.speed_modifier)
 
 /datum/reagent/consumable/ethanol/beer
 	name = "Beer"
@@ -671,7 +670,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			COMSIG_REAGENTS_CLEAR_REAGENTS,
 			COMSIG_REAGENTS_REACTED,
 		)
-		RegisterSignal(drink.reagents, reagent_change_signals, .proc/on_reagent_change)
+		RegisterSignal(drink.reagents, reagent_change_signals, PROC_REF(on_reagent_change))
 
 	return ..()
 
@@ -1076,7 +1075,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/demonsblood/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()
-	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED, .proc/pre_bloodcrawl_consumed)
+	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_PRE_CONSUMED, PROC_REF(pre_bloodcrawl_consumed))
 
 /datum/reagent/consumable/ethanol/demonsblood/on_mob_end_metabolize(mob/living/metabolizer)
 	. = ..()
@@ -1115,7 +1114,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/devilskiss/on_mob_metabolize(mob/living/metabolizer)
 	. = ..()
-	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, .proc/on_bloodcrawl_consumed)
+	RegisterSignal(metabolizer, COMSIG_LIVING_BLOOD_CRAWL_CONSUMED, PROC_REF(on_bloodcrawl_consumed))
 
 /datum/reagent/consumable/ethanol/devilskiss/on_mob_end_metabolize(mob/living/metabolizer)
 	. = ..()
@@ -2266,7 +2265,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	var/minimum_name_percent = 0.35
 	name = ""
-	var/list/names_in_order = sortTim(names, /proc/cmp_numeric_dsc, TRUE)
+	var/list/names_in_order = sortTim(names, GLOBAL_PROC_REF(cmp_numeric_dsc), TRUE)
 	var/named = FALSE
 	for(var/fruit_name in names)
 		if(names[fruit_name] >= minimum_name_percent)

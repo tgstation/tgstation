@@ -44,7 +44,7 @@
 	AddElement(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/table_carbon,
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(table_carbon),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -356,7 +356,7 @@
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
 	attached_items += I
-	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	RegisterSignal(I, COMSIG_MOVABLE_MOVED, PROC_REF(RemoveItemFromTable)) //Listen for the pickup event, unregister on pick-up so we aren't moved
 
 /obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
 	SIGNAL_HANDLER
@@ -396,7 +396,7 @@
 /obj/structure/table/glass/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -408,7 +408,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
+		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 5)
 	else
 		check_break(AM)
 
@@ -702,8 +702,8 @@
 		if(computer)
 			computer.table = src
 			break
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/mark_patient)
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, .proc/unmark_patient)
+	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
+	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
 
 /obj/structure/table/optable/Destroy()
 	if(computer && computer.table == src)
@@ -723,7 +723,7 @@
 	SIGNAL_HANDLER
 	if(!istype(potential_patient))
 		return
-	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, .proc/recheck_patient)
+	RegisterSignal(potential_patient, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(recheck_patient))
 	recheck_patient(potential_patient) // In case the mob is already lying down before they entered.
 
 /// Unmark the potential patient.

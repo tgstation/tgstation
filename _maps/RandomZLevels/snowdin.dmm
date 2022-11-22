@@ -4039,7 +4039,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/post/custodials)
