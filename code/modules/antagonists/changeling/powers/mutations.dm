@@ -36,10 +36,13 @@
 		user.update_held_items()
 		return 1
 
-/datum/action/changeling/weapon/sting_action(mob/living/user)
+/datum/action/changeling/weapon/sting_action(mob/living/carbon/user)
 	var/obj/item/held = user.get_active_held_item()
 	if(held && !user.dropItemToGround(held))
 		to_chat(user, span_warning("[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!"))
+		return
+	if(!istype(user))
+		to_chat(user, span_warning("You can't do that in this state!"))
 		return
 	..()
 	var/limb_regen = 0
@@ -455,7 +458,7 @@
 \***************************************/
 /datum/action/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure. Costs 20 chemicals."
+	desc = "We grow an organic suit to protect ourselves from space exposure, including regulation of temperature and oxygen needs. Costs 20 chemicals."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
 	button_icon_state = "organic_suit"
 	chemical_cost = 20

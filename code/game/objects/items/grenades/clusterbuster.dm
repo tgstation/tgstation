@@ -2,8 +2,8 @@
 //Clusterbang
 ////////////////////
 
-#define RANDOM_DETONATE_MIN_TIME 1.5 SECONDS
-#define RANDOM_DETONATE_MAX_TIME 6 SECONDS
+#define RANDOM_DETONATE_MIN_TIME (1.5 SECONDS)
+#define RANDOM_DETONATE_MAX_TIME (6 SECONDS)
 
 /obj/item/grenade/clusterbuster
 	desc = "Use of this weapon may constitute a war crime in your area, consult your local captain."

@@ -46,6 +46,10 @@
 #define RADIO_KEY_CENTCOM "y"
 #define RADIO_TOKEN_CENTCOM ":y"
 
+#define RADIO_CHANNEL_UPLINK "Uplink"
+#define RADIO_KEY_UPLINK "z"
+#define RADIO_TOKEN_UPLINK ":z"
+
 #define RADIO_CHANNEL_CTF_RED "Red Team"
 #define RADIO_CHANNEL_CTF_BLUE "Blue Team"
 #define RADIO_CHANNEL_CTF_GREEN "Green Team"
@@ -55,6 +59,7 @@
 #define MIN_FREE_FREQ 1201 // -------------------------------------------------
 // Frequencies are always odd numbers and range from 1201 to 1599.
 
+#define FREQ_UPLINK 1211	// Dummy loopback frequency, used for radio uplink. Not seen in game.
 #define FREQ_SYNDICATE 1213  // Nuke op comms frequency, dark brown
 #define FREQ_CTF_RED 1215  // CTF red team comms frequency, red
 #define FREQ_CTF_BLUE 1217  // CTF blue team comms frequency, blue

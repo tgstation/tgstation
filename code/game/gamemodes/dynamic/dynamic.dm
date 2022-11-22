@@ -290,7 +290,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	// If it got to this part, just pick one high impact ruleset if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags & HIGH_IMPACT_RULESET)
-			return rule.round_result()
+			rule.round_result()
+			// One was set, so we're done here
+			if(SSticker.news_report)
+				return
+
 	return ..()
 
 /datum/game_mode/dynamic/proc/send_intercept()

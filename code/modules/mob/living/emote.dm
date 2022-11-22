@@ -5,7 +5,7 @@
 	mob_type_blacklist_typecache = list(/mob/living/brain)
 
 /// The time it takes for the blush visual to be removed
-#define BLUSH_DURATION 5.2 SECONDS
+#define BLUSH_DURATION (5.2 SECONDS)
 
 /datum/emote/living/blush
 	key = "blush"
@@ -588,4 +588,5 @@
 	key = "swear"
 	key_third_person = "swears"
 	message = "says a swear word!"
+	message_mime = "makes a rude gesture!"
 	emote_type = EMOTE_AUDIBLE

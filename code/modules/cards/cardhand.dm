@@ -6,25 +6,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "card"
 
-/obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine = list())
+/obj/item/toy/cards/cardhand/Initialize(mapload)
 	. = ..()
-
-	var/has_runtime_spawned_cards = length(cards_to_combine)
-	var/has_mapped_spawned_cards = mapload && length(cards)
-
-	if(!has_runtime_spawned_cards && !has_mapped_spawned_cards)
-		CRASH("[src] is being made into a cardhand without a list of cards to combine")
-
-	if(has_mapped_spawned_cards) // these cards have not been initialized
-		for(var/card_name in cards)
-			var/obj/item/toy/singlecard/new_card = new (loc, card_name)
-			new_card.update_appearance()
-			cards_to_combine += new_card
-		cards = list() // reset our cards to an empty list
-
-	for(var/obj/item/toy/singlecard/new_card in cards_to_combine)
-		new_card.forceMove(src)
-		cards += new_card
 
 	register_context()
 	update_appearance()
@@ -36,7 +19,7 @@
 
 /obj/item/toy/cards/cardhand/examine(mob/user)
 	. = ..()
-	for(var/obj/item/toy/singlecard/card in cards)
+	for(var/obj/item/toy/singlecard/card in fetch_card_atoms())
 		if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
 			. += span_notice("You scan the cardhand with your x-ray vision and there is a: [card.cardname]")
 		var/marked_color = card.getMarkedColor(user)
@@ -65,7 +48,7 @@
 		return
 
 	var/list/handradial = list()
-	for(var/obj/item/toy/singlecard/card in cards)
+	for(var/obj/item/toy/singlecard/card in fetch_card_atoms())
 		handradial[card] = image(icon = src.icon, icon_state = card.icon_state)
 
 	var/obj/item/toy/singlecard/choice = show_radial_menu(usr, src, handradial, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE)
@@ -76,7 +59,7 @@
 	selected_card.pickup(user)
 	user.put_in_hands(selected_card)
 
-	if(cards.len == 1)
+	if(count_cards() == 1)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		var/obj/item/toy/singlecard/last_card = draw(user)
 		last_card.pickup(user)
@@ -118,6 +101,10 @@
 
 /obj/item/toy/cards/cardhand/update_overlays()
 	. = ..()
+
+	// This isn't strictly necessary, but this isn't expensive enough in reality
+	var/list/cards = fetch_card_atoms()
+
 	cut_overlays()
 	if(cards.len <= 1)
 		icon_state = null // we want an error icon to appear if this doesn't get qdel

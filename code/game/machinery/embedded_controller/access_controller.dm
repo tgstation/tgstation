@@ -53,7 +53,7 @@
 		if(A.idSelf == idSelf)
 			controller = A
 			break
-	for(var/obj/machinery/door/airlock/I in GLOB.machines)
+	for(var/obj/machinery/door/airlock/I in GLOB.airlocks)
 		if(I.id_tag == idDoor)
 			door = I
 			break

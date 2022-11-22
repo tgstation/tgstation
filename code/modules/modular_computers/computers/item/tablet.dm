@@ -1,4 +1,4 @@
-/obj/item/modular_computer/tablet  //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
+/obj/item/modular_computer/tablet //Its called tablet for theme of 90ies but actually its a "big smartphone" sized
 	name = "tablet computer"
 	icon = 'icons/obj/modular_tablet.dmi'
 	icon_state = "tablet-red"
@@ -11,10 +11,8 @@
 	base_icon_state = "tablet"
 	worn_icon_state = "tablet"
 	hardware_flag = PROGRAM_TABLET
-	max_hardware_size = 1
 	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
-	max_bays = 3
 	steel_sheet_cost = 2
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
@@ -66,6 +64,34 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	return ..()
+
+/obj/item/modular_computer/tablet/pre_attack(atom/target, mob/living/user, params)
+	if(!inserted_disk || !ismachinery(target))
+		return ..()
+
+	var/obj/machinery/target_machine = target
+	if(!target_machine.panel_open && !istype(target, /obj/machinery/computer))
+		return ..()
+
+	if(!istype(inserted_disk, /obj/item/computer_disk/virus/clown))
+		return ..()
+	var/obj/item/computer_disk/virus/clown/installed_cartridge = inserted_disk
+	if(!installed_cartridge.charges)
+		to_chat(user, span_notice("Out of virus charges."))
+		return ..()
+
+	to_chat(user, span_notice("You upload the virus to [target]!"))
+	var/sig_list = list(COMSIG_ATOM_ATTACK_HAND)
+	if(istype(target,/obj/machinery/door/airlock))
+		sig_list = list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
+
+	installed_cartridge.charges--
+	target.AddComponent(
+		/datum/component/sound_player, \
+		uses = rand(15,20), \
+		signal_list = sig_list, \
+	)
+	return TRUE
 
 /obj/item/modular_computer/tablet/interact(mob/user)
 	. = ..()
@@ -138,8 +164,6 @@
 		inserted_item = null
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
-	else
-		balloon_alert(user, "nothing to remove!")
 
 // Tablet 'splosion..
 
@@ -175,7 +199,7 @@
  * Arguments:
  * * ringtone_client - The client whose prefs we'll use to set the ringtone of this PDA.
  */
-/obj/item/modular_computer/tablet/proc/update_ringtone(client/ringtone_client)
+/obj/item/modular_computer/tablet/proc/update_ringtone_pref(client/ringtone_client)
 	if(!ringtone_client)
 		return
 
@@ -184,9 +208,15 @@
 	if(!new_ringtone || new_ringtone == MESSENGER_RINGTONE_DEFAULT)
 		return
 
+	update_ringtone(new_ringtone)
+
+
+/// A simple proc to set the ringtone from a pda.
+/obj/item/modular_computer/tablet/proc/update_ringtone(new_ringtone)
+	if(!istext(new_ringtone))
+		return
 	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
 		messenger_app.ringtone = new_ringtone
-
 
 // SUBTYPES
 
@@ -343,14 +373,14 @@
 /obj/item/modular_computer/tablet/integrated/ui_state(mob/user)
 	return GLOB.reverse_contained_state
 
-/obj/item/modular_computer/tablet/integrated/syndicate
+/obj/item/modular_computer/tablet/integrated/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
 	icon_state_powered = "tablet-silicon-syndicate"
 	icon_state_unpowered = "tablet-silicon-syndicate"
 	device_theme = "syndicate"
 
 
-/obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
+/obj/item/modular_computer/tablet/integrated/cyborg/syndicate/Initialize(mapload)
 	. = ..()
 	if(iscyborg(silicon_owner))
 		var/mob/living/silicon/robot/robo = silicon_owner
@@ -384,8 +414,7 @@
 
 /obj/item/modular_computer/tablet/pda/update_overlays()
 	. = ..()
-	var/obj/item/computer_hardware/card_slot/card = all_components[MC_CARD]
-	if(card?.stored_card)
+	if(computer_id_slot)
 		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
 		. += mutable_appearance(initial(icon), "light_overlay")
@@ -393,8 +422,3 @@
 /obj/item/modular_computer/tablet/pda/attack_ai(mob/user)
 	to_chat(user, span_notice("It doesn't feel right to snoop around like that..."))
 	return // we don't want ais or cyborgs using a private role tablet
-
-/obj/item/modular_computer/tablet/pda/Initialize(mapload)
-	. = ..()
-	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
-	install_component(new /obj/item/computer_hardware/card_slot)

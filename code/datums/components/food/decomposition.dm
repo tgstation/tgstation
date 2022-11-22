@@ -1,8 +1,8 @@
 //"Don't leave food on the floor, that's how we get ants"
 
-#define DECOMPOSITION_TIME 10 MINUTES
-#define DECOMPOSITION_TIME_RAW 5 MINUTES
-#define DECOMPOSITION_TIME_GROSS 7 MINUTES
+#define DECOMPOSITION_TIME (10 MINUTES)
+#define DECOMPOSITION_TIME_RAW (5 MINUTES)
+#define DECOMPOSITION_TIME_GROSS (7 MINUTES)
 
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
