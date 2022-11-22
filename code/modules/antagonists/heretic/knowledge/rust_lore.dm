@@ -12,6 +12,7 @@
  *
  * Mark of Rust
  * Ritual of Knowledge
+ * Rust Construction
  * Aggressive Spread
  * > Sidepaths:
  *   Curse of Corrosion
@@ -39,11 +40,6 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	route = PATH_RUST
 
-/datum/heretic_knowledge/limited_amount/starting/base_rust/on_research(mob/user)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
 	desc = "Your Mansus Grasp will deal 500 damage to non-living matter and rust any surface it touches. \
@@ -53,11 +49,11 @@
 	cost = 1
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_fist/on_gain(mob/user)
+/datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
 
-/datum/heretic_knowledge/rust_fist/on_lose(mob/user)
+/datum/heretic_knowledge/rust_fist/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
 
 /datum/heretic_knowledge/rust_fist/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -87,11 +83,11 @@
 	cost = 1
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_regen/on_gain(mob/user)
+/datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-/datum/heretic_knowledge/rust_regen/on_lose(mob/user)
+/datum/heretic_knowledge/rust_regen/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
 
 /*
@@ -144,7 +140,18 @@
 	mark_type = /datum/status_effect/eldritch/rust
 
 /datum/heretic_knowledge/knowledge_ritual/rust
+	next_knowledge = list(/datum/heretic_knowledge/spell/rust_construction)
+	route = PATH_RUST
+
+/datum/heretic_knowledge/spell/rust_construction
+	name = "Rust Construction"
+	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor. \
+		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
+	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
+		they no longer looked man made. Or perhaps they never were in the first place."
 	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
+	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
+	cost = 1
 	route = PATH_RUST
 
 /datum/heretic_knowledge/spell/area_conversion
@@ -221,7 +228,7 @@
 		TRAIT_NOBREATH,
 		)
 
-/datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user)
+/datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	// This map doesn't have a Bridge, for some reason??
 	// Let them complete the ritual anywhere

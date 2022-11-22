@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 
 	var/image/first_antagonist = get_antag_image(1) || image(icon('icons/blanks/32x32.dmi', "nothing"), mind.current)
 
-	RegisterSignal(
+	RegisterSignals(
 		mind,
 		list(COMSIG_ANTAGONIST_GAINED, COMSIG_ANTAGONIST_REMOVED),
 		PROC_REF(update_antag_hud_images)

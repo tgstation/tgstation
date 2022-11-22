@@ -103,7 +103,7 @@
 	alarmed.burglaralert(src)
 
 	alarm_manager.send_alarm(ALARM_BURGLAR)
-	addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
+	addtimer(CALLBACK(alarm_manager, TYPE_PROC_REF(/datum/alarm_handler, clear_alarm), ALARM_BURGLAR), 1 MINUTES)
 
 	playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 

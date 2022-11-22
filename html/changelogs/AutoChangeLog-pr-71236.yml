@@ -1,4 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - rscadd: "Added a reagent injector component and BCI manipulators to all circuit labs. (+ install detector component)"

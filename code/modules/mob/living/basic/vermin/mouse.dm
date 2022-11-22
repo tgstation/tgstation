@@ -178,7 +178,7 @@
 /mob/living/basic/mouse/proc/evolve_into_regal_rat()
 	var/mob/living/simple_animal/hostile/regalrat/controlled/regalrat = new(loc)
 	mind?.transfer_to(regalrat)
-	INVOKE_ASYNC(regalrat, /atom/movable/proc/say, "RISE, MY SUBJECTS! SCREEEEEEE!")
+	INVOKE_ASYNC(regalrat, TYPE_PROC_REF(/atom/movable, say), "RISE, MY SUBJECTS! SCREEEEEEE!")
 	qdel(src)
 
 /// Creates a new mouse based on this mouse's subtype.

@@ -23858,7 +23858,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gPZ" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -47082,7 +47082,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "nts" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8

@@ -61,7 +61,7 @@
 
 	. = ..()
 
-	RegisterSignal(
+	RegisterSignals(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
 		PROC_REF(on_techweb_update)

@@ -330,7 +330,7 @@
 	var/mob/living/user = last_user_ref?.resolve()
 	if (isnull(user))
 		return FALSE
-	if(!(surgery.surgery_flags & SURGERY_IGNORE_CLOTHES))
-		return TRUE
+	if(surgery.surgery_flags & SURGERY_IGNORE_CLOTHES)
+		return FALSE
 
 	return !get_location_accessible(target, user.zone_selected)

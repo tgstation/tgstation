@@ -54,6 +54,9 @@
 
 	fly.Remove(organ_owner)
 
+	if(wings_open)
+		toggle_flight(organ_owner)
+
 /obj/item/organ/external/wings/functional/on_life(delta_time, times_fired)
 	. = ..()
 

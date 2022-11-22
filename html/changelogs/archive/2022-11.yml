@@ -633,3 +633,53 @@
   - bugfix: rcds will now prioritize completing a girder over making a new wall on
       a turf
   - bugfix: Vending machines will no longer crush you through windows!
+2022-11-22:
+  A.C.M.O.:
+  - bugfix: Fixed a bug that caused the Signer quirk to stop working as expected when
+      used with the Mute quirk.
+  JohnFulpWillard:
+  - bugfix: Icebox's blacklisted ruins works again.
+  - balance: All modular computers now only have one ID slot, and cannot be upgraded.
+  - qol: The HoP's access application now only has one app, logging in will directly
+      modify the ID that's in it, making it less confusing to swap back and forth.
+  LT3:
+  - rscadd: 'New random event added: Tram Malfunction'
+  LemonInTheDark:
+  - bugfix: Mining walls won't have fucked lighting anymore
+  Melbert:
+  - admin: AI uploads constructed midround will now give an admin message and log
+      to silicon log
+  OrionTheFox:
+  - rscdel: NT has decided to begin a Recycling initiative, asking crew to please
+      stop throwing their bowls away in maintenance. You should only find trash and
+      grime from now on!
+  Profakos:
+  - refactor: refactored trophy cases, to be more user friendly
+  - admin: created a trophy managment admin panel
+  Rhials:
+  - spellcheck: Adds spread text to some diseases that lacked it.
+  RikuTheKiller:
+  - rscadd: Added a reagent injector component and BCI manipulators to all circuit
+      labs. (+ install detector component)
+  Time-Green:
+  - bugfix: Surgically removing wings during flight no longer grants infinite flight
+  Vishenka0704:
+  - rscadd: A way to send faxes to CentCom/Syndicate
+  - admin: New fax panel(with stamps!!!)
+  ZephyrTFA:
+  - bugfix: shoving someone away from you correctly breaks your grab on them
+  - bugfix: You can slap tables with right click again
+  disappointedButNotSuprised:
+  - rscadd: After a massive success of the Modello 3 series, Piccionaia Home Appliances
+      rolls out a completely new coffeemaker model and renovates the meta station
+      cafe for free in a promotional campaign!
+  - rscadd: Syrup bottles, condiment displays, and more, to make the spess coffee
+      experience even better
+  etherware-novice:
+  - rscadd: Re-adds legacy job ringtones (clown, mime, jani, lawyer, science, chaplain)
+  - refactor: update_ringtone was modifed to accept strings, moving the old functionality
+      to update_ringtone_pref
+  - rscadd: radios have overlays for showing broadcasting settings
+  - rscadd: You can now kickflip on skateboards.
+  lizardqueenlexi:
+  - spellcheck: Made "free objective" text consistent.
