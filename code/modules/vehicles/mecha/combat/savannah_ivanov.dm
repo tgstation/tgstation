@@ -1,10 +1,10 @@
 ///how much time between charge_level going up by 1
-#define SKYFALL_SINGLE_CHARGE_TIME 2 SECONDS
+#define SKYFALL_SINGLE_CHARGE_TIME (2 SECONDS)
 ///enough charge level to take off, basically done charging
 #define SKYFALL_CHARGELEVEL_LAUNCH 5
 
 ///how much time you're in the air
-#define TOTAL_SKYFALL_LEAP_TIME 3 SECONDS
+#define TOTAL_SKYFALL_LEAP_TIME (3 SECONDS)
 
 /**
  * ## Savannah-Ivanov!

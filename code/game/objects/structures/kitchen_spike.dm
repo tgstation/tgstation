@@ -105,7 +105,7 @@
 
 /obj/structure/kitchenspike/post_unbuckle_mob(mob/living/buckled_mob)
 	buckled_mob.adjustBruteLoss(30)
-	INVOKE_ASYNC(buckled_mob, /mob/proc/emote, "scream")
+	INVOKE_ASYNC(buckled_mob, TYPE_PROC_REF(/mob, emote), "scream")
 	buckled_mob.AdjustParalyzed(20)
 	var/matrix/m180 = matrix(buckled_mob.transform)
 	m180.Turn(180)

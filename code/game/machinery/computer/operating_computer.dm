@@ -84,14 +84,13 @@
 
 /obj/machinery/computer/operating/ui_data(mob/user)
 	var/list/data = list()
-	var/list/surgeries = list()
-	for(var/X in advanced_surgeries)
-		var/datum/surgery/S = X
+	var/list/all_surgeries = list()
+	for(var/datum/surgery/surgeries as anything in advanced_surgeries)
 		var/list/surgery = list()
-		surgery["name"] = initial(S.name)
-		surgery["desc"] = initial(S.desc)
-		surgeries += list(surgery)
-	data["surgeries"] = surgeries
+		surgery["name"] = initial(surgeries.name)
+		surgery["desc"] = initial(surgeries.desc)
+		all_surgeries += list(surgery)
+	data["surgeries"] = all_surgeries
 
 	//If there's no patient just hop to it yeah?
 	if(!table)

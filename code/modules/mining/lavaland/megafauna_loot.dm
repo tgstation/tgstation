@@ -4,7 +4,7 @@
 //Hierophant: Hierophant Club
 
 #define HIEROPHANT_BLINK_RANGE 5
-#define HIEROPHANT_BLINK_COOLDOWN 15 SECONDS
+#define HIEROPHANT_BLINK_COOLDOWN (15 SECONDS)
 
 /datum/action/innate/dash/hierophant
 	current_charges = 1

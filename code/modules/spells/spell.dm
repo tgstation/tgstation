@@ -37,7 +37,8 @@
  * this can be extended if you wish to add unique effects on level up for wizards.
  * - [delevel_spell][/datum/action/cooldown/spell/delevel_spell] is where the process of removing a spell level is handled.
  * this can be extended if you wish to undo unique effects on level up for wizards.
- * - [update_spell_name][/datum/action/cooldown/spell/update_spell_name] updates the prefix of the spell name based on its level.
+ * - [get_spell_title][/datum/action/cooldown/spell/get_spell_title] returns the prefix of the spell name based on its level,
+ * for use in updating the button name / spell name.
  */
 /datum/action/cooldown/spell
 	name = "Spell"
@@ -102,11 +103,11 @@
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
 		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_EMOTE)
-		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_status_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
-		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), PROC_REF(update_status_on_signal))
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), PROC_REF(update_status_on_signal))
 
-	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(update_status_on_signal))
+	RegisterSignals(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(update_status_on_signal))
 	owner.client?.stat_panel.send_message("check_spells")
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
@@ -183,10 +184,12 @@
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/mob/living/carbon/human/human_owner = owner
 			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
-				to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
 			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES))
-				to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
 
 	else
@@ -210,6 +213,7 @@
 /**
  * Check if the target we're casting on is a valid target.
  * For self-casted spells, the target being checked (cast_on) is the caster.
+ * For click_to_activate spells, the target being checked is the clicked atom.
  *
  * Return TRUE if cast_on is valid, FALSE otherwise
  */
@@ -386,7 +390,7 @@
 		return FALSE
 
 	spell_level++
-	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0)
+	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0.25 SECONDS) // 0 second CD starts to break things.
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
@@ -402,23 +406,30 @@
 		return FALSE
 
 	spell_level--
-	cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	if(cooldown_reduction_per_rank > 0 SECONDS)
+		cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	else
+		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+
 	build_all_button_icons(UPDATE_BUTTON_NAME)
 	return TRUE
 
 /datum/action/cooldown/spell/update_button_name(atom/movable/screen/movable/action_button/button, force)
-	var/spell_title = ""
+	name = "[get_spell_title()][initial(name)]"
+	return ..()
+
+/// Gets the title of the spell based on its level.
+/datum/action/cooldown/spell/proc/get_spell_title()
 	switch(spell_level)
 		if(2)
-			spell_title = "Efficient "
+			return "Efficient "
 		if(3)
-			spell_title = "Quickened "
+			return "Quickened "
 		if(4)
-			spell_title = "Free "
+			return "Free "
 		if(5)
-			spell_title = "Instant "
+			return "Instant "
 		if(6)
-			spell_title = "Ludicrous "
+			return "Ludicrous "
 
-	name = "[spell_title][initial(name)]"
-	return ..()
+	return ""

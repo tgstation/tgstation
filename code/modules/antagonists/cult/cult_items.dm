@@ -147,7 +147,7 @@ Striking a noncultist, however, will tear their flesh."}
 	breakouttime = 6 SECONDS
 	knockdown = 30
 
-#define CULT_BOLA_PICKUP_STUN 6 SECONDS
+#define CULT_BOLA_PICKUP_STUN (6 SECONDS)
 /obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/carbon/user, list/modifiers)
 	. = ..()
 
@@ -371,7 +371,7 @@ Striking a noncultist, however, will tear their flesh."}
 ///how many times can the shuttle be cursed?
 #define MAX_SHUTTLE_CURSES 3
 ///if the max number of shuttle curses are used within this duration, the entire cult gets an achievement
-#define SHUTTLE_CURSE_OMFG_TIMESPAN 10 SECONDS
+#define SHUTTLE_CURSE_OMFG_TIMESPAN (10 SECONDS)
 
 /obj/item/shuttle_curse
 	name = "cursed orb"

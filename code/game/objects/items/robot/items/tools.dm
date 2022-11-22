@@ -1,4 +1,4 @@
-#define PKBORG_DAMPEN_CYCLE_DELAY 2 SECONDS
+#define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"

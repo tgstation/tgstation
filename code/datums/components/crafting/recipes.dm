@@ -483,6 +483,8 @@
 	result = /obj/item/ammo_casing/shotgun/meteorslug
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/rcd_ammo = 1,
+				/datum/reagent/gunpowder = 10,
+				/datum/reagent/consumable/ethanol/rum = 10,
 				/obj/item/stock_parts/manipulator = 2)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 0.5 SECONDS
