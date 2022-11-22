@@ -870,13 +870,13 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
 
 /mob/living/proc/do_strange_reagent_revival(healing_amount)
-	var/brute_healing = healing_amount - getBruteLoss()
+	var/brute_healing = max(healing_amount - getBruteLoss(), 0)
 	healing_amount -= brute_healing
-	var/burn_healing = healing_amount - getFireLoss()
+	var/burn_healing = max(healing_amount - getFireLoss(), 0)
 	healing_amount -= burn_healing
 	adjustBruteLoss(-brute_healing, FALSE, TRUE)
 	adjustFireLoss(-burn_healing, FALSE, TRUE)
-	revive(NONE, healing_amount, FALSE)
+	revive(NONE, max(healing_amount, 0), FALSE)
 
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)
