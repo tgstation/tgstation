@@ -66,7 +66,7 @@
 	var/damage = target_max_health * percent * 0.5
 	target.adjustBruteLoss(damage)
 	target.adjustFireLoss(damage)
-	update_amounts()
+	update_amounts(target)
 	if(percent >= 1)
 		TEST_ASSERT_EQUAL(target.stat, DEAD, "Target type [target.type] should be dead but isnt")
 		return FALSE

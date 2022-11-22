@@ -814,6 +814,7 @@
 	var/instant = FALSE
 
 /datum/reagent/medicine/strange_reagent/instant
+	name = "Stranger Reagent"
 	instant = TRUE
 
 // FEED ME SEYMOUR
