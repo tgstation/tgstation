@@ -314,7 +314,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
 
 /datum/action/innate/spider/lay_web/Remove(mob/removed_from)
 	. = ..()
@@ -383,7 +383,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignal(owner, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
+	RegisterSignals(owner, list(COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
 
 /datum/action/cooldown/wrap/Remove(mob/removed_from)
 	. = ..()
@@ -496,7 +496,7 @@
 	. = ..()
 	if (!owner)
 		return
-	RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_DO_AFTER_BEGAN, COMSIG_DO_AFTER_ENDED), PROC_REF(update_icon_on_signal))
 
 /datum/action/innate/spider/lay_eggs/Remove(mob/removed_from)
 	. = ..()

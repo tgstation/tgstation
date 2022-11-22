@@ -82,7 +82,7 @@
 /area/station/maintenance/starboard/central)
 "V" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/mopbucket{
+/obj/structure/mop_bucket{
 	pixel_y = 15;
 	pixel_x = 5
 	},

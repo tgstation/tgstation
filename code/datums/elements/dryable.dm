@@ -1,7 +1,7 @@
 // If an item has this element, it can be dried on a drying rack.
 /datum/element/dryable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// The type of atom that is spawned by this element on drying.
 	var/dry_result
 
@@ -25,7 +25,7 @@
 	var/atom/dried_atom = source
 	if(dry_result == dried_atom.type)//if the dried type is the same as our currrent state, don't bother creating a whole new item, just re-color it.
 		var/atom/movable/resulting_atom = dried_atom
-		resulting_atom.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
+		resulting_atom.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY)
 		ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT(type))
 		resulting_atom.forceMove(source.drop_location())
 		return
