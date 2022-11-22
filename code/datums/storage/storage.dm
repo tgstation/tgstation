@@ -853,7 +853,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		adjusted_contents = numbered_contents.len
 
 	var/columns = clamp(max_slots, 1, screen_max_columns)
-	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + !(adjusted_contents % screen_max_columns), 1, screen_max_rows)
+	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + (!(adjusted_contents % screen_max_columns) && adjusted_contents < max_slots), 1, screen_max_rows)
 
 	orient_item_boxes(rows, columns, numbered_contents)
 
