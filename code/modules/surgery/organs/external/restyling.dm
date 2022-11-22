@@ -15,7 +15,7 @@
 	return valid_restyles
 
 ///Invokes async to ask a mob if their limb if their limb has an external organ
-/mob/living/carbon/proc/_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
+/mob/living/carbon/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
@@ -30,7 +30,7 @@
 	return TRUE
 
 ///Invoke async so we dont break signals
-/obj/item/bodypart/proc/_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
+/obj/item/bodypart/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 
 	INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
@@ -64,7 +64,7 @@
 	target_organ.attempt_feature_restyle(source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
 ///Invoke async so we dont break signals
-/obj/item/organ/external/proc/_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
+/obj/item/organ/external/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 
 	if(restyle_flags & restyle_type)

@@ -44,7 +44,7 @@
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
-	///Which flags does a 'modification tool' need to have to restyle us, if it all possible
+	///Which flags does a 'modification tool' need to have to restyle us, if it all possible (located in code/_DEFINES/mobs)
 	var/restyle_flags = NONE
 
 /**mob_sprite is optional if you havent set sprite_datums for the object, and is used mostly to generate sprite_datums from a persons DNA
@@ -60,7 +60,7 @@
 		color = "#[random_color()]" //A temporary random color that gets overwritten on insertion.
 
 	if(restyle_flags)
-		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(_attempt_feature_restyle))
+		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
 /obj/item/organ/external/Destroy()
 	if(owner)
@@ -153,7 +153,7 @@
 	if(use_mob_sprite_as_obj_sprite)
 		icon = icon(sprite_datum.icon, finished_icon_state, SOUTH)
 
-	if(sprite_datum.color_src) //There are multiple flags, but only one is ever used so meh :/ | This comment isn't true. | This comment can eat shit.
+	if(sprite_datum.color_src)
 		appearance.color = draw_color
 
 	if(sprite_datum.center)
