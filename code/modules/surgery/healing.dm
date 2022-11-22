@@ -1,17 +1,18 @@
 /datum/surgery/healing
+	target_mobtypes = list(/mob/living)
+	requires_bodypart_type = NONE
+	replaced_by = /datum/surgery
+	surgery_flags = SURGERY_IGNORE_CLOTHES | SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/heal,
-		/datum/surgery_step/close)
+		/datum/surgery_step/close,
+	)
 
-	target_mobtypes = list(/mob/living)
-	possible_locs = list(BODY_ZONE_CHEST)
-	requires_bodypart_type = FALSE
-	replaced_by = /datum/surgery
-	ignore_clothes = TRUE
 	var/healing_step_type
 	var/antispam = FALSE
 
@@ -62,9 +63,13 @@
 	if(istype(surgery,/datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		if(!the_surgery.antispam)
-			display_results(user, target, span_notice("You attempt to patch some of [target]'s [woundtype]."),
-		span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
-		span_notice("[user] attempts to patch some of [target]'s [woundtype]."))
+			display_results(
+				user,
+				target,
+				span_notice("You attempt to patch some of [target]'s [woundtype]."),
+				span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
+				span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
+			)
 		display_pain(target, "Your [woundtype] sting like hell!")
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
@@ -94,18 +99,27 @@
 
 	user_msg += get_progress(user, target, brute_healed, burn_healed)
 
-	display_results(user, target, span_notice("[user_msg]."),
-		"[target_msg].",
-		"[target_msg].")
+	display_results(
+		user,
+		target,
+		span_notice("[user_msg]."),
+		span_notice("[target_msg]."),
+		span_notice("[target_msg]."),
+	)
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
 	return ..()
 
 /datum/surgery_step/heal/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_warning("You screwed up!"),
+	display_results(
+		user,
+		target,
+		span_warning("You screwed up!"),
 		span_warning("[user] screws up!"),
-		span_notice("[user] fixes some of [target]'s wounds."), TRUE)
+		span_notice("[user] fixes some of [target]'s wounds."),
+		target_detailed = TRUE,
+	)
 	var/brute_dealt = brutehealing * 0.8
 	var/burn_dealt = burnhealing * 0.8
 	brute_dealt += round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
@@ -323,7 +337,12 @@
 	burn_multiplier = 0.4
 
 /datum/surgery_step/heal/combo/upgraded/femto/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_warning("You screwed up!"),
+	display_results(
+		user,
+		target,
+		span_warning("You screwed up!"),
 		span_warning("[user] screws up!"),
-		span_notice("[user] fixes some of [target]'s wounds."), TRUE)
+		span_notice("[user] fixes some of [target]'s wounds."),
+		target_detailed = TRUE,
+	)
 	target.take_bodypart_damage(5,5)

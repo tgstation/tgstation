@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "Fixed disposals pipes qdel-ing their contents when their integrity hits zero."

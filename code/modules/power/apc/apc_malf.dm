@@ -68,7 +68,7 @@
 	to_chat(occupier, span_danger("Primary core damaged, unable to return core processes."))
 	if(forced)
 		occupier.forceMove(drop_location())
-		INVOKE_ASYNC(occupier, /mob/living/proc/death)
+		INVOKE_ASYNC(occupier, TYPE_PROC_REF(/mob/living, death))
 		occupier.gib()
 
 	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.

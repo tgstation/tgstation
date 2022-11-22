@@ -457,3 +457,103 @@
 	name = "bottle of caramel"
 	desc = "A bottle containing caramalized sugar, also known as caramel. Do not lick."
 	list_reagents = list(/datum/reagent/consumable/caramel = 30)
+
+/*
+ *	Syrup bottles, basically a unspillable cup that transfers reagents upon clicking on it with a cup
+ */
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle
+	name = "syrup bottle"
+	desc = "A bottle with a syrup pump to dispense the delicious substance directly into your coffee cup."
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "syrup"
+	fill_icon_state = "syrup"
+	fill_icon_thresholds = list(0, 20, 40, 60, 80, 100)
+	possible_transfer_amounts = list(5, 10)
+	volume = 50
+	amount_per_transfer_from_this = 5
+	spillable = FALSE
+	///variable to tell if the bottle can be refilled
+	var/cap_on = TRUE
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to toggle the pump cap.")
+	. += span_notice("Use a pen on it to rename it.")
+	return
+
+//when you attack the syrup bottle with a container it refills it
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/attackby(obj/item/attacking_item, mob/user, params)
+
+	if(!cap_on)
+		return ..()
+
+	if(!check_allowed_items(attacking_item,target_self = TRUE))
+		return
+
+	if(attacking_item.is_refillable())
+		if(!reagents.total_volume)
+			balloon_alert(user, "bottle empty!")
+			return TRUE
+
+		if(attacking_item.reagents.holder_full())
+			balloon_alert(user, "container full!")
+			return TRUE
+
+		var/transfer_amount = reagents.trans_to(attacking_item, amount_per_transfer_from_this, transfered_by = user)
+		balloon_alert(user, "transferred [transfer_amount] unit\s")
+		flick("syrup_anim",src)
+
+	if(istype(attacking_item, /obj/item/pen))
+		rename(user, attacking_item)
+
+	attacking_item.update_appearance()
+	update_appearance()
+
+	return TRUE
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/AltClick(mob/user)
+	cap_on = !cap_on
+	if(!cap_on)
+		icon_state = "syrup_open"
+		balloon_alert(user, "removed pump cap")
+	else
+		icon_state = "syrup"
+		balloon_alert(user, "put pump cap on")
+	update_icon_state()
+	return ..()
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/rename(mob/user, obj/item/writing_instrument)
+	if(!user.can_write(writing_instrument))
+		return
+
+	var/inputvalue = tgui_input_text(user, "What would you like to label the syrup bottle?", "Syrup Bottle Labelling", max_length = MAX_NAME_LEN)
+
+	if(!inputvalue)
+		return
+
+	if(user.canUseTopic(src, be_close = TRUE))
+		name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
+
+//types of syrups
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/caramel
+	name = "bottle of caramel syrup"
+	desc = "A pump bottle containing caramalized sugar, also known as caramel. Do not lick."
+	list_reagents = list(/datum/reagent/consumable/caramel = 50)
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/liqueur
+	name = "bottle of coffee liqueur syrup"
+	desc = "A pump bottle containing mexican coffee-flavoured liqueur syrup. In production since 1936, HONK."
+	list_reagents = list(/datum/reagent/consumable/ethanol/kahlua = 50)
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/korta_nectar
+	name = "bottle of korta syrup"
+	desc = "A pump bottle containing korta syrup. A sweet, sugary substance made from crushed sweet korta nuts."
+	list_reagents = list(/datum/reagent/consumable/korta_nectar = 50)
+
+//secret syrup
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/laughsyrup
+	name = "bottle of laugh syrup"
+	desc = "A pump bottle containing laugh syrup. The product of juicing Laughin' Peas. Fizzy, and seems to change flavour based on what it's used with!"
+	list_reagents = list(/datum/reagent/consumable/laughsyrup = 50)

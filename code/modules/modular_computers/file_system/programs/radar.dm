@@ -277,8 +277,8 @@
 			var/obj/item/mop/wet_mop = custodial_tools
 			tool_name = "[wet_mop.reagents.total_volume ? "Wet" : "Dry"] [wet_mop.name]"
 
-		if(istype(custodial_tools, /obj/structure/janitorialcart))
-			var/obj/structure/janitorialcart/janicart = custodial_tools
+		if(istype(custodial_tools, /obj/structure/mop_bucket/janitorialcart))
+			var/obj/structure/mop_bucket/janitorialcart/janicart = custodial_tools
 			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / [janicart.reagents.maximum_volume]"
 
 		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))

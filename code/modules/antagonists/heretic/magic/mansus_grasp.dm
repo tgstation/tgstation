@@ -16,24 +16,26 @@
 
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 
+/datum/action/cooldown/spell/touch/mansus_grasp/is_valid_target(atom/cast_on)
+	return TRUE // This baby can hit anything
+
 /datum/action/cooldown/spell/touch/mansus_grasp/can_cast_spell(feedback = TRUE)
 	return ..() && !!IS_HERETIC(owner)
+
+/datum/action/cooldown/spell/touch/mansus_grasp/on_antimagic_triggered(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	victim.visible_message(
+		span_danger("The spell bounces off of [victim]!"),
+		span_danger("The spell bounces off of you!"),
+	)
 
 /datum/action/cooldown/spell/touch/mansus_grasp/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(!isliving(victim))
 		return FALSE
 
-	var/mob/living/living_hit = victim
-	if(living_hit.can_block_magic(antimagic_flags))
-		victim.visible_message(
-			span_danger("The spell bounces off of [victim]!"),
-			span_danger("The spell bounces off of you!"),
-		)
-		return FALSE
-
 	if(SEND_SIGNAL(caster, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, victim) & COMPONENT_BLOCK_HAND_USE)
 		return FALSE
 
+	var/mob/living/living_hit = victim
 	living_hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_hit = victim
@@ -84,9 +86,12 @@
 /obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/mob/living/carbon/carbon_user = user //iscarbon already used in spell's parent
-	var/datum/action/cooldown/spell/touch/mansus_grasp/source = locate() in user.actions
-	if(!IS_HERETIC(user))
-		return
+	var/datum/action/cooldown/spell/touch/mansus_grasp/source = spell_which_made_us?.resolve()
+	if(QDELETED(source) || !IS_HERETIC(user))
+		return SHAME
+
+	if(user.can_block_magic(source.antimagic_flags))
+		return SHAME
 
 	var/escape_our_torment = 0
 	while(carbon_user.stat == CONSCIOUS)
@@ -102,7 +107,7 @@
 				carbon_user.emote("scream")
 				carbon_user.adjust_stutter(26 SECONDS)
 
-		source?.cast_on_hand_hit(src, user, user)
+		source.cast_on_hand_hit(src, user, user)
 
 		escape_our_torment++
 		stoplag(0.4 SECONDS)
