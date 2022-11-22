@@ -145,18 +145,6 @@
 /datum/ai_behavior/basic_melee_attack/hauberoach //Slightly slower, as this is being made in feature freeze ;)
 	action_cooldown = 1 SECONDS
 
-/mob/living/basic/cockroach/sewer
-	name = "sewer cockroach"
-	desc = "A roach not to be underestimated."
-	icon_state = "cockroach_sewer"
-	health = 2
-	maxHealth = 2
-	melee_damage_lower = 2
-	melee_damage_upper = 4
-	obj_damage = 5
-	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/sewer
-
 /datum/ai_controller/basic_controller/cockroach/sewer
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,

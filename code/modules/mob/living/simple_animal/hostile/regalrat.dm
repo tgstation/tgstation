@@ -264,7 +264,6 @@
 		// No need to convert when not on the same team.
 		if(faction_check(nearby_frog.faction, converted_check_list))
 			continue
-		var/mob/living/simple_animal/hostile/retaliate/frog/frog_path = /mob/living/simple_animal/hostile/retaliate/frog
 		if(nearby_frog.name == "frog")
 			nearby_frog.name = "trash frog"
 			nearby_frog.icon_state += "_trash"
@@ -276,10 +275,10 @@
 			nearby_frog.icon_living += "_trash"
 			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
 		nearby_frog.desc += " ...Except this one lives in a trash bag."
-		nearby_frog.health = initial(frog_path.health)
-		nearby_frog.maxHealth = initial(frog_path.maxHealth)
-		nearby_frog.melee_damage_lower = initial(frog_path.melee_damage_lower)
-		nearby_frog.melee_damage_upper = initial(frog_path.melee_damage_upper)
+		nearby_frog.maxHealth += 10
+		nearby_frog.health += 10
+		nearby_frog.melee_damage_lower += 1
+		nearby_frog.melee_damage_upper += 5
 		nearby_frog.faction = owner.faction.Copy()
 		uplifted_frog = TRUE
 		break
@@ -291,30 +290,27 @@
 			// No need to convert when not on the same team.
 			if(faction_check(nearby_roach.faction, converted_check_list))
 				continue
-			var/mob/living/basic/cockroach/roach_path = /mob/living/basic/cockroach/sewer
 			if(istype(nearby_roach, /mob/living/basic/cockroach/glockroach))
 				if(nearby_roach.name == "glockroach")
 					nearby_roach.name = "sewer glockroach"
-					nearby_roach.icon_state += "_sewer"
-					nearby_roach.melee_damage_lower += 0.5
-					nearby_roach.melee_damage_upper += 2
+				nearby_roach.melee_damage_lower += 0.5
+				nearby_roach.melee_damage_upper += 2
 			else if(istype(nearby_roach, /mob/living/basic/cockroach/hauberoach))
 				if(nearby_roach.name == "hauberoach")
 					nearby_roach.name = "sewer hauberoach"
-					nearby_roach.icon_state += "_sewer"
-					nearby_roach.melee_damage_lower += 0.5
-					nearby_roach.melee_damage_upper += 2
+				nearby_roach.melee_damage_lower += 0.5
+				nearby_roach.melee_damage_upper += 2
 			else
 				if(nearby_roach.name == "cockroach")
-					nearby_roach.name = initial(roach_path.name)
-					nearby_roach.icon_state += "_sewer"
-					nearby_roach.melee_damage_lower = initial(roach_path.melee_damage_lower)
-					nearby_roach.melee_damage_upper = initial(roach_path.melee_damage_upper)
+					nearby_roach.name = "sewer cockroach"
+				nearby_roach.melee_damage_lower += 2
+				nearby_roach.melee_damage_upper += 4
+				nearby_roach.obj_damage += 5
 				nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
-				nearby_roach.obj_damage = initial(roach_path.obj_damage)
 			nearby_roach.desc += " ...Except this one looks very robust."
-			nearby_roach.health = initial(roach_path.health)
-			nearby_roach.maxHealth = initial(roach_path.maxHealth)
+			nearby_roach.icon_state += "_sewer"
+			nearby_roach.maxHealth += 1
+			nearby_roach.health += 1
 			nearby_roach.faction = owner.faction.Copy()
 			uplifted_roach = TRUE
 			break

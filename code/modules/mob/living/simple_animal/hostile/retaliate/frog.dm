@@ -69,15 +69,3 @@
 /mob/living/simple_animal/hostile/retaliate/frog/add_cell_sample()
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_FROG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-/mob/living/simple_animal/hostile/retaliate/frog/trash
-	name = "trash frog"
-	desc = "A frog with a trash bag as its habitat."
-	icon_state = "frog_trash"
-	icon_living = "frog_trash"
-	icon_dead = "frog_trash_dead"
-	maxHealth = 25
-	health = 25
-	melee_damage_lower = 6
-	melee_damage_upper = 10
-	gold_core_spawnable = NO_SPAWN
