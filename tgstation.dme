@@ -859,6 +859,7 @@
 #include "code\datums\components\mob_harvest.dm"
 #include "code\datums\components\multiple_lives.dm"
 #include "code\datums\components\ntnet_interface.dm"
+#include "code\datums\components\nuclear_bomb_operator.dm"
 #include "code\datums\components\omen.dm"
 #include "code\datums\components\onwear_mood.dm"
 #include "code\datums\components\orbiter.dm"
