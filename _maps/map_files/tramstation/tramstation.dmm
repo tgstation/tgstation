@@ -30873,8 +30873,6 @@
 	dir = 8;
 	name = "sorting disposal pipe (Cantina Staff)"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/mail_sorting/service/bar,
 /obj/effect/mapping_helpers/mail_sorting/service/kitchen,
 /obj/effect/mapping_helpers/mail_sorting/service/theater,
