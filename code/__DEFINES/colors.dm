@@ -273,6 +273,7 @@
 #define COLOR_CARP_BLUE "#09bae1"
 #define COLOR_CARP_PALE_GREEN "#7ef099"
 #define COLOR_CARP_SILVER "#fdfbf3"
+#define COLOR_CARP_DARK_BLUE "#3a384d"
 
 GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_BLUE = CABLE_HEX_COLOR_BLUE,
