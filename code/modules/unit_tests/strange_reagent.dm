@@ -62,7 +62,7 @@
 	if(amount_needed_to_revive <= 0)
 		amount_needed_to_revive = 1
 
-/datum/unit_test/strange_reagent/proc/damage_target_to_percentage(target, percent)
+/datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
 	target.adjustBruteLoss(damage)
 	target.adjustFireLoss(damage)
