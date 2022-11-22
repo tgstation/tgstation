@@ -277,7 +277,7 @@
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "sink"
 	},
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/clothing/suit/caution,

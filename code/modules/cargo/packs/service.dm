@@ -47,7 +47,7 @@
 	desc = "The keystone to any successful janitor. As long as you have feet, this pair \
 		of galoshes will keep them firmly planted on the ground. Also contains a janitorial cart."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/structure/janitorialcart,
+	contains = list(/obj/structure/mop_bucket/janitorialcart,
 					/obj/item/clothing/shoes/galoshes,
 				)
 	crate_name = "janitorial cart crate"
