@@ -213,7 +213,7 @@
  * * show_message (option) show a message to chat on unwield
  * * can_drop (option) whether 'dropItemToGround' can be called or not.
  */
-/datum/component/two_handed/proc/unwield(mob/living/carbon/user, show_message=TRUE, can_drop = TRUE)
+/datum/component/two_handed/proc/unwield(mob/living/carbon/user, show_message=TRUE, can_drop=TRUE)
 	if(!wielded)
 		return
 
@@ -302,7 +302,7 @@
 /datum/component/two_handed/proc/on_moved(datum/source, mob/user, dir)
 	SIGNAL_HANDLER
 
-	unwield(user)
+	unwield(user, can_drop=FALSE)
 
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
