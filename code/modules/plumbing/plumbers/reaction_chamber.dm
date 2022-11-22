@@ -87,7 +87,7 @@
 	if(.)
 		return TRUE
 
-	.=FALSE
+	. = FALSE
 	switch(action)
 		if("add")
 			var/selected_reagent = tgui_input_list(usr, "Select reagent", "Reagent", GLOB.chemical_name_list)
