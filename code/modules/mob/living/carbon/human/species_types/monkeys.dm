@@ -87,6 +87,7 @@
 
 	// this shouldn't even be possible, but I'm sure the check was here for a reason
 	if(!iscarbon(target))
+		stack_trace("HEY LISTEN! We are performing a species spec_unarmed attack with a non-carbon user. How did you fuck this up?")
 		return TRUE
 	var/mob/living/carbon/victim = target
 	if(user.is_muzzled())
