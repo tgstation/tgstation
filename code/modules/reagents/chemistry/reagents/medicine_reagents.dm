@@ -810,7 +810,7 @@
 	harmful = TRUE
 	ph = 0.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
+	var/healing_per_reagent_unit = 5
 
 // FEED ME SEYMOUR
 /datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -824,20 +824,33 @@
 	if(exposed_mob.suiciding) //they are never coming back
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body does not react..."))
 		return
+
 	if(iscarbon(exposed_mob) && !(methods & INGEST)) //simplemobs can still be splashed
 		return ..()
-	var/amount_to_revive = round((exposed_mob.getBruteLoss() + exposed_mob.getFireLoss()) / 20)
-	if(exposed_mob.getBruteLoss() + exposed_mob.getFireLoss() >= 200 || HAS_TRAIT(exposed_mob, TRAIT_HUSK) || reac_volume < amount_to_revive) //body will die from brute+burn on revive or you haven't provided enough to revive.
+
+	if(HAS_TRAIT(exposed_mob, TRAIT_HUSK))
+		exposed_mob.visible_message(span_warning("[exposed_mob]'s body lets off a puff of smoke..."))
+		return
+
+	var/mob_current_health = exposed_mob.get_organic_health()
+	var/needed_to_revive = (mob_current_health > 0) ? 1 : abs(FLOOR(mob_current_health, healing_per_reagent_unit)) + 1
+
+	if(reac_volume < needed_to_revive)
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses a bit, and then falls still once more."))
 		exposed_mob.do_jitter_animation(10)
 		return
+
 	exposed_mob.visible_message(span_warning("[exposed_mob]'s body starts convulsing!"))
 	exposed_mob.notify_ghost_cloning("Your body is being revived with Strange Reagent!")
 	exposed_mob.do_jitter_animation(10)
-	var/excess_healing = 5 * (reac_volume - amount_to_revive) //excess reagent will heal blood and organs across the board
-	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 10), 40) //jitter immediately, then again after 4 and 8 seconds
-	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation), 10), 80)
-	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, revive), FALSE, FALSE, excess_healing), 79)
+
+	// any excess reagent will simply heal the body and organs
+	var/excess_healing = healing_per_reagent_unit * (reac_volume - needed_to_revive)
+	// jitter immediately, after four seconds, and after eight seconds
+	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 4 SECONDS)
+	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 8 SECONDS)
+	// KEEP THIS IN LINE WITH THE ARGUMENTS FOR REVIVE! (see code\modules\mob\living\living.dm:744)
+	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, revive), NONE, excess_healing, FALSE), 7 SECONDS)
 	return ..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
