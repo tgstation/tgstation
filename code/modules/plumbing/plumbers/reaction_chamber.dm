@@ -109,7 +109,7 @@
 			var/reagent = get_chem_id(params["chem"])
 			if(reagent)
 				required_reagents.Remove(reagent)
-			.=TRUE
+			. = TRUE
 
 		if("temperature")
 			var/target = text2num(params["target"])
