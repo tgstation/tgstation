@@ -13,6 +13,8 @@
 		/mob/living/carbon/human,
 		/mob/living/simple_animal,
 	))
+	types_to_check -= /mob/living/simple_animal/pet/gondola/gondolapod // need a pod, which we don't have
+
 	for(var/mob/living/type as anything in types_to_check)
 		allocate_new_target(type)
 		if(target.status_flags & GODMODE)
