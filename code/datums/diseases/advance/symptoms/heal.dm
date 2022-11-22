@@ -453,6 +453,14 @@
 	else if(M.reagents.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
 		M.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
 		. += power * 0.5
+	else if(ishuman(M))
+		var/mob/living/carbon/human/bloodyhooman = M
+		if(bloodyhooman.dna?.species?.exotic_blood == /datum/reagent/water/holywater && !(NOBLOOD in bloodyhooman.dna.species.species_traits) && bloodyhooman.blood_volume >= BLOOD_VOLUME_NORMAL + 0.5*absorption_coeff) //do NOT make this able to lower your water-blood level below BLOOD_VOLUME_NORMAL, or self-resp will be able to keep this active all the time on its own.
+			bloodyhooman.blood_volume -= 0.5*absorption_coeff
+			. += power * 0.75 //technically, if someone with holy water as their exotic blood has normal water in their bloodstream, the normal water will be prioritized over their holy water. that's an extreme edge case that would require way too much logic to cover properly, though.
+		else if(bloodyhooman.dna?.species?.exotic_blood == /datum/reagent/water && !(NOBLOOD in bloodyhooman.dna.species.species_traits) && bloodyhooman.blood_volume >= BLOOD_VOLUME_NORMAL + 0.5*absorption_coeff)
+			bloodyhooman.blood_volume -= 0.5*absorption_coeff
+			. += power * 0.5
 
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 2 * actual_power
@@ -518,6 +526,10 @@
 			. += power * min(0.5, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. += power * 0.75 //Determines how much the symptom heals if injected or ingested
+	else if(ishuman(M))
+		var/mob/living/carbon/human/bloodyhooman = M
+		if(bloodyhooman.dna?.species?.exotic_blood == /datum/reagent/toxin/plasma && !(NOBLOOD in bloodyhooman.dna.species.species_traits) && bloodyhooman.blood_volume > 0)
+			. += power * 0.75
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
