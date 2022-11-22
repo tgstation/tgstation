@@ -16,7 +16,7 @@
 	var/atom/target = weak_target?.resolve()
 
 	if (!target)
-		finish_action(controller, succeeded = FALSE, target_key)
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	if (get_dist(basic_mob, target) <= required_distance)

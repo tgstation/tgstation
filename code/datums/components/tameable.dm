@@ -26,7 +26,7 @@
 
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(try_tame))
-	RegisterSignal(parent, list(COMSIG_SIMPLEMOB_SENTIENCEPOTION, COMSIG_SIMPLEMOB_TRANSFERPOTION) , PROC_REF(on_tame)) //Instantly succeeds
+	RegisterSignals(parent, list(COMSIG_SIMPLEMOB_SENTIENCEPOTION, COMSIG_SIMPLEMOB_TRANSFERPOTION) , PROC_REF(on_tame)) //Instantly succeeds
 	RegisterSignal(parent, COMSIG_EXTERNAL_TAME_LIVING_MOB, PROC_REF(tamed_externally)) //Instantly succeeds
 
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
