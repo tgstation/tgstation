@@ -16,11 +16,6 @@
 	/// Whether we are allowed to reconnect.
 	var/reconnecting = TRUE
 
-/obj/machinery/computer/atmos_control/Destroy()
-	GLOB.atmos_air_controllers -= src
-	SSradio.remove_object(src, frequency)
-	return ..()
-
 /// Reconnect only works for station based chambers.
 /obj/machinery/computer/atmos_control/proc/reconnect(mob/user)
 	if(!reconnecting)
@@ -28,13 +23,11 @@
 
 	// We only prompt the user with the sensors that are actually available.
 	var/available_devices = list()
-	for(var/datum/weakref/device_ref as anything in radio_connection.devices[RADIO_ATMOSIA])
-		var/obj/machinery/machine = device_ref.resolve()
-		if(istype(machine, /obj/machinery/computer/atmos_control)) // Skip if we are a listener. Make this a list if you add devices that work similarly to this comp.
+
+	for (var/chamber_identifier in GLOB.station_gas_chambers)
+		if (!("[chamber_identifier]_in" in GLOB.objects_by_id_tag) && !("[chamber_identifier]_out" in GLOB.objects_by_id_tag))
 			continue
-		var/chamber_identifier = splittext(machine.id_tag, "_")[1]
-		if(!GLOB.station_gas_chambers[chamber_identifier])
-			continue
+
 		available_devices[GLOB.station_gas_chambers[chamber_identifier]] = chamber_identifier
 
 	// As long as we dont put any funny chars in the strings it should match.
@@ -46,25 +39,10 @@
 
 	atmos_chambers = list()
 	atmos_chambers[new_id] = new_name
-	sensor_info = list()
-	input_info = list()
-	output_info = list()
 
 	name = new_name + (control ? " Control" : " Monitor")
 
-	// Ask things around us to update.
-	// Due to how signal datums work this is unoptimized but as long as our freq isnt terribly populated we should be fine.
-	// Also, we dont need to prompt sensors and meters since they already broadcast every process_atmos().
-	var/datum/signal/update_request = new(list("sigtype" = "command", "user" = usr, "status" = TRUE ,"tag" = "[new_id]_in"))
-	radio_connection.post_signal(src, update_request, filter = RADIO_ATMOSIA)
-	update_request = new(list("sigtype" = "command", "user" = usr, "status" = TRUE ,"tag" = "[new_id]_out"))
-	radio_connection.post_signal(src, update_request, filter = RADIO_ATMOSIA)
-
 	return TRUE
-#endif
-
-/obj/machinery/computer/atmos_control/proc/reconnect(mob/user)
-	// MBTODO: Reconnect
 
 /obj/machinery/computer/atmos_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -118,19 +96,26 @@
 		return
 
 	var/chamber = params["chamber"]
-	if (!(chamber in atmos_chambers))
-		return TRUE
 
 	switch(action)
 		if("toggle_input")
+			if (!(chamber in atmos_chambers))
+				return TRUE
+
 			var/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/input = GLOB.objects_by_id_tag["[chamber]_in"]
 			input?.on = !input.on
 			input.update_appearance(UPDATE_ICON)
 		if("toggle_output")
+			if (!(chamber in atmos_chambers))
+				return TRUE
+
 			var/obj/machinery/atmospherics/components/unary/vent_pump/output = GLOB.objects_by_id_tag["[chamber]_out"]
 			output?.on = !output.on
 			output.update_appearance(UPDATE_ICON)
 		if("adjust_input")
+			if (!(chamber in atmos_chambers))
+				return TRUE
+
 			var/target = text2num(params["rate"])
 			if(isnull(target))
 				return TRUE
@@ -139,12 +124,17 @@
 			var/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/input = GLOB.objects_by_id_tag["[chamber]_in"]
 			input?.volume_rate = clamp(target, 0, min(input.airs[1].volume, MAX_TRANSFER_RATE))
 		if("adjust_output")
+			if (!(chamber in atmos_chambers))
+				return TRUE
+
 			var/target = text2num(params["rate"])
 			if(isnull(target))
 				return TRUE
 
 			var/obj/machinery/atmospherics/components/unary/vent_pump/output = GLOB.objects_by_id_tag["[chamber]_out"]
 			output?.internal_pressure_bound = clamp(target, 0, ATMOS_PUMP_MAX_PRESSURE)
+		if("reconnect")
+			reconnect(usr)
 
 	return TRUE
 
