@@ -17,6 +17,9 @@
 		allocate_new_target(type)
 		if(target.status_flags & GODMODE)
 			continue
+		if(istype(target, /mob/living/simple_animal))
+			var/mob/living/simple_animal/simple_animal = target
+			simple_animal.loot?.Cut()
 
 		test_damage_but_no_death(type)
 		test_death_no_damage(type)
