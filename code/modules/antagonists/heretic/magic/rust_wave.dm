@@ -1,7 +1,9 @@
 // Shoots out in a wave-like, what rust heretics themselves get
 /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
-	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
+	desc = "Spews forth a disorienting plume that causes enemies to strike each other, \
+		briefly blinds them (increasing with range) and poisons them (decreasing with range). \
+		Also spreads rust in the path of the plume."
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "entropic_plume"
@@ -25,19 +27,21 @@
 	target_turf.rust_heretic_act()
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, atom/caster, level)
-	if(victim.can_block_magic(antimagic_flags) || IS_HERETIC_OR_MONSTER(victim))
+	if(victim.can_block_magic(antimagic_flags) || IS_HERETIC_OR_MONSTER(victim) || victim == caster)
 		return
 	victim.apply_status_effect(/datum/status_effect/amok)
 	victim.apply_status_effect(/datum/status_effect/cloudstruck, level * 1 SECONDS)
 	victim.reagents?.add_reagent(/datum/reagent/eldritch, max(1, 6 - level))
 
 /datum/action/cooldown/spell/cone/staggered/entropic_plume/calculate_cone_shape(current_level)
-	if(current_level == cone_levels)
-		return 5
-	else if(current_level == cone_levels - 1)
+	// At the first level (that isn't level 1) we will be small
+	if(current_level == 2)
 		return 3
-	else
-		return 2
+	// At the max level, we turn small again
+	if(current_level == cone_levels)
+		return 3
+	// Otherwise, all levels in between will be wider
+	return 5
 
 /obj/effect/temp_visual/dir_setting/entropic
 	icon = 'icons/effects/160x160.dmi'

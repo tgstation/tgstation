@@ -58,7 +58,7 @@
 	pull_force = PULL_FORCE_DEFAULT
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/hostile/asteroid/polarbear/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
 		return

@@ -8,6 +8,7 @@
 	density = FALSE
 	anchored = TRUE
 	can_atmos_pass = ATMOS_PASS_NO
+	can_astar_pass = CANASTARPASS_ALWAYS_PROC
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
@@ -42,7 +43,7 @@
 	var/action = anchored ? "unscrews [src] from" : "screws [src] to"
 	var/uraction = anchored ? "unscrew [src] from" : "screw [src] to"
 	user.visible_message(span_warning("[user] [action] the floor."), span_notice("You start to [uraction] the floor..."), span_hear("You hear rustling noises."))
-	if(!W.use_tool(src, user, 100, volume=100, extra_checks = CALLBACK(src, .proc/check_anchored_state, anchored)))
+	if(!W.use_tool(src, user, 100, volume=100, extra_checks = CALLBACK(src, PROC_REF(check_anchored_state), anchored)))
 		return TRUE
 	set_anchored(!anchored)
 	update_atmos_behaviour()

@@ -596,7 +596,7 @@
 		return
 
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
-	reagents.metabolize(src, delta_time, times_fired, can_overdose=FALSE, liverless = TRUE)
+	reagents.metabolize(src, delta_time, times_fired, can_overdose=TRUE, liverless = TRUE)
 
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
 		return

@@ -47,7 +47,7 @@
 		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
 			opening = FALSE
 			return
-	addtimer(CALLBACK(src, /obj/structure/falsewall/proc/toggle_open), 5)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 5)
 
 /obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
@@ -188,7 +188,7 @@
 
 /obj/structure/falsewall/uranium/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, .proc/radiate)
+	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, PROC_REF(radiate))
 
 /obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)
 	radiate()

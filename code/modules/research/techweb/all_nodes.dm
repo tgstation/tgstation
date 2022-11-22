@@ -110,6 +110,7 @@
 		"spoon",
 		"status_display_frame",
 		"sticky_tape",
+		"syrup_bottle",
 		"tablet",
 		"tape",
 		"tech_disk",
@@ -826,7 +827,9 @@
 		"comp_bar_overlay",
 		"comp_bci_action",
 		"comp_counter_overlay",
+		"comp_install_detector",
 		"comp_object_overlay",
+		"comp_reagent_injector",
 		"comp_target_intercept",
 		"comp_thought_listener",
 		"comp_vox",
@@ -849,7 +852,7 @@
 	id = "server_shell"
 	display_name = "Server Technology Research"
 	description = "Grants access to a server shell that has a very high capacity for components."
-	prereq_ids = list("adv_shells", "computer_hardware_basic")
+	prereq_ids = list("adv_shells", "computer_data_disks")
 	design_ids = list(
 		"server_shell",
 	)
@@ -1116,24 +1119,17 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 
-/datum/techweb_node/computer_hardware_basic //Modular computers are shitty and nearly useless so until someone makes them actually useful this can be easy to get.
-	id = "computer_hardware_basic"
-	display_name = "Computer Hardware"
-	description = "How computer hardware is made."
+/datum/techweb_node/data_disks
+	id = "computer_data_disks"
+	display_name = "Computer Data Disks"
+	description = "Data disks used for storing modular computer stuff."
 	prereq_ids = list("comptech")
 	design_ids = list(
-		"bat_advanced",
-		"bat_control",
-		"bat_micro",
-		"bat_nano",
-		"bat_normal",
-		"bat_super",
-		"cardslot",
 		"portadrive_advanced",
 		"portadrive_basic",
 		"portadrive_super",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)  //they are really shitty
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/computer_board_gaming
 	id = "computer_board_gaming"
@@ -1274,6 +1270,11 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
+/datum/techweb_node/cyber_organs/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
+
 /datum/techweb_node/cyber_organs_upgraded
 	id = "cyber_organs_upgraded"
 	display_name = "Upgraded Cybernetic Organs"
@@ -1287,6 +1288,11 @@
 		"cybernetic_stomach_tier3",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
+
+/datum/techweb_node/cyber_organs_upgraded/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 /datum/techweb_node/cyber_implants
 	id = "cyber_implants"
@@ -1304,6 +1310,11 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+/datum/techweb_node/cyber_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
+
 /datum/techweb_node/adv_cyber_implants
 	id = "adv_cyber_implants"
 	display_name = "Advanced Cybernetic Implants"
@@ -1316,6 +1327,11 @@
 		"ci-toolset",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/adv_cyber_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 /datum/techweb_node/combat_cyber_implants
 	id = "combat_cyber_implants"
@@ -1330,6 +1346,11 @@
 		"ci-xray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/combat_cyber_implants/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
 ////////////////////////Tools////////////////////////
 
@@ -2132,7 +2153,7 @@
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
 	if(!SSearly_assets.initialized)
-		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(register_uplink_items))
 	else
 		register_uplink_items()
 

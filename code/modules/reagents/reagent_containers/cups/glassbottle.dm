@@ -137,7 +137,7 @@
 	froth.pixel_x = offset_x
 	froth.pixel_y = offset_y
 	add_overlay(froth)
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, froth), 2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), froth), 2 SECONDS)
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
@@ -574,7 +574,7 @@
 	else //you dun goofed
 		user.visible_message(
 			span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"),
-			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"), 
+			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"),
 			)
 		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
 		return smash(target = user, ranged = FALSE, break_top = TRUE)
@@ -737,7 +737,7 @@
 		to_chat(user, span_info("You light [src] on fire."))
 		add_overlay(custom_fire_overlay ? custom_fire_overlay : GLOB.fire_overlay)
 		if(!isGlass)
-			addtimer(CALLBACK(src, .proc/explode), 5 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(explode)), 5 SECONDS)
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/proc/explode()
 	if(!active)
@@ -774,7 +774,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/pruno/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/check_fermentation)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(check_fermentation))
 
 /obj/item/reagent_containers/cup/glass/bottle/pruno/Destroy()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
@@ -795,7 +795,7 @@
 		return
 	if(!fermentation_time_remaining)
 		fermentation_time_remaining = fermentation_time
-	fermentation_timer = addtimer(CALLBACK(src, .proc/do_fermentation), fermentation_time_remaining, TIMER_UNIQUE|TIMER_STOPPABLE)
+	fermentation_timer = addtimer(CALLBACK(src, PROC_REF(do_fermentation)), fermentation_time_remaining, TIMER_UNIQUE|TIMER_STOPPABLE)
 	fermentation_time_remaining = null
 
 // actually ferment
