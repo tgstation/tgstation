@@ -2788,7 +2788,7 @@
 /turf/open/floor/engine/airless,
 /area/ruin/space/ks13/science/ordnance)
 "yb" = (
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /obj/item/mop,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,

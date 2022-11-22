@@ -52,7 +52,7 @@
 #define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
 
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
-#define MAXIMUM_WET_TIME 5 MINUTES
+#define MAXIMUM_WET_TIME (5 MINUTES)
 
 /**
  * Get the turf that `A` resides in, regardless of any containers.

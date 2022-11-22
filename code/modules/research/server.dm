@@ -30,6 +30,7 @@
 	if(CONFIG_GET(flag/no_default_techweb_link))
 		stored_research = new /datum/techweb
 	SSresearch.servers |= src
+	stored_research.techweb_servers |= src
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 
 ///calculate efficiency of server based on scanning modules installed
@@ -91,6 +92,10 @@
 
 
 /obj/machinery/rnd/server/Destroy()
+	if(stored_research)
+		stored_research.techweb_servers -= src
+	if(CONFIG_GET(flag/no_default_techweb_link))
+		QDEL_NULL(stored_research)
 	SSresearch.servers -= src
 	return ..()
 

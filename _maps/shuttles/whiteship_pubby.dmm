@@ -550,14 +550,10 @@
 	},
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 1;
-	height = 18;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2;
-	width = 17;
-	dheight = 5
+	port_direction = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
@@ -1192,7 +1188,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /obj/item/soap/nanotrasen,
 /obj/item/mop,
 /turf/open/floor/iron/dark,

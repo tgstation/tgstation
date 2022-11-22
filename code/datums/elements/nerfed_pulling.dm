@@ -32,7 +32,7 @@
 		return
 
 	source.add_movespeed_modifier(/datum/movespeed_modifier/nerfed_bump)
-	addtimer(CALLBACK(source, /mob/proc/remove_movespeed_modifier, /datum/movespeed_modifier/nerfed_bump), 1 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE)
+	addtimer(CALLBACK(source, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/nerfed_bump), 1 SECONDS, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 /datum/element/nerfed_pulling/proc/on_updating_pull_movespeed(mob/living/source)
 	SIGNAL_HANDLER

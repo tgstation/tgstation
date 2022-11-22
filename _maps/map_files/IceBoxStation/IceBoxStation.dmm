@@ -5831,7 +5831,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "bMs" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "bMz" = (
@@ -40551,7 +40551,7 @@
 /area/station/engineering/atmos)
 "mxA" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/janitorialcart{
+/obj/structure/mop_bucket/janitorialcart{
 	dir = 4
 	},
 /obj/item/mop,
@@ -45910,7 +45910,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "oaB" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "oaG" = (

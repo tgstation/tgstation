@@ -87,11 +87,16 @@
 		to_chat(owner, span_warning("You cannot cast [src] on yourself!"))
 		return FALSE
 
-	if(get_dist(owner, cast_on) > cast_range)
-		to_chat(owner, span_warning("[cast_on.p_theyre(TRUE)] too far away!"))
-		return FALSE
-
 	return TRUE
+
+/datum/action/cooldown/spell/pointed/before_cast(atom/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
+
+	if(owner && get_dist(get_turf(owner), get_turf(cast_on)) > cast_range)
+		cast_on.balloon_alert(owner, "too far away!")
+		return . | SPELL_CANCEL_CAST
 
 /**
  * ### Pointed projectile spells

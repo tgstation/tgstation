@@ -49,7 +49,7 @@ Nothing else in the console has ID requirements.
 	. = ..()
 	if(!CONFIG_GET(flag/no_default_techweb_link))
 		stored_research = SSresearch.science_tech
-		stored_research.consoles_accessing[src] = TRUE
+		stored_research.consoles_accessing += src
 
 /obj/machinery/computer/rdconsole/Destroy()
 	if(stored_research)
@@ -153,13 +153,14 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet/research_designs),
 	)
 
 // heavy data from this proc should be moved to static data when possible
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
 	var/list/data = list()
 	data["stored_research"] = !!stored_research
+	data["locked"] = locked
 	if(!stored_research) //lack of a research node is all we care about.
 		return data
 	data += list(
@@ -172,7 +173,6 @@ Nothing else in the console has ID requirements.
 		"sec_protocols" = !(obj_flags & EMAGGED),
 		"t_disk" = null,
 		"d_disk" = null,
-		"locked" = locked,
 	)
 
 	if (t_disk)

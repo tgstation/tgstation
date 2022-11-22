@@ -87,7 +87,7 @@
 
 
 /datum/saymode/holopad
-	key = "h"
+	key = "2"
 	mode = MODE_HOLOPAD
 
 /datum/saymode/holopad/handle_message(mob/living/user, message, datum/language/language)
@@ -98,7 +98,7 @@
 	return TRUE
 
 /datum/saymode/mafia
-	key = "j"
+	key = "1"
 	mode = MODE_MAFIA
 
 /datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
