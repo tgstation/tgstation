@@ -442,6 +442,15 @@ Behavior that's still missing from this component that original food items had t
 		if(after_eat)
 			after_eat.Invoke(eater, feeder, bitecount)
 
+		//Flypeople throw the food back up immediately
+		if(ishuman(eater))
+			var/mob/living/carbon/human/H = eater
+			if(isflyperson(H))
+				H.vomit(0, FALSE, FALSE, 2, TRUE, force=TRUE, purge_ratio = 0.67)
+				playsound(get_turf(H), 'sound/effects/splat.ogg', 50, TRUE)
+				H.visible_message(span_danger("[H] vomits on the floor!"), \
+					span_userdanger("You throw up on the floor!"))
+
 		return TRUE
 
 ///Checks whether or not the eater can actually consume the food
