@@ -384,8 +384,8 @@
 			var/mob/living/carbon/C = victim
 			C.electrocute_act(shock_damage*0.75, src, 1, flags)
 	//Knockdown
-	var/should_knockdown = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
-	if(should_knockdown)
+	var/should_not_knockdown = ((flags & SHOCK_TESLA) && siemens_coeff <= 0.5) || (flags & SHOCK_NOSTUN)
+	if(!should_not_knockdown)
 		Knockdown(80 * siemens_coeff)
 	//Jitter and other fluff.
 	do_jitter_animation(300)
