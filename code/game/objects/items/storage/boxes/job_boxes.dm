@@ -13,6 +13,14 @@
 	/// What medipen should be present in this box?
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
+/obj/item/storage/box/survival/Initialize(mapload)
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		atom_storage.max_slots += 2
+		atom_storage.max_total_storage += 4
+		name = "large [name]"
+		transform = transform.Scale(1.25, 1)
+
 /obj/item/storage/box/survival/PopulateContents()
 	if(!isnull(mask_type))
 		new mask_type(src)
