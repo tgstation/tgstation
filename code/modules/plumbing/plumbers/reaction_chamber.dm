@@ -114,7 +114,7 @@
 		if("temperature")
 			var/target = text2num(params["target"])
 			if(target != null)
-				target_temperature=clamp(target,0,1000)
+				target_temperature=clamp(target, 0, 1000)
 			.=TRUE
 
 ///Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting
