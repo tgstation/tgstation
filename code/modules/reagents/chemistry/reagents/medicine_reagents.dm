@@ -846,11 +846,19 @@
 
 	// any excess reagent will simply heal the body and organs
 	var/excess_healing = healing_per_reagent_unit * (reac_volume - needed_to_revive)
+
+	// during unit tests, we want it to happen immediately
+	#ifdef UNIT_TESTS
+	exposed_mob.revive(NONE, excess_healing, FALSE)
+	#else
+
 	// jitter immediately, after four seconds, and after eight seconds
 	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 4 SECONDS)
 	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, do_jitter_animation), 1 SECONDS), 8 SECONDS)
 	// KEEP THIS IN LINE WITH THE ARGUMENTS FOR REVIVE! (see code\modules\mob\living\living.dm:744)
 	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, revive), NONE, excess_healing, FALSE), 7 SECONDS)
+	#endif
+
 	return ..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
