@@ -955,16 +955,17 @@
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
+	//the initial value for an particular part/stack type. We count up from here when more instances are found
 	var/init_value = 0
 	var/list/part_count = list()
 	for(var/obj/item/component_part in component_parts)
 		if(!part_count[component_part.name])
 			if(isstack(component_part))
-				var/obj/item/stack/stack_part=component_part
-				init_value=stack_part.amount
+				var/obj/item/stack/stack_part = component_part
+				init_value = stack_part.amount
 			else
 				init_value = 1
-			part_count[component_part.name]=init_value
+			part_count[component_part.name] = init_value
 		else
 			part_count[component_part.name]++
 
@@ -978,9 +979,9 @@
 			count=part_count[component_part.name]
 			if(count>1)
 				if(!istype(component_part,/obj/item/stack/cable_coil) && isstack(component_part))
-					suffix=" sheets"
+					suffix = " sheets"
 				else
-					suffix="s"
+					suffix = "s"
 			else
 				suffix=""
 			text+= span_notice("[icon2html(component_part, user)] [count] [component_part.name][suffix].")

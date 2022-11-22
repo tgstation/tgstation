@@ -46,11 +46,11 @@
 
 		var/obj/item/stack/the_stack = to_insert
 		//how much of the stack is the user trying to insert
-		var/insert_amount=the_stack.amount
+		var/insert_amount = the_stack.amount
 		//how much of this stack type is currently in the stack
-		var/present_amount=0
+		var/present_amount = 0
 		//how much space is available
-		var/available=0
+		var/available = 0
 		//stacks type
 		var/obj/item/stack/things
 
@@ -77,13 +77,11 @@
 
 		//no more storage for this specific stack type
 		if(MAX_STACK_PICKUP-present_amount==0)
-			to_chat(usr,span_alert("No more [to_insert.name] can be added!"))
 			return FALSE
 
 		//we want the user to insert the exact stack amount which is available so we dont have to bother subtracting & leaving left overs for the user
 		available = MAX_STACK_PICKUP-present_amount
 		if(available-insert_amount<0)
-			to_chat(usr,span_alert("You can only insert exact [available] more of [to_insert.name]!"))
 			return FALSE
 
 	//check normal insertion of other stock parts
