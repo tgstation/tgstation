@@ -61,8 +61,8 @@
 	return pre_allocated
 
 /datum/unit_test/strange_reagent/proc/update_amounts(mob/living/target)
-	amount_needed_to_full_heal = strange_reagent.calculate_amount_needed_to_full_heal()
-	amount_needed_to_revive = strange_reagent.calculate_amount_needed_to_revive()
+	amount_needed_to_full_heal = strange_reagent.calculate_amount_needed_to_full_heal(target)
+	amount_needed_to_revive = strange_reagent.calculate_amount_needed_to_revive(target)
 
 /datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
