@@ -117,9 +117,11 @@
 	if (!object)
 		return
 
+#if DM_VERSION <= 514
 	if(istext(object) && object != GLOBAL_PROC)
 		to_chat(usr, "[object] may be an external library. Calling external libraries is disallowed.", confidential = TRUE)
 		return
+#endif
 
 	var/list/calling_arguments = arguments
 	if (length(args))
@@ -158,9 +160,11 @@
 	if (!object)
 		return
 
+#if DM_VERSION <= 514
 	if(istext(object) && object != GLOBAL_PROC)
 		to_chat(usr, "[object] may be an external library. Calling external libraries is disallowed.", confidential = TRUE)
 		return
+#endif
 
 	var/list/calling_arguments = arguments
 	if (length(args))
