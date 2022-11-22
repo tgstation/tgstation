@@ -285,11 +285,11 @@
 		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(turf_underneath, src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.
 		moveToNullspace()
-		addtimer(CALLBACK(src, .proc/open_pod, benis), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
+		addtimer(CALLBACK(src, PROC_REF(open_pod), benis), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
 	else if (style == STYLE_SEETHROUGH)
 		open_pod(src)
 	else
-		addtimer(CALLBACK(src, .proc/open_pod, src), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
+		addtimer(CALLBACK(src, PROC_REF(open_pod), src), delays[POD_OPENING]) //After the opening delay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
 /obj/structure/closet/supplypod/proc/open_pod(atom/movable/holder, broken = FALSE, forced = FALSE) //The holder var represents an atom whose contents we will be working with
 	if (!holder)
@@ -317,9 +317,9 @@
 		startExitSequence(src)
 	else
 		if (reversing)
-			addtimer(CALLBACK(src, .proc/SetReverseIcon), delays[POD_LEAVING]/2) //Finish up the pod's duties after a certain amount of time
+			addtimer(CALLBACK(src, PROC_REF(SetReverseIcon)), delays[POD_LEAVING]/2) //Finish up the pod's duties after a certain amount of time
 		if(!stay_after_drop) // Departing should be handled manually
-			addtimer(CALLBACK(src, .proc/startExitSequence, holder), delays[POD_LEAVING]*(4/5)) //Finish up the pod's duties after a certain amount of time
+			addtimer(CALLBACK(src, PROC_REF(startExitSequence), holder), delays[POD_LEAVING]*(4/5)) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/proc/startExitSequence(atom/movable/holder)
 	if (leavingSound)
@@ -340,7 +340,7 @@
 	take_contents(holder)
 	playsound(holder, close_sound, soundVolume*0.75, TRUE, -3)
 	holder.setClosed()
-	addtimer(CALLBACK(src, .proc/preReturn, holder), delays[POD_LEAVING] * 0.2) //Start to leave a bit after closing for cinematic effect
+	addtimer(CALLBACK(src, PROC_REF(preReturn), holder), delays[POD_LEAVING] * 0.2) //Start to leave a bit after closing for cinematic effect
 
 /obj/structure/closet/supplypod/take_contents(atom/movable/holder)
 	var/turf/turf_underneath = holder.drop_location()
@@ -417,7 +417,7 @@
 	deleteRubble()
 	animate(holder, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(holder, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising pod
-	addtimer(CALLBACK(src, .proc/handleReturnAfterDeparting, holder), 15) //Finish up the pod's duties after a certain amount of time
+	addtimer(CALLBACK(src, PROC_REF(handleReturnAfterDeparting), holder), 15) //Finish up the pod's duties after a certain amount of time
 
 /obj/structure/closet/supplypod/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open_pod() proc for more details
 	opened = TRUE
@@ -464,7 +464,7 @@
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
 	SET_PLANE_EXPLICIT(glow_effect, ABOVE_GAME_PLANE, src)
-	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
+	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, PROC_REF(remove_glow))
 
 /obj/structure/closet/supplypod/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	. = ..()
@@ -616,8 +616,8 @@
 	if (soundStartTime < 0)
 		soundStartTime = 1
 	if (!pod.effectQuiet && !(pod.pod_flags & FIRST_SOUNDS))
-		addtimer(CALLBACK(src, .proc/playFallingSound), soundStartTime)
-	addtimer(CALLBACK(src, .proc/beginLaunch, pod.effectCircle), pod.delays[POD_TRANSIT])
+		addtimer(CALLBACK(src, PROC_REF(playFallingSound)), soundStartTime)
+	addtimer(CALLBACK(src, PROC_REF(beginLaunch), pod.effectCircle), pod.delays[POD_TRANSIT])
 
 /obj/effect/pod_landingzone/proc/playFallingSound()
 	playsound(src, pod.fallingSound, pod.soundVolume, TRUE, 6)
@@ -638,7 +638,7 @@
 	SET_PLANE_EXPLICIT(pod, ABOVE_GAME_PLANE, src)
 	if (pod.style != STYLE_INVISIBLE)
 		animate(pod, pixel_z = -1 * abs(sin(rotation))*4, pixel_x = SUPPLYPOD_X_OFFSET + (sin(rotation) * 20), time = pod.delays[POD_FALLING], easing = LINEAR_EASING) //Make the pod fall! At an angle!
-	addtimer(CALLBACK(src, .proc/endLaunch), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
+	addtimer(CALLBACK(src, PROC_REF(endLaunch)), pod.delays[POD_FALLING], TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/pod_landingzone/proc/setupSmoke(rotation)
 	if (pod.style == STYLE_INVISIBLE || pod.style == STYLE_SEETHROUGH)
@@ -656,7 +656,7 @@
 		smoke_part.pixel_y = abs(cos(rotation))*32 * i
 		smoke_part.add_filter("smoke_blur", 1, gauss_blur_filter(size = 4))
 		var/time = (pod.delays[POD_FALLING] / length(smoke_effects))*(length(smoke_effects)-i)
-		addtimer(CALLBACK(smoke_part, /obj/effect/supplypod_smoke/.proc/drawSelf, i), time, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
+		addtimer(CALLBACK(smoke_part, TYPE_PROC_REF(/obj/effect/supplypod_smoke/, drawSelf), i), time, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 		QDEL_IN(smoke_part, pod.delays[POD_FALLING] + 35)
 
 /obj/effect/pod_landingzone/proc/drawSmoke()

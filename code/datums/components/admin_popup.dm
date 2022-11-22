@@ -23,7 +23,7 @@
 			COMSIG_ADMIN_HELP_REPLIED,
 			COMSIG_PARENT_QDELETING,
 		),
-		.proc/delete_self,
+		PROC_REF(delete_self),
 	)
 
 /datum/component/admin_popup/Destroy(force, silent)

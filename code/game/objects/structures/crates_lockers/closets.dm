@@ -80,8 +80,8 @@
 	update_appearance()
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
-		COMSIG_ATOM_MAGICALLY_UNLOCKED = .proc/on_magic_unlock,
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(locker_carbon),
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -198,7 +198,7 @@
 			animate(door_obj, transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
 		else
 			animate(transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag)
-	addtimer(CALLBACK(src, .proc/end_door_animation), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(src, PROC_REF(end_door_animation)), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
 
 /// Ends the door animation and removes the animated overlay
 /obj/structure/closet/proc/end_door_animation()
@@ -767,6 +767,6 @@
 	SIGNAL_HANDLER
 
 	locked = FALSE
-	INVOKE_ASYNC(src, .proc/open)
+	INVOKE_ASYNC(src, PROC_REF(open))
 
 #undef LOCKER_FULL

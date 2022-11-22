@@ -153,22 +153,22 @@ SUBSYSTEM_DEF(job)
 					new_joinable_departments_by_type[department_type] = department
 				department.add_job(job)
 
-	sortTim(new_all_occupations, /proc/cmp_job_display_asc)
+	sortTim(new_all_occupations, GLOBAL_PROC_REF(cmp_job_display_asc))
 	for(var/datum/job/job as anything in new_all_occupations)
 		if(!job.exp_granted_type)
 			continue
 		new_experience_jobs_map[job.exp_granted_type] += list(job)
 
-	sortTim(new_joinable_departments_by_type, /proc/cmp_department_display_asc, associative = TRUE)
+	sortTim(new_joinable_departments_by_type, GLOBAL_PROC_REF(cmp_department_display_asc), associative = TRUE)
 	for(var/department_type in new_joinable_departments_by_type)
 		var/datum/job_department/department = new_joinable_departments_by_type[department_type]
-		sortTim(department.department_jobs, /proc/cmp_job_display_asc)
+		sortTim(department.department_jobs, GLOBAL_PROC_REF(cmp_job_display_asc))
 		new_joinable_departments += department
 		if(department.department_experience_type)
 			new_experience_jobs_map[department.department_experience_type] = department.department_jobs.Copy()
 
 	all_occupations = new_all_occupations
-	joinable_occupations = sortTim(new_joinable_occupations, /proc/cmp_job_display_asc)
+	joinable_occupations = sortTim(new_joinable_occupations, GLOBAL_PROC_REF(cmp_job_display_asc))
 	joinable_departments = new_joinable_departments
 	joinable_departments_by_type = new_joinable_departments_by_type
 	experience_jobs_map = new_experience_jobs_map
@@ -864,7 +864,7 @@ SUBSYSTEM_DEF(job)
 	var/oldjobs = SSjob.all_occupations
 	sleep(2 SECONDS)
 	for (var/datum/job/job as anything in oldjobs)
-		INVOKE_ASYNC(src, .proc/RecoverJob, job)
+		INVOKE_ASYNC(src, PROC_REF(RecoverJob), job)
 
 /datum/controller/subsystem/job/proc/RecoverJob(datum/job/J)
 	var/datum/job/newjob = GetJob(J.title)
@@ -941,42 +941,39 @@ SUBSYSTEM_DEF(job)
 		living_mob.forceMove(toLaunch)
 		new /obj/effect/pod_landingzone(spawn_turf, toLaunch)
 
-///////////////////////////////////
-//Keeps track of all living heads//
-///////////////////////////////////
+/// Returns a list of minds of all heads of staff who are alive
 /datum/controller/subsystem/job/proc/get_living_heads()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.stat != DEAD && (player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
-			. += player.mind
+	for(var/datum/mind/head as anything in get_crewmember_minds())
+		if(!(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			continue
+		if(isnull(head.current) || head.current.stat == DEAD)
+			continue
+		. += head
 
-
-////////////////////////////
-//Keeps track of all heads//
-////////////////////////////
+/// Returns a list of minds of all heads of staff
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			. += player.mind
+	for(var/datum/mind/head as anything in get_crewmember_minds())
+		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			. += head
 
-//////////////////////////////////////////////
-//Keeps track of all living security members//
-//////////////////////////////////////////////
+/// Returns a list of minds of all security members who are alive
 /datum/controller/subsystem/job/proc/get_living_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.stat != DEAD && (player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
-			. += player.mind
+	for(var/datum/mind/sec as anything in get_crewmember_minds())
+		if(!(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY))
+			continue
+		if(isnull(sec.current) || sec.current.stat == DEAD)
+			continue
+		. += sec
 
-////////////////////////////////////////
-//Keeps track of all  security members//
-////////////////////////////////////////
+/// Returns a list of minds of all security members
 /datum/controller/subsystem/job/proc/get_all_sec()
 	. = list()
-	for(var/mob/living/carbon/human/player as anything in GLOB.human_list)
-		if(player.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
-			. += player.mind
+	for(var/datum/mind/sec as anything in get_crewmember_minds())
+		if(sec.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+			. += sec
 
 /datum/controller/subsystem/job/proc/JobDebug(message)
 	log_job_debug(message)
