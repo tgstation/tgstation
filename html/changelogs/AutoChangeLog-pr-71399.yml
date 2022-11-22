@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "AI uploads constructed midround will now give an admin message and log to silicon log"

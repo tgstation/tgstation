@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - bugfix: "Surgically removing wings during flight no longer grants infinite flight"
