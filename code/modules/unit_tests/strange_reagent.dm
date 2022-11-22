@@ -42,10 +42,15 @@
 		test_death_from_too_much_damage(type)
 	// cleanup our vars
 	QDEL_NULL(strange_reagent)
+	allocate_new_target(null)
 
 /datum/unit_test/strange_reagent/proc/allocate_new_target(type)
 	// cache the last one created so that we don't create N instances of the exact same mob
 	var/static/mob/living/pre_allocated
+	if(!type)
+		pre_allocated = null
+		return
+
 	if(pre_allocated?.type == type)
 		pre_allocated.revive(HEAL_ADMIN)
 		return pre_allocated
