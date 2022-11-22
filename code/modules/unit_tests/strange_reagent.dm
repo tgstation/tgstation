@@ -19,6 +19,9 @@
 			continue
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/simple_animal = target
+			if(simple_animal.del_on_death)
+				continue
+
 			simple_animal.loot?.Cut()
 
 		test_damage_but_no_death(type)
