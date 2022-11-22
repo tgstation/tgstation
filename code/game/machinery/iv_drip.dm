@@ -11,6 +11,8 @@
 	icon = 'icons/obj/medical/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
+	var/fill_icon_state = "reagent"
+	var/list/fill_icon_thresholds = list(0,10,25,50,75,80,90)
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	use_power = NO_POWER_USE
@@ -78,29 +80,31 @@
 	return data
 
 /obj/machinery/iv_drip/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+	if(..())
+		return TRUE
 	switch(action)
 		if("changeMode")
 			toggle_mode()
-			. = TRUE
+			return TRUE
 		if("eject")
 			eject_beaker()
-			. = TRUE
+			return TRUE
 		if("detach")
-			if(attached)
-				visible_message(span_notice("[attached] is detached from [src]."))
-				detach_iv()
-			. = TRUE
+			detach_iv()
+			return TRUE
 		if("changeRate")
-			if((use_internal_storage || reagent_container) && attached)
-				var/target_rate = params["rate"]
-				if(text2num(target_rate) != null)
-					target_rate = text2num(target_rate)
-					transfer_rate = round(clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_STEP)
-					. = TRUE
-	update_appearance(UPDATE_ICON)
+			change_transfer_rate(text2num(params["rate"]))
+			return TRUE
+
+/// Sets the transfer rate to the provided value
+/obj/machinery/iv_drip/proc/change_transfer_rate(var/new_rate)
+	if(!use_internal_storage && !reagent_container)
+		return
+	if(!attached)
+		return
+	if(!new_rate)
+		return
+	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_STEP)
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(transfer_rate > 0)
@@ -116,30 +120,19 @@
 		return
 
 	. += attached ? "beakeractive" : "beakeridle"
-	var/datum/reagents/target_reagents = get_reagents()
-	if(!target_reagents)
+	var/datum/reagents/container_reagents = get_reagents()
+	if(!container_reagents)
 		return
 
-	var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/medical/iv_drip.dmi', "reagent")
-	var/percent = round((target_reagents.total_volume / target_reagents.maximum_volume) * 100)
-	switch(percent)
-		if(0 to 9)
-			filling_overlay.icon_state = "reagent0"
-		if(10 to 24)
-			filling_overlay.icon_state = "reagent10"
-		if(25 to 49)
-			filling_overlay.icon_state = "reagent25"
-		if(50 to 74)
-			filling_overlay.icon_state = "reagent50"
-		if(75 to 79)
-			filling_overlay.icon_state = "reagent75"
-		if(80 to 90)
-			filling_overlay.icon_state = "reagent80"
-		if(91 to INFINITY)
-			filling_overlay.icon_state = "reagent100"
-
-	filling_overlay.color = mix_color_from_reagents(target_reagents.reagent_list)
-	. += filling_overlay
+	var/threshold = null
+	for(var/i in 1 to fill_icon_thresholds.len)
+		if(ROUND_UP(100 * container_reagents.total_volume / container_reagents.maximum_volume) >= fill_icon_thresholds[i])
+			threshold = i
+	if(threshold)
+		var/fill_name = "[fill_icon_state][fill_icon_thresholds[threshold]]"
+		var/mutable_appearance/filling = mutable_appearance(icon, fill_name)
+		filling.color = mix_color_from_reagents(container_reagents.reagent_list)
+			. += filling
 
 /obj/machinery/iv_drip/MouseDrop(atom/target)
 	. = ..()
@@ -180,16 +173,21 @@
 	else
 		return ..()
 
-/obj/machinery/iv_drip/AltClick(mob/user)
+/// Checks whether the IV drip transfer rate can be modified with AltClick
+/obj/machinery/iv_drip/proc/can_use_alt_click(mob/user)
 	if(!can_interact(user))
-		return ..()
-	if(istype(src, /obj/machinery/iv_drip/plumbing))
-		return ..()
+		return FALSE
+	if(istype(src, /obj/machinery/iv_drip/plumbing)) // AltClick is used for rotation there
+		return FALSE
 	if(!attached)
-		return ..()
+		return FALSE
 	if(!get_reagents())
-		return ..()
+		return FALSE
+	return TRUE
 
+/obj/machinery/iv_drip/AltClick(mob/user)
+	if(!can_use_alt_click(user))
+		return ..()
 	if(transfer_rate > MIN_IV_TRANSFER_RATE)
 		transfer_rate = MIN_IV_TRANSFER_RATE
 	else
@@ -287,6 +285,8 @@
 
 ///Called when an iv is detached. doesnt include chat stuff because there's multiple options and its better handled by the caller
 /obj/machinery/iv_drip/proc/detach_iv()
+	if(attached)
+		visible_message(span_notice("[attached] is detached from [src]."))
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
 	transfer_rate = MIN_IV_TRANSFER_RATE
 	attached = null
@@ -329,10 +329,14 @@
 	if(usr.incapacitated())
 		return
 	if(inject_only)
+		if(!mode)
+			update_appearance(UPDATE_ICON)
 		mode = IV_INJECTING
 		return
 	// Prevent blood draining from non-living
 	if(attached && !isliving(attached))
+		if(!mode)
+			update_appearance(UPDATE_ICON)
 		mode = IV_INJECTING
 		return
 	mode = !mode
@@ -344,9 +348,7 @@
 	. = ..()
 	if(get_dist(user, src) > 2)
 		return
-
 	. += "[src] is [mode ? "injecting" : "taking blood"]."
-
 	if(reagent_container)
 		if(reagent_container.reagents && reagent_container.reagents.reagent_list.len)
 			. += span_notice("Attached is \a [reagent_container] with [reagent_container.reagents.total_volume] units of liquid.")
@@ -356,7 +358,6 @@
 		. += span_notice("It has an internal chemical storage.")
 	else
 		. += span_notice("No chemicals are attached.")
-
 	. += span_notice("[attached ? attached : "Nothing"] is connected.")
 
 /datum/crafting_recipe/iv_drip
