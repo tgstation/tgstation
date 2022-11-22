@@ -8,7 +8,7 @@
 #define INTERN_THRESHOLD_FALLBACK_HOURS 15
 
 /// Max time interval between projecting holopays
-#define HOLOPAY_PROJECTION_INTERVAL 7 SECONDS
+#define HOLOPAY_PROJECTION_INTERVAL (7 SECONDS)
 
 /* Cards
  * Contains:

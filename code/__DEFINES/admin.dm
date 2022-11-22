@@ -110,7 +110,7 @@
 ///Length of held key buffer
 #define HELD_KEY_BUFFER_LENGTH 15
 
-#define STICKYBAN_DB_CACHE_TIME 10 SECONDS
+#define STICKYBAN_DB_CACHE_TIME (10 SECONDS)
 #define STICKYBAN_ROGUE_CHECK_TIME 5
 
 /// Reference index for policy.json to locate any policy text applicable to polymorphed/staff of changed mobs.

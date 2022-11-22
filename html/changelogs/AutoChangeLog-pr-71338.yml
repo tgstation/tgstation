@@ -1,0 +1,5 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - rscdel: "Removed Charlie station corridor between kitchen and botany"
+  - rscadd: "More random loot spawners on Charlie station"

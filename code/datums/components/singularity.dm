@@ -79,7 +79,7 @@
 
 	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, PROC_REF(block_blob))
 
-	RegisterSignal(parent, list(
+	RegisterSignals(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,

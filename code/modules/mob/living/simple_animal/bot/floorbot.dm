@@ -226,7 +226,6 @@
 	if(target)
 		if(loc == target || loc == get_turf(target))
 			if(check_bot(target)) //Target is not defined at the parent
-				shuffle = TRUE
 				if(prob(50)) //50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
 					target = null
 					path = list()
