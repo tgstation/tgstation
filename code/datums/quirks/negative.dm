@@ -991,6 +991,18 @@
 	hardcore_value = 8
 	mail_goodies = list(/obj/item/pai_card) // can read things for you
 
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "For some reason you are completely unable to speak."
+	icon = "volume-xmark"
+	value = -4
+	mob_trait = TRAIT_MUTE
+	gain_text = span_danger("You find yourself unable to speak!")
+	lose_text = span_notice("You feel a growing strength in your vocal chords.")
+	medical_record_text = "The patient is unable to use their voice in any capacity."
+	hardcore_value = 4
+
 /datum/quirk/body_purist
 	name = "Body Purist"
 	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."

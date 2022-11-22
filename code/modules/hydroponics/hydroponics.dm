@@ -38,7 +38,7 @@
 	///Used for timing of cycles.
 	var/lastcycle = 0
 	///About 10 seconds / cycle
-	var/cycledelay = 200
+	var/cycledelay = HYDROTRAY_CYCLE_DELAY
 	///The currently planted seed
 	var/obj/item/seeds/myseed
 	///Obtained from the quality of the parts used in the tray, determines nutrient drain rate.

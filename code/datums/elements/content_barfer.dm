@@ -4,7 +4,7 @@
  * Used for morphs and bileworms!
  */
 /datum/element/content_barfer
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 /datum/element/content_barfer/Attach(datum/target, tally_string)
 	. = ..()

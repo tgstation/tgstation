@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			L.death()
 			new/mob/living/simple_animal/hostile/blob/blobspore(T)
 		else
-			L.fully_heal(admin_revive = FALSE)
+			L.fully_heal()
 
 		for(var/area/A in GLOB.areas)
 			if(!(A.type in GLOB.the_station_areas))
@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			main_objective.completed = TRUE
 	to_chat(world, "<B>[real_name] consumed the station in an unstoppable tide!</B>")
 	SSticker.news_report = BLOB_WIN
-	SSticker.force_ending = 1
+	SSticker.force_ending = TRUE
 
 /mob/camera/blob/Destroy()
 	QDEL_NULL(blobstrain)
