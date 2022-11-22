@@ -47,7 +47,7 @@
 
 /datum/ai_behavior/basic_ranged_attack/while_healthy/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key, health_ratio_key)
 	var/mob/living/living_pawn = controller.pawn
-	var/current_health_ratio = (living_pawn.health / living_pawn.maxHealth)
+	var/current_health_ratio = living_pawn.health / living_pawn.maxHealth
 	if (current_health_ratio > controller.blackboard[health_ratio_key])
 		finish_action(controller, succeeded = FALSE)
 		return
