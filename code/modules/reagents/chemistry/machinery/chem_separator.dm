@@ -17,12 +17,14 @@
 	var/heating_rate = 5
 	/// Separation speed in units per second
 	var/distillation_rate = 5
+	var/datum/reagents/condenser
 	var/datum/reagent/separating_reagent
 	var/obj/item/reagent_containers/beaker
 
 /obj/structure/chem_separator/Initialize(mapload)
 	. = ..()
-	create_reagents(200)
+	create_reagents(300, TRANSPARENT)
+	condenser = new()
 	soundloop = new(src, boiling)
 
 /obj/structure/chem_separator/Destroy()
@@ -71,6 +73,11 @@
 				var/mutable_appearance/filling = mutable_appearance(fill_icon, fill_name)
 				filling.color = mix_color_from_reagents(beaker.reagents.reagent_list)
 				. += filling
+		// Dripping overlay
+		if(boiling)
+			var/mutable_appearance/filling = mutable_appearance(fill_icon, "separator_dripping")
+			filling.color = separating_reagent.color
+			. += filling
 	// Thermometer overlay
 	var/threshold = null
 	for(var/i in 1 to temperature_icon_thresholds.len)
@@ -141,8 +148,9 @@
 		return
 	if(!reagents.total_volume)
 		return
-	sort_list(reagents.reagent_list)
-	separating_reagent = reagents.reagent_list[1].type
+	var/list/reagents_sorted = reagents.reagent_list.Copy()
+	reagents_sorted = sort_list(reagents_sorted, GLOBAL_PROC_REF(cmp_reagents_asc))
+	separating_reagent = reagents_sorted[1]
 	burning = TRUE
 	update_appearance(UPDATE_ICON)
 	START_PROCESSING(SSobj, src)
@@ -153,6 +161,7 @@
 	burning = FALSE
 	if(boiling)
 		boiling = FALSE
+		condenser.trans_to(reagents, condenser.total_volume)
 		soundloop.stop()
 	update_appearance(UPDATE_ICON)
 	STOP_PROCESSING(SSobj, src)
@@ -183,20 +192,25 @@
 	reagents.trans_to(beaker.reagents, reagents.total_volume)
 	update_appearance(UPDATE_ICON)
 
-/// Check whether the separation can start
-/obj/structure/chem_separator/proc/can_process()
+/// Check whether the separation can process
+/obj/structure/chem_separator/proc/can_process(var/datum/gas_mixture/air)
 	if(!burning)
+		return FALSE
+	if(!air || !air.has_gas(/datum/gas/oxygen, 1))
+		return FALSE
+	if(air.temperature > required_temp) // Too hot to condense
 		return FALSE
 	if(!beaker)
 		return FALSE
 	if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return FALSE
-	if(!reagents.get_reagent_amount(separating_reagent))
+	if(!reagents.get_reagent_amount(separating_reagent.type))
 		return FALSE
 	return TRUE
 
 /obj/structure/chem_separator/process(delta_time)
-	if(!can_process())
+	var/datum/gas_mixture/air = return_air()
+	if(!can_process(air))
 		return stop()
 	if(isturf(loc))
 		var/turf/location = loc
@@ -209,8 +223,13 @@
 		if(!boiling)
 			boiling = TRUE
 			soundloop.start()
-		var/transfer_amount = distillation_rate * delta_time
-		reagents.trans_id_to(beaker.reagents, separating_reagent, transfer_amount)
+		var/vapor_amount = distillation_rate * delta_time
+		// Vapor to condenser
+		reagents.trans_id_to(condenser, separating_reagent.type, vapor_amount)
+		// Cool the vapor down
+		condenser.set_temperature(air.temperature)
+		// Condense into container
+		condenser.trans_to(beaker.reagents, condenser.total_volume)
 	else if (boiling)
 		boiling = FALSE
 		soundloop.stop()
@@ -245,7 +264,7 @@
 		if("unload")
 			unload()
 		if("start")
-			playsound(src, 'sound/effects/pop.ogg', 15, TRUE)
+			playsound(usr, 'sound/effects/pop.ogg', 30, ignore_walls = FALSE)
 			start()
 		if("stop")
 			stop()
