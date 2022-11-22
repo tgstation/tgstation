@@ -11492,7 +11492,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
 "Hh" = (
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("nukiebase"="Burn Chamber");
 	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
 	dir = 1;

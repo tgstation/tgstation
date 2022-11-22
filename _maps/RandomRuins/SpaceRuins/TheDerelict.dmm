@@ -3202,7 +3202,7 @@
 /area/ruin/space/ks13/science/rnd)
 "Az" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("ks13"="Primary Air Supply")
 	},
 /turf/open/floor/plating/airless,
@@ -6495,7 +6495,7 @@
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/science/genetics)
 "RO" = (
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("ks13-2"="Secondary Chamber")
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,

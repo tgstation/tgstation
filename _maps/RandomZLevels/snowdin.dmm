@@ -6168,7 +6168,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qX" = (
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("snowdinmix" = "Mix Chamber");
 	dir = 1
 	},
@@ -6195,7 +6195,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("snowdino2" = "Oxygen Supply");
 	dir = 1
 	},
@@ -6206,7 +6206,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("snowdinn2" = "Nitrogen Supply");
 	dir = 1
 	},

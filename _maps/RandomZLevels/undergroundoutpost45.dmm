@@ -7678,7 +7678,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("uo45air" = "Air Supply")
 	},
 /turf/open/floor/iron/white/corner{
@@ -8586,7 +8586,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("uo45mix" = "Mix Chamber");
 	dir = 8
 	},
@@ -9548,7 +9548,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("uo45n2" = "Nitrogen Supply");
 	dir = 1
 	},
@@ -9593,7 +9593,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("uo45o2" = "Oxygen Supply");
 	dir = 1
 	},

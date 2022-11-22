@@ -44,6 +44,10 @@
 	name = "Atmospheric Monitor"
 	build_path = /obj/machinery/computer/atmos_control/nocontrol
 
+/obj/item/circuitboard/computer/atmos_control/noreconnect
+	name = "Atmospheric Control"
+	build_path = /obj/machinery/computer/atmos_control/noreconnect
+
 /obj/item/circuitboard/computer/atmos_control/fixed
 	name = "Atmospheric Monitor"
 	build_path = /obj/machinery/computer/atmos_control/fixed

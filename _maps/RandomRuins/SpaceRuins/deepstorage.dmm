@@ -2105,7 +2105,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("deepo2"="Oxygen Supply");
 	dir = 8
 	},
@@ -2425,7 +2425,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "gC" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/atmos_control{
+/obj/machinery/computer/atmos_control/noreconnect{
 	atmos_chambers = list("deepn2"="Nitrogen Supply");
 	dir = 8
 	},

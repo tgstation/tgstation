@@ -17,6 +17,7 @@ export const AtmosControlConsole = (props, context) => {
     chambers: Chamber[];
     maxInput: number;
     maxOutput: number;
+    reconnecting: boolean;
     control: boolean;
   }>(context);
   const chambers = data.chambers || [];
@@ -49,7 +50,16 @@ export const AtmosControlConsole = (props, context) => {
           </Section>
         )}
         <Section
-          title={selectedChamber ? selectedChamber.name : 'Chamber Reading'}>
+          title={selectedChamber ? selectedChamber.name : 'Chamber Reading'}
+          buttons={
+            !!data.reconnecting && (
+              <Button
+                icon="undo"
+                content="Reconnect"
+                onClick={() => act('reconnect')}
+              />
+            )
+          }>
           {!!selectedChamber && !!selectedChamber.gasmix ? (
             <GasmixParser
               gasmix={selectedChamber.gasmix}
