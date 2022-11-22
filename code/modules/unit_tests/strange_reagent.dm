@@ -17,6 +17,8 @@
 		allocate_new_target(type)
 		if(target.status_flags & GODMODE)
 			continue
+		if(!(target.mob_biotypes & MOB_ORGANIC))
+			continue
 		if(istype(target, /mob/living/simple_animal))
 			var/mob/living/simple_animal/simple_animal = target
 			if(simple_animal.del_on_death)

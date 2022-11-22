@@ -819,7 +819,7 @@
 		mytray.spawnplant()
 
 /datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
-	if(exposed_mob.stat != DEAD)
+	if(exposed_mob.stat != DEAD || !(exposed_mob.mob_biotypes & MOB_ORGANIC))
 		return ..()
 	if(exposed_mob.suiciding) //they are never coming back
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body does not react..."))
