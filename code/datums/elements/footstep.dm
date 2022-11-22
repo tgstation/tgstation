@@ -3,7 +3,7 @@
 ///Footstep element. Plays footsteps at parents location when it is appropriate.
 /datum/element/footstep
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY|ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///A list containing living mobs and the number of steps they have taken since the last time their footsteps were played.
 	var/list/steps_for_living = list()
 	///volume determines the extra volume of the footstep. This is multiplied by the base volume, should there be one.

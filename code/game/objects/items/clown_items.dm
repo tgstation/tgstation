@@ -233,4 +233,5 @@
 	name = "Canned Laughter"
 	desc = "Just looking at this makes you want to giggle."
 	icon_state = "laughter"
+	volume = 50
 	list_reagents = list(/datum/reagent/consumable/laughter = 50)

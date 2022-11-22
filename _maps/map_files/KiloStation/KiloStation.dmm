@@ -6231,13 +6231,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
 "bWv" = (
-/obj/structure/rack,
-/obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/integrated_circuit/loaded/hello_world,
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 1
 	},
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/bci_implanter,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/office)
 "bWE" = (
@@ -23860,7 +23858,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "gPZ" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -47084,7 +47082,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "nts" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -56768,6 +56766,7 @@
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
+/obj/structure/fireaxecabinet/mechremoval/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "qiB" = (
@@ -71143,13 +71142,25 @@
 /area/station/engineering/atmos)
 "ujZ" = (
 /obj/structure/rack,
-/obj/item/controller,
-/obj/item/compact_remote,
-/obj/item/compact_remote,
+/obj/item/controller{
+	pixel_x = -7
+	},
+/obj/item/compact_remote{
+	pixel_x = -7
+	},
+/obj/item/compact_remote{
+	pixel_x = -7
+	},
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/north,
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_x = 7
+	},
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = 7
+	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/ordnance/office)
 "ukc" = (

@@ -84,6 +84,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// WARNING: Currently to use a density shortcircuiting this does not support dense turfs with special allow through function
 	var/pathing_pass_method = TURF_PATHING_PASS_DENSITY
 
+#if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
+	/// For the area_contents list unit test
+	/// Allows us to know our area without needing to preassign it
+	/// Sorry for the mess
+	var/area/in_contents_of
+#endif
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
 	if(var_name in banned_edits)
@@ -687,7 +694,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
  * * no_id: When true, doors with public access will count as impassible
 */
-/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only, no_id = FALSE)
+/turf/proc/reachableAdjacentTurfs(atom/movable/caller, ID, simulated_only, no_id = FALSE)
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 	. = list()
 

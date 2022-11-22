@@ -35,11 +35,12 @@
 	return things
 
 /datum/action/cooldown/spell/aoe/fiery_rebirth/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/carbon/human/caster)
-	new /obj/effect/temp_visual/eldritch_smoke(victim.drop_location())
+	new /obj/effect/temp_visual/eldritch_smoke(get_turf(victim))
+	victim.Beam(caster, icon_state = "r_beam", time = 2 SECONDS)
 
 	//This is essentially a death mark, use this to finish your opponent quicker.
-	if(HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(victim, TRAIT_NODEATH))
-		victim.investigate_log("has been killed by fiery rebirth.", INVESTIGATE_DEATHS)
+	if(CAN_SUCCUMB(victim))
+		victim.investigate_log("has been executed by fiery rebirth.", INVESTIGATE_DEATHS)
 		victim.death()
 	victim.apply_damage(20, BURN)
 

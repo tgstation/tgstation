@@ -183,9 +183,9 @@
 #define RND_CATEGORY_LIMBS_OTHER "Other Limbs"
 
 /// Biogenerator Categories
-#define RND_CATEGORY_FOOD "Food"
-#define RND_CATEGORY_BOTANY_CHEMICALS "Botany Chemicals"
-#define RND_CATEGORY_ORGANIC_MATERIALS "Organic Materials"
+#define RND_CATEGORY_BIO_FOOD "Food"
+#define RND_CATEGORY_BIO_CHEMICALS "Chemicals"
+#define RND_CATEGORY_BIO_MATERIALS "Materials"
 
 // Meta categories
 #define RND_CATEGORY_INITIAL "initial"
