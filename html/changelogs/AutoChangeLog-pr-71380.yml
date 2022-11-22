@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Soulstone names should no longer become bizarre after repeated use."

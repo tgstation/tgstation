@@ -5,6 +5,8 @@
 /// Holymelon's anti-magic trait. Charges based on potency.
 /datum/plant_gene/trait/anti_magic
 	name = "Anti-Magic Vacuoles"
+	description = "You can hide behind it from a fireball!"
+	icon = "hand-sparkles"
 	/// The amount of anti-magic blocking uses we have.
 	var/shield_uses = 1
 
@@ -19,8 +21,8 @@
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_HANDS, \
 		charges = shield_uses, \
-		drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
-		expiration = CALLBACK(src, .proc/expire), \
+		drain_antimagic = CALLBACK(src, PROC_REF(drain_antimagic)), \
+		expiration = CALLBACK(src, PROC_REF(expire)), \
 	)
 
 /// When the plant our gene is hosted in is drained of an anti-magic charge.
@@ -36,6 +38,8 @@
 /// Traits that turn a plant into a weapon, giving them force and effects on attack.
 /datum/plant_gene/trait/attack
 	name = "On Attack Trait"
+	description = "It is a very dangerous weapon."
+	icon = "hand-fist"
 	/// The multiplier we apply to the potency to calculate force. Set to 0 to not affect the force.
 	var/force_multiplier = 0
 	/// If TRUE, our plant will degrade in force every hit until diappearing.
@@ -51,14 +55,14 @@
 	if(force_multiplier)
 		var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 		our_plant.force = round((5 + our_seed.potency * force_multiplier), 1)
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK, .proc/on_plant_attack)
-	RegisterSignal(our_plant, COMSIG_ITEM_AFTERATTACK, .proc/after_plant_attack)
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK, PROC_REF(on_plant_attack))
+	RegisterSignal(our_plant, COMSIG_ITEM_AFTERATTACK, PROC_REF(after_plant_attack))
 
 /// Signal proc for [COMSIG_ITEM_ATTACK] that allows for effects on attack
 /datum/plant_gene/trait/attack/proc/on_plant_attack(obj/item/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/attack_effect, source, target, user)
+	INVOKE_ASYNC(src, PROC_REF(attack_effect), source, target, user)
 
 /*
  * Effects done when we hit people with our plant, ON attack.
@@ -86,7 +90,7 @@
 		if(!(object_target.obj_flags & CAN_BE_HIT))
 			return
 
-	INVOKE_ASYNC(src, .proc/after_attack_effect, source, target, user)
+	INVOKE_ASYNC(src, PROC_REF(after_attack_effect), source, target, user)
 
 /*
  * Effects done when we hit people with our plant, AFTER the attack is done.
@@ -114,6 +118,7 @@
 /// Novaflower's attack effects (sets people on fire) + degradation on attack
 /datum/plant_gene/trait/attack/novaflower_attack
 	name = "Heated Petals"
+	description = "Hitting with it may cause things to combust."
 	force_multiplier = 0.2
 	degrades_after_hit = TRUE
 	degradation_noun = "petals"
@@ -134,6 +139,7 @@
 /// Sunflower's attack effect (shows cute text)
 /datum/plant_gene/trait/attack/sunflower_attack
 	name = "Bright Petals"
+	description = "Makes others feel the power on hit."
 
 /datum/plant_gene/trait/attack/sunflower_attack/after_attack_effect(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
 	if(ismob(target))
@@ -159,6 +165,8 @@
 /// Traits for plants with backfire effects. These are negative effects that occur when a plant is handled without gloves/unsafely.
 /datum/plant_gene/trait/backfire
 	name = "Backfire Trait"
+	icon = "mitten"
+	description = "Be careful when holding it without protection."
 	/// Whether our actions are cancelled when the backfire triggers.
 	var/cancel_action_on_backfire = FALSE
 	/// A list of extra traits to check to be considered safe.
@@ -172,13 +180,13 @@
 		return
 
 	our_plant.AddElement(/datum/element/plant_backfire, cancel_action_on_backfire, traits_to_check, genes_to_check)
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/on_backfire)
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, PROC_REF(on_backfire))
 
 /// Signal proc for [COMSIG_PLANT_ON_BACKFIRE] that causes the backfire effect.
 /datum/plant_gene/trait/backfire/proc/on_backfire(obj/item/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/backfire_effect, source, user)
+	INVOKE_ASYNC(src, PROC_REF(backfire_effect), source, user)
 
 /**
  * The actual backfire effect on the user.
@@ -190,6 +198,7 @@
 /// Rose's prick on backfire
 /datum/plant_gene/trait/backfire/rose_thorns
 	name = "Rose Thorns"
+	description = "The stem has a lot of thorns."
 	traits_to_check = list(TRAIT_PIERCEIMMUNE)
 
 /datum/plant_gene/trait/backfire/rose_thorns/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
@@ -206,6 +215,7 @@
 /// Novaflower's hand burn on backfire
 /datum/plant_gene/trait/backfire/novaflower_heat
 	name = "Burning Stem"
+	description = "The stem may burn your hand."
 	cancel_action_on_backfire = TRUE
 
 /datum/plant_gene/trait/backfire/novaflower_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
@@ -217,6 +227,7 @@
 /// Normal Nettle hannd burn on backfire
 /datum/plant_gene/trait/backfire/nettle_burn
 	name = "Stinging Stem"
+	description = "The stem may sting your hand."
 
 /datum/plant_gene/trait/backfire/nettle_burn/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
 	to_chat(user, span_danger("[our_plant] burns your bare hand!"))
@@ -240,6 +251,7 @@
 /// Ghost-Chili heating up on backfire
 /datum/plant_gene/trait/backfire/chili_heat
 	name = "Active Capsicum Glands"
+	description = "You may survive a cold winter with this in hand."
 	genes_to_check = list(/datum/plant_gene/trait/chem_heating)
 	/// The mob currently holding the chili.
 	var/datum/weakref/held_mob
@@ -252,7 +264,7 @@
 		return
 
 	our_chili = WEAKREF(our_plant)
-	RegisterSignal(our_plant, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), .proc/stop_backfire_effect)
+	RegisterSignal(our_plant, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(stop_backfire_effect))
 
 /*
  * Begin processing the trait on backfire.
@@ -295,6 +307,7 @@
 /// Bluespace Tomato squashing on the user on backfire
 /datum/plant_gene/trait/backfire/bluespace
 	name = "Bluespace Volatility"
+	description = "You may be spaced out if you hold this unprotected."
 	cancel_action_on_backfire = TRUE
 	genes_to_check = list(/datum/plant_gene/trait/squash)
 
@@ -311,6 +324,8 @@
 /// Traits for plants that can be activated to turn into a mob.
 /datum/plant_gene/trait/mob_transformation
 	name = "Dormant Ferocity"
+	description = "It comes to life when shaken in hand."
+	icon = "heart-pulse"
 	trait_ids = ATTACK_SELF_ID
 	/// Whether mobs spawned by this trait are dangerous or not.
 	var/dangerous = FALSE
@@ -332,9 +347,9 @@
 
 	if(dangerous)
 		our_plant.AddElement(/datum/element/plant_backfire, TRUE)
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/early_awakening)
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/manual_awakening)
-	RegisterSignal(our_plant, COMSIG_ITEM_PRE_ATTACK, .proc/pre_consumption_check)
+		RegisterSignal(our_plant, COMSIG_PLANT_ON_BACKFIRE, PROC_REF(early_awakening))
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(manual_awakening))
+	RegisterSignal(our_plant, COMSIG_ITEM_PRE_ATTACK, PROC_REF(pre_consumption_check))
 
 /*
  * Before we can eat our plant, check to see if it's waking up. Don't eat it if it is.
@@ -399,7 +414,7 @@
  */
 /datum/plant_gene/trait/mob_transformation/proc/begin_awaken(obj/item/our_plant, awaken_time)
 	awakening = TRUE
-	addtimer(CALLBACK(src, .proc/awaken, our_plant), awaken_time)
+	addtimer(CALLBACK(src, PROC_REF(awaken), our_plant), awaken_time)
 
 /*
  * Actually awaken the plant, spawning the mob designated by the [killer_plant] typepath.
@@ -443,6 +458,8 @@
 /// Traiit for plants eaten in 1 bite.
 /datum/plant_gene/trait/one_bite
 	name = "Large Bites"
+	description = "You can't hold off from eating this in one bite!"
+	icon = "drumstick-bite"
 
 /datum/plant_gene/trait/one_bite/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
@@ -456,6 +473,8 @@
 /// Traits for plants with a different base max_volume.
 /datum/plant_gene/trait/modified_volume
 	name = "Deep Vesicles"
+	description = "It has more reagents than usual."
+	icon = "vials"
 	/// The new number we set the plant's max_volume to.
 	var/new_capcity = 100
 
@@ -481,6 +500,8 @@
 /// Plants that explode when used (based on their reagent contents)
 /datum/plant_gene/trait/bomb_plant
 	name = "Explosive Contents"
+	description = "Don't shake it, the contents may explode."
+	icon = "bomb"
 	trait_ids = ATTACK_SELF_ID
 
 /datum/plant_gene/trait/bomb_plant/on_new_plant(obj/item/our_plant, newloc)
@@ -489,9 +510,9 @@
 		return
 
 	our_plant.max_integrity = 40 // Max_integrity is lowered so they explode better, or something like that.
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/trigger_detonation)
-	RegisterSignal(our_plant, COMSIG_ATOM_EX_ACT, .proc/explosion_reaction)
-	RegisterSignal(our_plant, COMSIG_OBJ_DECONSTRUCT, .proc/deconstruct_reaction)
+	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, PROC_REF(trigger_detonation))
+	RegisterSignal(our_plant, COMSIG_ATOM_EX_ACT, PROC_REF(explosion_reaction))
+	RegisterSignal(our_plant, COMSIG_OBJ_DECONSTRUCT, PROC_REF(deconstruct_reaction))
 
 /*
  * Trigger our plant's detonation.
@@ -573,7 +594,7 @@
 		our_plant.color = COLOR_RED
 
 	playsound(our_plant.drop_location(), 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
-	addtimer(CALLBACK(src, .proc/detonate, our_plant), rand(1 SECONDS, 6 SECONDS))
+	addtimer(CALLBACK(src, PROC_REF(detonate), our_plant), rand(1 SECONDS, 6 SECONDS))
 
 /datum/plant_gene/trait/bomb_plant/potency_based/detonate(obj/item/our_plant)
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
@@ -587,15 +608,17 @@
 /// Can be generalized in the future to spawn any gas, but I don't think that's necessarily a good idea.
 /datum/plant_gene/trait/gas_production
 	name = "Miasma Gas Production"
+	description = "This plant stinks when grown."
+	icon = "wind"
 	/// The location of our tray, if we have one.
 	var/datum/weakref/home_tray
 	/// The seed emitting gas.
 	var/datum/weakref/stinky_seed
 
 /datum/plant_gene/trait/gas_production/on_new_seed(obj/item/seeds/new_seed)
-	RegisterSignal(new_seed, COMSIG_SEED_ON_PLANTED, .proc/set_home_tray)
-	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_release_gas)
-	RegisterSignal(new_seed, COMSIG_PARENT_QDELETING, .proc/stop_gas)
+	RegisterSignal(new_seed, COMSIG_SEED_ON_PLANTED, PROC_REF(set_home_tray))
+	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, PROC_REF(try_release_gas))
+	RegisterSignal(new_seed, COMSIG_PARENT_QDELETING, PROC_REF(stop_gas))
 	stinky_seed = WEAKREF(new_seed)
 
 /datum/plant_gene/trait/gas_production/on_removed(obj/item/seeds/old_seed)

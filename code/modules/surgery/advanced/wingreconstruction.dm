@@ -1,13 +1,13 @@
 /datum/surgery/advanced/wing_reconstruction
 	name = "Wing Reconstruction"
 	desc = "An experimental surgical procedure that reconstructs the damaged wings of moth people. Requires Synthflesh."
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/clamp_bleeders,
-		/datum/surgery_step/wing_reconstruction)
-	possible_locs = list(BODY_ZONE_CHEST)
-	target_mobtypes = list(/mob/living/carbon/human)
+		/datum/surgery_step/wing_reconstruction,
+	)
 
 /datum/surgery/advanced/wing_reconstruction/can_start(mob/user, mob/living/carbon/target)
 	if(!istype(target))
@@ -28,17 +28,25 @@
 	require_all_chems = FALSE
 
 /datum/surgery_step/wing_reconstruction/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_notice("You begin to fix [target]'s charred wing membranes..."),
+	display_results(
+		user,
+		target,
+		span_notice("You begin to fix [target]'s charred wing membranes..."),
 		span_notice("[user] begins to fix [target]'s charred wing membranes."),
-		span_notice("[user] begins to perform surgery on [target]'s charred wing membranes."))
+		span_notice("[user] begins to perform surgery on [target]'s charred wing membranes."),
+	)
 	display_pain(target, "Your wings sting like hell!")
 
 /datum/surgery_step/wing_reconstruction/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		display_results(user, target, span_notice("You succeed in reconstructing [target]'s wings."),
+		display_results(
+			user,
+			target,
+			span_notice("You succeed in reconstructing [target]'s wings."),
 			span_notice("[user] successfully reconstructs [target]'s wings!"),
-			span_notice("[user] completes the surgery on [target]'s wings."))
+			span_notice("[user] completes the surgery on [target]'s wings."),
+		)
 		display_pain(target, "You can feel your wings again!")
 		var/obj/item/organ/external/wings/moth/wings = target.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(istype(wings, /obj/item/organ/external/wings/moth)) //make sure we only heal moth wings.

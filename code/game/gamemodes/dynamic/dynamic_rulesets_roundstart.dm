@@ -273,7 +273,6 @@
 	weight = 2
 	cost = 20
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	var/list/roundstart_wizards = list()
 
 /datum/dynamic_ruleset/roundstart/wizard/acceptable(population=0, threat=0)
 	if(GLOB.wizardstart.len == 0)
@@ -281,6 +280,19 @@
 		message_admins("Cannot accept Wizard ruleset. Couldn't find any wizard spawn points.")
 		return FALSE
 	return ..()
+
+/datum/dynamic_ruleset/roundstart/wizard/round_result()
+	for(var/datum/antagonist/wizard/wiz in GLOB.antagonists)
+		var/mob/living/real_wiz = wiz.owner?.current
+		if(isnull(real_wiz))
+			continue
+
+		var/turf/wiz_location = get_turf(real_wiz)
+		// If this wiz is alive AND not in an away level, then we know not all wizards are dead and can leave entirely
+		if(considered_alive(wiz.owner) && wiz_location && !is_away_level(wiz_location.z))
+			return
+
+	SSticker.news_report = WIZARD_KILLED
 
 /datum/dynamic_ruleset/roundstart/wizard/pre_execute()
 	. = ..()
@@ -360,13 +372,25 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/bloodcult/round_result()
-	..()
 	if(main_cult.check_cult_victory())
 		SSticker.mode_result = "win - cult win"
 		SSticker.news_report = CULT_SUMMON
-	else
-		SSticker.mode_result = "loss - staff stopped the cult"
-		SSticker.news_report = CULT_FAILURE
+		return
+
+	SSticker.mode_result = "loss - staff stopped the cult"
+
+	if(main_cult.size_at_maximum == 0)
+		CRASH("Cult team existed with a size_at_maximum of 0 at round end!")
+
+	// If more than a certain ratio of our cultists have escaped, give the "cult escape" resport.
+	// Otherwise, give the "cult failure" report.
+	var/ratio_to_be_considered_escaped = 0.5
+	var/escaped_cultists = 0
+	for(var/datum/mind/escapee as anything in main_cult.members)
+		if(considered_escaped(escapee))
+			escaped_cultists++
+
+	SSticker.news_report = (escaped_cultists / main_cult.size_at_maximum) >= ratio_to_be_considered_escaped ? CULT_ESCAPE : CULT_FAILURE
 
 //////////////////////////////////////////////
 //                                          //
@@ -431,10 +455,10 @@
 			SSticker.news_report = NUKE_SYNDICATE_BASE
 		if(NUKE_RESULT_NUKE_WIN)
 			SSticker.mode_result = "win - syndicate nuke"
-			SSticker.news_report = STATION_NUKED
+			SSticker.news_report = STATION_DESTROYED_NUKE
 		if(NUKE_RESULT_NOSURVIVORS)
 			SSticker.mode_result = "halfwin - syndicate nuke - did not evacuate in time"
-			SSticker.news_report = STATION_NUKED
+			SSticker.news_report = STATION_DESTROYED_NUKE
 		if(NUKE_RESULT_WRONG_STATION)
 			SSticker.mode_result = "halfwin - blew wrong station"
 			SSticker.news_report = NUKE_MISS

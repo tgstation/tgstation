@@ -2,7 +2,7 @@
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/Clean)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(Clean))
 
 /datum/element/cleaning/Detach(datum/target)
 	. = ..()

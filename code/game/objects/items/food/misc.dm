@@ -169,7 +169,7 @@
 
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, .proc/OnGrill)
+	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"
@@ -431,7 +431,7 @@
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM / 2
 
-/obj/item/food/bubblegum/suicide_act(mob/user)
+/obj/item/food/bubblegum/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	qdel(src)
 	return TOXLOSS
@@ -468,7 +468,7 @@
 
 /obj/item/food/bubblegum/bubblegum/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, .proc/OnConsume))
+	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(OnConsume)))
 
 /obj/item/food/bubblegum/bubblegum/proc/OnConsume(mob/living/eater, mob/living/feeder)
 	if(iscarbon(eater))
@@ -483,7 +483,7 @@
 	else
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
-/obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
+/obj/item/food/bubblegum/bubblegum/suicide_act(mob/living/user)
 	user.say(";[pick(BUBBLEGUM_HALLUCINATION_LINES)]")
 	return ..()
 
@@ -680,7 +680,7 @@
 ///Override for checkliked callback
 /obj/item/food/rationpack/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, .proc/check_liked))
+	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/rationpack/proc/check_liked(fraction, mob/mob) //Nobody likes rationpacks. Nobody.
 	return FOOD_DISLIKED

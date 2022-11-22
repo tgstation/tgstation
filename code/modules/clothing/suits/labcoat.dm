@@ -96,4 +96,3 @@
 	name = "interdyne labcoat"
 	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
 	icon_state = "labcoat_robo"
-

@@ -184,11 +184,8 @@
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile/emergency{
 	dir = 8;
-	dwidth = 6;
-	height = 18;
 	name = "Birdboat emergency escape shuttle";
-	port_direction = 4;
-	width = 14
+	port_direction = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)

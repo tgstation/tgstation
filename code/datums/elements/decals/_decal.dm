@@ -1,6 +1,6 @@
 /datum/element/decal
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Whether this decal can be cleaned.
 	var/cleanable
 	/// A description this decal appends to the target's examine message.
@@ -80,23 +80,23 @@
 	base_icon_state = _icon_state
 	smoothing = _smoothing
 
-	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay, TRUE)
+	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(apply_overlay), TRUE)
 	if(target.flags_1 & INITIALIZED_1)
 		target.update_appearance(UPDATE_OVERLAYS) //could use some queuing here now maybe.
 	else
-		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
+		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE, PROC_REF(late_update_icon), TRUE)
 	if(isitem(target))
-		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
+		INVOKE_ASYNC(target, TYPE_PROC_REF(/obj/item/, update_slot_icon), TRUE)
 	if(_dir)
 		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, /datum/controller/subsystem/processing/dcs/proc/rotate_decals, TRUE)
 	if(!isnull(_smoothing))
-		RegisterSignal(target, COMSIG_ATOM_SMOOTHED_ICON, .proc/smooth_react, TRUE)
+		RegisterSignal(target, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smooth_react), TRUE)
 	if(_cleanable)
-		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react, TRUE)
+		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_react), TRUE)
 	if(_description)
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(examine),TRUE)
 
-	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
+	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, PROC_REF(shuttle_move_react),TRUE)
 
 /**
  * ## generate_appearance
@@ -121,7 +121,7 @@
 	SSdcs.UnregisterSignal(source, COMSIG_ATOM_DIR_CHANGE)
 	source.update_appearance(UPDATE_OVERLAYS)
 	if(isitem(source))
-		INVOKE_ASYNC(source, /obj/item/.proc/update_slot_icon)
+		INVOKE_ASYNC(source, TYPE_PROC_REF(/obj/item/, update_slot_icon))
 	SEND_SIGNAL(source, COMSIG_TURF_DECAL_DETACHED, description, cleanable, directional, pic)
 	return ..()
 

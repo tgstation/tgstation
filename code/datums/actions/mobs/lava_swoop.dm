@@ -32,7 +32,7 @@
 	if(enraged)
 		swoop_attack(target, TRUE)
 		return
-	INVOKE_ASYNC(src, .proc/lava_pools, target)
+	INVOKE_ASYNC(src, PROC_REF(lava_pools), target)
 	swoop_attack(target)
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/swoop_attack(atom/target, lava_arena = FALSE)
@@ -100,6 +100,7 @@
 	for(var/mob/living/L in orange(1, owner) - owner)
 		if(L.stat)
 			owner.visible_message(span_warning("[owner] slams down on [L], crushing [L.p_them()]!"))
+			L.investigate_log("has been gibbed by lava swoop.", INVESTIGATE_DEATHS)
 			L.gib()
 		else
 			L.adjustBruteLoss(75)
@@ -212,7 +213,7 @@
 
 /obj/effect/temp_visual/dragon_flight/Initialize(mapload, negative)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/flight, negative)
+	INVOKE_ASYNC(src, PROC_REF(flight), negative)
 
 /obj/effect/temp_visual/dragon_flight/proc/flight(negative)
 	if(negative)
