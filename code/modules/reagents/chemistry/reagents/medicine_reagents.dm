@@ -833,7 +833,7 @@
 	if(their_health > 0)
 		return 1
 
-	return CEILING(-amount_needed, healing_per_reagent_unit)
+	return CEILING(-their_health, healing_per_reagent_unit)
 
 /// Calculates the amount of reagent that will be needed to both revive and full heal the target. Looks at healing_per_reagent_unit and excess_healing_ratio
 /datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_full_heal(mob/living/benefactor)
