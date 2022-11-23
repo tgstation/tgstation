@@ -21,6 +21,7 @@
 
 	for(var/mob/living/type as anything in types_to_check)
 		var/mob/living/target = allocate_new_target(type)
+		var/is_basic = istype(target, /mob/living/basic)
 		if(target.status_flags & GODMODE)
 			continue
 		if(!(target.mob_biotypes & MOB_ORGANIC))
@@ -30,18 +31,23 @@
 			if(simple_animal.del_on_death)
 				continue
 			simple_animal.loot?.Cut()
-		if(istype(target, /mob/living/basic))
+		if(is_basic)
 			var/mob/living/basic/basic = target
 			if(basic.basic_mob_flags & DEL_ON_DEATH)
 				continue
+		if(istype(target, /mob/living/carbon))
+			var/mob/living/carbon/carbon = target
+			for(var/obj/item/bodypart/limb as anything in carbon.bodyparts)
+				limb.body_damage_coeff = 1 // fuck you
 
 		test_damage_but_no_death(type)
 		test_death_no_damage(type)
 		test_death_with_damage(type)
 		test_death_with_damage_but_not_enough_reagent(type)
-		test_death_with_full_heal(type)
-		test_death_from_damage(type)
-		test_death_from_too_much_damage(type)
+		if(!is_basic) // basic mobs cannot have negative health
+			test_death_with_full_heal(type)
+			test_death_from_damage(type)
+			test_death_from_too_much_damage(type)
 	// cleanup our vars
 	QDEL_NULL(strange_reagent)
 	allocate_new_target(null)
@@ -103,10 +109,9 @@
 
 /datum/unit_test/strange_reagent/proc/test_death_with_damage_but_not_enough_reagent(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
-	if(!damage_target_to_percentage(target, 0.8))
+	if(!damage_target_to_percentage(target, 1.2))
 		return
 
-	target.death()
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_revive - 1)
 	TEST_ASSERT_EQUAL(target.stat, DEAD, "Strange Reagent revived a dead target type [target.type] without enough reagent.")
@@ -132,7 +137,7 @@
 
 /datum/unit_test/strange_reagent/proc/test_death_from_too_much_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
-	if(!damage_target_to_percentage(target, 3)) // over the 2x damage cap
+	if(!damage_target_to_percentage(target, 3.3)) // 10% over the 2x damage cap
 		return
 
 	update_amounts(target)

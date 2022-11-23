@@ -833,7 +833,7 @@
 	if(their_health > 0)
 		return 1
 
-	return ROUND_UP(-their_health / healing_per_reagent_unit)
+	return round(-their_health / healing_per_reagent_unit, DAMAGE_PRECISION) + 1
 
 /// Calculates the amount of reagent that will be needed to both revive and full heal the target. Looks at healing_per_reagent_unit and excess_healing_ratio
 /datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_full_heal(mob/living/benefactor)
@@ -843,7 +843,7 @@
 		return 1
 
 	var/amount_needed_to_revive = calculate_amount_needed_to_revive(benefactor)
-	var/expected_amount_to_full_heal = ROUND_UP(max_health / healing_per_reagent_unit) / excess_healing_ratio
+	var/expected_amount_to_full_heal = round(max_health / healing_per_reagent_unit, DAMAGE_PRECISION) / excess_healing_ratio
 	return amount_needed_to_revive + expected_amount_to_full_heal
 
 /datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -858,6 +858,10 @@
 
 	if(HAS_TRAIT(exposed_mob, TRAIT_HUSK))
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body lets off a puff of smoke..."))
+		return
+
+	if(exposed_mob.get_organic_health() > (exposed_mob.getMaxHealth() * 2))
+		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses violently, before falling still..."))
 		return
 
 	var/needed_to_revive = calculate_amount_needed_to_revive(exposed_mob)
