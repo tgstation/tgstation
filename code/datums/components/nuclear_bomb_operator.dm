@@ -65,7 +65,7 @@
 	held_disk.forceMove(mob_parent.drop_location())
 	mob_parent.visible_message(span_danger("[mob_parent] drops [held_disk] onto the ground!"))
 	disky = null
-	mob_parent.update_icon()
+	mob_parent.update_appearance(updates = UPDATE_ICON)
 
 /// Add details about carrying the nuke disc to examination.
 /datum/component/nuclear_bomb_operator/proc/on_examine(atom/parent_atom, mob/examiner, list/examine_list)
