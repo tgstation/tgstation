@@ -40,7 +40,7 @@
 	//we check how much of glass,plasteel & cable the user can insert
 	if(isstack(to_insert))
 		//user tried to insert invalid stacktype
-		if(!is_type_in_list(to_insert,allowed_material_types) && !is_type_in_list(to_insert,allowed_bluespace_types))
+		if(!is_type_in_list(to_insert, allowed_material_types) && !is_type_in_list(to_insert, allowed_bluespace_types))
 			return FALSE
 
 		var/obj/item/stack/the_stack = to_insert
