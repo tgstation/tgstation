@@ -1,7 +1,6 @@
 import { useBackend } from '../backend';
 import { Button, ColorBox, Stack, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
-import { logger } from '../logging';
 
 export const NtosMain = (props, context) => {
   const { act, data } = useBackend(context);
@@ -17,7 +16,6 @@ export const NtosMain = (props, context) => {
     proposed_login = [],
     pai,
   } = data;
-  logger.log(proposed_login ? proposed_login.IDName : '');
   return (
     <NtosWindow
       title={
