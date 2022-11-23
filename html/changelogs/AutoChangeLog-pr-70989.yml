@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - refactor: "mech construction balloon messages are now actually stored in the construction steps, instead of being tracked separately."
-  - bugfix: "Items used in the honk mech construction are now properly deleted/moved inside the mech"

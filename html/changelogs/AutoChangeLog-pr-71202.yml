@@ -1,7 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - rscadd: "you can fax flatbreads and slices of bread now, changed all flatbreads into children of pizza/flatbread to allow for this"
-  - qol: "adds screentips to various pizzabox action (stacking, when you can take pizzas out, pizza box bomb stuff)"
-  - qol: "adds a way to add screentips directly into processable food via the add element processable proc"
-  - refactor: "pizza crates work the same but more clearly and more variable"
