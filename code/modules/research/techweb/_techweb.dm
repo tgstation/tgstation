@@ -316,7 +316,7 @@
 	if(auto_adjust_cost)
 		var/node_cost = node.get_price(src)
 		remove_point_list(node_cost)
-		log_message += "at the cost of [node_cost]"
+		log_message += " at the cost of [node_cost]"
 	researched_nodes[node.id] = TRUE //Add to our researched list
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
@@ -332,7 +332,7 @@
 	if(get_that_dosh)
 		var/datum/bank_account/science_department_bank_account = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		science_department_bank_account?.adjust_money(SSeconomy.techweb_bounty)
-		log_message += "gaining [SSeconomy.techweb_bounty] to [science_department_bank_account] for it."
+		log_message += ", gaining [SSeconomy.techweb_bounty] to [science_department_bank_account] for it."
 	log_research(log_message)
 	return TRUE
 
