@@ -90,10 +90,9 @@
 	if(!fruit.can_distill)
 		to_chat(user, span_warning("You can't distill this into anything!"))
 		return FALSE
-	if(bag)
-		if(!bag.atom_storage.attempt_remove(fruit, src))
-			to_chat(user, span_warning("Can't take the fruit from the bag!"))
-			return FALSE
+	if(bag && !bag.atom_storage.attempt_remove(fruit, src))
+		to_chat(user, span_warning("Can't take the fruit from the bag!"))
+		return FALSE
 	else if (!user.transferItemToLoc(fruit, src))
 		to_chat(user, span_warning("[fruit] is stuck to your hand!"))
 		return FALSE
