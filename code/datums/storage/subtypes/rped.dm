@@ -46,7 +46,6 @@
 		var/obj/item/stack/the_stack = to_insert
 		var/present_amount = 0
 
-		//not a real location so dont bother
 		var/obj/item/resolve_location = real_location?.resolve()
 		if(!resolve_location)
 			return FALSE
