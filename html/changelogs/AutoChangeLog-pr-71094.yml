@@ -1,7 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix reagent containers playing attack animation when transferring reagents to mob bucket"
-  - bugfix: "Fix syringes and droppers not updating the appearance of target when used"
-  - qol: "Regular mop bucket has the same RMB hotkey as janicart for wetting mop"
-  - refactor: "Refactor janicart to be subtype of mop bucket"
