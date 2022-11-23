@@ -386,7 +386,7 @@
 	//Knockdown
 	var/should_not_knockdown = ((flags & SHOCK_TESLA) && siemens_coeff <= 0.5) || (flags & SHOCK_NOSTUN)
 	if(!should_not_knockdown)
-		Knockdown(80 * siemens_coeff)
+		Knockdown(8 SECONDS * siemens_coeff)
 	//Jitter and other fluff.
 	do_jitter_animation(300)
 	adjust_jitter(20 SECONDS)

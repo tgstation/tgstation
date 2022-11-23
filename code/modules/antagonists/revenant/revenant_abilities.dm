@@ -259,7 +259,7 @@
 			continue
 		to_shock.Beam(human_mob, icon_state = "purple_lightning", time = 0.5 SECONDS)
 		if(!human_mob.can_block_magic(antimagic_flags) && human_mob.electrocute_act(shock_damage, to_shock, flags = SHOCK_NOGLOVES))
-			human_mob.Paralyze(80)
+			human_mob.Paralyze(8 SECONDS)
 
 		do_sparks(4, FALSE, human_mob)
 		playsound(human_mob, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)

@@ -29,7 +29,7 @@
 	if(isliving(hit_atom))
 		var/mob/living/hit_living = hit_atom
 		if(!hit_living.can_block_magic() && hit_living.electrocute_act(80, src, flags = SHOCK_ILLUSION | SHOCK_NOGLOVES))
-			hit_living.Paralyze(80)
+			hit_living.Paralyze(8 SECONDS)
 	qdel(src)
 
 /obj/item/spellpacket/lightningbolt/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY, quickstart = TRUE)

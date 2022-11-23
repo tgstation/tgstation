@@ -37,12 +37,11 @@
 
 	hallucinator.playsound_local(get_turf(src), SFX_SPARKS, 100, TRUE)
 	hallucinator.adjustStaminaLoss(50)
-	hallucinator.Stun(4 SECONDS)
+	hallucinator.Knockdown(8 SECONDS)
 	hallucinator.do_jitter_animation(300) // Maximum jitter
 	hallucinator.adjust_jitter(20 SECONDS)
 
 	addtimer(CALLBACK(src, PROC_REF(reset_shock_animation)), 4 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(shock_drop)), 2 SECONDS)
 	QDEL_IN(src, 4 SECONDS)
 	return TRUE
 
@@ -55,9 +54,3 @@
 
 	hallucinator.client?.images -= electrocution_skeleton_anim
 	electrocution_skeleton_anim = null
-
-/datum/hallucination/shock/proc/shock_drop()
-	if(QDELETED(hallucinator))
-		return
-
-	hallucinator.Paralyze(6 SECONDS)
