@@ -204,7 +204,7 @@
 	icon_living = "magicarp"
 	icon_state = "magicarp"
 	maxHealth = 200
-	greyscale_config = NONE
+	greyscale_config = null
 
 /mob/living/simple_animal/hostile/carp/lia/Initialize(mapload)
 	. = ..()
