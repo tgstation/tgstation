@@ -68,13 +68,11 @@
 
 /datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
-	target.setBruteLoss(damage)
-	target.setFireLoss(damage)
+	target.setBruteLoss(damage, FALSE) // no point running health update logic here
+	target.setFireLoss(damage, TRUE) // since we do it here
 	update_amounts(target)
 	if(percent >= 1)
 		target.death()
-		TEST_ASSERT_EQUAL(target.stat, DEAD, "Target type [target.type] should be dead but isnt")
-		return FALSE
 	return TRUE
 
 /datum/unit_test/strange_reagent/proc/test_damage_but_no_death(target_type)

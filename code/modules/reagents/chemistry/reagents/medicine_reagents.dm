@@ -833,7 +833,7 @@
 	if(their_health > 0)
 		return 1
 
-	return CEILING(-their_health, healing_per_reagent_unit)
+	return ROUND_UP(-their_health / healing_per_reagent_unit)
 
 /// Calculates the amount of reagent that will be needed to both revive and full heal the target. Looks at healing_per_reagent_unit and excess_healing_ratio
 /datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_full_heal(mob/living/benefactor)
@@ -843,7 +843,7 @@
 		return 1
 
 	var/amount_needed_to_revive = calculate_amount_needed_to_revive(benefactor)
-	var/expected_amount_to_full_heal = CEILING(max_health, healing_per_reagent_unit) / excess_healing_ratio
+	var/expected_amount_to_full_heal = ROUND_UP(max_health / healing_per_reagent_unit) / excess_healing_ratio
 	return amount_needed_to_revive + expected_amount_to_full_heal
 
 /datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)

@@ -877,13 +877,13 @@
 	var/brute_loss = getBruteLoss()
 	if(brute_loss)
 		var/brute_healing = min(healing_amount, brute_loss)
-		adjustBruteLoss(-brute_healing)
+		setBruteLoss(brute_loss - brute_healing, FALSE, TRUE)
 		healing_amount = max(0, healing_amount - brute_healing)
 
 	var/fire_loss = getFireLoss()
 	if(fire_loss && healing_amount)
 		var/fire_healing = min(healing_amount, fire_loss)
-		adjustFireLoss(-fire_healing)
+		setFireLoss(fire_loss - fire_healing, FALSE, TRUE)
 		healing_amount = max(0, healing_amount - fire_healing)
 
 	revive(NONE, max(healing_amount, 0), FALSE)
