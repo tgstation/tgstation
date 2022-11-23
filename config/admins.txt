@@ -4,10 +4,10 @@
 #Ranks will match to those with the same name in admin_ranks.txt, if a match isn't found the user won't be adminned.
 #If SQL-based admin loading is enabled, admins listed here will always be loaded first and will override any duplicate entries in the database.
 
-Optimumtact = Host
-CitrusGender = Game Master
-NewSta = Game Master
-Expletives = Game Master
+GForceTF = Host
+GenomeSoldier = Game Master
+Bytesol = Game Master
+Tallfission = Game Master
 kingofkosmos = Game Master
 MrStonedOne = Lazy Master
 microscopics = Game Master
