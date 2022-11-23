@@ -25,8 +25,7 @@
 
 	/**
 	 * we check if the user is trying to insert any of these bluespace crystal types into the RPED
-	 * at any point the total sum of all these types in the RPED must be 30
-	 * for example 10 refined crystals + 15 artifical crystals + 5 sheets=30 or any other combination like this
+	 * at any point the total sum of all these types in the RPED must be <= MAX_STACK_PICKUP
 	 */
 	var/static/list/allowed_bluespace_types = list(
 		/obj/item/stack/ore/bluespace_crystal,
@@ -60,19 +59,16 @@
 			return FALSE
 
 		//we try to count & limit how much the user can insert of each type to prevent them from using it as an normal storage medium
-		for(var/obj/item/thing in resolve_location.contents)
-			//try convert to stack else skip loop as we are only intrested in counting stacks
-			if(isstack(thing))
-				things=thing
-			else
-				continue
+		for(var/obj/item/stack/stack_content in resolve_location.contents)
 
-			//count how many of this stacktype is already in storage. One type of bluespace crystal takes space for all other bluespace types as well
+			//is user trying to insert any of these listed bluespace stuff
 			if(is_type_in_list(to_insert,allowed_bluespace_types))
-				if(is_type_in_list(things,allowed_bluespace_types))
-					present_amount+=things.amount
-			else if(istype(to_insert,things.type))
-				present_amount=things.amount
+				//if yes count total bluespace stuff is the RPED and then compare the total amount to the value the user is trying to insert
+				if(is_type_in_list(stack_content,allowed_bluespace_types))
+					present_amount+=stack_content.amount
+			//count other normal stack stuff
+			else if(istype(to_insert,stack_content.type))
+				present_amount=stack_content.amount
 				break
 
 		//no more storage for this specific stack type
