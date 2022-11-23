@@ -95,6 +95,7 @@ GLOBAL_LIST_INIT(alldirs, list(
 
 GLOBAL_LIST_EMPTY(landmarks_list) //list of all landmarks created
 GLOBAL_LIST_EMPTY(start_landmarks_list) //list of all spawn points created
+GLOBAL_LIST_EMPTY(migrant_landmarks_list) //list of all spawn points created
 GLOBAL_LIST_EMPTY(department_security_spawns) //list of all department security spawns
 GLOBAL_LIST_EMPTY(generic_event_spawns) //handles clockwork portal+eminence teleport destinations
 GLOBAL_LIST_EMPTY(jobspawn_overrides) //These will take precedence over normal spawnpoints if created.

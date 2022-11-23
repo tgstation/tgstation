@@ -37,6 +37,10 @@
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
+/obj/item/gps/migrant
+	icon_state = "gps-m"
+	gpstag = "MIGRANT"
+
 /obj/item/gps/cyborg
 	icon_state = "gps-b"
 	gpstag = "BORG0"

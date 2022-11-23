@@ -1075,3 +1075,15 @@
 	if(!IS_ORGANIC_LIMB(old_limb))
 		cybernetics_level--
 		update_mood()
+
+/datum/quirk/migrant
+	name = "Migrant"
+	desc = "You are traveling through a barren wasteland. Your survival depends on reaching the station."
+	icon = "compass"
+	value = -4
+	gain_text = span_danger("You are traveling to reach the station as a migrant. Strike the earth!")
+	lose_text = span_notice("You no longer feel like a migrant.")
+	mob_trait = TRAIT_MIGRANT
+	medical_record_text = "Patient is knowledgeable in survival skills."
+	hardcore_value = 3
+	mail_goodies = list(/obj/item/pickaxe/improvised)

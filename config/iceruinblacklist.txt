@@ -5,6 +5,7 @@
 
 ##RESPAWN
 #_maps/RandomRuins/AnywhereRuins/golem_ship.dmm
+#_maps/RandomRuins/AnywhereRuins/migrant_landing.dmm
 
 ##MEGAFAUNA
 #_maps/RandomRuins/IceRuins/icemoon_surface_mining_site.dmm

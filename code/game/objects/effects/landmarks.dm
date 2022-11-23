@@ -356,6 +356,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.emergencyresponseteamspawn += loc
 	return INITIALIZE_HINT_QDEL
 
+/// Used for the migrant quirk to spawn in the wilderness
+/obj/effect/landmark/migrant
+	name = "migrant spawn"
+
+/obj/effect/landmark/migrant/Initialize(mapload)
+	..()
+	GLOB.migrant_landmarks_list += loc
+	return INITIALIZE_HINT_QDEL
+
 //ninja energy nets teleport victims here
 /obj/effect/landmark/holding_facility
 	name = "Holding Facility"
@@ -444,7 +453,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.
 /obj/effect/landmark/unit_test_top_right
 	name = "unit test zone top right"
-
 
 /obj/effect/landmark/start/hangover
 	name = "hangover spawn"

@@ -370,7 +370,6 @@
 		if(equipped_client)
 			pda.update_ringtone_pref(equipped_client)
 
-
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
 	types -= /obj/item/storage/backpack //otherwise this will override the actual backpacks
@@ -393,22 +392,21 @@
 /datum/job/proc/get_mail_goodies(mob/recipient)
 	return mail_goodies
 
-
 /datum/job/proc/award_service(client/winner, award)
 	return
-
 
 /datum/job/proc/get_captaincy_announcement(mob/living/captain)
 	return "Due to extreme staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
 
-
 /// Returns an atom where the mob should spawn in.
-/datum/job/proc/get_roundstart_spawn_point()
+/datum/job/proc/get_roundstart_spawn_point(client/player_client)
+	if("Migrant" in player_client.prefs.all_quirks)
+		return get_migrant_spawn_point()
 	if(random_spawns_possible)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS))
-			return get_latejoin_spawn_point()
+			return get_latejoin_spawn_point(player_client)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_RANDOM_ARRIVALS))
-			return get_safe_random_station_turf(typesof(/area/station/hallway)) || get_latejoin_spawn_point()
+			return get_safe_random_station_turf(typesof(/area/station/hallway)) || get_latejoin_spawn_point(player_client)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
 			var/obj/effect/landmark/start/hangover_spawn_point
 			for(var/obj/effect/landmark/start/hangover/hangover_landmark in GLOB.start_landmarks_list)
@@ -417,12 +415,12 @@
 					continue
 				hangover_landmark.used = TRUE
 				break
-			return hangover_spawn_point || get_latejoin_spawn_point()
+			return hangover_spawn_point || get_latejoin_spawn_point(player_client)
 	if(length(GLOB.jobspawn_overrides[title]))
 		return pick(GLOB.jobspawn_overrides[title])
 	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point()
 	if(!spawn_point) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
-		return get_latejoin_spawn_point()
+		return get_latejoin_spawn_point(player_client)
 	return spawn_point
 
 
@@ -441,13 +439,22 @@
 
 
 /// Finds a valid latejoin spawn point, checking for events and special conditions.
-/datum/job/proc/get_latejoin_spawn_point()
+/datum/job/proc/get_latejoin_spawn_point(client/player_client)
+	if("Migrant" in player_client.prefs.all_quirks)
+		return get_migrant_spawn_point()
 	if(length(GLOB.jobspawn_overrides[title])) //We're doing something special today.
 		return pick(GLOB.jobspawn_overrides[title])
 	if(length(SSjob.latejoin_trackers))
 		return pick(SSjob.latejoin_trackers)
 	return SSjob.get_last_resort_spawn_points()
 
+/// Finds a valid migrant spawn point, checking for events and special conditions.
+/datum/job/proc/get_migrant_spawn_point()
+	var/obj/effect/landmark/migrant/migrant_spawn_point = pick(GLOB.migrant_landmarks_list)
+	if(!migrant_spawn_point)
+		stack_trace("Couldn't find a migrant spawn point for player to spawn at")
+
+	return migrant_spawn_point || SSjob.get_last_resort_spawn_points()
 
 /// Spawns the mob to be played as, taking into account preferences and the desired spawn point.
 /datum/job/proc/get_spawn_mob(client/player_client, atom/spawn_point)
@@ -464,10 +471,8 @@
 		return // Disconnected while checking for the appearance ban.
 	return spawn_instance
 
-
 /// Applies the preference options to the spawning mob, taking the job into account. Assumes the client has the proper mind.
 /mob/living/proc/apply_prefs_job(client/player_client, datum/job/job)
-
 
 /mob/living/carbon/human/apply_prefs_job(client/player_client, datum/job/job)
 	var/fully_randomize = GLOB.current_anonymous_theme || player_client.prefs.should_be_random_hardcore(job, player_client.mob.mind) || is_banned_from(player_client.ckey, "Appearance")
@@ -512,7 +517,6 @@
 			var/gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
 			real_name = species.random_name(gender, TRUE)
 	dna.update_dna_identity()
-
 
 /mob/living/silicon/ai/apply_prefs_job(client/player_client, datum/job/job)
 	if(GLOB.current_anonymous_theme)

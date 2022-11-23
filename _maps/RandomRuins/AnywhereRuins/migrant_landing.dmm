@@ -1,0 +1,778 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"az" = (
+/obj/structure/glowshroom/single,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"cm" = (
+/obj/structure/fans,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"cs" = (
+/obj/item/storage/bag/plants/portaseeder,
+/obj/machinery/hydroponics/soil,
+/obj/item/storage/bag/plants/portaseeder,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"dc" = (
+/obj/structure/table,
+/obj/item/stack/marker_beacon/ten,
+/obj/item/stack/marker_beacon/ten,
+/obj/item/stack/marker_beacon/ten,
+/obj/item/stack/marker_beacon/ten,
+/obj/item/stack/marker_beacon/ten,
+/obj/item/stack/marker_beacon/ten,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"de" = (
+/obj/structure/tank_holder/extinguisher,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"dJ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/machinery/door/airlock/survival_pod/glass,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered)
+"hU" = (
+/obj/structure/closet/wardrobe/miner,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"ih" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/marker_beacon/jade,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"iN" = (
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"iW" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"jp" = (
+/obj/structure/closet/emcloset,
+/obj/structure/tubes,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"jW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered)
+"kI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"le" = (
+/obj/effect/spawner/random/structure/chair_flipped{
+	dir = 1
+	},
+/obj/effect/landmark/migrant,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"mi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/bin,
+/obj/effect/spawner/random/trash/botanical_waste,
+/obj/effect/spawner/random/trash/food_packaging,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"mA" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular,
+/obj/item/reagent_containers/blood/random,
+/obj/item/stack/sheet/cloth/ten,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"nc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"no" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"oR" = (
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/obj/item/bedsheet/black{
+	dir = 1
+	},
+/obj/effect/landmark/migrant,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"qy" = (
+/obj/machinery/light/directional/west,
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/obj/item/bedsheet/black{
+	dir = 1
+	},
+/obj/effect/landmark/migrant,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"sS" = (
+/obj/machinery/smartfridge/survival_pod{
+	desc = "A heated storage unit. This one's seen better days.";
+	name = "dusty survival pod storage"
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"tL" = (
+/obj/structure/rack,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/mining_scanner,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"tS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/spawner/random/food_or_drink/seed{
+	spawn_all_loot = 1
+	},
+/obj/structure/closet/crate/hydroponics,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"uf" = (
+/obj/effect/spawner/random/structure/chair_comfy,
+/obj/effect/landmark/migrant,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"ul" = (
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"us" = (
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/mining_scanner,
+/obj/structure/closet/crate,
+/obj/item/shovel,
+/obj/item/shovel,
+/obj/item/shovel,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"uG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"uO" = (
+/obj/structure/table,
+/obj/item/gps/migrant,
+/obj/item/gps/migrant,
+/obj/item/gps/migrant,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"vc" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"vH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered)
+"xW" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"yR" = (
+/obj/machinery/door/airlock/survival_pod/glass,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"zi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"zH" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/black,
+/obj/effect/landmark/migrant,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"Bi" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"Bu" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/glowshroom,
+/obj/item/seeds/glowshroom,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"BG" = (
+/turf/template_noop,
+/area/template_noop)
+"Ct" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_loot_count = 3;
+	spawn_random_offset = 1
+	},
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"CQ" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/assault_pod/mining{
+	pixel_x = 9
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"CX" = (
+/obj/effect/spawner/random/structure/chair_maintenance{
+	dir = 4
+	},
+/obj/effect/landmark/migrant,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"DB" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/tower,
+/obj/item/seeds/tower,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"DG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/wardrobe/miner,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"Ev" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"EX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"Gm" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/structure/marker_beacon/jade,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"GT" = (
+/obj/structure/closet/crate/internals,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"Ha" = (
+/obj/item/hatchet/wooden,
+/obj/item/hatchet/wooden,
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"Iy" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/closet/wardrobe/miner,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"Jm" = (
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/flashlight/lantern,
+/obj/item/storage/toolbox/emergency,
+/obj/structure/table/survival_pod,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"KR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"LD" = (
+/obj/structure/closet/crate/grave,
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"LW" = (
+/obj/item/shovel,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"MM" = (
+/obj/structure/table,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
+/obj/item/knife/combat/survival,
+/obj/item/knife/combat/survival,
+/obj/item/knife/combat/survival,
+/obj/item/knife/combat/survival,
+/obj/item/knife/combat/survival,
+/obj/item/knife/combat/survival,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"Nc" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/cultivator,
+/obj/item/cultivator,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"Nh" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"Oq" = (
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/regular,
+/obj/structure/table/survival_pod,
+/obj/machinery/light/directional/west,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"Pi" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/structure/marker_beacon/jade,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"PL" = (
+/turf/closed/wall/mineral/titanium/survival/pod,
+/area/ruin/powered)
+"PR" = (
+/obj/machinery/light/directional/east,
+/obj/structure/bed/pod,
+/obj/item/bedsheet/black,
+/obj/effect/landmark/migrant,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"QG" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"QP" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/survival_pod/glass,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered)
+"SN" = (
+/obj/effect/spawner/structure/window/survival_pod,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"SY" = (
+/obj/machinery/light/directional/east,
+/obj/structure/tubes,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"Tk" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"Tw" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/structure/marker_beacon/jade,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"UV" = (
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/mining_scanner,
+/obj/structure/closet/crate,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"VB" = (
+/obj/structure/water_source/puddle{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"Wm" = (
+/obj/effect/spawner/random/structure/chair_maintenance{
+	dir = 8
+	},
+/obj/effect/landmark/migrant,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"XP" = (
+/obj/structure/tank_dispenser,
+/turf/open/floor/pod/dark,
+/area/ruin/powered)
+"Yp" = (
+/obj/structure/closet/crate/grave,
+/obj/item/shovel,
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+"Zr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/botanical_waste,
+/turf/open/misc/dirt{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/lavaland/surface/outdoors)
+"ZM" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"ZP" = (
+/turf/open/misc/dirt/dark,
+/area/lavaland/surface/outdoors)
+
+(1,1,1) = {"
+BG
+BG
+ZP
+iN
+ZP
+Ev
+Tk
+Tk
+az
+ZP
+ZP
+BG
+BG
+"}
+(2,1,1) = {"
+BG
+BG
+Tk
+Tk
+DG
+ZM
+dJ
+ZM
+UV
+ZP
+ZP
+BG
+BG
+"}
+(3,1,1) = {"
+iN
+ZP
+Ev
+LW
+de
+ZM
+jW
+ZM
+GT
+ZP
+Tk
+ZP
+iN
+"}
+(4,1,1) = {"
+iN
+Pi
+QG
+mi
+Iy
+ZM
+QP
+ZM
+no
+kI
+EX
+ih
+ZP
+"}
+(5,1,1) = {"
+Tk
+Nh
+PL
+PL
+PL
+SN
+yR
+SN
+PL
+PL
+PL
+Bi
+ZP
+"}
+(6,1,1) = {"
+ZP
+Nh
+PL
+Jm
+Oq
+ul
+ul
+oR
+qy
+tL
+PL
+KR
+Tk
+"}
+(7,1,1) = {"
+BG
+iW
+PL
+cm
+ul
+ul
+CX
+ul
+ul
+hU
+PL
+Bi
+BG
+"}
+(8,1,1) = {"
+BG
+Nh
+PL
+XP
+ul
+uf
+Ct
+le
+ul
+hU
+PL
+Bi
+BG
+"}
+(9,1,1) = {"
+BG
+Nh
+PL
+sS
+ul
+ul
+Wm
+ul
+ul
+hU
+PL
+nc
+BG
+"}
+(10,1,1) = {"
+iN
+iW
+PL
+jp
+SY
+ul
+ul
+zH
+PR
+tL
+PL
+nc
+iN
+"}
+(11,1,1) = {"
+az
+Nh
+PL
+PL
+PL
+SN
+yR
+SN
+PL
+PL
+PL
+KR
+Yp
+"}
+(12,1,1) = {"
+Tk
+Tw
+zi
+uG
+tS
+ZM
+dJ
+ZM
+CQ
+xW
+zi
+Gm
+LD
+"}
+(13,1,1) = {"
+Zr
+VB
+Nc
+vc
+us
+ZM
+vH
+ZM
+uO
+dc
+iN
+ZP
+ZP
+"}
+(14,1,1) = {"
+BG
+BG
+DB
+Ha
+mA
+ZM
+QP
+ZM
+MM
+Tk
+Tk
+BG
+BG
+"}
+(15,1,1) = {"
+BG
+BG
+Bu
+cs
+Tk
+iN
+iN
+Ev
+Ev
+ZP
+Tk
+BG
+BG
+"}

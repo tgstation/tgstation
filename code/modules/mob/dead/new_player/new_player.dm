@@ -200,7 +200,7 @@
 		tgui_alert(usr, get_job_unavailable_error_message(error, rank))
 		return FALSE
 
-	if(SSshuttle.arrivals)
+	if(SSshuttle.arrivals && !HAS_TRAIT(src, TRAIT_MIGRANT))
 		close_spawn_windows() //In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
 			tgui_alert(usr,"The arrivals shuttle is currently malfunctioning! You cannot join.")
@@ -220,7 +220,7 @@
 		return FALSE
 
 	mind.late_joiner = TRUE
-	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point()
+	var/atom/destination = mind.assigned_role.get_latejoin_spawn_point(src.client)
 	if(!destination)
 		CRASH("Failed to find a latejoin spawn point.")
 	var/mob/living/character = create_character(destination)
@@ -358,7 +358,6 @@
 	client.init_verbs()
 	. = spawning_mob
 	new_character = .
-
 
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character

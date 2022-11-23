@@ -267,3 +267,13 @@
 	cost = 5
 	suffix = "lavaland_surface_bileworm_nest.dmm"
 	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/migrant_landing
+	name = "Migrant Landing"
+	id = "migrant_landing"
+	description = "An outpost for migrants to embark from. Strike the earth!"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "migrant_landing.dmm"
+	cost = 0
+	always_place = TRUE
+	allow_duplicates = FALSE

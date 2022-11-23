@@ -858,7 +858,6 @@ SUBSYSTEM_DEF(job)
 	unassigned -= player
 	player.ready = PLAYER_NOT_READY
 
-
 /datum/controller/subsystem/job/Recover()
 	set waitfor = FALSE
 	var/oldjobs = SSjob.all_occupations
@@ -898,7 +897,6 @@ SUBSYSTEM_DEF(job)
 
 	destination = get_last_resort_spawn_points()
 	destination.JoinPlayerHere(M, buckle)
-
 
 /datum/controller/subsystem/job/proc/get_last_resort_spawn_points()
 	//bad mojo
