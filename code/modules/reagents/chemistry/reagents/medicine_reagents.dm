@@ -860,7 +860,7 @@
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body lets off a puff of smoke..."))
 		return
 
-	if(exposed_mob.get_organic_health() > (exposed_mob.getMaxHealth() * 2))
+	if(-exposed_mob.get_organic_health() > (exposed_mob.getMaxHealth() * 2))
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses violently, before falling still..."))
 		return
 
