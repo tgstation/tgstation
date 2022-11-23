@@ -42,10 +42,9 @@
 
 /obj/structure/fermenting_barrel/attackby(obj/item/object, mob/user, params)
 	if(open)
-		if(istype(object, /obj/item/food/grown))
-			if(insert_fruit(user, object))
-				balloon_alert(user, "added fruit")
-				return
+		if(istype(object, /obj/item/food/grown) && insert_fruit(user, object))
+			balloon_alert(user, "added fruit")
+			return
 		if(istype(object, /obj/item/storage/bag/plants))
 			var/obj/item/storage/bag/plants/bag = object
 			var/inserted_fruits = 0
