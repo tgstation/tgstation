@@ -122,6 +122,15 @@
 			transform = transform.Turn(180)
 		set_density(FALSE)
 
+/mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
+	. = ..()
+	if (!.)
+		return
+	icon_state = icon_living
+	if (flip_on_death)
+		transform = transform.Turn(180)
+	set_density(initial(density))
+
 /mob/living/basic/proc/melee_attack(atom/target)
 	src.face_atom(target)
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target) & COMPONENT_HOSTILE_NO_ATTACK)
