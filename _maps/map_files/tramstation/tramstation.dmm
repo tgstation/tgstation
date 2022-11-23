@@ -2156,12 +2156,7 @@
 "aVB" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "aVE" = (
 /obj/machinery/rnd/server/master,
@@ -2227,12 +2222,7 @@
 "aXm" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "aXo" = (
 /obj/structure/punching_bag,
@@ -8956,12 +8946,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
 "dja" = (
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "djg" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -10547,12 +10532,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "dIF" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -17832,12 +17812,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "grA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21144,12 +21119,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "hEb" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -26485,12 +26455,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "jxM" = (
 /obj/structure/table/wood,
@@ -27770,12 +27735,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "jWG" = (
 /obj/machinery/light/small/directional/north,
@@ -28601,12 +28561,7 @@
 	icon_state = "titanium"
 	},
 /obj/effect/landmark/lift_id,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "kli" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
@@ -32279,12 +32234,7 @@
 	icon_state = "titanium"
 	},
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "lxk" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -35137,12 +35087,7 @@
 "myM" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "myN" = (
 /obj/structure/table,
@@ -35510,12 +35455,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 8
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/floor/noslip/tram_platform,
 /area/station/hallway/primary/tram/left)
 "mEJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -41657,12 +41597,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "oTA" = (
 /turf/closed/wall,
@@ -42158,12 +42093,7 @@
 /area/station/maintenance/tram/mid)
 "pcv" = (
 /obj/effect/landmark/tram/left_part,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "pcC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42487,12 +42417,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/floor/noslip/tram_platform,
 /area/station/hallway/primary/tram/right)
 "pjt" = (
 /obj/machinery/light/directional/south,
@@ -48317,12 +48242,7 @@
 	},
 /obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "rhc" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -50976,12 +50896,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "rZl" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -53078,12 +52993,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "sPc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -56249,12 +56159,7 @@
 /area/station/construction/mining/aux_base)
 "tWp" = (
 /obj/effect/landmark/tram/right_part,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "tWw" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -56726,12 +56631,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "ueK" = (
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "ueZ" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -61179,12 +61079,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "vKc" = (
 /obj/structure/disposalpipe/segment{
@@ -62745,12 +62640,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "woW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -63654,12 +63544,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/port/central)
 "wGd" = (
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "wGf" = (
 /obj/machinery/smartfridge/chemistry/preloaded,
