@@ -877,16 +877,16 @@
 	var/brute_loss = getBruteLoss()
 	if(brute_loss)
 		var/brute_healing = min(healing_amount * 0.5, brute_loss) // 50% of the healing goes to brute
-		setBruteLoss(round(brute_loss - brute_healing, DAMAGE_PRECISION), FALSE, TRUE)
+		setBruteLoss(round(brute_loss - brute_healing, DAMAGE_PRECISION), updating_health=FALSE, forced=TRUE)
 		healing_amount = max(0, healing_amount - brute_healing)
 
 	var/fire_loss = getFireLoss()
 	if(fire_loss && healing_amount)
 		var/fire_healing = min(healing_amount, fire_loss) // rest of the healing goes to fire
-		setFireLoss(round(fire_loss - fire_healing, DAMAGE_PRECISION), TRUE, TRUE)
+		setFireLoss(round(fire_loss - fire_healing, DAMAGE_PRECISION), updating_health=TRUE, forced=TRUE)
 		healing_amount = max(0, healing_amount - fire_healing)
 
-	revive(NONE, max(healing_amount, 0), FALSE) // and any excess healing is passed along
+	revive(NONE, excess_healing=max(healing_amount, 0), force_grab_ghost=FALSE) // and any excess healing is passed along
 
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)
