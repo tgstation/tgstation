@@ -111,7 +111,7 @@
 		qdel(src)
 		return
 
-	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
+	RegisterSignals(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
 	RegisterSignal(resolve_parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
 	RegisterSignal(resolve_parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(on_mousedropped_onto))
 
@@ -122,7 +122,7 @@
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(mass_empty))
 
-	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
+	RegisterSignals(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
 	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, PROC_REF(open_storage_attackby_secondary))
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, PROC_REF(handle_enter))

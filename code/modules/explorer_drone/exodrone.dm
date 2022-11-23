@@ -214,11 +214,12 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/item/exodrone/proc/updateKeywords(text)
 	_regex_context = src
 	var/static/regex/keywordRegex = regex(@"\$\$(\S*)","g")
-	. = keywordRegex.Replace(text,/obj/item/exodrone/proc/replace_keyword)
+	. = keywordRegex.Replace(text, /obj/item/exodrone/proc/replace_keyword)
 	_regex_context = null
 
 /// This is called with src = regex datum, so don't try to access any instance variables directly here.
 /obj/item/exodrone/proc/replace_keyword(match,g1)
+	REGEX_REPLACE_HANDLER
 	switch(g1)
 		if("SITE_NAME")
 			return _regex_context.location.display_name()

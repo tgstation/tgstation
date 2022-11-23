@@ -1,6 +1,6 @@
 /datum/element/decal
 	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Whether this decal can be cleaned.
 	var/cleanable
 	/// A description this decal appends to the target's examine message.
@@ -88,7 +88,7 @@
 	if(isitem(target))
 		INVOKE_ASYNC(target, TYPE_PROC_REF(/obj/item/, update_slot_icon), TRUE)
 	if(_dir)
-		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, /datum/controller/subsystem/processing/dcs/proc/rotate_decals, TRUE)
+		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, TYPE_PROC_REF(/datum/controller/subsystem/processing/dcs, rotate_decals), TRUE)
 	if(!isnull(_smoothing))
 		RegisterSignal(target, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smooth_react), TRUE)
 	if(_cleanable)

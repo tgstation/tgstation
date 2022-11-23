@@ -598,7 +598,7 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_mob(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, /mob/living/proc/rest_checks_callback), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+	if(!instant && !do_mob(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -832,7 +832,7 @@
 	if(heal_flags & HEAL_TOX)
 		setToxLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_OXY)
-		setToxLoss(0, FALSE, TRUE)
+		setOxyLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_CLONE)
 		setCloneLoss(0, FALSE, TRUE)
 	if(heal_flags & HEAL_BRUTE)

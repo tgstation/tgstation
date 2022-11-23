@@ -1006,8 +1006,7 @@
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
 		surgery.speed_modifier = max(0.2, surgery.speed_modifier)
 
 /datum/reagent/iron
@@ -1115,7 +1114,7 @@
 		to_chat(M, span_warning("You feel unstable..."))
 		M.set_jitter_if_lower(2 SECONDS)
 		current_cycle = 1
-		addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 30)
+		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob/living, bluespace_shuffle)), 30)
 	..()
 
 /mob/living/proc/bluespace_shuffle()
