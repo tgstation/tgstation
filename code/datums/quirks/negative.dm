@@ -1011,6 +1011,7 @@
 
 	if(!is_holding_cane)
 		human_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown) // TODO make this it's own modifier at some point
+		quirk_holder.AddElement(/datum/element/waddling)
 	else if(is_holding_cane)
 		if(is_cane_left_hand)
 			left_cane = WEAKREF(left_hand_item)
@@ -1038,6 +1039,7 @@
 
 	if(!is_holding_cane)
 		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.RemoveElement(/datum/element/waddling)
 	else if(is_holding_cane)
 		if(primary_cane)
 			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
@@ -1059,8 +1061,10 @@
 
 	if(!is_holding_cane)
 		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.AddElement(/datum/element/waddling)	
 	else if(is_holding_cane)
 		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.RemoveElement(/datum/element/waddling)
 
 	var/obj/item/primary_cane = left_cane?.resolve()
 	var/obj/item/secondary_cane = right_cane?.resolve()
@@ -1102,7 +1106,7 @@
 
 	if(!both_hands_have_canes)
 		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
-		quirk_holder.do_jitter_animation(3 SECONDS)
+		quirk_holder.AddElement(/datum/element/waddling)
 
 	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(left_cane?.resolve() == source)
