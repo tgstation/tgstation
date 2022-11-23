@@ -127,14 +127,19 @@
 
 /obj/item/organ/internal/tongue/rat/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	. = ..()
-	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, .proc/its_on_the_mouse)
+	ADD_TRAIT(tongue_owner, TRAIT_SALIVATING, REF(src))
+	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
 
 /obj/item/organ/internal/tongue/rat/Remove(mob/living/carbon/tongue_owner, special)
 	. = ..()
 	UnregisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN)
+	REMOVE_TRAIT(tongue_owner, TRAIT_SALIVATING, REF(src))
 
-/obj/item/organ/internal/tongue/rat/proc/its_on_the_mouse(mob/living/carbon/offerer, mob/living/taker, obj/item/given)
+/obj/item/organ/internal/tongue/rat/proc/on_item_given(mob/living/carbon/offerer, mob/living/taker, obj/item/given)
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(its_on_the_mouse), offerer, taker)
+
+/obj/item/organ/internal/tongue/rat/proc/its_on_the_mouse(mob/living/carbon/offerer, mob/living/taker)
 	offerer.say("For you, it's on the mouse.")
 	taker.add_mood_event("it_was_on_the_mouse", /datum/mood_event/it_was_on_the_mouse)
 
