@@ -44,14 +44,7 @@
 			return FALSE
 
 		var/obj/item/stack/the_stack = to_insert
-		//how much of the stack is the user trying to insert
-		var/insert_amount = the_stack.amount
-		//how much of this stack type is currently in the stack
 		var/present_amount = 0
-		//how much space is available
-		var/available = 0
-		//stacks type
-		var/obj/item/stack/things
 
 		//not a real location so dont bother
 		var/obj/item/resolve_location = real_location?.resolve()
@@ -65,10 +58,10 @@
 			if(is_type_in_list(to_insert,allowed_bluespace_types))
 				//if yes count total bluespace stuff is the RPED and then compare the total amount to the value the user is trying to insert
 				if(is_type_in_list(stack_content,allowed_bluespace_types))
-					present_amount+=stack_content.amount
+					present_amount += stack_content.amount
 			//count other normal stack stuff
 			else if(istype(to_insert,stack_content.type))
-				present_amount=stack_content.amount
+				present_amount = stack_content.amount
 				break
 
 		//no more storage for this specific stack type
@@ -76,14 +69,14 @@
 			return FALSE
 
 		//we want the user to insert the exact stack amount which is available so we dont have to bother subtracting & leaving left overs for the user
-		available = MAX_STACK_PICKUP-present_amount
-		if(available-insert_amount<0)
+		var/available = MAX_STACK_PICKUP-present_amount
+		if(available-the_stack.amount<0)
 			return FALSE
 
 	//check normal insertion of other stock parts
 	else if(!to_insert.get_part_rating())
 		return FALSE
 
-	return TRUE
+	return .
 
 #undef MAX_STACK_PICKUP
