@@ -41,10 +41,10 @@
 			if(basic.basic_mob_flags & DEL_ON_DEATH)
 				continue
 
-		if(istype(target, /mob/living/carbon))
-			var/mob/living/carbon/carbon = target
-			for(var/obj/item/bodypart/limb as anything in carbon.bodyparts)
-				limb.body_damage_coeff = 1 // fuck you
+		// if(iscarbon(target))
+		// 	var/mob/living/carbon/carbon = target
+		// 	for(var/obj/item/bodypart/limb as anything in carbon.bodyparts)
+		// 		limb.body_damage_coeff = 1 // fuck you
 
 		test_damage_but_no_death(type)
 		test_death_no_damage(type)
@@ -80,8 +80,8 @@
 
 /datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
-	target.setBruteLoss(damage, FALSE) // no point running health update logic here
-	target.setFireLoss(damage, TRUE) // since we do it here
+	target.setBruteLoss(damage, updating_health=FALSE) // no point running health update logic here
+	target.setFireLoss(damage, updating_health=TRUE) // since we do it here
 	update_amounts(target)
 	if(percent >= 1)
 		target.death()
@@ -134,7 +134,7 @@
 
 /datum/unit_test/strange_reagent/proc/test_death_from_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
-	if(!damage_target_to_percentage(target, 1.6)) // under the 2x damage cap
+	if(!damage_target_to_percentage(target, strange_reagent.max_revive_damage_ratio * 0.9)) // 10% under the 2x damage cap
 		return
 
 	update_amounts(target)
@@ -143,7 +143,7 @@
 
 /datum/unit_test/strange_reagent/proc/test_death_from_too_much_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
-	if(!damage_target_to_percentage(target, 3.3)) // 10% over the 2x damage cap
+	if(!damage_target_to_percentage(target, strange_reagent.max_revive_damage_ratio * 1.1)) // 10% over the damage cap
 		return
 
 	update_amounts(target)

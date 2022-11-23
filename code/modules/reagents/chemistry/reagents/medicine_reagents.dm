@@ -802,7 +802,7 @@
 
 /datum/reagent/medicine/strange_reagent
 	name = "Strange Reagent"
-	description = "A miracle drug capable of bringing the dead back to life. Works topically unless anotamically complex, in which case works orally. Only works if the target has less than 200 total brute and burn damage and hasn't been husked and requires more reagent depending on damage inflicted. Causes damage to the living."
+	description = "A miracle drug capable of bringing the dead back to life. Works topically unless anotamically complex, in which case works orally. Cannot revive targets under -%MAXHEALTHRATIO% health."
 	reagent_state = LIQUID
 	color = "#A0E85E"
 	metabolization_rate = 1.25 * REAGENTS_METABOLISM
@@ -816,10 +816,18 @@
 	var/excess_healing_ratio = 0.8
 	/// Do we instantly revive
 	var/instant = FALSE
+	/// The maximum amount of damage we can revive from, as a ratio of max health
+	var/max_revive_damage_ratio = 2
 
 /datum/reagent/medicine/strange_reagent/instant
 	name = "Stranger Reagent"
 	instant = TRUE
+
+/datum/reagent/medicine/strange_reagent/New()
+	. = ..()
+	description = replacetext(description, "%MAXHEALTHRATIO%", "[max_revive_damage_ratio * 100]%")
+	if(instant)
+		description += " It appears to be pulsing with a warm pink light."
 
 // FEED ME SEYMOUR
 /datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -860,7 +868,7 @@
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body lets off a puff of smoke..."))
 		return
 
-	if(-exposed_mob.get_organic_health() > (exposed_mob.getMaxHealth() * 2))
+	if(-exposed_mob.get_organic_health() > (exposed_mob.getMaxHealth() * max_revive_damage_ratio))
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses violently, before falling still..."))
 		return
 
