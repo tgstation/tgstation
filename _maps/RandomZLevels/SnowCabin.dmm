@@ -4031,7 +4031,7 @@
 	pixel_y = 8;
 	throwforce = 2
 	},
-/obj/item/shield/riot/roman/fake{
+/obj/item/shield/roman/fake{
 	layer = 3.01;
 	pixel_x = -7
 	},

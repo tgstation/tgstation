@@ -62,6 +62,8 @@
 	)
 	/// Is the carp tamed?
 	var/tamed = FALSE
+	/// What colour is our 'healing' outline?
+	var/regenerate_colour = COLOR_PALE_GREEN
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
 	AddElement(/datum/element/simple_flying)
@@ -69,6 +71,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	add_cell_sample()
 	if(ai_controller)
 		ai_controller.blackboard[BB_HOSTILE_ATTACK_WORD] = pick(speak_emote)
@@ -113,7 +116,6 @@
 		can_have_ai = FALSE
 		toggle_ai(AI_OFF)
 
-
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
@@ -140,7 +142,7 @@
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
 	greyscale_config = NONE
-
+	regenerate_colour = COLOR_WHITE
 
 /mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
 	return
@@ -166,7 +168,6 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 3)
-	var/regen_cooldown = 0
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize(mapload)
 	. = ..()
@@ -179,11 +180,6 @@
 /mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(.)
-		regen_cooldown = world.time + REGENERATION_DELAY
-
 /mob/living/simple_animal/hostile/carp/megacarp/Login()
 	. = ..()
 	if(!. || !client)
@@ -192,11 +188,6 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/megacarp)
 	can_buckle = TRUE
 	buckle_lying = 0
-
-/mob/living/simple_animal/hostile/carp/megacarp/Life(delta_time = SSMOBS_DT, times_fired)
-	. = ..()
-	if(regen_cooldown < world.time)
-		heal_overall_damage(2 * delta_time)
 
 /mob/living/simple_animal/hostile/carp/lia
 	name = "Lia"
