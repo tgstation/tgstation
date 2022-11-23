@@ -305,7 +305,7 @@
 		/obj/item/reagent_containers/hypospray/combat/empty = 1,
 		/obj/item/storage/box/evilmeds = 1,
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
-		/obj/item/clothing/glasses/hud/health/night = 1,
+		/obj/item/clothing/glasses/hud/health/night/science = 1,
 	)
 	generate_items_inside(items_inside,src)
 

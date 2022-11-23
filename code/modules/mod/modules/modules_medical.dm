@@ -259,9 +259,9 @@
 /obj/item/shockpaddles/mod
 	name = "MOD defibrillator gauntlets"
 	req_defib = FALSE
-	icon_state = "defibgaunlets0"
-	inhand_icon_state = "defibgaunlets0"
-	base_icon_state = "defibgaunlets0"
+	icon_state = "defibgauntlets0"
+	inhand_icon_state = "defibgauntlets0"
+	base_icon_state = "defibgauntlets"
 
 /obj/item/mod/module/defibrillator/combat
 	name = "MOD combat defibrillator module"
@@ -274,6 +274,7 @@
 		But when it came time to provide their operatives with usable medical equipment, they didn't hesitate to remove \
 		those in-built safeties. Operatives in the field can benefit from what they dub as 'Stun Gloves', able to apply shocks \
 		straight to a victims heart to disable them, or maybe even outright stop their heart with enough power."
+	complexity = 1
 	module_type = MODULE_ACTIVE
 	overlay_state_inactive = "module_defibrillator_combat"
 	overlay_state_active = "module_defibrillator_combat_active"
@@ -283,9 +284,9 @@
 /obj/item/shockpaddles/syndicate/mod
 	name = "MOD combat defibrillator gauntlets"
 	req_defib = FALSE
-	icon_state = "syndiegaunlets0"
-	inhand_icon_state = "syndiegaunlets0"
-	base_icon_state = "syndiegaunlets0"
+	icon_state = "syndiegauntlets0"
+	inhand_icon_state = "syndiegauntlets0"
+	base_icon_state = "syndiegauntlets"
 
 ///Thread Ripper - Temporarily rips apart clothing to make it not cover the body.
 /obj/item/mod/module/thread_ripper
