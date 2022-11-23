@@ -35,7 +35,7 @@
 	if(open)
 		var/fruit_count = contents.len
 		if(fruit_count)
-			. += span_notice("It contains [fruit_count] [fruit_count % 10 == 1 && fruit_count % 100 != 11 ? "fruit" : "fruits"] ready to be fermented.")
+			. += span_notice("It contains [fruit_count] fruit\s ready to be fermented.")
 		. += span_notice("It is currently open, letting you fill it with fruits or reagents.")
 	else
 		. += span_notice("It is currently closed, letting it ferment fruits or draw reagents from its tap.")
@@ -54,7 +54,7 @@
 					break
 				inserted_fruits++
 			if(inserted_fruits)
-				balloon_alert(user, "added [inserted_fruits] [inserted_fruits % 10 == 1 && inserted_fruits % 100 != 11 ? "fruit" : "fruits"]")
+				balloon_alert(user, "added [inserted_fruits] fruit\s")
 	else if(object.is_refillable())
 		return //so we can refill them via their afterattack.
 	return ..()
@@ -125,8 +125,8 @@
 	if(!fruit)
 		return stop_fermentation()
 	fruit.ferment()
-	fruit.reagents.trans_to(reagents, fruit.reagents.total_volume)
 	potential_volume -= fruit.reagents.total_volume
+	fruit.reagents.trans_to(reagents, fruit.reagents.total_volume)
 	qdel(fruit)
 
 /// Stops the fermentation process
