@@ -171,5 +171,3 @@
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
-/// From /datum/component/nuclear_bomb_operator, when a mob without hands picks up the nuclear disk, passed an obj/item/disk/nuclear
-#define COMSIG_HANDLESS_MOB_COLLECTED_DISK "handless_mob_got_diskie"

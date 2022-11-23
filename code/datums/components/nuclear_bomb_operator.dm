@@ -13,19 +13,19 @@
 /datum/component/nuclear_bomb_operator
 	/// A weak reference to a held nuclear disk, in place of holding it in our inventory, because we don't have one
 	var/datum/weakref/disky
-	/// Overlay to display on top of this mob in order to show that it is holding the nuclear disk
-	var/mutable_appearance/disk_overlay
-	/// Overlay applied on top of the disk overlay representing whatever limb the mob is holding this in
-	var/mutable_appearance/mob_held_overlay
+	/// Something to call when we collect the disk
+	var/datum/callback/on_disk_collected
+	/// Should return some overlays to display on the mob to show they're carrying a disk
+	var/datum/callback/add_disk_overlays
 
-/datum/component/nuclear_bomb_operator/Initialize(mutable_appearance/disk_overlay, mutable_appearance/mob_held_overlay)
+/datum/component/nuclear_bomb_operator/Initialize(datum/callback/on_disk_collected, datum/callback/add_disk_overlays)
 	if (!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (iscarbon(parent)) // Redundant
 		return COMPONENT_INCOMPATIBLE
 
-	src.disk_overlay = disk_overlay
-	src.mob_held_overlay = mob_held_overlay
+	src.on_disk_collected = on_disk_collected
+	src.add_disk_overlays = add_disk_overlays
 
 /datum/component/nuclear_bomb_operator/RegisterWithParent()
 	. = ..()
@@ -40,7 +40,14 @@
 
 /datum/component/nuclear_bomb_operator/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_EXITED, COMSIG_ATOM_UPDATE_OVERLAYS))
+	UnregisterSignal(parent, list(
+		COMSIG_PARENT_EXAMINE,
+		COMSIG_LIVING_DEATH,
+		COMSIG_PARENT_QDELETING,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_EXITED,
+		COMSIG_ATOM_UPDATE_OVERLAYS,
+	))
 	REMOVE_TRAIT(parent, TRAIT_DISK_VERIFIER, NUKE_OP_MINION_TRAIT)
 	REMOVE_TRAIT(parent, TRAIT_CAN_STRIP, NUKE_OP_MINION_TRAIT)
 	REMOVE_TRAIT(parent, TRAIT_CAN_USE_NUKE, NUKE_OP_MINION_TRAIT)
@@ -99,9 +106,10 @@
 	var/mob/mob_parent = parent
 	potential_disky.forceMove(mob_parent)
 	disky = WEAKREF(potential_disky)
-	mob_parent.update_icon()
+	mob_parent.update_appearance(updates = UPDATE_ICON)
 	mob_parent.balloon_alert(mob_parent, "disk secured!")
-	SEND_SIGNAL(mob_parent, COMSIG_HANDLESS_MOB_COLLECTED_DISK, potential_disky)
+	if (on_disk_collected)
+		on_disk_collected.Invoke(potential_disky)
 
 /// Uses the disk on clicked atom, or places it on the ground
 /datum/component/nuclear_bomb_operator/proc/try_put_down_disk(obj/item/disk/nuclear/held_disk, atom/attacked_target)
@@ -114,7 +122,7 @@
 	held_disk.forceMove(attacked_target)
 	disky = null
 	mob_parent.balloon_alert(mob_parent, "disk dropped!")
-	mob_parent.update_icon()
+	mob_parent.update_appearance(updates = UPDATE_ICON)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Don't hold onto the reference if we lose the disk somehow
@@ -125,19 +133,16 @@
 		return
 	disky = null
 	var/mob/mob_parent = parent
-	mob_parent.update_icon()
+	mob_parent.update_appearance(updates = UPDATE_ICON)
 
 /// Display any disk-related overlays which need displaying
 /datum/component/nuclear_bomb_operator/proc/on_update_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
-
+	if (!add_disk_overlays)
+		return
 	if (!disky?.resolve())
 		return
 	var/mob/mob_parent = parent
 	if (!istype(mob_parent) || mob_parent.stat == DEAD)
 		return
-
-	if (!isnull(mob_held_overlay))
-		overlays += mob_held_overlay
-	if (!isnull(disk_overlay))
-		overlays += disk_overlay
+	add_disk_overlays.Invoke(overlays)

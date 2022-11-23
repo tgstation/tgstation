@@ -248,19 +248,32 @@
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
 	rarechance = 10
+	/// Overlay to apply to display the disk
+	var/mutable_appearance/disk_overlay
+	/// Overlay to apply over the disk so it looks like cayenne is holding it
+	var/mutable_appearance/mouth_overlay
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
-	var/mutable_appearance/disk = mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay")
-	var/mutable_appearance/mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
-	AddComponent(/datum/component/nuclear_bomb_operator, disk, mouth)
-	RegisterSignal(src, COMSIG_HANDLESS_MOB_COLLECTED_DISK, PROC_REF(got_disk))
+	var/datum/callback/got_disk = CALLBACK(src, PROC_REF(got_disk))
+	var/datum/callback/display_disk = CALLBACK(src, PROC_REF(display_disk))
+	AddComponent(/datum/component/nuclear_bomb_operator, got_disk, display_disk)
 
 /// She did it! Treats for Cayenne!
-/mob/living/simple_animal/hostile/carp/cayenne/proc/got_disk(atom/source, obj/item/disk/nuclear/disky)
+/mob/living/simple_animal/hostile/carp/cayenne/proc/got_disk(obj/item/disk/nuclear/disky)
 	if (disky.fake) // Never mind she didn't do it
 		return
 	client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
+
+/// Adds an overlay to show the disk on Cayenne
+/mob/living/simple_animal/hostile/carp/cayenne/proc/display_disk(list/new_overlays)
+	if (!mouth_overlay)
+		mouth_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
+	new_overlays += mouth_overlay
+
+	if (!disk_overlay)
+		disk_overlay = mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay")
+	new_overlays += disk_overlay
 
 #undef REGENERATION_DELAY
