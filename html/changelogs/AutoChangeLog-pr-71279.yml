@@ -1,4 +1,0 @@
-author: "Striders13"
-delete-after: True
-changes:
-  - bugfix: "fixed tramstation's AI sat solars not working"
