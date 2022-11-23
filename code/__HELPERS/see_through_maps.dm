@@ -10,6 +10,10 @@
 #define SEE_THROUGH_MAP_THREE_X_TWO "3x2"
 ///One row of three tiles above the atom, but offset one tile to the left because of how billboards work
 #define SEE_THROUGH_MAP_BILLBOARD "billboard"
+///Two rows of three wide, but offset one tile to the left because thats how shipping containers work
+#define SEE_THROUGH_MAP_SHIPPING_CONTAINER "shipping_container"
+///Seethrough component for the ratvar wreck, in shape of the ratvar wreck
+#define SEE_THROUGH_MAP_RATVAR_WRECK "ratvar"
 
 
 /**global statics for the see_through_component coordinate maps
@@ -22,7 +26,8 @@ GLOBAL_LIST_INIT(see_through_maps, list(
 	// X
 	// A
 	SEE_THROUGH_MAP_DEFAULT = list(
-	/*----------------*/list(0, 1, 0)
+	/*----------------*/list(0, 1, 0),
+	/*----------------*/list(0, 0, 0)
 	),
 
 	// XXX
@@ -40,7 +45,8 @@ GLOBAL_LIST_INIT(see_through_maps, list(
 	// A
 	SEE_THROUGH_MAP_DEFAULT_TWO_TALL = list(
 	/*----------------*/list(0, 2, 0),
-	/*----------------*/list(0, 1, 0)
+	/*----------------*/list(0, 1, 0),
+	/*----------------*/list(0, 0, 0)
 	),
 
 	// XXX
@@ -52,9 +58,24 @@ GLOBAL_LIST_INIT(see_through_maps, list(
 	),
 
 	/// XXX
-	/// OAO
+	/// AOO
 	SEE_THROUGH_MAP_BILLBOARD = list(
 		list(0, 1, 0), list(1, 1, 0), list(2, 1, 0)
+	),
+	/// XXX
+	/// AXX
+	SEE_THROUGH_MAP_SHIPPING_CONTAINER = list(
+		list(0, 1, 0), list(1, 1, 0), list(2, 1, 0),
+		list(0, 0, 0), list(1, 0, 0), list(2, 0, 0)
+	),
+	//No
+	SEE_THROUGH_MAP_RATVAR_WRECK = list(
+		list(3, 5, 0), list(4, 5, 0), list(5, 5, 0), list(6, 5, 0),
+		list(3, 4, 0), list(4, 4, 0), list(5, 4, 0), list(6, 4, 0), list(7, 4, 0), list(9, 4, 0),
+		list(3, 3, 0), list(4, 3, 0), list(5, 3, 0), list(6, 3, 0), /* the neck */ list(8, 3, 0), list(9, 3, 0),
+		list(0, 2, 0), list(1, 2, 0), list(2, 2, 0), list(3, 2, 0), list(4, 2, 0), list(5, 2, 0), list(6, 2, 0), list(7, 2, 0), list(8, 2, 0), list(9, 2, 0), list(10, 2, 0), list(11, 2, 0), list(12, 2, 0),
+		list(0, 1, 0), list(1, 1, 0), list(2, 1, 0), list(3, 1, 0), list(4, 1, 0), list(5, 1, 0), list(6, 1, 0), list(7, 1, 0), list(8, 1, 0), list(9, 1, 0), list(10, 1, 0), list(11, 1, 0), list(12, 1, 0),
+		list(0, 0, 0), list(1, 0, 0), list(2, 0, 0), list(3, 0, 0), list(4, 0, 0), list(5, 0, 0), list(6, 0, 0), list(7, 0, 0), list(8, 0, 0), list(9, 0, 0), list(10, 0, 0), list(11, 0, 0), list(12, 0, 0), list(13, 0, 0)
 	)
 ))
 

@@ -5,7 +5,7 @@
  */
 /datum/element/movement_turf_changer
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///Path of the turf added on top
 	var/turf_type
 
@@ -16,7 +16,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.turf_type = turf_type
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /datum/element/movement_turf_changer/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)

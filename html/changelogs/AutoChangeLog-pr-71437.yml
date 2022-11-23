@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "All Space Carp will now start regenerating health after 6 seconds of not taking any damage, until they're back to full health. This behaviour was previously unique to mega carp."

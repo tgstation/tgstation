@@ -1,0 +1,28 @@
+{
+	"megacarp_greyscale": [
+		{
+			"type": "icon_state",
+			"icon_state": "megacarp_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "megacarp_face",
+			"blend_mode": "overlay"
+		}
+	],
+	"megacarp_dead_greyscale": [
+		{
+			"type": "icon_state",
+			"icon_state": "megacarp_dead_greyscale",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "megacarp_dead_tongue",
+			"blend_mode": "overlay"
+		}
+	]
+}

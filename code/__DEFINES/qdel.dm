@@ -31,9 +31,9 @@
 #define GC_QUEUE_COUNT 3 //! Number of queues, used for allocating the nested lists. Don't forget to increase this if you add a new queue stage
 
 // Defines for the time an item has to get its reference cleaned before it fails the queue and moves to the next.
-#define GC_FILTER_QUEUE 1 SECONDS
-#define GC_CHECK_QUEUE 5 MINUTES
-#define GC_DEL_QUEUE 10 SECONDS
+#define GC_FILTER_QUEUE (1 SECONDS)
+#define GC_CHECK_QUEUE (5 MINUTES)
+#define GC_DEL_QUEUE (10 SECONDS)
 
 
 #define QDEL_ITEM_ADMINS_WARNED (1<<0) //! Set when admins are told about lag causing qdels in this type.
@@ -43,13 +43,13 @@
 #define GC_CURRENTLY_BEING_QDELETED -2
 
 #define QDELING(X) (X.gc_destroyed)
-#define QDELETED(X) (!X || QDELING(X))
+#define QDELETED(X) (isnull(X) || QDELING(X))
 #define QDESTROYING(X) (!X || X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 
-#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, (time) > GC_FILTER_QUEUE ? WEAKREF(item) : item), time, TIMER_STOPPABLE)
-#define QDEL_IN_CLIENT_TIME(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), (time) > GC_FILTER_QUEUE ? WEAKREF(item) : item), time, TIMER_STOPPABLE)
+#define QDEL_IN_CLIENT_TIME(item, time) addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), item), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
 #define QDEL_NULL(item) qdel(item); item = null
 #define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
-#define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/______qdel_list_wrapper, L), time, TIMER_STOPPABLE)
+#define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(______qdel_list_wrapper), L), time, TIMER_STOPPABLE)
 #define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) { qdel(L[I]); qdel(I); } L.Cut(); }
 #define QDEL_LIST_ASSOC_VAL(L) if(L) { for(var/I in L) qdel(L[I]); L.Cut(); }

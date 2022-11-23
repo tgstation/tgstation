@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
 	visible_message(span_boldannounce("[src] begins to collapse, cutting it off from this world!"))
 	animate(src, transform = matrix().Scale(0, 1), alpha = 50, time = 5 SECONDS)
-	addtimer(CALLBACK(src, .proc/collapse), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(collapse)), 5 SECONDS)
 
 /**
  * Handles portal deletion

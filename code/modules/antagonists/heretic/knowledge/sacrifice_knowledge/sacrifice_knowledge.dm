@@ -1,9 +1,9 @@
 // The knowledge and process of heretic sacrificing.
 
 /// How long we put the target so sleep for (during sacrifice).
-#define SACRIFICE_SLEEP_DURATION 12 SECONDS
+#define SACRIFICE_SLEEP_DURATION (12 SECONDS)
 /// How long sacrifices must stay in the shadow realm to survive.
-#define SACRIFICE_REALM_DURATION 2.5 MINUTES
+#define SACRIFICE_REALM_DURATION (2.5 MINUTES)
 
 /**
  * Allows the heretic to sacrifice living heart targets.
@@ -16,6 +16,8 @@
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
 	route = PATH_START
+	/// How many targets do we generate?
+	var/num_targets_to_generate = 5
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
 	var/static/heretic_level_generated = FALSE
 	/// A weakref to the mind of our heretic.
@@ -23,27 +25,29 @@
 	/// Lazylist of minds that we won't pick as targets.
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
-	var/return_timers
+	var/list/return_timers
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force, ...)
 	heretic_mind = null
 	LAZYCLEARLIST(target_blacklist)
 	return ..()
 
-/datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, regained = FALSE)
+/datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	obtain_targets(user, silent = TRUE)
-	heretic_mind = user.mind
+	obtain_targets(user, silent = TRUE, heretic_datum = our_heretic)
+	heretic_mind = our_heretic.owner
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
-		message_admins("Generating z-level for heretic sacrifices...")
-		INVOKE_ASYNC(src, .proc/generate_heretic_z_level)
+		log_game("Generating z-level for heretic sacrifices...")
+		INVOKE_ASYNC(src, PROC_REF(generate_heretic_z_level))
 
 /// Generate the sacrifice z-level.
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/generate_heretic_z_level()
 	var/datum/map_template/heretic_sacrifice_level/new_level = new()
 	if(!new_level.load_new_z())
-		message_admins("The heretic sacrifice z-level failed to load. Any heretics are gonna have a field day disemboweling people, probably. Up to you if you're fine with it.")
+		log_game("The heretic sacrifice z-level failed to load.")
+		message_admins("The heretic sacrifice z-level failed to load. Heretic sacrifices won't be teleported to the shadow realm. \
+			If you want, you can spawn an /obj/effect/landmark/heretic somewhere to stop that from happening.")
 		CRASH("Failed to initialize heretic sacrifice z-level!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -79,7 +83,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!LAZYLEN(heretic_datum.sac_targets))
-		if(obtain_targets(user))
+		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
 			loc.balloon_alert(user, "ritual failed, no targets found!")
@@ -94,7 +98,7 @@
  *
  * Returns FALSE if no targets are found, TRUE if the targets list was populated.
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE, datum/antagonist/heretic/heretic_datum)
 
 	// First construct a list of minds that are valid objective targets.
 	var/list/datum/mind/valid_targets = list()
@@ -143,17 +147,11 @@
 			valid_targets -= department_mind
 			break
 
-	// Final target, just get someone random.
-	final_targets += pick_n_take(valid_targets)
-
-	// If any of our targets failed to aquire,
-	// Let's run a loop until we get four total, grabbing random targets.
+	// Now grab completely random targets until we'll full
 	var/target_sanity = 0
-	while(length(final_targets) < 4 && length(valid_targets) > 4 && target_sanity < 25)
+	while(length(final_targets) < num_targets_to_generate && length(valid_targets) > num_targets_to_generate && target_sanity < 25)
 		final_targets += pick_n_take(valid_targets)
 		target_sanity++
-
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 
 	if(!silent)
 		to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
@@ -199,7 +197,7 @@
 		disembowel_target(sacrifice)
 
 /**
- * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].
+ * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].)
  *
  * Sets off a chain that sends the person sacrificed to the shadow realm to dodge hands to fight for survival.
  *
@@ -216,9 +214,9 @@
 	if(!LAZYLEN(GLOB.heretic_sacrifice_landmarks))
 		CRASH("[type] - begin_sacrifice was called, but no heretic sacrifice landmarks were found!")
 
-	var/obj/effect/landmark/heretic/destination_landmark = GLOB.heretic_sacrifice_landmarks[our_heretic.heretic_path]
+	var/obj/effect/landmark/heretic/destination_landmark = GLOB.heretic_sacrifice_landmarks[our_heretic.heretic_path] || GLOB.heretic_sacrifice_landmarks[PATH_START]
 	if(!destination_landmark)
-		CRASH("[type] - begin_sacrifice could not find a destination landmark to send the sacrifice! (heretic's path: [our_heretic.heretic_path])")
+		CRASH("[type] - begin_sacrifice could not find a destination landmark OR default landmark to send the sacrifice! (Heretic's path: [our_heretic.heretic_path])")
 
 	var/turf/destination = get_turf(destination_landmark)
 
@@ -236,11 +234,12 @@
 	sac_target.do_jitter_animation()
 	log_combat(heretic_mind.current, sac_target, "sacrificed")
 
-	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation), SACRIFICE_SLEEP_DURATION * (1/3))
-	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation), SACRIFICE_SLEEP_DURATION * (2/3))
+	addtimer(CALLBACK(sac_target, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (1/3))
+	addtimer(CALLBACK(sac_target, TYPE_PROC_REF(/mob/living/carbon, do_jitter_animation)), SACRIFICE_SLEEP_DURATION * (2/3))
 
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
+	sac_target.adjustOxyLoss(-100, FALSE)
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
@@ -252,12 +251,12 @@
 	sac_target.AdjustParalyzed(SACRIFICE_SLEEP_DURATION * 1.2)
 	sac_target.AdjustImmobilized(SACRIFICE_SLEEP_DURATION * 1.2)
 
-	addtimer(CALLBACK(src, .proc/after_target_sleeps, sac_target, destination), SACRIFICE_SLEEP_DURATION * 0.5) // Teleport to the minigame
+	addtimer(CALLBACK(src, PROC_REF(after_target_sleeps), sac_target, destination), SACRIFICE_SLEEP_DURATION * 0.5) // Teleport to the minigame
 
 	return TRUE
 
 /**
- * This proc is called from [proc/begin_sacrifice] after the [sac_target] falls asleep, shortly after the sacrifice occurs.
+ * This proc is called from [proc/begin_sacrifice] after the [sac_target] falls asleep), shortly after the sacrifice occurs.
  *
  * Teleports the [sac_target] to the heretic room, asleep.
  * If it fails to teleport, they will be disemboweled and stop the chain.
@@ -283,20 +282,21 @@
 	// If our target died during the (short) wait timer,
 	// and we fail to revive them (using a lower number than before),
 	// just disembowel them and stop the chain
-	if(!sac_target.heal_and_revive(75, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
+	sac_target.adjustOxyLoss(-100, FALSE)
+	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		disembowel_target(sac_target)
 		return
 
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
-	addtimer(CALLBACK(src, .proc/after_target_wakes, sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
+	addtimer(CALLBACK(src, PROC_REF(after_target_wakes), sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
 
-	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, .proc/on_target_escape) // Cheese condition
-	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, .proc/on_target_death) // Loss condition
+	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_target_escape)) // Cheese condition
+	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death)) // Loss condition
 
 /**
- * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.
+ * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.)
  *
  * Begins the survival minigame, featuring the sacrifice targets.
  * Gives them Helgrasp, throwing cursed hands towards them that they must dodge to survive.
@@ -326,13 +326,13 @@
 	to_chat(sac_target, span_reallybig(span_hypnophrase("The grasp of the Mansus reveal themselves to you!")))
 	to_chat(sac_target, span_hypnophrase("You feel invigorated! Fight to survive!"))
 	// When it runs out, let them know they're almost home free
-	addtimer(CALLBACK(src, .proc/after_helgrasp_ends, sac_target), helgrasp_time)
+	addtimer(CALLBACK(src, PROC_REF(after_helgrasp_ends), sac_target), helgrasp_time)
 	// Win condition
-	var/win_timer = addtimer(CALLBACK(src, .proc/return_target, sac_target), SACRIFICE_REALM_DURATION, TIMER_STOPPABLE)
+	var/win_timer = addtimer(CALLBACK(src, PROC_REF(return_target), sac_target), SACRIFICE_REALM_DURATION, TIMER_STOPPABLE)
 	LAZYSET(return_timers, REF(sac_target), win_timer)
 
 /**
- * This proc is called from [proc/after_target_wakes] after the helgrasp runs out in the [sac_target].
+ * This proc is called from [proc/after_target_wakes] after the helgrasp runs out in the [sac_target].)
  *
  * It gives them a message letting them know it's getting easier and they're almost free.
  */
@@ -343,7 +343,7 @@
 	to_chat(sac_target, span_hypnophrase("The worst is behind you... Not much longer! Hold fast, or expire!"))
 
 /**
- * This proc is called from [proc/begin_sacrifice] if the target survived the shadow realm, or [COMSIG_LIVING_DEATH] if they don't.
+ * This proc is called from [proc/begin_sacrifice] if the target survived the shadow realm), or [COMSIG_LIVING_DEATH] if they don't.
  *
  * Teleports [sac_target] back to a random safe turf on the station (or observer spawn if it fails to find a safe turf).
  * Also clears their status effects, unregisters any signals associated with the shadow realm, and sends a message
@@ -368,6 +368,7 @@
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
 	sac_target.clear_mood_event("shadow_realm")
+	sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/supernatural, TRAUMA_RESILIENCE_MAGIC)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
@@ -431,7 +432,7 @@
 	disembowel_target(sac_target)
 
 /**
- * This proc is called from [proc/return_target] if the [sac_target] survives the shadow realm.
+ * This proc is called from [proc/return_target] if the [sac_target] survives the shadow realm.)
  *
  * Gives the sacrifice target some after effects upon ariving back to reality.
  */
@@ -457,7 +458,7 @@
 	sac_target.reagents?.add_reagent(/datum/reagent/medicine/epinephrine, 8)
 
 /**
- * This proc is called from [proc/return_target] if the target dies in the shadow realm.
+ * This proc is called from [proc/return_target] if the target dies in the shadow realm.)
  *
  * After teleporting the target back to the station (dead),
  * it spawns a special red broken illusion on their spot, for style.
@@ -481,6 +482,7 @@
 	sac_target.spill_organs()
 	sac_target.apply_damage(250, BRUTE)
 	if(sac_target.stat != DEAD)
+		sac_target.investigate_log("has been killed by heretic sacrifice.", INVESTIGATE_DEATHS)
 		sac_target.death()
 	sac_target.visible_message(
 		span_danger("[sac_target]'s organs are pulled out of [sac_target.p_their()] chest by shadowy hands!"),

@@ -4,74 +4,74 @@
 /area/template_noop)
 "b" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "c" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "d" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "e" = (
 /turf/closed/wall,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "f" = (
 /turf/closed/wall/rust,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "g" = (
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "h" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "i" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "j" = (
 /obj/structure/barricade/wooden,
 /obj/structure/door_assembly,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "k" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/electrical,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "l" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "m" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "n" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "o" = (
 /obj/structure/table,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "p" = (
 /turf/open/misc/asteroid,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "q" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "r" = (
 /obj/structure/barricade/wooden,
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "s" = (
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 
 (1,1,1) = {"
 a

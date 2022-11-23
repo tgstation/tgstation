@@ -13,7 +13,7 @@
 
 /obj/item/food/cheese/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
+	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_eat))
 
 /obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
@@ -67,7 +67,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 
-/obj/item/food/curd_cheese/make_microwavable()
+/obj/item/food/cheese/curd_cheese/make_microwavable()
 	AddElement(/datum/element/microwavable, /obj/item/food/cheese/cheese_curds)
 
 /obj/item/food/cheese/cheese_curds
