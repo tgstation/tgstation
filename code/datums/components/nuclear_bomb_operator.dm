@@ -110,7 +110,7 @@
 	mob_parent.balloon_alert(mob_parent, "disk secured!")
 	INVOKE_ASYNC(src, PROC_REF(on_disk_collected), potential_disky)
 
-/// Proc which calls the overlay callback so we can invoke it asynchronously
+/// Proc which calls the disk collected callback so we can invoke it asynchronously
 /datum/component/nuclear_bomb_operator/proc/on_disk_collected(obj/item/disk/nuclear/potential_disky)
 	on_disk_collected?.Invoke(potential_disky)
 
