@@ -32,14 +32,51 @@ GLOBAL_VAR_INIT(lieniency_time, 0.1 SECONDS)
 		return TRUE
 	if(world.time - drag_start > GLOB.lieniency_time) // Time's up bestie
 		return FALSE
+	if(!isturf(dragging.loc)) // If it isn't in the world, drop it. This is for things that can move, and we assume hud elements will not have this problem
+		log_runtime("Lieniency Log FAILURE (NO TURF)!: [src] got the time right for a drag click, but was NOT on a turf. \n\
+			We found it sitting on [dragging.loc] \n\
+			They were trying to click [dragging], and instead clicked [over]. \n\
+			([params]) \n ([list2params(drag_details)])")
+		return FALSE
 	var/list/modifiers = params2list(params)
 	var/list/old_offsets = screen_loc_to_offset(LAZYACCESS(drag_details, SCREEN_LOC), view)
 	var/list/new_offsets = screen_loc_to_offset(LAZYACCESS(modifiers, SCREEN_LOC), view)
 
+	var/extra = ""
+	if(isliving(mob))
+		extra += "Our Mob:\n"
+		extra += drag_mob_extra_details(mob)
+
+	if(isliving(dragging))
+		extra += "Dragging Living:\n"
+		extra += drag_mob_extra_details(dragging)
+
 	var/distance = sqrt(((old_offsets[1] - new_offsets[1]) ** 2) + ((old_offsets[2] - new_offsets[2]) ** 2))
 	if(distance > GLOB.lieniency_distance)
+		log_runtime("Lieniency Log FAILURE (TOO FAR)!: [src] got the time right for a drag click, but was too far from the initial point of movement. \n\
+			They started at ([old_offsets[1]],[old_offsets[2]]) and moved to ([new_offsets[1]], [new_offsets[2]]) with a total distance of [distance], off the mark from [GLOB.lieniency_distance]. \n\
+			They were trying to click [dragging], and instead clicked [over]. \n\
+			[extra] \
+			([params]) \n ([list2params(drag_details)])")
 		return FALSE
+
+	log_runtime("Lieniency Log SUCCESS!: [src] got the time right for a drag click, And hit the correct window too. \n\
+		They started at ([old_offsets[1]],[old_offsets[2]]) and moved to ([new_offsets[1]], [new_offsets[2]]) with a total distance of [distance], on target for [GLOB.lieniency_distance]. \n\
+		They were trying to click [dragging], and instead clicked [over]. \n\
+		[extra] \
+		([params]) \n ([list2params(drag_details)])")
 	return TRUE
+
+/proc/drag_mob_extra_details(mob/living/details_from)
+	var/extra = ""
+	var/static/list/aspects_to_read = list(BRUTE, BURN, TOX, OXY, STAMINA, CLONE, BRAIN)
+	for(var/type in aspects_to_read)
+		extra += "[type]=[details_from.get_damage_amount(type)];"
+	extra += "\n"
+	var/obj/item/held = details_from.get_active_held_item()
+	if(held)
+		extra += "Holding : [held]\n"
+	return extra
 
 // receive a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user, params)
