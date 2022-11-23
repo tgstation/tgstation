@@ -41,11 +41,6 @@
 			if(basic.basic_mob_flags & DEL_ON_DEATH)
 				continue
 
-		// if(iscarbon(target))
-		// 	var/mob/living/carbon/carbon = target
-		// 	for(var/obj/item/bodypart/limb as anything in carbon.bodyparts)
-		// 		limb.body_damage_coeff = 1 // fuck you
-
 		test_damage_but_no_death(type)
 		test_death_no_damage(type)
 		test_death_with_damage(type)
@@ -80,6 +75,11 @@
 
 /datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
+	if(iscarbon(target))
+		var/mob/living/carbon/carbon = target
+		for(var/obj/item/bodypart/limb as anything in carbon.bodyparts)
+			damage = round(damage / limb.body_damage_coeff, DAMAGE_PRECISION) // ensure we respect their bodypart coefficients
+
 	target.setBruteLoss(damage, updating_health=FALSE) // no point running health update logic here
 	target.setFireLoss(damage, updating_health=TRUE) // since we do it here
 	update_amounts(target)
