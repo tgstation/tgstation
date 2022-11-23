@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
 import { Button, ColorBox, Stack, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
+import { logger } from '../logging';
 
 export const NtosMain = (props, context) => {
   const { act, data } = useBackend(context);
@@ -12,11 +13,11 @@ export const NtosMain = (props, context) => {
     light_on,
     comp_light_color,
     removable_media = [],
-    cardholder,
     login = [],
     proposed_login = [],
     pai,
   } = data;
+  logger.log(proposed_login ? proposed_login.IDName : '');
   return (
     <NtosWindow
       title={
@@ -58,17 +59,17 @@ export const NtosMain = (props, context) => {
             </Stack>
           </Section>
         )}
-        {!!(cardholder && show_imprint) && (
-          <Section
-            title="User Login"
-            buttons={
-              <>
-                <Button
-                  icon="eject"
-                  content="Eject ID"
-                  disabled={!proposed_login.IDName}
-                  onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
-                />
+        <Section
+          title="User Login"
+          buttons={
+            <>
+              <Button
+                icon="eject"
+                content="Eject ID"
+                disabled={!proposed_login.IDName}
+                onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
+              />
+              {!!show_imprint && (
                 <Button
                   icon="dna"
                   content="Imprint ID"
@@ -79,18 +80,20 @@ export const NtosMain = (props, context) => {
                   }
                   onClick={() => act('PC_Imprint_ID', { name: 'ID' })}
                 />
-              </>
-            }>
-            <Table>
-              <Table.Row>
-                ID Name: {login.IDName} ({proposed_login.IDName})
-              </Table.Row>
-              <Table.Row>
-                Assignment: {login.IDJob} ({proposed_login.IDJob})
-              </Table.Row>
-            </Table>
-          </Section>
-        )}
+              )}
+            </>
+          }>
+          <Table>
+            <Table.Row>
+              ID Name: {login.IDName}{' '}
+              {proposed_login.IDName ? '(' + proposed_login.IDName + ')' : ''}
+            </Table.Row>
+            <Table.Row>
+              Assignment: {login.IDJob}{' '}
+              {proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : ''}
+            </Table.Row>
+          </Table>
+        </Section>
         {!!pai && (
           <Section title="pAI">
             <Table>

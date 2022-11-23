@@ -59,21 +59,22 @@
 	data["device_theme"] = device_theme
 	data["login"] = list()
 
-	if(computer_id_slot)
-		var/stored_name = saved_identification
-		var/stored_title = saved_job
-		if(!stored_name)
-			stored_name = "Unknown"
-		if(!stored_title)
-			stored_title = "Unknown"
-		data["login"] = list(
-			IDName = saved_identification,
-			IDJob = saved_job,
-		)
-		data["proposed_login"] = list(
-			IDName = computer_id_slot.registered_name,
-			IDJob = computer_id_slot.assignment,
-		)
+	var/stored_name = saved_identification
+	var/stored_title = saved_job
+	if(!stored_name)
+		stored_name = "Unknown"
+	if(!stored_title)
+		stored_title = "Unknown"
+	data["login"] = list(
+		IDName = saved_identification,
+		IDJob = saved_job,
+	)
+
+	data["proposed_login"] = computer_id_slot ? list(
+		IDName = computer_id_slot.registered_name,
+		IDJob = computer_id_slot.assignment,
+	) : list()
+
 
 	data["removable_media"] = list()
 	if(inserted_disk)
@@ -166,18 +167,26 @@
 				if("Eject Disk")
 					if(!inserted_disk)
 						return
+
 					user.put_in_hands(inserted_disk)
 					inserted_disk = null
 					playsound(src, 'sound/machines/card_slide.ogg', 50)
+					return TRUE
+
 				if("intelliCard")
 					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 					if(!airestore_app)
 						return
+
 					if(airestore_app.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
+						return TRUE
+
 				if("ID")
 					if(RemoveID())
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
+						return TRUE
+
 		if("PC_Imprint_ID")
 			saved_identification = computer_id_slot.registered_name
 			saved_job = computer_id_slot.assignment
