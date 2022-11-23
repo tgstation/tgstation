@@ -53,7 +53,6 @@
 
 		//we try to count & limit how much the user can insert of each type to prevent them from using it as an normal storage medium
 		for(var/obj/item/stack/stack_content in resolve_location.contents)
-
 			//is user trying to insert any of these listed bluespace stuff
 			if(is_type_in_list(to_insert,allowed_bluespace_types))
 				//if yes count total bluespace stuff is the RPED and then compare the total amount to the value the user is trying to insert
