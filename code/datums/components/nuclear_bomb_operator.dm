@@ -108,11 +108,7 @@
 	disky = WEAKREF(potential_disky)
 	mob_parent.update_appearance(updates = UPDATE_ICON)
 	mob_parent.balloon_alert(mob_parent, "disk secured!")
-	INVOKE_ASYNC(src, PROC_REF(on_disk_collected), potential_disky)
-
-/// Proc which calls the disk collected callback so we can invoke it asynchronously
-/datum/component/nuclear_bomb_operator/proc/on_disk_collected(obj/item/disk/nuclear/potential_disky)
-	on_disk_collected?.Invoke(potential_disky)
+	on_disk_collected?.InvokeAsync(potential_disky)
 
 /// Uses the disk on clicked atom, or places it on the ground
 /datum/component/nuclear_bomb_operator/proc/try_put_down_disk(obj/item/disk/nuclear/held_disk, atom/attacked_target)
@@ -146,8 +142,4 @@
 	var/mob/mob_parent = parent
 	if (!istype(mob_parent) || mob_parent.stat == DEAD)
 		return
-	INVOKE_ASYNC(src, PROC_REF(get_disk_overlays), overlays)
-
-/// Proc which calls the overlay callback so we can invoke it asynchronously
-/datum/component/nuclear_bomb_operator/proc/get_disk_overlays(list/overlays)
-	add_disk_overlays?.Invoke(overlays)
+	add_disk_overlays?.InvokeAsync(overlays)
