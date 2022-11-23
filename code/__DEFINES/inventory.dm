@@ -66,6 +66,9 @@
 
 //SLOT GROUP HELPERS
 #define ITEM_SLOT_POCKETS (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)
+/// Slots that are physically on you
+#define ITEM_SLOT_ON_BODY (ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_EYES | ITEM_SLOT_EARS | \
+	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update check_obscured_slots() if you add more.
@@ -150,7 +153,7 @@
 /// How many messages you can remember while logged out before you stop remembering new ones
 #define AFK_THEFT_MAX_MESSAGES 10
 /// If someone logs back in and there are entries older than this, just tell them they can't remember who it was or when
-#define AFK_THEFT_FORGET_DETAILS_TIME 5 MINUTES
+#define AFK_THEFT_FORGET_DETAILS_TIME (5 MINUTES)
 /// The index of the entry in 'afk_thefts' with the person's visible name at the time
 #define AFK_THEFT_NAME 1
 /// The index of the entry in 'afk_thefts' with the text

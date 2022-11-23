@@ -4,8 +4,8 @@
  * Shabbier, dirtier ones lead to negative moodlets EXCLUSIVE to characters with the snob quirk.
  */
 /datum/element/beauty
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH_ON_HOST_DESTROY
+	argument_hash_start_idx = 2
 	var/beauty = 0
 	/**
 	  * Assoc list of atoms as keys and number of time the same element instance has been attached to them as assoc value.
@@ -23,8 +23,8 @@
 	if(!beauty_counter[target] && ismovable(target))
 		var/atom/movable/mov_target = target
 		mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
-		RegisterSignal(mov_target, COMSIG_ENTER_AREA, .proc/enter_area)
-		RegisterSignal(mov_target, COMSIG_EXIT_AREA, .proc/exit_area)
+		RegisterSignal(mov_target, COMSIG_ENTER_AREA, PROC_REF(enter_area))
+		RegisterSignal(mov_target, COMSIG_EXIT_AREA, PROC_REF(exit_area))
 
 	beauty_counter[target]++
 

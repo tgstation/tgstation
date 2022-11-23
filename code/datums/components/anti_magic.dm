@@ -40,11 +40,11 @@
 	)
 
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	else if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic, override = TRUE)
-		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic, override = TRUE)
+		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, PROC_REF(block_receiving_magic), override = TRUE)
+		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, PROC_REF(restrict_casting_magic), override = TRUE)
 		to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells but are unable to cast magic."))
 	else
 		return COMPONENT_INCOMPATIBLE
@@ -68,8 +68,8 @@
 		UnregisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC)
 		equipper.update_action_buttons()
 		return
-	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic, override = TRUE)
-	RegisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic, override = TRUE)
+	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, PROC_REF(block_receiving_magic), override = TRUE)
+	RegisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC, PROC_REF(restrict_casting_magic), override = TRUE)
 	equipper.update_action_buttons()
 
 	if(!casting_restriction_alert)
@@ -133,7 +133,7 @@
 
 		user.mob_light(_range = 2, _color = antimagic_color, _duration = 5 SECONDS)
 		user.add_overlay(antimagic_effect)
-		addtimer(CALLBACK(user, /atom/proc/cut_overlay, antimagic_effect), 50)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, cut_overlay), antimagic_effect), 50)
 
 		if(ismob(parent))
 			return COMPONENT_MAGIC_BLOCKED

@@ -31,6 +31,8 @@
 	rpg_title = "Groundskeeper"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
+	job_tone = "slip"
+
 
 /datum/outfit/job/janitor
 	name = "Janitor"
@@ -43,12 +45,12 @@
 
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	if(GARBAGEDAY in SSevents.holidays)
+	if(check_holidays(GARBAGEDAY))
 		backpack_contents += list(/obj/item/gun/ballistic/revolver)
 		r_pocket = /obj/item/ammo_box/a357
 
 /datum/outfit/job/janitor/get_types_to_preload()
 	. = ..()
-	if(GARBAGEDAY in SSevents.holidays)
+	if(check_holidays(GARBAGEDAY))
 		. += /obj/item/gun/ballistic/revolver
 		. += /obj/item/ammo_box/a357

@@ -23,9 +23,9 @@
 
 /obj/item/food/pizza/MakeProcessable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 3 SECONDS, table_required = TRUE)
-		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, 4.5 SECONDS, table_required = TRUE)
-		AddElement(/datum/element/processable, TOOL_SCALPEL, slice_type, 6, 6 SECONDS, table_required = TRUE)
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 6, 4.5 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_SCALPEL, slice_type, 6, 6 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 // Pizza Slice
 /obj/item/food/pizzaslice
@@ -36,8 +36,7 @@
 	decomp_type = /obj/item/food/pizzaslice/moldy
 
 /obj/item/food/pizzaslice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE)
-
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 1 SECONDS, table_required = TRUE, screentip_verb = "Flatten")
 
 /obj/item/food/pizza/margherita
 	name = "pizza margherita"
@@ -314,9 +313,9 @@
 /obj/item/food/proc/try_break_off(mob/living/attacker, mob/living/user) //maybe i give you a pizza maybe i break off your arm
 	if(prob(50) || (attacker != user) || !iscarbon(user) || HAS_TRAIT(user, TRAIT_NODISMEMBER))
 		return
-	var/obj/item/bodypart/l_arm = user.get_bodypart(BODY_ZONE_L_ARM)
-	var/obj/item/bodypart/r_arm = user.get_bodypart(BODY_ZONE_R_ARM)
-	var/did_the_thing = (l_arm?.dismember() || r_arm?.dismember()) //not all limbs can be removed, so important to check that we did. the. thing.
+	var/obj/item/bodypart/arm/left = user.get_bodypart(BODY_ZONE_L_ARM)
+	var/obj/item/bodypart/arm/right = user.get_bodypart(BODY_ZONE_R_ARM)
+	var/did_the_thing = (left?.dismember() || right?.dismember()) //not all limbs can be removed, so important to check that we did. the. thing.
 	if(!did_the_thing)
 		return
 	to_chat(user, span_userdanger("Maybe I'll give you a pizza, maybe I'll break off your arm.")) //makes the reference more obvious
@@ -326,6 +325,7 @@
 /obj/item/food/proc/i_kill_you(obj/item/item, mob/living/user)
 	if(istype(item, /obj/item/food/pineappleslice))
 		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I'll kill you.</font>") //this is in bigger text because it's hard to spam something that gibs you, and so that you're perfectly aware of the reason why you died
+		user.investigate_log("has been gibbed by putting pineapple on an arnold pizza.", INVESTIGATE_DEATHS)
 		user.gib() //if you want something crazy like pineapple, i'll kill you
 	else if(istype(item, /obj/item/food/grown/mushroom) && iscarbon(user))
 		to_chat(user, span_userdanger("So, if you want mushroom, shut up.")) //not as large as the pineapple text, because you could in theory spam it
@@ -363,3 +363,31 @@
 	food_reagents = list(/datum/reagent/ants = 5, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "insects" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | BUGS
+
+// Ethereal Pizza, for when they want a slice
+/obj/item/food/pizza/energy
+	name = "energy pizza"
+	desc = "You could probably power a RIPLEY with this. You should avoid eating this if you aren't an Ethereal."
+	icon_state ="energypizza"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18, /datum/reagent/consumable/liquidelectricity/enriched = 18)
+	tastes = list("pure electricity" = 4, "pizza" = 2)
+	slice_type = /obj/item/food/pizzaslice/energy
+	foodtypes = TOXIC
+	boxtag = "24 Hour Energy"
+
+/obj/item/food/pizza/energy/raw
+	name = "raw energy pizza"
+	icon_state = "energypizza_raw"
+	foodtypes = TOXIC
+	burns_in_oven = FALSE
+	slice_type = null
+
+/obj/item/food/pizza/energy/raw/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/energy, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+
+/obj/item/food/pizzaslice/energy
+	name = "energy pizza slice"
+	desc = "You're thinking about using this to power your modsuit. You should avoid eating this if you aren't an Ethereal."
+	icon_state ="energypizzaslice"
+	tastes = list("pure electricity" = 4, "pizza" = 2)
+	foodtypes = TOXIC

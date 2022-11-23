@@ -1,7 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes:
-  - refactor: "Refactored how duplicates are handled in traitor objective code. This will fix destroy heirloom and eyesnatching objectives from only ever being available once."
-  - bugfix: "Fixed destroy heirloom objectives never generating"
-  - bugfix: "Fixed eyesnatching objectives never generating."
-  - balance: "Kidnapping objective can only be taken a maximum of 3 times within 15 minutes. This puts it in line with the assassinate and eyesnatching objectives."

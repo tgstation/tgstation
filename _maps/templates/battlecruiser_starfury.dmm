@@ -1083,12 +1083,12 @@
 /area/shuttle/sbc_starfury)
 "dW" = (
 /obj/structure/table,
-/obj/item/bodypart/l_arm/robot,
-/obj/item/bodypart/l_arm/robot,
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/left/robot,
+/obj/item/bodypart/arm/left/robot,
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 3
 	},
-/obj/item/bodypart/r_arm/robot{
+/obj/item/bodypart/arm/right/robot{
 	pixel_x = 3
 	},
 /obj/item/book/manual/wiki/surgery,
@@ -2345,7 +2345,7 @@
 /area/shuttle/sbc_starfury)
 "hI" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/mopbucket,
+/obj/structure/mop_bucket,
 /obj/item/mop,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/sbc_starfury)

@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(networks)
 
 /datum/controller/subsystem/networks/Initialize()
 	station_network.register_map_supremecy() // sigh
-	assign_areas_root_ids(GLOB.sortedAreas) // setup area names before Initialize
+	assign_areas_root_ids(get_sorted_areas()) // setup area names before Initialize
 	station_network.build_software_lists()
 	syndie_network.build_software_lists()
 

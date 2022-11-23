@@ -26,7 +26,7 @@
 		CRASH("[type] queued a fake sound without a timer.")
 
 	// Queue the sound to be played with a timer on the mob, not the datum, because we'll probably get qdel'd
-	addtimer(CALLBACK(hallucinator, /mob/proc/playsound_local, source, sound_to_play, volume_override || volume, vary_override || sound_vary), delay)
+	addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob, playsound_local), source, sound_to_play, volume_override || volume, vary_override || sound_vary), delay)
 
 /datum/hallucination/fake_sound/normal
 	abstract_hallucination_parent = /datum/hallucination/fake_sound/normal
@@ -102,7 +102,7 @@
 		qdel(src)
 
 	else
-		addtimer(CALLBACK(src, .proc/mech_walk), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(mech_walk)), 1 SECONDS)
 
 /datum/hallucination/fake_sound/normal/wall_deconstruction
 	sound_type = 'sound/items/welder.ogg'

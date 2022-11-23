@@ -57,15 +57,17 @@
 
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/job/research_director
-	uniform = /obj/item/clothing/under/rank/rnd/research_director
-	suit = /obj/item/clothing/suit/toggle/labcoat
+	uniform = /obj/item/clothing/under/rank/rnd/research_director/turtleneck
+	suit = /obj/item/clothing/suit/jacket/research_director
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic = 1,
 		)
 	belt = /obj/item/modular_computer/tablet/pda/heads/rd
+	head = /obj/item/clothing/head/beret/science/rd
 	ears = /obj/item/radio/headset/heads/rd
-	shoes = /obj/item/clothing/shoes/sneakers/brown
-	l_pocket = /obj/item/laser_pointer
+	shoes = /obj/item/clothing/shoes/jackboots
+	gloves = /obj/item/clothing/gloves/color/black
+	l_pocket = /obj/item/laser_pointer/purple
 	l_hand = /obj/item/clipboard
 
 	backpack = /obj/item/storage/backpack/science
