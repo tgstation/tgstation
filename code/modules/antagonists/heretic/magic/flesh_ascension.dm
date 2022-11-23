@@ -22,7 +22,7 @@
 /datum/action/cooldown/spell/shapeshift/shed_human_form/do_shapeshift(mob/living/caster)
 	// When we transform into the worm, everyone nearby gets freaked out
 	for(var/mob/living/carbon/human/nearby_human in view(scare_radius, caster))
-		if(IS_HERETIC_OR_MONSTER(nearby_human))
+		if(IS_HERETIC_OR_MONSTER(nearby_human) || nearby_human == caster)
 			continue
 
 		// 25% chance to cause a trauma

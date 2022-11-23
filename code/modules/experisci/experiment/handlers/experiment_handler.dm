@@ -248,7 +248,7 @@
  */
 /datum/component/experiment_handler/proc/configure_experiment_click(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, /datum/proc/ui_interact, user)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /**
  * Attempts to link this experiment_handler to a provided techweb
