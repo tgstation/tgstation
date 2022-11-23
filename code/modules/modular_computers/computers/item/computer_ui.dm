@@ -57,23 +57,16 @@
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
-	data["login"] = list()
 
-	var/stored_name = saved_identification
-	var/stored_title = saved_job
-	if(!stored_name)
-		stored_name = "Unknown"
-	if(!stored_title)
-		stored_title = "Unknown"
 	data["login"] = list(
-		IDName = saved_identification,
-		IDJob = saved_job,
+		IDName = saved_identification || "Unknown",
+		IDJob = saved_job || "Unknown",
 	)
 
-	data["proposed_login"] = computer_id_slot ? list(
-		IDName = computer_id_slot.registered_name,
-		IDJob = computer_id_slot.assignment,
-	) : list()
+	data["proposed_login"] = list(
+		IDName = computer_id_slot?.registered_name,
+		IDJob = computer_id_slot?.assignment,
+	)
 
 
 	data["removable_media"] = list()
