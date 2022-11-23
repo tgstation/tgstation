@@ -7,6 +7,8 @@
 	eat_time = 3 SECONDS
 	/// type is spawned 5 at a time and replaces this bread loaf when processed by cutting tool
 	var/obj/item/food/breadslice/slice_type
+	/// so that the yield can change if it isnt 5
+	var/obj/item/food/bread/yield = 5
 
 /obj/item/food/bread/Initialize(mapload)
 	. = ..()
@@ -15,8 +17,8 @@
 
 /obj/item/food/bread/MakeProcessable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
-		AddElement(/datum/element/processable, TOOL_SAW, slice_type, 5, 4 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_SAW, slice_type, yield, 4 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'

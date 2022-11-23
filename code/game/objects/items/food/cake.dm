@@ -7,6 +7,8 @@
 	foodtypes = GRAIN | DAIRY
 	/// type is spawned 5 at a time and replaces this cake when processed by cutting tool
 	var/obj/item/food/cakeslice/slice_type
+	/// incase the yield isnt 3
+	var/obj/item/food/cake/yield = 5
 
 /obj/item/food/cake/Initialize(mapload)
 	. = ..()
@@ -14,7 +16,7 @@
 
 /obj/item/food/cake/MakeProcessable()
 	if (slice_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
@@ -333,9 +335,7 @@
 	foodtypes = GRAIN | DAIRY | SUGAR | JUNKFOOD
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/cakeslice/pound_cake_slice
-
-/obj/item/food/cake/pound_cake/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 7, 3 SECONDS, table_required = TRUE)
+	yield = 7
 
 /obj/item/food/cakeslice/pound_cake_slice
 	name = "pound cake slice"
@@ -421,9 +421,7 @@
 	tastes = list("cake" = 4, "butter" = 2, "cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	slice_type = /obj/item/food/cakeslice/brioche
-
-/obj/item/food/cake/brioche/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 6, 3 SECONDS, table_required = TRUE)
+	yield = 6
 
 /obj/item/food/cakeslice/brioche
 	name = "brioche cake slice"
