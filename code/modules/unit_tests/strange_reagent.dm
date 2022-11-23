@@ -22,19 +22,24 @@
 	for(var/mob/living/type as anything in types_to_check)
 		var/mob/living/target = allocate_new_target(type)
 		var/is_basic = istype(target, /mob/living/basic)
+		var/is_simple = istype(target, /mob/living/simple_animal)
+		// check some basic stuff
 		if(target.status_flags & GODMODE)
 			continue
 		if(!(target.mob_biotypes & MOB_ORGANIC))
 			continue
-		if(istype(target, /mob/living/simple_animal))
+
+		if(is_simple)
 			var/mob/living/simple_animal/simple_animal = target
 			if(simple_animal.del_on_death)
 				continue
 			simple_animal.loot?.Cut()
+
 		if(is_basic)
 			var/mob/living/basic/basic = target
 			if(basic.basic_mob_flags & DEL_ON_DEATH)
 				continue
+
 		if(istype(target, /mob/living/carbon))
 			var/mob/living/carbon/carbon = target
 			for(var/obj/item/bodypart/limb as anything in carbon.bodyparts)
@@ -44,7 +49,7 @@
 		test_death_no_damage(type)
 		test_death_with_damage(type)
 		test_death_with_damage_but_not_enough_reagent(type)
-		if(!is_basic) // basic mobs cannot have negative health
+		if(!is_basic && !is_simple) // simple/basic mobs cannot have negative health
 			test_death_with_full_heal(type)
 			test_death_from_damage(type)
 			test_death_from_too_much_damage(type)
