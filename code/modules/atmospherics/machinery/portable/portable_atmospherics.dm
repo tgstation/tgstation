@@ -178,12 +178,15 @@
 	if(!user)
 		return FALSE
 	if(holding)
-		user.put_in_hands(holding)
+		if(Adjacent(user))
+			user.put_in_hands(holding)
+		else
+			holding.forceMove(get_turf(src))
 		UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 		holding = null
 	if(new_tank)
 		holding = new_tank
-		RegisterSignal(holding, COMSIG_PARENT_QDELETING, .proc/unregister_holding)
+		RegisterSignal(holding, COMSIG_PARENT_QDELETING, PROC_REF(unregister_holding))
 
 	SSair.start_processing_machine(src)
 	update_appearance()

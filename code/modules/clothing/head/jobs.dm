@@ -26,14 +26,14 @@
 	desc = "The commander in chef's head wear. Upon closer inspection, there seem to be dozens of tiny levers, buttons, dials, and screens inside of this hat. What the hell...?"
 	mouse_control_probability = 100
 
-/obj/item/clothing/head/utility/chefhat/suicide_act(mob/user)
+/obj/item/clothing/head/utility/chefhat/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef."))
 	user.say("Bork Bork Bork!", forced = "chef hat suicide")
 	sleep(2 SECONDS)
 	user.visible_message(span_suicide("[user] climbs into an imaginary oven!"))
 	user.say("BOOORK!", forced = "chef hat suicide")
 	playsound(user, 'sound/machines/ding.ogg', 50, TRUE)
-	return(FIRELOSS)
+	return FIRELOSS
 
 /obj/item/clothing/head/utility/chefhat/relaymove(mob/living/user, direction)
 	if(!ismouse(user) || !isliving(loc) || !prob(mouse_control_probability))
@@ -218,7 +218,7 @@
 /obj/item/clothing/head/hats/warden/drill/equipped(mob/M, slot)
 	. = ..()
 	if (slot & ITEM_SLOT_HEAD)
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
 
@@ -281,12 +281,12 @@
 	greyscale_colors = "#8D008F"
 	flags_1 = NONE
 
-/obj/item/clothing/head/beret/science/fancy
-	desc = "A science-themed beret for our hardworking scientists. This one comes with a fancy badge!"
+/obj/item/clothing/head/beret/science/rd
+	desc = "A purple badge with the insignia of the Research Director attached. For the paper-shuffler in you!"
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
-	greyscale_colors = "#8D008F#FFFFFF"
+	greyscale_colors = "#7e1980#c9cbcb"
 
 //Medical
 /obj/item/clothing/head/beret/medical

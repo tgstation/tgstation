@@ -20,20 +20,16 @@
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
-	if(!d_type)
+/mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, damage_type)
+	if(!damage_type)
 		return 0
-	var/protection = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(!bp)
-			continue
-		if(bp && istype(bp , /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.body_parts_covered & def_zone.body_part)
-				protection += C.armor.getRating(d_type)
-	protection += physiology.armor.getRating(d_type)
-	return protection
+	var/protection = 100
+	var/list/covering_clothing = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	for(var/obj/item/clothing/clothing_item in covering_clothing)
+		if(clothing_item.body_parts_covered & def_zone.body_part)
+			protection *= (100 - min(clothing_item.armor.getRating(damage_type), 100)) * 0.01
+	protection *= (100 - min(physiology.armor.getRating(damage_type), 100)) * 0.01
+	return 100 - protection
 
 ///Get all the clothing on a specific body part
 /mob/living/carbon/human/proc/clothingonpart(obj/item/bodypart/def_zone)
@@ -204,7 +200,8 @@
 		return
 	if(check_block()) //everybody is kung fu fighting
 		return
-	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
+	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+	playsound(loc, active_arm.unarmed_attack_sound, 25, TRUE, -1)
 	visible_message(span_danger("[user] [hulk_verb]ed [src]!"), \
 					span_userdanger("[user] [hulk_verb]ed [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
 	to_chat(user, span_danger("You [hulk_verb] [src]!"))
@@ -257,7 +254,8 @@
 
 	if(try_inject(user, affecting, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))//Thick suits can stop monkey bites.
 		if(..()) //successful monkey bite, this handles disease contraction.
-			var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
+			var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
+			var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
 			if(!damage)
 				return
 			if(check_shields(user, damage, "the [user.name]"))
@@ -415,6 +413,7 @@
 							SSexplosions.med_mov_atom += thing
 						if(EXPLODE_LIGHT)
 							SSexplosions.low_mov_atom += thing
+				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 				gib()
 				return
 			else

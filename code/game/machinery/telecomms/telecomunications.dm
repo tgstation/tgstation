@@ -111,8 +111,10 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/LateInitialize()
 	..()
-	for(var/obj/machinery/telecomms/T in (long_range_link ? GLOB.telecomms_list : urange(20, src, 1)))
-		add_automatic_link(T)
+
+	for(var/obj/machinery/telecomms/telecomms_machine in GLOB.telecomms_list)
+		if (long_range_link || IN_GIVEN_RANGE(src, telecomms_machine, 20))
+			add_automatic_link(telecomms_machine)
 
 /obj/machinery/telecomms/Destroy()
 	GLOB.telecomms_list -= src
@@ -168,7 +170,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if(prob(100/severity) && !(machine_stat & EMPED))
 		set_machine_stat(machine_stat | EMPED)
 		var/duration = (300 * 10)/severity
-		addtimer(CALLBACK(src, .proc/de_emp), rand(duration - 20, duration + 20))
+		addtimer(CALLBACK(src, PROC_REF(de_emp)), rand(duration - 20, duration + 20))
 
 /obj/machinery/telecomms/proc/de_emp()
 	set_machine_stat(machine_stat & ~EMPED)

@@ -187,14 +187,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		GLOB.main_supermatter_engine = src
 
 	AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/force_delam)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, PROC_REF(force_delam))
 
 	var/static/list/loc_connections = list(
-		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/tram_contents_consume,
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = PROC_REF(tram_contents_consume),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
 
-	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, .proc/wrench_act_callback), CALLBACK(src, .proc/consume_callback))
+	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)))
 
 	soundloop = new(src, TRUE)
 
@@ -264,6 +264,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_multiplier()
 	if(internal_energy && (last_power_zap + 4 SECONDS - (internal_energy * 0.001)) < world.time)
+		if(!has_been_powered)
+			log_activation()
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		hue_angle_shift = clamp(903 * log(10, (internal_energy + 8000)) - 3590, -50, 240)
 		var/zap_color = color_matrix_rotate_hue(hue_angle_shift)
@@ -443,7 +445,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
 	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
-	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam/proc/delaminate, src)
+	INVOKE_ASYNC(delamination_strategy, TYPE_PROC_REF(/datum/sm_delam, delaminate), src)
 
 /**
  * Count down, spout some messages, and then execute the delam itself.
@@ -571,7 +573,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/momentary_power = internal_energy
 	for(var/powergain_type in additive_power)
 		momentary_power += additive_power[powergain_type]
-	if(internal_energy < powerloss_linear_threshold) // Negative numbers
+	if(momentary_power < powerloss_linear_threshold) // Negative numbers
 		additive_power[SM_POWER_POWERLOSS] = -1 * (momentary_power / POWERLOSS_CUBIC_DIVISOR) ** 3
 	else
 		additive_power[SM_POWER_POWERLOSS] = -1 * (momentary_power * POWERLOSS_LINEAR_RATE + powerloss_linear_offset)

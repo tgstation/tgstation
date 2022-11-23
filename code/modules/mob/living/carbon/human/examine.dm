@@ -357,7 +357,7 @@
 			msg += "[span_notice("<i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i>")]\n"
 		if(12 to INFINITY)
 			msg += "[span_notice("<b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b>")]\n"
-
+	msg += "</span>" // closes info class
 
 	if (length(msg))
 		. += span_warning("[msg.Join("")]")

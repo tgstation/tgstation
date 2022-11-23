@@ -188,22 +188,30 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1), \
 	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2), \
-	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3), \
-	new/datum/stack_recipe("toolbelt", /obj/item/storage/belt/utility, 4), \
-	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5), \
-	new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5), \
-	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
-	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2), \
-	new/datum/stack_recipe("biker jacket", /obj/item/clothing/suit/jacket/leather/biker, 7), \
 	new/datum/stack_recipe("saddle", /obj/item/saddle, 5), \
+	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2), \
+	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2), \
+	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3), \
+	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5), \
 	new/datum/stack_recipe("sheriff vest", /obj/item/clothing/accessory/vest_sheriff, 4), \
+	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
+	new/datum/stack_recipe("biker jacket", /obj/item/clothing/suit/jacket/leather/biker, 7), \
+	new/datum/stack_recipe_list("belts", list( \
+		new/datum/stack_recipe("tool belt", /obj/item/storage/belt/utility, 4), \
+		new/datum/stack_recipe("botanical belt", /obj/item/storage/belt/plant, 2), \
+		new/datum/stack_recipe("janitorial belt", /obj/item/storage/belt/janitor, 2), \
+		new/datum/stack_recipe("medical belt", /obj/item/storage/belt/medical, 2), \
+		new/datum/stack_recipe("security belt", /obj/item/storage/belt/security, 2), \
+		new/datum/stack_recipe("shoulder holster", /obj/item/storage/belt/holster, 3), \
+		new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5), \
+	)),
 	new/datum/stack_recipe_list("cowboy hats", list( \
 		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy/brown, 2), \
 		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy/black, 2), \
 		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy/white, 2), \
 		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy/red, 2), \
 		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy/grey, 2), \
-		)),
+	)),
 ))
 
 /obj/item/stack/sheet/leather/get_main_recipes()
@@ -287,6 +295,12 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step two - washing..... it's actually in washing machine code.
 
 //Step three - drying
+/obj/item/stack/sheet/wethide
+
+/obj/item/stack/sheet/wethide/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/microwavable, /obj/item/stack/sheet/leather)
+
 /obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > drying_threshold_temperature)
 
@@ -296,11 +310,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		new /obj/item/stack/sheet/leather(drop_location(), 1)
 		wetness = initial(wetness)
 		use(1)
-
-/obj/item/stack/sheet/wethide/microwave_act(obj/machinery/microwave/MW)
-	..()
-	new /obj/item/stack/sheet/leather(drop_location(), amount)
-	qdel(src)
 
 /obj/item/stack/sheet/animalhide/carp
 	name = "carp scales"

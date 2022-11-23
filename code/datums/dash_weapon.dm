@@ -23,8 +23,15 @@
 	/// What effect should we play when we phase out (at the source turf)
 	var/phaseout = /obj/effect/temp_visual/dir_setting/ninja/phase/out
 
-/datum/action/innate/dash/IsAvailable()
-	return ..() && (current_charges > 0)
+/datum/action/innate/dash/IsAvailable(feedback = FALSE)
+	. = ..()
+	if (!.)
+		return FALSE
+	if (current_charges <= 0)
+		if (feedback)
+			owner.balloon_alert(owner, "no charges!")
+		return FALSE
+	return TRUE
 
 /datum/action/innate/dash/Activate()
 	var/obj/item/dashing_item = target
@@ -35,8 +42,7 @@
 
 /// Teleports user to target using do_teleport. Returns TRUE if teleport successful, FALSE otherwise.
 /datum/action/innate/dash/proc/teleport(mob/user, atom/target)
-	if(!IsAvailable())
-		user.balloon_alert(user, "no charges!")
+	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 
 	var/turf/current_turf = get_turf(user)
@@ -58,7 +64,7 @@
 	spot_one.Beam(spot_two, beam_effect, time = beam_length)
 	playsound(target_turf, dash_sound, 25, TRUE)
 	current_charges--
-	addtimer(CALLBACK(src, .proc/charge), charge_rate)
+	addtimer(CALLBACK(src, PROC_REF(charge)), charge_rate)
 	owner?.update_action_buttons_icon()
 
 	return TRUE

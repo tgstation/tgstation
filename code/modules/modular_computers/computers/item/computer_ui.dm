@@ -16,9 +16,11 @@
 	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
-	if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS) && !allow_chunky)
-		to_chat(user, span_warning("Your fingers are too big to use this right now!"))
-		return
+	if(ishuman(user) && !allow_chunky)
+		var/mob/living/carbon/human/human_user = user
+		if(human_user.check_chunky_fingers())
+			balloon_alert(human_user, "fingers are too big!")
+			return
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!screen_on && !issilicon(user))
@@ -57,10 +59,7 @@
 	data["device_theme"] = device_theme
 	data["login"] = list()
 
-	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-	data["cardholder"] = !!cardholder
-
-	if(cardholder)
+	if(computer_id_slot)
 		var/stored_name = saved_identification
 		var/stored_title = saved_job
 		if(!stored_name)
@@ -72,8 +71,8 @@
 			IDJob = saved_job,
 		)
 		data["proposed_login"] = list(
-			IDName = cardholder.current_identification,
-			IDJob = cardholder.current_job,
+			IDName = computer_id_slot.registered_name,
+			IDJob = computer_id_slot.assignment,
 		)
 
 	data["removable_media"] = list()
@@ -82,9 +81,6 @@
 	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in stored_files
 	if(airestore_app?.stored_card)
 		data["removable_media"] += "intelliCard"
-	var/obj/item/computer_hardware/card_slot/secondarycardholder = all_components[MC_CARD2]
-	if(secondarycardholder?.stored_card)
-		data["removable_media"] += "secondary RFID card"
 
 	data["programs"] = list()
 	for(var/datum/computer_file/program/P in stored_files)
@@ -180,28 +176,14 @@
 					if(airestore_app.try_eject(user))
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("ID")
-					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-					if(!cardholder)
-						return
-					if(cardholder.try_eject(user))
-						playsound(src, 'sound/machines/card_slide.ogg', 50)
-				if("secondary RFID card")
-					var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD2]
-					if(!cardholder)
-						return
-					if(cardholder.try_eject(user))
+					if(RemoveID())
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 		if("PC_Imprint_ID")
-			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-			if(!cardholder)
-				return
-
-			saved_identification = cardholder.current_identification
-			saved_job = cardholder.current_job
-
+			saved_identification = computer_id_slot.registered_name
+			saved_job = computer_id_slot.assignment
 			UpdateDisplay()
-
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
+
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")

@@ -206,7 +206,7 @@
 		eggs_left = 0,\
 		eggs_added_from_eating = rand(1, 4),\
 		max_eggs_held = 8,\
-		egg_laid_callback = CALLBACK(src, .proc/egg_laid)\
+		egg_laid_callback = CALLBACK(src, PROC_REF(egg_laid))\
 	)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

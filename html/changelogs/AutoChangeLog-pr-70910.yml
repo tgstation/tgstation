@@ -1,4 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes:
-  - admin: "Forum 2fa (verify admin) now properly updates your record in the database without needing a reconnect to trigger a dbsync."

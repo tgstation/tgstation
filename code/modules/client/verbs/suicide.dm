@@ -35,52 +35,52 @@
 			return
 		set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
 		var/obj/item/held_item = get_active_held_item()
-		var/damagetype = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT)
-		if(held_item || damagetype)
-			if(!damagetype && held_item)
-				damagetype = held_item.suicide_act(src)
-			if(damagetype)
-				if(damagetype & SHAME)
-					adjustStaminaLoss(200)
-					set_suicide(FALSE)
-					add_mood_event("shameful_suicide", /datum/mood_event/shameful_suicide)
-					return
 
-				if(damagetype & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
-					set_suicide(FALSE)
-					return
-
-				suicide_log()
-
-				var/damage_mod = 0
-				for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
-					damage_mod += (T & damagetype) ? 1 : 0
-				damage_mod = max(1, damage_mod)
-
-				//Do 200 damage divided by the number of damage types applied.
-				if(damagetype & BRUTELOSS)
-					adjustBruteLoss(200/damage_mod)
-
-				if(damagetype & FIRELOSS)
-					adjustFireLoss(200/damage_mod)
-
-				if(damagetype & TOXLOSS)
-					adjustToxLoss(200/damage_mod)
-
-				if(damagetype & OXYLOSS)
-					adjustOxyLoss(200/damage_mod)
-
-				if(damagetype & MANUAL_SUICIDE) //Assume the object will handle the death.
-					return
-
-				//If something went wrong, just do normal oxyloss
-				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
-					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-
-				death(FALSE)
-				ghostize(FALSE) // Disallows reentering body and disassociates mind
-
+		var/damagetype = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT) || held_item?.suicide_act(src)
+		if(damagetype)
+			if(damagetype & SHAME)
+				adjustStaminaLoss(200)
+				set_suicide(FALSE)
+				add_mood_event("shameful_suicide", /datum/mood_event/shameful_suicide)
 				return
+
+			if(damagetype & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
+				set_suicide(FALSE)
+				return
+
+			suicide_log()
+
+			var/damage_mod = 0
+			for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
+				damage_mod += (T & damagetype) ? 1 : 0
+			damage_mod = max(1, damage_mod)
+
+			//Do 200 damage divided by the number of damage types applied.
+			if(damagetype & BRUTELOSS)
+				adjustBruteLoss(200/damage_mod)
+
+			if(damagetype & FIRELOSS)
+				adjustFireLoss(200/damage_mod)
+
+			if(damagetype & TOXLOSS)
+				adjustToxLoss(200/damage_mod)
+
+			if(damagetype & OXYLOSS)
+				adjustOxyLoss(200/damage_mod)
+
+			if(damagetype & MANUAL_SUICIDE) //Assume the object will handle the death.
+				investigate_log("has died from committing suicide[held_item ? " with [held_item]" : ""].", INVESTIGATE_DEATHS)
+				return
+
+			//If something went wrong, just do normal oxyloss
+			if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
+				adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+
+			investigate_log("has died from committing suicide[held_item ? " with [held_item]" : ""].", INVESTIGATE_DEATHS)
+			death(FALSE)
+			ghostize(FALSE) // Disallows reentering body and disassociates mind
+
+			return
 
 		var/suicide_message
 
@@ -108,6 +108,7 @@
 		suicide_log()
 
 		adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
+		investigate_log("has died from committing suicide[held_item ? " with [held_item]" : ""].", INVESTIGATE_DEATHS)
 		death(FALSE)
 		ghostize(FALSE) // Disallows reentering body and disassociates mind
 
@@ -219,6 +220,7 @@
 		ghostize(FALSE) // Disallows reentering body and disassociates mind
 
 /mob/living/proc/suicide_log()
+	investigate_log("has died from committing suicide.", INVESTIGATE_DEATHS)
 	log_message("committed suicide as [src.type]", LOG_ATTACK)
 
 /mob/living/carbon/human/suicide_log()

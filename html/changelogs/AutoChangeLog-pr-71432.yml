@@ -1,0 +1,7 @@
+author: "Roryl-c"
+delete-after: True
+changes:
+  - bugfix: "Flypeople gain a comparable amount of nutrients from vomited food to other species (~70%, up from ~30%)"
+  - bugfix: "Flypeople no longer vomit after drinking fluids"
+  - bugfix: "Flypeople no longer vomit all contents of their stomach on spawn"
+  - code_imp: "Stomachs can now react to foods entering them by overriding the `after_eat` proc"

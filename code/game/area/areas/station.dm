@@ -1156,6 +1156,11 @@
 	icon_state = "warden"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
+/area/station/security/evidence
+	name = "Evidence Storage"
+	icon_state = "evidence"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
 /area/station/security/detectives_office
 	name = "\improper Detective's Office"
 	icon_state = "detective"

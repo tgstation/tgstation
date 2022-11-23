@@ -20,7 +20,7 @@
 	var/mob/living/owner = loc
 	if(!istype(owner))
 		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, PROC_REF(ownerExamined))
 
 /obj/item/hand_item/circlegame/Destroy()
 	var/mob/owner = loc
@@ -39,7 +39,7 @@
 
 	if(!istype(sucker) || !in_range(owner, sucker))
 		return
-	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
+	addtimer(CALLBACK(src, PROC_REF(waitASecond), owner, sucker), 4)
 
 /// Stage 2: Fear sets in
 /obj/item/hand_item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
@@ -48,10 +48,10 @@
 
 	if(owner == sucker) // big mood
 		to_chat(owner, span_danger("Wait a second... you just looked at your own [src.name]!"))
-		addtimer(CALLBACK(src, .proc/selfGottem, owner), 10)
+		addtimer(CALLBACK(src, PROC_REF(selfGottem), owner), 10)
 	else
 		to_chat(sucker, span_danger("Wait a second... was that a-"))
-		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
+		addtimer(CALLBACK(src, PROC_REF(GOTTEM), owner, sucker), 6)
 
 /// Stage 3A: We face our own failures
 /obj/item/hand_item/circlegame/proc/selfGottem(mob/living/owner)
@@ -271,31 +271,47 @@
 	playsound(slapped, 'sound/weapons/slap.ogg', slap_volume, TRUE, -1)
 	return
 
-/obj/item/hand_item/slapper/attack_atom(obj/O, mob/living/user, params)
-	if(!istype(O, /obj/structure/table))
+/obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, params)
+	if(!Adjacent(target) || !istype(target, /obj/structure/table))
 		return ..()
 
-	var/obj/structure/table/the_table = O
-	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	slam_table(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(is_right_clicking && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
-		transform = transform.Scale(5) // BIG slap
-		if(HAS_TRAIT(user, TRAIT_HULK))
-			transform = transform.Scale(2)
-			color = COLOR_GREEN
-		user.do_attack_animation(the_table)
-		SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, the_table)
-		SEND_SIGNAL(the_table, COMSIG_TABLE_SLAMMED, user)
-		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 110, TRUE)
-		user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [the_table]!")]</b>", "<b>[span_danger("You slam your fist down on [the_table]!")]</b>")
+/obj/item/hand_item/slapper/pre_attack(atom/target, mob/living/user, params)
+	if(!Adjacent(target) || !istype(target, /obj/structure/table))
+		return ..()
+
+	slap_table(target, user)
+	return TRUE
+
+/// Slap the table, get some attention
+/obj/item/hand_item/slapper/proc/slap_table(obj/structure/table/table, mob/living/user)
+	user.do_attack_animation(table)
+	playsound(get_turf(table), 'sound/effects/tableslam.ogg', 40, TRUE)
+	user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [table]."), span_notice("You slap your hand on [table]."), vision_distance=COMBAT_MESSAGE_RANGE)
+
+	table_smacks_left--
+	if(table_smacks_left <= 0)
 		qdel(src)
-	else
-		user.do_attack_animation(the_table)
-		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 40, TRUE)
-		user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [the_table]."), span_notice("You slap your hand on [the_table]."), vision_distance=COMBAT_MESSAGE_RANGE)
-		table_smacks_left--
-		if(table_smacks_left <= 0)
-			qdel(src)
+
+/// Slam the table, demand some attention
+/obj/item/hand_item/slapper/proc/slam_table(obj/structure/table/table, mob/living/user)
+	if(table_smacks_left < initial(table_smacks_left))
+		return slap_table(table, user)
+	user.do_attack_animation(table)
+
+	transform = transform.Scale(5) // BIG slap
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		transform = transform.Scale(2)
+		color = COLOR_GREEN
+
+	SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, table)
+	SEND_SIGNAL(table, COMSIG_TABLE_SLAMMED, user)
+
+	playsound(get_turf(table), 'sound/effects/tableslam.ogg', 110, TRUE)
+	user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [table]!")]</b>", "<b>[span_danger("You slam your fist down on [table]!")]</b>")
+	qdel(src)
 
 /obj/item/hand_item/slapper/on_offered(mob/living/carbon/offerer)
 	. = TRUE
@@ -395,6 +411,10 @@
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_GARLIC_BREATH))
 		kiss_type = /obj/projectile/kiss/french
+
+	if(HAS_TRAIT(user, TRAIT_CHEF_KISS))
+		kiss_type = /obj/projectile/kiss/chef
+
 	var/obj/projectile/blown_kiss = new kiss_type(get_turf(user))
 	user.visible_message("<b>[user]</b> blows \a [blown_kiss] at [target]!", span_notice("You blow \a [blown_kiss] at [target]!"))
 
@@ -502,7 +522,7 @@
 		if(2)
 			other_msg = "stammers softly for a moment before choking on something!"
 			self_msg = "You feel your tongue disappear down your throat as you fight to remember how to make words!"
-			addtimer(CALLBACK(living_target, /atom/movable.proc/say, pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
+			addtimer(CALLBACK(living_target, TYPE_PROC_REF(/atom/movable, say), pick("Uhhh...", "O-oh, uhm...", "I- uhhhhh??", "You too!!", "What?")), rand(0.5 SECONDS, 1.5 SECONDS))
 			living_target.adjust_stutter(rand(10 SECONDS, 30 SECONDS))
 		if(3)
 			other_msg = "locks up with a stunned look on [living_target.p_their()] face, staring at [firer ? firer : "the ceiling"]!"
@@ -548,3 +568,33 @@
 		//Phwoar
 		living_target.reagents.add_reagent(/datum/reagent/consumable/garlic, 1)
 	living_target.visible_message("[living_target] has a funny look on [living_target.p_their()] face.", "Wow, that is a strong after taste of garlic!", vision_distance=COMBAT_MESSAGE_RANGE)
+
+/obj/projectile/kiss/chef
+	name = "chef's kiss"
+
+// If our chef's kiss hits a food item, we will improve it with love.
+/obj/projectile/kiss/chef/on_hit(atom/target, blocked, pierce_hit)
+	. = ..()
+	if(!IS_EDIBLE(target) || !target.reagents)
+		return
+	if(!firer || !target.Adjacent(firer))
+		return
+
+	// From here on, no message
+	suppressed = SUPPRESSED_VERY
+
+	if(!HAS_TRAIT_FROM(target, TRAIT_FOOD_CHEF_MADE, REF(firer)))
+		to_chat(firer, span_warning("Wait a second, you didn't make this [target.name]. How can you claim it as your own?"))
+		return
+	if(target.reagents.has_reagent(/datum/reagent/love))
+		to_chat(firer, span_warning("You've already blessed [target.name] with your heart and soul."))
+		return
+
+	var/amount_nutriment = target.reagents.get_multiple_reagent_amounts(typesof(/datum/reagent/consumable/nutriment))
+	if(amount_nutriment <= 0)
+		to_chat(firer, span_warning("There's not enough nutrition in [target.name] for it to be a proper meal."))
+		return
+
+	to_chat(firer, span_green("You deliver a chef's kiss over [target], declaring it perfect."))
+	target.visible_message(span_notice("[firer] delivers a chef's kiss over [target]."), ignored_mobs = firer)
+	target.reagents.add_reagent(/datum/reagent/love, clamp(amount_nutriment / 4, 1, 10)) // clamped to about half of the most dense food I think we have (super bite burger)

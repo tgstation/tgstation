@@ -32,11 +32,11 @@
 	species_language_holder = /datum/language_holder/skeleton
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/plasmaman,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/plasmaman,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/plasmaman,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/plasmaman,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/plasmaman,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/plasmaman,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/plasmaman,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/plasmaman,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/plasmaman,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/plasmaman,
 	)
 
@@ -69,7 +69,7 @@
 
 	var/flammable_limb = FALSE
 	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
-		if(IS_ORGANIC_LIMB(found_bodypart) && (found_bodypart.limb_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
+		if(IS_ORGANIC_LIMB(found_bodypart) && found_bodypart.limb_id == SPECIES_PLASMAMAN) //Allows for "donated" limbs and augmented limbs to prevent autoignition
 			flammable_limb = TRUE
 			break
 
