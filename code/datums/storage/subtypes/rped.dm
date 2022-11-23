@@ -65,7 +65,7 @@
 				break
 
 		//no more storage for this specific stack type
-		if(MAX_STACK_PICKUP-present_amount==0)
+		if(MAX_STACK_PICKUP - present_amount == 0)
 			return FALSE
 
 		//we want the user to insert the exact stack amount which is available so we dont have to bother subtracting & leaving left overs for the user
