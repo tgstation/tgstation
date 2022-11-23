@@ -70,7 +70,7 @@
 
 		//we want the user to insert the exact stack amount which is available so we dont have to bother subtracting & leaving left overs for the user
 		var/available = MAX_STACK_PICKUP-present_amount
-		if(available-the_stack.amount<0)
+		if(available - the_stack.amount < 0)
 			return FALSE
 
 	//check normal insertion of other stock parts
