@@ -3,7 +3,7 @@
  */
 
 //Maximum amount of an specified stack type[see allowed types below] the RPED can carry
-# define MAX_STACK_PICKUP 30
+#define MAX_STACK_PICKUP 30
 
 /datum/storage/rped
 	allow_quick_empty = TRUE
