@@ -851,9 +851,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(numerical_stacking)
 		numbered_contents = process_numerical_display()
 		adjusted_contents = numbered_contents.len
+	//if the ammount of contents reaches some multiplier of the final column (and its not the last slot), let the player view an additional row
+	var/additional_row = (!(adjusted_contents % screen_max_columns) && adjusted_contents < max_slots)
 
 	var/columns = clamp(max_slots, 1, screen_max_columns)
-	var/rows = clamp(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
+	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + additional_row, 1, screen_max_rows)
 
 	orient_item_boxes(rows, columns, numbered_contents)
 
