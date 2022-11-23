@@ -28,7 +28,7 @@
 	 * at any point the total sum of all these types in the RPED must be 30
 	 * for example 10 refined crystals + 15 artifical crystals + 5 sheets=30 or any other combination like this
 	 */
-	var/static/list/allowed_bluespace_types=list(
+	var/static/list/allowed_bluespace_types = list(
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stack/ore/bluespace_crystal/refined,
 		/obj/item/stack/ore/bluespace_crystal/artificial,
