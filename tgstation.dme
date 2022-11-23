@@ -874,6 +874,7 @@
 #include "code\datums\components\puzzgrid.dm"
 #include "code\datums\components\radiation_countdown.dm"
 #include "code\datums\components\reagent_refiller.dm"
+#include "code\datums\components\regenerator.dm"
 #include "code\datums\components\religious_tool.dm"
 #include "code\datums\components\remote_materials.dm"
 #include "code\datums\components\rename.dm"
