@@ -1032,8 +1032,7 @@
 	dir = 4
 	},
 /obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
+	dir = 1
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -4871,16 +4870,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"bRk" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/center)
 "bRm" = (
 /obj/machinery/door/airlock/research{
 	glass = 1;
@@ -7729,12 +7718,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "cKv" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
+/obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/tram/right)
 "cKw" = (
@@ -11996,9 +11980,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
+/obj/structure/fluff/tram_rail/floor,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -19380,8 +19362,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -19553,12 +19534,8 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/central/lesser)
 "gWI" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
 /obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
+	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/tram/right)
@@ -26297,12 +26274,6 @@
 /obj/machinery/air_sensor/ordnance_freezer_chamber,
 /turf/open/floor/iron/dark/airless,
 /area/station/science/ordnance/freezerchamber)
-"jva" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/left)
 "jvf" = (
 /turf/closed/wall,
 /area/station/command/heads_quarters/hop)
@@ -30178,12 +30149,6 @@
 "kNs" = (
 /turf/closed/wall/r_wall,
 /area/station/security/evidence)
-"kNT" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/center)
 "kOc" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -31572,12 +31537,8 @@
 	},
 /area/station/science/breakroom)
 "lmW" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
 /obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
+	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/tram/left)
@@ -39168,8 +39129,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
+	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -44444,9 +44404,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
+/obj/structure/fluff/tram_rail/floor,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
@@ -47431,12 +47389,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "qRn" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
+/obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/tram/center)
 "qRq" = (
@@ -51207,12 +51160,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"seR" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/right)
 "seW" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
@@ -52495,15 +52442,6 @@
 	dir = 5
 	},
 /area/station/command/heads_quarters/rd)
-"sFY" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/center)
 "sGp" = (
 /obj/structure/rack,
 /obj/item/clothing/glasses/meson{
@@ -55189,8 +55127,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
@@ -56175,12 +56112,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "tWE" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
+/obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/tram/left)
 "tXi" = (
@@ -57771,9 +57703,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
+/obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "uyw" = (
@@ -58441,12 +58371,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
-"uLX" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/center)
 "uMf" = (
 /obj/machinery/door/airlock/medical{
 	name = "Surgery"
@@ -60244,12 +60168,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "vty" = (
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
 /obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
+	dir = 1
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/tram/center)
@@ -67442,9 +67362,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
+/obj/structure/fluff/tram_rail/floor,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
@@ -155398,11 +155316,11 @@ gNS
 dpo
 nZF
 mpz
-jva
+nJX
 tWE
 hEa
 lmW
-jva
+nJX
 fXh
 ghM
 mAP
@@ -163879,11 +163797,11 @@ eSz
 wYe
 iAj
 rqG
-kNT
+hyg
 qRn
 grm
 vty
-kNT
+hyg
 poG
 oWe
 dTr
@@ -167477,11 +167395,11 @@ eSz
 wCn
 mVd
 rSO
-uLX
-sFY
+hyg
+qRn
 oTt
-bRk
-uLX
+vty
+hyg
 xXb
 xXq
 vMl
@@ -175958,11 +175876,11 @@ vUE
 kkz
 heJ
 hYv
-seR
+eGt
 cKv
 jxL
 gWI
-seR
+eGt
 ptB
 jZe
 xas
