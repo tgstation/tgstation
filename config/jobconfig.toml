@@ -148,6 +148,12 @@
 "# Spawn Positions" = 3
 "# Total Positions" = 5
 
+[MIGRANT]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = -1
+"# Total Positions" = -1
+
 [MIME]
 "# Playtime Requirements" = 0
 "# Required Account Age" = 0
