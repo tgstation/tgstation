@@ -198,7 +198,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	AddElement(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
 
 	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)))
-
+	AddComponent(/datum/component/supermatter_glow)
 	soundloop = new(src, TRUE)
 
 	if (!moveable)
@@ -317,6 +317,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(prob(15))
 		supermatter_pull(loc, min(internal_energy/850, 3))//850, 1700, 2550
 	update_appearance()
+	SEND_SIGNAL(src, COMSIG_SUPERMATTER_PROCESS_ATMOS)
 	return TRUE
 
 // SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
@@ -500,10 +501,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(healed)
 			final_countdown = FALSE
 			return // delam averted
-		if(check_special_delamination() == "singularity")
-			supermatter_pull_delamination(singularity = TRUE)
-		else
-			supermatter_pull_delamination() // We won't pull unwrenched things.
 		sleep(1 SECONDS)
 
 	delamination_strategy.delaminate(src)
