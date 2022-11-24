@@ -37,7 +37,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
 	//This demands a borg, so we'll let if off easy
-	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
+	ignore += typesof(/obj/item/modular_computer/pda/silicon)
 	//This one demands a computer, ditto
 	ignore += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
