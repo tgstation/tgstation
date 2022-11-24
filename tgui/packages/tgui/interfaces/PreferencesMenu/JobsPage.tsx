@@ -1,16 +1,12 @@
-import { sortBy } from 'common/collections';
+import { Color } from 'common/color';
 import { classes } from 'common/react';
-import { InfernoNode, SFC } from 'inferno';
+import { InfernoNode } from 'inferno';
 import { useBackend } from '../../backend';
-import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
-import { createSetPreference, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
+import { Box, Button, Dropdown, Icon, Stack, Tooltip } from '../../components';
+import { TriColumnDepartmentPane } from '../JobSelection';
+import { JOB2ICON } from '../Orbit/constants';
+import { createSetPreference, Department, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-
-const sortJobs = (entries: [string, Job][], head?: string) =>
-  sortBy<[string, Job]>(
-    ([key, _]) => (key === head ? -1 : 1),
-    ([key, _]) => key
-  )(entries);
 
 const PRIORITY_BUTTON_SIZE = '18px';
 
@@ -80,19 +76,23 @@ const createCreateSetPriorityFromName = (
   return createSetPriority;
 };
 
-const PriorityHeaders = () => {
+const PriorityHeaders = (props: { department: Department }) => {
   const className = 'PreferencesMenu__Jobs__PriorityHeader';
 
   return (
-    <Stack>
+    <Stack
+      style={{
+        'float': 'right',
+        'clear': 'left',
+        'color': Color.fromHex(props.department.color)
+          .darken(70)
+          .toString(),
+      }}
+      pt="10px">
       <Stack.Item grow />
-
       <Stack.Item className={className}>Off</Stack.Item>
-
       <Stack.Item className={className}>Low</Stack.Item>
-
-      <Stack.Item className={className}>Medium</Stack.Item>
-
+      <Stack.Item className={className}>Med</Stack.Item>
       <Stack.Item className={className}>High</Stack.Item>
     </Stack>
   );
@@ -168,14 +168,14 @@ const PriorityButtons = (props: {
 
 const JobRow = (
   props: {
-    className?: string;
     job: Job;
     name: string;
+    department: Department;
   },
   context
 ) => {
   const { data } = useBackend<PreferencesMenuData>(context);
-  const { className, job, name } = props;
+  const { job, name, department } = props;
 
   const isOverflow = data.overflow_role === name;
   const priority = data.job_preferences[name];
@@ -226,12 +226,7 @@ const JobRow = (
   }
 
   return (
-    <Stack.Item
-      className={className}
-      height="100%"
-      style={{
-        'margin-top': 0,
-      }}>
+    <Stack.Item mt="2px">
       <Stack fill align="center">
         <Tooltip content={job.description} position="bottom-start">
           <Stack.Item
@@ -239,8 +234,18 @@ const JobRow = (
             width="50%"
             style={{
               'padding-left': '0.3em',
-            }}>
-            {name}
+            }}
+            color={Color.fromHex(department.color)
+              .darken(80)
+              .toString()}>
+            {
+              <div>
+                {(job.icon = job.icon || JOB2ICON[job.name] || null) && (
+                  <Icon name={job.icon} width="16px" />
+                )}
+                {job.command ? <b>{job.name}</b> : job.name}
+              </div>
+            }
           </Stack.Item>
         </Tooltip>
 
@@ -250,68 +255,6 @@ const JobRow = (
       </Stack>
     </Stack.Item>
   );
-};
-
-const Department: SFC<{ department: string }> = (props) => {
-  const { children, department: name } = props;
-  const className = `PreferencesMenu__Jobs__departments--${name}`;
-
-  return (
-    <ServerPreferencesFetcher
-      render={(data) => {
-        if (!data) {
-          return null;
-        }
-
-        const { departments, jobs } = data.jobs;
-        const department = departments[name];
-
-        // This isn't necessarily a bug, it's like this
-        // so that you can remove entire departments without
-        // having to edit the UI.
-        // This is used in events, for instance.
-        if (!department) {
-          return null;
-        }
-
-        const jobsForDepartment = sortJobs(
-          Object.entries(jobs).filter(([_, job]) => job.department === name),
-          department.head
-        );
-
-        return (
-          <Box>
-            <Stack vertical fill>
-              {jobsForDepartment.map(([name, job]) => {
-                return (
-                  <JobRow
-                    className={classes([
-                      className,
-                      name === department.head && 'head',
-                    ])}
-                    key={name}
-                    job={job}
-                    name={name}
-                  />
-                );
-              })}
-            </Stack>
-
-            {children}
-          </Box>
-        );
-      }}
-    />
-  );
-};
-
-// *Please* find a better way to do this, this is RIDICULOUS.
-// All I want is for a gap to pretend to be an empty space.
-// But in order for everything to align, I also need to add the 0.2em padding.
-// But also, we can't be aligned with names that break into multiple lines!
-const Gap = (props: { amount: number }) => {
-  // 0.2em comes from the padding-bottom in the department listing
-  return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
 const JoblessRoleDropdown = (props, context) => {
@@ -334,7 +277,7 @@ const JoblessRoleDropdown = (props, context) => {
   ];
 
   return (
-    <Box position="absolute" right={0} width="30%">
+    <Box position="absolute" right={0} width="30%" mr="6px">
       <Dropdown
         width="100%"
         selected={selected}
@@ -350,64 +293,42 @@ const JoblessRoleDropdown = (props, context) => {
   );
 };
 
-export const JobsPage = () => {
+export const JobsPage = (props, context) => {
+  const { act } = useBackend(context);
   return (
-    <>
-      <JoblessRoleDropdown />
+    <Stack vertical>
+      <Stack.Item height="2em">
+        <JoblessRoleDropdown />
+      </Stack.Item>
 
-      <Stack vertical fill>
-        <Gap amount={22} />
+      <Stack.Item>
+        <ServerPreferencesFetcher
+          render={(data) => {
+            if (!data) {
+              return <h1>Oh no, your prefs didn&#39;t load into TGUI!!!</h1>;
+            }
 
-        <Stack.Item>
-          <Stack fill className="PreferencesMenu__Jobs">
-            <Stack.Item mr={1}>
-              <Gap amount={36} />
-
-              <PriorityHeaders />
-
-              <Department department="Engineering">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Science">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Silicon">
-                <Gap amount={12} />
-              </Department>
-
-              <Department department="Assistant" />
-            </Stack.Item>
-
-            <Stack.Item mr={1}>
-              <PriorityHeaders />
-
-              <Department department="Captain">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Service">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Cargo" />
-            </Stack.Item>
-
-            <Stack.Item>
-              <Gap amount={36} />
-
-              <PriorityHeaders />
-
-              <Department department="Security">
-                <Gap amount={6} />
-              </Department>
-
-              <Department department="Medical" />
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-      </Stack>
-    </>
+            return (
+              <TriColumnDepartmentPane
+                className="PreferencesMenu__Jobs"
+                act={act}
+                departments={data.jobs.departments}
+                titleSubtextBuilder={(department: Department) => (
+                  <PriorityHeaders department={department} />
+                )}
+                jobEntryBuilder={(job: Job, department: Department) => (
+                  <JobRow
+                    key={job.name}
+                    job={job}
+                    name={job.name}
+                    department={department}
+                  />
+                )}
+              />
+            );
+          }}
+        />
+      </Stack.Item>
+    </Stack>
   );
 };

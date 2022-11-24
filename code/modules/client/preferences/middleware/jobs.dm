@@ -29,33 +29,33 @@
 	var/list/data = list()
 
 	var/list/departments = list()
-	var/list/jobs = list()
 
-	for (var/datum/job/job as anything in SSjob.joinable_occupations)
-		var/datum/job_department/department_type = job.department_for_prefs || job.departments_list?[1]
-		if (isnull(department_type))
-			stack_trace("[job] does not have a department set, yet is a joinable occupation!")
-			continue
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		var/list/department_jobs = list()
+		var/list/department_data = list(
+			"name" = department.department_name,
+			"jobs" = department_jobs,
+			"color" = department.ui_color,
+		)
+		departments += list(department_data)
 
-		if (isnull(job.description))
-			stack_trace("[job] does not have a description set, yet is a joinable occupation!")
-			continue
+		for(var/datum/job/job_datum as anything in department.department_jobs)
+			if(isnull(job_datum.description))
+				stack_trace("[job_datum] does not have a description set, yet is a joinable occupation!")
+				continue
+			var/datum/outfit/outfit = job_datum.outfit
+			var/datum/id_trim/id_trim = initial(outfit.id_trim)
 
-		var/department_name = initial(department_type.department_name)
-		if (isnull(departments[department_name]))
-			var/datum/job/department_head_type = initial(department_type.department_head)
-
-			departments[department_name] = list(
-				"head" = department_head_type && initial(department_head_type.title),
+			var/list/job_data = list(
+				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
+				"description" = job_datum.description,
+				"name" = job_datum.title,
+				"icon" = initial(id_trim.orbit_icon),
 			)
 
-		jobs[job.title] = list(
-			"description" = job.description,
-			"department" = department_name,
-		)
+			department_jobs += list(job_data)
 
 	data["departments"] = departments
-	data["jobs"] = jobs
 
 	return data
 

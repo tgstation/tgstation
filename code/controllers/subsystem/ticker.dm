@@ -478,7 +478,7 @@ SUBSYSTEM_DEF(ticker)
 		for (var/mob/dead/new_player/new_player in queued_players)
 			to_chat(new_player, span_userdanger("The alive players limit has been released!<br><a href='?src=[REF(new_player)];late_join=override'>[html_encode(">>Join Game<<")]</a>"))
 			SEND_SOUND(new_player, sound('sound/misc/notice1.ogg'))
-			new_player.latejoin_menu.ui_interact(new_player)
+			GLOB.latejoin_menu.ui_interact(new_player)
 		queued_players.len = 0
 		queue_delay = 0
 		return

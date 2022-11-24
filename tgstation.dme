@@ -407,6 +407,7 @@
 #include "code\_globalvars\configuration.dm"
 #include "code\_globalvars\game_modes.dm"
 #include "code\_globalvars\genetics.dm"
+#include "code\_globalvars\latejoin_menu.dm"
 #include "code\_globalvars\logging.dm"
 #include "code\_globalvars\phobias.dm"
 #include "code\_globalvars\religion.dm"

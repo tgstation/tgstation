@@ -181,6 +181,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if(!SSticker?.IsRoundInProgress())
 		to_chat(hud.mymob, span_boldwarning("The round is either not ready, or has already finished..."))
 		return
@@ -208,7 +209,14 @@
 			SSticker.queued_players += new_player
 			to_chat(new_player, span_notice("You have been added to the queue to join the game. Your position in queue is [SSticker.queued_players.len]."))
 		return
-	new_player.latejoin_menu.ui_interact(new_player)
+
+	if(!LAZYACCESS(params2list(params), CTRL_CLICK))
+		to_chat(new_player, span_notice("Opening late join menu! If it doesn't show, hold CTRL while clicking the join button!"))
+		GLOB.latejoin_menu.ui_interact(new_player)
+	else
+		to_chat(new_player, span_warning("Opening emergency fallback late join menu! If THIS doesn't show after disabling TGUI in your [span_bold("game preferences")], ahelp immediately!"))
+		GLOB.latejoin_menu.fallback_ui(new_player)
+
 
 /atom/movable/screen/lobby/button/join/proc/show_join_button()
 	SIGNAL_HANDLER

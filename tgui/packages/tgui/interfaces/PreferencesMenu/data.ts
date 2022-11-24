@@ -67,12 +67,16 @@ export type Perk = {
 };
 
 export type Department = {
-  head?: string;
+  color: string;
+  name: string;
+  jobs: Job[];
 };
 
 export type Job = {
+  command: boolean;
+  name: string;
   description: string;
-  department: string;
+  icon: string;
 };
 
 export type Quirk = {
@@ -174,8 +178,7 @@ export type PreferencesMenuData = {
 
 export type ServerData = {
   jobs: {
-    departments: Record<string, Department>;
-    jobs: Record<string, Job>;
+    departments: Department[];
   };
   names: {
     types: Record<string, Name>;

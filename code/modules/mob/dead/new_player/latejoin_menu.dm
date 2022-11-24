@@ -4,7 +4,7 @@
 
 /// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
 /datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
-	var/list/jobs = list("Random")
+	var/list/jobs = list()
 	for(var/datum/job/job in SSjob.joinable_occupations)
 		jobs += job.title
 
@@ -16,12 +16,9 @@
 	user.AttemptLateSpawn(input)
 
 /datum/latejoin_menu/ui_interact(mob/user, datum/tgui/ui)
-	if(!isnewplayer(user))
-		return
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Job Selection", "Late Join Job Selection:")
+		ui = new(user, src, "JobSelection")
 		ui.open()
 
 /datum/latejoin_menu/ui_data(mob/user)
@@ -79,7 +76,7 @@
 	return data
 
 /datum/latejoin_menu/ui_status(mob/user)
-	return isnewplayer(src) ? UI_INTERACTIVE : UI_CLOSE
+	return isnewplayer(user) ? UI_INTERACTIVE : UI_CLOSE
 
 /datum/latejoin_menu/ui_state(mob/user)
 	return GLOB.always_state
@@ -102,14 +99,14 @@
 					dept_data += job_datum.title
 
 			if(dept_data.len <= 0) //Congratufuckinglations
-				tgui_alert(src, "There are literally no random jobs available for you on this server, ahelp for assistance.", "Oh No!")
+				tgui_alert(owner, "There are literally no random jobs available for you on this server, ahelp for assistance.", "Oh No!")
 				return TRUE
 
 			var/random_job
 
 			while(random_job != JOB_CHOICE_YES)
 				var/random = pick(dept_data)
-				random_job = tgui_alert(src, "[random]?", "Random Job", list(JOB_CHOICE_YES, JOB_CHOICE_REROLL, JOB_CHOICE_CANCEL))
+				random_job = tgui_alert(owner, "[random]?", "Random Job", list(JOB_CHOICE_YES, JOB_CHOICE_REROLL, JOB_CHOICE_CANCEL))
 
 				if(random_job == JOB_CHOICE_CANCEL)
 					return TRUE
@@ -117,11 +114,11 @@
 					params["job"] = random
 
 		if(!SSticker?.IsRoundInProgress())
-			tgui_alert(usr, "The round is either not ready, or has already finished...", "Oh No!")
+			tgui_alert(owner, "The round is either not ready, or has already finished...", "Oh No!")
 			return TRUE
 
 		if(SSlag_switch.measures[DISABLE_NON_OBSJOBS])
-			tgui_alert(usr, "There is an administrative lock on entering the game for non-observers!", "Oh No!")
+			tgui_alert(owner, "There is an administrative lock on entering the game for non-observers!", "Oh No!")
 			return TRUE
 
 		//Determines Relevent Population Cap
@@ -134,8 +131,8 @@
 			relevant_cap = max(hard_popcap, extreme_popcap)
 
 		if(SSticker.queued_players.len && !(ckey(owner.key) in GLOB.admin_datums))
-			if((living_player_count() >= relevant_cap) || (src != SSticker.queued_players[1]))
-				tgui_alert(usr, "The server is full!", "Oh No!")
+			if((living_player_count() >= relevant_cap) || (owner != SSticker.queued_players[1]))
+				tgui_alert(owner, "The server is full!", "Oh No!")
 				return TRUE
 
 		owner.AttemptLateSpawn(params["job"])

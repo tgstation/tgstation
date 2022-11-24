@@ -13,11 +13,8 @@
 	var/mob/living/new_character
 	///Used to make sure someone doesn't get spammed with messages if they're ineligible for roles.
 	var/ineligible_for_roles = FALSE
-	/// Latejoin menu.
-	var/datum/latejoin_menu/latejoin_menu
 
 /mob/dead/new_player/Initialize(mapload)
-	latejoin_menu = new(src)
 	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/atom/movable/screen/splash/S = new(null, client, TRUE, TRUE)
 		S.Fade(TRUE)
