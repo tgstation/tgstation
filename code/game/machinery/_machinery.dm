@@ -957,22 +957,29 @@
 /obj/machinery/proc/display_parts(mob/user)
 	var/list/part_count = list()
 	for(var/obj/item/component_part in component_parts)
-		if(!part_count[component_part.name])
-			if(isstack(component_part))
-				var/obj/item/stack/stack_part = component_part
-				part_count[component_part.name] = stack_part.amount
-			else
-				part_count[component_part.name] = 1
-		else
+		if(part_count[component_part.name])
 			part_count[component_part.name]++
+			continue
+
+		if(isstack(component_part))
+			var/obj/item/stack/stack_part = component_part
+			part_count[component_part.name] = stack_part.amount
+		else
+			part_count[component_part.name] = 1
 
 	var/list/printed_components = list()
 
 	var/text = span_notice("It contains the following parts:")
-	for(var/obj/item/component_part in component_parts)
+	for(var/obj/item/component_part as anything in component_parts)
 		if(printed_components[component_part.name])
 			continue //already printed so skip
-		text += span_notice("[icon2html(component_part, user)] [part_count[component_part.name]] [component_part.name].")
+		
+		var/part_name = component_part.name
+		if (isstack(component_part))
+			var/obj/item/stack/stack_part = component_part
+			part_name = stack_part.singular_name
+		
+		text += span_notice("[icon2html(component_part, user)] [part_count[component_part.name]] [part_name]\s.")
 		printed_components[component_part.name] = TRUE
 
 	return text
