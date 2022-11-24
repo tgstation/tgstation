@@ -27,3 +27,25 @@
 /datum/weather/snow_storm/weather_act(mob/living/L)
 	L.adjust_bodytemperature(-rand(5,15))
 
+
+// since snowstorm is on a station z level, add extra checks to not annoy everyone
+/datum/weather/snow_storm/can_get_alert(mob/player)
+	var/standard_check = ..()
+	// dont bother checking if theyre not on the station or wouldnt be able to see the alert anyways
+	if(!standard_check || !is_station_level(player.z))
+		return standard_check
+
+	if(isobserver(player))
+		return TRUE
+
+	if(istype(get_area(player), /area/mine))
+		return TRUE
+
+	if(player.mind?.assigned_role.title == JOB_SHAFT_MINER) // a good miner always senses a storm brewin.
+		return TRUE
+
+	for(var/area/snowarea in impacted_areas)
+		if(locate(snowarea) in view(player))
+			return TRUE
+
+	return FALSE
