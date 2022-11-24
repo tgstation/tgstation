@@ -41,7 +41,7 @@
 	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/cheese/wheel/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -95,7 +95,7 @@
 	rat_heal = 35
 
 /obj/item/food/cheese/firm_cheese/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/firm_cheese_slice, 3, 3 SECONDS)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/firm_cheese_slice, 3, 3 SECONDS, screentip_verb = "Slice")
 
 /obj/item/food/cheese/firm_cheese_slice
 	name = "firm cheese slice"
