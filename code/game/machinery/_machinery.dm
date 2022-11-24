@@ -966,23 +966,14 @@
 		else
 			part_count[component_part.name]++
 
-	var/count = 0
-	var/suffix = ""
 	var/list/printed_components = list()
 
 	var/text = span_notice("It contains the following parts:")
 	for(var/obj/item/component_part in component_parts)
-		if(!printed_components[component_part.name])
-			count=part_count[component_part.name]
-			if(count>1)
-				if(!istype(component_part,/obj/item/stack/cable_coil) && isstack(component_part))
-					suffix = " sheets"
-				else
-					suffix = "s"
-			else
-				suffix = ""
-			text+= span_notice("[icon2html(component_part, user)] [count] [component_part.name][suffix].")
-			printed_components[component_part.name] = TRUE
+		if(printed_components[component_part.name])
+			continue //already printed so skip
+		text += span_notice("[icon2html(component_part, user)] [part_count[component_part.name]] [component_part.name].")
+		printed_components[component_part.name] = TRUE
 
 	return text
 
