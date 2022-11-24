@@ -1176,5 +1176,22 @@
 	if(CONFIG_GET(flag/security_has_maint_access))
 		access |= list(ACCESS_MAINT_TUNNELS)
 
+/datum/id_trim/job/migrant
+	assignment = "Migrant"
+	trim_state = "trim_migrant" // ??? wtf is this for
+	orbit_icon = "lock"
+	department_color = COLOR_PRISONER_BLACK
+	subdepartment_color = COLOR_PRISONER_ORANGE
+	sechud_icon_state = SECHUD_PRISONER // needs it's own sechud icon
+	minimal_access = list(
+		ACCESS_CARGO,
+		ACCESS_MECH_MINING,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+	)
+	template_access = null
+	job = /datum/job/migrant
+
 #undef POPULATION_SCALED_ACCESS
 #undef ALWAYS_GETS_ACCESS
