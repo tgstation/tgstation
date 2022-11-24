@@ -32,6 +32,7 @@
 	cooldown_time = 12 SECONDS
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
+	antimagic_flags = NONE
 
 	//Vars for zaps made when power chromosome is applied, ripped and toned down from reactive tesla armor code.
 	///This var decides if the spell should chain, dictated by presence of power chromosome

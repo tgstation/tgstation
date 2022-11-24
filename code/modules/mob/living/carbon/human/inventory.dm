@@ -367,7 +367,7 @@
 
 /// take the most recent item out of a slot or place held item in a slot
 
-/mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt", delayed = TRUE)
+/mob/living/carbon/human/proc/smart_equip_targeted(slot_type = ITEM_SLOT_BELT, slot_item_name = "belt")
 	if(incapacitated())
 		return
 	var/obj/item/thing = get_active_held_item()
@@ -398,6 +398,4 @@
 	if(!stored || stored.on_found(src))
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot
-	if(delayed)
-		changeNext_move(CLICK_CD_MELEE)
 	return

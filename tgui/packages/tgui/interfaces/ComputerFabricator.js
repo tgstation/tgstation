@@ -133,43 +133,6 @@ const CfStep2 = (props, context) => {
             />
           </Table.Cell>
         </Table.Row>
-        <Table.Row>
-          <Table.Cell bold position="relative">
-            <Tooltip
-              content={multiline`
-                Adds a secondary RFID card reader, for manipulating or
-                reading from a second standard RFID card.
-                Please note that a primary card reader is necessary to
-                allow the device to read your identification, but one
-                is included in the base price.
-              `}
-              position="right">
-              Secondary Card Reader:
-            </Tooltip>
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="None"
-              selected={data.hw_card === 0}
-              onClick={() =>
-                act('hw_card', {
-                  card: '0',
-                })
-              }
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Button
-              content="Standard"
-              selected={data.hw_card === 1}
-              onClick={() =>
-                act('hw_card', {
-                  card: '1',
-                })
-              }
-            />
-          </Table.Cell>
-        </Table.Row>
       </Table>
       <Button
         fluid

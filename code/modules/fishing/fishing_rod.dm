@@ -66,9 +66,41 @@
 	QDEL_LIST(fishing_lines)
 
 
-/// Catch weight modifier for the given fish_type (or FISHING_DUD), additive
-/obj/item/fishing_rod/proc/fish_bonus(fish_type)
-	return 0
+/**
+ * Catch weight modifier for the given fish_type (or FISHING_DUD)
+ * and source, multiplicative. Called before `additive_fish_bonus()`.
+ */
+/obj/item/fishing_rod/proc/multiplicative_fish_bonus(fish_type, datum/fish_source/source)
+	if(!hook)
+		return FISHING_DEFAULT_HOOK_BONUS_MULTIPLICATIVE
+
+	return hook.get_hook_bonus_multiplicative(fish_type)
+
+
+/**
+ * Catch weight modifier for the given fish_type (or FISHING_DUD)
+ * and source, additive. Called after `multiplicative_fish_bonus()`.
+ */
+/obj/item/fishing_rod/proc/additive_fish_bonus(fish_type, datum/fish_source/source)
+	if(!hook)
+		return FISHING_DEFAULT_HOOK_BONUS_ADDITIVE
+
+	return hook.get_hook_bonus_additive(fish_type)
+
+
+/**
+ * Is there a reason why this fishing rod couldn't fish in target_fish_source?
+ * If so, return the denial reason as a string, otherwise return `null`.
+ *
+ * Arguments:
+ * * target_fish_source - The /datum/fish_source we're trying to fish in.
+ */
+/obj/item/fishing_rod/proc/reason_we_cant_fish(datum/fish_source/target_fish_source)
+	if(!hook)
+		return null
+
+	return hook.reason_we_cant_fish(target_fish_source)
+
 
 /obj/item/fishing_rod/proc/consume_bait()
 	if(bait)

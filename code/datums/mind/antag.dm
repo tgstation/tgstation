@@ -218,6 +218,9 @@
 	for(var/datum/objective/objective as anything in get_all_objectives())
 		to_chat(current, "<B>[objective.objective_name] #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
+	// Objectives are often stored in the static data of antag uis, so we should update those as well
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		antag.update_static_data(current)
 
 /datum/mind/proc/find_syndicate_uplink(check_unlocked)
 	var/list/L = current.get_all_contents()

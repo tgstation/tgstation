@@ -91,7 +91,7 @@
 		UnregisterSignal(mob, COMSIG_MOB_LOGOUT)
 
 		//after playing the fade-in animation, remove the screen obj
-		addtimer(CALLBACK(src, /datum/component/seethrough/proc/clear_image, trickery_image, mob.client), animation_time)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/seethrough,clear_image), trickery_image, mob.client), animation_time)
 
 ///Apply the trickery image and animation
 /datum/component/seethrough/proc/trick_mob(mob/fool)
@@ -128,7 +128,7 @@
 	clear_all_images()
 
 	//Timer override, so if our atom keeps moving the timer is reset until they stop for X time
-	addtimer(CALLBACK(src, /datum/component/seethrough/proc/setup_perimeter, parent), perimeter_reset_timer, TIMER_OVERRIDE | TIMER_UNIQUE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/seethrough,setup_perimeter), parent), perimeter_reset_timer, TIMER_OVERRIDE | TIMER_UNIQUE)
 
 ///Remove a screen image from a client
 /datum/component/seethrough/proc/clear_image(image/removee, client/remove_from)

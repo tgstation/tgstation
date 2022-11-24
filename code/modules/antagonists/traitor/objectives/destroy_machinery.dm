@@ -68,7 +68,7 @@
 		return FALSE
 
 	for(var/obj/machinery/machine as anything in possible_machines)
-		AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = COMSIG_PARENT_QDELETING)
+		AddComponent(/datum/component/traitor_objective_register, machine, succeed_signals = list(COMSIG_PARENT_QDELETING))
 
 	replace_in_name("%JOB%", lowertext(chosen_job))
 	replace_in_name("%MACHINE%", possible_machines[1].name)
