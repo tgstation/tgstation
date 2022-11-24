@@ -169,7 +169,7 @@
 	log_message("EMP detected", LOG_MECHA, color="red")
 
 	//Mess with the focus of the inbuilt camera if present
-	if(chassis_camera && chassis_camera.is_emp_scrambled == FALSE)
+	if(chassis_camera && !chassis_camera.is_emp_scrambled)
 		chassis_camera.setViewRange(chassis_camera.short_range)
 		chassis_camera.is_emp_scrambled = TRUE
 		diag_hud_set_camera()

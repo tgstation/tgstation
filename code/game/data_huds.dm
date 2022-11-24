@@ -446,7 +446,7 @@ Diagnostic HUDs!
 			new_icon_state = "hudtracking"
 	holder.icon_state = new_icon_state
 
-///Shows inbuilt camera on the mech
+///Shows inbuilt camera on the mech; if the camera's view range was affected by an EMP, shows a red blip while it's affected
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_camera()
 	var/image/holder = hud_list[DIAG_CAMERA_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
