@@ -30,6 +30,7 @@
 //No department
 #define JOB_ASSISTANT "Assistant"
 #define JOB_PRISONER "Prisoner"
+#define JOB_MIGRANT "Migrant"
 //Command
 #define JOB_CAPTAIN "Captain"
 #define JOB_HEAD_OF_PERSONNEL "Head of Personnel"
@@ -135,6 +136,7 @@
 #define JOB_DISPLAY_ORDER_DETECTIVE 33
 #define JOB_DISPLAY_ORDER_SECURITY_OFFICER 34
 #define JOB_DISPLAY_ORDER_PRISONER 35
+#define JOB_DISPLAY_ORDER_MIGRANT 36
 
 
 #define DEPARTMENT_UNASSIGNED "No department assigned"
