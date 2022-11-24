@@ -46,8 +46,8 @@
 		return TRUE
 
 
-	for(var/area/snowarea in impacted_areas)
-		if(locate(snowarea) in view(player))
+	for(var/area/snow_area in impacted_areas)
+		if(locate(snow_area) in view(player))
 			return TRUE
 
 	return FALSE
