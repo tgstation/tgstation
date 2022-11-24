@@ -75,11 +75,6 @@
 
 /datum/unit_test/strange_reagent/proc/damage_target_to_percentage(mob/living/target, percent)
 	var/damage = target_max_health * percent * 0.5
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon = target
-		for(var/obj/item/bodypart/limb as anything in carbon.bodyparts)
-			damage = round(damage / limb.body_damage_coeff, DAMAGE_PRECISION) // ensure we respect their bodypart coefficients
-
 	target.setBruteLoss(damage, updating_health=FALSE) // no point running health update logic here
 	target.setFireLoss(damage, updating_health=TRUE) // since we do it here
 	update_amounts(target)
@@ -87,14 +82,17 @@
 		target.death()
 	return TRUE
 
+/datum/unit_test/strange_reagent/proc/get_target_organic_health_manual(mob/living/target)
+	return target.getMaxHealth() - (target.getBruteLoss() + target.getFireLoss())
+
 /datum/unit_test/strange_reagent/proc/test_damage_but_no_death(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
 	if(!damage_target_to_percentage(target, 0.8))
 		return
 
-	var/health = target.get_organic_health()
+	var/health = get_target_organic_health_manual(target)
 	strange_reagent.expose_mob(target, INGEST, 20)
-	TEST_ASSERT_EQUAL(health, target.get_organic_health(), "Strange Reagent healed a target type [target.type] that was not dead.")
+	TEST_ASSERT_EQUAL(health, get_target_organic_health_manual(target), "Strange Reagent healed a target type [target.type] that was not dead.")
 
 /datum/unit_test/strange_reagent/proc/test_death_no_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
@@ -130,11 +128,11 @@
 	target.death()
 	update_amounts(target)
 	strange_reagent.expose_mob(target, INGEST, amount_needed_to_full_heal)
-	TEST_ASSERT_EQUAL(target_max_health, target.get_organic_health(), "Strange Reagent did not fully heal a dead target type [target.type] with the expected amount.")
+	TEST_ASSERT_EQUAL(target_max_health, get_target_organic_health_manual(target), "Strange Reagent did not fully heal a dead target type [target.type] with the expected amount.")
 
 /datum/unit_test/strange_reagent/proc/test_death_from_damage(target_type)
 	var/mob/living/target = allocate_new_target(target_type)
-	if(!damage_target_to_percentage(target, strange_reagent.max_revive_damage_ratio * 0.9)) // 10% under the 2x damage cap
+	if(!damage_target_to_percentage(target, strange_reagent.max_revive_damage_ratio * 0.9)) // 10% under the damage cap
 		return
 
 	update_amounts(target)

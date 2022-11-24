@@ -837,15 +837,15 @@
 
 /// Calculates the amount of reagent to at a bare minimum make the target not dead
 /datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_revive(mob/living/benefactor)
-	var/their_health = benefactor.get_organic_health()
+	var/their_health = benefactor.getMaxHealth() - (benefactor.getBruteLoss() + benefactor.getFireLoss())
 	if(their_health > 0)
 		return 1
 
-	return round(-their_health / healing_per_reagent_unit, DAMAGE_PRECISION) + 1
+	return round(-their_health / healing_per_reagent_unit, DAMAGE_PRECISION)
 
 /// Calculates the amount of reagent that will be needed to both revive and full heal the target. Looks at healing_per_reagent_unit and excess_healing_ratio
 /datum/reagent/medicine/strange_reagent/proc/calculate_amount_needed_to_full_heal(mob/living/benefactor)
-	var/their_health = benefactor.get_organic_health()
+	var/their_health = benefactor.getBruteLoss() + benefactor.getFireLoss()
 	var/max_health = benefactor.getMaxHealth()
 	if(their_health >= max_health)
 		return 1
@@ -857,6 +857,7 @@
 /datum/reagent/medicine/strange_reagent/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	if(exposed_mob.stat != DEAD || !(exposed_mob.mob_biotypes & MOB_ORGANIC))
 		return ..()
+
 	if(exposed_mob.suiciding) //they are never coming back
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body does not react..."))
 		return
@@ -868,7 +869,7 @@
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body lets off a puff of smoke..."))
 		return
 
-	if(-exposed_mob.get_organic_health() > (exposed_mob.getMaxHealth() * max_revive_damage_ratio))
+	if((exposed_mob.getBruteLoss() + exposed_mob.getFireLoss()) > (exposed_mob.getMaxHealth() * max_revive_damage_ratio))
 		exposed_mob.visible_message(span_warning("[exposed_mob]'s body convulses violently, before falling still..."))
 		return
 
