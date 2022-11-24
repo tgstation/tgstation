@@ -3,7 +3,7 @@ import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
 import { sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Section, Tabs, Stack, Box, Input, Table, NoticeBox, Tooltip, Icon } from '../components';
+import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon } from '../components';
 import { Window } from '../layouts';
 
 const TOOL_ICONS = {
@@ -54,7 +54,7 @@ export const PersonalCooking = (props, context) => {
   ])(recipes_filtered || []);
   const categories = data.categories.sort();
   return (
-    <Window width={600} height={600}>
+    <Window width={700} height={700}>
       <Window.Content scrollable>
         <Stack>
           <Stack.Item width={'120px'}>
@@ -78,7 +78,9 @@ export const PersonalCooking = (props, context) => {
           </Stack.Item>
           <Stack.Item grow>
             {recipes.length > 0 ? (
-              recipes.map((item) => <RecipeContent key item={item} />)
+              recipes
+                .slice(0, 30)
+                .map((item) => <RecipeContent key item={item} />)
             ) : (
               <NoticeBox m={1} p={1}>
                 No recipes found.
@@ -97,23 +99,48 @@ const RecipeContent = (props) => {
     <Section>
       <Stack>
         <Stack.Item>
-          <Box
-            style={{ 'background-color': '#111' }}
-            className={classes([
-              'food32x32',
-              item.result?.replace(/[/_]/gi, ''),
-            ])}
-          />
+          <Box width={'64px'} height={'64px'} mr={1}>
+            <Box
+              width={'32px'}
+              height={'32px'}
+              style={{
+                'transform': 'scale(2)',
+              }}
+              m={'16px'}
+              className={classes([
+                'food32x32',
+                item.result?.replace(/[/_]/gi, ''),
+              ])}
+            />
+          </Box>
         </Stack.Item>
         <Stack.Item grow>
-          <Box bold mb={0.5}>
-            {item.name}
-          </Box>
-          <Box color={'gray'}>{item.desc}</Box>
+          <Stack>
+            <Stack.Item grow>
+              <Box bold mb={0.5}>
+                {item.name}
+              </Box>
+              <Box color={'gray'}>{item.desc}</Box>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                ml={3}
+                width={6}
+                lineHeight={2.5}
+                align="center"
+                content="Make"
+                disabled
+                icon="utensils"
+              />
+            </Stack.Item>
+          </Stack>
+
           <hr style={{ 'border-color': '#111' }} />
           <Box>
             {item.reqs &&
-              item.reqs.map((item) => <Ingredient key item={item} />)}
+              item.reqs
+                .sort((a, b) => (a.path > b.path ? 1 : -1))
+                .map((item) => <Ingredient key item={item} />)}
           </Box>
         </Stack.Item>
       </Stack>
@@ -123,61 +150,45 @@ const RecipeContent = (props) => {
 
 const Ingredient = (props) => {
   return (
-    <Tooltip content={props.item.name}>
-      {props.item.path.includes('/obj/item/food/') ? (
-        <Box mx={1} inline>
-          <Box
-            verticalAlign="middle"
-            inline
-            className={classes([
-              'food32x32',
-              props.item.path.replace(/[/_]/gi, ''),
-            ])}
-          />
-          <Box inline>{props.item.amount > 1 && 'x' + props.item.amount}</Box>
-        </Box>
-      ) : props.item.path.includes('/datum/reagent/') ? (
-        <Box mx={1} inline verticalAlign="middle">
-          <Icon name="droplet" />
-          <Box inline>
-            &nbsp;{props.item.amount > 1 && props.item.amount + 'u'}
-          </Box>
-        </Box>
-      ) : props.item.path.includes('/obj/item/reagent_containers/') ? (
-        <Box mx={1} inline verticalAlign="middle">
-          <Icon name="prescription-bottle" />
-          <Box inline>
-            &nbsp;{props.item.amount > 1 && 'x' + props.item.amount}
-          </Box>
-        </Box>
-      ) : (
-        <Box mx={1} inline verticalAlign="middle">
+    props.item.path.includes('/obj/item/food/') ? (
+      <Box my={1}>
+        <Box
+          verticalAlign="middle"
+          inline
+          my={-1}
+          className={classes([
+            'food32x32',
+            props.item.path.replace(/[/_]/gi, ''),
+          ])}
+        />
+        <Box
+          inline
+          verticalAlign="middle"
+          style={{ 'text-transform': 'capitalize' }}>
           {props.item.name}&nbsp;
-          {props.item.amount > 1 && 'x' + props.item.amount}
+          {props.item.amount > 1 && props.item.amount + 'x'}
         </Box>
-      )}
-    </Tooltip>
+      </Box>
+    ) : (
+      <Box my={1} verticalAlign="middle">
+        <Icon
+          name={
+            props.item.path.includes('/datum/reagent/')
+              ? 'droplet'
+              : props.item.path.includes('/obj/item/reagent_containers/')
+                ? 'whiskey-glass'
+                : 'box'
+          }
+          width={'32px'}
+          textAlign="center"
+        />
+        <Box inline style={{ 'text-transform': 'capitalize' }}>
+          {props.item.name}&nbsp;
+          {props.item.path.includes('/datum/reagent/')
+            ? props.item.amount + 'u'
+            : props.item.amount > 1 && props.item.amount + 'x'}
+        </Box>
+      </Box>
+    )
   ) as any;
-};
-
-const ReagentTooltip = (props) => {
-  return (
-    <Table>
-      <Table.Row header>
-        <Table.Cell>Reagents</Table.Cell>
-      </Table.Row>
-      {props.reagents?.map((reagent) => (
-        <Table.Row key="">
-          <Table.Cell>{reagent.name}</Table.Cell>
-          <Table.Cell py={0.5} pl={2} textAlign={'right'}>
-            {Math.max(
-              Math.round(reagent.rate * props.potency * props.volume_mod),
-              1
-            )}
-            u
-          </Table.Cell>
-        </Table.Row>
-      ))}
-    </Table>
-  );
 };

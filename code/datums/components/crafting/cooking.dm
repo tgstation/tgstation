@@ -25,7 +25,7 @@
 /datum/component/cooking/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PersonalCooking")
+		ui = new(user, src, "PersonalCooking", "Cooking")
 		ui.open()
 
 /datum/component/cooking/ui_data(mob/user)
@@ -38,9 +38,9 @@
 	data["categories"] = list()
 	data["recipes"] = list()
 	for(var/path in GLOB.crafting_recipes)
-		if (!istype(path, /datum/crafting_recipe/food))
+		if (!(path in subtypesof(/datum/crafting_recipe/food))
 			continue
-		var/datum/crafting_recipe/recipe =  path
+		var/datum/crafting_recipe/recipe = path
 		var/list/recipe_data = list()
 		recipe_data["name"] = recipe.name
 		var/list/reqs = recipe.reqs
@@ -57,7 +57,7 @@
 		if(ispath(recipe.result, /obj/item/food))
 			var/obj/item/food/item = recipe.result
 			recipe_data["desc"] = initial(item.desc)
-			recipe_data["foodtypes"] = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
+			// recipe_data["foodtypes"] = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
 		else
 			recipe_data["desc"] = "Not an item"
 		data["recipes"] += list(recipe_data)
