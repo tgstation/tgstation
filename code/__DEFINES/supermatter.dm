@@ -151,13 +151,11 @@
 #define SM_ZAP_BASE "Base Zap Multiplier"
 /// How much we are multiplying our zap energy because of gas factors.
 #define SM_ZAP_GAS "Gas Zap Multiplier"
-/// How much a psychologist can reduce power loss.
-#define PSYCHOLOGIST_POWERLOSS_REDUCTION 0.2
-
+/// Delamination types.
 #define CASCADE_DELAMINATION "cascade"
 #define SINGULARITY_DELAMINATION "singularity"
 #define TESLA_DELAMINATION "tesla"
-
+/// Colours used for effects.
 #define SUPERMATTER_COLOUR "#ffd04f"
 #define SUPERMATTER_RED "#aa2c16"
 #define SUPERMATTER_CASCADE_COLOUR "#333333"

@@ -158,8 +158,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/hue_angle_shift = 0
 	///Reference to the warp effect
 	var/atom/movable/supermatter_warp_effect/warp
-	///Have the visual effects started? (Used to not spam effects)
-	var/animated
 	///The power threshold required to transform the powerloss function into a linear function from a cubic function.
 	var/powerloss_linear_threshold = 0
 	///The offset of the linear powerloss function set so the transition is differentiable.
