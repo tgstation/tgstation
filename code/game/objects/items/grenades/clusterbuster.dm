@@ -2,8 +2,8 @@
 //Clusterbang
 ////////////////////
 
-#define RANDOM_DETONATE_MIN_TIME 1.5 SECONDS
-#define RANDOM_DETONATE_MAX_TIME 6 SECONDS
+#define RANDOM_DETONATE_MIN_TIME (1.5 SECONDS)
+#define RANDOM_DETONATE_MAX_TIME (6 SECONDS)
 
 /obj/item/grenade/clusterbuster
 	desc = "Use of this weapon may constitute a war crime in your area, consult your local captain."
@@ -87,7 +87,7 @@
 		var/obj/item/grenade/grenade = new type(loc)
 		if(istype(grenade))
 			grenade.active = TRUE
-			addtimer(CALLBACK(grenade, /obj/item/grenade/proc/detonate), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
+			addtimer(CALLBACK(grenade, TYPE_PROC_REF(/obj/item/grenade, detonate)), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
 		var/steps = rand(1, 4)
 		for(var/step in 1 to steps)
 			step_away(src, loc)
@@ -116,7 +116,7 @@
 		var/chosen = pick(subtypesof(/obj/item/slime_extract))
 		var/obj/item/slime_extract/slime_extract = new chosen(loc)
 		if(volatile)
-			addtimer(CALLBACK(slime_extract, /obj/item/slime_extract/proc/activate_slime), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
+			addtimer(CALLBACK(slime_extract, TYPE_PROC_REF(/obj/item/slime_extract, activate_slime)), rand(RANDOM_DETONATE_MIN_TIME, RANDOM_DETONATE_MAX_TIME))
 		var/steps = rand(1, 4)
 		for(var/step in 1 to steps)
 			step_away(src, loc)

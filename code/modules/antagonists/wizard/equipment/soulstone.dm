@@ -9,6 +9,8 @@
 	desc = "A fragment of the legendary treasure known simply as the 'Soul Stone'. The shard still flickers with a fraction of the full artefact's power."
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
+	/// The base name of the soulstone, set to the initial name by default. Used in name updating
+	var/base_name
 	/// if TRUE, we can only be used once.
 	var/one_use = FALSE
 	/// Only used if one_use is TRUE. Whether it's used.
@@ -27,6 +29,8 @@
 	. = ..()
 	if(theme != THEME_HOLY)
 		RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
+	if(!base_name)
+		base_name = initial(name)
 
 /obj/item/soulstone/update_appearance(updates)
 	. = ..()
@@ -60,15 +64,15 @@
 
 /obj/item/soulstone/update_name(updates)
 	. = ..()
+	name = base_name
 	if(spent)
+		// "dull soulstone"
 		name = "dull [name]"
-		return
 
 	var/mob/living/simple_animal/shade/shade = locate() in src
 	if(shade)
+		// "(dull) soulstone: Urist McCaptain"
 		name = "[name]: [shade.real_name]"
-	else
-		name = initial(name)
 
 /obj/item/soulstone/update_desc(updates)
 	. = ..()
@@ -155,7 +159,7 @@
 
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
 	for(var/mob/living/simple_animal/shade/shade in src)
-		INVOKE_ASYNC(shade, /mob/living/proc/death)
+		INVOKE_ASYNC(shade, TYPE_PROC_REF(/mob/living, death))
 	return ..()
 
 /obj/item/soulstone/proc/hot_potato(mob/living/user)
@@ -548,6 +552,7 @@
 /obj/item/soulstone/anybody/chaplain/sparring/Initialize(mapload)
 	. = ..()
 	name = "[GLOB.deity]'s punishment"
+	base_name = name
 	desc = "A prison for those who lost [GLOB.deity]'s game."
 
 /obj/item/soulstone/anybody/mining

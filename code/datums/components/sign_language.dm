@@ -42,8 +42,6 @@
 		stack_trace("Sign Language component added to [parent] ([parent?.type]) which is not a /mob/living/carbon subtype.")
 		return COMPONENT_INCOMPATIBLE
 	linked_action = new(src)
-	linked_action.Grant(parent)
-	linked_action.UpdateButtons()
 
 /datum/component/sign_language/Destroy()
 	QDEL_NULL(linked_action)
@@ -53,6 +51,8 @@
 	// Sign language is toggled on/off via adding/removing TRAIT_SIGN_LANG.
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), PROC_REF(enable_sign_language))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), PROC_REF(disable_sign_language))
+	linked_action.Grant(parent)
+	linked_action.UpdateButtons()
 
 /datum/component/sign_language/UnregisterFromParent()
 	disable_sign_language()
