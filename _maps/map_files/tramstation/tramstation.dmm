@@ -51488,7 +51488,6 @@
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/vault,
 /area/station/hallway/primary/tram/right)
-/area/station/security/checkpoint)
 "slI" = (
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 1
