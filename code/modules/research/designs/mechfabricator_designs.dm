@@ -1317,7 +1317,7 @@
 
 /datum/design/mecha_camera
 	name = "Exosuit External Camera Kit"
-	desc = "A durable EMP-proof camera designed for exosuit operations."
+	desc = "A durable CCTV camera designed for exosuit operations."
 	id = "mecha_camera"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/camera_kit

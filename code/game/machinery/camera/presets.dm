@@ -77,9 +77,11 @@
 	///Whether the camera was recently affected by an EMP and is thus unfocused, shortening view_range
 	var/is_emp_scrambled = FALSE
 
-/obj/machinery/camera/exosuit/proc/emp_refocus()
+/obj/machinery/camera/exosuit/proc/emp_refocus(obj/vehicle/sealed/mecha/our_chassis)
 	is_emp_scrambled = FALSE
 	setViewRange(initial(view_range))
+	our_chassis.diag_hud_set_camera()
+
 
 //Updates the c_tag of the mech camera while preventing duplicate c_tag usage due to having mechs with the same name
 /obj/machinery/camera/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
