@@ -179,8 +179,7 @@
 // the checks for if a mob should recieve alerts, returns TRUE if can
 /datum/weather/proc/can_get_alert(mob/player)
 	var/turf/mob_turf = get_turf(player)
-	if(mob_turf)
-		return TRUE
+	return !isnull(mob_turf)
 
 /**
  * Returns TRUE if the living mob can be affected by the weather
