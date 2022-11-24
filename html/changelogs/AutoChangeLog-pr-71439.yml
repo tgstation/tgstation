@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - refactor: "Cayenne's ability to participate in Nuclear Operations is now a component which any mob can use."

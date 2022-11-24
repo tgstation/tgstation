@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed an exploit involving igniters attached to themselves. Assembly holders are now limited to 12 assemblies maximum, and you cannot attach multiple igniters to the same assembly."
-  - refactor: "Refactored some assembly jank, namely in how they pulse and are pulsed."
