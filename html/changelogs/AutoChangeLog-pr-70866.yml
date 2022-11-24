@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added two sets of coordinates to the checkers and chess modules for the holodeck."

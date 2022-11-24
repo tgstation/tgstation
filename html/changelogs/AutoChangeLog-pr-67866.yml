@@ -1,0 +1,6 @@
+author: "nevimer"
+delete-after: True
+changes:
+  - rscadd: "The Supermatter crystal will now emit rays of light, varying on it's power level and situation."
+  - code_imp: "improves a formatting and comment spelling"
+  - bugfix: "The Causality field now actually shows up!"

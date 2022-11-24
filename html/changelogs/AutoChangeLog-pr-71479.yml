@@ -1,0 +1,5 @@
+author: "PositiveEntropy"
+delete-after: True
+changes:
+  - imageadd: "Updates the Military, Bomber and Letterman Jackets"
+  - bugfix: "Fixes the centcom hat, cap and head intern cap, which were using the old sprites."
