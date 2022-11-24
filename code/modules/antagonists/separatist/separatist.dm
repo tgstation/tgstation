@@ -105,9 +105,7 @@
 	objectives -= nation.objectives
 
 /datum/antagonist/separatist/proc/setup_ui_color()
-	var/list/hsl = rgb2num(nation.department.ui_color, COLORSPACE_HSL)
-	hsl[3] = 25 //setting lightness very low
-	ui_color = rgb(hsl[1], hsl[2], hsl[3], space = COLORSPACE_HSL)
+	ui_color = nation.department.ui_color
 
 /datum/antagonist/separatist/create_team(datum/team/nation/new_team)
 	if(!new_team)
