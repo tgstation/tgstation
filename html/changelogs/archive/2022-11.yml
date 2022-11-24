@@ -822,3 +822,60 @@
   - bugfix: Fix syringes and droppers not updating the appearance of target when used
   - qol: Regular mop bucket has the same RMB hotkey as janicart for wetting mop
   - refactor: Refactor janicart to be subtype of mop bucket
+2022-11-24:
+  1bw0kopy:
+  - bugfix: Fix traitor objectives failing to complete
+  Fikou:
+  - qol: you get access to the next storage ui row 1 item earlier
+  Ghommie:
+  - rscadd: Added two sets of coordinates to the checkers and chess modules for the
+      holodeck.
+  GoldenAlpharex:
+  - rscadd: Added a Rescue Hook, that will allow the fishing rod it's attached onto
+      to become a lot more proficient at recovering corpses from chasms, at the expense
+      of making it unusable for more traditional fishing. It isn't entirely lobstrosity-proof,
+      however...
+  - balance: The magnetic hook can no longer fish out corpses from chasms, but will
+      fish out items much more efficiently than any other hooks, while also being
+      much less attractive to lobstrosities. Some still fall for it regardless, however.
+  - spellcheck: Fixed the capitalization and punctuation in the description of multiple
+      fishing accessories.
+  - code_imp: Improved the code for fishing weights, to allow for different hooks
+      to have some more noticeable results on the weights without having to add to
+      an already massive proc.
+  Jacquerel:
+  - refactor: Cayenne's ability to participate in Nuclear Operations is now a component
+      which any mob can use.
+  - rscadd: All Space Carp will now start regenerating health after 6 seconds of not
+      taking any damage, until they're back to full health. This behaviour was previously
+      unique to mega carp.
+  - qol: You can see what kind of spell a magicarp will cast by hovering your mouse
+      over it.
+  - imageadd: Megacarp now have a random colour.
+  - imagedel: Magicarp are now colour coded based on their spell, or change randomly
+      if they're Chaos Magicarp.
+  JohnFulpWillard:
+  - admin: Researching nodes and bepis unlocking stuff is now logged in research.
+  LemonInTheDark:
+  - bugfix: You can now see antag hud icons AND see through walls. WOW
+  Melbert:
+  - bugfix: Fixed an exploit involving igniters attached to themselves. Assembly holders
+      are now limited to 12 assemblies maximum, and you cannot attach multiple igniters
+      to the same assembly.
+  - refactor: Refactored some assembly jank, namely in how they pulse and are pulsed.
+  Roryl-c:
+  - bugfix: Flypeople gain a comparable amount of nutrients from vomited food to other
+      species (~70%, up from ~30%)
+  - bugfix: Flypeople no longer vomit after drinking fluids
+  - bugfix: Flypeople no longer vomit all contents of their stomach on spawn
+  - code_imp: Stomachs can now react to foods entering them by overriding the `after_eat`
+      proc
+  disappointedButNotSuprised:
+  - bugfix: Curd cheese can be microwaved again into cheese curds
+  etherware-novice:
+  - qol: slight positive moodlets use a different color to slight negative ones
+  flowercuco:
+  - qol: added screentips to customizable food
+  - qol: added more balloon alerts to custommizable food
+  private-tristan:
+  - bugfix: icebox kitchen maints is now correctly wired
