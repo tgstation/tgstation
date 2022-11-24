@@ -5,7 +5,7 @@
 /datum/asset/spritesheet/food/create_spritesheets()
 	var/list/id_list = list()
 	for (var/path in subtypesof(/obj/item/food))
-		var/obj/item/food/item = initial(path)
+		var/atom/item = initial(path)
 		var/icon_file = initial(item.icon)
 		var/icon_state = initial(item.icon_state)
 		#ifdef UNIT_TESTS

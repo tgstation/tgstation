@@ -35,12 +35,32 @@
 
 /datum/component/cooking/ui_static_data(mob/user)
 	var/list/data = list()
-	for(var/path in subtypesof(/datum/crafting_recipe/food))
-		var/datum/crafting_recipe/food/recipe = new path
-		data["recipes"] += list(list(
-			"name" = recipe.name,
-			"icon" = sanitize_css_class_name("[recipe.result]")
-		))
+	data["categories"] = list()
+	data["recipes"] = list()
+	for(var/path in GLOB.crafting_recipes)
+		if (!istype(path, /datum/crafting_recipe/food))
+			continue
+		var/datum/crafting_recipe/recipe =  path
+		var/list/recipe_data = list()
+		recipe_data["name"] = recipe.name
+		var/list/reqs = recipe.reqs
+		for(var/atom/req_atom as anything in reqs)
+			recipe_data["reqs"] += list(list(
+				"path" = req_atom,
+				"name" = initial(req_atom.name),
+				"amount" = reqs[req_atom]
+			))
+		recipe_data["category"] = recipe.subcategory
+		if(!(recipe.subcategory in data["categories"]))
+			data["categories"] += recipe.subcategory
+		recipe_data["result"] = recipe.result
+		if(ispath(recipe.result, /obj/item/food))
+			var/obj/item/food/item = recipe.result
+			recipe_data["desc"] = initial(item.desc)
+			recipe_data["foodtypes"] = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
+		else
+			recipe_data["desc"] = "Not an item"
+		data["recipes"] += list(recipe_data)
 	return data
 
 /datum/component/cooking/ui_act(action, params)
