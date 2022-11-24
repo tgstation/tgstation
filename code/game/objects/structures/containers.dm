@@ -5,9 +5,14 @@
 	icon_state = "container_blank"
 	max_integrity = 1000
 	bound_width = 96
-	bound_height = 64
+	bound_height = 32
 	density = TRUE
 	anchored = TRUE
+
+/obj/structure/shipping_container/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_SHIPPING_CONTAINER)
 
 /obj/structure/shipping_container/nanotrasen
 	name = "\improper Nanotrasen shipping container"

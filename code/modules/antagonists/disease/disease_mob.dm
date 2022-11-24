@@ -1,4 +1,4 @@
-#define FREEMOVE_TIME 2 MINUTES
+#define FREEMOVE_TIME (2 MINUTES)
 
 /*
 A mob of type /mob/camera/disease is an overmind coordinating at least one instance of /datum/disease/advance/sentient_disease

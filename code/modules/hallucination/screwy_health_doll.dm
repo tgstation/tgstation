@@ -51,7 +51,7 @@
 
 	var/obj/item/bodypart/picked = specific_limb || pick(human_mob.bodyparts)
 	if(!(picked in bodyparts))
-		RegisterSignal(picked, list(COMSIG_PARENT_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(remove_bodypart))
+		RegisterSignals(picked, list(COMSIG_PARENT_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(remove_bodypart))
 		RegisterSignal(picked, COMSIG_BODYPART_UPDATING_HEALTH_HUD, PROC_REF(on_bodypart_hud_update))
 		RegisterSignal(picked, COMSIG_BODYPART_CHECKED_FOR_INJURY, PROC_REF(on_bodypart_checked))
 

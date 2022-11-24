@@ -354,7 +354,7 @@
 		addtimer(CALLBACK(vehicle, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard/, grind)), 2)
 	else
 		vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
-	rider.spin(4, 1)
+	rider.spin(spintime = 4, speed = 1)
 	animate(rider, pixel_y = -6, time = 4)
 	animate(vehicle, pixel_y = -6, time = 3)
 	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
@@ -363,6 +363,48 @@
 	rider.Move(landing_turf, vehicle_target.dir)
 	passtable_off(rider, VEHICLE_TRAIT)
 	vehicle.pass_flags &= ~PASSTABLE
+
+/datum/action/vehicle/ridden/scooter/skateboard/kickflip
+	name = "Kickflip"
+	desc = "Kick your board up and catch it."
+	button_icon_state = "skateboard_ollie"
+	check_flags = AB_CHECK_CONSCIOUS
+
+/datum/action/vehicle/ridden/scooter/skateboard/kickflip/Trigger(trigger_flags)
+	var/obj/vehicle/ridden/scooter/skateboard/board = vehicle_target
+	var/mob/living/rider = owner
+
+	rider.adjustStaminaLoss(board.instability)
+	if (rider.getStaminaLoss() >= 100)
+		playsound(src, 'sound/effects/bang.ogg', 20, vary = TRUE)
+		board.unbuckle_mob(rider)
+		rider.Paralyze(50)
+		if(prob(15))
+			rider.visible_message(
+				span_userdanger("You smack against the board, hard."),
+				span_danger("[rider] misses the landing and falls on [rider.p_their()] face!)"),
+			)
+			rider.emote("scream")
+			rider.adjustBruteLoss(10)  // thats gonna leave a mark
+			return
+		rider.visible_message(
+			span_userdanger("You fall flat onto the board!"),
+			span_danger("[rider] misses the landing and falls on [rider.p_their()] face!"),
+		)
+		return
+
+	rider.visible_message(
+		span_notice("[rider] does a sick kickflip and catches [rider.p_their()] board in midair."),
+		span_notice("You do a sick kickflip, catching the board in midair! Stylish."),
+	)
+	playsound(board, 'sound/vehicles/skateboard_ollie.ogg', 50, vary = TRUE)
+	rider.spin(spintime = 4, speed = 1)
+	animate(rider, pixel_y = -6, time = 0.4 SECONDS)
+	animate(board, pixel_y = -6, time = 0.3 SECONDS)
+	board.unbuckle_mob(rider)
+	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider), 1 SECONDS)  // so the board can still handle "picking it up"
+
+
 
 //VIM ACTION DATUMS
 

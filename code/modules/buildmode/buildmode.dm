@@ -152,11 +152,11 @@
 		if(istype(M.client.click_intercept,/datum/buildmode))
 			var/datum/buildmode/B = M.client.click_intercept
 			B.quit()
-			log_admin("[key_name(usr)] has left build mode.")
+			log_admin("[key_name(M)] has left build mode.")
 		else
 			new /datum/buildmode(M.client)
-			message_admins("[key_name_admin(usr)] has entered build mode.")
-			log_admin("[key_name(usr)] has entered build mode.")
+			message_admins("[key_name_admin(M)] has entered build mode.")
+			log_admin("[key_name(M)] has entered build mode.")
 
 #undef BM_SWITCHSTATE_NONE
 #undef BM_SWITCHSTATE_MODE

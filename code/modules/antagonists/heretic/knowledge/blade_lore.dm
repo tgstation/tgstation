@@ -12,6 +12,7 @@
  *
  * Mark of the Blade
  * Ritual of Knowledge
+ * Realignment
  * Stance of the Scarred Duelist
  * > Sidepaths:
  *   Carving Knife
@@ -49,10 +50,10 @@
 	cost = 1
 	route = PATH_BLADE
 
-/datum/heretic_knowledge/blade_grasp/on_gain(mob/user)
+/datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/blade_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/blade_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/blade_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -92,7 +93,7 @@
 	playsound(get_turf(target), 'sound/weapons/guillotine.ogg', 100, TRUE)
 
 /// The cooldown duration between trigers of blade dance
-#define BLADE_DANCE_COOLDOWN 20 SECONDS
+#define BLADE_DANCE_COOLDOWN (20 SECONDS)
 
 /datum/heretic_knowledge/blade_dance
 	name = "Dance of the Brand"
@@ -112,10 +113,10 @@
 	/// Used instead of cooldowns, so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
 
-/datum/heretic_knowledge/blade_dance/on_gain(mob/user)
+/datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_shield_reaction))
 
-/datum/heretic_knowledge/blade_dance/on_lose(mob/user)
+/datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
 
 /datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
@@ -201,12 +202,11 @@
 
 /datum/heretic_knowledge/mark/blade_mark/create_mark(mob/living/source, mob/living/target)
 	var/datum/status_effect/eldritch/blade/blade_mark = ..()
-	if(!istype(blade_mark))
-		return
-
-	var/area/to_lock_to = get_area(target)
-	blade_mark.locked_to = to_lock_to
-	to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+	if(istype(blade_mark))
+		var/area/to_lock_to = get_area(target)
+		blade_mark.locked_to = to_lock_to
+		to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+	return blade_mark
 
 /datum/heretic_knowledge/mark/blade_mark/trigger_mark(mob/living/source, mob/living/target)
 	. = ..()
@@ -215,7 +215,18 @@
 	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
 
 /datum/heretic_knowledge/knowledge_ritual/blade
+	next_knowledge = list(/datum/heretic_knowledge/spell/realignment)
+	route = PATH_BLADE
+
+/datum/heretic_knowledge/spell/realignment
+	name = "Realignment"
+	desc = "Grants you Realignment a spell that wil realign your body rapidly for a short period. \
+		During this process, you will rapidly regenerate stamina and stuns, however, you will be unable to attack. \
+		This spell can be casted in rapid succession, but doing so will increase the cooldown."
+	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
 	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
+	spell_to_add = /datum/action/cooldown/spell/realignment
+	cost = 1
 	route = PATH_BLADE
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
@@ -239,7 +250,7 @@
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 
-/datum/heretic_knowledge/duel_stance/on_gain(mob/user)
+/datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
 	RegisterSignal(user, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_wound_gain))
@@ -247,7 +258,7 @@
 
 	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
 
-/datum/heretic_knowledge/duel_stance/on_lose(mob/user)
+/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
 	if(in_duelist_stance)
 		REMOVE_TRAIT(user, TRAIT_HARDLY_WOUNDED, type)
@@ -298,6 +309,10 @@
 		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
+	/// How much force do we apply to the offhand?
+	var/offand_force_decrement = 0
+	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
+	var/last_weapon_force = -1
 
 /datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(target == source)
@@ -317,18 +332,36 @@
 /datum/heretic_knowledge/blade_upgrade/blade/proc/follow_up_attack(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(QDELETED(source) || QDELETED(target) || QDELETED(blade))
 		return
-	// Sanity to ensure that the blade we're delivering
-	// an offhand attack with is actually our offhand
+	// Sanity to ensure that the blade we're delivering an offhand attack with is ACTUALLY our offhand
 	if(blade != source.get_inactive_held_item())
 		return
+	// And we easily could've moved away
 	if(!source.Adjacent(target))
 		return
 
-	// Blade are 17 force: 17 + 17 = 34 (3 hits to crit, unarmored)
-	// So, -5 force is put on the offhand blade: 17 + 12 = 29 (4 hits to crit, unarmored)
-	blade.force -= 5
+	// Check if we need to recaclulate our offhand force
+	// This is just so we don't run this block every attack, that's wasteful
+	if(last_weapon_force != blade.force)
+		offand_force_decrement = 0
+		// We want to make sure that the offhand blade increases their hits to crit by one, just about
+		// So, let's do some quick math. Yes this'll be inaccurate if their mainhand blade is modified (whetstone), no I don't care
+		// Find how much force we need to detract from the second blade
+		var/hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2))
+		while(hits_to_crit_on_average <= 3) // 3 hits and beyond is a bit too absurd
+			if(offand_force_decrement + 2 > blade.force * 0.5) // But also cutting the force beyond half is absurd
+				break
+
+			offand_force_decrement += 2
+			hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2 - offand_force_decrement))
+
+	// Save the force as our last weapon force
+	last_weapon_force = blade.force
+	// Subtract the decrement
+	blade.force -= offand_force_decrement
+	// Perform the offhand attack
 	blade.melee_attack_chain(source, target)
-	blade.force += 5
+	// Restore the force.
+	blade.force = last_weapon_force
 
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"

@@ -1,6 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "Cleanbots properly prioritize adjacent trash"
-  - qol: "Cleanbots now clean floor under the tables"
-  - qol: "Cleanbots now clean more types of trash"
