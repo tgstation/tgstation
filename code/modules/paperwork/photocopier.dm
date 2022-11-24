@@ -246,7 +246,7 @@
 		if(!toner_cartridge) //someone removed the toner cartridge during printing lol.
 			break
 		if(attempt_charge(src, user) & COMPONENT_OBJ_CANCEL_CHARGE)
-			balloon_alert(user, "can't charge to ID!")
+			balloon_alert(user, "insufficient funds!")
 			break
 		addtimer(copy_cb, i SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(reset_busy)), i SECONDS)
