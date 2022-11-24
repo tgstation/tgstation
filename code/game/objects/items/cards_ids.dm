@@ -1303,6 +1303,11 @@
 	name = "mining ID"
 	trim = /datum/id_trim/job/shaft_miner/spare
 
+/obj/item/card/id/advanced/migrant
+	name = "Migrant ID"
+	trim = /datum/id_trim/job/migrant
+	// TODO let us name the job title with attackself()
+
 /obj/item/card/id/advanced/highlander
 	name = "highlander ID"
 	registered_name = "Highlander"
