@@ -30,10 +30,11 @@
 
 // since snowstorm is on a station z level, add extra checks to not annoy everyone
 /datum/weather/snow_storm/can_get_alert(mob/player)
-	var/standard_check = ..()
-	// dont bother checking if theyre not on the station or wouldnt be able to see the alert anyways
-	if(!standard_check || !is_station_level(player.z))
-		return standard_check
+	if(!..())
+		return FALSE
+
+	if(!is_station_level(player.z))
+		return TRUE  // bypass checks
 
 	if(isobserver(player))
 		return TRUE
