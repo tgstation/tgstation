@@ -12,6 +12,7 @@
  *
  * Mark of Void
  * Ritual of Knowledge
+ * Cone of Cold
  * Void Phase
  * > Sidepaths:
  *   Carving Knife
@@ -37,11 +38,6 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	route = PATH_VOID
 
-/datum/heretic_knowledge/limited_amount/starting/base_void/on_research(mob/user)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
 		loc.balloon_alert(user, "ritual failed, invalid location!")
@@ -63,10 +59,10 @@
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/void_grasp/on_gain(mob/user)
+/datum/heretic_knowledge/void_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/void_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/void_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/void_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -94,11 +90,11 @@
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/cold_snap/on_gain(mob/user)
+/datum/heretic_knowledge/cold_snap/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
 	ADD_TRAIT(user, TRAIT_NOBREATH, type)
 
-/datum/heretic_knowledge/cold_snap/on_lose(mob/user)
+/datum/heretic_knowledge/cold_snap/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
 	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
 
@@ -113,15 +109,26 @@
 	mark_type = /datum/status_effect/eldritch/void
 
 /datum/heretic_knowledge/knowledge_ritual/void
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_cone)
+	route = PATH_VOID
+
+/datum/heretic_knowledge/spell/void_cone
+	name = "Void Blast"
+	desc = "Grants you Void Blast, a spell that shoots out a freezing blast in a code ahead of you, \
+		freezing the ground and any victims within."
+	gain_text = "Every door I open racks my body. I am afraid of what is behind them. Someone is expecting me, \
+		and my legs start to drag. Is that... snow?"
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
+	spell_to_add = /datum/action/cooldown/spell/cone/staggered/cone_of_cold/void
+	cost = 1
 	route = PATH_VOID
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
 	desc = "Grants you Void Phase, a long range targeted teleport spell. \
 		Additionally causes damage to heathens around your original and target destination."
-	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like\
-		nothing leaving a harsh, cold breeze in their wake. They disappear, and I am left in the snow."
+	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
+		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/void,
 		/datum/heretic_knowledge/reroll_targets,
@@ -204,9 +211,9 @@
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
-/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user)
+/datum/heretic_knowledge/ultimate/void_final/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	on_death() // Losing is pretty much dying. I think
-	RegisterSignal(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
+	RegisterSignals(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].
@@ -243,7 +250,7 @@
  *
  * Stop the storm when the heretic passes away.
  */
-/datum/heretic_knowledge/ultimate/void_final/proc/on_death()
+/datum/heretic_knowledge/ultimate/void_final/proc/on_death(datum/source)
 	SIGNAL_HANDLER
 
 	if(sound_loop)

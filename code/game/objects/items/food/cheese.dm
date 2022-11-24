@@ -67,7 +67,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	rat_heal = 35
 
-/obj/item/food/curd_cheese/make_microwavable()
+/obj/item/food/cheese/curd_cheese/make_microwavable()
 	AddElement(/datum/element/microwavable, /obj/item/food/cheese/cheese_curds)
 
 /obj/item/food/cheese/cheese_curds

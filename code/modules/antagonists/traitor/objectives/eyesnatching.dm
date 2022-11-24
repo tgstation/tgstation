@@ -105,7 +105,7 @@
 	replace_in_name("%TARGET%", victim_mind.name)
 	replace_in_name("%JOB TITLE%", victim_mind.assigned_role.title)
 	RegisterSignal(victim, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_eye_removal))
-	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = COMSIG_PARENT_QDELETING)
+	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = list(COMSIG_PARENT_QDELETING))
 	return TRUE
 
 /datum/traitor_objective/eyesnatching/proc/check_eye_removal(datum/source, obj/item/organ/internal/eyes/removed)

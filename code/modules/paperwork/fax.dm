@@ -38,11 +38,13 @@
 	var/static/list/exotic_types = list(
 		/obj/item/food/pizzaslice,
 		/obj/item/food/root_flatbread,
+		/obj/item/food/pizza/flatbread,
+		/obj/item/food/breadslice,
 		/obj/item/food/salami,
 		/obj/item/throwing_star,
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
-		/obj/item/card
+		/obj/item/card,
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
