@@ -1,22 +1,19 @@
 /datum/component/supermatter_glow
-/// The current light colour. Default is the nice yellow!
+	/// The current light colour. Default is the nice yellow!
 	var/light_color = SUPERMATTER_COLOUR
-/// Typecasted reference to our supermatter(parent)
-	var/obj/machinery/power/supermatter_crystal/our_supermatter
-/// Just in case a bug gets introduced later on, let's not crash people!
+	/// BYOND has a limit to animations before a crash occurs, so we don't want to spam our animation loop constantly.
 	var/loop_started = FALSE
 
 /datum/component/supermatter_glow/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_SUPERMATTER_PROCESS_ATMOS, .proc/update_effects) // When we are added, we listen for this signal and send the proc.
-	our_supermatter = parent // typecast our parent
 
 /datum/component/supermatter_glow/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_SUPERMATTER_PROCESS_ATMOS)
-	our_supermatter = null // no hard del 4 u
 
 /// This proc builds a list of effects to apply to the supermatter based on it's contexts.
 /datum/component/supermatter_glow/proc/update_effects()
 	SIGNAL_HANDLER
+	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // typecast our parent
 	var/list/filters_to_add = list() // List to apply later.
 /** You might be wondering what this does. We're building a list. Filters are an array, right. The first will over-write the first when reapplied..
 * However, they do not remove animate() from the entry in the array UNLESS it was deleted entirely.
@@ -92,6 +89,7 @@
 
 /// Evaluation proc to determine which special effect the supermatter filters will use. Two included in the box!
 /datum/component/supermatter_glow/proc/check_special_delamination() // In priority of devastation.
+	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent
 
 	if(our_supermatter.absorbed_gasmix.total_moles() > MOLE_PENALTY_THRESHOLD)// Singularity
 		return SINGULARITY_DELAMINATION
