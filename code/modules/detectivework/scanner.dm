@@ -10,8 +10,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
@@ -31,30 +31,35 @@
 		scanner.displayDetectiveScanResults(usr)
 
 /obj/item/detective_scanner/attack_self(mob/user)
-	if(log.len && !scanning)
-		scanning = TRUE
-		to_chat(user, span_notice("Printing report, please wait..."))
-		addtimer(CALLBACK(src, .proc/PrintReport), 100)
-	else
-		to_chat(user, span_notice("The scanner has no logs or is in use."))
+	if(!LAZYLEN(log))
+		balloon_alert(user, "no logs!")
+		return
+	if(scanning)
+		balloon_alert(user, "scanner busy!")
+		return
+	scanning = TRUE
+	balloon_alert(user, "printing report...")
+	addtimer(CALLBACK(src, PROC_REF(PrintReport)), 10 SECONDS)
 
 /obj/item/detective_scanner/proc/PrintReport()
 	// Create our paper
-	var/obj/item/paper/P = new(get_turf(src))
+	var/obj/item/paper/report_paper = new(get_turf(src))
 
 	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
 	var/frNum = ++forensicPrintCount
 
-	P.name = text("FR-[] 'Forensic Record'", frNum)
-	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
-	P.info += jointext(log, "<BR>")
-	P.info += "<HR><B>Notes:</B><BR>"
-	P.update_appearance()
+	report_paper.name = text("FR-[] 'Forensic Record'", frNum)
+	var/report_text = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
+	report_text += jointext(log, "<BR>")
+	report_text += "<HR><B>Notes:</B><BR>"
+
+	report_paper.add_raw_text(report_text)
+	report_paper.update_appearance()
 
 	if(ismob(loc))
-		var/mob/M = loc
-		M.put_in_hands(P)
-		to_chat(M, span_notice("Report printed. Log cleared."))
+		var/mob/printer = loc
+		printer.put_in_hands(report_paper)
+		balloon_alert(printer, "logs cleared")
 
 	// Clear the logs
 	log = list()
@@ -78,7 +83,10 @@
 
 		scanning = TRUE
 
-		user.visible_message(span_notice("\The [user] points the [src.name] at \the [A] and performs a forensic scan."))
+		user.visible_message(
+			span_notice("\The [user] points the [src.name] at \the [A] and performs a forensic scan."),
+			ignored_mobs = user
+		)
 		to_chat(user, span_notice("You scan \the [A]. The scanner is now analysing the results..."))
 
 
@@ -126,7 +134,7 @@
 
 		// Fingerprints
 		if(length(fingerprints))
-			sleep(30)
+			sleep(3 SECONDS)
 			add_log(span_info("<B>Prints:</B>"))
 			for(var/finger in fingerprints)
 				add_log("[finger]")
@@ -134,7 +142,7 @@
 
 		// Blood
 		if (length(blood))
-			sleep(30)
+			sleep(3 SECONDS)
 			add_log(span_info("<B>Blood:</B>"))
 			found_something = TRUE
 			for(var/B in blood)
@@ -142,7 +150,7 @@
 
 		//Fibers
 		if(length(fibers))
-			sleep(30)
+			sleep(3 SECONDS)
 			add_log(span_info("<B>Fibers:</B>"))
 			for(var/fiber in fibers)
 				add_log("[fiber]")
@@ -150,7 +158,7 @@
 
 		//Reagents
 		if(length(reagents))
-			sleep(30)
+			sleep(3 SECONDS)
 			add_log(span_info("<B>Reagents:</B>"))
 			for(var/R in reagents)
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
@@ -176,8 +184,8 @@
 /obj/item/detective_scanner/proc/add_log(msg, broadcast = 1)
 	if(scanning)
 		if(broadcast && ismob(loc))
-			var/mob/M = loc
-			to_chat(M, msg)
+			var/mob/logger = loc
+			to_chat(logger, msg)
 		log += "&nbsp;&nbsp;[msg]"
 	else
 		CRASH("[src] [REF(src)] is adding a log when it was never put in scanning mode!")
@@ -190,13 +198,15 @@
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return
 	if(!LAZYLEN(log))
-		to_chat(user, span_notice("Cannot clear logs, the scanner has no logs."))
+		balloon_alert(user, "no logs!")
 		return
 	if(scanning)
-		to_chat(user, span_notice("Cannot clear logs, the scanner is in use."))
+		balloon_alert(user, "scanner busy!")
 		return
-	to_chat(user, span_notice("The scanner logs are cleared."))
-	log = list()
+	balloon_alert(user, "deleting logs...")
+	if(do_after(user, 3 SECONDS, target = src))
+		balloon_alert(user, "logs cleared")
+		log = list()
 
 /obj/item/detective_scanner/examine(mob/user)
 	. = ..()
@@ -206,10 +216,10 @@
 /obj/item/detective_scanner/proc/displayDetectiveScanResults(mob/living/user)
 	// No need for can-use checks since the action button should do proper checks
 	if(!LAZYLEN(log))
-		to_chat(user, span_notice("Cannot display logs, the scanner has no logs."))
+		balloon_alert(user, "no logs!")
 		return
 	if(scanning)
-		to_chat(user, span_notice("Cannot display logs, the scanner is in use."))
+		balloon_alert(user, "scanner busy!")
 		return
 	to_chat(user, span_notice("<B>Scanner Report</B>"))
 	for(var/iterLog in log)

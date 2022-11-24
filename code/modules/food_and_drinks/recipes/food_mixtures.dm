@@ -2,6 +2,9 @@
 	var/real_parts
 	category = CAT_FOOD
 
+/datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
+	ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user))
+
 /datum/crafting_recipe/food/New()
 	real_parts = parts.Copy()
 	parts |= reqs
@@ -22,6 +25,17 @@
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
 	mob_react = FALSE
 	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/candycorn
+	required_reagents = list(/datum/reagent/consumable/cornoil = 5)
+	required_catalysts = list(/datum/reagent/consumable/sugar = 5)
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/candycorn/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		new /obj/item/food/candy_corn(location)
 
 /datum/chemical_reaction/food/tofu/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -161,7 +175,7 @@
 
 /datum/chemical_reaction/food/ricebowl
 	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)
-	required_container = /obj/item/reagent_containers/glass/bowl
+	required_container = /obj/item/reagent_containers/cup/bowl
 	mix_message = "The rice absorbs the water."
 	reaction_flags = REACTION_INSTANT
 

@@ -8,9 +8,13 @@
 	taste_description = "bitterness"
 	taste_mult = 1.2
 	harmful = TRUE
-	var/toxpwr = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
+	///How much damage this toxin does
+	var/toxpwr = 1.5
+	///won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present if true
+	var/silent_toxin = FALSE
+	///The afflicted must be above this health value in order for the toxin to deal damage
+	var/health_required = -100
 
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -19,7 +23,7 @@
 		mytray.adjust_toxic(round(chems.get_reagent_amount(type) * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(toxpwr)
+	if(toxpwr && M.health > health_required)
 		M.adjustToxLoss(toxpwr * REM * normalise_creation_purity() * delta_time, 0)
 		. = TRUE
 	..()
@@ -69,6 +73,7 @@
 		mytray.adjust_toxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define LIQUID_PLASMA_BP (50+T0C)
+#define LIQUID_PLASMA_IG (325+T0C)
 
 /datum/reagent/toxin/plasma
 	name = "Plasma"
@@ -87,7 +92,7 @@
 
 /datum/reagent/toxin/plasma/on_new(data)
 	. = ..()
-	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, .proc/on_temp_change)
+	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(on_temp_change))
 
 /datum/reagent/toxin/plasma/Destroy()
 	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
@@ -106,7 +111,8 @@
 		return
 	if(!holder.my_atom)
 		return
-
+	if((holder.flags & SEALED_CONTAINER) && (holder.chem_temp < LIQUID_PLASMA_IG))
+		return
 	var/atom/A = holder.my_atom
 	A.atmos_spawn_air("plasma=[volume];TEMP=[holder.chem_temp]")
 	holder.del_reagent(type)
@@ -170,6 +176,16 @@
 			C.emote("gasp")
 	..()
 
+/datum/reagent/toxin/lexorin/on_mob_metabolize(mob/living/L)
+	RegisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
+
+/datum/reagent/toxin/lexorin/on_mob_end_metabolize(mob/living/L)
+	UnregisterSignal(L, COMSIG_CARBON_ATTEMPT_BREATHE, PROC_REF(block_breath))
+
+/datum/reagent/toxin/lexorin/proc/block_breath(mob/living/source)
+	SIGNAL_HANDLER
+	return COMSIG_CARBON_BLOCK_BREATH
+
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
@@ -201,6 +217,7 @@
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(HAS_TRAIT(M, TRAIT_FAT))
+		M.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
 		M.inflate_gib()
 	return ..()
 
@@ -252,9 +269,9 @@
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
-			M.adjust_timed_status_effect(1 SECONDS * REM * delta_time, /datum/status_effect/confusion)
+			M.adjust_confusion(1 SECONDS * REM * delta_time)
 			M.adjust_drowsyness(1 * REM * delta_time)
-			M.adjust_timed_status_effect(6 SECONDS * REM * delta_time, /datum/status_effect/speech/slurring/drunk)
+			M.adjust_slurring(6 SECONDS * REM * delta_time)
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
 		if(9 to INFINITY)
@@ -296,16 +313,27 @@
 	creation_purity = REAGENT_STANDARD_PURITY
 	purity = REAGENT_STANDARD_PURITY
 	ph = 11
-	impure_chem = /datum/reagent/impurity/rosenol
-	inverse_chem = null
+	inverse_chem = /datum/reagent/impurity/rosenol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 18)  //7.2 per 2 seconds
 
-/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(HAS_TRAIT(M, TRAIT_INSANITY))
-		M.hallucination = 0
+
+/datum/reagent/toxin/mindbreaker/on_mob_metabolize(mob/living/metabolizer)
+	. = ..()
+	ADD_TRAIT(metabolizer, TRAIT_RDS_SUPPRESSED, type)
+
+/datum/reagent/toxin/mindbreaker/on_mob_end_metabolize(mob/living/metabolizer)
+	. = ..()
+	REMOVE_TRAIT(metabolizer, TRAIT_RDS_SUPPRESSED, type)
+
+/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
+	// mindbreaker toxin assuages hallucinations in those plagued with it, mentally
+	if(metabolizer.has_trauma_type(/datum/brain_trauma/mild/hallucinations))
+		metabolizer.remove_status_effect(/datum/status_effect/hallucination)
+
+	// otherwise it creates hallucinations. truly a miracle medicine.
 	else
-		M.hallucination += 5 * REM * delta_time
+		metabolizer.adjust_hallucinations(10 SECONDS * REM * delta_time)
 
 	return ..()
 
@@ -440,13 +468,13 @@
 	toxpwr = 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	ph = 11
-	impure_chem = /datum/reagent/impurity/chloralax
+	inverse_chem = /datum/reagent/impurity/chloralax
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	switch(current_cycle)
 		if(1 to 10)
-			M.adjust_timed_status_effect(2 SECONDS * REM * normalise_creation_purity() * delta_time, /datum/status_effect/confusion)
+			M.adjust_confusion(2 SECONDS * REM * normalise_creation_purity() * delta_time)
 			M.adjust_drowsyness(2 * REM * normalise_creation_purity() * delta_time)
 		if(10 to 50)
 			M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
@@ -458,7 +486,7 @@
 	..()
 
 /datum/reagent/toxin/fakebeer //disguised as normal beer for use by emagged brobots
-	name = "Beer...?"
+	name = "B33r"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -520,7 +548,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.silent = max(M.silent, 3 * REM * normalise_creation_purity() * delta_time)
+	// Gain approximately 12 seconds * creation purity seconds of silence every metabolism tick.
+	M.set_silence_if_lower(6 SECONDS * REM * normalise_creation_purity() * delta_time)
 	..()
 
 /datum/reagent/toxin/staminatoxin
@@ -601,7 +630,7 @@
 	purity = REAGENT_STANDARD_PURITY
 	toxpwr = 1
 	ph = 2.0
-	impure_chem = /datum/reagent/impurity/methanol
+	inverse_chem = /datum/reagent/impurity/methanol
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/formaldehyde/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -661,7 +690,7 @@
 	if(M.toxloss <= 60)
 		M.adjustToxLoss(1 * REM * normalise_creation_purity() * delta_time, 0)
 	if(current_cycle >= 4)
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smacked out", /datum/mood_event/narcotic_heavy, name)
+		M.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
 	if(current_cycle >= 18)
 		M.Sleeping(40 * REM * normalise_creation_purity() * delta_time)
 	..()
@@ -857,7 +886,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	toxpwr = 0
 	ph = 6
-	impure_chem = /datum/reagent/impurity/ipecacide
+	inverse_chem = /datum/reagent/impurity/ipecacide
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -964,16 +993,16 @@
 			var/atom/movable/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 			var/rotation = min(round(current_cycle/20), 89) // By this point the player is probably puking and quitting anyway
-			for(var/key in pm_controller.controlled_planes)
-				animate(pm_controller.controlled_planes[key], transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
+			for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
+				animate(plane, transform = matrix(rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING, loop = -1)
 				animate(transform = matrix(-rotation, MATRIX_ROTATE), time = 5, easing = QUAD_EASING)
 	return ..()
 
 /datum/reagent/toxin/rotatium/on_mob_end_metabolize(mob/living/M)
 	if(M?.hud_used)
 		var/atom/movable/plane_master_controller/pm_controller = M.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-		for(var/key in pm_controller.controlled_planes)
-			animate(pm_controller.controlled_planes[key], transform = matrix(), time = 5, easing = QUAD_EASING)
+		for(var/atom/movable/screen/plane_master/plane as anything in pm_controller.get_planes())
+			animate(plane, transform = matrix(), time = 5, easing = QUAD_EASING)
 	..()
 
 /datum/reagent/toxin/anacea
@@ -1183,7 +1212,7 @@
 	var/mob_dizziness = M.get_timed_status_effect_duration(/datum/status_effect/confusion)
 	if(mob_dizziness > 0)
 		// Gain confusion equal to about half the duration of our current dizziness
-		M.set_timed_status_effect(mob_dizziness / 2, /datum/status_effect/confusion)
+		M.set_confusion(mob_dizziness / 2)
 
 	if(current_cycle >= 12 && DT_PROB(4, delta_time))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
@@ -1206,5 +1235,20 @@
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time)
 	if(DT_PROB(0.5, delta_time))
 		to_chat(M, span_notice("Ah, what was that? You thought you heard something..."))
-		M.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
+		M.adjust_confusion(5 SECONDS)
+	return ..()
+
+/datum/reagent/toxin/hunterspider
+	name = "Spider Toxin"
+	description = "A toxic chemical produced by spiders to weaken prey."
+	health_required = 40
+
+/datum/reagent/toxin/viperspider
+	name = "Viper Spider Toxin"
+	toxpwr = 5
+	description = "An extremely toxic chemical produced by the rare viper spider. Brings their prey to the brink of death and causes hallucinations."
+	health_required = 10
+
+/datum/reagent/toxin/viperspider/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_hallucinations(10 SECONDS * REM * delta_time)
 	return ..()

@@ -5,7 +5,7 @@
 	health = 150
 	desc = "I wonder what they'll order..."
 	gender = NEUTER
-	icon = 'icons/mob/tourists.dmi'
+	icon = 'icons/mob/simple/tourists.dmi'
 	icon_state = "amerifat"
 	icon_living = "amerifat"
 	///Override so it uses datum ai
@@ -85,7 +85,7 @@
 	if(bonus_overlays)
 		. += bonus_overlays
 
-/mob/living/simple_animal/robot_customer/send_speech(message, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods)
+/mob/living/simple_animal/robot_customer/send_speech(message, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced)
 	. = ..()
 	var/datum/customer_data/customer_info = ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	playsound(src, customer_info.speech_sound, 30, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE, falloff_distance = 5)

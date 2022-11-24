@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	var/stl = CONFIG_GET(number/second_topic_limit)
-	if (!holder && stl)
+	if (!holder && stl && href_list["window_id"] != "statbrowser")
 		var/second = round(world.time, 10)
 		if (!topiclimiter)
 			topiclimiter = new(LIMITER_SIZE)
@@ -124,7 +124,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(QDELETED(real_src))
 			return
 
+	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
+	//overloaded
+	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_Topic), hsrc, href, href_list)))
+		return
 	..() //redirect to hsrc.Topic()
+
+///dumb workaround because byond doesnt seem to recognize the Topic() typepath for /datum/proc/Topic() from the client Topic,
+///so we cant queue it without this
+/client/proc/_Topic(datum/hsrc, href, list/href_list)
+	return hsrc.Topic(href, href_list)
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
@@ -214,7 +223,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	// Instantiate stat panel
 	stat_panel = new(src, "statbrowser")
-	stat_panel.subscribe(src, .proc/on_stat_panel_message)
+	stat_panel.subscribe(src, PROC_REF(on_stat_panel_message))
 
 	// Instantiate tgui panel
 	tgui_panel = new(src, "browseroutput")
@@ -350,7 +359,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		inline_js = file("html/statbrowser.js"),
 		inline_css = file("html/statbrowser.css"),
 	)
-	addtimer(CALLBACK(src, .proc/check_panel_loaded), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(check_panel_loaded)), 30 SECONDS)
 
 	// Initialize tgui panel
 	tgui_panel.initialize()
@@ -461,10 +470,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 	validate_key_in_db()
+	// If we aren't already generating a ban cache, fire off a build request
+	// This way hopefully any users of request_ban_cache will never need to yield
+	if(!ban_cache_start && SSban_cache?.query_started)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(build_ban_cache), src)
 
 	send_resources()
 
-	generate_clickcatcher()
 	apply_clickcatcher()
 
 	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
@@ -532,6 +544,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	SSserver_maint.UpdateHubStatus()
 	if(credits)
 		QDEL_LIST(credits)
+	if(obj_window)
+		QDEL_NULL(obj_window)
 	if(holder)
 		adminGreet(1)
 		holder.owner = null
@@ -619,9 +633,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if(!CONFIG_GET(flag/panic_bunker_interview))
 			// If we don't have panic_bunker_living set and the client is not in the DB, reject them.
 			// Otherwise, if we do have a panic_bunker_living set, check if they have enough minutes played.
-			if((!living_recs && !client_is_in_db) || living_recs >= minutes)
+			if((living_recs == 0 && !client_is_in_db) || living_recs >= minutes)
 				var/reject_message = "Failed Login: [key] - [client_is_in_db ? "":"New "]Account attempting to connect during panic bunker, but\
-					[living_recs == -1 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
+					[living_recs == 0 ? " was rejected due to no prior connections to game servers (no database entry)":" they do not have the required living time [minutes]/[living_recs]"]."
 				log_access(reject_message)
 				message_admins(span_adminnotice("[reject_message]"))
 				var/message = CONFIG_GET(string/panic_bunker_message)
@@ -883,6 +897,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.
 			return
 		click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
+
 	var/ab = FALSE
 	var/list/modifiers = params2list(params)
 
@@ -896,12 +911,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/mcl = CONFIG_GET(number/minute_click_limit)
 	if (!holder && mcl)
 		var/minute = round(world.time, 600)
+
 		if (!clicklimiter)
 			clicklimiter = new(LIMITER_SIZE)
+
 		if (minute != clicklimiter[CURRENT_MINUTE])
 			clicklimiter[CURRENT_MINUTE] = minute
 			clicklimiter[MINUTE_COUNT] = 0
-		clicklimiter[MINUTE_COUNT] += 1+(ab)
+
+		clicklimiter[MINUTE_COUNT] += 1 + (ab)
+
 		if (clicklimiter[MINUTE_COUNT] > mcl)
 			var/msg = "Your previous click was ignored because you've done too many in a minute."
 			if (minute != clicklimiter[ADMINSWARNED_AT]) //only one admin message per-minute. (if they spam the admins can just boot/ban them)
@@ -922,13 +941,21 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		var/second = round(world.time, 10)
 		if (!clicklimiter)
 			clicklimiter = new(LIMITER_SIZE)
+
 		if (second != clicklimiter[CURRENT_SECOND])
 			clicklimiter[CURRENT_SECOND] = second
 			clicklimiter[SECOND_COUNT] = 0
-		clicklimiter[SECOND_COUNT] += 1+(!!ab)
+
+		clicklimiter[SECOND_COUNT] += 1 + (!!ab)
+
 		if (clicklimiter[SECOND_COUNT] > scl)
 			to_chat(src, span_danger("Your previous click was ignored because you've done too many in a second"))
 			return
+
+	//check if the server is overloaded and if it is then queue up the click for next tick
+	//yes having it call a wrapping proc on the subsystem is fucking stupid glad we agree unfortunately byond insists its reasonable
+	if(!QDELETED(object) && TRY_QUEUE_VERB(VERB_CALLBACK(object, TYPE_PROC_REF(/atom, _Click), location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
+		return
 
 	if (hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
@@ -977,7 +1004,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		if (CONFIG_GET(flag/asset_simple_preload))
-			addtimer(CALLBACK(SSassets.transport, /datum/asset_transport.proc/send_assets_slow, src, SSassets.transport.preload), 5 SECONDS)
+			addtimer(CALLBACK(SSassets.transport, TYPE_PROC_REF(/datum/asset_transport, send_assets_slow), src, SSassets.transport.preload), 5 SECONDS)
 
 		#if (PRELOAD_RSC == 0)
 		for (var/name in GLOB.vox_sounds)
@@ -1008,6 +1035,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/rescale_view(change, min, max)
 	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
+/client/proc/set_eye(new_eye)
+	if(new_eye == eye)
+		return
+	var/atom/old_eye = eye
+	eye = new_eye
+	SEND_SIGNAL(src, COMSIG_CLIENT_SET_EYE, old_eye, new_eye)
 /**
  * Updates the keybinds for special keys
  *
@@ -1063,6 +1096,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /client/proc/generate_clickcatcher()
 	if(!void)
 		void = new()
+	if(!(void in screen))
 		screen += void
 
 /client/proc/apply_clickcatcher()
@@ -1147,6 +1181,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		holder.filteriffic = new /datum/filter_editor(in_atom)
 		holder.filteriffic.ui_interact(mob)
 
+///opens the particle editor UI for the in_atom object for this client
+/client/proc/open_particle_editor(atom/movable/in_atom)
+	if(holder)
+		holder.particle_test = new /datum/particle_editor(in_atom)
+		holder.particle_test.ui_interact(mob)
+
 /client/proc/set_right_click_menu_mode(shift_only)
 	if(shift_only)
 		winset(src, "mapwindow.map", "right-click=true")
@@ -1158,7 +1198,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		winset(src, "default.ShiftUp", "is-disabled=true")
 
 /client/proc/update_ambience_pref()
-	if(prefs.toggles & SOUND_AMBIENCE)
+	if(prefs.read_preference(/datum/preference/toggle/sound_ambience))
 		if(SSambience.ambience_listening_clients[src] > world.time)
 			return // If already properly set we don't want to reset the timer.
 		SSambience.ambience_listening_clients[src] = world.time + 10 SECONDS //Just wait 10 seconds before the next one aight mate? cheers.

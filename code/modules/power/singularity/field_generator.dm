@@ -46,9 +46,9 @@ no power level overlay is currently in the overlays list.
 	///Timer between 0 and 3 before the field gets made
 	var/warming_up = 0
 	///List of every containment fields connected to this generator
-	var/list/obj/machinery/field/containment/fields
+	var/list/obj/machinery/field/containment/fields = list()
 	///List of every field generators connected to this one
-	var/list/obj/machinery/field/generator/connected_gens
+	var/list/obj/machinery/field/generator/connected_gens = list()
 	///Check for asynk cleanups for this and the connected gens
 	var/clean_up = FALSE
 
@@ -64,17 +64,12 @@ no power level overlay is currently in the overlays list.
 
 /obj/machinery/field/generator/Initialize(mapload)
 	. = ..()
-	fields = list()
-	connected_gens = list()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 
 /obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
-
-/obj/machinery/field/generator/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)
@@ -201,8 +196,8 @@ no power level overlay is currently in the overlays list.
 	active = FG_OFFLINE
 	can_atmos_pass = ATMOS_PASS_YES
 	air_update_turf(TRUE, FALSE)
-	INVOKE_ASYNC(src, .proc/cleanup)
-	addtimer(CALLBACK(src, .proc/cool_down), 5 SECONDS)
+	INVOKE_ASYNC(src, PROC_REF(cleanup))
+	addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/cool_down()
 	if(active || warming_up <= 0)
@@ -210,11 +205,11 @@ no power level overlay is currently in the overlays list.
 	warming_up--
 	update_appearance()
 	if(warming_up > 0)
-		addtimer(CALLBACK(src, .proc/cool_down), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(cool_down)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/turn_on()
 	active = FG_CHARGING
-	addtimer(CALLBACK(src, .proc/warm_up), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(warm_up)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/warm_up()
 	if(!active)
@@ -224,7 +219,7 @@ no power level overlay is currently in the overlays list.
 	if(warming_up >= 3)
 		start_fields()
 	else
-		addtimer(CALLBACK(src, .proc/warm_up), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(warm_up)), 5 SECONDS)
 
 /obj/machinery/field/generator/proc/calc_power(set_power_draw)
 	var/power_draw = 2 + fields.len
@@ -277,10 +272,10 @@ no power level overlay is currently in the overlays list.
 	move_resist = INFINITY
 	can_atmos_pass = ATMOS_PASS_NO
 	air_update_turf(TRUE, TRUE)
-	addtimer(CALLBACK(src, .proc/setup_field, 1), 1)
-	addtimer(CALLBACK(src, .proc/setup_field, 2), 2)
-	addtimer(CALLBACK(src, .proc/setup_field, 4), 3)
-	addtimer(CALLBACK(src, .proc/setup_field, 8), 4)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 1), 1)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 2), 2)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 4), 3)
+	addtimer(CALLBACK(src, PROC_REF(setup_field), 8), 4)
 	addtimer(VARSET_CALLBACK(src, active, FG_ONLINE), 5)
 
 /obj/machinery/field/generator/proc/setup_field(NSEW)

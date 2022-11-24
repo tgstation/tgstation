@@ -55,7 +55,7 @@
 //******Modular Computer Bounties******
 /datum/bounty/item/science/ntnet
 	name = "Modular Tablets"
-	description = "Turns out that NTNet wasn't actually a fad afterall, who knew. Ship us some fully constructed tablets and send it turned on."
+	description = "Turns out that NTNet wasn't actually a fad afterall, who knew. Fully construct some tablets and send them powered on."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 4
 	wanted_types = list(/obj/item/modular_computer/tablet = TRUE)
@@ -72,14 +72,14 @@
 
 /datum/bounty/item/science/ntnet/laptops
 	name = "Modular Laptops"
-	description = "Central command brass need something more powerful than a tablet, but more portable than a console. Help these old fogeys out by shipping us some working laptops. Send it turned on."
+	description = "Central command brass need something more powerful than a tablet, but more portable than a console. Help these old fogeys out by shipping us some working laptops. Send them turned on."
 	reward = CARGO_CRATE_VALUE * 3
 	required_count = 2
 	wanted_types = list(/obj/item/modular_computer/laptop = TRUE)
 
 /datum/bounty/item/science/ntnet/console
 	name = "Modular Computer Console"
-	description = "Our big data devision needs more powerful hardware to play 'Outbomb Cuban Pe-', err, to closely monitor threats in your sector. Send us a working modular computer console."
+	description = "Our big data division needs more powerful hardware to play 'Outbomb Cuban Pe-', err, to closely monitor threats in your sector. Send us a working modular computer console."
 	reward = CARGO_CRATE_VALUE * 6
 	required_count = 1
 	wanted_types = list(/obj/machinery/modular_computer/console = TRUE)
@@ -97,7 +97,7 @@
 //******Anomaly Cores******
 /datum/bounty/item/science/ref_anomaly
 	name = "Refined Bluespace Core"
-	description = "We need a bluespace core to fit in a Phazon, ship us one, please."
+	description = "We need a bluespace core to fit in a Phazon. Ship us one, please."
 	reward = CARGO_CRATE_VALUE * 20
 	wanted_types = list(/obj/item/assembly/signaler/anomaly/bluespace = TRUE)
 
@@ -109,7 +109,7 @@
 
 /datum/bounty/item/science/ref_anomaly/flux
 	name = "Refined Flux Core"
-	description = "We're trying to make a tesla cannon to handle some moths, ship us a flux core, please."
+	description = "We're trying to make a tesla cannon to handle some moths. Ship us a flux core, please."
 	wanted_types = list(/obj/item/assembly/signaler/anomaly/flux = TRUE)
 
 /datum/bounty/item/science/ref_anomaly/pyro
@@ -136,3 +136,8 @@
 	name = "Refined Bioscrambler Core"
 	description = "Our janitor lizard lost all their limbs, send us a bioscrambler core to replace them."
 	wanted_types = list(/obj/item/assembly/signaler/anomaly/bioscrambler = TRUE)
+
+/datum/bounty/item/science/ref_anomaly/dimensional
+	name = "Refined Dimensional Core"
+	description = "We're trying to save money on our annual renovations at CentCom. Send us a dimensional core."
+	wanted_types = list(/obj/item/assembly/signaler/anomaly/dimensional = TRUE)

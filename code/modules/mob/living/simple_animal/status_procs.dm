@@ -1,7 +1,4 @@
 
-/mob/living/simple_animal/blind_eyes()
-	return
-
 /mob/living/simple_animal/adjust_blindness()
 	return
 

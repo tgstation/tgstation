@@ -16,12 +16,11 @@
 	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
 
 /datum/brain_trauma/Destroy()
-	if(brain?.traumas)
-		brain.traumas -= src
+	// Handles our references with our brain
+	brain?.remove_trauma_from_traumas(src)
 	if(owner)
 		on_lose()
-	brain = null
-	owner = null
+		owner = null
 	return ..()
 
 //Called on life ticks
@@ -36,8 +35,8 @@
 /datum/brain_trauma/proc/on_gain()
 	if(gain_text)
 		to_chat(owner, gain_text)
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(handle_hearing))
 
 //Called when removed from a mob
 /datum/brain_trauma/proc/on_lose(silent)

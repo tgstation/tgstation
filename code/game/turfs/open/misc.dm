@@ -16,7 +16,7 @@
 
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN)
-	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
+	canSmoothWith = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
@@ -141,6 +141,7 @@
 				new_airlock.req_access = new_airlock.electronics.accesses
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
+				new_airlock.unres_sensor = TRUE
 			if(new_airlock.electronics.passed_name)
 				new_airlock.name = sanitize(new_airlock.electronics.passed_name)
 			if(new_airlock.electronics.passed_cycle_id)

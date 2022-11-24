@@ -170,12 +170,8 @@
 		/datum/reagent/consumable/korta_milk = 10,
 		/obj/item/food/grown/berries = 5
 	)
-	result = /obj/item/food/cake/pavlova
+	result = /obj/item/food/cake/pavlova/nuts
 	subcategory = CAT_CAKE
-
-/datum/crafting_recipe/food/pavlovakorta/on_craft_completion(mob/user, obj/item/food/cake/pavlova/result)
-	result.foodtypes = NUTS | FRUIT | SUGAR
-	result.AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/pavlova/nuts, 5, 30)
 
 /datum/crafting_recipe/food/bscvcake
 	name = "blackberry and strawberry vanilla cake"
@@ -242,4 +238,13 @@
 		/datum/reagent/consumable/ethanol/rum = 5
 	)
 	result = /obj/item/food/cake/fruit
+	subcategory = CAT_CAKE
+
+/datum/crafting_recipe/food/plumcake
+	name = "Plum cake"
+	reqs = list(
+		/obj/item/food/cake/plain = 1,
+		/obj/item/food/grown/plum = 2
+	)
+	result = /obj/item/food/cake/plum
 	subcategory = CAT_CAKE

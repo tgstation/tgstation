@@ -20,6 +20,15 @@
 
 	return reagent_list
 
+/// Creates an list which is indexed by reagent name . used by plumbing reaction chamber and chemical filter UI
+/proc/init_chemical_name_list()
+	var/list/name_list = list()
+	for(var/X in GLOB.chemical_reagents_list)
+		var/datum/reagent/Reagent = GLOB.chemical_reagents_list[X]
+		name_list += Reagent.name
+	return sort_list(name_list)
+
+
 /proc/build_chemical_reactions_lists()
 	//Chemical Reactions - Initialises all /datum/chemical_reaction into a list
 	// It is filtered into multiple lists within a list.
@@ -163,10 +172,12 @@
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
  */
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = DEFAULT_REAGENT_TEMPERATURE, added_purity = null, added_ph, no_react = FALSE, override_base_ph = FALSE, ignore_splitting = FALSE)
-	if(!isnum(amount) || !amount)
+	// Prevents small amount problems, as well as zero and below zero amounts.
+	if(amount <= CHEMICAL_QUANTISATION_LEVEL)
 		return FALSE
 
-	if(amount <= CHEMICAL_QUANTISATION_LEVEL)//To prevent small amount problems.
+	if(!IS_FINITE(amount))
+		stack_trace("non finite amount passed to add reagent [amount] [reagent]")
 		return FALSE
 
 	if(SEND_SIGNAL(src, COMSIG_REAGENTS_PRE_ADD_REAGENT, reagent, amount, reagtemp, data, no_react) & COMPONENT_CANCEL_REAGENT_ADD)
@@ -273,13 +284,11 @@
 /// Remove a specific reagent
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = TRUE)//Added a safety check for the trans_id_to
 	if(isnull(amount))
-		amount = 0
-		CRASH("null amount passed to reagent code")
-
-	if(!isnum(amount))
+		stack_trace("null amount passed to reagent code")
 		return FALSE
 
-	if(amount < 0)
+	if(amount < 0 || !IS_FINITE(amount))
+		stack_trace("invalid number passed to remove_reagent [amount]")
 		return FALSE
 
 	var/list/cached_reagents = reagent_list
@@ -470,7 +479,7 @@
 		R = target
 		target_atom = R.my_atom
 	else
-		if(!ignore_stomach && (methods & INGEST) && istype(target, /mob/living/carbon))
+		if(!ignore_stomach && (methods & INGEST) && iscarbon(target))
 			var/mob/living/carbon/eater = target
 			var/obj/item/organ/internal/stomach/belly = eater.getorganslot(ORGAN_SLOT_STOMACH)
 			if(!belly)
@@ -491,6 +500,8 @@
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/trans_data = null
 	var/transfer_log = list()
+	var/r_to_send = list()	// Validated list of reagents to be exposed
+	var/reagents_to_remove = list()
 	if(!round_robin)
 		var/part = amount / src.total_volume
 		for(var/datum/reagent/reagent as anything in cached_reagents)
@@ -504,10 +515,18 @@
 			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
 				continue
 			if(methods)
-				if(istype(target_atom, /obj/item/organ))
-					R.expose_single(reagent, target, methods, part, show_message)
-				else
-					R.expose_single(reagent, target_atom, methods, part, show_message)
+				r_to_send += reagent
+
+			reagents_to_remove += reagent
+
+		if(isorgan(target_atom))
+			R.expose_multiple(r_to_send, target, methods, part, show_message)
+		else
+			R.expose_multiple(r_to_send, target_atom, methods, part, show_message)
+
+		for(var/datum/reagent/reagent as anything in reagents_to_remove)
+			var/transfer_amount = reagent.volume * part
+			if(methods)
 				reagent.on_transfer(target_atom, methods, transfer_amount * multiplier)
 			remove_reagent(reagent.type, transfer_amount)
 			var/list/reagent_qualities = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
@@ -531,7 +550,7 @@
 				continue
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)
-				if(istype(target_atom, /obj/item/organ))
+				if(isorgan(target_atom))
 					R.expose_single(reagent, target, methods, transfer_amount, show_message)
 				else
 					R.expose_single(reagent, target_atom, methods, transfer_amount, show_message)
@@ -720,7 +739,7 @@
 		owner = reagent.holder.my_atom
 
 	if(owner && reagent)
-		if(!owner.reagent_check(reagent, delta_time, times_fired) != TRUE)
+		if(owner.reagent_check(reagent, delta_time, times_fired))
 			return
 		if(liverless && !reagent.self_consuming) //need to be metabolized
 			return
@@ -732,7 +751,7 @@
 				if(reagent.volume >= reagent.overdose_threshold && !reagent.overdosed)
 					reagent.overdosed = TRUE
 					need_mob_update += reagent.overdose_start(owner)
-					log_game("[key_name(owner)] has started overdosing on [reagent.name] at [reagent.volume] units.")
+					owner.log_message("has started overdosing on [reagent.name] at [reagent.volume] units.", LOG_GAME)
 			for(var/addiction in reagent.addiction_types)
 				owner.mind?.add_addiction_points(addiction, reagent.addiction_types[addiction] * REAGENTS_METABOLISM)
 
@@ -777,16 +796,11 @@
 		added_purity = 0
 
 	if((reagent.inverse_chem_val > added_purity) && (reagent.inverse_chem))//Turns all of a added reagent into the inverse chem
-		add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = 1-reagent.creation_purity)
+		add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = reagent.get_inverse_purity(reagent.creation_purity))
 		var/datum/reagent/inverse_reagent = has_reagent(reagent.inverse_chem)
 		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
 			inverse_reagent.name = reagent.name//Negative effects are hidden
 		return FALSE //prevent addition
-	else if(reagent.impure_chem)
-		var/impure_vol = added_volume * (1 - added_purity) //turns impure ratio into impure chem
-		add_reagent(reagent.impure_chem, impure_vol, FALSE, added_purity = 1-reagent.creation_purity)
-		if(!(reagent.chemical_flags & REAGENT_SPLITRETAINVOL))
-			return added_volume - impure_vol
 	return added_volume
 
 ///Processes any chems that have the REAGENT_IGNORE_STASIS bitflag ONLY
@@ -842,7 +856,7 @@
 		return FALSE //Yup, no reactions here. No siree.
 
 	if(is_reacting)//Prevent wasteful calculations
-		if(datum_flags != DF_ISPROCESSING)//If we're reacting - but not processing (i.e. we've transfered)
+		if(!(datum_flags & DF_ISPROCESSING))//If we're reacting - but not processing (i.e. we've transfered)
 			START_PROCESSING(SSreagents, src)
 		if(!(has_changed_state()))
 			return FALSE
@@ -1230,6 +1244,20 @@
 
 	return A.expose_reagents(reagents, src, methods, volume_modifier, show_message)
 
+// Same as [/datum/reagents/proc/expose] but only for multiple reagents (through a list)
+/datum/reagents/proc/expose_multiple(list/r_to_expose, atom/A, methods = TOUCH, volume_modifier = 1, show_message = 1)
+	if(isnull(A))
+		return null
+
+	var/list/cached_reagents = r_to_expose
+	if(!cached_reagents.len)
+		return null
+
+	var/list/reagents = list()
+	for(var/datum/reagent/reagent as anything in cached_reagents)
+		reagents[reagent] = reagent.volume * volume_modifier
+
+	return A.expose_reagents(reagents, src, methods, volume_modifier, show_message)
 
 /// Same as [/datum/reagents/proc/expose] but only for one reagent
 /datum/reagents/proc/expose_single(datum/reagent/R, atom/A, methods = TOUCH, volume_modifier = 1, show_message = TRUE)
@@ -1255,6 +1283,13 @@
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
 		if(cached_reagent.type == reagent)
+			return round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
+	return 0
+
+/datum/reagents/proc/get_multiple_reagent_amounts(list/reagents)
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
+		if(cached_reagent.type in reagents)
 			return round(cached_reagent.volume, CHEMICAL_QUANTISATION_LEVEL)
 	return 0
 
@@ -1673,21 +1708,9 @@
 			data["reagent_mode_reagent"]["addictions"] = list()
 			data["reagent_mode_reagent"]["addictions"] = parse_addictions(reagent)
 
-
-			var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
-			if(impure_reagent)
-				data["reagent_mode_reagent"] += list("impureReagent" = impure_reagent.name, "impureId" = impure_reagent.type)
-
 			var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
 			if(inverse_reagent)
 				data["reagent_mode_reagent"] += list("inverseReagent" = inverse_reagent.name, "inverseId" = inverse_reagent.type)
-
-			var/datum/reagent/failed_reagent = GLOB.chemical_reagents_list[reagent.failed_chem]
-			if(failed_reagent)
-				data["reagent_mode_reagent"] += list("failedReagent" = failed_reagent.name, "failedId" = failed_reagent.type)
-
-			if(istype(reagent, /datum/reagent/impurity))
-				data["reagent_mode_reagent"] += list("isImpure" = TRUE)
 
 			if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 				data["reagent_mode_reagent"] += list("deadProcess" = TRUE)

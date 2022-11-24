@@ -25,6 +25,7 @@
 	user.adjustCloneLoss(20)
 	if(user.stat)
 		to_chat(user, span_userdanger("No... just one more try..."))
+		user.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
 		user.gib()
 	else
 		user.visible_message(span_warning("[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"), "<span class='warning'>You feel a draining as you pull the lever, but you \
@@ -32,7 +33,7 @@
 	icon_screen = "slots_screen_working"
 	update_appearance()
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, FALSE)
-	addtimer(CALLBACK(src, .proc/determine_victor, user), 50)
+	addtimer(CALLBACK(src, PROC_REF(determine_victor), user), 50)
 
 /obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
 	icon_screen = "slots_screen"
@@ -52,19 +53,19 @@
 	. = ..()
 	var/overlay_state = icon_screen
 	. += mutable_appearance(icon, overlay_state)
-	. += emissive_appearance(icon, overlay_state)
+	. += emissive_appearance(icon, overlay_state, src)
 
 /obj/structure/cursed_money
 	name = "bag of money"
 	desc = "RICH! YES! YOU KNEW IT WAS WORTH IT! YOU'RE RICH! RICH! RICH!"
-	icon = 'icons/obj/storage.dmi'
+	icon = 'icons/obj/storage/storage.dmi'
 	icon_state = "moneybag"
 	anchored = FALSE
 	density = TRUE
 
 /obj/structure/cursed_money/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/collapse), 600)
+	addtimer(CALLBACK(src, PROC_REF(collapse)), 600)
 
 /obj/structure/cursed_money/proc/collapse()
 	visible_message("<span class='warning'>[src] falls in on itself, \
@@ -91,7 +92,7 @@
 	anchored = TRUE
 	density = TRUE
 	icon_state = "blob"
-	icon = 'icons/mob/blob.dmi'
+	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	color = rgb(145, 150, 0)
 
 /obj/effect/gluttony/CanAllowThrough(atom/movable/mover, border_dir)//So bullets will fly over and stuff.

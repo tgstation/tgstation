@@ -163,7 +163,7 @@
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(!. && istype(mover, /obj/projectile))
+	if(!. && isprojectile(mover))
 		return prob(30)
 
 /obj/structure/grille/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
@@ -180,12 +180,13 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!isturf(loc) || !anchored)
+	if(!isturf(loc))
 		return FALSE
 	add_fingerprint(user)
 	if(shock(user, 90))
 		return FALSE
-	tool.play_tool_sound(src, 100)
+	if(!tool.use_tool(src, user, 0, volume=100))
+		return FALSE
 	set_anchored(!anchored)
 	user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
@@ -193,7 +194,6 @@
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/rods) && broken)
 		if(shock(user, 90))
 			return
@@ -251,8 +251,10 @@
 			return
 //window placing end
 
-	else if(istype(W, /obj/item/shard) || !shock(user, 70))
-		return ..()
+	else if((W.flags_1 & CONDUCT_1) && shock(user, 70))
+		return
+
+	return ..()
 
 /obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

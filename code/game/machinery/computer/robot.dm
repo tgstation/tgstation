@@ -44,11 +44,12 @@
 		var/mob/living/silicon/ai/ai = user
 		data["can_detonate"] = !isnull(ai.malf_picker)
 
+	var/turf/current_turf = get_turf(src)
 	data["cyborgs"] = list()
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 		if(!can_control(user, R))
 			continue
-		if(z != (get_turf(R)).z)
+		if(!is_valid_z_level(current_turf, get_turf(R)))
 			continue
 		var/list/cyborg_data = list(
 			name = R.name,
@@ -66,7 +67,7 @@
 	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 		if(D.hacked)
 			continue
-		if(z != (get_turf(D)).z)
+		if(!is_valid_z_level(current_turf, get_turf(D)))
 			continue
 		var/list/drone_data = list(
 			name = D.name,
@@ -128,15 +129,16 @@
 
 		if("killdrone")
 			if(allowed(usr))
-				var/mob/living/simple_animal/drone/D = locate(params["ref"]) in GLOB.mob_list
-				if(D.hacked)
-					to_chat(usr, span_danger("ERROR: [D] is not responding to external commands."))
+				var/mob/living/simple_animal/drone/drone = locate(params["ref"]) in GLOB.mob_list
+				if(drone.hacked)
+					to_chat(usr, span_danger("ERROR: [drone] is not responding to external commands."))
 				else
-					var/turf/T = get_turf(D)
-					message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)] at [ADMIN_VERBOSEJMP(T)]!")
-					log_silicon("[key_name(usr)] detonated [key_name(D)]!")
+					var/turf/T = get_turf(drone)
+					message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(drone)] at [ADMIN_VERBOSEJMP(T)]!")
+					log_silicon("[key_name(usr)] detonated [key_name(drone)]!")
 					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-					s.set_up(3, TRUE, D)
+					s.set_up(3, TRUE, drone)
 					s.start()
-					D.visible_message(span_danger("\the [D] self-destructs!"))
-					D.gib()
+					drone.visible_message(span_danger("\the [drone] self-destructs!"))
+					drone.investigate_log("has been gibbed by a robotics console.", INVESTIGATE_DEATHS)
+					drone.gib()

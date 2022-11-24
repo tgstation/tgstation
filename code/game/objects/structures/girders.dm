@@ -55,7 +55,7 @@
 			qdel(src)
 			return
 
-	else if(istype(W, /obj/item/stack))
+	else if(isstack(W))
 		if(iswallturf(loc) || (locate(/obj/structure/falsewall) in src.loc.contents))
 			balloon_alert(user, "wall already present!")
 			return
@@ -358,7 +358,7 @@
 
 /obj/structure/girder/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if((mover.pass_flags & PASSGRILLE) || istype(mover, /obj/projectile))
+	if((mover.pass_flags & PASSGRILLE) || isprojectile(mover))
 		return prob(girderpasschance)
 
 /obj/structure/girder/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)

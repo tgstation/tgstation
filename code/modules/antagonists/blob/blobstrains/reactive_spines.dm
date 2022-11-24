@@ -33,7 +33,7 @@
 	color = "#9ACD32"
 
 /datum/reagent/blob/reactive_spines/return_mob_expose_reac_volume(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
-	if(exposed_mob.stat == DEAD || istype(exposed_mob, /mob/living/simple_animal/hostile/blob))
+	if(exposed_mob.stat == DEAD || isblobmonster(exposed_mob))
 		return 0 //the dead, and blob mobs, don't cause reactions
 	return reac_volume
 

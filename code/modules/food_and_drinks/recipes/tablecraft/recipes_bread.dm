@@ -122,6 +122,29 @@
 	result = /obj/item/food/baguette
 	subcategory = CAT_BREAD
 
+/datum/crafting_recipe/food/raw_breadstick
+	name = "Raw breadstick"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/datum/reagent/consumable/salt = 1,
+		/obj/item/food/butter = 1
+	)
+	result = /obj/item/food/raw_breadstick
+	subcategory = CAT_BREAD
+
+/datum/crafting_recipe/food/breaddog
+	name = "Living dog/bread hybrid"
+	reqs = list(
+		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
+		/obj/item/food/bread = 2,
+		/obj/item/food/meat/slab = 3,
+		/datum/reagent/blood = 30,
+		/datum/reagent/teslium = 1 //To shock the whole thing into life
+	)
+	result = /mob/living/simple_animal/pet/dog/breaddog
+	subcategory = CAT_BREAD
+
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/slimetoast

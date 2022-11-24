@@ -52,16 +52,13 @@
 	user.adjust_blurriness(6)
 	if(eyes)
 		eyes.applyOrganDamage(rand(6,8))
-	sleep(10)
-	return (BRUTELOSS)
+	sleep(1 SECONDS)
+	return BRUTELOSS
 
 /obj/item/paperplane/update_overlays()
 	. = ..()
-	var/list/stamped = internalPaper.stamped
-	if(!LAZYLEN(stamped))
-		return
-	for(var/S in stamped)
-		. += "paperplane_[S]"
+	for(var/stamp in internalPaper.stamp_cache)
+		. += "paperplane_[stamp]"
 
 /obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, span_notice("You unfold [src]."))
@@ -116,7 +113,7 @@
 	. += span_notice("Alt-click [src] to fold it into a paper plane.")
 
 /obj/item/paper/AltClick(mob/living/user, obj/item/I)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		return
 	if(istype(src, /obj/item/paper/carbon))
 		var/obj/item/paper/carbon/Carbon = src

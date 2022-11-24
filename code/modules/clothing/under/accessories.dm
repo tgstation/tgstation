@@ -63,7 +63,7 @@
 		pixel_x -= 8
 		pixel_y += 8
 	layer = initial(layer)
-	plane = initial(plane)
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	U.cut_overlays()
 	U.attached_accessory = null
 	U.accessory_overlay = null
@@ -76,7 +76,7 @@
 	return
 
 /obj/item/clothing/accessory/attack_self_secondary(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
 		return
@@ -92,16 +92,34 @@
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
-	inhand_icon_state = "waistcoat"
+	inhand_icon_state = "wcoat"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = null
+	greyscale_config = /datum/greyscale_config/waistcoat
+	greyscale_config_worn = /datum/greyscale_config/waistcoat_worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/accessory/vest_sheriff
 	name = "sheriff vest"
 	desc = "Now you just have to pick your favourite deputy."
 	icon_state = "vest_sheriff"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	inhand_icon_state = "vest_sheriff"
 	minimize_when_attached = TRUE
+	attachment_slot = null
+
+/obj/item/clothing/accessory/maidcorset
+	name = "maid corset"
+	desc = "The final touch that holds it all together."
+	icon_state = "maidcorset"
+	inhand_icon_state = "maidapron"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
+	minimize_when_attached = FALSE
 	attachment_slot = null
 
 /obj/item/clothing/accessory/maidapron
@@ -109,6 +127,8 @@
 	desc = "The best part of a maid costume."
 	icon_state = "maidapron"
 	inhand_icon_state = "maidapron"
+	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -157,7 +177,7 @@
 							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
 							commended = TRUE
 							desc += "<br>The inscription reads: [input] - [user.real_name]"
-							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
+							M.log_message("was given the following commendation by <b>[key_name(user)]</b>: [input]", LOG_GAME, color = "green")
 							message_admins("<b>[key_name_admin(M)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
 							add_memory_in_range(M, 7, MEMORY_RECEIVED_MEDAL, list(DETAIL_PROTAGONIST = M, DETAIL_MEDAL_TYPE = src, DETAIL_DEUTERAGONIST = user, DETAIL_MEDAL_REASON = input), STORY_VALUE_AMAZING)
 
@@ -318,7 +338,7 @@
 	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, mob/living/user)
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
+	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
 	user.bubble_icon = "lawyer"
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, mob/living/user)
@@ -327,7 +347,7 @@
 
 /obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/handle_table_slam, source)
+	INVOKE_ASYNC(src, PROC_REF(handle_table_slam), source)
 
 /obj/item/clothing/accessory/lawyers_badge/proc/handle_table_slam(mob/living/user)
 	user.say("Objection!!", spans = list(SPAN_YELL), forced=TRUE)
@@ -340,10 +360,13 @@
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
 
-/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
+/obj/item/clothing/accessory/pocketprotector/Initialize(mapload)
 	. = ..()
 
 	create_storage(type = /datum/storage/pockets/pocketprotector)
+
+/obj/item/clothing/accessory/pocketprotector/full/Initialize(mapload)
+	. = ..()
 
 	new /obj/item/pen/red(src)
 	new /obj/item/pen(src)
@@ -366,12 +389,12 @@
 /obj/item/clothing/accessory/clown_enjoyer_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_CLOWN_ENJOYER))
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "clown_enjoyer_pin", /datum/mood_event/clown_enjoyer_pin)
+		L.add_mood_event("clown_enjoyer_pin", /datum/mood_event/clown_enjoyer_pin)
 
 /obj/item/clothing/accessory/clown_enjoyer_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_CLOWN_ENJOYER))
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "clown_enjoyer_pin")
+		L.clear_mood_event("clown_enjoyer_pin")
 
 /obj/item/clothing/accessory/mime_fan_pin
 	name = "\improper Mime Pin"
@@ -381,12 +404,12 @@
 /obj/item/clothing/accessory/mime_fan_pin/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_MIME_FAN))
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "mime_fan_pin", /datum/mood_event/mime_fan_pin)
+		L.add_mood_event("mime_fan_pin", /datum/mood_event/mime_fan_pin)
 
 /obj/item/clothing/accessory/mime_fan_pin/on_uniform_dropped(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(HAS_TRAIT(L, TRAIT_MIME_FAN))
-		SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "mime_fan_pin")
+		L.clear_mood_event("mime_fan_pin")
 
 ////////////////
 //OONGA BOONGA//
@@ -429,7 +452,7 @@
 
 /obj/item/clothing/accessory/allergy_dogtag/on_uniform_equip(obj/item/clothing/under/U, user)
 	. = ..()
-	RegisterSignal(U,COMSIG_PARENT_EXAMINE,.proc/on_examine)
+	RegisterSignal(U,COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/allergy_dogtag/on_uniform_dropped(obj/item/clothing/under/U, user)
 	. = ..()
@@ -454,3 +477,8 @@
 						"Intersex Pride" = "pride_intersex",
 						"Lesbian Pride" = "pride_lesbian",
 						)
+
+/obj/item/clothing/accessory/deaf_pin
+	name = "deaf personnel pin"
+	desc = "Indicates that the wearer is deaf."
+	icon_state = "deaf_pin"

@@ -35,7 +35,7 @@
 	new /obj/item/stack/sheet/iron(drop_location(), 1)
 	return ..()
 
-/obj/vehicle/ridden/wheelchair/Moved()
+/obj/vehicle/ridden/wheelchair/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
 
@@ -72,9 +72,10 @@
 /obj/vehicle/ridden/wheelchair/proc/make_ridable()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/hand)
 
+///A reward item for obtaining 5K hardcore random points. Do not use for anything else
 /obj/vehicle/ridden/wheelchair/gold
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
-	desc = "Damn, he's been through a lot."
+	desc = "Damn, must've been through a lot."
 	icon_state = "gold_wheelchair"
 	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
@@ -96,6 +97,7 @@
 	///The wheelchair vehicle type we create when we unfold this chair
 	var/unfolded_type = /obj/vehicle/ridden/wheelchair
 
+///A reward item for obtaining 5K hardcore random points. Do not use for anything else
 /obj/item/wheelchair/gold
 	name = "gold wheelchair"
 	desc = "A collapsed, shiny wheelchair that can be carried around."
@@ -112,7 +114,7 @@
 	. = ..()
 	if(over_object != usr || !Adjacent(usr) || !foldabletype)
 		return FALSE
-	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
+	if(!ishuman(usr) || !usr.canUseTopic(src, be_close = TRUE))
 		return FALSE
 	if(has_buckled_mobs())
 		return FALSE

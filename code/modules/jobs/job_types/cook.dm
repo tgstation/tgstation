@@ -5,9 +5,10 @@
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "COOK"
 	var/cooks = 0 //Counts cooks amount
 
 	outfit = /datum/outfit/job/cook
@@ -25,18 +26,18 @@
 		)
 
 	family_heirlooms = list(
-		/obj/item/reagent_containers/food/condiment/saltshaker,
+		/obj/item/reagent_containers/condiment/saltshaker,
 		/obj/item/kitchen/rollingpin,
-		/obj/item/clothing/head/chefhat,
+		/obj/item/clothing/head/utility/chefhat,
 	)
 
 	mail_goodies = list(
 		/obj/item/storage/box/ingredients/random = 80,
-		/obj/item/reagent_containers/glass/bottle/caramel = 20,
-		/obj/item/reagent_containers/food/condiment/flour = 20,
-		/obj/item/reagent_containers/food/condiment/rice = 20,
-		/obj/item/reagent_containers/food/condiment/enzyme = 15,
-		/obj/item/reagent_containers/food/condiment/soymilk = 15,
+		/obj/item/reagent_containers/cup/bottle/caramel = 20,
+		/obj/item/reagent_containers/condiment/flour = 20,
+		/obj/item/reagent_containers/condiment/rice = 20,
+		/obj/item/reagent_containers/condiment/enzyme = 15,
+		/obj/item/reagent_containers/condiment/soymilk = 15,
 		/obj/item/knife/kitchen = 4,
 		/obj/item/knife/butcher = 2
 	)
@@ -68,7 +69,7 @@
 	)
 	belt = /obj/item/modular_computer/tablet/pda/cook
 	ears = /obj/item/radio/headset/headset_srv
-	head = /obj/item/clothing/head/chefhat
+	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 	skillchips = list(/obj/item/skillchip/job/chef)

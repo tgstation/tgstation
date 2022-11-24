@@ -64,6 +64,15 @@
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
 
+/datum/crafting_recipe/food/tempehstarter
+	name = "Tempeh starter"
+	reqs = list(
+		/obj/item/food/grown/soybeans = 5,
+		/obj/item/seeds/plump = 1
+	)
+	result = /obj/item/food/tempehstarter
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/cornedbeef
 	name = "Corned beef"
 	reqs = list(

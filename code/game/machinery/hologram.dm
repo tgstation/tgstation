@@ -90,7 +90,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/Initialize(mapload)
 	. = ..()
 	/// We set the plane on mapload such that we can see the holopad render over atmospherics pipe and cabling in a map editor (without initialization), but so it gets that "inset" look in the floor in-game.
-	plane = FLOOR_PLANE
+	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 	update_appearance()
 
 /obj/machinery/holopad/secure
@@ -122,15 +122,15 @@ Possible to do for anyone motivated enough:
 			new_disk.forceMove(src)
 			disk = new_disk
 
-/obj/machinery/holopad/Moved(atom/OldLoc, Dir)
+/obj/machinery/holopad/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!loc)
 		return
 	// move any relevant holograms, basically non-AI, and rays with the pad
 	if(replay_holo)
 		replay_holo.abstract_move(loc)
-	for(var/i in holorays)
-		var/obj/effect/overlay/holoray/ray = holorays[i]
+	for(var/mob/living/user as anything in holorays)
+		var/obj/effect/overlay/holoray/ray = holorays[user]
 		ray.abstract_move(loc)
 	var/list/non_call_masters = masters?.Copy()
 	for(var/datum/holocall/holocall as anything in holo_calls)
@@ -138,7 +138,7 @@ Possible to do for anyone motivated enough:
 			continue
 		non_call_masters -= holocall.user
 		// moving the eye moves the holo which updates the ray too
-		holocall.eye.setLoc(locate(clamp(x + (holocall.hologram.x - OldLoc.x), 1, world.maxx), clamp(y + (holocall.hologram.y - OldLoc.y), 1, world.maxy), z))
+		holocall.eye.setLoc(locate(clamp(x + (holocall.hologram.x - old_loc.x), 1, world.maxx), clamp(y + (holocall.hologram.y - old_loc.y), 1, world.maxy), z))
 	for(var/mob/living/holo_master as anything in non_call_masters)
 		var/obj/effect/holo = masters[holo_master]
 		update_holoray(holo_master, holo.loc)
@@ -209,7 +209,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/examine(mob/user)
 	. = ..()
 	if(isAI(user))
-		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :h to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
+		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units. Use :2 to speak through the projection. Right-click to project or cancel a projection. Alt-click to hangup all active and incomming calls. Ctrl-click to end projection without jumping to your last location.")
 	else if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
 
@@ -217,6 +217,22 @@ Possible to do for anyone motivated enough:
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/holopad/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.) || anchorvalue)
+		return
+
+	if(outgoing_call)
+		outgoing_call.ConnectionFailure(src) //disconnect the call if we got unwrenched.
+
+	for(var/datum/holocall/holocall_to_disconnect as anything in holo_calls)
+		holocall_to_disconnect.ConnectionFailure(src)
+
+	if(replay_mode)
+		replay_stop()
+	if(record_mode)
+		record_stop()
 
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
@@ -516,7 +532,7 @@ Possible to do for anyone motivated enough:
 
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 		Hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
-		Hologram.plane = ABOVE_GAME_PLANE
+		SET_PLANE_EXPLICIT(Hologram, ABOVE_GAME_PLANE, src)
 		Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		Hologram.set_light(2) //hologram lighting
@@ -565,6 +581,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/total_users = LAZYLEN(masters) + LAZYLEN(holo_calls)
 	if(ringing)
 		icon_state = "[base_icon_state]_ringing"
+		return ..()
+	if(panel_open)
+		icon_state = "[base_icon_state]_open"
 		return ..()
 	icon_state = "[base_icon_state][(total_users || replay_mode) ? 1 : 0]"
 	return ..()
@@ -654,6 +673,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 				transfered = TRUE
 		//All is good.
 		holo.abstract_move(new_turf)
+		SET_PLANE(holo, ABOVE_GAME_PLANE, new_turf)
 		if(!transfered)
 			update_holoray(user,new_turf)
 	return TRUE
@@ -694,7 +714,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	holder.selected_language = record.language
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
-	Hologram.plane = ABOVE_GAME_PLANE
+	SET_PLANE_EXPLICIT(Hologram, ABOVE_GAME_PLANE, src)
 	Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2) //hologram lighting
@@ -772,7 +792,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(HOLORECORD_SOUND)
 			playsound(src,entry[2],50,TRUE)
 		if(HOLORECORD_DELAY)
-			addtimer(CALLBACK(src,.proc/replay_entry,entry_number+1),entry[2])
+			addtimer(CALLBACK(src, PROC_REF(replay_entry),entry_number+1),entry[2])
 			return
 		if(HOLORECORD_LANGUAGE)
 			var/datum/language_holder/holder = replay_holo.get_language_holder()

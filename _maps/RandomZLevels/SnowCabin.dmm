@@ -102,19 +102,12 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "as" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "at" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -201,9 +194,7 @@
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "aH" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -282,14 +273,13 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aS" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
+	name = "sink"
 	},
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/clothing/suit/caution,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -349,7 +339,7 @@
 /area/awaymission/cabin)
 "bc" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/britcup,
+/obj/item/reagent_containers/cup/glass/britcup,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bd" = (
@@ -441,6 +431,18 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bu" = (
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -460,15 +462,14 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "by" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/oven,
+/obj/item/plate/oven_tray,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bz" = (
-/obj/structure/sink/kitchen{
+/obj/structure/sink/kitchen/directional/south{
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "sink";
-	pixel_y = 28
+	name = "sink"
 	},
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
@@ -495,17 +496,11 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bG" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
+/obj/structure/sink/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "bH" = (
-/obj/machinery/shower{
-	dir = 1
-	},
+/obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /obj/item/soap/nanotrasen{
 	pixel_x = -1;
@@ -517,10 +512,7 @@
 /turf/open/lava,
 /area/awaymission/cabin/caves/mountain)
 "bJ" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bK" = (
@@ -574,7 +566,7 @@
 /area/awaymission/cabin)
 "bU" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bV" = (
@@ -638,19 +630,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cj" = (
-/obj/structure/table,
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
+/obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "ck" = (
@@ -763,7 +743,7 @@
 /area/awaymission/cabin)
 "cF" = (
 /obj/structure/table,
-/obj/structure/cable,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cG" = (
@@ -786,18 +766,18 @@
 /area/awaymission/cabin)
 "cJ" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 8;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = -8
 	},
 /obj/structure/cable,
@@ -805,7 +785,7 @@
 /area/awaymission/cabin)
 "cK" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton{
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
@@ -898,7 +878,7 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
 	desc = "A fancy bottle of vodka. The name isn't in Galactic Common though.";
 	name = "Porosha Vodka"
 	},
@@ -983,7 +963,7 @@
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dt" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/reagent_containers/food/condiment/mayonnaise,
+/obj/item/reagent_containers/condiment/mayonnaise,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "du" = (
@@ -1256,7 +1236,7 @@
 /area/awaymission/cabin)
 "ev" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/cup/rag,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ew" = (
@@ -1785,7 +1765,7 @@
 /area/awaymission/cabin/caves/mountain)
 "fL" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse{
+/mob/living/basic/mouse{
 	faction = list("sewer")
 	},
 /turf/open/floor/carpet,
@@ -2051,7 +2031,7 @@
 /obj/structure/table/wood,
 /obj/item/clothing/suit/hooded/wintercoat/hydro,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/head/hardhat,
+/obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "gZ" = (
@@ -2089,11 +2069,11 @@
 "he" = (
 /obj/structure/table/wood,
 /obj/structure/cable,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = 8;
 	pixel_y = 8
@@ -2202,7 +2182,7 @@
 /area/awaymission/cabin)
 "hv" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2268,7 +2248,7 @@
 /area/awaymission/cabin)
 "hF" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_y = 2
 	},
@@ -2320,7 +2300,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hQ" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hR" = (
@@ -2448,7 +2428,7 @@
 /area/awaymission/cabin/caves/sovietcave)
 "is" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "iv" = (
@@ -2509,7 +2489,7 @@
 /area/awaymission/cabin/caves)
 "iR" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = -7;
 	pixel_y = -2
@@ -2518,7 +2498,7 @@
 /area/awaymission/cabin)
 "iS" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = 7;
 	pixel_y = 2
@@ -2527,7 +2507,7 @@
 /area/awaymission/cabin)
 "iT" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = -4;
 	pixel_y = 4
@@ -2536,12 +2516,12 @@
 /area/awaymission/cabin)
 "iU" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/drinks/mug/coco{
+/obj/item/reagent_containers/cup/glass/mug/coco{
 	desc = "Still hot!";
 	pixel_x = 7;
 	pixel_y = -2
@@ -2731,7 +2711,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedbluescarf,
+/obj/item/clothing/neck/large_scarf/blue,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jv" = (
@@ -2743,7 +2723,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedgreenscarf,
+/obj/item/clothing/neck/large_scarf/green,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jw" = (
@@ -2755,7 +2735,7 @@
 /obj/item/clothing/suit/hooded/wintercoat,
 /obj/item/clothing/shoes/winterboots,
 /obj/item/clothing/shoes/winterboots,
-/obj/item/clothing/neck/stripedredscarf,
+/obj/item/clothing/neck/large_scarf/red,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jx" = (
@@ -2768,14 +2748,14 @@
 /area/awaymission/cabin)
 "jy" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = -7;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass{
 	pixel_x = 7;
 	pixel_y = 3
 	},
@@ -3076,7 +3056,7 @@
 "kK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -3709,7 +3689,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/displaycase{
 	start_showpiece_type = /obj/item/dice/d6/space;
-	trophy_message = "Stolen from dice collector before he could enjoy his day."
+	desc = "Contains an artifact stolen from dice collector before he could enjoy his day."
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -3729,7 +3709,7 @@
 "sK" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/head/helmet/police{
+/obj/item/clothing/head/hats/warden/police{
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 15, "bio" = 0, "fire" = 20, "acid" = 20);
 	desc = "I am the law!"
 	},
@@ -3858,11 +3838,11 @@
 	invoke_damage = 60;
 	name = "ice rune"
 	},
-/obj/item/clothing/suit/snowman{
+/obj/item/clothing/suit/costume/snowman{
 	desc = "The dead body of a snowman. There's holes to stick your own body in it.";
 	name = "snowman corpse"
 	},
-/obj/item/clothing/head/snowman{
+/obj/item/clothing/head/costume/snowman{
 	desc = "The head of a dead snowman. There's enough room inside for your own head.";
 	pixel_x = -1;
 	pixel_y = 10
@@ -3872,10 +3852,9 @@
 "vD" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
+	inserted_disk = /obj/item/computer_disk/virus/clown;
+	name = "soviet tablet"
 	},
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
@@ -4020,10 +3999,9 @@
 "yR" = (
 /obj/structure/table/reinforced,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
+	inserted_disk = /obj/item/computer_disk/virus/mime;
+	name = "soviet tablet"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
@@ -4053,7 +4031,7 @@
 	pixel_y = 8;
 	throwforce = 2
 	},
-/obj/item/shield/riot/roman/fake{
+/obj/item/shield/roman/fake{
 	layer = 3.01;
 	pixel_x = -7
 	},
@@ -4136,7 +4114,7 @@
 	name = "wooden box"
 	},
 /obj/item/paper{
-	info = "Moving these crates through a tunnel that isn't even finished yet is really annoying. It's such a pain in the ass to haul even a single crate to the cabin. It made sense to haul food and other goods however these are fake fucking trophies. Why do they even need these fake artifacts for some asshole's trophy case? We'll just leave the crates in the cave that has all those bones inside. Fuck it.";
+	default_raw_text = "Moving these crates through a tunnel that isn't even finished yet is really annoying. It's such a pain in the ass to haul even a single crate to the cabin. It made sense to haul food and other goods however these are fake fucking trophies. Why do they even need these fake artifacts for some asshole's trophy case? We'll just leave the crates in the cave that has all those bones inside. Fuck it.";
 	name = "Shipment Delivery Note"
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
@@ -4225,7 +4203,7 @@
 	anchored = 1;
 	name = "Because"
 	},
-/obj/item/clothing/head/scarecrow_hat{
+/obj/item/clothing/head/costume/scarecrow_hat{
 	desc = "A replica straw hat that isn't actually made out of straw";
 	name = "synthetic straw hat";
 	pixel_x = -1;
@@ -4414,7 +4392,7 @@
 	anchored = 1;
 	name = "I Don't Know"
 	},
-/obj/item/clothing/head/bishopmitre{
+/obj/item/clothing/head/chaplain/bishopmitre{
 	pixel_x = -1;
 	pixel_y = 16
 	},
@@ -4878,7 +4856,7 @@
 	anchored = 1;
 	name = "Why"
 	},
-/obj/item/clothing/head/bandana{
+/obj/item/clothing/head/costume/pirate/bandana{
 	pixel_x = -1;
 	pixel_y = -1
 	},

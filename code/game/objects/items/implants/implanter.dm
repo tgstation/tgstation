@@ -4,7 +4,7 @@
 /obj/item/implanter
 	name = "implanter"
 	desc = "A sterile automatic implant injector."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "implanter0"
 	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -54,7 +54,7 @@
 	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
 	if(user.get_active_held_item() != I)
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 	if(new_name)
 		name = "implanter ([new_name])"

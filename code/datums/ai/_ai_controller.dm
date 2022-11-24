@@ -104,7 +104,7 @@ multiple modular subtrees with behaviors
 	else
 		set_ai_status(AI_STATUS_ON)
 
-	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
+	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 ///Abstract proc for initializing the pawn to the new controller
 /datum/ai_controller/proc/TryPossessPawn(atom/new_pawn)
@@ -123,6 +123,8 @@ multiple modular subtrees with behaviors
 
 ///Returns TRUE if the ai controller can actually run at the moment.
 /datum/ai_controller/proc/able_to_run()
+	if(HAS_TRAIT(pawn, TRAIT_AI_PAUSED))
+		return FALSE
 	if(world.time < paused_until)
 		return FALSE
 	return TRUE
@@ -138,13 +140,17 @@ multiple modular subtrees with behaviors
 		idle_behavior.perform_idle_behavior(delta_time, src) //Do some stupid shit while we have nothing to do
 		return
 
-	if(current_movement_target && get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
-		CancelActions()
-		return
+	if(current_movement_target)
+		if(!isatom(current_movement_target))
+			stack_trace("[pawn]'s current movement target is not an atom, rather a [current_movement_target.type]! Did you accidentally set it to a weakref?")
+			CancelActions()
+			return
 
-	for(var/i in current_behaviors)
-		var/datum/ai_behavior/current_behavior = i
+		if(get_dist(pawn, current_movement_target) > max_target_distance) //The distance is out of range
+			CancelActions()
+			return
 
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
@@ -248,13 +254,13 @@ multiple modular subtrees with behaviors
 	UnregisterSignal(pawn, COMSIG_MOB_LOGIN)
 	if(!continue_processing_when_client)
 		set_ai_status(AI_STATUS_OFF) //Can't do anything while player is connected
-	RegisterSignal(pawn, COMSIG_MOB_LOGOUT, .proc/on_sentience_lost)
+	RegisterSignal(pawn, COMSIG_MOB_LOGOUT, PROC_REF(on_sentience_lost))
 
 /datum/ai_controller/proc/on_sentience_lost()
 	SIGNAL_HANDLER
 	UnregisterSignal(pawn, COMSIG_MOB_LOGOUT)
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
-	RegisterSignal(pawn, COMSIG_MOB_LOGIN, .proc/on_sentience_gained)
+	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
 /datum/ai_controller/proc/get_access()
@@ -270,3 +276,8 @@ multiple modular subtrees with behaviors
 		if(iter_behavior.required_distance < minimum_distance)
 			minimum_distance = iter_behavior.required_distance
 	return minimum_distance
+
+/// If this controller is applied to a human subtype, this proc will be called to generate examine text
+/datum/ai_controller/proc/get_human_examine_text()
+	var/text = "[span_deadsay("[pawn.p_they(TRUE)] do[pawn.p_es()]n't appear to be [pawn.p_them()]self.")]"
+	return text

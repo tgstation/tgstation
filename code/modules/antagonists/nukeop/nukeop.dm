@@ -28,11 +28,15 @@
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
 		return
-	var/mob/living/carbon/human/H = owner.current
 
-	H.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
+	var/mob/living/carbon/human/operative = owner.current
 
-	H.equipOutfit(nukeop_outfit)
+	if(!nukeop_outfit) // this variable is null in instances where an antagonist datum is granted via enslaving the mind (/datum/mind/proc/enslave_mind_to_creator), like in golems.
+		return
+
+	operative.set_species(/datum/species/human) //Plasmamen burn up otherwise, and besides, all other species are vulnerable to asimov AIs. Let's standardize all operatives being human.
+
+	operative.equipOutfit(nukeop_outfit)
 	return TRUE
 
 /datum/antagonist/nukeop/greet()
@@ -80,7 +84,7 @@
 		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in GLOB.nuke_list
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
-			if(nuke.r_code == "ADMIN")
+			if(nuke.r_code == NUKE_CODE_UNSET)
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
@@ -150,8 +154,8 @@
 
 /datum/antagonist/nukeop/get_admin_commands()
 	. = ..()
-	.["Send to base"] = CALLBACK(src,.proc/admin_send_to_base)
-	.["Tell code"] = CALLBACK(src,.proc/admin_tell_code)
+	.["Send to base"] = CALLBACK(src, PROC_REF(admin_send_to_base))
+	.["Tell code"] = CALLBACK(src, PROC_REF(admin_tell_code))
 
 /datum/antagonist/nukeop/proc/admin_send_to_base(mob/admin)
 	owner.current.forceMove(pick(GLOB.nukeop_start))
@@ -197,7 +201,7 @@
 /datum/outfit/nuclear_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
 	booster.active = TRUE
-	H.update_inv_back()
+	H.update_worn_back()
 
 /datum/outfit/nuclear_operative_elite
 	name = "Nuclear Operative (Elite, Preview only)"
@@ -210,10 +214,10 @@
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
 	booster.active = TRUE
-	H.update_inv_back()
+	H.update_worn_back()
 	var/obj/item/shield/energy/shield = locate() in H.held_items
 	shield.icon_state = "[shield.base_icon_state]1"
-	H.update_inv_hands()
+	H.update_held_items()
 
 /datum/antagonist/nukeop/leader
 	name = "Nuclear Operative Leader"
@@ -225,14 +229,14 @@
 /datum/antagonist/nukeop/leader/memorize_code()
 	..()
 	if(nuke_team?.memorized_code)
-		var/obj/item/paper/P = new
-		P.info = "The nuclear authorization code is: <b>[nuke_team.memorized_code]</b>"
-		P.name = "nuclear bomb code"
+		var/obj/item/paper/nuke_code_paper = new
+		nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[nuke_team.memorized_code]</b>")
+		nuke_code_paper.name = "nuclear bomb code"
 		var/mob/living/carbon/human/H = owner.current
 		if(!istype(H))
-			P.forceMove(get_turf(H))
+			nuke_code_paper.forceMove(get_turf(H))
 		else
-			H.put_in_hands(P, TRUE)
+			H.put_in_hands(nuke_code_paper, TRUE)
 			H.update_icons()
 
 /datum/antagonist/nukeop/leader/give_alias()
@@ -244,25 +248,20 @@
 
 /datum/antagonist/nukeop/leader/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
-	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B></span>")
-	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID to another operative.</B></span>")
+	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
+	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID and radio to another operative.</B></span>")
 	if(!CONFIG_GET(flag/disable_warops))
 		to_chat(owner, "<span class='warningplain'><B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B></span>")
-
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/leader/on_gain()
 	. = ..()
 	if(!CONFIG_GET(flag/disable_warops))
-		var/obj/item/dukinuki = new challengeitem
-		var/mob/living/carbon/human/H = owner.current
-		if(!istype(H))
-			dukinuki.forceMove(H.drop_location())
-		else
-			H.put_in_hands(dukinuki, TRUE)
-		nuke_team.war_button_ref = WEAKREF(dukinuki)
-
-	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
+		var/mob/living/carbon/human/leader = owner.current
+		var/obj/item/war_declaration = new challengeitem(leader.drop_location())
+		leader.put_in_hands(war_declaration)
+		nuke_team.war_button_ref = WEAKREF(war_declaration)
+	addtimer(CALLBACK(src, PROC_REF(nuketeam_name_assign)), 1)
 
 /datum/antagonist/nukeop/leader/proc/nuketeam_name_assign()
 	if(!nuke_team)
@@ -307,7 +306,7 @@
 		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
 		if(nuke)
 			nuke_team.tracked_nuke = nuke
-			if(nuke.r_code == "ADMIN")
+			if(nuke.r_code == NUKE_CODE_UNSET)
 				nuke.r_code = nuke_team.memorized_code
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
@@ -318,7 +317,7 @@
 /datum/antagonist/nukeop/reinforcement
 	show_in_antagpanel = FALSE
 	send_to_spawnpoint = FALSE
-	nukeop_outfit = /datum/outfit/syndicate/no_crystals
+	nukeop_outfit = /datum/outfit/syndicate/reinforcement
 
 /datum/team/nuclear
 	var/syndicate_name

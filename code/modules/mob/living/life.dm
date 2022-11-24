@@ -21,7 +21,7 @@
 			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
 			send2tgs_adminless_only("Mob", msg, R_ADMIN)
-			log_game("[key_name(src)] was found to have no .loc with an attached client.")
+			src.log_message("was found to have no .loc with an attached client.", LOG_GAME)
 
 		// This is a temporary error tracker to make sure we've caught everything
 		else if (registered_z != T.z)
@@ -175,11 +175,11 @@
 /mob/living/proc/gravity_animate()
 	if(!get_filter("gravity"))
 		add_filter("gravity",1,list("type"="motion_blur", "x"=0, "y"=0))
-	INVOKE_ASYNC(src, .proc/gravity_pulse_animation)
+	INVOKE_ASYNC(src, PROC_REF(gravity_pulse_animation))
 
 /mob/living/proc/gravity_pulse_animation()
 	animate(get_filter("gravity"), y = 1, time = 10)
-	sleep(10)
+	sleep(1 SECONDS)
 	animate(get_filter("gravity"), y = 0, time = 10)
 
 /mob/living/proc/handle_high_gravity(gravity, delta_time, times_fired)

@@ -14,7 +14,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
 	name = "fresh produce" // so recipe text doesn't say 'snack'
-	max_volume = 100
+	max_volume = PLANT_REAGENT_VOLUME
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	/// type path, gets converted to item on New(). It's safe to assume it's always a seed item.
@@ -79,34 +79,22 @@
 		QDEL_NULL(seed)
 	return ..()
 
-/obj/item/food/grown/MakeEdible()
-	AddComponent(/datum/component/edible,\
-				initial_reagents = food_reagents,\
-				food_flags = food_flags,\
-				foodtypes = foodtypes,\
-				volume = max_volume,\
-				eat_time = eat_time,\
-				tastes = tastes,\
-				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness)
-
 /obj/item/food/grown/proc/make_dryable()
 	AddElement(/datum/element/dryable, type)
 
 /obj/item/food/grown/MakeLeaveTrash()
 	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
+		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, TYPE_PROC_REF(/obj/item/food/grown/, generate_trash))
 	return
 
-/// Callback proc for bonus behavior for generating trash of grown food. Used by [/datum/element/food_trash].
-/obj/item/food/grown/proc/generate_trash()
+/// Generates a piece of trash based on our plant item. Used by [/datum/element/food_trash].
+/// location - Optional. If passed, generates the item at the passed location instead of at src's drop location.
+/obj/item/food/grown/proc/generate_trash(atom/location)
 	// If this is some type of grown thing, we pass a seed arg into its Inititalize()
 	if(ispath(trash_type, /obj/item/grown) || ispath(trash_type, /obj/item/food/grown))
-		return new trash_type(src, seed)
+		return new trash_type(location || drop_location(), seed)
 
-	return new trash_type(src)
+	return new trash_type(location || drop_location())
 
 /obj/item/food/grown/grind_requirements()
 	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))

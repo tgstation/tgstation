@@ -3,8 +3,8 @@
 	desc = "Sneeki breeki."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	var/starting_tc = 0
 	/// The uplink flags of the implant uplink inside, only checked during initialisation so modifying it after initialisation will do nothing
 	var/uplink_flag = UPLINK_TRAITORS
@@ -16,7 +16,7 @@
 	if(!uplink_flag)
 		uplink_flag = src.uplink_flag
 	src.uplink_handler = uplink_handler
-	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, .proc/_component_removal)
+	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, PROC_REF(_component_removal))
 
 /obj/item/implant/uplink/implant(mob/living/carbon/target, mob/user, silent, force)
 	. = ..()

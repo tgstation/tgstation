@@ -15,6 +15,14 @@
 	/// Radio connection datum used by signalers.
 	var/datum/radio_frequency/radio_connection
 
+/datum/computer_file/program/signal_commander/on_start(mob/living/user)
+	. = ..()
+	set_frequency(signal_frequency)
+
+/datum/computer_file/program/signal_commander/kill_program(forced)
+	. = ..()
+	SSradio.remove_object(computer, signal_frequency)
+
 /datum/computer_file/program/signal_commander/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["frequency"] = signal_frequency
@@ -29,7 +37,7 @@
 		return
 	switch(action)
 		if("signal")
-			INVOKE_ASYNC(src, .proc/signal)
+			INVOKE_ASYNC(src, PROC_REF(signal))
 			. = TRUE
 		if("freq")
 			var/new_signal_frequency = sanitize_frequency(unformat_frequency(params["freq"]), TRUE)

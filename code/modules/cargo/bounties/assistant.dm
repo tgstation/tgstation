@@ -1,6 +1,6 @@
 /datum/bounty/item/assistant/strange_object
 	name = "Strange Object"
-	description = "Nanotrasen has taken an interest in strange objects. Find one in maint, and ship it off to CentCom right away."
+	description = "Nanotrasen has taken an interest in strange objects. Find one in maintenance, and ship it off to CentCom right away."
 	reward = CARGO_CRATE_VALUE * 2.4
 	wanted_types = list(/obj/item/relic = TRUE)
 
@@ -158,7 +158,7 @@
 
 /datum/bounty/item/assistant/corgimeat
 	name = "Raw Corgi Meat"
-	description = "The Syndicate recently stole all of CentCom's Corgi meat. Ship out a replacement immediately."
+	description = "The Syndicate recently stole all of CentCom's corgi meat. Ship out a replacement immediately."
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/item/food/meat/slab/corgi = TRUE)
 
@@ -178,14 +178,14 @@
 
 /datum/bounty/item/assistant/crayons
 	name = "Crayons"
-	description = "Dr Jones' kid ate all our crayons again. Please send us yours."
+	description = "Dr. Jones's kid ate all of our crayons again. Please send us yours."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 24
 	wanted_types = list(/obj/item/toy/crayon = TRUE)
 
 /datum/bounty/item/assistant/pens
 	name = "Pens"
-	description = "We are hosting the intergalactic pen balancing competition. We need you to send us some standardized ball point pens."
+	description = "We are hosting the intergalactic pen balancing competition. We need you to send us some standardized black ballpoint pens."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 10
 	include_subtypes = FALSE
@@ -198,14 +198,14 @@
 	wanted_types = list(/obj/structure/reagent_dispensers/watertank = TRUE)
 
 /datum/bounty/item/assistant/pneumatic_cannon
-	name = "Penumatic Cannon"
+	name = "Pneumatic Cannon"
 	description = "We're figuring out how hard we can launch supermatter shards out of a pneumatic cannon. Send us one as soon as possible."
 	reward = CARGO_CRATE_VALUE * 4
 	wanted_types = list(/obj/item/pneumatic_cannon/ghetto = TRUE)
 
 /datum/bounty/item/assistant/improvised_shells
 	name = "Improvised Shotgun Shells"
-	description = "Budget cuts are hitting our security deparetment pretty hard. Send some improvised shotgun shells when you can."
+	description = "Budget cuts are hitting our security department pretty hard. Send some improvised shotgun shells when you can."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 5
 	wanted_types = list(/obj/item/ammo_casing/shotgun/improvised = TRUE)

@@ -5,6 +5,7 @@ $include dbconfig.txt
 $include comms.txt
 $include resources.txt
 $include interviews.txt
+$include lua.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -199,6 +200,12 @@ ID_CONSOLE_JOBSLOT_DELAY 30
 ## allow players to initiate a map-change vote
 #ALLOW_VOTE_MAP
 
+## allow players to rock the vote, or to vote on the map again if they didn't like the last results
+#ALLOW_ROCK_THE_VOTE
+
+## the number of times you wish to allow players to rock the vote in a given shift
+MAX_ROCKING_VOTES 1
+
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
 
@@ -289,8 +296,12 @@ CHECK_RANDOMIZER
 # INVOKE_YOUTUBEDL youtube-dl
 
 ## In-game features
-##Toggle for having jobs load up from the .txt
-# LOAD_JOBS_FROM_TXT
+
+## Toggle for having jobs load up from the jobconfig.toml (or jobs.txt) file. Will use codebase defaults if commented out.
+## Jobs have specific "keys" tied to their in-game datums, those should sync up otherwise it will fail to load.
+## Setting Total/Spawn Positions to -1 will open unlimited join slots for it.
+## Playtime Requirements is in minutes, Required Account Age is in days.
+#LOAD_JOBS_FROM_TXT
 
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
@@ -304,6 +315,9 @@ ALLOW_HOLIDAYS
 
 ## Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
+
+## Uncomment to prevent machines syncing to the Science techweb by default.
+#NO_DEFAULT_TECHWEB_LINK
 
 ##Defines the ticklag for the world. Ticklag is the amount of time between game ticks (aka byond ticks) (in 1/10ths of a second).
 ##	This also controls the client network update rate, as well as the default client fps

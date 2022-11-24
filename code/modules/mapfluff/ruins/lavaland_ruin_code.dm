@@ -31,7 +31,7 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 40000)
 	build_path = /obj/item/golem_shell
-	category = list("Imported")
+	category = list(RND_CATEGORY_IMPORTED)
 
 /obj/item/golem_shell
 	name = "incomplete free golem shell"
@@ -75,7 +75,7 @@
 		/obj/item/stack/sheet/mineral/metal_hydrogen= /datum/species/golem/mhydrogen,
 	)
 
-	if(!istype(I, /obj/item/stack))
+	if(!isstack(I))
 		return
 	var/obj/item/stack/stuff_stack = I
 	var/species = golem_shell_species_types[stuff_stack.merge_type]

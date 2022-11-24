@@ -5,6 +5,8 @@
 	icon_state = "scanner"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_price = PAYCHECK_CREW * 5

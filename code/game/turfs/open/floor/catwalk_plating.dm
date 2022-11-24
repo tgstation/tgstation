@@ -44,12 +44,12 @@
 	if(!covered)
 		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 		layer = TURF_LAYER
-		plane = FLOOR_PLANE
+		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 		icon_state = "[catwalk_type]_below"
 	else
 		underfloor_accessibility = UNDERFLOOR_VISIBLE
 		layer = CATWALK_LAYER
-		plane = GAME_PLANE
+		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 		icon_state = "[catwalk_type]_above"
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	tool.play_tool_sound(src)

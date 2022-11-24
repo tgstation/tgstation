@@ -48,7 +48,7 @@
 	summoner.AddElement(/datum/element/forced_gravity, 1)
 	AddElement(/datum/element/forced_gravity, 1)
 
-/mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(oldLoc, dir)
+/mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	for(var/i in gravito_targets)
 		if(get_dist(src, i) > gravity_power_range)
@@ -59,7 +59,7 @@
 		return
 	A.AddElement(/datum/element/forced_gravity, new_gravity)
 	gravito_targets[A] = new_gravity
-	RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/__distance_check)
+	RegisterSignal(A, COMSIG_MOVABLE_MOVED, PROC_REF(__distance_check))
 	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/remove_gravity(atom/target)

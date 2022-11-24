@@ -17,23 +17,23 @@
 	if(..())
 		return
 	//moodlet
-	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/honorbound)
+	owner.add_mood_event("honorbound", /datum/mood_event/honorbound)
 	//checking spells cast by honorbound
-	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, .proc/spell_check)
-	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, .proc/staff_check)
+	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, PROC_REF(spell_check))
+	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(staff_check))
 	//signals that check for guilt
-	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, .proc/attackby_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_ATTACK_HAND, .proc/hand_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_ATTACK_PAW, .proc/paw_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_BULLET_ACT, .proc/bullet_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_HITBY, .proc/thrown_guilt)
+	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_guilt))
+	RegisterSignal(owner, COMSIG_ATOM_HULK_ATTACK, PROC_REF(hulk_guilt))
+	RegisterSignal(owner, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_guilt))
+	RegisterSignal(owner, COMSIG_ATOM_ATTACK_PAW, PROC_REF(paw_guilt))
+	RegisterSignal(owner, COMSIG_ATOM_BULLET_ACT, PROC_REF(bullet_guilt))
+	RegisterSignal(owner, COMSIG_ATOM_HITBY, PROC_REF(thrown_guilt))
 
 	//signal that checks for dishonorable attacks
-	RegisterSignal(owner, COMSIG_MOB_CLICKON, .proc/attack_honor)
+	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(attack_honor))
 
 /datum/mutation/human/honorbound/on_losing(mob/living/carbon/human/owner)
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "honorbound")
+	owner.clear_mood_event("honorbound")
 	UnregisterSignal(owner, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_HULK_ATTACK,
@@ -159,7 +159,7 @@
 
 /datum/mutation/human/honorbound/proc/thrown_guilt(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if(istype(thrown_movable, /obj/item))
+	if(isitem(thrown_movable))
 		var/mob/living/honorbound = source
 		var/obj/item/thrown_item = thrown_movable
 		var/mob/thrown_by = thrown_item.thrownby?.resolve()
@@ -189,17 +189,17 @@
 	switch(school)
 		if(SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION)
 			return
-		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN)
+		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN, SCHOOL_SANGUINE)
 			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
 			lightningbolt(user)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/banished)
+			owner.add_mood_event("honorbound", /datum/mood_event/banished)
 			user.dna.remove_mutation(/datum/mutation/human/honorbound)
 			user.mind.holy_role = NONE
 			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		else
 			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [school] magic!"))
 			lightningbolt(user)
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
+			owner.add_mood_event("honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
 
 /datum/action/cooldown/spell/pointed/declare_evil
 	name = "Declare Evil"
@@ -244,7 +244,7 @@
 	if(QDELETED(honor_mut))
 		return FALSE
 
-	RegisterSignal(honor_mut, COMSIG_PARENT_QDELETING, .proc/on_honor_mutation_lost)
+	RegisterSignal(honor_mut, COMSIG_PARENT_QDELETING, PROC_REF(on_honor_mutation_lost))
 	honor_mutation = honor_mut
 	return ..()
 

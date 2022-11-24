@@ -9,7 +9,7 @@
 	see_in_dark = NIGHTVISION_FOV_RANGE
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
-	deathsound = 'sound/voice/borg_deathsound.ogg'
+	death_sound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
@@ -44,7 +44,8 @@
 	var/law_change_counter = 0
 	var/obj/machinery/camera/builtInCamera = null
 	var/updating = FALSE //portable camera camerachunk update
-
+	///Whether we have been emagged
+	var/emagged = FALSE
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
 
@@ -62,10 +63,12 @@
 	diag_hud_set_health()
 	add_sensors()
 	ADD_TRAIT(src, TRAIT_ADVANCEDTOOLUSER, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
-	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_LITERATE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
+
+	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_MADNESS_IMMUNE, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_MARTIAL_ARTS_IMMUNE, ROUNDSTART_TRAIT)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
@@ -79,23 +82,24 @@
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/tablet/integrated(src)
-	modularInterface.layer = ABOVE_HUD_PLANE
-	modularInterface.plane = ABOVE_HUD_PLANE
-	modularInterface.saved_identification = real_name || name
-	if(istype(src, /mob/living/silicon/robot))
-		modularInterface.saved_job = "Cyborg"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/robot)
-	if(istype(src, /mob/living/silicon/ai))
+	if(isAI(src))
 		modularInterface.saved_job = "AI"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
-	if(istype(src, /mob/living/silicon/pai))
+	if(ispAI(src))
 		modularInterface.saved_job = "pAI Messenger"
-		modularInterface.install_component(new /obj/item/computer_hardware/hard_drive/small/ai)
+
+	modularInterface.layer = ABOVE_HUD_PLANE
+	SET_PLANE_EXPLICIT(modularInterface, ABOVE_HUD_PLANE, src)
+	modularInterface.saved_identification = real_name || name
+
+/mob/living/silicon/robot/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/cyborg(src)
+		modularInterface.saved_job = "Cyborg"
+	return ..()
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
-		modularInterface.saved_identification = real_name
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/cyborg/syndicate(src)
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
@@ -121,7 +125,7 @@
 	if(in_cooldown)
 		return
 
-	addtimer(CALLBACK(src, .proc/show_alarms), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(show_alarms)), 3 SECONDS)
 
 /mob/living/silicon/proc/show_alarms()
 	if(length(alarms_to_show) < 5)
@@ -225,6 +229,7 @@
 	return
 
 /mob/living/silicon/proc/statelaws(force = 0)
+	laws_sanity_check()
 	// Create a cache of our laws and lawcheck flags before we do anything else.
 	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
 	var/lawcache_zeroth = laws.zeroth
@@ -239,12 +244,12 @@
 	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
 	say("[radiomod] Current Active Laws:", forced = forced_log_message)
-	sleep(10)
+	sleep(1 SECONDS)
 
 	if (lawcache_zeroth)
 		if (force || (lawcache_zeroth in lawcache_lawcheck))
 			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
-			sleep(10)
+			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
@@ -253,7 +258,7 @@
 			continue
 		if (force || (law in lawcache_hackedcheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
-			sleep(10)
+			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_ion))
 		var/law = lawcache_ion[index]
@@ -262,7 +267,7 @@
 			return
 		if (force || (law in lawcache_ioncheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message)
-			sleep(10)
+			sleep(1 SECONDS)
 
 	var/number = 1
 	for (var/index in 1 to length(lawcache_inherent))
@@ -272,7 +277,7 @@
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
-			sleep(10)
+			sleep(1 SECONDS)
 
 	for (var/index in 1 to length(lawcache_supplied))
 		var/law = lawcache_supplied[index]
@@ -282,10 +287,11 @@
 		if (force || (law in lawcache_lawcheck))
 			say("[radiomod] [number]. [law]", forced = forced_log_message)
 			number++
-			sleep(10)
+			sleep(1 SECONDS)
 
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
+	laws_sanity_check()
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
 	var/law_display = "Yes"
@@ -444,7 +450,7 @@
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
-	var/mob/living/silicon/robot/robo = modularInterface.borgo
+	var/mob/living/silicon/robot/robo = modularInterface.silicon_owner
 	if(istype(robo))
 		modularInterface.borglog += "[station_time_timestamp()] - [string]"
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()

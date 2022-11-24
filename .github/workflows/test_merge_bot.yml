@@ -1,0 +1,41 @@
+# On a cron, will comment on any PRs that have been test merged.
+# Expects secret GET_TEST_MERGES_URL, a URL that, on GET, will return an array of objects with the schema
+# { round_id, datetime, test_merges, server, url }
+# You can see the moth.fans implementation in Rust here: https://github.com/Mothblocks/mothbus/blob/41fec056824edba0ffdfa39882b67739bf475d83/src/routes/recent_test_merges.rs#L30
+# This is hosted on https://bus.moth.fans/recent-test-merges.json.
+name: Test Merge Detector
+on:
+  schedule:
+  - cron: "*/30 * * * *"
+  workflow_dispatch:
+jobs:
+  test_merge_bot:
+      name: Test Merge Detector
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Check for GET_TEST_MERGES_URL
+          id: secrets_set
+          env:
+            ENABLER_SECRET: ${{ secrets.GET_TEST_MERGES_URL }}
+          run: |
+            unset SECRET_EXISTS
+            if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
+            echo "GET_TEST_MERGES_URL=$SECRET_EXISTS" >> $GITHUB_OUTPUT
+        - name: Checkout
+          if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
+          uses: actions/checkout@v3
+        - name: Prepare module
+          if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
+          run: |
+            # This is needed because node-fetch needs import and doesn't work with require :/
+            echo "{\"type\": \"module\"}" > package.json
+            npm install node-fetch
+        - name: Check for test merges
+          if: steps.secrets_set.outputs.GET_TEST_MERGES_URL
+          uses: actions/github-script@v6
+          env:
+            GET_TEST_MERGES_URL: ${{ secrets.GET_TEST_MERGES_URL }}
+          with:
+            script: |
+              const { processTestMerges } = await import('${{ github.workspace }}/tools/test_merge_bot/main.js')
+              await processTestMerges({ github, context })

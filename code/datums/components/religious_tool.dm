@@ -29,8 +29,8 @@
 		catalyst_type = override_catalyst_type
 
 /datum/component/religious_tool/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/AttemptActions)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(AttemptActions))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/religious_tool/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
@@ -55,7 +55,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(the_item, catalyst_type))
-		INVOKE_ASYNC(src, /datum.proc/ui_interact, user) //asynchronous to avoid sleeping in a signal
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) //asynchronous to avoid sleeping in a signal
 
 	/**********Sacrificing**********/
 	else if(operation_flags & RELIGION_TOOL_SACRIFICE)
@@ -122,7 +122,7 @@
 	if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 		to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
 		return
-	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		to_chat(user,span_warning("You cannot select a sect at this time."))
 		return
 	if(GLOB.religious_sect)
@@ -152,7 +152,7 @@
 	if(performing_rite)
 		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")
 		return
-	if(!user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
+	if(!user.canUseTopic(parent, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		to_chat(user,span_warning("You are not close enough to perform the rite."))
 		return
 	performing_rite = new path(parent)

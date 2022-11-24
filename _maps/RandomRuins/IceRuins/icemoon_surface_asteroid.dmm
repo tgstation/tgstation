@@ -8,11 +8,11 @@
 /area/icemoon/surface)
 "h" = (
 /obj/effect/mob_spawn/corpse/human/skeleton,
-/obj/item/clothing/suit/bronze,
+/obj/item/clothing/suit/costume/bronze,
 /obj/item/clothing/shoes/bronze,
-/obj/item/clothing/head/bronze,
+/obj/item/clothing/head/costume/bronze,
 /turf/open/floor/bronze{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 "m" = (
@@ -20,12 +20,12 @@
 	name = "empowered bronze spear"
 	},
 /turf/open/floor/bronze{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 "o" = (
 /turf/open/floor/bronze{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 "A" = (
@@ -34,7 +34,7 @@
 /area/icemoon/surface)
 "B" = (
 /turf/open/genturf,
-/area/mine/unexplored)
+/area/lavaland/surface/outdoors/unexplored)
 "C" = (
 /obj/structure/fluff/clockwork/blind_eye,
 /turf/open/floor/bronze,
@@ -66,7 +66,7 @@
 "L" = (
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender,
 /turf/open/floor/bronze{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 "M" = (
@@ -91,11 +91,11 @@
 /area/icemoon/surface)
 "Y" = (
 /obj/item/paper{
-	info = "We tried to use the power of this moon to bring him back, but we've failed... I've contained what remains of his power here... if you find this, make sure those Nar-Sian Dogs don't last a second."
+	default_raw_text = "We tried to use the power of this moon to bring him back, but we've failed... I've contained what remains of his power here... if you find this, make sure those Nar-Sian Dogs don't last a second."
 	},
 /obj/item/pen,
 /turf/open/floor/bronze{
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/surface)
 

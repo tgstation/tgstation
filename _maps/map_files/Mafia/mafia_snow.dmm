@@ -18,7 +18,7 @@
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "h" = (
-/obj/structure/grille/indestructable,
+/obj/structure/grille/indestructible,
 /turf/open/floor/plating,
 /area/centcom/mafia)
 "i" = (
@@ -100,10 +100,6 @@
 /turf/open/lava/plasma/mafia,
 /area/centcom/mafia)
 "x" = (
-/obj/machinery/door/airlock/external/ruin{
-	max_integrity = 9999;
-	opacity = 0
-	},
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
 	id = "mafia";
@@ -111,6 +107,9 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external/glass/ruin{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/mafia)
 "y" = (
@@ -122,9 +121,6 @@
 /turf/open/lava/plasma/mafia,
 /area/centcom/mafia)
 "A" = (
-/obj/machinery/door/airlock/external/ruin{
-	max_integrity = 9999
-	},
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
 	id = "mafia";
@@ -132,6 +128,9 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external/glass/ruin{
+	max_integrity = 9999
+	},
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "B" = (

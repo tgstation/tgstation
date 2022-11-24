@@ -24,7 +24,7 @@
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), .proc/on_analyze)
+	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), PROC_REF(on_analyze))
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
@@ -38,7 +38,7 @@
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src))
+	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src))
 		return
 
 	if(cooldown)
@@ -79,7 +79,7 @@
 		else
 			to_chat(user, span_warning("[src]'s barometer function says a storm will land in approximately [butchertime(fixed)]."))
 	cooldown = TRUE
-	addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/analyzer, ping)), cooldown_time)
 
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
@@ -191,3 +191,17 @@
 	// we let the join apply newlines so we do need handholding
 	to_chat(user, examine_block(jointext(message, "\n")), type = MESSAGE_TYPE_INFO)
 	return TRUE
+
+/obj/item/analyzer/ranged
+	desc = "A hand-held long-range environmental scanner which reports current gas levels."
+	name = "long-range gas analyzer"
+	icon_state = "analyzerranged"
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron = 100, /datum/material/glass = 20, /datum/material/gold = 300, /datum/material/bluespace=200)
+	grind_results = list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
+
+/obj/item/analyzer/ranged/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!can_see(user, target, 15))
+		return
+	atmos_scan(user, (target.return_analyzable_air() ? target : get_turf(target)))

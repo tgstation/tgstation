@@ -1,6 +1,6 @@
-/mob/living/silicon/Moved(oldLoc, dir)
+/mob/living/silicon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	update_camera_location(oldLoc)
+	update_camera_location(old_loc)
 
 /mob/living/silicon/forceMove(atom/destination)
 	. = ..()
@@ -18,5 +18,5 @@
 	oldLoc = get_turf(oldLoc)
 	if(!QDELETED(builtInCamera) && !updating && oldLoc != get_turf(src))
 		updating = TRUE
-		addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), SILICON_CAMERA_BUFFER)
+		addtimer(CALLBACK(src, PROC_REF(do_camera_update), oldLoc), SILICON_CAMERA_BUFFER)
 #undef SILICON_CAMERA_BUFFER

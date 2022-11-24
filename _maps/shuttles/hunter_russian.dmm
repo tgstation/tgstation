@@ -76,7 +76,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter/russian)
 "eL" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -379,10 +379,10 @@
 /obj/item/storage/box/drinkingglasses,
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
 /obj/item/crowbar/large/old,
 /obj/item/lighter/greyscale,
 /turf/open/floor/pod/dark,
@@ -401,7 +401,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)
 "EK" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced/survival_pod{
@@ -454,18 +454,18 @@
 /area/shuttle/hunter/russian)
 "IV" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
 	pixel_x = -4
 	},
 /obj/effect/turf_decal/siding/red{
@@ -495,19 +495,15 @@
 /area/shuttle/hunter/russian)
 "JS" = (
 /obj/docking_port/mobile{
-	dheight = 3;
-	dwidth = 3;
-	height = 13;
-	id = "huntership";
+	shuttle_id = "huntership";
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "hunter shuttle";
-	rechargeTime = 1800;
-	width = 15
+	rechargeTime = 1800
 	},
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
-	id = "pirateship_home";
+	shuttle_id = "pirate_home";
 	name = "Deep Space";
 	width = 17
 	},

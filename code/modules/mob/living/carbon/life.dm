@@ -60,18 +60,18 @@
 	if((times_fired % next_breath) == 0 || failed_last_breath)
 		breathe(delta_time, times_fired) //Breathe per 4 ticks if healthy, down to 2 if our lungs or heart are damaged, unless suffocating
 		if(failed_last_breath)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "suffocation", /datum/mood_event/suffocation)
+			add_mood_event("suffocation", /datum/mood_event/suffocation)
 		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")
+			clear_mood_event("suffocation")
 	else
-		if(istype(loc, /obj/))
+		if(isobj(loc))
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src,0)
 
 //Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe(delta_time, times_fired)
 	var/obj/item/organ/internal/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
+	if(SEND_SIGNAL(src, COMSIG_CARBON_ATTEMPT_BREATHE) & COMSIG_CARBON_BLOCK_BREATH)
 		return
 
 	SEND_SIGNAL(src, COMSIG_CARBON_PRE_BREATHE)
@@ -94,7 +94,7 @@
 		losebreath--
 		if(prob(10))
 			emote("gasp")
-		if(istype(loc, /obj/))
+		if(isobj(loc))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
 	else
@@ -114,7 +114,7 @@
 
 				breath = loc.remove_air(breath_moles)
 		else //Breathe from loc as obj again
-			if(istype(loc, /obj/))
+			if(isobj(loc))
 				var/obj/loc_as_obj = loc
 				loc_as_obj.handle_internal_lifeform(src,0)
 
@@ -219,7 +219,7 @@
 		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			clear_mood_event("chemical_euphoria")
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
 				Sleeping(max(AmountSleeping() + 40, 200))
@@ -227,21 +227,21 @@
 			clear_alert(ALERT_TOO_MUCH_N2O)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+			add_mood_event("chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else
-			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+			clear_mood_event("chemical_euphoria")
 			clear_alert(ALERT_TOO_MUCH_N2O)
 	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+		clear_mood_event("chemical_euphoria")
 		clear_alert(ALERT_TOO_MUCH_N2O)
 
 	//BZ (Facepunch port of their Agent B)
 	if(breath_gases[/datum/gas/bz])
 		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
 		if(bz_partialpressure > 1)
-			hallucination += 10
+			adjust_hallucinations(20 SECONDS)
 		else if(bz_partialpressure > 0.01)
-			hallucination += 5
+			adjust_hallucinations(10 SECONDS)
 
 	//NITRIUM
 	if(breath_gases[/datum/gas/nitrium])
@@ -269,32 +269,32 @@
 		switch(miasma_partialpressure)
 			if(0.25 to 5)
 				// At lower pp, give out a little warning
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				clear_mood_event("smell")
 				if(prob(5))
 					to_chat(src, span_notice("There is an unpleasant smell in the air."))
 			if(5 to 20)
 				//At somewhat higher pp, warning becomes more obvious
 				if(prob(15))
 					to_chat(src, span_warning("You smell something horribly decayed inside this room."))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
+					add_mood_event("smell", /datum/mood_event/disgust/bad_smell)
 			if(15 to 30)
 				//Small chance to vomit. By now, people have internals on anyway
 				if(prob(5))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 					vomit()
 			if(30 to INFINITY)
 				//Higher chance to vomit. Let the horror start
 				if(prob(25))
 					to_chat(src, span_warning("The stench of rotting carcasses is unbearable!"))
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
+					add_mood_event("smell", /datum/mood_event/disgust/nauseating_stench)
 					vomit()
 			else
-				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+				clear_mood_event("smell")
 
 	//Clear all moods if no miasma at all
 	else
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
+		clear_mood_event("smell")
 
 	breath.garbage_collect()
 
@@ -303,24 +303,26 @@
 
 	return TRUE
 
-//Fourth and final link in a breath chain
+/// Fourth and final link in a breath chain
 /mob/living/carbon/proc/handle_breath_temperature(datum/gas_mixture/breath)
 	// The air you breathe out should match your body temperature
 	breath.temperature = bodytemperature
 
+/// Attempts to take a breath from the external or internal air tank.
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
-	if(internal)
-		if(internal.loc != src)
-			internal = null
-			update_internals_hud_icon(0)
-		else if ((!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS)) && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-			internal = null
-			update_internals_hud_icon(0)
-		else
-			update_internals_hud_icon(1)
-			. = internal.remove_air_volume(volume_needed)
-			if(!.)
-				return FALSE //to differentiate between no internals and active, but empty internals
+	if(invalid_internals())
+		// Unexpectely lost breathing apparatus and ability to breathe from the internal air tank.
+		cutoff_internals()
+		return
+	if (external)
+		. = external.remove_air_volume(volume_needed)
+	else if (internal)
+		. = internal.remove_air_volume(volume_needed)
+	else
+		// Return without taking a breath if there is no air tank.
+		return
+	// To differentiate between no internals and active, but empty internals.
+	return . || FALSE
 
 /mob/living/carbon/proc/handle_blood(delta_time, times_fired)
 	return
@@ -337,7 +339,11 @@
 		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/obj/item/organ/internal/organ as anything in internal_organs)
-			organ.on_death(delta_time, times_fired) //Needed so organs decay while inside the body.
+			// On-death is where organ decay is handled
+			organ.on_death(delta_time, times_fired)
+			// We need to re-check the stat every organ, as one of our others may have revived us
+			if(stat != DEAD)
+				break
 		return
 
 	// NOTE: internal_organs_slot is sorted by GLOB.organ_process_order on insertion
@@ -412,12 +418,6 @@
 		blur_eyes(1 * delta_time)
 		if(DT_PROB(2.5, delta_time))
 			AdjustSleeping(10 SECONDS)
-
-	if(silent)
-		silent = max(silent - (0.5 * delta_time), 0)
-
-	if(hallucination)
-		handle_hallucinations(delta_time, times_fired)
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
@@ -596,7 +596,7 @@
 		return
 
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
-	reagents.metabolize(src, delta_time, times_fired, can_overdose=FALSE, liverless = TRUE)
+	reagents.metabolize(src, delta_time, times_fired, can_overdose=TRUE, liverless = TRUE)
 
 	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
 		return

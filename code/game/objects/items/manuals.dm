@@ -414,13 +414,13 @@
 	starting_title = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
 	page_link = "Guide_to_toxins"
 
-/obj/item/book/manual/wiki/ordnance/suicide_act(mob/user)
+/obj/item/book/manual/wiki/ordnance/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message(span_suicide("[user] starts dancing to the Rhumba Beat! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	if (!QDELETED(H))
 		H.emote("spin")
-		sleep(20)
+		sleep(2 SECONDS)
 		for(var/obj/item/W in H)
 			H.dropItemToGround(W)
 			if(prob(50))
@@ -429,12 +429,12 @@
 		for(var/obj/item/bodypart/part as anything in H.bodyparts)
 			part.adjustBleedStacks(5)
 		H.gib_animation()
-		sleep(3)
+		sleep(0.3 SECONDS)
 		H.adjustBruteLoss(1000) //to make the body super-bloody
 		H.spawn_gibs()
 		H.spill_organs()
 		H.spread_bodyparts()
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/book/manual/wiki/plumbing
 	name = "Chemical Factories Without Narcotics"

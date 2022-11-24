@@ -579,7 +579,7 @@
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/mob/living/carbon/M = holder.my_atom
 	var/location = get_turf(M)
-	if(istype(M, /mob/living/carbon))
+	if(iscarbon(M))
 		if(ismonkey(M))
 			M.gib()
 		else
@@ -882,7 +882,6 @@
 		do_teleport(nearby_mob, get_turf(holder.my_atom), 3, no_effects=TRUE)
 		nearby_mob.Knockdown(20, TRUE)
 		nearby_mob.add_atom_colour("#cebfff", WASHABLE_COLOUR_PRIORITY)
-		to_chat()
 		do_sparks(3,FALSE,nearby_mob)
 	clear_products(holder, step_volume_added)
 

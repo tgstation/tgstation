@@ -1,0 +1,90 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/station/maintenance/department/security)
+"d" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"m" = (
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/decoration/glowstick,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/security)
+"X" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+m
+d
+a
+X
+X
+"}
+(2,1,1) = {"
+a
+d
+a
+X
+X
+"}
+(3,1,1) = {"
+a
+d
+a
+X
+X
+"}
+(4,1,1) = {"
+P
+d
+a
+a
+a
+"}
+(5,1,1) = {"
+w
+d
+d
+d
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+I
+a
+"}

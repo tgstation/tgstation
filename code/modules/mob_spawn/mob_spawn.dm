@@ -74,8 +74,7 @@
 			spawned_human.skin_tone = skin_tone
 		else
 			spawned_human.skin_tone = random_skin_tone()
-		spawned_human.update_hair()
-		spawned_human.update_body()
+		spawned_human.update_body(is_creating = TRUE)
 
 /obj/effect/mob_spawn/proc/name_mob(mob/living/spawned_mob, forced_name)
 	var/chosen_name
@@ -163,7 +162,7 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
-	log_game("[key_name(user)] became a [prompt_name]")
+	user.log_message("became a [prompt_name].", LOG_GAME)
 	create(user)
 
 /obj/effect/mob_spawn/ghost_role/special(mob/living/spawned_mob, mob/mob_possessor)
@@ -212,10 +211,10 @@
 	. = ..()
 	switch(spawn_when)
 		if(CORPSE_INSTANT)
-			INVOKE_ASYNC(src, .proc/create)
+			INVOKE_ASYNC(src, PROC_REF(create))
 		if(CORPSE_ROUNDSTART)
 			if(mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))
-				INVOKE_ASYNC(src, .proc/create)
+				INVOKE_ASYNC(src, PROC_REF(create))
 
 /obj/effect/mob_spawn/corpse/special(mob/living/spawned_mob)
 	. = ..()
@@ -255,13 +254,15 @@
 	. = ..()
 	if(conceal_presence)
 		// We don't want corpse PDAs to show up in the messenger list.
-		var/obj/item/modular_computer/tablet/pda/messenger = locate(/obj/item/modular_computer/tablet/pda/) in spawned_human
+		var/obj/item/modular_computer/tablet/pda/messenger = locate() in spawned_human
 		if(messenger)
-			messenger.invisible = TRUE
+			var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
+			if(message_app)
+				message_app.invisible = TRUE
 		// Or on crew monitors
 		var/obj/item/clothing/under/sensor_clothes = spawned_human.w_uniform
 		if(istype(sensor_clothes))
-			sensor_clothes.sensor_mode = NO_SENSORS
+			sensor_clothes.sensor_mode = SENSOR_OFF
 			spawned_human.update_suit_sensors()
 
 //don't use this in subtypes, just add 1000 brute yourself. that being said, this is a type that has 1000 brute. it doesn't really have a home anywhere else, it just needs to exist

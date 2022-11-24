@@ -1,5 +1,5 @@
 /obj/structure/sign
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
@@ -25,7 +25,7 @@
 /obj/item/sign
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/signs.dmi'
 	icon_state = "backing"
 	inhand_icon_state = "backing"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

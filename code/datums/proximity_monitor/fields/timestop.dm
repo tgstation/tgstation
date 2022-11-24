@@ -35,7 +35,7 @@
 		if(stand.summoner && HAS_TRAIT(stand.summoner, TRAIT_TIME_STOP_IMMUNE)) //It would only make sense that a person's stand would also be immune.
 			immune[stand] = TRUE
 	if(start)
-		INVOKE_ASYNC(src, .proc/timestop)
+		INVOKE_ASYNC(src, PROC_REF(timestop))
 
 /obj/effect/timestop/Destroy()
 	QDEL_NULL(chronofield)
@@ -93,7 +93,7 @@
 		return FALSE
 	if(immune[A]) //a little special logic but yes immune things don't freeze
 		if(channelled)
-			RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel, override = TRUE)
+			RegisterSignal(A, COMSIG_MOVABLE_MOVED, PROC_REF(atom_broke_channel), override = TRUE)
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A
@@ -103,9 +103,9 @@
 	var/frozen = TRUE
 	if(isliving(A))
 		freeze_mob(A)
-	else if(istype(A, /obj/projectile))
+	else if(isprojectile(A))
 		freeze_projectile(A)
-	else if(istype(A, /obj/vehicle/sealed/mecha))
+	else if(ismecha(A))
 		freeze_mecha(A)
 	else if((ismachinery(A) && !istype(A, /obj/machinery/light)) || isstructure(A)) //Special exception for light fixtures since recoloring causes them to change light
 		freeze_structure(A)
@@ -121,8 +121,8 @@
 	A.move_resist = INFINITY
 	global_frozen_atoms[A] = src
 	into_the_negative_zone(A)
-	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, .proc/unfreeze_atom)
-	RegisterSignal(A, COMSIG_ITEM_PICKUP, .proc/unfreeze_atom)
+	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(unfreeze_atom))
+	RegisterSignal(A, COMSIG_ITEM_PICKUP, PROC_REF(unfreeze_atom))
 
 	return TRUE
 
@@ -139,9 +139,9 @@
 		unfreeze_throwing(A)
 	if(isliving(A))
 		unfreeze_mob(A)
-	else if(istype(A, /obj/projectile))
+	else if(isprojectile(A))
 		unfreeze_projectile(A)
-	else if(istype(A, /obj/vehicle/sealed/mecha))
+	else if(ismecha(A))
 		unfreeze_mecha(A)
 
 	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)

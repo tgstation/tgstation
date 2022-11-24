@@ -79,6 +79,15 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/paintings_manager,
 	/datum/admins/proc/display_tags,
 	/datum/admins/proc/fishing_calculator,
+	/client/proc/list_bombers,
+	/client/proc/list_signalers,
+	/client/proc/list_law_changes,
+	/client/proc/show_manifest,
+	/client/proc/list_dna,
+	/client/proc/list_fingerprints,
+	/client/proc/message_pda, /*send a message to somebody on PDA*/
+	/client/proc/fax_panel, /*send a paper to fax*/
+	/datum/admins/proc/trophy_manager,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -108,6 +117,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/smite,
 	/client/proc/admin_away,
 	/client/proc/add_mob_ability,
+	/client/proc/remove_mob_ability,
 	/datum/admins/proc/station_traits_panel,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
@@ -121,6 +131,7 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/datum/admins/proc/restart,
 	/datum/admins/proc/end_round,
 	/datum/admins/proc/delay,
+	/datum/admins/proc/delay_round_end,
 	/datum/admins/proc/toggleaban,
 	/client/proc/everyone_random,
 	/datum/admins/proc/toggleAI,
@@ -134,7 +145,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/panicbunker,
 	/client/proc/toggle_interviews,
 	/client/proc/toggle_hub,
-	/client/proc/toggle_cdn
+	/client/proc/toggle_cdn,
+	/client/proc/generate_job_config,
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
@@ -167,12 +179,14 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_del_log,
 	/client/proc/outfit_manager,
 	/client/proc/open_colorblind_test,
+	/client/proc/debug_plane_masters,
 	/client/proc/generate_wikichem_list,
 	/client/proc/modify_goals,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/jump_to_ruin,
+	/client/proc/unload_ctf,
 	/client/proc/clear_dynamic_transit,
 	/client/proc/run_empty_query,
 	/client/proc/toggle_medal_disable,
@@ -199,8 +213,10 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_admin_toggle_fov,
 	/client/proc/cmd_admin_debug_traitor_objectives,
 	/client/proc/spawn_debug_full_crew,
+	/client/proc/open_lua_editor,
 	/client/proc/validate_puzzgrids,
 	/client/proc/debug_spell_requirements,
+	/client/proc/debug_hallucination_weighted_list_per_type,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -208,75 +224,6 @@ GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissio
 GLOBAL_PROTECT(admin_verbs_permissions)
 GLOBAL_LIST_INIT(admin_verbs_poll, list(/client/proc/poll_panel))
 GLOBAL_PROTECT(admin_verbs_poll)
-
-//verbs which can be hidden - needs work
-GLOBAL_LIST_INIT(admin_verbs_hideable, list(
-	/client/proc/set_ooc,
-	/client/proc/reset_ooc,
-	/client/proc/deadmin,
-	/datum/admins/proc/show_traitor_panel,
-	/datum/admins/proc/show_skill_panel,
-	/datum/admins/proc/toggleenter,
-	/datum/admins/proc/toggleguests,
-	/datum/admins/proc/announce,
-	/datum/admins/proc/set_admin_notice,
-	/client/proc/admin_ghost,
-	/client/proc/toggle_view_range,
-	/client/proc/cmd_admin_subtle_message,
-	/client/proc/cmd_admin_headset_message,
-	/client/proc/cmd_admin_check_contents,
-	/datum/admins/proc/access_news_network,
-	/client/proc/admin_call_shuttle,
-	/client/proc/admin_cancel_shuttle,
-	/client/proc/cmd_admin_direct_narrate,
-	/client/proc/cmd_admin_world_narrate,
-	/client/proc/cmd_admin_local_narrate,
-	/client/proc/play_local_sound,
-	/client/proc/play_sound,
-	/client/proc/set_round_end_sound,
-	/client/proc/cmd_select_equipment,
-	/client/proc/cmd_admin_gib_self,
-	/client/proc/drop_bomb,
-	/client/proc/drop_dynex_bomb,
-	/client/proc/get_dynex_range,
-	/client/proc/get_dynex_power,
-	/client/proc/set_dynex_scale,
-	/client/proc/cinematic,
-	/client/proc/cmd_admin_add_freeform_ai_law,
-	/client/proc/cmd_admin_create_centcom_report,
-	/client/proc/cmd_change_command_name,
-	/client/proc/object_say,
-	/client/proc/toggle_random_events,
-	/datum/admins/proc/startnow,
-	/datum/admins/proc/restart,
-	/datum/admins/proc/delay,
-	/datum/admins/proc/toggleaban,
-	/client/proc/everyone_random,
-	/datum/admins/proc/toggleAI,
-	/client/proc/restart_controller,
-	/client/proc/cmd_admin_list_open_jobs,
-	/client/proc/callproc,
-	/client/proc/callproc_datum,
-	/client/proc/Debug2,
-	/client/proc/reload_admins,
-	/client/proc/cmd_debug_make_powernets,
-	/client/proc/cmd_debug_mob_lists,
-	/client/proc/cmd_debug_del_all,
-	/client/proc/cmd_debug_force_del_all,
-	/client/proc/cmd_debug_hard_del_all,
-	/client/proc/enable_mapping_verbs,
-	/proc/possess,
-	/proc/release,
-	/client/proc/reload_admins,
-	/client/proc/panicbunker,
-	/client/proc/toggle_interviews,
-	/client/proc/admin_change_sec_level,
-	/client/proc/toggle_nuke,
-	/client/proc/cmd_display_del_log,
-	/client/proc/toggle_combo_hud,
-	/client/proc/debug_huds
-	))
-GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/add_admin_verbs()
 	if(holder)
@@ -382,7 +329,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		log_admin("[key_name(usr)] admin ghosted.")
 		message_admins("[key_name_admin(usr)] admin ghosted.")
 		var/mob/body = mob
-		body.ghostize(1)
+		body.ghostize(TRUE)
 		init_verbs()
 		if(body && !body.key)
 			body.key = "@[key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
@@ -412,6 +359,54 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		if(!isobserver(usr) && SSticker.HasRoundStarted())
 			message_admins("[key_name_admin(usr)] checked antagonists.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_bombers()
+	set name = "List Bombers"
+	set category = "Admin.Game"
+	if(!holder)
+		return
+	holder.list_bombers()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Bombers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_signalers()
+	set name = "List Signalers"
+	set category = "Admin.Game"
+	if(!holder)
+		return
+	holder.list_signalers()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Signalers") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_law_changes()
+	set name = "List Law Changes"
+	set category = "Debug"
+	if(!holder)
+		return
+	holder.list_law_changes()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Law Changes") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/show_manifest()
+	set name = "Show Manifest"
+	set category = "Debug"
+	if(!holder)
+		return
+	holder.show_manifest()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Manifest") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_dna()
+	set name = "List DNA"
+	set category = "Debug"
+	if(!holder)
+		return
+	holder.list_dna()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List DNA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/list_fingerprints()
+	set name = "List Fingerprints"
+	set category = "Debug"
+	if(!holder)
+		return
+	holder.list_fingerprints()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "List Fingerprints") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/ban_panel()
 	set name = "Banning Panel"
@@ -444,24 +439,38 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	holder.poll_list_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Server Poll Management") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/findStealthKey(txt)
-	if(txt)
-		for(var/P in GLOB.stealthminID)
-			if(GLOB.stealthminID[P] == txt)
-				return P
-	txt = GLOB.stealthminID[ckey]
-	return txt
+/// Returns this client's stealthed ckey
+/client/proc/getStealthKey()
+	return GLOB.stealthminID[ckey]
+
+/// Takes a stealthed ckey as input, returns the true key it represents
+/proc/findTrueKey(stealth_key)
+	if(!stealth_key)
+		return
+	for(var/potentialKey in GLOB.stealthminID)
+		if(GLOB.stealthminID[potentialKey] == stealth_key)
+			return potentialKey
+
+/// Hands back a stealth ckey to use, guarenteed to be unique
+/proc/generateStealthCkey()
+	var/guess = rand(0, 1000)
+	var/text_guess
+	var/valid_found = FALSE
+	while(valid_found == FALSE)
+		valid_found = TRUE
+		text_guess = "@[num2text(guess)]"
+		// We take a guess at some number, and if it's not in the existing stealthmin list we exit
+		for(var/key in GLOB.stealthminID)
+			// If it is in the list tho, we up one number, and redo the loop
+			if(GLOB.stealthminID[key] == text_guess)
+				guess += 1
+				valid_found = FALSE
+				break
+
+	return text_guess
 
 /client/proc/createStealthKey()
-	var/num = (rand(0,1000))
-	var/i = 0
-	while(i == 0)
-		i = 1
-		for(var/P in GLOB.stealthminID)
-			if(num == GLOB.stealthminID[P])
-				num++
-				i = 0
-	GLOB.stealthminID["[ckey]"] = "@[num2text(num)]"
+	GLOB.stealthminID["[ckey]"] = generateStealthCkey()
 
 /client/proc/stealth()
 	set category = "Admin"
@@ -737,7 +746,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!istype(T))
 		to_chat(src, span_notice("You can only give a disease to a mob of type /mob/living."), confidential = TRUE)
 		return
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, /proc/cmp_typepaths_asc)
+	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!D)
 		return
 	T.ForceContractDisease(new D, FALSE, TRUE)
@@ -811,39 +820,16 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	log_admin("[src] re-adminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
 
-/client/proc/populate_world(amount = 50 as num)
+/client/proc/populate_world(amount = 50)
 	set name = "Populate World"
 	set category = "Debug"
 	set desc = "(\"Amount of mobs to create\") Populate the world with test mobs."
 
-	if (amount > 0)
-		var/area/area
-		var/list/candidates
-		var/turf/open/floor/tile
-		var/j,k
-
-		for (var/i = 1 to amount)
-			j = 100
-
-			do
-				area = pick(GLOB.the_station_areas)
-
-				if (area)
-
-					candidates = get_area_turfs(area)
-
-					if (length(candidates))
-						k = 100
-
-						do
-							tile = pick(candidates)
-						while ((!tile || !istype(tile)) && --k > 0)
-
-						if (tile)
-							var/mob/living/carbon/human/hooman = new(tile)
-							hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
-							testing("Spawned test mob at [COORD(tile)]")
-			while (!area && --j > 0)
+	for (var/i in 1 to amount)
+		var/turf/tile = get_safe_random_station_turf()
+		var/mob/living/carbon/human/hooman = new(tile)
+		hooman.equipOutfit(pick(subtypesof(/datum/outfit)))
+		testing("Spawned test mob at [get_area_name(tile, TRUE)] ([tile.x],[tile.y],[tile.z])")
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"

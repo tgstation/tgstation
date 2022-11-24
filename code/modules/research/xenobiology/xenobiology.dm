@@ -3,7 +3,7 @@
 /obj/item/slime_extract
 	name = "slime extract"
 	desc = "Goo extracted from a slime. Legends claim these to have \"magical powers\"."
-	icon = 'icons/mob/slimes.dmi'
+	icon = 'icons/mob/simple/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -156,7 +156,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
 			var/obj/item/food/food_item = new food_type
-			food_item.mark_silver_slime_reaction()
+			ADD_TRAIT(food_item, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 			if(!user.put_in_active_hand(food_item))
 				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -270,7 +270,7 @@
 				to_chat(user, span_warning("Your glow is already enhanced!"))
 				return
 			species.update_glow(user, 5)
-			addtimer(CALLBACK(species, /datum/species/jelly/luminescent.proc/update_glow, user, LUMINESCENT_DEFAULT_GLOW), 600)
+			addtimer(CALLBACK(species, TYPE_PROC_REF(/datum/species/jelly/luminescent, update_glow), user, LUMINESCENT_DEFAULT_GLOW), 600)
 			to_chat(user, span_notice("You start glowing brighter."))
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -459,6 +459,7 @@
 			if(do_after(user, 60, target = user))
 				to_chat(user, span_userdanger("You explode!"))
 				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
+				user.investigate_log("has been gibbed by an oil slime extract explosion.", INVESTIGATE_DEATHS)
 				user.gib()
 				return
 			to_chat(user, span_notice("You stop feeding [src], and the feeling passes."))
@@ -477,7 +478,7 @@
 				return
 			to_chat(user, span_notice("You feel your skin harden and become more resistant."))
 			species.armor += 25
-			addtimer(CALLBACK(src, .proc/reset_armor, species), 1200)
+			addtimer(CALLBACK(src, PROC_REF(reset_armor), species), 1200)
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -650,7 +651,7 @@
 /obj/item/slimepotion/slime/docility
 	name = "docility potion"
 	desc = "A potent chemical mix that nullifies a slime's hunger, causing it to become docile and tame."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potsilver"
 
 /obj/item/slimepotion/slime/docility/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -681,7 +682,7 @@
 /obj/item/slimepotion/slime/sentience
 	name = "intelligence potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpink"
 	var/list/not_interested = list()
 	var/being_used = FALSE
@@ -719,12 +720,8 @@
 		if(isanimal(dumb_mob))
 			var/mob/living/simple_animal/smart_animal = dumb_mob
 			smart_animal.sentience_act()
-		to_chat(dumb_mob, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
-		to_chat(dumb_mob, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
-		if(dumb_mob.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
-			to_chat(dumb_mob, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
+		dumb_mob.mind.add_antag_datum(/datum/antagonist/sentient_creature)
 		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
-		dumb_mob.copy_languages(user, LANGUAGE_MASTER)
 		after_success(user, dumb_mob)
 		qdel(src)
 	else
@@ -747,7 +744,7 @@
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potorange"
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
@@ -790,8 +787,10 @@
 	to_chat(user, span_notice("You drink the potion then place your hands on [switchy_mob]..."))
 
 	user.mind.transfer_to(switchy_mob)
+	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
 	switchy_mob.faction = user.faction.Copy()
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
+	switchy_mob.update_atom_languages()
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
 	to_chat(switchy_mob, span_warning("You are now [switchy_mob]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
@@ -804,7 +803,7 @@
 /obj/item/slimepotion/slime/steroid
 	name = "slime steroid"
 	desc = "A potent chemical mix that will cause a baby slime to generate more extract."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potred"
 
 /obj/item/slimepotion/slime/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -828,13 +827,13 @@
 /obj/item/slimepotion/enhancer
 	name = "extract enhancer"
 	desc = "A potent chemical mix that will give a slime extract an additional use."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potpurple"
 
 /obj/item/slimepotion/slime/stabilizer
 	name = "slime stabilizer"
 	desc = "A potent chemical mix that will reduce the chance of a slime mutating."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potcyan"
 
 /obj/item/slimepotion/slime/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -855,7 +854,7 @@
 /obj/item/slimepotion/slime/mutator
 	name = "slime mutator"
 	desc = "A potent chemical mix that will increase the chance of a slime mutating."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgreen"
 
 /obj/item/slimepotion/slime/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
@@ -880,7 +879,7 @@
 /obj/item/slimepotion/speed
 	name = "slime speed potion"
 	desc = "A potent chemical mix that will remove the slowdown from any item."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potyellow"
 
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user, proximity)
@@ -916,7 +915,7 @@
 /obj/item/slimepotion/fireproof
 	name = "slime chill potion"
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potblue"
 	resistance_flags = FIRE_PROOF
 	var/uses = 3
@@ -948,7 +947,7 @@
 /obj/item/slimepotion/genderchange
 	name = "gender change potion"
 	desc = "An interesting chemical mix that changes the biological gender of what its applied to. Cannot be used on things that lack gender entirely."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potlightpink"
 
 /obj/item/slimepotion/genderchange/attack(mob/living/L, mob/user)
@@ -972,7 +971,7 @@
 /obj/item/slimepotion/slime/renaming
 	name = "renaming potion"
 	desc = "A potion that allows a self-aware being to change what name it subconciously presents to the world."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgreen"
 
 	var/being_used = FALSE
@@ -996,7 +995,7 @@
 
 	M.visible_message(span_notice("[span_name("[M]")] has a new name, [span_name("[new_name]")]."), span_notice("Your old name of [span_name("[M.real_name]")] fades away, and your new name [span_name("[new_name]")] anchors itself in your mind."))
 	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(M)], letting them rename themselves into [new_name].")
-	log_game("[key_name(user)] used [src] on [key_name(M)], letting them rename themselves into [new_name].")
+	user.log_message("used [src] on [key_name(M)], letting them rename themselves into [new_name].", LOG_GAME)
 
 	// pass null as first arg to not update records or ID/PDA
 	M.fully_replace_character_name(null, new_name)
@@ -1006,7 +1005,7 @@
 /obj/item/slimepotion/slime/slimeradio
 	name = "bluespace radio potion"
 	desc = "A strange chemical that grants those who ingest it the ability to broadcast and receive subscape radio waves."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potgrey"
 
 /obj/item/slimepotion/slime/slimeradio/attack(mob/living/M, mob/user)

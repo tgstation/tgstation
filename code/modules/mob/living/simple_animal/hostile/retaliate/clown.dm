@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown
 	name = "Clown"
 	desc = "A denizen of clown planet."
-	icon = 'icons/mob/clown_mobs.dmi'
+	icon = 'icons/mob/simple/clown_mobs.dmi'
 	icon_state = "clown"
 	icon_living = "clown"
 	icon_dead = "clown_dead"
@@ -41,7 +41,8 @@
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
 	. = ..()
 	if(attack_reagent)
-		AddElement(/datum/element/venomous, attack_reagent, list(1, 5))
+		var/static/list/injection_range = list(1, 5)
+		AddElement(/datum/element/venomous, attack_reagent, injection_range)
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
@@ -169,7 +170,7 @@
 	. = ..()
 	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
 	playsound(owner, 'sound/items/bikehorn.ogg', 60)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
 	StartCooldown()
 
 /mob/living/simple_animal/hostile/retaliate/clown/honkling
@@ -390,7 +391,7 @@
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
 	loot = list(/obj/effect/gibspawner/xeno/bodypartless, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless)
-	deathsound = 'sound/misc/sadtrombone.ogg'
+	death_sound = 'sound/misc/sadtrombone.ogg'
 	///This is the list of items we are ready to regurgitate,
 	var/list/prank_pouch = list()
 
@@ -400,7 +401,7 @@
 	spit.Grant(src)
 
 	add_cell_sample()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/attacked_by(obj/item/I, mob/living/user)
@@ -436,22 +437,25 @@
 ///This proc eats the atom, certain funny items are stored directly in the prank pouch while bananas grant a heal based on their potency and the peels are retained in the pouch.
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/eat_atom(atom/movable/eaten_atom)
 
-	var/static/funny_items = list(/obj/item/food/pie/cream,
-								/obj/item/food/grown/tomato,
-								/obj/item/food/meatclown)
+	var/static/funny_items = list(
+		/obj/item/food/pie/cream,
+		/obj/item/food/grown/tomato,
+		/obj/item/food/meatclown,
+	)
 
 	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom
 
-	else if(istype(eaten_atom, /obj/item/food/grown/banana))
-		var/obj/item/food/grown/banana/banana_morsel = eaten_atom
-		adjustBruteLoss(-banana_morsel.seed.potency * 0.25)
-		prank_pouch += banana_morsel.generate_trash(src)
-		qdel(eaten_atom)
 	else
+		if(istype(eaten_atom, /obj/item/food/grown/banana))
+			var/obj/item/food/grown/banana/banana_morsel = eaten_atom
+			adjustBruteLoss(-banana_morsel.seed.potency * 0.25)
+			prank_pouch += banana_morsel.generate_trash(src)
+
 		qdel(eaten_atom)
+
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	flick("glutton_mouth", src)
 
@@ -474,6 +478,7 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "regurgitate"
 	check_flags = AB_CHECK_CONSCIOUS
+	melee_cooldown_time = 0 SECONDS
 	click_to_activate = TRUE
 
 /datum/action/cooldown/regurgitate/set_click_ability(mob/on_who)
@@ -495,7 +500,7 @@
 	on_who.icon_state = initial(on_who.icon_state)
 	on_who.update_appearance(UPDATE_ICON)
 
-/datum/action/cooldown/regurgitate/IsAvailable()
+/datum/action/cooldown/regurgitate/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE

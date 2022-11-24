@@ -1,7 +1,8 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Blink, Box, Button, Dimmer, Flex, Icon, Input, Modal, Section, TextArea } from '../components';
+import { Blink, Box, Button, Dimmer, Flex, Icon, Modal, Section, TextArea } from '../components';
+import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 
@@ -202,11 +203,7 @@ const PageBuyingShuttle = (props, context) => {
 };
 
 const PageChangingStatus = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { maxStatusLineLength } = data;
-
-  const [lineOne, setLineOne] = useLocalState(context, 'lineOne', data.lineOne);
-  const [lineTwo, setLineTwo] = useLocalState(context, 'lineTwo', data.lineTwo);
+  const { act } = useBackend(context);
 
   return (
     <Box>
@@ -218,85 +215,7 @@ const PageChangingStatus = (props, context) => {
         />
       </Section>
 
-      <Section>
-        <Flex direction="column">
-          <Flex.Item>
-            <Button
-              icon="times"
-              content="Clear Alert"
-              color="bad"
-              onClick={() => act('setStatusPicture', { picture: 'blank' })}
-            />
-          </Flex.Item>
-
-          <Flex.Item mt={1}>
-            <Button
-              icon="check-square-o"
-              content="Default"
-              onClick={() => act('setStatusPicture', { picture: 'default' })}
-            />
-
-            <Button
-              icon="bell-o"
-              content="Red Alert"
-              onClick={() => act('setStatusPicture', { picture: 'redalert' })}
-            />
-
-            <Button
-              icon="exclamation-triangle"
-              content="Lockdown"
-              onClick={() => act('setStatusPicture', { picture: 'lockdown' })}
-            />
-
-            <Button
-              icon="exclamation-circle"
-              content="Biohazard"
-              onClick={() => act('setStatusPicture', { picture: 'biohazard' })}
-            />
-
-            <Button
-              icon="space-shuttle"
-              content="Shuttle ETA"
-              onClick={() => act('setStatusPicture', { picture: 'shuttle' })}
-            />
-          </Flex.Item>
-        </Flex>
-      </Section>
-
-      <Section title="Message">
-        <Flex direction="column">
-          <Flex.Item mb={1}>
-            <Input
-              maxLength={maxStatusLineLength}
-              value={lineOne}
-              width="200px"
-              onChange={(_, value) => setLineOne(value)}
-            />
-          </Flex.Item>
-
-          <Flex.Item mb={1}>
-            <Input
-              maxLength={maxStatusLineLength}
-              value={lineTwo}
-              width="200px"
-              onChange={(_, value) => setLineTwo(value)}
-            />
-          </Flex.Item>
-
-          <Flex.Item>
-            <Button
-              icon="comment-o"
-              content="Message"
-              onClick={() =>
-                act('setStatusMessage', {
-                  lineOne,
-                  lineTwo,
-                })
-              }
-            />
-          </Flex.Item>
-        </Flex>
-      </Section>
+      <StatusDisplayControls />
     </Box>
   );
 };

@@ -12,7 +12,7 @@
 /mob/living/simple_animal/hostile/asteroid/fugu
 	name = "wumborian fugu"
 	desc = "The wumborian fugu rapidly increases its body mass in order to ward off its prey. Great care should be taken to avoid it while it's in this state as it is nearly invincible, but it cannot maintain its form forever."
-	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	icon = 'icons/mob/simple/lavaland/64x64megafauna.dmi'
 	icon_state = "Fugu0"
 	icon_living = "Fugu0"
 	icon_aggro = "Fugu0"
@@ -107,7 +107,7 @@
 	F.environment_smash = ENVIRONMENT_SMASH_WALLS
 	F.mob_size = MOB_SIZE_LARGE
 	F.speed = 1
-	addtimer(CALLBACK(F, /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate), 100)
+	addtimer(CALLBACK(F, TYPE_PROC_REF(/mob/living/simple_animal/hostile/asteroid/fugu, Deflate)), 100)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
@@ -134,7 +134,7 @@
 /obj/item/fugu_gland
 	name = "wumborian fugu gland"
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "fugu_gland"
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL

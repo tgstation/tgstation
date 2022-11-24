@@ -25,17 +25,17 @@
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
 	. = ..()
-	if(slot != ITEM_SLOT_NECK)
+	if(!(slot & ITEM_SLOT_NECK))
 		return
 	if(!ishuman(user) || !IS_HERETIC_OR_MONSTER(user))
 		return
 
-	ADD_TRAIT(user, heretic_only_trait, "[CLOTHING_TRAIT] [REF(src)]")
+	ADD_TRAIT(user, heretic_only_trait, "[CLOTHING_TRAIT]_[REF(src)]")
 	user.update_sight()
 
 /obj/item/clothing/neck/eldritch_amulet/dropped(mob/user)
 	. = ..()
-	REMOVE_TRAIT(user, heretic_only_trait, "[CLOTHING_TRAIT] [REF(src)]")
+	REMOVE_TRAIT(user, heretic_only_trait, "[CLOTHING_TRAIT]_[REF(src)]")
 	user.update_sight()
 
 /obj/item/clothing/neck/eldritch_amulet/piercing

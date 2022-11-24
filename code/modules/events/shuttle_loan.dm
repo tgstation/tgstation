@@ -7,16 +7,44 @@
 #define ITS_HIP_TO 7
 #define MY_GOD_JC 8
 
-
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
 	typepath = /datum/round_event/shuttle_loan
-	max_occurrences = 1
+	max_occurrences = 3
 	earliest_start = 7 MINUTES
+	category = EVENT_CATEGORY_BUREAUCRATIC
+	description = "If cargo accepts the offer, fills the shuttle with loot and/or enemies."
+	///The types of loan offers that the crew can recieve.
+	var/list/shuttle_loan_offers = list(
+		ANTIDOTE_NEEDED,
+		DEPARTMENT_RESUPPLY,
+		HIJACK_SYNDIE,
+		ITS_HIP_TO,
+		MY_GOD_JC,
+		PIZZA_DELIVERY,
+		RUSKY_PARTY,
+		SPIDER_GIFT,
+	)
+	///The types of loan events already run (and to be excluded if the event triggers).
+	var/list/run_events = list()
+
+/datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
+	. = ..()
+
+	for(var/datum/round_event/running_event in SSevents.running)
+		if(istype(running_event, /datum/round_event/shuttle_loan)) //Make sure two of these don't happen at once.
+			return FALSE
+
+/datum/round_event_control/shuttle_loan/admin_setup()
+	if(!check_rights(R_FUN))
+		return ADMIN_CANCEL_EVENT
+
+	for(var/datum/round_event/shuttle_loan/loan_event in SSevents.running)
+		loan_event.kill() //Force out the old event for a new one to take its place
 
 /datum/round_event/shuttle_loan
-	announceWhen = 1
-	endWhen = 500
+	announce_when = 1
+	end_when = 500
 	var/dispatched = FALSE
 	var/dispatch_type = 0
 	var/bonus_points = 10000
@@ -24,7 +52,19 @@
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
+	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't call control, because it hasn't been set yet
+		var/list/loan_list = list()
+		loan_list += loan_event_control.shuttle_loan_offers
+		var/list/run_events = loan_event_control.run_events //Ask the round_event_control which loans have already been offered
+
+		loan_list -= run_events //Remove the already offered loans from the candidate list
+
+		if(!length(loan_list)) //If we somehow run out of loans, they all become available again
+			loan_list += loan_event_control.shuttle_loan_offers
+			run_events.Cut()
+
+		dispatch_type = pick(loan_list) //Pick a loan to offer, and add it to the blacklist
+		loan_event_control.run_events += dispatch_type
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
@@ -60,10 +100,10 @@
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		D.adjust_money(bonus_points)
-	endWhen = activeFor + 1
+	end_when = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
-	SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
+	SSshuttle.supply.destination = SSshuttle.getDock("cargo_home")
 	SSshuttle.supply.setTimer(3000)
 
 	switch(dispatch_type)
@@ -97,9 +137,9 @@
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
 		if(SSshuttle.supply.mode != SHUTTLE_IDLE)
-			endWhen = activeFor
+			end_when = activeFor
 		else
-			endWhen = activeFor + 1
+			end_when = activeFor + 1
 
 /datum/round_event/shuttle_loan/end()
 	if(SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched)
@@ -167,7 +207,7 @@
 				var/turf/T
 				for(var/i in 1 to 10)
 					if(prob(15))
-						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
+						shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle)
 					else if(prob(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/syringe)
 					else if(prob(25))
@@ -175,8 +215,8 @@
 					T = pick_n_take(empty_shuttle_turfs)
 					new infected_assistant(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/magnitis)
+				shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle/pierrot_throat)
+				shuttle_spawns.Add(/obj/item/reagent_containers/cup/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(
@@ -256,7 +296,7 @@
 
 /obj/item/paper/fluff/bee_objectives
 	name = "Objectives of a Bee Liberation Front Operative"
-	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
+	default_raw_text = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
 
 /obj/machinery/syndicatebomb/shuttle_loan/Initialize(mapload)
 	. = ..()
@@ -267,10 +307,10 @@
 
 /obj/item/paper/fluff/cargo/bomb
 	name = "hastly scribbled note"
-	info = "GOOD LUCK!"
+	default_raw_text = "GOOD LUCK!"
 
 /obj/item/paper/fluff/cargo/bomb/allyourbase
-	info = "Somebody set us up the bomb!"
+	default_raw_text = "Somebody set us up the bomb!"
 
 #undef HIJACK_SYNDIE
 #undef RUSKY_PARTY

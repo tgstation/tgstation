@@ -16,6 +16,8 @@
 	/// This is who currently owns the action, and most often, this is who is using the action if it is triggered
 	/// This can be the same as "target" but is not ALWAYS the same - this is set and unset with Grant() and Remove()
 	var/mob/owner
+	/// If False, the owner of this action does not get a hud and cannot activate it on their own
+	var/owner_has_control = TRUE
 	/// Flags that will determine of the owner / user of the action can... use the action
 	var/check_flags = NONE
 	/// The style the button's tooltips appear to be
@@ -30,6 +32,7 @@
 	var/icon_icon = 'icons/hud/actions.dmi'
 	/// This is the icon state for the icon that appears OVER the button background
 	var/button_icon_state = "default"
+	var/button_overlay_state
 	///List of all mobs that are viewing our action button -> A unique movable for them to view.
 	var/list/viewers = list()
 
@@ -39,13 +42,13 @@
 /// Links the passed target to our action, registering any relevant signals
 /datum/action/proc/link_to(Target)
 	target = Target
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref), override = TRUE)
 
 	if(isatom(target))
-		RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/update_icon_on_signal)
+		RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, PROC_REF(update_icon_on_signal))
 
 	if(istype(target, /datum/mind))
-		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_target_mind_swapped)
+		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, PROC_REF(on_target_mind_swapped))
 
 /datum/action/Destroy()
 	if(owner)
@@ -74,20 +77,21 @@
 		Remove(owner)
 	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, grant_to)
 	owner = grant_to
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref), override = TRUE)
 
 	// Register some signals based on our check_flags
 	// so that our button icon updates when relevant
 	if(check_flags & AB_CHECK_CONSCIOUS)
-		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/update_icon_on_signal)
+		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(update_icon_on_signal))
 	if(check_flags & AB_CHECK_IMMOBILE)
-		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), .proc/update_icon_on_signal)
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), PROC_REF(update_icon_on_signal))
 	if(check_flags & AB_CHECK_HANDS_BLOCKED)
-		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), .proc/update_icon_on_signal)
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), PROC_REF(update_icon_on_signal))
 	if(check_flags & AB_CHECK_LYING)
-		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/update_icon_on_signal)
+		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(update_icon_on_signal))
 
-	GiveAction(grant_to)
+	if(owner_has_control)
+		GiveAction(grant_to)
 
 /// Remove the passed mob from being owner of our action
 /datum/action/proc/Remove(mob/remove_from)
@@ -113,31 +117,42 @@
 		))
 
 		if(target == owner)
-			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref)
+			RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_ref))
 		owner = null
 
 /// Actually triggers the effects of the action.
 /// Called when the on-screen button is clicked, for example.
 /datum/action/proc/Trigger(trigger_flags)
-	if(!IsAvailable())
+	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
 		return FALSE
 	return TRUE
 
-/// Whether our action is currently available to use or not
-/datum/action/proc/IsAvailable()
+/**
+ * Whether our action is currently available to use or not
+ * * feedback - If true this is being called to check if we have any messages to show to the owner
+ */
+/datum/action/proc/IsAvailable(feedback = FALSE)
 	if(!owner)
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
+		if (feedback)
+			owner.balloon_alert(owner, "hands blocked!")
 		return FALSE
 	if((check_flags & AB_CHECK_IMMOBILE) && HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+		if (feedback)
+			owner.balloon_alert(owner, "can't move!")
 		return FALSE
 	if((check_flags & AB_CHECK_LYING) && isliving(owner))
-		var/mob/living/action_user = owner
-		if(action_user.body_position == LYING_DOWN)
+		var/mob/living/action_owner = owner
+		if(action_owner.body_position == LYING_DOWN)
+			if (feedback)
+				owner.balloon_alert(owner, "must stand up!")
 			return FALSE
 	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+		if (feedback)
+			owner.balloon_alert(owner, "unconscious!")
 		return FALSE
 	return TRUE
 
@@ -165,6 +180,11 @@
 				button.icon_state = background_icon_state
 
 		ApplyIcon(button, force)
+
+	if(button_overlay_state)
+		button.cut_overlay(button.button_overlay)
+		button.button_overlay = mutable_appearance(icon = 'icons/hud/actions.dmi', icon_state = button_overlay_state)
+		button.add_overlay(button.button_overlay)
 
 	var/available = IsAvailable()
 	if(available)

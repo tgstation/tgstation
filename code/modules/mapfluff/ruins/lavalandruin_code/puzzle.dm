@@ -1,6 +1,6 @@
 /obj/effect/sliding_puzzle
 	name = "Sliding puzzle generator"
-	icon = 'icons/obj/balloons.dmi' //mapping
+	icon = 'icons/obj/toys/balloons.dmi' //mapping
 	icon_state = "syndballoon"
 	invisibility = INVISIBILITY_ABSTRACT
 	anchored = TRUE
@@ -240,7 +240,7 @@
 		animate(src, pixel_x=rand(-5,5), pixel_y=rand(-2,2), time=1)
 	QDEL_IN(src,COLLAPSE_DURATION)
 
-/obj/structure/puzzle_element/Moved()
+/obj/structure/puzzle_element/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(source)
 		source.validate()
@@ -284,6 +284,7 @@
 /obj/effect/sliding_puzzle/prison/Destroy()
 	if(prisoner)
 		to_chat(prisoner,span_userdanger("With the cube broken by force, you can feel your body falling apart."))
+		prisoner.investigate_log("has died from their prison puzzle being destroyed.", INVESTIGATE_DEATHS)
 		prisoner.death()
 		qdel(prisoner)
 	. = ..()

@@ -12,7 +12,7 @@
 	flags_1 = NO_SCREENTIPS_1
 	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
-	canSmoothWith = list(SMOOTH_GROUP_OPEN_FLOOR, SMOOTH_GROUP_TURF_OPEN)
+	canSmoothWith = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_OPEN_FLOOR)
 
 	thermal_conductivity = 0.04
 	heat_capacity = 10000
@@ -154,7 +154,7 @@
 /turf/open/floor/proc/crush()
 	break_tile()
 
-/turf/open/floor/ChangeTurf(path, new_baseturf, flags)
+/turf/open/floor/ChangeTurf(path, new_baseturfs, flags)
 	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
 	if(!ispath(path, /turf/open/floor))
@@ -250,6 +250,9 @@
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
+			var/obj/structure/girder/girder = locate() in src
+			if(girder)
+				return girder.rcd_vals(user, the_rcd)
 			return rcd_result_with_memory(
 				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
 				src, RCD_MEMORY_WALL,
@@ -277,6 +280,10 @@
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
+			var/obj/structure/girder/girder = locate() in src
+			if(girder)
+				return girder.rcd_act(user, the_rcd, passed_mode)
+
 			to_chat(user, span_notice("You build a wall."))
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
@@ -313,6 +320,7 @@
 				new_airlock.req_access = new_airlock.electronics.accesses
 			if(new_airlock.electronics.unres_sides)
 				new_airlock.unres_sides = new_airlock.electronics.unres_sides
+				new_airlock.unres_sensor = TRUE
 			if(new_airlock.electronics.passed_name)
 				new_airlock.name = sanitize(new_airlock.electronics.passed_name)
 			if(new_airlock.electronics.passed_cycle_id)
@@ -322,9 +330,10 @@
 			new_airlock.update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
+			var/old_turf_name = name
 			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
 				return FALSE
-			to_chat(user, span_notice("You deconstruct [src]."))
+			to_chat(user, span_notice("You deconstruct the [old_turf_name]."))
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)

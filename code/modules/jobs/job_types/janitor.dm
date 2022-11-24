@@ -5,9 +5,10 @@
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 1
-	supervisors = "the head of personnel"
+	supervisors = SUPERVISOR_HOP
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "JANITOR"
 
 	outfit = /datum/outfit/job/janitor
 	plasmaman_outfit = /datum/outfit/plasmaman/janitor
@@ -20,7 +21,7 @@
 		/datum/job_department/service,
 		)
 
-	family_heirlooms = list(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket, /obj/item/paper/fluff/stations/soap)
+	family_heirlooms = list(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/cup/bucket, /obj/item/paper/fluff/stations/soap)
 
 	mail_goodies = list(
 		/obj/item/grenade/chem_grenade/cleaner = 30,
@@ -29,6 +30,8 @@
 	)
 	rpg_title = "Groundskeeper"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
+
+	job_tone = "slip"
 
 
 /datum/outfit/job/janitor
@@ -42,12 +45,12 @@
 
 /datum/outfit/job/janitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
-	if(GARBAGEDAY in SSevents.holidays)
+	if(check_holidays(GARBAGEDAY))
 		backpack_contents += list(/obj/item/gun/ballistic/revolver)
 		r_pocket = /obj/item/ammo_box/a357
 
 /datum/outfit/job/janitor/get_types_to_preload()
 	. = ..()
-	if(GARBAGEDAY in SSevents.holidays)
+	if(check_holidays(GARBAGEDAY))
 		. += /obj/item/gun/ballistic/revolver
 		. += /obj/item/ammo_box/a357

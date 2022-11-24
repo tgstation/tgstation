@@ -2,7 +2,7 @@
 	name = "Eldritch Demon"
 	real_name = "Eldritch Demon"
 	desc = "A horror from beyond this realm."
-	icon = 'icons/mob/eldritch_mobs.dmi'
+	icon = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
 	gender = NEUTER
 	mob_biotypes = NONE
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -28,7 +28,7 @@
 	movement_type = GROUND
 	pressure_resistance = 100
 	del_on_death = TRUE
-	deathmessage = "implodes into itself."
+	death_message = "implodes into itself."
 	loot = list(/obj/effect/gibspawner/human)
 	faction = list(FACTION_HERETIC)
 	simple_mob_flags = SILENCE_RANGED_MESSAGE
@@ -53,8 +53,8 @@
 	melee_damage_upper = 10
 	maxHealth = 65
 	health = 65
-	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/internal/eyes)
+	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
+	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/left, /obj/item/organ/internal/eyes)
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
 		/datum/action/cooldown/spell/list_target/telepathy/eldritch,
@@ -77,7 +77,7 @@
 		linker_action_path = /datum/action/cooldown/spell/pointed/manse_link, \
 		link_message = on_link_message, \
 		unlink_message = on_unlink_message, \
-		post_unlink_callback = CALLBACK(src, .proc/after_unlink), \
+		post_unlink_callback = CALLBACK(src, PROC_REF(after_unlink)), \
 		speech_action_background_icon_state = "bg_ecult", \
 	)
 
@@ -102,7 +102,7 @@
 	SpinAnimation(5, 1)
 	last_target = WEAKREF(attacked_target)
 
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	var/rotation_degree = (360 / 3)
 	if(movement_dir & WEST || movement_dir & SOUTH)
@@ -120,7 +120,7 @@
 	if(QDELETED(unlinked_mob) || unlinked_mob.stat == DEAD)
 		return
 
-	INVOKE_ASYNC(unlinked_mob, /mob.proc/emote, "scream")
+	INVOKE_ASYNC(unlinked_mob, TYPE_PROC_REF(/mob, emote), "scream")
 	unlinked_mob.AdjustParalyzed(0.5 SECONDS) //micro stun
 
 // What if we took a linked list... But made it a mob?
@@ -175,7 +175,7 @@
 		worm_length = 3 //code breaks below 3, let's just not allow it.
 
 	oldloc = loc
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/update_chain_links)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(update_chain_links))
 	if(!spawn_bodyparts)
 		return
 
@@ -301,7 +301,7 @@
 	AttackingTarget()
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/AttackingTarget()
-	if(istype(target, /obj/item/bodypart/r_arm) || istype(target, /obj/item/bodypart/l_arm))
+	if(istype(target, /obj/item/bodypart/arm))
 		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
 		qdel(target)
 		heal()
@@ -356,7 +356,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/aoe/rust_conversion/small,
 		/datum/action/cooldown/spell/basic_projectile/rust_wave/short,
@@ -370,7 +370,7 @@
 		icon_state = "rust_walker_s"
 	update_appearance(UPDATE_ICON_STATE)
 
-/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved()
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
@@ -396,7 +396,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/pointed/cleave,
@@ -414,9 +414,9 @@
 	health = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_MOBS
+	sight = SEE_MOBS|SEE_BLACKNESS
 	actions_to_add = list(
-		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/shapeshift/eldritch,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/emp/eldritch,
 	)
