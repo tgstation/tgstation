@@ -159,12 +159,21 @@
 			if(occupants)
 				SSexplosions.low_mov_atom += occupants
 
-/obj/vehicle/sealed/mecha/emp_act(severity)
+/obj/vehicle/sealed/mecha/emp_act(severity, ignore_beacons = FALSE)
 	. = ..()
-	if (. & EMP_PROTECT_SELF)
+	if(. & EMP_PROTECT_SELF)
 		return
+	if(!(. & EMP_PROTECT_CONTENTS))
+		for(var/atom/affected_atom as anything in src)
+			if(istype(affected_atom, /obj/item/mecha_parts/mecha_tracking) && ignore_beacons == TRUE) //if we are using a beacon's EMP, we ignore any installed beacons
+				continue
+			if(istype(affected_atom, /obj/item/stock_parts/cell)) //we ignore the cell inside the mech, as we handle cell power loss manually
+				continue
+			if(isAI(affected_atom)) //AI pilots are stored in the mecha to faciliate control, their emp_act only handles kicking the AI out of a borg shell and a chance to reset camera view/call the shuttle, so we skip them
+				continue
+			affected_atom.emp_act(severity)
 	if(get_charge())
-		use_power((cell.charge/3)/(severity*2))
+		use_power((cell.charge / 3) / (severity * 2))
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 

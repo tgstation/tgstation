@@ -439,6 +439,9 @@ Diagnostic HUDs!
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	var/new_icon_state //This var exists so that the holder's icon state is set only once in the event of multiple mech beacons.
+	if(!trackers) //clear the HUD image if beacons were destroyed or otherwise removed
+		holder.icon_state = null
+		return
 	for(var/obj/item/mecha_parts/mecha_tracking/T in trackers)
 		if(T.ai_beacon) //Beacon with AI uplink
 			new_icon_state = "hudtrackingai"

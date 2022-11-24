@@ -108,13 +108,15 @@
 
 /obj/item/mecha_parts/mecha_tracking/emp_act()
 	. = ..()
-	if(!(. & EMP_PROTECT_SELF))
-		qdel(src)
+	if(. & EMP_PROTECT_SELF)
+		return
+	qdel(src)
 
 /obj/item/mecha_parts/mecha_tracking/Destroy()
 	if(chassis)
 		if(src in chassis.trackers)
 			chassis.trackers -= src
+			chassis.diag_hud_set_mechtracking() //update the HUD image
 	chassis = null
 	return ..()
 
@@ -132,8 +134,8 @@
 	if(recharging)
 		return
 	if(chassis)
-		chassis.emp_act(EMP_HEAVY)
-		addtimer(CALLBACK(src, /obj/item/mecha_parts/mecha_tracking/proc/recharge), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		chassis.emp_act(EMP_HEAVY, ignore_beacons = TRUE) //we do not want to make beacons one-use
+		addtimer(CALLBACK(src, PROC_REF(recharge)), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		recharging = TRUE
 
 /**
@@ -146,6 +148,10 @@
 	name = "exosuit AI control beacon"
 	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
 	ai_beacon = TRUE
+
+/obj/item/mecha_parts/mecha_tracking/ai_control/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/storage/box/mechabeacons
 	name = "exosuit tracking beacons"
