@@ -4,6 +4,12 @@
 	/// BYOND has a limit to animations before a crash occurs, so we don't want to spam our animation loop constantly.
 	var/loop_started = FALSE
 
+/datum/component/supermatter_glow/Initialize(...)
+	. = ..()
+	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent
+	if(istype(our_supermatter))
+		return COMPONENT_INCOMPATIBLE
+
 /datum/component/supermatter_glow/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_SUPERMATTER_PROCESS_ATMOS, .proc/update_effects) // When we are added, we listen for this signal and send the proc.
 
