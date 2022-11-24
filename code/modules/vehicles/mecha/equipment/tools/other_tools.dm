@@ -525,6 +525,6 @@
 
 	. = ..()
 
-	mech.chassis_camera = new /obj/machinery/camera/emp_proof/exosuit (mech)
+	mech.chassis_camera = new /obj/machinery/camera/exosuit (mech)
 	mech.chassis_camera.update_c_tag(mech)
 	mech.diag_hud_set_camera()

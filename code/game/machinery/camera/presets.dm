@@ -66,16 +66,26 @@
 
 	c_tag = "[format_text(camera_area.name)] #[number]"
 
-/obj/machinery/camera/emp_proof/exosuit
+/obj/machinery/camera/exosuit
 	c_tag = "Exosuit: unspecified"
+	desc = "This camera belongs in a mecha. If you see this, tell a coder!"
 	network = list("ss13", "rd")
+	short_range = 1 //used when the camera gets EMPd
 	var/number
 	///Currently used name of the mech
 	var/current_name = null
+	///Whether the camera was recently affected by an EMP and is thus unfocused, shortening view_range
+	var/is_emp_scrambled = FALSE
 
-//Updates the c_tag of the mech while preventing duplicate c_tag usage due to having mechs with the same name
-/obj/machinery/camera/emp_proof/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
+/obj/machinery/camera/exosuit/proc/emp_refocus()
+	is_emp_scrambled = FALSE
+	setViewRange(initial(view_range))
+
+//Updates the c_tag of the mech camera while preventing duplicate c_tag usage due to having mechs with the same name
+/obj/machinery/camera/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
+	///List of all used mech names
 	var/static/list/existing_mech_names = list()
+	///Name of the mech passed with this proc. We use format_text to wipe away stuff like `\initial` to prevent c_tag from erroring out
 	var/mech_name = format_text(mech.name)
 
 	if(current_name && current_name != mech_name) //decrease by 1 to preserve correct naming numeration
