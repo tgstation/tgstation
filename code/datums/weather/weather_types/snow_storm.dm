@@ -38,11 +38,12 @@
 	if(isobserver(player))
 		return TRUE
 
+	if(HAS_TRAIT(player, TRAIT_DETECT_STORM))
+		return TRUE
+
 	if(istype(get_area(player), /area/mine))
 		return TRUE
 
-	if(player.mind?.assigned_role.title == JOB_SHAFT_MINER) // a good miner always senses a storm brewin.
-		return TRUE
 
 	for(var/area/snowarea in impacted_areas)
 		if(locate(snowarea) in view(player))
