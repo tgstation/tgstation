@@ -62,14 +62,18 @@
 				"prioritized" = !!(job_datum in SSjob.prioritized_jobs),
 				"name" = job_datum.title,
 				"used_slots" = job_datum.current_positions,
-				"open_slots" = job_datum.total_positions,
+				"open_slots" = job_datum.total_positions < 0 ? "∞" : job_datum.total_positions,
 				"icon" = initial(id_trim.orbit_icon)
 			)
 
 			if(job_availability != JOB_AVAILABLE)
 				job_data["unavailable_reason"] = get_job_unavailable_error_message(job_availability, job_datum.title)
 
-			department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
+			if(job_datum.total_positions < 0)
+				department_data["open_slots"] = "∞"
+
+			if(department_data["open_slots"] != "∞")
+				department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
 
 			department_jobs += list(job_data)
 

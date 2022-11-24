@@ -192,9 +192,7 @@ export const JobSelection = (props, context) => {
                         .darken(60)
                         .toString(),
                     }}>
-                    {(department['open_slots'] < 0
-                      ? 'Infinite'
-                      : department['open_slots']) + ' Slots Available'}
+                    {department['open_slots'] + ' Slots Available'}
                   </span>
                 )
               );
