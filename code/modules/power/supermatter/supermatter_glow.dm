@@ -4,10 +4,8 @@
 	/// BYOND has a limit to animations before a crash occurs, so we don't want to spam our animation loop constantly.
 	var/loop_started = FALSE
 
-/datum/component/supermatter_glow/Initialize(...)
-	. = ..()
-	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent
-	if(istype(our_supermatter))
+/datum/component/supermatter_glow/Initialize()
+	if(!istype(parent, /obj/machinery/power/supermatter_crystal))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/supermatter_glow/RegisterWithParent()
