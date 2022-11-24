@@ -753,6 +753,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes
 #define SWORDPLAY_TRAIT "swordplay"
+/// Trait given by being recruited as a nuclear operative
+#define NUKE_OP_MINION_TRAIT "nuke-op-minion"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.

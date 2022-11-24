@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "Entering reagent names is much faster with zero errors"
-  - bugfix: "You can enter new temp & ph values"
