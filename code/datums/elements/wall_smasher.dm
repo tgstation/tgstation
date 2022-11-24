@@ -11,10 +11,10 @@
 
 /datum/element/wall_smasher/Attach(datum/target, strength_flag = ENVIRONMENT_SMASH_WALLS)
 	. = ..()
+	if (. == ELEMENT_INCOMPATIBLE)
+		return
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
-	if (ishostile(target))
-		return ELEMENT_INCOMPATIBLE // This is baseline behaviour for hostile mobs and prevents this from working
 
 	src.strength_flag = strength_flag
 	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), PROC_REF(on_unarm_attack)) // Players
