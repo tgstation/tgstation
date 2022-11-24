@@ -8,6 +8,7 @@
  * it will make the tram more expensive to move and we dont want that because we dont want to return to the days where
  * the tram took a third of the tick per movement when its just carrying its default mapped in objects
  */
+
 /obj/structure/grille/tram/Initialize(mapload)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
@@ -17,6 +18,16 @@
 /obj/structure/window/reinforced/shuttle/tram/Initialize(mapload, direct)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
+
+/turf/open/floor/catwalk_floor/tram/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive, mapload)
+
+/turf/open/floor/catwalk_floor/tram
+	icon_state = "maint_above"
+	name = "tram catwalk"
+	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
+	layer = TRAM_FLOOR_LAYER
 
 /obj/machinery/power/shuttle_engine/propulsion/tram
 	//if this has opacity, then every movement of the tram causes lighting updates
