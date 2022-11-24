@@ -243,7 +243,7 @@
 */
 /atom/movable/proc/try_step_multiz(direction, z_move_flags = ZMOVE_FLIGHT_FLAGS)
 	if(direction == UP || direction == DOWN)
-		return zMove(direction)
+		return zMove(direction, null, z_move_flags)
 	return step(src, direction)
 
 /*
