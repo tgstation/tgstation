@@ -277,11 +277,13 @@
 			INVOKE_ASYNC(src, PROC_REF(animate_object_travel), fax_paper, "fax_receive", find_overlay_state(fax_paper, "send"))
 			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, vary = FALSE)
 
-			history_add("Send", params["name"])
+			var/name_sending = html_encode(params["name"])
+
+			history_add("Send", name_sending)
 			
-			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", fax_paper)
-			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [params["name"]]")] [ADMIN_SHOW_PAPER(fax_paper)]"), confidential = TRUE)
-			log_fax(fax_paper, params["id"], params["name"])
+			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [name_sending]", fax_paper)
+			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [name_sending]")] [ADMIN_SHOW_PAPER(fax_paper)]"), confidential = TRUE)
+			log_fax(fax_paper, params["id"], name_sending)
 			loaded_item_ref = null
 			update_appearance()
 				
