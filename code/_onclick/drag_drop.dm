@@ -65,6 +65,21 @@ GLOBAL_VAR_INIT(lieniency_time, 0.1 SECONDS)
 			They were trying to click [dragging], and instead clicked [over]. \n\
 			([params]) \n ([list2params(drag_details)])")
 		return FALSE
+	// Basically, are you trying to buckle someone down, or drag them onto you?
+	// If so, we know you must be right about what you want
+	if(ismovable(over))
+		var/atom/movable/over_movable = over
+		if(over_movable.can_buckle) // this will cover most mobs, for silly reasons. useful here tho
+			log_runtime("Lieniency Log FAILURE (BUCKLE)!: [src] got the time right for a drag click, but was dragging onto a bucklable thing. \n\
+				They were trying to click [dragging], and instead clicked [over]. \n\
+				([params]) \n ([list2params(drag_details)])")
+			return FALSE
+		if(over_movable == eye)
+			log_runtime("Lieniency Log FAILURE (OUR EYE)!: [src] got the time right for a drag click, but was dragging onto itself. \n\
+				They were trying to click [dragging], and instead clicked [over]. \n\
+				([params]) \n ([list2params(drag_details)])")
+			return FALSE
+
 	var/list/modifiers = params2list(params)
 	var/list/old_offsets = screen_loc_to_offset(LAZYACCESS(drag_details, SCREEN_LOC), view)
 	var/list/new_offsets = screen_loc_to_offset(LAZYACCESS(modifiers, SCREEN_LOC), view)
