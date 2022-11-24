@@ -102,7 +102,7 @@
  * * amount - the quantity of credits that will be reconciled with the account balance.
  */
 /datum/bank_account/proc/has_money(amount)
-	return account_balance >= amount && account_balance >= 0
+	return account_balance >= amount
 
 /**
  * Adjusts the balance of a bank_account as well as sanitizes the numerical input.
