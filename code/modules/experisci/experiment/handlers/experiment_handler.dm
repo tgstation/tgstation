@@ -358,6 +358,8 @@
 	.["techwebs"] = list()
 	for (var/datum/techweb/techwebs as anything in SSresearch.techwebs)
 		if(!length(techwebs.techweb_servers)) //no servers, we don't care
+			if(techwebs == linked_web) //disconnect if OUR techweb lost their servers.
+				unlink_techweb()
 			continue
 		if(!is_valid_z_level(get_turf(techwebs.techweb_servers[1]), get_turf(parent)))
 			continue
