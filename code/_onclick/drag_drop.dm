@@ -10,13 +10,40 @@
 		return
 	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP) //Whatever is receiving will verify themselves for adjacency.
 		return
-	if(usr.client.check_drag_proximity(src, over, params))
-		return usr.client.Click(src, src_location, src_control, params)
+	var/proximity_check = usr.client.check_drag_proximity(src, over, src_location, over_location, src_control, over_control, params)
+	if(proximity_check)
+		return proximity_check
+
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
 
 	over.MouseDrop_T(src,usr, params)
 	return
+
+/// Handles treating drags as clicks if they're within some conditions
+/// Does some other stuff adjacent to trying to figure out what the user actually "wanted" to click
+/// Returns TRUE if it caused a click, FALSE otherwise
+/client/proc/check_drag_proximity(atom/dragging, atom/over, src_location, over_location, src_control, over_control, params)
+	// We will swap which thing we're trying to check for clickability based off the type
+	// Assertion is if you drag a turf to anything else, you really just wanted to click the anything else
+	// And slightly misseed. I'm not interested in making this game pixel percise, so if it fits our other requirements
+	// Lets just let that through yeah?
+	var/atom/attempt_click = dragging
+	var/atom/click_from = over
+	var/location_to_use = src_location
+	var/control_to_use = src_control
+	if(isturf(attempt_click) && !isturf(over))
+		// swapppp
+		attempt_click = over
+		click_from = dragging
+		location_to_use = over_location
+		control_to_use = over_control
+		log_runtime("Lieniency Log TURF SWAP!: [src] clicked on [dragging] but we swapped them to [over] instead.")
+
+	if(is_drag_clickable(attempt_click, click_from, params))
+		Click(attempt_click, location_to_use, control_to_use, params)
+		return TRUE
+	return FALSE
 
 // These two are globs for the purpose of testing, convert to defines when you're done
 // Distance in pixels that we consider "acceptable" from the initial click to the release
@@ -27,12 +54,12 @@ GLOBAL_VAR_INIT(lieniency_distance, 10)
 GLOBAL_VAR_INIT(lieniency_time, 0.1 SECONDS)
 /// Does the logic for checking if a drag counts as a click or not
 /// Returns true if it does, false otherwise
-/client/proc/check_drag_proximity(atom/dragging, atom/over, params)
+/client/proc/is_drag_clickable(atom/dragging, atom/over, params)
 	if(dragging == over)
 		return TRUE
 	if(world.time - drag_start > GLOB.lieniency_time) // Time's up bestie
 		return FALSE
-	if(!isturf(dragging.loc)) // If it isn't in the world, drop it. This is for things that can move, and we assume hud elements will not have this problem
+	if(!get_turf(dragging)) // If it isn't in the world, drop it. This is for things that can move, and we assume hud elements will not have this problem
 		log_runtime("Lieniency Log FAILURE (NO TURF)!: [src] got the time right for a drag click, but was NOT on a turf. \n\
 			We found it sitting on [dragging.loc] \n\
 			They were trying to click [dragging], and instead clicked [over]. \n\
