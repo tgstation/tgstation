@@ -43,7 +43,7 @@
 /obj/structure/fermenting_barrel/attackby(obj/item/object, mob/user, params)
 	if(open)
 		if(istype(object, /obj/item/food/grown) && insert_fruit(user, object))
-			balloon_alert(user, "added fruit")
+			balloon_alert(user, "Added fruit")
 			return
 		if(istype(object, /obj/item/storage/bag/plants))
 			var/obj/item/storage/bag/plants/bag = object
@@ -53,7 +53,7 @@
 					break
 				inserted_fruits++
 			if(inserted_fruits)
-				balloon_alert(user, "added [inserted_fruits] fruit\s")
+				balloon_alert(user, "Added [inserted_fruits] fruit\s")
 	else if(object.is_refillable())
 		return //so we can refill them via their afterattack.
 	return ..()
@@ -65,14 +65,14 @@
 		open = FALSE
 		reagents.flags |= DRAINABLE
 		reagents.flags &= ~(REFILLABLE | TRANSPARENT)
-		balloon_alert(user, "closed the lid")
+		balloon_alert(user, "Closed the lid")
 		playsound(src, lid_close_sound, sound_volume)
 		start_fermentation()
 	else
 		open = TRUE
 		reagents.flags &= ~(DRAINABLE)
 		reagents.flags |= REFILLABLE | TRANSPARENT
-		balloon_alert(user, "opened the lid")
+		balloon_alert(user, "Opened the lid")
 		playsound(src, lid_open_sound, sound_volume)
 		stop_fermentation()
 	update_appearance(UPDATE_ICON)
