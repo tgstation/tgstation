@@ -6674,13 +6674,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
-"cuB" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "cuG" = (
 /obj/structure/fluff/paper/stack{
 	dir = 1
@@ -99193,7 +99186,7 @@ pXS
 dUU
 qqc
 gCH
-cuB
+lYY
 qHs
 ghh
 gqp
