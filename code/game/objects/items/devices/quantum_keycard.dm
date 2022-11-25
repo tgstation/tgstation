@@ -10,8 +10,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/machinery/quantumpad/qpad
-	/// area name of linked pad
-	var/linked_area_name
 
 	/// where the pad is located and what color the card will become
 	var/static/list/gags_coloring = list(
@@ -32,8 +30,11 @@
 	. = ..()
 	if(qpad)
 		. += "It's currently linked to a quantum pad."
-		if(linked_area_name)
-			. += "The pad is located in \the [linked_area_name]."
+
+		var/area_name = get_area_name(qpad)
+		if(area_name)
+			. += span_notice("The pad is located in \the [area_name]")
+
 		. += span_notice("Alt-click to unlink the keycard.")
 	else
 		. += span_notice("Insert [src] into an active quantum pad to link it.")
@@ -55,8 +56,5 @@
 		linked_area_name = null
 		return
 
-	var/area/new_pad_area = get_area(new_pad)
-	var/new_color = is_type_in_list(new_pad_area, gags_coloring, zebra = TRUE) || COLOR_WEBSAFE_DARK_GRAY
-	name = "linked [initial(name)]"
-	linked_area_name = new_pad_area.name
+	var/new_color = is_type_in_list(get_area(new_pad), gags_coloring, zebra = TRUE) || COLOR_WEBSAFE_DARK_GRAY
 	set_greyscale(new_color)
