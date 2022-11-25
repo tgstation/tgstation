@@ -2,7 +2,9 @@
 	name = "quantum keycard"
 	desc = "A keycard able to link to a quantum pad's particle signature, allowing other quantum pads to travel there instead of their linked pad."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "quantum_keycard"
+	icon_state = "quantum_keycard_gags"
+	greyscale_config = /datum/greyscale_config/quantum_keycard
+	greyscale_colors = "#FF0033"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
