@@ -1,4 +1,8 @@
-/datum/modular_computer_host
+/datum/component/modular_computer_host
+
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_type = /datum/component/modular_computer_host // TODO: planning on adding subtypes for pdas maybe
+
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
 	///The disk in this PDA. If set, this will be inserted on Initialize.
@@ -86,7 +90,7 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
-/datum/modular_computer_host/New(atom/holder)
+/datum/component/modular_computer_host/Initialize(...)
 	. = ..()
 	physical = holder
 
@@ -99,7 +103,7 @@
 	install_default_programs()
 	register_signals(physical)
 
-/datum/modular_computer_host/Destroy(force, ...)
+/datum/component/modular_computer_host/Destroy(force, ...)
 	. = ..()
 	wipe_program(forced = TRUE)
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
@@ -117,7 +121,7 @@
 		QDEL_NULL(computer_id_slot)
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/datum/modular_computer_host/process(delta_time)
+/datum/component/modular_computer_host/process(delta_time)
 	if(!powered_on) // The computer is turned off
 		last_power_usage = 0
 		return
@@ -144,17 +148,17 @@
 	handle_power(delta_time) // Handles all computer power interaction
 	//check_update_ui_need()
 
-/datum/modular_computer_host/proc/get_cell()
+/datum/component/modular_computer_host/proc/get_cell()
 	return internal_cell
 
-/datum/modular_computer_host/proc/install_default_programs()
+/datum/component/modular_computer_host/proc/install_default_programs()
 	SHOULD_CALL_PARENT(FALSE)
 	for(var/programs in default_programs + starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
-/datum/modular_computer_host/proc/get_ntnet_status(specific_action = 0)
+/datum/component/modular_computer_host/proc/get_ntnet_status(specific_action = 0)
 	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
 		return NTNET_NO_SIGNAL
 
@@ -176,21 +180,21 @@
 	return NTNET_NO_SIGNAL
 
 ///Wipes the computer's current program. Doesn't handle any of the niceties around doing this
-/datum/modular_computer_host/proc/wipe_program(forced)
+/datum/component/modular_computer_host/proc/wipe_program(forced)
 	if(!active_program)
 		return
 	active_program.kill_program(forced)
 	active_program = null
 
 // Relays kill program request to currently active program. Use this to quit current program.
-/datum/modular_computer_host/proc/kill_program(forced = FALSE)
+/datum/component/modular_computer_host/proc/kill_program(forced = FALSE)
 	wipe_program(forced)
 	var/mob/user = usr
 	if(user && istype(user))
 		//Here to prevent programs sleeping in destroy
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) // Re-open the UI on this computer. It should show the main screen now.
 
-/datum/modular_computer_host/proc/open_program(mob/user, datum/computer_file/program/program)
+/datum/component/modular_computer_host/proc/open_program(mob/user, datum/computer_file/program/program)
 	if(program.computer != src)
 		CRASH("tried to open program that does not belong to this computer")
 
@@ -225,10 +229,10 @@
 
 	return TRUE
 
-/datum/modular_computer_host/proc/nonfunctional()
+/datum/component/modular_computer_host/proc/nonfunctional()
 	return physical.atom_integrity <= physical.integrity_failure * physical.max_integrity
 
-/datum/modular_computer_host/proc/turn_on(mob/user, open_ui = TRUE)
+/datum/component/modular_computer_host/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(nonfunctional())
 		if(issynth)
@@ -255,7 +259,7 @@
 			to_chat(user, span_warning("You press the power button but \the [src] does not respond."))
 		return FALSE
 
-/datum/modular_computer_host/proc/shutdown_computer(loud = 1)
+/datum/component/modular_computer_host/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(forced = TRUE)
@@ -265,27 +269,113 @@
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	powered_on = FALSE
 
-/datum/modular_computer_host/proc/register_signals(atom/holder)
+/datum/component/modular_computer_host/proc/register_signals(atom/holder)
 	RegisterSignal(holder, COMSIG_ATOM_EMAG_ACT, PROC_REF(do_emag))
 	RegisterSignal(holder, COMSIG_ATOM_BREAK, PROC_REF(do_integrity_failure))
 	RegisterSignal(holder, COMSIG_PARENT_ATTACKBY, PROC_REF(do_attackby))
 
-/datum/modular_computer_host/proc/add_messenger()
+/datum/component/modular_computer_host/proc/add_messenger()
 	GLOB.TabletMessengers += src
 
-/datum/modular_computer_host/proc/remove_messenger()
+/datum/component/modular_computer_host/proc/remove_messenger()
 	GLOB.TabletMessengers -= src
 
-/datum/modular_computer_host/proc/do_integrity_failure()
+/datum/component/modular_computer_host/proc/do_integrity_failure()
 	shutdown_computer()
 
-/datum/modular_computer_host/proc/UpdateDisplay()
-	if(!saved_identification && !saved_job)
-		name = initial(name)
-		return
-	name = "[saved_identification] ([saved_job])"
+/**
+ * Displays notification text alongside a soundbeep when requested to by a program.
+ *
+ * After checking that the requesting program is allowed to send an alert, creates
+ * a visible message of the requested text alongside a soundbeep. This proc adds
+ * text to indicate that the message is coming from this device and the program
+ * on it, so the supplied text should be the exact message and ending punctuation.
+ *
+ * Arguments:
+ * The program calling this proc.
+ * The message that the program wishes to display.
+ */
+/datum/component/modular_computer_host/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
+	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
+		return FALSE
+	playsound(src, sound, 50, TRUE)
+	visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
 
-/datum/modular_computer_host/proc/do_emag(mob/user, obj/item/card/emag/card)
+/datum/component/modular_computer_host/proc/ring(ringtone) // bring bring
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
+		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+	else
+		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+	visible_message("*[ringtone]*")
+
+/datum/component/modular_computer_host/proc/send_sound()
+	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+
+/datum/component/modular_computer_host/proc/set_flashlight_color(color)
+	if(!has_light || !color)
+		return FALSE
+	comp_light_color = color
+	set_light_color(color)
+	return TRUE
+
+/**
+ * InsertID
+ * Attempt to insert the ID in either card slot.
+ * Args:
+ * inserting_id - the ID being inserted
+ * user - The person inserting the ID
+ */
+/datum/component/modular_computer_host/InsertID(obj/item/card/inserting_id, mob/user)
+	//all slots taken
+	if(cpu.computer_id_slot)
+		return FALSE
+
+	cpu.computer_id_slot = inserting_id
+	if(user)
+		if(!user.transferItemToLoc(inserting_id, src))
+			return FALSE
+		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
+	else
+		inserting_id.forceMove(src)
+
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+	update_appearance()
+	update_slot_icon()
+	return TRUE
+
+/**
+ * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
+ * Args:
+ * user - The mob trying to remove the ID, if there is one
+ */
+/datum/component/modular_computer_host/RemoveID(mob/user)
+	if(!computer_id_slot)
+		return ..()
+
+	if(user)
+		if(!issilicon(user) && in_range(src, user))
+			user.put_in_hands(computer_id_slot)
+		balloon_alert(user, "removed ID")
+		to_chat(user, span_notice("You remove the card from the card slot."))
+	else
+		computer_id_slot.forceMove(drop_location())
+
+	computer_id_slot = null
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+	update_slot_icon()
+	update_appearance()
+	return TRUE
+
+/datum/component/modular_computer_host/proc/do_emag(mob/user, obj/item/card/emag/card)
 	var/newemag = FALSE
 	for(var/datum/computer_file/program/app in stored_files)
 		if(!istype(app))
@@ -297,7 +387,7 @@
 		return
 	to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
 
-/datum/modular_computer_host/proc/do_attackby(obj/item/attacking_item, mob/user, params)
+/datum/component/modular_computer_host/proc/do_attackby(obj/item/attacking_item, mob/user, params)
 	// Check for ID first
 	if(isidcard(attacking_item) && InsertID(attacking_item, user))
 		return
@@ -368,3 +458,18 @@
 		inserted_disk = attacking_item
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 		return
+
+/datum/component/modular_computer_host/proc/do_preattack_secondary()
+	if(active_program?.tap(A, user, params))
+		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
+		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+// On-click handling. Turns on the computer if it's off and opens the GUI.
+/datum/component/modular_computer_host/proc/do_interact(mob/user)
+	if(powered_on)
+		ui_interact(user)
+	else
+		turn_on(user)

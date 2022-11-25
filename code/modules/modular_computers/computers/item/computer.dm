@@ -45,8 +45,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	cpu.UpdateDisplay()
 
 	register_context()
-	physical.init_network_id(NETWORK_TABLETS)
+	init_network_id(NETWORK_TABLETS)
 
+	// TODO: host subtype for PDAs
 	cpu.has_light = TRUE
 
 	add_item_action(/datum/action/item_action/toggle_computer_light)
@@ -57,11 +58,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	return ..()
 
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
-	if(active_program?.tap(A, user, params))
-		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
-		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
 // shameless copy of newscaster photo saving
@@ -126,63 +122,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		printed_paper.name = paper_title
 	printed_paper.update_appearance()
 	cpu.stored_paper--
-	return TRUE
-
-/**
- * InsertID
- * Attempt to insert the ID in either card slot.
- * Args:
- * inserting_id - the ID being inserted
- * user - The person inserting the ID
- */
-/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
-	//all slots taken
-	if(cpu.computer_id_slot)
-		return FALSE
-
-	cpu.computer_id_slot = inserting_id
-	if(user)
-		if(!user.transferItemToLoc(inserting_id, src))
-			return FALSE
-		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
-	else
-		inserting_id.forceMove(src)
-
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	if(ishuman(loc))
-		var/mob/living/carbon/human/human_wearer = loc
-		if(human_wearer.wear_id == src)
-			human_wearer.sec_hud_set_ID()
-	update_appearance()
-	update_slot_icon()
-	return TRUE
-
-/**
- * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
- * Args:
- * user - The mob trying to remove the ID, if there is one
- */
-/obj/item/modular_computer/RemoveID(mob/user)
-	if(!cpu.computer_id_slot)
-		return ..()
-
-	if(user)
-		if(!issilicon(user) && in_range(src, user))
-			user.put_in_hands(cpu.computer_id_slot)
-		balloon_alert(user, "removed ID")
-		to_chat(user, span_notice("You remove the card from the card slot."))
-	else
-		cpu.computer_id_slot.forceMove(drop_location())
-
-	cpu.computer_id_slot = null
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-
-	if(ishuman(loc))
-		var/mob/living/carbon/human/human_wearer = loc
-		if(human_wearer.wear_id == src)
-			human_wearer.sec_hud_set_ID()
-	update_slot_icon()
-	update_appearance()
 	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
@@ -293,12 +232,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		inserted_disk = null
 	return ..()
 
-// On-click handling. Turns on the computer if it's off and opens the GUI.
-/obj/item/modular_computer/interact(mob/user)
-	if(cpu.powered_on)
-		cpu.ui_interact(user)
-	else
-		cpu.turn_on(user)
 
 /obj/item/modular_computer/CtrlShiftClick(mob/user)
 	. = ..()
@@ -310,34 +243,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	cpu.inserted_disk = null
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
-
-/**
- * Displays notification text alongside a soundbeep when requested to by a program.
- *
- * After checking that the requesting program is allowed to send an alert, creates
- * a visible message of the requested text alongside a soundbeep. This proc adds
- * text to indicate that the message is coming from this device and the program
- * on it, so the supplied text should be the exact message and ending punctuation.
- *
- * Arguments:
- * The program calling this proc.
- * The message that the program wishes to display.
- */
-/obj/item/modular_computer/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
-	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
-		return FALSE
-	playsound(src, sound, 50, TRUE)
-	visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
-
-/obj/item/modular_computer/proc/ring(ringtone) // bring bring
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
-	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	visible_message("*[ringtone]*")
-
-/obj/item/modular_computer/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -425,17 +330,9 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
  * Arguments:
  ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
 */
-/obj/item/modular_computer/proc/set_flashlight_color(color)
-	if(!has_light || !color)
-		return FALSE
-	comp_light_color = color
-	set_light_color(color)
-	return TRUE
-
-
 
 /obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
-	// Check for ID first
+/*	// Check for ID first
 	if(isidcard(attacking_item) && InsertID(attacking_item, user))
 		return
 
@@ -505,7 +402,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		inserted_disk = attacking_item
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 		return
-
+*/
 	return ..()
 
 /obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)

@@ -32,8 +32,9 @@
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
 /datum/modular_computer_host/proc/handle_power(delta_time)
-	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
+	//var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
 
+	var/power_usage = base_active_power_usage
 	if(use_power(power_usage))
 		last_power_usage = power_usage
 		return TRUE
