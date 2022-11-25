@@ -76,7 +76,7 @@
 	if(!held)
 		finish_action(controller, FALSE)
 		return
-	pawn.activate_hand(pawn.get_active_hand())
+	pawn.activate_hand()
 	finish_action(controller, TRUE)
 
 /// Use the currently held item, or unarmed, on a weakref to an object in the world
