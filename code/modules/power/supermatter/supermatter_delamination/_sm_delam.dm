@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// [/obj/machinery/power/supermatter_crystal/update_overlays]
 /datum/sm_delam/proc/overlays(obj/machinery/power/supermatter_crystal/sm)
 	if(sm.final_countdown)
-		return list(mutable_appearance(sm.icon, "causality_field"))
+		return list(mutable_appearance(icon = sm.icon, icon_state = "causality_field", layer = FLOAT_LAYER))
 	return list()
 
 /// Applies filters to the SM.

@@ -51,7 +51,7 @@
 		sm.add_filter(name = "icon", priority = 3, params = list(
 			type = "layer",
 			icon = new/icon('icons/effects/96x96.dmi', "singularity_s3", frame = rand(1,8)),
-			flags = FILTER_UNDERLAY
+			flags = FILTER_OVERLAY
 		))
 	else
 		sm.remove_filter("icon")
@@ -61,6 +61,9 @@
 /datum/sm_delam/singularity/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
 	sm.remove_filter(list("outline", "icon"))
+
+/datum/sm_delam/singularity/overlays(obj/machinery/power/supermatter_crystal/sm)
+	return list()
 
 /datum/sm_delam/singularity/lights(obj/machinery/power/supermatter_crystal/sm)
 	if(!sm.internal_energy && !sm.damage)
@@ -115,7 +118,7 @@
 		density = clamp(sm.damage/5, 12, 200)
 	))
 
-	sm.add_filter(name = "icon", priority = 2, params=list(
+	sm.add_filter(name = "icon", priority = 2, params = list(
 		type = "layer",
 		icon = new/icon('icons/obj/engine/energy_ball.dmi', "energy_ball", frame = rand(1,12)),
 		flags = FILTER_UNDERLAY

@@ -430,9 +430,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/update_overlays()
 	. = ..()
 	if(psy_coeff > 0)
-		var/mutable_appearance/psy_overlay = mutable_appearance(icon, "[base_icon_state]-psy", FLOAT_LAYER - 1)
-		psy_overlay.alpha = psy_coeff * 255
-		. += psy_overlay
+		. += mutable_appearance(icon = icon, icon_state = "[base_icon_state]-psy", layer = FLOAT_LAYER - 1, alpha = psy_coeff * 255)
 	if(delamination_strategy)
 		. += delamination_strategy.overlays(src)
 	return .
