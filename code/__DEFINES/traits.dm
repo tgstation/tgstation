@@ -193,6 +193,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents you from leaving your corpse
 #define TRAIT_CORPSELOCKED "corpselocked"
 #define TRAIT_STABLELIVER "stable_liver"
+/// Makes you able to hear everything regardless of TRAIT_DEAF
+#define TRAIT_NODEAF "no_deaf"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
 ///For when you've gotten a power from a dna vault
@@ -226,7 +228,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Doesn't get any damage overlays from taking damage.
-#define TRAIT_NODAMAGEOVERLAY "no_damage_overlay"
+#define TRAIT_NOCRITOVERLAY "no_crit_overlay"
 /// Gets a mood boost from being in the hideout.
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone

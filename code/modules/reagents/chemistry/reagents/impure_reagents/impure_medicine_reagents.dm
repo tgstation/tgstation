@@ -520,11 +520,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return ..()
 	metabolization_rate = 0.2 * REM
 	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(owner, TRAIT_NODEAF, type) //As it turns out, being in critical health stops you from hearing stuff.
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	ADD_TRAIT(owner, TRAIT_NODEATH, type)
-	ADD_TRAIT(owner, TRAIT_NODAMAGEOVERLAY, type)
+	ADD_TRAIT(owner, TRAIT_NOCRITOVERLAY, type)
 	owner.set_stat(CONSCIOUS) //This doesn't touch knocked out
 	owner.updatehealth()
 	owner.update_sight()
@@ -581,11 +582,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/owner)
 	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(owner, TRAIT_NODEAF, type)
 	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
-	REMOVE_TRAIT(owner, TRAIT_NODAMAGEOVERLAY, type)
+	REMOVE_TRAIT(owner, TRAIT_NOCRITOVERLAY, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
 	owner.update_sight()

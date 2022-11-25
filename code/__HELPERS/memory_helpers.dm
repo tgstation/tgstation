@@ -30,7 +30,7 @@
 			if(!(memory_flags & MEMORY_CHECK_DEAFNESS)) // Only check for blindness
 				return
 			is_blind = TRUE // Otherwise check if the mob is both blind and deaf
-		if(memory_flags & MEMORY_CHECK_DEAFNESS && HAS_TRAIT(current, TRAIT_DEAF) && (!(memory_flags & MEMORY_CHECK_BLINDNESS) || is_blind))
+		if(memory_flags & MEMORY_CHECK_DEAFNESS && (HAS_TRAIT(current, TRAIT_DEAF) && !HAS_TRAIT(current, TRAIT_NODEAF)) && (!(memory_flags & MEMORY_CHECK_BLINDNESS) || is_blind))
 			return
 
 	var/story_mood = MOODLESS_MEMORY
