@@ -529,6 +529,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	owner.update_sight()
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, STAT_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
+	clear_fullscreen("crit") //So you don't get flashbanged by the crit overlay
+	clear_fullscreen("critvision")
 	owner.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
 	owner.SetAllImmobility(0)
 	back_from_the_dead = TRUE
