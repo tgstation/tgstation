@@ -1,7 +1,9 @@
 import { useBackend } from '../backend';
-import { Button, DepartmentEntry, DepartmentPane, JobEntry } from '../components';
+import { Button, DepartmentEntry, DepartmentPane, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
+import { SFC } from 'inferno';
+import { JobToIcon } from './common/JobToIcon';
 
 type BaseVars = {
   name: string;
@@ -30,6 +32,63 @@ type Data = {
   disable_jobs_for_non_observers: boolean;
   priority: boolean;
   round_duration: string;
+};
+
+// Specifically not typed for flexibility.
+export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
+  const job = data.job;
+  const department = data.department;
+  return (
+    <Stack.Item fill>
+      <Button
+        width="100%"
+        style={{
+          // Try not to think too hard about this one.
+          'background-color': job.unavailable_reason
+            ? 'lightgrey'
+            : job.prioritized
+              ? '#308d25'
+              : Color.fromHex(department.color)
+                .darken(10)
+                .toString(),
+          'color': job.unavailable_reason
+            ? 'dimgrey'
+            : Color.fromHex(department.color)
+              .darken(90)
+              .toString(),
+          'font-size': '1.1rem',
+          'cursor': job.unavailable_reason ? 'initial' : 'pointer',
+        }}
+        tooltip={
+          job.unavailable_reason ? (
+            job.unavailable_reason
+          ) : job.prioritized ? (
+            <div>
+              <b>The HoP wants more people in this job!</b>
+              <br /> <br />
+              {job.description}
+            </div>
+          ) : (
+            job.description
+          )
+        }
+        onClick={() => {
+          !job.unavailable_reason && data.act('SelectedJob', { job: job.name });
+        }}
+        content={
+          <div>
+            {(job.icon = job.icon || JobToIcon[job.name] || null) && (
+              <Icon name={job.icon} />
+            )}
+            {job.command ? <b>{job.name}</b> : job.name}
+            <span style={{ 'float': 'right' }}>
+              {job.used_slots} / {job.open_slots}
+            </span>
+          </div>
+        }
+      />
+    </Stack.Item>
+  );
 };
 
 export const JobSelection = (props, context) => {

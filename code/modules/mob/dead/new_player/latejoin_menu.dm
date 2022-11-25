@@ -55,6 +55,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 		for(var/datum/job/job_datum as anything in department.department_jobs)
 			var/job_availability = owner.IsJobUnavailable(job_datum.title, TRUE)
+			var/datum/outfit/outfit = job_datum.outfit
+			var/datum/id_trim/trim = initial(outfit.id_trim)
 
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
@@ -63,7 +65,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 				"name" = job_datum.title,
 				"used_slots" = job_datum.current_positions,
 				"open_slots" = job_datum.total_positions < 0 ? "∞" : job_datum.total_positions,
-				"icon" = job_to_tgui_icon(job_datum)
+				"icon" = initial(trim.orbit_icon)
 			)
 
 			if(job_availability != JOB_AVAILABLE)
