@@ -39,7 +39,7 @@
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
-	dept_jacket = /obj/item/clothing/suit/hooded/wintercoat/security // no hos jacket for some reason
+	dept_jacket = /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 
 
 /datum/job/head_of_security/get_captaincy_announcement(mob/living/captain)
