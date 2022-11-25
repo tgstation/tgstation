@@ -10,14 +10,6 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	base_icon_state = "tablet"
 	worn_icon_state = "tablet"
-	hardware_flag = PROGRAM_TABLET
-	max_idle_programs = 2
-	w_class = WEIGHT_CLASS_SMALL
-	steel_sheet_cost = 2
-	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
-	has_light = TRUE //LED flashlight!
-	comp_light_luminosity = 2.3 //Same as the PDA
-	looping_sound = FALSE
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100, /datum/material/plastic=100)
 	interaction_flags_atom = INTERACT_ATOM_ALLOW_USER_LOCATION
 

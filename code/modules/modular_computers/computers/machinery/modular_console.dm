@@ -16,9 +16,3 @@
 	integrity_failure = 0.5
 	///Used in New() to set network tag according to our area.
 	var/console_department = ""
-
-/obj/machinery/modular_computer/console/Initialize(mapload)
-	. = ..()
-	if(cpu)
-		cpu.screen_on = TRUE
-	update_appearance()

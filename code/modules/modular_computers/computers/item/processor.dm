@@ -1,4 +1,4 @@
-// Held by /obj/machinery/modular_computer to reduce amount of copy-pasted code.
+/*// Held by /obj/machinery/modular_computer to reduce amount of copy-pasted code.
 //TODO: REFACTOR THIS SPAGHETTI CODE
 /obj/item/modular_computer/processor
 	name = "processing unit"
@@ -7,7 +7,6 @@
 	icon_state = null
 	icon_state_unpowered = null
 	icon_state_menu = null
-	hardware_flag = 0
 
 	///The modular computer MACHINE that hosts us.
 	var/obj/machinery/modular_computer/machinery_computer
@@ -45,3 +44,4 @@
 
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)
+*/

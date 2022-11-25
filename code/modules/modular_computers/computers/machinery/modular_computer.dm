@@ -37,9 +37,11 @@
 	var/base_active_power_usage = 100
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
 	var/base_idle_power_usage = 10
+	/// Allow people with chunky fingers to use?
+	var/allow_chunky = FALSE
 
 	///CPU that handles most logic while this type only handles power and other specific things.
-	var/obj/item/modular_computer/processor/cpu
+	var/datum/modular_computer_host/cpu
 
 /obj/machinery/modular_computer/Initialize(mapload)
 	. = ..()
@@ -61,12 +63,6 @@
 		return
 	if(cpu)
 		cpu.attack_ghost(user)
-
-/obj/machinery/modular_computer/emag_act(mob/user)
-	if(!cpu)
-		to_chat(user, span_warning("You'd need to turn the [src] on first."))
-		return FALSE
-	return cpu.emag_act(user)
 
 /obj/machinery/modular_computer/update_appearance(updates)
 	. = ..()

@@ -9,44 +9,47 @@
 	icon_state_menu = "menu"
 	display_overlays = FALSE
 
-	hardware_flag = PROGRAM_LAPTOP
-	max_idle_programs = 3
 	w_class = WEIGHT_CLASS_NORMAL
 
 	// No running around with open laptops in hands.
 	item_flags = SLOWS_WHILE_IN_HAND
 
-	screen_on = FALSE // Starts closed
 	var/start_open = TRUE // unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
 	var/w_class_open = WEIGHT_CLASS_BULKY
 	var/slowdown_open = TRUE
 
+	///If the screen is open, only used by laptops.
+	var/screen_open = TRUE
+
 /obj/item/modular_computer/laptop/examine(mob/user)
 	. = ..()
-	if(screen_on)
+	if(screen_open)
 		. += span_notice("Alt-click to close it.")
 
 /obj/item/modular_computer/laptop/Initialize(mapload)
 	. = ..()
 
-	if(start_open && !screen_on)
+	cpu.hardware_flag = PROGRAM_LAPTOP
+	cpu.max_idle_programs = 3
+
+	if(start_open && !screen_open)
 		toggle_open()
 
 /obj/item/modular_computer/laptop/update_icon_state()
-	if(!screen_on)
+	if(!screen_open)
 		icon_state = icon_state_closed
 		return
 	return ..()
 
 /obj/item/modular_computer/laptop/update_overlays()
-	if(!screen_on)
+	if(!screen_open)
 		cut_overlays()
 		return
 	return ..()
 
 /obj/item/modular_computer/laptop/attack_self(mob/user)
-	if(!screen_on)
+	if(!screen_open)
 		try_toggle_open(user)
 	else
 		return ..()
@@ -77,7 +80,7 @@
 	. = ..()
 	if(.)
 		return
-	if(screen_on && isturf(loc))
+	if(screen_open && isturf(loc))
 		return attack_self(user)
 
 /obj/item/modular_computer/laptop/proc/try_toggle_open(mob/living/user)
@@ -95,13 +98,13 @@
 	. = ..()
 	if(!can_interact(user))
 		return
-	if(screen_on) // Close it.
+	if(screen_open) // Close it.
 		try_toggle_open(user)
 	else
 		return ..()
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
-	if(screen_on)
+	if(screen_open)
 		to_chat(user, span_notice("You close \the [src]."))
 		slowdown = initial(slowdown)
 		w_class = initial(w_class)
@@ -110,8 +113,8 @@
 		slowdown = slowdown_open
 		w_class = w_class_open
 
-	screen_on = !screen_on
-	display_overlays = screen_on
+	screen_open = !screen_open
+	display_overlays = screen_open
 	update_appearance()
 
 

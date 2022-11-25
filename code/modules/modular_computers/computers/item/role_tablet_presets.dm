@@ -340,7 +340,7 @@
 
 /obj/item/modular_computer/tablet/pda/mime/Initialize(mapload)
 	. = ..()
-	for(var/datum/computer_file/program/messenger/msg in stored_files)
+	for(var/datum/computer_file/program/messenger/msg in cpu.stored_files)
 		msg.mime_mode = TRUE
 		msg.ringer_status = FALSE
 
@@ -351,7 +351,6 @@
 	greyscale_colors = null
 	icon_state = "pda-library"
 	inserted_item = /obj/item/pen/fountain
-	long_ranged = TRUE
 	starting_programs = list(
 		/datum/computer_file/program/emojipedia,
 		/datum/computer_file/program/newscaster,
@@ -359,7 +358,8 @@
 
 /obj/item/modular_computer/tablet/pda/curator/Initialize(mapload)
 	. = ..()
-	for(var/datum/computer_file/program/messenger/msg in stored_files)
+	cpu.ntnet_bypass_rangelimit = TRUE
+	for(var/datum/computer_file/program/messenger/msg in cpu.stored_files)
 		msg.ringer_status = FALSE
 
 /**
@@ -379,13 +379,14 @@
 /obj/item/modular_computer/tablet/pda/syndicate
 	name = "military PDA"
 	greyscale_colors = "#891417#80FF80"
-	saved_identification = "John Doe"
-	saved_job = "Citizen"
-	device_theme = "syndicate"
+
 
 /obj/item/modular_computer/tablet/pda/syndicate/Initialize(mapload)
 	. = ..()
-	var/datum/computer_file/program/messenger/msg = locate() in stored_files
+	cpu.saved_identification = "John Doe"
+	cpu.saved_job = "Citizen"
+	cpu.device_theme = "syndicate"
+	var/datum/computer_file/program/messenger/msg = locate() in cpu.stored_files
 	if(msg)
 		msg.invisible = TRUE
 

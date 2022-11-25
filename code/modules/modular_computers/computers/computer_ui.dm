@@ -1,10 +1,6 @@
-/obj/item/modular_computer/attack_self(mob/user)
-	. = ..()
-	ui_interact(user)
-
 // Operates TGUI
-/obj/item/modular_computer/ui_interact(mob/user, datum/tgui/ui)
-	if(!enabled)
+/datum/modular_computer_host/ui_interact(mob/user, datum/tgui/ui)
+	if(!powered_on)
 		if(ui)
 			ui.close()
 		return
@@ -16,14 +12,15 @@
 	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
-	if(ishuman(user) && !allow_chunky)
+	// TODO
+/*	if(ishuman(user) && !allow_chunky)
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.check_chunky_fingers())
-			balloon_alert(human_user, "fingers are too big!")
-			return
+			physical.balloon_alert(human_user, "fingers are too big!")
+			return*/
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
-	if(!screen_on && !issilicon(user))
+	if(!powered_on && !issilicon(user))
 		if(ui)
 			ui.close()
 		return
@@ -46,7 +43,7 @@
 		if(ui.open())
 			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
-/obj/item/modular_computer/ui_static_data(mob/user)
+/datum/modular_computer_host/ui_static_data(mob/user)
 	. = ..()
 	var/list/data = list()
 
@@ -54,7 +51,7 @@
 
 	return data
 
-/obj/item/modular_computer/ui_data(mob/user)
+/datum/modular_computer_host/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
 
@@ -91,14 +88,14 @@
 		))
 
 	data["has_light"] = has_light
-	data["light_on"] = light_on
+	data["light_on"] = physical.light_on
 	data["comp_light_color"] = comp_light_color
 	data["pai"] = inserted_pai
 	return data
 
 
 // Handles user's GUI input
-/obj/item/modular_computer/ui_act(action, params)
+/datum/modular_computer_host/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -119,7 +116,6 @@
 			active_program.program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
 
 			active_program = null
-			update_appearance()
 			if(user && istype(user))
 				ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
 
@@ -198,7 +194,5 @@
 		else
 			return
 
-/obj/item/modular_computer/ui_host()
-	if(physical)
-		return physical
-	return src
+/datum/modular_computer_host/ui_host()
+	return physical

@@ -4,7 +4,7 @@
  * Adds an already initialized file to the computer, checking if one already exists.
  * Returns TRUE if successfully stored, FALSE otherwise.
  */
-/obj/item/modular_computer/proc/store_file(datum/computer_file/file_storing)
+/datum/modular_computer_host/proc/store_file(datum/computer_file/file_storing)
 	if(!file_storing || !istype(file_storing))
 		return FALSE
 	if(!can_store_file(file_storing))
@@ -28,7 +28,7 @@
  * Properly checking if the file even exists and is in the computer.
  * Returns TRUE if successfully completed, FALSE otherwise
  */
-/obj/item/modular_computer/proc/remove_file(datum/computer_file/file_removing)
+/datum/modular_computer_host/proc/remove_file(datum/computer_file/file_removing)
 	if(!file_removing || !istype(file_removing))
 		return FALSE
 	if(!(file_removing in stored_files))
@@ -52,7 +52,7 @@
  * Checks if a computer can store a file, as computers can only store unique files.
  * returns TRUE if possible, FALSE otherwise.
  */
-/obj/item/modular_computer/proc/can_store_file(datum/computer_file/file)
+/datum/modular_computer_host/proc/can_store_file(datum/computer_file/file)
 	if(!file || !istype(file))
 		return FALSE
 	if(file in stored_files)
@@ -75,7 +75,7 @@
  * the same filename (disregarding extension), will return it.
  * If a computer disk is passed instead, it will check the disk over the computer.
  */
-/obj/item/modular_computer/proc/find_file_by_name(filename, obj/item/computer_disk/target_disk)
+/datum/modular_computer_host/proc/find_file_by_name(filename, obj/item/computer_disk/target_disk)
 	if(!filename)
 		return null
 	if(target_disk)
