@@ -5,7 +5,6 @@ const TITLE_BOT_HEADER = "title: ";
 // Helps make sure we don't restart something like screenshot tests or linters, which are not known to be flaky.
 const CONSIDERED_JOBS = [
   "CI Suite / Integration Tests",
-  "CI Suite / Alternate Tests",
 ];
 
 async function getFailedJobsForRun(github, context, workflowRunId, runAttempt) {
