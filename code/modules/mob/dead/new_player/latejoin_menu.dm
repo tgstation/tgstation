@@ -20,7 +20,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 /datum/latejoin_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "JobSelection")
+		ui = new(user, src, "JobSelection", "Latejoin Menu")
 		ui.open()
 
 /datum/latejoin_menu/ui_data(mob/user)
