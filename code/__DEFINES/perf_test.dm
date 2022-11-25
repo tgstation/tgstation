@@ -5,5 +5,3 @@
 		var/_knockonwood_x = 0;\
 		_knockonwood_x += 20;\
 	}
-
-
