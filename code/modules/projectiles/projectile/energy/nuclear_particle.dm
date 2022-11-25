@@ -19,11 +19,14 @@
 	)
 	///Internal energy to release on impact (used on the SM and the nuclear accumulator)
 	var/internal_power = 0
+	///Additional effects
+	var/dangerous = FALSE
 
-/obj/projectile/energy/nuclear_particle/Initialize(mapload, internal_power = 0, icon_state)
+/obj/projectile/energy/nuclear_particle/Initialize(mapload, internal_power = 0, icon_state, dangerous = FALSE)
 	. = ..()
 	//Random color time!
 	src.internal_power = internal_power
+	src.dangerous = dangerous
 	if(!icon_state)
 		//Random color time!
 		var/our_color = pick(particle_colors)
@@ -34,16 +37,30 @@
 		update_colours()
 
 /obj/projectile/energy/nuclear_particle/on_hit(atom/target, blocked, pierce_hit)
-	if (ishuman(target))
-		radiation_pulse(target, max_range = 0, threshold = RAD_FULL_INSULATION)
+	if (!isliving(target))
+		return ..()
 
-	..()
+	radiation_pulse(target, max_range = 0, threshold = RAD_FULL_INSULATION)
+
+	if(!dangerous || !prob(35))
+		return ..()
+
+	var/mob/living/hit_mob = target
+	ADD_TRAIT(hit_mob, TRAIT_BEING_SHOCKED, WAS_SHOCKED)
+	addtimer(TRAIT_CALLBACK_REMOVE(hit_mob, TRAIT_BEING_SHOCKED, WAS_SHOCKED), 1 SECONDS)
+	var/shock_damage = min(round(internal_power/10), 90) + rand(-5, 5)
+	hit_mob.electrocute_act(shock_damage, src, 1, SHOCK_TESLA)
+	if(issilicon(hit_mob))
+		var/mob/living/silicon/hit_silicon = hit_mob
+		hit_silicon.emp_act(EMP_LIGHT)
+
+	return ..()
 
 /obj/projectile/energy/nuclear_particle/proc/update_colours()
 	var/list/colour = color_matrix_rotate_hue(internal_power / 30)
 	add_atom_colour(colour, FIXED_COLOUR_PRIORITY)
 
-/atom/proc/fire_nuclear_particle(angle = rand(0,360), speed = 0.4, internal_power = 0, set_icon_state) //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
-	var/obj/projectile/energy/nuclear_particle/particle = new /obj/projectile/energy/nuclear_particle(src, internal_power, set_icon_state)
+/atom/proc/fire_nuclear_particle(angle = rand(0,360), speed = 0.4, internal_power = 0, set_icon_state, dangerous = FALSE) //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
+	var/obj/projectile/energy/nuclear_particle/particle = new /obj/projectile/energy/nuclear_particle(src, internal_power, set_icon_state, dangerous)
 	particle.speed = speed
 	particle.fire(angle)

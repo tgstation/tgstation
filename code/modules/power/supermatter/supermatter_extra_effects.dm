@@ -205,13 +205,12 @@
 	var/static/list/angles_to_shoot = list(0, 45, 90, 135, 180, 225, 270, 315, 360)
 
 	if(internal_energy)
-		internal_energy = max(internal_energy - 30, 0)
-
-		for(var/_ in 1 to rand(2, 5))
-			if(hypermatter_power_amount < 1000)
+		var/particles_increase = max(round(internal_energy * 0.0005), 0)
+		for(var/_ in 1 to rand(1 + particles_increase, 4 + particles_increase))
+			if(hypermatter_power_amount < HYPERMATTER_PARTICLE_BASE_POWER)
 				break
 			var/angle_to_shoot = pick(angles_to_shoot)
-			fire_nuclear_particle(angle_to_shoot, 1.2, 1000, "sm_nuclear_particle")
+			fire_nuclear_particle(angle_to_shoot, HYPERMATTER_PARTICLE_BASE_POWER * 0.003, HYPERMATTER_PARTICLE_BASE_POWER, "tesla_projectile", dangerous = TRUE)
 			hypermatter_power_amount = max(hypermatter_power_amount - 100, 0)
 	else
 		hypermatter_power_amount = max(hypermatter_power_amount - 200, 0)

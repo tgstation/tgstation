@@ -87,6 +87,9 @@
 		reflecting_particle.internal_power = max(reflecting_particle.internal_power + particle_power_increase, 0)
 		if(particle_power_increase > 0)
 			reflecting_particle.range += 10
+			reflecting_particle.decayedRange += 10
+			reflecting_particle.speed = max(2.5 - reflecting_particle.internal_power * 0.0003, 0.8)
+			reflecting_particle.impacted = list()
 		reflecting_particle.update_colours()
 
 	if(auto_reflect(projectile_hit, projectile_dir, projectile_loc, projectile_angle) != BULLET_ACT_FORCE_PIERCE)
