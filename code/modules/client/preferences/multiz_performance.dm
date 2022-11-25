@@ -5,7 +5,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 	minimum = MULTIZ_PERFORMANCE_DISABLE
-	maximum = MAX_EXPECTED_Z_DEPTH
+	maximum = MAX_EXPECTED_Z_DEPTH - 1
 
 /datum/preference/numeric/multiz_performance/create_default_value()
 	return -1

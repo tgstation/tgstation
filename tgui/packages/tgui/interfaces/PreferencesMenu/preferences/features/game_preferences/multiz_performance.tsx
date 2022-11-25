@@ -1,15 +1,13 @@
 import { createDropdownInput, Feature } from '../base';
 
 export const multiz_performance: Feature<number> = {
-  name: 'Multiz Rendering Resolution',
+  name: 'Multiz Detail',
   category: 'GAMEPLAY',
   description:
-  'How many z levels of multiz to render normally before switching to a less intensive rendering mode',
+  'How detailed multiz is. Lower this to improve performance',
   component: createDropdownInput({
-    [-1]: 'Disable',
-    0: 'Zero',
-    1: 'One',
-    2: 'Two',
-    3: 'Three',
+    [-1]: 'Standard',
+    1: 'Medium',
+    0: 'Low',
   }),
 };
