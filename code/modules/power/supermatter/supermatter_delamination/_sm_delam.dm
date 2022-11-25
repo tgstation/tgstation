@@ -92,9 +92,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	if(!sm.internal_energy && !sm.damage)
 		return FALSE
 
-	var/new_filter = FALSE
-	if(isnull(sm.get_filter("ray")))
-		new_filter = TRUE
+	var/new_filter = isnull(sm.get_filter("ray"))
 
 	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
