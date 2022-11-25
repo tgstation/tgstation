@@ -104,7 +104,26 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dna.features["pod_hair"] = "Ivy"
 
 /// Provides a dummy for unit_tests that functions like a normal human, but with a standardized appearance
+/// Copies the stock dna setup from the dummy/consistent type
 /mob/living/carbon/human/unit_test
+
+/mob/living/carbon/human/unit_test/setup_human_dna()
+	create_dna(src)
+	dna.initialize_dna(skip_index = TRUE)
+	dna.features["body_markings"] = "None"
+	dna.features["ears"] = "None"
+	dna.features["ethcolor"] = COLOR_WHITE
+	dna.features["frills"] = "None"
+	dna.features["horns"] = "None"
+	dna.features["mcolor"] = COLOR_VIBRANT_LIME
+	dna.features["moth_antennae"] = "Plain"
+	dna.features["moth_markings"] = "None"
+	dna.features["moth_wings"] = "Plain"
+	dna.features["snout"] = "Round"
+	dna.features["spines"] = "None"
+	dna.features["tail_cat"] = "None"
+	dna.features["tail_lizard"] = "Smooth"
+	dna.features["pod_hair"] = "Ivy"
 
 /mob/living/carbon/human/unit_test/update_body(is_creating)
 	..()
