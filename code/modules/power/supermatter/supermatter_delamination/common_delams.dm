@@ -7,14 +7,14 @@
 	return (sm.absorbed_gasmix.total_moles() >= MOLE_PENALTY_THRESHOLD)
 
 /datum/sm_delam/singularity/delam_progress(obj/machinery/power/supermatter_crystal/sm)
-	. = ..()
-	if(!.)
+	if(!..())
 		return FALSE
 	sm.radio.talk_into(
 		sm,
 		"Warning: Critical coolant mass reached.",
 		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
+	return TRUE
 
 /datum/sm_delam/singularity/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a singularity delam.")
@@ -80,14 +80,14 @@
 	return (sm.internal_energy > POWER_PENALTY_THRESHOLD)
 
 /datum/sm_delam/tesla/delam_progress(obj/machinery/power/supermatter_crystal/sm)
-	. = ..()
-	if(!.)
+	if(!..())
 		return FALSE
 	sm.radio.talk_into(
 		sm,
 		"DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.",
 		sm.damage > sm.emergency_point ? sm.emergency_channel : sm.warning_channel
 	)
+	return TRUE
 
 /datum/sm_delam/tesla/delaminate(obj/machinery/power/supermatter_crystal/sm)
 	message_admins("Supermatter [sm] at [ADMIN_VERBOSEJMP(sm)] triggered a tesla delam.")
