@@ -25,7 +25,7 @@
 /datum/component/cooking/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PersonalCooking", "Cooking")
+		ui = new(user, src, "PersonalCooking", "Cook Book")
 		ui.open()
 
 /datum/component/cooking/ui_data(mob/user)
@@ -38,9 +38,11 @@
 	data["categories"] = list()
 	data["recipes"] = list()
 	for(var/path in GLOB.crafting_recipes)
-		if (!(path in subtypesof(/datum/crafting_recipe/food))
+		if (!istype(path, /datum/crafting_recipe/food))
 			continue
 		var/datum/crafting_recipe/recipe = path
+		if (!recipe.result)
+			continue
 		var/list/recipe_data = list()
 		recipe_data["name"] = recipe.name
 		var/list/reqs = recipe.reqs

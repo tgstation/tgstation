@@ -20,22 +20,18 @@ const TOOL_ICONS = {
   'bike horn': 'bullhorn',
 };
 
-type Category = {
-  id: string;
-  name: string;
-};
-
 type Recipe = {
   result: string;
   name: string;
   desc: string;
   reqs: number[];
-  category: Category;
+  category: string;
 };
 
 type Data = {
   // Dynamic
   busy: BooleanLike;
+  compact: BooleanLike;
   // Static
   recipes: Recipe[];
   categories: string[];
@@ -45,20 +41,30 @@ export const PersonalCooking = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [sortField, setSortField] = useLocalState(context, 'sortField', 'name');
-  const [action, toggleAction] = useLocalState(context, 'action', true);
-  const search = createSearch(searchText, (item: Recipe) => item.name);
+  const [activeCategory, setCategory] = useLocalState(
+    context,
+    'category',
+    data.categories[0]
+  );
+  const searchName = createSearch(searchText, (item: Recipe) => item.name);
+  const searchCategory = createSearch(
+    activeCategory,
+    (item: Recipe) => item.category
+  );
   const recipes_filtered =
-    searchText.length > 0 ? data.recipes.filter(search) : data.recipes;
+    searchText.length > 0
+      ? data.recipes.filter(searchName)
+      : data.recipes.filter(searchCategory);
   const recipes = flow([
     sortBy((item: Recipe) => item[sortField as keyof Recipe]),
   ])(recipes_filtered || []);
   const categories = data.categories.sort();
   return (
     <Window width={700} height={700}>
-      <Window.Content scrollable>
+      <Window.Content id="content" scrollable>
         <Stack>
-          <Stack.Item width={'120px'}>
-            <Section width={'120px'} style={{ 'position': 'fixed' }}>
+          <Stack.Item width={'128px'}>
+            <Section width={'128px'} style={{ 'position': 'fixed' }}>
               <Input
                 autoFocus
                 placeholder={'Search...'}
@@ -66,20 +72,44 @@ export const PersonalCooking = (props, context) => {
                 onInput={(e, value) => setSearchText(value)}
                 fluid
               />
+              <hr style={{ 'border-color': '#111' }} />
               <Tabs vertical mt={1}>
-                <Tabs.Tab key={null} selected>
-                  All
-                </Tabs.Tab>
                 {categories.map((category) => (
-                  <Tabs.Tab key={category}>{category}</Tabs.Tab>
+                  <Tabs.Tab
+                    key={category}
+                    selected={
+                      activeCategory === category && searchText.length === 0
+                    }
+                    onClick={(e) => {
+                      setCategory(category);
+                      document.getElementById('content').scrollTop = 0;
+                      if (searchText.length > 0) {
+                        setSearchText('');
+                      }
+                    }}>
+                    {category}
+                  </Tabs.Tab>
                 ))}
               </Tabs>
+              <hr style={{ 'border-color': '#111' }} />
+              <Button.Checkbox
+                fluid
+                content="Craftable only"
+                checked={data.compact}
+                onClick={() => act('toggle_compact')}
+              />
+              <Button.Checkbox
+                fluid
+                content="Compact"
+                checked={data.compact}
+                onClick={() => act('toggle_compact')}
+              />
             </Section>
           </Stack.Item>
           <Stack.Item grow>
             {recipes.length > 0 ? (
               recipes
-                .slice(0, 30)
+                .slice(0, searchText.length > 0 ? 30 : 99)
                 .map((item) => <RecipeContent key item={item} />)
             ) : (
               <NoticeBox m={1} p={1}>
@@ -117,7 +147,7 @@ const RecipeContent = (props) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box bold mb={0.5}>
+              <Box bold mb={0.5} style={{ 'text-transform': 'capitalize' }}>
                 {item.name}
               </Box>
               <Box color={'gray'}>{item.desc}</Box>
