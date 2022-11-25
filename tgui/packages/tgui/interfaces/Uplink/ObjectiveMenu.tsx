@@ -349,7 +349,7 @@ type ObjectiveElementProps = {
   handleAbort: (event: MouseEvent) => void;
 };
 
-const ObjectiveElement = (props: ObjectiveElementProps, context) => {
+export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
   const {
     name,
     reputation,
@@ -451,49 +451,49 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                   py={0.5}
                   width="100%"
                   textAlign="center">
-                  {telecrystalReward} TC,
-                  <Box ml={1} as="span">
-                    {calculateProgression(progressionReward)} Reputation
-                    {Math.abs(progressionDiff) > 10 && (
-                      <Tooltip
-                        content={
-                          <Box>
-                            You will get
-                            <Box
-                              mr={1}
-                              ml={1}
-                              color={
-                                progressionDiff > 0
-                                  ? progressionDiff > 25
-                                    ? 'red'
-                                    : 'orange'
-                                  : 'green'
-                              }
-                              as="span">
-                              {Math.abs(progressionDiff)}%
+                  {finalObjective ? "　" : telecrystalReward + " TC,"}
+                    <Box ml={1} as="span" color={finalObjective ? "transparent" : "white"}>
+                      {finalObjective ? "" : calculateProgression(progressionReward) + " Reputation"}
+                      {Math.abs(progressionDiff) > 10 && (
+                        <Tooltip
+                          content={
+                            <Box>
+                              You will get
+                              <Box
+                                mr={1}
+                                ml={1}
+                                color={
+                                  progressionDiff > 0
+                                    ? progressionDiff > 25
+                                      ? 'red'
+                                      : 'orange'
+                                    : 'green'
+                                }
+                                as="span">
+                                {Math.abs(progressionDiff)}%
+                              </Box>
+                              {progressionDiff > 0 ? 'less' : 'more'} reputation
+                              from this objective. This is because your reputation
+                              is {progressionDiff > 0 ? 'ahead ' : 'behind '}
+                              where it normally should be at.
                             </Box>
-                            {progressionDiff > 0 ? 'less' : 'more'} reputation
-                            from this objective. This is because your reputation
-                            is {progressionDiff > 0 ? 'ahead ' : 'behind '}
-                            where it normally should be at.
+                          }>
+                          <Box
+                            ml={1}
+                            color={
+                              progressionDiff > 0
+                                ? progressionDiff > 35
+                                  ? 'red'
+                                  : 'orange'
+                                : 'green'
+                            }
+                            as="span">
+                            ({progressionDiff > 0 ? '-' : '+'}
+                            {Math.abs(progressionDiff)}%)
                           </Box>
-                        }>
-                        <Box
-                          ml={1}
-                          color={
-                            progressionDiff > 0
-                              ? progressionDiff > 35
-                                ? 'red'
-                                : 'orange'
-                              : 'green'
-                          }
-                          as="span">
-                          ({progressionDiff > 0 ? '-' : '+'}
-                          {Math.abs(progressionDiff)}%)
-                        </Box>
-                      </Tooltip>
-                    )}
-                  </Box>
+                        </Tooltip>
+                      )}
+                    </Box>
                 </Box>
               </Stack>
               {objectiveFinished ? (

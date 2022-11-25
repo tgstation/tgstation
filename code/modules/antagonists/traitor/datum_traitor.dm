@@ -155,8 +155,9 @@
 	objectives.Cut()
 
 	var/list/kill_targets = list() //for blacklisting already-set targets
-	for(var/loopcounter=1, loopcounter<=2, loopcounter++)
-		var/list/ai_targets = active_ais(z = 2)
+	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
+	for(var/i in 1 to objective_limit)
+		var/list/ai_targets = active_ais(z = 2) //For multiZ stations, this proc will include AIs on all station levels if the provided arg is 2.
 		ai_targets -= kill_targets
 		if(ai_targets.len)
 			var/diceroll = rand(1, (living_player_count() - 1)) //AI kill and crew kill objectives are different, but I want a rough equal chance for AIs to be targets. Maybe I'll refractor this someday
@@ -245,7 +246,7 @@
 				traitor_won = FALSE
 			count++
 		if(final_objective)
-			objectives_text += "<br>[span_greentext("[traitor_won? "Additionally" : "However"], the final objective \"[final_objective]\" was completed!")]"
+			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[final_objective]\" was completed!")]"
 			traitor_won = TRUE
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
@@ -261,14 +262,6 @@
 
 	if(uplink_handler)
 		result += "<br>The traitor had a total of [uplink_handler.progression_points] Reputation and [uplink_handler.telecrystals] Unused Telecrystals."
-
-	/*
-	if(uplink_handler)
-		var/completed_objectives_text = "Completed Uplink Objectives: "
-		for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
-			if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
-				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [DISPLAY_PROGRESSION(objective.progression_reward)] Reputation)"
-		result += completed_objectives_text*/
 
 	var/special_role_text = lowertext(name)
 
