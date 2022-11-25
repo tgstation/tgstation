@@ -49,7 +49,7 @@
 		sm.add_filter(name = "icon", priority = 3, params = list(
 			type = "layer",
 			icon = new/icon('icons/effects/96x96.dmi', "singularity_s3", frame = rand(1,8)),
-			flags = FILTER_OVERLAY
+			flags = FILTER_UNDERLAY
 		))
 	return TRUE
 

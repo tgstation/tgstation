@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	))
 
 	// Filter animation persists even if the filter itself is changed externally.
-	// Probably prone to breaking.
+	// Probably prone to breaking. Treat with suspicion.
 	if(new_filter)
 		animate(sm.get_filter("ray"), offset = 10, time = 10 SECONDS, loop = -1)
 		animate(offset = 0, time = 10 SECONDS)
