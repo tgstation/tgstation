@@ -84,16 +84,16 @@
 /// Adds the fruit to the barrel to queue the fermentation
 /obj/structure/fermenting_barrel/proc/insert_fruit(mob/user, obj/item/food/grown/fruit, obj/item/storage/bag/plants/bag = null)
 	if(reagents.total_volume + potential_volume > reagents.maximum_volume)
-		to_chat(user, span_warning("The barrel can't hold any more fruits!"))
+		balloon_alert(user, "The barrel is full!")
 		return FALSE
 	if(!fruit.can_distill)
-		to_chat(user, span_warning("You can't distill this into anything!"))
+		balloon_alert(user, "Can't ferment this!")
 		return FALSE
 	if(bag && !bag.atom_storage.attempt_remove(fruit, src))
-		to_chat(user, span_warning("Can't take the fruit from the bag!"))
+		balloon_alert(user, "Can't take from the bag!")
 		return FALSE
 	else if (!user.transferItemToLoc(fruit, src))
-		to_chat(user, span_warning("[fruit] is stuck to your hand!"))
+		balloon_alert(user, "Can't take the fruit!")
 		return FALSE
 	potential_volume += fruit.reagents.total_volume
 	return TRUE
