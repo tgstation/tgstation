@@ -8,6 +8,7 @@
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 
 	express_cost_multiplier = 1.5
+	uses_cooldowns = FALSE
 	order_categories = list(
 		CATEGORY_MINING,
 		CATEGORY_CONSUMABLES,

@@ -10,6 +10,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 	///Cooldown between order uses.
 	COOLDOWN_DECLARE(order_cooldown)
+	///Boolean on whether they should use cooldowns between orders.
+	var/uses_cooldowns = TRUE
 
 	///The radio the console can speak into
 	var/obj/item/radio/radio
@@ -119,7 +121,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			grocery_list.Cut()
 			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
 			radio.talk_into(src, "The kitchen has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
-			COOLDOWN_START(src, order_cooldown, 60 SECONDS)
+			if(uses_cooldowns)
+				COOLDOWN_START(src, order_cooldown, 60 SECONDS)
 		if("express")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
@@ -131,9 +134,12 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				return
 			var/say_message = "Thank you for your purchase!"
 			if(express_cost_multiplier > 1)
-				say_message += "Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
+				say_message += "Please note: The charge of this purchase"
+			if(uses_cooldowns)
+				COOLDOWN_START(src, order_cooldown, 120 SECONDS)
+				say_message += " and machine cooldown"
+			say_message += "has been multiplied by [express_cost_multiplier]!"
 			say(say_message)
-			COOLDOWN_START(src, order_cooldown, 120 SECONDS)
 			var/list/ordered_paths = list()
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
 				if(!(item.category_index in order_categories))
