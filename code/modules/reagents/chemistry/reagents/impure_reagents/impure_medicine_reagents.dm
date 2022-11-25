@@ -520,7 +520,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return ..()
 	metabolization_rate = 0.2 * REM
 	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(owner, TRAIT_NODEAF, type) //As it turns out, being in critical health stops you from hearing stuff.
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
@@ -582,7 +581,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/owner)
 	REMOVE_TRAIT(owner, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(owner, TRAIT_NODEAF, type)
 	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 	REMOVE_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)

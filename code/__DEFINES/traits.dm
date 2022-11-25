@@ -193,8 +193,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents you from leaving your corpse
 #define TRAIT_CORPSELOCKED "corpselocked"
 #define TRAIT_STABLELIVER "stable_liver"
-/// Makes you able to hear everything regardless of TRAIT_DEAF
-#define TRAIT_NODEAF "no_deaf"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
 ///For when you've gotten a power from a dna vault

@@ -312,7 +312,7 @@
 					living_user.add_mood_event("empath", /datum/mood_event/sad_empath, src)
 				if (is_blind())
 					msg += "[t_He] appear[p_s()] to be staring off into space.\n"
-				if (HAS_TRAIT(src, TRAIT_DEAF) && !HAS_TRAIT(src, TRAIT_NODEAF))
+				if (HAS_TRAIT(src, TRAIT_DEAF))
 					msg += "[t_He] appear[p_s()] to not be responding to noises.\n"
 				if (bodytemperature > dna.species.bodytemp_heat_damage_limit)
 					msg += "[t_He] [t_is] flushed and wheezing.\n"

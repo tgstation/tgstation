@@ -196,7 +196,7 @@
 			healing += 0.1
 
 		// sleeping in silence is always better
-		if(HAS_TRAIT(src, TRAIT_DEAF) && !HAS_TRAIT(src, TRAIT_NODEAF))
+		if(HAS_TRAIT(src, TRAIT_DEAF))
 			healing += 0.1
 
 		// check for beds
