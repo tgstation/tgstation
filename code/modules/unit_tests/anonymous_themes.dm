@@ -4,7 +4,7 @@
 /datum/unit_test/anonymous_themes/Run()
 	GLOB.current_anonymous_theme = new /datum/anonymous_theme
 
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/unit_test)
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
 	var/datum/client_interface/client = new
 	human.mock_client = client

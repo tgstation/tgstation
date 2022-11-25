@@ -249,7 +249,7 @@ section "unit tests"
 part "mob/living/carbon/human usage"
 if $grep 'mob/living/carbon/human[, (){}]' $code_files; then
 	echo
-	echo -e "${RED}ERROR: Usage of mob/living/carbon/human detected in a unit test, please use mob/living/carbon/human/unit_test.${NC}"
+	echo -e "${RED}ERROR: Usage of mob/living/carbon/human detected in a unit test, please use mob/living/carbon/human/consistent.${NC}"
 	st=1
 fi;
 
