@@ -4,17 +4,36 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "quantum_keycard_gags"
 	greyscale_config = /datum/greyscale_config/quantum_keycard
-	greyscale_colors = "#FF0033"
+	greyscale_colors = "#FFFFFF"
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/obj/machinery/quantumpad/qpad
+	/// area name of linked pad
+	var/linked_area_name
+
+	/// where the pad is located and what color the card will become
+	var/static/list/gags_coloring = list(
+		/area/station/maintenance = COLOR_ASSISTANT_GRAY,
+		/area/station/security = COLOR_SECURITY_RED,
+		/area/station/service = COLOR_SERVICE_LIME,
+		/area/centcom = COLOR_CENTCOM_BLUE,  // how?
+		/area/station/command = COLOR_COMMAND_BLUE,
+		/area/station/ai_monitored = COLOR_COMMAND_BLUE,
+		/area/station/medical = COLOR_MEDICAL_BLUE,
+		/area/station/science = COLOR_SCIENCE_PINK,
+		/area/station/engineering = COLOR_ENGINEERING_ORANGE,
+		/area/station/cargo = COLOR_CARGO_BROWN,
+		/area/mine = COLOR_CARGO_BROWN
+	)
 
 /obj/item/quantum_keycard/examine(mob/user)
 	. = ..()
 	if(qpad)
 		. += "It's currently linked to a quantum pad."
+		if(linked_area_name)
+			. += "The pad is located in \the [linked_area_name]."
 		. += span_notice("Alt-click to unlink the keycard.")
 	else
 		. += span_notice("Insert [src] into an active quantum pad to link it.")
@@ -25,8 +44,19 @@
 	to_chat(user, span_notice("You start pressing [src]'s unlink button..."))
 	if(do_after(user, 40, target = src))
 		to_chat(user, span_notice("The keycard beeps twice and disconnects the quantum link."))
-		qpad = null
+		set_pad()
 
-/obj/item/quantum_keycard/update_icon_state()
-	icon_state = qpad ? "quantum_keycard_on" : initial(icon_state)
-	return ..()
+/obj/item/quantum_keycard/proc/set_pad(obj/machinery/quantumpad/new_pad)
+	qpad = new_pad
+
+	if(!istype(new_pad))
+		set_greyscale(initial(greyscale_colors))
+		name = initial(name)
+		linked_area_name = null
+		return
+
+	var/area/new_pad_area = get_area(new_pad)
+	var/new_color = is_type_in_list(new_pad_area, gags_coloring, zebra = TRUE) || COLOR_WEBSAFE_DARK_GRAY
+	name = "linked [initial(name)]"
+	linked_area_name = new_pad_area.name
+	set_greyscale(new_color)
