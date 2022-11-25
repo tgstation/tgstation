@@ -637,8 +637,6 @@
 
 /mob/living/carbon/can_hear()
 	. = FALSE
-	if(HAS_TRAIT(src, TRAIT_NODEAF))
-		return TRUE
 	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
