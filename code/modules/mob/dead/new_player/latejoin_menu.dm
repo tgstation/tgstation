@@ -55,7 +55,6 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 		for(var/datum/job/job_datum as anything in department.department_jobs)
 			var/job_availability = owner.IsJobUnavailable(job_datum.title, TRUE)
-			var/datum/outfit/outfit = job_datum.outfit
 
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
