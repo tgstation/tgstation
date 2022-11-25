@@ -529,7 +529,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen
 	name = "plasma coated metal hydrogen"
 	icon_state = "sheet-metalhydrogencoated"
-	inhand_icon_state = "sheet-metalhydrogen"
+	inhand_icon_state = null
 	singular_name = "plasma coated metal hydrogen sheet"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
