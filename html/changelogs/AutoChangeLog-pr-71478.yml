@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "Modular computers will now no longer all be called \"processing unit\", and will all have their own unique names once again."

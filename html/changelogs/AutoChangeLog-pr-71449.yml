@@ -1,6 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - rscadd: "you can saw bread with a saw into bread slices"
-  - qol: "added screentip verbs to a bunch of food files"
-  - code_imp: "bread and cake now have slice types and all only have one call on the processable.dm proc"
