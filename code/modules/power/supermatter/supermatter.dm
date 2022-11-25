@@ -26,8 +26,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	light_color = SUPERMATTER_COLOUR
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
+	icon_state = "mapped_sm"
 	base_icon_state = "sm"
-	icon_state = "sm"
+	///Icon for the underlay structure of the crystal.
+	var/base_structure_icon = "crystal_base"
 
 	///The id of our supermatter
 	var/uid = 1
@@ -169,6 +171,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Only values greater or equal to the current one can change the strat.
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
+	///Cooldown for the hypermatter state
+	COOLDOWN_DECLARE(hypermatter_cooldown)
+	///Are we in an hypermatter state?
+	var/hypermatter_state = FALSE
+	///Icon of the hypermatter state
+	var/hypermatter_icon = "hypermatter"
+	///The amount of power we have in the hypermatter state
+	var/hypermatter_power_amount
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	gas_percentage = list()
@@ -205,6 +216,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	// Damn math nerds
 	powerloss_linear_threshold = sqrt(POWERLOSS_LINEAR_RATE / 3 * POWERLOSS_CUBIC_DIVISOR ** 3)
 	powerloss_linear_offset = -1 * powerloss_linear_threshold * POWERLOSS_LINEAR_RATE + (powerloss_linear_threshold / POWERLOSS_CUBIC_DIVISOR) ** 3
+
+	update_appearance()
+
+	underlays += image(icon, loc, base_structure_icon)
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	if(warp)
@@ -249,22 +264,23 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			visible_message(span_warning("[src] melts through [local_turf]!"))
 		return
 
-	// PART 2: GAS PROCESSING
+	// PART 2: GAS PROCESSING (only if not in hypermatter state)
 	var/datum/gas_mixture/env = local_turf.return_air()
-	absorbed_gasmix = env?.remove_ratio(absorption_ratio) || new()
-	absorbed_gasmix.volume = (env?.volume || CELL_VOLUME) * absorption_ratio // To match the pressure.
-	calculate_gases()
-	// Extra effects should always fire after the compositions are all finished
-	// Some extra effects like [/datum/sm_gas/carbon_dioxide/extra_effects]
-	// needs more than one gas and rely on a fully parsed gas_percentage.
-	for (var/gas_path in absorbed_gasmix.gases)
-		var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
-		sm_gas?.extra_effects(src)
+	if(!hypermatter_state)
+		absorbed_gasmix = env?.remove_ratio(absorption_ratio) || new()
+		absorbed_gasmix.volume = (env?.volume || CELL_VOLUME) * absorption_ratio // To match the pressure.
+		calculate_gases()
+		// Extra effects should always fire after the compositions are all finished
+		// Some extra effects like [/datum/sm_gas/carbon_dioxide/extra_effects]
+		// needs more than one gas and rely on a fully parsed gas_percentage.
+		for (var/gas_path in absorbed_gasmix.gases)
+			var/datum/sm_gas/sm_gas = GLOB.sm_gas_behavior[gas_path]
+			sm_gas?.extra_effects(src)
 
 	// PART 3: POWER PROCESSING
 	internal_energy_factors = calculate_internal_energy()
 	zap_factors = calculate_zap_multiplier()
-	if(internal_energy && (last_power_zap + 4 SECONDS - (internal_energy * 0.001)) < world.time)
+	if(!hypermatter_state && internal_energy && (last_power_zap + 4 SECONDS - (internal_energy * 0.001)) < world.time)
 		if(!has_been_powered)
 			log_activation()
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
@@ -280,6 +296,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			color = zap_color,
 		)
 		last_power_zap = world.time
+
+	if(hypermatter_state)
+		emit_radiation()
+		processing_sound()
+		psychological_examination()
+		if(COOLDOWN_FINISHED(src, hypermatter_cooldown))
+			hypermatter_state = FALSE
+		update_appearance()
+		SEND_SIGNAL(src, COMSIG_SUPERMATTER_PROCESS_ATMOS)
+		return TRUE
 
 	// PART 4: DAMAGE PROCESSING
 	temp_limit_factors = calculate_temp_limit()
@@ -439,10 +465,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/update_icon(updates)
 	. = ..()
-	if(gas_heat_power_generation > 0.8)
+	if(gas_heat_power_generation > 0.8 && !hypermatter_state)
 		icon_state = "[base_icon_state]-glow"
-	else
+	else if(!hypermatter_state)
 		icon_state = base_icon_state
+	else
+		icon_state = hypermatter_icon
 
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
@@ -741,6 +769,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	delamination_strategy = new_delam
 	delamination_strategy.on_select(src)
 	return TRUE
+
+/obj/machinery/power/supermatter_crystal/proc/activate_hypermatter_state(time_to_add, power_to_add = 2000)
+	if(!anchored || damage > 0)
+		internal_energy += power_to_add * 2
+		return
+	var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
+	var/hypermatter_timer = max(old_time_left + time_to_add, 5 MINUTES)
+	COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
+	hypermatter_state = TRUE
+	hypermatter_power_amount += 50000
+	internal_energy += power_to_add
 
 /obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE, color = null)
 	if(QDELETED(zapstart))

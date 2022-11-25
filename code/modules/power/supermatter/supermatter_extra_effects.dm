@@ -55,8 +55,9 @@
 	)
 
 /obj/machinery/power/supermatter_crystal/proc/processing_sound()
-	if(internal_energy)
-		soundloop.volume = clamp((50 + (internal_energy / 50)), 50, 100)
+	if(internal_energy || hypermatter_state)
+		var/volume_amount = hypermatter_state ? 0 : (internal_energy / 100)
+		soundloop.volume = clamp((50 + volume_amount), 50, 100)
 	if(damage >= 300)
 		soundloop.mid_sounds = list('sound/machines/sm/loops/delamming.ogg' = 1)
 	else
@@ -65,7 +66,7 @@
 	//We play delam/neutral sounds at a rate determined by power and damage
 	if(last_accent_sound >= world.time || !prob(20))
 		return
-	var/aggression = min(((damage / 800) * (internal_energy / 2500)), 1.0) * 100
+	var/aggression = hypermatter_state ? rand(25, 75) : min(((damage / 800) * (internal_energy / 2500)), 1.0) * 100
 	if(damage >= 300)
 		playsound(src, SFX_SM_DELAM, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
 	else
@@ -172,6 +173,63 @@
 			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
 		if(BIOSCRAMBLER_ANOMALY)
 			new /obj/effect/anomaly/bioscrambler(local_turf, null, FALSE)
+
+/**
+ * Handles the main process of the Hypermatter
+ *
+ * The Hypermatter state is a state where the crystal shuts down any gas process and instead starts to shoot out radiation particles
+ * that have an internal energy of 1000 kJ. This energy can be increased by reflecting those particles onto reflectors made with
+ * plastitanium glass and they can be reflected back into the crystal to increase its energy.
+ *
+ * This state can be achieved in two ways:
+ * - By feeding the SM plasma coated metallic hydrogen
+ * - By using the nuclear emitter onto the crystal (a device that shoots a beam towards the SM and consumes 1 MW per shoot, charge
+ * rate fixed at 20 kW/tick)
+ *
+ * This state is temporary and will revert back to normal SM after a maximum of 5 minutes and can be increased only to maximum 5 minutes.
+ * If a particle that has more than 5000 kJ of internal energy is reflected back into the crystal, it will increase it's time by 10 seconds
+ *
+ * For each particle shot the hypermatter energy is decreased by a tenth of the energy of the particle.
+ * For each particle that hit the crystal the hypermatter energy is increased by a tenth of the energy of the particle.
+ *
+ * The particles can be also sent to the nuclear acculumator to be used into power generation, the higher energy they have
+ * the more power they can generate.
+ */
+/obj/machinery/power/supermatter_crystal/proc/handle_hypermatter_state()
+	if(!anchored) //Don't unanchor the shards
+		damage += 150
+		hypermatter_state = FALSE
+		update_appearance()
+		return
+
+	var/static/list/angles_to_shoot = list(0, 45, 90, 135, 180, 225, 270, 315, 360)
+
+	if(internal_energy)
+		internal_energy = max(internal_energy - 30, 0)
+
+		for(var/_ in 1 to rand(2, 5))
+			if(hypermatter_power_amount < 1000)
+				break
+			var/angle_to_shoot = pick(angles_to_shoot)
+			fire_nuclear_particle(angle_to_shoot, 1.2, 1000, "sm_nuclear_particle")
+			hypermatter_power_amount = max(hypermatter_power_amount - 100, 0)
+	else
+		hypermatter_power_amount = max(hypermatter_power_amount - 200, 0)
+
+
+	if(prob(5))
+		fire_nuclear_particle()
+
+		supermatter_zap(
+				zapstart = src,
+				range = 3,
+				zap_str = 5 * internal_energy,
+				zap_flags = ZAP_SUPERMATTER_FLAGS,
+				zap_cutoff = 300,
+				power_level = internal_energy,
+			)
+	if(hypermatter_power_amount < 1000)
+		COOLDOWN_REMOVE_TIME(src, hypermatter_cooldown, 5 SECONDS)
 
 #undef CHANCE_EQUATION_SLOPE
 #undef INTEGRITY_EXPONENTIAL_DEGREE

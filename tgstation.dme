@@ -4077,6 +4077,7 @@
 #include "code\modules\power\singularity\field_generator.dm"
 #include "code\modules\power\singularity\narsie.dm"
 #include "code\modules\power\singularity\singularity.dm"
+#include "code\modules\power\supermatter\hypermatter_machines.dm"
 #include "code\modules\power\supermatter\supermatter.dm"
 #include "code\modules\power\supermatter\supermatter_extra_effects.dm"
 #include "code\modules\power\supermatter\supermatter_gas.dm"

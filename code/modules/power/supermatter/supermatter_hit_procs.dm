@@ -18,6 +18,15 @@
 	if(!istype(projectile.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_ENGINE)
 	if(projectile.armor_flag != BULLET || kiss_power)
+		if(istype(projectile, /obj/projectile/energy/nuclear_particle))
+			var/obj/projectile/energy/nuclear_particle/particle = projectile
+			hypermatter_power_amount += particle.internal_power * 0.1
+			if(particle.internal_power >= 5000)
+				var/old_time_left = COOLDOWN_TIMELEFT(src, hypermatter_cooldown)
+				var/hypermatter_timer = max(old_time_left + 10 SECONDS, 5 MINUTES)
+				COOLDOWN_START(src, hypermatter_cooldown, hypermatter_timer)
+				hypermatter_state = TRUE
+			return BULLET_ACT_HIT
 		if(kiss_power)
 			psy_coeff = 1
 		external_power_immediate += projectile.damage * bullet_energy + kiss_power
@@ -119,15 +128,35 @@
 			qdel(destabilizing_crystal)
 		return
 
+	if(istype(item, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen))
+		var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = item
+		var/hypermatter_time = coated_metal_h2.amount * 30 SECONDS
+		activate_hypermatter_state(hypermatter_time)
+		qdel(coated_metal_h2)
+		return
+
 	return ..()
+
+/obj/machinery/power/supermatter_crystal/Bumped(atom/movable/bumped_atom)
+	if(!istype(bumped_atom, /obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen))
+		return ..()
+	var/obj/item/stack/sheet/mineral/plasma_coated_metal_hydrogen/coated_metal_h2 = bumped_atom
+	var/hypermatter_time = coated_metal_h2.amount * 30 SECONDS
+	activate_hypermatter_state(hypermatter_time)
+	qdel(coated_metal_h2)
 
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
 	return
 
 /obj/machinery/power/supermatter_crystal/proc/wrench_act_callback(mob/user, obj/item/tool)
-	if(moveable)
-		default_unfasten_wrench(user, tool)
+	if(!moveable)
+		return
+	if(hypermatter_state)
+		balloon_alert(user, "this seems like a bad idea")
+		if(!do_after(user, 3 SECONDS, src))
+			return
+	default_unfasten_wrench(user, tool)
 
 /obj/machinery/power/supermatter_crystal/proc/consume_callback(matter_increase, damage_increase)
 	external_power_trickle += matter_increase

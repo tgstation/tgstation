@@ -364,6 +364,27 @@
 		/obj/item/stack/sheet/glass = 10,
 		/obj/item/stack/sheet/plasteel = 5)
 
+/obj/item/circuitboard/machine/nuclear_accumulator
+	name = "Nuclear accumulator (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/energy_accumulator/nuclear_accumulator
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/mineral/gold = 5,
+		/obj/item/stack/sheet/mineral/titanium = 5,
+	)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/nuclear_emitter
+	name = "Nuclear emitter (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/nuclear_emitter
+	req_components = list(
+		/obj/item/stack/sheet/plastitaniumglass = 5,
+		/obj/item/stack/sheet/mineral/titanium = 5,
+		/obj/item/stack/sheet/mineral/silver = 5,
+	)
+
 //Generic
 
 /obj/item/circuitboard/machine/circuit_imprinter

@@ -589,6 +589,8 @@
 		"anomaly_refinery",
 		"tank_compressor",
 		"atmos_thermal",
+		"nuclear_accumulator",
+		"nuclear_emitter",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)

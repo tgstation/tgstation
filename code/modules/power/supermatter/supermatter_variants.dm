@@ -14,13 +14,15 @@
 	name = "supermatter shard"
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
 	base_icon_state = "sm_shard"
-	icon_state = "sm_shard"
+	icon_state = "mapped_sm_shard"
 	anchored = FALSE
 	absorption_ratio = 0.125
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	moveable = TRUE
+	base_structure_icon = "shard_base"
+	hypermatter_icon = "shard_hypermatter"
 
 /// Shard SM with it's processing disabled.
 /obj/machinery/power/supermatter_crystal/shard/hugbox

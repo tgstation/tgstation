@@ -5,17 +5,33 @@
 	desc = "A base for reflector assemblies."
 	anchored = FALSE
 	density = FALSE
+	///Icon state of this specific reflector type
 	var/deflector_icon_state
+	///The reference to the overlay we'll use once we've built the reflector.
 	var/image/deflector_overlay
+	///Is the build finished?
 	var/finished = FALSE
-	var/admin = FALSE //Can't be rotated or deconstructed
+	///Only for mapped reflectors or admin spawned, can't be rotated or deconstructed
+	var/admin = FALSE
+	///Can this reflector be rotated?
 	var/can_rotate = TRUE
-	var/framebuildstacktype = /obj/item/stack/sheet/iron
-	var/framebuildstackamount = 5
-	var/buildstacktype = /obj/item/stack/sheet/iron
-	var/buildstackamount = 0
-	var/list/allowed_projectile_typecache = list(/obj/projectile/beam, /obj/projectile/energy/nuclear_particle)
+	///The sheet types of the frame that are dropped from disassembling the reflector
+	var/frame_build_stack_type = /obj/item/stack/sheet/iron
+	///Amount of sheets needed to build the frame.
+	var/frame_build_stack_amount = 5
+	///The sheet types of the final build that are dropped from disassembling the reflector
+	var/build_stack_type = /obj/item/stack/sheet/iron
+	///Amount of sheets needed to build the reflector.
+	var/build_stack_amount = 0
+	///Typecache of the projectiles allowed to be reflected
+	var/list/allowed_projectile_typecache = list(
+		/obj/projectile/beam,
+		/obj/projectile/energy/nuclear_particle,
+		)
+	///The angle of the reflector
 	var/rotation_angle = -1
+	///Amount of energy to be given per deflector hit for each nuclear particle
+	var/particle_power_increase
 
 /obj/structure/reflector/Initialize(mapload)
 	. = ..()
@@ -59,13 +75,21 @@
 /obj/structure/reflector/setDir(new_dir)
 	return ..(NORTH)
 
-/obj/structure/reflector/bullet_act(obj/projectile/P)
-	var/pdir = P.dir
-	var/pangle = P.Angle
-	var/ploc = get_turf(P)
-	if(!finished || !allowed_projectile_typecache[P.type] || !(P.dir in GLOB.cardinals))
+/obj/structure/reflector/bullet_act(obj/projectile/projectile_hit)
+	var/projectile_dir = projectile_hit.dir
+	var/projectile_angle = projectile_hit.Angle
+	var/projectile_loc = get_turf(projectile_hit)
+	if(!finished || !allowed_projectile_typecache[projectile_hit.type] || !(projectile_hit.dir in GLOB.cardinals))
 		return ..()
-	if(auto_reflect(P, pdir, ploc, pangle) != BULLET_ACT_FORCE_PIERCE)
+
+	if(istype(projectile_hit, /obj/projectile/energy/nuclear_particle) && particle_power_increase)
+		var/obj/projectile/energy/nuclear_particle/reflecting_particle = projectile_hit
+		reflecting_particle.internal_power = max(reflecting_particle.internal_power + particle_power_increase, 0)
+		if(particle_power_increase > 0)
+			reflecting_particle.range += 10
+		reflecting_particle.update_colours()
+
+	if(auto_reflect(projectile_hit, projectile_dir, projectile_loc, projectile_angle) != BULLET_ACT_FORCE_PIERCE)
 		return ..()
 	return BULLET_ACT_FORCE_PIERCE
 
@@ -94,9 +118,9 @@
 	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
 		return
 	to_chat(user, span_notice("You dismantle [src]."))
-	new framebuildstacktype(drop_location(), framebuildstackamount)
-	if(buildstackamount)
-		new buildstacktype(drop_location(), buildstackamount)
+	new frame_build_stack_type(drop_location(), frame_build_stack_amount)
+	if(build_stack_amount)
+		new build_stack_type(drop_location(), build_stack_amount)
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
@@ -128,32 +152,39 @@
 
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/structure/reflector/attackby(obj/item/W, mob/user, params)
+/obj/structure/reflector/attackby(obj/item/item_hit, mob/user, params)
 	if(admin)
 		return
 	//Finishing the frame
-	else if(istype(W, /obj/item/stack/sheet))
+	else if(istype(item_hit, /obj/item/stack/sheet))
 		if(finished)
 			return
-		var/obj/item/stack/sheet/S = W
-		if(istype(S, /obj/item/stack/sheet/glass))
-			if(S.use(5))
+		var/obj/item/stack/sheet/sheet_hit = item_hit
+		if(istype(sheet_hit, /obj/item/stack/sheet/glass))
+			if(sheet_hit.use(5))
 				new /obj/structure/reflector/single(drop_location())
 				qdel(src)
 			else
 				to_chat(user, span_warning("You need five sheets of glass to create a reflector!"))
 				return
-		if(istype(S, /obj/item/stack/sheet/rglass))
-			if(S.use(10))
+		if(istype(sheet_hit, /obj/item/stack/sheet/rglass))
+			if(sheet_hit.use(10))
 				new /obj/structure/reflector/double(drop_location())
 				qdel(src)
 			else
 				to_chat(user, span_warning("You need ten sheets of reinforced glass to create a double reflector!"))
 				return
-		if(istype(S, /obj/item/stack/sheet/mineral/diamond))
-			if(S.use(1))
+		if(istype(sheet_hit, /obj/item/stack/sheet/mineral/diamond))
+			if(sheet_hit.use(1))
 				new /obj/structure/reflector/box(drop_location())
 				qdel(src)
+		if(istype(sheet_hit, /obj/item/stack/sheet/plastitaniumglass))
+			if(sheet_hit.use(5))
+				new /obj/structure/reflector/single/plastitaniumglass(drop_location())
+				qdel(src)
+			else
+				to_chat(user, span_warning("You need five sheets of plastitanium glass to create a nuclear reflector!"))
+				return
 	else
 		return ..()
 
@@ -181,11 +212,19 @@
 /obj/structure/reflector/single
 	name = "reflector"
 	deflector_icon_state = "reflector"
-	desc = "An angled mirror for reflecting laser beams."
+	desc = "An angled mirror for reflecting laser beams and nuclear particles."
 	density = TRUE
 	finished = TRUE
-	buildstacktype = /obj/item/stack/sheet/glass
-	buildstackamount = 5
+	build_stack_type = /obj/item/stack/sheet/glass
+	build_stack_amount = 5
+
+/obj/structure/reflector/single/plastitaniumglass
+	name = "nuclear reflector"
+	deflector_icon_state = "nuclear_reflector"
+	desc = "An angled mirror for reflecting laser beams and nuclear particles. It increases the nuclear particles internal energy after each reflection."
+	build_stack_type = /obj/item/stack/sheet/plastitaniumglass
+	build_stack_amount = 5
+	particle_power_increase = 500
 
 /obj/structure/reflector/single/anchored
 	anchored = TRUE
@@ -207,11 +246,11 @@
 /obj/structure/reflector/double
 	name = "double sided reflector"
 	deflector_icon_state = "reflector_double"
-	desc = "A double sided angled mirror for reflecting laser beams."
+	desc = "A double sided angled mirror for reflecting laser beams and nuclear particles."
 	density = TRUE
 	finished = TRUE
-	buildstacktype = /obj/item/stack/sheet/rglass
-	buildstackamount = 10
+	build_stack_type = /obj/item/stack/sheet/rglass
+	build_stack_amount = 10
 
 /obj/structure/reflector/double/anchored
 	anchored = TRUE
@@ -231,11 +270,12 @@
 /obj/structure/reflector/box
 	name = "reflector box"
 	deflector_icon_state = "reflector_box"
-	desc = "A box with an internal set of mirrors that reflects all laser beams in a single direction."
+	desc = "A box with an internal set of mirrors that reflects all laser beams and nuclear particles in a single direction."
 	density = TRUE
 	finished = TRUE
-	buildstacktype = /obj/item/stack/sheet/mineral/diamond
-	buildstackamount = 1
+	build_stack_type = /obj/item/stack/sheet/mineral/diamond
+	build_stack_amount = 1
+	particle_power_increase = -100
 
 /obj/structure/reflector/box/anchored
 	anchored = TRUE

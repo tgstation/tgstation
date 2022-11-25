@@ -17,13 +17,21 @@
 		"cyan" = "#00FFFF",
 		"purple" = "#FF00FF"
 	)
+	///Internal energy to release on impact (used on the SM and the nuclear accumulator)
+	var/internal_power = 0
 
-/obj/projectile/energy/nuclear_particle/Initialize(mapload)
+/obj/projectile/energy/nuclear_particle/Initialize(mapload, internal_power = 0, icon_state)
 	. = ..()
 	//Random color time!
-	var/our_color = pick(particle_colors)
-	add_atom_colour(particle_colors[our_color], FIXED_COLOUR_PRIORITY)
-	set_light(4, 3, particle_colors[our_color]) //Range of 4, brightness of 3 - Same range as a flashlight
+	src.internal_power = internal_power
+	if(!icon_state)
+		//Random color time!
+		var/our_color = pick(particle_colors)
+		add_atom_colour(particle_colors[our_color], FIXED_COLOUR_PRIORITY)
+		set_light(2, 1.5, particle_colors[our_color]) //Range of 2, brightness of 1.5
+	else
+		src.icon_state = icon_state
+		update_colours()
 
 /obj/projectile/energy/nuclear_particle/on_hit(atom/target, blocked, pierce_hit)
 	if (ishuman(target))
@@ -31,6 +39,11 @@
 
 	..()
 
-/atom/proc/fire_nuclear_particle(angle = rand(0,360)) //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
-	var/obj/projectile/energy/nuclear_particle/P = new /obj/projectile/energy/nuclear_particle(src)
-	P.fire(angle)
+/obj/projectile/energy/nuclear_particle/proc/update_colours()
+	var/list/colour = color_matrix_rotate_hue(internal_power / 30)
+	add_atom_colour(colour, FIXED_COLOUR_PRIORITY)
+
+/atom/proc/fire_nuclear_particle(angle = rand(0,360), speed = 0.4, internal_power = 0, set_icon_state) //used by fusion to fire random nuclear particles. Fires one particle in a random direction.
+	var/obj/projectile/energy/nuclear_particle/particle = new /obj/projectile/energy/nuclear_particle(src, internal_power, set_icon_state)
+	particle.speed = speed
+	particle.fire(angle)

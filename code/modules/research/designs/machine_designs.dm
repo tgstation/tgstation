@@ -642,6 +642,22 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
+/datum/design/board/nuclear_accumulator
+	name = "Machine Design (Nuclear Accumulator Board)"
+	desc = "The circuit board for a nuclear accumulator."
+	id = "nuclear_accumulator"
+	build_path = /obj/item/circuitboard/machine/nuclear_accumulator
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/nuclear_emitter
+	name = "Machine Design (Nuclear Emitter Board)"
+	desc = "The circuit board for a nuclear emitter."
+	id = "nuclear_emitter"
+	build_path = /obj/item/circuitboard/machine/nuclear_emitter
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/board/ntnet_relay
 	name = "NTNet Relay Board"
 	desc = "The circuit board for a wireless network relay."
