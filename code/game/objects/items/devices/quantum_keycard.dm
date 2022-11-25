@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
+	obj_flags = UNIQUE_RENAME
 	var/obj/machinery/quantumpad/qpad
 
 	/// where the pad is located and what color the card will become
