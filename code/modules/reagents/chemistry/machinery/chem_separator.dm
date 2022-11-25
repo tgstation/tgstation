@@ -217,7 +217,7 @@
 		location.hotspot_expose(exposed_temperature = 700, exposed_volume = 5)
 	if(reagents.chem_temp < required_temp)
 		reagents.adjust_thermal_energy(heating_rate * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.maximum_volume)
-		reagents.temperature = min(reagents.temperature, required_temp)
+		reagents.chem_temp = min(reagents.chem_temp, required_temp)
 		update_appearance(UPDATE_ICON)
 		return
 	if(reagents.chem_temp >= required_temp)
