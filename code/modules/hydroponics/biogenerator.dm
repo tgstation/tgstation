@@ -184,7 +184,7 @@
 	if(biomass >= max_biomass)
 		say("Biomass tank is full!")
 		return
-	if(!locate(/obj/item/food) in contents)
+	if(!(locate(/obj/item/food) in contents))
 		say("No food items found!")
 		return
 	processing = TRUE
