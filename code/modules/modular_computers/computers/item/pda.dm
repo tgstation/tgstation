@@ -140,7 +140,7 @@
 
 	if(!is_type_in_list(attacking_item, contained_item))
 		return
-	if(W.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
+	if(attacking_item.w_class >= WEIGHT_CLASS_SMALL) // Anything equal to or larger than small won't work
 		user.balloon_alert(user, "too big!")
 		return
 	if(inserted_item)
