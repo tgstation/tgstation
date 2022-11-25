@@ -1,5 +1,10 @@
 /datum/component/cooking
+	/// Whether you currently occupied with cooking
 	var/busy = FALSE
+	/// Whether to show the recipes in a compact mode, without description and ingredient icons
+	var/compact = FALSE
+	/// Whether to show only craftable recipes
+	var/craftable_only = FALSE
 
 /datum/component/cooking/Initialize()
 	if(ismob(parent))
@@ -31,11 +36,17 @@
 /datum/component/cooking/ui_data(mob/user)
 	var/list/data = list()
 	data["busy"] = busy
+	data["compact"] = compact
+	data["craftable_only"] = craftable_only
 	return data
 
 /datum/component/cooking/ui_static_data(mob/user)
 	var/list/data = list()
 	data["categories"] = list()
+	if(user.has_dna())
+		var/mob/living/carbon/carbon = user
+		data["diet"] = carbon.dna.species.get_species_diet()
+	data["foodtypes"] = list()
 	data["recipes"] = list()
 	for(var/path in GLOB.crafting_recipes)
 		if (!istype(path, /datum/crafting_recipe/food))
@@ -50,7 +61,8 @@
 			recipe_data["reqs"] += list(list(
 				"path" = req_atom,
 				"name" = initial(req_atom.name),
-				"amount" = reqs[req_atom]
+				"amount" = reqs[req_atom],
+				"is_reagent" = ispath(req_atom, /datum/reagent/)
 			))
 		recipe_data["category"] = recipe.subcategory
 		if(!(recipe.subcategory in data["categories"]))
@@ -59,7 +71,11 @@
 		if(ispath(recipe.result, /obj/item/food))
 			var/obj/item/food/item = recipe.result
 			recipe_data["desc"] = initial(item.desc)
-			// recipe_data["foodtypes"] = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
+			var/list/foodtypes = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
+			for(var/type in foodtypes)
+				if(!(type in data["foodtypes"]))
+					data["foodtypes"] += type
+			recipe_data["foodtypes"] = foodtypes
 		else
 			recipe_data["desc"] = "Not an item"
 		data["recipes"] += list(recipe_data)
@@ -70,6 +86,12 @@
 	if(.)
 		return
 	switch(action)
+		if("toggle_compact")
+			compact = !compact
+			return TRUE
+		if("toggle_craftable_only")
+			craftable_only = !craftable_only
+			return TRUE
 		if("cook")
 			busy = TRUE
 			return TRUE
