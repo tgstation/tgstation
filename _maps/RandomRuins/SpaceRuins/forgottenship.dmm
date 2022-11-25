@@ -435,7 +435,7 @@
 	},
 /obj/item/toy/nuke,
 /obj/item/clothing/under/chameleon,
-/obj/item/modular_computer/tablet/pda/chameleon,
+/obj/item/modular_computer/pda/chameleon,
 /obj/item/clothing/mask/chameleon,
 /obj/item/card/id/advanced/chameleon,
 /turf/open/floor/mineral/plastitanium,
