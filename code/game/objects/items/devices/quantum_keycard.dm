@@ -53,7 +53,6 @@
 	if(!istype(new_pad))
 		set_greyscale(initial(greyscale_colors))
 		name = initial(name)
-		linked_area_name = null
 		return
 
 	var/new_color = is_type_in_list(get_area(new_pad), gags_coloring, zebra = TRUE) || COLOR_WEBSAFE_DARK_GRAY
