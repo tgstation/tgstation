@@ -647,6 +647,13 @@
 	if(!client)
 		return
 
+	if(HAS_TRAIT(src, TRAIT_NODAMAGEOVERLAY))
+		clear_fullscreen("crit")
+		clear_fullscreen("critvision")
+		clear_fullscreen("oxy")
+		clear_fullscreen("brute")
+		return
+
 	if(health <= crit_threshold)
 		var/severity = 0
 		switch(health)
