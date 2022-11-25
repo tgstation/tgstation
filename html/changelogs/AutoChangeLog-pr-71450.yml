@@ -1,0 +1,4 @@
+author: "Cenrus, ported by Hardly"
+delete-after: True
+changes:
+  - rscadd: "Added *snap emote"

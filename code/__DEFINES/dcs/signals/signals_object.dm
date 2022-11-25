@@ -54,6 +54,7 @@
 /// from /obj/machinery/power/supermatter_crystal/process_atmos(); when the SM sounds an audible alarm
 #define COMSIG_SUPERMATTER_DELAM_ALARM "sm_delam_alarm"
 
+#define COMSIG_SUPERMATTER_PROCESS_ATMOS "sm_atmos_process"
 // /obj/machinery/atmospherics/components/unary/cryo_cell signals
 
 /// from /obj/machinery/atmospherics/components/unary/cryo_cell/set_on(bool): (on)
