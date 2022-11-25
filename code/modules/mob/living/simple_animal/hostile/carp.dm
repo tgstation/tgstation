@@ -1,5 +1,3 @@
-#define REGENERATION_DELAY 60  // After taking damage, how long it takes for automatic regeneration to begin for megacarps (ty robustin!)
-
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
@@ -41,42 +39,37 @@
 	faction = list("carp")
 	pressure_resistance = 200
 	gold_core_spawnable = HOSTILE_SPAWN
-	/// If the carp uses random coloring
-	var/random_color = TRUE
-	/// The chance for a rare color variant
-	var/rarechance = 1
-	/// List of usual carp colors
+	greyscale_config = /datum/greyscale_config/carp
+	/// Weighted list of usual carp colors
 	var/static/list/carp_colors = list(
-		"lightpurple" = "#aba2ff",
-		"lightpink" = "#da77a8",
-		"green" = "#70ff25",
-		"grape" = "#df0afb",
-		"swamp" = "#e5e75a",
-		"turquoise" = "#04e1ed",
-		"brown" = "#ca805a",
-		"teal" = "#20e28e",
-		"lightblue" = "#4d88cc",
-		"rusty" = "#dd5f34",
-		"lightred" = "#fd6767",
-		"yellow" = "#f3ca4a",
-		"blue" = "#09bae1",
-		"palegreen" = "#7ef099"
-	)
-	/// List of rare carp colors
-	var/static/list/carp_colors_rare = list(
-		"silver" = "#fdfbf3"
+		COLOR_CARP_PURPLE = 7,
+		COLOR_CARP_PINK = 7,
+		COLOR_CARP_GREEN = 7,
+		COLOR_CARP_GRAPE = 7,
+		COLOR_CARP_SWAMP = 7,
+		COLOR_CARP_TURQUOISE = 7,
+		COLOR_CARP_BROWN = 7,
+		COLOR_CARP_TEAL = 7,
+		COLOR_CARP_LIGHT_BLUE = 7,
+		COLOR_CARP_RUSTY = 7,
+		COLOR_CARP_RED = 7,
+		COLOR_CARP_YELLOW = 7,
+		COLOR_CARP_BLUE = 7,
+		COLOR_CARP_PALE_GREEN = 7,
+		COLOR_CARP_SILVER = 1, // The rare silver carp
 	)
 	/// Is the carp tamed?
 	var/tamed = FALSE
+	/// What colour is our 'healing' outline?
+	var/regenerate_colour = COLOR_PALE_GREEN
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
 	AddElement(/datum/element/simple_flying)
-	if(random_color)
-		set_greyscale(new_config=/datum/greyscale_config/carp)
-		carp_randomify(rarechance)
+	apply_colour()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	add_cell_sample()
 	if(ai_controller)
 		ai_controller.blackboard[BB_HOSTILE_ATTACK_WORD] = pick(speak_emote)
@@ -84,6 +77,12 @@
 			tamed(tamer)
 		else
 			make_tameable()
+
+/// Set a random colour on the carp, override to do something else
+/mob/living/simple_animal/hostile/carp/proc/apply_colour()
+	if (!greyscale_config)
+		return
+	set_greyscale(colors = list(pick_weight(carp_colors)))
 
 /mob/living/simple_animal/hostile/carp/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
@@ -115,24 +114,8 @@
 		can_have_ai = FALSE
 		toggle_ai(AI_OFF)
 
-
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-/**
- * Randomly assigns a color to a carp from either a common or rare color variant lists
- *
- * Arguments:
- * * rare The chance of the carp receiving color from the rare color variant list
- */
-/mob/living/simple_animal/hostile/carp/proc/carp_randomify(rarechance)
-	var/our_color
-	if(prob(rarechance))
-		our_color = pick(carp_colors_rare)
-		set_greyscale(colors=list(carp_colors_rare[our_color]))
-	else
-		our_color = pick(carp_colors)
-		set_greyscale(colors=list(carp_colors[our_color]))
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
 	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
@@ -156,8 +139,8 @@
 	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
-	random_color = FALSE
-
+	greyscale_config = null
+	regenerate_colour = COLOR_WHITE
 
 /mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
 	return
@@ -166,9 +149,9 @@
 	icon = 'icons/mob/simple/broadMobs.dmi'
 	name = "Mega Space Carp"
 	desc = "A ferocious, fang bearing creature that resembles a shark. This one seems especially ticked off."
-	icon_state = "megacarp"
-	icon_living = "megacarp"
-	icon_dead = "megacarp_dead"
+	icon_state = "megacarp_greyscale"
+	icon_living = "megacarp_greyscale"
+	icon_dead = "megacarp_dead_greyscale"
 	icon_gib = "megacarp_gib"
 	health_doll_icon = "megacarp"
 	ai_controller = null
@@ -177,13 +160,12 @@
 	pixel_x = -16
 	base_pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
-	random_color = FALSE
+	greyscale_config = /datum/greyscale_config/carp_mega
 
 	obj_damage = 80
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 3)
-	var/regen_cooldown = 0
 
 /mob/living/simple_animal/hostile/carp/megacarp/Initialize(mapload)
 	. = ..()
@@ -193,14 +175,8 @@
 	maxHealth += rand(30,60)
 	move_to_delay = rand(3,7)
 
-
 /mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-/mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(.)
-		regen_cooldown = world.time + REGENERATION_DELAY
 
 /mob/living/simple_animal/hostile/carp/megacarp/Login()
 	. = ..()
@@ -210,11 +186,6 @@
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/megacarp)
 	can_buckle = TRUE
 	buckle_lying = 0
-
-/mob/living/simple_animal/hostile/carp/megacarp/Life(delta_time = SSMOBS_DT, times_fired)
-	. = ..()
-	if(regen_cooldown < world.time)
-		heal_overall_damage(2 * delta_time)
 
 /mob/living/simple_animal/hostile/carp/lia
 	name = "Lia"
@@ -231,12 +202,14 @@
 	icon_living = "magicarp"
 	icon_state = "magicarp"
 	maxHealth = 200
-	random_color = FALSE
+	greyscale_config = null
 
 /mob/living/simple_animal/hostile/carp/lia/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
 
+/// Boosted chance for Cayenne to be silver
+#define RARE_CAYENNE_CHANCE 10
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"
@@ -247,79 +220,38 @@
 	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
-	rarechance = 10
-	/// Keeping track of the nuke disk for the functionality of storing it.
-	var/obj/item/disk/nuclear/disky
-	/// Location of the file storing disk overlays
-	var/icon/disk_overlay_file = 'icons/mob/simple/carp.dmi'
-	/// Colored disk mouth appearance for adding it as a mouth overlay
-	var/mutable_appearance/colored_disk_mouth
+	/// Overlay to apply to display the disk
+	var/mutable_appearance/disk_overlay
+	/// Overlay to apply over the disk so it looks like cayenne is holding it
+	var/mutable_appearance/mouth_overlay
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
-	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
-	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT) //carp can take the disk off the captain
-	ADD_TRAIT(src, TRAIT_CAN_USE_NUKE, INNATE_TRAIT) //carp SMART
+	var/datum/callback/got_disk = CALLBACK(src, PROC_REF(got_disk))
+	var/datum/callback/display_disk = CALLBACK(src, PROC_REF(display_disk))
+	AddComponent(/datum/component/nuclear_bomb_operator, got_disk, display_disk)
 
-/mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
-	if(disky)
-		disky.forceMove(drop_location())
-		disky = null
-	return ..()
+/mob/living/simple_animal/hostile/carp/cayenne/apply_colour()
+	if (prob(RARE_CAYENNE_CHANCE))
+		set_greyscale(colors = list(COLOR_CARP_SILVER))
+	else
+		return ..()
 
-/mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
-	QDEL_NULL(disky)
-	return ..()
-
-/mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
-	. = ..()
-	if(disky)
-		. += span_notice("Wait... is that [disky] in [p_their()] mouth?")
-
-/mob/living/simple_animal/hostile/carp/cayenne/AttackingTarget(atom/attacked_target)
-	if(istype(attacked_target, /obj/item/disk/nuclear))
-		var/obj/item/disk/nuclear/potential_disky = attacked_target
-		if(potential_disky.anchored)
-			return
-		potential_disky.forceMove(src)
-		disky = potential_disky
-		to_chat(src, span_nicegreen("YES!! You manage to pick up [disky]. (Click anywhere to place it back down.)"))
-		update_icon()
-		if(!disky.fake)
-			client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
+/// She did it! Treats for Cayenne!
+/mob/living/simple_animal/hostile/carp/cayenne/proc/got_disk(obj/item/disk/nuclear/disky)
+	if (disky.fake) // Never mind she didn't do it
 		return
-	if(disky)
-		if(isopenturf(attacked_target))
-			to_chat(src, span_notice("You place [disky] on [attacked_target]"))
-			disky.forceMove(attacked_target)
-			disky = null
-			update_icon()
-		else
-			disky.melee_attack_chain(src, attacked_target)
-		return
+	client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
 
-	if(istype(attacked_target, /obj/machinery/nuclearbomb))
-		var/obj/machinery/nuclearbomb/nuke = attacked_target
-		nuke.ui_interact(src)
-		return
-	return ..()
+/// Adds an overlay to show the disk on Cayenne
+/mob/living/simple_animal/hostile/carp/cayenne/proc/display_disk(list/new_overlays)
+	if (!mouth_overlay)
+		mouth_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
+	new_overlays += mouth_overlay
 
-/mob/living/simple_animal/hostile/carp/cayenne/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(disky == gone)
-		disky = null
-		update_icon()
+	if (!disk_overlay)
+		disk_overlay = mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay")
+	new_overlays += disk_overlay
 
-/mob/living/simple_animal/hostile/carp/cayenne/update_overlays()
-	. = ..()
-	if(!disky || stat == DEAD)
-		return
-
-	if (isnull(colored_disk_mouth))
-		colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
-
-	. += colored_disk_mouth
-	. += mutable_appearance(disk_overlay_file, "disk_overlay")
-
-#undef REGENERATION_DELAY
+#undef RARE_CAYENNE_CHANCE

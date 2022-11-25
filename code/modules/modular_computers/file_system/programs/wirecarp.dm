@@ -56,7 +56,7 @@
 			var/obj/item/modular_computer/target_tablet = locate(params["ref"]) in GLOB.TabletMessengers
 			if(!istype(target_tablet))
 				return
-			for(var/datum/computer_file/program/messenger/messenger_app in computer.stored_files)
+			for(var/datum/computer_file/program/messenger/messenger_app in target_tablet.stored_files)
 				messenger_app.spam_mode = !messenger_app.spam_mode
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
