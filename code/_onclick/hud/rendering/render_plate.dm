@@ -13,7 +13,8 @@
 	layer = -1
 	plane = 0
 	appearance_flags = PASS_MOUSE | NO_CLIENT_COLOR | KEEP_TOGETHER
-	var/critical_target = FALSE // If we render into a critical plane master, or not
+	/// If we render into a critical plane master, or not
+	var/critical_target = FALSE
 
 /**
  * ## Rendering plate
