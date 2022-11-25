@@ -4,7 +4,7 @@
 #define DETSCAN_CATEGORY_DRINK "Reagents"
 #define DETSCAN_CATEGORY_ACCESS "ID Access"
 
-// custom categories go here
+// custom categories section
 #define DETSCAN_CATEGORY_NOTES "Additional Notes"
 #define DETSCAN_CATEGORY_ILLEGAL "Illegal Tech"
 #define DETSCAN_CATEGORY_SYNDIE "Syndicate Tech"
@@ -25,7 +25,7 @@
 	DETSCAN_CATEGORY_NOTES, \
 )
 
-// the order departments show up in for the id scan (its sorted by red to blue on the color wheel)
+/// the order departments show up in for the id scan (its sorted by red to blue on the color wheel)
 #define DETSCAN_ACCESS_ORDER list(\
 	REGION_SECURITY, \
 	REGION_ENGINEERING, \
