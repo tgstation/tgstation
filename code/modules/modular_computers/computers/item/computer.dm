@@ -409,6 +409,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		if(ishuman(loc))
 			var/mob/living/carbon/human/human_wearer = loc
 			human_wearer.sec_hud_set_ID()
+	if(inserted_pai == gone)
+		inserted_pai = null
+	if(inserted_disk == gone)
+		inserted_disk = null
 	return ..()
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -778,6 +782,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src, user, 20, volume=20)
+	internal_cell?.forceMove(drop_location())
+	computer_id_slot?.forceMove(drop_location())
+	inserted_disk?.forceMove(drop_location())
+	inserted_pai?.forceMove(drop_location())
 	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
 	user.balloon_alert(user, "disassembled")
 	relay_qdel()
