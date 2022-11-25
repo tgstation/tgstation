@@ -55,9 +55,6 @@
 		return
 
 	var/obj/item/held_item = bumping.get_active_held_item()
-	if(iscyborg(miner))
-		var/mob/living/silicon/robot/robot = miner
-		held_item = robot.module_active
 	// !held_item exists to be nice to snow. the other bit is for pickaxes obviously
 	if(!held_item)
 		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, proc/ClickOn), src)
