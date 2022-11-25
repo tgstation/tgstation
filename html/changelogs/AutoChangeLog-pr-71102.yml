@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - rscadd: "checks while inserting stack materials into an RPED and their amounts"
-  - code_imp: "sorting of RPED part components to sort stack materials by their ratings"
-  - rscdel: "old way of displaying parts when clicking on an machine frame with it\nadd:new way of displaying part info which displays  number of parts including for stack materials"

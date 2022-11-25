@@ -879,3 +879,39 @@
   - qol: added more balloon alerts to custommizable food
   private-tristan:
   - bugfix: icebox kitchen maints is now correctly wired
+2022-11-25:
+  Cenrus, ported by Hardly:
+  - rscadd: Added *snap emote
+  CocaColaTastesGood:
+  - bugfix: Fixes a NTPay exploit.
+  GoldenAlpharex:
+  - bugfix: Modular computers will now no longer all be called "processing unit",
+      and will all have their own unique names once again.
+  Jacquerel:
+  - bugfix: A revived basic mob will stand up again rather than inching around as
+      a living corpse.
+  LT3:
+  - bugfix: Tram signs glow instead of being harsh blocky.
+  PositiveEntropy:
+  - imageadd: Updates the Military, Bomber and Letterman Jackets
+  - bugfix: Fixes the centcom hat, cap and head intern cap, which were using the old
+      sprites.
+  SyncIt21:
+  - rscadd: checks while inserting stack materials into an RPED and their amounts
+  - code_imp: sorting of RPED part components to sort stack materials by their ratings
+  - rscdel: 'old way of displaying parts when clicking on an machine frame with it
+
+      add:new way of displaying part info which displays  number of parts including
+      for stack materials'
+  ZephyrTFA:
+  - bugfix: Strange Reagent is once again Strange! (it works at all)
+  flowercuco:
+  - rscadd: you can saw bread with a saw into bread slices
+  - qol: added screentip verbs to a bunch of food files
+  - code_imp: bread and cake now have slice types and all only have one call on the
+      processable.dm proc
+  nevimer:
+  - rscadd: The Supermatter crystal will now emit rays of light, varying on it's power
+      level and situation.
+  - code_imp: improves a formatting and comment spelling
+  - bugfix: The Causality field now actually shows up!
