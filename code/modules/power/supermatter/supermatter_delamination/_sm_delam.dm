@@ -100,6 +100,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		density = clamp(sm.damage/10, 12, 100)
 	))
 
+	// Filters happen to continue their animation loop while being modified.
+	// This most likely have UB. Should be removed if it breaks in the future.
 	if(new_filter)
 		animate(sm.filters[1], time = 10 SECONDS, offset = 10, loop = -1)
 		animate(time = 10 SECONDS, offset = 0, loop = -1)

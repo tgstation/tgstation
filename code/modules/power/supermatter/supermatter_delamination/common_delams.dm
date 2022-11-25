@@ -30,20 +30,20 @@
 
 /datum/sm_delam/singularity/filters(obj/machinery/power/supermatter_crystal/sm)
 	..()
-	sm.add_filter(name = "ray", priority = 2, params=list(
+	sm.add_filter(name = "ray", priority = 1, params=list(
 		type = "rays",
 		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
 		color = SUPERMATTER_SINGULARITY_RAYS_COLOUR,
 		factor = clamp(sm.damage / 300, 1, 30),
 		density = clamp(sm.damage / 5, 12, 200)
 	))
-	sm.add_filter(name = "outline", priority = 3, params = list(
+	sm.add_filter(name = "outline", priority = 2, params = list(
 		type = "outline",
 		size = 1,
 		color = SUPERMATTER_SINGULARITY_LIGHT_COLOUR
 	))
 	if(sm.final_countdown)
-		sm.add_filter(name = "icon", priority = 4, params = list(
+		sm.add_filter(name = "icon", priority = 3, params = list(
 			type="layer",
 			icon = new/icon('icons/effects/96x96.dmi', "singularity_s3", frame = rand(1,8)),
 			flags = FILTER_OVERLAY
@@ -95,14 +95,14 @@
 
 /datum/sm_delam/tesla/filters(obj/machinery/power/supermatter_crystal/sm)
 	..()
-	sm.add_filter(name = "ray", priority = 2, params = list(
+	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
 		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
 		color = SUPERMATTER_TESLA_COLOUR,
 		factor = clamp(sm.damage/300, 1, 30),
 		density = clamp(sm.damage/5, 12, 200)
 	))
-	sm.add_filter(name = "icon", priority = 3, params=list(
+	sm.add_filter(name = "icon", priority = 2, params=list(
 		type = "layer",
 		icon = new/icon('icons/obj/engine/energy_ball.dmi', "energy_ball", frame = rand(1,12)),
 		flags = FILTER_UNDERLAY
