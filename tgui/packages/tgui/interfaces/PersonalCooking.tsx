@@ -59,6 +59,7 @@ type Ingredient = {
 };
 
 type Recipe = {
+  ref: string;
   result: string;
   name: string;
   desc: string;
@@ -254,7 +255,8 @@ const TypeContent = (props) => {
   );
 };
 
-const RecipeContentCompact = (props) => {
+const RecipeContentCompact = (props, context) => {
+  const { act } = useBackend<Data>(context);
   const item = props.item;
   return (
     <Section>
@@ -292,6 +294,11 @@ const RecipeContentCompact = (props) => {
                 content="Make"
                 disabled
                 icon="utensils"
+                onClick={() =>
+                  act('make', {
+                    recipe: item.ref,
+                  })
+                }
               />
             </Stack.Item>
           </Stack>
@@ -301,7 +308,8 @@ const RecipeContentCompact = (props) => {
   );
 };
 
-const RecipeContent = (props) => {
+const RecipeContent = (props, context) => {
+  const { act } = useBackend<Data>(context);
   const item = props.item;
   return (
     <Section>
@@ -338,6 +346,11 @@ const RecipeContent = (props) => {
                 content="Make"
                 disabled
                 icon="utensils"
+                onClick={() =>
+                  act('make', {
+                    recipe: item.ref,
+                  })
+                }
               />
             </Stack.Item>
           </Stack>

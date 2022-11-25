@@ -1,5 +1,5 @@
 /datum/component/cooking
-	/// Whether you currently occupied with cooking
+	/// Whether you are currently occupied with cooking
 	var/busy = FALSE
 	/// Whether to show the recipes in a compact mode, without description and ingredient icons
 	var/compact = FALSE
@@ -49,7 +49,7 @@
 	data["foodtypes"] = list()
 	data["recipes"] = list()
 	for(var/path in GLOB.crafting_recipes)
-		if (!istype(path, /datum/crafting_recipe/food))
+		if (!istype(path, /datum/crafting_recipe/food/))
 			continue
 		var/datum/crafting_recipe/recipe = path
 		if (!recipe.result)
