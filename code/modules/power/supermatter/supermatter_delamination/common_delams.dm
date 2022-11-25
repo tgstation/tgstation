@@ -32,6 +32,7 @@
 	if(!..())
 		return FALSE
 
+	// override the ray from parent call.
 	sm.add_filter(name = "ray", priority = 1, params=list(
 		type = "rays",
 		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
@@ -100,6 +101,7 @@
 	if(!..())
 		return FALSE
 
+	// override the ray from parent call.
 	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
 		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
@@ -146,14 +148,3 @@
 		effect_anomaly(sm)
 	effect_explosion(sm)
 	return ..()
-
-/datum/sm_delam/explosive/lights(obj/machinery/power/supermatter_crystal/sm)
-	if(!sm.internal_energy && !sm.damage)
-		return
-
-	sm.set_light(
-		sm.light_range + sm.internal_energy/200,
-		sm.light_power + sm.internal_energy/1000,
-		sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
-		TRUE
-	)

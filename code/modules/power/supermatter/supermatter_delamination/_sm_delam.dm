@@ -115,7 +115,15 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 // Change how bright the rock is.
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
-	return
+	if(!sm.internal_energy && !sm.damage)
+		return
+
+	sm.set_light(
+		sm.light_range + sm.internal_energy/200,
+		sm.light_power + sm.internal_energy/1000,
+		sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
+		TRUE
+	)
 
 /// Returns a set of messages to be spouted during delams
 /// First message is start of count down, second message is quitting of count down (if sm healed), third is 5 second intervals
