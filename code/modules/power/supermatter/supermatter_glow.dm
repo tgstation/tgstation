@@ -25,8 +25,15 @@
 * Sort of like photoshop. The loop will continue forever unless an accident happens.
 */
 	if(our_supermatter.internal_energy || our_supermatter.damage)
-		our_supermatter.set_light((initial(our_supermatter.light_range) + our_supermatter.internal_energy/200), initial(our_supermatter.light_power) + our_supermatter.internal_energy/1000, (our_supermatter.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), TRUE)
-		filters_to_add |= filter(type="rays", size = clamp(our_supermatter.internal_energy/30, 1, 125), color = (our_supermatter.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR), factor = clamp(our_supermatter.damage/600, 1, 10), density = clamp(our_supermatter.damage/10, 12, 100))
+		var/light_range = our_supermatter.hypermatter_state ? HYPERMATTER_LIGHT_RANGE : (initial(our_supermatter.light_range) + our_supermatter.internal_energy/200)
+		var/light_power = our_supermatter.hypermatter_state ? HYPERMATTER_LIGHT_POWER : (initial(our_supermatter.light_power) + our_supermatter.internal_energy/1000)
+		var/colour_to_apply = our_supermatter.hypermatter_state ? HYPERMATTER_LIGHT_COLOUR : (our_supermatter.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR)
+		our_supermatter.set_light(light_range, light_power, colour_to_apply, TRUE)
+
+		var/filter_size = our_supermatter.hypermatter_state ? HYPERMATTER_FILTER_SIZE : clamp(our_supermatter.internal_energy/30, 1, 125)
+		var/filter_factor = our_supermatter.hypermatter_state ? HYPERMATTER_FILTER_FACTOR : clamp(our_supermatter.damage/600, 1, 10)
+		var/filter_density = our_supermatter.hypermatter_state ? HYPERMATTER_FILTER_DENSITY : clamp(our_supermatter.damage/10, 12, 100)
+		filters_to_add |= filter(type="rays", size = filter_size, color = colour_to_apply, factor = filter_factor, density = filter_density)
 
 	switch(check_special_delamination())
 		if(SINGULARITY_DELAMINATION)

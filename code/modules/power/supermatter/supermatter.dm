@@ -298,6 +298,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		last_power_zap = world.time
 
 	if(hypermatter_state)
+		handle_hypermatter_state()
 		emit_radiation()
 		processing_sound()
 		psychological_examination()
