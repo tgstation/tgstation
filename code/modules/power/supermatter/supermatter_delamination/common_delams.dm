@@ -28,6 +28,42 @@
 		effect_explosion(sm)
 	return ..()
 
+/datum/sm_delam/singularity/filters(obj/machinery/power/supermatter_crystal/sm)
+	..()
+	sm.add_filter(name = "ray", priority = 2, params=list(
+		type = "rays",
+		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
+		color = SUPERMATTER_SINGULARITY_RAYS_COLOUR,
+		factor = clamp(sm.damage / 300, 1, 30),
+		density = clamp(sm.damage / 5, 12, 200)
+	))
+	sm.add_filter(name = "outline", priority = 3, params = list(
+		type = "outline",
+		size = 1,
+		color = SUPERMATTER_SINGULARITY_LIGHT_COLOUR
+	))
+	if(sm.final_countdown)
+		sm.add_filter(name = "icon", priority = 4, params = list(
+			type="layer",
+			icon = new/icon('icons/effects/96x96.dmi', "singularity_s3", frame = rand(1,8)),
+			flags = FILTER_OVERLAY
+		))
+
+/datum/sm_delam/singularity/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+	. = ..()
+	sm.remove_filter(list("outline", "icon"))
+
+/datum/sm_delam/singularity/lights(obj/machinery/power/supermatter_crystal/sm)
+	if(!sm.internal_energy && !sm.damage)
+		return
+
+	sm.set_light(
+		sm.light_range + clamp(sm.damage/2, 10, 50),
+		3,
+		SUPERMATTER_SINGULARITY_LIGHT_COLOUR,
+		TRUE
+	)
+
 /// When we have too much power.
 /datum/sm_delam/tesla
 
@@ -56,6 +92,37 @@
 	effect_explosion(sm)
 	return ..()
 
+
+/datum/sm_delam/tesla/filters(obj/machinery/power/supermatter_crystal/sm)
+	..()
+	sm.add_filter(name = "ray", priority = 2, params = list(
+		type = "rays",
+		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
+		color = SUPERMATTER_TESLA_COLOUR,
+		factor = clamp(sm.damage/300, 1, 30),
+		density = clamp(sm.damage/5, 12, 200)
+	))
+	sm.add_filter(name = "icon", priority = 3, params=list(
+		type = "layer",
+		icon = new/icon('icons/obj/engine/energy_ball.dmi', "energy_ball", frame = rand(1,12)),
+		flags = FILTER_UNDERLAY
+	))
+
+/datum/sm_delam/tesla/on_deselect(obj/machinery/power/supermatter_crystal/sm)
+	. = ..()
+	sm.remove_filter(list("icon"))
+
+/datum/sm_delam/tesla/lights(obj/machinery/power/supermatter_crystal/sm)
+	if(!sm.internal_energy && !sm.damage)
+		return
+
+	sm.set_light(
+		sm.light_range + clamp(sm.damage * sm.internal_energy, 50, 500),
+		3,
+		SUPERMATTER_TESLA_COLOUR,
+		TRUE,
+	)
+
 /// Default delam.
 /datum/sm_delam/explosive
 
@@ -72,3 +139,14 @@
 		effect_anomaly(sm)
 	effect_explosion(sm)
 	return ..()
+
+/datum/sm_delam/explosive/lights(obj/machinery/power/supermatter_crystal/sm)
+	if(!sm.internal_energy && !sm.damage)
+		return
+
+	sm.set_light(
+		sm.light_range + sm.internal_energy/200,
+		sm.light_power + sm.internal_energy/1000,
+		sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
+		TRUE
+	)

@@ -74,16 +74,40 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	return
 
 /// Added to an examine return value.
-/// [/obj/machinery/power/supermatter_crystal/proc/examine]
+/// [/obj/machinery/power/supermatter_crystal/examine]
 /datum/sm_delam/proc/examine(obj/machinery/power/supermatter_crystal/sm)
 	return list()
 
 /// Add whatever overlay to the sm.
-/// [/obj/machinery/power/supermatter_crystal/proc/overlays]
+/// [/obj/machinery/power/supermatter_crystal/update_overlays]
 /datum/sm_delam/proc/overlays(obj/machinery/power/supermatter_crystal/sm)
 	if(sm.final_countdown)
 		return list(mutable_appearance(sm.icon, "causality_field"))
 	return list()
+
+// Returns whatever filter to the SM.
+/// [/obj/machinery/power/supermatter_crystal/process_atmos]
+/datum/sm_delam/proc/filters(obj/machinery/power/supermatter_crystal/sm)
+	var/new_filter = FALSE
+	if(isnull(sm.get_filter("ray")))
+		new_filter = TRUE
+
+	sm.add_filter(name = "ray", priority = 1, params = list(
+		type = "rays",
+		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
+		color = (sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR),
+		factor = clamp(sm.damage/600, 1, 10),
+		density = clamp(sm.damage/10, 12, 100)
+	))
+
+	if(new_filter)
+		animate(sm.filters[1], time = 10 SECONDS, offset = 10, loop = -1)
+		animate(time = 10 SECONDS, offset = 0, loop = -1)
+
+// Change how bright the rock is
+/// [/obj/machinery/power/supermatter_crystal/process_atmos]
+/datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
+	return
 
 /// Returns a set of messages to be spouted during delams
 /// First message is start of count down, second message is quitting of count down (if sm healed), third is 5 second intervals
