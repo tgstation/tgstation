@@ -8,6 +8,12 @@
 	dog_fashion = null
 	unscrewed = FALSE
 
+	overlay_speaker_idle = "intercom_s"
+	overlay_speaker_active = "intercom_recieve"
+
+	overlay_mic_idle = "intercom_m"
+	overlay_mic_active = null
+
 /obj/item/radio/intercom/unscrewed
 	unscrewed = TRUE
 
@@ -24,7 +30,7 @@
 	var/area/current_area = get_area(src)
 	if(!current_area)
 		return
-	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, .proc/AreaPowerCheck)
+	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(AreaPowerCheck))
 	GLOB.intercoms_list += src
 
 /obj/item/radio/intercom/Destroy()

@@ -495,14 +495,10 @@
 /area/shuttle/hunter/russian)
 "JS" = (
 /obj/docking_port/mobile{
-	dheight = 3;
-	dwidth = 3;
-	height = 13;
 	shuttle_id = "huntership";
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "hunter shuttle";
-	rechargeTime = 1800;
-	width = 15
+	rechargeTime = 1800
 	},
 /obj/docking_port/stationary{
 	dwidth = 11;

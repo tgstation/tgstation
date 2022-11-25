@@ -14,10 +14,12 @@
 	icon_state = "void_chill"
 
 /datum/status_effect/void_chill/on_apply()
+	owner.add_atom_colour(COLOR_BLUE_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
 	return TRUE
 
 /datum/status_effect/void_chill/on_remove()
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLUE_LIGHT)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/void_chill, update = TRUE)
 
 /datum/status_effect/void_chill/tick()
@@ -26,6 +28,10 @@
 /datum/status_effect/void_chill/major
 	duration = 10 SECONDS
 	cooling_per_tick = -20
+
+/datum/status_effect/void_chill/lasting
+	id = "lasting_void_chill"
+	duration = -1
 
 /datum/movespeed_modifier/void_chill
 	multiplicative_slowdown = 0.3

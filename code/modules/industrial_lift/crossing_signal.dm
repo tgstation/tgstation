@@ -2,6 +2,8 @@
 #define XING_STATE_AMBER 1
 #define XING_STATE_RED 2
 
+GLOBAL_LIST_EMPTY(tram_signals)
+
 /// Pedestrian crossing signal for tram
 /obj/machinery/crossing_signal
 	name = "crossing signal"
@@ -48,9 +50,11 @@
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
 	if(tram_part)
-		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_travelling)
+		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, PROC_REF(on_tram_travelling))
+		GLOB.tram_signals += src
 
 /obj/machinery/crossing_signal/Destroy()
+	GLOB.tram_signals -= src
 	. = ..()
 
 	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()

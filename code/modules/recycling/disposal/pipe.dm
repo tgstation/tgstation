@@ -50,10 +50,6 @@
 	qdel(stored)
 	return ..()
 
-/obj/structure/disposalpipe/deconstruct()
-	spew_forth()
-	return ..()
-
 /**
  * Expells the pipe's contents.
  *
@@ -167,15 +163,13 @@
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
 				stored = null
-			if (contents.len > 1) // if there is actually something in the pipe
-				var/obj/structure/disposalholder/holder = locate() in src
-				expel(holder, loc, dir)
 		else
 			var/turf/T = get_turf(src)
 			for(var/D in GLOB.cardinals)
 				if(D & dpdir)
 					var/obj/structure/disposalpipe/broken/P = new(T)
 					P.setDir(D)
+	spew_forth()
 	qdel(src)
 
 

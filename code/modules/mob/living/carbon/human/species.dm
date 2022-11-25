@@ -458,7 +458,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
-	INVOKE_ASYNC(src, .proc/worn_items_fit_body_check, C)
+	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), C)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -476,7 +476,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(istype(I))
 				C.dropItemToGround(I)
 			else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-				INVOKE_ASYNC(C, /mob/proc/put_in_hands, new mutanthands)
+				INVOKE_ASYNC(C, TYPE_PROC_REF(/mob, put_in_hands), new mutanthands)
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/human = C
@@ -1044,7 +1044,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(time_since_irradiated > RAD_MOB_HAIRLOSS && DT_PROB(RAD_MOB_HAIRLOSS_PROB, delta_time))
 		if(!(source.hairstyle == "Bald") && (HAIR in species_traits))
 			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
-			addtimer(CALLBACK(src, .proc/go_bald, source), 5 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(go_bald), source), 5 SECONDS)
 
 /**
  * Makes the target human bald.
@@ -1064,9 +1064,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 //////////////////
 
 /datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
-	return
-
-/datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
 	return
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
@@ -1760,7 +1757,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/list/wings = list()
 			for(var/W in wings_icons)
 				var/datum/sprite_accessory/S = GLOB.wings_list[W] //Gets the datum for every wing this species has, then prompts user with a radial menu
-				var/image/img = image(icon = 'icons/mob/clothing/wings.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND") //Process the HUD elements
+				var/image/img = image(icon = 'icons/mob/species/wings.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND") //Process the HUD elements
 				img.transform *= 0.5
 				img.pixel_x = -32
 				if(wings[S.name])

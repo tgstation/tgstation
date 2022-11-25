@@ -5,7 +5,7 @@
  */
 /datum/element/atmos_requirements
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// An assoc list of "what atmos does this mob require to survive in".
 	var/list/atmos_requirements
 	/// How much (brute) damage we take from being in unsuitable atmos.
@@ -19,7 +19,7 @@
 		stack_trace("[type] added to [target] without any requirements specified.")
 	src.atmos_requirements = atmos_requirements
 	src.unsuitable_atmos_damage = unsuitable_atmos_damage
-	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, .proc/on_non_stasis_life)
+	RegisterSignal(target, COMSIG_LIVING_HANDLE_BREATHING, PROC_REF(on_non_stasis_life))
 
 /datum/element/atmos_requirements/Detach(datum/target)
 	. = ..()

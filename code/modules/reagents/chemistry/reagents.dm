@@ -246,6 +246,19 @@ Primarily used in reagents/reaction_agents
 	return creation_purity / normalise_num_to
 
 /**
+ * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to it's inverse one.
+ *
+ * Arguments
+ * * purity - Overrides the purity used for determining the inverse purity.
+ */
+/datum/reagent/proc/get_inverse_purity(purity)
+	if(!inverse_chem || !inverse_chem_val)
+		return
+	if(!purity)
+		purity = src.purity
+	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.
+
+/**
  * Input a reagent_list, outputs pretty readable text!
  * Default output will be formatted as
  * * water, 5 | silicon, 6 | soup, 4 | space lube, 8

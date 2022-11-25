@@ -87,10 +87,10 @@
 			card = new(user.drop_location())
 			user.put_in_hands(card)
 			card.balloon_alert(user, "the card materializes in your hand")
-			RegisterSignal(card, COMSIG_ITEM_EQUIPPED, .proc/on_card_planted)
+			RegisterSignal(card, COMSIG_ITEM_EQUIPPED, PROC_REF(on_card_planted))
 			AddComponent(/datum/component/traitor_objective_register, card, \
 				succeed_signals = null, \
-				fail_signals = COMSIG_PARENT_QDELETING, \
+				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = TRUE)
 
 /datum/traitor_objective/assassinate/calling_card/proc/on_card_planted(datum/source, mob/living/equipper, slot)
@@ -107,7 +107,7 @@
 	. = ..()
 	if(!.) //didn't generate
 		return FALSE
-	RegisterSignal(kill_target, COMSIG_PARENT_QDELETING, .proc/on_target_qdeleted)
+	RegisterSignal(kill_target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdeleted))
 
 /datum/traitor_objective/assassinate/calling_card/ungenerate_objective()
 	UnregisterSignal(kill_target, COMSIG_PARENT_QDELETING)
@@ -131,8 +131,8 @@
 	. = ..()
 	if(!.) //didn't generate
 		return FALSE
-	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = COMSIG_PARENT_QDELETING)
-	RegisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB, .proc/on_target_dismembered)
+	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = list(COMSIG_PARENT_QDELETING))
+	RegisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_target_dismembered))
 
 /datum/traitor_objective/assassinate/behead/ungenerate_objective()
 	UnregisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB)
@@ -159,7 +159,7 @@
 		fail_objective()
 	else
 		behead_goal = lost_head
-		RegisterSignal(behead_goal, COMSIG_ITEM_PICKUP, .proc/on_head_pickup)
+		RegisterSignal(behead_goal, COMSIG_ITEM_PICKUP, PROC_REF(on_head_pickup))
 
 /datum/traitor_objective/assassinate/New(datum/uplink_handler/handler)
 	. = ..()
@@ -219,7 +219,7 @@
 	kill_target = kill_target_mind.current
 	replace_in_name("%TARGET%", kill_target.real_name)
 	replace_in_name("%JOB TITLE%", kill_target_mind.assigned_role.title)
-	RegisterSignal(kill_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
+	RegisterSignal(kill_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
 	return TRUE
 
 /datum/traitor_objective/assassinate/ungenerate_objective()

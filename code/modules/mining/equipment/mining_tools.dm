@@ -224,7 +224,7 @@
 		"Shovel" = image(icon = icon, icon_state = "trench_tool_shovel"),
 		"Pick" = image(icon = icon, icon_state = "trench_tool_pick"),
 		)
-	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/tool_result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user) || !tool_result)
 		return
 	switch(tool_result)

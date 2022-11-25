@@ -200,14 +200,14 @@
 /obj/machinery/proc/setup_area_power_relationship()
 	var/area/our_area = get_area(src)
 	if(our_area)
-		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_change))
 
 	if(HAS_TRAIT_FROM(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)) // If we for some reason have not lost our area sensitivity, there's no reason to set it back up
 		return FALSE
 
 	become_area_sensitive(INNATE_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
-	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
+	RegisterSignal(src, COMSIG_ENTER_AREA, PROC_REF(on_enter_area))
+	RegisterSignal(src, COMSIG_EXIT_AREA, PROC_REF(on_exit_area))
 	return TRUE
 
 /**
@@ -234,7 +234,7 @@
 		return
 	update_current_power_usage()
 	power_change()
-	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_change))
 
 /obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
 	SIGNAL_HANDLER
@@ -872,7 +872,7 @@
 	wrench.play_tool_sound(src, 50)
 	var/prev_anchored = anchored
 	//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-	if(!wrench.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
+	if(!wrench.use_tool(src, user, time, extra_checks = CALLBACK(src, PROC_REF(unfasten_wrench_check), prev_anchored, user)))
 		return FAILED_UNFASTEN
 	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 		to_chat(user, span_notice("You fail to secure [src]."))
@@ -955,11 +955,34 @@
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
-	. = list()
-	. += span_notice("It contains the following parts:")
-	for(var/obj/item/C in component_parts)
-		. += span_notice("[icon2html(C, user)] \A [C].")
-	. = jointext(., "")
+	var/list/part_count = list()
+	for(var/obj/item/component_part in component_parts)
+		if(part_count[component_part.name])
+			part_count[component_part.name]++
+			continue
+
+		if(isstack(component_part))
+			var/obj/item/stack/stack_part = component_part
+			part_count[component_part.name] = stack_part.amount
+		else
+			part_count[component_part.name] = 1
+
+	var/list/printed_components = list()
+
+	var/text = span_notice("It contains the following parts:")
+	for(var/obj/item/component_part as anything in component_parts)
+		if(printed_components[component_part.name])
+			continue //already printed so skip
+		
+		var/part_name = component_part.name
+		if (isstack(component_part))
+			var/obj/item/stack/stack_part = component_part
+			part_name = stack_part.singular_name
+		
+		text += span_notice("[icon2html(component_part, user)] [part_count[component_part.name]] [part_name]\s.")
+		printed_components[component_part.name] = TRUE
+
+	return text
 
 /obj/machinery/examine(mob/user)
 	. = ..()
