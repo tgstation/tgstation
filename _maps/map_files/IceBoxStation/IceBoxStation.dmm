@@ -289,14 +289,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
-"agm" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Engineering Supermatter Chamber";
-	network = list("engine");
-	pixel_x = 23
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "agt" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6573,6 +6565,22 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"bXa" = (
+/obj/structure/closet/crate/engineering,
+/obj/item/circuitboard/machine/nuclear_accumulator,
+/obj/item/circuitboard/machine/nuclear_emitter,
+/obj/item/stack/sheet/mineral/titanium/fifty,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5
+	},
+/obj/item/stack/sheet/plastitaniumglass{
+	amount = 5
+	},
+/turf/open/floor/plating,
+/area/station/engineering/engine_smes)
 "bXf" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -22726,6 +22734,7 @@
 	},
 /obj/item/geiger_counter,
 /obj/item/clothing/glasses/meson,
+/obj/structure/sign/delamination_counter/directional/north,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "gSy" = (
@@ -43197,6 +43206,7 @@
 /area/station/maintenance/disposal/incinerator)
 "nnw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "nnx" = (
@@ -56565,6 +56575,10 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos/storage/gas)
+"rup" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "ruw" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
 	dir = 1;
@@ -62043,6 +62057,19 @@
 /mob/living/simple_animal/bot/secbot/beepsky/armsky,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory)
+"tho" = (
+/obj/structure/window/reinforced/plasma{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/camera/directional/north{
+	c_tag = "Engineering Supermatter Chamber";
+	network = list("engine")
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "thD" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
@@ -65121,10 +65148,6 @@
 "ucN" = (
 /turf/closed/wall/r_wall,
 /area/station/security/detectives_office)
-"ucO" = (
-/obj/structure/sign/warning/electric_shock,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
 "udg" = (
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
@@ -69310,10 +69333,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"vuK" = (
-/obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
-/area/station/engineering/supermatter)
 "vuR" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -76591,9 +76610,9 @@
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
 "xBp" = (
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "xBv" = (
 /obj/machinery/light/directional/north,
@@ -76873,15 +76892,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
-"xFM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/sign/delamination_counter/directional/north,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "xFU" = (
 /obj/structure/barricade/wooden,
 /obj/structure/sign/warning/gas_mask/directional/south{
@@ -235991,7 +236001,7 @@ xYI
 mNY
 oXX
 mNY
-hpd
+bXa
 hpd
 hpd
 wkw
@@ -238060,11 +238070,11 @@ fab
 eDC
 uIV
 nXl
-wuo
-agm
+rup
+esE
 fNN
 esE
-wuo
+rup
 cSH
 oyz
 mLV
@@ -238318,11 +238328,11 @@ oOk
 iEd
 wuo
 nnw
-cjD
+tho
 spF
 cjD
-wuo
-xFM
+rup
+pry
 kUz
 mLV
 gka
@@ -238578,7 +238588,7 @@ xBp
 bYw
 bYw
 bYw
-ucO
+rup
 kcD
 ugq
 njT
@@ -239092,7 +239102,7 @@ xBp
 imd
 imd
 imd
-vuK
+rup
 utA
 qYQ
 xUb
@@ -239344,12 +239354,12 @@ gFR
 fab
 kFZ
 wuo
-vuK
+rup
 nnw
 mcG
 oXM
 mcG
-wuo
+rup
 pry
 kUz
 mLV
@@ -239602,11 +239612,11 @@ fab
 iag
 loc
 hNI
-wuo
+rup
 esE
 fNN
 esE
-wuo
+rup
 cSH
 iam
 mLV

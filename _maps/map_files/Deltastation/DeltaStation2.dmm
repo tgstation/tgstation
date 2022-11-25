@@ -1219,6 +1219,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/corporate_showroom)
+"anS" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/plasma/spawner/west{
+	dir = 1
+	},
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/camera/directional/east{
+	c_tag = "Engineering - Supermatter";
+	name = "engineering camera";
+	network = list("ss13","engine");
+	pixel_y = -5
+	},
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "anV" = (
 /obj/effect/landmark/start/hangover/closet,
 /obj/structure/closet/firecloset,
@@ -4590,6 +4604,7 @@
 	dir = 1
 	},
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "bdx" = (
@@ -7984,7 +7999,7 @@
 /turf/closed/wall/r_wall,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "bPI" = (
-/obj/machinery/light/small/directional/south,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "bPY" = (
@@ -10700,7 +10715,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/sign/warning/radiation/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "cwK" = (
@@ -15532,10 +15546,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/department/chapel)
-"dHx" = (
-/obj/structure/sign/warning/radiation/directional/north,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "dHN" = (
 /obj/machinery/door/poddoor/massdriver_chapel,
 /obj/structure/fans/tiny,
@@ -19835,6 +19845,10 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"eMx" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "eME" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/landmark/start/hangover,
@@ -34107,6 +34121,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "ilH" = (
@@ -34840,11 +34855,6 @@
 "ivA" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/captain/private)
-"ivH" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/sign/warning/radiation/directional/south,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "ivK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -36081,9 +36091,21 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
 "iMU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/engineering,
+/obj/item/circuitboard/machine/nuclear_accumulator,
+/obj/item/circuitboard/machine/nuclear_emitter,
+/obj/item/stack/sheet/mineral/titanium/fifty,
+/obj/item/stack/sheet/mineral/gold{
+	amount = 5
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 5
+	},
+/obj/item/stack/sheet/plastitaniumglass{
+	amount = 5
+	},
 /obj/machinery/light/small/directional/west,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -37947,15 +37969,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/science/xenobiology)
-"jjw" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Engineering - Supermatter";
-	name = "engineering camera";
-	network = list("ss13","engine")
-	},
-/obj/structure/sign/warning/radiation/directional/east,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "jjC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -43928,7 +43941,6 @@
 	dir = 1;
 	pixel_y = 23
 	},
-/obj/structure/sign/delamination_counter/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "kDL" = (
@@ -44554,8 +44566,6 @@
 /turf/open/floor/iron,
 /area/station/security/brig)
 "kMt" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/sign/warning/radiation/directional/west,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "kMu" = (
@@ -45708,7 +45718,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/structure/sign/warning/radiation/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "lbo" = (
@@ -55020,7 +55029,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer4,
-/obj/structure/sign/warning/secure_area/directional/west,
+/obj/structure/sign/delamination_counter/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "nsd" = (
@@ -56090,7 +56099,6 @@
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "nET" = (
@@ -90040,6 +90048,15 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
+"vXs" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/plasma/spawner/west{
+	dir = 4
+	},
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "vXF" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -119718,7 +119735,7 @@ wvl
 gmx
 xGh
 cxp
-sHT
+eMx
 wgC
 iRx
 wgC
@@ -119975,11 +119992,11 @@ jMM
 gAw
 jPd
 ehD
-sHT
-dHx
+eMx
+kMt
 fNc
-ivH
-sHT
+kMt
+eMx
 vrs
 vrs
 qJI
@@ -120231,13 +120248,13 @@ mHg
 rLN
 pqr
 cZv
-tcy
-sHT
+ehD
+eMx
 vlN
 xUm
-vlN
+vXs
 sHT
-sHT
+eMx
 sHT
 mHc
 yeO
@@ -120489,7 +120506,7 @@ bpr
 anB
 ilG
 cwI
-sHT
+eMx
 msB
 kXR
 owf
@@ -121003,12 +121020,12 @@ vog
 anB
 aVW
 lbl
-sHT
+eMx
 msB
 kXR
 owf
-bdt
-jjw
+anS
+kMt
 tGr
 hCE
 sst
@@ -121261,11 +121278,11 @@ pqr
 qJs
 tcy
 sHT
-sHT
+eMx
 ePU
+eMx
 sHT
-sHT
-sHT
+eMx
 sHT
 jzC
 sLe
@@ -121521,7 +121538,7 @@ sHT
 kDE
 tsa
 bPI
-sHT
+eMx
 enR
 enR
 uxl
