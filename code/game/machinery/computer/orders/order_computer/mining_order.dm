@@ -7,8 +7,9 @@
 	icon_screen = null
 	circuit = /obj/item/circuitboard/computer/order_console/mining
 
+	cooldown_time = 10 SECONDS //just time to let you know your order went through.
 	express_cost_multiplier = 1.5
-	uses_cooldowns = FALSE
+	uses_ltsrbt = TRUE
 	order_categories = list(
 		CATEGORY_MINING,
 		CATEGORY_CONSUMABLES,
@@ -28,7 +29,7 @@
 	say(failure_message)
 	return FALSE
 
-/obj/machinery/computer/order_console/mining/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
+/obj/machinery/computer/order_console/mining/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries, ltsrbt_delivered = FALSE)
 	var/list/things_to_order = list()
 	for(var/datum/orderable_item/item as anything in groceries)
 		things_to_order[item.item_path] = groceries[item]
@@ -45,6 +46,21 @@
 		coupon = null, \
 		charge_on_purchase = FALSE,
 	)
+	if(ltsrbt_delivered)
+		var/obj/machinery/mining_ltsrbt/ltsrbt
+		for(var/obj/machinery/mining_ltsrbt/all_ltsrbts as anything in GLOB.mining_ltsrbt)
+			if(all_ltsrbts.machine_stat & (NOPOWER|BROKEN|MAINT)) //not functional
+				continue
+			if(!all_ltsrbts.enabled) //not enabled
+				continue
+			ltsrbt = all_ltsrbts
+			break
+		if(ltsrbt && ltsrbt.recieve_order(new_order))
+			return
+		say("Found no functional mining LTSRBTs. If there is one, it is likely destroyed, powered down, or under maintenance. Your delivery has instead been rerouted to Cargo.")
+	else
+		say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
+	radio.talk_into(src, "A shaft miner has ordered equipment which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
 	SSshuttle.shopping_list += new_order
 
 /obj/machinery/computer/order_console/mining/ui_data(mob/user)

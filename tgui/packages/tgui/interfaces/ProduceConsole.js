@@ -86,7 +86,7 @@ const ShoppingTab = (props, context) => {
 
 const CheckoutTab = (props, context) => {
   const { data, act } = useBackend(context);
-  const { forced_express, order_datums, total_cost } = data;
+  const { ltsrbt_available, forced_express, order_datums, total_cost } = data;
   const checkout_list = order_datums.filter((food) => food && food.amt);
   return (
     <Stack vertical fill>
@@ -158,6 +158,21 @@ const CheckoutTab = (props, context) => {
                   `}
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
+                />
+              </Stack.Item>
+            )}
+            {!!ltsrbt_available && (
+              <Stack.Item grow textAlign="center">
+                <Button
+                  fluid
+                  icon="shuttle-van"
+                  content="Deliver"
+                  tooltip={multiline`
+                  Your groceries will arrive to one of
+                  the on-station built LTSRBT devices.
+                  `}
+                  tooltipPosition="top"
+                  onClick={() => act('ltsrbt_deliver')}
                 />
               </Stack.Item>
             )}

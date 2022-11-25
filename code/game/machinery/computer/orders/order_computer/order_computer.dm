@@ -10,8 +10,10 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 	///Cooldown between order uses.
 	COOLDOWN_DECLARE(order_cooldown)
-	///Boolean on whether they should use cooldowns between orders.
-	var/uses_cooldowns = TRUE
+	///Cooldown time between uses, express console will have extra time depending on express_cost_multiplier.
+	var/cooldown_time = 60 SECONDS
+	///Boolean on whether they can bluespace orders using a '/obj/machinery/mining_ltsrbt'
+	var/uses_ltsrbt = FALSE
 
 	///The radio the console can speak into
 	var/obj/item/radio/radio
@@ -75,6 +77,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 
 /obj/machinery/computer/order_console/ui_static_data(mob/user)
 	var/list/data = list()
+	data["ltsrbt_available"] = (uses_ltsrbt && GLOB.mining_ltsrbt.len)
 	data["forced_express"] = forced_express
 	data["order_categories"] = order_categories
 	data["order_datums"] = list()
@@ -106,7 +109,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 			update_static_data(living_user)
-		if("purchase")
+		if("purchase", "ltsrbt_deliver")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
 			if(forced_express)
@@ -117,12 +120,9 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				return
 			if(!purchase_items(used_id_card))
 				return
-			order_groceries(living_user, used_id_card, grocery_list)
+			order_groceries(living_user, used_id_card, grocery_list, ltsrbt_delivered = (action == "ltsrbt_deliver"))
 			grocery_list.Cut()
-			say("Thank you for your purchase! It will arrive on the next cargo shuttle!")
-			radio.talk_into(src, "The kitchen has ordered groceries which will arrive on the cargo shuttle! Please make sure it gets to them as soon as possible!", radio_channel)
-			if(uses_cooldowns)
-				COOLDOWN_START(src, order_cooldown, 60 SECONDS)
+			COOLDOWN_START(src, order_cooldown, cooldown_time)
 		if("express")
 			if(!grocery_list.len || !COOLDOWN_FINISHED(src, order_cooldown))
 				return
@@ -134,11 +134,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 				return
 			var/say_message = "Thank you for your purchase!"
 			if(express_cost_multiplier > 1)
-				say_message += "Please note: The charge of this purchase"
-			if(uses_cooldowns)
-				COOLDOWN_START(src, order_cooldown, 120 SECONDS)
-				say_message += " and machine cooldown"
-			say_message += "has been multiplied by [express_cost_multiplier]!"
+				say_message += "Please note: The charge of this purchase and machine cooldown has been multiplied by [express_cost_multiplier]!"
+			COOLDOWN_START(src, order_cooldown, cooldown_time * express_cost_multiplier)
 			say(say_message)
 			var/list/ordered_paths = list()
 			for(var/datum/orderable_item/item as anything in grocery_list)//every order
@@ -175,5 +172,5 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	say(failure_message)
 	return FALSE
 
-/obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries)
+/obj/machinery/computer/order_console/proc/order_groceries(mob/living/purchaser, obj/item/card/id/card, list/groceries, ltsrbt_delivered = FALSE)
 	return
