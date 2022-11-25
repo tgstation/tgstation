@@ -1,5 +1,5 @@
 /obj/structure/chem_separator
-	name = "chemical separator"
+	name = "distillation apparatus"
 	desc = "A device that performs chemical separation by distillation."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "separator"
@@ -13,7 +13,7 @@
 	var/datum/looping_sound/boiling/soundloop
 	/// Minimal mixture temperature for separation
 	var/required_temp = T0C + 100
-	/// Mixture heating speed in degrees per second
+	/// Mixture heating speed in degrees per second for full container
 	var/heating_rate = 5
 	/// Separation speed in units per second
 	var/distillation_rate = 5
@@ -113,7 +113,7 @@
 /// Insert, replace or eject the container depending on the state and parameters
 /obj/structure/chem_separator/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
-		return FALSE
+		CRASH("[user] ([user?.type]) is not a living, but is trying to replace beaker")
 	if(beaker)
 		if(burning)
 			stop()
@@ -193,7 +193,7 @@
 	update_appearance(UPDATE_ICON)
 
 /// Check whether the separation can process
-/obj/structure/chem_separator/proc/can_process(var/datum/gas_mixture/air)
+/obj/structure/chem_separator/proc/can_process(datum/gas_mixture/air)
 	if(!burning)
 		return FALSE
 	if(!air || !air.has_gas(/datum/gas/oxygen, 1))
@@ -216,7 +216,8 @@
 		var/turf/location = loc
 		location.hotspot_expose(exposed_temperature = 700, exposed_volume = 5)
 	if(reagents.chem_temp < required_temp)
-		reagents.adjust_thermal_energy(heating_rate * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.total_volume)
+		reagents.adjust_thermal_energy(heating_rate * delta_time * SPECIFIC_HEAT_DEFAULT * reagents.maximum_volume)
+		reagents.temperature = min(reagents.temperature, required_temp)
 		update_appearance(UPDATE_ICON)
 		return
 	if(reagents.chem_temp >= required_temp)
@@ -273,7 +274,7 @@
 	return TRUE
 
 /datum/crafting_recipe/chem_separator
-	name = "Chemical separator"
+	name = "chemical separator"
 	result = /obj/structure/chem_separator
 	tool_behaviors = list(TOOL_WELDER)
 	time = 5 SECONDS
