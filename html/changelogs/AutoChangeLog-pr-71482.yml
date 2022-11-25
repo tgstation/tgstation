@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "A revived basic mob will stand up again rather than inching around as a living corpse."
