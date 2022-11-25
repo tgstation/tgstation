@@ -365,6 +365,10 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		. = CONTEXTUAL_SCREENTIP_SET
+
 	if(computer_id_slot) // ID get removed first before pAIs
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
 		. = CONTEXTUAL_SCREENTIP_SET
@@ -375,7 +379,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(inserted_disk)
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
 		. = CONTEXTUAL_SCREENTIP_SET
-
 	return . || NONE
 
 /obj/item/modular_computer/update_icon_state()
@@ -779,7 +782,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	return ..()
 
-/obj/item/modular_computer/wrench_act(mob/living/user, obj/item/tool)
+/obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
 	tool.play_tool_sound(src, user, 20, volume=20)
 	internal_cell?.forceMove(drop_location())
