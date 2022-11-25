@@ -20,8 +20,16 @@
 	RegisterSignals(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), PROC_REF(on_unarm_attack)) // Players
 	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attackingtarget)) // AI
 
+	if (isanimal(target))
+		var/mob/living/simple_animal/animal_target = target
+		animal_target.environment_smash |= strength_flag
+
 /datum/element/wall_smasher/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
+	if (isanimal(target))
+		var/mob/living/simple_animal/animal_target = target
+		animal_target.environment_smash &= ~strength_flag
+
 	return ..()
 
 /datum/element/wall_smasher/proc/on_unarm_attack(mob/living/puncher, atom/target, proximity, modifiers)

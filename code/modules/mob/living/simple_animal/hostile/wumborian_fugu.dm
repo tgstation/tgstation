@@ -104,7 +104,6 @@
 	F.retreat_distance = null
 	F.minimum_distance = 1
 	F.move_to_delay = 6
-	F.environment_smash = ENVIRONMENT_SMASH_WALLS
 	F.AddElement(/datum/element/wall_smasher)
 	F.mob_size = MOB_SIZE_LARGE
 	F.speed = 1
@@ -125,8 +124,7 @@
 		minimum_distance = 9
 		move_to_delay = 2
 		inflate_cooldown = 4
-		environment_smash = ENVIRONMENT_SMASH_NONE
-		RemoveElement(/datum/element/wall_smasher) // TODO replace with a proc, make the element assign traits to simple mobs
+		RemoveElement(/datum/element/wall_smasher)
 		mob_size = MOB_SIZE_SMALL
 		speed = 0
 
@@ -165,7 +163,7 @@
 	animal.melee_damage_lower = max((animal.melee_damage_lower * 2), 10)
 	animal.melee_damage_upper = max((animal.melee_damage_upper * 2), 10)
 	animal.transform *= 2
-	animal.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES | ENVIRONMENT_SMASH_RWALLS
-	animal.AddElement(/datum/element/wall_smasher)
+	animal.AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_RWALLS)
+	animal.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES
 	to_chat(user, span_info("You increase the size of [animal], giving [animal.p_them()] a surge of strength!"))
 	qdel(src)
