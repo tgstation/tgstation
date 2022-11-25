@@ -94,7 +94,7 @@
 /atom/movable/screen/cook
 	name = "cooking menu"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "craft"
+	icon_state = "cook"
 	screen_loc = ui_cooking
 
 /atom/movable/screen/area_creator
