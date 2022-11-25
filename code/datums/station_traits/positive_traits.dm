@@ -72,14 +72,14 @@
 /datum/station_trait/strong_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 0.8
 
-/datum/station_trait/wintergear
+/datum/station_trait/winter_gear
 	name = "Winter Gear"
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
 	var/list/scarves
 
-/datum/station_trait/wintergear/New()
+/datum/station_trait/winter_gear/New()
 	. = ..()
 	report_message = pick(
 		"Nanotrasen is experimenting with seeing if warmth improves employee morale.",
@@ -98,7 +98,7 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
 
-/datum/station_trait/wintergear/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+/datum/station_trait/winter_gear/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 	var/scarf_type = pick(scarves)
 
