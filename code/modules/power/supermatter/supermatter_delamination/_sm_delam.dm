@@ -85,9 +85,13 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		return list(mutable_appearance(sm.icon, "causality_field"))
 	return list()
 
-// Returns whatever filter to the SM.
+/// Applies filters to the SM.
+/// Returns true if filters were applied. Should call parent.
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/filters(obj/machinery/power/supermatter_crystal/sm)
+	if(!sm.internal_energy && !sm.damage)
+		return FALSE
+
 	var/new_filter = FALSE
 	if(isnull(sm.get_filter("ray")))
 		new_filter = TRUE
@@ -100,13 +104,15 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		density = clamp(sm.damage/10, 12, 100)
 	))
 
-	// Filters happen to continue their animation loop while being modified.
-	// This most likely have UB. Should be removed if it breaks in the future.
+	// Filter animation persists even if the filter itself is changed externally.
+	// Probably prone to breaking.
 	if(new_filter)
-		animate(sm.filters[1], time = 10 SECONDS, offset = 10, loop = -1)
-		animate(time = 10 SECONDS, offset = 0, loop = -1)
+		animate(sm.get_filter("ray"), offset = 10, time = 10 SECONDS, loop = -1)
+		animate(offset = 0, time = 10 SECONDS)
 
-// Change how bright the rock is
+	return TRUE
+
+// Change how bright the rock is.
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
 	return

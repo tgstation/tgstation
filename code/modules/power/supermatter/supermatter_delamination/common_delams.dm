@@ -29,7 +29,9 @@
 	return ..()
 
 /datum/sm_delam/singularity/filters(obj/machinery/power/supermatter_crystal/sm)
-	..()
+	if(!..())
+		return FALSE
+
 	sm.add_filter(name = "ray", priority = 1, params=list(
 		type = "rays",
 		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
@@ -44,10 +46,11 @@
 	))
 	if(sm.final_countdown)
 		sm.add_filter(name = "icon", priority = 3, params = list(
-			type="layer",
+			type = "layer",
 			icon = new/icon('icons/effects/96x96.dmi', "singularity_s3", frame = rand(1,8)),
 			flags = FILTER_OVERLAY
 		))
+	return TRUE
 
 /datum/sm_delam/singularity/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
@@ -94,7 +97,9 @@
 
 
 /datum/sm_delam/tesla/filters(obj/machinery/power/supermatter_crystal/sm)
-	..()
+	if(!..())
+		return FALSE
+
 	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
 		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
@@ -107,6 +112,8 @@
 		icon = new/icon('icons/obj/engine/energy_ball.dmi', "energy_ball", frame = rand(1,12)),
 		flags = FILTER_UNDERLAY
 	))
+
+	return TRUE
 
 /datum/sm_delam/tesla/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
