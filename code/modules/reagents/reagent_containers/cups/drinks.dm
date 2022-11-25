@@ -169,8 +169,8 @@
 	icon_state = "mug_nt_empty"
 
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen/update_icon_state()
+	. = ..()
 	icon_state = reagents.total_volume ? "mug_nt" : "mug_nt_empty"
-	return ..()
 
 /obj/item/reagent_containers/cup/glass/coffee_cup
 	name = "coffee cup"
