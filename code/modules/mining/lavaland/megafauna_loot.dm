@@ -439,7 +439,7 @@
 		return
 	if(pixel_x != base_pixel_x || pixel_y != base_pixel_y)
 		animate(src, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y, flags = ANIMATION_PARALLEL)
-	Move(get_step_multiz(src, direction), direction)
+	try_step_multiz(direction)
 	COOLDOWN_START(src, move_cooldown, (direction in GLOB.cardinals) ? 0.1 SECONDS : 0.2 SECONDS)
 
 /obj/item/soulscythe/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

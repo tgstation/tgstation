@@ -822,3 +822,96 @@
   - bugfix: Fix syringes and droppers not updating the appearance of target when used
   - qol: Regular mop bucket has the same RMB hotkey as janicart for wetting mop
   - refactor: Refactor janicart to be subtype of mop bucket
+2022-11-24:
+  1bw0kopy:
+  - bugfix: Fix traitor objectives failing to complete
+  Fikou:
+  - qol: you get access to the next storage ui row 1 item earlier
+  Ghommie:
+  - rscadd: Added two sets of coordinates to the checkers and chess modules for the
+      holodeck.
+  GoldenAlpharex:
+  - rscadd: Added a Rescue Hook, that will allow the fishing rod it's attached onto
+      to become a lot more proficient at recovering corpses from chasms, at the expense
+      of making it unusable for more traditional fishing. It isn't entirely lobstrosity-proof,
+      however...
+  - balance: The magnetic hook can no longer fish out corpses from chasms, but will
+      fish out items much more efficiently than any other hooks, while also being
+      much less attractive to lobstrosities. Some still fall for it regardless, however.
+  - spellcheck: Fixed the capitalization and punctuation in the description of multiple
+      fishing accessories.
+  - code_imp: Improved the code for fishing weights, to allow for different hooks
+      to have some more noticeable results on the weights without having to add to
+      an already massive proc.
+  Jacquerel:
+  - refactor: Cayenne's ability to participate in Nuclear Operations is now a component
+      which any mob can use.
+  - rscadd: All Space Carp will now start regenerating health after 6 seconds of not
+      taking any damage, until they're back to full health. This behaviour was previously
+      unique to mega carp.
+  - qol: You can see what kind of spell a magicarp will cast by hovering your mouse
+      over it.
+  - imageadd: Megacarp now have a random colour.
+  - imagedel: Magicarp are now colour coded based on their spell, or change randomly
+      if they're Chaos Magicarp.
+  JohnFulpWillard:
+  - admin: Researching nodes and bepis unlocking stuff is now logged in research.
+  LemonInTheDark:
+  - bugfix: You can now see antag hud icons AND see through walls. WOW
+  Melbert:
+  - bugfix: Fixed an exploit involving igniters attached to themselves. Assembly holders
+      are now limited to 12 assemblies maximum, and you cannot attach multiple igniters
+      to the same assembly.
+  - refactor: Refactored some assembly jank, namely in how they pulse and are pulsed.
+  Roryl-c:
+  - bugfix: Flypeople gain a comparable amount of nutrients from vomited food to other
+      species (~70%, up from ~30%)
+  - bugfix: Flypeople no longer vomit after drinking fluids
+  - bugfix: Flypeople no longer vomit all contents of their stomach on spawn
+  - code_imp: Stomachs can now react to foods entering them by overriding the `after_eat`
+      proc
+  disappointedButNotSuprised:
+  - bugfix: Curd cheese can be microwaved again into cheese curds
+  etherware-novice:
+  - qol: slight positive moodlets use a different color to slight negative ones
+  flowercuco:
+  - qol: added screentips to customizable food
+  - qol: added more balloon alerts to custommizable food
+  private-tristan:
+  - bugfix: icebox kitchen maints is now correctly wired
+2022-11-25:
+  Cenrus, ported by Hardly:
+  - rscadd: Added *snap emote
+  CocaColaTastesGood:
+  - bugfix: Fixes a NTPay exploit.
+  GoldenAlpharex:
+  - bugfix: Modular computers will now no longer all be called "processing unit",
+      and will all have their own unique names once again.
+  Jacquerel:
+  - bugfix: A revived basic mob will stand up again rather than inching around as
+      a living corpse.
+  LT3:
+  - bugfix: Tram signs glow instead of being harsh blocky.
+  PositiveEntropy:
+  - imageadd: Updates the Military, Bomber and Letterman Jackets
+  - bugfix: Fixes the centcom hat, cap and head intern cap, which were using the old
+      sprites.
+  SyncIt21:
+  - rscadd: checks while inserting stack materials into an RPED and their amounts
+  - code_imp: sorting of RPED part components to sort stack materials by their ratings
+  - rscdel: 'old way of displaying parts when clicking on an machine frame with it
+
+      add:new way of displaying part info which displays  number of parts including
+      for stack materials'
+  ZephyrTFA:
+  - bugfix: Strange Reagent is once again Strange! (it works at all)
+  flowercuco:
+  - rscadd: you can saw bread with a saw into bread slices
+  - qol: added screentip verbs to a bunch of food files
+  - code_imp: bread and cake now have slice types and all only have one call on the
+      processable.dm proc
+  nevimer:
+  - rscadd: The Supermatter crystal will now emit rays of light, varying on it's power
+      level and situation.
+  - code_imp: improves a formatting and comment spelling
+  - bugfix: The Causality field now actually shows up!

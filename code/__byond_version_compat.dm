@@ -20,14 +20,6 @@
 /savefile/byond_version = MIN_COMPILER_VERSION
 #endif
 
-// Temporary 515 block until it is completely compatible.
-// AnturK says there are issues with savefiles that would make it dangerous to test merge,
-// and so this check is in place to stop serious damage.
-// That being said, if you really are ready, you can give YES_I_WANT_515 to TGS.
-#if !defined(YES_I_WANT_515) && DM_VERSION >= 515
-#error We do not yet completely support BYOND 515.
-#endif
-
 // 515 split call for external libraries into call_ext
 #if DM_VERSION < 515
 #define LIBCALL call

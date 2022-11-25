@@ -1,5 +1,3 @@
-#define REGENERATION_DELAY 60  // After taking damage, how long it takes for automatic regeneration to begin for megacarps (ty robustin!)
-
 /mob/living/simple_animal/hostile/carp
 	name = "space carp"
 	desc = "A ferocious, fang-bearing creature that resembles a fish."
@@ -141,7 +139,7 @@
 	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
-	greyscale_config = NONE
+	greyscale_config = null
 	regenerate_colour = COLOR_WHITE
 
 /mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
@@ -222,19 +220,17 @@
 	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
 	faction = list(ROLE_SYNDICATE)
-	/// Keeping track of the nuke disk for the functionality of storing it.
-	var/obj/item/disk/nuclear/disky
-	/// Location of the file storing disk overlays
-	var/icon/disk_overlay_file = 'icons/mob/simple/carp.dmi'
-	/// Colored disk mouth appearance for adding it as a mouth overlay
-	var/mutable_appearance/colored_disk_mouth
+	/// Overlay to apply to display the disk
+	var/mutable_appearance/disk_overlay
+	/// Overlay to apply over the disk so it looks like cayenne is holding it
+	var/mutable_appearance/mouth_overlay
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "bloops happily!")
-	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
-	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT) //carp can take the disk off the captain
-	ADD_TRAIT(src, TRAIT_CAN_USE_NUKE, INNATE_TRAIT) //carp SMART
+	var/datum/callback/got_disk = CALLBACK(src, PROC_REF(got_disk))
+	var/datum/callback/display_disk = CALLBACK(src, PROC_REF(display_disk))
+	AddComponent(/datum/component/nuclear_bomb_operator, got_disk, display_disk)
 
 /mob/living/simple_animal/hostile/carp/cayenne/apply_colour()
 	if (prob(RARE_CAYENNE_CHANCE))
@@ -242,65 +238,20 @@
 	else
 		return ..()
 
-/mob/living/simple_animal/hostile/carp/cayenne/death(gibbed)
-	if(disky)
-		disky.forceMove(drop_location())
-		disky = null
-	return ..()
-
-/mob/living/simple_animal/hostile/carp/cayenne/Destroy(force)
-	QDEL_NULL(disky)
-	return ..()
-
-/mob/living/simple_animal/hostile/carp/cayenne/examine(mob/user)
-	. = ..()
-	if(disky)
-		. += span_notice("Wait... is that [disky] in [p_their()] mouth?")
-
-/mob/living/simple_animal/hostile/carp/cayenne/AttackingTarget(atom/attacked_target)
-	if(istype(attacked_target, /obj/item/disk/nuclear))
-		var/obj/item/disk/nuclear/potential_disky = attacked_target
-		if(potential_disky.anchored)
-			return
-		potential_disky.forceMove(src)
-		disky = potential_disky
-		to_chat(src, span_nicegreen("YES!! You manage to pick up [disky]. (Click anywhere to place it back down.)"))
-		update_icon()
-		if(!disky.fake)
-			client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
+/// She did it! Treats for Cayenne!
+/mob/living/simple_animal/hostile/carp/cayenne/proc/got_disk(obj/item/disk/nuclear/disky)
+	if (disky.fake) // Never mind she didn't do it
 		return
-	if(disky)
-		if(isopenturf(attacked_target))
-			to_chat(src, span_notice("You place [disky] on [attacked_target]"))
-			disky.forceMove(attacked_target)
-			disky = null
-			update_icon()
-		else
-			disky.melee_attack_chain(src, attacked_target)
-		return
+	client.give_award(/datum/award/achievement/misc/cayenne_disk, src)
 
-	if(istype(attacked_target, /obj/machinery/nuclearbomb))
-		var/obj/machinery/nuclearbomb/nuke = attacked_target
-		nuke.ui_interact(src)
-		return
-	return ..()
+/// Adds an overlay to show the disk on Cayenne
+/mob/living/simple_animal/hostile/carp/cayenne/proc/display_disk(list/new_overlays)
+	if (!mouth_overlay)
+		mouth_overlay = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
+	new_overlays += mouth_overlay
 
-/mob/living/simple_animal/hostile/carp/cayenne/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(disky == gone)
-		disky = null
-		update_icon()
+	if (!disk_overlay)
+		disk_overlay = mutable_appearance('icons/mob/simple/carp.dmi', "disk_overlay")
+	new_overlays += disk_overlay
 
-/mob/living/simple_animal/hostile/carp/cayenne/update_overlays()
-	. = ..()
-	if(!disky || stat == DEAD)
-		return
-
-	if (isnull(colored_disk_mouth))
-		colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
-
-	. += colored_disk_mouth
-	. += mutable_appearance(disk_overlay_file, "disk_overlay")
-
-#undef REGENERATION_DELAY
 #undef RARE_CAYENNE_CHANCE
