@@ -519,15 +519,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * Returns: null
  */
 /obj/machinery/power/supermatter_crystal/proc/calculate_gases()
+	if(disable_gas)
+		return
+
 	gas_percentage = list()
 	gas_power_transmission = 0
 	gas_heat_modifier = 0
 	gas_heat_resistance = 0
 	gas_heat_power_generation = 0
 	gas_powerloss_inhibition = 0
-
-	if(disable_gas)
-		return
 
 	var/total_moles = absorbed_gasmix.total_moles()
 
