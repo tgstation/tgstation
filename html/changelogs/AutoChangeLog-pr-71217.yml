@@ -1,0 +1,10 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - rscadd: "You can stick IV drip into anything that is a reagent container (injection only)"
+  - qol: "IV drip transfer rate can be zeroed to stop the flow without removing the needle"
+  - qol: "IV drip transfer rate spans from 0 to 5 units per second with 0.01 step instead of previous 0.05 to 2.5 with 0.05 step"
+  - qol: "IV drip animation plays only when transfer rate is above 0"
+  - qol: "IV drip supports alt+clicking that toggles the transfer rate between 0 and max"
+  - qol: "IV drip UI update"
+  - rscadd: "You can craft IV drip with 2 rods, 1 plastic sheet and a syringe"

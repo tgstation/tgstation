@@ -1,5 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - qol: "added a mail sorting map helper, to allow mappers to create disposal networks faster"
-  - bugfix: "fixes several non working disposal mail targets that never received their packages"

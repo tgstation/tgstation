@@ -683,3 +683,235 @@
   - rscadd: You can now kickflip on skateboards.
   lizardqueenlexi:
   - spellcheck: Made "free objective" text consistent.
+2022-11-23:
+  Fikou:
+  - balance: Clothing armor values stack multiplicatively rather than additively.
+  Guillaume Prata:
+  - bugfix: You can no longer repair wooden bucklers and roman shields by slapping
+      them with a titanium sheet.
+  JohnFulpWillard:
+  - bugfix: Experisci handlers no longer show all servers as being on the same techweb
+      if they aren't.
+  - bugfix: RnD consoles no longer bluescreen if they aren't connected to a techweb,
+      instead it will give an error message.
+  - balance: Experisci handlers no longer show the location of RnD servers.
+  - qol: The chat client is now listed under 'Crew' instead of 'Misc' in the store.
+  - qol: The chat client now allows anyone to use the ping feature, as long as they
+      aren't server muted.
+  - qol: The chat client's messaging system now shows the latest messages on top,
+      rather than bottom. No more scrolling!
+  - qol: The chat client now has a ping spam-prevention feature.
+  - bugfix: Techfabs now automatically update to researched designs again.
+  LemonInTheDark:
+  - bugfix: Bots will now "notice" you if you're standing right next to them
+  - bugfix: Bot paths will now draw above things like pipes, rather then below them
+  - refactor: Changed how pathfinding paths get generated
+  - refactor: Made pathfinding and bot searching significantly faster
+  MTandi:
+  - refactor: biogenerator UI revamped
+  - qol: biogenerator no longer requires beaker for materials, monkey cubes and nori
+  - balance: biogenerator accepts all food, not just plants
+  - balance: biogenerator treats all nutriment subtypes as nutriments (vitamins, protein,
+      etc.)
+  - balance: biogenerator product prices doubled
+  - balance: biogenerator biomass storage is limited depending on the level of matter
+      bins
+  - balance: cowboy boots recipe moved from crafting to leather recipes
+  - balance: leather clothing & belt recipes moved from biogenerator to leather recipes
+  - balance: rice hat recipe moved from biogenerator to bamboo recipes
+  - balance: biogenerator now outputs rolling paper sheets instead of a pack
+  - rscadd: biogenerator can now print paper
+  - imageadd: biogenerator icons now use overlays, have emissive layer and indicate
+      the biomass volume
+  - rscdel: Removed Charlie station corridor between kitchen and botany
+  - rscadd: More random loot spawners on Charlie station
+  - bugfix: biogenerator active power usage fix
+  Melbert:
+  - rscadd: Added five new heretic spells, one for each path. They come after the
+      Ritual of Knowledge.
+  - rscadd: Cone of Cold, for Void heretics. Shoots out a freezing chill in a cone
+      which deal damage and freezes.
+  - rscadd: Flesh Surgery for Flesh heretics. A touch spell which can either heal
+      minions or be used on mobs to extract organs without surgery.
+  - rscadd: Volcano Blast for Ash heretics. A beam spell, like Tesla Blast, which
+      fires out a beam of fire that bounces between people.
+  - rscadd: Realignment for Blade heretics. Fleshmend, but for stuns and stamina damage.
+      Makes you a pacifist, but rapidly regenerates stamina.
+  - rscadd: Rust Construction for Rust heretics. Places a wall of rust on the target
+      rusted flooring. Can even be used to ascend z-levels!
+  - balance: Nerfed the cooldown of Cleave slightly, buffed the cooldown of Lesser
+      Cleave slightly.
+  - balance: Slightly more influences will spawn on the station per heretic.
+  - balance: Heretics require an additional sacrifice on average for ascension, but
+      are given a fifth sacrifice target (randomly selected).
+  - balance: Being sacrificed by a heretic now gives you a permanent phobia of spooky
+      things, including heretic mobs and items.
+  - balance: Heretic ghouls now take reduced stamina damage, depending on how small
+      their health pool is.
+  - balance: Using Jaunts will conceal your runechat for their duration.
+  - balance: Spells which require emoting (Mime spells) require your hands not be
+      blocked to use.
+  - refactor: Touch Spells were improved a bit. Added some new template spells - Charged
+      spells, and Charged beam spells.
+  - bugfix: Fixes a runtime from losing heretic.
+  - bugfix: Soulstone names should no longer become bizarre after repeated use.
+  NamelessFairy:
+  - bugfix: Delta's Port Bow Solar is now correctly labelled.
+  Profakos:
+  - refactor: mech construction balloon messages are now actually stored in the construction
+      steps, instead of being tracked separately.
+  - bugfix: Items used in the honk mech construction are now properly deleted/moved
+      inside the mech
+  - qol: added a mail sorting map helper, to allow mappers to create disposal networks
+      faster
+  - bugfix: fixes several non working disposal mail targets that never received their
+      packages
+  RikuTheKiller:
+  - balance: Nooartrium metabolizes much slower now.
+  - bugfix: You can now get 100% pure inverse reagents.
+  - bugfix: Metabolization works for reagents that are meant to metabolize while your
+      liver is failing.
+  - bugfix: Higadrite, cordiolis hepatico and herignis work properly.
+  - balance: Herignis is more potent and has an overdose threshold of 25u.
+  Ryll/Shaps:
+  - rscadd: Added the Marksman Revolver, for admins to spawn.
+  SeigaSeiga:
+  - bugfix: Plague Doctor Hat no longer makes the Plague Doctor Mask (and everything
+      else on your head) invisible.
+  SgtHunk:
+  - rscadd: A gibber, upon creation, might be a meat grinder. This does nothing meaningful,
+      but at least one of your finger bones will still be intact.
+  SkeletalElite:
+  - bugfix: Riot darts no longer do damage with no pen inserted if recovered after
+      being fired while modified to accept pens.
+  Striders13:
+  - bugfix: fixed tramstation's AI sat solars not working
+  SyncIt21:
+  - qol: Entering reagent names is much faster with zero errors
+  - bugfix: You can enter new temp & ph values
+  Y0SH1M4S73R:
+  - admin: Admins are unable to invoke functions from external libraries using callbacks.
+  ZephyrTFA:
+  - bugfix: two handed items will no longer leave a ghost at your feet when inserted
+      into something
+  Zonespace27:
+  - admin: ERTs can now have a custom shuttle that they can spawn on, on a toggle
+      while creating said ERT.
+  carshalash:
+  - bugfix: Updates the Ice cabin kitchen to be more modern. An oven and griddle have
+      been added.
+  etherware-novice:
+  - bugfix: costume hat descriptions
+  flowercuco:
+  - rscadd: you can fax flatbreads and slices of bread now, changed all flatbreads
+      into children of pizza/flatbread to allow for this
+  - qol: adds screentips to various pizzabox action (stacking, when you can take pizzas
+      out, pizza box bomb stuff)
+  - qol: adds a way to add screentips directly into processable food via the add element
+      processable proc
+  - refactor: pizza crates work the same but more clearly and more variable
+  lizardqueenlexi:
+  - refactor: Removed mutant_bodyparts.dmi and distributed its sprites in a more sensible
+      and granular manner.
+  necromanceranne:
+  - balance: Meteorslugs are now miniature cannonballs. They also need more gunpowder
+      and rum to be constructed.
+  timothymtorres:
+  - bugfix: Fix reagent containers playing attack animation when transferring reagents
+      to mob bucket
+  - bugfix: Fix syringes and droppers not updating the appearance of target when used
+  - qol: Regular mop bucket has the same RMB hotkey as janicart for wetting mop
+  - refactor: Refactor janicart to be subtype of mop bucket
+2022-11-24:
+  1bw0kopy:
+  - bugfix: Fix traitor objectives failing to complete
+  Fikou:
+  - qol: you get access to the next storage ui row 1 item earlier
+  Ghommie:
+  - rscadd: Added two sets of coordinates to the checkers and chess modules for the
+      holodeck.
+  GoldenAlpharex:
+  - rscadd: Added a Rescue Hook, that will allow the fishing rod it's attached onto
+      to become a lot more proficient at recovering corpses from chasms, at the expense
+      of making it unusable for more traditional fishing. It isn't entirely lobstrosity-proof,
+      however...
+  - balance: The magnetic hook can no longer fish out corpses from chasms, but will
+      fish out items much more efficiently than any other hooks, while also being
+      much less attractive to lobstrosities. Some still fall for it regardless, however.
+  - spellcheck: Fixed the capitalization and punctuation in the description of multiple
+      fishing accessories.
+  - code_imp: Improved the code for fishing weights, to allow for different hooks
+      to have some more noticeable results on the weights without having to add to
+      an already massive proc.
+  Jacquerel:
+  - refactor: Cayenne's ability to participate in Nuclear Operations is now a component
+      which any mob can use.
+  - rscadd: All Space Carp will now start regenerating health after 6 seconds of not
+      taking any damage, until they're back to full health. This behaviour was previously
+      unique to mega carp.
+  - qol: You can see what kind of spell a magicarp will cast by hovering your mouse
+      over it.
+  - imageadd: Megacarp now have a random colour.
+  - imagedel: Magicarp are now colour coded based on their spell, or change randomly
+      if they're Chaos Magicarp.
+  JohnFulpWillard:
+  - admin: Researching nodes and bepis unlocking stuff is now logged in research.
+  LemonInTheDark:
+  - bugfix: You can now see antag hud icons AND see through walls. WOW
+  Melbert:
+  - bugfix: Fixed an exploit involving igniters attached to themselves. Assembly holders
+      are now limited to 12 assemblies maximum, and you cannot attach multiple igniters
+      to the same assembly.
+  - refactor: Refactored some assembly jank, namely in how they pulse and are pulsed.
+  Roryl-c:
+  - bugfix: Flypeople gain a comparable amount of nutrients from vomited food to other
+      species (~70%, up from ~30%)
+  - bugfix: Flypeople no longer vomit after drinking fluids
+  - bugfix: Flypeople no longer vomit all contents of their stomach on spawn
+  - code_imp: Stomachs can now react to foods entering them by overriding the `after_eat`
+      proc
+  disappointedButNotSuprised:
+  - bugfix: Curd cheese can be microwaved again into cheese curds
+  etherware-novice:
+  - qol: slight positive moodlets use a different color to slight negative ones
+  flowercuco:
+  - qol: added screentips to customizable food
+  - qol: added more balloon alerts to custommizable food
+  private-tristan:
+  - bugfix: icebox kitchen maints is now correctly wired
+2022-11-25:
+  Cenrus, ported by Hardly:
+  - rscadd: Added *snap emote
+  CocaColaTastesGood:
+  - bugfix: Fixes a NTPay exploit.
+  GoldenAlpharex:
+  - bugfix: Modular computers will now no longer all be called "processing unit",
+      and will all have their own unique names once again.
+  Jacquerel:
+  - bugfix: A revived basic mob will stand up again rather than inching around as
+      a living corpse.
+  LT3:
+  - bugfix: Tram signs glow instead of being harsh blocky.
+  PositiveEntropy:
+  - imageadd: Updates the Military, Bomber and Letterman Jackets
+  - bugfix: Fixes the centcom hat, cap and head intern cap, which were using the old
+      sprites.
+  SyncIt21:
+  - rscadd: checks while inserting stack materials into an RPED and their amounts
+  - code_imp: sorting of RPED part components to sort stack materials by their ratings
+  - rscdel: 'old way of displaying parts when clicking on an machine frame with it
+
+      add:new way of displaying part info which displays  number of parts including
+      for stack materials'
+  ZephyrTFA:
+  - bugfix: Strange Reagent is once again Strange! (it works at all)
+  flowercuco:
+  - rscadd: you can saw bread with a saw into bread slices
+  - qol: added screentip verbs to a bunch of food files
+  - code_imp: bread and cake now have slice types and all only have one call on the
+      processable.dm proc
+  nevimer:
+  - rscadd: The Supermatter crystal will now emit rays of light, varying on it's power
+      level and situation.
+  - code_imp: improves a formatting and comment spelling
+  - bugfix: The Causality field now actually shows up!

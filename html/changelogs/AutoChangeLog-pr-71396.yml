@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - balance: "Clothing armor values stack multiplicatively rather than additively."

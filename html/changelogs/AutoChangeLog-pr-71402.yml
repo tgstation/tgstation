@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Experisci handlers no longer show all servers as being on the same techweb if they aren't."
-  - bugfix: "RnD consoles no longer bluescreen if they aren't connected to a techweb, instead it will give an error message."
-  - balance: "Experisci handlers no longer show the location of RnD servers."
