@@ -111,50 +111,6 @@
     }
 
     &__departments {
-      @each $department-name, $color-value in $department_map {
-        &--#{$department-name} {
-          &.head {
-            background: $color-value;
-
-            .job-name {
-              font-weight: bold;
-            }
-          }
-
-          background: colors.fg($color-value);
-          border-bottom: 2px solid rgba(0, 0, 0, 0.3);
-          border-left: 2px solid rgba(0, 0, 0, 0.3);
-          border-right: 2px solid rgba(0, 0, 0, 0.3);
-          color: black;
-
-          > * {
-            height: calc(100% + 0.2em);
-            padding-bottom: 0.2em;
-          }
-
-          &:first-child {
-            border-top: 2px solid rgba(0, 0, 0, 0.3);
-          }
-
-          .options {
-            background: rgba(0, 0, 0, 0.2);
-            height: 100%;
-          }
-        }
-
-        &--Captain {
-          border: 3px solid rgba(200, 200, 0, 1);
-
-          &:first-child {
-            border-top: 3px solid rgba(200, 200, 0, 1);
-          }
-
-          .job-name {
-            font-size: 17px;
-          }
-        }
-      }
-
       &__priority {
         border: 1px solid rgba(0, 0, 0, 0.3);
 

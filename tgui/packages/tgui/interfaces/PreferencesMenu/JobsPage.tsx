@@ -2,9 +2,7 @@ import { Color } from 'common/color';
 import { classes } from 'common/react';
 import { InfernoNode } from 'inferno';
 import { useBackend } from '../../backend';
-import { Box, Button, Dropdown, Icon, Stack, Tooltip } from '../../components';
-import { TriColumnDepartmentPane } from '../JobSelection';
-import { JOB2ICON } from '../Orbit/constants';
+import { Box, Button, DepartmentPane, Dropdown, Icon, Stack, Tooltip } from '../../components';
 import { createSetPreference, Department, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
@@ -240,9 +238,7 @@ const JobRow = (
               .toString()}>
             {
               <div>
-                {(job.icon = job.icon || JOB2ICON[job.name] || null) && (
-                  <Icon name={job.icon} width="16px" />
-                )}
+                {job.icon && <Icon name={job.icon} width="16px" />}
                 {job.command ? <b>{job.name}</b> : job.name}
               </div>
             }
@@ -309,7 +305,7 @@ export const JobsPage = (props, context) => {
             }
 
             return (
-              <TriColumnDepartmentPane
+              <DepartmentPane
                 className="PreferencesMenu__Jobs"
                 act={act}
                 departments={data.jobs.departments}
@@ -324,6 +320,7 @@ export const JobsPage = (props, context) => {
                     department={department}
                   />
                 )}
+                entryWidth={'30%'}
               />
             );
           }}

@@ -12,7 +12,7 @@
 	var/display_order = 0
 	/// The header color to be displayed in the ban panel, classes defined in banpanel.css
 	var/label_class = "undefineddepartment"
-	/// The color used in the latejoin menu.
+	/// The color used in TGUI or similar menus.
 	var/ui_color = "#6681a5"
 	/// Job singleton datums associated to this department. Populated on job initialization.
 	var/list/department_jobs = list()

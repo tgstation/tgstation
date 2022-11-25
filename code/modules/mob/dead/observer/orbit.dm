@@ -88,11 +88,13 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 			serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
 			if(issilicon(player))
 				serialized["job"] = player.job
+				serialized["job_icon"] = job_to_tgui_icon(SSjob.GetJob(player.job)?.title)
 			else
 				var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
 				serialized["job"] = id_card?.get_trim_assignment()
-				var/datum/id_trim/trim = id_card?.trim
-				serialized["job_icon"] = trim?.orbit_icon
+				var/datum/id_trim/job/trim = id_card?.trim
+				if(istype(trim))
+					serialized["job_icon"] = job_to_tgui_icon(trim)
 
 		for(var/datum/antagonist/antag_datum as anything in mind.antag_datums)
 			if (antag_datum.show_to_ghosts)

@@ -177,6 +177,7 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/GetJob(rank)
+	RETURN_TYPE(/datum/job)
 	if(!length(all_occupations))
 		SetupOccupations()
 	return name_occupations[rank]
@@ -188,6 +189,7 @@ SUBSYSTEM_DEF(job)
 	return type_occupations[jobtype]
 
 /datum/controller/subsystem/job/proc/get_department_type(department_type)
+	RETURN_TYPE(/datum/job_department)
 	if(!length(all_occupations))
 		SetupOccupations()
 	return joinable_departments_by_type[department_type]

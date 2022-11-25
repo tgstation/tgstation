@@ -24,31 +24,6 @@ const HEALTH_ICON_BY_LEVEL = [
 
 const jobIsHead = (jobId) => jobId % 10 === 0;
 
-const jobToColor = (jobId) => {
-  if (jobId === 0) {
-    return COLORS.department.captain;
-  }
-  if (jobId >= 10 && jobId < 20) {
-    return COLORS.department.security;
-  }
-  if (jobId >= 20 && jobId < 30) {
-    return COLORS.department.medbay;
-  }
-  if (jobId >= 30 && jobId < 40) {
-    return COLORS.department.science;
-  }
-  if (jobId >= 40 && jobId < 50) {
-    return COLORS.department.engineering;
-  }
-  if (jobId >= 50 && jobId < 60) {
-    return COLORS.department.cargo;
-  }
-  if (jobId >= 200 && jobId < 230) {
-    return COLORS.department.centcom;
-  }
-  return COLORS.department.other;
-};
-
 const healthToAttribute = (oxy, tox, burn, brute, attributeList) => {
   const healthSum = oxy + tox + burn + brute;
   const level = Math.min(Math.max(Math.ceil(healthSum / 25), 0), 5);
@@ -118,11 +93,12 @@ const CrewTableEntry = (props, context) => {
     brutedam,
     area,
     can_track,
+    department_color,
   } = sensor_data;
 
   return (
     <Table.Row>
-      <Table.Cell bold={jobIsHead(ijob)} color={jobToColor(ijob)}>
+      <Table.Cell bold={jobIsHead(ijob)} color={department_color}>
         {name}
         {assignment !== undefined ? ` (${assignment})` : ''}
       </Table.Cell>

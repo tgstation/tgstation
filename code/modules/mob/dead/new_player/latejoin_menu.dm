@@ -2,6 +2,8 @@
 #define JOB_CHOICE_REROLL "Reroll"
 #define JOB_CHOICE_CANCEL "Cancel"
 
+GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
+
 /// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
 /datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
 	var/list/jobs = list()
@@ -54,7 +56,6 @@
 		for(var/datum/job/job_datum as anything in department.department_jobs)
 			var/job_availability = owner.IsJobUnavailable(job_datum.title, TRUE)
 			var/datum/outfit/outfit = job_datum.outfit
-			var/datum/id_trim/id_trim = initial(outfit.id_trim)
 
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
@@ -63,7 +64,7 @@
 				"name" = job_datum.title,
 				"used_slots" = job_datum.current_positions,
 				"open_slots" = job_datum.total_positions < 0 ? "∞" : job_datum.total_positions,
-				"icon" = initial(id_trim.orbit_icon)
+				"icon" = job_to_tgui_icon(job_datum)
 			)
 
 			if(job_availability != JOB_AVAILABLE)

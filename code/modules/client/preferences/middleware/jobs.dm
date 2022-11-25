@@ -43,14 +43,12 @@
 			if(isnull(job_datum.description))
 				stack_trace("[job_datum] does not have a description set, yet is a joinable occupation!")
 				continue
-			var/datum/outfit/outfit = job_datum.outfit
-			var/datum/id_trim/id_trim = initial(outfit.id_trim)
 
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
 				"description" = job_datum.description,
 				"name" = job_datum.title,
-				"icon" = initial(id_trim.orbit_icon),
+				"icon" = job_to_tgui_icon(job_datum),
 			)
 
 			department_jobs += list(job_data)

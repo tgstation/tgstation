@@ -241,6 +241,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			var/trim_assignment = id_card.get_trim_assignment()
 			if (jobs[trim_assignment] != null)
 				entry["ijob"] = jobs[trim_assignment]
+				var/datum/job/job = SSjob.GetJob(trim_assignment) // Simple department fetching.
+				if(job && job.departments_list.len > 0)
+					entry["department_color"] = SSjob.get_department_type(job.departments_list[1]).ui_color
 
 		// Binary living/dead status
 		if (sensor_mode >= SENSOR_LIVING)
