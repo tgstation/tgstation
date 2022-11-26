@@ -24330,7 +24330,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/engineering/main)
@@ -32970,17 +32969,6 @@
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"lNc" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/duct,
-/turf/open/floor/iron,
-/area/station/engineering/main)
 "lNE" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/landmark/event_spawn,
@@ -51534,9 +51522,7 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/structure/reagent_dispensers/plumbed{
-	dir = 8
-	},
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "siL" = (
@@ -109927,7 +109913,7 @@ vjB
 haa
 hRq
 xba
-lNc
+brE
 iMS
 haa
 liz
