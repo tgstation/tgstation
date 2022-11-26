@@ -87,7 +87,7 @@
 				var/mob/living/carbon/human/user = usr
 				if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 					to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
-					pulse(FALSE)
+					pulse()
 		update_appearance()
 		playsound(src, 'sound/weapons/handcuffs.ogg', 30, TRUE, -3)
 
@@ -117,7 +117,7 @@
 		var/mob/living/carbon/human/victim = target
 		if(HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 			playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
-			pulse(FALSE)
+			pulse()
 			return FALSE
 		switch(type)
 			if("feet")
@@ -148,7 +148,7 @@
 		visible_message(span_boldannounce("Skreeeee!")) //He's simply too large to be affected by a tiny mouse trap.
 
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
-	pulse(FALSE)
+	pulse()
 
 /**
  * clumsy_check: Sets off the mousetrap if handled by a clown (with some probability)

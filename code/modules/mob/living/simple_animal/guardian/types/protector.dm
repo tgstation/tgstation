@@ -29,7 +29,7 @@
 		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(GLOB.cardinals))
 		if(guardiancolor)
 			I.color = guardiancolor
-		flick_overlay_view(I, src, 5)
+		flick_overlay_view(I, 5)
 
 /mob/living/simple_animal/hostile/guardian/protector/ToggleMode()
 	if(cooldown > world.time)

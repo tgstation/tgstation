@@ -492,3 +492,53 @@
 
 /obj/effect/turf_decal/siding/wideplating_new/terracotta/end
 	icon_state = "siding_wideplating_new_end"
+
+/// ALPHANUMERIC DECALS (SO FAR ONLY FOR CHESS ALGEBRAIC NOTATION) ///
+
+/obj/effect/turf_decal/board_number/one
+	icon_state = "board_1"
+
+/obj/effect/turf_decal/board_number/two
+	icon_state = "board_2"
+
+/obj/effect/turf_decal/board_number/three
+	icon_state = "board_3"
+
+/obj/effect/turf_decal/board_number/four
+	icon_state = "board_4"
+
+/obj/effect/turf_decal/board_number/five
+	icon_state = "board_5"
+
+/obj/effect/turf_decal/board_number/six
+	icon_state = "board_6"
+
+/obj/effect/turf_decal/board_number/seven
+	icon_state = "board_7"
+
+/obj/effect/turf_decal/board_number/eight
+	icon_state = "board_8"
+
+/obj/effect/turf_decal/board_letter/a
+	icon_state = "board_a"
+
+/obj/effect/turf_decal/board_letter/b
+	icon_state = "board_b"
+
+/obj/effect/turf_decal/board_letter/c
+	icon_state = "board_c"
+
+/obj/effect/turf_decal/board_letter/d
+	icon_state = "board_d"
+
+/obj/effect/turf_decal/board_letter/e
+	icon_state = "board_e"
+
+/obj/effect/turf_decal/board_letter/f
+	icon_state = "board_f"
+
+/obj/effect/turf_decal/board_letter/g
+	icon_state = "board_g"
+
+/obj/effect/turf_decal/board_letter/h
+	icon_state = "board_h"

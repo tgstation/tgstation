@@ -141,7 +141,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/green_lasagne/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
 /obj/item/food/green_lasagne_slice
 	name = "green lasagne al forno slice"
@@ -178,7 +178,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/big_baked_rice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/lil_baked_rice
 	name = "lil baked rice"
@@ -697,9 +697,8 @@
 	tastes = list("cornbread" = 10)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/bread/corn/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/corn, 6)
+	slice_type = /obj/item/food/breadslice/corn
+	yield = 6
 
 /obj/item/food/breadslice/corn
 	name = "cornbread slice"
@@ -728,9 +727,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sugar = 20)
 	tastes = list("vanilla" = 1, "clouds" = 1, "chocolate" = 1)
 	foodtypes = VEGETABLES | SUGAR
-
-/obj/item/food/cake/mothmallow/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/mothmallow, 6)
+	slice_type = /obj/item/food/cakeslice/mothmallow
+	yield = 6
 
 /obj/item/food/cakeslice/mothmallow
 	name = "mothmallow"

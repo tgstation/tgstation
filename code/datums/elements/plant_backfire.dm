@@ -4,7 +4,7 @@
 /// If they're not protected properly, we invoke a callback on the user, harming or inconveniencing them.
 /datum/element/plant_backfire
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// Whether we stop the current action if backfire is triggered (EX: returning CANCEL_ATTACK_CHAIN)
 	var/cancel_action = FALSE
 	/// Any extra traits we want to check in addition to TRAIT_PLANT_SAFE. Mobs with a trait in this list will be considered safe. List of traits.
