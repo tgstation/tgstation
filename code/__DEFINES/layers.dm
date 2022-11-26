@@ -97,7 +97,6 @@
 #define SPACE_LAYER 1.8
 
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (GAME_PLANE) use this.
-#define OPENSPACE_LAYER 600 //Openspace layer over all turfs
 
 // GAME_PLANE layers
 #define CULT_OVERLAY_LAYER 2.01

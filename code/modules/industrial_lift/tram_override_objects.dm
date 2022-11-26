@@ -23,10 +23,10 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
-/turf/open/floor/catwalk_floor/tram
-	icon_state = "tram_above"
-	name = "tram catwalk"
+/turf/open/floor/glass/reinforced/tram
+	name = "tram bridge"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
+	plane = GAME_PLANE
 	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram

@@ -1572,7 +1572,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/right)
 "aIA" = (
 /obj/structure/disposalpipe/segment{
@@ -2160,7 +2160,7 @@
 "aVm" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/center)
 "aVp" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -6310,7 +6310,7 @@
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/left)
 "cqy" = (
 /obj/machinery/firealarm/directional/north,
@@ -18753,7 +18753,7 @@
 /area/station/security/warden)
 "gNN" = (
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/center)
 "gNS" = (
 /obj/machinery/door/firedoor,
@@ -20848,7 +20848,7 @@
 /area/station/maintenance/solars/starboard)
 "hDg" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/right)
 "hDz" = (
 /obj/structure/chair/stool/directional/south,
@@ -29551,7 +29551,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "kHn" = (
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/left)
 "kHr" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -29662,7 +29662,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/center)
 "kJh" = (
 /obj/structure/disposalpipe/trunk{
@@ -32280,7 +32280,7 @@
 /area/station/medical/medbay/lobby)
 "lDJ" = (
 /obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/right)
 "lDK" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
@@ -32463,7 +32463,7 @@
 /area/lavaland/surface)
 "lHX" = (
 /obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/left)
 "lIs" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -33359,7 +33359,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/fluff/tram_rail/floor,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/center)
 "lZw" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -35546,7 +35546,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/right)
 "mKY" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -38901,7 +38901,7 @@
 "nXn" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/right)
 "nXp" = (
 /obj/structure/floodlight_frame,
@@ -40858,7 +40858,7 @@
 "oLj" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/left)
 "oLl" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -48288,7 +48288,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "rpf" = (
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/right)
 "rpy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50252,7 +50252,7 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
 "rUp" = (
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/center)
 "rUu" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
@@ -55497,7 +55497,7 @@
 /area/station/commons/toilet)
 "tTB" = (
 /obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/center)
 "tTJ" = (
 /obj/structure/railing{
@@ -57702,7 +57702,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/left)
 "uHb" = (
 /obj/machinery/photocopier,
@@ -66220,7 +66220,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/left)
 "xMP" = (
 /obj/machinery/door/airlock/external{
@@ -67090,7 +67090,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
-/turf/open/floor/catwalk_floor/tram,
+/turf/open/floor/glass/reinforced/tram,
 /area/station/hallway/primary/tram/center)
 "ycK" = (
 /obj/machinery/door/window/left/directional/south{
