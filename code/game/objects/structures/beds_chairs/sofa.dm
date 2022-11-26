@@ -58,6 +58,7 @@
 	icon_state = "sofacorner"
 
 COLORED_SOFA(/obj/structure/chair/sofa, brown, SOFA_BROWN)
+COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 
 // Original icon ported from Eris(?) and updated to work here.
 /obj/structure/chair/sofa/corp
