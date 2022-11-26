@@ -5,7 +5,7 @@
 
 /datum/unit_test/barsigns_icon/Run()
 	var/obj/structure/sign/barsign_type = /obj/structure/sign/barsign
-	var/barsign_icon = (barsign_type.icon)
+	var/barsign_icon = initial(barsign_type.icon)
 
 	// Check every datum real bar sign
 	for(var/sign_type in (subtypesof(/datum/barsign) - /datum/barsign/hiddensigns))
