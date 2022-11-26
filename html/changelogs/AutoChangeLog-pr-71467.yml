@@ -1,0 +1,7 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - bugfix: "PDAs (and by extension, modular computers) now can see the ID section at the top of their main screen again, which means that PDAs can have IDs imprinted on them again."
+  - bugfix: "Fixes the ID section not displaying anything when there wasn't any ID inserted in it, even if it had an imprinted name and job."
+  - bugfix: "Fixes the \"Eject ID\" and \"Imprint ID\" buttons not being disabled when there's no ID in the computer/PDA."
+  - bugfix: "There's no longer any empty () by in the \"ID Name\" and \"Assignment\" fields of the ID section of computers when there's no ID in them."
