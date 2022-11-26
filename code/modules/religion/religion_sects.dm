@@ -318,6 +318,7 @@
 	alignment = ALIGNMENT_NEUT
 	invalidating_qualities = TRAIT_GENELESS
 	candle_overlay = FALSE
+	rites_list = list(/datum/religion_rites/nullrod_transformation)
 
 /datum/religion_sect/burden/on_conversion(mob/living/carbon/human/new_convert)
 	..()

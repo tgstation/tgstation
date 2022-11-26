@@ -6,6 +6,8 @@
 	var/fade_out_time = 0.5 SECONDS
 	var/list/images = list()
 	var/static/list/saved_appearances = list()
+	var/static/list/allowed_paths
+	var/static/list/black_white_matrix = list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
 	COOLDOWN_DECLARE(cooldown_last)
 
 /datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time)
@@ -13,6 +15,8 @@
 	var/mob/echolocator = parent
 	if(!istype(echolocator))
 		return COMPONENT_INCOMPATIBLE
+	if(!allowed_paths)
+		allowed_paths = typecacheof(list(/turf/closed, /obj, /mob/living))
 	if(!isnull(echo_range))
 		src.echo_range = echo_range
 	if(!isnull(cooldown_time))
@@ -46,7 +50,7 @@
 	for(var/atom/seen_atom as anything in seen)
 		if(seen_atom.invisibility > echolocator.see_invisible || !seen_atom.alpha)
 			continue
-		if(is_type_in_list(seen_atom, list(/turf/closed, /obj, /mob/living)))
+		if(allowed_paths[seen_atom.type])
 			filtered += seen_atom
 	if(!length(filtered))
 		return
@@ -73,9 +77,10 @@
 	var/mutable_appearance/copied_appearance = new /mutable_appearance()
 	copied_appearance.appearance = input
 	if(istype(input, /obj/machinery/door/airlock)) //i hate you
-		copied_appearance.icon = 'icons/obj/doors/airlocks/station/public.dmi'
-		copied_appearance.icon_state = "closed"
-	copied_appearance.color = list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
+		var/obj/machinery/door/airlock/airlock_input = input
+		copied_appearance.icon = airlock_input.icon
+		copied_appearance.icon_state = airlock_input.density ? "closed" : "open"
+	copied_appearance.color = black_white_matrix
 	copied_appearance.filters += outline_filter(size = 1, color = COLOR_WHITE)
 	copied_appearance.pixel_x = 0
 	copied_appearance.pixel_y = 0

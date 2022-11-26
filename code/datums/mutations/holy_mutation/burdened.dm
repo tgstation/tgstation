@@ -9,7 +9,7 @@
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel burdened!</span>"
 	text_lose_indication = "<span class='warning'>You no longer feel the need to burden yourself!</span>"
-	/// goes from 0 to 6 (but can be beyond 6, just does nothing) and gives rewards. increased by disabling yourself with debuffs
+	/// goes from 0 to 9 (but can be beyond 9, just does nothing) and gives rewards. increased by disabling yourself with debuffs
 	var/burden_level = 0
 
 /datum/mutation/human/burdened/on_acquiring(mob/living/carbon/human/owner)
@@ -112,7 +112,10 @@
 		if(new_eyes.tint < TINT_BLIND) //unless you added unworking eyes (flashlight eyes), this is removing burden
 			update_burden(FALSE)
 		return
-	update_burden(FALSE)//working organ
+	else if(istype(old_organ, /obj/item/organ/internal/appendix))
+		return
+
+	update_burden(increase = FALSE)//working organ
 
 /// Signal to increase burden_level (see update_burden proc) if an organ is removed
 /datum/mutation/human/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
@@ -125,8 +128,11 @@
 		var/obj/item/organ/internal/eyes/old_eyes = old_organ
 		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
 			update_burden(TRUE)
+		return
+	else if(istype(old_organ, /obj/item/organ/internal/appendix))
+		return
 
-	update_burden(TRUE)//lost organ
+	update_burden(increase = TRUE)//lost organ
 
 /// Signal to decrease burden_level (see update_burden proc) if a limb is added
 /datum/mutation/human/burdened/proc/limbs_added_burden(datum/source, obj/item/bodypart/new_limb, special)
@@ -134,7 +140,7 @@
 
 	if(special) //something we don't wanna consider, like instaswapping limbs
 		return
-	update_burden(FALSE)
+	update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a limb is removed
 /datum/mutation/human/burdened/proc/limbs_removed_burden(datum/source, obj/item/bodypart/old_limb, special)
@@ -142,19 +148,19 @@
 
 	if(special) //something we don't wanna consider, like instaswapping limbs
 		return
-	update_burden(TRUE)
+	update_burden(increase = TRUE)
 
 /// Signal to increase burden_level (see update_burden proc) if an addiction is added
 /datum/mutation/human/burdened/proc/addict_added_burden(datum/addiction/new_addiction, datum/mind/addict_mind)
 	SIGNAL_HANDLER
 
-	update_burden(TRUE)
+	update_burden(increase = TRUE)
 
 /// Signal to decrease burden_level (see update_burden proc) if an addiction is removed
 /datum/mutation/human/burdened/proc/addict_removed_burden(datum/addiction/old_addiction, datum/mind/nonaddict_mind)
 	SIGNAL_HANDLER
 
-	update_burden(FALSE)
+	update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a mutation is added
 /datum/mutation/human/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type, class)
@@ -163,7 +169,7 @@
 	if(class == MUT_OTHER) //getting a mutation can give a mutation as a reward, which in turn triggers this, which then rewards a mutation, which in turn...
 		return
 	if(initial(mutation_type.quality) == NEGATIVE)
-		update_burden(TRUE)
+		update_burden(increase = TRUE)
 
 /// Signal to decrease burden_level (see update_burden proc) if a mutation is removed
 /datum/mutation/human/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type)
@@ -172,18 +178,18 @@
 	if(class == MUT_OTHER) //see above
 		return
 	if(initial(mutation_type.quality) == NEGATIVE)
-		update_burden(FALSE)
+		update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a trauma is added
 /datum/mutation/human/burdened/proc/trauma_added_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_added)
 	SIGNAL_HANDLER
 
 	if(istype(trauma_added, /datum/brain_trauma/severe))
-		update_burden(TRUE)
+		update_burden(increase = TRUE)
 
 /// Signal to decrease burden_level (see update_burden proc) if a trauma is removed
 /datum/mutation/human/burdened/proc/trauma_removed_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_removed)
 	SIGNAL_HANDLER
 
 	if(istype(trauma_removed, /datum/brain_trauma/severe))
-		update_burden(FALSE)
+		update_burden(increase = FALSE)

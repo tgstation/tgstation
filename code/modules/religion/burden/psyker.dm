@@ -5,7 +5,7 @@
 
 /obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
 	if(!istype(inserted_into.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
-		return
+		return FALSE
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation)
 
@@ -46,9 +46,6 @@
 	if(old_eyes)
 		qdel(old_eyes)
 
-/atom/movable/screen/fullscreen/echo
-	icon_state = "echo"
+/datum/religion_rites/nullrod_transformation
 
-/atom/movable/screen/fullscreen/warped
-	plane = GRAVITY_PULSE_PLANE
-	icon_state = "screen_warp"
+/obj/item/gun/ballistic/revolver/chaplain
