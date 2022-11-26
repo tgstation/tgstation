@@ -161,10 +161,11 @@
 
 	overlay_list += appearance
 
-///If you need to change an external_organ for simple one-offs, use this. Accessory's usually look something like "Big Firemoth Wings" or "Rosegarden Bushmaster"
-///Don't pass names straight into this, fetch them from the sprite_accessory datum
-/obj/item/organ/external/proc/simple_change_sprite(accessory_name)
-	set_sprite(accessory_name)
+///If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something
+/obj/item/organ/external/proc/simple_change_sprite(accessory_type)
+	var/datum/sprite_accessory/typed_accessory = accessory_type //we only take types for maintainability
+
+	set_sprite(initial(typed_accessory.name))
 
 	if(owner) //are we in a person?
 		owner.update_body_parts()
@@ -173,8 +174,10 @@
 	else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
 		get_overlays(list(), image_layer = use_mob_sprite_as_obj_sprite) //both fetches and updates our organ sprite, although we only update
 
-///Change our accessory sprite, using the accesssory name. Name's usually look something like "Big Firemoth Wings" or "Rosegarden Bushmaster"
+///Change our accessory sprite, using the accesssory name. If you need to change the sprite for something, use simple_change_sprite()
 /obj/item/organ/external/proc/set_sprite(accessory_name)
+	PRIVATE_PROC(TRUE)
+
 	stored_feature_id = accessory_name
 	sprite_datum = get_sprite_datum(accessory_name)
 	if(!sprite_datum && accessory_name)
@@ -346,8 +349,8 @@
 
 	///Are we burned?
 	var/burnt = FALSE
-	///Store our old sprite here for if our antennae wings are healed
-	var/original_sprite = ""
+	///Store our old datum here for if our antennae are healed
+	var/original_sprite_datum
 
 /obj/item/organ/external/antennae/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
@@ -378,8 +381,8 @@
 
 /obj/item/organ/external/antennae/proc/burn_antennae()
 	burnt = TRUE
-	original_sprite = sprite_datum.name
-	set_sprite("Burnt Off")
+	original_sprite_datum = sprite_datum.name
+	simple_change_sprite(/datum/sprite_accessory/moth_antennae/burnt_off)
 
 ///heal our antennae back up!!
 /obj/item/organ/external/antennae/proc/heal_antennae(datum/source, heal_flags)
@@ -390,7 +393,7 @@
 
 	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
 		burnt = FALSE
-		set_sprite(original_sprite)
+		simple_change_sprite(original_sprite_datum)
 
 ///The leafy hair of a podperson
 /obj/item/organ/external/pod_hair
