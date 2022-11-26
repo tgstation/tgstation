@@ -57,7 +57,7 @@
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		tram.collision_lethality = original_lethality
 
-	priority_announce("We've successfuly reset the software of the tram, normal operations are now resuming. Sorry for the inconvienence.", "CentCom Engineering Division")
+	priority_announce("We've successfully reset the software of the tram, normal operations are now resuming. Sorry for any inconvienence this may have caused. We hope you have a good rest of your shift.", "CentCom Engineering Division")
 
 #undef TRAM_MALFUNCTION_TIME_UPPER
 #undef TRAM_MALFUNCTION_TIME_LOWER
