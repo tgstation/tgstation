@@ -129,14 +129,16 @@
 	..()
 	var/altar_turf = get_turf(religious_tool)
 	var/blessing = pick(
-					/obj/item/organ/cyberimp/arm/surgery,
-					/obj/item/organ/cyberimp/eyes/hud/diagnostic,
-					/obj/item/organ/cyberimp/eyes/hud/medical,
-					/obj/item/organ/cyberimp/mouth/breathing_tube,
-					/obj/item/organ/cyberimp/chest/thrusters,
-					/obj/item/organ/eyes/robotic/glow)
+		/obj/item/organ/internal/cyberimp/arm/surgery,
+		/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
+		/obj/item/organ/internal/cyberimp/eyes/hud/medical,
+		/obj/item/organ/internal/cyberimp/mouth/breathing_tube,
+		/obj/item/organ/internal/cyberimp/chest/thrusters,
+		/obj/item/organ/internal/eyes/robotic/glow,
+	)
 	new blessing(altar_turf)
 	return TRUE
+
 /**** Pyre God ****/
 
 ///apply a bunch of fire immunity effect to clothing
@@ -334,7 +336,7 @@
 	user.emote("laughs")
 	ADD_TRAIT(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation")
 	//addiction sends some nasty mood effects but we want the maint adaption to be enjoyed like a fine wine
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "maint_adaptation", /datum/mood_event/maintenance_adaptation)
+	user.add_mood_event("maint_adaptation", /datum/mood_event/maintenance_adaptation)
 	if(iscarbon(user))
 		var/mob/living/carbon/vomitorium = user
 		vomitorium.vomit()
@@ -356,7 +358,7 @@
 	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
 		to_chat(user, span_warning("You need to adapt to maintenance first."))
 		return FALSE
-	var/obj/item/organ/eyes/night_vision/maintenance_adapted/adapted = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/adapted = user.getorganslot(ORGAN_SLOT_EYES)
 	if(adapted && istype(adapted))
 		to_chat(user, span_warning("Your eyes are already adapted!"))
 		return FALSE
@@ -364,12 +366,12 @@
 
 /datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/organ/eyes/oldeyes = user.getorganslot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/internal/eyes/oldeyes = user.getorganslot(ORGAN_SLOT_EYES)
 	to_chat(user, span_warning("You feel your eyes adapt to the darkness!"))
 	if(oldeyes)
 		oldeyes.Remove(user, special = TRUE)
 		qdel(oldeyes)//eh
-	var/obj/item/organ/eyes/night_vision/maintenance_adapted/neweyes = new
+	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/neweyes = new
 	neweyes.Insert(user, special = TRUE)
 
 /datum/religion_rites/adapted_food
@@ -444,7 +446,7 @@
 
 /datum/religion_rites/sparring_contract/perform_rite(mob/living/user, atom/religious_tool)
 	for(var/obj/item/paper/could_contract in get_turf(religious_tool))
-		if(could_contract.get_info_length()) //blank paper pls
+		if(could_contract.get_total_length()) //blank paper pls
 			continue
 		contract_target = could_contract
 		return ..()
