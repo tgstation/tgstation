@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
-import { sortBy } from 'common/collections';
+import { filter, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon } from '../components';
 import { Window } from '../layouts';
@@ -77,8 +77,9 @@ type Diet = {
 type Data = {
   // Dynamic
   busy: BooleanLike;
-  compact: BooleanLike;
-  craftable_only: BooleanLike;
+  display_compact: BooleanLike;
+  display_craftable_only: BooleanLike;
+  craftability: Record<string, BooleanLike>;
   // Static
   recipes: Recipe[];
   categories: string[];
@@ -89,7 +90,6 @@ type Data = {
 export const PersonalCooking = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const [sortField, setSortField] = useLocalState(context, 'sortField', 'name');
   const [activeCategory, setCategory] = useLocalState(
     context,
     'category',
@@ -102,23 +102,30 @@ export const PersonalCooking = (props, context) => {
   );
   const [typeMode, setTypeMode] = useLocalState(context, 'typeMode', false);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
-  const searchCategory = createSearch(
-    activeCategory,
-    (item: Recipe) => item.category
-  );
-  const searchType = createSearch(
-    activeType,
-    (item: Recipe) => item.foodtypes?.join() // Some foods don't have types
-  );
-  const recipes_filtered =
-    searchText.length > 0
-      ? data.recipes.filter(searchName)
-      : typeMode
-        ? data.recipes.filter(searchType)
-        : data.recipes.filter(searchCategory);
-  const recipes = flow([
-    sortBy((item: Recipe) => item[sortField as keyof Recipe]),
-  ])(recipes_filtered || []);
+  const craftabilityByRef = data.craftability;
+  let recipes = flow([
+    filter<Recipe>(
+      (recipe) =>
+        // If craftable only is selected, then filter by craftability
+        (!data.display_craftable_only ||
+          Boolean(craftabilityByRef[recipe.ref])) &&
+        // Ignore categories and types when searching
+        (searchText.length > 0 ||
+          // Is type mode and the active type matches
+          (typeMode &&
+            (activeType === '' || recipe.foodtypes?.includes(activeType))) ||
+          // Is category mode and the active categroy matches
+          (!typeMode &&
+            (activeCategory === '' || recipe.category === activeCategory)))
+    ),
+    sortBy<Recipe>((recipe) => [
+      -Number(craftabilityByRef[recipe.ref]),
+      recipe.name,
+    ]),
+  ])(data.recipes);
+  if (searchText.length > 0) {
+    recipes = recipes.filter(searchName);
+  }
   const categories = data.categories.sort();
   const foodtypes = data.foodtypes.sort();
   const displayLimit = searchText.length > 0 ? 30 : 299;
@@ -139,16 +146,49 @@ export const PersonalCooking = (props, context) => {
               <Tabs mt={1} fluid textAlign="center">
                 <Tabs.Tab
                   selected={!typeMode}
-                  onClick={(e) => setTypeMode(false)}>
+                  onClick={() => {
+                    setTypeMode(false);
+                    setCategory(
+                      data.display_craftable_only ? '' : data.categories[0]
+                    );
+                  }}>
                   Category
                 </Tabs.Tab>
                 <Tabs.Tab
                   selected={typeMode}
-                  onClick={(e) => setTypeMode(true)}>
+                  onClick={() => {
+                    setTypeMode(true);
+                    setType(
+                      data.display_craftable_only ? '' : data.foodtypes[0]
+                    );
+                  }}>
                   Type
                 </Tabs.Tab>
               </Tabs>
               <Tabs vertical>
+                {!!data.display_craftable_only && (
+                  <Tabs.Tab
+                    selected={
+                      searchText.length === 0 &&
+                      ((typeMode && activeType === '') ||
+                        (!typeMode && activeCategory === ''))
+                    }
+                    onClick={(e) => {
+                      setType('');
+                      setCategory('');
+                      document.getElementById('content').scrollTop = 0;
+                      if (searchText.length > 0) {
+                        setSearchText('');
+                      }
+                    }}>
+                    <Stack>
+                      <Stack.Item width="14px" textAlign="center">
+                        <Icon name="utensils" />
+                      </Stack.Item>
+                      <Stack.Item grow>Can make</Stack.Item>
+                    </Stack>
+                  </Tabs.Tab>
+                )}
                 {typeMode
                   ? foodtypes.map((foodtype) => (
                     <Tabs.Tab
@@ -191,14 +231,24 @@ export const PersonalCooking = (props, context) => {
               <hr style={{ 'border-color': '#111' }} />
               <Button.Checkbox
                 fluid
-                content="Craftable only"
-                checked={data.craftable_only}
-                onClick={() => act('toggle_craftable_only')}
+                content="Can make only"
+                checked={data.display_craftable_only}
+                onClick={() => {
+                  data.display_craftable_only = !data.display_craftable_only;
+                  data.display_craftable_only
+                    ? typeMode
+                      ? setType('')
+                      : setCategory('')
+                    : typeMode
+                      ? setType(data.foodtypes[0])
+                      : setCategory(data.categories[0]);
+                  act('toggle_recipes');
+                }}
               />
               <Button.Checkbox
                 fluid
                 content="Compact list"
-                checked={data.compact}
+                checked={data.display_compact}
                 onClick={() => act('toggle_compact')}
               />
             </Section>
@@ -208,10 +258,21 @@ export const PersonalCooking = (props, context) => {
               recipes
                 .slice(0, displayLimit)
                 .map((item) =>
-                  data.compact ? (
-                    <RecipeContentCompact key item={item} />
+                  data.display_compact ? (
+                    <RecipeContentCompact
+                      key
+                      item={item}
+                      craftable={Boolean(craftabilityByRef[item.ref])}
+                      busy={data.busy}
+                    />
                   ) : (
-                    <RecipeContent key item={item} diet={data.diet} />
+                    <RecipeContent
+                      key
+                      item={item}
+                      diet={data.diet}
+                      craftable={Boolean(craftabilityByRef[item.ref])}
+                      busy={data.busy}
+                    />
                   )
                 )
             ) : (
@@ -259,8 +320,8 @@ const RecipeContentCompact = (props, context) => {
   const { act } = useBackend<Data>(context);
   const item = props.item;
   return (
-    <Section>
-      <Stack>
+    <Section my={0.5}>
+      <Stack my={-0.75}>
         <Stack.Item>
           <Box
             className={classes([
@@ -275,7 +336,7 @@ const RecipeContentCompact = (props, context) => {
               <Box bold mb={0.5} style={{ 'text-transform': 'capitalize' }}>
                 {item.name}
               </Box>
-              <Box style={{ 'text-transform': 'capitalize' }}>
+              <Box style={{ 'text-transform': 'capitalize' }} color={'gray'}>
                 {Array.from(
                   item.reqs.map((i) =>
                     i.is_reagent
@@ -289,11 +350,13 @@ const RecipeContentCompact = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               <Button
+                my={0.3}
                 lineHeight={2.5}
                 align="center"
                 content="Make"
-                disabled
-                icon="utensils"
+                disabled={!props.craftable || props.busy}
+                icon={props.busy ? 'circle-notch' : 'utensils'}
+                iconSpin={props.busy ? 1 : 0}
                 onClick={() =>
                   act('make', {
                     recipe: item.ref,
@@ -344,8 +407,9 @@ const RecipeContent = (props, context) => {
                 lineHeight={2.5}
                 align="center"
                 content="Make"
-                disabled
-                icon="utensils"
+                disabled={!props.craftable || props.busy}
+                icon={props.busy ? 'circle-notch' : 'utensils'}
+                iconSpin={props.busy ? 1 : 0}
                 onClick={() =>
                   act('make', {
                     recipe: item.ref,
