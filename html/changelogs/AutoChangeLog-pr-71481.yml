@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes:
-  - bugfix: "fixed armblades and digitigrade legs not showing up in the limb grower"
