@@ -291,6 +291,7 @@ const ObjectiveFunction = (
       progressionReward={objective.progression_reward}
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
+      HideTcRep={objective.final_objective}
       finalObjective={objective.final_objective}
       canAbort={
         !!handleAbort &&
@@ -342,6 +343,7 @@ type ObjectiveElementProps = {
   originalProgression: number;
   telecrystalPenalty: number;
   grow: boolean;
+  HideTcRep: BooleanLike;
   finalObjective: BooleanLike;
   canAbort: BooleanLike;
 
@@ -364,6 +366,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     canAbort,
     originalProgression,
     grow,
+    HideTcRep,
     finalObjective,
     ...rest
   } = props;
@@ -419,9 +422,9 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         </Box>
       </Flex.Item>
       <Flex.Item grow={grow} basis="content">
-        <Box className="UplinkObjective__Content" height="100%">
+        <Box className="UplinkObjective__Content" height="100%" mb={HideTcRep ? 6 : 0}>
           <Box>{description}</Box>
-          {!finalObjective && (
+          {!HideTcRep && (
             <Box mt={1}>
               Failing this objective will deduct {telecrystalPenalty} TC.
             </Box>
@@ -436,6 +439,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         </Box>
       </Flex.Item>
       <Flex.Item>
+      {!HideTcRep && (
         <Box className="UplinkObjective__Footer">
           <Stack vertical>
             <Stack.Item>
@@ -451,9 +455,9 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                   py={0.5}
                   width="100%"
                   textAlign="center">
-                  {finalObjective ? "　" : telecrystalReward + " TC,"}
-                    <Box ml={1} as="span" color={finalObjective ? "transparent" : "white"}>
-                      {finalObjective ? "" : calculateProgression(progressionReward) + " Reputation"}
+                  {telecrystalReward} TC,
+                    <Box ml={1} as="span">
+                      {calculateProgression(progressionReward)} Reputation
                       {Math.abs(progressionDiff) > 10 && (
                         <Tooltip
                           content={
@@ -539,6 +543,7 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
             )}
           </Stack>
         </Box>
+      )}
       </Flex.Item>
     </Flex>
   );

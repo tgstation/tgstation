@@ -18,13 +18,12 @@ export class PrimaryObjectiveMenu extends Component<
     } = this.props;
     const boxrep = getReputation(Infinity);
     return (
-      <Section>
-        <Fragment>
+      <Section fill={1}>
         <Section>
           <Box mt={3} mb={3} bold fontSize={1.2} align="center" color="white">
             {'Agent, your Primary Objectives are as follows. Complete these at all costs.'}
           </Box>
-          <Box mt={3} mb={3} bold fontSize={1.2} align="center" color="white">
+          <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
             {'Completing on Secondary Objectives may allow you to aquire additional equipment.'}
           </Box>
         </Section>
@@ -38,7 +37,6 @@ export class PrimaryObjectiveMenu extends Component<
                   \\Final Objective confirmed complete. <br/>
                   \\Your work is done here, agent.<br/><br/>
                   CONNECTION CLOSED_
-                  
                 </Box>
               </Dimmer>
             </Fragment>
@@ -54,13 +52,12 @@ export class PrimaryObjectiveMenu extends Component<
               progressionReward={0}
               objectiveState={""}
               originalProgression={""}
-              finalObjective={1}
+              HideTcRep={1}
               canAbort={""}
               grow={0}
             />
           ))}
         </Section>
-        </Fragment>
       </Section>
     );
   }

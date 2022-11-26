@@ -168,7 +168,7 @@
 	if(uplink_handler.has_objectives)
 		var/list/primary_objectives = list()
 		for(var/datum/objective/task as anything in uplink_handler.traitor_datum?.objectives)
-				primary_objectives += task.explanation_text
+			primary_objectives += task.explanation_text
 		var/list/potential_objectives = list()
 		for(var/index in 1 to uplink_handler.potential_objectives.len)
 			var/datum/traitor_objective/objective = uplink_handler.potential_objectives[index]

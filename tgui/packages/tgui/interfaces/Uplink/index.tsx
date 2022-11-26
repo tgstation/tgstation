@@ -47,8 +47,10 @@ type UplinkData = {
 
   has_objectives: BooleanLike;
   has_progression: BooleanLike;
-  primary_objectives;
-  completed_final_objective;
+  primary_objectives: {
+    [key: number]: string;
+  };
+  completed_final_objective: string;
   potential_objectives: Objective[];
   active_objectives: Objective[];
   maximum_active_objectives: number;
