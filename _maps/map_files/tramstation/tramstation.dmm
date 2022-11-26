@@ -572,7 +572,7 @@
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
 "akP" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/vault{
 	base_icon_state = "tram2";
@@ -720,7 +720,6 @@
 /obj/structure/lattice/catwalk,
 /obj/merge_conflict_marker{
 	name = "---Merge Conflict Marker---";
-	
 	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/structure/fluff/tram_rail/floor{
@@ -4595,12 +4594,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
-"bNt" = (
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/center)
 "bNz" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmospherics_engine)
@@ -11558,7 +11551,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "eea" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/vault{
 	base_icon_state = "tram2";
@@ -13043,9 +13036,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
-"eGt" = (
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/right)
 "eGS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
@@ -13403,7 +13393,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "eOR" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/vault{
@@ -17422,7 +17412,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "goO" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/vault{
@@ -18777,7 +18767,7 @@
 /area/station/security/warden)
 "gNN" = (
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/glass/reinforced,
+/turf/open/floor/catwalk_floor/tram,
 /area/station/hallway/primary/tram/center)
 "gNS" = (
 /obj/machinery/door/firedoor,
@@ -20400,7 +20390,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "htf" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
@@ -20609,9 +20599,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/service)
-"hyg" = (
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/center)
 "hyE" = (
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -21562,13 +21549,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
-"hQO" = (
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/center)
 "hQU" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
@@ -23120,7 +23100,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "iuE" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Eastern Tram Bridge 1"
@@ -26499,7 +26479,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/command)
 "jFk" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Eastern Tram Bridge 2"
@@ -29068,7 +29048,7 @@
 /turf/open/floor/iron,
 /area/station/security/courtroom)
 "kxm" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Western Tram Bridge 1"
@@ -29125,13 +29105,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
-"kyL" = (
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/left)
 "kyU" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -31985,7 +31958,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/solars/port/aft)
 "lxI" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
 /turf/open/floor/vault{
@@ -32274,12 +32247,6 @@
 "lCy" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/secondary/exit)
-"lCC" = (
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/right)
 "lCE" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/closet/emcloset,
@@ -32523,7 +32490,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "lJf" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
@@ -32841,7 +32808,7 @@
 /turf/open/openspace,
 /area/station/hallway/primary/tram/left)
 "lOh" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /turf/open/floor/vault{
 	base_icon_state = "tram2";
@@ -38316,9 +38283,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"nJX" = (
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/left)
 "nKb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50611,13 +50575,6 @@
 /obj/structure/plasticflaps/opaque,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"saN" = (
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1;
-	layer = 601
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/right)
 "saW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -52521,12 +52478,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
-"sOJ" = (
-/obj/structure/fluff/tram_rail/floor{
-	layer = 601
-	},
-/turf/open/floor/glass/reinforced,
-/area/station/hallway/primary/tram/left)
 "sOU" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52678,7 +52629,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "sQI" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Western Tram Bridge 2"
@@ -56737,7 +56688,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/radshelter/civil)
 "unK" = (
-/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
@@ -159108,13 +159059,13 @@ dDG
 dDG
 dOi
 klT
-nJX
-nJX
-sOJ
+kHn
+kHn
+lHX
 wEr
-kyL
-nJX
-nJX
+uGZ
+kHn
+kHn
 klT
 aRN
 dDG
@@ -159366,12 +159317,12 @@ dDG
 dOi
 pdW
 gNN
-hyg
-bNt
+rUp
+tTB
 owO
-hQO
-hyg
-hyg
+ycw
+rUp
+rUp
 pdW
 aRN
 dDG
@@ -171187,12 +171138,12 @@ dhe
 dDG
 dOi
 pdW
-hyg
-hyg
-bNt
+rUp
+rUp
+tTB
 owO
-hQO
-hyg
+ycw
+rUp
 gNN
 pdW
 aRN
@@ -171444,13 +171395,13 @@ dhe
 dDG
 dOi
 pev
-eGt
-eGt
-lCC
+rpf
+rpf
+lDJ
 dfk
-saN
-eGt
-eGt
+aIu
+rpf
+rpf
 pev
 aRN
 dDG

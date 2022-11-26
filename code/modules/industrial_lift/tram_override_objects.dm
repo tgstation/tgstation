@@ -24,15 +24,10 @@
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
 /turf/open/floor/catwalk_floor/tram
-	icon_state = "maint_above"
+	icon_state = "tram_above"
 	name = "tram catwalk"
 	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
-	layer = TRAM_FLOOR_LAYER
-
-/obj/machinery/power/shuttle_engine/propulsion/tram
-	//if this has opacity, then every movement of the tram causes lighting updates
-	//DO NOT put something on the tram roundstart that has opacity, it WILL overload SSlighting
-	opacity = FALSE
+	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'
