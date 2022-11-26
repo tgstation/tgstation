@@ -1,7 +1,6 @@
-/datum/component/modular_computer_host
-
-	dupe_mode = COMPONENT_DUPE_UNIQUE
-	dupe_type = /datum/component/modular_computer_host // TODO: planning on adding subtypes for pdas maybe
+/datum/modular_computer_host
+	///Our object that holds us
+	var/obj/physical
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
@@ -75,8 +74,6 @@
 	///The job title of the stored ID card
 	var/saved_job
 
-	///The 'computer' itself, as an obj. Primarily used for Adjacent() and UI visibility checks, especially for computers.
-	var/atom/physical
 	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
 	var/steel_sheet_cost = 5
 
@@ -90,8 +87,14 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
-/datum/component/modular_computer_host/Initialize(...)
+/datum/modular_computer_host/New(holder)
 	. = ..()
+
+	if(!isobj(holder))
+		stack_trace("We were attaching a modular computer host to a non-obj! What the hell? [holder]")
+		qdel(src)
+		return
+
 	physical = holder
 
 	if(inserted_disk)
@@ -101,17 +104,18 @@
 
 	add_messenger()
 	install_default_programs()
-	register_signals(physical)
 
-/datum/component/modular_computer_host/Destroy(force, ...)
-	. = ..()
+	// TODO: replace this with new subsystem
+	START_PROCESSING(SSobj, src)
+
+/datum/modular_computer_host/Destroy(force, ...)
 	wipe_program(forced = TRUE)
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
 		idle.kill_program(TRUE)
+
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
-	remove_messenger()
 
 	if(istype(inserted_disk))
 		QDEL_NULL(inserted_disk)
@@ -120,8 +124,29 @@
 	if(computer_id_slot)
 		QDEL_NULL(computer_id_slot)
 
+	remove_messenger()
+
+	STOP_PROCESSING(SSobj, src)
+
+	return ..()
+
+/datum/modular_computer_host/proc/register_signals()
+	RegisterSignal(physical, COMSIG_ATOM_EMAG_ACT, PROC_REF(do_emag))
+	RegisterSignal(physical, COMSIG_ATOM_BREAK, PROC_REF(do_integrity_failure))
+	RegisterSignal(physical, COMSIG_ATOM_UI_INTERACT, PROC_REF(do_interact))
+	RegisterSignal(physical, COMSIG_CLICK_ALT, PROC_REF(do_altclick))
+	RegisterSignal(physical, COMSIG_PARENT_ATTACKBY, PROC_REF(do_attackby))
+
+/datum/modular_computer_host/UnregisterFromParent()
+	UnregisterSignal(physical, list(
+		COMSIG_ATOM_EMAG_ACT,
+		COMSIG_ATOM_BREAK,
+		COMSIG_ATOM_UI_INTERACT,
+		COMSIG_PARENT_ATTACKBY,
+	))
+
 // Process currently calls handle_power(), may be expanded in future if more things are added.
-/datum/component/modular_computer_host/process(delta_time)
+/datum/modular_computer_host/process(delta_time)
 	if(!powered_on) // The computer is turned off
 		last_power_usage = 0
 		return
@@ -148,17 +173,19 @@
 	handle_power(delta_time) // Handles all computer power interaction
 	//check_update_ui_need()
 
-/datum/component/modular_computer_host/proc/get_cell()
+///Returns the reference to our internal cell, if we are allowed to have one in our context
+/datum/modular_computer_host/proc/get_cell()
 	return internal_cell
 
-/datum/component/modular_computer_host/proc/install_default_programs()
+///Sets up all our default starting programs, but not your starting programs. Install those manually.
+/datum/modular_computer_host/proc/install_default_programs()
 	SHOULD_CALL_PARENT(FALSE)
-	for(var/programs in default_programs + starting_programs)
+	for(var/programs in default_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
-/datum/component/modular_computer_host/proc/get_ntnet_status(specific_action = 0)
+/datum/modular_computer_host/proc/get_ntnet_status(specific_action = 0)
 	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
 		return NTNET_NO_SIGNAL
 
@@ -180,21 +207,21 @@
 	return NTNET_NO_SIGNAL
 
 ///Wipes the computer's current program. Doesn't handle any of the niceties around doing this
-/datum/component/modular_computer_host/proc/wipe_program(forced)
+/datum/modular_computer_host/proc/wipe_program(forced)
 	if(!active_program)
 		return
 	active_program.kill_program(forced)
 	active_program = null
 
 // Relays kill program request to currently active program. Use this to quit current program.
-/datum/component/modular_computer_host/proc/kill_program(forced = FALSE)
+/datum/modular_computer_host/proc/kill_program(forced = FALSE)
 	wipe_program(forced)
 	var/mob/user = usr
 	if(user && istype(user))
 		//Here to prevent programs sleeping in destroy
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) // Re-open the UI on this computer. It should show the main screen now.
 
-/datum/component/modular_computer_host/proc/open_program(mob/user, datum/computer_file/program/program)
+/datum/modular_computer_host/proc/open_program(mob/user, datum/computer_file/program/program)
 	if(program.computer != src)
 		CRASH("tried to open program that does not belong to this computer")
 
@@ -229,10 +256,10 @@
 
 	return TRUE
 
-/datum/component/modular_computer_host/proc/nonfunctional()
+/datum/modular_computer_host/proc/nonfunctional()
 	return physical.atom_integrity <= physical.integrity_failure * physical.max_integrity
 
-/datum/component/modular_computer_host/proc/turn_on(mob/user, open_ui = TRUE)
+/datum/modular_computer_host/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(nonfunctional())
 		if(issynth)
@@ -259,7 +286,7 @@
 			to_chat(user, span_warning("You press the power button but \the [src] does not respond."))
 		return FALSE
 
-/datum/component/modular_computer_host/proc/shutdown_computer(loud = 1)
+/datum/modular_computer_host/proc/shutdown_computer(loud = 1)
 	kill_program(forced = TRUE)
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(forced = TRUE)
@@ -269,18 +296,15 @@
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	powered_on = FALSE
 
-/datum/component/modular_computer_host/proc/register_signals(atom/holder)
-	RegisterSignal(holder, COMSIG_ATOM_EMAG_ACT, PROC_REF(do_emag))
-	RegisterSignal(holder, COMSIG_ATOM_BREAK, PROC_REF(do_integrity_failure))
-	RegisterSignal(holder, COMSIG_PARENT_ATTACKBY, PROC_REF(do_attackby))
-
-/datum/component/modular_computer_host/proc/add_messenger()
+///Adds ourself to the global list of tablet messengers. TODO: Move this to the fucking subtype!!
+/datum/modular_computer_host/proc/add_messenger()
 	GLOB.TabletMessengers += src
 
-/datum/component/modular_computer_host/proc/remove_messenger()
+///Removes ourselves to the global list of tablet messengers. TODO: Move this to the fucking subtype!!
+/datum/modular_computer_host/proc/remove_messenger()
 	GLOB.TabletMessengers -= src
 
-/datum/component/modular_computer_host/proc/do_integrity_failure()
+/datum/modular_computer_host/proc/do_integrity_failure()
 	shutdown_computer()
 
 /**
@@ -295,27 +319,29 @@
  * The program calling this proc.
  * The message that the program wishes to display.
  */
-/datum/component/modular_computer_host/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
+/datum/modular_computer_host/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
 	playsound(src, sound, 50, TRUE)
-	visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
+	physical.visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
 
-/datum/component/modular_computer_host/proc/ring(ringtone) // bring bring
+// TODO: Component subtype...
+/datum/modular_computer_host/proc/ring(ringtone) // bring bring
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 	else
 		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	visible_message("*[ringtone]*")
+	physical.visible_message("*[ringtone]*")
 
-/datum/component/modular_computer_host/proc/send_sound()
+/datum/modular_computer_host/proc/send_sound()
 	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
-/datum/component/modular_computer_host/proc/set_flashlight_color(color)
+// TODO: Component subtype...
+/datum/modular_computer_host/proc/set_flashlight_color(color)
 	if(!has_light || !color)
 		return FALSE
 	comp_light_color = color
-	set_light_color(color)
+	physical.set_light_color(color)
 	return TRUE
 
 /**
@@ -325,12 +351,12 @@
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
-/datum/component/modular_computer_host/InsertID(obj/item/card/inserting_id, mob/user)
+/datum/modular_computer_host/proc/insert_id(obj/item/card/inserting_id, mob/user)
 	//all slots taken
-	if(cpu.computer_id_slot)
+	if(computer_id_slot)
 		return FALSE
 
-	cpu.computer_id_slot = inserting_id
+	computer_id_slot = inserting_id
 	if(user)
 		if(!user.transferItemToLoc(inserting_id, src))
 			return FALSE
@@ -339,12 +365,10 @@
 		inserting_id.forceMove(src)
 
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-	if(ishuman(loc))
-		var/mob/living/carbon/human/human_wearer = loc
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_wearer = user
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
-	update_appearance()
-	update_slot_icon()
 	return TRUE
 
 /**
@@ -352,34 +376,32 @@
  * Args:
  * user - The mob trying to remove the ID, if there is one
  */
-/datum/component/modular_computer_host/RemoveID(mob/user)
+/datum/modular_computer_host/proc/remove_card(mob/user)
 	if(!computer_id_slot)
-		return ..()
+		return
 
 	if(user)
 		if(!issilicon(user) && in_range(src, user))
 			user.put_in_hands(computer_id_slot)
-		balloon_alert(user, "removed ID")
+		physical.balloon_alert(user, "removed ID")
 		to_chat(user, span_notice("You remove the card from the card slot."))
 	else
-		computer_id_slot.forceMove(drop_location())
+		computer_id_slot.forceMove(physical.drop_location())
 
 	computer_id_slot = null
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
-	if(ishuman(loc))
-		var/mob/living/carbon/human/human_wearer = loc
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_wearer = user
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
-	update_slot_icon()
-	update_appearance()
 	return TRUE
 
-/datum/component/modular_computer_host/proc/do_emag(mob/user, obj/item/card/emag/card)
+/datum/modular_computer_host/proc/do_emag(mob/user, obj/item/card/emag/card)
+	SIGNAL_HANDLER
+
 	var/newemag = FALSE
 	for(var/datum/computer_file/program/app in stored_files)
-		if(!istype(app))
-			continue
 		if(app.run_emag())
 			newemag = TRUE
 	if(newemag)
@@ -387,17 +409,19 @@
 		return
 	to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
 
-/datum/component/modular_computer_host/proc/do_attackby(obj/item/attacking_item, mob/user, params)
+/datum/modular_computer_host/proc/do_attackby(obj/item/attacking_item, mob/user, params)
+	SIGNAL_HANDLER
+
 	// Check for ID first
-	if(isidcard(attacking_item) && InsertID(attacking_item, user))
-		return
+	if(isidcard(attacking_item) && insert_id(attacking_item, user))
+		return COMPONENT_NO_AFTERATTACK
 
 	// Check for cash next
 	if(computer_id_slot && iscash(attacking_item))
 		var/obj/item/card/id/inserted_id = computer_id_slot.GetID()
 		if(inserted_id)
 			inserted_id.attackby(attacking_item, user) // If we do, try and put that attacking object in
-			return
+			return COMPONENT_NO_AFTERATTACK
 
 	// Inserting a pAI
 	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
@@ -405,7 +429,7 @@
 			return
 		inserted_pai = attacking_item
 		physical.balloon_alert(user, "inserted pai")
-		return
+		return COMPONENT_NO_AFTERATTACK
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(ismachinery(physical))
@@ -422,23 +446,23 @@
 	// Check if any Applications need it
 	for(var/datum/computer_file/item_holding_app as anything in stored_files)
 		if(item_holding_app.application_attackby(attacking_item, user))
-			return
+			return COMPONENT_NO_AFTERATTACK
 
 	if(istype(attacking_item, /obj/item/paper))
 		if(stored_paper >= max_paper)
 			physical.balloon_alert(user, "no more room!")
-			return
+			return COMPONENT_NO_AFTERATTACK
 		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
 			return FALSE
 		physical.balloon_alert(user, "inserted paper")
 		qdel(attacking_item)
 		stored_paper++
-		return
+		return COMPONENT_NO_AFTERATTACK
 	if(istype(attacking_item, /obj/item/paper_bin))
 		var/obj/item/paper_bin/bin = attacking_item
 		if(bin.total_paper <= 0)
 			physical.balloon_alert(user, "empty bin!")
-			return
+			return COMPONENT_NO_AFTERATTACK
 		var/papers_added //just to keep track
 		while((bin.total_paper > 0) && (stored_paper < max_paper))
 			papers_added++
@@ -449,7 +473,7 @@
 		physical.balloon_alert(user, "inserted paper")
 		to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
 		bin.update_appearance()
-		return
+		return COMPONENT_NO_AFTERATTACK
 
 	// Insert a data disk
 	if(istype(attacking_item, /obj/item/computer_disk))
@@ -459,17 +483,37 @@
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 		return
 
-/datum/component/modular_computer_host/proc/do_preattack_secondary()
+// TODO: DEFINITELY NEED A COMPONENT SUBTYPE FOR THIS HERE NOW!!
+/*/datum/modular_computer_host/proc/do_preattack_secondary()
 	if(active_program?.tap(A, user, params))
 		user.do_attack_animation(A) //Emulate this animation since we kill the attack in three lines
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
 		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+	return SECONDARY_ATTACK_CONTINUE_CHAIN*/
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
-/datum/component/modular_computer_host/proc/do_interact(mob/user)
+/datum/modular_computer_host/proc/do_interact(mob/user)
+	SIGNAL_HANDLER
+
 	if(powered_on)
 		ui_interact(user)
 	else
 		turn_on(user)
+
+/datum/modular_computer_host/proc/do_altclick(mob/user)
+	SIGNAL_HANDLER
+
+	if(issilicon(user))
+		return
+	if(!user.canUseTopic(src, be_close = TRUE))
+		return
+
+	if(remove_id(user))
+		return
+
+	if(istype(inserted_pai)) // Remove pAI
+		user.put_in_hands(inserted_pai)
+		physical.balloon_alert(user, "removed pAI")
+		inserted_pai = null
+		return COMPONENT_CANCEL_CLICK_ALT

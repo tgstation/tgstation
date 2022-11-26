@@ -35,26 +35,23 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 
-	cpu = new(src)
-	START_PROCESSING(SSobj, src)
+	cpu = AddComponent(/datum/modular_computer_host)
 
-	set_light_color(cpu.comp_light_color)
-	set_light_range(cpu.comp_light_luminosity)
-	if(cpu.looping_sound)
-		cpu.soundloop = new(src, cpu.powered_on)
-	cpu.UpdateDisplay()
+	//set_light_color(cpu.comp_light_color)
+	//set_light_range(cpu.comp_light_luminosity)
+	//if(cpu.looping_sound)
+	//	cpu.soundloop = new(src, cpu.powered_on)
+	//cpu.UpdateDisplay()
 
 	register_context()
 	init_network_id(NETWORK_TABLETS)
 
 	// TODO: host subtype for PDAs
-	cpu.has_light = TRUE
+	//cpu.has_light = TRUE
 
 	add_item_action(/datum/action/item_action/toggle_computer_light)
 
 /obj/item/modular_computer/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(cpu)
 	return ..()
 
 /obj/item/modular_computer/pre_attack_secondary(atom/A, mob/living/user, params)
@@ -81,19 +78,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/AltClick(mob/user)
 	. = ..()
-	if(issilicon(user))
-		return FALSE
-	if(!user.canUseTopic(src, be_close = TRUE))
-		return FALSE
-
-	if(RemoveID(user))
-		return TRUE
-
-	if(istype(cpu.inserted_pai)) // Remove pAI
-		user.put_in_hands(cpu.inserted_pai)
-		balloon_alert(user, "removed pAI")
-		cpu.inserted_pai = null
-		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()

@@ -45,8 +45,7 @@
 
 /obj/machinery/modular_computer/Initialize(mapload)
 	. = ..()
-	cpu = new(src)
-	cpu.physical = src
+	AddComponent(/datum/modular_computer_host)
 
 /obj/machinery/modular_computer/Destroy()
 	QDEL_NULL(cpu)
@@ -69,7 +68,7 @@
 	set_light(cpu?.enabled ? light_strength : 0)
 
 /obj/machinery/modular_computer/update_icon_state()
-	if(!cpu || !cpu.enabled || !cpu.use_power() || (machine_stat & NOPOWER))
+	if(!cpu || !cpu.powered_on || !cpu.use_power() || (machine_stat & NOPOWER))
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
