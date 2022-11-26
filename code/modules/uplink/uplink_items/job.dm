@@ -286,7 +286,7 @@
 	desc = "Seven rounds of 12g buckshot in a box. Load into shotgun and shoot whoever's killed Pun Pun."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/storage/box/lethalshot
-	cost = 7
+	cost = 4
 	restricted_roles = list(JOB_BARTENDER)
 
 
