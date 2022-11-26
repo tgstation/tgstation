@@ -53,6 +53,10 @@
 	///Did we add the component responsible for spawning sharpnel to this?
 	var/shrapnel_initialized
 
+/obj/item/grenade/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(on_used_as_ingredient))
+
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
@@ -162,6 +166,16 @@
 	if(ismob(loc))
 		var/mob/mob = loc
 		mob.dropItemToGround(src)
+
+/obj/item/grenade/proc/on_used_as_ingredient(datum/source, atom/used_in)
+	SIGNAL_HANDLER
+
+	RegisterSignal(used_in, COMSIG_FOOD_EATEN, PROC_REF(on_eaten_as_ingredient))
+
+/obj/item/grenade/proc/on_eaten_as_ingredient(datum/source, mob/living/target, mob/living/user, bitecount, bitesize)
+	SIGNAL_HANDLER
+
+	detonate()
 
 /obj/item/grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)

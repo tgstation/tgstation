@@ -450,10 +450,6 @@ Behavior that's still missing from this component that original food items had t
 		if(istype(stomach))
 			stomach.after_eat(owner)
 
-
-	for(var/obj/item/grenade/bombger_ingredient in parent)
-		bombger_ingredient.detonate()
-
 	return TRUE
 
 ///Checks whether or not the eater can actually consume the food
