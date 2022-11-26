@@ -281,6 +281,14 @@
 	restricted_roles = list(JOB_CHAPLAIN)
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/box_buckshot
+	name = "Box of Lethals"
+	desc = "Seven rounds of 12g buckshot in a box. Load into shotgun and shoot whoever's killed Pun Pun."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/storage/box/lethalshot
+	cost = 7
+	restricted_roles = list(JOB_BARTENDER)
+
 
 // High progression cost
 
