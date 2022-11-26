@@ -21,17 +21,17 @@
 			this_food.name = "lightly-fried [this_food.name]"
 			this_food.desc += " It's been lightly fried in a deep fryer."
 
-		if(16 to 49)
+		if(15 to 50)
 			this_food.add_atom_colour(fried_colors[2], FIXED_COLOUR_PRIORITY)
 			this_food.name = "fried [this_food.name]"
 			this_food.desc += " It's been fried, increasing its tastiness value by [rand(1, 75)]%."
 
-		if(50 to 59)
+		if(50 to 85)
 			this_food.add_atom_colour(fried_colors[3], FIXED_COLOUR_PRIORITY)
 			this_food.name = "deep-fried [this_food.name]"
 			this_food.desc += " Deep-fried to perfection."
 
-		if(60 to INFINITY)
+		if(85 to INFINITY)
 			this_food.add_atom_colour(fried_colors[4], FIXED_COLOUR_PRIORITY)
 			this_food.name = "\proper the physical manifestation of the very concept of fried foods"
 			this_food.desc = "A heavily-fried... something. Who can tell anymore?"

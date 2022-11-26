@@ -1,5 +1,6 @@
-
-#define DEEPFRYER_COOKTIME 60
+/// The deep fryer pings after this long, letting people know it's "perfect"
+#define DEEPFRYER_COOKTIME 50
+/// The deep fryer pings after this long, reminding people that there's a very burnt object inside
 #define DEEPFRYER_BURNTIME 120
 
 /// Global typecache of things which should never be fried.
@@ -26,9 +27,9 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	var/obj/item/frying
 	/// How long the current object has been cooking for
 	var/cook_time = 0
-	/// How much cooking oil is used per second
+	/// How much cooking oil is used per process
 	var/oil_use = 0.025
-	/// How quickly we fry food
+	/// How quickly we fry food - modifier applied per process tick
 	var/fry_speed = 1
 	/// Has our currently frying object been fried?
 	var/frying_fried = FALSE
@@ -181,6 +182,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	// Give them reagents to put frying oil in
 	if(isnull(frying.reagents))
 		frying.create_reagents(50, INJECTABLE)
+	ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user))
 
 	icon_state = "fryer_on"
 	fry_loop.start()
@@ -197,7 +199,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(frying)
 		to_chat(user, span_notice("You eject [frying] from [src]."))
 		frying.forceMove(drop_location())
-		ADD_TRAIT(frying, TRAIT_FOOD_CHEF_MADE, REF(user))
 		if(Adjacent(user) && !issilicon(user))
 			user.put_in_hands(frying)
 		return
