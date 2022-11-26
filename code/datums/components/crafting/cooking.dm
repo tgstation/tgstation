@@ -335,12 +335,6 @@
 /datum/component/cooking/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		cur_category = categories[1]
-		if(islist(categories[cur_category]))
-			var/list/subcats = categories[cur_category]
-			cur_subcategory = subcats[1]
-		else
-			cur_subcategory = CAT_NONE
 		ui = new(user, src, "PersonalCooking", "Cook Book")
 		ui.open()
 
@@ -431,10 +425,6 @@
 			. = TRUE
 		if("toggle_compact")
 			display_compact = !display_compact
-			. = TRUE
-		if("set_category")
-			cur_category = params["category"]
-			cur_subcategory = params["subcategory"] || ""
 			. = TRUE
 
 /datum/component/cooking/ui_assets(mob/user)
