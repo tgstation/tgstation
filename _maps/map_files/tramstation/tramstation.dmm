@@ -713,20 +713,6 @@
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron,
 /area/station/science/ordnance/storage)
-"anm" = (
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1
-	},
-/obj/structure/lattice/catwalk,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1
-	},
-/turf/open/floor/catwalk_floor/tram,
-/area/station/hallway/primary/tram/center)
 "ann" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -167030,7 +167016,7 @@ vKX
 rUp
 tTB
 pcj
-anm
+ycw
 rUp
 qnr
 eoa
