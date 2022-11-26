@@ -1,35 +1,3 @@
-/datum/religion_sect/honorbound
-	name = "Honorbound God"
-	quote = "A good, honorable crusade against evil is required."
-	desc = "Your deity requires fair fights from you. You may not attack the unready, the just, or the innocent. \
-	You earn favor by getting others to join the crusade, and you may spend favor to announce a battle, bypassing some conditions to attack."
-	tgui_icon = "scroll"
-	altar_icon_state = "convertaltar-white"
-	alignment = ALIGNMENT_GOOD
-	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
-	///people who have agreed to join the crusade, and can be deaconized
-	var/list/possible_crusaders = list()
-	///people who have been offered an invitation, they haven't finished the alert though.
-	var/list/currently_asking = list()
-
-/**
- * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
- * If yes, the deaconize rite can now recruit them instead of just offering invites
- */
-/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
-	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
-	currently_asking -= invited
-	if(ask == "Yes")
-		possible_crusaders += invited
-
-/datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
-	..()
-	if(!ishuman(new_convert))
-		to_chat(new_convert, span_warning("[GLOB.deity] has no respect for lower creatures, and refuses to make you honorbound."))
-		return FALSE
-	new_convert.gain_trauma(/datum/brain_trauma/special/honorbound, TRAUMA_RESILIENCE_MAGIC)
-
 ///Makes the person holy, but they now also have to follow the honorbound code (CBT). Actually earns favor, convincing others to uphold the code (tm) is not easy
 /datum/religion_rites/deaconize
 	name = "Join Crusade"
@@ -148,7 +116,7 @@
 	for(var/obj/item/paper/could_writ in get_turf(religious_tool))
 		if(istype(could_writ, /obj/item/paper/holy_writ))
 			continue
-		if(could_writ.get_info_length()) //blank paper pls
+		if(could_writ.get_total_length()) //blank paper pls
 			continue
 		writ_target = could_writ //PLEASE SIGN MY AUTOGRAPH
 		return ..()
@@ -203,4 +171,4 @@
 	You may use holy magic, and, if you recruit one, the mime may use holy mimery. Restoration has also
 	been allowed as it is a school focused on the light and mending of this world.
 	"}
-	. = ..()
+	return ..()

@@ -47,5 +47,30 @@
 		qdel(old_eyes)
 
 /datum/religion_rites/nullrod_transformation
+	name = "Transmogrify"
+	desc = "Your full power needs a firearm to be realized. You may transform your null rod into one."
+	ritual_length = 10 SECONDS
+	///The rod that will be transmogrified.
+	var/obj/item/nullrod/null_rod
+
+/datum/religion_rites/adapted_food/perform_rite(mob/living/user, atom/religious_tool)
+	for(var/obj/item/nullrod/rod in get_turf(religious_tool))
+		null_rod = rod
+		return ..()
+	to_chat(user, span_warning("You need to place a null rod on [religious_tool] to do this!"))
+	return FALSE
+
+/datum/religion_rites/adapted_food/invoke_effect(mob/living/user, atom/movable/religious_tool)
+	..()
+	var/obj/item/nullrod/rod = null_rod
+	mold_target = null
+	if(QDELETED(moldify) || !(get_turf(religious_tool) == moldify.loc)) //check if the same food is still there
+		to_chat(user, span_warning("Your target left the altar!"))
+		return FALSE
+	to_chat(user, span_warning("[moldify] becomes rancid!"))
+	user.emote("laughs")
+	new /obj/item/food/badrecipe/moldy(get_turf(religious_tool))
+	qdel(moldify)
+	return TRUE
 
 /obj/item/gun/ballistic/revolver/chaplain
