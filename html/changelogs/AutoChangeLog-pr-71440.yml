@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - balance: "premium internals station trait now increases the slots of your internals box"
