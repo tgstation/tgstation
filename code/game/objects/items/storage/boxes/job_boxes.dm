@@ -12,8 +12,21 @@
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	/// What medipen should be present in this box?
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	/// Are we crafted?
+	var/crafted = FALSE
+
+/obj/item/storage/box/survival/Initialize(mapload)
+	. = ..()
+	if(crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		return
+	atom_storage.max_slots += 2
+	atom_storage.max_total_storage += 4
+	name = "large [name]"
+	transform = transform.Scale(1.25, 1)
 
 /obj/item/storage/box/survival/PopulateContents()
+	if(crafted)
+		return
 	if(!isnull(mask_type))
 		new mask_type(src)
 
@@ -98,6 +111,12 @@
 // Medical survival box
 /obj/item/storage/box/survival/medical
 	mask_type = /obj/item/clothing/mask/breath/medical
+
+/obj/item/storage/box/survival/crafted
+	crafted = TRUE
+
+/obj/item/storage/box/survival/engineer/crafted
+	crafted = TRUE
 
 //Mime spell boxes
 

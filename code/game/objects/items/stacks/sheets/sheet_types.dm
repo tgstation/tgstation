@@ -563,8 +563,8 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 		new /datum/stack_recipe("extended oxygen tank box", /obj/item/storage/box/engitank), \
 		null, \
 
-		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival), \
-		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer), \
+		new /datum/stack_recipe("survival box", /obj/item/storage/box/survival/crafted), \
+		new /datum/stack_recipe("extended tank survival box", /obj/item/storage/box/survival/engineer/crafted), \
 		new /datum/stack_recipe("disk box", /obj/item/storage/box/disks), \
 		new /datum/stack_recipe("light tubes box", /obj/item/storage/box/lights/tubes), \
 		new /datum/stack_recipe("light bulbs box", /obj/item/storage/box/lights/bulbs), \

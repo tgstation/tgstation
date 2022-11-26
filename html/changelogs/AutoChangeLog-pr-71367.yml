@@ -1,6 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - bugfix: "Metabolization works for reagents that are meant to metabolize while your liver is failing."
-  - bugfix: "Higadrite, cordiolis hepatico and herignis work properly."
-  - balance: "Herignis is more potent and has an overdose threshold of 25u."

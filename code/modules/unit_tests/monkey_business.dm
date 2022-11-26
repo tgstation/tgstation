@@ -15,7 +15,7 @@
 /datum/unit_test/monkey_business/Run()
 	var/start_runtimes = GLOB.total_runtimes
 	for(var/monkey_id in 1 to length(GLOB.the_station_areas))
-		var/mob/living/carbon/human/monkey = allocate(/mob/living/carbon/human, get_first_open_turf_in_area(GLOB.the_station_areas[monkey_id]))
+		var/mob/living/carbon/human/monkey = allocate(/mob/living/carbon/human/consistent, get_first_open_turf_in_area(GLOB.the_station_areas[monkey_id]))
 		monkey.set_species(/datum/species/monkey)
 		monkey.set_name("Monkey [monkey_id]")
 		if(monkey_id % monkey_angry_nth == 0) // BLOOD FOR THE BLOOD GODS
@@ -25,6 +25,3 @@
 			new /datum/ai_controller/monkey(monkey)
 		monkey.ai_controller.blackboard[BB_MONKEY_TARGET_MONKEYS] = TRUE
 	sleep(monkey_timer)
-	var/monkey_runtimes = GLOB.total_runtimes - start_runtimes
-	if(monkey_runtimes)
-		TEST_FAIL("Monkey Business caused [monkey_runtimes] runtimes")
