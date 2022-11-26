@@ -95,3 +95,13 @@ DEFINE_BITFIELD(antimagic_flags, list(
 	"MAGIC_RESISTANCE_HOLY" = MAGIC_RESISTANCE_HOLY,
 	"MAGIC_RESISTANCE_MIND" = MAGIC_RESISTANCE_MIND,
 ))
+
+/**
+ * Checks if our mob is jaunting actively (within a phased mob object)
+ * Used in jaunting spells specifically to determine whether they should be entering or exiting jaunt
+ *
+ * If you want to use this in non-jaunt related code, it is preferable
+ * to instead check for trait [TRAIT_MAGICALLY_PHASED] instead of using this
+ * as it encompasses more states in which a mob may be "incorporeal from magic"
+ */
+#define is_jaunting(atom) (istype(atom.loc, /obj/effect/dummy/phased_mob))

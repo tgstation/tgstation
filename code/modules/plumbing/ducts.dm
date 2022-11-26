@@ -123,7 +123,7 @@ All the important duct code:
 	add_neighbour(other, direction)
 
 	//Delegate to timer subsystem so its handled the next tick and doesnt cause byond to mistake it for an infinite loop and kill the game
-	addtimer(CALLBACK(other, .proc/attempt_connect))
+	addtimer(CALLBACK(other, PROC_REF(attempt_connect)))
 
 	return TRUE
 

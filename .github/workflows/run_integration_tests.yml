@@ -1,0 +1,70 @@
+# This is a reusable workflow to run integration tests on a single map.
+# This is run for every single map in ci_suite.yml. You might want to edit that instead.
+name: Run Integration Tests
+on:
+  workflow_call:
+    inputs:
+      map:
+        required: true
+        type: string
+      major:
+        required: false
+        type: string
+      minor:
+        required: false
+        type: string
+jobs:
+  run_integration_tests:
+    runs-on: ubuntu-20.04
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: actions/checkout@v3
+      - name: Restore BYOND cache
+        uses: actions/cache@v3
+        with:
+          path: ~/BYOND
+          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+      - name: Setup database
+        run: |
+          sudo systemctl start mysql
+          mysql -u root -proot -e 'CREATE DATABASE tg_ci;'
+          mysql -u root -proot tg_ci < SQL/tgstation_schema.sql
+          mysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'
+          mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
+      - name: Install rust-g
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update || true
+          sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
+          bash tools/ci/install_rust_g.sh
+      - name: Install auxlua
+        run: |
+          bash tools/ci/install_auxlua.sh
+      - name: Configure version
+        run: |
+          echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
+          echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
+        if: ${{ inputs.major }}
+      - name: Compile Tests
+        run: |
+          bash tools/ci/install_byond.sh
+          source $HOME/BYOND/byond/bin/byondsetup
+          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS
+      - name: Run Tests
+        run: |
+          source $HOME/BYOND/byond/bin/byondsetup
+          bash tools/ci/run_server.sh ${{ inputs.map }}
+      - name: Upload screenshot tests
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_artifacts_${{ inputs.map }}
+          path: data/screenshots_new/
+          retention-days: 1

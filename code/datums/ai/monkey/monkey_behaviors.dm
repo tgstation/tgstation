@@ -13,7 +13,7 @@
 
 		item_blacklist[target] = TRUE
 		if(istype(controller, /datum/ai_controller/monkey)) //What the fuck
-			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, /datum/ai_controller/monkey/proc/target_del)
+			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/ai_controller/monkey,target_del))
 
 	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 
@@ -53,7 +53,7 @@
 		return
 
 	// EVERYTHING ELSE
-	else if(living_pawn.get_empty_held_index_for_side(LEFT_HANDS) || living_pawn.get_empty_held_index_for_side(RIGHT_HANDS))
+	else if(living_pawn.get_empty_held_indexes())
 		living_pawn.put_in_hands(target)
 		finish_action(controller, TRUE)
 		return
@@ -73,7 +73,7 @@
 	. = ..()
 	if(controller.blackboard[BB_MONKEY_PICKPOCKETING]) //We are pickpocketing, don't do ANYTHING!!!!
 		return
-	INVOKE_ASYNC(src, .proc/attempt_pickpocket, controller)
+	INVOKE_ASYNC(src, PROC_REF(attempt_pickpocket), controller)
 
 /datum/ai_behavior/monkey_equip/pickpocket/proc/attempt_pickpocket(datum/ai_controller/controller)
 	var/obj/item/target = controller.blackboard[BB_MONKEY_PICKUPTARGET]
@@ -279,7 +279,7 @@
 		return
 
 	if(living_pawn.Adjacent(disposal))
-		INVOKE_ASYNC(src, .proc/try_disposal_mob, controller, attack_target_key, disposal_target_key) //put him in!
+		INVOKE_ASYNC(src, PROC_REF(try_disposal_mob), controller, attack_target_key, disposal_target_key) //put him in!
 	else //This means we might be getting pissed!
 		return
 

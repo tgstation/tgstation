@@ -159,12 +159,6 @@
 			if(occupants)
 				SSexplosions.low_mov_atom += occupants
 
-/obj/vehicle/sealed/mecha/handle_atom_del(atom/A)
-	if(A in occupants) //todo does not work and in wrong file
-		LAZYREMOVE(occupants, A)
-		icon_state = initial(icon_state)+"-open"
-		setDir(dir_in)
-
 /obj/vehicle/sealed/mecha/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
@@ -176,7 +170,7 @@
 
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
-	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha.proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
 	set_mouse_pointer()
 
@@ -203,7 +197,9 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/user, params)
+/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/living/user, params)
+	if(user.combat_mode)
+		return ..()
 	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
 			to_chat(user, span_notice("[src]-[W] interface initialized successfully."))
@@ -292,6 +288,11 @@
 	log_combat(user, src, "attacked", attacking_item)
 	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage_taken]", LOG_MECHA)
 
+/obj/vehicle/sealed/mecha/attack_generic(mob/user, damage_amount, damage_type, damage_flag, effects, armor_penetration)
+	. = ..()
+	if(.)
+		try_damage_component(., user.zone_selected)
+
 /obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/I)
 	..()
 	. = TRUE
@@ -306,6 +307,10 @@
 /obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/I)
 	..()
 	. = TRUE
+	if(istype(I, /obj/item/crowbar/mechremoval))
+		var/obj/item/crowbar/mechremoval/remover = I
+		remover.empty_mech(src, user)
+		return
 	if(construction_state == MECHA_LOOSE_BOLTS)
 		construction_state = MECHA_OPEN_HATCH
 		to_chat(user, span_notice("You open the hatch to the power unit."))

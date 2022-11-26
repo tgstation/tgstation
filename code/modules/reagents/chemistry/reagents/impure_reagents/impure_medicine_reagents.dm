@@ -88,7 +88,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/hands = 1
 	var/time = 2 / delta_time
 	while(hands < delta_time) //we already made a hand now so start from 1
-		LAZYADD(timer_ids, addtimer(CALLBACK(src, .proc/spawn_hands, owner), (time*hands) SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
+		LAZYADD(timer_ids, addtimer(CALLBACK(src, PROC_REF(spawn_hands), owner), (time*hands) SECONDS, TIMER_STOPPABLE)) //keep track of all the timers we set up
 		hands += time
 	return ..()
 
@@ -141,8 +141,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/consumer = L
 	if(!consumer)
 		return
-	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
+	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
 	var/obj/item/organ/internal/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
@@ -268,41 +268,41 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //inverse
 /datum/reagent/inverse/hercuri
 	name = "Herignis"
-	description = "This reagent causes a dramatic raise in a patient's body temperature."
+	description = "This reagent causes a dramatic raise in the patient's body temperature. Overdosing makes the effect even stronger and causes severe liver damage."
 	ph = 0.8
 	tox_damage = 0
 	color = "#ff1818"
+	overdose_threshold = 25
+	reagent_weight = 0.6
 	taste_description = "heat! Ouch!"
 	addiction_types = list(/datum/addiction/medicine = 2.5)
-	data = list("method" = TOUCH)
-	///The method in which the reagent was exposed
-	var/method
-
-/datum/reagent/inverse/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
-	method |= methods
-	data["method"] |= methods
-	..()
-
-/datum/reagent/inverse/hercuri/on_new(data)
-	. = ..()
-	if(!data)
-		return
-	method |= data["method"]
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	var/heating = rand(creation_purity * REM * 3, creation_purity * REM * 6)
-	if(method & INGEST)
-		owner.reagents?.chem_temp += heating * REM * delta_time
-	if(method & VAPOR)
-		owner.adjust_bodytemperature(heating * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
-	if(method & INJECT)
-		if(!ishuman(owner))
-			return ..()
-		var/mob/living/carbon/human/human_mob = owner
-		human_mob.adjust_coretemperature(heating * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
-	else
-		owner.adjust_fire_stacks(heating * 0.05)
-	..()
+	. = ..()
+	var/heating = rand(5, 25) * creation_purity * REM * delta_time
+	owner.reagents?.chem_temp += heating
+	owner.adjust_bodytemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human = owner
+	human.adjust_coretemperature(heating * TEMPERATURE_DAMAGE_COEFFICIENT)
+
+/datum/reagent/inverse/hercuri/expose_mob(mob/living/carbon/exposed_mob, methods=VAPOR, reac_volume)
+	. = ..()
+	if(!(methods & VAPOR))
+		return
+
+	exposed_mob.adjust_bodytemperature(reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT)
+	exposed_mob.adjust_fire_stacks(reac_volume / 2)
+
+/datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, delta_time, times_fired)
+	. = ..()
+	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	var/heating = 10 * creation_purity * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT
+	owner.adjust_bodytemperature(heating) //hot hot
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		human.adjust_coretemperature(heating)
 
 /datum/reagent/inverse/healing/tirimol
 	name = "Super Melatonin"//It's melatonin, but super!
@@ -368,8 +368,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/healing/convermol/on_mob_add(mob/living/owner, amount)
 	. = ..()
-	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
+	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
 	var/obj/item/organ/internal/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
@@ -518,7 +518,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/internal/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return ..()
-	metabolization_rate = 0.35
+	metabolization_rate = 0.2 * REM
 	ADD_TRAIT(owner, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, type)
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
@@ -697,8 +697,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	manual_heart.Insert(carbon_mob, special = TRUE)
 	//these last so instert doesn't call them
-	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_gained_organ))
+	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_removed_organ))
 	to_chat(owner, span_userdanger("You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!"))
 	..()
 
@@ -799,7 +799,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/owner, delta_time, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(owner_hear))
 	to_chat(owner, span_warning("Your hearing seems to be a bit off!"))
 	..()
 

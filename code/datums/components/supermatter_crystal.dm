@@ -7,16 +7,16 @@
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
 
-	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/blob_hit)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, .proc/paw_hit)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/animal_hit)
-	RegisterSignal(parent, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_hit)
-	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, .proc/unarmed_hit)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/hand_hit)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_hit)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/tool_hit)
-	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/bumped_hit)
-	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_Z_FALL, .proc/intercept_z_fall)
+	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, PROC_REF(blob_hit))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, PROC_REF(paw_hit))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(animal_hit))
+	RegisterSignal(parent, COMSIG_ATOM_HULK_ATTACK, PROC_REF(hulk_hit))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_hit))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_hit))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_hit))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), PROC_REF(tool_hit))
+	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(bumped_hit))
+	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_Z_FALL, PROC_REF(intercept_z_fall))
 
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
@@ -194,6 +194,11 @@
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
+	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // Why is this a component?
+	if(!istype(our_supermatter))
+		our_supermatter = null // so we don't runtime on the next line....
+	if(our_supermatter?.has_been_powered)
+		our_supermatter.log_activation(source = atom_source)
 	if(isliving(hit_object))
 		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 			span_userdanger("You slam into \the [atom_source] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
@@ -240,6 +245,7 @@
 			return
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
+		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
@@ -274,6 +280,9 @@
 		else
 			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 	consume_returns(matter_increase, damage_increase)
+	var/obj/machinery/power/supermatter_crystal/our_crystal = parent
+	if(!our_crystal.has_been_powered)
+		our_crystal.log_activation(source = consumed_object)
 
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)
 	if(consume_callback)

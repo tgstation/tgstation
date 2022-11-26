@@ -104,6 +104,7 @@
 #define COLOR_DARK_BROWN "#997C4F"
 #define COLOR_ORANGE_BROWN "#a9734f"
 #define COLOR_CARGO_BROWN "#B18644"
+#define COLOR_DRIED_TAN "#ad7257"
 
 //Color defines used by the soapstone (based on readability against grey tiles)
 #define COLOR_SOAPSTONE_PLASTIC "#a19d94"

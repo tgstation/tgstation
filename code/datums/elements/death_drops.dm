@@ -5,7 +5,7 @@
  */
 /datum/element/death_drops
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///what items the target drops when killed
 	var/list/loot
 
@@ -16,7 +16,7 @@
 	if(!loot)
 		stack_trace("[type] added to [target] with NO LOOT.")
 	src.loot = loot
-	RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /datum/element/death_drops/Detach(datum/target)
 	. = ..()

@@ -1,5 +1,5 @@
-#define ENGINE_COOLDOWN 5 SECONDS
-#define DASH_COOLDOWN 2.5 SECONDS
+#define ENGINE_COOLDOWN (5 SECONDS)
+#define DASH_COOLDOWN (2.5 SECONDS)
 #define HOUSE_EDGE_ICONS_MAX 3
 #define HOUSE_EDGE_ICONS_MIN 0
 
@@ -30,17 +30,16 @@
 
 /obj/item/v8_engine/examine_more(mob/user)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/start_learning_recipe, user)
+	INVOKE_ASYNC(src, PROC_REF(start_learning_recipe), user)
 
 /obj/item/v8_engine/proc/start_learning_recipe(mob/user)
-	var/datum/crafting_recipe/house_edge/edge
 	if(!user.mind)
 		return
-	if(user.mind.has_crafting_recipe(user = user, potential_recipe = edge))
+	if(user.mind.has_crafting_recipe(user = user, potential_recipe = /datum/crafting_recipe/house_edge))
 		return
 	to_chat(user, span_notice("You peer at the label on the side, reading about some unique modifications that could be made to the engine..."))
 	if(do_after(user, 15 SECONDS, src))
-		user.mind.teach_crafting_recipe(edge)
+		user.mind.teach_crafting_recipe(/datum/crafting_recipe/house_edge)
 		to_chat(user, span_notice("You learned how to make the House Edge."))
 
 
@@ -70,7 +69,7 @@
 /obj/item/house_edge/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded = 12, force_wielded = 22, attacksound = active_hitsound)
-	RegisterSignal(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), .proc/reset_charges)
+	RegisterSignals(src, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_PRE_THROW, COMSIG_ITEM_ATTACK_SELF), PROC_REF(reset_charges))
 
 /obj/item/house_edge/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

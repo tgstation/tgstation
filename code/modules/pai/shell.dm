@@ -55,7 +55,7 @@
 		skins += list("[holochassis_option]" = item_image)
 	sort_list(skins)
 	var/atom/anchor = get_atom_on_turf(src)
-	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)
+	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, PROC_REF(check_menu), anchor), radius = 40, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	set_holochassis(choice)

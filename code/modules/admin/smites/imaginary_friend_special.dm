@@ -16,23 +16,29 @@
 /datum/smite/custom_imaginary_friend/configure(client/user)
 	friend_candidate_client = tgui_input_list(user, "Pick the player to put in control", "New Imaginary Friend", sort_list(GLOB.clients))
 	if(isnull(friend_candidate_client))
-		return
+		return FALSE
 
 	if(QDELETED(friend_candidate_client))
 		to_chat(user, span_notice("Selected player no longer has a client, aborting."))
 		return FALSE
 
-	if(isliving(friend_candidate_client.mob) && (tgui_alert(user, "This player already has a living mob ([friend_candidate_client.mob]). Do you still want to turn them into an Imaginary Friend?", "Remove player from mob?", list("Do it!", "Cancel")) == "Cancel"))
-		return
+	if(isliving(friend_candidate_client.mob) && (tgui_alert(user, "This player already has a living mob ([friend_candidate_client.mob]). Do you still want to turn them into an Imaginary Friend?", "Remove player from mob?", list("Do it!", "Cancel")) != "Do it!"))
+		return FALSE
 
 	if(QDELETED(friend_candidate_client))
 		to_chat(user, span_notice("Selected player no longer has a client, aborting."))
 		return FALSE
 
 	if(friend_candidate_client.prefs)
-		random_appearance = tgui_alert(user, "Do you want the imaginary friend to look like and be named after [friend_candidate_client]'s current preferences ([friend_candidate_client.prefs.read_preference(/datum/preference/name/real_name)])?", "Imaginary Friend Appearance?", list("Look-a-like", "Random")) == "Random"
+		var/choice = tgui_alert(user, "Do you want the imaginary friend to look like and be named after [friend_candidate_client]'s current preferences ([friend_candidate_client.prefs.read_preference(/datum/preference/name/real_name)])?", "Imaginary Friend Appearance?", list("Look-a-like", "Random", "Cancel"))
+		if(choice != "Look-a-like" && choice != "Random")
+			return FALSE
+		random_appearance = choice == "Random"
 	else
+		if(tgui_alert(user, "The preferences for the friend could not be loaded, defaulting to random appearance. Is that okay?", "Preference error", list("Yes", "No")) != "Yes")
+			return FALSE
 		random_appearance = TRUE
+	return TRUE
 
 /datum/smite/custom_imaginary_friend/effect(client/user, mob/living/target)
 	. = ..()
