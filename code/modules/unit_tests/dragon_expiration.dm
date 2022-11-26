@@ -1,5 +1,3 @@
-/mob/living/carbon/human/consistent
-
 /// Unit test for the contents barfer element
 /datum/unit_test/contents_barfer
 
