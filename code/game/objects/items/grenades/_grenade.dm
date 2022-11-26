@@ -170,9 +170,11 @@
 /obj/item/grenade/proc/on_used_as_ingredient(datum/source, atom/used_in)
 	SIGNAL_HANDLER
 
-	RegisterSignal(used_in, COMSIG_FOOD_EATEN, PROC_REF(on_eaten_as_ingredient))
+	RegisterSignal(used_in, COMSIG_FOOD_EATEN, PROC_REF(ingredient_detonation))
+	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_KNIFE), PROC_REF(ingredient_detonation))
+	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ROLLINGPIN), PROC_REF(ingredient_detonation))
 
-/obj/item/grenade/proc/on_eaten_as_ingredient(datum/source, mob/living/target, mob/living/user, bitecount, bitesize)
+/obj/item/grenade/proc/ingredient_detonation(datum/source, mob/living/target, mob/living/user, bitecount, bitesize)
 	SIGNAL_HANDLER
 
 	detonate()
