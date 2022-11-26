@@ -198,6 +198,16 @@
 /obj/machinery/power/supermatter_crystal/proc/handle_hypermatter_state()
 	if(!anchored) //Don't unanchor the shards
 		damage += 150
+		internal_energy = hypermatter_power_amount
+		for(var/_ in 1 to rand(2, 5))
+			supermatter_zap(
+				zapstart = src,
+				range = 3,
+				zap_str = internal_energy,
+				zap_flags = ZAP_SUPERMATTER_FLAGS,
+				zap_cutoff = 300,
+				power_level = internal_energy,
+			)
 		hypermatter_state = FALSE
 		update_appearance()
 		return
@@ -220,13 +230,13 @@
 		fire_nuclear_particle()
 
 		supermatter_zap(
-				zapstart = src,
-				range = 3,
-				zap_str = 5 * internal_energy,
-				zap_flags = ZAP_SUPERMATTER_FLAGS,
-				zap_cutoff = 300,
-				power_level = internal_energy,
-			)
+			zapstart = src,
+			range = 3,
+			zap_str = 5 * internal_energy,
+			zap_flags = ZAP_SUPERMATTER_FLAGS,
+			zap_cutoff = 300,
+			power_level = internal_energy,
+		)
 	if(hypermatter_power_amount < 1000)
 		COOLDOWN_REMOVE_TIME(src, hypermatter_cooldown, 5 SECONDS)
 

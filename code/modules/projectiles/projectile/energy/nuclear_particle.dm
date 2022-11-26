@@ -19,7 +19,7 @@
 	)
 	///Internal energy to release on impact (used on the SM and the nuclear accumulator)
 	var/internal_power = 0
-	///Additional effects
+	///Additional effects, electrocutes and shocks the mob, light emp if the mob is a silicon
 	var/dangerous = FALSE
 
 /obj/projectile/energy/nuclear_particle/Initialize(mapload, internal_power = 0, icon_state, dangerous = FALSE)

@@ -24,7 +24,7 @@
 	///Amount of sheets needed to build the reflector.
 	var/build_stack_amount = 0
 	///Typecache of the projectiles allowed to be reflected
-	var/list/allowed_projectile_typecache = list(
+	var/static/list/allowed_projectile_typecache = list(
 		/obj/projectile/beam,
 		/obj/projectile/energy/nuclear_particle,
 		)

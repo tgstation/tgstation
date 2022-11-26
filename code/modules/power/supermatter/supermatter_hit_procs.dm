@@ -153,7 +153,7 @@
 	if(!moveable)
 		return
 	if(hypermatter_state)
-		balloon_alert(user, "this seems like a bad idea")
+		balloon_alert(user, "this seems like a bad idea...")
 		if(!do_after(user, 3 SECONDS, src))
 			return
 	default_unfasten_wrench(user, tool)
