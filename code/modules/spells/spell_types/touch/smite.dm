@@ -14,26 +14,28 @@
 
 	hand_path = /obj/item/melee/touch_attack/smite
 
-/datum/action/cooldown/spell/touch/smite/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	if(!isliving(victim))
-		return FALSE
-
+/// Smite is pretty extravagant, so whenever we get casted, we blind everyone nearby.
+/datum/action/cooldown/spell/touch/smite/proc/blind_everyone_nearby(mob/living/victim, atom/center)
 	do_sparks(sparks_amt, FALSE, get_turf(victim))
-	for(var/mob/living/nearby_spectator in view(caster, 7))
-		if(nearby_spectator == caster)
+	for(var/mob/living/nearby_spectator in view(center, 7))
+		if(nearby_spectator == center)
 			continue
 		nearby_spectator.flash_act(affect_silicon = FALSE)
 
-	var/mob/living/living_victim = victim
-	if(living_victim.can_block_magic(antimagic_flags))
-		caster.visible_message(
-			span_warning("The feedback blows [caster]'s arm off!"),
-			span_userdanger("The spell bounces from [living_victim]'s skin back into your arm!"),
-		)
-		caster.flash_act()
-		var/obj/item/bodypart/to_dismember = caster.get_holding_bodypart_of_item(hand)
-		to_dismember?.dismember()
-		return TRUE
+/datum/action/cooldown/spell/touch/smite/on_antimagic_triggered(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
+	caster.visible_message(
+		span_warning("The feedback blows [caster]'s arm off!"),
+		span_userdanger("The spell bounces from [victim]'s skin back into your arm!"),
+	)
+	// Off goes the arm we were casting with!
+	var/obj/item/bodypart/to_dismember = caster.get_holding_bodypart_of_item(hand)
+	to_dismember?.dismember()
+	// And do the blind (us included)
+	caster.flash_act()
+	blind_everyone_nearby(caster, caster)
+
+/datum/action/cooldown/spell/touch/smite/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
+	blind_everyone_nearby(victim, caster)
 
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
@@ -45,8 +47,8 @@
 			new /obj/effect/gibspawner(get_turf(victim))
 			return TRUE
 
-	living_victim.investigate_log("has been gibbed by the smite spell.", INVESTIGATE_DEATHS)
-	living_victim.gib()
+	victim.investigate_log("has been gibbed by the smite spell.", INVESTIGATE_DEATHS)
+	victim.gib()
 	return TRUE
 
 /obj/item/melee/touch_attack/smite

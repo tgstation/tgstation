@@ -36,6 +36,8 @@
 	var/stun_animation = TRUE
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
+	/// Boolean on whether people with chunky fingers can use this baton.
+	var/chunky_finger_usable = FALSE
 
 	/// The context to show when the baton is active and targetting a living thing
 	var/context_living_target_active = "Stun"
@@ -119,6 +121,12 @@
 
 	if(clumsy_check(user, target))
 		return BATON_ATTACK_DONE
+
+	if(!chunky_finger_usable && ishuman(user))
+		var/mob/living/carbon/human/potential_chunky_finger_human = user
+		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src))
+			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
+			return BATON_ATTACK_DONE
 
 	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return BATON_DO_NORMAL_ATTACK
@@ -309,7 +317,7 @@
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/baton/telescopic/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/human_user = user
@@ -414,7 +422,7 @@
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/convert)
+	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, PROC_REF(convert))
 	update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
@@ -568,7 +576,7 @@
 	target.set_stutter_if_lower(16 SECONDS)
 
 	SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, target), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_stun_effect_end), target), 2 SECONDS)
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
@@ -609,7 +617,7 @@
 		scramble_mode()
 		for(var/loops in 1 to rand(6, 12))
 			scramble_time = rand(5, 15) / (1 SECONDS)
-			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
+			addtimer(CALLBACK(src, PROC_REF(scramble_mode)), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
 	if (!cell || cell.charge < cell_hit_cost)

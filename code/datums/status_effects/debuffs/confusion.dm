@@ -9,24 +9,18 @@
 /datum/status_effect/confusion
 	id = "confusion"
 	alert_type = null
+	remove_on_fullheal = TRUE
 
 /datum/status_effect/confusion/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
 	return ..()
 
 /datum/status_effect/confusion/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/remove_confusion)
-	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/on_move)
+	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(on_move))
 	return TRUE
 
 /datum/status_effect/confusion/on_remove()
-	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_CLIENT_PRE_MOVE))
-
-/// Removes all of our confusion (self terminate) on signal
-/datum/status_effect/confusion/proc/remove_confusion(datum/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
+	UnregisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE)
 
 /// Signal proc for [COMSIG_MOB_CLIENT_PRE_MOVE]. We have a chance to mix up our movement pre-move with confusion.
 /datum/status_effect/confusion/proc/on_move(datum/source, list/move_args)

@@ -62,7 +62,7 @@
 
 
 /datum/status_effect/wish_granters_gift/on_remove()
-	owner.revive(full_heal = TRUE, admin_revive = TRUE)
+	owner.revive(ADMIN_HEAL_ALL)
 	owner.visible_message(span_warning("[owner] appears to wake from the dead, having healed all wounds!"), span_notice("You have regenerated."))
 
 
@@ -146,22 +146,38 @@
 //Being on fire will suppress this healing
 /datum/status_effect/fleshmend
 	id = "fleshmend"
-	duration = 100
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/fleshmend
+
+/datum/status_effect/fleshmend/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
+		QDEL_LAZYLIST(carbon_owner.all_scars)
+
+	RegisterSignal(owner, COMSIG_LIVING_IGNITED, PROC_REF(on_ignited))
+	RegisterSignal(owner, COMSIG_LIVING_EXTINGUISHED, PROC_REF(on_extinguished))
+
+/datum/status_effect/fleshmend/on_remove()
+	UnregisterSignal(owner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_EXTINGUISHED))
 
 /datum/status_effect/fleshmend/tick()
 	if(owner.on_fire)
-		linked_alert.icon_state = "fleshmend_fire"
 		return
-	else
-		linked_alert.icon_state = "fleshmend"
+
 	owner.adjustBruteLoss(-10, FALSE)
 	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
-	if(!iscarbon(owner))
-		return
-	var/mob/living/carbon/C = owner
-	QDEL_LAZYLIST(C.all_scars)
+
+/datum/status_effect/fleshmend/proc/on_ignited(datum/source)
+	SIGNAL_HANDLER
+
+	linked_alert?.icon_state = "fleshmend_fire"
+
+/datum/status_effect/fleshmend/proc/on_extinguished(datum/source)
+	SIGNAL_HANDLER
+
+	linked_alert?.icon_state = "fleshmend"
 
 /atom/movable/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
@@ -309,7 +325,7 @@
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
-	owner.remove_CC()
+	owner.fully_heal(HEAL_CC_STATUS)
 	owner.bodytemperature = owner.get_body_temp_normal()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner

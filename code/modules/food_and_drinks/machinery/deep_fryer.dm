@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		visible_message(span_userdanger("[src] starts glowing... Oh no..."))
 		playsound(src, 'sound/effects/pray_chaplain.ogg', 100)
 		add_filter("entropic_ray", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
-		addtimer(CALLBACK(src, .proc/blow_up), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(blow_up)), 5 SECONDS)
 
 	frying = frying_item
 	// Give them reagents to put frying oil in
@@ -228,7 +228,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 			reagents.remove_any((reagents.total_volume/2))
 		dunking_target.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
-
 	return ..()
 
 #undef DEEPFRYER_COOKTIME

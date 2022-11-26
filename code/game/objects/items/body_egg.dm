@@ -20,14 +20,14 @@
 	ADD_TRAIT(owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
 	ADD_TRAIT(owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	owner.med_hud_set_status()
-	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
+	INVOKE_ASYNC(src, PROC_REF(AddInfectionImages), owner)
 
 /obj/item/organ/internal/body_egg/Remove(mob/living/carbon/M, special = FALSE)
 	if(owner)
 		REMOVE_TRAIT(owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
 		REMOVE_TRAIT(owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 		owner.med_hud_set_status()
-		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
+		INVOKE_ASYNC(src, PROC_REF(RemoveInfectionImages), owner)
 	..()
 
 /obj/item/organ/internal/body_egg/on_death(delta_time, times_fired)

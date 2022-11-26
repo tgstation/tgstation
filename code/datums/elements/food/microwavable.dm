@@ -1,7 +1,7 @@
 /// Atoms that can be microwaved from one type to another.
 /datum/element/microwavable
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	/// The typepath we default to if we were passed no microwave result
 	var/atom/default_typepath = /obj/item/food/badrecipe
 	/// Resulting atom typepath on a completed microwave.
@@ -14,10 +14,10 @@
 
 	result_typepath = microwave_type || default_typepath
 
-	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, .proc/on_microwaved)
+	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_ACT, PROC_REF(on_microwaved))
 
 	if(!ispath(result_typepath, default_typepath))
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/microwavable/Detach(datum/source)
 	UnregisterSignal(source, list(COMSIG_ITEM_MICROWAVE_ACT, COMSIG_PARENT_EXAMINE))

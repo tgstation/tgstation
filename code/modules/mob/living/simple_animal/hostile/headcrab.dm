@@ -1,4 +1,4 @@
-#define EGG_INCUBATION_TIME 4 MINUTES
+#define EGG_INCUBATION_TIME (4 MINUTES)
 
 /mob/living/simple_animal/hostile/headcrab
 	name = "headslug"
@@ -52,7 +52,7 @@
 				return
 			Infect(target)
 			to_chat(src, span_userdanger("With our egg laid, our death approaches rapidly..."))
-			addtimer(CALLBACK(src, .proc/death), 100)
+			addtimer(CALLBACK(src, PROC_REF(death)), 100)
 
 /obj/item/organ/internal/body_egg/changeling_egg
 	name = "changeling egg"

@@ -40,9 +40,9 @@
 	right = add_output_port("Extra Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/controller/register_shell(atom/movable/shell)
-	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
-	RegisterSignal(shell, COMSIG_CLICK_ALT, .proc/send_alternate_signal)
-	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF_SECONDARY, .proc/send_right_signal)
+	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, PROC_REF(send_trigger))
+	RegisterSignal(shell, COMSIG_CLICK_ALT, PROC_REF(send_alternate_signal))
+	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(send_right_signal))
 
 /obj/item/circuit_component/controller/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(

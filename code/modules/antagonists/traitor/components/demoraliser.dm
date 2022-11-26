@@ -11,7 +11,7 @@
 /datum/proximity_monitor/advanced/demoraliser/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/demoralise_moods/moods)
 	. = ..()
 	src.moods = moods
-	RegisterSignal(host, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(host, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/location)
 	if (!isliving(crossed))

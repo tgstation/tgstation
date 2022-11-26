@@ -24,7 +24,7 @@
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), .proc/on_analyze)
+	RegisterSignal(src, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_behaviour), PROC_REF(on_analyze))
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
@@ -79,7 +79,7 @@
 		else
 			to_chat(user, span_warning("[src]'s barometer function says a storm will land in approximately [butchertime(fixed)]."))
 	cooldown = TRUE
-	addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/analyzer, ping)), cooldown_time)
 
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
