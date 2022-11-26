@@ -890,7 +890,7 @@
 		//Some externals have multiple layers for background, foreground and between
 		for(var/external_layer in external_organ.all_layers)
 			if(external_organ.layers & external_layer)
-				external_organ.get_overlays(
+				external_organ.generate_and_retrieve_overlays(
 					.,
 					image_dir,
 					external_organ.bitflag_to_layer(external_layer),

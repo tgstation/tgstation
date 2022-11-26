@@ -132,7 +132,7 @@
 	return ..()
 
 ///Add the overlays we need to draw on a person. Called from _bodyparts.dm
-/obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir = SOUTH, image_layer, physique)
+/obj/item/organ/external/proc/generate_and_retrieve_overlays(list/overlay_list, image_dir = SOUTH, image_layer, physique)
 	set_sprite(stored_feature_id)
 	if(!sprite_datum)
 		return
@@ -172,7 +172,7 @@
 	else if(ownerlimb) //are we in a limb?
 		ownerlimb.update_icon_dropped()
 	else if(use_mob_sprite_as_obj_sprite) //are we out in the world, unprotected by flesh?
-		get_overlays(list(), image_layer = use_mob_sprite_as_obj_sprite) //both fetches and updates our organ sprite, although we only update
+		generate_and_retrieve_overlays(list(), image_layer = use_mob_sprite_as_obj_sprite) //both fetches and updates our organ sprite, although we only update
 
 ///Change our accessory sprite, using the accesssory name. If you need to change the sprite for something, use simple_change_sprite()
 /obj/item/organ/external/proc/set_sprite(accessory_name)
