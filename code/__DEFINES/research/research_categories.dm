@@ -179,7 +179,7 @@
 #define RND_SUBCATEGORY_IMPLANTS "/Implants"
 
 // Limb Categories
-#define RND_CATEGORY_LIMBS_DIGITIGRADE "Digitigrade"
+#define RND_CATEGORY_LIMBS_DIGITIGRADE "digitigrade"
 #define RND_CATEGORY_LIMBS_OTHER "Other Limbs"
 
 /// Biogenerator Categories
