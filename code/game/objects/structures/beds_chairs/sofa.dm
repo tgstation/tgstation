@@ -1,6 +1,5 @@
 /obj/structure/chair/sofa
 	name = "old ratty sofa"
-	icon_state = "sofamiddle"
 	icon = 'icons/obj/sofa.dmi'
 	buildstackamount = 1
 	item_chair = null
@@ -46,6 +45,9 @@
 /obj/structure/chair/sofa/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
 	return
 
+/obj/structure/chair/sofa/middle
+	icon_state = "sofamiddle"
+
 /obj/structure/chair/sofa/left
 	icon_state = "sofaend_left"
 
@@ -54,6 +56,8 @@
 
 /obj/structure/chair/sofa/corner
 	icon_state = "sofacorner"
+
+COLORED_SOFA(/obj/structure/chair/sofa, brown, SOFA_BROWN)
 
 // Original icon ported from Eris(?) and updated to work here.
 /obj/structure/chair/sofa/corp

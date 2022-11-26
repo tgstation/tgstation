@@ -17577,7 +17577,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "gzJ" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
 "gzO" = (
@@ -50978,7 +50978,7 @@
 /obj/structure/sign/poster/official/get_your_legs{
 	pixel_y = 32
 	},
-/obj/structure/chair/sofa/right,
+/obj/structure/chair/sofa/right/brown,
 /obj/item/toy/plush/moth{
 	name = "Mender Moff"
 	},
