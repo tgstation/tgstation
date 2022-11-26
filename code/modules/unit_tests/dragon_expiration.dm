@@ -26,5 +26,5 @@
 	dragon_antag_datum.rift_checks()
 
 	TEST_ASSERT(QDELETED(dragon_time), "The space dragon wasn't deleted after having its rift timer exceeded!")
-	TEST_ASSERT(!QDELETED(to_be_consumed), "After having its rift timer exceeded, the dragon deleted all the dummy instead!")
-	TEST_ASSERT(isturf(to_be_consumed.loc), "After having its rift timer exceeded, the dragon did not eject all the dummy!")
+	TEST_ASSERT(!QDELETED(to_be_consumed), "After having its rift timer exceeded, the dragon deleted the dummy instead! The dragon should be dead prior to being deleted!")
+	TEST_ASSERT(isturf(to_be_consumed.loc), "After having its rift timer exceeded, the dragon did not eject the dummy! (Dummy's loc: [to_be_consumed.loc])")
