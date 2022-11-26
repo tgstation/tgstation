@@ -24,25 +24,6 @@
 				CAT_ROBOT = CAT_NONE,
 				CAT_MISC = CAT_NONE,
 				CAT_PRIMAL = CAT_NONE,
-				CAT_FOOD = list(
-					CAT_BREAD,
-					CAT_BURGER,
-					CAT_CAKE,
-					CAT_EGG,
-					CAT_LIZARD,
-					CAT_ICE,
-					CAT_MEAT,
-					CAT_SEAFOOD,
-					CAT_MISCFOOD,
-					CAT_MOTH,
-					CAT_PASTRY,
-					CAT_PIE,
-					CAT_PIZZA,
-					CAT_SALAD,
-					CAT_SANDWICH,
-					CAT_SOUP,
-					CAT_SPAGHETTI,
-				),
 				CAT_DRINK = CAT_NONE,
 				CAT_CLOTHING = CAT_NONE,
 				CAT_ATMOSPHERIC = CAT_NONE,
@@ -397,6 +378,9 @@
 		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
+		if (ispath(R.type, /datum/crafting_recipe/food/))
+			continue
+
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
 
@@ -416,6 +400,9 @@
 			continue
 
 		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+			continue
+
+		if (ispath(R.type, /datum/crafting_recipe/food/))
 			continue
 
 		if(isnull(crafting_recipes[R.category]))
