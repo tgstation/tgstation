@@ -339,7 +339,7 @@ type ObjectiveElementProps = {
   telecrystalReward: number;
   progressionReward: number;
   uiButtons?: JSX.Element;
-  objectiveState: ObjectiveState;
+  objectiveState?: ObjectiveState;
   originalProgression: number;
   telecrystalPenalty: number;
   grow: boolean;
@@ -347,8 +347,8 @@ type ObjectiveElementProps = {
   finalObjective: BooleanLike;
   canAbort: BooleanLike;
 
-  handleCompletion: (event: MouseEvent) => void;
-  handleAbort: (event: MouseEvent) => void;
+  handleCompletion?: (event: MouseEvent) => void;
+  handleAbort?: (event: MouseEvent) => void;
 };
 
 export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
