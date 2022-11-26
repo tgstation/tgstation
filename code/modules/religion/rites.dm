@@ -333,7 +333,7 @@
 /datum/religion_rites/maint_adaptation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	to_chat(user, span_warning("You feel your genes rattled and reshaped. <b>You're becoming something new.</b>"))
-	user.emote("laughs")
+	user.emote("laugh")
 	ADD_TRAIT(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation")
 	//addiction sends some nasty mood effects but we want the maint adaption to be enjoyed like a fine wine
 	user.add_mood_event("maint_adaptation", /datum/mood_event/maintenance_adaptation)
@@ -400,7 +400,7 @@
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
 	to_chat(user, span_warning("[moldify] becomes rancid!"))
-	user.emote("laughs")
+	user.emote("laugh")
 	new /obj/item/food/badrecipe/moldy(get_turf(religious_tool))
 	qdel(moldify)
 	return TRUE
@@ -431,7 +431,7 @@
 	to_chat(user, span_warning("[padala] reshapes into a totem!"))
 	if(!padala.use(1))//use one wood
 		return
-	user.emote("laughs")
+	user.emote("laugh")
 	new /obj/item/ritual_totem(altar_turf)
 	return TRUE
 

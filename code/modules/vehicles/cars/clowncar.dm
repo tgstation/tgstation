@@ -201,9 +201,9 @@
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car lets out a comedic toot."))
 			playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
 			for(var/mob/living/L in orange(loc, 6))
-				L.emote("laughs")
+				L.emote("laugh")
 			for(var/mob/living/L as anything in occupants)
-				L.emote("laughs")
+				L.emote("laugh")
 
 ///resets the icon and iconstate of the clowncar after it was set to singulo states
 /obj/vehicle/sealed/car/clowncar/proc/reset_icon()

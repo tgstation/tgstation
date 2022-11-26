@@ -10,7 +10,6 @@
 	var/burden_level = 0
 
 /datum/brain_trauma/special/burdened/on_gain()
-	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(organ_added_burden))
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(organ_removed_burden))
 
@@ -25,6 +24,7 @@
 
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_TRAUMA, PROC_REF(trauma_added_burden))
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_TRAUMA, PROC_REF(trauma_removed_burden))
+	return ..()
 
 /datum/brain_trauma/special/burdened/on_lose()
 	UnregisterSignal(owner, list(
