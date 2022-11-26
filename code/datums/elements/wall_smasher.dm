@@ -6,13 +6,13 @@
 /datum/element/wall_smasher
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
-	/// Whether you can smash RWalls or not
+	/// Either ENVIRONMENT_SMASH_WALLS or ENVIRONMENT_SMASH_RWALLS, as in '_DEFINES/mobs.dm'
 	var/strength_flag
 
 /datum/element/wall_smasher/Attach(datum/target, strength_flag = ENVIRONMENT_SMASH_WALLS)
 	. = ..()
 	if (. == ELEMENT_INCOMPATIBLE)
-		return
+		return ELEMENT_INCOMPATIBLE
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
@@ -22,13 +22,13 @@
 
 	if (isanimal(target))
 		var/mob/living/simple_animal/animal_target = target
-		animal_target.environment_smash |= strength_flag
+		animal_target.environment_smash = strength_flag
 
 /datum/element/wall_smasher/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	if (isanimal(target))
 		var/mob/living/simple_animal/animal_target = target
-		animal_target.environment_smash &= ~strength_flag
+		animal_target.environment_smash = initial(animal_target.environment_smash)
 
 	return ..()
 
@@ -62,10 +62,10 @@
 	var/turf/closed/wall/wall_turf = target
 
 	if (istype(wall_turf, /turf/closed/wall/r_wall) && strength_flag != ENVIRONMENT_SMASH_RWALLS)
-		playsound(wall_turf, 'sound/effects/bang.ogg', 50, TRUE)
-		wall_turf.balloon_alert(puncher, span_warning("too tough!"))
+		playsound(wall_turf, 'sound/effects/bang.ogg', 50, vary = TRUE)
+		wall_turf.balloon_alert(puncher, "too tough!")
 		return COMPONENT_HOSTILE_NO_ATTACK
 
-	wall_turf.dismantle_wall(1)
-	playsound(wall_turf, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	wall_turf.dismantle_wall(devastated = TRUE)
+	playsound(wall_turf, 'sound/effects/meteorimpact.ogg', 100, vary = TRUE)
 	return COMPONENT_HOSTILE_NO_ATTACK

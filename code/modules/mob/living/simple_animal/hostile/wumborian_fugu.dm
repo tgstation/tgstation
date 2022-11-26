@@ -164,6 +164,5 @@
 	animal.melee_damage_upper = max((animal.melee_damage_upper * 2), 10)
 	animal.transform *= 2
 	animal.AddElement(/datum/element/wall_smasher, strength_flag = ENVIRONMENT_SMASH_RWALLS)
-	animal.environment_smash |= ENVIRONMENT_SMASH_STRUCTURES
 	to_chat(user, span_info("You increase the size of [animal], giving [animal.p_them()] a surge of strength!"))
 	qdel(src)
