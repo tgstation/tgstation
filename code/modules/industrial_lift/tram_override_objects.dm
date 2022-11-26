@@ -23,19 +23,40 @@
 	//DO NOT put something on the tram roundstart that has opacity, it WILL overload SSlighting
 	opacity = FALSE
 
-/obj/machinery/door/window/left/tram
-/obj/machinery/door/window/right/tram
+/obj/machinery/door/window/tram
+	icon = 'icons/obj/doors/tramdoor.dmi'
+	var/associated_lift = MAIN_STATION_TRAM
+	var/datum/weakref/tram_ref
+	name = "tram door"
+	desc = "Probably won't crush you if you try to rush them as they close. But we know you live on that danger, try and beat the tram!"
 
-/obj/machinery/door/window/left/tram/Initialize(mapload, set_dir, unres_sides)
+/obj/machinery/door/window/tram/left
+	icon_state = "left"
+	base_state = "left"
+
+/obj/machinery/door/window/tram/right
+	icon_state = "right"
+	base_state = "right"
+
+/obj/machinery/door/window/tram/proc/find_tram()
+	for(var/datum/lift_master/lift as anything in GLOB.active_lifts_by_type[TRAM_LIFT_ID])
+		if(lift.specific_lift_id == associated_lift)
+			tram_ref = WEAKREF(lift)
+
+/obj/machinery/door/window/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 	associated_lift = MAIN_STATION_TRAM
+	INVOKE_ASYNC(src, PROC_REF(open))
+	find_tram()
 
-/obj/machinery/door/window/right/tram/Initialize(mapload, set_dir, unres_sides)
-	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive, mapload)
-	associated_lift = MAIN_STATION_TRAM
+/obj/machinery/door/window/tram/open_and_close()
+	var/datum/lift_master/tram/tram_part = tram_ref?.resolve()
+	if(!open())
+		return
+	if(tram_part.travelling) //making a daring exit midtravel? make sure the doors don't go in the wrong state on arrival.
+		say("Emergency exit activated!")
+		return PROCESS_KILL
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/left/tram, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/right/tram, 0)
-
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/left, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/tram/right, 0)

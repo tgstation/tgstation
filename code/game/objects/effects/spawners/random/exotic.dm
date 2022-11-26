@@ -17,6 +17,7 @@
 	icon_state = "book"
 	loot = list( // A single roundstart species language book.
 		/obj/item/language_manual/roundstart_species = 100,
+		/obj/item/book/granter/sign_language = 10,
 		/obj/item/language_manual/roundstart_species/five = 3,
 		/obj/item/language_manual/roundstart_species/unlimited = 1,
 	)

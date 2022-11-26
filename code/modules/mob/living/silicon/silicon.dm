@@ -99,7 +99,7 @@
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated/syndicate(src)
+		modularInterface = new /obj/item/modular_computer/tablet/integrated/cyborg/syndicate(src)
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 

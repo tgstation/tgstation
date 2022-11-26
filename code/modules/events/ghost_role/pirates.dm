@@ -153,10 +153,12 @@
 
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()
-	for(var/obj/machinery/rnd/server/S in GLOB.machines)
+	for(var/obj/machinery/rnd/server/S as anything in SSresearch.servers)
 		if(S.machine_stat & (NOPOWER|BROKEN))
 			continue
-		S.emp_act(1)
+		if(S.stored_research != SSresearch.science_tech) //only target the station
+			continue
+		S.emp_act()
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
@@ -456,7 +458,7 @@
 /datum/export/pirate/ransom/find_loot()
 	var/list/head_minds = SSjob.get_living_heads()
 	var/list/head_mobs = list()
-	for(var/datum/mind/M in head_minds)
+	for(var/datum/mind/M as anything in head_minds)
 		head_mobs += M.current
 	if(head_mobs.len)
 		return pick(head_mobs)

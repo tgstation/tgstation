@@ -10,13 +10,13 @@
 
 // delays for the different stages of the box's state, the visuals, and the audio
 /// How long the box takes to decide what the prize is
-#define MBOX_DURATION_CHOOSING 5 SECONDS
+#define MBOX_DURATION_CHOOSING (5 SECONDS)
 /// How long the box takes to start expiring the offer, though it's still valid until MBOX_DURATION_EXPIRING finishes. Timed to the sound clips
-#define MBOX_DURATION_PRESENTING 3.5 SECONDS
+#define MBOX_DURATION_PRESENTING (3.5 SECONDS)
 /// How long the box takes to start lowering the prize back into itself. When this finishes, the prize is gone
-#define MBOX_DURATION_EXPIRING 4.5 SECONDS
+#define MBOX_DURATION_EXPIRING (4.5 SECONDS)
 /// How long after the box closes until it can go again
-#define MBOX_DURATION_STANDBY 2.7 SECONDS
+#define MBOX_DURATION_STANDBY (2.7 SECONDS)
 
 GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/lasercannon,

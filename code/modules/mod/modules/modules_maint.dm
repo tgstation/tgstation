@@ -324,7 +324,7 @@
 		playsound(current_turf, 'sound/items/modsuit/atrocinator_step.ogg', 50)
 	step_count++
 
-#define FLY_TIME 5 SECONDS
+#define FLY_TIME (5 SECONDS)
 
 /obj/item/mod/module/atrocinator/proc/fly_away()
 	you_fucked_up = TRUE

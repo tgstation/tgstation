@@ -79,7 +79,7 @@
 		return FALSE //so we can refill them via their afterattack.
 	if(istype(W, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
-			user.balloon_alert("another device is in the way!")
+			balloon_alert(user, "another device is in the way!")
 			return ..()
 		var/obj/item/assembly_holder/holder = W
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))

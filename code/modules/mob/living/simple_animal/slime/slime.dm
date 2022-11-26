@@ -120,7 +120,7 @@
 
 /mob/living/simple_animal/slime/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(on_reagent_change))
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(on_reagent_change))
 	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /// Handles removing signal hooks incase someone is crazy enough to reset the reagents datum.
@@ -345,9 +345,9 @@
 	else
 		if(stat == DEAD && surgeries.len)
 			if(!user.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
-				for(var/datum/surgery/S in surgeries)
-					if(S.next_step(user, modifiers))
-						return 1
+				for(var/datum/surgery/operations as anything in surgeries)
+					if(operations.next_step(user, modifiers))
+						return TRUE
 		if(..()) //successful attack
 			attacked += 10
 
@@ -361,9 +361,9 @@
 	if(stat == DEAD && surgeries.len)
 		var/list/modifiers = params2list(params)
 		if(!user.combat_mode || (LAZYACCESS(modifiers, RIGHT_CLICK)))
-			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user, modifiers))
-					return 1
+			for(var/datum/surgery/operations as anything in surgeries)
+				if(operations.next_step(user, modifiers))
+					return TRUE
 	if(istype(W, /obj/item/stack/sheet/mineral/plasma) && !stat) //Let's you feed slimes plasma.
 		add_friendship(user, 1)
 		to_chat(user, span_notice("You feed the slime the plasma. It chirps happily."))

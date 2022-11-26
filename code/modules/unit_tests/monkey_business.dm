@@ -25,6 +25,3 @@
 			new /datum/ai_controller/monkey(monkey)
 		monkey.ai_controller.blackboard[BB_MONKEY_TARGET_MONKEYS] = TRUE
 	sleep(monkey_timer)
-	var/monkey_runtimes = GLOB.total_runtimes - start_runtimes
-	if(monkey_runtimes)
-		TEST_FAIL("Monkey Business caused [monkey_runtimes] runtimes")

@@ -3,6 +3,7 @@
 	name = "pack of pumpkin seeds"
 	desc = "These seeds grow into pumpkin vines."
 	icon_state = "seed-pumpkin"
+	plant_icon_offset = 4
 	species = "pumpkin"
 	plantname = "Pumpkin Vines"
 	product = /obj/item/food/grown/pumpkin

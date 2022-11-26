@@ -47,6 +47,14 @@
 	results = list(/datum/reagent/consumable/choccyshake = 3)
 	required_reagents = list(/datum/reagent/consumable/coco = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
 
+/datum/chemical_reaction/drink/strawberryshake
+	results = list(/datum/reagent/consumable/strawberryshake = 3)
+	required_reagents = list(/datum/reagent/consumable/berryjuice = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
+
+/datum/chemical_reaction/drink/bananashake
+	results = list(/datum/reagent/consumable/bananashake = 3)
+	required_reagents = list(/datum/reagent/consumable/banana = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
+
 /datum/chemical_reaction/drink/pumpkin_latte
 	results = list(/datum/reagent/consumable/pumpkin_latte = 15)
 	required_reagents = list(/datum/reagent/consumable/pumpkinjuice = 5, /datum/reagent/consumable/coffee = 5, /datum/reagent/consumable/cream = 5)

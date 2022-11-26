@@ -1,9 +1,9 @@
 // The knowledge and process of heretic sacrificing.
 
 /// How long we put the target so sleep for (during sacrifice).
-#define SACRIFICE_SLEEP_DURATION 12 SECONDS
+#define SACRIFICE_SLEEP_DURATION (12 SECONDS)
 /// How long sacrifices must stay in the shadow realm to survive.
-#define SACRIFICE_REALM_DURATION 2.5 MINUTES
+#define SACRIFICE_REALM_DURATION (2.5 MINUTES)
 
 /**
  * Allows the heretic to sacrifice living heart targets.
@@ -16,6 +16,8 @@
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
 	route = PATH_START
+	/// How many targets do we generate?
+	var/num_targets_to_generate = 5
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
 	var/static/heretic_level_generated = FALSE
 	/// A weakref to the mind of our heretic.
@@ -23,27 +25,29 @@
 	/// Lazylist of minds that we won't pick as targets.
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
-	var/return_timers
+	var/list/return_timers
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force, ...)
 	heretic_mind = null
 	LAZYCLEARLIST(target_blacklist)
 	return ..()
 
-/datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, regained = FALSE)
+/datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	obtain_targets(user, silent = TRUE)
-	heretic_mind = user.mind
+	obtain_targets(user, silent = TRUE, heretic_datum = our_heretic)
+	heretic_mind = our_heretic.owner
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
-		message_admins("Generating z-level for heretic sacrifices...")
+		log_game("Generating z-level for heretic sacrifices...")
 		INVOKE_ASYNC(src, PROC_REF(generate_heretic_z_level))
 
 /// Generate the sacrifice z-level.
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/generate_heretic_z_level()
 	var/datum/map_template/heretic_sacrifice_level/new_level = new()
 	if(!new_level.load_new_z())
-		message_admins("The heretic sacrifice z-level failed to load. Any heretics are gonna have a field day disemboweling people, probably. Up to you if you're fine with it.")
+		log_game("The heretic sacrifice z-level failed to load.")
+		message_admins("The heretic sacrifice z-level failed to load. Heretic sacrifices won't be teleported to the shadow realm. \
+			If you want, you can spawn an /obj/effect/landmark/heretic somewhere to stop that from happening.")
 		CRASH("Failed to initialize heretic sacrifice z-level!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -79,7 +83,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!LAZYLEN(heretic_datum.sac_targets))
-		if(obtain_targets(user))
+		if(obtain_targets(user, heretic_datum = heretic_datum))
 			return TRUE
 		else
 			loc.balloon_alert(user, "ritual failed, no targets found!")
@@ -94,7 +98,7 @@
  *
  * Returns FALSE if no targets are found, TRUE if the targets list was populated.
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE, datum/antagonist/heretic/heretic_datum)
 
 	// First construct a list of minds that are valid objective targets.
 	var/list/datum/mind/valid_targets = list()
@@ -143,17 +147,11 @@
 			valid_targets -= department_mind
 			break
 
-	// Final target, just get someone random.
-	final_targets += pick_n_take(valid_targets)
-
-	// If any of our targets failed to aquire,
-	// Let's run a loop until we get four total, grabbing random targets.
+	// Now grab completely random targets until we'll full
 	var/target_sanity = 0
-	while(length(final_targets) < 4 && length(valid_targets) > 4 && target_sanity < 25)
+	while(length(final_targets) < num_targets_to_generate && length(valid_targets) > num_targets_to_generate && target_sanity < 25)
 		final_targets += pick_n_take(valid_targets)
 		target_sanity++
-
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 
 	if(!silent)
 		to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
@@ -216,9 +214,9 @@
 	if(!LAZYLEN(GLOB.heretic_sacrifice_landmarks))
 		CRASH("[type] - begin_sacrifice was called, but no heretic sacrifice landmarks were found!")
 
-	var/obj/effect/landmark/heretic/destination_landmark = GLOB.heretic_sacrifice_landmarks[our_heretic.heretic_path]
+	var/obj/effect/landmark/heretic/destination_landmark = GLOB.heretic_sacrifice_landmarks[our_heretic.heretic_path] || GLOB.heretic_sacrifice_landmarks[PATH_START]
 	if(!destination_landmark)
-		CRASH("[type] - begin_sacrifice could not find a destination landmark to send the sacrifice! (heretic's path: [our_heretic.heretic_path])")
+		CRASH("[type] - begin_sacrifice could not find a destination landmark OR default landmark to send the sacrifice! (Heretic's path: [our_heretic.heretic_path])")
 
 	var/turf/destination = get_turf(destination_landmark)
 
@@ -241,6 +239,7 @@
 
 	// If our target is dead, try to revive them
 	// and if we fail to revive them, don't proceede the chain
+	sac_target.adjustOxyLoss(-100, FALSE)
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
@@ -283,7 +282,8 @@
 	// If our target died during the (short) wait timer,
 	// and we fail to revive them (using a lower number than before),
 	// just disembowel them and stop the chain
-	if(!sac_target.heal_and_revive(75, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
+	sac_target.adjustOxyLoss(-100, FALSE)
+	if(!sac_target.heal_and_revive(60, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		disembowel_target(sac_target)
 		return
 
@@ -368,6 +368,7 @@
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
 	sac_target.clear_mood_event("shadow_realm")
+	sac_target.gain_trauma(/datum/brain_trauma/mild/phobia/supernatural, TRAUMA_RESILIENCE_MAGIC)
 
 	// Wherever we end up, we sure as hell won't be able to explain
 	sac_target.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/speech/slurring/heretic)

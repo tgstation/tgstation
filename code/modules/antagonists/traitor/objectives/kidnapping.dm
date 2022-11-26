@@ -168,7 +168,7 @@
 
 	var/datum/mind/target_mind = pick(possible_targets)
 	victim = target_mind.current
-	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = COMSIG_PARENT_QDELETING)
+	AddComponent(/datum/component/traitor_objective_register, victim, fail_signals = list(COMSIG_PARENT_QDELETING))
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		if(istype(possible_area, /area/station/hallway) || istype(possible_area, /area/station/security) || initial(possible_area.outdoors))
