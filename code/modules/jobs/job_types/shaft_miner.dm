@@ -17,6 +17,8 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
+	mind_traits = list(TRAIT_DETECT_STORM)
+
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 	bounty_types = CIV_JOB_MINE
 	departments_list = list(

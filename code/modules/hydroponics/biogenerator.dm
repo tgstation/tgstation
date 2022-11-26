@@ -5,8 +5,6 @@
 	icon_state = "biogenerator"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/biogenerator
-	light_power = 1
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	var/processing = FALSE
 	var/obj/item/reagent_containers/cup/beaker = null
 	var/biomass = 0
@@ -74,28 +72,26 @@
 
 /obj/machinery/biogenerator/update_appearance()
 	. = ..()
-	if((machine_stat & (NOPOWER|BROKEN)) || panel_open)
-		luminosity = 0
-		return
-	luminosity = 1 + ROUND_UP(2 * biomass / max_biomass) + (processing & 1)
+	var/power = machine_stat & (NOPOWER|BROKEN) ? 0 : 1 + biomass / max_biomass + (processing & 1)
+	set_light(MINIMUM_USEFUL_LIGHT_RANGE, power, LIGHT_COLOR_CYAN)
 
 /obj/machinery/biogenerator/update_overlays()
 	. = ..()
 	if(panel_open)
-		. += mutable_appearance(icon, "[icon_state]_o_panel", alpha = alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_panel")
 	if(beaker)
-		. += mutable_appearance(icon, "[icon_state]_o_container", alpha = alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_container")
 	if(biomass > 0)
 		var/biomass_level = min(ROUND_UP(7 * biomass / max_biomass), 7)
-		. += mutable_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", alpha = alpha)
-		. += emissive_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", src, alpha = alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_biomass_[biomass_level]")
+		. += emissive_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", src)
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(processing)
-		. += mutable_appearance(icon, "[icon_state]_o_process", alpha = alpha)
-		. += emissive_appearance(icon, "[icon_state]_o_process", src, alpha = alpha)
-	. += mutable_appearance(icon, "[icon_state]_o_screen", alpha = alpha)
-	. += emissive_appearance(icon, "[icon_state]_o_screen", src, alpha = alpha)
+		. += mutable_appearance(icon, "[icon_state]_o_process")
+		. += emissive_appearance(icon, "[icon_state]_o_process", src)
+	. += mutable_appearance(icon, "[icon_state]_o_screen")
+	. += emissive_appearance(icon, "[icon_state]_o_screen", src)
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/living/user, params)
 	if(user.combat_mode)
@@ -109,7 +105,7 @@
 			var/obj/item/reagent_containers/cup/B = beaker
 			B.forceMove(drop_location())
 			beaker = null
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return
 
 	var/turf/drop_location = drop_location()
@@ -178,42 +174,49 @@
 	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE) && can_interact(user))
 		eject_beaker(user)
 
-/**
- * activate: Activates biomass processing and converts all inserted food products into biomass
- *
- * Arguments:
- * * user The mob starting the biomass processing
- */
-/obj/machinery/biogenerator/proc/activate(mob/user)
-	if(user.stat != CONSCIOUS)
-		return
-	if(machine_stat != NONE)
+/// Activates biomass processing and converts all inserted food products into biomass
+/obj/machinery/biogenerator/proc/start_process()
+	if(machine_stat != NONE || panel_open)
 		return
 	if(processing)
-		to_chat(user, span_warning("The biogenerator is in the process of working."))
+		say("Already working!")
 		return
 	if(biomass >= max_biomass)
-		say("Warning: The biomass storage is full!")
+		say("Biomass tank is full!")
 		return
-	if(locate(/obj/item/food) in contents)
-		processing = TRUE
-		soundloop.start()
-		update_appearance()
-		for(var/obj/item/food/object in contents)
-			var/nutriments = 0
-			for(var/nutriment in typesof(/datum/reagent/consumable/nutriment))
-				nutriments += object.reagents.get_reagent_amount(nutriment)
-			qdel(object)
-			var/potential_biomass = max(1, nutriments) * productivity
-			while(processing && potential_biomass > 0)
-				use_power(active_power_usage * (0.01 SECONDS)) // Seconds needed here to convert time (in deciseconds) to seconds such that watts * seconds = joules)
-				potential_biomass -= 1
-				biomass += 1
-				stoplag(2 / productivity)
-				update_appearance(UPDATE_ICON)
-		processing = FALSE
-		soundloop.stop()
-		update_appearance()
+	if(!(locate(/obj/item/food) in contents))
+		say("No food items found!")
+		return
+	processing = TRUE
+	soundloop.start()
+	update_appearance()
+
+/obj/machinery/biogenerator/process(delta_time)
+	if(!processing)
+		return
+	if(machine_stat != NONE || panel_open)
+		stop_process()
+		return
+	if(biomass >= max_biomass)
+		say("Biomass tank is full!")
+		stop_process()
+		return
+	var/obj/item/food/object = locate(/obj/item/food) in contents
+	if(!object)
+		stop_process()
+		return
+	var/nutriments = 0
+	for(var/nutriment in typesof(/datum/reagent/consumable/nutriment))
+		nutriments += object.reagents.get_reagent_amount(nutriment)
+	qdel(object)
+	biomass = min(biomass + max(1, nutriments) * productivity, max_biomass)
+	use_power(active_power_usage * delta_time)
+	update_appearance()
+
+/obj/machinery/biogenerator/proc/stop_process()
+	processing = FALSE
+	soundloop.stop()
+	update_appearance()
 
 /obj/machinery/biogenerator/proc/use_biomass(list/materials, amount = 1, remove_biomass = TRUE)
 	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
@@ -239,7 +242,11 @@
 	if(D.build_path)
 		if(!use_biomass(D.materials, amount))
 			return FALSE
-		new D.build_path(drop_location(), amount)
+		if(istype(D.build_path, /obj/item/stack/sheet))
+			new D.build_path(drop_location(), amount)
+		else
+			for(var/i in 1 to amount)
+				new D.build_path(drop_location())
 	return TRUE
 
 /*
@@ -262,7 +269,7 @@
 		to_chat(user, span_notice("You add [inserted_beaker] to [src]."))
 
 	beaker = inserted_beaker
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /*
  * Eject the current stored beaker either into the user's hands or onto the ground.
@@ -286,7 +293,7 @@
 		beaker.forceMove(drop_location())
 
 	beaker = null
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/biogenerator/ui_status(mob/user)
 	if(machine_stat & BROKEN || panel_open)
@@ -358,7 +365,7 @@
 
 	switch(action)
 		if("activate")
-			activate(usr)
+			start_process()
 			return TRUE
 		if("eject")
 			eject_beaker(usr)

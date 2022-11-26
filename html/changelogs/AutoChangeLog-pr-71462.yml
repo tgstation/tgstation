@@ -1,0 +1,5 @@
+author: "RaveRadbury"
+delete-after: True
+changes:
+  - balance: "Obsessed has been bumped up to a Deep-Rooted Brain Trauma"
+  - balance: "Mind Restoration can't remove deep-rooted traumas, making Obsessed unremovable by virusses"

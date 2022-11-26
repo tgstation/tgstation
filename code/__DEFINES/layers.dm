@@ -236,3 +236,21 @@
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
 #define PLANE_MASTERS_COLORBLIND "plane_masters_colorblind"
+
+//Plane master critical flags
+//Describes how different plane masters behave when they are being culled for performance reasons
+/// This plane master will not go away if its layer is culled. useful for preserving effects
+#define PLANE_CRITICAL_DISPLAY (1<<0)
+/// This plane master will temporarially remove relays to non critical planes if it's layer is culled (and it's critical)
+/// This is VERY hacky, but needed to ensure that some instances of BLEND_MULITPLY work as expected (fuck you god damn parallax)
+/// It also implies that the critical plane has a *'d render target, making it mask itself
+#define PLANE_CRITICAL_NO_EMPTY_RELAY (1<<1)
+
+#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_EMPTY_RELAY)
+
+/// A value of /datum/preference/numeric/multiz_performance that disables the option
+#define MULTIZ_PERFORMANCE_DISABLE -1
+/// We expect at most 3 layers of multiz
+/// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
+/// If you modify this, you'll need to modify the tsx file too
+#define MAX_EXPECTED_Z_DEPTH 2

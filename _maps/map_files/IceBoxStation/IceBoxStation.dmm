@@ -11002,7 +11002,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "dlc" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
@@ -15448,7 +15448,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "eFd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -16449,7 +16449,7 @@
 	},
 /obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "eUW" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/landmark/start/janitor,
@@ -18684,7 +18684,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "fER" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 4
@@ -18799,7 +18799,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "fHb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/cold_temp,
@@ -24764,7 +24764,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "hAm" = (
 /turf/open/floor/iron/white/side{
 	dir = 4
@@ -24826,7 +24826,7 @@
 /obj/effect/turf_decal/tile/red/full,
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "hBv" = (
 /obj/structure/kitchenspike,
 /obj/item/stack/sheet/leather,
@@ -26790,7 +26790,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "iiR" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -28874,7 +28874,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "iPY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/segment{
@@ -31934,7 +31934,7 @@
 	name = "Brig Reception"
 	},
 /turf/open/floor/iron/dark,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "jMc" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -32282,7 +32282,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "jRh" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -34270,7 +34270,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "kxv" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -36594,7 +36594,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "lgA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -37223,7 +37223,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "lpM" = (
 /turf/closed/wall/r_wall,
 /area/station/command/heads_quarters/captain)
@@ -37579,7 +37579,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "lvT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -39122,7 +39122,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "lYJ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -40180,7 +40180,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "mqO" = (
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
@@ -40723,7 +40723,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured_large,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "mAc" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Maintenance"
@@ -45447,7 +45447,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "nTv" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/food_or_drink/cups,
@@ -47491,7 +47491,7 @@
 /area/station/maintenance/department/medical/morgue)
 "oAh" = (
 /turf/open/floor/glass/reinforced,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "oAk" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -48194,7 +48194,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "oMd" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -49888,7 +49888,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "ppp" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/stripes/line,
@@ -50157,7 +50157,7 @@
 /area/station/medical/chemistry)
 "psN" = (
 /turf/closed/wall/r_wall,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "psP" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 1
@@ -51835,7 +51835,7 @@
 	name = "Brig Reception"
 	},
 /turf/open/floor/iron/dark,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "pTf" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -61923,7 +61923,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "teQ" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -61962,7 +61962,7 @@
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "tfG" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -64407,7 +64407,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "tPY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -66337,7 +66337,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "uwH" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -69933,7 +69933,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "vDh" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/beakers{
@@ -77069,7 +77069,7 @@
 	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "xIS" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/item/radio/intercom/directional/east,
@@ -77236,7 +77236,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/checkpoint/auxiliary)
+/area/station/security/brig/entrance)
 "xLS" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9

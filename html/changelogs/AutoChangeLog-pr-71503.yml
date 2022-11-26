@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - admin: "removed message_admins message for tram malfunction failing to run on maps that aren't tram"
