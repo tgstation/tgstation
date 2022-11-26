@@ -161,11 +161,6 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 /obj/machinery/deepfryer/proc/fry(obj/item/frying_item, mob/user)
 	to_chat(user, span_notice("You put [frying_item] into [src]."))
-	if(istype(frying_item, /obj/item/transfer_valve))
-		log_bomber(user, "put a TTV in a", src)
-		var/obj/item/transfer_valve/valve = frying_item
-		valve.toggle_valve()
-		///if it doesn't blow up, congratulations! it's inert anyways, so we don't care if it's deep fried anymore
 	if(istype(frying_item, /obj/item/freeze_cube))
 		log_bomber(user, "put a freeze cube in a", src)
 		visible_message(span_userdanger("[src] starts glowing... Oh no..."))

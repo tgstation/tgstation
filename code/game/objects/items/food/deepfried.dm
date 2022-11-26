@@ -36,6 +36,11 @@
 	if(!(SEND_SIGNAL(fried, COMSIG_ITEM_FRIED, src) & COMSIG_FRYING_HANDLED)) //If frying is handled by signal don't do the defaault behavior.
 		fried.forceMove(src)
 
+	if(istype(fried, /obj/item/transfer_valve))
+		var/obj/item/transfer_valve/valve = fried
+		log_bomber(null, "TTV valve opened via deepfrying", src, "last fingerprints = [valve.fingerprintslast]")
+		valve.toggle_valve()
+		///if it doesn't blow up, congratulations! it's inert anyways, so we don't care if it's deep fried anymore
 
 /obj/item/food/deepfryholder/Destroy()
 	if(contents)
