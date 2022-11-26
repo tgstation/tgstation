@@ -14,7 +14,7 @@
 			icon_file = initial(D.research_icon)
 			icon_state = initial(D.research_icon_state)
 			#ifdef UNIT_TESTS
-			if(!(icon_state in icon_states(icon_file)))
+			if(!icon_exists(icon_file, icon_state))
 				stack_trace("design [D] with icon '[icon_file]' missing state '[icon_state]'")
 				continue
 			#endif
@@ -47,7 +47,7 @@
 
 			icon_state = initial(item.icon_state)
 			#ifdef UNIT_TESTS
-			if(!(icon_state in icon_states(icon_file)))
+			if(!icon_exists(icon_file, icon_state))
 				stack_trace("design [D] with icon '[icon_file]' missing state '[icon_state]'")
 				continue
 			#endif

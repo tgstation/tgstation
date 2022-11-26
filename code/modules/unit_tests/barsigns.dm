@@ -5,14 +5,13 @@
 
 /datum/unit_test/barsigns_icon/Run()
 	var/obj/structure/sign/barsign_type = /obj/structure/sign/barsign
-	var/icon/barsign_icon = initial(barsign_type.icon)
-	var/list/barsign_icon_states = icon_states(barsign_icon)
+	var/barsign_icon = (barsign_type.icon)
 
 	// Check every datum real bar sign
 	for(var/sign_type in (subtypesof(/datum/barsign) - /datum/barsign/hiddensigns))
 		var/datum/barsign/sign = new sign_type()
 
-		if(!(sign.icon in barsign_icon_states))
+		if(!(icon_exists(sign.icon, barsign_icon)))
 			TEST_FAIL("Icon state for [sign_type] does not exist in [barsign_icon].")
 
 /**
