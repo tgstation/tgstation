@@ -48,6 +48,8 @@
 		underfloor_accessibility = UNDERFLOOR_VISIBLE
 		layer = CATWALK_LAYER
 		icon_state = "[catwalk_type]_above"
+
+	levelupdate()
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	tool.play_tool_sound(src)
 	update_appearance()
