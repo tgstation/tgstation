@@ -1747,3 +1747,10 @@
 		if(!paper_to_show)
 			return
 		paper_to_show.ui_interact(usr)
+
+	else if(href_list["reply_fax"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/datum/fax_panel_interface/ui = new(usr)
+		ui.ui_interact(usr)
