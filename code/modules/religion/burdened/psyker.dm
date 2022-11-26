@@ -54,15 +54,15 @@
 	var/obj/item/nullrod/transformation_target
 
 /datum/religion_rites/nullrod_transformation/perform_rite(mob/living/user, atom/religious_tool)
-	for(var/obj/item/nullrod/nullrod in get_turf(religious_tool))
-		transformation_target = rod
+	for(var/obj/item/nullrod/null_rod in get_turf(religious_tool))
+		transformation_target = nullrod
 		return ..()
 	to_chat(user, span_warning("You need to place a null rod on [religious_tool] to do this!"))
 	return FALSE
 
 /datum/religion_rites/nullrod_transformation/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/nullrod/nullrod = transformation_target
+	var/obj/item/nullrod/null_rod = transformation_target
 	transformation_target = null
 	qdel(nullrod)
 /*	if(QDELETED(moldify) || !(get_turf(religious_tool) == moldify.loc)) //check if the same food is still there

@@ -112,7 +112,7 @@
 		if(new_eyes.tint < TINT_BLIND) //unless you added unworking eyes (flashlight eyes), this is removing burden
 			update_burden(FALSE)
 		return
-	else if(istype(old_organ, /obj/item/organ/internal/appendix))
+	else if(istype(new_organ, /obj/item/organ/internal/appendix))
 		return
 
 	update_burden(increase = FALSE)//working organ

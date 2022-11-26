@@ -143,11 +143,11 @@
 	slot_flags = null
 	show_written_words = FALSE
 
-	//info set in here because we need GLOB.deity
+//info set in here because we need GLOB.deity
 /obj/item/paper/holy_writ/Initialize(mapload)
 	add_filter("holy_outline", 9, list("type" = "outline", "color" = "#fdff6c"))
 	name = "[GLOB.deity]'s honorbound rules"
-	info = {"[GLOB.deity]'s honorbound rules:
+	default_raw_text = {"[GLOB.deity]'s honorbound rules:
 	<br>
 	1.) Thou shalt not attack the unready!<br>
 	Those who are not ready for battle should not be wrought low. The evil of this world must lose
