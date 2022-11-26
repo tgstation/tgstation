@@ -1,20 +1,16 @@
-
-///Burdened grants some more mutations upon injuring yourself sufficiently
-/datum/mutation/human/burdened
-	name = "Burdened"
-	desc = "Less of a genome and more of a forceful rewrite of genes. Nothing Nanotrasen supplies allows for a genetic restructure like this... \
-	The user feels compelled to injure themselves in various incapacitating and horrific ways. Oddly enough, this gene seems to be connected \
-	to several other ones, possibly ready to trigger more genetic changes in the future."
-	quality = POSITIVE //so it gets carried over on revives
-	locked = TRUE
-	text_gain_indication = "<span class='notice'>You feel burdened!</span>"
-	text_lose_indication = "<span class='warning'>You no longer feel the need to burden yourself!</span>"
+///Burdened grants some mutations upon injuring yourself sufficiently
+/datum/brain_trauma/special/burdened
+	name = "Flagellating Compulsions"
+	desc = "Patient feels compelled to injure themselves in various incapacitating and horrific ways. There seems to be an odd genetic... trigger, following these compulsions may lead to?"
+	scan_desc = "damaged frontal lobe"
+	gain_text = span_notice("You feel burdened!")
+	lose_text = span_warning("You no longer feel the need to burden yourself!")
+	random_gain = FALSE
 	/// goes from 0 to 9 (but can be beyond 9, just does nothing) and gives rewards. increased by disabling yourself with debuffs
 	var/burden_level = 0
 
-/datum/mutation/human/burdened/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
+/datum/brain_trauma/special/burdened/on_gain()
+	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(organ_added_burden))
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(organ_removed_burden))
 
@@ -30,8 +26,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_TRAUMA, PROC_REF(trauma_added_burden))
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_TRAUMA, PROC_REF(trauma_removed_burden))
 
-/datum/mutation/human/burdened/on_losing(mob/living/carbon/human/owner)
-	. = ..()
+/datum/brain_trauma/special/burdened/on_lose()
 	UnregisterSignal(owner, list(
 		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_CARBON_LOSE_ORGAN,
@@ -44,6 +39,7 @@
 		COMSIG_CARBON_GAIN_TRAUMA,
 		COMSIG_CARBON_LOSE_TRAUMA,
 		))
+	return ..()
 
 /**
  * Called by hooked signals whenever burden_level var needs to go up or down by 1.
@@ -52,11 +48,15 @@
  * Arguments:
  * * increase: whether to tick burden_level up or down 1
  */
-/datum/mutation/human/burdened/proc/update_burden(increase)
+/datum/brain_trauma/special/burdened/proc/update_burden(increase)
+	var/datum/dna/dna = owner?.dna
+	if(!dna)
+		qdel(src)
+		return
 	//adjust burden
 	burden_level = increase ? burden_level + 1 : burden_level - 1
 	if(burden_level < 0) //basically a clamp with a stack on it, because this shouldn't be happening
-		stack_trace("somehow, burden mutation is removing more burden than it's adding.")
+		stack_trace("somehow, burden trauma is removing more burden than it's adding.")
 		burden_level = 0
 	//send a message and handle rewards
 	switch(burden_level)
@@ -101,7 +101,7 @@
 			dna.add_mutation(/datum/mutation/human/mindreader)
 
 /// Signal to decrease burden_level (see update_burden proc) if an organ is added
-/datum/mutation/human/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)
+/datum/brain_trauma/special/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER
 
 	if(special) //aheals
@@ -118,7 +118,7 @@
 	update_burden(increase = FALSE)//working organ
 
 /// Signal to increase burden_level (see update_burden proc) if an organ is removed
-/datum/mutation/human/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
+/datum/brain_trauma/special/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
 
 	if(special) //aheals
@@ -135,7 +135,7 @@
 	update_burden(increase = TRUE)//lost organ
 
 /// Signal to decrease burden_level (see update_burden proc) if a limb is added
-/datum/mutation/human/burdened/proc/limbs_added_burden(datum/source, obj/item/bodypart/new_limb, special)
+/datum/brain_trauma/special/burdened/proc/limbs_added_burden(datum/source, obj/item/bodypart/new_limb, special)
 	SIGNAL_HANDLER
 
 	if(special) //something we don't wanna consider, like instaswapping limbs
@@ -143,7 +143,7 @@
 	update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a limb is removed
-/datum/mutation/human/burdened/proc/limbs_removed_burden(datum/source, obj/item/bodypart/old_limb, special)
+/datum/brain_trauma/special/burdened/proc/limbs_removed_burden(datum/source, obj/item/bodypart/old_limb, special)
 	SIGNAL_HANDLER
 
 	if(special) //something we don't wanna consider, like instaswapping limbs
@@ -151,44 +151,40 @@
 	update_burden(increase = TRUE)
 
 /// Signal to increase burden_level (see update_burden proc) if an addiction is added
-/datum/mutation/human/burdened/proc/addict_added_burden(datum/addiction/new_addiction, datum/mind/addict_mind)
+/datum/brain_trauma/special/burdened/proc/addict_added_burden(datum/addiction/new_addiction, datum/mind/addict_mind)
 	SIGNAL_HANDLER
 
 	update_burden(increase = TRUE)
 
 /// Signal to decrease burden_level (see update_burden proc) if an addiction is removed
-/datum/mutation/human/burdened/proc/addict_removed_burden(datum/addiction/old_addiction, datum/mind/nonaddict_mind)
+/datum/brain_trauma/special/burdened/proc/addict_removed_burden(datum/addiction/old_addiction, datum/mind/nonaddict_mind)
 	SIGNAL_HANDLER
 
 	update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a mutation is added
-/datum/mutation/human/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type, class)
+/datum/brain_trauma/special/burdened/proc/mutation_added_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type, class)
 	SIGNAL_HANDLER
 
-	if(class == MUT_OTHER) //getting a mutation can give a mutation as a reward, which in turn triggers this, which then rewards a mutation, which in turn...
-		return
 	if(initial(mutation_type.quality) == NEGATIVE)
 		update_burden(increase = TRUE)
 
 /// Signal to decrease burden_level (see update_burden proc) if a mutation is removed
-/datum/mutation/human/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type)
+/datum/brain_trauma/special/burdened/proc/mutation_removed_burden(mob/living/carbon/burdened, datum/mutation/human/mutation_type)
 	SIGNAL_HANDLER
 
-	if(class == MUT_OTHER) //see above
-		return
 	if(initial(mutation_type.quality) == NEGATIVE)
 		update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a trauma is added
-/datum/mutation/human/burdened/proc/trauma_added_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_added)
+/datum/brain_trauma/special/burdened/proc/trauma_added_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_added)
 	SIGNAL_HANDLER
 
 	if(istype(trauma_added, /datum/brain_trauma/severe))
 		update_burden(increase = TRUE)
 
 /// Signal to decrease burden_level (see update_burden proc) if a trauma is removed
-/datum/mutation/human/burdened/proc/trauma_removed_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_removed)
+/datum/brain_trauma/special/burdened/proc/trauma_removed_burden(mob/living/carbon/burdened, datum/brain_trauma/trauma_removed)
 	SIGNAL_HANDLER
 
 	if(istype(trauma_removed, /datum/brain_trauma/severe))

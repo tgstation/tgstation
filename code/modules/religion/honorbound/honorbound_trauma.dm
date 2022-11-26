@@ -1,21 +1,14 @@
-
 ///Honorbound prevents you from attacking the unready, the just, or the innocent
-/datum/mutation/human/honorbound
-	name = "Honorbound"
-	desc = "Less of a genome and more of a forceful rewrite of genes. Nothing Nanotrasen supplies allows for a genetic restructure like this... \
-	The user feels compelled to follow supposed \"rules of combat\" but in reality they physically are unable to. \
-	Their brain is rewired to excuse any curious inabilities that arise from this odd effect."
-	quality = POSITIVE //so it gets carried over on revives
-	power_path = /datum/action/cooldown/spell/pointed/declare_evil
-	locked = TRUE
-	text_gain_indication = "<span class='notice'>You feel honorbound!</span>"
-	text_lose_indication = "<span class='warning'>You feel unshackled from your code of honor!</span>"
+/datum/brain_trauma/special/honorbound
+	name = "Dogmatic Compulsions"
+	desc = "Patient feels compelled to follow supposed \"rules of combat\"."
+	scan_desc = "damaged frontal lobe"
+	gain_text = span_notice("You feel honorbound!")
+	lose_text = span_warning("You feel unshackled from your code of honor!")
 	/// list of guilty people
 	var/list/guilty = list()
 
-/datum/mutation/human/honorbound/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
+/datum/brain_trauma/special/honorbound/on_gain()
 	//moodlet
 	owner.add_mood_event("honorbound", /datum/mood_event/honorbound)
 	//checking spells cast by honorbound
@@ -31,8 +24,11 @@
 
 	//signal that checks for dishonorable attacks
 	RegisterSignal(owner, COMSIG_MOB_CLICKON, PROC_REF(attack_honor))
+	var/datum/action/cooldown/spell/pointed/declare_evil = new(src)
+	declare_evil.Grant(owner)
+	return ..()
 
-/datum/mutation/human/honorbound/on_losing(mob/living/carbon/human/owner)
+/datum/brain_trauma/special/honorbound/on_lose(silent)
 	owner.clear_mood_event("honorbound")
 	UnregisterSignal(owner, list(
 		COMSIG_PARENT_ATTACKBY,
@@ -44,11 +40,11 @@
 		COMSIG_MOB_CLICKON,
 		COMSIG_MOB_CAST_SPELL,
 		COMSIG_MOB_FIRED_GUN,
-		))
-	. = ..()
+	))
+	return ..()
 
-/// Signal to see if the mutation allows us to attack a target
-/datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, list/modifiers)
+/// Signal to see if the trauma allows us to attack a target
+/datum/brain_trauma/special/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
@@ -69,14 +65,14 @@
 		return (COMSIG_MOB_CANCEL_CLICKON)
 
 /**
- * Called by hooked signals whenever someone attacks the person with this mutation
+ * Called by hooked signals whenever someone attacks the person with this trauma
  * Checks if the attacker should be considered guilty and adds them to the guilty list if true
  *
  * Arguments:
  * * user: person who attacked the honorbound
  * * declaration: if this wasn't an attack, but instead the honorbound spending favor on declaring this person guilty
  */
-/datum/mutation/human/honorbound/proc/guilty(mob/living/user, declaration = FALSE)
+/datum/brain_trauma/special/honorbound/proc/guilty(mob/living/user, declaration = FALSE)
 	if(user in guilty)
 		return
 	var/datum/mind/guilty_conscience = user.mind
@@ -95,10 +91,10 @@
  * Called by attack_honor signal to check whether an attack should be allowed or not
  *
  * Arguments:
- * * honorbound_human: typecasted owner of mutation
+ * * honorbound_human: typecasted owner of the trauma
  * * target_creature: person honorbound_human is attacking
  */
-/datum/mutation/human/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
+/datum/brain_trauma/special/honorbound/proc/is_honorable(mob/living/carbon/human/honorbound_human, mob/living/target_creature)
 	var/is_guilty = (target_creature in guilty)
 	//THE UNREADY (Applies over ANYTHING else!)
 	if(honorbound_human == target_creature)
@@ -124,25 +120,25 @@
 	return TRUE
 
 // SIGNALS THAT ARE FOR BEING ATTACKED FIRST (GUILTY)
-/datum/mutation/human/honorbound/proc/attackby_guilt(datum/source, obj/item/I, mob/attacker)
+/datum/brain_trauma/special/honorbound/proc/attackby_guilt(datum/source, obj/item/I, mob/attacker)
 	SIGNAL_HANDLER
 	if(I.force && I.damtype != STAMINA)
 		guilty(attacker)
 
-/datum/mutation/human/honorbound/proc/hulk_guilt(datum/source, mob/attacker)
+/datum/brain_trauma/special/honorbound/proc/hulk_guilt(datum/source, mob/attacker)
 	SIGNAL_HANDLER
 	guilty(attacker)
 
-/datum/mutation/human/honorbound/proc/hand_guilt(datum/source, mob/living/attacker)
+/datum/brain_trauma/special/honorbound/proc/hand_guilt(datum/source, mob/living/attacker)
 	SIGNAL_HANDLER
 	if(attacker.combat_mode)
 		guilty(attacker)
 
-/datum/mutation/human/honorbound/proc/paw_guilt(datum/source, mob/living/attacker)
+/datum/brain_trauma/special/honorbound/proc/paw_guilt(datum/source, mob/living/attacker)
 	SIGNAL_HANDLER
 	guilty(attacker)
 
-/datum/mutation/human/honorbound/proc/bullet_guilt(datum/source, obj/projectile/proj)
+/datum/brain_trauma/special/honorbound/proc/bullet_guilt(datum/source, obj/projectile/proj)
 	SIGNAL_HANDLER
 	var/mob/living/shot_honorbound = source
 	var/static/list/guilty_projectiles = typecacheof(list(
@@ -157,7 +153,7 @@
 	if(!proj.nodamage && proj.damage < shot_honorbound.health && isliving(proj.firer))
 		guilty(proj.firer)
 
-/datum/mutation/human/honorbound/proc/thrown_guilt(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
+/datum/brain_trauma/special/honorbound/proc/thrown_guilt(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	if(isitem(thrown_movable))
 		var/mob/living/honorbound = source
@@ -167,11 +163,11 @@
 			guilty(thrown_by)
 
 //spell checking
-/datum/mutation/human/honorbound/proc/spell_check(mob/user, datum/action/cooldown/spell/spell_cast)
+/datum/brain_trauma/special/honorbound/proc/spell_check(mob/user, datum/action/cooldown/spell/spell_cast)
 	SIGNAL_HANDLER
 	punishment(user, spell_cast.school)
 
-/datum/mutation/human/honorbound/proc/staff_check(mob/user, obj/item/gun/gun_fired, target, params, zone_override)
+/datum/brain_trauma/special/honorbound/proc/staff_check(mob/user, obj/item/gun/gun_fired, target, params, zone_override)
 	SIGNAL_HANDLER
 	if(!istype(gun_fired, /obj/item/gun/magic))
 		return
@@ -182,19 +178,19 @@
  * Called when a spell is casted or a magic gun is fired, checks the signal and punishes accordingly
  *
  * Arguments:
- * * user: typecasted owner of mutation
+ * * user: typecasted owner of trauma
  * * school: school of magic casted from the staff/spell
  */
-/datum/mutation/human/honorbound/proc/punishment(mob/living/carbon/human/user, school)
+/datum/brain_trauma/special/honorbound/proc/punishment(mob/living/carbon/human/user, school)
 	switch(school)
 		if(SCHOOL_HOLY, SCHOOL_MIME, SCHOOL_RESTORATION)
 			return
 		if(SCHOOL_NECROMANCY, SCHOOL_FORBIDDEN, SCHOOL_SANGUINE)
 			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
 			lightningbolt(user)
-			owner.add_mood_event("honorbound", /datum/mood_event/banished)
-			user.dna.remove_mutation(/datum/mutation/human/honorbound)
 			user.mind.holy_role = NONE
+			qdel(src)
+			owner.add_mood_event("honorbound", /datum/mood_event/banished) //add mood event after we already cleared our events
 			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		else
 			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [school] magic!"))
@@ -219,8 +215,8 @@
 
 	/// The amount of favor required to declare on someone
 	var/required_favor = 150
-	/// A ref to our owner's honorbound mutation
-	var/datum/mutation/human/honorbound/honor_mutation
+	/// A ref to our owner's honorbound trauma
+	var/datum/brain_trauma/special/honorbound/honor_trauma
 	/// The declaration that's shouted in invocation. Set in New()
 	var/declaration = "By the divine light of my deity, you are an evil of this world that must be wrought low!"
 
@@ -230,9 +226,9 @@
 
 /datum/action/cooldown/spell/pointed/declare_evil/Destroy()
 	// If we had an owner, Destroy() called Remove(), and already handled this
-	if(honor_mutation)
-		UnregisterSignal(honor_mutation, COMSIG_PARENT_QDELETING)
-		honor_mutation = null
+	if(honor_trauma)
+		UnregisterSignal(honor_trauma, COMSIG_PARENT_QDELETING)
+		honor_trauma = null
 	return ..()
 
 /datum/action/cooldown/spell/pointed/declare_evil/Grant(mob/grant_to)
@@ -240,21 +236,21 @@
 		return FALSE
 
 	var/mob/living/carbon/human/human_owner = grant_to
-	var/datum/mutation/human/honorbound/honor_mut = human_owner.dna?.check_mutation(/datum/mutation/human/honorbound)
-	if(QDELETED(honor_mut))
+	var/datum/brain_trauma/special/honorbound/honorbound = human_owner.has_trauma_type(/datum/brain_trauma/special/honorbound)
+	if(QDELETED(honorbound))
 		return FALSE
 
-	RegisterSignal(honor_mut, COMSIG_PARENT_QDELETING, PROC_REF(on_honor_mutation_lost))
-	honor_mutation = honor_mut
+	RegisterSignal(honorbound, COMSIG_PARENT_QDELETING, PROC_REF(on_honor_trauma_lost))
+	honor_trauma = honorbound
 	return ..()
 
 /datum/action/cooldown/spell/pointed/declare_evil/Remove(mob/living/remove_from)
 	. = ..()
-	UnregisterSignal(honor_mutation, COMSIG_PARENT_QDELETING)
-	honor_mutation = null
+	UnregisterSignal(honor_trauma, COMSIG_PARENT_QDELETING)
+	honor_trauma = null
 
-/// If we lose our honor mutation somehow, self-delete (and clear references)
-/datum/action/cooldown/spell/pointed/declare_evil/proc/on_honor_mutation_lost(datum/source)
+/// If we lose our honor trauma somehow, self-delete (and clear references)
+/datum/action/cooldown/spell/pointed/declare_evil/proc/on_honor_trauma_lost(datum/source)
 	SIGNAL_HANDLER
 
 	qdel(src)
@@ -264,9 +260,6 @@
 	if(!.)
 		return FALSE
 
-	// This shouldn't technically be a possible state, but you never know
-	if(!honor_mutation)
-		return FALSE
 	if(GLOB.religious_sect.favor < required_favor)
 		if(feedback)
 			to_chat(owner, span_warning("You need at least 150 favor to declare someone evil!"))
@@ -315,4 +308,4 @@
 /datum/action/cooldown/spell/pointed/declare_evil/cast(mob/living/cast_on)
 	. = ..()
 	GLOB.religious_sect.adjust_favor(-required_favor, owner)
-	honor_mutation.guilty(cast_on, declaration = TRUE)
+	honor_trauma.guilty(cast_on, declaration = TRUE)
