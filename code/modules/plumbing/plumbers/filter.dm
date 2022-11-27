@@ -1,9 +1,10 @@
 ///chemical plumbing filter. If it's not filtered by left and right, it goes straight.
 /obj/machinery/plumbing/filter
-	name = "chemical filter"
+	name = "Chemical Filter"
 	desc = "A chemical filter for filtering chemicals. The left and right outputs appear to be from the perspective of the input port."
 	icon_state = "filter"
 	density = FALSE
+	category="Distribution"
 
 	///whitelist of chems id's that go to the left side. Empty to disable port
 	var/list/left = list()
@@ -41,11 +42,11 @@
 			var/selected_reagent = tgui_input_list(usr, "Select [which] reagent", "Reagent", GLOB.chemical_name_list)
 			if(!selected_reagent)
 				return TRUE
-				
+
 			var/chem_id = get_chem_id(selected_reagent)
 			if(!chem_id)
 				return TRUE
-				
+
 			switch(which)
 				if("left")
 					if(!left.Find(chem_id))

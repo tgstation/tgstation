@@ -105,7 +105,6 @@ const CategoryItem = (props, context) => {
 };
 
 const SelectionSection = (props, context) => {
-  const { act, data } = useBackend(context);
   return (
     <Section>
       <LabeledList>
@@ -141,7 +140,6 @@ export const LayerSelect = (props, context) => {
 
 const PreviewSelect = (props, context) => {
   const { act, data } = useBackend(context);
-  const { category: rootCategoryIndex } = data;
   const previews = data.preview_rows.flatMap((row) => row.previews);
   return (
     <Box width="120px">
@@ -178,9 +176,8 @@ const PreviewSelect = (props, context) => {
 };
 
 const LayerSection = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const { category: rootCategoryIndex, piping_layer } = data;
-  const previews = data.preview_rows.flatMap((row) => row.previews);
   return (
     <Section fill width={7.5}>
       {rootCategoryIndex === 0 && <LayerSelect />}
@@ -236,7 +233,6 @@ const PipeTypeSection = (props, context) => {
 export const SmartPipeBlockSection = (props, context) => {
   const { act, data } = useBackend(context);
   const init_directions = data.init_directions || [];
-  const { category: rootCategoryIndex } = data;
   return (
     <Section height={7.5}>
       <Stack fill vertical textAlign="center">

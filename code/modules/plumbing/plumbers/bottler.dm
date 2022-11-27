@@ -1,5 +1,5 @@
 /obj/machinery/plumbing/bottler
-	name = "chemical bottler"
+	name = "Chemical Bottler"
 	desc = "Puts reagents into containers, like bottles and beakers in the tile facing the green light spot, they will exit on the red light spot if successfully filled."
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -8,6 +8,9 @@
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 100
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+
+	category="Storage"
+
 	///how much do we fill
 	var/wanted_amount = 10
 	///where things are sent

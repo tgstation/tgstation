@@ -5,13 +5,15 @@
 
 ///this the plumbing version of a heater/freezer.
 /obj/machinery/plumbing/acclimator
-	name = "chemical acclimator"
+	name = "Chemical Acclimator"
 	desc = "An efficient cooler and heater for the perfect showering temperature or illicit chemical factory."
 
 	icon_state = "acclimator"
 	base_icon_state = "acclimator"
 	buffer = 200
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+
+	category="Storage"
 
 	///towards wich temperature do we build?
 	var/target_temperature = 300

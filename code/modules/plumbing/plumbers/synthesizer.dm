@@ -1,11 +1,14 @@
 ///A single machine that produces a single chem. Can be placed in unison with others through plumbing to create chemical factories
 /obj/machinery/plumbing/synthesizer
-	name = "chemical synthesizer"
+	name = "Chemical Synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed. Most effective when working in unison with other chemical synthesizers, heaters and filters."
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+
+	category="Synthesizers"
+
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
 	///I track them here because I have no idea how I'd make tgui loop like that
@@ -108,7 +111,7 @@
 	. += r_overlay
 
 /obj/machinery/plumbing/synthesizer/soda
-	name = "soda synthesizer"
+	name = "Soda Synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed."
 	icon_state = "synthesizer_soda"
 
@@ -140,7 +143,7 @@
 	)
 
 /obj/machinery/plumbing/synthesizer/beer
-	name = "beer synthesizer"
+	name = "Beer Synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed."
 
 	icon_state = "synthesizer_booze"

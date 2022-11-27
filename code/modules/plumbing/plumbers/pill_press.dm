@@ -1,9 +1,11 @@
 ///We take a constant input of reagents, and produce a pill once a set volume is reached
 /obj/machinery/plumbing/pill_press
-	name = "chemical press"
+	name = "Chemical Press"
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	category="Storage"
+
 	///maximum size of a pill
 	var/max_pill_volume = 50
 	///maximum size of a patch

@@ -328,13 +328,15 @@
 
 ///modified IV that can be anchored and takes plumbing in- and output
 /obj/machinery/iv_drip/plumbing
-	name = "automated IV drip"
+	name = "Automated IV Drip"
 	desc = "A modified IV drip with plumbing connects. Reagents received from the connect are injected directly into their bloodstream, blood that is drawn goes to the internal storage and then into the ducting."
 	icon_state = "plumb"
 	base_icon_state = "plumb"
 
 	density = TRUE
 	use_internal_storage = TRUE
+
+	var/category = "Storage"
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload)
 	. = ..()

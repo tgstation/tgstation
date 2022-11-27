@@ -1,9 +1,12 @@
 ///Used to make mobs from microbiological samples. Grow grow grow.
 /obj/machinery/plumbing/growing_vat
-	name = "growing vat"
+	name = "Growing Vat"
 	desc = "Tastes just like the chef's soup."
 	icon_state = "growing_vat"
 	buffer = 300
+	category="Synthesizers"
+
+
 	///List of all microbiological samples in this soup.
 	var/datum/biological_sample/biological_sample
 	///If the vat will restart the sample upon completion

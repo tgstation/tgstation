@@ -1,12 +1,14 @@
 ///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
 
 /obj/machinery/plumbing/reaction_chamber
-	name = "mixing chamber"
+	name = "Mixing Chamber"
 	desc = "Keeps chemicals separated until given conditions are met."
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	category="Synthesizers"
+
 	/**
 	* list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
@@ -119,7 +121,7 @@
 
 ///Chemistry version of reaction chamber that allows for acid and base buffers to be used while reacting
 /obj/machinery/plumbing/reaction_chamber/chem
-	name = "reaction chamber"
+	name = "Reaction Chamber"
 
 	///If above this pH, we start dumping buffer into it
 	var/acidic_limit = 9

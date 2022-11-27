@@ -1098,8 +1098,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/blueprint = null
 	///index, used in the attack self to get the type. stored here since it doesnt change
 	var/list/choices = list()
-	///index, used in the attack self to get the type. stored here since it doesnt change
-	var/list/name_to_type = list()
 	///All info for construction
 	var/list/machinery_data = list("cost" = list())
 	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
@@ -1109,13 +1107,46 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	///Current selected color, for ducts
 	var/current_color = "omni"
 
+
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()
+
+	//design types supported for this plumbing rcd
 	set_plumbing_designs()
 
-/obj/item/construction/plumbing/examine(mob/user)
-	. = ..()
-	. += span_notice("Alt-Click to change layer and duct color.")
+	//set cost of each machine & initial blueprint
+	for(var/obj/machinery/plumbing/plumbing_type as anything in plumbing_design_types)
+		machinery_data["cost"][plumbing_type] = plumbing_design_types[plumbing_type]
+	blueprint =  plumbing_design_types[1]
+
+/obj/item/construction/plumbing/proc/set_plumbing_designs()
+	plumbing_design_types = list(
+		//category 1 Synthesizers i.e devices which creates , reacts & destroys chemicals
+		/obj/machinery/plumbing/synthesizer = 15,
+		/obj/machinery/plumbing/reaction_chamber/chem = 15,
+		/obj/machinery/plumbing/grinder_chemical = 30,
+		/obj/machinery/plumbing/growing_vat = 20,
+		/obj/machinery/plumbing/fermenter = 30,
+		/obj/machinery/plumbing/liquid_pump = 35,   //extracting chemicals from ground is one way of creation
+		/obj/machinery/plumbing/disposer = 10,
+		/obj/machinery/plumbing/buffer = 10,       //creates chemicals as it waits for other buffers containing other chemicals and when mixed creates new chemicals
+
+		//category 2 distributors i.e devices which inject , move around , remove chemicals from the network
+		/obj/machinery/duct = 1,
+		/obj/machinery/plumbing/layer_manifold = 5,
+		/obj/machinery/plumbing/input = 5,
+		/obj/machinery/plumbing/filter = 5,
+		/obj/machinery/plumbing/splitter = 5,
+		/obj/machinery/plumbing/sender = 20,
+		/obj/machinery/plumbing/output = 5,
+
+		//category 3 Storage i.e devices which stores & makes the processed chemicals ready for consumption
+		/obj/machinery/plumbing/tank = 20,
+		/obj/machinery/plumbing/acclimator = 10,
+		/obj/machinery/plumbing/bottler = 50,
+		/obj/machinery/plumbing/pill_press = 20,
+		/obj/machinery/iv_drip/plumbing = 20
+	)
 
 /obj/item/construction/plumbing/equipped(mob/user, slot, initial)
 	. = ..()
@@ -1133,53 +1164,96 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return ..()
 
 /obj/item/construction/plumbing/attack_self(mob/user)
-	..()
-	if(!choices.len)
-		for(var/obj/machinery/plumbing/plumbing_type as anything in plumbing_design_types)
-			choices += list(initial(plumbing_type.name) = image(initial(plumbing_type.icon), icon_state = initial(plumbing_type.icon_state)))
-			name_to_type[initial(plumbing_type.name)] = plumbing_type
-			machinery_data["cost"][plumbing_type] = plumbing_design_types[plumbing_type]
+	ui_interact(user)
 
-	// Update duct icon
-	var/image/duct_image = choices["fluid duct"]
-	duct_image.color = current_color
+/obj/item/construction/plumbing/examine(mob/user)
+	. = ..()
+	. += "You can scroll your mouse wheel to change the piping layer."
+	. += "You can right click a fluid duct to set the Plumbing RPD to its color and layer."
 
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
-	if(!choice || !check_menu(user))
+/obj/item/construction/plumbing/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PlumbingService", name)
+		ui.open()
+
+/obj/item/construction/plumbing/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/PlumbingService),
+	)
+
+/obj/item/construction/plumbing/ui_static_data(mob/user)
+	var/list/data = list("paint_colors" = GLOB.pipe_paint_colors)
+	return data
+
+/obj/item/construction/plumbing/ui_data(mob/user)
+	var/obj/machinery/b = blueprint
+	//map string layer to number layer . calculations don't look nice but better than creating an list in memory to do the mapping
+	var/layer = GLOB.plumbing_layers[current_layer]
+	if(layer == 16)   //max bit flag means layer 5
+		layer = 5
+	else if(layer > 2) //for bit flags 4 & 8 we do bitflag/4 + 2 . for example 4/4 + 2 = 3[layer 3], 8/4 +2 = 4[layer 4]
+		layer = (layer / 4) + 2
+
+	var/list/data = list()
+	data["piping_layer"] = layer
+	data["selected_color"] = current_color
+	data["icon"] = initial(b.icon_state)
+
+	var/index = 1
+	var/list/category_list = list()
+	var/selected = initial(b.name)
+	var/category = ""
+
+	for(var/obj/machinery/recipe as anything in plumbing_design_types)
+		category = ""  //find category of each design type
+		if(ispath(recipe , /obj/machinery/plumbing))
+			var/obj/machinery/plumbing/p = recipe
+			category = initial(p.category)
+		else if(ispath(recipe , /obj/machinery/duct))
+			var/obj/machinery/duct/p = recipe
+			category = initial(p.category)
+		else
+			var/obj/machinery/iv_drip/plumbing/p = recipe
+			category = initial(p.category)
+
+		var/list/item = list()
+		item["index"] = index++
+		item["name"] = initial(recipe.name)
+		item["selected"] = selected == initial(recipe.name)
+
+		if(!category_list[category])
+			var/list/item_list = list()
+			item_list["cat_name"] = category //used by RapidPipeDispenser.js
+			item_list["recipes"] = list()
+			category_list[category] = item_list
+
+		category_list[category]["recipes"] += list(item)
+
+	data["categories"] = list()
+	for(category in category_list)
+		data["categories"] += list(category_list[category])
+
+	return data
+
+/obj/item/construction/plumbing/ui_act(action, params)
+	. = ..()
+	if(.)
 		return
 
-	blueprint = name_to_type[choice]
-	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
-	to_chat(user, span_notice("You change [name]s blueprint to '[choice]'."))
+	switch(action)
+		if("color")
+			current_color = params["paint_color"]
+		if("piping_layer")
+			var/bitflag = text2num(params["piping_layer"])  //convert from layer number back to layer string
+			bitflag = 1 << (bitflag - 1)
+			current_layer = GLOB.plumbing_layer_names["[bitflag]"]
+		if("recipe")
+			blueprint = plumbing_design_types[text2num(params["id"])]
+			playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 
-/**
- * Set the list of designs this plumbing rcd can make
- */
-/obj/item/construction/plumbing/proc/set_plumbing_designs()
-	plumbing_design_types = list(
-	// Note that the list MUST include fluid ducts.
-	/obj/machinery/duct = 1,
-	/obj/machinery/plumbing/input = 5,
-	/obj/machinery/plumbing/output = 5,
-	/obj/machinery/plumbing/tank = 20,
-	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/reaction_chamber/chem = 15,
-	/obj/machinery/plumbing/buffer = 10,
-	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line, unless they're probably gonna be needed alot
-	/obj/machinery/plumbing/layer_manifold = 5,
-	/obj/machinery/plumbing/pill_press = 20,
-	/obj/machinery/plumbing/acclimator = 10,
-	/obj/machinery/plumbing/bottler = 50,
-	/obj/machinery/plumbing/disposer = 10,
-	/obj/machinery/plumbing/fermenter = 30,
-	/obj/machinery/plumbing/filter = 5,
-	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/liquid_pump = 35,
-	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/sender = 20,
-	/obj/machinery/plumbing/growing_vat = 20,
-	/obj/machinery/iv_drip/plumbing = 20
-)
+	return TRUE
+
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
 /obj/item/construction/plumbing/proc/create_machine(atom/destination, mob/user)
@@ -1230,6 +1304,17 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			if(duct_machine.duct_layer & layer_id)
 				return FALSE
 
+/obj/item/construction/plumbing/pre_attack_secondary(obj/machinery/target, mob/user, params)
+	if(!istype(target, /obj/machinery/duct))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	var/obj/machinery/duct/duct = target
+	if(duct.duct_layer && duct.duct_color)
+		current_color = GLOB.pipe_color_name[duct.duct_color]
+		current_layer = GLOB.plumbing_layer_names["[duct.duct_layer]"]
+		to_chat(user, span_notice("You change [src] to [current_color] color and layer [current_layer] pipes."))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!prox_check(proximity))
@@ -1246,70 +1331,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		create_machine(target, user)
 
 /obj/item/construction/plumbing/AltClick(mob/user)
-	// give a menu to pick layers or colors
-	var/list/options_menu = list(
-		"Current Layer" = image('icons/hud/radial.dmi', icon_state = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"),
-		"Current Color" = image('icons/hud/radial.dmi', icon_state = current_color),
-	)
+	ui_interact(user)
 
-	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/choice = show_radial_menu(user, src, options_menu, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
-	if(!check_menu(user))
-		return
-
-	switch(choice)
-		if("Current Layer")
-			choose_layer_menu(user)
-		if("Current Color")
-			choose_color_menu(user)
-
-/**
- * Choose the current layer via radial menu.
- *
- * Arguments:
- * * user - current user.
- */
-/obj/item/construction/plumbing/proc/choose_layer_menu(mob/user)
-	if(!GLOB.plumbing_layer_menu_options.len)
-		for(var/layer_name in GLOB.plumbing_layers)
-			GLOB.plumbing_layer_menu_options += list((layer_name) = image('icons/hud/radial.dmi', icon_state = "plumbing_layer[GLOB.plumbing_layers[layer_name]]"))
-
-	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/new_layer = show_radial_menu(user, src, GLOB.plumbing_layer_menu_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
-	if(!new_layer || !check_menu(user))
-		return
-
-	current_layer = new_layer
-	to_chat(user, span_notice("You set the layer to [new_layer]."))
-
-/**
- * Choose the current color via radial menu.
- *
- * Arguments:
- * * user - current user.
- */
-/obj/item/construction/plumbing/proc/choose_color_menu(mob/user)
-	if(!GLOB.plumbing_color_menu_options.len)
-		for(var/color_name in GLOB.pipe_paint_colors)
-			GLOB.plumbing_color_menu_options += list((color_name) = image('icons/hud/radial.dmi', icon_state = color_name))
-
-	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/new_color = show_radial_menu(user, src, GLOB.plumbing_color_menu_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
-	if(!new_color || !check_menu(user))
-		return
-
-	current_color = new_color
-	to_chat(user, span_notice("You set the color to [new_color]."))
-
-/**
- * Choose layer via mouse wheel, like an RPD
- *
- * Arguments:
- * * source - the user
- * * A - the atom being selected, unused.
- * * delta_x - X scroll delta
- * * delta_y - Y scroll delta
- */
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
 	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
@@ -1340,17 +1363,22 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/plumbing/research/set_plumbing_designs()
 	plumbing_design_types = list(
-		/obj/machinery/duct = 1,
-		/obj/machinery/plumbing/input = 5,
-		/obj/machinery/plumbing/output = 5,
-		/obj/machinery/plumbing/tank = 20,
-		/obj/machinery/plumbing/acclimator = 10,
-		/obj/machinery/plumbing/filter = 5,
+		//category 1 synthesizers
 		/obj/machinery/plumbing/reaction_chamber = 15,
 		/obj/machinery/plumbing/grinder_chemical = 30,
-		/obj/machinery/plumbing/splitter = 5,
 		/obj/machinery/plumbing/disposer = 10,
-		/obj/machinery/plumbing/growing_vat = 20
+		/obj/machinery/plumbing/growing_vat = 20,
+
+		//category 2 Distributors
+		/obj/machinery/duct = 1,
+		/obj/machinery/plumbing/input = 5,
+		/obj/machinery/plumbing/filter = 5,
+		/obj/machinery/plumbing/splitter = 5,
+		/obj/machinery/plumbing/output = 5,
+
+		//category 3 storage
+		/obj/machinery/plumbing/tank = 20,
+		/obj/machinery/plumbing/acclimator = 10,
 	)
 
 /obj/item/construction/plumbing/service
@@ -1361,23 +1389,31 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/plumbing/service/set_plumbing_designs()
 	plumbing_design_types = list(
-	/obj/machinery/duct = 1,
-	/obj/machinery/plumbing/input = 5,
-	/obj/machinery/plumbing/output/tap = 5,
-	/obj/machinery/plumbing/synthesizer/soda = 15,
-	/obj/machinery/plumbing/synthesizer/beer = 15,
-	/obj/machinery/plumbing/reaction_chamber = 15,
-	/obj/machinery/plumbing/buffer = 10,
-	/obj/machinery/plumbing/bottler = 50,
-	/obj/machinery/plumbing/tank = 20,
-	/obj/machinery/plumbing/filter = 5,
-	/obj/machinery/plumbing/layer_manifold = 5,
-	/obj/machinery/plumbing/acclimator = 10,
-	/obj/machinery/plumbing/fermenter = 30,
-	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/disposer = 10,
-	/obj/machinery/plumbing/sender = 20,
+		//category 1 synthesizers
+		/obj/machinery/plumbing/synthesizer/soda = 15,
+		/obj/machinery/plumbing/synthesizer/beer = 15,
+		/obj/machinery/plumbing/reaction_chamber = 15,
+		/obj/machinery/plumbing/buffer = 10,
+		/obj/machinery/plumbing/fermenter = 30,
+		/obj/machinery/plumbing/grinder_chemical = 30,
+		/obj/machinery/plumbing/disposer = 10,
+
+
+		//category 2 distributors
+		/obj/machinery/duct = 1,
+		/obj/machinery/plumbing/layer_manifold = 5,
+		/obj/machinery/plumbing/input = 5,
+		/obj/machinery/plumbing/filter = 5,
+		/obj/machinery/plumbing/splitter = 5,
+		/obj/machinery/plumbing/output/tap = 5,
+		/obj/machinery/plumbing/sender = 20,
+
+		//category 3 storage
+		/obj/machinery/plumbing/bottler = 50,
+		/obj/machinery/plumbing/tank = 20,
+		/obj/machinery/plumbing/acclimator = 10,
 	)
+
 
 
 /obj/item/rcd_upgrade

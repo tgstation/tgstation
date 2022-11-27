@@ -2526,6 +2526,7 @@
 #include "code\modules\asset_cache\assets\plane_debug.dm"
 #include "code\modules\asset_cache\assets\portraits.dm"
 #include "code\modules\asset_cache\assets\radar.dm"
+#include "code\modules\asset_cache\assets\PlumbingService.dm"
 #include "code\modules\asset_cache\assets\research_designs.dm"
 #include "code\modules\asset_cache\assets\safe.dm"
 #include "code\modules\asset_cache\assets\seeds.dm"

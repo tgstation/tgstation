@@ -3,11 +3,12 @@
 #define READY 2
 
 /obj/machinery/plumbing/buffer
-	name = "automatic buffer"
+	name = "Automatic Buffer"
 	desc = "A chemical holding tank that waits for neighbouring automatic buffers to complete before allowing a withdrawal. Connect/reset by screwdrivering"
 	icon_state = "buffer"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // It looks short enough.
 	buffer = 200
+	category="Synthesizers"
 
 	var/datum/buffer_net/buffer_net
 	var/activation_volume = 100

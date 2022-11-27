@@ -15,6 +15,8 @@
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
 
+	var/category = ""
+
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
 	set_anchored(bolt)
@@ -54,11 +56,13 @@
 
 ///We can empty beakers in here and everything
 /obj/machinery/plumbing/input
-	name = "input gate"
+	name = "Input Gate"
 	desc = "Can be manually filled with reagents from containers."
 	icon_state = "pipe_input"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | REFILLABLE
+	category="Distribution"
+
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -66,11 +70,14 @@
 
 ///We can fill beakers in here and everything. we dont inheret from input because it has nothing that we need
 /obj/machinery/plumbing/output
-	name = "output gate"
+	name = "Output Gate"
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
 	icon_state = "pipe_output"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | DRAINABLE
+	//category for plumbing service rcd
+	category="Distribution"
+
 
 /obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -80,12 +87,14 @@
 	name = "drinking tap"
 	desc = "A manual output for plumbing systems, for taking drinks directly into glasses."
 	icon_state = "tap_output"
+	category = "Distribution"
 
 /obj/machinery/plumbing/tank
-	name = "chemical tank"
+	name = "Chemical Tank"
 	desc = "A massive chemical holding tank."
 	icon_state = "tank"
 	buffer = 400
+	category="Storage"
 
 /obj/machinery/plumbing/tank/Initialize(mapload, bolt, layer)
 	. = ..()
@@ -94,10 +103,12 @@
 
 ///Layer manifold machine that connects a bunch of layers
 /obj/machinery/plumbing/layer_manifold
-	name = "layer manifold"
+	name = "Layer Manifold"
 	desc = "A plumbing manifold for layers."
 	icon_state = "manifold"
 	density = FALSE
+	//category for plumbing service rcd
+	category="Distribution"
 
 /obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)
 	. = ..()

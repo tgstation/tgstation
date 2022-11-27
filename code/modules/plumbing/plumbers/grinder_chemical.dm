@@ -1,5 +1,5 @@
 /obj/machinery/plumbing/grinder_chemical
-	name = "chemical grinder"
+	name = "Chemical Grinder"
 	desc = "chemical grinder."
 	icon_state = "grinder_chemical"
 	layer = ABOVE_ALL_MOB_LAYER
@@ -9,6 +9,8 @@
 	buffer = 400
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 	var/eat_dir = SOUTH
+
+	category="Synthesizers"
 
 /obj/machinery/plumbing/grinder_chemical/Initialize(mapload, bolt, layer)
 	. = ..()

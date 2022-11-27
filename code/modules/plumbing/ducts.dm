@@ -4,12 +4,15 @@ All the important duct code:
 /code/datums/ductnet.dm
 */
 /obj/machinery/duct
-	name = "fluid duct"
+	name = "Fluid Duct"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
 	layer = PLUMBING_PIPE_VISIBILE_LAYER
 
 	use_power = NO_POWER_USE
+
+	//category for plumbing service rcd
+	var/category="Distribution"
 
 	///bitfield with the directions we're connected in
 	var/connects
