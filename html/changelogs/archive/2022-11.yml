@@ -979,3 +979,23 @@
   - bugfix: limits how much you get alerted by icebox storms
   theOOZ:
   - balance: Paramedics get to have mining station access
+2022-11-27:
+  ATHATH:
+  - bugfix: The shocks from the spell packets spell are no longer blocked by insulated
+      gloves.
+  Jacquerel:
+  - bugfix: Sheep are no longer immune to weaponry.
+  LT3:
+  - spellcheck: Tram Malfunction event now successfully announces 'successfully.'
+  RaveRadbury:
+  - balance: Obsessed has been bumped up to a Deep-Rooted Brain Trauma
+  - balance: Mind Restoration can't remove deep-rooted traumas, making Obsessed unremovable
+      by virusses
+  Tattle:
+  - admin: removed message_admins message for tram malfunction failing to run on maps
+      that aren't tram
+  flowercuco:
+  - qol: pdas have a wrench deconstruct screentip
+  - bugfix: wrenching a pda no longer destroys all contents inside
+  - bugfix: roundstart empty mugs now appear to be empty
+  - bugfix: nanotrasen mug no longer becomes normal mug after you drink from it
