@@ -1179,7 +1179,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/plumbing/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/PlumbingService),
+		get_asset_datum(/datum/asset/spritesheet/plumbing),
 	)
 
 /obj/item/construction/plumbing/ui_static_data(mob/user)
