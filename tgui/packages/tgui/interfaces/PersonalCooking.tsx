@@ -68,6 +68,12 @@ type Recipe = {
   reqs: Ingredient[];
   category: string;
   foodtypes: string[];
+  is_guide: BooleanLike;
+  is_reaction: BooleanLike;
+  steps: string[];
+  tool_paths: string[];
+  catalysts: Ingredient[];
+  machinery: string[];
 };
 
 type Diet = {
@@ -341,20 +347,22 @@ const RecipeContentCompact = (props, context) => {
               </Box>
             </Stack.Item>
             <Stack.Item>
-              <Button
-                my={0.3}
-                lineHeight={2.5}
-                align="center"
-                content="Make"
-                disabled={!props.craftable || props.busy}
-                icon={props.busy ? 'circle-notch' : 'utensils'}
-                iconSpin={props.busy ? 1 : 0}
-                onClick={() =>
-                  act('make', {
-                    recipe: item.ref,
-                  })
-                }
-              />
+              {!item.is_guide && (
+                <Button
+                  my={0.3}
+                  lineHeight={2.5}
+                  align="center"
+                  content="Make"
+                  disabled={!props.craftable || props.busy}
+                  icon={props.busy ? 'circle-notch' : 'utensils'}
+                  iconSpin={props.busy ? 1 : 0}
+                  onClick={() =>
+                    act('make', {
+                      recipe: item.ref,
+                    })
+                  }
+                />
+              )}
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -392,44 +400,125 @@ const RecipeContent = (props, context) => {
                 {item.name}
               </Box>
               <Box color={'gray'}>{item.desc}</Box>
+              <Box style={{ 'text-transform': 'capitalize' }}>
+                {item.reqs && (
+                  <Box>
+                    <Stack my={1}>
+                      <Stack.Item grow>
+                        <hr style={{ 'border-color': '#111' }} />
+                      </Stack.Item>
+                      <Stack.Item color={'gray'}>Ingredients</Stack.Item>
+                      <Stack.Item grow>
+                        <hr style={{ 'border-color': '#111' }} />
+                      </Stack.Item>
+                    </Stack>
+                    {flow([
+                      sortBy((item: Ingredient) => item.path),
+                      map((item: Ingredient) => (
+                        <IngredientContent key={item.path} item={item} />
+                      )),
+                    ])(item.reqs)}
+                  </Box>
+                )}
+                {item.catalysts && (
+                  <Box>
+                    <Stack my={1}>
+                      <Stack.Item grow>
+                        <hr style={{ 'border-color': '#111' }} />
+                      </Stack.Item>
+                      <Stack.Item color={'gray'}>Catalysts</Stack.Item>
+                      <Stack.Item grow>
+                        <hr style={{ 'border-color': '#111' }} />
+                      </Stack.Item>
+                    </Stack>
+                    {flow([
+                      sortBy((item: Ingredient) => item.path),
+                      map((item: Ingredient) => (
+                        <IngredientContent key={item.path} item={item} />
+                      )),
+                    ])(item.catalysts)}
+                  </Box>
+                )}
+                {item.tool_paths && (
+                  <Box>
+                    <Stack my={1}>
+                      <Stack.Item grow>
+                        <hr style={{ 'border-color': '#111' }} />
+                      </Stack.Item>
+                      <Stack.Item color={'gray'}>Tools</Stack.Item>
+                      <Stack.Item grow>
+                        <hr style={{ 'border-color': '#111' }} />
+                      </Stack.Item>
+                    </Stack>
+                    {item.tool_paths.map((item) => (
+                      <Box key={item}>{item}</Box>
+                    ))}
+                  </Box>
+                )}
+                {item.machinery && (
+                  <Box>
+                    <Stack my={1}>
+                      <Stack.Item grow>
+                        <hr style={{ 'border-color': '#111' }} />
+                      </Stack.Item>
+                      <Stack.Item color={'gray'}>Machinery</Stack.Item>
+                      <Stack.Item grow>
+                        <hr style={{ 'border-color': '#111' }} />
+                      </Stack.Item>
+                    </Stack>
+                    {item.machinery.map((item) => (
+                      <Box key={item}>{item}</Box>
+                    ))}
+                  </Box>
+                )}
+              </Box>
+              {item.is_guide && !!item.steps?.length && (
+                <Box>
+                  <Stack my={1}>
+                    <Stack.Item grow>
+                      <hr style={{ 'border-color': '#111' }} />
+                    </Stack.Item>
+                    <Stack.Item color={'gray'}>Steps</Stack.Item>
+                    <Stack.Item grow>
+                      <hr style={{ 'border-color': '#111' }} />
+                    </Stack.Item>
+                  </Stack>
+                  <ul style={{ 'padding-left': '20px' }}>
+                    {item.steps.map((step) => (
+                      <li key={step}>{step}</li>
+                    ))}
+                  </ul>
+                </Box>
+              )}
             </Stack.Item>
             <Stack.Item>
-              <Button
-                width="104px"
-                lineHeight={2.5}
-                align="center"
-                content="Make"
-                disabled={!props.craftable || props.busy}
-                icon={props.busy ? 'circle-notch' : 'utensils'}
-                iconSpin={props.busy ? 1 : 0}
-                onClick={() =>
-                  act('make', {
-                    recipe: item.ref,
-                  })
-                }
-              />
-            </Stack.Item>
-          </Stack>
-          <hr style={{ 'border-color': '#111' }} />
-          <Stack>
-            <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
-              {item.reqs &&
-                flow([
-                  sortBy((item: Ingredient) => item.path),
-                  map((item: Ingredient) => (
-                    <IngredientContent key={item.path} item={item} />
-                  )),
-                ])(item.reqs)}
-            </Stack.Item>
-            <Stack.Item color={'gray'} width={'104px'} lineHeight={1.5}>
-              {item.foodtypes?.length > 0 &&
-                item.foodtypes.map((foodtype) => (
-                  <TypeContent
-                    key={item.ref}
-                    type={foodtype}
-                    diet={props.diet}
-                  />
-                ))}
+              {!item.is_guide && (
+                <Button
+                  width="104px"
+                  lineHeight={2.5}
+                  align="center"
+                  content="Make"
+                  disabled={!props.craftable || props.busy}
+                  icon={props.busy ? 'circle-notch' : 'utensils'}
+                  iconSpin={props.busy ? 1 : 0}
+                  onClick={() =>
+                    act('make', {
+                      recipe: item.ref,
+                    })
+                  }
+                />
+              )}
+              {item.foodtypes?.length > 0 && (
+                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
+                  {item.foodtypes.map((foodtype) => (
+                    <TypeContent
+                      key={item.ref}
+                      type={foodtype}
+                      diet={props.diet}
+                    />
+                  ))}
+                </Box>
+              )}
             </Stack.Item>
           </Stack>
         </Stack.Item>

@@ -33,6 +33,10 @@
 	var/list/machinery
 	///Should only one object exist on the same turf?
 	var/one_per_turf = FALSE
+	/// Steps needed to achieve the result
+	var/list/steps
+	/// Is this recipe a guide that doesn't need crafting
+	var/is_guide
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))

@@ -1,6 +1,7 @@
 /datum/crafting_recipe/food
 	var/real_parts
 	category = CAT_FOOD
+	var/datum/chemical_reaction/food/reaction
 
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
 	ADD_TRAIT(result, TRAIT_FOOD_CHEF_MADE, REF(user))

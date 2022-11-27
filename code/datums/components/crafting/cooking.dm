@@ -15,7 +15,7 @@
 /datum/component/cooking
 	var/busy
 	var/display_craftable_only = FALSE
-	var/display_compact = TRUE
+	var/display_compact = FALSE
 
 /* This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -355,7 +355,7 @@
 		if (!ispath(R.type, /datum/crafting_recipe/food/) || R.type == /datum/crafting_recipe/food)
 			continue
 
-		if(check_contents(user, R, surroundings))
+		if(check_contents(user, R, surroundings) && check_tools(user, R, surroundings))
 			craftability["[REF(R)]"] = TRUE
 
 	data["craftability"] = craftability
@@ -462,10 +462,47 @@
 
 	return data
 
-/datum/component/cooking/proc/build_cooking_data(datum/crafting_recipe/recipe)
+/datum/component/cooking/proc/build_cooking_data(datum/crafting_recipe/food/recipe)
 	var/list/data = list()
 	data["name"] = recipe.name
 	data["ref"] = "[REF(recipe)]"
+
+	if(recipe.machinery)
+		data["machinery"] = recipe.machinery
+	if(recipe.is_guide)
+		data["is_guide"] = recipe.is_guide
+	if(recipe.steps)
+		data["steps"] = recipe.steps
+	if(recipe.tool_paths)
+		data["tool_paths"] = recipe.tool_paths
+
+	if(recipe.reaction)
+		data["is_reaction"] = TRUE
+		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[recipe.reaction]
+		recipe.reqs = reaction.required_reagents
+		if(!data["steps"])
+			data["steps"] = list()
+		if(recipe.reqs.len > 1)
+			data["steps"] += "Mix all ingredients together"
+		if(reaction.required_temp > T20C)
+			data["steps"] += "Heat up to [reaction.required_temp]K"
+		if(reaction.required_container)
+			var/atom/req_atom = reaction.required_container
+			data["reqs"] += list(list(
+				"path" = req_atom,
+				"name" = initial(req_atom.name),
+				"amount" = recipe.reqs[req_atom],
+				"is_reagent" = ispath(req_atom, /datum/reagent/)
+			))
+			data["steps"] += "Add all ingredients into the [initial(req_atom.name)]"
+		if(reaction.required_catalysts)
+			for(var/atom/req_atom as anything in reaction.required_catalysts)
+				data["catalysts"] += list(list(
+					"path" = req_atom,
+					"name" = initial(req_atom.name),
+					"amount" = reaction.required_catalysts[req_atom],
+					"is_reagent" = ispath(req_atom, /datum/reagent/)
+				))
 
 	for(var/atom/req_atom as anything in recipe.reqs)
 		data["reqs"] += list(list(
@@ -487,6 +524,6 @@
 				data["foodtypes"] += type
 		data["foodtypes"] = foodtypes
 	else
-		data["desc"] = "Not an item"
+		data["desc"] = "This is not a food item."
 
 	return data
