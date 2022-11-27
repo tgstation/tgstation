@@ -7,6 +7,7 @@
 		/datum/action/cooldown/spell/charged/psychic_booster,
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
+	organ_traits = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 
 /obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
 	if(!istype(inserted_into.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
@@ -212,7 +213,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	spell_max_level = 1
 	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	cast_range = 5
 	active_msg = "You prepare to psychically project to a target..."
 	/// Duration of the effects.
@@ -286,7 +287,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	spell_max_level = 1
 	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	channel_message = span_notice("You focus on your trigger fingers...")
 	charge_overlay_icon = 'icons/effects/effects.dmi'
 	charge_overlay_state = "purplesparkles"
@@ -335,14 +336,15 @@
 	school = SCHOOL_HOLY
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 0 SECONDS
-	antimagic_flags = NONE
+	antimagic_flags = MAGIC_RESISTANCE_MIND
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	spell_max_level = 1
 	invocation_type = INVOCATION_NONE
 	wall_type = /obj/effect/forcefield/psychic
 
 /datum/action/cooldown/spell/forcewall/psychic_wall/spawn_wall(turf/cast_turf)
 	. = ..()
-	play_fov_effect(cast_turf, 5, "forcefield", time = 5 SECONDS)
+	play_fov_effect(cast_turf, 5, "forcefield", time = 10 SECONDS)
 
 /obj/item/reagent_containers/pill/psyker //for testmerge
 	name = "pill that definitely does not give you psychic powers"
