@@ -341,3 +341,15 @@
 /datum/action/cooldown/spell/forcewall/psychic_wall/spawn_wall(turf/cast_turf)
 	. = ..()
 	play_fov_effect(cast_turf, 5, "forcefield", time = 5 SECONDS)
+
+/obj/item/reagent_containers/pill/psyker //for testmerge
+	name = "pill that definitely does not give you psychic powers"
+	desc = "DO NOT EAT!"
+	icon_state = "pill4"
+	list_reagents = list(/datum/reagent/drug/happiness = 5)
+
+/obj/item/reagent_containers/pill/psyker/on_consumption(mob/living/carbon/human/consoomer, mob/user)
+	. = ..()
+	if(!istype(consoomer))
+		return
+	consoomer.psykerize()
