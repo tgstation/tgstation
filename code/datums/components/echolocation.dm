@@ -36,7 +36,7 @@
 
 /datum/component/echolocation/Destroy(force, silent)
 	STOP_PROCESSING(SSobj, src)
-	var/mob/echolocator = parent
+	var/mob/living/echolocator = parent
 	echolocator.cure_blind(ECHOLOCATION_TRAIT)
 	echolocator.clear_fullscreen("echo")
 	for(var/timeframe in images)
