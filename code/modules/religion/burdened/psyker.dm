@@ -26,6 +26,13 @@
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED, TRAIT_BLIND)
 
+/obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
+	. = ..()
+	if(!. || !new_head_owner.dna?.species)
+		return
+	new_head_owner.dna.species.species_traits |= NOEYESPRITES //MAKE VISUALS TIED TO BODYPARTS ARGHH
+	new_head_owner.update_body()
+
 /mob/living/carbon/human/proc/psykerize()
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD))
 		return
@@ -43,6 +50,7 @@
 	if(stat == DEAD || !old_head || !old_brain)
 		return
 	to_chat(src, span_userdanger("Your head splits open! Your brain mutates!"))
+	playsound(src, 'sound/effects/blobattack.ogg', 50, vary = TRUE)
 	emote("scream")
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
 	psyker_head.receive_damage(brute = 50)
