@@ -222,6 +222,8 @@
 
 /datum/action/cooldown/spell/pointed/psychic_projection/cast(mob/living/carbon/human/cast_on)
 	. = ..()
+	if(!istype(cast_on))
+		return FALSE
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("Your mind feels weird, but it passes momentarily."))
 		to_chat(owner, span_warning("The spell had no effect!"))
