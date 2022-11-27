@@ -283,8 +283,8 @@
 		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
-		var/obj/R = new rods_type(drop_location(), rods_amount)
-		transfer_fingerprints_to(R)
+		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
+		transfer_fingerprints_to(dropped_rods)
 
 /obj/structure/grille/proc/repair_grille()
 	if(broken)
