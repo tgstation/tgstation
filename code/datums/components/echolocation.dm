@@ -13,7 +13,7 @@
 
 /datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static)
 	. = ..()
-	var/mob/echolocator = parent
+	var/mob/living/echolocator = parent
 	if(!istype(echolocator))
 		return COMPONENT_INCOMPATIBLE
 	if(!allowed_paths)
