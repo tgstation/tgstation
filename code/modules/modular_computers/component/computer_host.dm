@@ -1,6 +1,8 @@
 /datum/modular_computer_host
 	///Our object that holds us
 	var/obj/physical
+	///Is our object broken?
+	var/nonfunctional
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
@@ -256,12 +258,9 @@
 
 	return TRUE
 
-/datum/modular_computer_host/proc/nonfunctional()
-	return physical.atom_integrity <= physical.integrity_failure * physical.max_integrity
-
 /datum/modular_computer_host/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
-	if(nonfunctional())
+	if(nonfunctional)
 		if(issynth)
 			to_chat(user, span_warning("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
 		else
@@ -351,7 +350,7 @@
  * inserting_id - the ID being inserted
  * user - The person inserting the ID
  */
-/datum/modular_computer_host/proc/insert_id(obj/item/card/inserting_id, mob/user)
+/datum/modular_computer_host/proc/insert_card(obj/item/card/inserting_id, mob/user)
 	//all slots taken
 	if(computer_id_slot)
 		return FALSE
@@ -377,9 +376,6 @@
  * user - The mob trying to remove the ID, if there is one
  */
 /datum/modular_computer_host/proc/remove_card(mob/user)
-	if(!computer_id_slot)
-		return
-
 	if(user)
 		if(!issilicon(user) && in_range(src, user))
 			user.put_in_hands(computer_id_slot)
@@ -395,7 +391,6 @@
 		var/mob/living/carbon/human/human_wearer = user
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
-	return TRUE
 
 /datum/modular_computer_host/proc/do_emag(mob/user, obj/item/card/emag/card)
 	SIGNAL_HANDLER
@@ -413,15 +408,13 @@
 	SIGNAL_HANDLER
 
 	// Check for ID first
-	if(isidcard(attacking_item) && insert_id(attacking_item, user))
+	if(isidcard(attacking_item) && insert_card(attacking_item, user))
 		return COMPONENT_NO_AFTERATTACK
 
 	// Check for cash next
 	if(computer_id_slot && iscash(attacking_item))
-		var/obj/item/card/id/inserted_id = computer_id_slot.GetID()
-		if(inserted_id)
-			inserted_id.attackby(attacking_item, user) // If we do, try and put that attacking object in
-			return COMPONENT_NO_AFTERATTACK
+		INVOKE_ASYNC(computer_id_slot, TYPE_PROC_REF(/obj/item/card/id, attackby), attacking_item, user) // If we do, try and put that attacking object in (cant sleep, so call asynchronously)
+		return COMPONENT_NO_AFTERATTACK
 
 	// Inserting a pAI
 	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
@@ -453,7 +446,7 @@
 			physical.balloon_alert(user, "no more room!")
 			return COMPONENT_NO_AFTERATTACK
 		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
-			return FALSE
+			return
 		physical.balloon_alert(user, "inserted paper")
 		qdel(attacking_item)
 		stored_paper++
@@ -495,7 +488,9 @@
 // On-click handling. Turns on the computer if it's off and opens the GUI.
 /datum/modular_computer_host/proc/do_interact(mob/user)
 	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(interact), user)
 
+/datum/modular_computer_host/proc/interact(mob/user)
 	if(powered_on)
 		ui_interact(user)
 	else
@@ -509,11 +504,12 @@
 	if(!user.canUseTopic(src, be_close = TRUE))
 		return
 
-	if(remove_id(user))
-		return
+	if(!computer_id_slot)
+		INVOKE_ASYNC(src, PROC_REF(remove_card), user)
+		return COMPONENT_CANCEL_CLICK_ALT
 
 	if(istype(inserted_pai)) // Remove pAI
-		user.put_in_hands(inserted_pai)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), inserted_pai)
 		physical.balloon_alert(user, "removed pAI")
 		inserted_pai = null
 		return COMPONENT_CANCEL_CLICK_ALT
