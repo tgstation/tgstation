@@ -1,0 +1,4 @@
+author: "supergrog2"
+delete-after: True
+changes:
+  - bugfix: "fixes grilles dropping stack of 0 iron rods"

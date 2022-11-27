@@ -915,3 +915,87 @@
       level and situation.
   - code_imp: improves a formatting and comment spelling
   - bugfix: The Causality field now actually shows up!
+2022-11-26:
+  Fikou:
+  - balance: premium internals station trait now increases the slots of your internals
+      box
+  GoblinBackwards:
+  - bugfix: Fixed being unable to open the necropolis gate when standing behind it
+  - bugfix: Fixed being able to move through floors and get to centcomm when moving
+      up/down while inside mechs and similar movable objects.
+  - bugfix: fixed armblades and digitigrade legs not showing up in the limb grower
+  GoldenAlpharex:
+  - bugfix: PDAs (and by extension, modular computers) now can see the ID section
+      at the top of their main screen again, which means that PDAs can have IDs imprinted
+      on them again.
+  - bugfix: Fixes the ID section not displaying anything when there wasn't any ID
+      inserted in it, even if it had an imprinted name and job.
+  - bugfix: Fixes the "Eject ID" and "Imprint ID" buttons not being disabled when
+      there's no ID in the computer/PDA.
+  - bugfix: There's no longer any empty () by in the "ID Name" and "Assignment" fields
+      of the ID section of computers when there's no ID in them.
+  Jacquerel:
+  - bugfix: Rabbits don't suddenly become more dense when killed than they were in
+      life.
+  JohnFulpWillard:
+  - bugfix: Wirecarp now lets you give people mass PDA perms again.
+  LT3:
+  - imageadd: New railing pillar tram crossing signals.
+  - qol: Vending machines next to the tram are now against the wall.
+  - bugfix: Tramstation floor decals no longer guide you to walk into the vending
+      machines.
+  - rscadd: The tram stations now have no-slip hazard floor tiles so you don't accidentally
+      slip and get smacked. Feel free to still run into it anyways, medbay has a counter
+      now so they'll know.
+  LemonInTheDark:
+  - bugfix: Lavaland fauna will no longer be able to mine
+  - rscadd: Adds a new rendering option to the gameplay preferences. You can now limit
+      the rendering intensity of multiz levels. This will make things look a bit worse,
+      but run a LOT better. Try it out if your machine chokes on icebox or somethin.
+  MTandi:
+  - bugfix: biogenerator now properly gives non-stackable items
+  - refactor: biogenerator backend optimization
+  - rscadd: You can stick IV drip into anything that is a reagent container (injection
+      only)
+  - qol: IV drip transfer rate can be zeroed to stop the flow without removing the
+      needle
+  - qol: IV drip transfer rate spans from 0 to 5 units per second with 0.01 step instead
+      of previous 0.05 to 2.5 with 0.05 step
+  - qol: IV drip animation plays only when transfer rate is above 0
+  - qol: IV drip supports alt+clicking that toggles the transfer rate between 0 and
+      max
+  - qol: IV drip UI update
+  - rscadd: You can craft IV drip with 2 rods, 1 plastic sheet and a syringe
+  Rhials:
+  - bugfix: you get your keys upon removing them from a car now!
+  - balance: the clown car now crashes upon ramming into a deer, like god intended.
+  - bugfix: Wall mounted vendors can no longer receive brand intelligence.
+  VexingRaven:
+  - bugfix: Ashwalker Eggs and Battlecruiser spawners no longer give you a warning
+      every time you open the spawn menu if you've already spawned as that role once.
+  - spellcheck: Ashwalker Egg warning message for having already spawned once is no
+      longer bolded for no reason.
+  etherware-novice:
+  - bugfix: limits how much you get alerted by icebox storms
+  theOOZ:
+  - balance: Paramedics get to have mining station access
+2022-11-27:
+  ATHATH:
+  - bugfix: The shocks from the spell packets spell are no longer blocked by insulated
+      gloves.
+  Jacquerel:
+  - bugfix: Sheep are no longer immune to weaponry.
+  LT3:
+  - spellcheck: Tram Malfunction event now successfully announces 'successfully.'
+  RaveRadbury:
+  - balance: Obsessed has been bumped up to a Deep-Rooted Brain Trauma
+  - balance: Mind Restoration can't remove deep-rooted traumas, making Obsessed unremovable
+      by virusses
+  Tattle:
+  - admin: removed message_admins message for tram malfunction failing to run on maps
+      that aren't tram
+  flowercuco:
+  - qol: pdas have a wrench deconstruct screentip
+  - bugfix: wrenching a pda no longer destroys all contents inside
+  - bugfix: roundstart empty mugs now appear to be empty
+  - bugfix: nanotrasen mug no longer becomes normal mug after you drink from it
