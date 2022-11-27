@@ -45,14 +45,14 @@ export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
         style={{
           // Try not to think too hard about this one.
           'background-color': job.unavailable_reason
-            ? 'lightgrey'
+            ? '#949494'
             : job.prioritized
-              ? '#308d25'
+              ? '#16fc0f'
               : Color.fromHex(department.color)
                 .darken(10)
                 .toString(),
           'color': job.unavailable_reason
-            ? 'dimgrey'
+            ? '#616161'
             : Color.fromHex(department.color)
               .darken(90)
               .toString(),

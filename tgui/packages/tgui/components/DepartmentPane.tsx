@@ -13,8 +13,9 @@ export const DepartmentEntry: SFC<{
   titleSubtext?;
 }> = (props) => {
   return (
-    <Box ClassName="Section" style={props.style}>
-      <Box class="Section__title" style={props.titleStyle} minHeight="3.4rem">
+    <Box style={props.style}>
+      {/* Yes, this box is missing the "Section" class. This is very intentional, as the layout looks *ugly* with it.*/}
+      <Box class="Section__title" style={props.titleStyle}>
         <Box class="Section__titleText" style={props.textStyle}>
           {props.title}
           {props.titleContents}
@@ -52,6 +53,7 @@ export const DepartmentPane: SFC<{
                 'border-bottom-color': Color.fromHex(department['color'])
                   .darken(50)
                   .toString(),
+                'min-height': '3.4rem',
               }}
               textStyle={{
                 'color': Color.fromHex(department['color'])

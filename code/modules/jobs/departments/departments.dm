@@ -13,7 +13,7 @@
 	/// The header color to be displayed in the ban panel, classes defined in banpanel.css
 	var/label_class = "undefineddepartment"
 	/// The color used in TGUI or similar menus.
-	var/ui_color = "#6681a5"
+	var/ui_color = "#9689db"
 	/// Job singleton datums associated to this department. Populated on job initialization.
 	var/list/department_jobs = list()
 	/// For separatists, what independent name prefix does their nation get named?
@@ -54,7 +54,7 @@
 	department_experience_type = EXP_TYPE_COMMAND
 	display_order = 1
 	label_class = "command"
-	ui_color = "#9689db"
+	ui_color = "#6681a5"
 
 
 /datum/job_department/security

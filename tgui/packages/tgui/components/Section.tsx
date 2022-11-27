@@ -12,8 +12,6 @@ import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 type SectionProps = BoxProps & {
   className?: string;
   title?: InfernoNode;
-  titleStyle?: String | undefined;
-  textStyle?: String | undefined;
   buttons?: InfernoNode;
   fill?: boolean;
   fitted?: boolean;
@@ -62,8 +60,6 @@ export class Section extends Component<SectionProps> {
     const {
       className,
       title,
-      titleStyle,
-      textStyle,
       buttons,
       fill,
       fitted,
@@ -88,10 +84,8 @@ export class Section extends Component<SectionProps> {
         ])}
         {...computeBoxProps(rest)}>
         {hasTitle && (
-          <div className="Section__title" style={titleStyle}>
-            <span className="Section__titleText" style={textStyle}>
-              {title}
-            </span>
+          <div className="Section__title">
+            <span className="Section__titleText">{title}</span>
             <div className="Section__buttons">{buttons}</div>
           </div>
         )}
