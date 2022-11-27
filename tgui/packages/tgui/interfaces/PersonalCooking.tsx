@@ -7,7 +7,8 @@ import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon } from '../co
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
 
-const FOOD_ICONS = {
+const TYPE_ICONS = {
+  'Can Make': 'utensils',
   [Food.Alcohol]: 'wine-glass',
   [Food.Breakfast]: 'sun',
   [Food.Bugs]: 'bug',
@@ -31,6 +32,7 @@ const FOOD_ICONS = {
 };
 
 const CATEGORY_ICONS = {
+  'Can Make': 'utensils',
   'Breads': 'bread-slice',
   'Burgers': 'burger',
   'Cakes': 'cake-candles',
@@ -113,10 +115,14 @@ export const PersonalCooking = (props, context) => {
         (searchText.length > 0 ||
           // Is type mode and the active type matches
           (typeMode &&
-            (activeType === '' || recipe.foodtypes?.includes(activeType))) ||
+            ((activeType === 'Can Make' &&
+              Boolean(craftabilityByRef[recipe.ref])) ||
+              recipe.foodtypes?.includes(activeType))) ||
           // Is category mode and the active categroy matches
           (!typeMode &&
-            (activeCategory === '' || recipe.category === activeCategory)))
+            ((activeCategory === 'Can Make' &&
+              Boolean(craftabilityByRef[recipe.ref])) ||
+              recipe.category === activeCategory)))
     ),
     sortBy<Recipe>((recipe) => [
       -Number(craftabilityByRef[recipe.ref]),
@@ -126,8 +132,9 @@ export const PersonalCooking = (props, context) => {
   if (searchText.length > 0) {
     recipes = recipes.filter(searchName);
   }
-  const categories = data.categories.sort();
-  const foodtypes = data.foodtypes.sort();
+  const canMake = ['Can Make'];
+  const categories = canMake.concat(data.categories.sort());
+  const foodtypes = canMake.concat(data.foodtypes.sort());
   const displayLimit = searchText.length > 0 ? 30 : 299;
   return (
     <Window width={700} height={700}>
@@ -149,7 +156,9 @@ export const PersonalCooking = (props, context) => {
                   onClick={() => {
                     setTypeMode(false);
                     setCategory(
-                      data.display_craftable_only ? '' : data.categories[0]
+                      Object.keys(data.craftability).length
+                        ? 'Can Make'
+                        : data.categories[0]
                     );
                   }}>
                   Category
@@ -159,36 +168,15 @@ export const PersonalCooking = (props, context) => {
                   onClick={() => {
                     setTypeMode(true);
                     setType(
-                      data.display_craftable_only ? '' : data.foodtypes[0]
+                      Object.keys(data.craftability).length
+                        ? 'Can Make'
+                        : data.foodtypes[0]
                     );
                   }}>
                   Type
                 </Tabs.Tab>
               </Tabs>
               <Tabs vertical>
-                {!!data.display_craftable_only && (
-                  <Tabs.Tab
-                    selected={
-                      searchText.length === 0 &&
-                      ((typeMode && activeType === '') ||
-                        (!typeMode && activeCategory === ''))
-                    }
-                    onClick={(e) => {
-                      setType('');
-                      setCategory('');
-                      document.getElementById('content').scrollTop = 0;
-                      if (searchText.length > 0) {
-                        setSearchText('');
-                      }
-                    }}>
-                    <Stack>
-                      <Stack.Item width="14px" textAlign="center">
-                        <Icon name="utensils" />
-                      </Stack.Item>
-                      <Stack.Item grow>Can make</Stack.Item>
-                    </Stack>
-                  </Tabs.Tab>
-                )}
                 {typeMode
                   ? foodtypes.map((foodtype) => (
                     <Tabs.Tab
@@ -203,7 +191,11 @@ export const PersonalCooking = (props, context) => {
                           setSearchText('');
                         }
                       }}>
-                      <TypeContent type={foodtype} diet={data.diet} />
+                      <TypeContent
+                        type={foodtype}
+                        diet={data.diet}
+                        craftable={Object.keys(data.craftability).length}
+                      />
                     </Tabs.Tab>
                   ))
                   : categories.map((category) => (
@@ -224,6 +216,10 @@ export const PersonalCooking = (props, context) => {
                           <Icon name={CATEGORY_ICONS[category]} />
                         </Stack.Item>
                         <Stack.Item grow>{category}</Stack.Item>
+                        <Stack.Item>
+                          {category === 'Can Make' &&
+                            Object.keys(data.craftability).length}
+                        </Stack.Item>
                       </Stack>
                     </Tabs.Tab>
                   ))}
@@ -235,13 +231,6 @@ export const PersonalCooking = (props, context) => {
                 checked={data.display_craftable_only}
                 onClick={() => {
                   data.display_craftable_only = !data.display_craftable_only;
-                  data.display_craftable_only
-                    ? typeMode
-                      ? setType('')
-                      : setCategory('')
-                    : typeMode
-                      ? setType(data.foodtypes[0])
-                      : setCategory(data.categories[0]);
                   act('toggle_recipes');
                 }}
               />
@@ -296,13 +285,15 @@ const TypeContent = (props) => {
   return (
     <Stack>
       <Stack.Item width="14px" textAlign="center">
-        <Icon name={FOOD_ICONS[props.type]} />
+        <Icon name={TYPE_ICONS[props.type]} />
       </Stack.Item>
       <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
         {props.type.toLowerCase()}
       </Stack.Item>
       <Stack.Item>
-        {props.diet.liked_food.includes(props.type) ? (
+        {props.type === 'Can Make' ? (
+          props.craftable
+        ) : props.diet.liked_food.includes(props.type) ? (
           <Icon name="face-laugh-beam" color={'good'} />
         ) : props.diet.disliked_food.includes(props.type) ? (
           <Icon name="face-tired" color={'average'} />
