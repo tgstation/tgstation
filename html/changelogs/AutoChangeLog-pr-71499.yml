@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Rabbits don't suddenly become more dense when killed than they were in life."

@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Wall mounted vendors can no longer receive brand intelligence."

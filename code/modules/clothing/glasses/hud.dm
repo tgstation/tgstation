@@ -65,13 +65,19 @@
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "night vision health scanner HUD"
-	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
+	desc = "An advanced medical heads-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	inhand_icon_state = "glasses"
 	darkness_view = 8
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
+
+/obj/item/clothing/glasses/hud/health/night/science
+	name = "night vision medical science scanner HUD"
+	desc = "An clandestine medical science heads-up display that allows operatives to find \
+		dying captains and the perfect poison to finish them off in complete darkness."
+	clothing_traits = list(TRAIT_REAGENT_SCANNER)
 
 /obj/item/clothing/glasses/hud/health/sunglasses
 	name = "medical HUDSunglasses"

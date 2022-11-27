@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes:
-  - bugfix: "Fixed being able to move through floors and get to centcomm when moving up/down while inside mechs and similar movable objects."

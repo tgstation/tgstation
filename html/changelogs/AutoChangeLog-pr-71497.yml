@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes:
-  - bugfix: "Fixed being unable to open the necropolis gate when standing behind it"
