@@ -99,16 +99,15 @@
 	return copied_appearance
 
 /datum/component/echolocation/proc/fade_images(from_when)
-	for(var/image_echo as anything in images[from_when])
+	for(var/image_echo in images[from_when])
 		animate(image_echo, alpha = 0, time = fade_out_time)
 	addtimer(CALLBACK(src, .proc/delete_images, from_when), fade_out_time)
 
 /datum/component/echolocation/proc/delete_images(from_when)
 	var/mob/echolocator = parent
-	for(var/image_echo as anything in images[from_when])
+	for(var/image_echo in images[from_when])
 		if(echolocator.client)
 			echolocator.client.images -= image_echo
-		qdel(image_echo)
 	images -= from_when
 
 /atom/movable/screen/fullscreen/echo
