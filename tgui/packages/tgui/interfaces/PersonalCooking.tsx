@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
-import { filter, sortBy } from 'common/collections';
+import { map, filter, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon } from '../components';
 import { Window } from '../layouts';
@@ -260,14 +260,14 @@ export const PersonalCooking = (props, context) => {
                 .map((item) =>
                   data.display_compact ? (
                     <RecipeContentCompact
-                      key
+                      key={item.ref}
                       item={item}
                       craftable={Boolean(craftabilityByRef[item.ref])}
                       busy={data.busy}
                     />
                   ) : (
                     <RecipeContent
-                      key
+                      key={item.ref}
                       item={item}
                       diet={data.diet}
                       craftable={Boolean(craftabilityByRef[item.ref])}
@@ -373,7 +373,7 @@ const RecipeContentCompact = (props, context) => {
 
 const RecipeContent = (props, context) => {
   const { act } = useBackend<Data>(context);
-  const item = props.item;
+  const item: Recipe = props.item;
   return (
     <Section>
       <Stack>
@@ -422,14 +422,21 @@ const RecipeContent = (props, context) => {
           <Stack>
             <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
               {item.reqs &&
-                item.reqs
-                  .sort((a, b) => (a.path > b.path ? 1 : -1))
-                  .map((item) => <IngredientContent key item={item} />)}
+                flow([
+                  sortBy((item: Ingredient) => item.path),
+                  map((item: Ingredient) => (
+                    <IngredientContent key={item.path} item={item} />
+                  )),
+                ])(item.reqs)}
             </Stack.Item>
             <Stack.Item color={'gray'} width={'104px'} lineHeight={1.5}>
               {item.foodtypes?.length > 0 &&
                 item.foodtypes.map((foodtype) => (
-                  <TypeContent key type={foodtype} diet={props.diet} />
+                  <TypeContent
+                    key={item.ref}
+                    type={foodtype}
+                    diet={props.diet}
+                  />
                 ))}
             </Stack.Item>
           </Stack>
