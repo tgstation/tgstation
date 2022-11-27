@@ -77,9 +77,8 @@
 	var/mutable_appearance/copied_appearance = new /mutable_appearance()
 	copied_appearance.appearance = input
 	if(istype(input, /obj/machinery/door/airlock)) //i hate you
-		var/obj/machinery/door/airlock/airlock_input = input
-		copied_appearance.icon = airlock_input.icon
-		copied_appearance.icon_state = airlock_input.density ? "closed" : "open"
+		copied_appearance.icon = input.icon
+		copied_appearance.icon_state = "closed"
 	copied_appearance.color = black_white_matrix
 	copied_appearance.filters += outline_filter(size = 1, color = COLOR_WHITE)
 	copied_appearance.pixel_x = 0

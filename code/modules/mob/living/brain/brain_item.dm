@@ -88,11 +88,12 @@
 /obj/item/organ/internal/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
 	// Delete skillchips first as parent proc sets owner to null, and skillchips need to know the brain's owner.
 	if(!QDELETED(C) && length(skillchips))
-		to_chat(C, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
+		if(!special)
+			to_chat(C, span_notice("You feel your skillchips enable emergency power saving mode, deactivating as your brain leaves your body..."))
 		for(var/chip in skillchips)
 			var/obj/item/skillchip/skillchip = chip
 			// Run the try_ proc with force = TRUE.
-			skillchip.try_deactivate_skillchip(FALSE, TRUE)
+			skillchip.try_deactivate_skillchip(silent = special, force = TRUE)
 
 	. = ..()
 
@@ -297,7 +298,7 @@
 
 	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
 	if(owner && length(skillchips) && (replacement_brain.type != type))
-		activate_skillchip_failsafe(FALSE)
+		activate_skillchip_failsafe(silent = TRUE)
 
 	// Check through all our skillchips, remove them from this brain, add them to the replacement brain.
 	for(var/chip in skillchips)

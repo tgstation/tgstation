@@ -2,6 +2,11 @@
 	name = "psyker brain"
 	desc = "This brain is blue, split into two hemispheres, and has immense psychic powers. Why does that even exist?"
 	icon_state = "brain-psyker"
+	actions_types = list(
+		/datum/action/cooldown/spell/pointed/psychic_projection,
+		/datum/action/cooldown/spell/charged/projectile_booster,
+		/datum/action/cooldown/spell/forcewall/psychic_wall,
+	)
 
 /obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
 	if(!istype(inserted_into.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
@@ -13,7 +18,7 @@
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
-	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED, TRAIT_BLIND, TRAIT_UNINTELLIGIBLE_SPEECH)
+	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED, TRAIT_BLIND)
 
 /mob/living/carbon/human/proc/psykerize()
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD))
@@ -22,7 +27,7 @@
 	sleep(5 SECONDS)
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD))
 		return
-	to_chat(src, span_userdanger("It hurts!"))
+	to_chat(src, span_userdanger("You feel your skin ripping off!"))
 	emote("scream")
 	apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 	sleep(5 SECONDS)
@@ -88,23 +93,21 @@
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev77
 	obj_flags = UNIQUE_RENAME
+	custom_materials = null
 	actions_types = list(/datum/action/item_action/pray_refill)
 	/// List of all possible names and descriptions.
 	var/static/list/possible_names = list(
-		//cool latin
 		"Requiescat" = "May they rest in peace.",
 		"Requiem" = "They will never reach truth.",
 		"Vade Retro" = "Having a gun might make exorcisms more effective, who knows?",
 		"Extra Nos" = "Salvation is given externally.",
 		"Ordo Salutis" = "First step? Fire.",
-		//other religious stuff
 		"Absolution" = "Free of your sins.",
 		"Rod of God" = "Splitting the red sea again.",
 		"Holy Grail" = "You found it!",
 		"Burning Bush" = "Useful for any burning ambush.",
 		"Judgement" = "First of all, damn. Alpha much? Dude, so cool, and so are you! Strong, too!",
 		"Paradiso" = "A divine end to the comedy of life.",
-		//music
 		"DVNO" = "Don't need to ask my name to figure out how cool I am.",
 		"Venus Supermax" = "Did you know nearly everyone working and living on Venus is involved in sulfur extraction? Quite fitting for this weapon of gunpowder.",
 		"Nirvana" = "The giver of quietude, freedom, and highest happiness.",
@@ -112,7 +115,6 @@
 		"Ultimort" = "Your hope dies last.",
 		"Lifelight" = "No escape, no greater fate to be made.",
 		"Bendbreaker" = "FRAGILE: Please do not bend or break.",
-		//video games
 		"Pop Pop" = "The name referring to an onomatopeia (phonetic imitation) of a gun firing.",
 		"Justice" = "Justice is Splendor.",
 		"Splendor" = "Splendor is Justice.",
@@ -123,14 +125,15 @@
 		"Life Leech" = "An artifact said to draw its power from the life energy of others.",
 		"Nullray" = "Starless metal on the barrel imbibes light and routes it to the null place. The grip acrylic is patterned after ley lines.",
 		"Mortis" = "Put your faith into this weapon working.",
-		//movies shows comics
 		"Ramiel" = "Literally meaning \"God has thundered\". You could even interpret the gunshot as a thunder.",
 		"Daredevil" = "Hey now, you won't be reckless with this, will you?",
 		"Lacytanga" = "Rules are written by the strong.",
+		"A10" = "The fist of God. Keep away from the terrible.",
 	)
 
 /obj/item/gun/ballistic/revolver/chaplain/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND)
 	name = pick(possible_names)
 	desc = possible_names[name]
 
@@ -184,3 +187,119 @@
 	ricochet_auto_aim_range = 3
 	wound_bonus = -10
 	embedding = null
+
+/datum/action/cooldown/spell/pointed/psychic_projection
+	name = "Psychic Projection"
+	desc = "Project your psychics into a target to warp their view, and instill absolute terror that will cause them to fire their gun rapidly."
+	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
+	button_icon_state = "blind"
+	school = SCHOOL_HOLY
+	cooldown_time = 1 MINUTES
+	antimagic_flags = MAGIC_RESISTANCE_MIND
+	spell_max_level = 1
+	invocation_type = INVOCATION_NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	cast_range = 5
+	active_msg = "You prepare to psychically project to a target..."
+	/// Duration of the effects.
+	var/projection_duration = 10 SECONDS
+	/// The target we are projecting on.
+	var/projection_target
+
+/datum/action/cooldown/spell/pointed/psychic_projection/cast(mob/living/carbon/human/cast_on)
+	. = ..()
+	if(cast_on.can_block_magic(antimagic_flags))
+		to_chat(cast_on, span_notice("Your mind feels weird, but it passes momentarily."))
+		to_chat(owner, span_warning("The spell had no effect!"))
+		return FALSE
+	to_chat(cast_on, span_warning("Your mind gets twisted!"))
+	cast_on.apply_status_effect(/datum/status_effect/psychic_projection, projection_duration)
+	return TRUE
+
+/datum/status_effect/psychic_projection
+	id = "psychic_projection"
+	alert_type = null
+	remove_on_fullheal = TRUE
+
+/datum/status_effect/psychic_projection/on_creation(mob/living/new_owner, duration = 10 SECONDS)
+	src.duration = duration
+	return ..()
+
+/datum/status_effect/psychic_projection/on_apply()
+	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used?.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(!game_plane_master_controller)
+		return FALSE
+	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(300, 300, 3, 0, WAVE_SIDEWAYS))
+	game_plane_master_controller.add_filter("psychic_blur", 10, angular_blur_filter(0, 0, 3))
+	return TRUE
+
+/datum/status_effect/psychic_projection/on_remove()
+	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used?.plane_master_controllers[PLANE_MASTERS_GAME]
+	if(!game_plane_master_controller)
+		return
+	game_plane_master_controller.remove_filter("psychic_blur")
+	game_plane_master_controller.remove_filter("psychic_wave")
+
+/datum/status_effect/psychic_projection/process(delta_time, times_fired)
+	. = ..()
+	var/obj/item/gun/held_gun = owner.is_holding_item_of_type(/obj/item/gun)
+	var/turf/target_turf = get_offset_target_turf(get_ranged_target_turf(owner, owner.dir, 7), dx = rand(-1, 1), dy = rand(-1, 1))
+	held_gun.process_fire(target_turf, owner, TRUE, null, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
+	held_gun.reset_semicd()
+
+/datum/action/cooldown/spell/charged/projectile_booster
+	name = "Projectile Booster"
+	desc = "Charge up your gun to fire it faster and home in on your targets. Think smarter, not harder."
+	button_icon_state = "projectile"
+	sound = 'sound/weapons/gun/shotgun/rack.ogg'
+	school = SCHOOL_HOLY
+	cooldown_time = 1 MINUTES
+	antimagic_flags = MAGIC_RESISTANCE_MIND
+	spell_max_level = 1
+	invocation_type = INVOCATION_NONE
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	channel_message = span_notice("You focus on your weapon...")
+	charge_overlay_icon = 'icons/effects/effects.dmi'
+	charge_overlay_state = "purplesparkles"
+	channel_flags = IGNORE_HELD_ITEM
+	var/boosted = FALSE
+	var/effect_time = 10 SECONDS
+
+/datum/action/cooldown/spell/charged/projectile_booster/Destroy()
+	if(boosted)
+		stop_effects()
+	return ..()
+
+/datum/action/cooldown/spell/charged/projectile_booster/Remove(mob/living/remove_from)
+	if(boosted)
+		stop_effects()
+	return ..()
+
+/datum/action/cooldown/spell/charged/projectile_booster/cast(atom/cast_on)
+	. = ..()
+	ADD_TRAIT(cast_on, TRAIT_DOUBLE_TAP, type)
+	RegisterSignal(cast_on, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, PROC_REF(modify_projectile))
+	addtimer(CALLBACK(src, PROC_REF(stop_effects)), effect_time)
+
+/datum/action/cooldown/spell/charged/projectile_booster/proc/stop_effects()
+	REMOVE_TRAIT(owner, TRAIT_DOUBLE_TAP, type)
+	UnregisterSignal(owner, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE)
+
+/datum/action/cooldown/spell/charged/projectile_booster/proc/modify_projectile(datum/source, obj/projectile/bullet, atom/firer, atom/original_target)
+	bullet.homing_turn_speed = 60
+	bullet.set_homing_target(original_target)
+
+/datum/action/cooldown/spell/forcewall/psychic_wall
+	name = "Psychic Wall"
+	desc = "Form a psychic wall, able to deflect projectiles and prevent things from going through."
+	school = SCHOOL_HOLY
+	cooldown_time = 30 SECONDS
+	cooldown_reduction_per_rank = 0 SECONDS
+	antimagic_flags = MAGIC_RESISTANCE_MIND
+	spell_max_level = 1
+	invocation_type = INVOCATION_NONE
+	wall_type = /obj/effect/forcefield/psychic
+
+/datum/action/cooldown/spell/forcewall/psychic_wall/spawn_wall(turf/cast_turf)
+	. = ..()
+	play_fov_effect(cast_turf, 5, "forcefield", time = 5 SECONDS)
