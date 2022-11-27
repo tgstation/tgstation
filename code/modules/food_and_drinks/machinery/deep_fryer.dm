@@ -9,7 +9,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/storage,
 	/obj/item/delivery,
 	/obj/item/his_grace,
-	/obj/item/transfer_valve,)))
+	/obj/item/transfer_valve,
+)))
 
 /obj/machinery/deepfryer
 	name = "deep fryer"
