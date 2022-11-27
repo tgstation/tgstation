@@ -11,7 +11,7 @@
 	strange_reagent = new
 
 	var/list/types_to_check = typecacheof(list(
-		/mob/living/carbon/human,
+		/mob/living/carbon/human/consistent,
 		/mob/living/simple_animal,
 		/mob/living/basic,
 	))

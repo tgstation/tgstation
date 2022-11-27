@@ -1,0 +1,5 @@
+author: "flowercuco"
+delete-after: True
+changes:
+  - bugfix: "roundstart empty mugs now appear to be empty"
+  - bugfix: "nanotrasen mug no longer becomes normal mug after you drink from it"

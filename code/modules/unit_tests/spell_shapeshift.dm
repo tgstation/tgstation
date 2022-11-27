@@ -25,7 +25,7 @@
 
 /datum/unit_test/shapeshift_spell/Run()
 
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	dummy.mind_initialize()
 
 	for(var/spell_type in subtypesof(/datum/action/cooldown/spell/shapeshift))
@@ -81,7 +81,7 @@
 
 /datum/unit_test/shapeshift_holoparasites/Run()
 
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 
 	var/datum/action/cooldown/spell/shapeshift/wizard/shift = new(dummy)
 	shift.shapeshift_type = shift.possible_shapes[1]

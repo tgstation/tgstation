@@ -1,5 +1,0 @@
-author: "VexingRaven"
-delete-after: True
-changes:
-  - bugfix: "Ashwalker Eggs and Battlecruiser spawners no longer give you a warning every time you open the spawn menu if you've already spawned as that role once."
-  - spellcheck: "Ashwalker Egg warning message for having already spawned once is no longer bolded for no reason."
