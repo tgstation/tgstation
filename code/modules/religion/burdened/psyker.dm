@@ -1,10 +1,10 @@
 /obj/item/organ/internal/brain/psyker
 	name = "psyker brain"
-	desc = "This brain is blue, split into two hemispheres, and has immense psychic powers. Why does that even exist?"
+	desc = "This brain is blue, split into two hemispheres, and has immense psychic powers. What kind of monstrocity would use that?"
 	icon_state = "brain-psyker"
 	actions_types = list(
 		/datum/action/cooldown/spell/pointed/psychic_projection,
-		/datum/action/cooldown/spell/charged/projectile_booster,
+		/datum/action/cooldown/spell/charged/psychic_booster,
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
 
@@ -13,6 +13,12 @@
 		return FALSE
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation)
+	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
+
+/obj/item/organ/internal/brain/psyker/Remove(mob/living/carbon/removed_from, special, no_id_transfer)
+	. = ..()
+	qdel(removed_from.GetComponent(/datum/component/echolocation))
+	qdel(removed_from.GetComponent(/datum/component/anti_magic))
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
@@ -133,17 +139,17 @@
 
 /obj/item/gun/ballistic/revolver/chaplain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND)
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
 	name = pick(possible_names)
 	desc = possible_names[name]
-
-/obj/item/gun/ballistic/revolver/chaplain/attack_self(mob/living/user)
-	pray_refill(user)
 
 /obj/item/gun/ballistic/revolver/chaplain/suicide_act(mob/living/user)
 	. = ..()
 	name = "Habemus Papam"
 	desc = "I announce to you a great joy."
+
+/obj/item/gun/ballistic/revolver/chaplain/attack_self(mob/living/user)
+	pray_refill(user)
 
 /obj/item/gun/ballistic/revolver/chaplain/proc/pray_refill(mob/living/carbon/human/user)
 	if(DOING_INTERACTION_WITH_TARGET(user, src) || !istype(user))
@@ -198,7 +204,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	spell_max_level = 1
 	invocation_type = INVOCATION_NONE
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
+	spell_requirements = NONE
 	cast_range = 5
 	active_msg = "You prepare to psychically project to a target..."
 	/// Duration of the effects.
@@ -212,7 +218,8 @@
 		to_chat(cast_on, span_notice("Your mind feels weird, but it passes momentarily."))
 		to_chat(owner, span_warning("The spell had no effect!"))
 		return FALSE
-	to_chat(cast_on, span_warning("Your mind gets twisted!"))
+	to_chat(cast_on, span_userdanger("Your mind gets twisted!"))
+	cast_on.emote("scream")
 	cast_on.apply_status_effect(/datum/status_effect/psychic_projection, projection_duration)
 	return TRUE
 
@@ -220,6 +227,8 @@
 	id = "psychic_projection"
 	alert_type = null
 	remove_on_fullheal = TRUE
+	var/times_dry_fired = 0
+	var/firing_delay  = 0
 
 /datum/status_effect/psychic_projection/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -229,7 +238,7 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used?.plane_master_controllers[PLANE_MASTERS_GAME]
 	if(!game_plane_master_controller)
 		return FALSE
-	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(300, 300, 3, 0, WAVE_SIDEWAYS))
+	game_plane_master_controller.add_filter("psychic_wave", 10, wave_filter(240, 240, 3, 0, WAVE_SIDEWAYS))
 	game_plane_master_controller.add_filter("psychic_blur", 10, angular_blur_filter(0, 0, 3))
 	return TRUE
 
@@ -242,14 +251,24 @@
 
 /datum/status_effect/psychic_projection/process(delta_time, times_fired)
 	. = ..()
-	var/obj/item/gun/held_gun = owner.is_holding_item_of_type(/obj/item/gun)
+	var/obj/item/gun/held_gun = owner?.is_holding_item_of_type(/obj/item/gun)
+	if(!held_gun)
+		return
+	if(!held_gun.can_shoot())
+		if(firing_delay < times_dry_fired)
+			firing_delay++
+			return
+		firing_delay = 0
+		times_dry_fired++
+	else
+		times_dry_fired = 0
 	var/turf/target_turf = get_offset_target_turf(get_ranged_target_turf(owner, owner.dir, 7), dx = rand(-1, 1), dy = rand(-1, 1))
 	held_gun.process_fire(target_turf, owner, TRUE, null, pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-	held_gun.reset_semicd()
+	held_gun.semicd = FALSE
 
-/datum/action/cooldown/spell/charged/projectile_booster
-	name = "Projectile Booster"
-	desc = "Charge up your gun to fire it faster and home in on your targets. Think smarter, not harder."
+/datum/action/cooldown/spell/charged/psychic_booster
+	name = "Psychic Booster"
+	desc = "Charge up your mind to shoot firearms faster and home in on your targets. Think smarter, not harder."
 	button_icon_state = "projectile"
 	sound = 'sound/weapons/gun/shotgun/rack.ogg'
 	school = SCHOOL_HOLY
@@ -257,37 +276,48 @@
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	spell_max_level = 1
 	invocation_type = INVOCATION_NONE
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
-	channel_message = span_notice("You focus on your weapon...")
+	spell_requirements = NONE
+	channel_message = span_notice("You focus on your trigger fingers...")
 	charge_overlay_icon = 'icons/effects/effects.dmi'
 	charge_overlay_state = "purplesparkles"
-	channel_flags = IGNORE_HELD_ITEM
+	channel_time = 5 SECONDS
+	channel_flags = IGNORE_USER_LOC_CHANGE
 	var/boosted = FALSE
 	var/effect_time = 10 SECONDS
 
-/datum/action/cooldown/spell/charged/projectile_booster/Destroy()
+/datum/action/cooldown/spell/charged/psychic_booster/Destroy()
 	if(boosted)
 		stop_effects()
 	return ..()
 
-/datum/action/cooldown/spell/charged/projectile_booster/Remove(mob/living/remove_from)
+/datum/action/cooldown/spell/charged/psychic_booster/Remove(mob/living/remove_from)
 	if(boosted)
 		stop_effects()
 	return ..()
 
-/datum/action/cooldown/spell/charged/projectile_booster/cast(atom/cast_on)
+/datum/action/cooldown/spell/charged/psychic_booster/cast(atom/cast_on)
 	. = ..()
+	if(boosted)
+		return
 	ADD_TRAIT(cast_on, TRAIT_DOUBLE_TAP, type)
 	RegisterSignal(cast_on, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, PROC_REF(modify_projectile))
 	addtimer(CALLBACK(src, PROC_REF(stop_effects)), effect_time)
 
-/datum/action/cooldown/spell/charged/projectile_booster/proc/stop_effects()
+/datum/action/cooldown/spell/charged/psychic_booster/proc/stop_effects()
 	REMOVE_TRAIT(owner, TRAIT_DOUBLE_TAP, type)
 	UnregisterSignal(owner, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE)
 
-/datum/action/cooldown/spell/charged/projectile_booster/proc/modify_projectile(datum/source, obj/projectile/bullet, atom/firer, atom/original_target)
-	bullet.homing_turn_speed = 60
-	bullet.set_homing_target(original_target)
+/datum/action/cooldown/spell/charged/psychic_booster/proc/modify_projectile(datum/source, obj/projectile/bullet, atom/firer, atom/original_target)
+	var/atom/target = original_target
+	if(isturf(target) || (isobj(target) && !target.density)) //if weird target, we try to compensate in our homing
+		for(var/mob/living/shooting_target in range(1, get_turf(target)))
+			target = shooting_target
+			break
+	if(!bullet.can_hit_target(target, direct_target = TRUE, ignore_loc = TRUE))
+		return
+	bullet.original = target
+	bullet.homing_turn_speed = 30
+	bullet.set_homing_target(target)
 
 /datum/action/cooldown/spell/forcewall/psychic_wall
 	name = "Psychic Wall"
@@ -295,7 +325,7 @@
 	school = SCHOOL_HOLY
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 0 SECONDS
-	antimagic_flags = MAGIC_RESISTANCE_MIND
+	antimagic_flags = NONE
 	spell_max_level = 1
 	invocation_type = INVOCATION_NONE
 	wall_type = /obj/effect/forcefield/psychic

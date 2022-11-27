@@ -32,6 +32,10 @@
 
 /datum/component/echolocation/Destroy(force, silent)
 	STOP_PROCESSING(SSobj, src)
+	var/mob/echolocator = parent
+	echolocator.clear_fullscreen("echo")
+	for(var/timeframe in images)
+		delete_images(timeframe)
 	return ..()
 
 /datum/component/echolocation/process()
@@ -83,7 +87,9 @@
 	copied_appearance.filters += outline_filter(size = 1, color = COLOR_WHITE)
 	copied_appearance.pixel_x = 0
 	copied_appearance.pixel_y = 0
-	saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
+	copied_appearance.transform = matrix()
+	if(!iscarbon(input)) //wacky overlay people get generated everytime
+		saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
 	return copied_appearance
 
 /datum/component/echolocation/proc/fade_images(from_when)
