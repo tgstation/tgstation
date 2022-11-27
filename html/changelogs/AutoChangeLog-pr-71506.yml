@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes:
-  - bugfix: "The shocks from the spell packets spell are no longer blocked by insulated gloves."
