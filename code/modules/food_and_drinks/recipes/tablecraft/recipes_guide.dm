@@ -113,7 +113,7 @@
 	is_guide = TRUE
 
 /datum/crafting_recipe/food/ricebowl
-	name = "Bowl of rice"
+	name = "Ricebowl"
 	result = /obj/item/food/salad/ricebowl
 	reaction = /datum/chemical_reaction/food/ricebowl
 	subcategory = CAT_MISCFOOD
