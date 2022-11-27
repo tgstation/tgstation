@@ -672,6 +672,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// this is used to bypass tongue language restrictions but not tongue disabilities
 #define TRAIT_TOWER_OF_BABEL "tower_of_babel"
 
+/// This target has recently been shot by a marksman coin and is very briefly immune to being hit by one again to prevent recursion
+#define TRAIT_RECENTLY_COINED "trait_recently_coined"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
@@ -982,5 +985,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define RIGHT_LEG_TRAIT "right_leg"
 #define LEFT_LEG_TRAIT "left_leg"
 
-/// This target has recently been shot by a marksman coin and is very briefly immune to being hit by one again to prevent recursion
-#define TRAIT_RECENTLY_COINED "trait_recently_coined"
+/// Trait given by echolocation component.
+#define ECHOLOCATION_TRAIT "echolocation"

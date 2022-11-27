@@ -30,12 +30,14 @@
 		src.fade_out_time = fade_out_time
 	if(!isnull(images_are_static))
 		src.images_are_static = images_are_static
+	echolocator.become_blind(ECHOLOCATION_TRAIT)
 	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo)
 	START_PROCESSING(SSobj, src)
 
 /datum/component/echolocation/Destroy(force, silent)
 	STOP_PROCESSING(SSobj, src)
 	var/mob/echolocator = parent
+	echolocator.cure_blind(ECHOLOCATION_TRAIT)
 	echolocator.clear_fullscreen("echo")
 	for(var/timeframe in images)
 		delete_images(timeframe)
