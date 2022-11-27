@@ -17,7 +17,6 @@
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
-	var/rods_broken = TRUE
 
 /obj/structure/grille/Initialize(mapload)
 	. = ..()
@@ -284,9 +283,8 @@
 		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
-		rods_broken = FALSE
-		var/obj/R = new rods_type(drop_location(), rods_broken)
-		transfer_fingerprints_to(R)
+		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
+		transfer_fingerprints_to(dropped_rods)
 
 /obj/structure/grille/proc/repair_grille()
 	if(broken)
@@ -295,7 +293,6 @@
 		atom_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
-		rods_broken = TRUE
 		return TRUE
 	return FALSE
 
@@ -348,7 +345,6 @@
 	density = FALSE
 	broken = TRUE
 	rods_amount = 1
-	rods_broken = FALSE
 
 /obj/structure/grille/broken/Initialize(mapload)
 	. = ..()

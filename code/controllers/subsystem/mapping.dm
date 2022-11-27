@@ -112,6 +112,8 @@ SUBSYSTEM_DEF(mapping)
 	true_to_offset_planes["[FLOAT_PLANE]"] = list(FLOAT_PLANE)
 	plane_to_offset["[FLOAT_PLANE]"] = 0
 	plane_offset_blacklist = list()
+	// You aren't allowed to offset a floatplane that'll just fuck it all up
+	plane_offset_blacklist["[FLOAT_PLANE]"] = TRUE
 	render_offset_blacklist = list()
 	critical_planes = list()
 	create_plane_offsets(0, 0)
