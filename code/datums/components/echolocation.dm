@@ -4,13 +4,14 @@
 	var/image_expiry_time = 1.5 SECONDS
 	var/fade_in_time = 0.5 SECONDS
 	var/fade_out_time = 0.5 SECONDS
+	var/images_are_static = FALSE
 	var/list/images = list()
 	var/static/list/saved_appearances = list()
 	var/static/list/allowed_paths
 	var/static/list/black_white_matrix = list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
 	COOLDOWN_DECLARE(cooldown_last)
 
-/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time)
+/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static)
 	. = ..()
 	var/mob/echolocator = parent
 	if(!istype(echolocator))
@@ -27,6 +28,8 @@
 		src.fade_in_time = fade_in_time
 	if(!isnull(fade_out_time))
 		src.fade_out_time = fade_out_time
+	if(!isnull(images_are_static))
+		src.images_are_static = images_are_static
 	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo)
 	START_PROCESSING(SSobj, src)
 
@@ -69,7 +72,7 @@
 	var/image/final_image = image(input_appearance)
 	final_image.layer += EFFECTS_LAYER
 	final_image.plane = FULLSCREEN_PLANE
-	final_image.loc = input
+	final_image.loc = images_are_static ? get_turf(input) : input
 	final_image.dir = input.dir
 	final_image.alpha = 0
 	images[current_time] += final_image
@@ -85,9 +88,10 @@
 		copied_appearance.icon_state = "closed"
 	copied_appearance.color = black_white_matrix
 	copied_appearance.filters += outline_filter(size = 1, color = COLOR_WHITE)
-	copied_appearance.pixel_x = 0
-	copied_appearance.pixel_y = 0
-	copied_appearance.transform = matrix()
+	if(!images_are_static)
+		copied_appearance.pixel_x = 0
+		copied_appearance.pixel_y = 0
+		copied_appearance.transform = matrix()
 	if(!iscarbon(input)) //wacky overlay people get generated everytime
 		saved_appearances["[input.icon]-[input.icon_state]"] = copied_appearance
 	return copied_appearance

@@ -24,7 +24,7 @@
 	return list(get_turf(owner), get_step(owner, turn(owner.dir, 90)), get_step(owner, turn(owner.dir, 270)))
 
 /datum/action/cooldown/spell/forcewall/proc/spawn_wall(turf/cast_turf)
-	new wall_type(cast_turf, owner)
+	new wall_type(cast_turf, owner, antimagic_flags)
 
 /datum/action/cooldown/spell/forcewall/cult
 	name = "Shield"
