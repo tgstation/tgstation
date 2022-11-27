@@ -95,12 +95,12 @@ export const PersonalCooking = (props, context) => {
   const [activeCategory, setCategory] = useLocalState(
     context,
     'category',
-    data.categories[0]
+    Object.keys(data.craftability).length ? 'Can Make' : data.categories[0]
   );
   const [activeType, setType] = useLocalState(
     context,
     'foodtype',
-    data.foodtypes[0]
+    Object.keys(data.craftability).length ? 'Can Make' : data.foodtypes[0]
   );
   const [typeMode, setTypeMode] = useLocalState(context, 'typeMode', false);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
@@ -216,10 +216,11 @@ export const PersonalCooking = (props, context) => {
                           <Icon name={CATEGORY_ICONS[category]} />
                         </Stack.Item>
                         <Stack.Item grow>{category}</Stack.Item>
-                        <Stack.Item>
-                          {category === 'Can Make' &&
-                            Object.keys(data.craftability).length}
-                        </Stack.Item>
+                        {category === 'Can Make' && (
+                          <Stack.Item>
+                            {Object.keys(data.craftability).length}
+                          </Stack.Item>
+                        )}
                       </Stack>
                     </Tabs.Tab>
                   ))}
