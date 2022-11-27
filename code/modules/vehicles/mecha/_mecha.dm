@@ -84,6 +84,7 @@
 
 	///Special version of the radio, which is unsellable
 	var/obj/item/radio/mech/radio
+	///List of installed remote tracking beacons, including AI control beacons
 	var/list/trackers = list()
 	///Camera installed into the mech
 	var/obj/machinery/camera/exosuit/chassis_camera
@@ -285,6 +286,8 @@
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
 	QDEL_NULL(ui_view)
+	QDEL_NULL(trackers)
+	QDEL_NULL(chassis_camera)
 
 	GLOB.mechas_list -= src //global mech list
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)

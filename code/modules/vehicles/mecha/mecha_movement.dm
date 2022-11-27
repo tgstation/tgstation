@@ -149,26 +149,20 @@
 		if(mob_obstacle.move_resist <= move_force)
 			step(obstacle, dir)
 
+//Following procs are camera static update related and are basically ripped off of code\modules\mob\living\silicon\silicon_movement.dm
+
 /obj/vehicle/sealed/mecha/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(chassis_camera)
 		update_camera_location(old_loc)
 
-/obj/vehicle/sealed/mecha/forceMove(atom/destination)
-	. = ..()
-	//Only bother updating the camera if we actually managed to move
-	if(. && chassis_camera)
-		update_camera_location(destination)
-
-/obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
-	if(!QDELETED(chassis_camera) && oldLoc != get_turf(src))
-		GLOB.cameranet.updatePortableCamera(chassis_camera)
-	updating = FALSE
-
-#define MECHA_CAMERA_BUFFER 0.5 SECONDS
 /obj/vehicle/sealed/mecha/proc/update_camera_location(oldLoc)
 	oldLoc = get_turf(oldLoc)
-	if(!QDELETED(chassis_camera) && !updating && oldLoc != get_turf(src))
+	if(!updating && oldLoc != get_turf(src))
 		updating = TRUE
-		addtimer(CALLBACK(src, PROC_REF(do_camera_update), oldLoc), MECHA_CAMERA_BUFFER)
-#undef MECHA_CAMERA_BUFFER
+		do_camera_update(oldLoc)
+
+/obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
+	if(oldLoc != get_turf(src))
+		GLOB.cameranet.updatePortableCamera(chassis_camera)
+	updating = FALSE
