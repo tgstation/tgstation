@@ -1,6 +1,6 @@
 /obj/item/organ/internal/brain/psyker
 	name = "psyker brain"
-	desc = "This brain is blue, split into two hemispheres, and has immense psychic powers. What kind of monstrocity would use that?"
+	desc = "This brain is blue, split into two hemispheres, and has immense psychic powers. What kind of monstrosity would use that?"
 	icon_state = "brain-psyker"
 	actions_types = list(
 		/datum/action/cooldown/spell/pointed/psychic_projection,
@@ -322,6 +322,8 @@
 	var/atom/target = original_target
 	if(isturf(target) || (isobj(target) && !target.density)) //if weird target, we try to compensate in our homing
 		for(var/mob/living/shooting_target in range(1, get_turf(target)))
+			if(shooting_target = firer)
+				continue
 			target = shooting_target
 			break
 	if(!bullet.can_hit_target(target, direct_target = TRUE, ignore_loc = TRUE))
