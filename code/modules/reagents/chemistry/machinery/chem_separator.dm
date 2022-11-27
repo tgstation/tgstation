@@ -6,9 +6,13 @@
 	light_power = 1
 	var/fill_icon = 'icons/obj/reagentfillings.dmi'
 	var/fill_icon_state = "separator"
+	/// Icons for different percentages of beaker/separator reagent volumes
 	var/list/fill_icon_thresholds = list(1,30,80)
+	/// The temperature thresholds used for thermometer icon update, in Celsius
 	var/list/temperature_icon_thresholds = list(0,50,100)
+	/// Whether the burner is currently on and the mixture is heating up
 	var/burning = FALSE
+	/// Whether the mixture is above the required temperature and the separation is in process
 	var/boiling = FALSE
 	var/datum/looping_sound/boiling/soundloop
 	/// Minimal mixture temperature for separation
@@ -35,9 +39,9 @@
 	QDEL_NULL(soundloop)
 	return ..()
 
-/obj/structure/chem_separator/handle_atom_del(atom/A)
+/obj/structure/chem_separator/handle_atom_del(atom/deleted_atom)
 	..()
-	if(A == beaker)
+	if(deleted_atom == beaker)
 		beaker = null
 		update_appearance(UPDATE_ICON)
 
@@ -130,10 +134,9 @@
 	return TRUE
 
 /obj/structure/chem_separator/fire_act(exposed_temperature, exposed_volume)
-	if(!burning)
-		start()
-		return
-	return ..()
+	if(burning)
+		return ..()
+	start()
 
 /obj/structure/chem_separator/extinguish()
 	if(burning)
@@ -170,9 +173,7 @@
 /obj/structure/chem_separator/proc/load()
 	if(burning)
 		return
-	if(!beaker)
-		return
-	if(!beaker.reagents.total_volume)
+	if(!beaker?.reagents.total_volume)
 		return
 	if(reagents.total_volume >= reagents.maximum_volume)
 		return
