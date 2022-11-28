@@ -999,3 +999,30 @@
   - bugfix: wrenching a pda no longer destroys all contents inside
   - bugfix: roundstart empty mugs now appear to be empty
   - bugfix: nanotrasen mug no longer becomes normal mug after you drink from it
+2022-11-28:
+  RikuTheKiller:
+  - bugfix: Nooartrium doesn't blind you anymore and keeps you conscious regardless
+      of oxyloss.
+  - bugfix: Being immune to hardcrit makes you able to hear while you should be in
+      hardcrit.
+  Ryll/Shaps:
+  - imageadd: Added missing coin projectile sprite for the marksman revolver
+  necromanceranne:
+  - balance: 'Splits the nuclear operative combat medical kit into two versions: basic
+      and premium.'
+  - balance: Basic contains additional amounts of basic c2 chem patches, some spare
+      atropine autoinjectors, sutures and regen mesh, and some basic medical equipment
+      for tending wounds. 4 TC (as it was before).
+  - balance: The premium kit is a far more useful full suite of advanced medical equipment,
+      MODsuit modules, medical supplies and cybernetic implants, including the combat
+      hypospray and the combat defib. 15 TC.
+  - balance: Atropine stops bomb implants from automatically detonating on death.
+      You can still manually activate your bomb implant (even when you are dead).
+  - balance: Operatives start with an atropine pen to stop themselves and their allies
+      from detonating so they can hopefully be saved by a medical operative.
+  - rscadd: There is a pamphlet to explain this in the nuclear operative's survival
+      box.
+  - rscadd: I'm not telling you to read the pamphlet, but you should probably read
+      the pamphlet.
+  supergrog2:
+  - bugfix: fixes grilles dropping stack of 0 iron rods

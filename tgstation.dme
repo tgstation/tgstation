@@ -1108,6 +1108,7 @@
 #include "code\datums\elements\volatile_gas_storage.dm"
 #include "code\datums\elements\waddling.dm"
 #include "code\datums\elements\wall_engraver.dm"
+#include "code\datums\elements\wall_smasher.dm"
 #include "code\datums\elements\weapon_description.dm"
 #include "code\datums\elements\weather_listener.dm"
 #include "code\datums\elements\decals\_decal.dm"

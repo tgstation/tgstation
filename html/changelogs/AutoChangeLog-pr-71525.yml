@@ -1,5 +1,0 @@
-author: "RikuTheKiller"
-delete-after: True
-changes:
-  - bugfix: "Nooartrium doesn't blind you anymore and keeps you conscious regardless of oxyloss."
-  - bugfix: "Being immune to hardcrit makes you able to hear while you should be in hardcrit."
