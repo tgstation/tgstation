@@ -38,6 +38,7 @@ type Data = {
 export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
   const job = data.job;
   const department = data.department;
+  const jobIcon = job.icon || JobToIcon[job.name] || null;
   return (
     <Stack.Item fill>
       <Button
@@ -45,14 +46,14 @@ export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
         style={{
           // Try not to think too hard about this one.
           'background-color': job.unavailable_reason
-            ? '#949494'
+            ? '#949494' // Grey background
             : job.prioritized
-              ? '#16fc0f'
+              ? '#16fc0f' // Bright green background
               : Color.fromHex(department.color)
                 .darken(10)
                 .toString(),
           'color': job.unavailable_reason
-            ? '#616161'
+            ? '#616161' // Dark grey font
             : Color.fromHex(department.color)
               .darken(90)
               .toString(),
@@ -76,9 +77,7 @@ export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
         }}
         content={
           <div>
-            {(job.icon = job.icon || JobToIcon[job.name] || null) && (
-              <Icon name={job.icon} />
-            )}
+            {jobIcon && <Icon name={jobIcon} />}
             {job.command ? <b>{job.name}</b> : job.name}
             <span style={{ 'float': 'right' }}>
               {job.used_slots} / {job.open_slots}

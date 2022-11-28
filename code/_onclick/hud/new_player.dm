@@ -214,7 +214,7 @@
 		to_chat(new_player, span_notice("Opening late join menu! If it doesn't show, hold CTRL while clicking the join button!"))
 		GLOB.latejoin_menu.ui_interact(new_player)
 	else
-		to_chat(new_player, span_warning("Opening emergency fallback late join menu! If THIS doesn't show after disabling TGUI in your [span_bold("game preferences")], ahelp immediately!"))
+		to_chat(new_player, span_warning("Opening emergency fallback late join menu! If THIS doesn't show, ahelp immediately!"))
 		GLOB.latejoin_menu.fallback_ui(new_player)
 
 
