@@ -1,16 +1,33 @@
-import { classes } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Section, Tabs, Button, Stack, Box } from '../components';
 import { ColorItem, LayerSelect } from './RapidPipeDispenser';
 import { capitalizeAll } from 'common/string';
 
+type Data = {
+  categories: Category[];
+  icon: string;
+};
+
+type Category = {
+  cat_name: string;
+  recipes: Recipe[];
+};
+
+type Recipe = {
+  index: number;
+  selected: BooleanLike;
+  name: string;
+};
+
 const PlumbingTypeSection = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<Data>(context);
   const { categories = [] } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
-    'categoryName'
+    'categoryName',
+    ''
   );
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
@@ -64,7 +81,7 @@ const LayerSection = (props, context) => {
 };
 
 const IconSection = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<Data>(context);
   const { icon } = data;
   return (
     <Section
