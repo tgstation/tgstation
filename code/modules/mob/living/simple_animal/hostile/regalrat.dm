@@ -235,6 +235,13 @@
 	domain()
 	StartCooldown()
 
+// Command you can give to a mouse to make it kill someone
+/datum/pet_command/point_targetting/attack/mouse
+	speech_commands = list("attack", "sic", "kill", "cheese 'em")
+	command_feedback = "squeak!"
+	pointed_reaction = "squeaks aggressively!"
+	refuse_reaction = "quivers"
+
 /**
  * This action checks all nearby mice, and converts them into hostile rats.
  * If no mice are nearby, creates a new one.
@@ -248,6 +255,13 @@
 	background_icon_state = "bg_clock"
 	cooldown_time = 8 SECONDS
 	melee_cooldown_time = 0 SECONDS
+	/// Commands you can give to your mouse army
+	var/static/list/mouse_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/point_targetting/attack/mouse
+	)
 
 /datum/action/cooldown/riot/Activate(atom/target)
 	StartCooldown(10 SECONDS)
@@ -273,6 +287,8 @@
 		nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
 		// Give a hint in description too
 		nearby_mouse.desc += " ...Except this one looks corrupted and aggressive."
+		nearby_mouse.AddComponent(/datum/component/obeys_commands, mouse_commands)
+		nearby_mouse.befriend(owner)
 		// Now we share factions!
 		nearby_mouse.faction = owner.faction.Copy()
 		uplifted_mice = TRUE

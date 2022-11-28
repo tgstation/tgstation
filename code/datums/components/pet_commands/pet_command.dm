@@ -1,15 +1,14 @@
-/// How close your pet must be to you or to a pointed target in order to acknowdlege a command
-#define PET_SENSE_RADIUS 7
-
 /**
  * # Pet Command
  * Set some AI blackboard commands in response to receiving instructions
  * This is abstract and should be extended for actual behaviour
  */
-/datum/component/pet_command
+/datum/pet_command
+	/// Weak reference to who follows this command
+	var/datum/weakref/weak_parent
 	/// Key for command applied when you receive an order
 	var/command_key = PET_COMMAND_NONE
-	/// Friendly name to display in radial menu
+	/// Unique name used for radial selection, should not be shared with other commands on one mob
 	var/command_name
 	/// Description to display in radial menu
 	var/command_desc
@@ -19,102 +18,71 @@
 	var/radial_icon_state
 	/// Speech strings to listen out for
 	var/list/speech_commands
-	/// People we care about listening to
-	var/list/friends = list()
 	/// Shown above the mob's head when it hears you
 	var/command_feedback
+	/// How close a mob needs to be to a target to respond to a command
+	var/sense_radius = 7
 
-/datum/component/pet_command/Initialize(list/speech_commands, command_feedback)
+/datum/pet_command/New(mob/living/parent)
 	. = ..()
-	if (!isliving(parent))
-		return COMPONENT_INCOMPATIBLE
-	var/mob/living/living_parent = parent
-	if (!living_parent.ai_controller)
-		return COMPONENT_INCOMPATIBLE
-	if (!length(speech_commands))
-		CRASH("Didn't provide any instructions to listen to.")
-
-	src.speech_commands = speech_commands
-	src.command_feedback = command_feedback
-
-/datum/component/pet_command/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ON_LIVING_TAMED, PROC_REF(new_friend))
-	RegisterSignal(parent, COMSIG_RADIAL_PET_COMMAND_SELECTED, PROC_REF(radial_command_selected))
-	RegisterSignal(parent, COMSIG_REQUESTING_PET_COMMAND_RADIAL, PROC_REF(provide_radial_data))
-
-/datum/component/pet_command/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ON_LIVING_TAMED))
-	return ..()
-
-/datum/component/pet_command/Destroy(force, silent)
-	. = ..()
-	for (var/datum/weakref/weak_friend as anything in friends)
-		var/mob/living/tamer = weak_friend.resolve()
-		if (!tamer)
-			continue
-		UnregisterSignal(tamer, COMSIG_MOB_SAY)
+	weak_parent = WEAKREF(parent)
 
 /// Register a new guy we want to listen to
-/datum/component/pet_command/proc/new_friend(mob/living/source, mob/living/tamer)
-	SIGNAL_HANDLER
-
-	friends += WEAKREF(tamer)
-	RegisterSignal(tamer, COMSIG_MOB_SAY, PROC_REF(listen_for_command))
+/datum/pet_command/proc/add_new_friend(mob/living/tamer)
+	RegisterSignal(tamer, COMSIG_MOB_SAY, PROC_REF(respond_to_command))
 
 /// Respond to something that one of our friends has asked us to do
-/datum/component/pet_command/proc/listen_for_command(mob/living/speaker, speech_args)
+/datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args)
 	SIGNAL_HANDLER
 
-	var/mob/living/living_parent = parent
-	if (!living_parent.ai_controller) // We stopped having a brain at some point
+	var/mob/living/parent = weak_parent.resolve()
+	if (!parent)
 		return
-	if (IS_DEAD_OR_INCAP(living_parent)) // Probably can't hear them if we're dead
-		return
-	if (living_parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == command_key) // We're already doing it
-		return
-	if (!can_see(living_parent, speaker, PET_SENSE_RADIUS)) // Basically the same rules as hearing
+	if (!can_see(parent, speaker, sense_radius)) // Basically the same rules as hearing
 		return
 
 	var/spoken_text = speech_args[SPEECH_MESSAGE]
-	if (find_command_in_text(spoken_text))
-		set_command_target(NONE)
-		set_command_active(speaker)
+	if (!find_command_in_text(spoken_text))
+		return
+
+	try_activate_command(speaker)
 
 /// Returns true if we find any of our spoken commands in the text
-/datum/component/pet_command/proc/find_command_in_text(spoken_text)
+/datum/pet_command/proc/find_command_in_text(spoken_text)
 	for (var/command as anything in speech_commands)
 		if (!findtext(spoken_text, command))
 			continue
 		return TRUE
 	return FALSE
 
+/// Apply a command state if conditions are right, return command if successful
+/datum/pet_command/proc/try_activate_command(mob/living/commander)
+	var/mob/living/parent = weak_parent.resolve()
+	if (!parent)
+		return
+	if (!parent.ai_controller) // We stopped having a brain at some point
+		return
+	if (IS_DEAD_OR_INCAP(parent)) // Probably can't hear them if we're dead
+		return
+	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == command_key) // We're already doing it
+		return
+	set_command_active(parent, commander)
+
 /// Activate the command, extend to add visible messages and the like
-/datum/component/pet_command/proc/set_command_active(mob/living/commander)
-	var/mob/living/living_parent = parent
-	living_parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
-	living_parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] = command_key
+/datum/pet_command/proc/set_command_active(mob/living/parent, mob/living/commander)
+	set_command_target(parent, null)
+
+	parent.ai_controller.CancelActions() // Stop whatever you're doing and do this instead
+	parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] = command_key
 	if (command_feedback)
-		living_parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
+		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
 
 /// Store the target for the AI blackboard
-/datum/component/pet_command/proc/set_command_target(atom/target)
-	var/mob/living/living_parent = parent
-	living_parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] = WEAKREF(target)
-
-/// Apply a command state from a radial menu option
-/datum/component/pet_command/proc/radial_command_selected(datum/source, var/command, mob/living/commander)
-	var/mob/living/living_parent = parent
-	if (!living_parent.ai_controller)
-		return
-	if (command != command_key)
-		return
-	if (living_parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] == command_key)
-		return
-	set_command_target(NONE)
-	set_command_active(commander)
+/datum/pet_command/proc/set_command_target(mob/living/parent, atom/target)
+	parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] = WEAKREF(target)
 
 /// Provide information about how to display this command in a radial menu
-/datum/component/pet_command/proc/provide_radial_data(datum/source, list/radial_options)
+/datum/pet_command/proc/provide_radial_data()
 	var/datum/radial_menu_choice/choice = new()
 	choice.name = command_name
 	choice.image = icon(icon = radial_icon, icon_state = radial_icon_state)
@@ -123,52 +91,41 @@
 		tooltip += "<br>Speak this command with the words [speech_commands.Join(", ")]."
 	choice.info = tooltip
 
-	radial_options += list("[command_key]" = choice)
+	return list("[command_name]" = choice)
 
 /**
  * # Point Targetting Pet Command
  * As above but also listens for you pointing at something and marks it as a target
  */
-/datum/component/pet_command/point_targetting
+/datum/pet_command/point_targetting
 	/// Text describing an action we perform upon receiving a new target
 	var/pointed_reaction
 
-/datum/component/pet_command/point_targetting/Initialize(list/speech_commands, command_feedback, pointed_reaction)
-	. = ..()
-	if (. == COMPONENT_INCOMPATIBLE)
-		return
-	src.pointed_reaction = pointed_reaction
-
-/datum/component/pet_command/point_targetting/new_friend(mob/living/source, mob/living/tamer)
+/datum/pet_command/point_targetting/add_new_friend(mob/living/tamer)
 	. = ..()
 	RegisterSignal(tamer, COMSIG_MOB_POINTED, PROC_REF(look_for_target))
 
-/datum/component/pet_command/point_targetting/Destroy(force, silent)
-	for (var/datum/weakref/weak_friend as anything in friends)
-		var/mob/living/tamer = weak_friend.resolve()
-		if (!tamer)
-			continue
-		UnregisterSignal(tamer, COMSIG_MOB_POINTED)
-	return ..()
-
 /// Target the pointed atom for actions
-/datum/component/pet_command/point_targetting/proc/look_for_target(mob/living/friend, atom/pointed_atom)
-	var/mob/living/living_parent = parent
-	if (!living_parent.ai_controller)
+/datum/pet_command/point_targetting/proc/look_for_target(mob/living/friend, atom/pointed_atom)
+	SIGNAL_HANDLER
+
+
+	var/mob/living/parent = weak_parent.resolve()
+	if (!parent)
 		return
-	if (IS_DEAD_OR_INCAP(living_parent))
+	if (!parent.ai_controller)
 		return
-	if (living_parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != command_key) // We're not listening right now
+	if (IS_DEAD_OR_INCAP(parent))
 		return
-	if (living_parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == WEAKREF(pointed_atom)) // That's already our target
+	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != command_key) // We're not listening right now
 		return
-	if (!can_see(living_parent, pointed_atom, PET_SENSE_RADIUS))
+	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == WEAKREF(pointed_atom)) // That's already our target
+		return
+	if (!can_see(parent, pointed_atom, sense_radius))
 		return
 
-	living_parent.ai_controller.CancelActions()
+	parent.ai_controller.CancelActions()
 	// Deciding if they can actually do anything with this target is the behaviour's job
-	set_command_target(pointed_atom)
+	set_command_target(parent, pointed_atom)
 	// These are usually hostile actions so should have a record in chat
-	living_parent.visible_message(span_warning("[living_parent] follows [friend]'s gesture towards [pointed_atom] and [pointed_reaction]!"))
-
-#undef PET_SENSE_RADIUS
+	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [pointed_atom] and [pointed_reaction]!"))

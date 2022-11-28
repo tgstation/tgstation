@@ -16,9 +16,4 @@
 /// Blackboard field for how we target things, as usually we want to be more permissive than normal
 #define BB_PET_TARGETTING_DATUM "BB_pet_targetting"
 /// Typecache of weakrefs to mobs this mob is friends with, will follow their instructions and won't attack them
-#define BB_PET_FRIENDS_LIST "BB_pet_friends_list"
-
-/// Signal sent when user makes an input requesting a radial command menu, contains a list to append radial data to
-#define COMSIG_REQUESTING_PET_COMMAND_RADIAL "requesting_pet_command_radial_menu"
-/// Signal sent when user selects a command on a radial menu, contains the key of the command selected and the user who selected it
-#define COMSIG_RADIAL_PET_COMMAND_SELECTED "radial_pet_command_selected"
+#define BB_FRIENDS_LIST "BB_friends_list"
