@@ -454,11 +454,10 @@
 	// taking taker by their hands.
 	var/offerer_zone_selected = offerer.zone_selected
 	offerer.zone_selected = "r_arm"
-	var/did_we_pull = offerer.start_pulling(taker)
+	var/did_we_pull = offerer.start_pulling(taker) // Will return either null or FALSE. We only want to silence FALSE.
 	offerer.zone_selected = offerer_zone_selected
-	offerer.buckle_mob()
 
-	if(!did_we_pull)
+	if(did_we_pull == FALSE)
 		return // That didn't work for one reason or the other. No need to display anything.
 
 	to_chat(offerer, span_notice("[taker] takes your hand, allowing you to pull [taker.p_them()] along."))
