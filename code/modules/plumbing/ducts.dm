@@ -12,7 +12,7 @@ All the important duct code:
 	use_power = NO_POWER_USE
 
 	//category for plumbing service rcd
-	var/category="Distribution"
+	var/category = "Distribution"
 
 	///bitfield with the directions we're connected in
 	var/connects
