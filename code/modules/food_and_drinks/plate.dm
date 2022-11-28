@@ -48,6 +48,11 @@
 	item_to_plate.vis_flags |= VIS_INHERIT_PLANE
 	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
 	RegisterSignal(item_to_plate, COMSIG_PARENT_QDELETING, PROC_REF(ItemMoved))
+	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
+	item_to_plate.pixel_w = item_to_plate.pixel_x
+	item_to_plate.pixel_z = item_to_plate.pixel_y
+	item_to_plate.pixel_x = 0
+	item_to_plate.pixel_y = 0
 	update_appearance()
 
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
@@ -56,6 +61,11 @@
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
 	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	// Resettt
+	removed_item.pixel_x = removed_item.pixel_w
+	removed_item.pixel_y = removed_item.pixel_z
+	removed_item.pixel_w = 0
+	removed_item.pixel_z = 0
 
 ///This proc is called by signals that remove the food from the plate.
 /obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
