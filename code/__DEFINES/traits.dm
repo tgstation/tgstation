@@ -673,7 +673,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TOWER_OF_BABEL "tower_of_babel"
 
 /// This target has recently been shot by a marksman coin and is very briefly immune to being hit by one again to prevent recursion
-#define TRAIT_RECENTLY_COINED "trait_recently_coined"
+#define TRAIT_RECENTLY_COINED "recently_coined"
+
+/// Receives echolocation images.
+#define TRAIT_ECHOLOCATION_RECEIVER "echolocation_receiver"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0

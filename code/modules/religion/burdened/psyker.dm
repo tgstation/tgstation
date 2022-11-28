@@ -8,12 +8,13 @@
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
 	organ_traits = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
+	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
 	if(!istype(inserted_into.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
 		return FALSE
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation)
+	inserted_into.AddComponent(/datum/component/echolocation, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
 /obj/item/organ/internal/brain/psyker/Remove(mob/living/carbon/removed_from, special, no_id_transfer)
@@ -218,13 +219,18 @@
 	active_msg = "You prepare to psychically project to a target..."
 	/// Duration of the effects.
 	var/projection_duration = 10 SECONDS
-	/// The target we are projecting on.
-	var/projection_target
 
-/datum/action/cooldown/spell/pointed/psychic_projection/cast(mob/living/carbon/human/cast_on)
+/datum/action/cooldown/spell/pointed/blind/is_valid_target(atom/cast_on)
 	. = ..()
-	if(!istype(cast_on))
+	if(!.)
 		return FALSE
+	if(!isliving(cast_on))
+		return FALSE
+	var/mob/living/living_target = cast_on
+	return !living_target.has_status_effect(/datum/status_effect/psychic_projection)
+
+/datum/action/cooldown/spell/pointed/psychic_projection/cast(mob/living/cast_on)
+	. = ..()
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("Your mind feels weird, but it passes momentarily."))
 		to_chat(owner, span_warning("The spell had no effect!"))
@@ -238,8 +244,9 @@
 	id = "psychic_projection"
 	alert_type = null
 	remove_on_fullheal = TRUE
+	tick_interval = 0.2 SECONDS
 	var/times_dry_fired = 0
-	var/firing_delay  = 0
+	var/firing_delay = 0
 
 /datum/status_effect/psychic_projection/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
@@ -260,8 +267,7 @@
 	game_plane_master_controller.remove_filter("psychic_blur")
 	game_plane_master_controller.remove_filter("psychic_wave")
 
-/datum/status_effect/psychic_projection/process(delta_time, times_fired)
-	. = ..()
+/datum/status_effect/psychic_projection/tick(delta_time, times_fired)
 	var/obj/item/gun/held_gun = owner?.is_holding_item_of_type(/obj/item/gun)
 	if(!held_gun)
 		return
@@ -310,11 +316,13 @@
 	. = ..()
 	if(boosted)
 		return
+	boosted = TRUE
 	ADD_TRAIT(cast_on, TRAIT_DOUBLE_TAP, type)
 	RegisterSignal(cast_on, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, PROC_REF(modify_projectile))
 	addtimer(CALLBACK(src, PROC_REF(stop_effects)), effect_time)
 
 /datum/action/cooldown/spell/charged/psychic_booster/proc/stop_effects()
+	boosted = FALSE
 	REMOVE_TRAIT(owner, TRAIT_DOUBLE_TAP, type)
 	UnregisterSignal(owner, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE)
 
@@ -358,4 +366,8 @@
 	. = ..()
 	if(!istype(consoomer))
 		return
+	consoomer.dna?.add_mutation(/datum/mutation/human/telekinesis)
+	consoomer.dna?.add_mutation(/datum/mutation/human/mindreader)
+	consoomer.dna?.add_mutation(/datum/mutation/human/telepathy)
+	consoomer.dna?.add_mutation(/datum/mutation/human/unintelligible)
 	consoomer.psykerize()
