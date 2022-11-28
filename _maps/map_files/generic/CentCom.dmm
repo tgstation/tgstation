@@ -3344,20 +3344,15 @@
 	},
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
-"jS" = (
-/obj/machinery/computer/prisoner/management,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/prison)
 "jT" = (
-/obj/machinery/computer/security,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/north,
+/obj/machinery/computer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "jU" = (
-/obj/machinery/computer/secure_data,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/computer,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/prison)
 "jV" = (
@@ -3841,7 +3836,6 @@
 /area/centcom/central_command_areas/prison)
 "lv" = (
 /obj/structure/table/reinforced,
-/obj/item/gun/ballistic/automatic/wt550,
 /obj/item/flashlight/seclite,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3976,8 +3970,6 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/handcuffs,
 /obj/item/crowbar/red,
-/obj/item/crowbar/power,
-/obj/item/storage/belt/security/full,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -63369,23 +63361,23 @@ aa
 aa
 aa
 il
-Mz
-Mz
 il
-Mz
+il
+il
+il
 Ho
-Mz
-Mz
+il
+il
 jw
 lL
 jG
 Mz
 Mz
 Ho
-Mz
 il
-Mz
-Mz
+il
+il
+il
 il
 Mz
 Ho
@@ -63632,12 +63624,12 @@ iD
 iV
 lL
 jh
-Mz
+il
 jw
 lL
 jG
 Mz
-jS
+jU
 lL
 kx
 kT
@@ -64146,7 +64138,7 @@ iE
 iW
 lL
 jh
-Mz
+il
 jw
 lL
 jG
@@ -64397,23 +64389,23 @@ aa
 aa
 aa
 il
-Mz
-Mz
 il
-Mz
+il
+il
+il
 Ho
-Mz
-Mz
+il
+il
 jw
 lL
 jG
 Mz
 Mz
 Ho
-Mz
 il
-Mz
-Mz
+il
+il
+il
 il
 Mz
 Ho
