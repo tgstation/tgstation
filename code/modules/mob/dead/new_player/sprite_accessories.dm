@@ -1850,6 +1850,7 @@
 	color_src = HAIR
 
 /datum/sprite_accessory/ears/fox
+	icon = 'icons/mob/species/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
 	hasinner = 1
