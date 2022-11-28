@@ -175,7 +175,7 @@
 	for(var/datum/objective/task as anything in handler.traitor_datum?.objectives)
 		if(!task.target)
 			continue
-		if(!is_type(datum/mind)
+		if(!istype(task.target, /datum/mind))
 			continue
 		already_targeting += task.target //Removing primary objective kill targets from the list
 
