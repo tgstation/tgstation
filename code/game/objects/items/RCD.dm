@@ -1127,9 +1127,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		/obj/machinery/plumbing/grinder_chemical = 30,
 		/obj/machinery/plumbing/growing_vat = 20,
 		/obj/machinery/plumbing/fermenter = 30,
-		/obj/machinery/plumbing/liquid_pump = 35,   //extracting chemicals from ground is one way of creation
+		/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
 		/obj/machinery/plumbing/disposer = 10,
-		/obj/machinery/plumbing/buffer = 10,       //creates chemicals as it waits for other buffers containing other chemicals and when mixed creates new chemicals
+		/obj/machinery/plumbing/buffer = 10, //creates chemicals as it waits for other buffers containing other chemicals and when mixed creates new chemicals
 
 		//category 2 distributors i.e devices which inject , move around , remove chemicals from the network
 		/obj/machinery/duct = 1,
