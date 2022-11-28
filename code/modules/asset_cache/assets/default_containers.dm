@@ -1,16 +1,17 @@
 // Representative icons for each creafting recipe
-/datum/asset/spritesheet/food
-	name = "food"
+/datum/asset/spritesheet/default_containers
+	name = "default_containers"
 
-/datum/asset/spritesheet/food/create_spritesheets()
+/datum/asset/spritesheet/default_containers/create_spritesheets()
 	var/list/id_list = list()
-	for (var/path in subtypesof(/obj/item/food))
-		var/atom/item = initial(path)
+	for (var/path in subtypesof(/datum/reagent/))
+		var/datum/reagent/reagent = initial(path)
+		var/atom/item = initial(reagent.default_container)
 		var/icon_file = initial(item.icon)
 		var/icon_state = initial(item.icon_state)
 		#ifdef UNIT_TESTS
 		if(!(icon_state in icon_states(icon_file)))
-			stack_trace("food [R] with icon '[icon_file]' missing state '[icon_state]'")
+			stack_trace("reagent container [R] with icon '[icon_file]' missing state '[icon_state]'")
 			continue
 		#endif
 		var/icon/I = icon(icon_file, icon_state, SOUTH)

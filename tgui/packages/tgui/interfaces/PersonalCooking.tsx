@@ -322,10 +322,14 @@ const RecipeContentCompact = (props, context) => {
       <Stack my={-0.75}>
         <Stack.Item>
           <Box
-            className={classes([
-              'food32x32',
-              item.result?.replace(/[/_]/gi, ''),
-            ])}
+            className={
+              item.result?.includes('/datum/reagent/')
+                ? classes([
+                  'default_containers32x32',
+                  item.result?.replace(/[/_]/gi, ''),
+                ])
+                : classes(['food32x32', item.result?.replace(/[/_]/gi, '')])
+            }
           />
         </Stack.Item>
         <Stack.Item grow>
@@ -386,10 +390,14 @@ const RecipeContent = (props, context) => {
                 'transform': 'scale(2)',
               }}
               m={'16px'}
-              className={classes([
-                'food32x32',
-                item.result?.replace(/[/_]/gi, ''),
-              ])}
+              className={
+                item.result?.includes('/datum/reagent/')
+                  ? classes([
+                    'default_containers32x32',
+                    item.result?.replace(/[/_]/gi, ''),
+                  ])
+                  : classes(['food32x32', item.result?.replace(/[/_]/gi, '')])
+              }
             />
           </Box>
         </Stack.Item>
@@ -399,7 +407,7 @@ const RecipeContent = (props, context) => {
               <Box bold mb={0.5} style={{ 'text-transform': 'capitalize' }}>
                 {item.name}
               </Box>
-              <Box color={'gray'}>{item.desc}</Box>
+              {item.desc && <Box color={'gray'}>{item.desc}</Box>}
               <Box style={{ 'text-transform': 'capitalize' }}>
                 {item.reqs && (
                   <Box>
@@ -543,25 +551,34 @@ const IngredientContent = (props) => {
           {i.amount > 1 && '\xa0' + i.amount + 'x'}
         </Box>
       </Box>
+    ) : i.is_reagent ? (
+      <Box my={1}>
+        <Box
+          verticalAlign="middle"
+          inline
+          my={-1}
+          className={classes([
+            'default_containers32x32',
+            i.path.replace(/[/_]/gi, ''),
+          ])}
+        />
+        <Box inline verticalAlign="middle">
+          {i.name + '\xa0' + i.amount + 'u'}
+        </Box>
+      </Box>
     ) : (
       <Box my={1} verticalAlign="middle">
         <Icon
           name={
-            i.is_reagent
-              ? 'droplet'
-              : i.path.includes('/obj/item/reagent_containers/')
-                ? 'whiskey-glass'
-                : 'box'
+            i.path.includes('/obj/item/reagent_containers/')
+              ? 'whiskey-glass'
+              : 'box'
           }
           width={'32px'}
           textAlign="center"
         />
         <Box inline>
-          {i.is_reagent
-            ? i.name + '\xa0' + i.amount + 'u'
-            : i.amount > 1
-              ? i.name + '\xa0' + i.amount + 'x'
-              : i.name}
+          {i.amount > 1 ? i.name + '\xa0' + i.amount + 'x' : i.name}
         </Box>
       </Box>
     )

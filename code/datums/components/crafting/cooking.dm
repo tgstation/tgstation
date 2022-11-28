@@ -429,7 +429,8 @@
 
 /datum/component/cooking/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/food)
+		get_asset_datum(/datum/asset/spritesheet/food),
+		get_asset_datum(/datum/asset/spritesheet/default_containers),
 	)
 
 /datum/component/cooking/proc/build_crafting_data(datum/crafting_recipe/R)
@@ -523,7 +524,8 @@
 			if(!(type in data["foodtypes"]))
 				data["foodtypes"] += type
 		data["foodtypes"] = foodtypes
-	else
-		data["desc"] = "This is not a food item."
+	else if(ispath(recipe.result, /datum/reagent))
+		var/datum/reagent/item = recipe.result
+		data["desc"] = initial(item.description)
 
 	return data
