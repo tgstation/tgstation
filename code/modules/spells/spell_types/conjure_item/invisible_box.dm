@@ -6,6 +6,7 @@
 	background_icon_state = "bg_mime"
 	icon_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_box"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 	panel = "Mime"
 	sound = null
 
@@ -32,7 +33,7 @@
 	. = ..()
 	var/obj/item/made_box = .
 	made_box.alpha = 255
-	addtimer(CALLBACK(src, .proc/cleanup_box, made_box), box_lifespan)
+	addtimer(CALLBACK(src, PROC_REF(cleanup_box), made_box), box_lifespan)
 
 /// Callback that gets rid out of box and removes the weakref from our list
 /datum/action/cooldown/spell/conjure_item/invisible_box/proc/cleanup_box(obj/item/storage/box/box)

@@ -63,7 +63,7 @@ GLOBAL_PROTECT(lua_usr)
 			result["param"] = weakrefify_list(encode_text_and_nulls(result["param"]))
 		log += list(result)
 		index_of_log = log.len
-	INVOKE_ASYNC(src, /datum/lua_state.proc/update_editors)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/lua_state, update_editors))
 	return index_of_log
 
 /datum/lua_state/proc/load_script(script)
@@ -95,7 +95,7 @@ GLOBAL_PROTECT(lua_usr)
 				var/datum/weakref/weak_ref = path_element
 				var/resolved = weak_ref.hard_resolve()
 				if(!resolved)
-					return list("status" = "errored", "param" = "Weakref in function path ([weak_ref] \ref[weak_ref]) resolved to null.", "name" = jointext(function, "."))
+					return list("status" = "errored", "param" = "Weakref in function path ([weak_ref] [text_ref(weak_ref)]) resolved to null.", "name" = jointext(function, "."))
 				new_function_path += resolved
 			else
 				new_function_path += path_element
@@ -163,7 +163,7 @@ GLOBAL_PROTECT(lua_usr)
 	__lua_kill_task(internal_id, task_info)
 
 /datum/lua_state/proc/update_editors()
-	var/list/editor_list = LAZYACCESS(SSlua.editors, "\ref[src]")
+	var/list/editor_list = LAZYACCESS(SSlua.editors, text_ref(src))
 	if(editor_list)
 		for(var/datum/lua_editor/editor as anything in editor_list)
 			SStgui.update_uis(editor)

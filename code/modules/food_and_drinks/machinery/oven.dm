@@ -66,7 +66,7 @@
 	var/worst_cooked_food_state = 0
 	for(var/obj/item/baked_item in used_tray.contents)
 
-		var/signal_result = SEND_SIGNAL(baked_item, COMSIG_ITEM_BAKED, src, delta_time)
+		var/signal_result = SEND_SIGNAL(baked_item, COMSIG_ITEM_OVEN_PROCESS, src, delta_time)
 
 		if(signal_result & COMPONENT_HANDLED_BAKING) //This means something responded to us baking!
 			if(signal_result & COMPONENT_BAKING_GOOD_RESULT && worst_cooked_food_state < OVEN_SMOKE_STATE_GOOD)
@@ -89,12 +89,12 @@
 	if(open && !used_tray && istype(I, /obj/item/plate/oven_tray))
 		if(user.transferItemToLoc(I, src, silent = FALSE))
 			to_chat(user, span_notice("You put [I] in [src]."))
-			add_tray_to_oven(I)
+			add_tray_to_oven(I, user)
 	else
 		return ..()
 
 ///Adds a tray to the oven, making sure the shit can get baked.
-/obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray)
+/obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/baker)
 	used_tray = oven_tray
 
 	if(!open)
@@ -105,13 +105,14 @@
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
 	oven_tray.pixel_x = OVEN_TRAY_X_OFFSET
 
-	RegisterSignal(used_tray, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
+	RegisterSignal(used_tray, COMSIG_MOVABLE_MOVED, PROC_REF(on_tray_moved))
 	update_baking_audio()
 	update_appearance()
 
 ///Called when the tray is moved out of the oven in some way
-/obj/machinery/oven/proc/ItemMoved(obj/item/oven_tray, atom/OldLoc, Dir, Forced)
+/obj/machinery/oven/proc/on_tray_moved(obj/item/oven_tray, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
+
 	tray_removed_from_oven(oven_tray)
 
 /obj/machinery/oven/proc/tray_removed_from_oven(obj/item/oven_tray)
@@ -139,6 +140,11 @@
 		if(used_tray)
 			begin_processing()
 			used_tray.vis_flags |= VIS_HIDE
+
+			// yeah yeah i figure you don't need connect loc for just baking trays
+			for(var/obj/item/baked_item in used_tray.contents)
+				SEND_SIGNAL(baked_item, COMSIG_ITEM_OVEN_PLACED_IN, src, user)
+
 	update_appearance()
 	update_baking_audio()
 	return TRUE

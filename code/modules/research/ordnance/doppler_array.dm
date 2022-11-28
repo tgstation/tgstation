@@ -25,9 +25,9 @@
 
 /obj/machinery/doppler_array/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
-	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, .proc/update_doppler_light)
-	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, .proc/update_doppler_light)
+	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, PROC_REF(sense_explosion))
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, PROC_REF(update_doppler_light))
+	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(update_doppler_light))
 	update_doppler_light()
 
 	// Rotation determines the detectable direction.
@@ -304,7 +304,7 @@
 				return
 			records -= record
 			return TRUE
-		if("print_record")
+		if("save_record")
 			var/datum/data/tachyon_record/record  = locate(params["ref"]) in records
 			if(!records || !(record in records))
 				return

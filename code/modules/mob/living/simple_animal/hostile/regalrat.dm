@@ -196,7 +196,7 @@
 
 /mob/living/simple_animal/hostile/regalrat/controlled/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/get_player)
+	INVOKE_ASYNC(src, PROC_REF(get_player))
 	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
 	var/title = pick("King","Lord","Prince","Emperor","Supreme","Overlord","Master","Shogun","Bojar","Tsar")
 	name = "[kingdom] [title]"
@@ -258,6 +258,9 @@
 	var/cap = CONFIG_GET(number/ratcap)
 	var/uplifted_mice = FALSE
 	for(var/mob/living/basic/mouse/nearby_mouse in oview(owner, 5))
+		// This mouse is already rat controlled, let's not bother with it.
+		if(istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
+			continue
 		var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
 
 		// Buffs our combat stats to that of a rat
@@ -266,6 +269,8 @@
 		nearby_mouse.obj_damage = initial(rat_path.obj_damage)
 		nearby_mouse.maxHealth = initial(rat_path.maxHealth)
 		nearby_mouse.health = initial(rat_path.health)
+		// Replace our AI with a rat one
+		nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
 		// Give a hint in description too
 		nearby_mouse.desc += " ...Except this one looks corrupted and aggressive."
 		// Now we share factions!
@@ -276,7 +281,7 @@
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
 
 	else if(LAZYLEN(SSmobs.cheeserats) < cap)
-		new /mob/living/basic/mouse(owner.loc, owner.faction)
+		new /mob/living/basic/mouse(owner.loc)
 		owner.visible_message(span_warning("[owner] commands a rat to their side!"))
 
 	else

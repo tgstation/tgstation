@@ -27,11 +27,11 @@
 	mutant_organs = list(/obj/item/organ/internal/fly, /obj/item/organ/internal/fly/groin)
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/fly,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/fly,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/fly,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/fly,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/fly,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/fly,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/fly,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/fly,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/fly,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
 	)
 
@@ -138,14 +138,16 @@
 	name = odd_organ_name()
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 
-/obj/item/organ/internal/stomach/fly/on_life(delta_time, times_fired)
-	if(locate(/datum/reagent/consumable) in reagents.reagent_list)
-		var/mob/living/carbon/body = owner
-		// we do not loss any nutrition as a fly when vomiting out food
-		body.vomit(0, FALSE, FALSE, 2, TRUE, force=TRUE, purge_ratio = 0.67)
-		playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-		body.visible_message(span_danger("[body] vomits on the floor!"), \
-					span_userdanger("You throw up on the floor!"))
+/obj/item/organ/internal/stomach/fly/after_eat(edible)
+	var/mob/living/carbon/body = owner
+	ASSERT(istype(body))
+	// we do not lose any nutrition as a fly when vomiting out food
+	body.vomit(lost_nutrition = 0, stun = FALSE, distance = 2, force = TRUE, purge_ratio = 0.67)
+	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
+	body.visible_message(
+		span_danger("[body] vomits on the floor!"),
+		span_userdanger("You throw up on the floor!"),
+	)
 	return ..()
 
 /obj/item/organ/internal/appendix/fly

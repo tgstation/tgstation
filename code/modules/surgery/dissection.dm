@@ -4,8 +4,8 @@
 		/mob/living/carbon/human,
 		/mob/living/carbon/alien,
 	)
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	possible_locs = list(BODY_ZONE_CHEST)
-	requires_real_bodypart = TRUE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -30,7 +30,7 @@
 	return TRUE
 
 /datum/surgery_step/dissection
-	name = "dissect"
+	name = "dissect (scalpel)"
 	time = 16 SECONDS
 	implements = list(
 		TOOL_SCALPEL = 100,
@@ -68,7 +68,7 @@
 		target,
 		span_notice("You mess up, damaging some of the internal organs!"),
 		span_notice("[user] messes up, damaging some of the internal organs!"),
-		span_notice("[user] messes up, damaging some of your internal organs!")
+		span_notice("[user] messes up, damaging some of your internal organs!"),
 	)
 
 	target.adjustOrganLoss(pick(

@@ -1,12 +1,10 @@
+#define MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE 25
+
 /datum/species/monkey
 	name = "Monkey"
 	id = SPECIES_MONKEY
 	say_mod = "chimpers"
 	bodytype = BODYTYPE_ORGANIC | BODYTYPE_MONKEY
-	attack_verb = "bite"
-	attack_effect = ATTACK_EFFECT_BITE
-	attack_sound = 'sound/weapons/bite.ogg'
-	miss_sound = 'sound/weapons/bite.ogg'
 	external_organs = list(
 		/obj/item/organ/external/tail/monkey = "Monkey"
 	)
@@ -40,17 +38,14 @@
 	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
 	sexes = FALSE
-	punchdamagelow = 1
-	punchdamagehigh = 3
-	punchstunthreshold = 4 // no stun punches
 	species_language_holder = /datum/language_holder/monkey
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/monkey,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/monkey,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/monkey,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/monkey,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/monkey,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/monkey,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/monkey,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/monkey,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 	fire_overlay = "monkey"
@@ -82,40 +77,66 @@
 	C.dna.remove_mutation(/datum/mutation/human/race)
 
 /datum/species/monkey/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
-	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-		if(!iscarbon(target))
+	// If our hands are not blocked, dont try to bite them
+	if(!HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		// if we aren't an advanced tool user, we call attack_paw and cancel the preceeding attack chain
+		if(!ISADVANCEDTOOLUSER(user))
+			target.attack_paw(user, modifiers)
 			return TRUE
-		var/mob/living/carbon/victim = target
-		if(user.is_muzzled())
-			return TRUE
-		var/obj/item/bodypart/affecting = null
-		if(ishuman(victim))
-			var/mob/living/carbon/human/human_victim = victim
-			affecting = human_victim.get_bodypart(human_victim.get_random_valid_zone(even_weights = TRUE))
-		var/armor = victim.run_armor_check(affecting, MELEE)
-		if(prob(25))
-			victim.visible_message(span_danger("[user]'s bite misses [victim]!"),
-				span_danger("You avoid [user]'s bite!"), span_hear("You hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("Your bite misses [victim]!"))
-			return TRUE
-		victim.apply_damage(rand(punchdamagelow, punchdamagehigh), BRUTE, affecting, armor)
-		victim.visible_message(span_danger("[name] bites [victim]!"),
-			span_userdanger("[name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, name)
-		to_chat(user, span_danger("You bite [victim]!"))
-		if(armor >= 2)
-			return TRUE
-		for(var/datum/disease/bite_infection as anything in user.diseases)
-			if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
-				continue
-			victim.ForceContractDisease(bite_infection)
+		return ..()
+
+	// this shouldn't even be possible, but I'm sure the check was here for a reason
+	if(!iscarbon(target))
+		stack_trace("HEY LISTEN! We are performing a species spec_unarmed attack with a non-carbon user. How did you fuck this up?")
 		return TRUE
-	if(!ISADVANCEDTOOLUSER(user))
-		target.attack_paw(user, modifiers)
+	var/mob/living/carbon/victim = target
+	if(user.is_muzzled())
+		return TRUE // cannot bite them if we're muzzled
+
+	var/obj/item/bodypart/affecting
+	if(ishuman(victim))
+		var/mob/living/carbon/human/human_victim = victim
+		affecting = human_victim.get_bodypart(human_victim.get_random_valid_zone(even_weights = TRUE))
+	var/armor = victim.run_armor_check(affecting, MELEE)
+
+	if(prob(MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE))
+		victim.visible_message(
+			span_danger("[user]'s bite misses [victim]!"),
+			span_danger("You avoid [user]'s bite!"),
+			span_hear("You hear jaws snapping shut!"),
+			COMBAT_MESSAGE_RANGE,
+			user,
+		)
+		to_chat(user, span_danger("Your bite misses [victim]!"))
 		return TRUE
-	return ..()
+
+	var/obj/item/bodypart/head/mouth = user.get_bodypart(BODY_ZONE_HEAD)
+	if(!mouth) // check for them having a head, ala HARS
+		return TRUE
+
+	var/damage_roll = rand(mouth.unarmed_damage_low, mouth.unarmed_damage_high)
+	victim.apply_damage(damage_roll, BRUTE, affecting, armor)
+
+	victim.visible_message(
+		span_danger("[name] bites [victim]!"),
+		span_userdanger("[name] bites you!"),
+		span_hear("You hear a chomp!"),
+		COMBAT_MESSAGE_RANGE,
+		name,
+	)
+	to_chat(user, span_danger("You bite [victim]!"))
+
+	if(armor >= 2) // if they have basic armor on the limb we bit, don't spread diseases
+		return TRUE
+	for(var/datum/disease/bite_infection as anything in user.diseases)
+		if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+			continue // ignore diseases that have special spread logic, or are not contagious
+		victim.ForceContractDisease(bite_infection)
+
+	return TRUE
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[MONKEYDAY])
+	if(check_holidays(MONKEYDAY))
 		return TRUE
 	return ..()
 
@@ -216,7 +237,7 @@
 
 /obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
-	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, .proc/on_crossed, TRUE)
+	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
 /obj/item/organ/internal/brain/primate/Remove(mob/living/carbon/primate, special = FALSE, no_id_transfer = FALSE)
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
@@ -234,3 +255,8 @@
 	if(in_the_way_mob.pass_flags & PASSTABLE)
 		return
 	in_the_way_mob.knockOver(owner)
+
+/obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
+	return owner.get_bodypart(BODY_ZONE_HEAD)
+
+#undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

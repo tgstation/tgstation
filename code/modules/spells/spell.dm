@@ -96,15 +96,15 @@
 
 	// Register some signals so our button's icon stays up to date
 	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
-		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
+		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(update_icon_on_signal))
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
+		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(update_icon_on_signal))
 	if(invocation_type == INVOCATION_EMOTE)
-		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), .proc/update_icon_on_signal)
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_EMOTEMUTE), SIGNAL_REMOVETRAIT(TRAIT_EMOTEMUTE)), PROC_REF(update_icon_on_signal))
 	if(invocation_type == INVOCATION_SHOUT || invocation_type == INVOCATION_WHISPER)
-		RegisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), .proc/update_icon_on_signal)
+		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MUTE), SIGNAL_REMOVETRAIT(TRAIT_MUTE)), PROC_REF(update_icon_on_signal))
 
-	RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
+	RegisterSignals(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(update_icon_on_signal))
 	owner.client?.stat_panel.send_message("check_spells")
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
@@ -123,19 +123,8 @@
 
 	return ..()
 
-/datum/action/cooldown/spell/IsAvailable()
-	return ..() && can_cast_spell(feedback = FALSE)
-
-/datum/action/cooldown/spell/Trigger(trigger_flags, atom/target)
-	// We implement this can_cast_spell check before the parent call of Trigger()
-	// to allow people to click unavailable abilities to get a feedback chat message
-	// about why the ability is unavailable.
-	// It is otherwise redundant, however, as IsAvailable() checks can_cast_spell as well.
-	if(!can_cast_spell())
-		UpdateButtons(TRUE)
-		return FALSE
-
-	return ..()
+/datum/action/cooldown/spell/IsAvailable(feedback = FALSE)
+	return ..() && can_cast_spell(feedback)
 
 /datum/action/cooldown/spell/set_click_ability(mob/on_who)
 	if(SEND_SIGNAL(on_who, COMSIG_MOB_SPELL_ACTIVATED, src) & SPELL_CANCEL_CAST)
@@ -192,10 +181,12 @@
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			var/mob/living/carbon/human/human_owner = owner
 			if(!(human_owner.wear_suit?.clothing_flags & CASTING_CLOTHES))
-				to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
 			if(!(human_owner.head?.clothing_flags & CASTING_CLOTHES))
-				to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough without your hat!"))
 				return FALSE
 
 	else
@@ -219,6 +210,7 @@
 /**
  * Check if the target we're casting on is a valid target.
  * For self-casted spells, the target being checked (cast_on) is the caster.
+ * For click_to_activate spells, the target being checked is the clicked atom.
  *
  * Return TRUE if cast_on is valid, FALSE otherwise
  */
@@ -266,7 +258,7 @@
  *
  * Returns a bitflag.
  * - SPELL_CANCEL_CAST will stop the spell from being cast.
- * - SPELL_NO_FEEDBACK will prevent the spell from calling [proc/spell_feedback] on cast. (invocation, sounds)
+ * - SPELL_NO_FEEDBACK will prevent the spell from calling [proc/spell_feedback] on cast. (invocation), sounds)
  * - SPELL_NO_IMMEDIATE_COOLDOWN will prevent the spell from starting its cooldown between cast and before after_cast.
  */
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
@@ -395,7 +387,7 @@
 		return FALSE
 
 	spell_level++
-	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0)
+	cooldown_time = max(cooldown_time - cooldown_reduction_per_rank, 0.25 SECONDS) // 0 second CD starts to break things.
 	update_spell_name()
 	return TRUE
 
@@ -411,7 +403,11 @@
 		return FALSE
 
 	spell_level--
-	cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	if(cooldown_reduction_per_rank > 0 SECONDS)
+		cooldown_time = min(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+	else
+		cooldown_time = max(cooldown_time + cooldown_reduction_per_rank, initial(cooldown_time))
+
 	update_spell_name()
 	return TRUE
 

@@ -2,6 +2,68 @@
 //SS13 Optimized Map loader
 //////////////////////////////////////////////////////////////
 #define SPACE_KEY "space"
+// We support two different map formats
+// It is kinda possible to process them together, but if we split them up
+// I can make optimization decisions more easily
+/**
+ * DMM SPEC:
+ * DMM is split into two parts. First we have strings of text linked to lists of paths and their modifications (I will call this the cache)
+ * We call these strings "keys" and the things they point to members. Keys have a static length
+ *
+ * The second part is a list of locations matched to a string of keys. (I'll be calling this the grid)
+ * These are used to lookup the cache we built earlier.
+ * We store location lists as grid_sets. the lines represent different things depending on the spec
+ *
+ * In standard DMM (which you can treat as the base case, since it also covers weird modifications) each line
+ * represents an x file, and there's typically only one grid set per z level.
+ * The meme is you can look at a DMM formatted map and literally see what it should roughly look like
+ * This differs in TGM, and we can pull some performance from this
+ *
+ * Any restrictions here also apply to TGM
+ *
+ * /tg/ Restrictions:
+ * Paths have a specified order. First atoms in the order in which they should be loaded, then a single turf, then the area of the cell
+ * DMM technically supports turf stacking, but this is deprecated for all formats
+
+ */
+#define MAP_DMM "dmm"
+/**
+ * TGM SPEC:
+ * TGM is a derevation of DMM, with restrictions placed on it
+ * to make it easier to parse and to reduce merge conflicts/ease their resolution
+ *
+ * Requirements:
+ * Each "statement" in a key's details ends with a new line, and wrapped in (...)
+ * All paths end with either a comma or occasionally a {, then a new line
+ * Excepting the area, who is listed last and ends with a ) to mark the end of the key
+ *
+ * {} denotes a list of variable edits applied to the path that came before the first {
+ * the final } is followed by a comma, and then a new line
+ * Variable edits have the form \tname = value;\n
+ * Except the last edit, which has no final ;, and just ends in a newline
+ * No extra padding is permitted
+ * Many values are supported. See parse_constant()
+ * Strings must be wrapped in "...", files in '...', and lists in list(...)
+ * Files are kinda susy, and may not actually work. buyer beware
+ * Lists support assoc values as expected
+ * These constants can be further embedded into lists
+ * One var edited list will be shared among all the things it is applied to
+ *
+ * There can be no padding in front of, or behind a path
+ *
+ * Therefore:
+ * "key" = (
+ * /path,
+ * /other/path{
+ *     var = list("name" = 'filepath');
+ *     other_var = /path
+ *     },
+ * /turf,
+ * /area)
+ *
+ */
+#define MAP_TGM "tgm"
+#define MAP_UNKNOWN "unknown"
 
 /datum/grid_set
 	var/xcrd
@@ -11,8 +73,15 @@
 
 /datum/parsed_map
 	var/original_path
+	var/map_format
 	/// The length of a key in this file. This is promised by the standard to be static
 	var/key_len = 0
+	/// The length of a line in this file. Not promised by dmm but standard dmm uses it, so we can trust it
+	var/line_len = 0
+	/// If we've expanded world.maxx
+	var/expanded_y = FALSE
+	/// If we've expanded world.maxy
+	var/expanded_x = FALSE
 	var/list/grid_models = list()
 	var/list/gridSets = list()
 	/// List of area types we've loaded AS A PART OF THIS MAP
@@ -31,8 +100,13 @@
 
 	// raw strings used to represent regexes more accurately
 	// '' used to avoid confusing syntax highlighting
-	var/static/regex/dmmRegex = new(@'"([a-zA-Z]+)" = \(((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
-	var/static/regex/trimRegex = new(@'^[\s\n]+|[\s\n]+$', "g")
+	var/static/regex/dmm_regex = new(@'"([a-zA-Z]+)" = (?:\(\n|\()((?:.|\n)*?)\)\n(?!\t)|\((\d+),(\d+),(\d+)\) = \{"([a-zA-Z\n]*)"\}', "g")
+	/// Matches key formats in TMG (IE: newline after the \()
+	var/static/regex/matches_tgm = new(@'^"[A-z]*"[\s]*=[\s]*\([\s]*\n', "m")
+	/// Pulls out key value pairs for TGM
+	var/static/regex/var_edits_tgm = new(@'^\t([A-z]*) = (.*?);?$')
+	/// Pulls out model paths for DMM
+	var/static/regex/model_path = new(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g")
 
 	#ifdef TESTING
 	var/turfsSkipped = 0
@@ -50,10 +124,10 @@
 /// - `no_changeturf`: When true, [/turf/proc/AfterChange] won't be called on loaded turfs
 /// - `x_lower`, `x_upper`, `y_lower`, `y_upper`: Coordinates (relative to the map) to crop to (Optional).
 /// - `placeOnTop`: Whether to use [/turf/proc/PlaceOnTop] rather than [/turf/proc/ChangeTurf] (Optional).
-/proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num)
+/proc/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num, x_lower = -INFINITY as num, x_upper = INFINITY as num, y_lower = -INFINITY as num, y_upper = INFINITY as num, placeOnTop = FALSE as num, new_z)
 	var/datum/parsed_map/parsed = new(dmm_file, x_lower, x_upper, y_lower, y_upper, measureOnly)
 	if(parsed.bounds && !measureOnly)
-		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+		parsed.load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z = new_z)
 	return parsed
 
 /// Parse a map, possibly cropping it.
@@ -69,18 +143,25 @@
 		return
 
 	src.bounds = parsed_bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+
+	if(findtext(tfile, matches_tgm))
+		map_format = MAP_TGM
+	else
+		map_format = MAP_DMM // Fallback
+
 	// lists are structs don't you know :)
 	var/list/bounds = src.bounds
 	var/list/grid_models = src.grid_models
 	var/key_len = src.key_len
+	var/line_len = src.line_len
 
 	var/stored_index = 1
 	var/list/regexOutput
 	//multiz lool
-	while(dmmRegex.Find(tfile, stored_index))
-		stored_index = dmmRegex.next
+	while(dmm_regex.Find(tfile, stored_index))
+		stored_index = dmm_regex.next
 		// Datum var lookup is expensive, this isn't
-		regexOutput = dmmRegex.group
+		regexOutput = dmm_regex.group
 
 		// "aa" = (/type{vars=blah})
 		if(regexOutput[1]) // Model
@@ -136,9 +217,12 @@
 			gridSet.ycrd += length(gridLines) - 1 // Start at the top and work down
 			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], gridSet.ycrd)
 
+			if(!line_len)
+				line_len = length(gridLines[1])
+
 			var/maxx = curr_x
 			if(length(gridLines)) //Not an empty map
-				maxx = max(maxx, curr_x + length(gridLines[1]) / key_len - 1)
+				maxx = max(maxx, curr_x + line_len / key_len - 1)
 
 			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], maxx)
 		CHECK_TICK
@@ -155,14 +239,14 @@
 
 	parsed_bounds = src.bounds
 	src.key_len = key_len
+	src.line_len = line_len
 
 /// Load the parsed map into the world. See [/proc/load_map] for arguments.
-/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, whitelist = FALSE)
+/datum/parsed_map/proc/load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, whitelist = FALSE, new_z)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop)
+	. = _load_impl(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
 	Master.StopLoadingMap()
-
 
 #define MAPLOADING_CHECK_TICK \
 	if(TICK_CHECK) { \
@@ -170,24 +254,188 @@
 		stoplag(); \
 		SSatoms.map_loader_begin(); \
 	}
+
 // Do not call except via load() above.
-/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE)
+/datum/parsed_map/proc/_load_impl(x_offset = 1, y_offset = 1, z_offset = world.maxz + 1, cropMap = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, placeOnTop = FALSE, new_z = FALSE)
 	PRIVATE_PROC(TRUE)
+	// Tell ss atoms that we're doing maploading
+	// We'll have to account for this in the following tick_checks so it doesn't overflow
+	SSatoms.map_loader_begin()
+
+	// Loading used to be done in this proc
+	// We make the assumption that if the inner procs runtime, we WANT to do cleanup on them, but we should stil tell our parents we failed
+	// Since well, we did
+	var/sucessful = FALSE
+	switch(map_format)
+		if(MAP_TGM)
+			sucessful = _tgm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+		else
+			sucessful = _dmm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+
+	// And we are done lads, call it off
+	SSatoms.map_loader_stop()
+
+	if(new_z)
+		for(var/z_index in bounds[MAP_MINZ] to bounds[MAP_MAXZ])
+			SSmapping.build_area_turfs(z_index)
+
+	if(!no_changeturf)
+		for(var/turf/T as anything in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+			//we do this after we load everything in. if we don't, we'll have weird atmos bugs regarding atmos adjacent turfs
+			T.AfterChange(CHANGETURF_IGNORE_AIR)
+
+	if(expanded_x || expanded_y)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, expanded_x, expanded_y)
+
+	#ifdef TESTING
+	if(turfsSkipped)
+		testing("Skipped loading [turfsSkipped] default turfs")
+	#endif
+
+	return sucessful
+
+// Wanna clear something up about maps, talking in 255x255 here
+// In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
+// In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
+// You can think of dmm as storing maps in rows, whereas tgm stores them in columns
+/datum/parsed_map/proc/_tgm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+	// setup
+	var/list/modelCache = build_cache(no_changeturf)
+	var/space_key = modelCache[SPACE_KEY]
+	var/list/bounds
+	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
+
+	// Building y coordinate ranges
+	var/y_relative_to_absolute = y_offset - 1
+	var/x_relative_to_absolute = x_offset - 1
+
+	// Ok so like. something important
+	// We talk in "relative" coords here, so the coordinate system of the map datum
+	// This is so we can do offsets, but it is NOT the same as positions in game
+	// That's why there's some uses of - y_relative_to_absolute here, to turn absolute positions into relative ones
+	// TGM maps process in columns, so the starting y will always be the max size
+	// We know y starts at 1
+	var/datum/grid_set/first_column = gridSets[1]
+	var/relative_y = first_column.ycrd
+	var/highest_y = relative_y + y_relative_to_absolute
+
+	if(!cropMap && highest_y > world.maxy)
+		world.maxy = highest_y // Expand Y here. X is expanded later on
+		expanded_y = TRUE
+
+	// Skip Y coords that are above the smallest of the three params
+	// So maxy and y_upper get to act as thresholds, and relative_y can play
+	var/y_skip_above = min(world.maxy - y_relative_to_absolute, y_upper, relative_y)
+	// How many lines to skip because they'd be above the y cuttoff line
+	var/y_starting_skip = relative_y - y_skip_above
+	highest_y += y_starting_skip
+
+
+	// Y is the LOWEST it will ever be here, so we can easily set a threshold for how low to go
+	var/line_count = length(first_column.gridLines)
+	var/lowest_y = relative_y - (line_count - 1) // -1 because we decrement at the end of the loop, not the start
+	var/y_ending_skip = max(max(y_lower, 1 - y_relative_to_absolute) - lowest_y, 0)
+
+	// X setup
+	var/x_delta_with = x_upper
+	if(cropMap)
+		// Take our smaller crop threshold yes?
+		x_delta_with = min(x_delta_with, world.maxx)
+
+	// We're gonna skip all the entries above the upper x, or maxx if cropMap is set
+	// The last column is guarenteed to have the highest x value we;ll encounter
+	// Even if z scales, this still works
+	var/datum/grid_set/last_column = gridSets[length(gridSets)]
+	var/final_x = last_column.xcrd + x_relative_to_absolute
+
+	if(final_x > x_delta_with)
+		// If our relative x is greater then X upper, well then we've gotta limit our expansion
+		var/delta = max(final_x - x_delta_with, 0)
+		final_x -= delta
+	if(final_x > world.maxx && !cropMap)
+		world.maxx = final_x
+		expanded_x = TRUE
+
+	var/lowest_x = max(x_lower, 1 - x_relative_to_absolute)
+
+	// We make the assumption that the last block of turfs will have the highest embedded z in it
+	var/highest_z = last_column.zcrd + z_offset - 1 // Lets not just make a new z level each time we increment maxz
+	var/z_threshold = world.maxz
+	if(highest_z > z_threshold && cropMap)
+		for(var/i in z_threshold + 1 to highest_z) //create a new z_level if needed
+			world.incrementMaxZ()
+		if(!no_changeturf)
+			WARNING("Z-level expansion occurred without no_changeturf set, this may cause problems when /turf/AfterChange is called")
+
+	for(var/datum/grid_set/gset as anything in gridSets)
+		var/true_xcrd = gset.xcrd + x_relative_to_absolute
+
+		// any cutoff of x means we just shouldn't iterate this gridset
+		if(final_x < true_xcrd || lowest_x > gset.xcrd)
+			continue
+
+		var/zcrd = gset.zcrd + z_offset - 1
+		// If we're using changeturf, we disable it if we load into a z level we JUST created
+		var/no_afterchange = no_changeturf || zcrd > z_threshold
+
+		// We're gonna track the first and last pairs of coords we find
+		// Since x is always incremented in steps of 1, we only need to deal in y
+		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
+		// This is faster then doing mins and maxes inside the hot loop below
+		var/first_found = FALSE
+		var/first_y = 0
+		var/last_y = 0
+
+		var/ycrd = highest_y
+		// Everything following this line is VERY hot.
+		for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
+			if(gset.gridLines[i] == space_key && no_afterchange)
+				#ifdef TESTING
+				++turfsSkipped
+				#endif
+				ycrd--
+				MAPLOADING_CHECK_TICK
+				continue
+
+			var/list/cache = modelCache[gset.gridLines[i]]
+			if(!cache)
+				SSatoms.map_loader_stop()
+				CRASH("Undefined model key in DMM: [gset.gridLines[i]]")
+			build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, placeOnTop, new_z)
+
+			// only bother with bounds that actually exist
+			if(!first_found)
+				first_found = TRUE
+				first_y = ycrd
+			last_y = ycrd
+			ycrd--
+			MAPLOADING_CHECK_TICK
+
+		// The x coord never changes, so not tracking first x is safe
+		// If no ycrd is found, we assume this row is totally empty and just continue on
+		if(first_found)
+			bounds[MAP_MINX] = min(bounds[MAP_MINX], true_xcrd)
+			bounds[MAP_MINY] = min(bounds[MAP_MINY], last_y)
+			bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
+			bounds[MAP_MAXX] = max(bounds[MAP_MAXX], true_xcrd)
+			bounds[MAP_MAXY] = max(bounds[MAP_MAXY], first_y)
+			bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
+	return TRUE
+
+/// Stanrdard loading, not used in production
+/// Doesn't take advantage of any tgm optimizations, which makes it slower but also more general
+/// Use this if for some reason your map format is messy
+/datum/parsed_map/proc/_dmm_load(x_offset, y_offset, z_offset, cropMap, no_changeturf, x_lower, x_upper, y_lower, y_upper, placeOnTop, new_z)
+	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
 	var/list/bounds
 	var/key_len = src.key_len
 	src.bounds = bounds = list(1.#INF, 1.#INF, 1.#INF, -1.#INF, -1.#INF, -1.#INF)
 
-	// Tell ss atoms that we're doing maploading
-	// We'll have to account for this in the following tick_checks so it doesn't overflow
-	SSatoms.map_loader_begin()
-
-	//used for sending the maxx and maxy expanded global signals at the end of this proc
-	var/has_expanded_world_maxx = FALSE
-	var/has_expanded_world_maxy = FALSE
 	var/y_relative_to_absolute = y_offset - 1
 	var/x_relative_to_absolute = x_offset - 1
+	var/line_len = src.line_len
 	for(var/datum/grid_set/gset as anything in gridSets)
 		var/relative_x = gset.xcrd
 		var/relative_y = gset.ycrd
@@ -196,7 +444,7 @@
 		var/zcrd = gset.zcrd + z_offset - 1
 		if(!cropMap && ycrd > world.maxy)
 			world.maxy = ycrd // Expand Y here.  X is expanded in the loop below
-			has_expanded_world_maxy = TRUE
+			expanded_y = TRUE
 		var/zexpansion = zcrd > world.maxz
 		var/no_afterchange = no_changeturf
 		if(zexpansion)
@@ -232,12 +480,8 @@
 		var/x_starting_skip = starting_x_delta * key_len
 		true_xcrd += starting_x_delta
 
-		var/line_length = 0
-		if(line_count)
-			// This is promised as static, so we will treat it as such
-			line_length = length(gset.gridLines[1])
 		// We're gonna skip all the entries above the upper x, or maxx if cropMap is set
-		var/x_target = line_length - key_len + 1
+		var/x_target = line_len - key_len + 1
 		var/x_step_count = ROUND_UP(x_target / key_len)
 		var/final_x = relative_x + (x_step_count - 1)
 		var/x_delta_with = x_upper
@@ -252,7 +496,7 @@
 			x_target = x_step_count * key_len
 		if(final_x > world.maxx && !cropMap)
 			world.maxx = final_x
-			has_expanded_world_maxx = TRUE
+			expanded_x = TRUE
 
 		// We're gonna track the first and last pairs of coords we find
 		// The first x is guarenteed to be the lowest, the first y the highest, and vis versa
@@ -265,74 +509,36 @@
 
 		// Everything following this line is VERY hot. How hot depends on the map format
 		// (Yes this does mean dmm is technically faster to parse. shut up)
+		for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
+			var/line = gset.gridLines[i]
 
-		// This is the "is this map tgm" check
-		if(key_len == line_length)
-			// Wanna clear something up about maps, talking in 255x255 here
-			// In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
-			// In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
-			// since this is the tgm branch any cutoff of x means we just shouldn't iterate this gridset
-			if(!x_step_count || x_starting_skip)
-				continue
-			for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
-				var/line = gset.gridLines[i]
-				if(line == space_key && no_afterchange)
+			var/xcrd = true_xcrd
+			for(var/tpos in 1 + x_starting_skip to x_target step key_len)
+				var/model_key = copytext(line, tpos, tpos + key_len)
+				if(model_key == space_key && no_afterchange)
 					#ifdef TESTING
 					++turfsSkipped
 					#endif
-					ycrd--
 					MAPLOADING_CHECK_TICK
+					++xcrd
 					continue
-
-				var/list/cache = modelCache[line]
+				var/list/cache = modelCache[model_key]
 				if(!cache)
 					SSatoms.map_loader_stop()
-					CRASH("Undefined model key in DMM: [line]")
-				build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
+					CRASH("Undefined model key in DMM: [model_key]")
+				build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop, new_z)
 
 				// only bother with bounds that actually exist
 				if(!first_found)
 					first_found = TRUE
+					first_x = xcrd
 					first_y = ycrd
+				last_x = xcrd
 				last_y = ycrd
-				ycrd--
 				MAPLOADING_CHECK_TICK
-			// The x coord never changes, so this is safe
-			if(first_found)
-				first_x = true_xcrd
-				last_x = true_xcrd
-		else
-			// This is the dmm parser, note the double loop
-			for(var/i in 1 + y_starting_skip to line_count - y_ending_skip)
-				var/line = gset.gridLines[i]
-
-				var/xcrd = true_xcrd
-				for(var/tpos in 1 + x_starting_skip to x_target step key_len)
-					var/model_key = copytext(line, tpos, tpos + key_len)
-					if(model_key == space_key && no_afterchange)
-						#ifdef TESTING
-						++turfsSkipped
-						#endif
-						MAPLOADING_CHECK_TICK
-						++xcrd
-						continue
-					var/list/cache = modelCache[model_key]
-					if(!cache)
-						SSatoms.map_loader_stop()
-						CRASH("Undefined model key in DMM: [model_key]")
-					build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, placeOnTop)
-
-					// only bother with bounds that actually exist
-					if(!first_found)
-						first_found = TRUE
-						first_x = xcrd
-						first_y = ycrd
-					last_x = xcrd
-					last_y = ycrd
-					MAPLOADING_CHECK_TICK
-					++xcrd
-				ycrd--
-				MAPLOADING_CHECK_TICK
+				++xcrd
+			ycrd--
+			MAPLOADING_CHECK_TICK
 		bounds[MAP_MINX] = min(bounds[MAP_MINX], first_x)
 		bounds[MAP_MINY] = min(bounds[MAP_MINY], last_y)
 		bounds[MAP_MINZ] = min(bounds[MAP_MINZ], zcrd)
@@ -340,26 +546,16 @@
 		bounds[MAP_MAXY] = max(bounds[MAP_MAXY], first_y)
 		bounds[MAP_MAXZ] = max(bounds[MAP_MAXZ], zcrd)
 
-	// And we are done lads, call it off
-	SSatoms.map_loader_stop()
-	if(!no_changeturf)
-		for(var/turf/T as anything in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
-			T.AfterChange(CHANGETURF_IGNORE_AIR)
-
-	if(has_expanded_world_maxx || has_expanded_world_maxy)
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_EXPANDED_WORLD_BOUNDS, has_expanded_world_maxx, has_expanded_world_maxy)
-
-	#ifdef TESTING
-	if(turfsSkipped)
-		testing("Skipped loading [turfsSkipped] default turfs")
-	#endif
-
 	return TRUE
 
 GLOBAL_LIST_EMPTY(map_model_default)
 
-/datum/parsed_map/proc/build_cache(no_changeturf, bad_paths=null)
+/datum/parsed_map/proc/build_cache(no_changeturf, bad_paths)
+	if(map_format == MAP_TGM)
+		return tgm_build_cache(no_changeturf, bad_paths)
+	return dmm_build_cache(no_changeturf, bad_paths)
+
+/datum/parsed_map/proc/tgm_build_cache(no_changeturf, bad_paths=null)
 	if(modelCache && !bad_paths)
 		return modelCache
 	. = modelCache = list()
@@ -367,25 +563,149 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/set_space = FALSE
 	// Use where a list is needed, but where it will not be modified
 	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
-	var/static/list/default_list = GLOB.map_model_default
+	var/static/list/default_list = GLOB.map_model_default // It's stupid, but it saves += list(list)
+	var/static/list/wrapped_default_list = list(default_list) // It's stupid, but it saves += list(list)
+	var/static/regex/var_edits = var_edits_tgm
+
+	var/path_to_init = ""
+	// Reference to the attributes list we're currently filling, if any
+	var/list/current_attributes
+	// If we are currently editing a path or not
+	var/editing = FALSE
 	for(var/model_key in grid_models)
-		var/model = grid_models[model_key]
-		// This is safe because dmm strings will never actually newline
-		// So we can parse things just fine
-		var/list/entries = splittext(model, ",\n")
+		// We're going to split models by newline
+		// This guarentees that each entry will be of interest to us
+		// Then we'll process them step by step
+		// Hopefully this reduces the cost from read_list that we'd otherwise have
+		var/list/lines = splittext(grid_models[model_key], "\n")
+		// Builds list of path/edits for later
+		// Of note: we cannot preallocate them to save time in list expansion later
+		// But fortunately lists allocate at least 8 entries normally anyway, and
+		// We are unlikely to have more then that many members
 		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall)
-		var/list/members = new /list(length(entries))
+		var/list/members = list()
 		//will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
-		//member attributes are rarish, so we could lazyinit this
-		var/list/members_attributes = new /list(length(entries))
+		var/list/members_attributes = list()
 
 		/////////////////////////////////////////////////////////
 		//Constructing members and corresponding variables lists
 		////////////////////////////////////////////////////////
+		// string representation of the path to init
+		for(var/line in lines)
+			// We do this here to avoid needing to check at each return statement
+			// No harm in it anyway
+			CHECK_TICK
 
-		var/index = 1
-		for(var/member_string in entries)
+			switch(line[length(line)])
+				if(";") // Var edit, we'll apply it
+					// Var edits look like \tname = value;
+					// I'm gonna try capturing them with regex, since it ought to be the fastest here
+					// Should hand back key = value
+					var_edits.Find(line)
+					var/value = parse_constant(var_edits.group[2])
+					if(istext(value))
+						value = apply_text_macros(value)
+					current_attributes[var_edits.group[1]] = value
+					continue // Keep on keeping on brother
+				if("{") // Start of an edit, and so also the start of a path
+					editing = TRUE
+					current_attributes = list() // Init the list we'll be filling
+					members_attributes += list(current_attributes)
+					path_to_init = copytext(line, 1, -1)
+				if(",") // Either the end of a path, or the end of an edit
+					if(editing) // it was the end of a path
+						editing = FALSE
+						continue
+					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
+					// Drop the last char mind
+					path_to_init = copytext(line, 1, -1)
+				if("}") // Gotta be the end of an area edit, let's check to be sure
+					if(editing) // it was the end of an area edit (shouldn't do those anyhow)
+						editing = FALSE
+						continue
+					stack_trace("ended a line on JUST a }, with no ongoing edit. What? Area shit?")
+				else // If we're editing, this is a var edit entry. the last one in a stack, cause god hates me. Otherwise, it's an area
+					if(editing) // I want inline I want inline I want inline
+						// Var edits look like \tname = value;
+						// I'm gonna try capturing them with regex, since it ought to be the fastest here
+						// Should hand back key = value
+						var_edits.Find(line)
+						var/value = parse_constant(var_edits.group[2])
+						if(istext(value))
+							value = apply_text_macros(value)
+						current_attributes[var_edits.group[1]] = value
+						continue // Keep on keeping on brother
+
+					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
+					path_to_init = line
+
+
+			// Alright, if we've gotten to this point, our string is a path
+			// Oh and we don't trim it, because we require no padding for these
+			// Saves like 1.5 deciseconds
+			var/atom_def = text2path(path_to_init) //path definition, e.g /obj/foo/bar
+
+			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
+				if(bad_paths)
+					// Rare case, avoid the var to save time most of the time
+					LAZYOR(bad_paths[copytext(line, 1, -1)], model_key)
+				continue
+			// Index is already incremented either way, just gotta set the path and all
+			members += atom_def
+
+		//check and see if we can just skip this turf
+		//So you don't have to understand this horrid statement, we can do this if
+		// 1. the space_key isn't set yet
+		// 2. no_changeturf is set
+		// 3. there are exactly 2 members
+		// 4. with no attributes
+		// 5. and the members are world.turf and world.area
+		// Basically, if we find an entry like this: "XXX" = (/turf/default, /area/default)
+		// We can skip calling this proc every time we see XXX
+		if(!set_space \
+			&& no_changeturf \
+			&& members_attributes.len == 2 \
+			&& members.len == 2 \
+			&& members_attributes[1] == default_list \
+			&& members_attributes[2] == default_list \
+			&& members[2] == world.area \
+			&& members[1] == world.turf
+		)
+			set_space = TRUE
+			.[SPACE_KEY] = model_key
+			continue
+
+		.[model_key] = list(members, members_attributes)
+	return .
+
+/// Builds key caches for general formats
+/// Slower then the proc above, tho it could still be optimized slightly. it's just not a priority
+/// Since we don't run DMM maps, ever.
+/datum/parsed_map/proc/dmm_build_cache(no_changeturf, bad_paths=null)
+	if(modelCache && !bad_paths)
+		return modelCache
+	. = modelCache = list()
+	var/list/grid_models = src.grid_models
+	var/set_space = FALSE
+	// Use where a list is needed, but where it will not be modified
+	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
+	var/static/list/default_list = list(GLOB.map_model_default)
+	for(var/model_key in grid_models)
+		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall)
+		var/list/members = list()
+		//will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
+		var/list/members_attributes = list()
+
+		var/model = grid_models[model_key]
+		/////////////////////////////////////////////////////////
+		//Constructing members and corresponding variables lists
+		////////////////////////////////////////////////////////
+
+		var/model_index = 1
+		while(model_path.Find(model, model_index))
 			var/variables_start = 0
+			var/member_string = model_path.group[1]
+			model_index = model_path.next
 			//findtext is a bit expensive, lets only do this if the last char of our string is a } (IE: we know we have vars)
 			//this saves about 25 miliseconds on my machine. Not a major optimization
 			if(member_string[length(member_string)] == "}")
@@ -398,20 +718,22 @@ GLOBAL_LIST_EMPTY(map_model_default)
 				if(bad_paths)
 					LAZYOR(bad_paths[path_text], model_key)
 				continue
-			members[index] = atom_def
+			members += atom_def
 
 			//transform the variables in text format into a list (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
+			// OF NOTE: this could be made faster by replacing readlist with a progressive regex
+			// I'm just too much of a bum to do it rn, especially since we mandate tgm format for any maps in repo
 			var/list/fields = default_list
 			if(variables_start)//if there's any variable
 				member_string = copytext(member_string, variables_start + length(member_string[variables_start]), -length(copytext_char(member_string, -1))) //removing the last '}'
-				fields = readlist(member_string, ";")
+				fields = list(readlist(member_string, ";"))
 				for(var/I in fields)
 					var/value = fields[I]
 					if(istext(value))
 						fields[I] = apply_text_macros(value)
 
 			//then fill the members_attributes list with the corresponding variables
-			members_attributes[index++] = fields
+			members_attributes += fields
 			CHECK_TICK
 
 		//check and see if we can just skip this turf
@@ -436,8 +758,9 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			continue
 
 		.[model_key] = list(members, members_attributes)
+	return .
 
-/datum/parsed_map/proc/build_coordinate(list/model, turf/crds, no_changeturf as num, placeOnTop as num)
+/datum/parsed_map/proc/build_coordinate(list/model, turf/crds, no_changeturf as num, placeOnTop as num, new_z)
 	// If we don't have a turf, nothing we will do next will actually acomplish anything, so just go back
 	// Note, this would actually drop area vvs in the tile, but like, why tho
 	if(!crds)
@@ -458,29 +781,34 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
 	index = members.len
-	var/atom/instance
 	if(members[index] != /area/template_noop)
+		var/area/area_instance
 		if(members_attributes[index] != default_list)
 			world.preloader_setup(members_attributes[index], members[index])//preloader for assigning  set variables on atom creation
-		instance = loaded_areas[members[index]]
-		if(!instance)
+		area_instance = loaded_areas[members[index]]
+		if(!area_instance)
 			var/area_type = members[index]
 			// If this parsed map doesn't have that area already, we check the global cache
-			instance = GLOB.areas_by_type[area_type]
+			area_instance = GLOB.areas_by_type[area_type]
 			// If the global list DOESN'T have this area it's either not a unique area, or it just hasn't been created yet
-			if (!instance)
-				instance = new area_type(null)
-				if(!instance)
+			if (!area_instance)
+				area_instance = new area_type(null)
+				if(!area_instance)
 					CRASH("[area_type] failed to be new'd, what'd you do?")
-			loaded_areas[area_type] = instance
+			loaded_areas[area_type] = area_instance
 
-		instance.contents.Add(crds)
+		if(!new_z)
+			var/area/old_area = crds.loc
+			old_area.turfs_to_uncontain += crds
+			area_instance.contained_turfs.Add(crds)
+		area_instance.contents.Add(crds)
 
 		if(GLOB.use_preloader)
-			world.preloader_load(instance)
+			world.preloader_load(area_instance)
 
 	// Index right before /area is /turf
 	index--
+	var/atom/instance
 	//then instance the /turf
 	//NOTE: this used to place any turfs before the last "underneath" it using .appearance and underlays
 	//We don't actually use this, and all it did was cost cpu, so we don't do this anymore
@@ -543,47 +871,29 @@ GLOBAL_LIST_EMPTY(map_model_default)
 
 	// If we're using a semi colon, we can do this as splittext rather then constant calls to find_next_delimiter_position
 	// This does make the code a bit harder to read, but saves a good bit of time so suck it up
-	var/using_semicolon = delimiter == ";"
-	if(using_semicolon)
-		var/list/line_entries = splittext(text, ";\n")
-		for(var/entry in line_entries)
-			// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
-			var/equal_position = findtext(entry,"=")
-			// This could in theory happen if someone inserts an improper newline
-			// Let's be nice and kill it here rather then later, it'll save like 0.02 seconds if we don't need to run trims in build_cache
-			if(!equal_position)
-				continue
-			var/trim_left = TRIM_TEXT(copytext(entry,1,equal_position))
+	var/position
+	var/old_position = 1
+	while(position != 0)
+		// find next delimiter that is not within  "..."
+		position = find_next_delimiter_position(text,old_position,delimiter)
 
+		// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
+		var/equal_position = findtext(text,"=",old_position, position)
+		var/trim_left = TRIM_TEXT(copytext(text,old_position,(equal_position ? equal_position : position)))
+		var/left_constant = parse_constant(trim_left)
+		if(position)
+			old_position = position + length(text[position])
+		if(!left_constant) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
+			continue
+
+		if(equal_position && !isnum(left_constant))
 			// Associative var, so do the association.
 			// Note that numbers cannot be keys - the RHS is dropped if so.
-			var/trim_right = TRIM_TEXT(copytext(entry, equal_position + length(entry[equal_position])))
+			var/trim_right = TRIM_TEXT(copytext(text, equal_position + length(text[equal_position]), position))
 			var/right_constant = parse_constant(trim_right)
-			.[trim_left] = right_constant
-	else
-		var/position
-		var/old_position = 1
-		while(position != 0)
-			// find next delimiter that is not within  "..."
-			position = find_next_delimiter_position(text,old_position,delimiter)
-
-			// check if this is a simple variable (as in list(var1, var2)) or an associative one (as in list(var1="foo",var2=7))
-			var/equal_position = findtext(text,"=",old_position, position)
-			var/trim_left = TRIM_TEXT(copytext(text,old_position,(equal_position ? equal_position : position)))
-			var/left_constant = parse_constant(trim_left)
-			if(position)
-				old_position = position + length(text[position])
-			if(!left_constant) // damn newlines man. Exists to provide behavior consistency with the above loop. not a major cost becuase this path is cold
-				continue
-
-			if(equal_position && !isnum(left_constant))
-				// Associative var, so do the association.
-				// Note that numbers cannot be keys - the RHS is dropped if so.
-				var/trim_right = TRIM_TEXT(copytext(text, equal_position + length(text[equal_position]), position))
-				var/right_constant = parse_constant(trim_right)
-				.[left_constant] = right_constant
-			else  // simple var
-				. += list(left_constant)
+			.[left_constant] = right_constant
+		else  // simple var
+			. += list(left_constant)
 
 /datum/parsed_map/proc/parse_constant(text)
 	// number

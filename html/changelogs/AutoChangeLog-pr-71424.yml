@@ -1,0 +1,4 @@
+author: "private-tristan"
+delete-after: True
+changes:
+  - bugfix: "icebox kitchen maints is now correctly wired"

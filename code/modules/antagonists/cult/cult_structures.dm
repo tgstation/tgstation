@@ -147,7 +147,7 @@
 		user,
 		src,
 		choices,
-		custom_check = CALLBACK(src, .proc/check_menu, user),
+		custom_check = CALLBACK(src, PROC_REF(check_menu), user),
 		require_near = TRUE,
 		tooltips = TRUE,
 		)

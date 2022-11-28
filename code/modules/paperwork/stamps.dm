@@ -13,9 +13,9 @@
 	attack_verb_continuous = list("stamps")
 	attack_verb_simple = list("stamp")
 
-/obj/item/stamp/suicide_act(mob/user)
+/obj/item/stamp/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead."))
-	return (OXYLOSS)
+	return OXYLOSS
 
 /obj/item/stamp/get_writing_implement_details()
 	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)

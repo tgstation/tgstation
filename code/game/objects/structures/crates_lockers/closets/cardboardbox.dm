@@ -34,7 +34,7 @@
 	var/oldloc = loc
 	step(src, direction)
 	if(oldloc != loc)
-		addtimer(CALLBACK(src, .proc/ResetMoveDelay), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
+		addtimer(CALLBACK(src, PROC_REF(ResetMoveDelay)), CONFIG_GET(number/movedelay/walk_delay) * move_speed_multiplier)
 	else
 		move_delay = FALSE
 
@@ -74,13 +74,13 @@
 /atom/proc/do_alert_animation()
 	var/image/alert_image = image('icons/obj/storage/closet.dmi', src, "cardboard_special", layer+1)
 	SET_PLANE_EXPLICIT(alert_image, ABOVE_LIGHTING_PLANE, src)
-	flick_overlay_view(alert_image, src, 0.8 SECONDS)
+	flick_overlay_view(alert_image, 0.8 SECONDS)
 	alert_image.alpha = 0
 	animate(alert_image, pixel_z = 32, alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
 	// We use this list to update plane values on parent z change, which is why we need the timer too
 	// I'm sorry :(
 	LAZYADD(update_on_z, alert_image)
-	addtimer(CALLBACK(src, .proc/forget_alert_image, alert_image), 0.8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(forget_alert_image), alert_image), 0.8 SECONDS)
 
 /atom/proc/forget_alert_image(image/alert_image)
 	LAZYREMOVE(update_on_z, alert_image)
