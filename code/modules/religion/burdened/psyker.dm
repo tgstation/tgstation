@@ -7,12 +7,10 @@
 		/datum/action/cooldown/spell/charged/psychic_booster,
 		/datum/action/cooldown/spell/forcewall/psychic_wall,
 	)
-	organ_traits = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
+	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
-	if(!istype(inserted_into.get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
-		return FALSE
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
@@ -21,6 +19,17 @@
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
+
+/obj/item/organ/internal/brain/psyker/on_life(delta_time, times_fired)
+	. = ..()
+	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(slot)
+	if(istype(psyker_head))
+		return
+	if(!DT_PROB(2, delta_time))
+		return
+	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
+	owner.adjust_disgust(33 * delta_time)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * delta_time)
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
@@ -111,6 +120,8 @@
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null
 	actions_types = list(/datum/action/item_action/pray_refill)
+	/// Needs burden level nine to refill.
+	var/needs_burden = TRUE
 	/// List of all possible names and descriptions.
 	var/static/list/possible_names = list(
 		"Requiescat" = "May they rest in peace.",
@@ -165,7 +176,7 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, src) || !istype(user))
 		return
 	var/datum/brain_trauma/special/burdened/burden = user.has_trauma_type(/datum/brain_trauma/special/burdened)
-	if(!burden || burden.burden_level < 9)
+	if(needs_burden && (!burden || burden.burden_level < 9))
 		to_chat(user, span_warning("You aren't burdened enough."))
 		return
 	user.manual_emote("presses [user.p_their()] palms together...")
@@ -240,12 +251,15 @@
 	cast_on.apply_status_effect(/datum/status_effect/psychic_projection, projection_duration)
 	return TRUE
 
+/// Status effect that adds a weird view to its owner and causes them to rapidly shoot a firearm in their general direction.
 /datum/status_effect/psychic_projection
 	id = "psychic_projection"
 	alert_type = null
 	remove_on_fullheal = TRUE
 	tick_interval = 0.2 SECONDS
+	/// Times the target has dry fired a weapon.
 	var/times_dry_fired = 0
+	/// Needs to reach times_dry_fired for the next dry fire to happen.
 	var/firing_delay = 0
 
 /datum/status_effect/psychic_projection/on_creation(mob/living/new_owner, duration = 10 SECONDS)
@@ -298,8 +312,9 @@
 	charge_overlay_icon = 'icons/effects/effects.dmi'
 	charge_overlay_state = "purplesparkles"
 	channel_time = 5 SECONDS
-	channel_flags = IGNORE_USER_LOC_CHANGE
+	/// Are we currently active?
 	var/boosted = FALSE
+	/// How long the effect lasts for?
 	var/effect_time = 10 SECONDS
 
 /datum/action/cooldown/spell/charged/psychic_booster/Destroy()
@@ -323,6 +338,7 @@
 
 /datum/action/cooldown/spell/charged/psychic_booster/proc/stop_effects()
 	boosted = FALSE
+	to_chat(owner, span_warning("Your trigger fingers feel weaker."))
 	REMOVE_TRAIT(owner, TRAIT_DOUBLE_TAP, type)
 	UnregisterSignal(owner, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE)
 

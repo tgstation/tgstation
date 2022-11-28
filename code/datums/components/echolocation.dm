@@ -1,17 +1,31 @@
 /datum/component/echolocation
+	/// Radius of our view.
 	var/echo_range = 4
+	/// Time between echolocations.
 	var/cooldown_time = 2 SECONDS
+	/// Time for the image to start fading out.
 	var/image_expiry_time = 1.5 SECONDS
+	/// Time for the image to fade in.
 	var/fade_in_time = 0.5 SECONDS
+	/// Time for the image to fade out and delete itself.
 	var/fade_out_time = 0.5 SECONDS
+	/// Are images static? If yes, spawns them on the turf and makes them not change location. Otherwise they change location and pixel shift with the original.
 	var/images_are_static = TRUE
+	/// With mobs that have this echo group in their echolocation receiver trait, we share echo images.
 	var/echo_group = null
+	/// Associative list of world.time when created to a list of the images.
 	var/list/images = list()
+	/// Associative list of world.time when created to a list of receivers.
 	var/list/receivers = list()
+	/// All the saved appearances, keyed by icon-icon_state.
 	var/static/list/saved_appearances = list()
+	/// Typecache of all the allowed paths to render.
 	var/static/list/allowed_paths
+	/// Typecache of turfs that are dangerous, to give them a special icon.
 	var/static/list/danger_turfs
+	/// A matrix that turns everything except #ffffff into pure blackness, used for our images (the outlines are #ffffff).
 	var/static/list/black_white_matrix = list(85, 85, 85, 0, 85, 85, 85, 0, 85, 85, 85, 0, 0, 0, 0, 1, -254, -254, -254, 0)
+	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 
 /datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, echo_group, echo_icon, color_path)
