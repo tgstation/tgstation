@@ -28,6 +28,6 @@
 #ifdef UNIT_TESTS
 #define TEST_ONLY_ASSERT(test, explanation) if(!(test)) {CRASH(explanation)}
 #else
-#define TEST_ONLY_ASSERT(test, explanation) ()
+#define TEST_ONLY_ASSERT(test, explanation) 
 #endif
 
