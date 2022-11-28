@@ -1323,7 +1323,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(duct.duct_layer && duct.duct_color)
 		current_color = GLOB.pipe_color_name[duct.duct_color]
 		current_layer = GLOB.plumbing_layer_names["[duct.duct_layer]"]
-		to_chat(user, span_notice("You change [src] to [current_color] color and layer [current_layer] pipes."))
+		balloon_alert(user, "using [current_color], layer [current_layer]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
