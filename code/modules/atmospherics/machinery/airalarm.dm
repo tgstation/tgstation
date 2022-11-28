@@ -1319,7 +1319,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(isnull(scrubber))
 		return
 
-	scrubber.set_filter_types(valid_filters)
+	scrubber.filter_types = valid_filters
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_scrubber(datum/port/input/port)
 	CIRCUIT_TRIGGER
