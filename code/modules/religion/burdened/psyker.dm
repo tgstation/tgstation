@@ -233,7 +233,7 @@
 	/// Duration of the effects.
 	var/projection_duration = 10 SECONDS
 
-/datum/action/cooldown/spell/pointed/blind/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/pointed/psychic_projection/is_valid_target(atom/cast_on)
 	. = ..()
 	if(!.)
 		return FALSE
