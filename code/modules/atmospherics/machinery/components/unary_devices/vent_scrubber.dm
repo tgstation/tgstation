@@ -196,7 +196,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/set_filter_types(list/new_filters)
 	var/list/new_filter_ids = list()
 
-	for (var/datum/gas/gas_type in new_filters)
+	for (var/datum/gas/gas_type as anything in new_filters)
 		new_filter_ids += initial(gas_type.id)
 
 	filter_types = new_filter_ids
