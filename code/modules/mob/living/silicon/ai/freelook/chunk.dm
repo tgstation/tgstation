@@ -56,10 +56,13 @@
 /**
  * Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
  * instead be flagged to update the next time an AI Eye moves near it.
+ * update_delay_buffer is used for cameras that are moving around, which are cyborg inbuilt cameras and
+ * mecha onboard cameras. This buffer should be usually lower than UPDATE_BUFFER_TIME because
+ * otherwise a moving camera can run out of its own view before updating static.
  */
-/datum/camerachunk/proc/hasChanged(update_now = 0)
+/datum/camerachunk/proc/hasChanged(update_now = 0, update_delay_buffer = UPDATE_BUFFER_TIME)
 	if(seenby.len || update_now)
-		addtimer(CALLBACK(src, PROC_REF(update)), UPDATE_BUFFER_TIME, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(update)), update_delay_buffer, TIMER_UNIQUE)
 	else
 		changed = TRUE
 

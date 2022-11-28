@@ -180,21 +180,22 @@
 // Returns the list of cameras accessible from this computer
 /obj/machinery/computer/security/proc/get_available_cameras()
 	var/list/L = list()
-	for (var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
-		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only receive feed from same z_level cameras
+	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
+		var/turf/camera_turf = get_turf(cam)
+		if((is_away_level(z) || is_away_level(camera_turf.z)) && (camera_turf.z != z))//if on away mission, can only receive feed from same z_level cameras
 			continue
-		L.Add(C)
+		L.Add(cam)
 	var/list/D = list()
-	for(var/obj/machinery/camera/C in L)
-		if(!C.network)
+	for(var/obj/machinery/camera/cam in L)
+		if(!cam.network)
 			stack_trace("Camera in a cameranet has no camera network")
 			continue
-		if(!(islist(C.network)))
+		if(!(islist(cam.network)))
 			stack_trace("Camera in a cameranet has a non-list camera network")
 			continue
-		var/list/tempnetwork = C.network & network
+		var/list/tempnetwork = cam.network & network
 		if(tempnetwork.len)
-			D["[C.c_tag]"] = C
+			D["[cam.c_tag]"] = cam
 	return D
 
 // SECURITY MONITORS

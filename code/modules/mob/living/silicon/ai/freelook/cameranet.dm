@@ -110,10 +110,14 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	if(c.can_use())
 		majorChunkChange(c, 1)
 
-/// Used for Cyborg cameras. Since portable cameras can be in ANY chunk.
-/datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c)
+/**
+ * Used for Cyborg/mecha cameras. Since portable cameras can be in ANY chunk.
+ * update_delay_buffer is passed all the way to hasChanged() from their camera updates on movement
+ * to change the time between static updates.
+*/
+/datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c, update_delay_buffer)
 	if(c.can_use())
-		majorChunkChange(c, 1)
+		majorChunkChange(c, 1, update_delay_buffer)
 
 /**
  * Never access this proc directly!!!!
@@ -121,8 +125,10 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
  * It will also add the atom to the cameras list if you set the choice to 1.
  * Setting the choice to 0 will remove the camera from the chunks.
  * If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
+ * update_delay_buffer is passed all the way to hasChanged() from portable camera updates on movement
+ * to change the time between static updates.
  */
-/datum/cameranet/proc/majorChunkChange(atom/c, choice)
+/datum/cameranet/proc/majorChunkChange(atom/c, choice, update_delay_buffer)
 	if(QDELETED(c) && choice == 1)
 		CRASH("Tried to add a qdeleting camera to the net")
 
@@ -142,7 +148,7 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 					else if(choice == 1)
 						// You can't have the same camera in the list twice.
 						chunk.cameras["[T.z]"] |= c
-					chunk.hasChanged()
+					chunk.hasChanged(update_delay_buffer = update_delay_buffer)
 
 /// Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 /datum/cameranet/proc/checkCameraVis(mob/living/target)
