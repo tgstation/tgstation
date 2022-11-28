@@ -496,7 +496,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
 				scrubber.on = TRUE
-				scrubber.set_filter_types(list(/datum/gas/carbon_dioxide))
+				scrubber.filter_types = list(/datum/gas/carbon_dioxide)
 				scrubber.set_scrubbing(TRUE)
 				scrubber.set_widenet(FALSE)
 		if (AALARM_MODE_CONTAMINATED)
@@ -508,7 +508,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
 				scrubber.on = TRUE
-				scrubber.set_filter_types(list(
+				scrubber.filter_types = list(
 					/datum/gas/carbon_dioxide,
 					/datum/gas/miasma,
 					/datum/gas/plasma,
@@ -527,7 +527,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 					/datum/gas/helium,
 					/datum/gas/antinoblium,
 					/datum/gas/halon,
-				))
+				)
 				scrubber.set_scrubbing(TRUE)
 				scrubber.set_widenet(TRUE)
 		if (AALARM_MODE_VENTING)
@@ -551,7 +551,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
 				scrubber.on = TRUE
 
-				scrubber.set_filter_types(list(/datum/gas/carbon_dioxide))
+				scrubber.filter_types = list(/datum/gas/carbon_dioxide)
 				scrubber.set_widenet(FALSE)
 				scrubber.set_scrubbing(FALSE)
 		if (AALARM_MODE_PANIC, AALARM_MODE_REPLACEMENT)
@@ -1310,9 +1310,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	var/list/valid_filters = list()
 	for(var/info in gas_filter.value)
-		if(gas_id2path(info) == "")
+		var/gas_type = gas_id2path(info)
+		if(!gas_type)
 			continue
-		valid_filters += info
+		valid_filters += gas_type
 
 	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
 	if(isnull(scrubber))
