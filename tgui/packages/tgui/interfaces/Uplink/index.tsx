@@ -359,54 +359,55 @@ export class Uplink extends Component<{}, UplinkState> {
                   primary_objectives={primary_objectives}
                   final_objective={completed_final_objective}
                 />
-              )) || (currentTab === 1 && has_objectives && (
-                <ObjectiveMenu
-                  activeObjectives={active_objectives}
-                  potentialObjectives={potential_objectives}
-                  maximumActiveObjectives={maximum_active_objectives}
-                  maximumPotentialObjectives={maximum_potential_objectives}
-                  handleObjectiveAction={(objective, action) =>
-                    act('objective_act', {
-                      check: objective.original_progression,
-                      objective_action: action,
-                      index: objective.id,
-                    })
-                  }
-                  handleStartObjective={(objective) =>
-                    act('start_objective', {
-                      check: objective.original_progression,
-                      index: objective.id,
-                    })
-                  }
-                  handleObjectiveAbort={(objective) =>
-                    act('objective_abort', {
-                      check: objective.original_progression,
-                      index: objective.id,
-                    })
-                  }
-                  handleObjectiveCompleted={(objective) =>
-                    act('finish_objective', {
-                      check: objective.original_progression,
-                      index: objective.id,
-                    })
-                  }
-                  handleRequestObjectives={() => act('regenerate_objectives')}
-                />
-              )) || (
-                <GenericUplink
-                  currency=""
-                  categories={allCategories}
-                  items={items}
-                  handleBuy={(item) => {
-                    const extraDataItem = item as Item<ItemExtraData>;
-                    if (!extraDataItem.extraData?.ref) {
-                      act('buy', { path: item.id });
-                    } else {
-                      act('buy', { ref: extraDataItem.extraData.ref });
+              )) ||
+                (currentTab === 1 && has_objectives && (
+                  <ObjectiveMenu
+                    activeObjectives={active_objectives}
+                    potentialObjectives={potential_objectives}
+                    maximumActiveObjectives={maximum_active_objectives}
+                    maximumPotentialObjectives={maximum_potential_objectives}
+                    handleObjectiveAction={(objective, action) =>
+                      act('objective_act', {
+                        check: objective.original_progression,
+                        objective_action: action,
+                        index: objective.id,
+                      })
                     }
-                  }}
-                />
-              )}
+                    handleStartObjective={(objective) =>
+                      act('start_objective', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleObjectiveAbort={(objective) =>
+                      act('objective_abort', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleObjectiveCompleted={(objective) =>
+                      act('finish_objective', {
+                        check: objective.original_progression,
+                        index: objective.id,
+                      })
+                    }
+                    handleRequestObjectives={() => act('regenerate_objectives')}
+                  />
+                )) || (
+                  <GenericUplink
+                    currency=""
+                    categories={allCategories}
+                    items={items}
+                    handleBuy={(item) => {
+                      const extraDataItem = item as Item<ItemExtraData>;
+                      if (!extraDataItem.extraData?.ref) {
+                        act('buy', { path: item.id });
+                      } else {
+                        act('buy', { ref: extraDataItem.extraData.ref });
+                      }
+                    }}
+                  />
+                )}
             </Stack.Item>
           </Stack>
         </Window.Content>

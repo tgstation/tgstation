@@ -51,8 +51,13 @@
 
 /datum/traitor_objective/eyesnatching/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 
+	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
 	for(var/datum/objective/task as anything in handler.traitor_datum?.objectives)
-		possible_duplicates += task.target //Removing primary objective kill targets from the list
+		if(!task.target)
+			continue
+		if(!is_type(datum/mind)
+			continue
+		already_targeting += task.target //Removing primary objective kill targets from the list
 
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
@@ -61,6 +66,9 @@
 
 	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		if(possible_target == generating_for)
+			continue
+
+		if(possible_target in already_targeting)
 			continue
 
 		if(!ishuman(possible_target.current))

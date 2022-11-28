@@ -422,7 +422,10 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         </Box>
       </Flex.Item>
       <Flex.Item grow={grow} basis="content">
-        <Box className="UplinkObjective__Content" height="100%" mb={HideTcRep ? 6 : 0}>
+        <Box
+          className="UplinkObjective__Content"
+          height="100%"
+          mb={HideTcRep ? 6 : 0}>
           <Box>{description}</Box>
           {!HideTcRep && (
             <Box mt={1}>
@@ -439,23 +442,23 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         </Box>
       </Flex.Item>
       <Flex.Item>
-      {!HideTcRep && (
-        <Box className="UplinkObjective__Footer">
-          <Stack vertical>
-            <Stack.Item>
-              <Stack align="center" justify="center">
-                <Box
-                  style={{
-                    'border': '2px solid rgba(0, 0, 0, 0.5)',
-                    'border-left': 'none',
-                    'border-right': 'none',
-                    'border-bottom': objectiveFinished ? 'none' : undefined,
-                  }}
-                  className={reputation.gradient}
-                  py={0.5}
-                  width="100%"
-                  textAlign="center">
-                  {telecrystalReward} TC,
+        {!HideTcRep && (
+          <Box className="UplinkObjective__Footer">
+            <Stack vertical>
+              <Stack.Item>
+                <Stack align="center" justify="center">
+                  <Box
+                    style={{
+                      'border': '2px solid rgba(0, 0, 0, 0.5)',
+                      'border-left': 'none',
+                      'border-right': 'none',
+                      'border-bottom': objectiveFinished ? 'none' : undefined,
+                    }}
+                    className={reputation.gradient}
+                    py={0.5}
+                    width="100%"
+                    textAlign="center">
+                    {telecrystalReward} TC,
                     <Box ml={1} as="span">
                       {calculateProgression(progressionReward)} Reputation
                       {Math.abs(progressionDiff) > 10 && (
@@ -477,8 +480,9 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                                 {Math.abs(progressionDiff)}%
                               </Box>
                               {progressionDiff > 0 ? 'less' : 'more'} reputation
-                              from this objective. This is because your reputation
-                              is {progressionDiff > 0 ? 'ahead ' : 'behind '}
+                              from this objective. This is because your
+                              reputation is{' '}
+                              {progressionDiff > 0 ? 'ahead ' : 'behind '}
                               where it normally should be at.
                             </Box>
                           }>
@@ -498,52 +502,52 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                         </Tooltip>
                       )}
                     </Box>
-                </Box>
-              </Stack>
-              {objectiveFinished ? (
-                <Box
-                  inline
-                  className={reputation.gradient}
-                  style={{
-                    'border-radius': '0',
-                    'border': '2px solid rgba(0, 0, 0, 0.5)',
-                    'border-left': 'none',
-                    'border-right': 'none',
-                  }}
-                  position="relative"
-                  width="100%"
-                  textAlign="center"
-                  bold>
+                  </Box>
+                </Stack>
+                {objectiveFinished ? (
                   <Box
-                    width="100%"
-                    height="100%"
-                    backgroundColor={
-                      objectiveFailed
-                        ? 'rgba(255, 0, 0, 0.1)'
-                        : 'rgba(0, 255, 0, 0.1)'
-                    }
-                    position="absolute"
-                    left={0}
-                    top={0}
-                  />
-                  <Button
-                    onClick={handleCompletion}
-                    color={objectiveFailed ? 'bad' : 'good'}
+                    inline
+                    className={reputation.gradient}
                     style={{
-                      'border': '1px solid rgba(0, 0, 0, 0.65)',
+                      'border-radius': '0',
+                      'border': '2px solid rgba(0, 0, 0, 0.5)',
+                      'border-left': 'none',
+                      'border-right': 'none',
                     }}
-                    my={1}>
-                    TURN IN
-                  </Button>
-                </Box>
-              ) : null}
-            </Stack.Item>
-            {!!uiButtons && !objectiveFinished && (
-              <Stack.Item>{uiButtons}</Stack.Item>
-            )}
-          </Stack>
-        </Box>
-      )}
+                    position="relative"
+                    width="100%"
+                    textAlign="center"
+                    bold>
+                    <Box
+                      width="100%"
+                      height="100%"
+                      backgroundColor={
+                        objectiveFailed
+                          ? 'rgba(255, 0, 0, 0.1)'
+                          : 'rgba(0, 255, 0, 0.1)'
+                      }
+                      position="absolute"
+                      left={0}
+                      top={0}
+                    />
+                    <Button
+                      onClick={handleCompletion}
+                      color={objectiveFailed ? 'bad' : 'good'}
+                      style={{
+                        'border': '1px solid rgba(0, 0, 0, 0.65)',
+                      }}
+                      my={1}>
+                      TURN IN
+                    </Button>
+                  </Box>
+                ) : null}
+              </Stack.Item>
+              {!!uiButtons && !objectiveFinished && (
+                <Stack.Item>{uiButtons}</Stack.Item>
+              )}
+            </Stack>
+          </Box>
+        )}
       </Flex.Item>
     </Flex>
   );

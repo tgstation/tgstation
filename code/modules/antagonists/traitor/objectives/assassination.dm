@@ -171,8 +171,13 @@
 
 /datum/traitor_objective/assassinate/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 
+	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
 	for(var/datum/objective/task as anything in handler.traitor_datum?.objectives)
-		possible_duplicates += task.target //Removing primary objective kill targets from the list
+		if(!task.target)
+			continue
+		if(!is_type(datum/mind)
+			continue
+		already_targeting += task.target //Removing primary objective kill targets from the list
 
 	var/parent_type = type2parent(type)
 	//don't roll head of staff types if you haven't completed the normal version
@@ -185,6 +190,8 @@
 	if(generating_for.late_joiner)
 		try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
+		if(possible_target in already_targeting)
+			continue
 		var/target_area = get_area(possible_target.current)
 		if(possible_target == generating_for)
 			continue
