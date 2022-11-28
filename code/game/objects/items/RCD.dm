@@ -1206,7 +1206,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	for(var/obj/machinery/recipe as anything in plumbing_design_types)
 		category = ""  //find category of each design type
-		if(ispath(recipe , /obj/machinery/plumbing))
+		if(ispath(recipe, /obj/machinery/plumbing))
 			var/obj/machinery/plumbing/p = recipe
 			category = initial(p.category)
 		else if(ispath(recipe , /obj/machinery/duct))
