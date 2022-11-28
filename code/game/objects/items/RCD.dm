@@ -1095,7 +1095,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	max_matter = 200
 
 	///type of the plumbing machine
-	var/blueprint = null
+	var/obj/machinery/blueprint = null
 	///index, used in the attack self to get the type. stored here since it doesnt change
 	var/list/choices = list()
 	///All info for construction
@@ -1186,48 +1186,56 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return list("paint_colors" = GLOB.pipe_paint_colors)
 
 /obj/item/construction/plumbing/ui_data(mob/user)
-	var/obj/machinery/b = blueprint
-	//map string layer to number layer . calculations don't look nice but better than creating an list in memory to do the mapping
+	/**
+	 * Maps current_layer[type string] -> number so it can be sent to the UI
+	 * I didn't want to create an temporary list to map these values as it would take up memory so i made this dumb logic
+	 * GLOB.plumbing_layers maps layer name["First Layer","Second Layer","Default Layer","Forth Layer","Fifth Layer"]  to bit mask values 1,2,4,8,16
+	 * We need to map these values 1,2,4,8,16 -> 1,2,3,4,5 i.e list index values
+	 * So here is my logic
+	 * after mapping if we get the bit flags 1,2 then we dont change them as they correspond to the layers 1,2
+	 * after mapping if we get the bit flags 4,8 we need to map them layers 3,4 so the math is (bitflag/4)+2 So that would be (4/4)+2=3 i.e layer 3,(8/4)+2=4 i.e layer 4
+	 * after mapping if we get the bit flag 16 we just directly imply it means layer 5
+	 * So yeah this logic works and hopefully nobody needs to read this or understand this
+	 */
 	var/layer = GLOB.plumbing_layers[current_layer]
-	if(layer == 16)   //max bit flag means layer 5
+	if(layer == 16)
 		layer = 5
-	else if(layer > 2) //for bit flags 4 & 8 we do bitflag/4 + 2 . for example 4/4 + 2 = 3[layer 3], 8/4 +2 = 4[layer 4]
+	else if(layer > 2)
 		layer = (layer / 4) + 2
 
 	var/list/data = list()
 	data["piping_layer"] = layer
 	data["selected_color"] = current_color
-	data["icon"] = initial(b.icon_state)
+	data["icon"] = initial(blueprint.icon_state)
 
-	var/index = 1
 	var/list/category_list = list()
-	var/selected = initial(b.name)
 	var/category = ""
+	var/obj/machinery/recipe = null
 
-	for(var/obj/machinery/recipe as anything in plumbing_design_types)
-		category = ""  //find category of each design type
+	for(var/i in 1 to plumbing_design_types.len)
+		recipe = plumbing_design_types[i]
+
+		//find which category this recipe belongs to
 		if(ispath(recipe, /obj/machinery/plumbing))
-			var/obj/machinery/plumbing/p = recipe
-			category = initial(p.category)
+			var/obj/machinery/plumbing/plumbing_design = recipe
+			category = initial(plumbing_design.category)
 		else if(ispath(recipe , /obj/machinery/duct))
-			var/obj/machinery/duct/p = recipe
-			category = initial(p.category)
+			category = "Distribution"
 		else
-			var/obj/machinery/iv_drip/plumbing/p = recipe
-			category = initial(p.category)
-
-		var/list/item = list()
-		item["index"] = index++
-		item["name"] = initial(recipe.name)
-		item["selected"] = selected == initial(recipe.name)
+			category = "Storage"
 
 		if(!category_list[category])
 			var/list/item_list = list()
 			item_list["cat_name"] = category //used by RapidPipeDispenser.js
-			item_list["recipes"] = list()
+			item_list["recipes"] = list() //used by RapidPipeDispenser.js
 			category_list[category] = item_list
 
-		category_list[category]["recipes"] += list(item)
+		//add item to category
+		category_list[category]["recipes"] += list(list(
+			"index" = i,
+			"name" = initial(recipe.name),
+			"selected" = (initial(blueprint.name) == initial(recipe.name))
+		))
 
 	data["categories"] = list()
 	for(category in category_list)
@@ -1242,14 +1250,20 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	switch(action)
 		if("color")
-			current_color = params["paint_color"]
+			var/color = params["paint_color"]
+			if(GLOB.pipe_paint_colors[color] != null) //validate if the color is in the allowed list of values
+				current_color = color
 		if("piping_layer")
 			var/bitflag = text2num(params["piping_layer"])  //convert from layer number back to layer string
 			bitflag = 1 << (bitflag - 1)
-			current_layer = GLOB.plumbing_layer_names["[bitflag]"]
+			var/layer = GLOB.plumbing_layer_names["[bitflag]"]
+			if(layer != null) //validate if this value exists in the list
+				current_layer = layer
 		if("recipe")
-			blueprint = plumbing_design_types[text2num(params["id"])]
-			playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
+			var/design = plumbing_design_types[text2num(params["id"])]
+			if(design != null) //validate if design is valid
+				blueprint = design
+			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
 
 	return TRUE
 
@@ -1260,8 +1274,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		return FALSE
 
 	if(!canPlace(destination))
-		var/obj/blueprint_type = blueprint
-		to_chat(user, span_notice("There is something blocking you from placing a [initial(blueprint_type.name)] there."))
+		to_chat(user, span_notice("There is something blocking you from placing a [initial(blueprint.name)] there."))
 		return
 	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
 		//"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
@@ -1282,12 +1295,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		return FALSE
 	. = TRUE
 
-	var/obj/blueprint_template = blueprint
 	var/layer_id = GLOB.plumbing_layers[current_layer]
 
 	for(var/obj/content_obj in destination.contents)
 		// Let's not built ontop of dense stuff, if this is also dense.
-		if(initial(blueprint_template.density) && content_obj.density)
+		if(initial(blueprint.density) && content_obj.density)
 			return FALSE
 
 		// Ducts can overlap other plumbing objects IF the layers are different

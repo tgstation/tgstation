@@ -10,9 +10,6 @@ All the important duct code:
 	layer = PLUMBING_PIPE_VISIBILE_LAYER
 	use_power = NO_POWER_USE
 
-	///category for plumbing service rcd
-	var/category = "Distribution"
-
 	///bitfield with the directions we're connected in
 	var/connects
 	///set to TRUE to disable smart duct behaviour
