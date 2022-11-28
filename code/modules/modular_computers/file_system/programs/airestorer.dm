@@ -17,13 +17,13 @@
 	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
-/datum/computer_file/program/ai_restorer/on_examine(obj/item/modular_computer/source, mob/user)
+/datum/computer_file/program/ai_restorer/on_examine(atom/target, mob/user)
 	var/list/examine_text = list()
 	if(!stored_card)
 		examine_text += "It has a slot installed for an intelliCard."
 		return examine_text
 
-	if(computer.Adjacent(user))
+	if(target.Adjacent(user))
 		examine_text += "It has a slot installed for an intelliCard which contains: [stored_card.name]"
 	else
 		examine_text += "It has a slot installed for an intelliCard, which appears to be occupied."
@@ -66,20 +66,20 @@
 		return FALSE
 
 	if(stored_card)
-		to_chat(user, span_warning("You try to insert \the [attacking_item] into \the [computer.name], but the slot is occupied."))
+		to_chat(user, span_warning("You try to insert \the [attacking_item] into \the [computer.physical.name], but the slot is occupied."))
 		return FALSE
 	if(user && !user.transferItemToLoc(attacking_item, computer))
 		return FALSE
 
 	stored_card = attacking_item
-	to_chat(user, span_notice("You insert \the [attacking_item] into \the [computer.name]."))
+	to_chat(user, span_notice("You insert \the [attacking_item] into \the [computer.physical.name]."))
 
 	return TRUE
 
 /datum/computer_file/program/ai_restorer/try_eject(mob/living/user, forced = FALSE)
 	if(!stored_card)
 		if(user)
-			to_chat(user, span_warning("There is no card in \the [computer.name]."))
+			to_chat(user, span_warning("There is no card in \the [computer.physical.name]."))
 		return FALSE
 
 	if(restoring && !forced)
@@ -87,11 +87,11 @@
 			to_chat(user, span_warning("Safeties prevent you from removing the card until reconstruction is complete..."))
 		return FALSE
 
-	if(user && computer.Adjacent(user))
-		to_chat(user, span_notice("You remove [stored_card] from [computer.name]."))
+	if(user && computer.physical.Adjacent(user))
+		to_chat(user, span_notice("You remove [stored_card] from [computer.physical.name]."))
 		user.put_in_hands(stored_card)
 	else
-		stored_card.forceMove(computer.drop_location())
+		stored_card.forceMove(computer.physical.drop_location())
 
 	stored_card = null
 	restoring = FALSE

@@ -69,6 +69,7 @@
 			if("[i.req_number]" == "[current_ref_num]")
 				active_request = i
 				break
+	var/obj/physical_obj = computer.physical // this could be a mob, check type; TODO: this is dumb, make a helper proc from this
 	if(active_request)
 		for(var/datum/bank_account/j in active_request.applicants)
 			if("[j.account_id]" == "[current_app_num]")
@@ -81,7 +82,8 @@
 				return TRUE
 			for(var/datum/station_request/i in GLOB.request_list)
 				if("[i.req_number]" == "[current_user.account_id]")
-					computer.say("Account already has active bounty.")
+					if(istype(physical_obj))
+						physical_obj.say("Account already has active bounty.")
 					return
 			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
 			GLOB.request_list += list(curr_request)
@@ -91,7 +93,8 @@
 			return TRUE
 		if("apply")
 			if(!current_user)
-				computer.say("Please swipe a valid ID first.")
+				if(istype(physical_obj))
+					physical_obj.say("Please swipe a valid ID first.")
 				return TRUE
 			if(current_user.account_holder == active_request.owner)
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
@@ -104,13 +107,15 @@
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
 			request_target.transfer_money(current_user, active_request.value, "Bounties: Request Completed")
-			computer.say("Paid out [active_request.value] credits.")
+			if(istype(physical_obj))
+				physical_obj.say("Paid out [active_request.value] credits.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
 		if("clear")
 			if(current_user)
 				current_user = null
-				computer.say("Account Reset.")
+				if(istype(physical_obj))
+					physical_obj.say("Account Reset.")
 				return TRUE
 		if("deleteRequest")
 			if(!current_user)
@@ -119,7 +124,8 @@
 			if(active_request.owner != current_user.account_holder)
 				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
-			computer.say("Deleted current request.")
+			if(istype(physical_obj))
+				physical_obj.say("Deleted current request.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
 		if("bountyVal")

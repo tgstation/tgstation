@@ -6,7 +6,7 @@
 /datum/modular_computer_host
 	///Our object that holds us
 	var/atom/physical
-	///The type this host is valid on.
+	///The type this host is valid on. Really only used for error proofing.
 	var/valid_on = /atom/movable
 
 	///The ID currently stored in the computer.
@@ -93,7 +93,7 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
-/datum/modular_computer_host/New(holder)
+/datum/modular_computer_host/New(datum/holder)
 	. = ..()
 
 	if(!istype(holder, valid_on))
@@ -162,6 +162,7 @@
 	RegisterSignal(physical, COMSIG_ITEM_ATTACK_SELF, PROC_REF(do_attack_self))
 	RegisterSignal(physical, COMSIG_CLICK_ALT, PROC_REF(do_altclick))
 	RegisterSignal(physical, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(do_ctrlshiftclick))
+	RegisterSignal(physical, COMSIG_ATOM_TOOL_ACT("screwdriver"), PROC_REF(do_screwdriver_act))
 	RegisterSignal(physical, COMSIG_PARENT_ATTACKBY, PROC_REF(do_attackby))
 	RegisterSignal(physical, COMSIG_PARENT_EXAMINE, PROC_REF(do_examine))
 
@@ -609,3 +610,10 @@
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	return . || NONE
+
+/datum/modular_computer_host/proc/do_screwdriver_act()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(remove_part))
+
+/datum/modular_computer_host/proc/remove_part()
+	return

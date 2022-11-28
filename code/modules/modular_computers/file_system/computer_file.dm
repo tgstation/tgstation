@@ -44,7 +44,7 @@
  *
  * note: please replace this with signals when hdd's are removed and program's New() already has the tablet set.
  */
-/datum/computer_file/proc/on_examine(obj/item/modular_computer/source, mob/user)
+/datum/computer_file/proc/on_examine(atom/target, mob/user)
 	return null
 
 /// Called when attacking a tablet with an item, checking if any application uses it. Return TRUE to cancel the attack chain.

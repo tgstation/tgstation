@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	/// Starting programs for this computer
 	var/list/datum/computer_file/program/starting_programs = list()
 	/// Our modular computer
-	var/datum/modular_computer_host/cpu
+	var/datum/modular_computer_host/cpu = /datum/modular_computer_host
 
 	/// Icon state when the computer is turned off.
 	var/icon_state_unpowered = null

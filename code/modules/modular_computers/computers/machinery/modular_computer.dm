@@ -41,7 +41,7 @@
 	var/allow_chunky = FALSE
 
 	///CPU that handles most logic while this type only handles power and other specific things.
-	var/datum/modular_computer_host/cpu
+	var/datum/modular_computer_host/console/cpu
 
 /obj/machinery/modular_computer/Initialize(mapload)
 	. = ..()
@@ -49,11 +49,6 @@
 
 /obj/machinery/modular_computer/Destroy()
 	QDEL_NULL(cpu)
-	return ..()
-
-/obj/machinery/modular_computer/examine(mob/user)
-	if(cpu)
-		return cpu.examine(user)
 	return ..()
 
 /obj/machinery/modular_computer/update_appearance(updates)
@@ -72,12 +67,12 @@
 	if(!cpu)
 		return .
 
-	if(cpu.enabled && cpu.use_power())
+	if(cpu.powered_on && cpu.use_power())
 		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
 	else if(!(machine_stat & NOPOWER))
 		. += screen_icon_screensaver
 
-	if(cpu.get_integrity() <= cpu.integrity_failure * cpu.max_integrity)
+	if(get_integrity() <= integrity_failure * max_integrity)
 		. += "bsod"
 		. += "broken"
 	return .
@@ -115,11 +110,6 @@
 		return cpu.attackby(W, user)
 	return ..()
 
-/obj/machinery/modular_computer/attacked_by(obj/item/attacking_item, mob/living/user)
-	if (cpu)
-		return cpu.attacked_by(attacking_item, user)
-	return ..()
-
 // Stronger explosions cause serious damage to internal components
 // Minor explosions are mostly mitigitated by casing.
 /obj/machinery/modular_computer/ex_act(severity)
@@ -134,14 +124,6 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += cpu
 	return ..()
-
-// EMPs are similar to explosions, but don't cause physical damage to the casing. Instead they screw up the components
-/obj/machinery/modular_computer/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_CONTENTS)
-		return
-	if(cpu)
-		cpu.emp_act(severity)
 
 // "Stun" weapons can cause minor damage to components (short-circuits?)
 // "Burn" damage is equally strong against internal components and exterior casing

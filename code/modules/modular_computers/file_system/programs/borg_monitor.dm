@@ -40,7 +40,7 @@
 	DL_progress = 0
 
 	var/username = "unknown user"
-	var/obj/item/card/id/stored_card = computer.GetID()
+	var/obj/item/card/id/stored_card = computer.computer_id_slot
 	if(istype(stored_card) && stored_card.registered_name)
 		username = "user [stored_card.registered_name]"
 	to_chat(borgo, span_userdanger("Request received from [username] for the system log file. Upload in progress."))//Damning evidence may be contained, so warn the borg
@@ -152,7 +152,7 @@
 
 ///Gets the ID's name, if one is inserted into the device. This is a separate proc solely to be overridden by the syndicate version of the app.
 /datum/computer_file/program/borg_monitor/proc/checkID()
-	var/obj/item/card/id/ID = computer.GetID()
+	var/obj/item/card/id/ID = computer.computer_id_slot
 	if(!ID)
 		if(emagged)
 			return "STDERR:UNDF"
