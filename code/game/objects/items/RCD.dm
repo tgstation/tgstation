@@ -1183,8 +1183,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	)
 
 /obj/item/construction/plumbing/ui_static_data(mob/user)
-	var/list/data = list("paint_colors" = GLOB.pipe_paint_colors)
-	return data
+	return list("paint_colors" = GLOB.pipe_paint_colors)
 
 /obj/item/construction/plumbing/ui_data(mob/user)
 	var/obj/machinery/b = blueprint
