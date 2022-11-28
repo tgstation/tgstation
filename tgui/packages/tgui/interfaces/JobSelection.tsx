@@ -4,26 +4,22 @@ import { Window } from '../layouts';
 import { Color } from 'common/color';
 import { SFC } from 'inferno';
 import { JobToIcon } from './common/JobToIcon';
+import { BaseDepartmentInfo, BaseJobInfo } from '../components/DepartmentPane';
 
-type BaseVars = {
-  name: string;
-  open_slots: number;
-};
-
-type Job = BaseVars & {
+type Job = {
   unavailable_reason: string | null;
   command: boolean;
+  open_slots: number;
   used_slots: number;
   icon: string;
   prioritized: boolean;
   job_description: string;
-};
+} & BaseJobInfo;
 
-type Department = BaseVars & {
-  jobs: Job[];
+type Department = {
   open_slots: number;
-  color: string;
-};
+  jobs: Job[];
+} & BaseDepartmentInfo;
 
 type Data = {
   departments: Department[];
@@ -111,7 +107,6 @@ export const JobSelection = (props, context) => {
             />
           }>
           <DepartmentPane
-            act={act}
             departments={departments}
             titleSubtextBuilder={(department) => {
               return (

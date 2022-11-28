@@ -3,6 +3,17 @@ import { SFC } from 'inferno';
 import { Box } from './Box';
 import { Stack } from './Stack';
 
+export interface BaseDepartmentInfo {
+  name: string;
+  color: string;
+  jobs: BaseJobInfo[];
+}
+
+// Very loose because the job info required can vary, and this component doesn't require any particular data from it.
+export interface BaseJobInfo {
+  name: string;
+}
+
 // The cost of flexibility and prettiness.
 export const DepartmentEntry: SFC<{
   style?;
@@ -14,14 +25,13 @@ export const DepartmentEntry: SFC<{
 }> = (props) => {
   return (
     <Box style={props.style}>
-      {/* Yes, this box is missing the "Section" class. This is very intentional, as the layout looks *ugly* with it.*/}
+      {/* Yes, this box (line above) is missing the "Section" class. This is very intentional, as the layout looks *ugly* with it.*/}
       <Box class="Section__title" style={props.titleStyle}>
         <Box class="Section__titleText" style={props.textStyle}>
           {props.title}
           {props.titleContents}
         </Box>
-        {props.titleSubtext}
-        <br style={{ 'clear': 'both' }} />
+        <div className="Section__buttons">{props.titleSubtext}</div>
       </Box>
       <Box class="Section__rest">
         <Box class="Section__content">{props.children}</Box>
@@ -31,38 +41,39 @@ export const DepartmentEntry: SFC<{
 };
 
 export const DepartmentPane: SFC<{
-  act;
-  departments: object[];
-  jobEntryBuilder: (job: object, department: object) => object;
-  titleSubtextBuilder: (department: object) => object;
+  departments: BaseDepartmentInfo[];
+  jobEntryBuilder: (job: BaseJobInfo, department: BaseDepartmentInfo) => object;
+  titleSubtextBuilder?: (department: BaseDepartmentInfo) => object;
   entryWidth: string;
 }> = (data) => {
   return (
     <Box wrap="wrap" style={{ 'columns': '20em' }}>
       {data.departments.map((department) => {
         return (
-          <Box key={department['name']} minWidth={data.entryWidth}>
+          <Box key={department.name} minWidth={data.entryWidth}>
             <DepartmentEntry
-              title={department['name']}
+              title={department.name}
               style={{
-                'background-color': department['color'],
+                'background-color': department.color,
                 'margin-bottom': '1em',
                 'break-inside': 'avoid-column',
               }}
               titleStyle={{
-                'border-bottom-color': Color.fromHex(department['color'])
+                'border-bottom-color': Color.fromHex(department.color)
                   .darken(50)
                   .toString(),
                 'min-height': '3.4rem',
               }}
               textStyle={{
-                'color': Color.fromHex(department['color'])
+                'color': Color.fromHex(department.color)
                   .darken(80)
                   .toString(),
               }}
-              titleSubtext={data.titleSubtextBuilder(department)}>
+              titleSubtext={
+                data.titleSubtextBuilder && data.titleSubtextBuilder(department)
+              }>
               <Stack vertical>
-                {department['jobs'].map((job) =>
+                {department.jobs.map((job) =>
                   data.jobEntryBuilder(job, department)
                 )}
               </Stack>
