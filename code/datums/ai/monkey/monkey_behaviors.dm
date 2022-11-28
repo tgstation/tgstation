@@ -13,7 +13,7 @@
 
 		item_blacklist[target] = TRUE
 		if(istype(controller, /datum/ai_controller/monkey)) //What the fuck
-			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, /datum/ai_controller/monkey/proc/target_del)
+			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/ai_controller/monkey,target_del))
 
 	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 

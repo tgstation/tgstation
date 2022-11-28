@@ -598,7 +598,7 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_mob(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, /mob/living/proc/rest_checks_callback), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+	if(!instant && !do_mob(src, src, 1 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -868,6 +868,25 @@
 	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
+
+/**
+ * Called by strange_reagent, with the amount of healing the strange reagent is doing
+ * It uses the healing amount on brute/fire damage, and then uses the excess healing for revive
+ */
+/mob/living/proc/do_strange_reagent_revival(healing_amount)
+	var/brute_loss = getBruteLoss()
+	if(brute_loss)
+		var/brute_healing = min(healing_amount * 0.5, brute_loss) // 50% of the healing goes to brute
+		setBruteLoss(round(brute_loss - brute_healing, DAMAGE_PRECISION), updating_health=FALSE, forced=TRUE)
+		healing_amount = max(0, healing_amount - brute_healing)
+
+	var/fire_loss = getFireLoss()
+	if(fire_loss && healing_amount)
+		var/fire_healing = min(healing_amount, fire_loss) // rest of the healing goes to fire
+		setFireLoss(round(fire_loss - fire_healing, DAMAGE_PRECISION), updating_health=TRUE, forced=TRUE)
+		healing_amount = max(0, healing_amount - fire_healing)
+
+	revive(NONE, excess_healing=max(healing_amount, 0), force_grab_ghost=FALSE) // and any excess healing is passed along
 
 /// Checks if we are actually able to ressuscitate this mob.
 /// (We don't want to revive then to have them instantly die again)

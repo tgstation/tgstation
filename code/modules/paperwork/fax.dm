@@ -253,7 +253,7 @@
 			playsound(src, 'sound/machines/eject.ogg', 50, FALSE)
 			update_appearance()
 			return TRUE
-		
+
 		if("send")
 			var/obj/item/loaded = loaded_item_ref?.resolve()
 			if (!loaded)
@@ -264,13 +264,13 @@
 				loaded_item_ref = null
 				update_appearance()
 				return TRUE
-		
+
 		if("send_special")
 			var/obj/item/paper/fax_paper = loaded_item_ref?.resolve()
 			if(!istype(fax_paper))
 				to_chat(usr, icon2html(src.icon, usr) + span_warning("Fax cannot send all above paper on this protected network, sorry."))
-				return 
-			
+				return
+
 			fax_paper.request_state = TRUE
 			fax_paper.loc = null
 
@@ -278,13 +278,13 @@
 			playsound(src, 'sound/machines/high_tech_confirm.ogg', 50, vary = FALSE)
 
 			history_add("Send", params["name"])
-			
+
 			GLOB.requests.fax_request(usr.client, "sent a fax message from [fax_name]/[fax_id] to [params["name"]]", fax_paper)
-			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [params["name"]]")] [ADMIN_SHOW_PAPER(fax_paper)]"), confidential = TRUE)
+			to_chat(GLOB.admins, span_adminnotice("[icon2html(src.icon, GLOB.admins)]<b><font color=green>FAX REQUEST: </font>[ADMIN_FULLMONTY(usr)]:</b> [span_linkify("sent a fax message from [fax_name]/[fax_id][ADMIN_FLW(src)] to [html_encode(params["name"])]")] [ADMIN_SHOW_PAPER(fax_paper)]"), confidential = TRUE)
 			log_fax(fax_paper, params["id"], params["name"])
 			loaded_item_ref = null
 			update_appearance()
-				
+
 		if("history_clear")
 			history_clear()
 			return TRUE

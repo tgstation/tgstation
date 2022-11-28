@@ -23,6 +23,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	layer = MOB_LAYER
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	light_range = 4
+	light_color = SUPERMATTER_COLOUR
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	critical_machine = TRUE
 	base_icon_state = "sm"
@@ -195,7 +196,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	AddElement(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
 
 	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)))
-
+	AddComponent(/datum/component/supermatter_glow)
 	soundloop = new(src, TRUE)
 
 	if (!moveable)
@@ -314,6 +315,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(prob(15))
 		supermatter_pull(loc, min(internal_energy/850, 3))//850, 1700, 2550
 	update_appearance()
+	SEND_SIGNAL(src, COMSIG_SUPERMATTER_PROCESS_ATMOS)
 	return TRUE
 
 // SupermatterMonitor UI for ghosts only. Inherited attack_ghost will call this.
@@ -445,7 +447,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/force_delam()
 	SIGNAL_HANDLER
 	investigate_log("was forcefully delaminated", INVESTIGATE_ENGINE)
-	INVOKE_ASYNC(delamination_strategy, /datum/sm_delam/proc/delaminate, src)
+	INVOKE_ASYNC(delamination_strategy, TYPE_PROC_REF(/datum/sm_delam, delaminate), src)
 
 /**
  * Count down, spout some messages, and then execute the delam itself.
@@ -526,6 +528,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	gas_heat_power_generation = 0
 	gas_powerloss_inhibition = 0
 	if(disable_gas)
+
 		return
 
 	var/total_moles = absorbed_gasmix.total_moles()

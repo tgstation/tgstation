@@ -14,8 +14,8 @@
 
 /obj/item/modular_computer/processor/UpdateDisplay()
 	. = ..()
-	//update the name with us
-	machinery_computer.name = name
+	//update our name to match the computer's
+	name = machinery_computer.name
 
 /obj/item/modular_computer/processor/Initialize(mapload)
 	if(!istype(loc, /obj/machinery/modular_computer))
@@ -33,7 +33,7 @@
 	integrity_failure = machinery_computer.integrity_failure
 	base_active_power_usage = machinery_computer.base_active_power_usage
 	base_idle_power_usage = machinery_computer.base_idle_power_usage
-	machinery_computer.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /obj/machinery/modular_computer/proc/relay_icon_update) //when we update_icon, also update the computer
+	machinery_computer.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, TYPE_PROC_REF(/obj/machinery/modular_computer, relay_icon_update)) //when we update_icon, also update the computer
 	return ..()
 
 /obj/item/modular_computer/processor/Destroy(force)
