@@ -1,8 +1,13 @@
+/**
+ * `/datum/modular_computer_host`, the brains and logic of NtOS
+ * Written similar to a component, except that you have to explicitly implement it in your `/obj`
+ * Woe be upon ye, for there lie only shitcode beyond this point
+ */
 /datum/modular_computer_host
 	///Our object that holds us
-	var/obj/physical
-	///Is our object broken?
-	var/nonfunctional
+	var/atom/physical
+	///The type this host is valid on.
+	var/valid_on = /atom/movable
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
@@ -47,6 +52,8 @@
 
 	///Bool on whether the computer is currently active or not.
 	var/powered_on = FALSE
+	///Is our object broken?
+	var/nonfunctional
 
 	///Looping sound for when the computer is on.
 	var/datum/looping_sound/computer/soundloop
@@ -76,9 +83,6 @@
 	///The job title of the stored ID card
 	var/saved_job
 
-	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
-	var/steel_sheet_cost = 5
-
 	///If hit by a Clown virus, remaining honks left until it stops.
 	var/honkvirus_amount = 0
 	///Whether the PDA can still use NTNet while out of NTNet's reach.
@@ -92,8 +96,8 @@
 /datum/modular_computer_host/New(holder)
 	. = ..()
 
-	if(!isobj(holder))
-		stack_trace("We were attaching a modular computer host to a non-obj! What the hell? [holder]")
+	if(!istype(holder, valid_on))
+		stack_trace("We were attaching a modular computer host to an invalid holder! Expected: [valid_on], Got: [holder.type]")
 		qdel(src)
 		return
 
@@ -107,6 +111,8 @@
 	add_messenger()
 	install_default_programs()
 
+	register_signals()
+
 	// TODO: replace this with new subsystem
 	START_PROCESSING(SSobj, src)
 
@@ -119,32 +125,57 @@
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
 
-	if(istype(inserted_disk))
-		QDEL_NULL(inserted_disk)
-	if(istype(inserted_pai))
-		QDEL_NULL(inserted_pai)
-	if(computer_id_slot)
-		QDEL_NULL(computer_id_slot)
+	if(!force) // our internal stuff gets a chance to live
+		var droploc = physical.drop_location()
+		// refs get cleared in do_exited
+		internal_cell?.forceMove(droploc)
+		computer_id_slot?.forceMove(droploc)
+		inserted_disk?.forceMove(droploc)
+		inserted_pai?.forceMove(droploc)
+	else
+		if(istype(internal_cell))
+			QDEL_NULL(internal_cell)
+		if(istype(inserted_disk))
+			QDEL_NULL(inserted_disk)
+		if(istype(inserted_pai))
+			QDEL_NULL(inserted_pai)
+		if(istype(computer_id_slot))
+			QDEL_NULL(computer_id_slot)
 
 	remove_messenger()
 
+	unregister_signals()
+
 	STOP_PROCESSING(SSobj, src)
+
+	physical = null
 
 	return ..()
 
 /datum/modular_computer_host/proc/register_signals()
-	RegisterSignal(physical, COMSIG_ATOM_EMAG_ACT, PROC_REF(do_emag))
+	RegisterSignal(physical, COMSIG_ATOM_ATTACK_GHOST, PROC_REF(do_attack_ghost))
 	RegisterSignal(physical, COMSIG_ATOM_BREAK, PROC_REF(do_integrity_failure))
+	RegisterSignal(physical, COMSIG_ATOM_EMAG_ACT, PROC_REF(do_emag))
+	RegisterSignal(physical, COMSIG_ATOM_EXITED, PROC_REF(do_exited))
+	RegisterSignal(physical, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(do_add_context))
 	RegisterSignal(physical, COMSIG_ATOM_UI_INTERACT, PROC_REF(do_interact))
+	RegisterSignal(physical, COMSIG_ITEM_ATTACK_SELF, PROC_REF(do_attack_self))
 	RegisterSignal(physical, COMSIG_CLICK_ALT, PROC_REF(do_altclick))
+	RegisterSignal(physical, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(do_ctrlshiftclick))
 	RegisterSignal(physical, COMSIG_PARENT_ATTACKBY, PROC_REF(do_attackby))
+	RegisterSignal(physical, COMSIG_PARENT_EXAMINE, PROC_REF(do_examine))
 
-/datum/modular_computer_host/UnregisterFromParent()
+/datum/modular_computer_host/proc/unregister_signals()
 	UnregisterSignal(physical, list(
-		COMSIG_ATOM_EMAG_ACT,
+		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_BREAK,
+		COMSIG_ATOM_EXITED,
+		COMSIG_ATOM_EMAG_ACT,
 		COMSIG_ATOM_UI_INTERACT,
+		COMSIG_ITEM_ATTACK_SELF,
+		COMSIG_CLICK_ALT,
 		COMSIG_PARENT_ATTACKBY,
+		COMSIG_PARENT_EXAMINE,
 	))
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
@@ -353,22 +384,23 @@
 /datum/modular_computer_host/proc/insert_card(obj/item/card/inserting_id, mob/user)
 	//all slots taken
 	if(computer_id_slot)
-		return FALSE
+		return
 
-	computer_id_slot = inserting_id
 	if(user)
-		if(!user.transferItemToLoc(inserting_id, src))
-			return FALSE
+		if(!user.transferItemToLoc(inserting_id, physical))
+			return
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 	else
-		inserting_id.forceMove(src)
+		inserting_id.forceMove(physical)
+
+	computer_id_slot = inserting_id
 
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
-	return TRUE
+	return
 
 /**
  * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
@@ -392,9 +424,14 @@
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
 
+/datum/modular_computer_host/proc/interact(mob/user)
+	if(powered_on)
+		ui_interact(user)
+	else
+		turn_on(user)
+
 /datum/modular_computer_host/proc/do_emag(mob/user, obj/item/card/emag/card)
 	SIGNAL_HANDLER
-
 	var/newemag = FALSE
 	for(var/datum/computer_file/program/app in stored_files)
 		if(app.run_emag())
@@ -406,7 +443,6 @@
 
 /datum/modular_computer_host/proc/do_attackby(obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
-
 	// Check for ID first
 	if(isidcard(attacking_item) && insert_card(attacking_item, user))
 		return COMPONENT_NO_AFTERATTACK
@@ -490,15 +526,8 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(interact), user)
 
-/datum/modular_computer_host/proc/interact(mob/user)
-	if(powered_on)
-		ui_interact(user)
-	else
-		turn_on(user)
-
 /datum/modular_computer_host/proc/do_altclick(mob/user)
 	SIGNAL_HANDLER
-
 	if(issilicon(user))
 		return
 	if(!user.canUseTopic(src, be_close = TRUE))
@@ -513,3 +542,70 @@
 		physical.balloon_alert(user, "removed pAI")
 		inserted_pai = null
 		return COMPONENT_CANCEL_CLICK_ALT
+
+/datum/modular_computer_host/proc/do_exited(atom/movable/gone, direction)
+	SIGNAL_HANDLER
+	if(internal_cell == gone)
+		internal_cell = null
+		if(powered_on && !use_power())
+			shutdown_computer()
+	if(computer_id_slot == gone)
+		computer_id_slot = null
+		if(ishuman(physical.loc))
+			var/mob/living/carbon/human/human_wearer = physical.loc
+			human_wearer.sec_hud_set_ID()
+	if(inserted_pai == gone)
+		inserted_pai = null
+	if(inserted_disk == gone)
+		inserted_disk = null
+
+/datum/modular_computer_host/proc/do_examine(mob/user)
+	SIGNAL_HANDLER
+	if(ntnet_bypass_rangelimit)
+		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
+	. += span_notice("It has [max_capacity] GQ of storage capacity.")
+
+	if(computer_id_slot)
+		if(physical.Adjacent(user))
+			. += "It has \the [computer_id_slot] card installed in its card slot."
+		else
+			. += "Its identification card slot is currently occupied."
+		. += span_info("Alt-click [src] to eject the identification card.")
+
+/datum/modular_computer_host/proc/do_ctrlshiftclick(mob/user)
+	SIGNAL_HANDLER
+	if(!inserted_disk)
+		return
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), inserted_disk)
+	playsound(src, 'sound/machines/card_slide.ogg', 50)
+
+/datum/modular_computer_host/proc/do_attack_ghost(mob/dead/observer/user)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(interact_ghost), user)
+
+/datum/modular_computer_host/proc/interact_ghost(mob/dead/observer/user)
+	if(powered_on)
+		ui_interact(user)
+	else if(isAdminGhostAI(user))
+		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
+		if(response == "Yes")
+			turn_on(user)
+			ui_interact(user)
+
+/datum/modular_computer_host/proc/do_attack_self(mob/user)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(interact), user)
+
+/datum/modular_computer_host/proc/do_add_context(atom/source, list/ctx, obj/item/item, mob/user)
+	SIGNAL_HANDLER
+	if(computer_id_slot) // ID get removed first before pAIs
+		ctx[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+		. = CONTEXTUAL_SCREENTIP_SET
+	else if(inserted_pai)
+		ctx[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
+		. = CONTEXTUAL_SCREENTIP_SET
+	if(inserted_disk)
+		ctx[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE

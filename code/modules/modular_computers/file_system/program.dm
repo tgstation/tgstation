@@ -57,12 +57,12 @@
 // Relays icon update to the computer.
 /datum/computer_file/program/proc/update_computer_icon()
 	if(computer)
-		computer.update_appearance()
+		computer.physical.update_appearance()
 
 // Attempts to create a log in global ntnet datum. Returns 1 on success, 0 on fail.
 /datum/computer_file/program/proc/generate_network_log(text)
 	if(computer)
-		return computer.add_log(text)
+		return computer.physical.add_log(text)
 	return 0
 
 /**
@@ -110,7 +110,7 @@
 	if(isAdminGhostAI(user))
 		return TRUE
 
-	if(!transfer && computer && (computer.obj_flags & EMAGGED)) //emags can bypass the execution locks but not the download ones.
+	if(!transfer && computer && (computer.physical.obj_flags & EMAGGED)) //emags can bypass the execution locks but not the download ones.
 		return TRUE
 
 	// Defaults to required_access
@@ -237,7 +237,7 @@
 				program_state = PROGRAM_STATE_BACKGROUND // Should close any existing UIs
 
 				computer.active_program = null
-				computer.update_appearance()
+				//computer.update_appearance()
 				ui.close()
 
 				if(user && istype(user))

@@ -45,7 +45,7 @@
 
 /obj/machinery/modular_computer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/modular_computer_host)
+	cpu = new(src)
 
 /obj/machinery/modular_computer/Destroy()
 	QDEL_NULL(cpu)
@@ -56,16 +56,9 @@
 		return cpu.examine(user)
 	return ..()
 
-/obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
-	. = ..()
-	if(.)
-		return
-	if(cpu)
-		cpu.attack_ghost(user)
-
 /obj/machinery/modular_computer/update_appearance(updates)
 	. = ..()
-	set_light(cpu?.enabled ? light_strength : 0)
+	set_light(cpu?.powered_on ? light_strength : 0)
 
 /obj/machinery/modular_computer/update_icon_state()
 	if(!cpu || !cpu.powered_on || !cpu.use_power() || (machine_stat & NOPOWER))
@@ -93,20 +86,6 @@
 /obj/machinery/modular_computer/proc/relay_icon_update(datum/source, updates, updated)
 	SIGNAL_HANDLER
 	return update_icon(updates)
-
-/obj/machinery/modular_computer/AltClick(mob/user)
-	. = ..()
-	if(!can_interact(user))
-		return
-	if(cpu)
-		cpu.AltClick(user)
-
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-// On-click handling. Turns on the computer if it's off and opens the GUI.
-/obj/machinery/modular_computer/interact(mob/user)
-	if(cpu)
-		return cpu.interact(user)
-	return ..()
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()

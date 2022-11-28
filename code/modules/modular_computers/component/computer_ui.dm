@@ -135,10 +135,10 @@
 			open_program(usr, find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
-			return toggle_flashlight()
+			//return toggle_flashlight()
 
 		if("PC_light_color")
-			var/mob/user = usr
+			/*var/mob/user = usr
 			var/new_color
 			while(!new_color)
 				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
@@ -147,7 +147,7 @@
 				if(is_color_dark(new_color, 50) ) //Colors too dark are rejected
 					to_chat(user, span_warning("That color is too dark! Choose a lighter one."))
 					new_color = null
-			return set_flashlight_color(new_color)
+			return set_flashlight_color(new_color)*/
 
 		if("PC_Eject_Disk")
 			var/param = params["name"]
@@ -172,21 +172,21 @@
 						return TRUE
 
 				if("ID")
-					if(RemoveID())
+					if(remove_card())
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
 						return TRUE
 
 		if("PC_Imprint_ID")
 			saved_identification = computer_id_slot.registered_name
 			saved_job = computer_id_slot.assignment
-			UpdateDisplay()
+			//UpdateDisplay()
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")
 					usr.put_in_hands(inserted_pai)
-					to_chat(usr, span_notice("You remove [inserted_pai] from the [name]."))
+					to_chat(usr, span_notice("You remove [inserted_pai] from the [physical.name]."))
 					inserted_pai = null
 				if("interact")
 					inserted_pai.attack_self(usr)
@@ -196,3 +196,54 @@
 
 /datum/modular_computer_host/ui_host()
 	return physical
+
+
+///Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
+/datum/modular_computer_host/proc/get_header_data()
+	var/list/data = list()
+
+	data["PC_device_theme"] = device_theme
+	data["PC_showbatteryicon"] = !!internal_cell
+
+	if(internal_cell)
+		switch(internal_cell.percent())
+			if(80 to 200) // 100 should be maximal but just in case..
+				data["PC_batteryicon"] = "batt_100.gif"
+			if(60 to 80)
+				data["PC_batteryicon"] = "batt_80.gif"
+			if(40 to 60)
+				data["PC_batteryicon"] = "batt_60.gif"
+			if(20 to 40)
+				data["PC_batteryicon"] = "batt_40.gif"
+			if(5 to 20)
+				data["PC_batteryicon"] = "batt_20.gif"
+			else
+				data["PC_batteryicon"] = "batt_5.gif"
+		data["PC_batterypercent"] = "[round(internal_cell.percent())]%"
+	else
+		data["PC_batteryicon"] = "batt_5.gif"
+		data["PC_batterypercent"] = "N/C"
+
+	switch(get_ntnet_status())
+		if(NTNET_NO_SIGNAL)
+			data["PC_ntneticon"] = "sig_none.gif"
+		if(NTNET_LOW_SIGNAL)
+			data["PC_ntneticon"] = "sig_low.gif"
+		if(NTNET_GOOD_SIGNAL)
+			data["PC_ntneticon"] = "sig_high.gif"
+		if(NTNET_ETHERNET_SIGNAL)
+			data["PC_ntneticon"] = "sig_lan.gif"
+
+	if(length(idle_threads))
+		var/list/program_headers = list()
+		for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
+			if(!idle_programs.ui_header)
+				continue
+			program_headers.Add(list(list("icon" = idle_programs.ui_header)))
+
+		data["PC_programheaders"] = program_headers
+
+	data["PC_stationtime"] = station_time_timestamp()
+	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD")], [CURRENT_STATION_YEAR]"
+	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
+	return data

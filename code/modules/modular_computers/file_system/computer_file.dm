@@ -12,7 +12,7 @@
 	///Static ID to ensure all IDs are unique.
 	var/static/file_uid = 0
 	///The modular computer hosting the file.
-	var/obj/item/modular_computer/computer
+	var/datum/modular_computer_host/computer
 
 /datum/computer_file/New()
 	..()
