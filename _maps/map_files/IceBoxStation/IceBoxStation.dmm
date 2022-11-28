@@ -39923,7 +39923,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/medical{
-	name = "Surgery B"
+	name = "Surgery South"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -69296,7 +69296,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/medical{
-	name = "Surgery A"
+	name = "Surgery North"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
