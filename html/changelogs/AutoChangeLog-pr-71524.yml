@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - refactor: "Moves wall smashing out of simple mob code and into an element we can reuse for basic mobs later"
