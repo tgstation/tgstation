@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
-import { map, filter, sortBy } from 'common/collections';
+import { map, filter, sortBy, sort } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon } from '../components';
 import { Window } from '../layouts';
@@ -29,7 +29,7 @@ const TYPE_ICONS = {
   [Food.Sugar]: 'candy-cane',
   [Food.Toxic]: 'biohazard',
   [Food.Vegetables]: 'carrot',
-};
+} as const;
 
 const CATEGORY_ICONS = {
   'Can Make': 'utensils',
@@ -51,7 +51,7 @@ const CATEGORY_ICONS = {
   'Seafood': 'fish',
   'Soups': 'mug-saucer',
   'Spaghettis': 'wheat-awn',
-};
+} as const;
 
 type Ingredient = {
   path: string;
@@ -139,8 +139,8 @@ export const PersonalCooking = (props, context) => {
     recipes = recipes.filter(searchName);
   }
   const canMake = ['Can Make'];
-  const categories = canMake.concat(data.categories.sort());
-  const foodtypes = canMake.concat(data.foodtypes.sort());
+  const categories = canMake.concat(sort(data.categories) as string[]);
+  const foodtypes = canMake.concat(sort(data.foodtypes) as string[]);
   const displayLimit = searchText.length > 0 ? 30 : 299;
   return (
     <Window width={700} height={700}>
@@ -200,7 +200,7 @@ export const PersonalCooking = (props, context) => {
                       <TypeContent
                         type={foodtype}
                         diet={data.diet}
-                        craftable={Object.keys(data.craftability).length}
+                        craftableCount={Object.keys(data.craftability).length}
                       />
                     </Tabs.Tab>
                   ))
@@ -289,23 +289,24 @@ export const PersonalCooking = (props, context) => {
 };
 
 const TypeContent = (props) => {
+  const { type, diet, craftableCount } = props;
   return (
     <Stack>
       <Stack.Item width="14px" textAlign="center">
-        <Icon name={TYPE_ICONS[props.type]} />
+        <Icon name={TYPE_ICONS[type]} />
       </Stack.Item>
       <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
-        {props.type.toLowerCase()}
+        {type.toLowerCase()}
       </Stack.Item>
       <Stack.Item>
-        {props.type === 'Can Make' ? (
-          props.craftable
-        ) : props.diet.liked_food.includes(props.type) ? (
+        {type === 'Can Make' ? (
+          craftableCount
+        ) : diet.liked_food.includes(type) ? (
           <Icon name="face-laugh-beam" color={'good'} />
-        ) : props.diet.disliked_food.includes(props.type) ? (
+        ) : diet.disliked_food.includes(type) ? (
           <Icon name="face-tired" color={'average'} />
         ) : (
-          props.diet.toxic_food.includes(props.type) && (
+          diet.toxic_food.includes(type) && (
             <Icon name="skull-crossbones" color={'bad'} />
           )
         )}
@@ -314,9 +315,8 @@ const TypeContent = (props) => {
   );
 };
 
-const RecipeContentCompact = (props, context) => {
+const RecipeContentCompact = ({ item, craftable, busy }, context) => {
   const { act } = useBackend<Data>(context);
-  const item = props.item;
   return (
     <Section my={0.5}>
       <Stack my={-0.75}>
@@ -340,12 +340,12 @@ const RecipeContentCompact = (props, context) => {
               </Box>
               <Box style={{ 'text-transform': 'capitalize' }} color={'gray'}>
                 {Array.from(
-                  item.reqs.map((i) =>
-                    i.is_reagent
-                      ? i.name + '\xa0' + i.amount + 'u'
-                      : i.amount > 1
-                        ? i.name + '\xa0' + i.amount + 'x'
-                        : i.name
+                  item.reqs.map((ingredient) =>
+                    ingredient.is_reagent
+                      ? ingredient.name + '\xa0' + ingredient.amount + 'u'
+                      : ingredient.amount > 1
+                        ? ingredient.name + '\xa0' + ingredient.amount + 'x'
+                        : ingredient.name
                   )
                 ).join(', ')}
               </Box>
@@ -357,9 +357,9 @@ const RecipeContentCompact = (props, context) => {
                   lineHeight={2.5}
                   align="center"
                   content="Make"
-                  disabled={!props.craftable || props.busy}
-                  icon={props.busy ? 'circle-notch' : 'utensils'}
-                  iconSpin={props.busy ? 1 : 0}
+                  disabled={!craftable || busy}
+                  icon={busy ? 'circle-notch' : 'utensils'}
+                  iconSpin={busy ? 1 : 0}
                   onClick={() =>
                     act('make', {
                       recipe: item.ref,
@@ -375,9 +375,8 @@ const RecipeContentCompact = (props, context) => {
   );
 };
 
-const RecipeContent = (props, context) => {
+const RecipeContent = ({ item, diet, craftable, busy }, context) => {
   const { act } = useBackend<Data>(context);
-  const item: Recipe = props.item;
   return (
     <Section>
       <Stack>
@@ -506,9 +505,9 @@ const RecipeContent = (props, context) => {
                   lineHeight={2.5}
                   align="center"
                   content="Make"
-                  disabled={!props.craftable || props.busy}
-                  icon={props.busy ? 'circle-notch' : 'utensils'}
-                  iconSpin={props.busy ? 1 : 0}
+                  disabled={!craftable || busy}
+                  icon={busy ? 'circle-notch' : 'utensils'}
+                  iconSpin={busy ? 1 : 0}
                   onClick={() =>
                     act('make', {
                       recipe: item.ref,
@@ -519,11 +518,7 @@ const RecipeContent = (props, context) => {
               {item.foodtypes?.length > 0 && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
                   {item.foodtypes.map((foodtype) => (
-                    <TypeContent
-                      key={item.ref}
-                      type={foodtype}
-                      diet={props.diet}
-                    />
+                    <TypeContent key={item.ref} type={foodtype} diet={diet} />
                   ))}
                 </Box>
               )}
@@ -535,23 +530,22 @@ const RecipeContent = (props, context) => {
   );
 };
 
-const IngredientContent = (props) => {
-  const i = props.item;
+const IngredientContent = ({ item: { name, amount, path, is_reagent } }) => {
   return (
-    i.path.includes('/obj/item/food/') ? (
+    path.includes('/obj/item/food/') ? (
       <Box my={1}>
         <Box
           verticalAlign="middle"
           inline
           my={-1}
-          className={classes(['food32x32', i.path.replace(/[/_]/gi, '')])}
+          className={classes(['food32x32', path.replace(/[/_]/gi, '')])}
         />
         <Box inline verticalAlign="middle">
-          {i.name}
-          {i.amount > 1 && '\xa0' + i.amount + 'x'}
+          {name}
+          {amount > 1 && '\xa0' + amount + 'x'}
         </Box>
       </Box>
-    ) : i.is_reagent ? (
+    ) : is_reagent ? (
       <Box my={1}>
         <Box
           verticalAlign="middle"
@@ -559,27 +553,25 @@ const IngredientContent = (props) => {
           my={-1}
           className={classes([
             'default_containers32x32',
-            i.path.replace(/[/_]/gi, ''),
+            path.replace(/[/_]/gi, ''),
           ])}
         />
         <Box inline verticalAlign="middle">
-          {i.name + '\xa0' + i.amount + 'u'}
+          {name + '\xa0' + amount + 'u'}
         </Box>
       </Box>
     ) : (
       <Box my={1} verticalAlign="middle">
         <Icon
           name={
-            i.path.includes('/obj/item/reagent_containers/')
+            path.includes('/obj/item/reagent_containers/')
               ? 'whiskey-glass'
               : 'box'
           }
           width={'32px'}
           textAlign="center"
         />
-        <Box inline>
-          {i.amount > 1 ? i.name + '\xa0' + i.amount + 'x' : i.name}
-        </Box>
+        <Box inline>{amount > 1 ? name + '\xa0' + amount + 'x' : name}</Box>
       </Box>
     )
   ) as any;
