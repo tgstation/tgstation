@@ -87,9 +87,9 @@
 	name = "lavaland baseturf editor"
 	baseturf = /turf/open/lava/smooth/lava_land_surface
 
-/obj/effect/baseturf_helper/r_plate
+/obj/effect/baseturf_helper/reinforced_plating
 	name = "reinforced plating baseturf editor"
-	baseturf = /turf/open/floor/plating/r_plate
+	baseturf = /turf/open/floor/plating/reinforced
 	baseturf_to_replace = list(/turf/open/floor/plating,/turf/open/space,/turf/baseturf_bottom)
 
 

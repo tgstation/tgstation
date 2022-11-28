@@ -30,7 +30,7 @@
 	var/list/broken_states
 	var/list/burnt_states
 	/// Determines if you can deconstruct this with a RCD
-	var/RCD_proof = FALSE
+	var/rcd_proof = FALSE
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
@@ -333,8 +333,8 @@
 			new_airlock.update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			if(RCD_proof)
-				to_chat(user, span_warning("The flooring is too thick to be regularly deconstructed!"))
+			if(rcd_proof)
+				balloon_alert(user, "it's too thick!")
 				return FALSE
 			else
 				var/old_turf_name = name
