@@ -56,7 +56,7 @@
 
 	var/spellnum = 1
 	for(var/datum/action/spell as anything in actions)
-		if(!(type in construct_spells))
+		if(!(spell.type in construct_spells))
 			continue
 
 		var/pos = 2 + spellnum * 31

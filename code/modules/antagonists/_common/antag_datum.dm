@@ -482,6 +482,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/action/antag_info
 	name = "Open Antag Information:"
 	button_icon_state = "round_end"
+	show_to_observers = FALSE
 
 /datum/action/antag_info/New(Target)
 	. = ..()
