@@ -322,7 +322,7 @@
 	var/atom/target = original_target
 	if(isturf(target) || (isobj(target) && !target.density)) //if weird target, we try to compensate in our homing
 		for(var/mob/living/shooting_target in range(1, get_turf(target)))
-			if(shooting_target = firer)
+			if(shooting_target == firer)
 				continue
 			target = shooting_target
 			break
