@@ -436,7 +436,7 @@
 /datum/component/cooking/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/food),
-		get_asset_datum(/datum/asset/spritesheet/default_containers),
+		get_asset_datum(/datum/asset/spritesheet/reagents),
 	)
 
 /datum/component/cooking/proc/build_crafting_data(datum/crafting_recipe/R)
@@ -507,6 +507,16 @@
 				data["foodtypes"] += type
 		data["foodtypes"] = foodtypes
 
+	// Ingredients
+	data["reqs"] = list()
+	for(var/atom/req_atom as anything in recipe.reqs)
+		data["reqs"] += list(list(
+			"path" = req_atom,
+			"name" = initial(req_atom.name),
+			"amount" = recipe.reqs[req_atom],
+			"is_reagent" = ispath(req_atom, /datum/reagent/)
+		))
+
 	// Reaction data
 	if(recipe.reaction)
 		data["is_reaction"] = TRUE
@@ -514,7 +524,7 @@
 		recipe.reqs = reaction.required_reagents
 		if(!data["steps"])
 			data["steps"] = list()
-		if(recipe.reqs.len > 1 || reaction.required_catalysts)
+		if(!reaction.required_container && (recipe.reqs.len > 1 || reaction.required_catalysts))
 			data["steps"] += "Mix all ingredients together"
 		if(reaction.required_temp > T20C)
 			data["steps"] += "Heat up to [reaction.required_temp]K"
@@ -535,14 +545,5 @@
 					"amount" = reaction.required_catalysts[req_atom],
 					"is_reagent" = ispath(req_atom, /datum/reagent/)
 				))
-	else
-		// Ingredients for non-reactions
-		for(var/atom/req_atom as anything in recipe.reqs)
-			data["reqs"] += list(list(
-				"path" = req_atom,
-				"name" = initial(req_atom.name),
-				"amount" = recipe.reqs[req_atom],
-				"is_reagent" = ispath(req_atom, /datum/reagent/)
-			))
 
 	return data

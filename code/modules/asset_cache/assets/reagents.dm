@@ -1,8 +1,9 @@
-// Representative icons for each creafting recipe
-/datum/asset/spritesheet/default_containers
-	name = "default_containers"
+// Default container icon lookup by reagent type path
 
-/datum/asset/spritesheet/default_containers/create_spritesheets()
+/datum/asset/spritesheet/reagents
+	name = "reagents"
+
+/datum/asset/spritesheet/reagents/create_spritesheets()
 	var/list/id_list = list()
 	for (var/path in subtypesof(/datum/reagent/))
 		var/datum/reagent/reagent = initial(path)

@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
-import { map, filter, sortBy, sort } from 'common/collections';
+import { map, filter, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon } from '../components';
 import { Window } from '../layouts';
@@ -139,8 +139,8 @@ export const PersonalCooking = (props, context) => {
     recipes = recipes.filter(searchName);
   }
   const canMake = ['Can Make'];
-  const categories = canMake.concat(sort(data.categories) as string[]);
-  const foodtypes = canMake.concat(sort(data.foodtypes) as string[]);
+  const categories = canMake.concat(data.categories.sort());
+  const foodtypes = canMake.concat(data.foodtypes.sort());
   const displayLimit = searchText.length > 0 ? 30 : 299;
   return (
     <Window width={700} height={700}>
@@ -324,10 +324,7 @@ const RecipeContentCompact = ({ item, craftable, busy }, context) => {
           <Box
             className={
               item.result?.includes('/datum/reagent/')
-                ? classes([
-                  'default_containers32x32',
-                  item.result?.replace(/[/_]/gi, ''),
-                ])
+                ? classes(['reagents32x32', item.result?.replace(/[/_]/gi, '')])
                 : classes(['food32x32', item.result?.replace(/[/_]/gi, '')])
             }
           />
@@ -392,7 +389,7 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
               className={
                 item.result?.includes('/datum/reagent/')
                   ? classes([
-                    'default_containers32x32',
+                    'reagents32x32',
                     item.result?.replace(/[/_]/gi, ''),
                   ])
                   : classes(['food32x32', item.result?.replace(/[/_]/gi, '')])
@@ -551,10 +548,7 @@ const IngredientContent = ({ item: { name, amount, path, is_reagent } }) => {
           verticalAlign="middle"
           inline
           my={-1}
-          className={classes([
-            'default_containers32x32',
-            path.replace(/[/_]/gi, ''),
-          ])}
+          className={classes(['reagents32x32', path.replace(/[/_]/gi, '')])}
         />
         <Box inline verticalAlign="middle">
           {name + '\xa0' + amount + 'u'}
