@@ -355,6 +355,9 @@
 		if (!ispath(R.type, /datum/crafting_recipe/food/) || R.type == /datum/crafting_recipe/food)
 			continue
 
+		if(!R.result)
+			continue
+
 		if(check_contents(user, R, surroundings) && check_tools(user, R, surroundings))
 			craftability["[REF(R)]"] = TRUE
 
@@ -382,6 +385,9 @@
 			continue
 
 		if (!ispath(R.type, /datum/crafting_recipe/food/))
+			continue
+
+		if(!R.result)
 			continue
 
 		if(!(R.subcategory in data["categories"]))
@@ -465,18 +471,43 @@
 
 /datum/component/cooking/proc/build_cooking_data(datum/crafting_recipe/food/recipe)
 	var/list/data = list()
-	data["name"] = recipe.name
 	data["ref"] = "[REF(recipe)]"
+	var/atom/atom = recipe.result
+	data["result"] = atom
+	data["category"] = recipe.subcategory
+	data["name"] = initial(atom.name)
+	if(recipe.name) // Override if recipe has a name
+		data["name"] = recipe.name
 
+	// Description
+	if(ispath(recipe.result, /datum/reagent))
+		var/datum/reagent/reagent = recipe.result
+		data["desc"] = initial(reagent.description)
+	else
+		data["desc"] = initial(atom.desc)
+
+	// Machinery, tools, craftability
 	if(recipe.machinery)
 		data["machinery"] = recipe.machinery
-	if(recipe.is_guide)
-		data["is_guide"] = recipe.is_guide
+	if(recipe.non_craftable)
+		data["non_craftable"] = recipe.non_craftable
 	if(recipe.steps)
 		data["steps"] = recipe.steps
 	if(recipe.tool_paths)
 		data["tool_paths"] = recipe.tool_paths
 
+
+
+	// Foodtypes
+	if(ispath(recipe.result, /obj/item/food))
+		var/obj/item/food/item = recipe.result
+		var/list/foodtypes = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
+		for(var/type in foodtypes)
+			if(!(type in data["foodtypes"]))
+				data["foodtypes"] += type
+		data["foodtypes"] = foodtypes
+
+	// Reaction data
 	if(recipe.reaction)
 		data["is_reaction"] = TRUE
 		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[recipe.reaction]
@@ -504,28 +535,14 @@
 					"amount" = reaction.required_catalysts[req_atom],
 					"is_reagent" = ispath(req_atom, /datum/reagent/)
 				))
-
-	for(var/atom/req_atom as anything in recipe.reqs)
-		data["reqs"] += list(list(
-			"path" = req_atom,
-			"name" = initial(req_atom.name),
-			"amount" = recipe.reqs[req_atom],
-			"is_reagent" = ispath(req_atom, /datum/reagent/)
-		))
-
-	data["category"] = recipe.subcategory
-	data["result"] = recipe.result
-
-	if(ispath(recipe.result, /obj/item/food))
-		var/obj/item/food/item = recipe.result
-		data["desc"] = initial(item.desc)
-		var/list/foodtypes = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
-		for(var/type in foodtypes)
-			if(!(type in data["foodtypes"]))
-				data["foodtypes"] += type
-		data["foodtypes"] = foodtypes
-	else if(ispath(recipe.result, /datum/reagent))
-		var/datum/reagent/item = recipe.result
-		data["desc"] = initial(item.description)
+	else
+		// Ingredients for non-reactions
+		for(var/atom/req_atom as anything in recipe.reqs)
+			data["reqs"] += list(list(
+				"path" = req_atom,
+				"name" = initial(req_atom.name),
+				"amount" = recipe.reqs[req_atom],
+				"is_reagent" = ispath(req_atom, /datum/reagent/)
+			))
 
 	return data

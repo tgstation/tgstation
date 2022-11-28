@@ -68,7 +68,7 @@ type Recipe = {
   reqs: Ingredient[];
   category: string;
   foodtypes: string[];
-  is_guide: BooleanLike;
+  non_craftable: BooleanLike;
   is_reaction: BooleanLike;
   steps: string[];
   tool_paths: string[];
@@ -351,7 +351,7 @@ const RecipeContentCompact = (props, context) => {
               </Box>
             </Stack.Item>
             <Stack.Item>
-              {!item.is_guide && (
+              {!item.non_craftable && (
                 <Button
                   my={0.3}
                   lineHeight={2.5}
@@ -480,7 +480,7 @@ const RecipeContent = (props, context) => {
                   </Box>
                 )}
               </Box>
-              {item.is_guide && !!item.steps?.length && (
+              {!!item.steps?.length && (
                 <Box>
                   <Stack my={1}>
                     <Stack.Item grow>
@@ -500,7 +500,7 @@ const RecipeContent = (props, context) => {
               )}
             </Stack.Item>
             <Stack.Item>
-              {!item.is_guide && (
+              {!item.non_craftable && (
                 <Button
                   width="104px"
                   lineHeight={2.5}

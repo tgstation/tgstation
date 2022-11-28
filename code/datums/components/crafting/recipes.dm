@@ -5,7 +5,7 @@
 
 /datum/crafting_recipe
 	///in-game display name
-	var/name = ""
+	var/name
 	///type paths of items consumed associated with how many are needed
 	var/list/reqs = list()
 	///type paths of items explicitly not allowed as an ingredient
@@ -35,8 +35,8 @@
 	var/one_per_turf = FALSE
 	/// Steps needed to achieve the result
 	var/list/steps
-	/// Is this recipe a guide that doesn't need crafting
-	var/is_guide
+	/// Whether the result can be crafted with a crafting menu button
+	var/non_craftable
 
 /datum/crafting_recipe/New()
 	if(!(result in reqs))
