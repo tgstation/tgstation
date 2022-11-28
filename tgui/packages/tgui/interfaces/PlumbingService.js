@@ -74,7 +74,7 @@ const IconSection = (props, context) => {
         height: '50px',
       }}>
       <Box
-        className={classes(['pservice32x32', icon])}
+        className={classes(['plumbing-tgui32x32', icon])}
         style={{
           transform: 'scale(1.5) translate(9%, 9.5%)',
         }}

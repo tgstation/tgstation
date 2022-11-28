@@ -1,5 +1,5 @@
 /datum/asset/spritesheet/plumbing
-	name = "pservice"
+	name = "plumbing-tgui"
 
 /datum/asset/spritesheet/plumbing/create_spritesheets()
 	InsertAll("", 'icons/obj/medical/iv_drip.dmi')
