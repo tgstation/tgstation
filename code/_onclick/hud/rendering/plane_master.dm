@@ -1,5 +1,6 @@
 // I hate this place
 INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
+
 /atom/movable/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
@@ -50,6 +51,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// If this plane should be scaled by multiz
 	/// Planes with this set should NEVER be relay'd into each other, as that will cause visual fuck
 	var/multiz_scaled = TRUE
+
+	/// Bitfield that describes how this plane master will render if its z layer is being "optimized"
+	/// If a plane master is NOT critical, it will be completely dropped if we start to render outside a client's multiz boundary prefs
+	/// Of note: most of the time we will relay renders to non critical planes in this stage. so the plane master will end up drawing roughly "in order" with its friends
+	/// This is NOT done for parallax and other problem children, because the rules of BLEND_MULTIPLY appear to not behave as expected :(
+	/// This will also just make debugging harder, because we do fragile things in order to ensure things operate as epected. I'm sorry
+	/// Compile time
+	/// See [code\__DEFINES\layers.dm] for our bitflags
+	var/critical = NONE
+
+	/// If this plane master is outside of our visual bounds right now
+	var/is_outside_bounds = FALSE
 
 /atom/movable/screen/plane_master/Initialize(mapload, datum/plane_master_group/home, offset = 0)
 	. = ..()
@@ -116,7 +129,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /// Returns TRUE if the call is allowed, FALSE otherwise
 /atom/movable/screen/plane_master/proc/show_to(mob/mymob)
 	SHOULD_CALL_PARENT(TRUE)
-	if(force_hidden)
+	if(force_hidden || is_outside_bounds)
 		return FALSE
 
 	var/client/our_client = mymob?.client
@@ -166,6 +179,45 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	else
 		unhide_plane(our_mob)
 
+/atom/movable/screen/plane_master/proc/outside_bounds(mob/relevant)
+	if(force_hidden || is_outside_bounds)
+		return
+	is_outside_bounds = TRUE
+	// If we're of critical importance, AND we're below the rendering layer
+	if(critical & PLANE_CRITICAL_DISPLAY)
+		if(!(critical & PLANE_CRITICAL_NO_EMPTY_RELAY))
+			return
+		var/client/our_client = relevant.client
+		if(!our_client)
+			return
+		for(var/atom/movable/render_plane_relay/relay as anything in relays)
+			if(!relay.critical_target)
+				our_client.screen -= relay
+
+		// We here assume that your render target starts with *
+		if(render_target)
+			render_target = copytext_char(render_target, 2)
+		return
+	hide_from(relevant)
+
+/atom/movable/screen/plane_master/proc/inside_bounds(mob/relevant)
+	is_outside_bounds = FALSE
+	if(critical & PLANE_CRITICAL_DISPLAY)
+		if(!(critical & PLANE_CRITICAL_NO_EMPTY_RELAY))
+			return
+		var/client/our_client = relevant.client
+		if(!our_client)
+			return
+		for(var/atom/movable/render_plane_relay/relay as anything in relays)
+			if(!relay.critical_target)
+				our_client.screen += relay
+
+		// We here assume that your render target starts with *
+		if(render_target)
+			render_target = "*[render_target]"
+		return
+	show_to(relevant)
+
 /atom/movable/screen/plane_master/clickcatcher
 	name = "Click Catcher"
 	documentation = "Contains the screen object we use as a backdrop to catch clicks on portions of the screen that would otherwise contain nothing else. \
@@ -173,6 +225,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	plane = CLICKCATCHER_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	multiz_scaled = FALSE
+	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/clickcatcher/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -192,6 +245,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>If you want something to look as if it has parallax on it, draw it to this plane."
 	plane = PLANE_SPACE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	critical = PLANE_CRITICAL_FUCKO_PARALLAX // goes funny when touched. no idea why I don't trust byond
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
@@ -205,6 +259,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	multiz_scaled = FALSE
+	critical = PLANE_CRITICAL_FUCKO_PARALLAX
 
 /atom/movable/screen/plane_master/parallax/Initialize(mapload, datum/plane_master_group/home, offset)
 	. = ..()
@@ -224,6 +279,21 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		if(offset != 0)
 			// Overlay so we don't multiply twice, and thus fuck up our rendering
 			add_relay_to(GET_NEW_PLANE(plane, offset), BLEND_OVERLAY)
+
+// Hacky shit to ensure parallax works in perf mode
+/atom/movable/screen/plane_master/parallax/outside_bounds(mob/relevant)
+	if(offset == 0)
+		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
+		is_outside_bounds = TRUE // I'm sorry :(
+		return
+	return ..()
+
+/atom/movable/screen/plane_master/parallax/inside_bounds(mob/relevant)
+	if(offset == 0)
+		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, 0))
+		is_outside_bounds = FALSE
+		return
+	return ..()
 
 /atom/movable/screen/plane_master/gravpulse
 	name = "Gravpulse"
@@ -407,6 +477,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_relay_planes = list(RENDER_PLANE_LIGHTING)
 	blend_mode_override = BLEND_ADD
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	critical = PLANE_CRITICAL_DISPLAY
 
 /// This will not work through multiz, because of a byond bug with BLEND_MULTIPLY
 /// Bug report is up, waiting on a fix
@@ -420,6 +491,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
+	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"
@@ -444,6 +516,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_target = EMISSIVE_RENDER_TARGET
 	render_relay_planes = list()
+	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/emissive/Initialize(mapload)
 	. = ..()

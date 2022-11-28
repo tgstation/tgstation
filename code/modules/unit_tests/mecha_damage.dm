@@ -15,7 +15,7 @@
 	var/expected_laser_armor = demo_mech.armor.getRating(LASER)
 	var/expected_bullet_armor = demo_mech.armor.getRating(BULLET)
 
-	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	dummy.forceMove(locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y, run_loc_floor_bottom_left.z))
 	// The dummy needs to be targeting an arm. Left is chosen here arbitrarily.
 	dummy.zone_selected = BODY_ZONE_L_ARM

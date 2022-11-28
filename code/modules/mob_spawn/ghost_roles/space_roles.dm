@@ -120,7 +120,8 @@
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/allow_spawn(mob/user, silent = FALSE)
 	if(!(user.ckey in antag_team.players_spawned))
 		return TRUE
-	to_chat(user, span_boldwarning("You have already used up your chance to roll as Battlecruiser."))
+	if(!silent)
+		to_chat(user, span_boldwarning("You have already used up your chance to roll as Battlecruiser."))
 	return FALSE
 
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/special(mob/living/spawned_mob, mob/possesser)

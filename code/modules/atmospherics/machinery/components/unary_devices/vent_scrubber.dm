@@ -256,7 +256,7 @@
 	return TRUE
 
 ///filtered gases at or below this amount automatically get removed from the mix
-#define MINIMUM_MOLES_TO_SCRUB MOLAR_ACCURACY*100
+#define MINIMUM_MOLES_TO_SCRUB (MOLAR_ACCURACY*100)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile)
 	if(!istype(tile))
