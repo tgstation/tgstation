@@ -43,7 +43,7 @@
 /obj/structure/fermenting_barrel/attackby(obj/item/object, mob/user, params)
 	if(open)
 		if(istype(object, /obj/item/food/grown) && insert_fruit(user, object))
-			balloon_alert(user, "Added fruit")
+			balloon_alert(user, "added fruit")
 			return
 		if(istype(object, /obj/item/storage/bag/plants))
 			var/obj/item/storage/bag/plants/bag = object
@@ -53,7 +53,7 @@
 					break
 				inserted_fruits++
 			if(inserted_fruits)
-				balloon_alert(user, "Added [inserted_fruits] fruit\s")
+				balloon_alert(user, "added [inserted_fruits] fruit\s")
 	else if(object.is_refillable())
 		return //so we can refill them via their afterattack.
 	return ..()
@@ -65,14 +65,12 @@
 		open = FALSE
 		reagents.flags |= DRAINABLE
 		reagents.flags &= ~(REFILLABLE | TRANSPARENT)
-		balloon_alert(user, "Closed the lid")
 		playsound(src, lid_close_sound, sound_volume)
 		start_fermentation()
 	else
 		open = TRUE
 		reagents.flags &= ~(DRAINABLE)
 		reagents.flags |= REFILLABLE | TRANSPARENT
-		balloon_alert(user, "Opened the lid")
 		playsound(src, lid_open_sound, sound_volume)
 		stop_fermentation()
 	update_appearance(UPDATE_ICON)
@@ -84,16 +82,16 @@
 /// Adds the fruit to the barrel to queue the fermentation
 /obj/structure/fermenting_barrel/proc/insert_fruit(mob/user, obj/item/food/grown/fruit, obj/item/storage/bag/plants/bag = null)
 	if(reagents.total_volume + potential_volume > reagents.maximum_volume)
-		balloon_alert(user, "The barrel is full!")
+		balloon_alert(user, "it's full!")
 		return FALSE
 	if(!fruit.can_distill)
-		balloon_alert(user, "Can't ferment this!")
+		balloon_alert(user, "can't ferment this!")
 		return FALSE
 	if(bag && !bag.atom_storage.attempt_remove(fruit, src))
-		balloon_alert(user, "Can't take from the bag!")
+		balloon_alert(user, "can't take from bag!")
 		return FALSE
 	else if (!user.transferItemToLoc(fruit, src))
-		balloon_alert(user, "Can't take the fruit!")
+		balloon_alert(user, "can't take fruit!")
 		return FALSE
 	potential_volume += fruit.reagents.total_volume
 	return TRUE
@@ -106,7 +104,7 @@
 		return
 	if(reagents.total_volume >= reagents.maximum_volume)
 		return
-	if(!locate(/obj/item/food) in contents)
+	if(!(locate(/obj/item/food) in contents))
 		return
 	fermenting = TRUE
 	soundloop.start()
