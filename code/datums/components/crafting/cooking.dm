@@ -483,7 +483,7 @@
 		recipe.reqs = reaction.required_reagents
 		if(!data["steps"])
 			data["steps"] = list()
-		if(recipe.reqs.len > 1)
+		if(recipe.reqs.len > 1 || reaction.required_catalysts)
 			data["steps"] += "Mix all ingredients together"
 		if(reaction.required_temp > T20C)
 			data["steps"] += "Heat up to [reaction.required_temp]K"
