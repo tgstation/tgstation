@@ -209,12 +209,13 @@ multiple modular subtrees with behaviors
 				break
 
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
-		if(!LAZYACCESS(planned_behaviors, current_behavior))
-			var/list/arguments = list(src, FALSE)
-			var/list/stored_arguments = behavior_args[type]
-			if(stored_arguments)
-				arguments += stored_arguments
-			current_behavior.finish_action(arglist(arguments))
+		if(LAZYACCESS(planned_behaviors, current_behavior))
+			continue
+		var/list/arguments = list(src, FALSE)
+		var/list/stored_arguments = behavior_args[type]
+		if(stored_arguments)
+			arguments += stored_arguments
+		current_behavior.finish_action(arglist(arguments))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
