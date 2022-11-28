@@ -109,8 +109,6 @@
 		return
 	if(!attached)
 		return
-	if(!new_rate)
-		return
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
 
 /obj/machinery/iv_drip/update_icon_state()
@@ -196,9 +194,9 @@
 	if(!can_use_alt_click(user))
 		return ..()
 	if(transfer_rate > MIN_IV_TRANSFER_RATE)
-		transfer_rate = MIN_IV_TRANSFER_RATE
+		change_transfer_rate(MIN_IV_TRANSFER_RATE)
 	else
-		transfer_rate = MAX_IV_TRANSFER_RATE
+		change_transfer_rate(MAX_IV_TRANSFER_RATE)
 	investigate_log("was set to [transfer_rate] u/sec. by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "transfer rate set to [transfer_rate] u/sec.")
 	update_appearance(UPDATE_ICON)
