@@ -1,5 +1,5 @@
 /obj/machinery/plumbing/bottler
-	name = "Chemical Bottler"
+	name = "chemical bottler"
 	desc = "Puts reagents into containers, like bottles and beakers in the tile facing the green light spot, they will exit on the red light spot if successfully filled."
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER

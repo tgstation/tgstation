@@ -1,6 +1,6 @@
 ///chemical plumbing filter. If it's not filtered by left and right, it goes straight.
 /obj/machinery/plumbing/filter
-	name = "Chemical Filter"
+	name = "chemical filter"
 	desc = "A chemical filter for filtering chemicals. The left and right outputs appear to be from the perspective of the input port."
 	icon_state = "filter"
 	density = FALSE

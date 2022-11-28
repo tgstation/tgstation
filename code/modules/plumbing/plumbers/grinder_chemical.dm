@@ -1,5 +1,5 @@
 /obj/machinery/plumbing/grinder_chemical
-	name = "Chemical Grinder"
+	name = "chemical grinder"
 	desc = "chemical grinder."
 	icon_state = "grinder_chemical"
 	layer = ABOVE_ALL_MOB_LAYER

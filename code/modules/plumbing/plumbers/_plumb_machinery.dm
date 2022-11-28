@@ -56,7 +56,7 @@
 
 ///We can empty beakers in here and everything
 /obj/machinery/plumbing/input
-	name = "Input Gate"
+	name = "input gate"
 	desc = "Can be manually filled with reagents from containers."
 	icon_state = "pipe_input"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
@@ -70,7 +70,7 @@
 
 ///We can fill beakers in here and everything. we dont inheret from input because it has nothing that we need
 /obj/machinery/plumbing/output
-	name = "Output Gate"
+	name = "output gate"
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
 	icon_state = "pipe_output"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
@@ -90,7 +90,7 @@
 	category = "Distribution"
 
 /obj/machinery/plumbing/tank
-	name = "Chemical Tank"
+	name = "chemical tank"
 	desc = "A massive chemical holding tank."
 	icon_state = "tank"
 	buffer = 400
@@ -103,7 +103,7 @@
 
 ///Layer manifold machine that connects a bunch of layers
 /obj/machinery/plumbing/layer_manifold
-	name = "Layer Manifold"
+	name = "layer manifold"
 	desc = "A plumbing manifold for layers."
 	icon_state = "manifold"
 	density = FALSE

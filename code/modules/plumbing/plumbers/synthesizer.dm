@@ -1,12 +1,13 @@
 ///A single machine that produces a single chem. Can be placed in unison with others through plumbing to create chemical factories
 /obj/machinery/plumbing/synthesizer
-	name = "Chemical Synthesizer"
+	name = "chemical synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed. Most effective when working in unison with other chemical synthesizers, heaters and filters."
 
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
+	//category used by plumbing RCD
 	category="Synthesizers"
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
@@ -111,7 +112,7 @@
 	. += r_overlay
 
 /obj/machinery/plumbing/synthesizer/soda
-	name = "Soda Synthesizer"
+	name = "soda synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed."
 	icon_state = "synthesizer_soda"
 
@@ -143,7 +144,7 @@
 	)
 
 /obj/machinery/plumbing/synthesizer/beer
-	name = "Beer Synthesizer"
+	name = "beer synthesizer"
 	desc = "Produces a single chemical at a given volume. Must be plumbed."
 
 	icon_state = "synthesizer_booze"

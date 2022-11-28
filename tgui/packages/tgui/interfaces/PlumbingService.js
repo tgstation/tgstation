@@ -3,6 +3,7 @@ import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Section, Tabs, Button, Stack, Box } from '../components';
 import { ColorItem, LayerSelect } from './RapidPipeDispenser';
+import { capitalizeAll } from 'common/string';
 
 const PlumbingTypeSection = (props, context) => {
   const { act, data } = useBackend(context);
@@ -33,8 +34,8 @@ const PlumbingTypeSection = (props, context) => {
           fluid
           ellipsis
           checked={recipe.selected}
-          content={recipe.name}
-          title={recipe.name}
+          content={capitalizeAll(recipe.name)}
+          title={capitalizeAll(recipe.name)}
           onClick={() =>
             act('recipe', {
               id: recipe.index,

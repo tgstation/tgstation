@@ -4,7 +4,7 @@ All the important duct code:
 /code/datums/ductnet.dm
 */
 /obj/machinery/duct
-	name = "Fluid Duct"
+	name = "fluid duct"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
 	layer = PLUMBING_PIPE_VISIBILE_LAYER

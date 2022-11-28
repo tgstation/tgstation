@@ -1,6 +1,6 @@
 ///We take a constant input of reagents, and produce a pill once a set volume is reached
 /obj/machinery/plumbing/pill_press
-	name = "Chemical Press"
+	name = "chemical press"
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
