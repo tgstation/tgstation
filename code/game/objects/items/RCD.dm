@@ -1106,7 +1106,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/current_layer = "Default Layer"
 	///Current selected color, for ducts
 	var/current_color = "omni"
-	///maps bit flag to layer number value. didnt make this global cause only this class needs it
+	///maps layer name to layer number value. didnt make this global cause only this class needs it
 	var/static/list/name_to_number = list(
 		"First Layer" = 1,
 		"Second Layer" = 2,
