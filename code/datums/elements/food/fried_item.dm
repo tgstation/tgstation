@@ -3,10 +3,10 @@
 	/// List of colors to apply the element target.
 	/// Each index corresponds to a different level.
 	var/static/list/fried_colors = list(
-		"#996666",
-		"#663300",
-		"#330000",
-		"#000000",
+		COLOR_LIGHT_BROWN,
+		COLOR_BROWNER_BROWN,
+		COLOR_DARKER_BROWN,
+		COLOR_BLACK,
 	)
 
 /datum/element/fried_item/Attach(datum/target, fry_time)
