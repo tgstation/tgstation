@@ -24,7 +24,8 @@
 	var/transparent_when_unavailable = TRUE
 	///List of all mobs that are viewing our action button -> A unique movable for them to view.
 	var/list/viewers = list()
-	/// If TRUE, this action button will be shown to observers who view from this action's owner's eyes.
+	/// If TRUE, this action button will be shown to observers / other mobs who view from this action's owner's eyes.
+	/// Used in [/mob/proc/show_other_mob_action_buttons]
 	var/show_to_observers = TRUE
 
 	/// The style the button's tooltips appear to be
