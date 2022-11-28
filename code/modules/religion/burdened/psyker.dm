@@ -22,13 +22,14 @@
 
 /obj/item/organ/internal/brain/psyker/on_life(delta_time, times_fired)
 	. = ..()
-	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(slot)
+	var/obj/item/bodypart/head/psyker/psyker_head = owner.get_bodypart(zone)
 	if(istype(psyker_head))
 		return
 	if(!DT_PROB(2, delta_time))
 		return
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
 	owner.adjust_disgust(33 * delta_time)
+	applyOrganDamage(5 * delta_time, 199)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * delta_time)
 
 /obj/item/bodypart/head/psyker
@@ -44,6 +45,7 @@
 	new_head_owner.dna.species.species_traits |= NOEYESPRITES //MAKE VISUALS TIED TO BODYPARTS ARGHH
 	new_head_owner.update_body()
 
+/// Makes us go through a transform sequency, to turn into a psyker.
 /mob/living/carbon/human/proc/psykerize()
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD))
 		return
