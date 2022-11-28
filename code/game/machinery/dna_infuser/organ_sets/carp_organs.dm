@@ -1,3 +1,7 @@
+
+/// if you add eyes, switch to the way the rat organ defines work
+#define CARP_COLORS "#4caee7"
+
 ///bonus of the carp: you can swim through space!
 /datum/status_effect/organ_set_bonus/carp
 	organs_needed = 4
@@ -19,6 +23,11 @@
 	safe_oxygen_max = 16
 	safe_oxygen_min = 0
 
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "lungs"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = CARP_COLORS
+
 /obj/item/organ/internal/lungs/carp/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "has odd neck gills.", BODY_ZONE_HEAD)
@@ -28,6 +37,12 @@
 /obj/item/organ/internal/tongue/carp
 	name = "mutated carp-jaws"
 	desc = "Carp DNA infused into what was once some normal teeth."
+
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "tongue"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = CARP_COLORS
+
 	var/datum/martial_art/carp_jaws/jaws_datum
 
 /obj/item/organ/internal/tongue/carp/Initialize(mapload)
@@ -58,6 +73,12 @@
 /obj/item/organ/internal/brain/carp
 	name = "mutated carp-brain"
 	desc = "Carp DNA infused into what was once a normal brain."
+
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "brain"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = CARP_COLORS
+
 	///Timer counting down. When finished, the owner gets a bad moodlet.
 	var/cooldown_timer
 	///how much time the timer is given
@@ -91,6 +112,11 @@
 	name = "mutated carp-heart"
 	desc = "Carp DNA infused into what was once a normal heart."
 
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "heart"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = CARP_COLORS
+
 /obj/item/organ/internal/heart/carp/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing...")
@@ -113,3 +139,5 @@
 	var/mob/living/carbon/human/human_heartless = heartless
 	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
 	human_heartless.physiology.damage_resistance += 100
+
+#undef CARP_COLORS

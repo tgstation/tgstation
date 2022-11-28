@@ -102,10 +102,7 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 	desc = "EVERYONE CALM DOWN! I'm not implying anything with this entry. Are we really so surprised that felinids are humans with mixed feline DNA?"
 	threshold_desc = "nothing happens. I guess this is why it's a big genetic craze, feline DNA is notably stable."
 	qualities = list(
-		"big jaws, big teeth",
-		"swim through space, no problem",
-		"face every problem when you go back on station",
-		"always wants to travel",
+		"oh, let me guess, you're a big fan of those japanese tourist bots",
 	)
 	input_obj_or_mob = list(
 		/mob/living/simple_animal/pet/cat,

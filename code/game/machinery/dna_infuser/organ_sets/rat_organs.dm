@@ -1,3 +1,10 @@
+
+#define RAT_ORGAN_COLOR "#646464"
+#define RAT_SCLERA_COLOR "#f0e055"
+#define RAT_PUPIL_COLOR "#000000"
+
+#define RAT_COLORS RAT_ORGAN_COLOR + RAT_SCLERA_COLOR + RAT_PUPIL_COLOR
+
 ///bonus of the rat: you can ventcrawl!
 /datum/status_effect/organ_set_bonus/rat
 	organs_needed = 4
@@ -22,6 +29,11 @@
 	eye_color_left = "#000000"
 	eye_color_right = "#000000"
 
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "eyes"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = RAT_COLORS
+
 /obj/item/organ/internal/eyes/night_vision/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "has deep, shifty black pupils, surrounded by a sickening yellow sclera.", BODY_ZONE_PRECISE_EYES)
@@ -34,6 +46,11 @@
 	name = "mutated rat-stomach"
 	desc = "Rat DNA infused into what was once a normal stomach."
 	disgust_metabolism = 3
+
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "stomach"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = RAT_COLORS
 
 /obj/item/organ/internal/stomach/rat/Initialize(mapload)
 	. = ..()
@@ -81,6 +98,11 @@
 	name = "mutated rat-heart"
 	desc = "Rat DNA infused into what was once a normal heart."
 
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "heart"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = RAT_COLORS
+
 /obj/item/organ/internal/heart/rat/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "hunches over unnaturally!")
@@ -111,6 +133,11 @@
 	desc = "Rat DNA infused into what was once a normal tongue."
 	say_mod = "squeaks"
 	modifies_speech = TRUE
+
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "tongue"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = RAT_COLORS
 
 /obj/item/organ/internal/tongue/rat/Initialize(mapload)
 	. = ..()
@@ -148,3 +175,9 @@
 	if(prob(5))
 		owner.emote("squeaks")
 		playsound(owner, 'sound/effects/mousesqueek.ogg', 100)
+
+#undef RAT_ORGAN_COLOR
+#undef RAT_SCLERA_COLOR
+#undef RAT_PUPIL_COLOR
+
+#undef RAT_COLORS
