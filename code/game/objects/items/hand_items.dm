@@ -537,7 +537,7 @@
 	cheek_kiss = (offerer.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 	offerer.visible_message(span_notice("[offerer] leans in slightly, offering a kiss[cheek_kiss ? " on the cheek" : ""]!"),
 		span_notice("You lean in slightly, indicating you'd like to offer a kiss[cheek_kiss ? " on the cheek" : ""]!"), null, 2)
-	offerer.apply_status_effect(/datum/status_effect/offering, src)
+	offerer.apply_status_effect(/datum/status_effect/offering/no_item_received, src)
 	return TRUE
 
 /obj/item/hand_item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
