@@ -3,7 +3,7 @@ import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
 import { map, filter, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon, Tooltip } from '../components';
+import { Divider, Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
 
@@ -155,7 +155,7 @@ export const PersonalCooking = (props, context) => {
                 onInput={(e, value) => setSearchText(value)}
                 fluid
               />
-              <hr style={{ 'border-color': '#111' }} />
+              <Divider />
               <Tabs mt={1} fluid textAlign="center">
                 <Tabs.Tab
                   selected={!typeMode}
@@ -231,7 +231,7 @@ export const PersonalCooking = (props, context) => {
                     </Tabs.Tab>
                   ))}
               </Tabs>
-              <hr style={{ 'border-color': '#111' }} />
+              <Divider />
               <Button.Checkbox
                 fluid
                 content="Can make only"
@@ -430,11 +430,11 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                   <Box>
                     <Stack my={1}>
                       <Stack.Item grow>
-                        <hr style={{ 'border-color': '#111' }} />
+                        <Divider />
                       </Stack.Item>
                       <Stack.Item color={'gray'}>Ingredients</Stack.Item>
                       <Stack.Item grow>
-                        <hr style={{ 'border-color': '#111' }} />
+                        <Divider />
                       </Stack.Item>
                     </Stack>
                     {flow([
@@ -449,11 +449,11 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                   <Box>
                     <Stack my={1}>
                       <Stack.Item grow>
-                        <hr style={{ 'border-color': '#111' }} />
+                        <Divider />
                       </Stack.Item>
                       <Stack.Item color={'gray'}>Catalysts</Stack.Item>
                       <Stack.Item grow>
-                        <hr style={{ 'border-color': '#111' }} />
+                        <Divider />
                       </Stack.Item>
                     </Stack>
                     {flow([
@@ -468,11 +468,11 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                   <Box>
                     <Stack my={1}>
                       <Stack.Item grow>
-                        <hr style={{ 'border-color': '#111' }} />
+                        <Divider />
                       </Stack.Item>
                       <Stack.Item color={'gray'}>Tools</Stack.Item>
                       <Stack.Item grow>
-                        <hr style={{ 'border-color': '#111' }} />
+                        <Divider />
                       </Stack.Item>
                     </Stack>
                     {item.tool_paths.map((item) => (
@@ -484,11 +484,11 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                   <Box>
                     <Stack my={1}>
                       <Stack.Item grow>
-                        <hr style={{ 'border-color': '#111' }} />
+                        <Divider />
                       </Stack.Item>
                       <Stack.Item color={'gray'}>Machinery</Stack.Item>
                       <Stack.Item grow>
-                        <hr style={{ 'border-color': '#111' }} />
+                        <Divider />
                       </Stack.Item>
                     </Stack>
                     {item.machinery.map((item) => (
@@ -501,11 +501,11 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                 <Box>
                   <Stack my={1}>
                     <Stack.Item grow>
-                      <hr style={{ 'border-color': '#111' }} />
+                      <Divider />
                     </Stack.Item>
                     <Stack.Item color={'gray'}>Steps</Stack.Item>
                     <Stack.Item grow>
-                      <hr style={{ 'border-color': '#111' }} />
+                      <Divider />
                     </Stack.Item>
                   </Stack>
                   <ul style={{ 'padding-left': '20px' }}>
@@ -565,5 +565,5 @@ const AtomContent = ({ item: { name, amount, path, is_reagent } }) => {
           : amount > 1 && '\xa0' + amount + 'x'}
       </Box>
     </Box>
-  );
+  ) as any;
 };
