@@ -1,0 +1,6 @@
+author: "Common fucking sense"
+delete-after: True
+changes:
+  - bugfix: "The changes to Mafia and holopad say prefixes was reverted."
+  - spellcheck: "Mafia changeling say prefix has no longer been changed to .1, and has been returned to .j"
+  - spellcheck: "AI Holopad say has no longer been changed to .2, and has been returned to .h"

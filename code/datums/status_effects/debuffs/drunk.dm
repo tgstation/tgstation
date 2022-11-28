@@ -14,19 +14,13 @@
 	id = "drunk"
 	tick_interval = 2 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
+	remove_on_fullheal = TRUE
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
 
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
 	set_drunk_value(drunk_value)
-
-/datum/status_effect/inebriated/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/clear_drunkenness)
-	return TRUE
-
-/datum/status_effect/inebriated/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL)
 
 /datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk
@@ -57,12 +51,6 @@
 			return span_warning("[owner.p_they(TRUE)] [owner.p_are()] a shitfaced, slobbering wreck.")
 
 	return null
-
-/// Removes all of our drunkenness (self-deletes) on signal.
-/datum/status_effect/inebriated/proc/clear_drunkenness(mob/living/source)
-	SIGNAL_HANDLER
-
-	qdel(src)
 
 /// Sets the drunk value to set_to, deleting if the value drops to 0 or lower
 /datum/status_effect/inebriated/proc/set_drunk_value(set_to)

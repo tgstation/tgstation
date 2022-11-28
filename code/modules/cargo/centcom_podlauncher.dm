@@ -105,7 +105,7 @@
 	var/datum/plane_master_group/planes = cam_screen.display_to(holder.mob)
 
 	if(!renderLighting)
-		for(var/atom/movable/screen/plane_master/instance in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
+		for(var/atom/movable/screen/plane_master/instance as anything in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
 			instance.set_alpha(100)
 
 	cam_background = new
@@ -349,7 +349,7 @@
 			if (temp_pod.effectShrapnel == TRUE) //If already doing custom damage, set back to default (no shrapnel)
 				temp_pod.effectShrapnel = FALSE
 				return
-			var/shrapnelInput = input("Please enter the type of pellet cloud you'd like to create on landing (Can be any projectile!)", "Projectile Typepath",  0) in sort_list(subtypesof(/obj/projectile), /proc/cmp_typepaths_asc)
+			var/shrapnelInput = input("Please enter the type of pellet cloud you'd like to create on landing (Can be any projectile!)", "Projectile Typepath",  0) in sort_list(subtypesof(/obj/projectile), GLOBAL_PROC_REF(cmp_typepaths_asc))
 			if (isnull(shrapnelInput))
 				return
 			var/shrapnelMagnitude = input("Enter the magnitude of the pellet cloud. This is usually a value around 1-5. Please note that Ryll-Ryll has asked me to tell you that if you go too crazy with the projectiles you might crash the server. So uh, be gentle!", "Shrapnel Magnitude", 0) as null|num

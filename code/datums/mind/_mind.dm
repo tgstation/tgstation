@@ -73,7 +73,8 @@
 	var/has_ever_been_ai = FALSE
 	var/last_death = 0
 
-	/// Set by Into The Sunset command of the shuttle manipulator
+	/// Set by Into The Sunset command of the shuttle manipulator.
+	/// If TRUE, the mob will always be considered "escaped" if they are alive and not exiled.
 	var/force_escaped = FALSE
 
 	var/list/learned_recipes //List of learned recipe TYPES.
@@ -141,7 +142,7 @@
 		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(clear_current))
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
@@ -182,7 +183,7 @@
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
 	transfer_martial_arts(new_character)
-	RegisterSignal(new_character, COMSIG_LIVING_DEATH, .proc/set_death_time)
+	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
 		new_character.key = key //now transfer the key to link the client to our new body
 	if(new_character.client)

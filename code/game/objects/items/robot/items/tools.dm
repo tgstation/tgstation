@@ -1,4 +1,4 @@
-#define PKBORG_DAMPEN_CYCLE_DELAY 2 SECONDS
+#define PKBORG_DAMPEN_CYCLE_DELAY (2 SECONDS)
 
 /obj/item/cautery/prt //it's a subtype of cauteries so that it inherits the cautery sprites and behavior and stuff, because I'm too lazy to make sprites for this thing
 	name = "plating repair tool"
@@ -60,7 +60,7 @@
 	icon_state = "shield0"
 	START_PROCESSING(SSfastprocess, src)
 	host = loc
-	RegisterSignal(host, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(host, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	return ..()
 
 /obj/item/borg/projectile_dampen/proc/on_death(datum/source, gibbed)
@@ -96,8 +96,8 @@
 		QDEL_NULL(dampening_field)
 	var/mob/living/silicon/robot/owner = get_host()
 	dampening_field = new(owner, field_radius, TRUE, src)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, .proc/dampen_projectile)
-	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, .proc/restore_projectile)
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(restore_projectile))
 	owner?.model.allow_riding = FALSE
 	active = TRUE
 

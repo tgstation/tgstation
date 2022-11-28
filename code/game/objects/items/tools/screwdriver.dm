@@ -54,6 +54,7 @@
 		set_greyscale(colors=list(screwdriver_colors[our_color]))
 	. = ..()
 	AddElement(/datum/element/eyestab)
+	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"
@@ -105,7 +106,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].

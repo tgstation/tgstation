@@ -2,11 +2,12 @@
 	// Pause natural mob life so it can be handled entirely by the test
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
-
-	for (var/reagent_type in subtypesof(/datum/reagent))
-		if(reagent_type in GLOB.fake_reagent_blacklist)
-			continue
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
+	var/list/blacklisted_reagents = list(
+		/datum/reagent/eigenstate, //Creates clones after a delay which get into other tests
+	)
+	var/list/reagents_to_check = subtypesof(/datum/reagent) - blacklisted_reagents - GLOB.fake_reagent_blacklist
+	for (var/reagent_type in reagents_to_check)
 		test_reagent(human, reagent_type)
 
 /datum/unit_test/metabolization/proc/test_reagent(mob/living/carbon/C, reagent_type)
@@ -21,7 +22,7 @@
 /datum/unit_test/on_mob_end_metabolize/Run()
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/pill/pill = allocate(/obj/item/reagent_containers/pill)
 	var/datum/reagent/drug/methamphetamine/meth = /datum/reagent/drug/methamphetamine
 
@@ -46,9 +47,9 @@
 /datum/unit_test/addictions/Run()
 	SSmobs.pause()
 
-	var/mob/living/carbon/human/pill_user = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/syringe_user = allocate(/mob/living/carbon/human)
-	var/mob/living/carbon/human/pill_syringe_user = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/pill_user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/syringe_user = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/pill_syringe_user = allocate(/mob/living/carbon/human/consistent)
 
 	var/datum/mind/pill_mind = new /datum/mind("Mothcocks")
 	pill_mind.active = TRUE

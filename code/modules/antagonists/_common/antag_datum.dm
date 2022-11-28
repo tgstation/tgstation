@@ -156,8 +156,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 			info_button.Trigger()
 	apply_innate_effects()
 	give_antag_moodies()
-	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, .proc/pre_mindshield)
-	RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, .proc/on_mindshield)
+	RegisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT, PROC_REF(pre_mindshield))
+	RegisterSignal(owner, COMSIG_MINDSHIELD_IMPLANTED, PROC_REF(on_mindshield))
 	if(is_banned(owner.current) && replace_banned)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
@@ -416,7 +416,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	team_hud_ref = WEAKREF(target.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
 		"antag_team_hud_[REF(src)]",
-		image(hud_icon, target, antag_hud_name),
+		hud_image_on(target),
 		antag_to_check || type,
 	))
 
@@ -424,6 +424,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
 		if (antag_hud.mobShouldSee(owner.current))
 			antag_hud.show_to(owner.current)
+
+/// Takes a location, returns an image drawing "on" it that matches this antag datum's hud icon
+/datum/antagonist/proc/hud_image_on(mob/hud_loc)
+	var/image/hud = image(hud_icon, hud_loc, antag_hud_name)
+	SET_PLANE_EXPLICIT(hud, ABOVE_GAME_PLANE, hud_loc)
+	return hud
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom

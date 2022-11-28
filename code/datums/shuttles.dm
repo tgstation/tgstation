@@ -67,31 +67,33 @@
 		place.baseturfs = baseturfs_string_list(sanity, place)
 
 		for(var/obj/docking_port/mobile/port in place)
+			if(!isnull(port_x_offset))
+				switch(port.dir) // Yeah this looks a little ugly but mappers had to do this in their head before
+					if(NORTH)
+						port.width = width
+						port.height = height
+						port.dwidth = port_x_offset - 1
+						port.dheight = port_y_offset - 1
+					if(EAST)
+						port.width = height
+						port.height = width
+						port.dwidth = height - port_y_offset
+						port.dheight = port_x_offset - 1
+					if(SOUTH)
+						port.width = width
+						port.height = height
+						port.dwidth = width - port_x_offset
+						port.dheight = height - port_y_offset
+					if(WEST)
+						port.width = height
+						port.height = width
+						port.dwidth = port_y_offset - 1
+						port.dheight = width - port_x_offset
+			// initTemplateBounds explicitly ignores the shuttle's docking port, to ensure that it calculates the bounds of the shuttle correctly
+			// so we need to manually initialize it here
+			SSatoms.InitializeAtoms(list(port))
 			if(register)
 				port.register()
-			if(isnull(port_x_offset))
-				continue
-			switch(port.dir) // Yeah this looks a little ugly but mappers had to do this in their head before
-				if(NORTH)
-					port.width = width
-					port.height = height
-					port.dwidth = port_x_offset - 1
-					port.dheight = port_y_offset - 1
-				if(EAST)
-					port.width = height
-					port.height = width
-					port.dwidth = height - port_y_offset
-					port.dheight = port_x_offset - 1
-				if(SOUTH)
-					port.width = width
-					port.height = height
-					port.dwidth = width - port_x_offset
-					port.dheight = height - port_y_offset
-				if(WEST)
-					port.width = height
-					port.height = width
-					port.dwidth = port_y_offset - 1
-					port.dheight = width - port_x_offset
 
 //Whatever special stuff you want
 /datum/map_template/shuttle/post_load(obj/docking_port/mobile/M)
@@ -161,6 +163,10 @@
 
 /datum/map_template/shuttle/snowdin
 	port_id = "snowdin"
+	who_can_purchase = null
+
+/datum/map_template/shuttle/ert
+	port_id = "ert"
 	who_can_purchase = null
 
 // Shuttles start here:
@@ -459,7 +465,7 @@
 	description = "A luxurious casino packed to the brim with everything you need to start new gambling addicitions!"
 	admin_notes = "The ship is a bit chunky, so watch where you park it."
 	credit_cost = 7777
-	
+
 /datum/map_template/shuttle/emergency/shadow
 	suffix = "shadow"
 	name = "The NTSS Shadow"
@@ -508,7 +514,7 @@
 
 /datum/map_template/shuttle/whiteship/pubby
 	suffix = "pubby"
-	name = "NT White UFO"
+	name = "NT Science Vessel"
 
 /datum/map_template/shuttle/whiteship/cere
 	suffix = "cere"
@@ -533,6 +539,15 @@
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
+
+/datum/map_template/shuttle/whiteship/personalshuttle
+	suffix = "personalshuttle"
+	name = "Personal Travel Shuttle"
+
+/datum/map_template/shuttle/whiteship/obelisk
+	suffix = "obelisk"
+	name = "Obelisk"
+	admin_notes = "Not actually an obelisk, has nonsentient cult constructs."
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
@@ -744,5 +759,10 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+// Custom ERT shuttles
+/datum/map_template/shuttle/ert/bounty
+	suffix = "bounty"
+	name = "Bounty Hunter ERT Shuttle"
 
 #undef EMAG_LOCKED_SHUTTLE_COST

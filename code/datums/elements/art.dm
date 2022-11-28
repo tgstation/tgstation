@@ -1,6 +1,6 @@
 /datum/element/art
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/impressiveness = 0
 
 /datum/element/art/Attach(datum/target, impress)
@@ -8,7 +8,7 @@
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 	impressiveness = impress
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/element/art/Detach(datum/target)
 	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
@@ -40,7 +40,7 @@
 	if(!isliving(user))
 		return
 	if(!DOING_INTERACTION_WITH_TARGET(user, source))
-		INVOKE_ASYNC(src, .proc/appraise, source, user) //Do not sleep the proc.
+		INVOKE_ASYNC(src, PROC_REF(appraise), source, user) //Do not sleep the proc.
 
 /datum/element/art/proc/appraise(atom/source, mob/user)
 	to_chat(user, span_notice("You start appraising [source]..."))

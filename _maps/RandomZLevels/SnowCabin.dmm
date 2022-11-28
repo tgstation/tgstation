@@ -277,7 +277,7 @@
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "sink"
 	},
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/clothing/suit/caution,
@@ -431,6 +431,18 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bu" = (
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -450,8 +462,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "by" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/oven,
+/obj/item/plate/oven_tray,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bz" = (
@@ -618,19 +630,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cj" = (
-/obj/structure/table,
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
+/obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "ck" = (
@@ -743,7 +743,7 @@
 /area/awaymission/cabin)
 "cF" = (
 /obj/structure/table,
-/obj/structure/cable,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cG" = (
@@ -3689,7 +3689,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/displaycase{
 	start_showpiece_type = /obj/item/dice/d6/space;
-	trophy_message = "Stolen from dice collector before he could enjoy his day."
+	desc = "Contains an artifact stolen from dice collector before he could enjoy his day."
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -3852,8 +3852,8 @@
 "vD" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	inserted_disk = /obj/item/computer_disk/virus/clown;
 	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
+	inserted_disk = /obj/item/computer_disk/virus/clown;
 	name = "soviet tablet"
 	},
 /obj/effect/decal/remains/human{
@@ -3999,8 +3999,8 @@
 "yR" = (
 /obj/structure/table/reinforced,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	inserted_disk = /obj/item/computer_disk/virus/mime;
 	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
+	inserted_disk = /obj/item/computer_disk/virus/mime;
 	name = "soviet tablet"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
@@ -4031,7 +4031,7 @@
 	pixel_y = 8;
 	throwforce = 2
 	},
-/obj/item/shield/riot/roman/fake{
+/obj/item/shield/roman/fake{
 	layer = 3.01;
 	pixel_x = -7
 	},

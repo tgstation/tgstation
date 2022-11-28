@@ -53,28 +53,26 @@ const ExperimentStageRow = (props) => {
 
 export const TechwebServer = (props, context) => {
   const { act, data } = useBackend(context);
-  const { servers } = props;
+  const { techwebs } = props;
 
-  return (
-    <Box m={1} className="ExperimentTechwebServer__Web">
+  return techwebs.map((server, index) => (
+    <Box key={index} m={1} className="ExperimentTechwebServer__Web">
       <Flex
         align="center"
         justify="space-between"
         className="ExperimentTechwebServer__WebHeader">
         <Flex.Item className="ExperimentTechwebServer__WebName">
-          {servers[0].web_id} / {servers[0].web_org}
+          {server.web_id} / {server.web_org}
         </Flex.Item>
         <Flex.Item>
           <Button
             onClick={() =>
-              servers[0].selected
+              server.selected
                 ? act('clear_server')
-                : act('select_server', { 'ref': servers[0].ref })
+                : act('select_server', { 'ref': server.ref })
             }
-            content={servers[0].selected ? 'Disconnect' : 'Connect'}
-            backgroundColor={
-              servers[0].selected ? 'good' : 'rgba(0, 0, 0, 0.4)'
-            }
+            content={server.selected ? 'Disconnect' : 'Connect'}
+            backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
             className="ExperimentTechwebServer__ConnectButton"
           />
         </Flex.Item>
@@ -84,29 +82,25 @@ export const TechwebServer = (props, context) => {
           Connectivity to this web is maintained by the following servers...
         </span>
         <LabeledList>
-          {servers.map((server, index) => {
-            return (
-              <LabeledList.Item key={index} label={server.name}>
-                <i>Located in {server.location}</i>
-              </LabeledList.Item>
-            );
-          })}
+          {server.all_servers.map((individual_servers, new_index) => (
+            <Box key={new_index}>{individual_servers}</Box>
+          ))}
         </LabeledList>
       </Box>
     </Box>
-  );
+  ));
 };
 
 export const ExperimentConfigure = (props, context) => {
   const { act, data } = useBackend(context);
   const { always_active, has_start_callback } = data;
-  let servers = data.servers ?? [];
+  let techwebs = data.techwebs ?? [];
 
   const experiments = sortBy((exp) => exp.name)(data.experiments ?? []);
 
   // Group servers together by web
   let webs = new Map();
-  servers.forEach((x) => {
+  techwebs.forEach((x) => {
     if (x.web_id !== null) {
       if (!webs.has(x.web_id)) {
         webs.set(x.web_id, []);
@@ -127,13 +121,13 @@ export const ExperimentConfigure = (props, context) => {
                   : 'Found no available techwebs!'}
               </Box>
               {webs.size > 0 &&
-                Array.from(webs, ([techweb, servers]) => (
-                  <TechwebServer key={techweb} servers={servers} />
+                Array.from(webs, ([techweb, techwebs]) => (
+                  <TechwebServer key={techweb} techwebs={techwebs} />
                 ))}
             </Section>
           </Flex.Item>
           <Flex.Item mb={has_start_callback ? 1 : 0} grow={1}>
-            {servers.some((e) => e.selected) && (
+            {techwebs.some((e) => e.selected) && (
               <Section
                 title="Experiments"
                 className="ExperimentConfigure__ExperimentsContainer">
