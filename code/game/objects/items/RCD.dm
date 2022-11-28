@@ -1209,7 +1209,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	data["icon"] = initial(blueprint.icon_state)
 
 	var/list/category_list = list()
-	var/category = ""
+	var/category_name = ""
 	var/obj/machinery/recipe = null
 
 	for(var/i in 1 to plumbing_design_types.len)
@@ -1218,28 +1218,28 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		//find which category this recipe belongs to
 		if(ispath(recipe, /obj/machinery/plumbing))
 			var/obj/machinery/plumbing/plumbing_design = recipe
-			category = initial(plumbing_design.category)
+			category_name = initial(plumbing_design.category)
 		else if(ispath(recipe , /obj/machinery/duct))
-			category = "Distribution"
+			category_name = "Distribution"
 		else
-			category = "Storage"
+			category_name = "Storage"
 
-		if(!category_list[category])
+		if(!category_list[category_name])
 			var/list/item_list = list()
-			item_list["cat_name"] = category //used by RapidPipeDispenser.js
+			item_list["cat_name"] = category_name //used by RapidPipeDispenser.js
 			item_list["recipes"] = list() //used by RapidPipeDispenser.js
-			category_list[category] = item_list
+			category_list[category_name] = item_list
 
 		//add item to category
-		category_list[category]["recipes"] += list(list(
+		category_list[category_name]["recipes"] += list(list(
 			"index" = i,
 			"name" = initial(recipe.name),
 			"selected" = (initial(blueprint.name) == initial(recipe.name))
 		))
 
 	data["categories"] = list()
-	for(category in category_list)
-		data["categories"] += list(category_list[category])
+	for(category_name in category_list)
+		data["categories"] += list(category_list[category_name])
 
 	return data
 
