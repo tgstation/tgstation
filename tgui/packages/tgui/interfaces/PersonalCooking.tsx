@@ -152,7 +152,7 @@ export const PersonalCooking = (props, context) => {
   const canMake = ['Can Make'];
   const categories_combined = canMake.concat(categories.sort());
   const foodtypes_combined = canMake.concat(foodtypes.sort());
-  const displayLimit = searchText.length > 0 ? 30 : display_compact ? 299 : 99;
+  const displayLimit = display_compact ? 299 : 99;
   return (
     <Window width={700} height={700}>
       <Window.Content id="content" scrollable>
@@ -248,7 +248,6 @@ export const PersonalCooking = (props, context) => {
                 content="Can make only"
                 checked={display_craftable_only}
                 onClick={() => {
-                  display_craftable_only = !display_craftable_only;
                   act('toggle_recipes');
                 }}
               />
