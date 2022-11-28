@@ -1,0 +1,5 @@
+author: "etherware-novice"
+delete-after: True
+changes:
+  - qol: "quantum keycards light up with the department theyre in (or grey as a fallback)"
+  - qol: "quantum keycards are custom renamable w/ pen, to help keep em organized"

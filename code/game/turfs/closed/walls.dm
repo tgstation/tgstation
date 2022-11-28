@@ -130,15 +130,6 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return attack_hand(user, modifiers)
 
-
-/turf/closed/wall/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		dismantle_wall(1)
-		return
-
 /turf/closed/wall/attack_hulk(mob/living/carbon/user)
 	..()
 	var/obj/item/bodypart/arm = user.hand_bodyparts[user.active_hand_index]
