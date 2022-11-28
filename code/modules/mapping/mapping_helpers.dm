@@ -101,7 +101,7 @@
 		CRASH("baseturf helper is attempting to modify the Z level above but there is no Z level above above it.")
 	if(isspaceturf(ceiling) || istype(ceiling, /turf/open/openspace))
 		return
-	. = ..(ceiling)
+	return ..(ceiling)
 
 
 /obj/effect/mapping_helpers
