@@ -971,3 +971,7 @@
 	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_security.json'
 
+/datum/greyscale_config/mutant_brain
+	name = "Mutant "
+	icon_file = 'icons/obj/weapons/cleric_mace.dmi'
+	json_config = 'code/datums/greyscale/json_configs/items/cleric_mace.json'

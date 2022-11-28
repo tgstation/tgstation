@@ -43,7 +43,7 @@ const InfuserEntry = (props: InfuserEntryProps, context) => {
   return (
     <Section>
       <Stack vertical>
-        <Stack.Item fontSize={'18px'}>{entry.name}</Stack.Item>
+        <Stack.Item fontSize={'18px'}>{entry.name} Mutant</Stack.Item>
         <Stack.Item>
           <BlockQuote>
             {entry.desc} If a subject infuses with enough DNA,{' '}
@@ -63,10 +63,10 @@ const InfuserEntry = (props: InfuserEntryProps, context) => {
         <Stack.Divider />
         <Stack.Item>
           Created from infusing{' '}
-          <Box inline color="green">
+          <Box inline color={entry.name === 'Rejected' ? 'red' : 'green'}>
             {entry.infuse_mob_name}
           </Box>{' '}
-          into a subject.
+          DNA into a subject.
         </Stack.Item>
       </Stack>
     </Section>

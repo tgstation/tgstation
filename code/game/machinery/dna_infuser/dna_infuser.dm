@@ -16,68 +16,86 @@
 	var/infusing = FALSE
 	///what we're infusing with
 	var/atom/movable/infusing_from
+	///what we're turning into
+	var/datum/infuser_entry/infusing_into
 
 /obj/machinery/dna_infuser/Initialize(mapload)
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon/human)
 
+/obj/machinery/dna_infuser/Destroy()
+	. = ..()
+	//dump_inventory_contents called by parent, emptying infusing_from
+	infusing_into = null
+
 /obj/machinery/dna_infuser/examine(mob/user)
 	. = ..()
-	var/requires_text = "Requires "
-	var/missing_parts = FALSE
 	if(!occupant)
-		missing_parts = TRUE
-		requires_text += span_bold("a subject")
-		if(!infusing_from)
-			requires_text += " and "
+		. += span_notice("Requires [span_bold("a subject")].")
 	else
-		requires_text += span_bold("[src] reports \"[occupant]\" is inside the infusion chamber.")
+		. += span_notice("\"[span_bold(occupant.name)]\" is inside the infusion chamber.")
 	if(!infusing_from)
-		missing_parts = TRUE
-		requires_text += span_bold("an infusion source")
+		. += span_notice("Missing [span_bold("an infusion source")].")
 	else
-		. += span_notice("[infusing_from] is in the infusion slot.")
-	if(missing_parts)
-		requires_text += "."
-		. += span_notice(requires_text)
-	. += span_notice("You can drag a potential infusion source into the machine to add it.")
+		. += span_notice("[span_bold(infusing_from.name)] is in the infusion slot.")
 	. += span_notice("Alt-click to eject the infusion source, if one is inside.")
 
 /obj/machinery/dna_infuser/interact(mob/user)
+	// if(user == occupant)
+	// 	balloon_alert(user, "can't reach!")
+	// 	return
+	if(infusing)
+		balloon_alert(user, "not while it's on!")
+		return
 	if(occupant && infusing_from)
+		balloon_alert(user, "starting DNA infusion...")
 		start_infuse()
 		return
 	toggle_open(user)
 
 /obj/machinery/dna_infuser/proc/start_infuse()
-	visible_message(span_notice("[src] hums to life, beginning the infusion process!"))
-	to_chat(occupant, span_danger("A small trickle of pain"))
 	infusing = TRUE
-	Shake(5, 5, INFUSING_TIME)
+	var/mob/living/carbon/human/hoccupant = occupant
+	visible_message(span_notice("[src] hums to life, beginning the infusion process!"))
+	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
+		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
+			infusing_into = entry
+			break
+	if(!infusing_into)
+		//no valid recipe, so you get a fly mutation
+		infusing_into = GLOB.infuser_entries[1]
+	to_chat(hoccupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
+	hoccupant.take_overall_damage(10)
+	Shake(15, 15, INFUSING_TIME)
 	addtimer(CALLBACK(occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(end_infuse)), INFUSING_TIME)
 	update_appearance()
 
 /obj/machinery/dna_infuser/proc/end_infuse()
+	infusing = FALSE
 	infuse_organ(occupant)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
 	toggle_open()
 	update_appearance()
 
+//in the future, this should have more logic:
+//- replace non-mutant organs before mutant ones
+//- don't replace empty organ slots
 /obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
-	if(!ishuman(target))
+	if(!ishuman(target) || !infusing_into)
 		//already filters humans from entering, but you know, just in case.
 		return
-	var/datum/infuser_entry/found_entry
-	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
-		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
-			found_entry = entry
-			break
-	if(!found_entry)
-		//no valid recipe, so you get a fly mutation
-		found_entry = GLOB.infuser_entries[1]
-	to_chat(target, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [found_entry.infusion_desc]?"))
-	target.take_overall_damage(10)
+	var/list/potential_new_organs = infusing_into.output_organs.Copy()
+	for(var/obj/item/organ/organ as anything in (target.internal_organs.Copy() + target.external_organs.Copy()))
+		if(organ.type in potential_new_organs)
+			//we already have this
+			potential_new_organs -= organ.type
+	if(potential_new_organs.len)
+		var/obj/item/organ/new_organ = pick(potential_new_organs)
+		new_organ = new new_organ()
+		new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
+	infusing_into = null
+	QDEL_NULL(infusing_from)
 
 /obj/machinery/dna_infuser/update_icon_state()
 	//out of order
@@ -111,7 +129,9 @@
 			balloon_alert(user, "not while it's on!")
 		return
 
-	open_machine()
+	open_machine(drop = FALSE)
+	//we set drop to false to manually call it with an allowlist
+	dump_inventory_contents(list(occupant))
 
 /obj/machinery/dna_infuser/attackby(obj/item/used, mob/user, params)
 	if(infusing)
@@ -123,26 +143,55 @@
 		return
 	if(default_deconstruction_crowbar(used))
 		return
+	if(ismovable(used))
+		add_infusion_item(used, user)
 	return ..()
 
+// mostly good for dead mobs that turn into items like dead mice (smack to add)
+/obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
+	if(!is_valid_infusion(target, user))
+		return
+
+	if(!user.transferItemToLoc(target, src))
+		to_chat(user, span_warning("[target] is stuck to your hand!"))
+		return
+
+	infusing_from = target
+
+// mostly good for dead mobs like corpses (drag to add)
 /obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
 	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
 		return
+
+	if(!is_valid_infusion(target, user))
+		return
+
+	infusing_from = target
+	infusing_from.forceMove(src)
+
+/obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
-		return
+		return FALSE
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.stat != DEAD)
 			balloon_alert(user, "only dead creatures!")
-			return
-		infusing_from = living_target
+			return FALSE
+	else if(istype(target, /obj/item/food))
+		var/obj/item/food/food_target = target
+		if(!(food_target.foodtypes & GORE))
+			balloon_alert(user, "only creatures!")
+			return FALSE
 	else
-		infusing_from = target
-	infusing_from.forceMove(src)
+		return FALSE
+	return TRUE
 
 /obj/machinery/dna_infuser/AltClick(mob/user)
 	. = ..()
+	if(infusing)
+		balloon_alert(user, "not while it's on!")
+		return
 	if(!infusing_from)
 		balloon_alert(user, "no sample to eject!")
 		return
