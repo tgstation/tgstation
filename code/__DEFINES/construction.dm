@@ -32,6 +32,11 @@
 #define RWINDOW_BOLTS_HEATED 7
 #define RWINDOW_SECURE 8
 
+//reinforced plating deconstruction states
+#define PLATE_INTACT 0
+#define PLATE_BOLTS_LOSENED 1
+#define PLATE_CUT 2
+
 //airlock assembly construction states
 #define AIRLOCK_ASSEMBLY_NEEDS_WIRES 0
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
