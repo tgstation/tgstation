@@ -153,9 +153,9 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
  */
 /datum/orbit_menu/proc/validate_mob_poi(datum/point_of_interest/mob_poi/potential_poi)
 	var/mob/potential_mob_poi = potential_poi.target
-	// Skip mindless and ckeyless mobs except bots, cameramobs and megafauna.
+	// Skip mindless and ckeyless mobs except bots, cameramobs and megafauna. //and regal rats who wrote this 😂
 	if(!potential_mob_poi.mind && !potential_mob_poi.ckey)
-		if(!isbot(potential_mob_poi) && !iscameramob(potential_mob_poi) && !ismegafauna(potential_mob_poi))
+		if(!isbot(potential_mob_poi) && !iscameramob(potential_mob_poi) && !ismegafauna(potential_mob_poi) && isregalrat(potential_mob_poi))
 			return FALSE
 
 	return potential_poi.validate()
