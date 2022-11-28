@@ -60,8 +60,8 @@ export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
           'cursor': job.unavailable_reason ? 'initial' : 'pointer',
         }}
         tooltip={
-          job.unavailable_reason || (
-            job.prioritized ? (
+          job.unavailable_reason ||
+          (job.prioritized ? (
             <div>
               <b>The HoP wants more people in this job!</b>
               <br /> <br />
@@ -69,7 +69,7 @@ export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
             </div>
           ) : (
             job.description
-          )
+          ))
         }
         onClick={() => {
           !job.unavailable_reason && data.act('SelectedJob', { job: job.name });
@@ -94,10 +94,10 @@ export const JobSelection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { departments } = data;
 
-  const anyJobAvailable = departments.filter((department) => (
+  const anyJobAvailable = departments.filter((department) =>
     department.jobs.some((job) => !job.unavailable_reason)
-  ));
-  
+  );
+
   return (
     <Window width={1012} height={716}>
       <Window.Content scrollable>
