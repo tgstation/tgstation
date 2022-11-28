@@ -1,7 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "The chat client is now listed under 'Crew' instead of 'Misc' in the store."
-  - qol: "The chat client now allows anyone to use the ping feature, as long as they aren't server muted."
-  - qol: "The chat client's messaging system now shows the latest messages on top, rather than bottom. No more scrolling!"
-  - qol: "The chat client now has a ping spam-prevention feature."

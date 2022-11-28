@@ -42,7 +42,7 @@
 
 			if(!recipient)
 				return to_chat(usr, span_notice("The app can't find who you're trying to pay. Did you enter the pay token right?"))
-			if(!current_user.has_money(money_to_send))
+			if(!current_user.has_money(money_to_send) || money_to_send < 1)
 				return current_user.bank_card_talk("You cannot afford it.")
 
 			recipient.bank_card_talk("You received [money_to_send] credit(s). Reason: transfer from [current_user.account_holder]")
