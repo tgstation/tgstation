@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "Cuts some uses of allowed list as a typecache. Allowed lists are not typecaches, don't make them typecaches"

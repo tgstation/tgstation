@@ -111,3 +111,21 @@
 		/obj/item/stack/sheet/iron/ten = 1,
 		)
 	generate_items_inside(items_inside, src)
+
+/obj/item/storage/box/evilmeds
+	name = "box of premium medicine"
+	desc = "Contains a large number of beakers filled with premium medical supplies. Straight from Interdyne Pharmaceutics!"
+	icon_state = "syndiebox"
+	illustration = "beaker"
+
+/obj/item/storage/box/evilmeds/PopulateContents()
+	var/static/list/items_inside = list(
+		/obj/item/reagent_containers/cup/beaker/meta/omnizine = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/sal_acid = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/oxandrolone = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/pen_acid = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/atropine = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/salbutamol = 1,
+		/obj/item/reagent_containers/cup/beaker/meta/rezadone = 1,
+	)
+	generate_items_inside(items_inside, src)

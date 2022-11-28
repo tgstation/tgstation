@@ -1103,5 +1103,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_parent)
 		return
 
-	animate(resolve_parent, time = 1.5, loop = 0, transform = matrix().Scale(1.07, 0.9))
-	animate(time = 2, transform = null)
+	var/matrix/old_matrix = resolve_parent.transform
+	animate(resolve_parent, time = 1.5, loop = 0, transform = resolve_parent.transform.Scale(1.07, 0.9))
+	animate(time = 2, transform = old_matrix)
