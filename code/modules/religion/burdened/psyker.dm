@@ -47,7 +47,7 @@
 
 /// Makes us go through a transform sequency, to turn into a psyker.
 /mob/living/carbon/human/proc/psykerize()
-	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD))
+	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD) || istype(get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
 		return
 	to_chat(src, span_userdanger("You feel unwell..."))
 	sleep(5 SECONDS)

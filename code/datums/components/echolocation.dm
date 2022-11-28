@@ -69,6 +69,9 @@
 	return ..()
 
 /datum/component/echolocation/process()
+	var/mob/living/echolocator = parent
+	if(parent.stat == DEAD)
+		return
 	echolocate()
 
 /datum/component/echolocation/proc/echolocate()
