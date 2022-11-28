@@ -508,7 +508,7 @@
 		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 	// Reset our animations
 	animate(pixel_x = base_x, pixel_y = base_y, time = 2)
-	addtimer(CALLBACK(wash_audio, /datum/looping_sound/proc/stop), time_left)
+	addtimer(CALLBACK(wash_audio, TYPE_PROC_REF(/datum/looping_sound, stop)), time_left)
 	addtimer(CALLBACK(src, PROC_REF(turn_off_wash)), finished_by)
 
 /// Called by [deactivate_wash] on a timer to allow noises and animation to play out.

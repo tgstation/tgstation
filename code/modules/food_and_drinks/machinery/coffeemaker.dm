@@ -1,3 +1,5 @@
+#define BEAN_CAPACITY 10 //amount of coffee beans that can fit inside the impressa coffeemaker
+
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
 	desc = "A Modello 3 Coffeemaker that brews coffee and holds it at the perfect temperature of 176 fahrenheit. Made by Piccionaia Home Appliances."
@@ -16,13 +18,17 @@
 	/// The type path to instantiate for the coffee cartridge the device initially comes with, eg. /obj/item/coffee_cartridge
 	var/initial_cartridge = /obj/item/coffee_cartridge
 	/// The number of cups left
-	var/coffee_cups = 20
+	var/coffee_cups = 15
+	var/max_coffee_cups = 15
 	/// The amount of sugar packets left
-	var/sugar_packs = 20
+	var/sugar_packs = 10
+	var/max_sugar_packs = 10
 	/// The amount of sweetener packets left
-	var/sweetener_packs = 20
+	var/sweetener_packs = 10
+	var/max_sweetener_packs = 10
 	/// The amount of creamer packets left
-	var/creamer_packs = 20
+	var/creamer_packs = 10
+	var/max_creamer_packs = 10
 
 	var/static/radial_examine = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_examine")
 	var/static/radial_brew = image(icon = 'icons/hud/radial_coffee.dmi', icon_state = "radial_brew")
@@ -82,6 +88,7 @@
 			. += span_notice("- \A [coffeepot].")
 		if(cartridge)
 			. += span_notice("- \A [cartridge].")
+		return
 
 	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "[span_notice("The status display reads:")]\n"+\
@@ -138,11 +145,19 @@
 		coffeepot = null
 	if(A == cartridge)
 		cartridge = null
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/coffeemaker/update_icon_state()
-	icon_state = "[base_icon_state][coffeepot ? "_pot" : "_nopot"][cartridge ? "_cart": "_nocart"]"
-	return ..()
+/obj/machinery/coffeemaker/update_overlays()
+	. = ..()
+	. += overlay_checks()
+
+/obj/machinery/coffeemaker/proc/overlay_checks()
+	. = list()
+	if(coffeepot)
+		. += "coffeemaker_pot"
+	if(cartridge)
+		. += "coffeemaker_cartidge"
+	return .
 
 /obj/machinery/coffeemaker/proc/replace_pot(mob/living/user, obj/item/reagent_containers/cup/coffeepot/new_coffeepot)
 	if(!user)
@@ -151,7 +166,8 @@
 		try_put_in_hand(coffeepot, user)
 	if(new_coffeepot)
 		coffeepot = new_coffeepot
-	update_appearance()
+	balloon_alert(user, "replaced pot")
+	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/machinery/coffeemaker/proc/replace_cartridge(mob/living/user, obj/item/coffee_cartridge/new_cartridge)
@@ -161,7 +177,7 @@
 		try_put_in_hand(cartridge, user)
 	if(new_cartridge)
 		cartridge = new_cartridge
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/machinery/coffeemaker/wrench_act(mob/living/user, obj/item/tool)
@@ -172,7 +188,7 @@
 /obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
 	//You can only screw open empty grinder
 	if(!coffeepot && default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item))
-		return
+		return FALSE
 
 	if(default_deconstruction_crowbar(attack_item))
 		return
@@ -186,19 +202,91 @@
 		if(!user.transferItemToLoc(new_pot, src))
 			return TRUE
 		replace_pot(user, new_pot)
-		balloon_alert(user, "added pot")
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee_cup) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = attack_item
+		if(new_cup.reagents.total_volume > 0)
+			balloon_alert(user, "the cup must be empty!")
+			return
+		if(coffee_cups >= max_coffee_cups)
+			balloon_alert(user, "the cup holder is full!")
+			return
+		if(!user.transferItemToLoc(attack_item, src))
+			return
+		coffee_cups++
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/sugar))
+		var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return
+		if(sugar_packs >= max_sugar_packs)
+			balloon_alert(user, "the sugar compartment is full!")
+			return
+		if(!user.transferItemToLoc(attack_item, src))
+			return
+		sugar_packs++
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/creamer))
+		var/obj/item/reagent_containers/condiment/creamer/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return
+		if(creamer_packs >= max_creamer_packs)
+			balloon_alert(user, "the creamer compartment is full!")
+			return
+		if(!user.transferItemToLoc(attack_item, src))
+			return
+		creamer_packs++
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/astrotame))
+		var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return
+		else if(sweetener_packs >= max_sweetener_packs)
+			balloon_alert(user, "the sweetener compartment is full!")
+			return
+		else if(!user.transferItemToLoc(attack_item, src))
+			return
+		sweetener_packs++
+		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
 
 	if (istype(attack_item, /obj/item/coffee_cartridge) && !(attack_item.item_flags & ABSTRACT))
 		var/obj/item/coffee_cartridge/new_cartridge = attack_item
-		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(new_cartridge, src))
-			return TRUE
+			return
 		replace_cartridge(user, new_cartridge)
 		balloon_alert(user, "added cartridge")
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 		return TRUE //no afterattack
+
+/obj/machinery/coffeemaker/proc/try_brew()
+	if(!cartridge)
+		balloon_alert("no coffee cartidge inserted!")
+		return FALSE
+	if(cartridge.charges < 1)
+		balloon_alert("coffee cartidge empty!")
+		return FALSE
+	if(!coffeepot)
+		balloon_alert("no coffeepot inside!")
+		return FALSE
+	if(machine_stat & (NOPOWER|BROKEN))
+		balloon_alert("machine unpowered!")
+		return FALSE
+	if(coffeepot.reagents.total_volume >= coffeepot.reagents.maximum_volume)
+		balloon_alert("the coffeepot is already full!")
+		return FALSE
+	return TRUE
 
 /obj/machinery/coffeemaker/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave //I am positively certain that this is not a microwave
 	. = ..()
@@ -214,8 +302,7 @@
 	if(cartridge)
 		options["Eject Cartridge"] = radial_eject_cartridge
 
-	if(coffeepot && cartridge && cartridge.charges > 0)
-		options["Brew"] = radial_brew
+	options["Brew"] = radial_brew //brew is always available as an option, when the machine is unable to brew the player is told by balloon alerts whats exactly wrong
 
 	if(coffee_cups > 0)
 		options["Take Cup"] = radial_take_cup
@@ -275,39 +362,39 @@
 
 /obj/machinery/coffeemaker/proc/take_cup(mob/user)
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
-		balloon_alert("no cups left!")
+		balloon_alert(user, "no cups left!")
 		return
-	balloon_alert_to_viewers("took cup")
 	var/obj/item/reagent_containers/cup/glass/coffee_cup/new_cup = new(get_turf(src))
 	user.put_in_hands(new_cup)
 	coffee_cups--
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/proc/take_sugar(mob/user)
 	if(!sugar_packs)
-		balloon_alert("no sugar left!")
+		balloon_alert(user, "no sugar left!")
 		return
-	balloon_alert_to_viewers("took sugar packet")
 	var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	sugar_packs--
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/proc/take_sweetener(mob/user)
 	if(!sweetener_packs)
-		balloon_alert("no sweetener left!")
+		balloon_alert(user, "no sweetener left!")
 		return
-	balloon_alert_to_viewers("took sweetener packet")
 	var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = new(get_turf(src))
 	user.put_in_hands(new_pack)
 	sweetener_packs--
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/coffeemaker/proc/take_creamer(mob/user)
 	if(!creamer_packs)
-		balloon_alert("no creamer left!")
+		balloon_alert(user, "no creamer left!")
 		return
-	balloon_alert_to_viewers("took creamer packet")
-	var/obj/item/reagent_containers/condiment/pack/creamer/new_pack = new(get_turf(src))
+	var/obj/item/reagent_containers/condiment/creamer/new_pack = new(drop_location())
 	user.put_in_hands(new_pack)
 	creamer_packs--
+	update_appearance(UPDATE_OVERLAYS)
 
 ///Updates the smoke state to something else, setting particles if relevant
 /obj/machinery/coffeemaker/proc/toggle_steam()
@@ -330,7 +417,7 @@
 
 /obj/machinery/coffeemaker/proc/brew()
 	power_change()
-	if(!coffeepot || machine_stat & (NOPOWER|BROKEN) || coffeepot.reagents.total_volume >= coffeepot.reagents.maximum_volume)
+	if(!try_brew())
 		return
 	operate_for(brew_time)
 	coffeepot.reagents.add_reagent_list(cartridge.drink_type)
@@ -408,3 +495,244 @@
 	. = ..()
 	atom_storage.max_slots = 4
 	atom_storage.set_holdable(list(/obj/item/coffee_cartridge))
+
+/*
+ * impressa coffee maker
+ * its supposed to be a premium line product, so its cargo-only, the board cant be therefore researched
+ */
+
+/obj/machinery/coffeemaker/impressa
+	name = "impressa coffeemaker"
+	desc = "An industry-grade Impressa Modello 5 Coffeemaker of the Piccionaia Home Appliances premium coffeemakers product line. Makes coffee from fresh dried whole beans."
+	icon = 'icons/obj/machines/coffeemaker.dmi'
+	icon_state = "coffeemaker_impressa"
+	circuit = /obj/item/circuitboard/machine/coffeemaker/impressa
+	initial_cartridge = null //no cartridge, just coffee beans
+	brew_time = 15 SECONDS //industrial grade, its faster than the regular one
+	density = TRUE
+	pass_flags = PASSTABLE
+	/// Current amount of coffee beans stored
+	var/coffee_amount = 0
+	/// List of coffee bean objects are stored
+	var/list/coffee = list()
+
+/obj/machinery/coffeemaker/impressa/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		coffeepot = new /obj/item/reagent_containers/cup/coffeepot(src)
+		cartridge = null
+
+/obj/machinery/coffeemaker/impressa/Destroy()
+	QDEL_NULL(coffeepot)
+	QDEL_NULL(coffee)
+	return ..()
+
+/obj/machinery/coffeemaker/impressa/Exited(atom/movable/gone, direction)
+	if(gone == coffeepot)
+		coffeepot = null
+	if(gone == coffee)
+		coffee = null
+	return ..()
+
+/obj/machinery/coffeemaker/impressa/examine(mob/user)
+	. = ..()
+	if(coffee)
+		. += span_notice("The internal grinder contains [coffee.len] scoop\s of coffee beans")
+
+/obj/machinery/coffeemaker/impressa/update_overlays()
+	. = ..()
+	. += overlay_checks()
+
+/obj/machinery/coffeemaker/impressa/overlay_checks()
+	. = list()
+	if(coffeepot)
+		if(coffeepot.reagents.total_volume > 0)
+			. += "pot_full"
+		else
+			. += "pot_empty"
+	if(coffee_cups > 0)
+		if(coffee_cups >= max_coffee_cups/3)
+			if(coffee_cups > max_coffee_cups/1.5)
+				. += "cups_3"
+			else
+				. += "cups_2"
+		else
+			. += "cups_1"
+	if(sugar_packs)
+		. += "extras_1"
+	if(creamer_packs)
+		. += "extras_2"
+	if(sweetener_packs)
+		. += "extras_3"
+	if(coffee_amount)
+		if(coffee_amount < 0.7*BEAN_CAPACITY)
+			. += "grinder_half"
+		else
+			. += "grinder_full"
+	return .
+
+/obj/machinery/coffeemaker/impressa/handle_atom_del(atom/A)
+	. = ..()
+	if(A == coffeepot)
+		coffeepot = null
+	if(A == coffee)
+		coffee.Cut()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/machinery/coffeemaker/impressa/try_brew()
+	if(coffee_amount <= 0)
+		balloon_alert_to_viewers("no coffee beans added!")
+		return FALSE
+	if(!coffeepot)
+		balloon_alert_to_viewers("no coffeepot inside!")
+		return FALSE
+	if(machine_stat & (NOPOWER|BROKEN) )
+		balloon_alert_to_viewers("machine unpowered!")
+		return FALSE
+	if(coffeepot.reagents.total_volume >= coffeepot.reagents.maximum_volume)
+		balloon_alert_to_viewers("the coffeepot is already full!")
+		return FALSE
+	return TRUE
+
+/obj/machinery/coffeemaker/impressa/attackby(obj/item/attack_item, mob/living/user, params)
+	//You can only screw open empty grinder
+	if(!coffeepot && default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item))
+		return
+
+	if(default_deconstruction_crowbar(attack_item))
+		return
+
+	if(panel_open) //Can't insert objects when its screwed open
+		return TRUE
+
+	if (istype(attack_item, /obj/item/reagent_containers/cup/coffeepot) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/cup/coffeepot/new_pot = attack_item
+		if(!user.transferItemToLoc(new_pot, src))
+			return TRUE
+		replace_pot(user, new_pot)
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/cup/glass/coffee) && !(attack_item.item_flags & ABSTRACT) && attack_item.is_open_container())
+		var/obj/item/reagent_containers/cup/glass/coffee/new_cup = attack_item //different type of cup
+		if(new_cup.reagents.total_volume > 0 )
+			balloon_alert(user, "the cup must be empty!")
+			return
+		if(coffee_cups >= max_coffee_cups)
+			balloon_alert(user, "the cup holder is full!")
+			return
+		if(!user.transferItemToLoc(attack_item, src))
+			return
+		coffee_cups++
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/sugar))
+		var/obj/item/reagent_containers/condiment/pack/sugar/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return
+		if(sugar_packs >= max_sugar_packs)
+			balloon_alert(user, "the sugar compartment is full!")
+			return
+		if(!user.transferItemToLoc(attack_item, src))
+			return
+		sugar_packs++
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/creamer))
+		var/obj/item/reagent_containers/condiment/creamer/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return
+		if(creamer_packs >= max_creamer_packs)
+			balloon_alert(user, "the creamer compartment is full!")
+			return
+		if(!user.transferItemToLoc(attack_item, src))
+			return
+		creamer_packs++
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/reagent_containers/condiment/pack/astrotame))
+		var/obj/item/reagent_containers/condiment/pack/astrotame/new_pack = attack_item
+		if(new_pack.reagents.total_volume < new_pack.reagents.maximum_volume)
+			balloon_alert(user, "the pack must be full!")
+			return
+		if(sweetener_packs >= max_sweetener_packs)
+			balloon_alert(user, "the sweetener compartment is full!")
+			return
+		if(!user.transferItemToLoc(attack_item, src))
+			return
+		sweetener_packs++
+		update_appearance(UPDATE_OVERLAYS)
+		return TRUE //no afterattack
+
+	if (istype(attack_item, /obj/item/food/grown/coffee) && !(attack_item.item_flags & ABSTRACT))
+		if(coffee_amount >= BEAN_CAPACITY)
+			balloon_alert(user, "the coffee container is full!")
+			return
+		if(!HAS_TRAIT(attack_item, TRAIT_DRIED))
+			balloon_alert(user, "coffee beans must be dry!")
+			return
+		var/obj/item/food/grown/coffee/new_coffee = attack_item
+		if(!user.transferItemToLoc(new_coffee, src))
+			return
+		coffee += new_coffee
+		coffee_amount++
+		balloon_alert(user, "added coffee")
+
+
+	if (istype(attack_item, /obj/item/storage/box/coffeepack))
+		if(coffee_amount >= BEAN_CAPACITY)
+			balloon_alert(user, "the coffee container is full!")
+			return
+		var/obj/item/storage/box/coffeepack/new_coffee_pack = attack_item
+		for(var/obj/item/food/grown/coffee/new_coffee in new_coffee_pack.contents)
+			if(HAS_TRAIT(new_coffee, TRAIT_DRIED)) //the coffee beans inside must be dry
+				if(coffee_amount < BEAN_CAPACITY)
+					if(user.transferItemToLoc(new_coffee, src))
+						coffee += new_coffee
+						coffee_amount++
+						new_coffee.forceMove(src)
+						balloon_alert(user, "added coffee")
+						update_appearance(UPDATE_OVERLAYS)
+					else
+						return
+				else
+					return
+			else
+				balloon_alert(user, "non-dried beans inside of coffee pack!")
+				return
+
+	update_appearance(UPDATE_OVERLAYS)
+	return TRUE //no afterattack
+
+/obj/machinery/coffeemaker/impressa/take_cup(mob/user)
+	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
+		balloon_alert("no cups left!")
+		return
+	balloon_alert_to_viewers("took cup")
+	var/obj/item/reagent_containers/cup/glass/coffee/no_lid/new_cup = new(get_turf(src))
+	user.put_in_hands(new_cup)
+	coffee_cups--
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/machinery/coffeemaker/impressa/toggle_steam()
+	QDEL_NULL(particles)
+	if(brewing)
+		particles = new /particles/smoke/steam/mild()
+		particles.position = list(-2, 1, 0)
+
+/obj/machinery/coffeemaker/impressa/brew()
+	power_change()
+	if(!try_brew())
+		return
+	operate_for(brew_time)
+	coffeepot.reagents.add_reagent_list(list(/datum/reagent/consumable/coffee = 120))
+	coffee.Cut(1,2) //remove the first item from the list
+	coffee_amount--
+	update_appearance(UPDATE_OVERLAYS)
+
+#undef BEAN_CAPACITY

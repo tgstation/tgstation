@@ -104,6 +104,7 @@
 	owner.add_mood_event("nomad", /datum/mood_event/unsatisfied_nomad)
 
 /obj/item/organ/internal/brain/carp/proc/satisfied_nomad()
+	SIGNAL_HANDLER
 	owner.clear_mood_event("nomad")
 	cooldown_timer = addtimer(CALLBACK(src, PROC_REF(unsatisfied_nomad)), cooldown_time, TIMER_STOPPABLE|TIMER_OVERRIDE)
 

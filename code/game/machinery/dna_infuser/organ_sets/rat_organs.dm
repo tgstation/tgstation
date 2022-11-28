@@ -54,7 +54,7 @@
 
 /obj/item/organ/internal/stomach/rat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "salviates excessively.", BODY_ZONE_HEAD)
+	AddElement(/datum/element/noticable_organ, "salivates excessively.", BODY_ZONE_HEAD)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
 /obj/item/organ/internal/stomach/rat/on_life(delta_time, times_fired)
