@@ -3794,6 +3794,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\hostile.dm"
 #include "code\modules\mob\living\simple_animal\hostile\illusion.dm"
 #include "code\modules\mob\living\simple_animal\hostile\killertomato.dm"
+#include "code\modules\mob\living\simple_animal\hostile\lightgeist.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mecha_pilot.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mimic.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mushroom.dm"
