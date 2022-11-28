@@ -6,7 +6,8 @@ import { SFC } from 'inferno';
 import { JobToIcon } from './common/JobToIcon';
 import { BaseDepartmentInfo, BaseJobInfo } from '../components/DepartmentPane';
 
-type Job = {
+class Job implements BaseJobInfo {
+  name: string;
   unavailable_reason: string | null;
   command: boolean;
   open_slots: number;
@@ -14,12 +15,14 @@ type Job = {
   icon: string;
   prioritized: boolean;
   job_description: string;
-} & BaseJobInfo;
+}
 
-type Department = {
+class Department implements BaseDepartmentInfo {
+  name: string;
+  color: string;
   open_slots: number;
   jobs: Job[];
-} & BaseDepartmentInfo;
+}
 
 type Data = {
   departments: Department[];
@@ -109,25 +112,24 @@ export const JobSelection = (props, context) => {
           <DepartmentPane
             departments={departments}
             titleSubtextBuilder={(department) => {
+              const department_data = department as Department;
               return (
-                department['open_slots'] && (
-                  <span
-                    style={{
-                      'float': 'right',
-                      'clear': 'left',
-                      'color': Color.fromHex(department['color'])
-                        .darken(60)
-                        .toString(),
-                    }}>
-                    {department['open_slots'] + ' Slots Available'}
-                  </span>
-                )
+                <span
+                  style={{
+                    'float': 'right',
+                    'clear': 'left',
+                    'color': Color.fromHex(department_data.color)
+                      .darken(60)
+                      .toString(),
+                  }}>
+                  {department_data.open_slots + ' Slots Available'}
+                </span>
               );
             }}
             jobEntryBuilder={(job, department) => {
               return (
                 <JobEntry
-                  key={job['name']}
+                  key={job.name}
                   job={job}
                   department={department}
                   act={act}
