@@ -60,9 +60,14 @@
 		death()
 
 /mob/living/simple_animal/hostile/lightgeist/AttackingTarget()
-	if(isliving(target) && target != src)
-		var/mob/living/L = target
-		if(L.stat != DEAD)
-			L.heal_overall_damage(melee_damage_upper, melee_damage_upper)
-			new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
-			visible_message(span_notice("[src] mends the wounds of [target]."),span_notice("You mend the wounds of [target]."))
+	if(istype(target, /obj/structure/ladder)) //special case where lightgeists can use ladders properly.
+		var/obj/structure/ladder/laddy = target
+		laddy.use(src)
+		return
+	if(!isliving(target) || target == src)
+		return
+	var/mob/living/living_target = target
+	if(living_target.stat != DEAD)
+		living_target.heal_overall_damage(melee_damage_upper, melee_damage_upper)
+		new /obj/effect/temp_visual/heal(get_turf(target), "#80F5FF")
+		visible_message(span_notice("[src] mends the wounds of [target]."),span_notice("You mend the wounds of [target]."))

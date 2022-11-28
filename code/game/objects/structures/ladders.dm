@@ -251,7 +251,7 @@
 /obj/structure/ladder/attack_robot_secondary(mob/living/silicon/robot/user)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || !user.Adjacent(src))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return
 	use(user, going_up = FALSE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -262,9 +262,10 @@
 /obj/structure/ladder/attack_pai_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return
 	use(user, going_up = FALSE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/structure/ladder/attack_ghost(mob/dead/observer/user)
 	ghost_use(user)
