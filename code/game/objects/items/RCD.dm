@@ -1106,7 +1106,14 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/current_layer = "Default Layer"
 	///Current selected color, for ducts
 	var/current_color = "omni"
-
+	///maps bit flag to layer number value. didnt make this global cause only this class needs it
+	var/static/list/name_to_number = list(
+		"First Layer" = 1,
+		"Second Layer" = 2,
+		"Default Layer" = 3,
+		"Fourth Layer" = 4,
+		"Fifth Layer" = 5,
+	)
 
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()
@@ -1186,25 +1193,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return list("paint_colors" = GLOB.pipe_paint_colors)
 
 /obj/item/construction/plumbing/ui_data(mob/user)
-	/**
-	 * Maps current_layer[type string] -> number so it can be sent to the UI
-	 * I didn't want to create an temporary list to map these values as it would take up memory so i made this dumb logic
-	 * GLOB.plumbing_layers maps layer name["First Layer","Second Layer","Default Layer","Forth Layer","Fifth Layer"]  to bit mask values 1,2,4,8,16
-	 * We need to map these values 1,2,4,8,16 -> 1,2,3,4,5 i.e list index values
-	 * So here is my logic
-	 * after mapping if we get the bit flags 1,2 then we dont change them as they correspond to the layers 1,2
-	 * after mapping if we get the bit flags 4,8 we need to map them layers 3,4 so the math is (bitflag/4)+2 So that would be (4/4)+2=3 i.e layer 3,(8/4)+2=4 i.e layer 4
-	 * after mapping if we get the bit flag 16 we just directly imply it means layer 5
-	 * So yeah this logic works and hopefully nobody needs to read this or understand this
-	 */
-	var/layer = GLOB.plumbing_layers[current_layer]
-	if(layer == 16)
-		layer = 5
-	else if(layer > 2)
-		layer = (layer / 4) + 2
-
 	var/list/data = list()
-	data["piping_layer"] = layer
+	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
 	data["selected_color"] = current_color
 	data["icon"] = initial(blueprint.icon_state)
 
