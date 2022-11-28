@@ -96,27 +96,38 @@ type Data = {
 };
 
 export const PersonalCooking = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+  const {
+    act,
+    data: {
+      busy,
+      display_compact,
+      display_craftable_only,
+      craftability,
+      recipes,
+      categories,
+      foodtypes,
+      diet,
+    },
+  } = useBackend<Data>(context);
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [activeCategory, setCategory] = useLocalState(
     context,
     'category',
-    Object.keys(data.craftability).length ? 'Can Make' : data.categories[0]
+    Object.keys(craftability).length ? 'Can Make' : categories[0]
   );
   const [activeType, setType] = useLocalState(
     context,
     'foodtype',
-    Object.keys(data.craftability).length ? 'Can Make' : data.foodtypes[0]
+    Object.keys(craftability).length ? 'Can Make' : foodtypes[0]
   );
   const [typeMode, setTypeMode] = useLocalState(context, 'typeMode', false);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
-  const craftabilityByRef = data.craftability;
-  let recipes = flow([
+  const craftabilityByRef = craftability;
+  let recipes_filtered = flow([
     filter<Recipe>(
       (recipe) =>
         // If craftable only is selected, then filter by craftability
-        (!data.display_craftable_only ||
-          Boolean(craftabilityByRef[recipe.ref])) &&
+        (!display_craftable_only || Boolean(craftabilityByRef[recipe.ref])) &&
         // Ignore categories and types when searching
         (searchText.length > 0 ||
           // Is type mode and the active type matches
@@ -134,14 +145,14 @@ export const PersonalCooking = (props, context) => {
       -Number(craftabilityByRef[recipe.ref]),
       recipe.name,
     ]),
-  ])(data.recipes);
+  ])(recipes);
   if (searchText.length > 0) {
-    recipes = recipes.filter(searchName);
+    recipes_filtered = recipes_filtered.filter(searchName);
   }
   const canMake = ['Can Make'];
-  const categories = canMake.concat(data.categories.sort());
-  const foodtypes = canMake.concat(data.foodtypes.sort());
-  const displayLimit = searchText.length > 0 ? 30 : 299;
+  const categories_combined = canMake.concat(categories.sort());
+  const foodtypes_combined = canMake.concat(foodtypes.sort());
+  const displayLimit = searchText.length > 0 ? 30 : display_compact ? 299 : 99;
   return (
     <Window width={700} height={700}>
       <Window.Content id="content" scrollable>
@@ -162,9 +173,9 @@ export const PersonalCooking = (props, context) => {
                   onClick={() => {
                     setTypeMode(false);
                     setCategory(
-                      Object.keys(data.craftability).length
+                      Object.keys(craftability).length
                         ? 'Can Make'
-                        : data.categories[0]
+                        : categories[0]
                     );
                   }}>
                   Category
@@ -174,9 +185,9 @@ export const PersonalCooking = (props, context) => {
                   onClick={() => {
                     setTypeMode(true);
                     setType(
-                      Object.keys(data.craftability).length
+                      Object.keys(craftability).length
                         ? 'Can Make'
-                        : data.foodtypes[0]
+                        : foodtypes[0]
                     );
                   }}>
                   Type
@@ -184,7 +195,7 @@ export const PersonalCooking = (props, context) => {
               </Tabs>
               <Tabs vertical>
                 {typeMode
-                  ? foodtypes.map((foodtype) => (
+                  ? foodtypes_combined.map((foodtype) => (
                     <Tabs.Tab
                       key={foodtype}
                       selected={
@@ -199,12 +210,12 @@ export const PersonalCooking = (props, context) => {
                       }}>
                       <TypeContent
                         type={foodtype}
-                        diet={data.diet}
-                        craftableCount={Object.keys(data.craftability).length}
+                        diet={diet}
+                        craftableCount={Object.keys(craftability).length}
                       />
                     </Tabs.Tab>
                   ))
-                  : categories.map((category) => (
+                  : categories_combined.map((category) => (
                     <Tabs.Tab
                       key={category}
                       selected={
@@ -224,7 +235,7 @@ export const PersonalCooking = (props, context) => {
                         <Stack.Item grow>{category}</Stack.Item>
                         {category === 'Can Make' && (
                           <Stack.Item>
-                            {Object.keys(data.craftability).length}
+                            {Object.keys(craftability).length}
                           </Stack.Item>
                         )}
                       </Stack>
@@ -235,39 +246,39 @@ export const PersonalCooking = (props, context) => {
               <Button.Checkbox
                 fluid
                 content="Can make only"
-                checked={data.display_craftable_only}
+                checked={display_craftable_only}
                 onClick={() => {
-                  data.display_craftable_only = !data.display_craftable_only;
+                  display_craftable_only = !display_craftable_only;
                   act('toggle_recipes');
                 }}
               />
               <Button.Checkbox
                 fluid
                 content="Compact list"
-                checked={data.display_compact}
+                checked={display_compact}
                 onClick={() => act('toggle_compact')}
               />
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            {recipes.length > 0 ? (
-              recipes
+            {recipes_filtered.length > 0 ? (
+              recipes_filtered
                 .slice(0, displayLimit)
                 .map((item) =>
-                  data.display_compact ? (
+                  display_compact ? (
                     <RecipeContentCompact
                       key={item.ref}
                       item={item}
                       craftable={Boolean(craftabilityByRef[item.ref])}
-                      busy={data.busy}
+                      busy={busy}
                     />
                   ) : (
                     <RecipeContent
                       key={item.ref}
                       item={item}
-                      diet={data.diet}
+                      diet={diet}
                       craftable={Boolean(craftabilityByRef[item.ref])}
-                      busy={data.busy}
+                      busy={busy}
                     />
                   )
                 )
@@ -276,9 +287,9 @@ export const PersonalCooking = (props, context) => {
                 No recipes found.
               </NoticeBox>
             )}
-            {recipes.length > displayLimit && (
+            {recipes_filtered.length > displayLimit && (
               <Section textAlign="right">
-                And {recipes.length - displayLimit} more...
+                And {recipes_filtered.length - displayLimit} more...
               </Section>
             )}
           </Stack.Item>
