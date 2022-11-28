@@ -162,7 +162,7 @@
 // Tools: Knife
 
 /datum/crafting_recipe/food/knife
-	tool_paths = list(/obj/item/kitchen/rollingpin)
+	tool_paths = list(/obj/item/knife)
 	steps = list("Slice with knife")
 	subcategory = CAT_MISCFOOD
 
