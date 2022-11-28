@@ -435,8 +435,7 @@
 
 /datum/component/cooking/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/food),
-		get_asset_datum(/datum/asset/spritesheet/reagents),
+		get_asset_datum(/datum/asset/spritesheet/cooking),
 	)
 
 /datum/component/cooking/proc/build_crafting_data(datum/crafting_recipe/R)
@@ -486,17 +485,25 @@
 	else
 		data["desc"] = initial(atom.desc)
 
-	// Machinery, tools, craftability
-	if(recipe.machinery)
-		data["machinery"] = recipe.machinery
+	// Crafting
 	if(recipe.non_craftable)
 		data["non_craftable"] = recipe.non_craftable
 	if(recipe.steps)
 		data["steps"] = recipe.steps
-	if(recipe.tool_paths)
-		data["tool_paths"] = recipe.tool_paths
 
+	// Tools
+	for(var/atom/req_atom as anything in recipe.machinery)
+		data["machinery"] += list(list(
+			"path" = req_atom,
+			"name" = initial(req_atom.name)
+		))
 
+	// Machinery
+	for(var/atom/req_atom as anything in recipe.tool_paths)
+		data["tool_paths"] += list(list(
+			"path" = req_atom,
+			"name" = initial(req_atom.name)
+		))
 
 	// Foodtypes
 	if(ispath(recipe.result, /obj/item/food))
@@ -507,16 +514,7 @@
 				data["foodtypes"] += type
 		data["foodtypes"] = foodtypes
 
-	// Ingredients
 	data["reqs"] = list()
-	for(var/atom/req_atom as anything in recipe.reqs)
-		data["reqs"] += list(list(
-			"path" = req_atom,
-			"name" = initial(req_atom.name),
-			"amount" = recipe.reqs[req_atom],
-			"is_reagent" = ispath(req_atom, /datum/reagent/)
-		))
-
 	// Reaction data
 	if(recipe.reaction)
 		data["is_reaction"] = TRUE
@@ -545,5 +543,14 @@
 					"amount" = reaction.required_catalysts[req_atom],
 					"is_reagent" = ispath(req_atom, /datum/reagent/)
 				))
+
+	// Ingredients
+	for(var/atom/req_atom as anything in recipe.reqs)
+		data["reqs"] += list(list(
+			"path" = req_atom,
+			"name" = initial(req_atom.name),
+			"amount" = recipe.reqs[req_atom],
+			"is_reagent" = ispath(req_atom, /datum/reagent/)
+		))
 
 	return data

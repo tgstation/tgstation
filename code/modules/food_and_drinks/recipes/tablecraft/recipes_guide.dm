@@ -143,6 +143,7 @@
 	tool_paths = list(/obj/item/kitchen/rollingpin)
 	steps = list("Flatten with a rolling pin")
 	subcategory = CAT_MISCFOOD
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/rollingpin/flatdough
 	reqs = list(/obj/item/food/dough = 1)
@@ -165,7 +166,7 @@
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/rollingpin/pizza_sheet
-	reqs = list(/obj/item/food/pizzaslice = 1)
+	reqs = list(/obj/item/food/pizzaslice/margherita = 1)
 	result = /obj/item/stack/sheet/pizza
 
 // Tools: Knife
@@ -174,10 +175,11 @@
 	tool_paths = list(/obj/item/knife)
 	steps = list("Slice with knife")
 	subcategory = CAT_MISCFOOD
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/knife/breadslice
-	reqs = list(/obj/item/food/bread = 1)
-	result = /obj/item/food/breadslice
+	reqs = list(/obj/item/food/bread/plain = 1)
+	result = /obj/item/food/breadslice/plain
 	subcategory = CAT_BREAD
 
 /datum/crafting_recipe/food/knife/breadslice/root
@@ -185,13 +187,13 @@
 	result = /obj/item/food/breadslice/root
 
 /datum/crafting_recipe/food/knife/cakeslice
-	reqs = list(/obj/item/food/cake = 1)
-	result = /obj/item/food/cakeslice
+	reqs = list(/obj/item/food/cake/plain = 1)
+	result = /obj/item/food/cakeslice/plain
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/knife/pizzaslice
-	reqs = list(/obj/item/food/pizza = 1)
-	result = /obj/item/food/pizzaslice
+	reqs = list(/obj/item/food/pizza/margherita = 1)
+	result = /obj/item/food/pizzaslice/margherita
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/knife/doughslice
@@ -237,7 +239,7 @@
 	result = /obj/item/food/onion_slice
 
 /datum/crafting_recipe/food/knife/cheesewedge
-	reqs = list(/obj/item/food/cheese = 1)
+	reqs = list(/obj/item/food/cheese/wheel = 1)
 	result = /obj/item/food/cheese/wedge
 
 /datum/crafting_recipe/food/knife/salami
@@ -264,6 +266,7 @@
 	machinery = list(/obj/machinery/griddle)
 	steps = list("Grill until ready")
 	subcategory = CAT_MEAT
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/grill/meatball
 	reqs = list(/obj/item/food/raw_meatball = 1)
@@ -282,7 +285,7 @@
 	result = /obj/item/food/meat/steak
 
 /datum/crafting_recipe/food/grill/steak/chicken
-	reqs = list(/obj/item/food/slab/chicken = 1)
+	reqs = list(/obj/item/food/meat/slab/chicken = 1)
 	result = /obj/item/food/meat/steak/chicken
 
 /datum/crafting_recipe/food/grill/bacon
@@ -346,6 +349,7 @@
 	machinery = list(/obj/machinery/reagentgrinder)
 	steps = list("Put into grinder and grind")
 	subcategory = CAT_MISCFOOD
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/grinder/capsaicin
 	reqs = list(/obj/item/food/grown/chili = 1)
@@ -409,7 +413,7 @@
 	steps = list("Put into grinder and juice")
 
 /datum/crafting_recipe/food/grinder/sprinkles
-	reqs = list(/obj/item/food/donut = 1)
+	reqs = list(/obj/item/food/donut/plain = 1)
 	result = /datum/reagent/consumable/sprinkles
 
 /datum/crafting_recipe/food/grinder/cherryjelly
@@ -433,6 +437,7 @@
 	machinery = list(/obj/machinery/processor)
 	steps = list("Put into processor and activate")
 	subcategory = CAT_MISCFOOD
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/processor/rawbacon
 	reqs = list(/obj/item/food/meat/rawcutlet = 1)
@@ -466,7 +471,7 @@
 
 /datum/crafting_recipe/food/processor/spaghetti
 	reqs = list(/obj/item/food/doughslice = 1)
-	result = /obj/item/food/spaghetti
+	result = /obj/item/food/spaghetti/raw
 	subcategory = CAT_SPAGHETTI
 
 /datum/crafting_recipe/food/processor/tortilla
@@ -495,6 +500,7 @@
 	machinery = list(/obj/machinery/microwave)
 	steps = list("Microwave until ready")
 	subcategory = CAT_MISCFOOD
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/microwave/boiledegg
 	reqs = list(/obj/item/food/egg = 1)
@@ -507,7 +513,7 @@
 	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/microwave/boiledspaghetti
-	reqs = list(/obj/item/food/spaghetti = 1)
+	reqs = list(/obj/item/food/spaghetti/raw = 1)
 	result = /obj/item/food/spaghetti/boiledspaghetti
 	subcategory = CAT_SPAGHETTI
 
@@ -519,7 +525,6 @@
 /datum/crafting_recipe/food/microwave/onionrings
 	reqs = list(/obj/item/food/onion_slice = 1)
 	result = /obj/item/food/onionrings
-	subcategory = CAT_SALAD
 
 /datum/crafting_recipe/food/microwave/popcorn
 	reqs = list(/obj/item/food/grown/corn = 1)
@@ -530,10 +535,11 @@
 	machinery = list(/obj/machinery/oven)
 	steps = list("Bake in oven until ready")
 	subcategory = CAT_BREAD
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/oven/bread
 	reqs = list(/obj/item/food/dough = 1)
-	result = /obj/item/food/bread
+	result = /obj/item/food/bread/plain
 
 /datum/crafting_recipe/food/oven/rootbread
 	reqs = list(/obj/item/food/rootdough = 1)
@@ -555,17 +561,21 @@
 	reqs = list(/obj/item/food/flatdough = 1)
 	result = /obj/item/food/pizzabread
 
+/datum/crafting_recipe/food/oven/pizza
+	reqs = list(/obj/item/food/pizza/margherita/raw = 1)
+	result = /obj/item/food/pizza/margherita
+
 /datum/crafting_recipe/food/oven/rootflatbread
 	reqs = list(/obj/item/food/flatrootdough = 1)
 	result = /obj/item/food/root_flatbread
 
 /datum/crafting_recipe/food/oven/pie
 	reqs = list(/obj/item/food/piedough = 1)
-	result = /obj/item/food/pie
+	result = /obj/item/food/pie/plain
 
 /datum/crafting_recipe/food/oven/cake
 	reqs = list(/obj/item/food/cakebatter = 1)
-	result = /obj/item/food/cake
+	result = /obj/item/food/cake/plain
 
 /datum/crafting_recipe/food/oven/breadstick
 	reqs = list(/obj/item/food/raw_breadstick = 1)

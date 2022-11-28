@@ -3,7 +3,7 @@ import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
 import { map, filter, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon } from '../components';
+import { Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
 
@@ -71,9 +71,9 @@ type Recipe = {
   non_craftable: BooleanLike;
   is_reaction: BooleanLike;
   steps: string[];
-  tool_paths: string[];
+  tool_paths: Ingredient[];
   catalysts: Ingredient[];
-  machinery: string[];
+  machinery: Ingredient[];
 };
 
 type Diet = {
@@ -322,11 +322,10 @@ const RecipeContentCompact = ({ item, craftable, busy }, context) => {
       <Stack my={-0.75}>
         <Stack.Item>
           <Box
-            className={
-              item.result?.includes('/datum/reagent/')
-                ? classes(['reagents32x32', item.result?.replace(/[/_]/gi, '')])
-                : classes(['food32x32', item.result?.replace(/[/_]/gi, '')])
-            }
+            className={classes([
+              'cooking32x32',
+              item.result?.replace(/[/_]/gi, ''),
+            ])}
           />
         </Stack.Item>
         <Stack.Item grow>
@@ -345,10 +344,25 @@ const RecipeContentCompact = ({ item, craftable, busy }, context) => {
                         : ingredient.name
                   )
                 ).join(', ')}
+                {item.catalysts &&
+                  ' | ' +
+                    item.catalysts
+                      .map((ingredient) =>
+                        ingredient.is_reagent
+                          ? ingredient.name + '\xa0' + ingredient.amount + 'u'
+                          : ingredient.amount > 1
+                            ? ingredient.name + '\xa0' + ingredient.amount + 'x'
+                            : ingredient.name
+                      )
+                      .join(', ')}
+                {item.tool_paths &&
+                  ' | ' + item.tool_paths.map((item) => item.name).join(', ')}
+                {item.machinery &&
+                  ' | ' + item.machinery.map((item) => item.name).join(', ')}
               </Box>
             </Stack.Item>
             <Stack.Item>
-              {!item.non_craftable && (
+              {!item.non_craftable ? (
                 <Button
                   my={0.3}
                   lineHeight={2.5}
@@ -363,6 +377,17 @@ const RecipeContentCompact = ({ item, craftable, busy }, context) => {
                     })
                   }
                 />
+              ) : (
+                item.steps && (
+                  <Tooltip
+                    content={item.steps.map((step) => (
+                      <Box key={step}>{step}</Box>
+                    ))}>
+                    <Box fontSize={1.5} p={1}>
+                      <Icon name="circle-question-o" />
+                    </Box>
+                  </Tooltip>
+                )
               )}
             </Stack.Item>
           </Stack>
@@ -386,14 +411,10 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                 'transform': 'scale(2)',
               }}
               m={'16px'}
-              className={
-                item.result?.includes('/datum/reagent/')
-                  ? classes([
-                    'reagents32x32',
-                    item.result?.replace(/[/_]/gi, ''),
-                  ])
-                  : classes(['food32x32', item.result?.replace(/[/_]/gi, '')])
-              }
+              className={classes([
+                'cooking32x32',
+                item.result?.replace(/[/_]/gi, ''),
+              ])}
             />
           </Box>
         </Stack.Item>
@@ -419,7 +440,7 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                     {flow([
                       sortBy((item: Ingredient) => item.path),
                       map((item: Ingredient) => (
-                        <IngredientContent key={item.path} item={item} />
+                        <AtomContent key={item.path} item={item} />
                       )),
                     ])(item.reqs)}
                   </Box>
@@ -438,7 +459,7 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                     {flow([
                       sortBy((item: Ingredient) => item.path),
                       map((item: Ingredient) => (
-                        <IngredientContent key={item.path} item={item} />
+                        <AtomContent key={item.path} item={item} />
                       )),
                     ])(item.catalysts)}
                   </Box>
@@ -455,7 +476,7 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                       </Stack.Item>
                     </Stack>
                     {item.tool_paths.map((item) => (
-                      <Box key={item}>{item}</Box>
+                      <AtomContent key={item.path} item={item} />
                     ))}
                   </Box>
                 )}
@@ -471,7 +492,7 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                       </Stack.Item>
                     </Stack>
                     {item.machinery.map((item) => (
-                      <Box key={item}>{item}</Box>
+                      <AtomContent key={item.path} item={item} />
                     ))}
                   </Box>
                 )}
@@ -495,7 +516,7 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
                 </Box>
               )}
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item pl={1}>
               {!item.non_craftable && (
                 <Button
                   width="104px"
@@ -527,46 +548,22 @@ const RecipeContent = ({ item, diet, craftable, busy }, context) => {
   );
 };
 
-const IngredientContent = ({ item: { name, amount, path, is_reagent } }) => {
+const AtomContent = ({ item: { name, amount, path, is_reagent } }) => {
   return (
-    path.includes('/obj/item/food/') ? (
-      <Box my={1}>
-        <Box
-          verticalAlign="middle"
-          inline
-          my={-1}
-          className={classes(['food32x32', path.replace(/[/_]/gi, '')])}
-        />
-        <Box inline verticalAlign="middle">
-          {name}
-          {amount > 1 && '\xa0' + amount + 'x'}
-        </Box>
+    <Box my={1}>
+      <Box
+        verticalAlign="middle"
+        inline
+        my={-1}
+        mr={0.5}
+        className={classes(['cooking32x32', path.replace(/[/_]/gi, '')])}
+      />
+      <Box inline verticalAlign="middle">
+        {name}
+        {is_reagent
+          ? '\xa0' + amount + 'u'
+          : amount > 1 && '\xa0' + amount + 'x'}
       </Box>
-    ) : is_reagent ? (
-      <Box my={1}>
-        <Box
-          verticalAlign="middle"
-          inline
-          my={-1}
-          className={classes(['reagents32x32', path.replace(/[/_]/gi, '')])}
-        />
-        <Box inline verticalAlign="middle">
-          {name + '\xa0' + amount + 'u'}
-        </Box>
-      </Box>
-    ) : (
-      <Box my={1} verticalAlign="middle">
-        <Icon
-          name={
-            path.includes('/obj/item/reagent_containers/')
-              ? 'whiskey-glass'
-              : 'box'
-          }
-          width={'32px'}
-          textAlign="center"
-        />
-        <Box inline>{amount > 1 ? name + '\xa0' + amount + 'x' : name}</Box>
-      </Box>
-    )
-  ) as any;
+    </Box>
+  );
 };
