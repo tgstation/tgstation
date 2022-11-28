@@ -1845,6 +1845,12 @@
 	hasinner = 1
 	color_src = HAIR
 
+/datum/sprite_accessory/ears/fox
+	name = "Fox"
+	icon_state = "fox"
+	hasinner = 1
+	color_src = HAIR
+
 /datum/sprite_accessory/wings/none
 	name = "None"
 	icon_state = "none"

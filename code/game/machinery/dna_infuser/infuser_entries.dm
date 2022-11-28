@@ -112,3 +112,21 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		/obj/item/organ/external/tail/cat,
 	)
 	infusion_desc = "domestic"
+
+/datum/infuser_entry/vulpini
+	name = "Fox"
+	infuse_mob_name = "vulpini"
+	desc = "Foxes are now quite rare because of the \"fox ears\" craze back in 2555. Also, because we're spacefarers who destroyed foxes' natural habitats ages ago, but that applies to most animals."
+	threshold_desc = "nothing happens. Stable DNA."
+	qualities = list(
+		"oh come on really",
+		"you bring SHAME to all geneticists",
+		"i hope it was worth it",
+	)
+	input_obj_or_mob = list(
+		/mob/living/simple_animal/pet/fox,
+	)
+	output_organs = list(
+		/obj/item/organ/internal/ears/fox,
+	)
+	infusion_desc = "inexcusable"
