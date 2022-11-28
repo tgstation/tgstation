@@ -38,6 +38,7 @@
 			this_food.desc = "A heavily-fried... something. Who can tell anymore?"
 
 	ADD_TRAIT(this_food, TRAIT_FOOD_FRIED, ELEMENT_TRAIT(type))
+	SEND_SIGNAL(this_food, COMSIG_ITEM_FRIED, fry_time)
 	// Already edible items will inherent these parameters
 	// Otherwise, we will become edible.
 	this_food.AddComponent( \
