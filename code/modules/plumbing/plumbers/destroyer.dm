@@ -4,6 +4,7 @@
 	icon_state = "disposal"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	///category for plumbing RCD
 	category="Synthesizers"
 
 	///we remove 5 reagents per second

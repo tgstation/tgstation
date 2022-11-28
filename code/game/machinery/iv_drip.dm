@@ -406,7 +406,7 @@
 	base_icon_state = "plumb"
 	density = TRUE
 	use_internal_storage = TRUE
-
+	///category for plumbing RCD
 	var/category = "Storage"
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload)

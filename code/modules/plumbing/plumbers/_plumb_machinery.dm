@@ -14,7 +14,7 @@
 	var/buffer = 50
 	///Flags for reagents, like INJECTABLE, TRANSPARENT bla bla everything thats in DEFINES/reagents.dm
 	var/reagent_flags = TRANSPARENT
-
+	///category for plumbing RCD
 	var/category = ""
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
@@ -61,6 +61,7 @@
 	icon_state = "pipe_input"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | REFILLABLE
+	///category for plumbing RCD
 	category="Distribution"
 
 
@@ -75,7 +76,7 @@
 	icon_state = "pipe_output"
 	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | DRAINABLE
-	//category for plumbing service rcd
+	///category for plumbing service rcd
 	category="Distribution"
 
 
@@ -87,6 +88,7 @@
 	name = "drinking tap"
 	desc = "A manual output for plumbing systems, for taking drinks directly into glasses."
 	icon_state = "tap_output"
+	///category for plumbing RCD
 	category = "Distribution"
 
 /obj/machinery/plumbing/tank
@@ -94,6 +96,7 @@
 	desc = "A massive chemical holding tank."
 	icon_state = "tank"
 	buffer = 400
+	///category for plumbing RCD
 	category="Storage"
 
 /obj/machinery/plumbing/tank/Initialize(mapload, bolt, layer)
@@ -107,7 +110,7 @@
 	desc = "A plumbing manifold for layers."
 	icon_state = "manifold"
 	density = FALSE
-	//category for plumbing service rcd
+	///category for plumbing service rcd
 	category="Distribution"
 
 /obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)

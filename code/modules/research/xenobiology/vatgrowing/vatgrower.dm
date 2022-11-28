@@ -4,6 +4,7 @@
 	desc = "Tastes just like the chef's soup."
 	icon_state = "growing_vat"
 	buffer = 300
+	///category for plumbing RCD
 	category="Synthesizers"
 
 

@@ -7,7 +7,7 @@
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
-	//category used by plumbing RCD
+	///category for plumbing RCD
 	category="Synthesizers"
 
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
