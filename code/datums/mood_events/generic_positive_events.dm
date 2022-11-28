@@ -211,6 +211,20 @@
 	mood_change = 2
 	timeout = 45 SECONDS
 
+/datum/mood_event/helped_up
+	description = "Helping them up felt good!"
+	mood_change = 2
+	timeout = 45 SECONDS
+
+/datum/mood_event/helped_up/add_effects(mob/other_person, helper)
+	if(!other_person)
+		return
+
+	if(helper)
+		description = "Helping [other_person] up felt good!"
+	else
+		description = "[other_person] helped me up, how nice of [other_person.p_them()]!"
+
 /datum/mood_event/high_ten
 	description = "AMAZING! A HIGH-TEN!"
 	mood_change = 3
