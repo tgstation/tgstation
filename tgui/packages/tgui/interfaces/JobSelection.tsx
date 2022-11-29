@@ -67,28 +67,32 @@ export const JobEntry: SFC<{
         tooltip={
           job.unavailable_reason ||
           (job.prioritized ? (
-            <div>
-              <b>The HoP wants more people in this job!</b>
-              <br /> <br />
+            <>
+              <b style={{ 'margin-bottom': '1.5em' }}>
+                The HoP wants more people in this job!
+              </b>
               {job.description}
-            </div>
+            </>
           ) : (
             job.description
           ))
         }
         onClick={() => {
           !job.unavailable_reason && data.act('SelectedJob', { job: jobName });
-        }}
-        content={
-          <div>
-            {jobIcon && <Icon name={jobIcon} />}
-            {job.command ? <b>{jobName}</b> : jobName}
-            <span style={{ 'float': 'right' }}>
-              {job.used_slots} / {job.open_slots}
-            </span>
-          </div>
-        }
-      />
+        }}>
+        <>
+          {jobIcon && <Icon name={jobIcon} />}
+          {job.command ? <b>{jobName}</b> : jobName}
+          <span
+            style={{
+              'white-space': 'nowrap',
+              'position': 'absolute',
+              'right': '0.5em',
+            }}>
+            {job.used_slots} / {job.open_slots}
+          </span>
+        </>
+      </Button>
     </Stack.Item>
   );
 };
@@ -96,6 +100,9 @@ export const JobEntry: SFC<{
 export const JobSelection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   let departments = JSON.parse(JSON.stringify(data.departments)); // Why the fuck is it so hard to clone objects properly in JS?!
+  if (!data?.static_data?.departments) {
+    return null; // Stop TGUI whitescreens!
+  }
   departments = merge(departments, data.static_data.departments);
 
   return (
@@ -118,13 +125,17 @@ export const JobSelection = (props, context) => {
               return (
                 <span
                   style={{
-                    'float': 'right',
+                    'white-space': 'nowrap',
+                    'position': 'absolute',
+                    'right': '0px',
                     'clear': 'left',
                     'color': Color.fromHex(department_data.color)
                       .darken(60)
                       .toString(),
                   }}>
-                  {department_data.open_slots + ' Slots Available'}
+                  {department_data.open_slots +
+                    (department_data.open_slots === 1 ? ' Slot' : ' Slots') +
+                    ' Available'}
                 </span>
               );
             }}
