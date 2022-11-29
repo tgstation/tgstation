@@ -107,7 +107,7 @@
 	C.update_body_parts()
 
 /obj/item/organ/internal/brain/proc/transfer_identity(mob/living/L)
-	name = "[L.name]'s brain"
+	name = "[L.name]'s [initial(name)]"
 	if(brainmob || decoy_override)
 		return
 	if(!L.mind)
