@@ -173,6 +173,7 @@
 /datum/computer_file/program/secureye/proc/get_available_cameras()
 	var/list/L = list()
 	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
+		//Get the camera's turf in case it's inside something like a borg
 		var/turf/camera_turf = get_turf(cam)
 		if(!is_station_level(camera_turf.z))//Only show station cameras.
 			continue
