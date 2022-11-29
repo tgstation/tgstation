@@ -35,7 +35,7 @@ const PlumbingTypeSection = (props, context) => {
   return (
     <Section fill scrollable>
       <Tabs>
-        {categories.map((category, i) => (
+        {categories.map((category) => (
           <Tabs.Tab
             fluid
             key={category.cat_name}
