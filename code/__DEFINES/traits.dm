@@ -225,6 +225,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_TOXINLOVER "toxinlover"
+/// Doesn't get overlays from being in critical.
+#define TRAIT_NOCRITOVERLAY "no_crit_overlay"
 /// Gets a mood boost from being in the hideout.
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
@@ -306,6 +308,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// prevents xeno huggies implanting skeletons
 #define TRAIT_XENO_IMMUNE "xeno_immune"
 #define TRAIT_NAIVE "naive"
+/// always detect storms on icebox
+#define TRAIT_DETECT_STORM "detect_storm"
 #define TRAIT_PRIMITIVE "primitive"
 #define TRAIT_GUNFLIP "gunflip"
 /// Increases chance of getting special traumas, makes them harder to cure
@@ -383,7 +387,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLUSHING "blushing"
 /// This person is crying
 #define TRAIT_CRYING "crying"
-#define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
+///This carbon doesn't bleed
+#define TRAIT_NOBLEED "nobleed"
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
 /// This mobs bodyparts are invisible but still clickable.
@@ -433,6 +438,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// The person with this trait always appears as 'unknown'.
 #define TRAIT_UNKNOWN "unknown"
+
+/// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
+#define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -753,6 +761,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes
 #define SWORDPLAY_TRAIT "swordplay"
+/// Trait given by being recruited as a nuclear operative
+#define NUKE_OP_MINION_TRAIT "nuke-op-minion"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
