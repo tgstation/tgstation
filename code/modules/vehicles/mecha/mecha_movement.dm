@@ -119,7 +119,7 @@
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally
-	. = step(src,direction, dir)
+	. = try_step_multiz(direction)
 	if(phasing)
 		use_power(phasing_energy_drain)
 	if(strafe)

@@ -1,5 +1,5 @@
-#define PARTY_COOLDOWN_LENGTH_MIN 6 MINUTES
-#define PARTY_COOLDOWN_LENGTH_MAX 12 MINUTES
+#define PARTY_COOLDOWN_LENGTH_MIN (6 MINUTES)
+#define PARTY_COOLDOWN_LENGTH_MAX (12 MINUTES)
 
 
 /datum/station_trait/lucky_winner
@@ -45,9 +45,9 @@
 /datum/station_trait/premium_internals_box
 	name = "Premium internals boxes"
 	trait_type = STATION_TRAIT_POSITIVE
-	weight = 10
+	weight = 5
 	show_in_report = TRUE
-	report_message = "The internals boxes for your crew have been filled with bonus equipment."
+	report_message = "The internals boxes for your crew have been upsized and filled with bonus equipment."
 	trait_to_give = STATION_TRAIT_PREMIUM_INTERNALS
 
 /datum/station_trait/bountiful_bounties

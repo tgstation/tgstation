@@ -63,6 +63,8 @@
 #define PLANE_TO_TRUE(plane) ((SSmapping.plane_offset_to_true) ? SSmapping.plane_offset_to_true["[plane]"] : plane)
 /// Takes a plane, returns the offset it uses
 #define PLANE_TO_OFFSET(plane) ((SSmapping.plane_to_offset) ? SSmapping.plane_to_offset["[plane]"] : plane)
+/// Takes a plane, returns TRUE if it is of critical priority, FALSE otherwise
+#define PLANE_IS_CRITICAL(plane) ((SSmapping.plane_to_offset) ? !!SSmapping.critical_planes["[plane]"] : FALSE)
 /// Takes a true plane, returns the offset planes that would canonically represent it
 #define TRUE_PLANE_TO_OFFSETS(plane) ((SSmapping.true_to_offset_planes) ? SSmapping.true_to_offset_planes["[plane]"] : list(plane))
 /// Takes a render target and an offset, returns a canonical render target string for it

@@ -554,6 +554,9 @@ At base BYOND only allows you to attach one particle emitter to any one `/atom`.
 The type is `/obj/effect/abstract/particle_holder`. Interacting with it's real simple, you just pass in the location to mirror, and the type to use.
 It'll do the rest.
 
+> We have a debug tool for particles. You can access it in-game by vving an atom, going to the dropdown, and hitting `Edit Particles`
+It'll let you add and tweak the particles attached to that atom.
+
 ## Pixel Offsets
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/pixel_x) 

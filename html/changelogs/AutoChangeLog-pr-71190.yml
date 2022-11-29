@@ -1,7 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - rscadd: "the punching bag, bench press, and chest press are all able to be crafted and unanchored."
-  - rscadd: "crafting recipes for the above"
-  - qol: "changed a chat message into a balloon alert"
-  - qol: "adds screentips to equipment (thanks for suggesting i do this mothblocks!)"

@@ -193,6 +193,8 @@
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
 	for(var/trait in weather_immunities)
 		ADD_TRAIT(src, trait, ROUNDSTART_TRAIT)
+	if (environment_smash >= ENVIRONMENT_SMASH_WALLS)
+		AddElement(/datum/element/wall_smasher, strength_flag = environment_smash)
 
 	if(speak)
 		speak = string_list(speak)
@@ -518,7 +520,7 @@
 		return
 	return ..()
 
-/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
 	if(!.)
 		return
