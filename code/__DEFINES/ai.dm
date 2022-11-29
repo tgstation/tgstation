@@ -4,9 +4,6 @@
 #define AI_STATUS_ON 1
 #define AI_STATUS_OFF 2
 
-///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
-#define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
-
 ///Cooldown on planning if planning failed last time
 
 #define AI_FAILED_PLANNING_COOLDOWN (1.5 SECONDS)
@@ -46,6 +43,8 @@
 #define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
 ///what we're going to eat next
 #define BB_FOOD_TARGET "bb_food_target"
+///Objects to ignore due to them being unreachable
+#define BB_IGNORE_LIST "BB__IGNORE_LIST"
 
 //for songs
 
@@ -225,3 +224,21 @@
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
+
+
+
+/// After this long, the bots ignore list is reset
+#define AI_BOT_IGNORE_DURATION 30 SECONDS
+
+///Bot AI keys
+///Base bot
+
+#define BB_BOT_CURRENT_SUMMONER "BB_last_summoner"
+#define BB_BOT_SUMMON_WAYPOINT "BB_summon_waypoint"
+#define BB_BOT_CURRENT_PATROL_POINT "BB_current_patrol_point"
+#define BB_BOT_IS_COMMISSIONED "BB_bot_is_commissioned"
+
+///Clean bot keys
+#define BB_CLEAN_BOT_TARGET "BB_clean_bot_target"
+#define BB_CLEAN_BOT_VALID_TARGETS "BB_clean_bot_valid_targets"
+#define BB_CLEAN_BOT_BUSY_CLEANING "BB_clean_bot_BUSY_CLEANING"

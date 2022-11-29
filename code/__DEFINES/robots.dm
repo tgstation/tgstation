@@ -132,10 +132,8 @@
 #define BOT_START_PATROL "Beginning Patrol"
 /// Patrolling
 #define BOT_PATROL "Patrolling"
-/// Summoned to a location
-#define BOT_SUMMON "Summoned by PDA"
 /// Responding to a call from the AI
-#define BOT_RESPONDING "Proceeding to AI waypoint"
+#define BOT_SUMMON "Being summoned"
 /// Currently moving
 #define BOT_MOVING "Moving"
 
