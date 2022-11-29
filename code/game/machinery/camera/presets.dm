@@ -66,6 +66,7 @@
 
 	c_tag = "[format_text(camera_area.name)] #[number]"
 
+///The internal camera object for exosuits, applied by the camera upgrade
 /obj/machinery/camera/exosuit
 	c_tag = "Exosuit: unspecified"
 	desc = "This camera belongs in a mecha. If you see this, tell a coder!"
