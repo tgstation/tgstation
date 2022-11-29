@@ -48,7 +48,13 @@
 				add_stamp()
 				to_chat(user, span_notice("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
 			else
-				to_chat(user, span_warning("You hunt through the papers for somewhere to use the [attacking_item], but can't find anything."))
+				if(istype(attacking_item, /obj/item/stamp/chameleon))
+					var/obj/item/stamp/chameleon/chameleon_stamp = attacking_item
+					to_chat(user, span_notice("[chameleon_stamp] morphs into the appropriate stamp, which you use to complete the paperwork."))
+					chameleon_stamp.chameleon_action.update_item(stamp_requested)
+					add_stamp()
+				else
+					to_chat(user, span_warning("You hunt through the papers for somewhere to use the [attacking_item], but can't find anything."))
 
 /obj/item/paperwork/examine_more(mob/user)
 	. = ..()
