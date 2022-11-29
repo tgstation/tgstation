@@ -384,7 +384,7 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_margherita
-	subcategory = CAT_MOTH
+	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_firecracker
 	reqs = list(
@@ -395,7 +395,7 @@
 		/obj/item/food/grown/ghost_chili = 1
 	)
 	result = /obj/item/food/raw_mothic_firecracker
-	subcategory = CAT_MOTH
+	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_five_cheese
 	reqs = list(
@@ -408,7 +408,7 @@
 		/obj/item/food/cheese/cheese_curds = 1
 	)
 	result = /obj/item/food/raw_mothic_five_cheese
-	subcategory = CAT_MOTH
+	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_white_pie
 	reqs = list(
@@ -420,7 +420,7 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_white_pie
-	subcategory = CAT_MOTH
+	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_pesto
 	reqs = list(
@@ -430,7 +430,7 @@
 		/obj/item/food/cheese/mozzarella = 1
 	)
 	result = /obj/item/food/raw_mothic_pesto
-	subcategory = CAT_MOTH
+	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/raw_mothic_garlic
 	reqs = list(
@@ -440,7 +440,7 @@
 		/obj/item/food/grown/herbs = 1
 	)
 	result = /obj/item/food/raw_mothic_garlic
-	subcategory = CAT_MOTH
+	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/moth_cheese_cakes
 	name = "Ælorölen (Cheesecake balls)"
