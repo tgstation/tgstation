@@ -174,12 +174,12 @@
 
 	diag_hud_set_electrified()
 
-	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, .proc/on_break)
-	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
+	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
+	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, PROC_REF(ntnet_receive))
 
 	// Click on the floor to close airlocks
 	var/static/list/connections = list(
-		COMSIG_ATOM_ATTACK_HAND = .proc/on_attack_hand
+		COMSIG_ATOM_ATTACK_HAND = PROC_REF(on_attack_hand)
 	)
 	AddElement(/datum/element/connect_loc, connections)
 
@@ -250,9 +250,9 @@
 				return
 
 			if(density)
-				INVOKE_ASYNC(src, .proc/open)
+				INVOKE_ASYNC(src, PROC_REF(open))
 			else
-				INVOKE_ASYNC(src, .proc/close)
+				INVOKE_ASYNC(src, PROC_REF(close))
 
 		if("bolt")
 			if(command_value == "on" && locked)
@@ -356,6 +356,9 @@
 		update_appearance()
 
 /obj/machinery/door/airlock/bumpopen(mob/living/user)
+	if(!hasPower())
+		return
+
 	if(issilicon(user) || !iscarbon(user))
 		return ..()
 
@@ -394,7 +397,7 @@
 /obj/machinery/door/airlock/proc/handlePowerRestore()
 	var/cont = TRUE
 	while (cont)
-		sleep(10)
+		sleep(1 SECONDS)
 		if(QDELETED(src))
 			return
 		cont = FALSE
@@ -416,7 +419,7 @@
 			secondsBackupPowerLost = 10
 	if(!spawnPowerRestoreRunning)
 		spawnPowerRestoreRunning = TRUE
-	INVOKE_ASYNC(src, .proc/handlePowerRestore)
+	INVOKE_ASYNC(src, PROC_REF(handlePowerRestore))
 	update_appearance()
 
 /obj/machinery/door/airlock/proc/loseBackupPower()
@@ -424,7 +427,7 @@
 		secondsBackupPowerLost = 60
 	if(!spawnPowerRestoreRunning)
 		spawnPowerRestoreRunning = TRUE
-	INVOKE_ASYNC(src, .proc/handlePowerRestore)
+	INVOKE_ASYNC(src, PROC_REF(handlePowerRestore))
 	update_appearance()
 
 /obj/machinery/door/airlock/proc/regainBackupPower()
@@ -565,7 +568,7 @@
 			if(!machine_stat)
 				update_icon(ALL, AIRLOCK_DENY)
 				playsound(src,doorDeni,50,FALSE,3)
-				addtimer(CALLBACK(src, /atom/proc/update_icon, ALL, AIRLOCK_CLOSED), AIRLOCK_DENY_ANIMATION_TIME)
+				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon), ALL, AIRLOCK_CLOSED), AIRLOCK_DENY_ANIMATION_TIME)
 
 /obj/machinery/door/airlock/examine(mob/user)
 	. = ..()
@@ -686,7 +689,7 @@
 	if(!aiHacking)
 		aiHacking = TRUE
 		to_chat(user, span_warning("Airlock AI control has been blocked. Beginning fault-detection."))
-		sleep(50)
+		sleep(5 SECONDS)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -696,9 +699,9 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Fault confirmed: airlock control wire disabled or cut."))
-		sleep(20)
+		sleep(2 SECONDS)
 		to_chat(user, span_notice("Attempting to hack into airlock. This may take some time."))
-		sleep(200)
+		sleep(20 SECONDS)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -708,7 +711,7 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Upload access confirmed. Loading control program into airlock software."))
-		sleep(170)
+		sleep(17 SECONDS)
 		if(canAIControl(user))
 			to_chat(user, span_notice("Alert cancelled. Airlock control has been restored without our assistance."))
 			aiHacking = FALSE
@@ -718,11 +721,11 @@
 			aiHacking = FALSE
 			return
 		to_chat(user, span_notice("Transfer complete. Forcing airlock to execute program."))
-		sleep(50)
+		sleep(5 SECONDS)
 		//disable blocked control
 		aiControlDisabled = AI_WIRE_HACKED
 		to_chat(user, span_notice("Receiving control information from airlock."))
-		sleep(10)
+		sleep(1 SECONDS)
 		//bring up airlock dialog
 		aiHacking = FALSE
 		if(user)
@@ -738,7 +741,7 @@
 
 /obj/machinery/door/airlock/proc/on_attack_hand(atom/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, /atom/proc/attack_hand, user, modifiers)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, attack_hand), user, modifiers)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/door/airlock/attack_hand(mob/user, list/modifiers)
@@ -769,7 +772,7 @@
 
 /obj/machinery/door/airlock/proc/electrified_loop()
 	while (secondsElectrified > MACHINE_NOT_ELECTRIFIED)
-		sleep(10)
+		sleep(1 SECONDS)
 		if(QDELETED(src))
 			return
 
@@ -925,7 +928,7 @@
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
 	if(!issilicon(user) && !isAdminGhostAI(user))
-		if(isElectrified() && shock(user, 75))
+		if(isElectrified() && (C.flags_1 & CONDUCT_1) && shock(user, 75))
 			return
 	add_fingerprint(user)
 
@@ -1002,7 +1005,7 @@
 			user.visible_message(span_notice("[user] begins welding the airlock."), \
 							span_notice("You begin repairing the airlock..."), \
 							span_hear("You hear welding."))
-			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
+			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, PROC_REF(weld_checks), W, user)))
 				atom_integrity = max_integrity
 				set_machine_stat(machine_stat & ~BROKEN)
 				user.visible_message(span_notice("[user] finishes welding [src]."), \
@@ -1017,7 +1020,7 @@
 	user.visible_message(span_notice("[user] begins [welded ? "unwelding":"welding"] the airlock."), \
 		span_notice("You begin [welded ? "unwelding":"welding"] the airlock..."), \
 		span_hear("You hear welding."))
-	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, tool, user)))
+	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, PROC_REF(weld_checks), tool, user)))
 		return
 	welded = !welded
 	user.visible_message(span_notice("[user] [welded? "welds shut":"unwelds"] [src]."), \
@@ -1128,7 +1131,7 @@
 		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_WIELDED)) //being fireaxe'd
 			to_chat(user, span_warning("You need to be wielding [I] to do that!"))
 			return
-		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
+		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), 2)
 
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked || seal )
@@ -1151,7 +1154,7 @@
 		return TRUE
 
 	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock))
-		addtimer(CALLBACK(closeOther, .proc/close), 2)
+		addtimer(CALLBACK(closeOther, PROC_REF(close)), 2)
 
 	if(close_others)
 		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
@@ -1159,32 +1162,32 @@
 				if(otherlock.operating)
 					otherlock.delayed_close_requested = TRUE
 				else
-					addtimer(CALLBACK(otherlock, .proc/close), 2)
+					addtimer(CALLBACK(otherlock, PROC_REF(close)), 2)
 
 	if(cyclelinkedairlock)
 		if(!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency)
 			if(cyclelinkedairlock.operating)
 				cyclelinkedairlock.delayed_close_requested = TRUE
 			else
-				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
+				addtimer(CALLBACK(cyclelinkedairlock, PROC_REF(close)), 2)
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
-	sleep(1)
+	sleep(0.1 SECONDS)
 	set_opacity(0)
 	update_freelook_sight()
-	sleep(4)
+	sleep(0.4 SECONDS)
 	set_density(FALSE)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	air_update_turf(TRUE, FALSE)
-	sleep(1)
+	sleep(0.1 SECONDS)
 	layer = OPEN_DOOR_LAYER
 	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
-		addtimer(CALLBACK(src, .proc/close), 1)
+		addtimer(CALLBACK(src, PROC_REF(close)), 1)
 	return TRUE
 
 
@@ -1223,18 +1226,18 @@
 		set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(1)
+	sleep(0.1 SECONDS)
 	if(!air_tight)
 		set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
-	sleep(4)
+	sleep(0.4 SECONDS)
 	if(dangerous_close)
 		crush()
 	if(visible && !glass)
 		set_opacity(1)
 	update_freelook_sight()
-	sleep(1)
+	sleep(0.1 SECONDS)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
 	delayed_close_requested = FALSE
@@ -1285,7 +1288,7 @@
 			D.use_charge(user)
 		operating = TRUE
 		update_icon(ALL, AIRLOCK_EMAG, 1)
-		sleep(6)
+		sleep(0.6 SECONDS)
 		if(QDELETED(src))
 			return
 		operating = FALSE
@@ -1297,7 +1300,7 @@
 		loseMainPower()
 		loseBackupPower()
 
-/obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
+/obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
 		add_fingerprint(user)
 		return
@@ -1362,7 +1365,7 @@
 	secondsElectrified = seconds
 	diag_hud_set_electrified()
 	if(secondsElectrified > MACHINE_NOT_ELECTRIFIED)
-		INVOKE_ASYNC(src, .proc/electrified_loop)
+		INVOKE_ASYNC(src, PROC_REF(electrified_loop))
 
 	if(user)
 		var/message

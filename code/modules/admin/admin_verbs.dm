@@ -85,6 +85,9 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/show_manifest,
 	/client/proc/list_dna,
 	/client/proc/list_fingerprints,
+	/client/proc/message_pda, /*send a message to somebody on PDA*/
+	/client/proc/fax_panel, /*send a paper to fax*/
+	/datum/admins/proc/trophy_manager,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -142,7 +145,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/panicbunker,
 	/client/proc/toggle_interviews,
 	/client/proc/toggle_hub,
-	/client/proc/toggle_cdn
+	/client/proc/toggle_cdn,
+	/client/proc/generate_job_config,
 	)
 GLOBAL_LIST_INIT(admin_verbs_debug, world.AVerbsDebug())
 GLOBAL_PROTECT(admin_verbs_debug)
@@ -325,7 +329,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		log_admin("[key_name(usr)] admin ghosted.")
 		message_admins("[key_name_admin(usr)] admin ghosted.")
 		var/mob/body = mob
-		body.ghostize(1)
+		body.ghostize(TRUE)
 		init_verbs()
 		if(body && !body.key)
 			body.key = "@[key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
@@ -742,7 +746,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	if(!istype(T))
 		to_chat(src, span_notice("You can only give a disease to a mob of type /mob/living."), confidential = TRUE)
 		return
-	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, /proc/cmp_typepaths_asc)
+	var/datum/disease/D = input("Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!D)
 		return
 	T.ForceContractDisease(new D, FALSE, TRUE)

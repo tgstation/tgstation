@@ -73,11 +73,11 @@
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
-	dna.species.handle_mutant_bodyparts(src)
+	dna?.species.handle_mutant_bodyparts(src)
 	update_body_parts()
 
 /mob/living/carbon/update_body(is_creating = FALSE)
-	dna.species.handle_body(src) //This calls `handle_mutant_bodyparts` which calls `update_mutant_bodyparts()`. Don't double call!
+	dna?.species.handle_body(src) //This calls `handle_mutant_bodyparts` which calls `update_mutant_bodyparts()`. Don't double call!
 	update_body_parts(is_creating)
 
 /mob/living/carbon/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -89,9 +89,9 @@
 /mob/living/carbon/proc/refresh_loop(iter_cnt, rebuild = FALSE)
 	for(var/i in 1 to iter_cnt)
 		update_z_overlays(1, rebuild)
-		sleep(3)
+		sleep(0.3 SECONDS)
 		update_z_overlays(0, rebuild)
-		sleep(3)
+		sleep(0.3 SECONDS)
 
 #define NEXT_PARENT_COMMAND "next_parent"
 /// Takes a list of mutable appearances
@@ -466,8 +466,8 @@
 	update_wound_overlays()
 	var/list/needs_update = list()
 	var/limb_count_update = FALSE
-	var/obj/item/bodypart/l_leg/left_leg
-	var/obj/item/bodypart/r_leg/right_leg
+	var/obj/item/bodypart/leg/left/left_leg
+	var/obj/item/bodypart/leg/right/right_leg
 	var/old_left_leg_key
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
@@ -530,7 +530,7 @@
  * Returns a boolean, TRUE if the legs need to be redrawn, FALSE if they do not need to be redrawn.
  * Necessary so that we can ensure that modifications of legs cause overlay updates.
  */
-/mob/living/carbon/proc/update_legs(obj/item/bodypart/r_leg/right_leg, obj/item/bodypart/l_leg/left_leg, old_left_leg_key)
+/mob/living/carbon/proc/update_legs(obj/item/bodypart/leg/right/right_leg, obj/item/bodypart/leg/left/left_leg, old_left_leg_key)
 	var/list/left_leg_icons // yes it's actually a list, bet you didn't expect that, now did you?
 	var/legs_need_redrawn = FALSE
 	if(left_leg)
@@ -647,7 +647,7 @@
 
 	return .
 
-/obj/item/bodypart/r_leg/generate_icon_key()
+/obj/item/bodypart/leg/right/generate_icon_key()
 	RETURN_TYPE(/list)
 	. = ..()
 	if(left_leg_mask_key) // We do this so we can cache the versions with and without a mask, for when there's no left leg.
@@ -669,7 +669,7 @@
  *
  * Returns the `/image` of the right leg that was masked, or `null` if the mask didn't exist.
  */
-/obj/item/bodypart/r_leg/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state, image_dir)
+/obj/item/bodypart/leg/right/proc/generate_masked_right_leg(right_leg_icon_file, right_leg_icon_state, image_dir)
 	RETURN_TYPE(/image)
 	if(!left_leg_mask_cache[left_leg_mask_key] || !right_leg_icon_file || !right_leg_icon_state)
 		return

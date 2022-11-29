@@ -4,8 +4,13 @@
 /// Prepares a text to be used for maptext. Use this so it doesn't look hideous.
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
 
-/// Macro from Lummox used to get height from a MeasureText proc
-#define WXH_TO_HEIGHT(x) text2num(copytext(x, findtextEx(x, "x") + 1))
+/// Macro from Lummox used to get height from a MeasureText proc.
+/// resolves the MeasureText() return value once, then resolves the height, then sets return_var to that.
+#define WXH_TO_HEIGHT(measurement, return_var) \
+	do { \
+		var/_measurement = measurement; \
+		return_var = text2num(copytext(_measurement, findtextEx(_measurement, "x") + 1)); \
+	} while(FALSE);
 
 /// Removes characters incompatible with file names.
 #define SANITIZE_FILENAME(text) (GLOB.filename_forbidden_chars.Replace(text, ""))
@@ -53,3 +58,5 @@
 #define HALLUCINATION_FILE "hallucination.json"
 /// File location for ninja lines
 #define NINJA_FILE "ninja.json"
+/// File loation for title splashes
+#define SPLASH_FILE "splashes.json"

@@ -33,7 +33,7 @@
 			locked = FALSE
 			update_appearance()
 
-			sleep(2)
+			sleep(0.2 SECONDS)
 			open(TRUE)
 
 			locked = TRUE
@@ -44,7 +44,7 @@
 			close(TRUE)
 
 			locked = TRUE
-			sleep(2)
+			sleep(0.2 SECONDS)
 			update_appearance()
 
 	send_status()

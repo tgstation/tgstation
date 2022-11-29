@@ -324,3 +324,21 @@
 	)
 	result = /obj/item/food/springroll
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/caramel_popcorn
+	name = "Caramel popcorn"
+	reqs = list(
+		/obj/item/food/popcorn = 1,
+		/datum/reagent/consumable/caramel = 3,
+	)
+	result = /obj/item/food/popcorn/caramel
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/salty_popcorn
+	name = "Salty popcorn"
+	reqs = list(
+		/obj/item/food/popcorn = 1,
+		/datum/reagent/consumable/salt = 3,
+	)
+	result = /obj/item/food/popcorn/salty
+	subcategory = CAT_MISCFOOD

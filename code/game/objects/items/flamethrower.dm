@@ -209,7 +209,7 @@
 			igniter.ignite_turf(src,T)
 		else
 			default_ignite(T)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		previousturf = T
 	operating = FALSE
 	for(var/mob/M in viewers(1, loc))
@@ -243,7 +243,7 @@
 		if(create_with_tank)
 			ptank = new /obj/item/tank/internals/plasma/full(src)
 		update_appearance()
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_refill)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_refill))
 
 /obj/item/flamethrower/full
 	create_full = TRUE

@@ -110,9 +110,9 @@
 	alternate_magazine = current_mag
 	toggled = !toggled
 	if(toggled)
-		to_chat(user, span_notice("You switch to tube B."))
+		balloon_alert(user, "switched to tube B")
 	else
-		to_chat(user, span_notice("You switch to tube A."))
+		balloon_alert(user, "switched to tube A")
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
@@ -202,7 +202,7 @@
 
 /obj/item/gun/ballistic/shotgun/bulldog/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(!istype(weapon, secondary_magazine_type))
-		to_chat(user, span_warning("[weapon] doesn't seem to fit into [src]..."))
+		balloon_alert(user, "[weapon.name] doesn't fit!")
 		return SECONDARY_ATTACK_CALL_NORMAL
 	if(!user.transferItemToLoc(weapon, src))
 		to_chat(user, span_warning("You cannot seem to get [src] out of your hands!"))
@@ -211,7 +211,7 @@
 	secondary_magazine = weapon
 	if(old_mag)
 		user.put_in_hands(old_mag)
-	to_chat(user, span_notice("You load a new [magazine_wording] into [src]."))
+	balloon_alert(user, "secondary [magazine_wording] loaded")
 	playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

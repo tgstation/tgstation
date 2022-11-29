@@ -131,7 +131,7 @@ As an Engineer, the Supermatter Monitoring Program on modular computers give you
 As an Engineer, the Supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will touching it with telepathy.
 As an Engineer, you can cool the Supermatter crystal by spraying it with a fire extinguisher. Only for the brave!
 As an Engineer, you can electrify grilles by placing powered cables beneath them.
-As an Engineer, you can lock APCs, fire alarms, emitters and radiation collectors using your ID card to prevent others from disabling them.
+As an Engineer, you can lock APCs and emitters using your ID card to prevent others from disabling them.
 As an Engineer, you can pry open secure storage blast doors by disabling the engine room APC's main breaker. This is obviously a bad idea if the engine is running.
 As an Engineer, you can repair windows by using a welding tool on them while not in combat mode.
 As an Engineer, you can temporarily power the station solely with the solar arrays. They will provide just enough electricity to power the station for a while, however their output is just slightly below what is truly needed to consistently power the station.

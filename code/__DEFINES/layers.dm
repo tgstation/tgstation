@@ -45,13 +45,13 @@
 #define O_LIGHTING_VISUAL_PLANE 11
 #define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
 
-///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 12
-
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_PLANE 14
 
 #define RENDER_PLANE_LIGHTING 15
+
+///Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 16
 
 ///---------------- MISC -----------------------
 
@@ -65,9 +65,6 @@
 #define HIGH_GAME_PLANE 22
 
 #define FULLSCREEN_PLANE 23
-
-///Visuals that represent sounds happening, and can be seen while blind.
-#define SOUND_EFFECT_VISUAL_PLANE 25
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
@@ -123,6 +120,7 @@
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
 #define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
+#define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER 2.51
@@ -213,10 +211,11 @@
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
 
-///--------------- SOUND EFFECT VISUALS ------------
+#define FOV_EFFECT_LAYER 100
+
+///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 /// Bubble for typing indicators
-#define TYPING_LAYER 1
-#define FOV_EFFECTS_LAYER 2 //Blindness effects are not layer 4, they lie to you
+#define TYPING_LAYER 500
 
 #define RADIAL_BACKGROUND_LAYER 0
 ///1000 is an unimportant number, it's just to normalize copied layers
@@ -237,3 +236,21 @@
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
 #define PLANE_MASTERS_COLORBLIND "plane_masters_colorblind"
+
+//Plane master critical flags
+//Describes how different plane masters behave when they are being culled for performance reasons
+/// This plane master will not go away if its layer is culled. useful for preserving effects
+#define PLANE_CRITICAL_DISPLAY (1<<0)
+/// This plane master will temporarially remove relays to non critical planes if it's layer is culled (and it's critical)
+/// This is VERY hacky, but needed to ensure that some instances of BLEND_MULITPLY work as expected (fuck you god damn parallax)
+/// It also implies that the critical plane has a *'d render target, making it mask itself
+#define PLANE_CRITICAL_NO_EMPTY_RELAY (1<<1)
+
+#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_EMPTY_RELAY)
+
+/// A value of /datum/preference/numeric/multiz_performance that disables the option
+#define MULTIZ_PERFORMANCE_DISABLE -1
+/// We expect at most 3 layers of multiz
+/// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
+/// If you modify this, you'll need to modify the tsx file too
+#define MAX_EXPECTED_Z_DEPTH 2

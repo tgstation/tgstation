@@ -6,6 +6,8 @@
 		Try hiding some broken glass behind your poster before you hang it to give  \
 		do-gooders who try to take it down a hard time!"
 
+	progression_minimum = 0 MINUTES
+	duplicate_type = /datum/traitor_objective/demoralise/poster
 	/// Have we handed out a box of stuff yet?
 	var/granted_posters = FALSE
 	/// All of the posters the traitor gets, if this list is empty they've failed
@@ -35,9 +37,9 @@
 				var/obj/item/poster/traitor/added_poster = new /obj/item/poster/traitor(posterbox)
 				var/obj/structure/sign/poster/traitor/poster_when_placed = added_poster.poster_structure
 				posters += poster_when_placed
-				RegisterSignal(poster_when_placed, COMSIG_DEMORALISING_EVENT, .proc/on_mood_event)
-				RegisterSignal(poster_when_placed, COMSIG_POSTER_TRAP_SUCCEED, .proc/on_triggered_trap)
-				RegisterSignal(poster_when_placed, COMSIG_PARENT_QDELETING, .proc/on_poster_destroy)
+				RegisterSignal(poster_when_placed, COMSIG_DEMORALISING_EVENT, PROC_REF(on_mood_event))
+				RegisterSignal(poster_when_placed, COMSIG_POSTER_TRAP_SUCCEED, PROC_REF(on_triggered_trap))
+				RegisterSignal(poster_when_placed, COMSIG_PARENT_QDELETING, PROC_REF(on_poster_destroy))
 
 			user.put_in_hands(posterbox)
 			posterbox.balloon_alert(user, "the box materializes in your hand")
@@ -57,7 +59,7 @@
  * Arguments
  * * victim - A mob who just got something stuck in their hand.
  */
-/datum/traitor_objective/demoralise/poster/proc/on_triggered_trap(mob/victim)
+/datum/traitor_objective/demoralise/poster/proc/on_triggered_trap(datum/source, mob/victim)
 	SIGNAL_HANDLER
 	on_mood_event(victim.mind)
 

@@ -99,12 +99,12 @@
 					else
 						ipintel_handle_error("Bad intel from server: [response["result"]].", ip, retryed)
 						if (!retryed)
-							sleep(25)
+							sleep(2.5 SECONDS)
 							return .(ip, 1)
 				else
 					ipintel_handle_error("Bad response from server: [response["status"]].", ip, retryed)
 					if (!retryed)
-						sleep(25)
+						sleep(2.5 SECONDS)
 						return .(ip, 1)
 
 		else if (status == 429)
@@ -113,12 +113,12 @@
 		else
 			ipintel_handle_error("Unknown status code: [status].", ip, retryed)
 			if (!retryed)
-				sleep(25)
+				sleep(2.5 SECONDS)
 				return .(ip, 1)
 	else
 		ipintel_handle_error("Unable to connect to API.", ip, retryed)
 		if (!retryed)
-			sleep(25)
+			sleep(2.5 SECONDS)
 			return .(ip, 1)
 
 

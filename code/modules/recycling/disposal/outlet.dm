@@ -36,9 +36,10 @@
 
 	target = get_ranged_target_turf(src, dir, 10)
 
-	trunk = locate() in loc
-	if(trunk)
-		trunk.linked = src // link the pipe trunk to self
+	var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc
+	if(found_trunk)
+		found_trunk.set_linked(src) // link the pipe trunk to self
+		trunk = found_trunk
 
 /obj/structure/disposaloutlet/Destroy()
 	if(trunk)
@@ -55,9 +56,9 @@
 	if((start_eject + 30) < world.time)
 		start_eject = world.time
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, FALSE)
-		addtimer(CALLBACK(src, .proc/expel_holder, H, TRUE), 20)
+		addtimer(CALLBACK(src, PROC_REF(expel_holder), H, TRUE), 20)
 	else
-		addtimer(CALLBACK(src, .proc/expel_holder, H), 20)
+		addtimer(CALLBACK(src, PROC_REF(expel_holder), H), 20)
 
 /obj/structure/disposaloutlet/proc/expel_holder(obj/structure/disposalholder/H, playsound=FALSE)
 	if(playsound)

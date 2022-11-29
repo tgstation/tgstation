@@ -3,7 +3,7 @@ import { BooleanLike, classes } from 'common/react';
 import { ComponentType, createComponentVNode, InfernoNode } from 'inferno';
 import { VNodeFlags } from 'inferno-vnode-flags';
 import { sendAct, useBackend, useLocalState } from '../../../../backend';
-import { Box, Button, Dropdown, NumberInput, Stack } from '../../../../components';
+import { Box, Button, Dropdown, Input, NumberInput, Stack } from '../../../../components';
 import { createSetPreference, PreferencesMenuData } from '../../data';
 import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
 
@@ -341,6 +341,27 @@ export const FeatureValueInput = (
           }
         );
       }}
+    />
+  );
+};
+
+export type FeatureShortTextData = {
+  maximum_length: number;
+};
+
+export const FeatureShortTextInput = (
+  props: FeatureValueProps<string, string, FeatureShortTextData>
+) => {
+  if (!props.serverData) {
+    return <Box>Loading...</Box>;
+  }
+
+  return (
+    <Input
+      width="100%"
+      value={props.value}
+      maxLength={props.serverData.maximum_length}
+      onChange={(_, value) => props.handleSetValue(value)}
     />
   );
 };

@@ -231,3 +231,11 @@
 	name = "leader hood"
 	desc = "I mean, you don't /have/ to seek bling water. I just think you should."
 	icon_state = "chaplain_hood_leader"
+
+/obj/item/clothing/suit/chaplainsuit/shrinehand
+	name = "shrinehand robe"
+	desc = "Won't help you communicate with spirits, but you'll certainly look the part."
+	icon_state = "shrinehand"
+	inhand_icon_state = "shrinehand"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDEJUMPSUIT

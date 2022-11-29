@@ -14,9 +14,10 @@
 	item_flags = NEEDS_PERMIT | NOBLUDGEON
 	sharpness = SHARP_POINTY
 	force = 18
+	antimagic_flags = NONE
 
 /obj/item/gun/magic/hook/shoot_with_empty_chamber(mob/living/user)
-	to_chat(user, span_warning("[src] isn't ready to fire yet!"))
+	balloon_alert(user, "not ready yet!")
 
 /obj/item/gun/magic/hook/can_trigger_gun(mob/living/user) // This isn't really a gun, so it shouldn't be checking for TRAIT_NOGUNS, a firing pin (pinless), or a trigger guard (guardless)
 	return TRUE

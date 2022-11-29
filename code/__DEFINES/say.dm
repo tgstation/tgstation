@@ -52,8 +52,6 @@
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
 
-#define MODE_MONKEY "monkeyhive"
-
 #define MODE_MAFIA "mafia"
 
 #define MODE_SING "sing"
@@ -96,6 +94,7 @@
 #define MAX_NAME_LEN 42
 #define MAX_BROADCAST_LEN 512
 #define MAX_CHARTER_LEN 80
+#define MAX_PLAQUE_LEN 144
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)

@@ -9,12 +9,15 @@
 	supervisors = SUPERVISOR_QM
 	selection_color = "#dcba97"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "SHAFT_MINER"
 
 	outfit = /datum/outfit/job/miner
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
+
+	mind_traits = list(TRAIT_DETECT_STORM)
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 	bounty_types = CIV_JOB_MINE

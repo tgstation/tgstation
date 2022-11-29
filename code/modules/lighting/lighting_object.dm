@@ -50,12 +50,6 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	return ..()
 
 /datum/lighting_object/proc/update()
-#ifdef VISUALIZE_LIGHT_UPDATES
-	affected_turf.add_atom_colour(COLOR_BLUE_LIGHT, ADMIN_COLOUR_PRIORITY)
-	animate(affected_turf, 10, color = null)
-	addtimer(CALLBACK(affected_turf, /atom/proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY, COLOR_BLUE_LIGHT), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
-#endif
-
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
 	// Well my man, it's because the loop performed like shit.
@@ -67,6 +61,13 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
 	var/turf/affected_turf = src.affected_turf
+
+#ifdef VISUALIZE_LIGHT_UPDATES
+	affected_turf.add_atom_colour(COLOR_BLUE_LIGHT, ADMIN_COLOUR_PRIORITY)
+	animate(affected_turf, 10, color = null)
+	addtimer(CALLBACK(affected_turf, TYPE_PROC_REF(/atom, remove_atom_colour), ADMIN_COLOUR_PRIORITY, COLOR_BLUE_LIGHT), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
+#endif
+
 	var/datum/lighting_corner/red_corner = affected_turf.lighting_corner_SW || dummy_lighting_corner
 	var/datum/lighting_corner/green_corner = affected_turf.lighting_corner_SE || dummy_lighting_corner
 	var/datum/lighting_corner/blue_corner = affected_turf.lighting_corner_NW || dummy_lighting_corner
