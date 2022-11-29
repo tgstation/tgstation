@@ -245,6 +245,7 @@
 		if(!amount)
 			transfer_rate = MIN_IV_TRANSFER_RATE
 			visible_message(span_hear("[src] pings."))
+			update_appearance(UPDATE_ICON)
 			return
 
 		// If the human is losing too much blood, beep.
