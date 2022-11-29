@@ -53,9 +53,6 @@
 /obj/item/paperwork/update_overlays()
 	. = ..()
 
-	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
-	add_overlay(stamp_overlay)
-
 	if(stamped)
 		. += stamp_overlay
 
@@ -87,6 +84,7 @@
  * Handled as a proc so that an object may be maked as "stamped" even when a stamp isn't present (like the photocopier)
  */
 /obj/item/paperwork/proc/add_stamp()
+	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
 	stamped = TRUE
 	update_overlays()
 
@@ -137,7 +135,7 @@
 /obj/item/paperwork/service/Initialize()
 	. = ..()
 
-	detailed_desc += span_info(" Your begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")
+	detailed_desc += span_info(" You begin scanning over the document. This is a standard Nanotrasen NT-435Z3 form used for requests to Central Command.")
 	detailed_desc += span_info(" Looks like a nearby station has sent in a MAXIMUM priority request for coal, in seemingly ridiculous quantities.")
 	detailed_desc += span_info(" The reason listed for the request seems to be hastily filled in -- 'Seeking alternative methods to power the station.'")
 	detailed_desc += span_info(" A MAXIMUM priority request like this is nothing to balk at. You should probably stamp this.")
