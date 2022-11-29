@@ -1026,3 +1026,42 @@
       the pamphlet.
   supergrog2:
   - bugfix: fixes grilles dropping stack of 0 iron rods
+2022-11-29:
+  Auris456852:
+  - bugfix: Makes Miner's Salve HUD screw not permanent.
+  Common fucking sense:
+  - bugfix: The changes to Mafia and holopad say prefixes was reverted.
+  - spellcheck: Mafia changeling say prefix has no longer been changed to .1, and
+      has been returned to .j
+  - spellcheck: AI Holopad say has no longer been changed to .2, and has been returned
+      to .h
+  Ghommie:
+  - bugfix: pAIs and lightgeists can now correctly climb ladders.
+  - bugfix: fixed a small issue with the radial menu for ladders that caused the user
+      to travel down when abruptly closed.
+  Jacquerel:
+  - refactor: Moves wall smashing out of simple mob code and into an element we can
+      reuse for basic mobs later
+  Melbert:
+  - code_imp: Cuts some uses of allowed list as a typecache. Allowed lists are not
+      typecaches, don't make them typecaches
+  - bugfix: Fixes dragon despawn deleting all the people they consumed
+  RikuTheKiller:
+  - bugfix: You can now make acetaldehyde without making pentaerythritol.
+  Thunder12345:
+  - bugfix: TTV bombs can no longer be concealed inside food
+  epicgamer545:
+  - admin: Nanotrashen made some top-of-the-line changes to their top-of-the-line
+      prison by walling off their equipment area and removing some spare guns they
+      somehow left on the tables. We also stole the security computers, so people
+      with telekinesis can't access them.
+  etherware-novice:
+  - qol: quantum keycards light up with the department theyre in (or grey as a fallback)
+  - qol: quantum keycards are custom renamable w/ pen, to help keep em organized
+  private-tristan:
+  - spellcheck: removed a reference to radiation collectors in tip of the round
+  - qol: in metastation engineering, the plumbing water tank has been replaced with
+      a proper water tank, and shower water is now plumbed in from the engine maintenance
+  san7890:
+  - qol: The photocopier will now tell you when it's not able to find an ID to charge
+      on your person.

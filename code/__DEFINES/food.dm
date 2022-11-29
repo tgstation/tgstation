@@ -101,7 +101,7 @@ DEFINE_BITFIELD(foodtypes, list(
 /// Finger food can be eaten while walking / running around
 #define FOOD_FINGER_FOOD (1<<1)
 
-DEFINE_BITFIELD(food_types, list(
+DEFINE_BITFIELD(food_flags, list(
 	"FOOD_FINGER_FOOD" = FOOD_FINGER_FOOD,
 	"FOOD_IN_CONTAINER" = FOOD_IN_CONTAINER,
 ))
