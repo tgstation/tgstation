@@ -735,6 +735,11 @@
 	result = /obj/item/food/headcheese
 	subcategory = CAT_MEAT
 
+/datum/crafting_recipe/food/drying/tiziran_sausage
+	reqs = list(/obj/item/food/raw_tiziran_sausage = 1)
+	result = /obj/item/food/tiziran_sausage
+	subcategory = CAT_MEAT
+
 /datum/crafting_recipe/food/drying/sosjerky
 	reqs = list(/obj/item/food/meat/slab = 1)
 	result = /obj/item/food/sosjerky/healthy
