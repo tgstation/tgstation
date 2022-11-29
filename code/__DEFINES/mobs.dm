@@ -462,7 +462,7 @@
 
 #define PULL_PRONE_SLOWDOWN 1.5
 #define HUMAN_CARRY_SLOWDOWN 0.35
-#define BAD_BACK_SLOWDOWN 0.5
+#define DECREPIT_SLOWDOWN 0.7
 
 //Flags that control what things can spawn species (whitelist)
 //Badmin magic mirror

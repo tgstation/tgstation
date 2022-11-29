@@ -1025,7 +1025,7 @@
 			right_cane = WEAKREF(right_hand_item)
 			RegisterSignals(right_hand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
 	else
-		human_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown) // TODO make this it's own modifier at some point
+		human_holder.add_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown) // TODO make this it's own modifier at some point
 		quirk_holder.AddElement(/datum/element/waddling)
 
 
@@ -1048,7 +1048,7 @@
 		if(secondary_cane)
 			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	else
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
 		quirk_holder.RemoveElement(/datum/element/waddling)
 
 /// Signal handler for when the badback quirk_holder equips an item
@@ -1062,10 +1062,10 @@
 	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
 	if(is_holding_cane)
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
 		quirk_holder.RemoveElement(/datum/element/waddling)
 	else
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
 		quirk_holder.AddElement(/datum/element/waddling)
 
 	var/obj/item/primary_cane = left_cane?.resolve()
@@ -1103,7 +1103,7 @@
 	var/both_hands_have_canes = left_cane?.resolve() && right_cane?.resolve()
 
 	if(!both_hands_have_canes)
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
 		quirk_holder.AddElement(/datum/element/waddling)
 
 	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
