@@ -189,9 +189,11 @@ const LayerSection = (props, context) => {
 const PipeTypeSection = (props, context) => {
   const { act, data } = useBackend(context);
   const { categories = [] } = data;
+  const { selected_category } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
-    'categoryName'
+    'categoryName',
+    selected_category
   );
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
@@ -310,7 +312,7 @@ export const SmartPipeBlockSection = (props, context) => {
 };
 
 export const RapidPipeDispenser = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const { category: rootCategoryIndex } = data;
   return (
     <Window width={450} height={575}>
