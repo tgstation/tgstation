@@ -53,7 +53,7 @@
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
-	var/datum/species/rec_species = human_reciever.dna.species
+	var/datum/species/rec_species = human_receiver.dna.species
 	if(!(rec_species.no_equip & ITEM_SLOT_MASK))
 		rec_species.no_equip += ITEM_SLOT_MASK
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
@@ -66,7 +66,7 @@
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
-	var/datum/species/rec_species = human_reciever.dna.species
+	var/datum/species/rec_species = human_receiver.dna.species
 	if(!(initial(rec_species.no_equip) & ITEM_SLOT_MASK))
 		rec_species.no_equip -= ITEM_SLOT_MASK
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
@@ -148,12 +148,12 @@
 /obj/item/organ/internal/heart/carp/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 	ADD_TRAIT(reciever, TRAIT_RESISTCOLD, type)
-	ADD_TRAIT(reciever, TRAIT_RESISTLOWPRESSURE, GENETIC_MUTATION)
+	ADD_TRAIT(reciever, TRAIT_RESISTLOWPRESSURE, type)
 	//considered adding burn but this is supposed to be good at space exploration
 
 /obj/item/organ/internal/heart/carp/Remove(mob/living/carbon/heartless, special)
 	. = ..()
-	REMOVE_TRAIT(reciever, TRAIT_RESISTCOLD, type)
-	REMOVE_TRAIT(reciever, TRAIT_RESISTLOWPRESSURE, GENETIC_MUTATION)
+	REMOVE_TRAIT(heartless, TRAIT_RESISTCOLD, type)
+	REMOVE_TRAIT(heartless, TRAIT_RESISTLOWPRESSURE, type)
 
 #undef CARP_COLORS
