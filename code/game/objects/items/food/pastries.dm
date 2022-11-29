@@ -30,7 +30,7 @@
 
 /obj/item/food/muffin/moffin
 	name = "moffin"
-	icon_state = "moffin"
+	icon_state = "moffin_1"
 	desc = "A delicious and spongy little cake."
 	tastes = list("muffin" = 3, "dust" = 1, "lint" = 1)
 	foodtypes = CLOTH | GRAIN | SUGAR | BREAKFAST

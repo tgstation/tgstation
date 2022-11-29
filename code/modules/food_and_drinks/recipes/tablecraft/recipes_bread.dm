@@ -137,7 +137,7 @@
 	reqs = list(
 		/obj/item/organ/internal/brain = 1,
 		/obj/item/organ/internal/heart = 1,
-		/obj/item/food/bread = 2,
+		/obj/item/food/bread/plain = 2,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
