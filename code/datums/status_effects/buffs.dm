@@ -321,6 +321,17 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 
+/atom/movable/screen/alert/status_effect/penthrite
+	name = "Strong Heartbeat"
+	desc = "Your heart beats with great force!"
+	icon_state = "penthrite"
+
+/datum/status_effect/penthrite
+	id = "Penthrite"
+	duration = -1
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/penthrite
+
 /datum/status_effect/regenerative_core/on_apply()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 	owner.adjustBruteLoss(-25)
