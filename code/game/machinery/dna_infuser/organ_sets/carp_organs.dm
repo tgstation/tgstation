@@ -140,20 +140,11 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
+	organ_traits = list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE)
+
 /obj/item/organ/internal/heart/carp/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing...")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
-
-/obj/item/organ/internal/heart/carp/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
-	. = ..()
-	ADD_TRAIT(reciever, TRAIT_RESISTCOLD, type)
-	ADD_TRAIT(reciever, TRAIT_RESISTLOWPRESSURE, type)
-	//considered adding burn but this is supposed to be good at space exploration
-
-/obj/item/organ/internal/heart/carp/Remove(mob/living/carbon/heartless, special)
-	. = ..()
-	REMOVE_TRAIT(heartless, TRAIT_RESISTCOLD, type)
-	REMOVE_TRAIT(heartless, TRAIT_RESISTLOWPRESSURE, type)
 
 #undef CARP_COLORS
