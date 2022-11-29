@@ -115,9 +115,9 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
  * update_delay_buffer is passed all the way to hasChanged() from their camera updates on movement
  * to change the time between static updates.
 */
-/datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/c, update_delay_buffer)
-	if(c.can_use())
-		majorChunkChange(c, 1, update_delay_buffer)
+/datum/cameranet/proc/updatePortableCamera(obj/machinery/camera/updating_camera, update_delay_buffer)
+	if(updating_camera.can_use())
+		majorChunkChange(updating_camera, 1, update_delay_buffer)
 
 /**
  * Never access this proc directly!!!!

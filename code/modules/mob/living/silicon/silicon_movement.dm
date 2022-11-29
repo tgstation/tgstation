@@ -1,7 +1,8 @@
-//We only call a camera static update if we have successfully moved
+//We only call a camera static update if we have successfully moved and the camera is present and working
 /mob/living/silicon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	update_camera_location(old_loc)
+	if(builtInCamera?.can_use())
+		update_camera_location(old_loc)
 
 /mob/living/silicon/proc/update_camera_location(oldLoc)
 	oldLoc = get_turf(oldLoc)
