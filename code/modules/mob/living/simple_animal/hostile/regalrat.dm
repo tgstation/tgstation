@@ -47,6 +47,7 @@
 	SSpoints_of_interest.make_point_of_interest(src)
 
 /mob/living/simple_animal/hostile/regalrat/Destroy()
+	SSpoints_of_interest.remove_point_of_interest(src)
 	QDEL_NULL(domain)
 	QDEL_NULL(riot)
 	return ..()
