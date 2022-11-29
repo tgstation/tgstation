@@ -117,7 +117,7 @@
 				on_find_target(controller, target_key, scan)
 				break
 
-	for(var/atom/scanned_atom as anything in reverseList(view(scan_range, living_pawn) - adjacent)) //Search for something in range, minus what we already checked.
+	for(var/atom/scanned_atom as anything in view(scan_range, living_pawn) - adjacent) //Search for something in range, minus what we already checked.
 		var/final_result = targetting_datum.can_attack(living_pawn, scanned_atom)
 		if(final_result)
 			on_find_target(controller, target_key, scanned_atom)

@@ -2,7 +2,8 @@
 /mob/living/basic/bot/cleanbot
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon_state = "s"
+	base_icon_state = "cleanbot"
+	icon_state = "cleanbot"
 	pass_flags = PASSMOB | PASSFLAPS
 	layer = MOB_UPPER_LAYER
 	density = FALSE
