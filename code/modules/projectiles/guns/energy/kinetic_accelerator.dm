@@ -31,7 +31,7 @@
 	. = ..()
 	if(max_mod_capacity)
 		. += "<b>[get_remaining_mod_capacity()]%</b> mod capacity remaining."
-		. += span_info("You can use a <b>crowbar</b> to remove modules.")
+		. += span_info("You can use a <b>crowbar</b> to remove all modules or <b>right-click</b> with an empty hand to remove a specific one.")
 		for(var/A in modkits)
 			var/obj/item/borg/upgrade/modkit/M = A
 			. += span_notice("There is \a [M] installed, using <b>[M.cost]%</b> capacity.")
@@ -39,7 +39,7 @@
 /obj/item/gun/energy/recharge/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
 	if(modkits.len)
-		to_chat(user, span_notice("You pry the modifications out."))
+		to_chat(user, span_notice("You pry all the modifications out."))
 		I.play_tool_sound(src, 100)
 		for(var/a in modkits)
 			var/obj/item/borg/upgrade/modkit/M = a
@@ -57,24 +57,24 @@
 
 	var/list/display_names = list()
 	var/list/items = list()
-	for(var/i in 1 to length(modkits))
-		var/obj/item/thing = modkits[i]
-		display_names["[thing.name] ([i])"] = REF(thing)
+	for(var/modkits_lenght in 1 to length(modkits))
+		var/obj/item/thing = modkits[modkits_lenght]
+		display_names["[thing.name] ([modkits_lenght])"] = REF(thing)
 		var/image/item_image = image(icon = thing.icon, icon_state = thing.icon_state)
 		if(length(thing.overlays))
 			item_image.copy_overlays(thing)
-		items += list("[thing.name] ([i])" = item_image)
+		items += list("[thing.name] ([modkits_lenght])" = item_image)
 
 	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return
 
-	var/MK_reference = display_names[pick]
-	var/obj/item/borg/upgrade/modkit/MK = locate(MK_reference) in modkits
-	if(!istype(MK))
+	var/modkit_reference = display_names[pick]
+	var/obj/item/borg/upgrade/modkit/modkit_to_remove = locate(modkit_reference) in modkits
+	if(!istype(modkit_to_remove))
 		return
-	if(!user.put_in_hands(MK))
-		MK.forceMove(get_turf(src))
+	if(!user.put_in_hands(modkit_to_remove))
+		modkit_to_remove.forceMove(get_turf(src))
 	update_appearance()
 
 
@@ -263,9 +263,9 @@
 			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
 			KA.modkits += src
 		else
-			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits."))
+			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
 	else
-		to_chat(user, span_notice("You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar to remove existing modkits."))
+		to_chat(user, span_notice("You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar or right click with an empty hand to remove existing modkits."))
 		. = FALSE
 
 /obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)

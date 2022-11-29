@@ -59,10 +59,6 @@
 /obj/item/storage/box/survival/mining
 	mask_type = /obj/item/clothing/mask/gas/explorer/folded
 
-/obj/item/storage/box/survival/mining/PopulateContents()
-	..()
-	new /obj/item/crowbar/red(src)
-
 // Engineer survival box
 /obj/item/storage/box/survival/engineer
 	name = "extended-capacity survival box"
