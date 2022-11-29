@@ -999,7 +999,7 @@
 	hardcore_value = 4
 	gain_text = "<span class='danger'>You feel old!</span>"
 	lose_text = "<span class='notice'>You feel young again.</span>"
-	medical_record_text = "Patient suffers from a lack of mobility without a cane as support."
+	medical_record_text = "Patient suffers from a lack of mobility requiring a cane for support."
 	mail_goodies = list(/obj/item/cane)
 	var/datum/weakref/left_cane
 	var/datum/weakref/right_cane
@@ -1077,9 +1077,7 @@
 		else if(!primary_cane)
 			left_cane = WEAKREF(left_hand_item)
 			primary_cane = left_hand_item
-			RegisterSignal(primary_cane, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
-			RegisterSignal(primary_cane, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
-			RegisterSignal(primary_cane, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
+			RegisterSignals(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
 	else if(primary_cane) // no cane in hand, time to remove the signal and weakref
 		UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 		//left_cane = null
@@ -1091,9 +1089,7 @@
 		else if(!secondary_cane)
 			right_cane = WEAKREF(right_hand_item)
 			secondary_cane = right_hand_item
-			RegisterSignal(secondary_cane, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
-			RegisterSignal(secondary_cane, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
-			RegisterSignal(secondary_cane, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
+			RegisterSignals(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
 	else if(secondary_cane) // no cane in hand, time to remove the signal and weakref
 		UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 		//right_cane = null
