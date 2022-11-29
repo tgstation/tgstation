@@ -2,30 +2,30 @@ import { useBackend } from '../backend';
 import { Button, DepartmentEntry, DepartmentPane, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
+import { merge } from 'common/merge';
 import { SFC } from 'inferno';
 import { JobToIcon } from './common/JobToIcon';
 import { BaseDepartmentInfo, BaseJobInfo } from '../components/DepartmentPane';
 
 class Job implements BaseJobInfo {
-  name: string;
   unavailable_reason: string | null;
   command: boolean;
   open_slots: number;
   used_slots: number;
   icon: string;
   prioritized: boolean;
-  job_description: string;
+  description: string;
 }
 
 class Department implements BaseDepartmentInfo {
-  name: string;
   color: string;
   open_slots: number;
-  jobs: Job[];
+  jobs: { [x: string]: Job };
 }
 
 type Data = {
-  departments: Department[];
+  static_data: { departments: { [x: string]: Department } };
+  departments: { [x: string]: Department };
   alert_state: string;
   shuttle_status: string;
   disable_jobs_for_non_observers: boolean;
@@ -33,11 +33,16 @@ type Data = {
   round_duration: string;
 };
 
-// Specifically not typed for flexibility.
-export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
+export const JobEntry: SFC<{
+  jobName: string;
+  job: Job;
+  department: Department;
+  act: Function;
+}> = (data) => {
+  const jobName = data.jobName;
   const job = data.job;
   const department = data.department;
-  const jobIcon = job.icon || JobToIcon[job.name] || null;
+  const jobIcon = job.icon || JobToIcon[jobName] || null;
   return (
     <Stack.Item fill>
       <Button
@@ -72,12 +77,12 @@ export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
           ))
         }
         onClick={() => {
-          !job.unavailable_reason && data.act('SelectedJob', { job: job.name });
+          !job.unavailable_reason && data.act('SelectedJob', { job: jobName });
         }}
         content={
           <div>
             {jobIcon && <Icon name={jobIcon} />}
-            {job.command ? <b>{job.name}</b> : job.name}
+            {job.command ? <b>{jobName}</b> : jobName}
             <span style={{ 'float': 'right' }}>
               {job.used_slots} / {job.open_slots}
             </span>
@@ -90,11 +95,8 @@ export const JobEntry: SFC<{ job; department; act: Function }> = (data) => {
 
 export const JobSelection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { departments } = data;
-
-  const anyJobAvailable = departments.filter((department) =>
-    department.jobs.some((job) => !job.unavailable_reason)
-  );
+  let departments = JSON.parse(JSON.stringify(data.departments)); // Why the fuck is it so hard to clone objects properly in JS?!
+  departments = merge(departments, data.static_data.departments);
 
   return (
     <Window width={1012} height={716}>
@@ -106,7 +108,7 @@ export const JobSelection = (props, context) => {
               style={{ 'float': 'right' }}
               onClick={() => act('SelectedJob', { 'job': 'Random' })}
               content="Random Job!"
-              tooltip="Roll a random job. You can re-roll or cancel your random job if you don't like it."
+              tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
             />
           }>
           <DepartmentPane
@@ -126,12 +128,13 @@ export const JobSelection = (props, context) => {
                 </span>
               );
             }}
-            jobEntryBuilder={(job, department) => {
+            jobEntryBuilder={(jobName, job, department) => {
               return (
                 <JobEntry
-                  key={job.name}
-                  job={job}
-                  department={department}
+                  key={jobName}
+                  jobName={jobName}
+                  job={job as Job}
+                  department={department as Department}
                   act={act}
                 />
               );

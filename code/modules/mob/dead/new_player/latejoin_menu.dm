@@ -46,26 +46,18 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
 		var/list/department_jobs = list()
 		var/list/department_data = list(
-			"name" = department.department_name,
 			"jobs" = department_jobs,
-			"color" = department.ui_color,
 			"open_slots" = 0,
 		)
-		departments += list(department_data)
+		departments[department.department_name] = department_data
 
 		for(var/datum/job/job_datum as anything in department.department_jobs)
 			var/job_availability = owner.IsJobUnavailable(job_datum.title, latejoin = TRUE)
-			var/datum/outfit/outfit = job_datum.outfit
-			var/datum/id_trim/trim = initial(outfit.id_trim)
 
 			var/list/job_data = list(
-				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
-				"description" = job_datum.description,
 				"prioritized" = (job_datum in SSjob.prioritized_jobs),
-				"name" = job_datum.title,
 				"used_slots" = job_datum.current_positions,
 				"open_slots" = job_datum.total_positions < 0 ? "∞" : job_datum.total_positions,
-				"icon" = initial(trim.orbit_icon)
 			)
 
 			if(job_availability != JOB_AVAILABLE)
@@ -77,9 +69,34 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			if(department_data["open_slots"] != "∞")
 				department_data["open_slots"] += job_datum.total_positions - job_datum.current_positions
 
-			department_jobs += list(job_data)
+			department_jobs[job_datum.title] = job_data
 
 	return data
+
+/datum/latejoin_menu/ui_static_data(mob/user)
+	var/list/departments = list()
+
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		var/list/department_jobs = list()
+		var/list/department_data = list(
+			"jobs" = department_jobs,
+			"color" = department.ui_color,
+		)
+		departments[department.department_name] = department_data
+
+		for(var/datum/job/job_datum as anything in department.department_jobs)
+			var/datum/outfit/outfit = job_datum.outfit
+			var/datum/id_trim/trim = initial(outfit.id_trim)
+
+			var/list/job_data = list(
+				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
+				"description" = job_datum.description,
+				"icon" = initial(trim.orbit_icon)
+			)
+
+			department_jobs[job_datum.title] = job_data
+
+	return list("static_data" = list("departments" = departments))
 
 /datum/latejoin_menu/ui_status(mob/user)
 	return isnewplayer(user) ? UI_INTERACTIVE : UI_CLOSE

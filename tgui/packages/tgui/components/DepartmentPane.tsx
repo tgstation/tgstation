@@ -4,15 +4,12 @@ import { Box } from './Box';
 import { Stack } from './Stack';
 
 export interface BaseDepartmentInfo {
-  name: string;
   color: string;
-  jobs: BaseJobInfo[];
+  jobs: { [x: string]: BaseJobInfo };
 }
 
-// Very loose because the job info required can vary, and this component doesn't require any particular data from it.
-export interface BaseJobInfo {
-  name: string;
-}
+// Empty because the job info required can vary, and this component doesn't require any particular data from it.
+export interface BaseJobInfo {}
 
 // The cost of flexibility and prettiness.
 export const DepartmentEntry: SFC<{
@@ -41,18 +38,24 @@ export const DepartmentEntry: SFC<{
 };
 
 export const DepartmentPane: SFC<{
-  departments: BaseDepartmentInfo[];
-  jobEntryBuilder: (job: BaseJobInfo, department: BaseDepartmentInfo) => object;
+  departments: { [x: string]: BaseDepartmentInfo };
+  jobEntryBuilder: (
+    jobName: string,
+    job: BaseJobInfo,
+    department: BaseDepartmentInfo
+  ) => object;
   titleSubtextBuilder?: (department: BaseDepartmentInfo) => object;
   entryWidth: string;
 }> = (data) => {
   return (
     <Box wrap="wrap" style={{ 'columns': '20em' }}>
-      {data.departments.map((department) => {
+      {Object.entries(data.departments).map((entry) => {
+        const departmentName = entry[0];
+        const department = entry[1];
         return (
-          <Box key={department.name} minWidth={data.entryWidth}>
+          <Box key={departmentName} minWidth={data.entryWidth}>
             <DepartmentEntry
-              title={department.name}
+              title={departmentName}
               style={{
                 'background-color': department.color,
                 'margin-bottom': '1em',
@@ -73,8 +76,8 @@ export const DepartmentPane: SFC<{
                 data.titleSubtextBuilder && data.titleSubtextBuilder(department)
               }>
               <Stack vertical>
-                {department.jobs.map((job) =>
-                  data.jobEntryBuilder(job, department)
+                {Object.entries(department.jobs).map((job) =>
+                  data.jobEntryBuilder(job[0], job[1], department)
                 )}
               </Stack>
             </DepartmentEntry>
