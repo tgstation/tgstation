@@ -144,4 +144,8 @@
 	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing...")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
+#undef CARP_ORGAN_COLOR
+#undef CARP_SCLERA_COLOR
+#undef CARP_PUPIL_COLOR
+
 #undef CARP_COLORS

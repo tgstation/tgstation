@@ -208,9 +208,6 @@
 		return FALSE
 	if(isliving(target))
 		var/mob/living/living_target = target
-		if(iscarbon(target))
-			balloon_alert(user, "no higher-level creatures!")
-			return FALSE
 		if(living_target.stat != DEAD)
 			balloon_alert(user, "only dead creatures!")
 			return FALSE
