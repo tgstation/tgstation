@@ -49,6 +49,7 @@
 	name = "strange shuttle wall"
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "block"
+	use_splitvis = FALSE
 
 /turf/closed/indestructible/weeb
 	name = "paper wall"
@@ -162,7 +163,7 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 /turf/closed/indestructible/riveted/plastinum
 	name = "plastinum wall"
 	desc = "A luxurious wall made out of a plasma-platinum alloy. Effectively impervious to conventional methods of destruction."
-// wallening todo:	icon = 'icons/turf/walls/plastinum_wall.dmi'
+	icon = 'icons/turf/walls/plastinum_wall.dmi'
 	icon_state = "plastinum_wall-0"
 	base_icon_state = "plastinum_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS

@@ -1,0 +1,4 @@
+template: walls
+mode: !BitmaskDirectionalVis
+  delay:
+    - 2

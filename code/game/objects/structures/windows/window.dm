@@ -52,6 +52,7 @@
 		setDir()
 		update_icon_state()
 		AddElement(/datum/element/can_barricade)
+		AddComponent(/datum/component/window_smoothing)
 	else
 		AddElement(/datum/element/render_over_keep_hitbox)
 

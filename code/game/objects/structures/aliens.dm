@@ -69,6 +69,7 @@
 /obj/structure/alien/resin/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
+	AddElement(/datum/element/split_visibility, icon)
 
 /obj/structure/alien/resin/Destroy()
 	air_update_turf(TRUE, FALSE)
