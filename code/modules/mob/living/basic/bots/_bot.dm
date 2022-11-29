@@ -36,7 +36,7 @@
 	var/mode = BOT_IDLE
 
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
-	var/robot_arm = /obj/item/bodypart/r_arm/robot
+	var/robot_arm = /obj/item/bodypart/arm/right/robot
 	///People currently looking into a bot's UI panel.
 	var/list/users = list()
 	///The inserted (if any) pAI in this bot.
@@ -68,7 +68,7 @@
 
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
-	GLOB.basic_bots_list += src
+	GLOB.bots_list += src
 
 	// Give bots a fancy new ID card that can hold any access.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
@@ -95,7 +95,7 @@
 		datahud.show_to(src)
 
 /mob/living/basic/bot/Destroy()
-	GLOB.basic_bots_list -= src
+	GLOB.bots_list -= src
 	if(paicard)
 		ejectpai()
 	QDEL_NULL(internal_radio)
@@ -614,7 +614,7 @@
 		access_card.add_access(player_access)
 	diag_hud_set_botmode()
 
-/mob/living/basic/bot/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/basic/bot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	if(..())
 		update_appearance()
 		. = TRUE

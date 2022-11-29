@@ -13,7 +13,7 @@
 		current_movement_target,
 		delay,
 		repath_delay = 2 SECONDS,
-		max_path_length =  controller.max_target_distance,,
+		max_path_length =  controller.max_target_distance,
 		minimum_distance = controller.get_minimum_distance(),
 		id = controller.get_access(),
 		subsystem = SSai_movement,

@@ -597,7 +597,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 
 /mob/living/simple_animal/bot/proc/check_bot_access()
-	if(mode != BOT_SUMMON && mode != BOT_RESPONDING)
+	if(mode != BOT_SUMMON)
 		access_card.set_access(prev_access)
 
 /mob/living/simple_animal/bot/proc/call_bot(caller, turf/waypoint, message = TRUE)

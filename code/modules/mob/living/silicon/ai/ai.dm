@@ -566,7 +566,7 @@
 	if(!bot)
 		return
 
-	var/current_caller = basic_bot.ai_controller.blackboard[BB_BOT_CURRENT_SUMMONER]
+	var/current_caller = bot.ai_controller.blackboard[BB_BOT_CURRENT_SUMMONER]
 	if(isAI(current_caller) && current_caller != src) //Prevents an override if another AI is controlling this bot.
 		to_chat(src, span_danger("Interface error. Unit is already in use."))
 		return

@@ -39,7 +39,7 @@
 			continue
 		var/list/newbot = list(
 			"name" = basic.name,
-			"mode" = basic.get_mode_ui(),
+			"mode" = basic.get_current_behavior_description(),
 			"model" = basic.bot_type,
 			"locat" = get_area(basic),
 			"bot_ref" = REF(basic),

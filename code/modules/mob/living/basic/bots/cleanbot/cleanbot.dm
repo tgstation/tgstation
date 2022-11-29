@@ -2,7 +2,7 @@
 /mob/living/basic/bot/cleanbot
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	icon_state = "hygienebot"
+	icon_state = "s"
 	pass_flags = PASSMOB | PASSFLAPS
 	layer = MOB_UPPER_LAYER
 	density = FALSE
@@ -155,7 +155,7 @@
 		if(janitor_mode_flags & CLEANBOT_CLEAN_PESTS)
 			target_types += list(
 				/mob/living/basic/cockroach,
-				/mob/living/simple_animal/mouse,
+				/mob/living/basic/mouse,
 			)
 
 		if(janitor_mode_flags & CLEANBOT_CLEAN_DRAWINGS)
@@ -171,7 +171,7 @@
 		var/datum/ai_controller/basic_controller/bot/clean/cleanbot = ai_controller
 		cleanbot.set_valid_targets(typecacheof(target_types))
 
-/mob/living/basic/bot//examine(mob/user)
+/mob/living/basic/bot/cleanbot/examine(mob/user)
 	. = ..()
 	if(!weapon)
 		return .
