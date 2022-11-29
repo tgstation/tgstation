@@ -228,7 +228,7 @@
 	if(!drip_reagents)
 		return PROCESS_KILL
 
-	if(set_transfer_rate(MIN_IV_TRANSFER_RATE))
+	if(transfer_rate == 0)
 		return
 
 	// Give reagents
