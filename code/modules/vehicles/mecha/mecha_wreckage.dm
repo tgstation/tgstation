@@ -87,7 +87,7 @@
 		user.visible_message(span_notice("[user] pries [S] from [src]."), span_notice("You pry [S] from [src]."))
 		crowbar_salvage -= S
 		return
-	to_chat(user, span_notice("You don't see anything that can be cut with [I]!"))
+	to_chat(user, span_notice("You don't see anything that can be pried with [I]!"))
 
 /obj/structure/mecha_wreckage/transfer_ai(interaction, mob/user, mob/living/silicon/ai/ai_mob, obj/item/aicard/card)
 	if(!..())
@@ -112,6 +112,7 @@
 /obj/structure/mecha_wreckage/gygax
 	name = "\improper Gygax wreckage"
 	icon_state = "gygax-broken"
+	welder_salvage = list(/obj/item/stack/sheet/mineral/gold, /obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(
 				/obj/item/mecha_parts/part/gygax_torso,
 				/obj/item/mecha_parts/part/gygax_head,
@@ -124,29 +125,35 @@
 /obj/structure/mecha_wreckage/gygax/dark
 	name = "\improper Dark Gygax wreckage"
 	icon_state = "darkgygax-broken"
+	welder_salvage = list(/obj/item/stack/sheet/mineral/plastitanium, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/marauder
 	name = "\improper Marauder wreckage"
 	icon_state = "marauder-broken"
+	welder_salvage = list(/obj/item/stack/sheet/mineral/titanium, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/mauler
 	name = "\improper Mauler wreckage"
 	icon_state = "mauler-broken"
 	desc = "The syndicate won't be very happy about this..."
+	welder_salvage = list(/obj/item/stack/sheet/mineral/plastitanium, /obj/item/stack/sheet/mineral/diamond, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/seraph
 	name = "\improper Seraph wreckage"
 	icon_state = "seraph-broken"
+	welder_salvage = list(/obj/item/stack/sheet/mineral/titanium, /obj/item/stack/sheet/mineral/diamond, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 
 /obj/structure/mecha_wreckage/reticence
 	name = "\improper Reticence wreckage"
 	icon_state = "reticence-broken"
 	color = "#87878715"
 	desc = "..."
+	welder_salvage = list(/obj/item/shard) //get it, it's a glass cannon
 
 /obj/structure/mecha_wreckage/ripley
 	name = "\improper Ripley wreckage"
 	icon_state = "ripley-broken"
+	welder_salvage = list(/obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(
 				/obj/item/mecha_parts/part/ripley_torso,
 				/obj/item/mecha_parts/part/ripley_left_arm,
@@ -161,6 +168,7 @@
 /obj/structure/mecha_wreckage/clarke
 	name = "\improper Clarke wreckage"
 	icon_state = "clarke-broken"
+	welder_salvage = list(/obj/item/stack/sheet/mineral/gold, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(
 				/obj/item/mecha_parts/part/clarke_torso,
 				/obj/item/mecha_parts/part/clarke_head,
@@ -171,12 +179,14 @@
 /obj/structure/mecha_wreckage/ripley/deathripley
 	name = "\improper Death-Ripley wreckage"
 	icon_state = "deathripley-broken"
+	welder_salvage = list(/obj/item/stack/sheet/mineral/plastitanium, /obj/item/stack/sheet/mineral/diamond, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = null
 
 /obj/structure/mecha_wreckage/honker
 	name = "\improper H.O.N.K wreckage"
 	icon_state = "honker-broken"
 	desc = "All is right in the universe."
+	welder_salvage = list(/obj/item/stack/sheet/mineral/bananium, /obj/item/grown/bananapeel, /obj/item/stack/sheet/iron)
 	parts = list(
 				/obj/item/mecha_parts/part/honker_torso,
 				/obj/item/mecha_parts/part/honker_head,
@@ -188,6 +198,7 @@
 /obj/structure/mecha_wreckage/durand
 	name = "\improper Durand wreckage"
 	icon_state = "durand-broken"
+	welder_salvage = list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(
 			/obj/item/mecha_parts/part/durand_torso,
 			/obj/item/mecha_parts/part/durand_head,
@@ -211,6 +222,7 @@
 	name = "\improper Savannah-Ivanov wreckage"
 	icon = 'icons/mecha/coop_mech.dmi'
 	icon_state = "savannah_ivanov-broken"
+	welder_salvage = list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
 	parts = list(
 		/obj/item/mecha_parts/part/savannah_ivanov_torso,
 		/obj/item/mecha_parts/part/savannah_ivanov_head,
