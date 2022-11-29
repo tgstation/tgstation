@@ -560,10 +560,12 @@
 /datum/crafting_recipe/food/oven/pizzabread
 	reqs = list(/obj/item/food/flatdough = 1)
 	result = /obj/item/food/pizzabread
+	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/oven/pizza
 	reqs = list(/obj/item/food/pizza/margherita/raw = 1)
 	result = /obj/item/food/pizza/margherita
+	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/oven/rootflatbread
 	reqs = list(/obj/item/food/flatrootdough = 1)

@@ -1,9 +1,9 @@
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
-import { map, filter, sortBy } from 'common/collections';
+import { map, filter, sortBy, sort } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Divider, Button, Section, Tabs, Stack, Box, Input, NoticeBox, Icon, Tooltip } from '../components';
+import { Divider, Button, Section, Tabs, Stack, Box, Input, Icon, Tooltip, NoticeBox } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
 
@@ -96,34 +96,24 @@ type Data = {
 };
 
 export const PersonalCooking = (props, context) => {
-  const {
-    act,
-    data: {
-      busy,
-      display_compact,
-      display_craftable_only,
-      craftability,
-      recipes,
-      categories,
-      foodtypes,
-      diet,
-    },
-  } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>(context);
+  const { busy, display_compact, display_craftable_only, craftability, diet } =
+    data;
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [activeCategory, setCategory] = useLocalState(
     context,
     'category',
-    Object.keys(craftability).length ? 'Can Make' : categories[0]
+    Object.keys(craftability).length ? 'Can Make' : data.categories[0]
   );
   const [activeType, setType] = useLocalState(
     context,
     'foodtype',
-    Object.keys(craftability).length ? 'Can Make' : foodtypes[0]
+    Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0]
   );
   const [typeMode, setTypeMode] = useLocalState(context, 'typeMode', false);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
   const craftabilityByRef = craftability;
-  let recipes_filtered = flow([
+  let recipes = flow([
     filter<Recipe>(
       (recipe) =>
         // If craftable only is selected, then filter by craftability
@@ -143,154 +133,172 @@ export const PersonalCooking = (props, context) => {
     ),
     sortBy<Recipe>((recipe) => [
       -Number(craftabilityByRef[recipe.ref]),
-      recipe.name,
+      recipe.name.toLocaleLowerCase(),
     ]),
-  ])(recipes);
+  ])(data.recipes);
   if (searchText.length > 0) {
-    recipes_filtered = recipes_filtered.filter(searchName);
+    recipes = recipes.filter(searchName);
   }
   const canMake = ['Can Make'];
-  const categories_combined = canMake.concat(categories.sort());
-  const foodtypes_combined = canMake.concat(foodtypes.sort());
-  const displayLimit = display_compact ? 299 : 99;
+  const categories = [...canMake, ...sort(data.categories)] as string[];
+  const foodtypes = [...canMake, ...sort(data.foodtypes)] as string[];
+  const displayLimit = searchText.length > 0 ? 30 : display_compact ? 299 : 99;
   return (
     <Window width={700} height={700}>
-      <Window.Content id="content" scrollable>
-        <Stack>
-          <Stack.Item width={'140px'}>
-            <Section width={'140px'} style={{ 'position': 'fixed' }}>
-              <Input
-                autoFocus
-                placeholder={'Search...'}
-                value={searchText}
-                onInput={(e, value) => setSearchText(value)}
-                fluid
-              />
-              <Divider />
-              <Tabs mt={1} fluid textAlign="center">
-                <Tabs.Tab
-                  selected={!typeMode}
-                  onClick={() => {
-                    setTypeMode(false);
-                    setCategory(
-                      Object.keys(craftability).length
-                        ? 'Can Make'
-                        : categories[0]
-                    );
-                  }}>
-                  Category
-                </Tabs.Tab>
-                <Tabs.Tab
-                  selected={typeMode}
-                  onClick={() => {
-                    setTypeMode(true);
-                    setType(
-                      Object.keys(craftability).length
-                        ? 'Can Make'
-                        : foodtypes[0]
-                    );
-                  }}>
-                  Type
-                </Tabs.Tab>
-              </Tabs>
-              <Tabs vertical>
-                {typeMode
-                  ? foodtypes_combined.map((foodtype) => (
+      <Window.Content>
+        <Stack fill>
+          <Stack.Item width={'155px'}>
+            <Section fill>
+              <Stack fill vertical justify={'space-between'}>
+                <Stack.Item>
+                  <Input
+                    autoFocus
+                    placeholder={'Search...'}
+                    value={searchText}
+                    onInput={(e, value) => setSearchText(value)}
+                    fluid
+                  />
+                  <Tabs mt={1} fluid textAlign="center">
                     <Tabs.Tab
-                      key={foodtype}
-                      selected={
-                        activeType === foodtype && searchText.length === 0
-                      }
-                      onClick={(e) => {
-                        setType(foodtype);
-                        document.getElementById('content').scrollTop = 0;
-                        if (searchText.length > 0) {
-                          setSearchText('');
-                        }
+                      selected={!typeMode}
+                      onClick={() => {
+                        setTypeMode(false);
+                        setCategory(
+                          Object.keys(craftability).length
+                            ? 'Can Make'
+                            : categories[0]
+                        );
                       }}>
-                      <TypeContent
-                        type={foodtype}
-                        diet={diet}
-                        craftableCount={Object.keys(craftability).length}
-                      />
+                      Category
                     </Tabs.Tab>
-                  ))
-                  : categories_combined.map((category) => (
                     <Tabs.Tab
-                      key={category}
-                      selected={
-                        activeCategory === category && searchText.length === 0
-                      }
-                      onClick={(e) => {
-                        setCategory(category);
-                        document.getElementById('content').scrollTop = 0;
-                        if (searchText.length > 0) {
-                          setSearchText('');
-                        }
+                      selected={typeMode}
+                      onClick={() => {
+                        setTypeMode(true);
+                        setType(
+                          Object.keys(craftability).length
+                            ? 'Can Make'
+                            : foodtypes[0]
+                        );
                       }}>
-                      <Stack>
-                        <Stack.Item width="14px" textAlign="center">
-                          <Icon name={CATEGORY_ICONS[category]} />
-                        </Stack.Item>
-                        <Stack.Item grow>{category}</Stack.Item>
-                        {category === 'Can Make' && (
-                          <Stack.Item>
-                            {Object.keys(craftability).length}
-                          </Stack.Item>
-                        )}
-                      </Stack>
+                      Type
                     </Tabs.Tab>
-                  ))}
-              </Tabs>
-              <Divider />
-              <Button.Checkbox
-                fluid
-                content="Can make only"
-                checked={display_craftable_only}
-                onClick={() => {
-                  act('toggle_recipes');
-                }}
-              />
-              <Button.Checkbox
-                fluid
-                content="Compact list"
-                checked={display_compact}
-                onClick={() => act('toggle_compact')}
-              />
+                  </Tabs>
+                </Stack.Item>
+                <Stack.Item grow m={-1}>
+                  <Box height={'100%'} p={1} style={{ 'overflow-y': 'auto' }}>
+                    <Tabs vertical>
+                      {typeMode
+                        ? foodtypes.map((foodtype) => (
+                          <Tabs.Tab
+                            key={foodtype}
+                            selected={
+                              activeType === foodtype && searchText.length === 0
+                            }
+                            onClick={(e) => {
+                              setType(foodtype);
+                              document.getElementById('content').scrollTop = 0;
+                              if (searchText.length > 0) {
+                                setSearchText('');
+                              }
+                            }}>
+                            <TypeContent
+                              type={foodtype}
+                              diet={diet}
+                              craftableCount={Object.keys(craftability).length}
+                            />
+                          </Tabs.Tab>
+                        ))
+                        : categories.map((category) => (
+                          <Tabs.Tab
+                            key={category}
+                            selected={
+                              activeCategory === category &&
+                              searchText.length === 0
+                            }
+                            onClick={(e) => {
+                              setCategory(category);
+                              document.getElementById('content').scrollTop = 0;
+                              if (searchText.length > 0) {
+                                setSearchText('');
+                              }
+                            }}>
+                            <Stack>
+                              <Stack.Item width="14px" textAlign="center">
+                                <Icon name={CATEGORY_ICONS[category]} />
+                              </Stack.Item>
+                              <Stack.Item grow>{category}</Stack.Item>
+                              {category === 'Can Make' && (
+                                <Stack.Item>
+                                  {Object.keys(craftability).length}
+                                </Stack.Item>
+                              )}
+                            </Stack>
+                          </Tabs.Tab>
+                        ))}
+                    </Tabs>
+                  </Box>
+                </Stack.Item>
+                <Stack.Item>
+                  <Divider />
+                  <Button.Checkbox
+                    fluid
+                    content="Can make only"
+                    checked={display_craftable_only}
+                    onClick={() => {
+                      act('toggle_recipes');
+                    }}
+                  />
+                  <Button.Checkbox
+                    fluid
+                    content="Compact list"
+                    checked={display_compact}
+                    onClick={() => act('toggle_compact')}
+                  />
+                </Stack.Item>
+              </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item grow>
-            {recipes_filtered.length > 0 ? (
-              recipes_filtered
-                .slice(0, displayLimit)
-                .map((item) =>
-                  display_compact ? (
-                    <RecipeContentCompact
-                      key={item.ref}
-                      item={item}
-                      craftable={Boolean(craftabilityByRef[item.ref])}
-                      busy={busy}
-                    />
-                  ) : (
-                    <RecipeContent
-                      key={item.ref}
-                      item={item}
-                      diet={diet}
-                      craftable={Boolean(craftabilityByRef[item.ref])}
-                      busy={busy}
-                    />
+          <Stack.Item grow my={-1}>
+            <Box
+              id="content"
+              height={'100%'}
+              pr={1}
+              py={1}
+              mr={-1}
+              style={{ 'overflow-y': 'auto' }}>
+              {recipes.length > 0 ? (
+                recipes
+                  .slice(0, displayLimit)
+                  .map((item) =>
+                    display_compact ? (
+                      <RecipeContentCompact
+                        key={item.ref}
+                        item={item}
+                        craftable={Boolean(craftabilityByRef[item.ref])}
+                        busy={busy}
+                      />
+                    ) : (
+                      <RecipeContent
+                        key={item.ref}
+                        item={item}
+                        diet={diet}
+                        craftable={Boolean(craftabilityByRef[item.ref])}
+                        busy={busy}
+                      />
+                    )
                   )
-                )
-            ) : (
-              <NoticeBox m={1} p={1}>
-                No recipes found.
-              </NoticeBox>
-            )}
-            {recipes_filtered.length > displayLimit && (
-              <Section textAlign="right">
-                And {recipes_filtered.length - displayLimit} more...
-              </Section>
-            )}
+              ) : (
+                <NoticeBox m={1} p={1}>
+                  No recipes found.
+                </NoticeBox>
+              )}
+              {recipes.length > displayLimit && (
+                <Section textAlign="right">
+                  And {recipes.length - displayLimit} more...
+                </Section>
+              )}
+            </Box>
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -328,7 +336,7 @@ const TypeContent = (props) => {
 const RecipeContentCompact = ({ item, craftable, busy }, context) => {
   const { act } = useBackend<Data>(context);
   return (
-    <Section my={0.5}>
+    <Section>
       <Stack my={-0.75}>
         <Stack.Item>
           <Box

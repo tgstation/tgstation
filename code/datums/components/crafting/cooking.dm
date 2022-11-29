@@ -352,7 +352,7 @@
 		if(!R.always_available && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 
-		if (!ispath(R.type, /datum/crafting_recipe/food/) || R.type == /datum/crafting_recipe/food)
+		if (!ispath(R.type, /datum/crafting_recipe/food/))
 			continue
 
 		if(!R.result)
