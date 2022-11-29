@@ -1,7 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - imageadd: "New railing pillar tram crossing signals."
-  - qol: "Vending machines next to the tram are now against the wall."
-  - bugfix: "Tramstation floor decals no longer guide you to walk into the vending machines."
-  - rscadd: "The tram stations now have no-slip hazard floor tiles so you don't accidentally slip and get smacked. Feel free to still run into it anyways, medbay has a counter now so they'll know."
