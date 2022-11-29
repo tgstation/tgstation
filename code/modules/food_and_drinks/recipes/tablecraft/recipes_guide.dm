@@ -302,6 +302,11 @@
 	result = /obj/item/food/root_flatbread
 	subcategory = CAT_BREAD
 
+/datum/crafting_recipe/food/grill/frenchtoast
+	reqs = list(/obj/item/food/raw_frenchtoast = 1)
+	result = /obj/item/food/frenchtoast
+	subcategory = CAT_BREAD
+
 /datum/crafting_recipe/food/grill/friedegg
 	reqs = list(/obj/item/food/egg = 1)
 	result = /obj/item/food/friedegg

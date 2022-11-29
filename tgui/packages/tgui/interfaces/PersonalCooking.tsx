@@ -282,7 +282,9 @@ export const PersonalCooking = (props, context) => {
                       <RecipeContentCompact
                         key={item.ref}
                         item={item}
-                        craftable={Boolean(craftability[item.ref])}
+                        craftable={
+                          !item.non_craftable && Boolean(craftability[item.ref])
+                        }
                         busy={busy}
                       />
                     ) : (
@@ -290,7 +292,9 @@ export const PersonalCooking = (props, context) => {
                         key={item.ref}
                         item={item}
                         diet={diet}
-                        craftable={Boolean(craftability[item.ref])}
+                        craftable={
+                          !item.non_craftable && Boolean(craftability[item.ref])
+                        }
                         busy={busy}
                       />
                     )
