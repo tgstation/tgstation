@@ -147,20 +147,13 @@
 
 /obj/item/organ/internal/heart/carp/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
-	if(!ishuman(reciever))
-		return
-	var/mob/living/carbon/human/human_reciever = reciever
-	var/datum/species/rec_species = human_reciever.dna.species
-	rec_species.bodytemp_heat_damage_limit = (BODYTEMP_NORMAL + 1)
-	rec_species.bodytemp_cold_damage_limit = (BODYTEMP_NORMAL - 150)
+	ADD_TRAIT(reciever, TRAIT_RESISTCOLD, type)
+	ADD_TRAIT(reciever, TRAIT_RESISTLOWPRESSURE, GENETIC_MUTATION)
 	//considered adding burn but this is supposed to be good at space exploration
 
 /obj/item/organ/internal/heart/carp/Remove(mob/living/carbon/heartless, special)
 	. = ..()
-	if(!ishuman(heartless))
-		return
-	var/mob/living/carbon/human/human_heartless = heartless
-	human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
-	human_heartless.physiology.damage_resistance += 100
+	REMOVE_TRAIT(reciever, TRAIT_RESISTCOLD, type)
+	REMOVE_TRAIT(reciever, TRAIT_RESISTLOWPRESSURE, GENETIC_MUTATION)
 
 #undef CARP_COLORS
