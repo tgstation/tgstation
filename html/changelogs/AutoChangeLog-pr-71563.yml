@@ -1,0 +1,9 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes:
+  - refactor: "Went through and refactored a lot of the old code of the biogenerator, and made multiple improvements to its logic, which should hopefully make it behave more consistently. Nearly all of it is now also fully documented, so as to make it easier for anyone else that has to sift through it in the future."
+  - qol: "The biogenerator now processes items five times faster, up to 20 times faster if properly upgraded!"
+  - qol: "The biogenerator is no longer capped on biomass. Its visuals will change up until 5000 biomass, but you're free to go as high as you'd like with it! Sky's the limit!"
+  - bugfix: "Fixed the logic of the biogenerator that would make it so the amount of biomass used for recipes was wildly inconsistent. Now, there's no more back-end rounding up, it's all on the front end when it needs to be, so there's no loss or gain of biomass when there shouldn't be."
+  - spellcheck: "Fixed a capitalization issue with the seaweed sheets in the biogenerator recipes."
+  - spellcheck: "Fixed multiple inconsistencies between the messages sent to your chat by the biogenerator."
