@@ -56,8 +56,6 @@
 	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
 	overlay.appearance_flags = TILE_BOUND
 	overlay.icon_state = icon_state
-	//overlay.layer = FLY_LAYER
-	//SET_PLANE_EXPLICIT(overlay, ABOVE_GAME_PLANE, src)
 	overlay.pixel_y = y_offset
 	vis_contents += overlay
 	return overlay
@@ -410,7 +408,7 @@
 				// space vines block out sunlight
 				var/obj/structure/spacevine/vine = locate(/obj/structure/spacevine) in loc
 				if(istype(vine) && !(/datum/spacevine_mutation/transparency in vine.mutations))
-					continue // should this return?
+					continue
 
 				var/obj/machinery/power/solar/S = M
 				if(!S.control) //i.e unconnected
