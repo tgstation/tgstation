@@ -288,9 +288,7 @@
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
 
 			if(PAPERS_PLEASE)
-				for(var/new_paperwork in subtypesof(/obj/item/paperwork))
-					if(!ispath(new_paperwork, /obj/item/paperwork/photocopy) && !ispath(new_paperwork, /obj/item/paperwork/ancient))
-						shuttle_spawns.Add(new_paperwork)
+				shuttle_spawns += subtypesof(/obj/item/paperwork) - typesof(/obj/item/paperwork/photocopy) - typesof(/obj/item/paperwork/ancient)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)

@@ -5,14 +5,13 @@
 	exclude_types = list(/obj/item/paperwork/photocopy) //Has its own category
 	allow_negative_cost = TRUE
 
-/datum/export/paperwork/get_cost(obj/sold_object)
-	var/obj/item/paperwork/sold_paperwork = sold_object
+/datum/export/paperwork/get_cost(obj/item/paperwork/sold_paperwork)
 	var/paperwork_cost = cost
 
-	if(!sold_paperwork.stamped)
-		paperwork_cost = -init_cost  //Punishment for improperly filed paperwork.
-	else
+	if(sold_paperwork.stamped)
 		paperwork_cost = ..()
+	else
+		paperwork_cost = -init_cost //Punishment for improperly filed paperwork.
 
 	return paperwork_cost
 
@@ -26,8 +25,7 @@
 	///Used to track if a batch of photocopy exports has backfired
 	var/backfired = FALSE
 
-/datum/export/photocopy/get_cost(obj/sold_object)
-	var/obj/item/paperwork/photocopy/sold_paperwork = sold_object
+/datum/export/photocopy/get_cost(obj/item/paperwork/photocopy/sold_paperwork)
 	if(sold_paperwork.stamped && !backfired) //Upon backfiring, no more photocopies are processed or sold until the next cargo shipment
 		if(sold_paperwork.voided)
 			return 0 //Voided photocopies do nothing
