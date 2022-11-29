@@ -63,7 +63,7 @@
 	if(stat == DEAD || !old_head || !old_brain)
 		return
 	to_chat(src, span_userdanger("Your head splits open! Your brain mutates!"))
-	playsound(src, 'sound/effects/blobattack.ogg', 50, vary = TRUE)
+	new /obj/effect/gibspawner/generic(drop_location(), src)
 	emote("scream")
 	var/obj/item/bodypart/head/psyker/psyker_head = new()
 	psyker_head.receive_damage(brute = 50)
@@ -334,13 +334,14 @@
 	if(boosted)
 		return
 	boosted = TRUE
+	to_chat(owner, span_boldnotice("Your trigger fingers feel stronger."))
 	ADD_TRAIT(cast_on, TRAIT_DOUBLE_TAP, type)
 	RegisterSignal(cast_on, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, PROC_REF(modify_projectile))
 	addtimer(CALLBACK(src, PROC_REF(stop_effects)), effect_time)
 
 /datum/action/cooldown/spell/charged/psychic_booster/proc/stop_effects()
 	boosted = FALSE
-	to_chat(owner, span_warning("Your trigger fingers feel weaker."))
+	to_chat(owner, span_danger("Your trigger fingers feel weaker."))
 	REMOVE_TRAIT(owner, TRAIT_DOUBLE_TAP, type)
 	UnregisterSignal(owner, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE)
 
@@ -373,19 +374,3 @@
 /datum/action/cooldown/spell/forcewall/psychic_wall/spawn_wall(turf/cast_turf)
 	. = ..()
 	play_fov_effect(cast_turf, 5, "forcefield", time = 10 SECONDS)
-
-/obj/item/reagent_containers/pill/psyker //for testmerge
-	name = "pill that definitely does not give you psychic powers"
-	desc = "DO NOT EAT!"
-	icon_state = "pill4"
-	list_reagents = list(/datum/reagent/drug/happiness = 5)
-
-/obj/item/reagent_containers/pill/psyker/on_consumption(mob/living/carbon/human/consoomer, mob/user)
-	. = ..()
-	if(!istype(consoomer))
-		return
-	consoomer.dna?.add_mutation(/datum/mutation/human/telekinesis)
-	consoomer.dna?.add_mutation(/datum/mutation/human/mindreader)
-	consoomer.dna?.add_mutation(/datum/mutation/human/telepathy)
-	consoomer.dna?.add_mutation(/datum/mutation/human/unintelligible)
-	consoomer.psykerize()
