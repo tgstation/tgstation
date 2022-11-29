@@ -991,8 +991,8 @@
 	hardcore_value = 8
 	mail_goodies = list(/obj/item/pai_card) // can read things for you
 
-/datum/quirk/old_man_jenkins
-	name = "Old Man Jenkins"
+/datum/quirk/decrepit
+	name = "Decrepit"
 	desc = "You require a cane like object in your hand for mobility."
 	icon = "person-cane"
 	value = -4
@@ -1004,7 +1004,7 @@
 	var/datum/weakref/left_cane
 	var/datum/weakref/right_cane
 
-/datum/quirk/old_man_jenkins/add_unique()
+/datum/quirk/decrepit/add_unique()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	var/turf/holder_turf = get_turf(human_holder)
@@ -1032,7 +1032,7 @@
 
 	RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
-/datum/quirk/old_man_jenkins/remove()
+/datum/quirk/decrepit/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM))
 	var/obj/item/primary_cane = left_cane?.resolve()
 	var/obj/item/secondary_cane = right_cane?.resolve()
@@ -1056,7 +1056,7 @@
 	right_cane = null
 
 /// Signal handler for when the badback quirk_holder equips an item
-/datum/quirk/old_man_jenkins/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
+/datum/quirk/decrepit/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
 
 	var/obj/item/left_hand_item = quirk_holder.held_items[1]
@@ -1104,7 +1104,7 @@
 		right_cane = null
 
 /// Signal handler for when the quirk_holder unequips an equipped cane
-/datum/quirk/old_man_jenkins/proc/on_unequipped_cane(obj/item/source)
+/datum/quirk/decrepit/proc/on_unequipped_cane(obj/item/source)
 	SIGNAL_HANDLER
 
 	// if they have dual canes then no need to change mood/speed
