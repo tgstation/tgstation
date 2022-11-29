@@ -118,8 +118,7 @@
 
 	register_signals()
 
-	// TODO: replace this with new subsystem
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSmodular_computers, src)
 
 /datum/modular_computer_host/Destroy(force, ...)
 	wipe_program(forced = TRUE)
@@ -151,7 +150,7 @@
 
 	unregister_signals()
 
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSmodular_computers, src)
 
 	physical = null
 
