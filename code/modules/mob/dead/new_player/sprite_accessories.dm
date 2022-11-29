@@ -68,7 +68,7 @@
 	 */
 	var/color_src = MUTCOLORS
 	/// Decides if this sprite has an "inner" part, such as the fleshy parts on ears.
-	var/hasinner
+	var/hasinner = FALSE
 	/// Is this part locked from roundstart selection? Used for parts that apply effects.
 	var/locked = FALSE
 	/// Should we center the sprite?
@@ -1846,14 +1846,14 @@
 /datum/sprite_accessory/ears/cat
 	name = "Cat"
 	icon_state = "cat"
-	hasinner = 1
+	hasinner = TRUE
 	color_src = HAIR
 
 /datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/species/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
-	hasinner = 1
+	hasinner = TRUE
 	color_src = HAIR
 
 /datum/sprite_accessory/wings/none

@@ -8,8 +8,8 @@
 ///bonus of the carp: you can swim through space!
 /datum/status_effect/organ_set_bonus/carp
 	organs_needed = 4
-	bonus_activate_text = "Carp DNA is deeply infused with you! You've learned how to propel yourself through space!"
-	bonus_deactivate_text = "Your DNA is once again mostly yours, and so fades your ability to space-swim..."
+	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
+	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 
 /datum/status_effect/organ_set_bonus/carp/enable_bonus()
 	. = ..()
@@ -53,6 +53,9 @@
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
+	var/datum/species/rec_species = human_reciever.dna.species
+	if(!(rec_species.no_equip & ITEM_SLOT_MASK))
+		rec_species.no_equip += ITEM_SLOT_MASK
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = 10 // Yeah, biteing is pretty weak, blame the monkey super-nerf
 	head.unarmed_damage_high = 15
@@ -63,6 +66,9 @@
 	if(!ishuman(tongue_owner))
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
+	var/datum/species/rec_species = human_reciever.dna.species
+	if(!(initial(rec_species.no_equip) & ITEM_SLOT_MASK))
+		rec_species.no_equip -= ITEM_SLOT_MASK
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = initial(head.unarmed_damage_low)
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)

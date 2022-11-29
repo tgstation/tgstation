@@ -29,17 +29,17 @@
 		UnregisterSignal(target.owner, COMSIG_PARENT_EXAMINE)
 	return ..()
 
-/datum/element/noticable_organ/proc/on_implanted(obj/item/organ/target, mob/living/carbon/reciever)
+/datum/element/noticable_organ/proc/on_implanted(obj/item/organ/target, mob/living/carbon/receiver)
 	SIGNAL_HANDLER
 
-	RegisterSignal(reciever, COMSIG_PARENT_EXAMINE, PROC_REF(on_reciever_examine))
+	RegisterSignal(receiver, COMSIG_PARENT_EXAMINE, PROC_REF(on_receiver_examine))
 
 /datum/element/noticable_organ/proc/on_removed(obj/item/organ/target, mob/living/carbon/loser)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(loser, COMSIG_PARENT_EXAMINE)
 
-/datum/element/noticable_organ/proc/on_reciever_examine(mob/living/carbon/examined, mob/user, list/examine_list)
+/datum/element/noticable_organ/proc/on_receiver_examine(mob/living/carbon/examined, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	var/list/covered = examined.get_covered_body_zones()

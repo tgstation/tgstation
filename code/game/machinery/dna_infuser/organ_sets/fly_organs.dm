@@ -15,10 +15,6 @@
 	to_chat(new_fly, span_danger("Too much fly DNA! Your skin begins to discolor into a horrible black as you become more fly than person!"))
 	new_fly.set_species(/datum/species/fly)
 
-/datum/status_effect/organ_set_bonus/fly/disable_bonus()
-	. = ..()
-	//sorry dude
-
 /obj/item/organ/internal/eyes/fly
 	name = "fly eyes"
 	desc = "These eyes seem to stare back no matter the direction you look at it from."

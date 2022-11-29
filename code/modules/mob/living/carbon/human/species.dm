@@ -827,7 +827,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
-	if(slot in no_equip)
+	if(no_equip & slot)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
 
