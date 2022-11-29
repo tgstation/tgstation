@@ -210,6 +210,7 @@
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
+#define ECHO_LAYER 7
 
 #define FOV_EFFECT_LAYER 100
 
