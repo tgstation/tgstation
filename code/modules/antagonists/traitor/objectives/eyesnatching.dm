@@ -53,8 +53,6 @@
 
 	var/list/already_targeting = list() //List of minds we're already targeting. The possible_duplicates is a list of objectives, so let's not mix things
 	for(var/datum/objective/task as anything in handler.traitor_datum?.objectives)
-		if(!task.target)
-			continue
 		if(!istype(task.target, /datum/mind))
 			continue
 		already_targeting += task.target //Removing primary objective kill targets from the list

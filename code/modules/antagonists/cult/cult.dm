@@ -347,7 +347,7 @@
 		UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	target = null
 
-/datum/objective/sacrifice/find_target(dupe_search_range)
+/datum/objective/sacrifice/find_target(dupe_search_range, list/blacklist)
 	clear_sacrifice()
 	if(!istype(team, /datum/team/cult))
 		return
