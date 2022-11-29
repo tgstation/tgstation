@@ -8,11 +8,13 @@ import { capitalizeAll } from 'common/string';
 type Data = {
   layer_icon: string;
   categories: Category[];
+  selected_category: string;
 };
 
 type Category = {
   cat_name: string;
   recipes: Recipe[];
+  active: BooleanLike;
 };
 
 type Recipe = {
@@ -25,10 +27,11 @@ type Recipe = {
 const PlumbingTypeSection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
   const { categories = [] } = data;
+  const { selected_category } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
     'categoryName',
-    ''
+    selected_category
   );
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||

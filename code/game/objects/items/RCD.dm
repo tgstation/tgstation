@@ -1192,11 +1192,23 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/plumbing/ui_static_data(mob/user)
 	return list("paint_colors" = GLOB.pipe_paint_colors)
 
+
+///find which category this design belongs to
+/obj/item/construction/plumbing/proc/get_category(obj/machinery/recipe)
+	if(ispath(recipe, /obj/machinery/plumbing))
+		var/obj/machinery/plumbing/plumbing_design = recipe
+		return initial(plumbing_design.category)
+	else if(ispath(recipe , /obj/machinery/duct))
+		return "Distribution"
+	else
+		return "Storage"
+
 /obj/item/construction/plumbing/ui_data(mob/user)
 	var/list/data = list()
 	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
 	data["selected_color"] = current_color
 	data["layer_icon"] = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"
+	data["selected_category"] = get_category(blueprint)
 
 	var/list/category_list = list()
 	var/category_name = ""
@@ -1205,15 +1217,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	for(var/i in 1 to plumbing_design_types.len)
 		recipe = plumbing_design_types[i]
 
-		//find which category this recipe belongs to
-		if(ispath(recipe, /obj/machinery/plumbing))
-			var/obj/machinery/plumbing/plumbing_design = recipe
-			category_name = initial(plumbing_design.category)
-		else if(ispath(recipe , /obj/machinery/duct))
-			category_name = "Distribution"
-		else
-			category_name = "Storage"
-
+		category_name = get_category(recipe) //get category of design
 		if(!category_list[category_name])
 			var/list/item_list = list()
 			item_list["cat_name"] = category_name //used by RapidPipeDispenser.js
