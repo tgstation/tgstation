@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Bitfield for food types that the species absolutely hates, giving them even more disgust than disliked food. Meat is "toxic" to moths, for example.
 	var/toxic_food = TOXIC
 	///flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.
-	var/no_equip_flags
+	var/no_equip_flags = NONE
 	/// Allows the species to equip items that normally require a jumpsuit without having one equipped. Used by golems.
 	var/nojumpsuit = FALSE
 	///Affects the speech message, for example: Motharula flutters, "My speech message is flutters!"
