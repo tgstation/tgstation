@@ -1,0 +1,4 @@
+author: "AnturK"
+delete-after: True
+changes:
+  - bugfix: "normal toolboxes can't hold fishing rods anymore"

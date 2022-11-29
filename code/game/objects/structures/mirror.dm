@@ -34,6 +34,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			return TRUE
 		if(!user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 			return TRUE //no tele-grooming
+		if(HAS_TRAIT(hairdresser, TRAIT_SHAVED))
+			to_chat(hairdresser, span_notice("If only growing back facial hair were that easy for you..."))
 		hairdresser.facial_hairstyle = new_style
 	else
 		hairdresser.facial_hairstyle = "Shaved"

@@ -265,9 +265,21 @@
 	pAI
 */
 
-/mob/living/silicon/pai/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)//Stops runtimes due to attack_animal being the default
+/mob/living/silicon/pai/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	attack_target.attack_pai(src, modifiers)
+
+/mob/living/silicon/pai/resolve_right_click_attack(atom/target, list/modifiers)
+	return target.attack_pai_secondary(src, modifiers)
+
+/atom/proc/attack_pai(mob/user, list/modifiers)
 	return
 
+/**
+ * Called when a pAI right clicks an atom.
+ * Returns a SECONDARY_ATTACK_* value.
+ */
+/atom/proc/attack_pai_secondary(mob/user, list/modifiers)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /*
 	Simple animals

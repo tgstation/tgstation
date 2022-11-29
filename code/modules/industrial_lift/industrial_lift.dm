@@ -780,6 +780,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "titanium_yellow"
+	layer = TRAM_FLOOR_LAYER
+	plane = GAME_PLANE
 	base_icon_state = null
 	smoothing_flags = NONE
 	smoothing_groups = null
