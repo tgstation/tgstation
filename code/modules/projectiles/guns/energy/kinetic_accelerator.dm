@@ -47,6 +47,46 @@
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if(!LAZYLEN(modkits))
+		return
+
+	var/list/display_names = list()
+	var/list/items = list()
+	for(var/i in 1 to length(modkits))
+		var/obj/item/thing = modkits[i]
+		display_names["[thing.name] ([i])"] = REF(thing)
+		var/image/item_image = image(icon = thing.icon, icon_state = thing.icon_state)
+		if(length(thing.overlays))
+			item_image.copy_overlays(thing)
+		items += list("[thing.name] ([i])" = item_image)
+
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE, tooltips = TRUE)
+	if(!pick)
+		return
+
+	var/MK_reference = display_names[pick]
+	var/obj/item/borg/upgrade/modkit/MK = locate(MK_reference) in modkits
+	if(!istype(MK))
+		return
+	if(!user.put_in_hands(MK))
+		MK.forceMove(get_turf(src))
+	update_appearance()
+
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/proc/check_menu(mob/living/carbon/human/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/Exited(atom/movable/gone, direction)
 	if(gone in modkits)
 		var/obj/item/borg/upgrade/modkit/MK = gone
