@@ -258,7 +258,7 @@
 	id = "psychic_projection"
 	alert_type = null
 	remove_on_fullheal = TRUE
-	tick_interval = 0.2 SECONDS
+	tick_interval = 0.1 SECONDS
 	/// Times the target has dry fired a weapon.
 	var/times_dry_fired = 0
 	/// Needs to reach times_dry_fired for the next dry fire to happen.

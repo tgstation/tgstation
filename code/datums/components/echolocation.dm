@@ -70,7 +70,7 @@
 
 /datum/component/echolocation/process()
 	var/mob/living/echolocator = parent
-	if(parent.stat == DEAD)
+	if(echolocator.stat == DEAD)
 		return
 	echolocate()
 
