@@ -338,7 +338,7 @@
 	var/datum/species/S = H.dna.species
 	for(var/atom/movable/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
-			if(S.no_equip & inv.slot_id)
+			if(S.no_equip_flags & inv.slot_id)
 				inv.alpha = 128
 			else
 				inv.alpha = initial(inv.alpha)

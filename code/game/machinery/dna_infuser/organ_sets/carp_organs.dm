@@ -54,8 +54,8 @@
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
 	var/datum/species/rec_species = human_receiver.dna.species
-	if(!(rec_species.no_equip & ITEM_SLOT_MASK))
-		rec_species.no_equip += ITEM_SLOT_MASK
+	if(!(rec_species.no_equip_flags & ITEM_SLOT_MASK))
+		rec_species.no_equip_flags += ITEM_SLOT_MASK
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = 10 // Yeah, biteing is pretty weak, blame the monkey super-nerf
 	head.unarmed_damage_high = 15
@@ -67,8 +67,8 @@
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
 	var/datum/species/rec_species = human_receiver.dna.species
-	if(!(initial(rec_species.no_equip) & ITEM_SLOT_MASK))
-		rec_species.no_equip -= ITEM_SLOT_MASK
+	if(!(initial(rec_species.no_equip_flags) & ITEM_SLOT_MASK))
+		rec_species.no_equip_flags -= ITEM_SLOT_MASK
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = initial(head.unarmed_damage_low)
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
