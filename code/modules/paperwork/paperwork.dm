@@ -50,12 +50,6 @@
 			else
 				to_chat(user, span_warning("You hunt through the papers for somewhere to use the [attacking_item], but can't find anything."))
 
-/obj/item/paperwork/update_overlays()
-	. = ..()
-
-	if(stamped)
-		. += stamp_overlay
-
 /obj/item/paperwork/examine_more(mob/user)
 	. = ..()
 
@@ -72,10 +66,21 @@
 				. += span_info("Trying to read through it makes your head spin. Judging by the few words you can make out, this looks like a job for the [title].")
 
 /obj/item/paperwork/suicide_act(mob/living/user)
-	. = ..()
+	user.visible_message(span_suicide("[user] begins insulting the inefficiency of paperwork and bureaucracy. It looks like [user.p_theyre()] trying to commit suicide!"), span_alert(""))
 
-	user.visible_message(span_suicide("[user] is looking too deep into the [src]. It looks like [user.p_theyre()] trying to commit suicide!"))
-	return OXYLOSS
+	var/obj/item/paper/new_paper = new /obj/item/paper(get_turf(src))
+	var/turf/turf_to_throw_at = get_ranged_target_turf(get_turf(src), pick(GLOB.alldirs))
+	new_paper.throw_at(turf_to_throw_at, 2)
+
+	var/obj/item/bodypart/BP = user.get_bodypart(pick(BODY_ZONE_HEAD))
+	if(BP)
+		BP.dismember()
+		new_paper.visible_message(span_alert("The [src] launches a sheet of paper, instantly slicing off [user]'s head!"))
+	else
+		user.visible_message(span_suicide("[user] panics and starts choking to death!"))
+		return OXYLOSS
+
+	return MANUAL_SUICIDE
 
 /**
  * Adds the stamp overlay and sets "stamped" to true
@@ -85,8 +90,8 @@
  */
 /obj/item/paperwork/proc/add_stamp()
 	stamp_overlay = mutable_appearance('icons/obj/bureaucracy.dmi', stamp_icon)
+	add_overlay(stamp_overlay)
 	stamped = TRUE
-	update_overlays()
 
 /**
  * Copies the requested stamp, associated job, and associated icon of a given paperwork type
