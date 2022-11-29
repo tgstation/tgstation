@@ -1017,16 +1017,17 @@
 	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
 	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
-	if(!is_holding_cane)
-		human_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown) // TODO make this it's own modifier at some point
-		quirk_holder.AddElement(/datum/element/waddling)
-	else if(is_holding_cane)
+	if(is_holding_cane)
 		if(is_cane_left_hand)
 			left_cane = WEAKREF(left_hand_item)
 			RegisterSignals(left_hand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
 		if(is_cane_right_hand)
 			right_cane = WEAKREF(right_hand_item)
 			RegisterSignals(right_hand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
+	else
+		human_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown) // TODO make this it's own modifier at some point
+		quirk_holder.AddElement(/datum/element/waddling)
+
 
 	RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
@@ -1041,14 +1042,14 @@
 	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
 	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
-	if(!is_holding_cane)
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
-		quirk_holder.RemoveElement(/datum/element/waddling)
-	else if(is_holding_cane)
+	if(is_holding_cane)
 		if(primary_cane)
 			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 		if(secondary_cane)
 			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	else
+		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.RemoveElement(/datum/element/waddling)
 
 /// Signal handler for when the badback quirk_holder equips an item
 /datum/quirk/decrepit/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
@@ -1060,12 +1061,12 @@
 	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
 	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
 
-	if(!is_holding_cane)
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
-		quirk_holder.AddElement(/datum/element/waddling)
-	else if(is_holding_cane)
+	if(is_holding_cane)
 		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
 		quirk_holder.RemoveElement(/datum/element/waddling)
+	else
+		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/bad_back_slowdown)
+		quirk_holder.AddElement(/datum/element/waddling)
 
 	var/obj/item/primary_cane = left_cane?.resolve()
 	var/obj/item/secondary_cane = right_cane?.resolve()
