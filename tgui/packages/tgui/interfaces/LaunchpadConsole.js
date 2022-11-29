@@ -207,6 +207,15 @@ export const LaunchpadControl = (props, context) => {
         <Grid.Column>
           <Button
             fluid
+            icon="up-down"
+            content="Peek"
+            textAlign="center"
+            onClick={() => act('peek')}
+          />
+        </Grid.Column>
+        <Grid.Column>
+          <Button
+            fluid
             icon="download"
             content="Pull"
             textAlign="center"

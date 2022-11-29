@@ -183,4 +183,15 @@
 				to_chat(usr, span_warning(checks))
 
 			. = TRUE
+
+		if("peek")
+			var/checks = teleport_checks(current_pad)
+			if(!isnull(checks))
+				to_chat(usr, span_warning(checks))
+
+			current_pad.doteleport(usr, TRUE)
+			sleep(selected_id SECONDS)  // allows for cool relay tactics
+			current_pad.doteleport(usr, FALSE)
+
+			. = TRUE
 	. = TRUE
