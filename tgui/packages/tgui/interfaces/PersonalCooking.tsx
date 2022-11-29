@@ -143,6 +143,7 @@ export const PersonalCooking = (props, context) => {
   const foodtypes = canMake.concat(data.foodtypes.sort());
   const pageSize = display_compact ? 60 : 30;
   const displayLimit = pageSize * pages;
+  const content = document.getElementById('content');
   return (
     <Window width={700} height={700}>
       <Window.Content>
@@ -203,7 +204,9 @@ export const PersonalCooking = (props, context) => {
                             onClick={(e) => {
                               setType(foodtype);
                               setPages(1);
-                              document.getElementById('content').scrollTop = 0;
+                              if (content) {
+                                content.scrollTop = 0;
+                              }
                               if (searchText.length > 0) {
                                 setSearchText('');
                               }
@@ -225,7 +228,9 @@ export const PersonalCooking = (props, context) => {
                             onClick={(e) => {
                               setCategory(category);
                               setPages(1);
-                              document.getElementById('content').scrollTop = 0;
+                              if (content) {
+                                content.scrollTop = 0;
+                              }
                               if (searchText.length > 0) {
                                 setSearchText('');
                               }
