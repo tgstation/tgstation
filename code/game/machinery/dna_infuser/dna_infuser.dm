@@ -18,6 +18,8 @@
 	var/atom/movable/infusing_from
 	///what we're turning into
 	var/datum/infuser_entry/infusing_into
+	///a message for relaying that the machine is locked if someone tries to leave while it's active
+	COOLDOWN_DECLARE(message_cooldown)
 
 /obj/machinery/dna_infuser/Initialize(mapload)
 	. = ..()
@@ -159,6 +161,19 @@
 		add_infusion_item(used, user)
 	return ..()
 
+/obj/machinery/dna_infuser/relaymove(mob/living/user, direction)
+	if(user.stat)
+		if(COOLDOWN_FINISHED(src, message_cooldown))
+			COOLDOWN_START(src, message_cooldown, 4 SECONDS)
+			to_chat(user, span_warning("[src]'s door won't budge!"))
+		return
+	if(infusing)
+		if(COOLDOWN_FINISHED(src, message_cooldown))
+			COOLDOWN_START(src, message_cooldown, 4 SECONDS)
+			to_chat(user, span_danger("[src]'s door won't budge while all the needles are infusing you!"))
+		return
+	open_machine()
+
 // mostly good for dead mobs that turn into items like dead mice (smack to add)
 /obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
 	if(!is_valid_infusion(target, user))
@@ -173,6 +188,10 @@
 // mostly good for dead mobs like corpses (drag to add)
 /obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
 	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
+		return
+
+	if(iscarbon(target))
+		close_machine(target)
 		return
 
 	if(!is_valid_infusion(target, user))
