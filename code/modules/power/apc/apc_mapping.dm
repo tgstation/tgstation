@@ -20,7 +20,7 @@
 	auto_name = TRUE
 	cell_type = /obj/item/stock_parts/cell/high
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET)
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/highcap/five_k, APC_PIXEL_OFFSET)
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/highcap/ten_k, APC_PIXEL_OFFSET)
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/sm_apc, APC_PIXEL_OFFSET)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, 0)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/highcap/five_k, 0)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/highcap/ten_k, 0)
+INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/sm_apc, 0)

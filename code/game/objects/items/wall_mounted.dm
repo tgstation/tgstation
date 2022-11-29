@@ -9,6 +9,7 @@
 	var/result_path
 	var/wall_external = FALSE // For frames that are external to the wall they are placed on, like light fixtures and cameras.
 	var/pixel_shift //The amount of pixels
+	var/inverse_dir = FALSE // Do we used inverse directionals?
 
 /obj/item/wallframe/proc/try_build(turf/on_wall, mob/user)
 	if(get_dist(on_wall,user)>1)
@@ -40,6 +41,16 @@
 
 		var/obj/O = new result_path(get_turf(user), floor_to_wall, TRUE)
 		O.setDir(floor_to_wall)
+		if(inverse_dir == TRUE) // I'm sorry about this switch, O.turn wouldn't work for whatever reason.
+			switch(floor_to_wall)
+				if(NORTH)
+					O.dir = SOUTH
+				if(SOUTH)
+					O.dir = NORTH
+				if(EAST)
+					O.dir = WEST
+				if(WEST)
+					O.dir = EAST
 
 		if(pixel_shift)
 			switch(floor_to_wall)

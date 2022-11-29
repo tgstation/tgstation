@@ -66,7 +66,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	// So we'll start with "do we have a wall down there"
 	// we check to the south east and west too because action hates me
 	var/wall_below = isclosedturf(get_step(our_turf, SOUTH)) || isclosedturf(get_step(our_turf, SOUTHEAST)) || isclosedturf(get_step(our_turf, SOUTHWEST))
-	 // If there's a wall below us, we render different
+	// If there's a wall below us, we render different
 	our_appearances += get_window_appearance(offset, icon_path, junction, "lower", wall_below, FALSE)
 
 	// Now we'll check above

@@ -4,6 +4,7 @@
 	desc = "Used for repairing or building APCs."
 	icon_state = "apc"
 	result_path = /obj/machinery/power/apc
+	inverse_dir = TRUE
 
 /obj/item/wallframe/apc/try_build(turf/on_wall, user)
 	if(!..())

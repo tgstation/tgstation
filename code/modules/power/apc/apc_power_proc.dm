@@ -11,7 +11,7 @@
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
 	terminal = new/obj/machinery/power/terminal(loc)
-	terminal.setDir(dir)
+	terminal.setDir(turn(dir, 180))
 	terminal.master = src
 
 /obj/machinery/power/apc/proc/toggle_nightshift_lights(mob/user)

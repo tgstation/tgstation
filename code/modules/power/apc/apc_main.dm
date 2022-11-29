@@ -107,8 +107,6 @@
 	var/mob/remote_control_user = null
 	///Represents a signel source of power alarms for this apc
 	var/datum/alarm_handler/alarm_manager
-	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
-	var/offset_old
 
 /obj/machinery/power/apc/New(turf/loc, ndir, building=0)
 	if(!req_access)
@@ -128,22 +126,8 @@
 		set_machine_stat(machine_stat | MAINT)
 		update_appearance()
 		addtimer(CALLBACK(src, .proc/update), 5)
-		dir = ndir
+		dir = turn(ndir, 180)
 	AddElement(/datum/element/wall_mount)
-
-	switch(dir)
-		if(NORTH)
-			offset_old = pixel_y
-			pixel_y = APC_PIXEL_OFFSET
-		if(SOUTH)
-			offset_old = pixel_y
-			pixel_y = -APC_PIXEL_OFFSET
-		if(EAST)
-			offset_old = pixel_x
-			pixel_x = APC_PIXEL_OFFSET
-		if(WEST)
-			offset_old = pixel_x
-			pixel_x = -APC_PIXEL_OFFSET
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
@@ -182,10 +166,6 @@
 	make_terminal()
 
 	addtimer(CALLBACK(src, .proc/update), 5)
-
-	///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
-	if(abs(offset_old) != APC_PIXEL_OFFSET)
-		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src

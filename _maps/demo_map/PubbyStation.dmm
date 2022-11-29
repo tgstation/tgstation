@@ -9832,10 +9832,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/highcap{
-	name = "Central Primary Hallway APC";
-	pixel_y = -25
-	},
+/obj/machinery/power/apc/highcap/five_k/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "aJU" = (
@@ -13970,8 +13967,7 @@
 /turf/open/floor/iron/dark,
 /area/station/commons/lounge)
 "bbu" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "bbv" = (
@@ -25979,9 +25975,8 @@
 /turf/closed/wall,
 /area/station/service/chapel/asteroid/monastery)
 "caT" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
-/turf/open/floor/iron/dark,
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
 /area/station/service/chapel/monastery)
 "caZ" = (
 /obj/structure/table,
@@ -30789,7 +30784,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "doo" = (
-/obj/structure/table,
 /obj/structure/disposalpipe/segment,
 /obj/structure/table,
 /obj/item/storage/box/beakers{
