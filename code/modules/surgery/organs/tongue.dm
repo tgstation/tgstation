@@ -50,6 +50,7 @@
  */
 /obj/item/organ/internal/tongue/proc/get_possible_languages()
 	RETURN_TYPE(/list)
+	// This is the default list of languages most humans should be capable of speaking
 	return list(
 		/datum/language/common,
 		/datum/language/uncommon,
@@ -346,7 +347,8 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	return list(
 		/datum/language/xenocommon,
 		/datum/language/common,
-		/datum/language/draconic,
+		/datum/language/uncommon,
+		/datum/language/draconic, // Both hiss?
 		/datum/language/monkey,
 	)
 
@@ -374,7 +376,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	. = ..()
 	phomeme_type = pick(phomeme_types)
 
-// Bone tongues can speak all + calcic
+// Bone tongues can speak all default + calcic
 /obj/item/organ/internal/tongue/bone/get_possible_languages()
 	return ..() + /datum/language/calcic
 
@@ -436,6 +438,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
 
-// Ethereal tongues can speak all + voltaic
+// Ethereal tongues can speak all default + voltaic
 /obj/item/organ/internal/tongue/ethereal/get_possible_languages()
 	return ..() + /datum/language/voltaic
