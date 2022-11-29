@@ -323,12 +323,11 @@
 		if(possible_enemy == controller.pawn)
 			continue // don't target ourselves
 		var/datum/weakref/enemy_ref = WEAKREF(possible_enemy)
-		if(enemy_ref in enemies)
-			continue // don't target enemies we already hate
-		if(!controller.blackboard[BB_MONKEY_AGGRESSIVE])
-			continue // don't target enemies if we're not aggressive
-		if(HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS])
-			continue // don't target monkeys if we're not supposed to
+		if(!enemies[enemy_ref]) //We don't hate this creature! But we might still attack it!
+			if(!controller.blackboard[BB_MONKEY_AGGRESSIVE]) //We are not aggressive either, so we won't attack!
+				continue
+			if(HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS]) //Do not target poor monkes
+				continue
 		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
 		valids[enemy_ref] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
 
