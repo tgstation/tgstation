@@ -70,6 +70,7 @@ Slimecrossing Weapons
 	attack_verb_continuous = list("bashes", "pounds", "slams")
 	attack_verb_simple = list("bash", "pound", "slam")
 	item_flags = SLOWS_WHILE_IN_HAND
+	breakable_by_damage = FALSE
 
 /obj/item/shield/adamantineshield/Initialize(mapload)
 	. = ..()

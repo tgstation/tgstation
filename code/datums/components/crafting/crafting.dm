@@ -51,7 +51,6 @@
 
 	var/cur_category = CAT_NONE
 	var/cur_subcategory = CAT_NONE
-	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
 
@@ -276,6 +275,7 @@
 							RG.volume -= amt
 							data = RG.data
 							RC.reagents.conditional_update(RC)
+							RC.update_appearance(UPDATE_ICON)
 							RG = locate(RG.type) in Deletion
 							RG.volume = amt
 							RG.data += data
@@ -285,6 +285,7 @@
 							amt -= RG.volume
 							RC.reagents.reagent_list -= RG
 							RC.reagents.conditional_update(RC)
+							RC.update_appearance(UPDATE_ICON)
 							RGNT = locate(RG.type) in Deletion
 							RGNT.volume += RG.volume
 							RGNT.data += RG.data

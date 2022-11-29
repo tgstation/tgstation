@@ -96,7 +96,8 @@
 
 	if(!istype(liver_owner))
 		return
-	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) // can't process reagents with a failing liver
+	if(organ_flags & ORGAN_FAILING || HAS_TRAIT(liver_owner, TRAIT_NOMETABOLISM)) //If your liver is failing or you lack a metabolism then we use the liverless version of metabolize
+		liver_owner.reagents.metabolize(liver_owner, delta_time, times_fired, can_overdose=TRUE, liverless=TRUE)
 		return
 
 	var/obj/belly = liver_owner.getorganslot(ORGAN_SLOT_STOMACH)
@@ -104,7 +105,7 @@
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
 
-	if(filterToxins && !HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+	if(filterToxins && !HAS_TRAIT(liver_owner, TRAIT_TOXINLOVER))
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
 			if(belly)
@@ -126,7 +127,7 @@
 
 
 /obj/item/organ/internal/liver/handle_failing_organs(delta_time)
-	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_NOMETABOLISM))
+	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_NOMETABOLISM))
 		return
 	return ..()
 

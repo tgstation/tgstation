@@ -1,12 +1,5 @@
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
 	verb_say = dna.species.say_mod
-	// Any subtype of slurring in our status effects make us "slur"
-	if(locate(/datum/status_effect/speech/slurring) in status_effects)
-		if (HAS_TRAIT(src, TRAIT_SIGN_LANG))
-			return "loosely signs"
-		else
-			return "slurs"
-
 	return ..()
 
 /mob/living/carbon/human/GetVoice()

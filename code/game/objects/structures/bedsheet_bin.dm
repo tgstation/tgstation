@@ -32,6 +32,7 @@ LINEN BINS
 	var/stack_amount = 3
 	/// Denotes if the bedsheet is a single, double, or other kind of bedsheet
 	var/bedsheet_type = BEDSHEET_SINGLE
+	var/datum/weakref/signal_sleeper //this is our goldylocks
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
@@ -40,31 +41,86 @@ LINEN BINS
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	register_context()
+	register_item_context()
+
+/obj/item/bedsheet/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(istype(held_item) && (held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness()))
+		context[SCREENTIP_CONTEXT_LMB] = "Shred into cloth"
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
+	if(isliving(target) && target.body_position == LYING_DOWN)
+		context[SCREENTIP_CONTEXT_LMB] = "Cover"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
+/obj/item/bedsheet/attack(mob/living/target, mob/living/user)
+	if(!user.CanReach(target))
+		return
+	if(user.combat_mode || target.body_position != LYING_DOWN)
+		return ..()
+	if(!user.dropItemToGround(src))
+		return
+
+	forceMove(get_turf(target))
+	balloon_alert(user, "covered")
+	coverup(target)
+	add_fingerprint(user)
 
 /obj/item/bedsheet/attack_self(mob/living/user)
 	if(!user.CanReach(src)) //No telekenetic grabbing.
 		return
+	if(user.body_position != LYING_DOWN)
+		return
 	if(!user.dropItemToGround(src))
 		return
-	if(layer == initial(layer))
-		layer = ABOVE_MOB_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-		to_chat(user, span_notice("You cover yourself with [src]."))
-		pixel_x = 0
-		pixel_y = 0
-	else
-		layer = initial(layer)
-		SET_PLANE_IMPLICIT(src, initial(plane))
-		to_chat(user, span_notice("You smooth [src] out beneath you."))
-	if(user.body_position == LYING_DOWN)    //The player isn't laying down currently
-		dir = user.dir
-	else
-		if(user.dir & WEST)    //The player is rotated to the right, lay the sheet left!
-			dir = WEST
-		else    //The player is rotated to the left, lay the sheet right!
-			dir = EAST
+
+	coverup(user)
 	add_fingerprint(user)
-	return
+
+/obj/item/bedsheet/proc/coverup(mob/living/sleeper)
+	layer = ABOVE_MOB_LAYER
+	SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
+	pixel_x = 0
+	pixel_y = 0
+	balloon_alert(sleeper, "covered")
+	var/angle = sleeper.lying_prev
+	dir = angle2dir(angle + 180) // 180 flips it to be the same direction as the mob
+
+	signal_sleeper = WEAKREF(sleeper)
+	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+	RegisterSignal(sleeper, COMSIG_MOVABLE_MOVED, PROC_REF(smooth_sheets))
+	RegisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(smooth_sheets))
+	RegisterSignal(sleeper, COMSIG_PARENT_QDELETING, PROC_REF(smooth_sheets))
+
+/obj/item/bedsheet/proc/smooth_sheets(mob/living/sleeper)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(sleeper, COMSIG_PARENT_QDELETING)
+	balloon_alert(sleeper, "smoothed sheets")
+	layer = initial(layer)
+	SET_PLANE_IMPLICIT(src, initial(plane))
+	signal_sleeper = null
+
+// We need to do this in case someone picks up a bedsheet while a mob is covered up
+// otherwise the bedsheet will disappear while in our hands if the sleeper signals get activated by moving
+/obj/item/bedsheet/proc/on_pickup(datum/source, mob/grabber)
+	SIGNAL_HANDLER
+
+	var/mob/living/sleeper = signal_sleeper?.resolve()
+
+	UnregisterSignal(src, COMSIG_ITEM_PICKUP)
+	UnregisterSignal(sleeper, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(sleeper, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(sleeper, COMSIG_PARENT_QDELETING)
+	signal_sleeper = null
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
@@ -77,6 +133,12 @@ LINEN BINS
 		to_chat(user, span_notice("You tear [src] up."))
 	else
 		return ..()
+
+/obj/item/bedsheet/AltClick(mob/living/user)
+	// double check the canUseTopic args to make sure it's correct
+	if(!istype(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
+		return
+	dir = turn(dir, 180)
 
 /obj/item/bedsheet/blue
 	icon_state = "sheetblue"

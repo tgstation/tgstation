@@ -18,7 +18,7 @@
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
 
-	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING)
+	no_equip_flags = ITEM_SLOT_MASK | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_ICLOTHING
 
 	burnmod = 1.25
 	heatmod = 1.5
