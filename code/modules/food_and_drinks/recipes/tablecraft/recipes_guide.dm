@@ -615,7 +615,7 @@
 
 /datum/crafting_recipe/food/microwave/cheese_curds
 	reqs = list(/obj/item/food/cheese/curd_cheese = 1)
-	result = /obj/item/food/cheese_curds
+	result = /obj/item/food/cheese/cheese_curds
 
 // Machinery: Oven
 /datum/crafting_recipe/food/oven
@@ -684,7 +684,7 @@
 	subcategory = CAT_PASTRY
 
 /datum/crafting_recipe/food/oven/green_lasagne
-	reqs = list(/obj/item/food/raw_green_lasagnee = 1)
+	reqs = list(/obj/item/food/raw_green_lasagne = 1)
 	result = /obj/item/food/green_lasagne
 	subcategory = CAT_SPAGHETTI
 
@@ -732,10 +732,12 @@
 /datum/crafting_recipe/food/drying/headcheese
 	reqs = list(/obj/item/food/raw_headcheese = 1)
 	result = /obj/item/food/headcheese
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/drying/sosjerky
 	reqs = list(/obj/item/food/meat/slab = 1)
 	result = /obj/item/food/sosjerky/healthy
+	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/drying/no_raisin/healthy
 	reqs = list(/obj/item/food/grown/grapes = 1)
