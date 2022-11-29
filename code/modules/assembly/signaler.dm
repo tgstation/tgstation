@@ -6,7 +6,6 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
-	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
@@ -156,8 +155,6 @@
 		return
 	if(signal.data["code"] != code)
 		return
-	if(!(src.wires & WIRE_RADIO_RECEIVE))
-		return
 	if(suicider)
 		manual_suicide(suicider)
 		return
@@ -165,7 +162,7 @@
 	// If the holder is a TTV, we want to store the last received signal to incorporate it into TTV logging, else wipe it.
 	last_receive_signal_log = istype(holder, /obj/item/transfer_valve) ? signal.logging_data : null
 
-	pulse(TRUE)
+	pulse()
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
 		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
@@ -175,34 +172,6 @@
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
-	return
-
-// Embedded signaller used in grenade construction.
-// It's necessary because the signaler doens't have an off state.
-// Generated during grenade construction.  -Sayu
-/obj/item/assembly/signaler/receiver
-	var/on = FALSE
-
-/obj/item/assembly/signaler/receiver/proc/toggle_safety()
-	on = !on
-
-/obj/item/assembly/signaler/receiver/activate()
-	toggle_safety()
-	return TRUE
-
-/obj/item/assembly/signaler/receiver/examine(mob/user)
-	. = ..()
-	. += span_notice("The radio receiver is [on?"on":"off"].")
-
-/obj/item/assembly/signaler/receiver/receive_signal(datum/signal/signal)
-	if(!on)
-		return
-	return ..(signal)
-
-/obj/item/assembly/signaler/anomaly/attack_self()
-	return
-
-/obj/item/assembly/signaler/crystal_anomaly/attack_self()
 	return
 
 /obj/item/assembly/signaler/cyborg
@@ -228,4 +197,3 @@
 	if(ispAI(user))
 		return TRUE
 	. = ..()
-

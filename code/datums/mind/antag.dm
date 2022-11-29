@@ -169,7 +169,7 @@
 	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
 	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
 	if(uplink_loc == R)
-		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply speak \"[new_uplink.unlock_code]\" into frequency :d to unlock its hidden features."
+		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply speak \"[new_uplink.unlock_code]\" into frequency [RADIO_TOKEN_UPLINK] to unlock its hidden features."
 	else if(uplink_loc == PDA)
 		unlock_text = "Your Uplink is cunningly disguised as your [PDA.name]. Simply enter the code \"[new_uplink.unlock_code]\" into the ring tone selection to unlock its hidden features."
 	else if(uplink_loc == P)
@@ -218,6 +218,9 @@
 	for(var/datum/objective/objective as anything in get_all_objectives())
 		to_chat(current, "<B>[objective.objective_name] #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
+	// Objectives are often stored in the static data of antag uis, so we should update those as well
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		antag.update_static_data(current)
 
 /datum/mind/proc/find_syndicate_uplink(check_unlocked)
 	var/list/L = current.get_all_contents()

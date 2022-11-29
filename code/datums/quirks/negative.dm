@@ -908,7 +908,7 @@
 	mail_goodies = list(/obj/item/reagent_containers/spray/pepper) // show me on the doll where the bad man touched you
 
 /datum/quirk/bad_touch/add()
-	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), PROC_REF(uncomfortable_touch))
+	RegisterSignals(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT), PROC_REF(uncomfortable_touch))
 
 /datum/quirk/bad_touch/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HELP_ACT))
@@ -990,6 +990,18 @@
 	medical_record_text = "Patient is not literate."
 	hardcore_value = 8
 	mail_goodies = list(/obj/item/pai_card) // can read things for you
+
+
+/datum/quirk/mute
+	name = "Mute"
+	desc = "For some reason you are completely unable to speak."
+	icon = "volume-xmark"
+	value = -4
+	mob_trait = TRAIT_MUTE
+	gain_text = span_danger("You find yourself unable to speak!")
+	lose_text = span_notice("You feel a growing strength in your vocal chords.")
+	medical_record_text = "The patient is unable to use their voice in any capacity."
+	hardcore_value = 4
 
 /datum/quirk/body_purist
 	name = "Body Purist"

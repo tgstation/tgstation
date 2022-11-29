@@ -13,6 +13,9 @@ SUBSYSTEM_DEF(research)
 	var/datum/techweb_node/error_node/error_node //These two are what you get if a node/design is deleted and somehow still stored in a console.
 	var/datum/design/error_design/error_design
 
+	///List of all research servers.
+	var/list/obj/machinery/rnd/server/servers = list()
+
 	//ERROR LOGGING
 	///associative id = number of times
 	var/list/invalid_design_ids = list()
@@ -20,8 +23,6 @@ SUBSYSTEM_DEF(research)
 	var/list/invalid_node_ids = list()
 	///associative id = error message
 	var/list/invalid_node_boost = list()
-
-	var/list/obj/machinery/rnd/server/servers = list()
 
 	///associative id = TRUE
 	var/list/techweb_nodes_starting = list()
@@ -68,9 +69,9 @@ SUBSYSTEM_DEF(research)
 	)
 
 	/// Lookup list for ordnance briefers.
-	var/list/ordnance_experiments
+	var/list/ordnance_experiments = list()
 	/// Lookup list for scipaper partners.
-	var/list/scientific_partners
+	var/list/scientific_partners = list()
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
@@ -306,12 +307,10 @@ SUBSYSTEM_DEF(research)
 		CHECK_TICK
 
 /datum/controller/subsystem/research/proc/populate_ordnance_experiments()
-	ordnance_experiments = list()
-	scientific_partners = list()
-
 	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))
 		if (initial(experiment_path.experiment_proper))
 			ordnance_experiments += new experiment_path()
+
 	for(var/partner_path in subtypesof(/datum/scientific_partner))
 		var/datum/scientific_partner/partner = new partner_path
 		if(!partner.accepted_experiments.len)

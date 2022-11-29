@@ -322,7 +322,21 @@
 	if(plasma_parts.len)
 		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
 		burn_human.emote("scream")
-		ADD_TRAIT(burn_limb, TRAIT_PLASMABURNT, name)
+		var/obj/item/bodypart/plasmalimb
+		switch(burn_limb.body_zone) //get plasmaman limb to swap in
+			if(BODY_ZONE_L_ARM)
+				plasmalimb = new /obj/item/bodypart/arm/left/plasmaman
+			if(BODY_ZONE_R_ARM)
+				plasmalimb = new /obj/item/bodypart/arm/right/plasmaman
+			if(BODY_ZONE_L_LEG)
+				plasmalimb = new /obj/item/bodypart/leg/left/plasmaman
+			if(BODY_ZONE_R_LEG)
+				plasmalimb = new /obj/item/bodypart/leg/right/plasmaman
+			if(BODY_ZONE_CHEST)
+				plasmalimb = new /obj/item/bodypart/chest/plasmaman
+			if(BODY_ZONE_HEAD)
+				plasmalimb = new /obj/item/bodypart/head/plasmaman
+		burn_human.del_and_replace_bodypart(plasmalimb)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \

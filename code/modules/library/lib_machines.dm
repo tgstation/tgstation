@@ -247,7 +247,7 @@
 	var/checkout
 	var/duedate
 
-#define PRINTER_COOLDOWN 6 SECONDS
+#define PRINTER_COOLDOWN (6 SECONDS)
 #define LIBRARY_NEWSFEED "Nanotrasen Book Club"
 //The different states the computer can be in, only send the info we need yeah?
 #define LIBRARY_INVENTORY 1
