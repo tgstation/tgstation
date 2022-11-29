@@ -39916,7 +39916,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/medical{
-	name = "Surgery B"
+	name = "Surgery South"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -69300,6 +69300,21 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron,
 /area/station/maintenance/port/fore)
+"vuh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/medical{
+	name = "Surgery North"
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue/full,
+/obj/effect/mapping_helpers/airlock/access/all/medical/surgery,
+/turf/open/floor/iron/white/smooth_large,
+/area/station/medical/medbay/aft)
 "vuq" = (
 /obj/machinery/modular_computer/console/preset/civilian,
 /obj/structure/fireaxecabinet/mechremoval/directional/north,
@@ -250110,7 +250125,7 @@ cTJ
 klc
 aSo
 aSo
-mmB
+vuh
 aSo
 aSo
 aSo
