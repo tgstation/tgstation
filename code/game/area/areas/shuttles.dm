@@ -76,6 +76,13 @@
 	requires_power = TRUE
 	static_lighting = TRUE
 
+////////////////////////////Cyborg Mothership////////////////////////////
+
+/area/shuttle/cyborg_mothership
+	name = "Cyborg Mothership"
+	requires_power = TRUE
+	area_limited_icon_smoothing = /area/shuttle/cyborg_mothership
+
 ////////////////////////////White Ship////////////////////////////
 
 /area/shuttle/abandoned
@@ -187,7 +194,7 @@
 /area/shuttle/escape/meteor
 	name = "\proper a meteor with engines strapped to it"
 	luminosity = NONE
-	
+
 /area/shuttle/escape/engine
 	name = "Escape Shuttle Engine"
 
