@@ -130,3 +130,18 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		/obj/item/organ/internal/ears/fox,
 	)
 	infusion_desc = "inexcusable"
+
+/datum/infuser_entry/roach
+	name = "Roach"
+	infuse_mob_name = "cockroach"
+	desc = "Cockroaches are everywhere."
+	threshold_desc = "you gain incredible resistance... to some things."
+	qualities = list(
+		"nothing",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/cockroach,
+	)
+	output_organs = list(
+	)
+	infusion_desc = "kafkaesque" // Gregor Samsa !!

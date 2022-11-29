@@ -60,10 +60,7 @@
 		return
 	if(++stage < 6)
 		INVOKE_ASYNC(src, PROC_REF(RefreshInfectionImage))
-		var/slowdown = 1
-		if(ishuman(owner))
-			var/mob/living/carbon/human/baby_momma = owner
-			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
+		var/slowdown = HAS_TRAIT(baby_momma, TRAIT_VIRUS_RESISTANCE) ? 2 : 1
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()

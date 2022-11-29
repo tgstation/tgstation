@@ -37,6 +37,7 @@
 	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NUKEIMMUNE, INNATE_TRAIT)
 
 /mob/living/basic/cockroach/death(gibbed)
 	if(GLOB.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
