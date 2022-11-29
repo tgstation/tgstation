@@ -44,10 +44,7 @@
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
-	SSpoints_of_interest.make_point_of_interest(src)
-
 /mob/living/simple_animal/hostile/regalrat/Destroy()
-	SSpoints_of_interest.remove_point_of_interest(src)
 	QDEL_NULL(domain)
 	QDEL_NULL(riot)
 	return ..()
@@ -55,7 +52,6 @@
 /mob/living/simple_animal/hostile/regalrat/proc/become_player_controlled(mob/user)
 	log_message("took control of [name].", LOG_GAME)
 	key = user.key
-	SSpoints_of_interest.remove_point_of_interest(src)
 	notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
 	to_chat(src, span_notice("You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!"))
 
