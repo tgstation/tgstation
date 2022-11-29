@@ -171,7 +171,7 @@
 		var/datum/ai_controller/basic_controller/bot/clean/cleanbot = ai_controller
 		cleanbot.set_valid_targets(typecacheof(target_types))
 
-/mob/living/basic/bot/cleanbot/examine(mob/user)
+/mob/living/basic/bot//examine(mob/user)
 	. = ..()
 	if(!weapon)
 		return .
