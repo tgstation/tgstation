@@ -13,6 +13,8 @@
 	var/images_are_static = TRUE
 	/// With mobs that have this echo group in their echolocation receiver trait, we share echo images.
 	var/echo_group = null
+	/// Ref of the client color we give to the echolocator.
+	var/client_color
 	/// Associative list of world.time when created to a list of the images.
 	var/list/images = list()
 	/// Associative list of world.time when created to a list of receivers.
@@ -52,7 +54,7 @@
 	if(!isnull(echo_group))
 		src.echo_group = echo_group
 	if(!isnull(color_path))
-		echolocator.add_client_colour(color_path)
+		client_color = echolocator.add_client_colour(color_path)
 	ADD_TRAIT(echolocator, TRAIT_ECHOLOCATION_RECEIVER, echo_group || REF(src))
 	echolocator.become_blind(ECHOLOCATION_TRAIT)
 	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo, echo_icon)
@@ -61,6 +63,7 @@
 /datum/component/echolocation/Destroy(force, silent)
 	STOP_PROCESSING(SSfastprocess, src)
 	var/mob/living/echolocator = parent
+	QDEL_NULL(client_color)
 	REMOVE_TRAIT(echolocator, TRAIT_ECHOLOCATION_RECEIVER, echo_group || REF(src))
 	echolocator.cure_blind(ECHOLOCATION_TRAIT)
 	echolocator.clear_fullscreen("echo")
