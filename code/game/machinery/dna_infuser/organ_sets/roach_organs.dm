@@ -1,7 +1,7 @@
 #define ROACH_ORGAN_COLOR "#7c4200"
 
 /datum/status_effect/organ_set_bonus/roach
-	organs_needed = 4
+	organs_needed = 3
 	bonus_activate_text = span_notice("Roach DNA is deeply infused with you! You feel increasingly resistant explosives.")
 	bonus_deactivate_text = span_notice("You are no longer majority roach, and you feel vulnerable to nuclear apocalypses.")
 
@@ -48,7 +48,9 @@
 	REMOVE_TRAIT(owner, TRAIT_VIRUS_RESISTANCE, id)
 
 
-
+/// Roach heart:
+/// Reduces damage taken from brute attacks from behind,
+/// but increases duration of knockdowns
 /obj/item/organ/internal/heart/roach
 	name = "mutated roach-heart"
 	desc = "Roach DNA infused into what was once a normal heart."
@@ -62,22 +64,35 @@
 
 /obj/item/organ/internal/heart/roach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "has a thick carapace spouting from their back!")
+	AddElement(/datum/element/noticable_organ, "has hardened, somewhat translucent skin.")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
 
 /obj/item/organ/internal/heart/roach/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 	if(!.)
 		return
+	if(!ishuman(owner))
+		return
 
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(modify_damage))
+	// 3x as long knockdowns
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.physiology.knockdown_mod *= 3
 
 /obj/item/organ/internal/heart/roach/Remove(mob/living/carbon/heartless, special)
-	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.knockdown_mod /= 3
 	if(defense_timerid)
-		reset_damage()
+		reset_damage(owner)
 	return ..()
 
+/**
+ * Signal proc for [COMSIG_MOB_APPLY_DAMAGE]
+ *
+ * Being hit with brute damage in the back will impart a large damage resistance bonus for a very short period.
+ */
 /obj/item/organ/internal/heart/roach/proc/modify_damage(datum/source, damage, damagetype, def_zone, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
 	SIGNAL_HANDLER
 
@@ -93,13 +108,25 @@
 	if(!defense_timerid)
 		human_owner.physiology.brute_mod /= 2
 		human_owner.visible_message(span_warning("[human_owner]'s back hardens against the blow!"))
-	defense_timerid = addtimer(CALLBACK(src, PROC_REF(reset_damage)), 0.2 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+	defense_timerid = addtimer(CALLBACK(src, PROC_REF(reset_damage), owner), 0.2 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-/obj/item/organ/internal/heart/roach/proc/reset_damage()
-	if(QDELETED(src) || QDELETED(owner))
-		return
-	var/mob/living/carbon/human/human_owner = owner
+/obj/item/organ/internal/heart/roach/proc/reset_damage(mob/living/carbon/human/human_owner)
 	human_owner.physiology.brute_mod *= 2
 	defense_timerid = null
 
-/obj/item/organ/internal/ears/roach
+
+/// Roach stomach:
+/// Makes disgust a non-issue
+/obj/item/organ/internal/stomach/roach
+	name = "mutated roach-stomach"
+	desc = "Roach DNA infused into what was once a normal stomach."
+	disgust_metabolism = 32 // Demolishes any disgust we have
+
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "stomach"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = ROACH_ORGAN_COLOR
+
+/obj/item/organ/internal/stomach/roach/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
