@@ -387,7 +387,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLUSHING "blushing"
 /// This person is crying
 #define TRAIT_CRYING "crying"
-#define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
+///This carbon doesn't bleed
+#define TRAIT_NOBLEED "nobleed"
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
 /// This mobs bodyparts are invisible but still clickable.
