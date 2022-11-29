@@ -46,14 +46,6 @@
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
 	return speech_args[SPEECH_MESSAGE]
 
-/obj/item/organ/internal/tongue/proc/generate_body_overlay(mob/living/carbon/human/parent)
-	var/list/overlays = list()
-	if(HAS_TRAIT(parent, TRAIT_SALIVATING))
-		var/mutable_appearance/saliva_overlay = mutable_appearance('icons/mob/species/human/human_face.dmi', "drool", -BODY_ADJ_LAYER)
-		saliva_overlay.color = COLOR_DARK_CYAN
-		overlays += saliva_overlay
-	return overlays
-
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)

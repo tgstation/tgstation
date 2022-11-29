@@ -57,10 +57,6 @@
 	AddElement(/datum/element/noticable_organ, "salivates excessively.", BODY_ZONE_HEAD)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
 
-/obj/item/organ/internal/stomach/rat/on_life(delta_time, times_fired)
-	. = ..()
-	owner.adjust_nutrition(-9 * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
-
 /obj/item/organ/internal/stomach/rat/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 	if(!ishuman(reciever))
@@ -72,6 +68,7 @@
 	//but a rat can eat anything without issue
 	species.disliked_food = NONE
 	species.toxic_food = NONE
+	human_holder.physiology.hunger_mod *= 10
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 /obj/item/organ/internal/stomach/rat/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
@@ -84,11 +81,12 @@
 	. = ..()
 	if(!ishuman(stomach_owner))
 		return
-	var/datum/species/species = stomach_owner.dna.species
+	var/mob/living/carbon/human/human_holder = stomach_owner
+	var/datum/species/species = human_holder.dna.species
 	species.liked_food = initial(species.liked_food)
 	species.disliked_food = initial(species.disliked_food)
 	species.toxic_food = initial(species.toxic_food)
-
+	human_holder.physiology.hunger_mod /= 10
 	UnregisterSignal(stomach_owner, COMSIG_SPECIES_GAIN)
 
 

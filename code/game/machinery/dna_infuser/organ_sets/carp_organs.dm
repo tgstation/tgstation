@@ -1,6 +1,9 @@
 
-/// if you add eyes, switch to the way the rat organ defines work
-#define CARP_COLORS "#4caee7"
+#define CARP_ORGAN_COLOR "#4caee7"
+#define CARP_SCLERA_COLOR "#ffffff"
+#define CARP_PUPIL_COLOR "#00b1b1"
+
+#define CARP_COLORS CARP_ORGAN_COLOR + CARP_SCLERA_COLOR + CARP_PUPIL_COLOR
 
 ///bonus of the carp: you can swim through space!
 /datum/status_effect/organ_set_bonus/carp
@@ -38,36 +41,32 @@
 	name = "mutated carp-jaws"
 	desc = "Carp DNA infused into what was once some normal teeth."
 
+	say_mod = "gnashes"
+
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
 
-	var/datum/martial_art/carp_jaws/jaws_datum
-
-/obj/item/organ/internal/tongue/carp/Initialize(mapload)
-	. = ..()
-	jaws_datum = new()
-
 /obj/item/organ/internal/tongue/carp/Insert(mob/living/carbon/tongue_owner, special, drop_if_replaced)
 	. = ..()
-	jaws_datum.teach(tongue_owner)
 	if(!ishuman(tongue_owner))
 		return
-	var/mob/living/carbon/human/human_reciever = tongue_owner
-	var/datum/species/rec_species = human_reciever.dna.species
-	if(!(ITEM_SLOT_MASK in rec_species.no_equip))
-		rec_species.no_equip += ITEM_SLOT_MASK
+	var/mob/living/carbon/human/human_receiver = tongue_owner
+	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
+	head.unarmed_damage_low = 10 // Yeah, biteing is pretty weak, blame the monkey super-nerf
+	head.unarmed_damage_high = 15
+	head.unarmed_stun_threshold = 15
 
 /obj/item/organ/internal/tongue/carp/Remove(mob/living/carbon/tongue_owner, special)
 	. = ..()
-	jaws_datum.remove(tongue_owner)
 	if(!ishuman(tongue_owner))
 		return
-	var/mob/living/carbon/human/human_reciever = tongue_owner
-	var/datum/species/rec_species = human_reciever.dna.species
-	if(!(ITEM_SLOT_MASK in initial(rec_species.no_equip)))
-		rec_species.no_equip -= ITEM_SLOT_MASK
+	var/mob/living/carbon/human/human_receiver = tongue_owner
+	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
+	head.unarmed_damage_low = initial(head.unarmed_damage_low)
+	head.unarmed_damage_high = initial(head.unarmed_damage_high)
+	head.unarmed_stun_threshold = initial(head.unarmed_stun_threshold)
 
 /obj/item/organ/internal/tongue/carp/on_life(delta_time, times_fired)
 	. = ..()
@@ -113,6 +112,9 @@
 	. = ..()
 	UnregisterSignal(brain_owner)
 	deltimer(cooldown_timer)
+
+/obj/item/organ/internal/brain/carp/get_attacking_limb(mob/living/carbon/human/target)
+	return owner.get_bodypart(BODY_ZONE_HEAD)
 
 /obj/item/organ/internal/brain/carp/proc/unsatisfied_nomad()
 	owner.add_mood_event("nomad", /datum/mood_event/unsatisfied_nomad)

@@ -41,9 +41,9 @@
 	. += span_notice("Alt-click to eject the infusion source, if one is inside.")
 
 /obj/machinery/dna_infuser/interact(mob/user)
-	// if(user == occupant)
-	// 	balloon_alert(user, "can't reach!")
-	// 	return
+	if(user == occupant)
+		balloon_alert(user, "can't reach!")
+		return
 	if(infusing)
 		balloon_alert(user, "not while it's on!")
 		return

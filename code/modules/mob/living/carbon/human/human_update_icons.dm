@@ -815,11 +815,6 @@ generate/load female uniform sprites matching all previously decided variables
 					missing_eyes.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 					missing_eyes.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
 				add_overlay(missing_eyes)
-		// tongue? yes, some niche things related to the mouth, like salivating
-		var/obj/item/organ/internal/tongue/parent_tongue = getorganslot(ORGAN_SLOT_TONGUE)
-		var/list/tongue_overlays = parent_tongue?.generate_body_overlay(src)
-		if(tongue_overlays && tongue_overlays.len)
-			add_overlay(tongue_overlays)
 	update_worn_head()
 	update_worn_mask()
 

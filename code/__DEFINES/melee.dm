@@ -1,7 +1,6 @@
 //Martial arts defines
 
 #define MARTIALART_BOXING "boxing"
-#define MARTIALART_CARP_JAWS "carp jaws"
 #define MARTIALART_CQC "CQC"
 #define MARTIALART_KRAVMAGA "krav maga"
 #define MARTIALART_MUSHPUNCH "mushroom punch"
