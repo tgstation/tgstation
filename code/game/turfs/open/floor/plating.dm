@@ -15,9 +15,11 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-	var/attachment_holes = TRUE //Can this plating have reinforced floors placed ontop of it
+	//Can this plating have reinforced floors placed ontop of it
+	var/attachment_holes = TRUE 
 
-	var/upgradable = TRUE //Used for upgrading this into R-Plating
+	//Used for upgrading this into R-Plating
+	var/upgradable = TRUE 
 
 	/// If true, will allow tiles to replace us if the tile [wants to] [/obj/item/stack/tile/var/replace_plating].
 	/// And if our baseturfs are compatible.
@@ -42,6 +44,7 @@
 	if(upgradable)
 		. += span_notice("You could probably make this plating more resilient with some plasteel.")
 
+#define PLATE_REINFORCE_COST 2
 
 /turf/open/floor/plating/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -89,15 +92,15 @@
 	else if(istype(C, /obj/item/stack/sheet/plasteel) && upgradable) //Reinforcement!
 		if(!broken && !burnt)
 			var/obj/item/stack/sheet/sheets = C
-			if(sheets.get_amount() < 2)
+			if(sheets.get_amount() < PLATE_REINFORCE_COST)
 				return
 			balloon_alert(user, "reinforcing plating...")
 			if(do_after(user, 12 SECONDS, target = src))
-				if(sheets.get_amount() < 2)
+				if(sheets.get_amount() < PLATE_REINFORCE_COST)
 					return
-				sheets.use(2)
+				sheets.use(PLATE_REINFORCE_COST)
 				playsound(src, 'sound/machines/creak.ogg', 100, vary = TRUE)
-				src.PlaceOnTop(/turf/open/floor/plating/reinforced)
+				PlaceOnTop(/turf/open/floor/plating/reinforced)
 		else
 			if(!iscyborg(user))
 				balloon_alert(user, "too damaged, use a welding tool!")
@@ -115,6 +118,8 @@
 		update_appearance()
 
 	return TRUE
+
+#undef PLATE_REINFORCE_COST
 
 /turf/open/floor/plating/rust_heretic_act()
 	if(prob(70))
@@ -177,7 +182,7 @@
 
 //reinforced plating deconstruction states
 #define PLATE_INTACT 0
-#define PLATE_BOLTS_LOSENED 1
+#define PLATE_BOLTS_LOOSENED 1
 #define PLATE_CUT 2
 
 /turf/open/floor/plating/reinforced //RCD Proof plating designed to be used on Multi-Z maps to protect the rooms below
@@ -193,6 +198,7 @@
 	rcd_proof = TRUE
 	upgradable = FALSE
 
+	//Used to track which stage of deconstruction the plate is currently in, Intact > Bolts Loosened > Cut
 	var/deconstruction_state = PLATE_INTACT
 
 /turf/open/floor/plating/reinforced/examine(mob/user)
@@ -203,7 +209,7 @@
 	switch(deconstruction_state)
 		if(PLATE_INTACT)
 			return span_notice("The plating reinforcements are securely <b>bolted</b> in place.")
-		if(PLATE_BOLTS_LOSENED)
+		if(PLATE_BOLTS_LOOSENED)
 			return span_notice("The plating reinforcement is <i>unscrewed</i> but <b>welded</b> firmly to the plating.")
 		if(PLATE_CUT)
 			return span_notice("The plating reinforcements have been <i>sliced through</i> but is still <b>loosly</b> held in place.")
@@ -236,20 +242,20 @@
 				if(tool_used.use_tool(src, user, 10 SECONDS, volume=100))
 					if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_INTACT)
 						return TRUE
-					deconstruction_state = PLATE_BOLTS_LOSENED
+					deconstruction_state = PLATE_BOLTS_LOOSENED
 					update_appearance(UPDATE_ICON)
 					drop_screws()
 					balloon_alert(user, "removed bolts")
 				return TRUE
 
-		if(PLATE_BOLTS_LOSENED)
+		if(PLATE_BOLTS_LOOSENED)
 			switch(tool_used.tool_behaviour)
 				if(TOOL_WELDER)
 					if(!tool_used.tool_start_check(user, amount=0))
 						return
 					balloon_alert(user, "slicing...")
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
-						if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_BOLTS_LOSENED)
+						if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_BOLTS_LOOSENED)
 							return TRUE
 						deconstruction_state = PLATE_CUT
 						update_appearance(UPDATE_ICON)
@@ -259,7 +265,7 @@
 				if(TOOL_SCREWDRIVER)
 					balloon_alert(user, "securing bolts...")
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
-						if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_BOLTS_LOSENED)
+						if(!istype(src, /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_BOLTS_LOOSENED)
 							return TRUE
 						deconstruction_state = PLATE_INTACT
 						update_appearance(UPDATE_ICON)
@@ -286,7 +292,7 @@
 					if(tool_used.use_tool(src, user, 15 SECONDS, volume=100))
 						if(!istype(src,  /turf/open/floor/plating/reinforced) || deconstruction_state != PLATE_CUT)
 							return TRUE
-						deconstruction_state = PLATE_BOLTS_LOSENED
+						deconstruction_state = PLATE_BOLTS_LOOSENED
 						update_appearance(UPDATE_ICON)
 						balloon_alert(user, "welded back on")
 					return TRUE
@@ -302,5 +308,5 @@
 		playsound(src, 'sound/effects/structure_stress/pop3.ogg', 100, vary = TRUE)
 
 #undef PLATE_INTACT
-#undef PLATE_BOLTS_LOSENED
+#undef PLATE_BOLTS_LOOSENED
 #undef PLATE_CUT
