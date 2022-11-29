@@ -19,7 +19,7 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
-/turf/open/floor/catwalk_floor/tram/Initialize(mapload)
+/turf/open/floor/glass/reinforced/tram/Initialize(mapload)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
