@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "pAIs and lightgeists can now correctly climb ladders."
-  - bugfix: "fixed a small issue with the radial menu for ladders that caused the user to travel down when abruptly closed."
