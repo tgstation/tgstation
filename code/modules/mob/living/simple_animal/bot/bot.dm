@@ -317,9 +317,6 @@
 				break
 
 	switch(mode) //High-priority overrides are processed first. Bots can do nothing else while under direct command.
-		if(BOT_RESPONDING) //Called by the AI.
-			call_mode()
-			return FALSE
 		if(BOT_SUMMON) //Called to a location
 			summon_step()
 			return FALSE
@@ -624,7 +621,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if(message)
 			to_chat(calling_ai, span_notice("[icon2html(src, calling_ai)] [name] called to [end_area]. [path.len-1] meters to destination."))
 		pathset = TRUE
-		mode = BOT_RESPONDING
+		mode = BOT_SUMMON
 		tries = 0
 	else
 		if(message)
