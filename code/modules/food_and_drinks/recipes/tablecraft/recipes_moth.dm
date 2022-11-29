@@ -87,7 +87,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_green_lasagne
-	name = "Green lasagne al forno"
 	reqs = list(
 		/obj/item/food/pesto = 1,
 		/obj/item/food/spaghetti/boiledspaghetti = 2,
@@ -98,7 +97,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_baked_rice
-	name = "Big baked rice"
 	reqs = list(
 		/obj/item/food/salad/boiledrice = 2,
 		/obj/item/food/soup/vegetable = 1,
@@ -132,7 +130,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/ratatouille
-	name = "Ratatouille"
 	reqs = list(
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/grown/onion/red = 1,
@@ -379,7 +376,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_mothic_margherita
-	name = "Mothic margherita pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
@@ -391,7 +387,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_mothic_firecracker
-	name = "Mothic firecracker pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/datum/reagent/consumable/bbqsauce = 10,
@@ -403,7 +398,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_mothic_five_cheese
-	name = "Mothic five cheese pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
@@ -417,7 +411,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_mothic_white_pie
-	name = "Mothic white pie pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/bechamel_sauce = 1,
@@ -430,7 +423,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_mothic_pesto
-	name = "Mothic pesto pizza"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/pesto = 1,
@@ -441,7 +433,6 @@
 	subcategory = CAT_MOTH
 
 /datum/crafting_recipe/food/raw_mothic_garlic
-	name = "Mothic garlic pizzabread"
 	reqs = list(
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/butter = 1,
