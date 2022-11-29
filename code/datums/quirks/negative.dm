@@ -1050,9 +1050,6 @@
 		if(secondary_cane)
 			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 
-	left_cane = null
-	right_cane = null
-
 /// Signal handler for when the badback quirk_holder equips an item
 /datum/quirk/decrepit/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
 	SIGNAL_HANDLER
@@ -1076,7 +1073,7 @@
 	if(is_cane_left_hand)
 		if(primary_cane && (primary_cane != left_hand_item))
 			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-			left_cane = null
+			//left_cane = null
 		else if(!primary_cane)
 			left_cane = WEAKREF(left_hand_item)
 			primary_cane = left_hand_item
@@ -1085,12 +1082,12 @@
 			RegisterSignal(primary_cane, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
 	else if(primary_cane) // no cane in hand, time to remove the signal and weakref
 		UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-		left_cane = null
+		//left_cane = null
 
 	if(is_cane_right_hand)
 		if(secondary_cane && (secondary_cane != right_hand_item))
 			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-			right_cane = null
+			//right_cane = null
 		else if(!secondary_cane)
 			right_cane = WEAKREF(right_hand_item)
 			secondary_cane = right_hand_item
@@ -1099,7 +1096,7 @@
 			RegisterSignal(secondary_cane, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
 	else if(secondary_cane) // no cane in hand, time to remove the signal and weakref
 		UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-		right_cane = null
+		//right_cane = null
 
 /// Signal handler for when the quirk_holder unequips an equipped cane
 /datum/quirk/decrepit/proc/on_unequipped_cane(obj/item/source)
@@ -1114,9 +1111,9 @@
 
 	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	if(left_cane?.resolve() == source)
-		left_cane = null
+		//left_cane = null
 	else if (right_cane?.resolve() == source)
-		right_cane = null
+		//right_cane = null
 
 /datum/quirk/mute
 	name = "Mute"
