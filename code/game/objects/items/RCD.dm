@@ -1196,7 +1196,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/list/data = list()
 	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
 	data["selected_color"] = current_color
-	data["icon"] = initial(blueprint.icon_state)
+	data["layer_icon"] = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"
 
 	var/list/category_list = list()
 	var/category_name = ""
@@ -1223,6 +1223,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		//add item to category
 		category_list[category_name]["recipes"] += list(list(
 			"index" = i,
+			"icon" = initial(recipe.icon_state),
 			"name" = initial(recipe.name),
 			"selected" = (initial(blueprint.name) == initial(recipe.name))
 		))

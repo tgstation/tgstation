@@ -6,8 +6,8 @@ import { ColorItem, LayerSelect } from './RapidPipeDispenser';
 import { capitalizeAll } from 'common/string';
 
 type Data = {
+  layer_icon: string;
   categories: Category[];
-  icon: string;
 };
 
 type Category = {
@@ -17,6 +17,7 @@ type Category = {
 
 type Recipe = {
   index: number;
+  icon: string;
   selected: BooleanLike;
   name: string;
 };
@@ -46,19 +47,36 @@ const PlumbingTypeSection = (props, context) => {
         ))}
       </Tabs>
       {shownCategory?.recipes.map((recipe) => (
-        <Button.Checkbox
+        <Button
           key={recipe.index}
           fluid
           ellipsis
-          checked={recipe.selected}
-          content={capitalizeAll(recipe.name)}
-          title={capitalizeAll(recipe.name)}
+          color="transparent"
+          selected={recipe.selected}
           onClick={() =>
             act('recipe', {
               id: recipe.index,
             })
-          }
-        />
+          }>
+          <Stack>
+            <Stack.Item>
+              <Box
+                className={classes(['plumbing-tgui32x32', recipe.icon])}
+                style={{
+                  transform: 'scale(1.5) translate(9%, 9.5%)',
+                }}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <span style={{ width: '7px' }} />
+            </Stack.Item>
+            <Stack.Item>
+              <Section verticalAlign="middle">
+                {capitalizeAll(recipe.name)}
+              </Section>
+            </Stack.Item>
+          </Stack>
+        </Button>
       ))}
     </Section>
   );
@@ -80,9 +98,9 @@ const LayerSection = (props, context) => {
   );
 };
 
-const IconSection = (props, context) => {
+const LayerIconSection = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { icon } = data;
+  const { layer_icon } = data;
   return (
     <Section
       backgroundColor="green"
@@ -91,7 +109,7 @@ const IconSection = (props, context) => {
         height: '50px',
       }}>
       <Box
-        className={classes(['plumbing-tgui32x32', icon])}
+        className={classes(['plumbing-tgui32x32', layer_icon])}
         style={{
           transform: 'scale(1.5) translate(9%, 9.5%)',
         }}
@@ -116,7 +134,7 @@ export const PlumbingService = (props, context) => {
                     <LayerSection />
                   </Stack.Item>
                   <Stack.Item grow>
-                    <IconSection />
+                    <LayerIconSection />
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
