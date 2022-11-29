@@ -9,6 +9,8 @@
 	var/list/obj/machinery/launchpad/launchpads
 	var/maximum_pads = 4
 
+	var/list/peek_stack
+
 /obj/machinery/computer/launchpad/Initialize(mapload)
 	launchpads = list()
 	. = ..()
@@ -190,8 +192,24 @@
 				to_chat(usr, span_warning(checks))
 
 			current_pad.doteleport(usr, TRUE)
-			sleep(selected_id SECONDS)  // allows for cool relay tactics
-			current_pad.doteleport(usr, FALSE)
+			if(!length(peek_stack))  // dont pull multiple times
+				addtimer(CALLBACK(src, PROC_REF(peek_return)), 4 SECONDS)
+			peek_stack += current_pad
 
 			. = TRUE
 	. = TRUE
+
+
+/obj/machinery/computer/launchpad/proc/peek_return(user)
+	if(!length(peek_stack))
+		return
+
+	for(var/obj/machinery/launchpad/current_pad in reverseList(peek_stack))
+		var/checks = teleport_checks(current_pad)
+		if(!isnull(checks))
+			to_chat(user, span_warning(checks))
+			continue
+		current_pad.doteleport(user, FALSE)
+		sleep(0.25 SECONDS)
+
+	peek_stack.Cut()
