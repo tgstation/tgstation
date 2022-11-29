@@ -1026,9 +1026,7 @@
 			RegisterSignals(left_hand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
 		if(is_cane_right_hand)
 			right_cane = WEAKREF(right_hand_item)
-			RegisterSignal(right_hand_item, COMSIG_ITEM_DROPPED, .proc/on_unequipped_cane)
-			RegisterSignal(right_hand_item, COMSIG_PARENT_QDELETING, .proc/on_unequipped_cane)
-			RegisterSignal(right_hand_item, COMSIG_MOVABLE_MOVED, .proc/on_unequipped_cane)
+			RegisterSignals(right_hand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
 
 	RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
