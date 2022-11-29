@@ -438,36 +438,6 @@
 		get_asset_datum(/datum/asset/spritesheet/cooking),
 	)
 
-/datum/component/cooking/proc/build_crafting_data(datum/crafting_recipe/R)
-	var/list/data = list()
-	data["name"] = R.name
-	data["ref"] = "[REF(R)]"
-	var/list/req_text = list()
-	var/list/tool_list = list()
-	var/list/catalyst_text = list()
-
-	for(var/atom/req_atom as anything in R.reqs)
-		//We just need the name, so cheat-typecast to /atom for speed (even tho Reagents are /datum they DO have a "name" var)
-		//Also these are typepaths so sadly we can't just do "[a]"
-		req_text += "[R.reqs[req_atom]] [initial(req_atom.name)]"
-	for(var/obj/machinery/content as anything in R.machinery)
-		req_text += "[R.reqs[content]] [initial(content.name)]"
-	if(R.additional_req_text)
-		req_text += R.additional_req_text
-	data["req_text"] = req_text.Join(", ")
-
-	for(var/atom/req_catalyst as anything in R.chem_catalysts)
-		catalyst_text += "[R.chem_catalysts[req_catalyst]] [initial(req_catalyst.name)]"
-	data["catalyst_text"] = catalyst_text.Join(", ")
-
-	for(var/required_quality in R.tool_behaviors)
-		tool_list += required_quality
-	for(var/obj/item/required_path as anything in R.tool_paths)
-		tool_list += initial(required_path.name)
-	data["tool_text"] = tool_list.Join(", ")
-
-	return data
-
 /datum/component/cooking/proc/build_cooking_data(datum/crafting_recipe/food/recipe)
 	var/list/data = list()
 	data["ref"] = "[REF(recipe)]"
