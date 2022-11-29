@@ -799,8 +799,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/right)
@@ -1075,8 +1075,8 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -2179,8 +2179,13 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction/engineering)
 "aVp" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/mob/living/carbon/human/species/monkey,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Science - Genetics Pen";
+	network = list("ss13","rd")
+	},
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "aVE" = (
@@ -3363,8 +3368,8 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -4457,8 +4462,8 @@
 /obj/effect/landmark/lift_id,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -6111,8 +6116,8 @@
 "clb" = (
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/left)
@@ -9650,6 +9655,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
+"duv" = (
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/requests_console/directional/south{
+	department = "Genetics";
+	name = "Genetics Requests Console"
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/genetics)
 "duB" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/garden)
@@ -10155,8 +10168,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram2";
-	icon_state = "tram2";
 	desc = "A sturdy looking tram platform.";
+	icon_state = "tram2";
 	name = "tram platform"
 	},
 /area/station/hallway/primary/tram/right)
@@ -11297,16 +11310,15 @@
 /obj/effect/landmark/tram/middle_part,
 /obj/machinery/computer/tram_controls{
 	icon_keyboard = null;
-	icon_state = "tram_controls";
-	icon_screen = "tram_Central Wing_idle"
+	icon_state = "tram_controls"
 	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -11554,8 +11566,8 @@
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "ech" = (
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/grass,
+/obj/machinery/dna_infuser,
+/turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "eci" = (
 /obj/structure/table/wood,
@@ -12666,9 +12678,12 @@
 /area/station/hallway/primary/tram/center)
 "eyX" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
+/obj/machinery/door/window/left/directional/west{
+	name = "Monkey Pen";
+	req_access = list("genetics")
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "ezs" = (
@@ -14671,11 +14686,6 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
-"fkU" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/grass,
-/area/station/science/genetics)
 "fla" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/firealarm/directional/east,
@@ -17345,8 +17355,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -19409,9 +19419,7 @@
 /obj/effect/turf_decal/trimline/white/tram{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southwest{
-	pixel_x = -32
-	},
+/obj/machinery/crossing_signal/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "gVD" = (
@@ -20937,8 +20945,8 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/right)
@@ -21291,8 +21299,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -26902,9 +26910,8 @@
 /turf/open/floor/iron/freezer,
 /area/station/security/prison)
 "jLF" = (
-/obj/structure/flora/bush/leavy/style_random,
-/obj/structure/flora/tree/palm/style_random,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "jLI" = (
@@ -27595,13 +27602,8 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "jYx" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Science - Genetics Pen";
-	network = list("ss13","rd")
-	},
+/obj/structure/flora/bush/sunny/style_random,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "jYy" = (
@@ -28534,8 +28536,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -32200,7 +32202,7 @@
 /turf/open/floor/grass,
 /area/station/service/hydroponics)
 "lzu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "lzD" = (
@@ -33336,6 +33338,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/evidence)
+"lWY" = (
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/grass,
+/area/station/science/genetics)
 "lXi" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -35164,8 +35172,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/right)
@@ -37942,8 +37950,8 @@
 /obj/effect/landmark/tram/right_part,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/right)
@@ -39662,17 +39670,17 @@
 "oii" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/monkeycubes{
-	pixel_x = 6;
+	pixel_x = -7;
 	pixel_y = 7
-	},
-/obj/machinery/requests_console/directional/east{
-	department = "Genetics";
-	name = "Genetics Requests Console"
 	},
 /obj/machinery/camera{
 	c_tag = "Science - Genetics";
 	dir = 9;
 	network = list("ss13","rd")
+	},
+/obj/item/infuser_book{
+	pixel_x = 5;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
@@ -40337,8 +40345,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/left)
@@ -41155,8 +41163,8 @@
 /obj/effect/landmark/tram/left_part,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/left)
@@ -41682,7 +41690,7 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "oWO" = (
-/obj/item/stack/ore/glass,
+/obj/structure/flora/tree/palm/style_random,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "oXe" = (
@@ -42677,9 +42685,7 @@
 /area/station/hallway/primary/tram/center)
 "ppG" = (
 /obj/effect/turf_decal/trimline/white/tram,
-/obj/machinery/crossing_signal/northwest{
-	pixel_x = -32
-	},
+/obj/machinery/crossing_signal/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "ppM" = (
@@ -43539,13 +43545,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "pCF" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/machinery/door/window/left/directional/west{
-	name = "Monkey Pen";
-	req_access = list("genetics")
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/flora/bush/leavy/style_random,
+/obj/structure/flora/tree/palm/style_random,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "pCI" = (
@@ -44764,8 +44766,8 @@
 "pZG" = (
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/right)
@@ -48572,8 +48574,8 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -49512,7 +49514,6 @@
 /obj/item/storage/box/monkeycubes{
 	pixel_x = -5
 	},
-/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "rGx" = (
@@ -50325,8 +50326,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/left)
@@ -51152,9 +51153,7 @@
 /obj/effect/turf_decal/trimline/white/tram{
 	dir = 1
 	},
-/obj/machinery/crossing_signal/southwest{
-	pixel_x = -32
-	},
+/obj/machinery/crossing_signal/southwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "sjc" = (
@@ -52284,8 +52283,8 @@
 	},
 /turf/open/floor/vault{
 	base_icon_state = "tram2";
-	icon_state = "tram2";
 	desc = "A sturdy looking tram platform.";
+	icon_state = "tram2";
 	name = "tram platform"
 	},
 /area/station/hallway/primary/tram/left)
@@ -54508,7 +54507,7 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "tuv" = (
-/obj/structure/flora/bush/sunny/style_random,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "tuC" = (
@@ -56294,8 +56293,8 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/left)
@@ -56776,8 +56775,9 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "umQ" = (
-/obj/structure/flora/bush/leavy/style_random,
-/obj/structure/flora/tree/palm/style_random,
+/obj/structure/flora/bush/lavendergrass/style_random,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/science/genetics)
 "umS" = (
@@ -60535,11 +60535,6 @@
 	},
 /turf/open/floor/engine/n2o,
 /area/station/engineering/atmos)
-"vFV" = (
-/obj/structure/flora/bush/lavendergrass/style_random,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/grass,
-/area/station/science/genetics)
 "vGA" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -62144,8 +62139,8 @@
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -62784,8 +62779,8 @@
 /obj/structure/window/reinforced/shuttle/tram,
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -63957,9 +63952,7 @@
 /area/lavaland/surface)
 "wVd" = (
 /obj/effect/turf_decal/trimline/white/tram,
-/obj/machinery/crossing_signal/northwest{
-	pixel_x = -32
-	},
+/obj/machinery/crossing_signal/northwest,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "wVj" = (
@@ -64840,8 +64833,8 @@
 "xgS" = (
 /turf/open/floor/vault{
 	base_icon_state = "tram";
-	icon_state = "tram";
 	desc = "The linear induction plate that powers the tram.";
+	icon_state = "tram";
 	name = "linear induction plate"
 	},
 /area/station/hallway/primary/tram/center)
@@ -66090,9 +66083,7 @@
 /turf/open/floor/plating,
 /area/station/security/processing)
 "xGA" = (
-/obj/structure/flora/bush/sunny/style_random,
-/obj/structure/window/reinforced/spawner/west,
-/turf/open/floor/grass,
+/turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "xGX" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
@@ -180763,13 +180754,13 @@ aVE
 pLf
 btO
 hvJ
-xNT
-vFV
-ech
-pCF
 ech
 xGA
-xNT
+bHS
+hQf
+vme
+xGA
+duv
 xNT
 pQd
 pQd
@@ -181024,10 +181015,10 @@ xNT
 jLF
 lzu
 eyX
-fkU
+lzu
 jYx
 xNT
-dhe
+xNT
 pQd
 mKY
 dMR
@@ -181278,9 +181269,9 @@ hvJ
 hvJ
 hvJ
 xNT
-tpN
+pCF
 tuv
-vTP
+lWY
 umQ
 aVp
 xNT
@@ -181539,7 +181530,7 @@ bhp
 tpN
 vTP
 oWO
-vTP
+bPf
 vTP
 dhe
 pQd

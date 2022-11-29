@@ -69,6 +69,20 @@
 	if(!(ITEM_SLOT_MASK in initial(rec_species.no_equip)))
 		rec_species.no_equip -= ITEM_SLOT_MASK
 
+/obj/item/organ/internal/tongue/carp/on_life(delta_time, times_fired)
+	. = ..()
+	if(!prob(1))
+		return
+	owner.emote("cough")
+	var/turf/tooth_fairy = get_turf(owner)
+	if(tooth_fairy)
+		new /obj/item/knife/carp(tooth_fairy)
+
+/obj/item/knife/carp
+	name = "carp tooth"
+	desc = "Looks sharp. Sharp enough to poke someone's eye out. Holy fuck it's big."
+	icon_state = "carptooth"
+
 ///carp brain. you need to occasionally go to a new zlevel. think of it as... walking your dog!
 /obj/item/organ/internal/brain/carp
 	name = "mutated carp-brain"

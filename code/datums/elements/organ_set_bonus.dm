@@ -5,7 +5,7 @@
  */
 /datum/element/organ_set_bonus
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	///status effect type to apply/update!
 	var/bonus_type
 

@@ -5,7 +5,7 @@
  */
 /datum/element/noticable_organ
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	// "[they] [desc here]", shows on examining someone with an infused organ.
 	var/infused_desc
 	///Which body zone has to be exposed. If none is set, this is always noticable.
