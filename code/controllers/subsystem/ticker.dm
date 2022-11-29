@@ -8,11 +8,14 @@ SUBSYSTEM_DEF(ticker)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
-	var/current_state = GAME_STATE_STARTUP //state of current round (used by process()) Use the defines GAME_STATE_* !
-	var/force_ending = 0 //Round was ended by admin intervention
-	// If true, there is no lobby phase, the game starts immediately.
+	/// state of current round (used by process()) Use the defines GAME_STATE_* !
+	var/current_state = GAME_STATE_STARTUP
+	/// Boolean to track if round was ended by admin intervention or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc.
+	var/force_ending = FALSE
+	/// If TRUE, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
-	var/setup_done = FALSE //All game setup done including mode post setup and
+	/// Boolean to track and check if our subsystem setup is done.
+	var/setup_done = FALSE
 
 	var/datum/game_mode/mode = null
 
@@ -265,7 +268,7 @@ SUBSYSTEM_DEF(ticker)
 	SEND_SIGNAL(src, COMSIG_TICKER_ROUND_STARTING, world.time)
 
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
-	INVOKE_ASYNC(SSdbcore, /datum/controller/subsystem/dbcore/proc/SetRoundStart)
+	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
 	to_chat(world, span_notice("<B>Welcome to [station_name()], enjoy your stay!</B>"))
 	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))

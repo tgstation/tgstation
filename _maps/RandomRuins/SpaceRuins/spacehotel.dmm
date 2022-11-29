@@ -298,7 +298,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
 "cS" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
 /obj/item/lightreplacer,
 /turf/open/floor/catwalk_floor,

@@ -48,7 +48,7 @@
 	user.add_stun_absorption("bloody bastard sword", duration, 2, "doesn't even flinch as the sword's power courses through them!", "You shrug off the stun!", " glowing with a blazing red aura!")
 	user.spin(duration, 1)
 	animate(user, color = oldcolor, time = duration, easing = EASE_IN)
-	addtimer(CALLBACK(user, /atom/proc/update_atom_colour), duration)
+	addtimer(CALLBACK(user, TYPE_PROC_REF(/atom, update_atom_colour)), duration)
 	block_chance = 100
 	slowdown += 1.5
 	spinning = TRUE

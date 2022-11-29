@@ -886,13 +886,10 @@
 	callTime = 250;
 	can_move_docking_ports = 1;
 	dir = 2;
-	dwidth = 6;
-	height = 15;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "White Ship";
-	width = 16;
 	preferred_direction = 8;
 	port_direction = 4
 	},

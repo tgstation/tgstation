@@ -1367,9 +1367,9 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define STATE_END_OF_GAME "end_of_game"
 #define STATE_RETALIATION "retaliation"
 
-#define TIME_TO_BEGIN 1.6 SECONDS
-#define TIME_PER_DEMO_STEP 0.6 SECONDS
-#define TIME_TO_RESET_ICON 0.5 SECONDS
+#define TIME_TO_BEGIN (1.6 SECONDS)
+#define TIME_PER_DEMO_STEP (0.6 SECONDS)
+#define TIME_TO_RESET_ICON (0.5 SECONDS)
 
 /obj/item/toy/intento
 	name = "\improper Intento"

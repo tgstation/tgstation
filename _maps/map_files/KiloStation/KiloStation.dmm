@@ -777,6 +777,29 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"ajt" = (
+/obj/structure/rack,
+/obj/item/controller{
+	pixel_x = -7
+	},
+/obj/item/compact_remote{
+	pixel_x = -7
+	},
+/obj/item/compact_remote{
+	pixel_x = -7
+	},
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north,
+/obj/item/integrated_circuit/loaded/speech_relay{
+	pixel_x = 7
+	},
+/obj/item/integrated_circuit/loaded/hello_world{
+	pixel_x = 7
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/ordnance/office)
 "ajv" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -2899,6 +2922,22 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/station/command/gateway)
+"aOS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "virology sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/virology,
+/turf/open/floor/iron/showroomfloor,
+/area/station/medical/medbay/central)
 "aPg" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -2932,6 +2971,29 @@
 /obj/machinery/power/shieldwallgen,
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
+"aPx" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/box,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	name = "HoP sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/hop_office,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "aPF" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/light/small/directional/east,
@@ -4052,18 +4114,6 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/robotics/lab)
-"bld" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "engineering sorting disposal pipe";
-	sortType = 4
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/aft)
 "bln" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -4733,19 +4783,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/dock)
-"buU" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	name = "detective sorting disposal pipe";
-	sortType = 30
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/aft)
 "bvk" = (
 /obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
@@ -6230,16 +6267,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"bWv" = (
-/obj/structure/rack,
-/obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/integrated_circuit/loaded/hello_world,
-/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
-	dir = 1
-	},
-/obj/machinery/light_switch/directional/north,
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/ordnance/office)
 "bWE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
@@ -6365,6 +6392,27 @@
 "bXz" = (
 /turf/closed/wall,
 /area/station/service/kitchen/coldroom)
+"bXA" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/mail_sorting/medbay/chemistry,
+/turf/open/floor/iron/showroomfloor,
+/area/station/medical/medbay/lobby)
 "bXS" = (
 /obj/machinery/door/airlock/external{
 	name = "Prison External Airlock"
@@ -8578,21 +8626,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/fore)
-"cFn" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/machinery/holopad,
-/obj/effect/turf_decal/bot,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	name = "cmo sorting disposal pipe";
-	sortType = 10
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/storage)
 "cFq" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -10076,6 +10109,33 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
+"dcS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2;
+	name = "genetics sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/science/genetics,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/genetics)
 "ddb" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Atmospherics Tank - N2";
@@ -10527,29 +10587,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"djl" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/obj/effect/turf_decal/box,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 1;
-	name = "lawyer sorting disposal pipe";
-	sortType = 29
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/primary/port)
 "djo" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple/layer2{
 	dir = 8
@@ -10688,6 +10725,23 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/customs)
+"dkM" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 2;
+	name = "robotics sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/science/robotics,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/research)
 "dkQ" = (
 /obj/machinery/conveyor{
 	id = "NTMSLoad2";
@@ -13585,6 +13639,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/purple,
+/obj/machinery/dna_infuser,
+/obj/item/infuser_book,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/genetics)
 "edU" = (
@@ -13911,27 +13967,6 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"eiT" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	name = "xenobiology sorting disposal pipe";
-	sortType = 28
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/xenobiology)
 "eiW" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -14133,25 +14168,6 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/detectives_office)
-"ell" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 4;
-	name = "library sorting disposal pipe";
-	sortType = 16
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
 "elw" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -15821,23 +15837,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"eJu" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/structure/sink/directional/east,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 1;
-	sortType = 28
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/xenobiology)
 "eJy" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mining Dock Maintenance"
@@ -16428,25 +16427,6 @@
 /obj/machinery/air_sensor/incinerator_tank,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
-"eSi" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2;
-	name = "cargo sorting disposal pipe";
-	sortType = 2
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "eSl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/carbon_output{
 	dir = 1
@@ -17214,22 +17194,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/medical/virology)
-"ffd" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2;
-	name = "science sorting disposal pipe";
-	sortType = 12
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/lab)
 "ffh" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -19504,6 +19468,22 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
+"fGQ" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2;
+	name = "virology sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/virology,
+/turf/open/floor/iron/showroomfloor,
+/area/station/medical/virology)
 "fHj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -21695,20 +21675,6 @@
 "glI" = (
 /turf/closed/indestructible/opshuttle,
 /area/station/science/ordnance/bomb)
-"glM" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "atmospherics sorting disposal pipe";
-	sortType = 6
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/primary/aft)
 "glX" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet/green,
@@ -23859,22 +23825,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
-"gPZ" = (
-/obj/structure/janitorialcart,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/contraband/lusty_xenomorph{
-	pixel_x = 32
-	},
-/turf/open/floor/iron/dark,
-/area/station/maintenance/fore)
 "gQd" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -24741,6 +24691,21 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/station/hallway/primary/central/fore)
+"hdA" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	name = "cmo sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/medbay/cmo_office,
+/turf/open/floor/iron/showroomfloor,
+/area/station/medical/storage)
 "hdY" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance"
@@ -26794,6 +26759,27 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"hFx" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4;
+	name = "xenobiology sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/xenobiology)
 "hFy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
@@ -27230,6 +27216,20 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/commissary)
+"hLz" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "medical sorting disposal pipe"
+	},
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/mail_sorting/medbay/general,
+/turf/open/floor/iron/showroomfloor,
+/area/station/medical/storage)
 "hLO" = (
 /obj/structure/plasticflaps,
 /obj/machinery/conveyor{
@@ -27518,6 +27518,19 @@
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"hPq" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4;
+	name = "dormitories sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/service/dormitories,
+/turf/open/floor/iron,
+/area/station/commons/fitness/recreation)
 "hPx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate,
@@ -27632,24 +27645,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
-"hQL" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/structure/disposalpipe/sorting/mail{
-	name = "hydroponics sorting disposal pipe";
-	sortType = 21
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "hQP" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -28581,6 +28576,22 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
+"idh" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4;
+	name = "chapel sorting disposal pipe"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/chapel,
+/turf/open/floor/iron/dark,
+/area/station/hallway/primary/fore)
 "idq" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -28962,6 +28973,25 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/medical/virology)
+"ijy" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2;
+	name = "cargo sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/supply/cargo_bay,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "ijz" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -30368,22 +30398,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"iBm" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2;
-	name = "virology sorting disposal pipe";
-	sortType = 27
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/virology)
 "iBt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -30645,6 +30659,25 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/brig)
+"iFm" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 4;
+	name = "library sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/library,
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "iFE" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -31484,29 +31517,6 @@
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"iQY" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/box,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	name = "HoP sorting disposal pipe";
-	sortType = 15
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/central)
 "iRq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
@@ -34394,6 +34404,26 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"jJB" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/hangover,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "disposals sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/supply/disposals,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "jJD" = (
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/machinery/light/directional/north,
@@ -34479,6 +34509,18 @@
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
+"jKH" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 2;
+	name = "Theater sorting disposal pipe"
+	},
+/obj/machinery/duct,
+/obj/effect/mapping_helpers/mail_sorting/service/theater,
+/turf/open/floor/plastic,
+/area/station/hallway/secondary/service)
 "jKJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/decoration/glowstick,
@@ -37128,6 +37170,24 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"kCa" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/sorting/mail{
+	name = "hydroponics sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/hydroponics,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "kCk" = (
 /turf/closed/wall/rust,
 /area/station/maintenance/disposal/incinerator)
@@ -38285,27 +38345,6 @@
 /obj/machinery/recycler,
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
-"kSr" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	sortType = 11
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/medbay/lobby)
 "kSs" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -42660,21 +42699,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"meS" = (
+"meP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	name = "security disposal pipe";
-	sortType = 7
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2;
+	name = "ordnance sorting disposal pipe"
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/security/office)
+/obj/effect/mapping_helpers/mail_sorting/science/ordnance,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/research)
 "meU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment{
@@ -42794,6 +42828,21 @@
 	dir = 8
 	},
 /area/station/hallway/primary/central/fore)
+"mfM" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	name = "security disposal pipe"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/mail_sorting/security/general,
+/turf/open/floor/iron,
+/area/station/security/office)
 "mfU" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -42938,6 +42987,27 @@
 /obj/item/stack/cable_coil/cut,
 /turf/open/floor/plating,
 /area/station/cargo/warehouse)
+"mit" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2;
+	name = "qm sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/supply/qm_office,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "miK" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4;
@@ -43973,20 +44043,6 @@
 "myp" = (
 /turf/closed/wall/r_wall,
 /area/station/security/prison/garden)
-"myz" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "medical sorting disposal pipe";
-	sortType = 9
-	},
-/obj/effect/turf_decal/siding/blue/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/storage)
 "myS" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -44729,22 +44785,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
-"mKo" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "virology sorting disposal pipe";
-	sortType = 27
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/medical/medbay/central)
 "mKv" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -44929,26 +44969,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
-"mMC" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "ce sorting disposal pipe";
-	sortType = 5
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/aft)
 "mMJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/corner{
@@ -45561,23 +45581,6 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron/showroomfloor,
 /area/station/command/heads_quarters/rd)
-"mVm" = (
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
-/obj/effect/turf_decal/siding/purple{
-	dir = 4
-	},
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 2;
-	name = "robotics sorting disposal pipe";
-	sortType = 14
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/research)
 "mVo" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -45746,29 +45749,6 @@
 /obj/structure/sign/poster/contraband/random/directional/south,
 /turf/open/floor/iron/freezer,
 /area/station/service/kitchen/coldroom)
-"mXX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/junction/flip,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/genetics)
 "mYv" = (
 /obj/effect/turf_decal/siding/thinplating/dark/end{
 	dir = 8
@@ -47083,18 +47063,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"nts" = (
-/obj/structure/janitorialcart,
-/obj/effect/turf_decal/delivery,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/station/service/janitor)
 "ntC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue{
@@ -47435,6 +47403,20 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
+"nxi" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "atmospherics sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/engineering/atmospherics,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "nxj" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
@@ -50645,19 +50627,6 @@
 /obj/structure/closet/emcloset/anchored,
 /turf/open/floor/plating,
 /area/station/service/chapel)
-"oyk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2;
-	name = "rd sorting disposal pipe";
-	sortType = 13
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/siding/purple/corner,
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/genetics)
 "oyu" = (
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
@@ -51839,18 +51808,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
-"oPz" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 2;
-	name = "Theater sorting disposal pipe";
-	sortType = 18
-	},
-/obj/machinery/duct,
-/turf/open/floor/plastic,
-/area/station/hallway/secondary/service)
 "oPX" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer{
 	dir = 8;
@@ -52609,6 +52566,31 @@
 /obj/item/reagent_containers/cup/glass/bottle/wine/unlabeled,
 /turf/open/floor/carpet/royalblue,
 /area/station/service/chapel/office)
+"pai" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "custodial sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/janitor_closet,
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "pal" = (
 /obj/machinery/door/airlock/external{
 	name = "Atmospherics External Airlock"
@@ -56750,27 +56732,6 @@
 /mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/station/medical/virology)
-"qiq" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/item/stack/sheet/plasteel{
-	amount = 10;
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/book/manual/wiki/robotics_cyborgs,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
-/obj/structure/fireaxecabinet/mechremoval/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/science/robotics/lab)
 "qiB" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/stripes/corner,
@@ -57056,16 +57017,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
-"qmG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2;
-	name = "toxins sorting disposal pipe";
-	sortType = 25
-	},
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/research)
 "qmR" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible,
 /turf/open/floor/engine,
@@ -57112,27 +57063,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/janitor)
-"qnJ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2;
-	name = "qm sorting disposal pipe";
-	sortType = 3
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "qnK" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Emergency Storage"
@@ -58634,22 +58564,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/station/maintenance/port/fore)
-"qMA" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	name = "chapel sorting disposal pipe";
-	sortType = 17
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/siding/white{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/fore)
 "qMC" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -59410,6 +59324,20 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/maintenance,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port/lesser)
+"qWC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/cable,
+/obj/structure/disposalpipe/junction{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "qWJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61031,6 +60959,22 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
+"rtN" = (
+/obj/structure/mop_bucket/janitorialcart,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/contraband/lusty_xenomorph{
+	pixel_x = 32
+	},
+/turf/open/floor/iron/dark,
+/area/station/maintenance/fore)
 "rtT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -61278,22 +61222,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"rxe" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 1;
-	name = "kitchen sorting disposal pipe";
-	sortType = 20
-	},
-/obj/machinery/duct,
-/turf/open/floor/iron/showroomfloor,
-/area/station/service/bar/atrium)
 "rxi" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -62057,6 +61985,18 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/processing)
+"rIy" = (
+/obj/structure/mop_bucket/janitorialcart,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/janitor)
 "rIY" = (
 /obj/structure/table,
 /obj/item/radio/intercom{
@@ -63267,6 +63207,16 @@
 "saW" = (
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
+"sbf" = (
+/obj/structure/table/wood,
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	name = "bar sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
+/turf/open/floor/wood,
+/area/station/service/bar)
 "sbh" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64336,25 +64286,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/lawyer,
 /turf/open/floor/iron/dark,
 /area/station/service/lawoffice)
-"sqh" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "hos sorting disposal pipe";
-	sortType = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/showroomfloor,
-/area/station/security/office)
 "sqs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -65544,6 +65475,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/mess)
+"sIH" = (
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 1
+	},
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/bci_implanter,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/ordnance/office)
 "sIO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -66875,22 +66814,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
-"tat" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/blood/old,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 1;
-	name = "genetics sorting disposal pipe";
-	sortType = 23
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "tav" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -67221,6 +67144,19 @@
 /obj/structure/sign/warning/secure_area,
 /turf/closed/wall/r_wall/rust,
 /area/station/engineering/supermatter/room)
+"tfh" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 8;
+	name = "detective sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/security/detectives_office,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "tfi" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/sand/plating,
@@ -70417,16 +70353,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
-"tZB" = (
-/obj/structure/table/wood,
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/sorting/mail{
-	dir = 8;
-	name = "bar sorting disposal pipe";
-	sortType = 19
-	},
-/turf/open/floor/wood,
-/area/station/service/bar)
 "tZD" = (
 /obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
@@ -71142,17 +71068,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"ujZ" = (
-/obj/structure/rack,
-/obj/item/controller,
-/obj/item/compact_remote,
-/obj/item/compact_remote,
-/obj/effect/turf_decal/tile/purple/half/contrasted{
-	dir = 1
-	},
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/showroomfloor,
-/area/station/science/ordnance/office)
 "ukc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -72183,6 +72098,22 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"uAh" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2;
+	name = "science sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/science/research,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/lab)
 "uAn" = (
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -73029,6 +72960,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"uNi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2;
+	name = "rd sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/siding/purple/corner,
+/obj/effect/mapping_helpers/mail_sorting/science/rd_office,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/genetics)
 "uNv" = (
 /obj/machinery/power/turbine/turbine_outlet,
 /turf/open/floor/engine,
@@ -74334,31 +74278,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
-"vhl" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "custodial sorting disposal pipe";
-	sortType = 22
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "vhp" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -76004,6 +75923,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
+"vEl" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "engineering sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/engineering/general,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "vEt" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -77225,6 +77156,27 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"vTu" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/stack/sheet/plasteel{
+	amount = 10;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/book/manual/wiki/robotics_cyborgs,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/structure/fireaxecabinet/mechremoval/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "vTx" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/yellow,
@@ -77624,6 +77576,22 @@
 	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"vYD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 1;
+	name = "kitchen sorting disposal pipe"
+	},
+/obj/machinery/duct,
+/obj/effect/mapping_helpers/mail_sorting/service/kitchen,
+/turf/open/floor/iron/showroomfloor,
+/area/station/service/bar/atrium)
 "vYI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -79945,6 +79913,29 @@
 	},
 /turf/open/floor/engine,
 /area/station/ai_monitored/command/nuke_storage)
+"wFU" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/box,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 1;
+	name = "lawyer sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/service/law_office,
+/turf/open/floor/iron,
+/area/station/hallway/primary/port)
 "wGd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
@@ -80172,6 +80163,25 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"wHT" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "hos sorting disposal pipe"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/mail_sorting/security/hos_office,
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/office)
 "wHW" = (
 /obj/structure/closet/secure_closet/security/engine,
 /obj/effect/turf_decal/delivery,
@@ -81001,26 +81011,6 @@
 "wTU" = (
 /turf/open/floor/carpet/orange,
 /area/station/command/heads_quarters/qm)
-"wUT" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/cable,
-/obj/effect/landmark/start/hangover,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 8;
-	name = "disposals sorting disposal pipe";
-	sortType = 1
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "wUU" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -83110,6 +83100,26 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/pharmacy)
+"xAw" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 8;
+	name = "ce sorting disposal pipe"
+	},
+/obj/effect/mapping_helpers/mail_sorting/engineering/ce_office,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "xAI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 5
@@ -83494,19 +83504,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
-"xFM" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 4;
-	name = "dormitories sorting disposal pipe";
-	sortType = 26
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/commons/fitness/recreation)
 "xFQ" = (
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
@@ -85628,6 +85625,23 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/bar/atrium)
+"ykd" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/structure/sink/directional/east,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
+/turf/open/floor/iron/showroomfloor,
+/area/station/science/xenobiology)
 "ykv" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -103333,7 +103347,7 @@ bZY
 bzp
 dtA
 sbB
-tat
+qWC
 qOT
 lcF
 eWP
@@ -103603,7 +103617,7 @@ iGI
 thG
 taW
 ktA
-cFn
+hdA
 kSx
 ruU
 jop
@@ -103860,7 +103874,7 @@ mfs
 vpD
 eDu
 wcC
-myz
+hLz
 lRq
 fzG
 jop
@@ -104139,7 +104153,7 @@ eKU
 jiR
 mle
 hQg
-xFM
+hPq
 dny
 joS
 pqD
@@ -104935,7 +104949,7 @@ hgf
 kiZ
 vBI
 nqh
-meS
+mfM
 cjN
 oKW
 nvA
@@ -105402,7 +105416,7 @@ uCa
 hPV
 fph
 bsR
-mKo
+aOS
 hDX
 lTu
 rSi
@@ -105706,7 +105720,7 @@ vtf
 veu
 mun
 aqq
-sqh
+wHT
 thy
 oHm
 kAt
@@ -106956,7 +106970,7 @@ mnG
 uEX
 nCU
 llY
-iBm
+fGQ
 qZS
 egU
 fpx
@@ -107455,7 +107469,7 @@ pbk
 qpP
 wzW
 pFq
-kSr
+bXA
 naC
 xKr
 xKr
@@ -108989,7 +109003,7 @@ mjc
 hsJ
 cXZ
 krg
-qMA
+idh
 sby
 oAN
 gQd
@@ -109277,7 +109291,7 @@ qNh
 gFR
 uqc
 jgr
-djl
+wFU
 jWw
 uAA
 dLk
@@ -110539,7 +110553,7 @@ dkA
 ovv
 ovv
 nIx
-ell
+iFm
 ocO
 eAl
 rYf
@@ -110843,7 +110857,7 @@ vlJ
 srW
 hkq
 nOI
-buU
+tfh
 mCm
 caS
 ruo
@@ -112322,7 +112336,7 @@ aeu
 aeu
 efG
 hVZ
-gPZ
+rtN
 dpe
 nNT
 pms
@@ -113377,7 +113391,7 @@ mma
 oSD
 lvy
 fEE
-oPz
+jKH
 eiz
 cIC
 dkH
@@ -113888,7 +113902,7 @@ dBw
 jlw
 lHE
 ele
-tZB
+sbf
 gbO
 vDD
 xLk
@@ -115457,7 +115471,7 @@ pik
 dfi
 vfb
 fgJ
-iQY
+aPx
 dpx
 hAJ
 kax
@@ -115944,7 +115958,7 @@ xoT
 wiw
 ikR
 ikR
-rxe
+vYD
 bvN
 fiY
 kzG
@@ -118807,7 +118821,7 @@ bax
 bax
 mnO
 nJj
-glM
+nxi
 kBs
 mwn
 xeq
@@ -119064,7 +119078,7 @@ wRE
 gng
 xsJ
 xLH
-mMC
+xAw
 bSX
 ddI
 jMo
@@ -119321,7 +119335,7 @@ cWS
 nFu
 qPz
 cLq
-bld
+vEl
 dwL
 mxx
 qMC
@@ -120812,7 +120826,7 @@ lRk
 enP
 lZi
 xSO
-qiq
+vTu
 dRR
 tmf
 xvh
@@ -122112,10 +122126,10 @@ vPd
 rOq
 nMj
 anN
-hQL
+kCa
 asu
 anN
-qnJ
+mit
 tXz
 anN
 twG
@@ -122123,7 +122137,7 @@ qXa
 cpZ
 tXz
 anN
-eSi
+ijy
 wwJ
 aot
 xnK
@@ -122651,7 +122665,7 @@ gXc
 uIx
 ihU
 xHc
-vhl
+pai
 kua
 fuq
 hnA
@@ -122908,7 +122922,7 @@ rEE
 upa
 xNe
 ghO
-wUT
+jJB
 tuO
 vzy
 vyE
@@ -123112,13 +123126,13 @@ cAz
 jFv
 vgJ
 xta
-eJu
+ykd
 shS
 epI
 rtK
 lev
 kKw
-eiT
+hFx
 frO
 oMA
 spG
@@ -123377,23 +123391,23 @@ uYb
 rHm
 uXI
 pnI
-mXX
+dcS
 aAy
-oyk
+uNi
 ieV
 hma
 hZr
 uYP
 tNe
-mVm
+dkM
 eog
 iUm
 eog
 eog
 riC
-qmG
+meP
 rhK
-ffd
+uAh
 iQd
 mfY
 nFb
@@ -123425,7 +123439,7 @@ rpN
 rqb
 drl
 nxc
-nts
+rIy
 kDC
 sLP
 qny
@@ -125954,7 +125968,7 @@ iBY
 wCY
 gyv
 oLH
-bWv
+sIH
 xqf
 jiO
 uLW
@@ -126211,7 +126225,7 @@ rZV
 fRp
 rVY
 lDu
-ujZ
+ajt
 wdu
 mEW
 cAl

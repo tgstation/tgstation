@@ -1,4 +1,4 @@
-#define SPAM_CD 3 SECONDS
+#define SPAM_CD (3 SECONDS)
 
 /obj/machinery/prisongate
 	name = "prison gate scanner"

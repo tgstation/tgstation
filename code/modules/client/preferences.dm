@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		// Lemon from the future: this issue appears to replicate if the byond map (what we're relaying here)
 		// Is shown while the client's mouse is on the screen. As soon as their mouse enters the main map, it's properly scaled
 		// I hate this place
-		addtimer(CALLBACK(character_preview_view, /atom/movable/screen/map_view/char_preview/proc/update_body), 1 SECONDS)
+		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/atom/movable/screen/map_view/char_preview, update_body)), 1 SECONDS)
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
