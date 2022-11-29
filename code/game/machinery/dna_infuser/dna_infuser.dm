@@ -38,6 +38,8 @@
 		. += span_notice("Missing [span_bold("an infusion source")].")
 	else
 		. += span_notice("[span_bold(infusing_from.name)] is in the infusion slot.")
+	. += span_notice("To operate: Obtain dead creature. Depending on size, drag or drop into the infuser slot.")
+	. += span_notice("Subject enters the chamber, someone activates the machine. Voila! One of your organs has... changed!")
 	. += span_notice("Alt-click to eject the infusion source, if one is inside.")
 
 /obj/machinery/dna_infuser/interact(mob/user)
@@ -64,6 +66,7 @@
 	if(!infusing_into)
 		//no valid recipe, so you get a fly mutation
 		infusing_into = GLOB.infuser_entries[1]
+	playsound(src, 'sound/machines/blender.ogg', 50, TRUE)
 	to_chat(hoccupant, span_danger("Little needles repeatedly prick you! And with each prick, you feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	hoccupant.take_overall_damage(10)
 	Shake(15, 15, INFUSING_TIME)
@@ -93,7 +96,16 @@
 	if(potential_new_organs.len)
 		var/obj/item/organ/new_organ = pick(potential_new_organs)
 		new_organ = new new_organ()
-		new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
+		if(istype(new_organ, /obj/item/organ/internal/brain))
+			// brains REALLY like ghosting people. we need special tricks to avoid that, namely removing the old brain with no_id_transfer
+			var/obj/item/organ/internal/brain/new_brain = new_organ
+			var/obj/item/organ/internal/brain/old_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+			if(old_brain)
+				old_brain.Remove(target, special = TRUE, no_id_transfer = TRUE)
+				qdel(old_brain)
+			new_brain.Insert(target, special = TRUE, drop_if_replaced = FALSE, no_id_transfer = TRUE)
+		else
+			new_organ.Insert(target, special = TRUE, drop_if_replaced = FALSE)
 	infusing_into = null
 	QDEL_NULL(infusing_from)
 
@@ -175,6 +187,9 @@
 		return FALSE
 	if(isliving(target))
 		var/mob/living/living_target = target
+		if(iscarbon(target))
+			balloon_alert(user, "no higher-level creatures!")
+			return FALSE
 		if(living_target.stat != DEAD)
 			balloon_alert(user, "only dead creatures!")
 			return FALSE
