@@ -7,7 +7,7 @@
 	///Our object that holds us
 	var/atom/physical
 	///The type this host is valid on. Really only used for error proofing.
-	var/valid_on = /atom/movable
+	var/valid_on = null
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/computer_id_slot
@@ -95,6 +95,11 @@
 
 /datum/modular_computer_host/New(datum/holder)
 	. = ..()
+
+	if(isnull(valid_on))
+		stack_trace("We were attaching a modular computer host that is defined as abstract! Type: [type]")
+		qdel(src)
+		return
 
 	if(!istype(holder, valid_on))
 		stack_trace("We were attaching a modular computer host to an invalid holder! Expected: [valid_on], Got: [holder.type]")
