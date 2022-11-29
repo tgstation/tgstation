@@ -7,24 +7,37 @@
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
+	/**
+	 * A cached list of paths of all the languages this tongue is capable of speaking
+	 *
+	 * Relates to a mob's ability to speak a language - a mob must be able to speak the language
+	 * and have a tongue able to speak the language (or omnitongue) in order to actually speak said language
+	 */
 	var/list/languages_possible
-	var/list/languages_native //human mobs can speak with this languages without the accent (letters replaces)
+	/**
+	 * A list of languages which are native to this tongue
+	 *
+	 * When these languages are spoken with this tongue, and modifies speech is true, no modifications will be made
+	 * (such as no accent, hissing, or whatever)
+	 */
+	var/list/languages_native
+	/// Overrides the say mod of the mob implanted into (that is, replaces "X says" with "X [say_mod]")
 	var/say_mod = null
-
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
-
-	var/taste_sensitivity = 15 // lower is more sensitive.
+	/// Determines how "sensitive" this tongue is to tasting things, lower is more sensitive.
+	/// See [/mob/living/proc/get_taste_sensitivity].
+	var/taste_sensitivity = 15
+	/// Whether this tongue modifies speech via signal
 	var/modifies_speech = FALSE
 
 /obj/item/organ/internal/tongue/Initialize(mapload)
 	. = ..()
 	// Setup the possible languages list
 	// - get_possible_languages gives us a list of language paths
-	// - we typecache it for faster accesses
-	// - then we globally cache it via string assoc list
-	// this results in languages possible being a typecache of languages shared between all tongues of similar type
-	languages_possible = string_assoc_list(typecacheof(get_possible_languages()))
+	// - then we cache it via string list
+	// this results in tongues with identical possible languages sharing a cached list instance
+	languages_possible = string_list(get_possible_languages())
 
 /**
  * Used in setting up the "languages possible" list.
@@ -90,8 +103,8 @@
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
-/obj/item/organ/internal/tongue/could_speak_language(language)
-	return is_type_in_typecache(language, languages_possible)
+/obj/item/organ/internal/tongue/could_speak_language(datum/language/language_path)
+	return (language_path in languages_possible)
 
 /obj/item/organ/internal/tongue/get_availability(datum/species/owner_species)
 	return !(NO_TONGUE in owner_species.species_traits)
