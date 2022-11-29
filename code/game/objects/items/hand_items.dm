@@ -272,14 +272,14 @@
 	return
 
 /obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, params)
-	if(!Adjacent(target) || !istype(target, /obj/structure/table))
+	if(!loc.Adjacent(target) || !istype(target, /obj/structure/table))
 		return ..()
 
 	slam_table(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/hand_item/slapper/pre_attack(atom/target, mob/living/user, params)
-	if(!Adjacent(target) || !istype(target, /obj/structure/table))
+	if(!loc.Adjacent(target) || !istype(target, /obj/structure/table))
 		return ..()
 
 	slap_table(target, user)
