@@ -35,22 +35,6 @@
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
 	modifies_speech = TRUE
 	languages_native = list(/datum/language/buzzwords)
-	var/static/list/languages_possible_fly = typecacheof(list(
-		/datum/language/common,
-		/datum/language/draconic,
-		/datum/language/codespeak,
-		/datum/language/monkey,
-		/datum/language/narsie,
-		/datum/language/beachbum,
-		/datum/language/aphasia,
-		/datum/language/piratespeak,
-		/datum/language/moffic,
-		/datum/language/sylvan,
-		/datum/language/shadowtongue,
-		/datum/language/terrum,
-		/datum/language/nekomimetic,
-		/datum/language/buzzwords
-	))
 
 /obj/item/organ/internal/tongue/fly/modify_speech(datum/source, list/speech_args)
 	var/static/regex/fly_buzz = new("z+", "g")
@@ -65,8 +49,10 @@
 
 /obj/item/organ/internal/tongue/fly/Initialize(mapload)
 	. = ..()
-	languages_possible = languages_possible_fly
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
+
+/obj/item/organ/internal/tongue/fly/get_possible_languages()
+	return ..() + /datum/language/buzzwords
 
 /obj/item/organ/internal/heart/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."

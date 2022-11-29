@@ -16,7 +16,28 @@
 
 	var/taste_sensitivity = 15 // lower is more sensitive.
 	var/modifies_speech = FALSE
-	var/static/list/languages_possible_base = typecacheof(list(
+
+/obj/item/organ/internal/tongue/Initialize(mapload)
+	. = ..()
+	// Setup the possible languages list
+	// - get_possible_languages gives us a list of language paths
+	// - we typecache it for faster accesses
+	// - then we globally cache it via string assoc list
+	// this results in languages possible being a typecache of languages shared between all tongues of similar type
+	languages_possible = string_assoc_list(typecacheof(get_possible_languages()))
+
+/**
+ * Used in setting up the "languages possible" list.
+ *
+ * Override to have your tongue be only capable of speaking certain languages
+ * Extend to hvae a tongue capable of speaking additional languages to the base tongue
+ *
+ * While a user may be theoretically capable of speaking a language, they cannot physically speak it
+ * UNLESS they have a tongue with that language possible, UNLESS UNLESS they have omnitongue enabled.
+ */
+/obj/item/organ/internal/tongue/proc/get_possible_languages()
+	RETURN_TYPE(/list)
+	return list(
 		/datum/language/common,
 		/datum/language/uncommon,
 		/datum/language/draconic,
@@ -30,12 +51,8 @@
 		/datum/language/sylvan,
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
-		/datum/language/nekomimetic
-	))
-
-/obj/item/organ/internal/tongue/Initialize(mapload)
-	. = ..()
-	languages_possible = languages_possible_base
+		/datum/language/nekomimetic,
+	)
 
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -310,15 +327,15 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 	modifies_speech = TRUE // not really, they just hiss
-	var/static/list/languages_possible_alien = typecacheof(list(
+
+// Aliens can only speak alien and a few other languages.
+/obj/item/organ/internal/tongue/alien/get_possible_languages()
+	return list(
 		/datum/language/xenocommon,
 		/datum/language/common,
 		/datum/language/draconic,
-		/datum/language/monkey))
-
-/obj/item/organ/internal/tongue/alien/Initialize(mapload)
-	. = ..()
-	languages_possible = languages_possible_alien
+		/datum/language/monkey,
+	)
 
 /obj/item/organ/internal/tongue/alien/modify_speech(datum/source, list/speech_args)
 	var/datum/saymode/xeno/hivemind = speech_args[SPEECH_SAYMODE]
@@ -339,27 +356,14 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list("sans", "papyrus")
-	var/static/list/languages_possible_skeleton = typecacheof(list(
-		/datum/language/common,
-		/datum/language/draconic,
-		/datum/language/codespeak,
-		/datum/language/monkey,
-		/datum/language/narsie,
-		/datum/language/beachbum,
-		/datum/language/aphasia,
-		/datum/language/piratespeak,
-		/datum/language/moffic,
-		/datum/language/sylvan,
-		/datum/language/shadowtongue,
-		/datum/language/terrum,
-		/datum/language/nekomimetic,
-		/datum/language/calcic
-	))
 
 /obj/item/organ/internal/tongue/bone/Initialize(mapload)
 	. = ..()
 	phomeme_type = pick(phomeme_types)
-	languages_possible = languages_possible_skeleton
+
+// Bone tongues can speak all + calcic
+/obj/item/organ/internal/tongue/bone/get_possible_languages()
+	return ..() + /datum/language/calcic
 
 /obj/item/organ/internal/tongue/bone/modify_speech(datum/source, list/speech_args)
 	if (chattering)
@@ -418,23 +422,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	taste_sensitivity = 10 // ethereal tongues function (very loosely) like a gas spectrometer: vaporising a small amount of the food and allowing it to pass to the nose, resulting in more sensitive taste
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
-	var/static/list/languages_possible_ethereal = typecacheof(list(
-		/datum/language/common,
-		/datum/language/draconic,
-		/datum/language/codespeak,
-		/datum/language/monkey,
-		/datum/language/narsie,
-		/datum/language/beachbum,
-		/datum/language/aphasia,
-		/datum/language/piratespeak,
-		/datum/language/moffic,
-		/datum/language/sylvan,
-		/datum/language/shadowtongue,
-		/datum/language/terrum,
-		/datum/language/nekomimetic,
-		/datum/language/voltaic
-	))
 
-/obj/item/organ/internal/tongue/ethereal/Initialize(mapload)
-	. = ..()
-	languages_possible = languages_possible_ethereal
+// Ethereal tongues can speak all + voltaic
+/obj/item/organ/internal/tongue/ethereal/get_possible_languages()
+	return ..() + /datum/language/voltaic
