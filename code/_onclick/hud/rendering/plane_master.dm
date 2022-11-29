@@ -192,6 +192,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		<br>If you want something to look as if it has parallax on it, draw it to this plane."
 	plane = PLANE_SPACE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	render_relay_planes = list(RENDER_PLANE_GAME, EMISSIVE_MASK_PLANE)
 
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
@@ -242,6 +243,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	name = "Floor"
 	documentation = "The well, floor. This is mostly used as a sorting mechanism, but it also lets us create a \"border\" around the game world plane, so its drop shadow will actually work."
 	plane = FLOOR_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME, EMISSIVE_MASK_PLANE)
+
+/atom/movable/screen/plane_master/wall
+	name = "Wall"
+	documentation = "Holds all walls. We render this onto the game world. Separate so we can use this + space and floor planes as a guide for where byond blackness is NOT."
+	plane = WALL_PLANE
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, EMISSIVE_MASK_PLANE)
 
 /atom/movable/screen/plane_master/game
 	name = "Lower game world"
@@ -284,6 +292,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	documentation = "Ok so fov is kinda fucky, because planes in byond serve both as effect groupings and as rendering orderers. Since that's true, we need a plane that we can stick stuff that draws above fov blocked stuff on."
 	plane = GAME_PLANE_UPPER
 	render_relay_planes = list(RENDER_PLANE_GAME_WORLD)
+
+/atom/movable/screen/plane_master/wall_upper
+	name = "Upper wall"
+	documentation = "There are some walls that want to render above most things (mostly minerals since they shift over.\
+		<br>We draw them to their own plane so we can hijack them for our emissive mask stuff"
+	plane = WALL_PLANE_UPPER
+	render_relay_planes = list(RENDER_PLANE_GAME_WORLD, EMISSIVE_MASK_PLANE)
 
 /atom/movable/screen/plane_master/game_world_upper_fov_hidden
 	name = "Upper game world fov hidden"
@@ -391,7 +406,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 
 /atom/movable/screen/plane_master/emissive/Initialize(mapload)
 	. = ..()
-	add_filter("em_block_masking", 1, color_matrix_filter(GLOB.em_mask_matrix))
+	add_filter("emissive_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_MASK_RENDER_TARGET, offset)))
+	add_filter("em_block_masking", 2, color_matrix_filter(GLOB.em_mask_matrix))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"

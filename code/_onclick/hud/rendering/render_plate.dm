@@ -124,6 +124,21 @@
 	blend_mode_override = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/*!
+ * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
+ *
+ * Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.
+ * Emissive blockers are pasted with an atom color that converts them to be entirely some different color.
+ * Emissive overlays and emissive blockers are put onto the same plane.
+ * The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.
+ * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
+ * This is then used to alpha mask the lighting plane.
+ */
+/atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload)
+	. = ..()
+	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
+	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
 	. = ..()
 	if(!.)
@@ -165,20 +180,17 @@
 	else
 		enable_alpha()
 
-/*!
- * This system works by exploiting BYONDs color matrix filter to use layers to handle emissive blockers.
- *
- * Emissive overlays are pasted with an atom color that converts them to be entirely some specific color.
- * Emissive blockers are pasted with an atom color that converts them to be entirely some different color.
- * Emissive overlays and emissive blockers are put onto the same plane.
- * The layers for the emissive overlays and emissive blockers cause them to mask eachother similar to normal BYOND objects.
- * A color matrix filter is applied to the emissive plane to mask out anything that isn't whatever the emissive color is.
- * This is then used to alpha mask the lighting plane.
- */
-/atom/movable/screen/plane_master/rendering_plate/lighting/Initialize(mapload)
-	. = ..()
-	add_filter("emissives", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(EMISSIVE_RENDER_TARGET, offset), flags = MASK_INVERSE))
-	add_filter("object_lighting", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(O_LIGHTING_VISUAL_RENDER_TARGET, offset), flags = MASK_INVERSE))
+/atom/movable/screen/plane_master/rendering_plate/mask_emissive
+	name = "Emissive Mask"
+	documentation = "Any part of this plane that is transparent will be transparent in the emissive plane.\
+		<br>This is done to ensure emissives don't light things up \"through\" the darkness that normally sits at the bottom of the lighting plane.\
+		<br>We relay copies of the space, floor and wall planes to it, so we can use them as masks. Then we just boost any existing alpha to 100% and we're done."
+	plane = EMISSIVE_MASK_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,255, 0,0,0,0)
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_target = EMISSIVE_MASK_RENDER_TARGET
+	render_relay_planes = list()
 
 ///render plate for OOC stuff like ghosts, hud-screen effects, etc
 /atom/movable/screen/plane_master/rendering_plate/non_game
