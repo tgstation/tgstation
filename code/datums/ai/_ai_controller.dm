@@ -61,6 +61,12 @@ multiple modular subtrees with behaviors
 	UnpossessPawn(FALSE)
 	return ..()
 
+///Sets the current movement target, with an optional param to override the movement behavior
+/datum/ai_controller/proc/set_movement_target(atom/target, datum/ai_movement/new_movement)
+	current_movement_target = target
+	if(new_movement)
+		change_ai_movement_type(new_movement)
+
 ///Overrides the current ai_movement of this controller with a new one
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
 	ai_movement = SSai_movement.movement_types[new_movement]
