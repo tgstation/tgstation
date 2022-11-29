@@ -142,7 +142,7 @@
 /obj/item/reagent_containers/cup/glass/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
 	desc = "A drink served in a classy mug."
-	icon_state = "tea"
+	icon_state = "tea_empty"
 	inhand_icon_state = "coffee"
 	spillable = TRUE
 
@@ -169,8 +169,8 @@
 	icon_state = "mug_nt_empty"
 
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen/update_icon_state()
+	. = ..()
 	icon_state = reagents.total_volume ? "mug_nt" : "mug_nt_empty"
-	return ..()
 
 /obj/item/reagent_containers/cup/glass/coffee_cup
 	name = "coffee cup"

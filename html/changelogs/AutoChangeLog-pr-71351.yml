@@ -1,0 +1,5 @@
+author: "Tralezab code, Azlan + Azarak (Az gaaang) for the organs"
+delete-after: True
+changes:
+  - rscadd: "Added the DNA infuser to genetics! Person goes in, corpse goes in, and they combine!"
+  - rscadd: "Try not to turn yourself into a fly, OK?"

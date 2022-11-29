@@ -271,7 +271,7 @@
 		target.Move(target_shove_turf, shove_dir)
 		if(get_turf(target) == target_old_turf)
 			shove_blocked = TRUE
-	
+
 	if(!shove_blocked)
 		target.setGrabState(GRAB_PASSIVE)
 
@@ -640,7 +640,7 @@
 	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
-	if(health <= hardcrit_threshold)
+	if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
 		. = FALSE
 
 
