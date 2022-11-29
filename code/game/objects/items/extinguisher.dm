@@ -181,7 +181,7 @@
 		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
 			var/obj/B = user.buckled
 			var/movementdirection = turn(direction,180)
-			addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_chair, B, movementdirection), 1)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/extinguisher, move_chair), B, movementdirection), 1)
 		else
 			user.newtonian_move(turn(direction, 180))
 

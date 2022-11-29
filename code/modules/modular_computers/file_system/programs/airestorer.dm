@@ -59,7 +59,7 @@
 
 	return TRUE
 
-/datum/computer_file/program/ai_restorer/try_insert(obj/item/attacking_item, mob/living/user)
+/datum/computer_file/program/ai_restorer/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!computer)
 		return FALSE
 	if(!istype(attacking_item, /obj/item/aicard))

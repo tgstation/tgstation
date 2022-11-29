@@ -2,7 +2,7 @@
 /datum/unit_test/human_through_recycler
 
 /datum/unit_test/human_through_recycler/Run()
-	var/mob/living/carbon/human/assistant = allocate(/mob/living/carbon/human, run_loc_floor_bottom_left) // we should be in the bottom_left by default, but let's be sooper dooper sure :)
+	var/mob/living/carbon/human/assistant = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left) // we should be in the bottom_left by default, but let's be sooper dooper sure :)
 	var/obj/machinery/recycler/chewer = allocate(/obj/machinery/recycler/deathtrap, get_step(run_loc_floor_bottom_left, EAST)) //already existing subtype that has emagged set to TRUE, so it shall CHEW. Put it directly right to the assistant to mimick a player entering the recycler.
 	assistant.equipOutfit(/datum/outfit/job/assistant/consistent) // consistent assistant juuuust in case
 	var/turf/open/stage = get_turf(chewer)

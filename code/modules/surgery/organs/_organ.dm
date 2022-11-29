@@ -221,46 +221,53 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
 
-/mob/living/proc/regenerate_organs()
-	return FALSE
-
-/mob/living/carbon/regenerate_organs()
+/**
+ * Recreates all of this mob's organs, and heals them to full.
+ */
+/mob/living/carbon/proc/regenerate_organs()
+	// Delegate to species if possible.
 	if(dna?.species)
 		dna.species.regenerate_organs(src)
+		// Species regenerate organs doesn't handling healing the organs here,
+		// it's more concerned with just putting the necessary organs back in.
+		for(var/obj/item/organ/organ as anything in internal_organs)
+			organ.setOrganDamage(0)
+		set_heartattack(FALSE)
 		return
 
+	// Default organ fixing handling
+	// May result in kinda cursed stuff for mobs which don't need these organs
+	var/obj/item/organ/internal/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)
+	if(!lungs)
+		lungs = new()
+		lungs.Insert(src)
+	lungs.setOrganDamage(0)
+
+	var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+	if(heart)
+		set_heartattack(FALSE)
 	else
-		var/obj/item/organ/internal/lungs/lungs = getorganslot(ORGAN_SLOT_LUNGS)
-		if(!lungs)
-			lungs = new()
-			lungs.Insert(src)
-		lungs.setOrganDamage(0)
+		heart = new()
+		heart.Insert(src)
+	heart.setOrganDamage(0)
 
-		var/obj/item/organ/internal/heart/heart = getorganslot(ORGAN_SLOT_HEART)
-		if(heart)
-			set_heartattack(FALSE)
-		else
-			heart = new()
-			heart.Insert(src)
-		heart.setOrganDamage(0)
+	var/obj/item/organ/internal/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		tongue = new()
+		tongue.Insert(src)
+	tongue.setOrganDamage(0)
 
-		var/obj/item/organ/internal/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
-		if(!tongue)
-			tongue = new()
-			tongue.Insert(src)
-		tongue.setOrganDamage(0)
+	var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		eyes = new()
+		eyes.Insert(src)
+	eyes.setOrganDamage(0)
 
-		var/obj/item/organ/internal/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
-		if(!eyes)
-			eyes = new()
-			eyes.Insert(src)
-		eyes.setOrganDamage(0)
-
-		var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
-		if(!ears)
-			ears = new()
-			ears.Insert(src)
-		ears.setOrganDamage(0)
+	var/obj/item/organ/internal/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+	if(!ears)
+		ears = new()
+		ears.Insert(src)
+	ears.setOrganDamage(0)
 
 /obj/item/organ/proc/handle_failing_organs(delta_time)
 	return

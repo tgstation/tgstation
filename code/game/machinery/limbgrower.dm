@@ -21,7 +21,7 @@
 	/// Our internal techweb for limbgrower designs.
 	var/datum/techweb/stored_research
 	/// All the categories of organs we can print.
-	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, "other")
+	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_LIMBS_DIGITIGRADE)
 
 /obj/machinery/limbgrower/Initialize(mapload)
 	create_reagents(100, OPENCONTAINER)

@@ -47,7 +47,7 @@
 	/// Whether this app can send messages to all.
 	var/spam_mode = FALSE
 
-/datum/computer_file/program/messenger/try_insert(obj/item/attacking_item, mob/living/user)
+/datum/computer_file/program/messenger/application_attackby(obj/item/attacking_item, mob/living/user)
 	if(!istype(attacking_item, /obj/item/photo))
 		return FALSE
 	var/obj/item/photo/pic = attacking_item

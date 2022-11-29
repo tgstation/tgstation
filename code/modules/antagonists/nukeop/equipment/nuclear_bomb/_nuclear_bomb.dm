@@ -567,7 +567,7 @@ GLOBAL_VAR(station_nuke_source)
 	return detonation_status
 
 /obj/machinery/nuclearbomb/proc/really_actually_explode(detonation_status)
-	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, /datum/controller/subsystem/ticker/proc/station_explosion_detonation, src))
+	play_cinematic(get_cinematic_type(detonation_status), world, CALLBACK(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, station_explosion_detonation), src))
 
 	var/turf/bomb_location = get_turf(src)
 	var/list/z_levels_to_blow = list()

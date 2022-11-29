@@ -1,6 +1,6 @@
 /datum/element/art
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH_ON_HOST_DESTROY // Detach for turfs
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 	var/impressiveness = 0
 
 /datum/element/art/Attach(datum/target, impress)
