@@ -91,8 +91,8 @@ export const InfuserInstructions = (props, context) => {
           3. Have someone activate the machine externally.
           <br />
           <Box inline color="white">
-            And you're done! Note that the infusion source will be obliterated
-            in the process.
+            And you&apos;re done! Note that the infusion source will be
+            obliterated in the process.
           </Box>
         </Stack.Item>
       </Stack>

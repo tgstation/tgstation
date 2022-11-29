@@ -46,7 +46,7 @@
 
 /obj/machinery/dna_infuser/interact(mob/user)
 	if(user == occupant)
-		balloon_alert(user, "can't reach!")
+		toggle_open(user)
 		return
 	if(infusing)
 		balloon_alert(user, "not while it's on!")
@@ -172,7 +172,9 @@
 			COOLDOWN_START(src, message_cooldown, 4 SECONDS)
 			to_chat(user, span_danger("[src]'s door won't budge while all the needles are infusing you!"))
 		return
-	open_machine()
+	open_machine(drop = FALSE)
+	//we set drop to false to manually call it with an allowlist
+	dump_inventory_contents(list(occupant))
 
 // mostly good for dead mobs that turn into items like dead mice (smack to add)
 /obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
