@@ -32,21 +32,22 @@
 
 	botcount = 0
 
-	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
-		if(!is_valid_z_level(current_turf, get_turf(simple_bot)) || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+	for(var/mob/living/basic/bot/basic as anything in GLOB.bots_list)
+		if(!is_valid_z_level(current_turf, get_turf(basic)) || !(basic.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(computer && !simple_bot.check_access(user)) // Only check Bots we can access)
+		if(computer && !basic.check_access(user)) // Only check Bots we can access)
 			continue
 		var/list/newbot = list(
-			"name" = simple_bot.name,
-			"mode" = simple_bot.get_mode_ui(),
-			"model" = simple_bot.bot_type,
-			"locat" = get_area(simple_bot),
-			"bot_ref" = REF(simple_bot),
+			"name" = basic.name,
+			"mode" = basic.get_mode_ui(),
+			"model" = basic.bot_type,
+			"locat" = get_area(basic),
+			"bot_ref" = REF(basic),
 			"mule_check" = FALSE,
 		)
-		if(simple_bot.bot_type == MULE_BOT)
-			var/mob/living/simple_animal/bot/mulebot/simple_mulebot = simple_bot
+		/* Temp disabled as we don't have basic mules yet
+		if(basic.bot_type == MULE_BOT)
+			var/mob/living/simple_animal/bot/mulebot/simple_mulebot = basic
 			mulelist += list(list(
 				"name" = simple_mulebot.name,
 				"dest" = simple_mulebot.destination,
@@ -59,7 +60,7 @@
 			))
 			if(simple_mulebot.load)
 				data["load"] = simple_mulebot.load.name
-			newbot["mule_check"] = TRUE
+			newbot["mule_check"] = TRUE*/
 		botlist += list(newbot)
 
 	for(var/mob/living/simple_animal/drone/all_drones as anything in GLOB.drones_list)
@@ -108,15 +109,15 @@
 		"report",
 		"ejectpai",
 	)
-	var/mob/living/simple_animal/bot/simple_bot = locate(params["robot"]) in GLOB.bots_list
+	var/mob/living/basic/bot/basic = locate(params["robot"]) in GLOB.bots_list
 	if (action in standard_actions)
-		simple_bot.bot_control(action, current_user, current_access)
+		basic.bot_control(action, current_user, current_access)
 	if (action in MULE_actions)
-		simple_bot.bot_control(action, current_user, current_access, TRUE)
+		basic.bot_control(action, current_user, current_access, TRUE)
 
 	switch(action)
 		if("summon")
-			simple_bot.bot_control(action, current_user, id_card ? id_card.access : current_access)
+			basic.bot_control(action, current_user, id_card ? id_card.access : current_access)
 		if("ejectcard")
 			if(!computer || !computer.computer_id_slot)
 				return

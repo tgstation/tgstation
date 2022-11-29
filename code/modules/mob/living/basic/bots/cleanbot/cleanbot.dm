@@ -99,7 +99,7 @@
 /mob/living/basic/bot/cleanbot/Initialize(mapload)
 	. = ..()
 
-	AddComponent(/datum/component/cleaner, 1 SECONDS, \
+	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
 		on_cleaned_callback = CALLBACK(src, .proc/finish_cleaning))
 
 	update_targets()
