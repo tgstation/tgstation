@@ -32,7 +32,7 @@
 
 	botcount = 0
 
-	for(var/mob/living/basic/bot/basic as anything in GLOB.bots_list)
+	for(var/mob/living/basic/bot/basic in GLOB.bots_list)  //RE-ADD AS ANYTHING ONCE PORTING IS FINISHED
 		if(!is_valid_z_level(current_turf, get_turf(basic)) || !(basic.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
 		if(computer && !basic.check_access(user)) // Only check Bots we can access)

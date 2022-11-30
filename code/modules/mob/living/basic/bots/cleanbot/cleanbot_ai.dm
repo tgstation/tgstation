@@ -9,8 +9,8 @@
 		/datum/ai_planning_subtree/cleanbot_get_saluted,
 		/datum/ai_planning_subtree/cleanbot_throw_foam,
 		/datum/ai_planning_subtree/clean_target,
-		/datum/ai_planning_subtree/core_bot_behaviors/watch_for_filth,
-		/datum/ai_planning_subtree/watch_for_filth_idle
+		/datum/ai_planning_subtree/core_bot_behaviors,
+		/datum/ai_planning_subtree/watch_for_filth
 		)
 
 	COOLDOWN_DECLARE(next_salute_check)
@@ -33,13 +33,8 @@
 /datum/ai_controller/basic_controller/bot/clean/proc/set_valid_targets(valid_targets)
 	blackboard[BB_CLEAN_BOT_VALID_TARGETS] = valid_targets
 
-///Look for filthy people while patrolling!
-/datum/ai_planning_subtree/core_bot_behaviors/watch_for_filth/PatrolBehavior(datum/ai_controller/controller, delta_time)
-	controller.queue_behavior(/datum/ai_behavior/move_to_next_patrol_point)
-	controller.queue_behavior(/datum/ai_behavior/scan/constant, BB_CLEAN_BOT_TARGET, BB_TARGETTING_DATUM)
-
 ///Look for filthy things while idling too!
-/datum/ai_planning_subtree/watch_for_filth_idle/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/datum/ai_planning_subtree/watch_for_filth/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
 	controller.queue_behavior(/datum/ai_behavior/scan, BB_CLEAN_BOT_TARGET, BB_TARGETTING_DATUM)
 

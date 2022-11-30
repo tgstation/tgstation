@@ -92,9 +92,8 @@
 
 ///Looks for targets based on the specified targetting datum, and sets the target if something is found.
 /datum/ai_behavior/scan
-	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM
+	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	action_cooldown = 1 SECONDS
-	var/should_finish_after_scan = TRUE
 	var/scan_range = DEFAULT_SCAN_RANGE
 
 /datum/ai_behavior/scan/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
@@ -123,19 +122,12 @@
 			on_find_target(controller, target_key, scanned_atom)
 			break
 
-	if(should_finish_after_scan)
-		finish_action(controller, TRUE)
-
 ///Ran once bot has found a target during scanning
 /datum/ai_behavior/scan/proc/on_find_target(datum/ai_controller/controller, target_key, target)
 	controller.blackboard[target_key] = target
-	controller.CancelActions()
-
-/datum/ai_behavior/scan/constant
-	should_finish_after_scan = FALSE
+	controller.CancelActions() //Found a target, time to replan!
 
 /datum/ai_behavior/force_bot_salute
-
 
 /datum/ai_behavior/force_bot_salute/perform(delta_time, datum/ai_controller/controller, ...)
 	. = ..()

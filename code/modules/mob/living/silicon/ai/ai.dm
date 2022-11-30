@@ -570,7 +570,7 @@
 	if(isAI(current_caller) && current_caller != src) //Prevents an override if another AI is controlling this bot.
 		to_chat(src, span_danger("Interface error. Unit is already in use."))
 		return
-	to_chat(src, span_notice("Sending command to bot..."))
+w	to_chat(src, span_notice("Sending command to bot..."))
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 	bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0

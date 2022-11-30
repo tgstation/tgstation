@@ -49,6 +49,8 @@
 	if(message)
 		to_chat(caller, span_notice("[icon2html(src, caller)] [bot_pawn.name] called to [end_area]."))
 
+	CancelActions() //Cancel whatever I was doing before!
+
 /datum/ai_controller/basic_controller/bot/proc/reset_bot()
 	var/mob/living/basic/bot/bot_pawn = pawn
 	var/atom/caller = blackboard[BB_BOT_CURRENT_SUMMONER]
