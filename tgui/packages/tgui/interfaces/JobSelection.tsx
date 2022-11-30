@@ -2,10 +2,10 @@ import { useBackend } from '../backend';
 import { Button, DepartmentEntry, DepartmentPane, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
-import { merge } from 'common/merge';
 import { SFC } from 'inferno';
 import { JobToIcon } from './common/JobToIcon';
 import { BaseDepartmentInfo, BaseJobInfo } from '../components/DepartmentPane';
+import { deepMerge } from 'common/collections';
 
 class Job implements BaseJobInfo {
   unavailable_reason: string | null;
@@ -99,11 +99,10 @@ export const JobEntry: SFC<{
 
 export const JobSelection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  let departments = JSON.parse(JSON.stringify(data.departments)); // Why the fuck is it so hard to clone objects properly in JS?!
   if (!data?.static_data?.departments) {
     return null; // Stop TGUI whitescreens!
   }
-  departments = merge(departments, data.static_data.departments);
+  const departments = deepMerge(data.departments, data.static_data.departments); // Why the fuck is it so hard to clone objects properly in JS?!
 
   return (
     <Window width={1012} height={716}>
