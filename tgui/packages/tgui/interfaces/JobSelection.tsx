@@ -4,7 +4,7 @@ import { Window } from '../layouts';
 import { Color } from 'common/color';
 import { SFC } from 'inferno';
 import { JobToIcon } from './common/JobToIcon';
-import { BaseDepartmentInfo } from '../components/DepartmentPane';
+import { BaseDepartment } from '../components/DepartmentPane';
 import { deepMerge } from 'common/collections';
 
 type Job = {
@@ -17,10 +17,9 @@ type Job = {
   description: string;
 };
 
-type Department = {
+type Department = BaseDepartment<Job> & {
   open_slots: number;
-  jobs: Record<string, Job>;
-} & BaseDepartmentInfo;
+};
 
 type Data = {
   departments_static: Record<string, Department>;
@@ -66,10 +65,10 @@ export const JobEntry: SFC<{
         job.unavailable_reason ||
         (job.prioritized ? (
           <>
-            <b style={{ 'margin-bottom': '1.5em' }}>
-              The HoP wants more people in this job!
-            </b>
-            {job.description}
+            <p>
+              <b>The HoP wants more people in this job!</b>
+            </p>
+            <p>{job.description}</p>
           </>
         ) : (
           job.description
@@ -116,8 +115,8 @@ export const JobSelection = (props, context) => {
           }>
           <DepartmentPane
             departments={departments}
-            renderTitleSubtext={(department) => {
-              const department_data = department as Department;
+            renderTitleSubtext={(department: Department) => {
+              const department_data = department;
               return (
                 <span
                   style={{
@@ -135,13 +134,13 @@ export const JobSelection = (props, context) => {
                 </span>
               );
             }}
-            renderJobEntry={(jobName, job, department) => {
+            renderJobEntry={(jobName, job, department: Department) => {
               return (
                 <JobEntry
                   key={jobName}
                   jobName={jobName}
-                  job={job as Job}
-                  department={department as Department}
+                  job={job}
+                  department={department}
                   onClick={() => {
                     act('SelectedJob', { job: jobName });
                   }}

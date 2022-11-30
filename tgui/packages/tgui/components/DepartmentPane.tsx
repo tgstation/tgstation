@@ -3,9 +3,9 @@ import { SFC } from 'inferno';
 import { Box } from './Box';
 import { Stack } from './Stack';
 
-export type BaseDepartmentInfo = {
+export type BaseDepartment<Job = any> = {
   color: string;
-  jobs: Record<string, any>;
+  jobs: Record<string, Job>;
 };
 
 // The cost of flexibility and prettiness.
@@ -35,13 +35,13 @@ export const DepartmentEntry: SFC<{
 };
 
 export const DepartmentPane: SFC<{
-  departments: Record<string, BaseDepartmentInfo>;
+  departments: Record<string, BaseDepartment>;
   renderJobEntry: (
     jobName: string,
     job: any,
-    department: BaseDepartmentInfo
+    department: BaseDepartment
   ) => object;
-  renderTitleSubtext?: (department: BaseDepartmentInfo) => object;
+  renderTitleSubtext?: (department: BaseDepartment) => object;
   entryWidth: string;
 }> = (data) => {
   return (
