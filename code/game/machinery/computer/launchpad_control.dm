@@ -9,7 +9,7 @@
 	var/list/obj/machinery/launchpad/launchpads
 	var/maximum_pads = 4
 
-	var/list/peek_stack = list()
+	var/list/peek_stack
 
 /obj/machinery/computer/launchpad/Initialize(mapload)
 	launchpads = list()
@@ -195,16 +195,17 @@
 			current_pad.doteleport(usr, TRUE)
 			if(!LAZYLEN(peek_stack))  // dont pull multiple times
 				addtimer(CALLBACK(src, PROC_REF(peek_return)), 3 SECONDS)
-			peek_stack += current_pad
+			LAZYADD(peek_stack, current_pad)
 
 			. = TRUE
 	. = TRUE
 
 
 /obj/machinery/computer/launchpad/proc/peek_return(user)
-	if(!length(peek_stack))
+	if(!LAZYLEN(peek_stack))
 		return
 
+	// we've confirmed the lazylist is a list, and can treat it as such
 	for(var/obj/machinery/launchpad/current_pad in reverseList(peek_stack))
 		var/checks = teleport_checks(current_pad)
 		if(!isnull(checks))
@@ -215,4 +216,4 @@
 		INVOKE_ASYNC(current_pad, TYPE_PROC_REF(/obj/machinery/launchpad, doteleport), user, FALSE)
 		sleep(0.25 SECONDS)  // adds some delay to not make it too epileptic/pull properly
 
-	peek_stack.Cut()
+	peek_stack = null
