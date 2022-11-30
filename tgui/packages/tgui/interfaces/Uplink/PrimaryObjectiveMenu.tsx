@@ -21,7 +21,7 @@ export const PrimaryObjectiveMenu = (
         </Box>
         <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
           {
-            'Completing on Secondary Objectives may allow you to aquire additional equipment.'
+            'Completing Secondary Objectives may allow you to aquire additional equipment.'
           }
         </Box>
       </Section>
