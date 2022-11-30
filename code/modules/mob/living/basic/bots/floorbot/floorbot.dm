@@ -193,8 +193,9 @@
 /mob/living/basic/bot/floorbot/proc/repair(turf/target_turf)
 	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
 		toggle_magnet()
+		set_current_mode(BOT_REPAIRING)
 		visible_message(span_notice("[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] "))
-		if(!do_after(src, 50, target = target_turf))
+		if(!do_after(src, 20, target = target_turf))
 			return FALSE
 		if(floorbot_mode_flags & FLOORBOT_AUTO_TILE) //Build the floor and include a tile.
 			if(floorbot_mode_flags & FLOORBOT_REPLACE_TILES && tilestack)
@@ -218,14 +219,16 @@
 
 		if(target_floor.broken || target_floor.burnt || isplatingturf(target_floor))
 			toggle_magnet()
+			set_current_mode(BOT_REPAIRING)
 			visible_message(span_notice("[src] begins [(target_floor.broken || target_floor.burnt) ? "repairing the floor" : "placing a floor tile"]."))
-			if(do_after(src, 50, target = target_floor) && mode == BOT_REPAIRING)
+			if(do_after(src, 20, target = target_floor) && mode == BOT_REPAIRING)
 				success = TRUE
 
 		else if(was_replacing && tilestack && target_floor.type != tilestack.turf_type)
 			toggle_magnet()
+			set_current_mode(BOT_REPAIRING)
 			visible_message(span_notice("[src] begins replacing the floor tiles."))
-			if(do_after(src, 50, target = target_turf) && mode == BOT_REPAIRING && tilestack)
+			if(do_after(src, 20, target = target_floor) && mode == BOT_REPAIRING && tilestack)
 				success = TRUE
 
 		if(success)

@@ -105,16 +105,29 @@
 
 	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
 
+
+	var/found_target
+
 	for(var/turf/scanned_turf as anything in adjacent) //Let's see if there's something right next to us first!
+
+		if(found_target) //If we found something inside any of the loops, we should break.
+			break
+
+		found_target = targetting_datum.can_attack(living_pawn, scanned_turf)
+
+		if(found_target)
+			on_find_target(controller, target_key, scanned_turf)
+			break
+
 		for(var/atom/scan in scanned_turf)
-			var/final_result = targetting_datum.can_attack(living_pawn, scan)
-			if(final_result)
+			found_target = targetting_datum.can_attack(living_pawn, scan)
+			if(found_target)
 				on_find_target(controller, target_key, scan)
 				break
 
 	for(var/atom/scanned_atom as anything in view(scan_range, living_pawn) - adjacent) //Search for something in range, minus what we already checked.
-		var/final_result = targetting_datum.can_attack(living_pawn, scanned_atom)
-		if(final_result)
+		found_target = targetting_datum.can_attack(living_pawn, scanned_atom)
+		if(found_target)
 			on_find_target(controller, target_key, scanned_atom)
 			break
 

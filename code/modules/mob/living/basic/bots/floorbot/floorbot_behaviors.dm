@@ -8,7 +8,6 @@
 	var/mob/living/basic/bot/bot = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
 	RESERVE_DATUM(target, TRAIT_AI_FLOOR_WORK_RESERVATION, bot)
-	bot.set_current_mode(BOT_REPAIRING)
 
 /datum/ai_behavior/repair_floor/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
@@ -37,6 +36,7 @@
 		if(floorbot.repair(target))
 			finish_action(controller, TRUE, target_key)
 		else
+			finish_action(controller, FALSE, target_key)
 
 /datum/ai_behavior/repair_floor/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

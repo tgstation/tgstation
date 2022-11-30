@@ -2,7 +2,7 @@
  * This movement datum represents smart-pathing
  */
 /datum/ai_movement/jps
-	max_pathing_attempts = 20
+	max_pathing_attempts = 4
 
 /datum/ai_movement/jps/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	. = ..()
