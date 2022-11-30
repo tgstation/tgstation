@@ -60,7 +60,7 @@
 			M.post_lawchange()
 
 	if(botEmagChance)
-		for(var/mob/living/simple_animal/bot/bot in GLOB.alive_mob_list)
+		for(var/mob/living/basic/bot/bot in GLOB.bots_list)
 			if(prob(botEmagChance))
 				bot.emag_act()
 
