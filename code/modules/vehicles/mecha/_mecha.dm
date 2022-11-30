@@ -33,7 +33,7 @@
 	light_on = FALSE
 	light_range = 8
 	generic_canpass = FALSE
-	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/normal_step_energy_drain = 10
@@ -84,7 +84,12 @@
 
 	///Special version of the radio, which is unsellable
 	var/obj/item/radio/mech/radio
+	///List of installed remote tracking beacons, including AI control beacons
 	var/list/trackers = list()
+	///Camera installed into the mech
+	var/obj/machinery/camera/exosuit/chassis_camera
+	///Portable camera camerachunk update
+	var/updating = FALSE
 
 	var/max_temperature = 25000
 
@@ -281,6 +286,8 @@
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
 	QDEL_NULL(ui_view)
+	QDEL_NULL(trackers)
+	QDEL_NULL(chassis_camera)
 
 	GLOB.mechas_list -= src //global mech list
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)

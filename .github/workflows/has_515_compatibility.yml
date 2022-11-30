@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
     - master
+    - 'project/**'
 jobs:
   has_515_compatibility:
     name: Has 515 Compatibility

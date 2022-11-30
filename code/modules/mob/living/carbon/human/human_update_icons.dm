@@ -815,7 +815,6 @@ generate/load female uniform sprites matching all previously decided variables
 					missing_eyes.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 					missing_eyes.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
 				add_overlay(missing_eyes)
-
 	update_worn_head()
 	update_worn_mask()
 
