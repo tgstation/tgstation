@@ -4,10 +4,10 @@ import { Window } from '../layouts';
 import { Color } from 'common/color';
 import { SFC } from 'inferno';
 import { JobToIcon } from './common/JobToIcon';
-import { BaseDepartmentInfo, BaseJobInfo } from '../components/DepartmentPane';
+import { BaseDepartmentInfo } from '../components/DepartmentPane';
 import { deepMerge } from 'common/collections';
 
-class Job implements BaseJobInfo {
+type Job = {
   unavailable_reason: string | null;
   command: boolean;
   open_slots: number;
@@ -15,17 +15,17 @@ class Job implements BaseJobInfo {
   icon: string;
   prioritized: boolean;
   description: string;
-}
+};
 
-class Department implements BaseDepartmentInfo {
+type Department = {
   color: string;
   open_slots: number;
-  jobs: { [x: string]: Job };
-}
+  jobs: Record<string, Job>;
+} & BaseDepartmentInfo;
 
 type Data = {
-  static_data: { departments: { [x: string]: Department } };
-  departments: { [x: string]: Department };
+  static_data: { departments: Record<string, Department> };
+  departments: Record<string, Department>;
   alert_state: string;
   shuttle_status: string;
   disable_jobs_for_non_observers: boolean;

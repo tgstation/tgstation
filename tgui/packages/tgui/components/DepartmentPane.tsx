@@ -3,13 +3,10 @@ import { SFC } from 'inferno';
 import { Box } from './Box';
 import { Stack } from './Stack';
 
-export interface BaseDepartmentInfo {
+export type BaseDepartmentInfo = {
   color: string;
-  jobs: { [x: string]: BaseJobInfo };
-}
-
-// Empty because the job info required can vary, and this component doesn't require any particular data from it.
-export interface BaseJobInfo {}
+  jobs: Record<string, any>;
+};
 
 // The cost of flexibility and prettiness.
 export const DepartmentEntry: SFC<{
@@ -38,10 +35,10 @@ export const DepartmentEntry: SFC<{
 };
 
 export const DepartmentPane: SFC<{
-  departments: { [x: string]: BaseDepartmentInfo };
+  departments: Record<string, BaseDepartmentInfo>;
   jobEntryBuilder: (
     jobName: string,
-    job: BaseJobInfo,
+    job: any,
     department: BaseDepartmentInfo
   ) => object;
   titleSubtextBuilder?: (department: BaseDepartmentInfo) => object;
