@@ -22,6 +22,8 @@
 #define CALIBER_357 ".357"
 /// The caliber used by the detective's revolver.
 #define CALIBER_38 ".38"
+/// The caliber used by the chaplain's revolver.
+#define CALIBER_77 ".77"
 /// The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.
 #define CALIBER_45 ".45"
 /// The caliber used by sniper rifles and the desert eagle.

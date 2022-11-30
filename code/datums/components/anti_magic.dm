@@ -45,7 +45,8 @@
 	else if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, PROC_REF(block_receiving_magic), override = TRUE)
 		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, PROC_REF(restrict_casting_magic), override = TRUE)
-		to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells but are unable to cast magic."))
+		if(!HAS_TRAIT(parent, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
+			to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells but are unable to cast magic."))
 	else
 		return COMPONENT_INCOMPATIBLE
 

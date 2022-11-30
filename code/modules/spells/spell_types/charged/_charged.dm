@@ -13,6 +13,8 @@
 	var/currently_channeling = FALSE
 	/// How long it takes to channel the spell.
 	var/channel_time = 10 SECONDS
+	/// Flags of the do_after
+	var/channel_flags = IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM
 
 	// Overlay optional, applied when we start channelling
 	/// What icon should we use for our overlay
@@ -80,7 +82,7 @@
 
 	currently_channeling = TRUE
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
-	if(!do_after(cast_on, channel_time, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
+	if(!do_after(cast_on, channel_time, timed_action_flags = channel_flags))
 		stop_channel_effect(cast_on)
 		return . | SPELL_CANCEL_CAST
 

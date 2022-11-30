@@ -3,7 +3,7 @@
 	var/mob/host_mob
 
 /datum/unit_test/get_message_mods/Run()
-	host_mob = allocate(/mob/living/carbon/human)
+	host_mob = allocate(/mob/living/carbon/human/consistent)
 
 	test("Hello", "Hello", list())
 	test(";HELP", "HELP", list(MODE_HEADSET = TRUE))

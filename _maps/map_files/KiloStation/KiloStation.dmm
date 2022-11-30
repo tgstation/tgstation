@@ -13639,6 +13639,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/purple,
+/obj/machinery/dna_infuser,
+/obj/item/infuser_book,
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/genetics)
 "edU" = (
