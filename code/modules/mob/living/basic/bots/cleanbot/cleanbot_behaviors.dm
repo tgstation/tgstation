@@ -6,6 +6,8 @@
 /datum/ai_behavior/clean/setup(datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
 	var/mob/living/basic/bot/bot = controller.pawn
+	var/atom/target = controller.blackboard[target_key]
+	RESERVE_DATUM(target, TRAIT_AI_CLEANING_RESERVATION, bot)
 	bot.set_current_mode(BOT_CLEANING)
 	RegisterSignal(bot, COMSIG_AINOTIFY_CLEANBOT_FINISH_CLEANING, .proc/on_finish_cleaning)
 
@@ -34,11 +36,12 @@
 	. = ..()
 
 	var/mob/living/basic/bot/bot = controller.pawn
+	var/atom/target = controller.blackboard[BB_CLEAN_BOT_TARGET]
 	UnregisterSignal(bot, COMSIG_AINOTIFY_CLEANBOT_FINISH_CLEANING, .proc/on_finish_cleaning)
+	UNRESERVE_DATUM(target, TRAIT_AI_CLEANING_RESERVATION, bot)
 	bot.set_current_mode()
 
 	if(!succeeded)
-		var/atom/target = controller.blackboard[BB_CLEAN_BOT_TARGET]
 		controller.blackboard[BB_IGNORE_LIST][WEAKREF(target)] = TRUE
 
 	controller.blackboard[BB_CLEAN_BOT_BUSY_CLEANING] = FALSE

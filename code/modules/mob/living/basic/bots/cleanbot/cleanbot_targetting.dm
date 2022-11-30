@@ -23,7 +23,11 @@
 			if(target_carbon.body_position != LYING_DOWN)
 				return FALSE
 
-	if(is_type_in_typecache(the_target, targetting_bot.ai_controller.blackboard[BB_CLEAN_BOT_VALID_TARGETS]))
-		return TRUE
 
-	return FALSE
+	if(!is_type_in_typecache(the_target, targetting_bot.ai_controller.blackboard[BB_CLEAN_BOT_VALID_TARGETS]))
+		return FALSE
+
+	if(IS_DATUM_RESERVED_BY(the_target, TRAIT_AI_CLEANING_RESERVATION, living_mob)) //Check if someone is already cleaning it!
+		return FALSE
+
+	return TRUE
