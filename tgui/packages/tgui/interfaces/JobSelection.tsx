@@ -44,7 +44,7 @@ export const JobEntry: SFC<{
   const jobIcon = job.icon || JobToIcon[jobName] || null;
   return (
     <Button
-      width="100%"
+      fluid
       style={{
         // Try not to think too hard about this one.
         'background-color': job.unavailable_reason
