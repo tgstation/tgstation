@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")
 		inserted_pai = null
-		update_overlays()
+		update_appearance(UPDATE_ICON)
 		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
@@ -417,7 +417,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		inserted_pai = null
 	if(inserted_disk == gone)
 		inserted_disk = null
-	update_overlays()
+		update_appearance(UPDATE_ICON)
 	return ..()
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -728,7 +728,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 		inserted_pai = attacking_item
 		balloon_alert(user, "inserted pai")
-		update_overlays()
+		update_appearance(UPDATE_ICON)
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))
