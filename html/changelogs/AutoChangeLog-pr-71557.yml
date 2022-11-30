@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "VVing an edible comp's food flags pulls up the bitfield ui correctly"
