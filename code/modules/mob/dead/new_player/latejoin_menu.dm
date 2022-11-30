@@ -137,7 +137,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 					var/list/random_job_options = list(JOB_CHOICE_YES, JOB_CHOICE_CANCEL)
 
 					if(dept_data.len > 0)
-						random_job_options.Insert(JOB_CHOICE_REROLL, 2) // Add reroll in the middle, it makes more sense, I think.
+						random_job_options.Insert(2, JOB_CHOICE_REROLL) // Add reroll in the middle, it makes more sense, I think.
 
 					random_job = tgui_alert(owner, "[random]?", "Random Job", random_job_options)
 
