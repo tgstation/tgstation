@@ -1077,7 +1077,7 @@
 
 /datum/quirk/decrepit
 	name = "Decrepit"
-	desc = "You require a cane like object in your hand for mobility."
+	desc = "You require a cane in your hand for mobility."
 	icon = "person-cane"
 	value = -4
 	hardcore_value = 4
@@ -1085,145 +1085,37 @@
 	lose_text = "<span class='notice'>You feel young again.</span>"
 	medical_record_text = "Patient suffers from a lack of mobility requiring a cane for support."
 	mail_goodies = list(/obj/item/cane)
-	var/is_holding_cane = FALSE
-	var/list/datum/weakref/held_canes = list()
-
-/*
-/atom/movable/screen/map_view/Destroy()
-	for(var/datum/weakref/client_ref in viewers_to_huds)
-		var/client/our_client = client_ref.resolve()
-		if(!our_client)
-			continue
-		hide_from(our_client.mob)
-
-	return ..()
-
-
-
-
-IS_WEAKREF_OF(thing, potential_weakref)
-*/
-
-/datum/quirk/decrepit/proc/equip_cane(obj/item/held_cane)
-	if(!istype(held_cane) && !HAS_TRAIT(held_cane, TRAIT_CANE_TOOL))
-		return
-
-	quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
-	quirk_holder.RemoveElement(/datum/element/waddling)
-
-	var/datum/weakref/selected_cane = WEAKREF(held_cane)
-	canes[held_cane] = held_cane
-
-	RegisterSignals(held_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
-	is_holding_cane = TRUE
 
 /datum/quirk/decrepit/add_unique()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	var/turf/holder_turf = get_turf(human_holder)
+	var/turf/holder_turf = get_turf(quirk_holder)
 	var/obj/item/cane/spawn_cane = new /obj/item/cane(holder_turf)
-	human_holder.put_in_hands(spawn_cane)
-
-	for(var/obj/item/held_cane in owner.held_items)
-		if(HAS_TRAIT(held_cane, TRAIT_CANE_TOOL))
-			equip_cane(held_cane)
-
-	if(!is_holding_cane)
-		human_holder.add_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
-		quirk_holder.AddElement(/datum/element/waddling)
-
-	RegisterSignal(human_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
-
-/datum/quirk/decrepit/process(delta_time)
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
-		return
-
-	for(var/obj/item/held_cane in owner.held_items)
-		if(HAS_TRAIT(held_cane, TRAIT_CANE_TOOL))
-			is_holding_cane = TRUE
-
-	if(is_holding_cane)
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
-		quirk_holder.RemoveElement(/datum/element/waddling)
-	else
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
-		quirk_holder.AddElement(/datum/element/waddling)
-
-	if(DT_PROB(4, delta_time))
-		to_chat(quirk_holder, span_warning("You feel off balance without your cane..."))
+	quirk_holder.put_in_hands(spawn_cane)
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(handle_decrepit_movement))
 
 /datum/quirk/decrepit/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EQUIPPED_ITEM)) //, COMSIG_MOB_UNEQUIPPED_ITEM))  I don't think we need this or is used?
+	UnregisterSignal(quirk_holder, list(COMSIG_MOVABLE_MOVED))
 
-	if(!is_holding_cane)
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
-		quirk_holder.RemoveElement(/datum/element/waddling)
-
-	for(var/datum/weakref/ref as anything in held_canes)
-		var/obj/item/cane = ref.resolve()
-		UnregisterSignal(cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-		//if(QDELETED(cane))
-		//	LAZYREMOVE(held_canes, ref)
-
-	QDEL_LIST(held_canes)
-
-/// Signal handler for when the decrepit quirk_holder equips an item
-/datum/quirk/decrepit/proc/on_equipped_item(mob/living/source, obj/item/equipped_item, slot)
+/datum/quirk/decrepit/proc/handle_decrepit_movement(datum/source, old_loc)
 	SIGNAL_HANDLER
 
-	var/obj/item/left_hand_item = quirk_holder.held_items[1]
-	var/obj/item/right_hand_item = quirk_holder.held_items[2]
-	var/is_cane_left_hand = istype(left_hand_item) && HAS_TRAIT(left_hand_item, TRAIT_CANE_TOOL)
-	var/is_cane_right_hand = istype(right_hand_item) && HAS_TRAIT(right_hand_item, TRAIT_CANE_TOOL)
-	var/is_holding_cane = is_cane_left_hand || is_cane_right_hand
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious() || quirk_holder.body_position == LYING_DOWN || quirk_holder.buckled )
+		return
 
-	if(is_holding_cane)
-		quirk_holder.remove_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
-		quirk_holder.RemoveElement(/datum/element/waddling)
-	else
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
-		quirk_holder.AddElement(/datum/element/waddling)
+	if(quirk_holder.m_intent == MOVE_INTENT_WALK)
+		return
 
-	var/obj/item/primary_cane = left_cane?.resolve()
-	var/obj/item/secondary_cane = right_cane?.resolve()
+	for(var/obj/item/held_cane in quirk_holder.held_items)
+		if(HAS_TRAIT(held_cane, TRAIT_CANE_TOOL))
+			return
 
-	if(is_cane_left_hand)
-		if(primary_cane && (primary_cane != left_hand_item))
-			UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-			//left_cane = null
-		else if(!primary_cane)
-			left_cane = WEAKREF(left_hand_item)
-			primary_cane = left_hand_item
-			RegisterSignals(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
-	else if(primary_cane) // no cane in hand, time to remove the signal and weakref
-		UnregisterSignal(primary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-		//left_cane = null
-
-	if(is_cane_right_hand)
-		if(secondary_cane && (secondary_cane != right_hand_item))
-			UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-			//right_cane = null
-		else if(!secondary_cane)
-			right_cane = WEAKREF(right_hand_item)
-			secondary_cane = right_hand_item
-			RegisterSignals(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_unequipped_cane)
-	else if(secondary_cane) // no cane in hand, time to remove the signal and weakref
-		UnregisterSignal(secondary_cane, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-		//right_cane = null
-
-/// Signal handler for when the quirk_holder unequips an equipped cane
-/datum/quirk/decrepit/proc/on_unequipped_cane(obj/item/source)
-	SIGNAL_HANDLER
-
-	// if they have dual canes then no need to change mood/speed
-	var/both_hands_have_canes = left_cane?.resolve() && right_cane?.resolve()
-
-	if(!both_hands_have_canes)
-		quirk_holder.add_movespeed_modifier(/datum/movespeed_modifier/decrepit_slowdown)
-		quirk_holder.AddElement(/datum/element/waddling)
-
-	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	if(left_cane?.resolve() == source)
-		//left_cane = null
-	else if (right_cane?.resolve() == source)
-		//right_cane = null
+	switch(rand(0, 100))
+		if(0 to 70)
+			return
+		if(71 to 90)
+			to_chat(quirk_holder, span_warning("You feel off balance without your cane. It might be safer to walk..."))
+			return
+		if(91 to 100)
+			quirk_holder.Paralyze(1 SECONDS)
+			quirk_holder.Knockdown(4 SECONDS)
+			quirk_holder.visible_message(span_danger("[quirk_holder.name] loses their balance and falls down!"),
+				span_userdanger("You lose your balance and fall down!"), span_hear("You hear someone fall down!"), COMBAT_MESSAGE_RANGE, src)
