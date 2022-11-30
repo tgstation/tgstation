@@ -9,6 +9,8 @@ multiple modular subtrees with behaviors
 	var/atom/pawn
 	///Bitfield of traits for this AI to handle extra behavior
 	var/ai_traits
+	///Current actions planned to be performed by the AI in the upcoming plan
+	var/list/planned_behaviors
 	///Current actions being performed by the AI.
 	var/list/current_behaviors
 	///Current actions and their respective last time ran as an assoc list.
@@ -60,6 +62,12 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	return ..()
+
+///Sets the current movement target, with an optional param to override the movement behavior
+/datum/ai_controller/proc/set_movement_target(atom/target, datum/ai_movement/new_movement)
+	current_movement_target = target
+	if(new_movement)
+		change_ai_movement_type(new_movement)
 
 ///Overrides the current ai_movement of this controller with a new one
 /datum/ai_controller/proc/change_ai_movement_type(datum/ai_movement/new_movement)
@@ -184,6 +192,14 @@ multiple modular subtrees with behaviors
 			ProcessBehavior(action_delta_time, current_behavior)
 			return
 
+///Determines whether the AI can currently make a new plan
+/datum/ai_controller/proc/able_to_plan()
+	. = TRUE
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+		if(!(current_behavior.behavior_flags & AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION)) //We have a behavior that blocks planning
+			. = FALSE
+			break
+
 ///This is where you decide what actions are taken by the AI.
 /datum/ai_controller/proc/SelectBehaviors(delta_time)
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
@@ -191,11 +207,21 @@ multiple modular subtrees with behaviors
 		return FALSE
 
 	LAZYINITLIST(current_behaviors)
+	LAZYCLEARLIST(planned_behaviors)
 
 	if(LAZYLEN(planning_subtrees))
 		for(var/datum/ai_planning_subtree/subtree as anything in planning_subtrees)
 			if(subtree.SelectBehaviors(src, delta_time) == SUBTREE_RETURN_FINISH_PLANNING)
 				break
+
+	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
+		if(LAZYACCESS(planned_behaviors, current_behavior))
+			continue
+		var/list/arguments = list(src, FALSE)
+		var/list/stored_arguments = behavior_args[type]
+		if(stored_arguments)
+			arguments += stored_arguments
+		current_behavior.finish_action(arglist(arguments))
 
 ///This proc handles changing ai status, and starts/stops processing if required.
 /datum/ai_controller/proc/set_ai_status(new_ai_status)
@@ -225,6 +251,7 @@ multiple modular subtrees with behaviors
 	if(!behavior.setup(arglist(arguments)))
 		return
 	LAZYADD(current_behaviors, behavior)
+	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))
 		behavior_args[behavior_type] = arguments
