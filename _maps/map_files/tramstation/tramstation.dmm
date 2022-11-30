@@ -3189,8 +3189,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "bpT" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/engine,
+/obj/structure/sign/warning/electric_shock,
+/turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "bqg" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -7190,12 +7190,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "cDi" = (
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "cDu" = (
 /obj/structure/cable,
@@ -7375,13 +7370,6 @@
 "cFs" = (
 /turf/open/openspace,
 /area/station/hallway/primary/tram/left)
-"cFP" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/item/radio/intercom/directional/south,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "cGm" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/reagent_dispensers/watertank,
@@ -7739,22 +7727,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
-"cNI" = (
-/obj/structure/closet/crate/engineering,
-/obj/item/circuitboard/machine/nuclear_accumulator,
-/obj/item/circuitboard/machine/nuclear_emitter,
-/obj/item/stack/sheet/mineral/titanium/fifty,
-/obj/item/stack/sheet/mineral/gold{
-	amount = 5
-	},
-/obj/item/stack/sheet/mineral/silver{
-	amount = 5
-	},
-/obj/item/stack/sheet/plastitaniumglass{
-	amount = 5
-	},
-/turf/open/floor/plating,
-/area/station/engineering/engine_smes)
 "cNS" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -11303,7 +11275,12 @@
 	dir = 1;
 	name = "Gas to Filter"
 	},
-/obj/machinery/camera/emp_proof/directional/north,
+/obj/machinery/camera/emp_proof{
+	c_tag = "Engineering - Engine Room Airlock";
+	dir = 10;
+	network = list("ss13","engine","engineering")
+	},
+/obj/structure/sign/delamination_counter/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
 "eam" = (
@@ -12045,31 +12022,12 @@
 /obj/effect/landmark/tram/middle_part,
 /obj/machinery/computer/tram_controls{
 	icon_keyboard = null;
-	icon_screen = "tram_Central Wing_idle";
 	icon_state = "tram_controls"
 	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/effect/landmark/tram/middle_part,
-/obj/machinery/computer/tram_controls{
-	icon_keyboard = null;
-	icon_state = "tram_controls"
-	},
-/obj/structure/industrial_lift/tram{
-	icon_state = "titanium"
-	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "enA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13491,12 +13449,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
 "ePD" = (
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "ePZ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -14144,12 +14097,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "fcs" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -17773,12 +17721,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "guE" = (
 /obj/machinery/door/airlock{
@@ -23832,24 +23775,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
-"iFg" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/sign/delamination_counter/directional/north,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/room)
 "iFv" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "iFO" = (
 /obj/structure/railing/corner{
@@ -24218,12 +24149,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
 "iNA" = (
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "iNH" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -24753,6 +24679,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"iXa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "iXb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -30038,6 +29972,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
+"kPQ" = (
+/obj/structure/sign/warning/fire,
+/turf/closed/wall/r_wall,
+/area/station/engineering/supermatter)
 "kQd" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -30570,12 +30508,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 8
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	icon_state = "tram2";
-	name = "tram platform"
-	},
+/turf/open/floor/noslip/tram_platform,
 /area/station/hallway/primary/tram/left)
 "kXI" = (
 /obj/structure/closet/crate,
@@ -33208,12 +33141,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "lUV" = (
 /obj/effect/decal/cleanable/dirt,
@@ -35479,12 +35407,7 @@
 "mJk" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "mJn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -38100,12 +38023,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "nDz" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
@@ -40593,12 +40511,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	icon_state = "tram2";
-	name = "tram platform"
-	},
+/turf/open/floor/noslip/tram_platform,
 /area/station/hallway/primary/tram/right)
 "oCe" = (
 /obj/machinery/computer/secure_data{
@@ -41812,12 +41725,7 @@
 	icon_state = "titanium"
 	},
 /obj/effect/landmark/lift_id,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "oZW" = (
 /obj/structure/cable/multilayer/multiz,
@@ -44388,7 +44296,6 @@
 /area/station/security/medical)
 "pUP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter)
 "pUU" = (
@@ -45752,12 +45659,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qrR" = (
 /obj/machinery/chem_heater/withbuffer,
@@ -47116,6 +47018,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
+"qNw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "qNx" = (
 /obj/structure/table,
 /obj/item/paper_bin{
@@ -48230,12 +48137,7 @@
 /area/station/security/prison/garden)
 "rlh" = (
 /obj/effect/landmark/tram/left_part,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "rls" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
@@ -51081,12 +50983,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "sij" = (
 /obj/structure/table,
@@ -51676,12 +51573,7 @@
 "svc" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "svk" = (
 /turf/open/floor/circuit/red,
@@ -52263,12 +52155,7 @@
 /area/station/commons/dorms/laundry)
 "sHO" = (
 /obj/effect/landmark/tram/right_part,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "sHV" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -52440,12 +52327,7 @@
 "sKW" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "sLf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -56755,12 +56637,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/left)
 "umS" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -57994,12 +57871,7 @@
 	},
 /obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "uKI" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
@@ -59696,12 +59568,7 @@
 	icon_state = "titanium"
 	},
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/center)
 "vrj" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
@@ -60821,11 +60688,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/research)
-"vMV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/engine,
-/area/station/engineering/supermatter)
 "vMX" = (
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 6
@@ -64909,12 +64771,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram";
-	desc = "The linear induction plate that powers the tram.";
-	icon_state = "tram";
-	name = "linear induction plate"
-	},
+/turf/open/floor/noslip/tram_plate,
 /area/station/hallway/primary/tram/right)
 "xjr" = (
 /obj/structure/disposalpipe/segment{
@@ -65581,6 +65438,17 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"xvM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/power/apc/auto_name/directional/north{
+	areastring = "/area/station/engineering/supermatter"
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/room)
 "xvO" = (
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 8
@@ -97249,7 +97117,7 @@ jnq
 jnq
 xtu
 jIG
-cNI
+bTm
 bTm
 hRi
 pkp
@@ -97533,11 +97401,11 @@ bWN
 kFf
 mmH
 cht
-bpT
+hDI
 bKt
 lGg
 bKt
-bpT
+hDI
 qqc
 cOF
 lYY
@@ -97789,15 +97657,15 @@ wiH
 bWN
 sre
 qik
-bpT
+hDI
 pUP
 jUj
 kwr
 jUj
-bpT
-qqc
+hDI
+iXa
 gCH
-cFP
+lYY
 qHs
 ghh
 gqp
@@ -98047,7 +97915,7 @@ bWN
 nan
 hiB
 ead
-vMV
+pUP
 jyF
 jyF
 jyF
@@ -98561,11 +98429,11 @@ fuj
 hyL
 xXC
 hiD
-vMV
+pUP
 onW
 onW
 onW
-bpT
+kPQ
 tRf
 aqh
 rZW
@@ -98817,14 +98685,14 @@ ggv
 fuj
 bLP
 hDI
-bpT
+kPQ
 pUP
 pXS
 iUy
 pXS
-bpT
-qqc
-gCH
+hDI
+xvM
+qNw
 lYY
 qHs
 ghh
@@ -99075,11 +98943,11 @@ fuj
 qmi
 miU
 rMZ
-bpT
+hDI
 bKt
 lGg
 bKt
-bpT
+hDI
 qqc
 hTX
 tHx
@@ -99327,7 +99195,7 @@ sHH
 sHH
 cjy
 qHs
-iFg
+ltq
 fuj
 qmi
 miU
