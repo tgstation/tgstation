@@ -242,7 +242,7 @@ function tag_pr($payload, $opened) {
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
 		$tags = checkchangelog($payload);
 
-		if(strpos(strtolower($title), 'log') !== FALSE || strpos(strtolower($title), 'logs') !== FALSE || strpos(strtolower($title), 'logging') !== FALSE)
+		if(strpos(strtolower($title), 'logs') !== FALSE || strpos(strtolower($title), 'logging') !== FALSE)
 			$tags[] = 'Logging';
 		if(strpos(strtolower($title), 'refactor') !== FALSE)
 			$tags[] = 'Refactor';
