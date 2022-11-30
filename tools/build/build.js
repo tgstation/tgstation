@@ -278,7 +278,8 @@ export const BuildTarget = new Juke.Target({
 });
 
 export const ServerTarget = new Juke.Target({
-  dependsOn: [BuildTarget, DmVersionParameter],
+  parameters: [DmVersionParameter, PortParameter],
+  dependsOn: [BuildTarget],
   executes: async ({ get }) => {
     const port = get(PortParameter) || '1337';
     const options = {

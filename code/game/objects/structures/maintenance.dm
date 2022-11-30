@@ -116,7 +116,7 @@ at the cost of risking a vicious bite.**/
 #define ALTAR_STAGEONE 1
 #define ALTAR_STAGETWO 2
 #define ALTAR_STAGETHREE 3
-#define ALTAR_TIME 9.5 SECONDS
+#define ALTAR_TIME (9.5 SECONDS)
 
 /obj/structure/destructible/cult/pants_altar
 	name = "strange structure"

@@ -165,7 +165,7 @@
 		UnregisterSignal(attached_item, COMSIG_PARENT_QDELETING)
 		qdel(attached_item)
 	else if (user)
-		INVOKE_ASYNC(user, /mob/proc/put_in_hands, attached_item)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), attached_item)
 	else
 		attached_item.forceMove(drop_location())
 	if (throwing && !QDELETED(attached_item)) //Fun little thing where we throw out the old attached item when emagged

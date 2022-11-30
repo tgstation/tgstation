@@ -92,10 +92,6 @@
 	. = ..()
 	if (.)
 		return
-	var/obj/item/computer_hardware/card_slot/card_slot
-	if(computer)
-		card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/user_id_card = card_slot?.stored_card
 
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
@@ -107,7 +103,7 @@
 			if(computer.obj_flags & EMAGGED)
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
-			if(lock_access in user_id_card?.access)
+			if(lock_access in computer?.computer_id_slot?.access)
 				locked = !locked
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))

@@ -3,9 +3,11 @@ on:
   push:
     branches:
     - master
+    - 'project/**'
   pull_request:
     branches:
     - master
+    - 'project/**'
 jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -20,14 +22,21 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm-${{ secrets.CACHE_PURGE_KEY }}
+          key: ${{ runner.os }}-spacemandmm
       - name: Restore Yarn cache
         uses: actions/cache@v3
         with:
           path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Restore Rust cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo
+          key: ${{ runner.os }}-rust
+          restore-keys: |
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Install Tools
@@ -35,6 +44,7 @@ jobs:
           pip3 install setuptools
           bash tools/ci/install_node.sh
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
+          cargo install ripgrep --features pcre2
           tools/bootstrap/python -c ''
       - name: Run Linters
         run: |
@@ -66,7 +76,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+          key: ${{ runner.os }}-byond
       - name: Compile All Maps
         run: |
           bash tools/ci/install_byond.sh
@@ -175,9 +185,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ secrets.CACHE_PURGE_KEY }}-${{ hashFiles('tgui/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ secrets.CACHE_PURGE_KEY }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Compile

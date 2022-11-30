@@ -13,7 +13,7 @@
 	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
 	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
 	if(message)
-		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, /atom/movable/proc/say, message), SSspeech_controller)
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
@@ -26,7 +26,7 @@
 		return
 
 	if(message)
-		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, /mob/proc/whisper, message), SSspeech_controller)
+		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, whisper), message), SSspeech_controller)
 
 /**
  * Whisper a message.
@@ -49,7 +49,7 @@
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, /mob/proc/emote, "me", 1, message, TRUE), SSspeech_controller)
+	QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/mob, emote), "me", 1, message, TRUE), SSspeech_controller)
 
 /mob/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	SHOULD_CALL_PARENT(TRUE)

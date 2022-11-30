@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
 
-// This is the base type that does all the hardware stuff.
+// This is the base type of computer
 // Other types expand it - tablets and laptops are subtypes
 // consoles use "procssor" item that is held inside it.
 /obj/item/modular_computer
@@ -14,16 +14,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 
-	///The power cell the computer uses to run on.
-	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
-
+	///The ID currently stored in the computer.
+	var/obj/item/card/id/computer_id_slot
 	///The disk in this PDA. If set, this will be inserted on Initialize.
 	var/obj/item/computer_disk/inserted_disk
+	///The power cell the computer uses to run on.
+	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
+	///A pAI currently loaded into the modular computer.
+	var/obj/item/pai_card/inserted_pai
+
 	///The amount of storage space the computer starts with.
 	var/max_capacity = 128
 	///The amount of storage space we've got filled
 	var/used_capacity = 0
-	///List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+	///List of stored files on this drive. Use `store_file` and `remove_file` instead of modifying directly!
 	var/list/datum/computer_file/stored_files = list()
 
 	///Non-static list of programs the computer should recieve on Initialize.
@@ -35,13 +39,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		/datum/computer_file/program/filemanager,
 	)
 
+	///The program currently active on the tablet.
+	var/datum/computer_file/program/active_program
+	///Idle programs on background. They still receive process calls but can't be interacted with.
+	var/list/idle_threads = list()
+	/// Amount of programs that can be ran at once
+	var/max_idle_programs = 2
+
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = NONE
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
 
 	///Whether the icon state should be bypassed entirely, used for PDAs.
 	var/bypass_state = FALSE
-	///The theme, used for the main menu, some hardware config, and file browser apps.
+	///The theme, used for the main menu and file browser apps.
 	var/device_theme = "ntos"
 
 	///Bool on whether the computer is currently active or not.
@@ -63,12 +74,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 	///The last recorded amount of power used.
 	var/last_power_usage = 0
-	///Power usage when the computer is open (screen is active) and can be interacted with. Remember hardware can use power too.
+	///Power usage when the computer is open (screen is active) and can be interacted with.
 	var/base_active_power_usage = 75
 	///Power usage when the computer is idle and screen is off (currently only applies to laptops)
 	var/base_idle_power_usage = 5
 
-	// Modular computers can run on various devices. Each DEVICE (Laptop, Console, Tablet,..)
+	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
@@ -77,41 +88,22 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
 
-	/// List of "connection ports" in this computer and the components with which they are plugged
-	var/list/all_components = list()
-	/// Lazy List of extra hardware slots that can be used modularly.
-	var/list/expansion_bays
-	/// Number of total expansion bays this computer has available.
-	var/max_bays = 0
-	///The w_class (size) hardware it can handle, laptops get extra, computers get more.
-	var/max_hardware_size = 0
-
 	///The full name of the stored ID card's identity. These vars should probably be on the PDA.
 	var/saved_identification
 	///The job title of the stored ID card
 	var/saved_job
-
-	///The program currently active on the tablet.
-	var/datum/computer_file/program/active_program
-	///Idle programs on background. They still receive process calls but can't be interacted with.
-	var/list/idle_threads = list()
-	/// Amount of programs that can be ran at once
-	var/max_idle_programs = 2
 
 	///The 'computer' itself, as an obj. Primarily used for Adjacent() and UI visibility checks, especially for computers.
 	var/obj/physical
 	///Amount of steel sheets refunded when disassembling an empty frame of this computer.
 	var/steel_sheet_cost = 5
 
-	///A pAI currently loaded into the modular computer.
-	var/obj/item/pai_card/inserted_pai
-	/// Allow people with chunky fingers to use?
-	var/allow_chunky = FALSE
-
 	///If hit by a Clown virus, remaining honks left until it stops.
 	var/honkvirus_amount = 0
 	///Whether the PDA can still use NTNet while out of NTNet's reach.
 	var/long_ranged = FALSE
+	/// Allow people with chunky fingers to use?
+	var/allow_chunky = FALSE
 
 	///The amount of paper currently stored in the PDA
 	var/stored_paper = 10
@@ -153,10 +145,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	wipe_program(forced = TRUE)
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
 		idle.kill_program(TRUE)
-	for(var/port in all_components)
-		var/obj/item/computer_hardware/component = all_components[port]
-		qdel(component)
-	all_components?.Cut()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
@@ -166,6 +154,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		QDEL_NULL(inserted_disk)
 	if(istype(inserted_pai))
 		QDEL_NULL(inserted_pai)
+	if(computer_id_slot)
+		QDEL_NULL(computer_id_slot)
 
 	physical = null
 	return ..()
@@ -201,98 +191,37 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	return internal_cell
 
 /obj/item/modular_computer/AltClick(mob/user)
-	..()
+	. = ..()
 	if(issilicon(user))
-		return
+		return FALSE
+	if(!user.canUseTopic(src, be_close = TRUE))
+		return FALSE
 
-	if(user.canUseTopic(src, be_close = TRUE))
-		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(RemoveID(user))
+		return TRUE
 
-		if(istype(card_slot) && card_slot.stored_card && card_slot?.try_eject(user))
-			return TRUE
-
-		if(istype(card_slot2) && card_slot2?.stored_card && card_slot2?.try_eject(user))
-			return TRUE
-
-		if(istype(inserted_pai)) // Remove pAI
-			user.put_in_hands(inserted_pai)
-			balloon_alert(user, "removed pAI")
-			inserted_pai = null
-			return TRUE
-
-		if(!istype(src, /obj/item/modular_computer/tablet))
-			return FALSE
+	if(istype(inserted_pai)) // Remove pAI
+		user.put_in_hands(inserted_pai)
+		balloon_alert(user, "removed pAI")
+		inserted_pai = null
+		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot)
-		return card_slot.GetAccess()
+	if(computer_id_slot)
+		return computer_id_slot.GetAccess()
 	return ..()
 
 /obj/item/modular_computer/GetID()
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-
-	var/obj/item/card/id/first_id = card_slot?.GetID()
-	var/obj/item/card/id/second_id = card_slot2?.GetID()
-
-	// We have two IDs, pick the one with the most command accesses, preferring the primary slot.
-	if(first_id && second_id)
-		var/first_id_tally = SSid_access.tally_access(first_id, ACCESS_FLAG_COMMAND)
-		var/second_id_tally = SSid_access.tally_access(second_id, ACCESS_FLAG_COMMAND)
-
-		return (first_id_tally >= second_id_tally) ? first_id : second_id
-
-	// If we don't have both ID slots filled, pick the one that is filled.
-	if(first_id)
-		return first_id
-	if(second_id)
-		return second_id
-
-	// Otherwise, we have no ID at all.
+	if(computer_id_slot)
+		return computer_id_slot
 	return ..()
 
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
-
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-
-	var/obj/item/card/id/id_card1 = card_slot?.GetID()
-	var/obj/item/card/id/id_card2 = card_slot2?.GetID()
-
-	if(id_card1 || id_card2)
-		if(id_card1 && id_card2)
-			. += "\The [src] is displaying [id_card1] and [id_card2]."
-			var/list/id_icons = list()
-			id_icons += id_card1.get_id_examine_strings(user)
-			id_icons += id_card2.get_id_examine_strings(user)
-			. += id_icons.Join(" ")
-		else if(id_card1)
-			. += "\The [src] is displaying [id_card1]."
-			. += id_card1.get_id_examine_strings(user)
-		else
-			. += "\The [src] is displaying [id_card2]."
-			. += id_card2.get_id_examine_strings(user)
-
-/obj/item/modular_computer/RemoveID()
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-
-	var/removed_id = (card_slot2?.try_eject() || card_slot?.try_eject())
-	if(removed_id)
-		if(ishuman(loc))
-			var/mob/living/carbon/human/human_wearer = loc
-			if(human_wearer.wear_id == src)
-				human_wearer.sec_hud_set_ID()
-		update_slot_icon()
-		update_appearance()
-
-		return removed_id
-
-	return ..()
+	if(computer_id_slot)
+		. += "\The [src] is displaying [computer_id_slot]."
+		. += computer_id_slot.get_id_examine_strings(user)
 
 /obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
 	if(!stored_paper)
@@ -306,25 +235,61 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	stored_paper--
 	return TRUE
 
-/obj/item/modular_computer/InsertID(obj/item/inserting_item)
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-
-	if(!(card_slot || card_slot2))
+/**
+ * InsertID
+ * Attempt to insert the ID in either card slot.
+ * Args:
+ * inserting_id - the ID being inserted
+ * user - The person inserting the ID
+ */
+/obj/item/modular_computer/InsertID(obj/item/card/inserting_id, mob/user)
+	//all slots taken
+	if(computer_id_slot)
 		return FALSE
 
-	var/obj/item/card/inserting_id = inserting_item.GetID()
-	if(!inserting_id)
-		return FALSE
+	computer_id_slot = inserting_id
+	if(user)
+		if(!user.transferItemToLoc(inserting_id, src))
+			return FALSE
+		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
+	else
+		inserting_id.forceMove(src)
 
-	if((card_slot?.try_insert(inserting_id)) || (card_slot2?.try_insert(inserting_id)))
-		if(ishuman(loc))
-			var/mob/living/carbon/human/human_wearer = loc
-			if(human_wearer.wear_id == src)
-				human_wearer.sec_hud_set_ID()
-		update_appearance()
-		update_slot_icon()
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+	update_appearance()
+	update_slot_icon()
+	return TRUE
 
+/**
+ * Removes the ID card from the computer, and puts it in loc's hand if it's a mob
+ * Args:
+ * user - The mob trying to remove the ID, if there is one
+ */
+/obj/item/modular_computer/RemoveID(mob/user)
+	if(!computer_id_slot)
+		return ..()
+
+	if(user)
+		if(!issilicon(user) && in_range(src, user))
+			user.put_in_hands(computer_id_slot)
+		balloon_alert(user, "removed ID")
+		to_chat(user, span_notice("You remove the card from the card slot."))
+	else
+		computer_id_slot.forceMove(drop_location())
+
+	computer_id_slot = null
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
+	if(ishuman(loc))
+		var/mob/living/carbon/human/human_wearer = loc
+		if(human_wearer.wear_id == src)
+			human_wearer.sec_hud_set_ID()
+	update_slot_icon()
+	update_appearance()
 	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
@@ -379,21 +344,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
 	. += span_notice("It has [max_capacity] GQ of storage capacity.")
 
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
-	var/multiple_slots = istype(card_slot) && istype(card_slot2)
-	if(card_slot)
-		if(card_slot.stored_card || card_slot2?.stored_card)
-			var/obj/item/card/id/first_ID = card_slot?.stored_card
-			var/obj/item/card/id/second_ID = card_slot2?.stored_card
-			var/multiple_cards = (first_ID && second_ID)
-			if(Adjacent(user))
-				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed[multiple_cards ? " which contain [first_ID] and [second_ID]" : ", one of which contains [first_ID || second_ID]"]."
-			else
-				. += "It has [multiple_slots ? "two slots" : "a slot"] for identification cards installed, [multiple_cards ? "both of which appear" : "and one of them appears"] to be occupied."
-			. += span_info("Alt-click [src] to eject the identification card[multiple_cards ? "s":""].")
+	if(computer_id_slot)
+		if(Adjacent(user))
+			. += "It has \the [computer_id_slot] card installed in its card slot."
 		else
-			. += "It has [multiple_slots ? "two slots" : "a slot"] installed for identification cards."
+			. += "Its identification card slot is currently occupied."
+		. += span_info("Alt-click [src] to eject the identification card.")
 
 /obj/item/modular_computer/examine_more(mob/user)
 	. = ..()
@@ -409,10 +365,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+	if(held_item?.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if(card_slot?.stored_card || card_slot2?.stored_card) // IDs get removed first before pAIs
+	if(computer_id_slot) // ID get removed first before pAIs
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
 		. = CONTEXTUAL_SCREENTIP_SET
 	else if(inserted_pai)
@@ -422,7 +379,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(inserted_disk)
 		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
 		. = CONTEXTUAL_SCREENTIP_SET
-
 	return . || NONE
 
 /obj/item/modular_computer/update_icon_state()
@@ -450,6 +406,16 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		internal_cell = null
 		if(enabled && !use_power())
 			shutdown_computer()
+	if(computer_id_slot == gone)
+		computer_id_slot = null
+		update_slot_icon()
+		if(ishuman(loc))
+			var/mob/living/carbon/human/human_wearer = loc
+			human_wearer.sec_hud_set_ID()
+	if(inserted_pai == gone)
+		inserted_pai = null
+	if(inserted_disk == gone)
+		inserted_disk = null
 	return ..()
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -620,7 +586,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/mob/user = usr
 	if(user && istype(user))
 		//Here to prevent programs sleeping in destroy
-		INVOKE_ASYNC(src, /datum/proc/ui_interact, user) // Re-open the UI on this computer. It should show the main screen now.
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user) // Re-open the UI on this computer. It should show the main screen now.
 	update_appearance()
 
 /obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program)
@@ -744,13 +710,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 /obj/item/modular_computer/attackby(obj/item/attacking_item, mob/user, params)
 	// Check for ID first
-	if(isidcard(attacking_item) && InsertID(attacking_item))
+	if(isidcard(attacking_item) && InsertID(attacking_item, user))
 		return
 
 	// Check for cash next
-	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-	if(card_slot && iscash(attacking_item))
-		var/obj/item/card/id/inserted_id = card_slot.GetID()
+	if(computer_id_slot && iscash(attacking_item))
+		var/obj/item/card/id/inserted_id = computer_id_slot.GetID()
 		if(inserted_id)
 			inserted_id.attackby(attacking_item, user) // If we do, try and put that attacking object in
 			return
@@ -807,13 +772,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		bin.update_appearance()
 		return
 
-
-	// Insert items into the components
-	for(var/h in all_components)
-		var/obj/item/computer_hardware/H = all_components[h]
-		if(H.try_insert(attacking_item, user))
-			return
-
 	// Insert a data disk
 	if(istype(attacking_item, /obj/item/computer_disk))
 		if(!user.transferItemToLoc(attacking_item, src))
@@ -822,55 +780,20 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		playsound(src, 'sound/machines/card_slide.ogg', 50)
 		return
 
-	// Insert new hardware
-	if(istype(attacking_item, /obj/item/computer_hardware))
-		if(install_component(attacking_item, user))
-			playsound(src, 'sound/machines/card_slide.ogg', 50)
-			return
-
 	return ..()
 
-/obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
+/obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
-	if((resistance_flags & INDESTRUCTIBLE) || (flags_1 & NODECONSTRUCT_1))
-		return
-	if(!length(all_components))
-		balloon_alert(user, "no components installed!")
-		return
-	var/list/component_names = list()
-	for(var/h in all_components)
-		var/obj/item/computer_hardware/H = all_components[h]
-		component_names.Add(H.name)
-
-	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
-	if(isnull(choice))
-		if(internal_cell)
-			user.put_in_hands(internal_cell)
-			to_chat(user, span_notice("You detach \the [internal_cell] from \the [src]."))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	if(!Adjacent(user))
-		return
-
-	var/obj/item/computer_hardware/H = find_hardware_by_name(choice)
-	if(!H)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-
 	tool.play_tool_sound(src, user, 20, volume=20)
-	uninstall_component(H, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-/obj/item/modular_computer/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(length(all_components))
-		balloon_alert(user, "remove the other components!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	tool.play_tool_sound(src, user, 20, volume=20)
+	internal_cell?.forceMove(drop_location())
+	computer_id_slot?.forceMove(drop_location())
+	inserted_disk?.forceMove(drop_location())
+	inserted_pai?.forceMove(drop_location())
 	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
 	user.balloon_alert(user, "disassembled")
 	relay_qdel()
 	qdel(src)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 
 /obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -889,6 +812,16 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/item/modular_computer/deconstruct(disassembled = TRUE)
+	break_apart()
+	return ..()
+
+/obj/item/modular_computer/proc/break_apart()
+	if(!(flags_1 & NODECONSTRUCT_1))
+		physical.visible_message(span_notice("\The [src] breaks apart!"))
+		var/turf/newloc = get_turf(src)
+		new /obj/item/stack/sheet/iron(newloc, round(steel_sheet_cost / 2))
+	relay_qdel()
 
 // Used by processor to relay qdel() to machinery type.
 /obj/item/modular_computer/proc/relay_qdel()

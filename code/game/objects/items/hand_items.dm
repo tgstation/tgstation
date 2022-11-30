@@ -271,31 +271,47 @@
 	playsound(slapped, 'sound/weapons/slap.ogg', slap_volume, TRUE, -1)
 	return
 
-/obj/item/hand_item/slapper/attack_atom(obj/O, mob/living/user, params)
-	if(!istype(O, /obj/structure/table))
+/obj/item/hand_item/slapper/pre_attack_secondary(atom/target, mob/living/user, params)
+	if(!loc.Adjacent(target) || !istype(target, /obj/structure/table))
 		return ..()
 
-	var/obj/structure/table/the_table = O
-	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	slam_table(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(is_right_clicking && table_smacks_left == initial(table_smacks_left)) // so you can't do 2 weak slaps followed by a big slam
-		transform = transform.Scale(5) // BIG slap
-		if(HAS_TRAIT(user, TRAIT_HULK))
-			transform = transform.Scale(2)
-			color = COLOR_GREEN
-		user.do_attack_animation(the_table)
-		SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, the_table)
-		SEND_SIGNAL(the_table, COMSIG_TABLE_SLAMMED, user)
-		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 110, TRUE)
-		user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [the_table]!")]</b>", "<b>[span_danger("You slam your fist down on [the_table]!")]</b>")
+/obj/item/hand_item/slapper/pre_attack(atom/target, mob/living/user, params)
+	if(!loc.Adjacent(target) || !istype(target, /obj/structure/table))
+		return ..()
+
+	slap_table(target, user)
+	return TRUE
+
+/// Slap the table, get some attention
+/obj/item/hand_item/slapper/proc/slap_table(obj/structure/table/table, mob/living/user)
+	user.do_attack_animation(table)
+	playsound(get_turf(table), 'sound/effects/tableslam.ogg', 40, TRUE)
+	user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [table]."), span_notice("You slap your hand on [table]."), vision_distance=COMBAT_MESSAGE_RANGE)
+
+	table_smacks_left--
+	if(table_smacks_left <= 0)
 		qdel(src)
-	else
-		user.do_attack_animation(the_table)
-		playsound(get_turf(the_table), 'sound/effects/tableslam.ogg', 40, TRUE)
-		user.visible_message(span_notice("[user] slaps [user.p_their()] hand on [the_table]."), span_notice("You slap your hand on [the_table]."), vision_distance=COMBAT_MESSAGE_RANGE)
-		table_smacks_left--
-		if(table_smacks_left <= 0)
-			qdel(src)
+
+/// Slam the table, demand some attention
+/obj/item/hand_item/slapper/proc/slam_table(obj/structure/table/table, mob/living/user)
+	if(table_smacks_left < initial(table_smacks_left))
+		return slap_table(table, user)
+	user.do_attack_animation(table)
+
+	transform = transform.Scale(5) // BIG slap
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		transform = transform.Scale(2)
+		color = COLOR_GREEN
+
+	SEND_SIGNAL(user, COMSIG_LIVING_SLAM_TABLE, table)
+	SEND_SIGNAL(table, COMSIG_TABLE_SLAMMED, user)
+
+	playsound(get_turf(table), 'sound/effects/tableslam.ogg', 110, TRUE)
+	user.visible_message("<b>[span_danger("[user] slams [user.p_their()] fist down on [table]!")]</b>", "<b>[span_danger("You slam your fist down on [table]!")]</b>")
+	qdel(src)
 
 /obj/item/hand_item/slapper/on_offered(mob/living/carbon/offerer)
 	. = TRUE

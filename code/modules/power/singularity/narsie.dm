@@ -261,7 +261,7 @@
 
 ///Helper to set the round to end asap. Current usage Cult round end code
 /proc/ending_helper()
-	SSticker.force_ending = 1
+	SSticker.force_ending = TRUE
 
 /**
  * Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward

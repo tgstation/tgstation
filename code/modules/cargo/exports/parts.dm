@@ -15,19 +15,6 @@
 	unit_name = "solar panel control board"
 	export_types = list(/obj/item/circuitboard/computer/solar_control)
 
-// Computer and Tablet Parts
-/datum/export/modular_part/idcard
-	cost = CARGO_CRATE_VALUE * 0.2
-	unit_name = "computer ID card slot"
-	export_types = list(/obj/item/computer_hardware/card_slot)
-	include_subtypes = TRUE
-
-/datum/export/modular_part/misc
-	cost = CARGO_CRATE_VALUE * 0.1
-	unit_name = "miscellaneous computer part"
-	export_types = list(/obj/item/computer_hardware)
-	include_subtypes = TRUE
-
 //Data Disks
 /datum/export/modular_part/portabledrive/advanced
 	cost = CARGO_CRATE_VALUE * 0.4

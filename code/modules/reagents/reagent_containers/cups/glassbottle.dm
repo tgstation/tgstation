@@ -137,7 +137,7 @@
 	froth.pixel_x = offset_x
 	froth.pixel_y = offset_y
 	add_overlay(froth)
-	addtimer(CALLBACK(src, /atom/proc/cut_overlay, froth), 2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), froth), 2 SECONDS)
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/broken_bottle
@@ -574,7 +574,7 @@
 	else //you dun goofed
 		user.visible_message(
 			span_danger("[user] fumbles the sabrage and cuts [src] in half, spilling it over themselves!"),
-			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"), 
+			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"),
 			)
 		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
 		return smash(target = user, ranged = FALSE, break_top = TRUE)

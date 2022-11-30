@@ -120,6 +120,7 @@
 #define BODYPART_ID_ROBOTIC "robotic"
 #define BODYPART_ID_DIGITIGRADE "digitigrade"
 #define BODYPART_ID_LARVA "larva"
+#define BODYPART_ID_PSYKER "psyker"
 
 //See: datum/species/var/digitigrade_customization
 ///The species does not have digitigrade legs in generation.
@@ -289,10 +290,10 @@
 #define ETHEREAL_CHARGE_DANGEROUS 3000
 
 
-#define CRYSTALIZE_COOLDOWN_LENGTH 120 SECONDS
-#define CRYSTALIZE_PRE_WAIT_TIME 40 SECONDS
-#define CRYSTALIZE_DISARM_WAIT_TIME 120 SECONDS
-#define CRYSTALIZE_HEAL_TIME 60 SECONDS
+#define CRYSTALIZE_COOLDOWN_LENGTH (120 SECONDS)
+#define CRYSTALIZE_PRE_WAIT_TIME (40 SECONDS)
+#define CRYSTALIZE_DISARM_WAIT_TIME (120 SECONDS)
+#define CRYSTALIZE_HEAL_TIME (60 SECONDS)
 
 #define BRUTE_DAMAGE_REQUIRED_TO_STOP_CRYSTALIZATION 30
 
@@ -340,9 +341,9 @@
 
 //determines if a mob can smash through it
 #define ENVIRONMENT_SMASH_NONE 0
-#define ENVIRONMENT_SMASH_STRUCTURES (1<<0) //crates, lockers, ect
-#define ENVIRONMENT_SMASH_WALLS (1<<1)  //walls
-#define ENVIRONMENT_SMASH_RWALLS (1<<2) //rwalls
+#define ENVIRONMENT_SMASH_STRUCTURES 1 //crates, lockers, ect
+#define ENVIRONMENT_SMASH_WALLS 2  //walls
+#define ENVIRONMENT_SMASH_RWALLS 3 //rwalls
 
 #define NO_SLIP_WHEN_WALKING (1<<0)
 #define SLIDE (1<<1)
@@ -521,13 +522,13 @@
 
 // recent examine defines
 /// How long it takes for an examined atom to be removed from recent_examines. Should be the max of the below time windows
-#define RECENT_EXAMINE_MAX_WINDOW 2 SECONDS
+#define RECENT_EXAMINE_MAX_WINDOW (2 SECONDS)
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
-#define EXAMINE_MORE_WINDOW 1 SECONDS
+#define EXAMINE_MORE_WINDOW (1 SECONDS)
 /// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
-#define EYE_CONTACT_WINDOW 2 SECONDS
+#define EYE_CONTACT_WINDOW (2 SECONDS)
 /// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
-#define YAWN_PROPAGATION_EXAMINE_WINDOW 2 SECONDS
+#define YAWN_PROPAGATION_EXAMINE_WINDOW (2 SECONDS)
 
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE 5

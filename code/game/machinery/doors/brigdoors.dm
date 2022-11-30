@@ -1,7 +1,7 @@
-#define MAX_TIMER 15 MINUTES
-#define PRESET_SHORT 2 MINUTES
-#define PRESET_MEDIUM 3 MINUTES
-#define PRESET_LONG 5 MINUTES
+#define MAX_TIMER (15 MINUTES)
+#define PRESET_SHORT (2 MINUTES)
+#define PRESET_MEDIUM (3 MINUTES)
+#define PRESET_LONG (5 MINUTES)
 
 /**
  * Brig Door control displays.

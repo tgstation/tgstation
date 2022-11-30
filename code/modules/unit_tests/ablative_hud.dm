@@ -2,7 +2,7 @@
 /datum/unit_test/ablative_hood_hud
 
 /datum/unit_test/ablative_hood_hud/Run()
-	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/suit/hooded/ablative/coat = allocate(/obj/item/clothing/suit/hooded/ablative)
 	person.equip_to_slot(coat, ITEM_SLOT_OCLOTHING)
 	TEST_ASSERT(!HAS_TRAIT(person, TRAIT_SECURITY_HUD), "Person already had a sechud before trying to equip the ablative hood.")
@@ -15,7 +15,7 @@
 /datum/unit_test/ablative_hood_hud_with_helmet
 
 /datum/unit_test/ablative_hood_hud_with_helmet/Run()
-	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/person = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/suit/hooded/ablative/coat = allocate(/obj/item/clothing/suit/hooded/ablative)
 	var/obj/item/clothing/head/helmet/hat = allocate(/obj/item/clothing/head/helmet)
 	person.equip_to_slot(coat, ITEM_SLOT_OCLOTHING)

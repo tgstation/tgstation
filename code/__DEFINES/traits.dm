@@ -225,6 +225,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
 #define TRAIT_TOXINLOVER "toxinlover"
+/// Doesn't get overlays from being in critical.
+#define TRAIT_NOCRITOVERLAY "no_crit_overlay"
 /// Gets a mood boost from being in the hideout.
 #define TRAIT_VAL_CORRIN_MEMBER "val_corrin_member"
 /// reduces the use time of syringes, pills, patches and medigels but only when using on someone
@@ -306,6 +308,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// prevents xeno huggies implanting skeletons
 #define TRAIT_XENO_IMMUNE "xeno_immune"
 #define TRAIT_NAIVE "naive"
+/// always detect storms on icebox
+#define TRAIT_DETECT_STORM "detect_storm"
 #define TRAIT_PRIMITIVE "primitive"
 #define TRAIT_GUNFLIP "gunflip"
 /// Increases chance of getting special traumas, makes them harder to cure
@@ -383,7 +387,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLUSHING "blushing"
 /// This person is crying
 #define TRAIT_CRYING "crying"
-#define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
+///This carbon doesn't bleed
+#define TRAIT_NOBLEED "nobleed"
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
 #define TRAIT_AI_BAGATTACK "bagattack"
 /// This mobs bodyparts are invisible but still clickable.
@@ -433,6 +438,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// The person with this trait always appears as 'unknown'.
 #define TRAIT_UNKNOWN "unknown"
+
+/// If the mob has this trait and die, their bomb implant doesn't detonate automatically. It must be consciously activated.
+#define TRAIT_PREVENT_IMPLANT_AUTO_EXPLOSION "prevent_implant_auto_explosion"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -601,6 +609,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GRABWEAKNESS "grab_weakness"
 #define TRAIT_SNOB "snob"
 #define TRAIT_BALD "bald"
+#define TRAIT_SHAVED "shaved"
 #define TRAIT_BADTOUCH "bad_touch"
 #define TRAIT_EXTROVERT "extrovert"
 #define TRAIT_INTROVERT "introvert"
@@ -668,6 +677,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// this is used to bypass tongue language restrictions but not tongue disabilities
 #define TRAIT_TOWER_OF_BABEL "tower_of_babel"
+
+/// This target has recently been shot by a marksman coin and is very briefly immune to being hit by one again to prevent recursion
+#define TRAIT_RECENTLY_COINED "recently_coined"
+
+/// Receives echolocation images.
+#define TRAIT_ECHOLOCATION_RECEIVER "echolocation_receiver"
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
@@ -753,14 +768,16 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define HIGHLANDER_TRAIT "highlander"
 /// Trait given from playing pretend with baguettes
 #define SWORDPLAY_TRAIT "swordplay"
+/// Trait given by being recruited as a nuclear operative
+#define NUKE_OP_MINION_TRAIT "nuke-op-minion"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
 #define TRAIT_RUSTY "rust_trait"
 ///stops someone from splashing their reagent_container on an object with this trait
-#define DO_NOT_SPLASH "do_not_splash"
+#define TRAIT_DO_NOT_SPLASH "do_not_splash"
 /// Marks an atom when the cleaning of it is first started, so that the cleaning overlay doesn't get removed prematurely
-#define CURRENTLY_CLEANING "currently_cleaning"
+#define TRAIT_CURRENTLY_CLEANING "currently_cleaning"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
@@ -965,6 +982,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes a species be better/worse at defending against tackling depending on their tail's status
 #define TRAIT_TACKLING_TAILED_DEFENDER "tackling_tailed_defender"
 
+/// Is runechat for this atom/movable currently disabled, regardless of prefs or anything?
+#define TRAIT_RUNECHAT_HIDDEN "runechat_hudden"
+
 /// some trait sorces dirived from bodyparts BODYPART_TRAIT is generic.
 #define BODYPART_TRAIT "bodypart"
 #define HEAD_TRAIT "head"
@@ -973,3 +993,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define LEFT_ARM_TRAIT "left_arm"
 #define RIGHT_LEG_TRAIT "right_leg"
 #define LEFT_LEG_TRAIT "left_leg"
+
+/// Trait given by echolocation component.
+#define ECHOLOCATION_TRAIT "echolocation"
