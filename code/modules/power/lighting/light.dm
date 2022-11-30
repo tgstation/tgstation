@@ -88,6 +88,9 @@
 	if(start_with_cell && !no_low_power)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
+	if(is_station_level(z))
+		RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT, PROC_REF(grey_tide)) //Only put the signal on station lights
+
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
@@ -104,6 +107,7 @@
 	update(trigger = FALSE)
 
 /obj/machinery/light/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT)
 	var/area/local_area =get_room_area(src)
 	if(local_area)
 		on = FALSE
@@ -628,8 +632,12 @@
 	tube?.burn()
 	return
 
+/obj/machinery/light/proc/grey_tide()
+	SIGNAL_HANDLER
 
-
+	for(var/area_type in GLOB.grey_tide_areas)
+		if(istype(get_area(src), area_type))
+			INVOKE_ASYNC(src, PROC_REF(flicker))
 
 /obj/machinery/light/floor
 	name = "floor light"

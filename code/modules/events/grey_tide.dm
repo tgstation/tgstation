@@ -8,6 +8,13 @@ GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Bolts open all doors in one or more departments."
 
+/datum/round_event_control/grey_tide/can_spawn_event(players_amt)
+	. = ..()
+
+	for(var/datum/round_event/running_event in SSevents.running)
+		if(istype(running_event, /datum/round_event/grey_tide)) //Two of these at once messes up the list
+			return FALSE
+
 /datum/round_event/grey_tide
 	announce_when = 50
 	end_when = 20
@@ -41,9 +48,7 @@ GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
 
 /datum/round_event/grey_tide/tick()
 	if(ISMULTIPLE(activeFor, 12))
-		for(var/area/area_to_open in GLOB.grey_tide_areas) //Currently broken due to the changes to areas_to_open. Doesn't matter because this functionality was getting thrown out anyways
-			for(var/obj/machinery/light/chosen_light in area_to_open)
-				chosen_light.flicker(10)
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE_LIGHT)
 
 // Objects currently impacted by the greytide event:
 // /obj/machinery/door/airlock -- Signal bolts open the door
