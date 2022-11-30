@@ -135,13 +135,21 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 	name = "Roach"
 	infuse_mob_name = "cockroach"
 	desc = "Cockroaches are everywhere."
-	threshold_desc = "you gain incredible resistance... to some things."
+	threshold_desc = "you will no longer be gibbed by explosions, and gain incredible resistance to viruses."
 	qualities = list(
-		"nothing",
+		"resilience to attacks from behind",
+		"healthier organs",
+		"get over disgust very quickly",
+		"the ability to survive a nuclear apocalypse",
+		"harder to pick yourself up from falling over",
+		"avoid toxins at all costs",
 	)
 	input_obj_or_mob = list(
 		/mob/living/basic/cockroach,
 	)
 	output_organs = list(
+		/obj/item/organ/internal/heart/roach,
+		/obj/item/organ/internal/stomach/roach,
+		/obj/item/organ/internal/liver/roach,
 	)
 	infusion_desc = "kafkaesque" // Gregor Samsa !!

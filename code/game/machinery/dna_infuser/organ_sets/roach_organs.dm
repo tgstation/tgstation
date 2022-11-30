@@ -2,7 +2,8 @@
 
 /datum/status_effect/organ_set_bonus/roach
 	organs_needed = 3
-	bonus_activate_text = span_notice("Roach DNA is deeply infused with you! You feel increasingly resistant explosives.")
+	bonus_activate_text = span_notice("Roach DNA is deeply infused with you! \
+		You feel increasingly resistant to explosives, radiation, and viral agents.")
 	bonus_deactivate_text = span_notice("You are no longer majority roach, and you feel vulnerable to nuclear apocalypses.")
 
 	/// The stats given out to roach enabled mobs
@@ -11,7 +12,7 @@
 		BULLET = 0,
 		LASER = 0,
 		ENERGY = 0,
-		BOMB = 100, // Prevents gibbing from explosions
+		BOMB = 100, // Prevents gibbing from explosions (you'll stil die though)
 		BIO = 90, // Some resistance to bio events
 		FIRE = 0,
 		ACID = 0,
@@ -24,7 +25,7 @@
 	given_armor = getArmor(arglist(given_armor_stats))
 
 /datum/status_effect/organ_set_bonus/roach/Destroy()
-	given_armor = null // I don't even know if these can hold references
+	given_armor = null // I don't even know if these can stop GC
 	return ..()
 
 /datum/status_effect/organ_set_bonus/roach/enable_bonus()
@@ -32,7 +33,7 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
-	human_owner.physiology.armor.attachArmor(given_armor) // Provices immunity to explosion gibbing, and also bio resistance
+	human_owner.physiology.armor.attachArmor(given_armor) // Gives armor from above
 	ADD_TRAIT(owner, TRAIT_NUKEIMMUNE, id) // Immunity to nuke gibs
 	ADD_TRAIT(owner, TRAIT_RADIMMUNE, id) // Nukes come with radiation (not actually but yknow)
 	ADD_TRAIT(owner, TRAIT_VIRUS_RESISTANCE, id) // Viral resistance
@@ -54,6 +55,7 @@
 /obj/item/organ/internal/heart/roach
 	name = "mutated roach-heart"
 	desc = "Roach DNA infused into what was once a normal heart."
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "heart"
@@ -108,6 +110,7 @@
 	if(!defense_timerid)
 		human_owner.physiology.brute_mod /= 2
 		human_owner.visible_message(span_warning("[human_owner]'s back hardens against the blow!"))
+		playsound(human_owner, 'sound/effects/constructform.ogg', 25)
 	defense_timerid = addtimer(CALLBACK(src, PROC_REF(reset_damage), owner), 0.2 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/item/organ/internal/heart/roach/proc/reset_damage(mob/living/carbon/human/human_owner)
@@ -116,11 +119,13 @@
 
 
 /// Roach stomach:
-/// Makes disgust a non-issue
+/// Makes disgust a non-issue, very slightly worse at passing off reagents
 /obj/item/organ/internal/stomach/roach
 	name = "mutated roach-stomach"
 	desc = "Roach DNA infused into what was once a normal stomach."
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	disgust_metabolism = 32 // Demolishes any disgust we have
+	metabolism_efficiency = 0.033 // Slightly worse at transferring reagents
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "stomach"
@@ -130,3 +135,28 @@
 /obj/item/organ/internal/stomach/roach/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/roach)
+
+/obj/item/organ/internal/liver/roach
+	name = "mutated roach-liver"
+	desc = "Roach DNA infused into what was once a normal liver."
+	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	toxTolerance = 5 // More tolerance for toxins
+	toxLethality = 4 * LIVER_DEFAULT_TOX_LETHALITY // But if they manage to get in you're screwed
+
+	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
+	icon_state = "stomach"
+	greyscale_config = /datum/greyscale_config/mutant_organ
+	greyscale_colors = ROACH_ORGAN_COLOR
+
+/obj/item/organ/internal/liver/roach/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
+	. = ..()
+	if(!. || !ishuman(owner))
+		return
+
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.physiology.tox_mod *= 2
+
+/obj/item/organ/internal/liver/roach/Remove(mob/living/carbon/organ_owner, special)
+	var/mob/living/carbon/human/human_owner = owner
+	human_owner.physiology.tox_mod /= 2
+	return ..()

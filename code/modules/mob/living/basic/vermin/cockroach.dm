@@ -38,15 +38,10 @@
 	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NUKEIMMUNE, INNATE_TRAIT)
-
-/mob/living/basic/cockroach/death(gibbed)
-	if(GLOB.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
-		return
-	..()
+	ADD_TRAIT(src, TRAIT_RADIMMUNE, INNATE_TRAIT)
 
 /mob/living/basic/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return FALSE
-
 
 /datum/ai_controller/basic_controller/cockroach
 	blackboard = list(
