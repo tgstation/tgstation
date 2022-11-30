@@ -1,6 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - rscadd: "You can now reinforce plating to protect your department from the troublemakers upstairs. Station builders might find these useful to put the stations most secure locations on the lower floors."
-  - imageadd: "added sprites for reinforced plating"
-  - code_imp: "RCD proofing has been variablized and can now be applied to any floor type instead of just reinforced floors."

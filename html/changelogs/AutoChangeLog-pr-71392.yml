@@ -1,5 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes:
-  - rscadd: "robotics now has access to a mech camera add-on, which installs a security camera into the mech. bodycam footage from the big leagues!"
-  - qol: "cyborg cameras should be more active with updating static when moving (ideally down from 2.5 seconds to 0.5 between updates), make sure to report any jank if you happen on some"

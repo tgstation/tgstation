@@ -1,4 +1,0 @@
-author: "Capybara Holly"
-delete-after: True
-changes:
-  - refactor: "Datum AI can now switch to different movement datums in their behavior."

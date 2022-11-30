@@ -1,5 +1,0 @@
-author: "Striders13"
-delete-after: True
-changes:
-  - bugfix: "fixed lizard markings incorrectly displaying when strapped to a guillotine"
-  - code_imp: "guillotine's blade drop sound is now a variable"

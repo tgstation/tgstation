@@ -1,6 +1,0 @@
-author: "Fikou, sprites from Halcyon, some old code from Basilman and Armhulen."
-delete-after: True
-changes:
-  - refactor: "Honorbound and Burdened mutations are brain traumas now."
-  - rscadd: "Psykers. Become a psyker through the path of the burdened, or a genetic breakdown."
-  - rscadd: "Echolocation Component."
