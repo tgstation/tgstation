@@ -96,7 +96,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 			department_jobs[job_datum.title] = job_data
 
-	return list("static_data" = list("departments" = departments))
+	return list("departments_static" = departments)
 
 /datum/latejoin_menu/ui_status(mob/user)
 	return isnewplayer(user) ? UI_INTERACTIVE : UI_CLOSE

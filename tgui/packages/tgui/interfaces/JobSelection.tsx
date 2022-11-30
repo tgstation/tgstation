@@ -23,7 +23,7 @@ type Department = {
 } & BaseDepartmentInfo;
 
 type Data = {
-  static_data: { departments: Record<string, Department> };
+  departments_static: Record<string, Department>;
   departments: Record<string, Department>;
   alert_state: string;
   shuttle_status: string;
@@ -36,7 +36,7 @@ export const JobEntry: SFC<{
   jobName: string;
   job: Job;
   department: Department;
-  act: Function;
+  onClick: () => void;
 }> = (data) => {
   const jobName = data.jobName;
   const job = data.job;
@@ -76,7 +76,7 @@ export const JobEntry: SFC<{
         ))
       }
       onClick={() => {
-        !job.unavailable_reason && data.act('SelectedJob', { job: jobName });
+        !job.unavailable_reason && data.onClick();
       }}>
       <>
         {jobIcon && <Icon name={jobIcon} />}
@@ -96,10 +96,10 @@ export const JobEntry: SFC<{
 
 export const JobSelection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  if (!data?.static_data?.departments) {
-    return null; // Stop TGUI whitescreens!
+  if (!data?.departments_static) {
+    return null; // Stop TGUI whitescreens with TGUI-dev!
   }
-  const departments = deepMerge(data.departments, data.static_data.departments); // Why the fuck is it so hard to clone objects properly in JS?!
+  const departments = deepMerge(data.departments, data.departments_static); // Why the fuck is it so hard to clone objects properly in JS?!
 
   return (
     <Window width={1012} height={716}>
@@ -142,7 +142,9 @@ export const JobSelection = (props, context) => {
                   jobName={jobName}
                   job={job as Job}
                   department={department as Department}
-                  act={act}
+                  onClick={() => {
+                    act('SelectedJob', { job: jobName });
+                  }}
                 />
               );
             }}
