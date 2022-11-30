@@ -141,7 +141,14 @@ export const PersonalCooking = (props, context) => {
   const canMake = ['Can Make'];
   const categories = canMake.concat(data.categories.sort());
   const foodtypes = canMake.concat(data.foodtypes.sort());
-  const pageSize = display_compact ? 60 : 30;
+  const pageSize =
+    searchText.length > 0
+      ? display_compact
+        ? 20
+        : 10
+      : display_compact
+        ? 60
+        : 30;
   const displayLimit = pageSize * pages;
   const content = document.getElementById('content');
   return (
@@ -324,33 +331,6 @@ export const PersonalCooking = (props, context) => {
         </Stack>
       </Window.Content>
     </Window>
-  );
-};
-
-const TypeContent = (props) => {
-  const { type, diet, craftableCount } = props;
-  return (
-    <Stack>
-      <Stack.Item width="14px" textAlign="center">
-        <Icon name={TYPE_ICONS[type]} />
-      </Stack.Item>
-      <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
-        {type.toLowerCase()}
-      </Stack.Item>
-      <Stack.Item>
-        {type === 'Can Make' ? (
-          craftableCount
-        ) : diet.liked_food.includes(type) ? (
-          <Icon name="face-laugh-beam" color={'good'} />
-        ) : diet.disliked_food.includes(type) ? (
-          <Icon name="face-tired" color={'average'} />
-        ) : (
-          diet.toxic_food.includes(type) && (
-            <Icon name="skull-crossbones" color={'bad'} />
-          )
-        )}
-      </Stack.Item>
-    </Stack>
   );
 };
 
