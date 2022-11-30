@@ -186,7 +186,7 @@
 	if(abs(offset_old) != APC_PIXEL_OFFSET)
 		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
-	RegisterSignal(src, COMSIG_GREY_TIDE, PROC_REF(grey_tide))
+	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
 /obj/machinery/power/apc/Destroy()
 	GLOB.apcs_list -= src
@@ -209,7 +209,7 @@
 	if(terminal)
 		disconnect_terminal()
 
-	UnregisterSignal(src, COMSIG_GREY_TIDE)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE)
 
 	. = ..()
 
@@ -620,10 +620,15 @@
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_total]) : [cell? cell.percent() : "N/C"] ([charging])"
 
-/obj/machinery/power/apc/proc/grey_tide()
-	lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
-	update_appearance()
-	update()
+/obj/machinery/power/apc/proc/grey_tide(areas_to_open)
+	SIGNAL_HANDLER
+
+	if(is_station_level(z))
+		for(var/area/area_type in areas_to_open)
+			if(istype(area_type, get_area(src)))
+				lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
+				update_appearance()
+				update()
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

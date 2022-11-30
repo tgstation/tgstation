@@ -10,12 +10,17 @@
 
 /obj/structure/closet/secure_closet/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_GREY_TIDE, PROC_REF(grey_tide))
+	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
 /obj/structure/closet/secure_closet/Destroy()
 	. = ..()
-	UnregisterSignal(src, COMSIG_GREY_TIDE)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE)
 
-/obj/structure/closet/secure_closet/proc/grey_tide()
-	locked = FALSE
-	update_appearance()
+/obj/structure/closet/secure_closet/proc/grey_tide(list/areas_to_open)
+	SIGNAL_HANDLER
+
+	if(is_station_level(z))
+		for(var/area/area_type in areas_to_open)
+			if(istype(area_type, get_area(src)))
+				locked = FALSE
+				update_appearance()

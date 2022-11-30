@@ -26,10 +26,7 @@
 	)
 
 	for(var/i in 1 to severity)
-		var/picked_area = pick_n_take(potential_areas)
-		for(var/area/area_to_check as anything in GLOB.areas)
-			if(istype(area_to_check, picked_area))
-				areas_to_open += area_to_check
+		areas_to_open += pick_n_take(potential_areas)
 
 /datum/round_event/grey_tide/announce(fake)
 	priority_announce("Gr3y.T1d3 virus detected in [station_name()] secure locking encryption subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
@@ -41,11 +38,15 @@
 
 /datum/round_event/grey_tide/tick()
 	if(ISMULTIPLE(activeFor, 12))
-		for(var/area/area_to_open in areas_to_open)
+		for(var/area/area_to_open in areas_to_open) //Currently broken due to the changes to areas_to_open. Doesn't matter because it was getting thrown out anyways
 			for(var/obj/machinery/light/chosen_light in area_to_open)
 				chosen_light.flicker(10)
 
+// Objects currently impacted by the greytide event:
+// /obj/machinery/door/airlock -- Signal bolts open the door
+// /obj/machinery/status_display/door_timer -- Signal instantly ends the timer, releasing the occupant
+// /obj/structure/closet/secure_closet -- Signal unlocks locked lockers
+// /obj/machinery/power/apc -- Signal turns the lighting channel off
+
 /datum/round_event/grey_tide/end()
-	for(var/area/area_to_open in areas_to_open)
-		for(var/obj/object_to_open in area_to_open)
-			SEND_SIGNAL(object_to_open, COMSIG_GREY_TIDE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE, areas_to_open)

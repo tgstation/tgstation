@@ -54,7 +54,7 @@
 	if(!length(doors) && !length(flashers) && length(closets))
 		atom_break()
 
-	RegisterSignal(src, COMSIG_GREY_TIDE, PROC_REF(grey_tide))
+	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
 // if it's less than 0, open door, reset timer
@@ -74,7 +74,7 @@
 
 /obj/machinery/status_display/door_timer/Destroy()
 	. = ..()
-	UnregisterSignal(src, COMSIG_GREY_TIDE)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE)
 
 /**
  * Update the display content.
@@ -267,8 +267,13 @@
 		else
 			. = FALSE
 
-/obj/machinery/status_display/door_timer/proc/grey_tide()
-	timer_end(forced = TRUE)
+/obj/machinery/status_display/door_timer/proc/grey_tide(list/areas_to_open)
+	SIGNAL_HANDLER
+
+	if(is_station_level(z))
+		for(var/area/area_type in areas_to_open)
+			if(istype(area_type, get_area(src)))
+				timer_end(forced = TRUE)
 
 #undef PRESET_SHORT
 #undef PRESET_MEDIUM

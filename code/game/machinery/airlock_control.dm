@@ -9,7 +9,7 @@
 
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_GREY_TIDE, PROC_REF(grey_tide))
+	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal)
@@ -87,13 +87,18 @@
 /obj/machinery/door/airlock/Destroy()
 	if(frequency)
 		SSradio.remove_object(src,frequency)
-	UnregisterSignal(src, COMSIG_GREY_TIDE)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE)
 	return ..()
 
-/obj/machinery/door/airlock/proc/grey_tide()
-	if(critical_machine) //Skip doors in critical positions, such as the SM chamber.
-		return
-	prison_open()
+/obj/machinery/door/airlock/proc/grey_tide(list/areas_to_open)
+	SIGNAL_HANDLER
+
+	if(is_station_level(z))
+		for(var/area/area_type in areas_to_open) //Area check currently does NOT work because the area list is getting fucked up somehow
+			if(istype(area_type, get_area(src)))
+				if(critical_machine) //Skip doors in critical positions, such as the SM chamber.
+					return
+				INVOKE_ASYNC(src, PROC_REF(prison_open), 2) //Sleep gets called further down in open(), so we have to invoke async
 
 /obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
