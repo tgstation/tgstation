@@ -230,7 +230,7 @@
 	UpdateButtons()
 
 
-/obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE, no_id_transfer = FALSE)
 	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
