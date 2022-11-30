@@ -16,11 +16,11 @@
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE)
 
-/obj/structure/closet/secure_closet/proc/grey_tide(list/areas_to_open)
+/obj/structure/closet/secure_closet/proc/grey_tide()
 	SIGNAL_HANDLER
 
 	if(is_station_level(z))
-		for(var/area/area_type in areas_to_open)
-			if(istype(area_type, get_area(src)))
+		for(var/area_type in GLOB.grey_tide_areas)
+			if(istype(get_area(src), area_type))
 				locked = FALSE
 				update_appearance()
