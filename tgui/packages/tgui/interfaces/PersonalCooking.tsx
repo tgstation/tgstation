@@ -334,6 +334,33 @@ export const PersonalCooking = (props, context) => {
   );
 };
 
+const TypeContent = (props) => {
+  const { type, diet, craftableCount } = props;
+  return (
+    <Stack>
+      <Stack.Item width="14px" textAlign="center">
+        <Icon name={TYPE_ICONS[type]} />
+      </Stack.Item>
+      <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
+        {type.toLowerCase()}
+      </Stack.Item>
+      <Stack.Item>
+        {type === 'Can Make' ? (
+          craftableCount
+        ) : diet.liked_food.includes(type) ? (
+          <Icon name="face-laugh-beam" color={'good'} />
+        ) : diet.disliked_food.includes(type) ? (
+          <Icon name="face-tired" color={'average'} />
+        ) : (
+          diet.toxic_food.includes(type) && (
+            <Icon name="skull-crossbones" color={'bad'} />
+          )
+        )}
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 const RecipeContentCompact = ({ item, craftable, busy }, context) => {
   const { act } = useBackend<Data>(context);
   return (
