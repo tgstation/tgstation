@@ -206,7 +206,7 @@
 		return
 
 	// we've confirmed the lazylist is a list, and can treat it as such
-	for(var/obj/machinery/launchpad/current_pad in reverseList(peek_stack))
+	for(var/obj/machinery/launchpad/current_pad as anything in reverseList(peek_stack))
 		var/checks = teleport_checks(current_pad)
 		if(!isnull(checks))
 			to_chat(user, span_warning(checks))
