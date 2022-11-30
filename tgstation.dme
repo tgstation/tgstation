@@ -2534,6 +2534,7 @@
 #include "code\modules\asset_cache\assets\pills.dm"
 #include "code\modules\asset_cache\assets\pipes.dm"
 #include "code\modules\asset_cache\assets\plane_debug.dm"
+#include "code\modules\asset_cache\assets\plumbing.dm"
 #include "code\modules\asset_cache\assets\portraits.dm"
 #include "code\modules\asset_cache\assets\radar.dm"
 #include "code\modules\asset_cache\assets\research_designs.dm"
