@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	last_say_args_ref = REF(args)
 	#endif
 
-	if(!HAS_TRAIT(speaker, TRAIT_SIGN_LANG)) // if using sign language skip sending the say signal
+	if(!HAS_TRAIT(src, TRAIT_SIGN_LANG)) // if using sign language skip sending the say signal
 		// Make sure the arglist is passed exactly - don't pass a copy of it. Say signal handlers will modify some of the parameters.
 		var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
 		if(sigreturn & COMPONENT_UPPERCASE_SPEECH)
