@@ -5,7 +5,7 @@
 	icon_state = "growing_vat"
 	buffer = 300
 	///category for plumbing RCD
-	category="Synthesizers"
+	category = "Synthesizers"
 
 
 	///List of all microbiological samples in this soup.
