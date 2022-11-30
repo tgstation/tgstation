@@ -203,6 +203,7 @@
 	infusing_from.forceMove(src)
 
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
+	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
 		return FALSE
@@ -211,9 +212,8 @@
 		if(living_target.stat != DEAD)
 			balloon_alert(user, "only dead creatures!")
 			return FALSE
-	else if(istype(target, /obj/item/food))
-		var/obj/item/food/food_target = target
-		if(!(food_target.foodtypes & GORE))
+	else if(food_comp)
+		if(!(food_comp.foodtypes & GORE))
 			balloon_alert(user, "only creatures!")
 			return FALSE
 	else
