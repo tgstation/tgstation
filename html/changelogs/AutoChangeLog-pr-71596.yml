@@ -1,4 +1,0 @@
-author: "Capybara Holly"
-delete-after: True
-changes:
-  - refactor: "Allows datum AI to create new plans while a plan is still executing"

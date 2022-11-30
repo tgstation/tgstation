@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - bugfix: "Fixed reactions being broken in the EXPERIMENTOR or something I don't actually know what this thing does"
