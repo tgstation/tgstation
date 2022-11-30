@@ -1,9 +1,9 @@
 #define GET_AI_BEHAVIOR(behavior_type) SSai_behaviors.ai_behaviors[behavior_type]
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
-#define RESERVE_DATUM(target, reservation_trait, claimant) ADD_TRAIT(target, reservation_trait, REF(claimant_weakref)
+#define RESERVE_DATUM(target, reservation_trait, claimant) ADD_TRAIT(target, reservation_trait, REF(claimant_weakref))
 #define UNRESERVE_DATUM(target, reservation_trait, claimant) REMOVE_TRAIT(target, reservation_trait, REF(claimant_weakref)
-#define IS_DATUM_RESERVED_BY(target, reservation_trait, claimant) HAS_TRAIT_NOT_FROM(target, reservation_trait, REF(claimant_weakref)
+#define IS_DATUM_RESERVED_BY(target, reservation_trait, claimant) HAS_TRAIT_NOT_FROM(target, reservation_trait, REF(claimant_weakref))
 
 
 #define AI_STATUS_ON 1
