@@ -168,13 +168,13 @@
 	update_appearance()
 
 ///Handles preparing a bot for a call.
-/mob/living/basic/bot/proc/call_bot(caller, turf/waypoint, message = TRUE)
+/mob/living/basic/bot/proc/call_bot(caller, turf/waypoint, message = TRUE, list/access = REGION_ACCESS_ALL_STATION)
 	if(!istype(ai_controller, /datum/ai_controller/basic_controller/bot))
 		return //Cannot be called, we have no AI controller
 
 	var/datum/ai_controller/basic_controller/bot/bot_controller = ai_controller
 
-	bot_controller.call_bot(caller, waypoint, message)
+	bot_controller.call_bot(caller, waypoint, message, access)
 
 ///Resets the bots to its defaults, mostly important for cancelling summons
 /mob/living/basic/bot/proc/reset_bot(caller, turf/waypoint, message = TRUE)
@@ -317,9 +317,10 @@
 			reset_bot()
 
 		if("summon")
-			call_bot(user, get_turf(user), FALSE)
+			var/list/access_to_give = list(base_access)
 			if(user_access.len != 0)
-				access_card.set_access(user_access + base_access) //Adds the user's access, if any.
+				access_to_give += user_access
+			call_bot(user, get_turf(user), FALSE)
 			speak("Responding.", radio_channel)
 
 		if("ejectpai")

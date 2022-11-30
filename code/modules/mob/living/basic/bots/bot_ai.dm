@@ -31,7 +31,7 @@
 	var/mob/living/basic/bot/bot_pawn = pawn
 	return bot_pawn.access_card
 
-/datum/ai_controller/basic_controller/bot/proc/call_bot(caller, turf/waypoint, message = TRUE)
+/datum/ai_controller/basic_controller/bot/proc/call_bot(caller, turf/waypoint, message = TRUE, list/access = REGION_ACCESS_ALL_STATION)
 
 	var/mob/living/basic/bot/bot_pawn = pawn
 
@@ -42,7 +42,7 @@
 	if(!(bot_pawn.bot_mode_flags & BOT_MODE_ON))
 		bot_pawn.turn_on() //Saves the AI the hassle of having to activate a bot manually.
 
-	bot_pawn.access_card.set_access(REGION_ACCESS_ALL_STATION) //Give the bot all-access while under the AI's command.
+	bot_pawn.access_card.set_access(access) //Give the bot all-access while under the AI's command.
 
 	if(bot_pawn.client)
 		reset_access_timer_id = addtimer(CALLBACK (src, .proc/reset_bot), 60 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE) //if the bot is player controlled, they get the extra access for a limited time
