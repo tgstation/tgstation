@@ -14,6 +14,7 @@
 	var/burning = FALSE
 	/// Whether the mixture is above the required temperature and the separation is in process
 	var/boiling = FALSE
+	/// Sound during separation
 	var/datum/looping_sound/boiling/soundloop
 	/// Minimal mixture temperature for separation
 	var/required_temp = T0C + 100
@@ -21,8 +22,11 @@
 	var/heating_rate = 5
 	/// Separation speed in units per second
 	var/distillation_rate = 5
+	/// Reagent container for the vapor of the separating reagent
 	var/datum/reagents/condenser
+	/// The reagent chosen for separation
 	var/datum/reagent/separating_reagent
+	/// Reagent container for condensate or separator filling
 	var/obj/item/reagent_containers/beaker
 
 /obj/structure/chem_separator/Initialize(mapload)
