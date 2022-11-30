@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, ColoredSection, Icon, Stack } from '../components';
+import { Box, Button, StyleableSection, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
 import { SFC } from 'inferno';
@@ -107,7 +107,7 @@ export const JobSelection = (props, context) => {
   return (
     <Window width={1012} height={716}>
       <Window.Content scrollable>
-        <ColoredSection
+        <StyleableSection
           title="Job Selection"
           titleContents={
             <Button
@@ -123,7 +123,7 @@ export const JobSelection = (props, context) => {
               const entry = departmentEntry[1];
               return (
                 <Box key={departmentName} minWidth="30%">
-                  <ColoredSection
+                  <StyleableSection
                     title={departmentName}
                     style={{
                       'background-color': entry.color,
@@ -174,12 +174,12 @@ export const JobSelection = (props, context) => {
                         </Stack.Item>
                       ))}
                     </Stack>
-                  </ColoredSection>
+                  </StyleableSection>
                 </Box>
               );
             })}
           </Box>
-        </ColoredSection>
+        </StyleableSection>
       </Window.Content>
     </Window>
   );
