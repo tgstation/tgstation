@@ -9,7 +9,7 @@
 	var/list/obj/machinery/launchpad/launchpads
 	var/maximum_pads = 4
 
-	var/list/peek_stack
+	var/list/peek_stack = list()
 
 /obj/machinery/computer/launchpad/Initialize(mapload)
 	launchpads = list()
@@ -190,10 +190,11 @@
 			var/checks = teleport_checks(current_pad)
 			if(!isnull(checks))
 				to_chat(usr, span_warning(checks))
+				return
 
 			current_pad.doteleport(usr, TRUE)
-			if(!length(peek_stack))  // dont pull multiple times
-				addtimer(CALLBACK(src, PROC_REF(peek_return)), 4 SECONDS)
+			if(!LAZYLEN(peek_stack))  // dont pull multiple times
+				addtimer(CALLBACK(src, PROC_REF(peek_return)), 3 SECONDS)
 			peek_stack += current_pad
 
 			. = TRUE
@@ -209,7 +210,9 @@
 		if(!isnull(checks))
 			to_chat(user, span_warning(checks))
 			continue
-		current_pad.doteleport(user, FALSE)
-		sleep(0.25 SECONDS)
+
+		// initializes pull on each pad without waiting for it to complete pulling
+		INVOKE_ASYNC(current_pad, TYPE_PROC_REF(/obj/machinery/launchpad, doteleport), user, FALSE)
+		sleep(0.25 SECONDS)  // adds some delay to not make it too epileptic/pull properly
 
 	peek_stack.Cut()
