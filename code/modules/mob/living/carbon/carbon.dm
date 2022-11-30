@@ -767,28 +767,33 @@
 	else
 		hud_used.healths.icon_state = "health6"
 
-/mob/living/carbon/update_stamina_hud(shown_stamina_amount)
+/mob/living/carbon/update_stamina_hud(shown_stamloss)
 	if(!client || !hud_used?.stamina)
 		return
-	if(stat == DEAD || IsStun() || IsParalyzed() || IsImmobilized() || IsKnockdown() || IsFrozen())
-		hud_used.stamina.icon_state = "stamina6"
+
+	var/stam_crit_threshold = maxHealth - crit_threshold
+
+	if(stat == DEAD)
+		hud_used.stamina.icon_state = "stamina_dead"
 	else
-		if(shown_stamina_amount == null)
-			shown_stamina_amount = health - getStaminaLoss() - crit_threshold
-		if(shown_stamina_amount >= health)
-			hud_used.stamina.icon_state = "stamina0"
-		else if(shown_stamina_amount > health*0.8)
-			hud_used.stamina.icon_state = "stamina1"
-		else if(shown_stamina_amount > health*0.6)
-			hud_used.stamina.icon_state = "stamina2"
-		else if(shown_stamina_amount > health*0.4)
-			hud_used.stamina.icon_state = "stamina3"
-		else if(shown_stamina_amount > health*0.2)
-			hud_used.stamina.icon_state = "stamina4"
-		else if(shown_stamina_amount > 0)
-			hud_used.stamina.icon_state = "stamina5"
+
+		if(shown_stamloss == null)
+			shown_stamloss = getStaminaLoss()
+
+		if(shown_stamloss >= stam_crit_threshold)
+			hud_used.stamina.icon_state = "stamina_crit"
+		else if(shown_stamloss > maxHealth*0.8)
+			hud_used.stamina.icon_state = "stamina_5"
+		else if(shown_stamloss > maxHealth*0.6)
+			hud_used.stamina.icon_state = "stamina_4"
+		else if(shown_stamloss > maxHealth*0.4)
+			hud_used.stamina.icon_state = "stamina_3"
+		else if(shown_stamloss > maxHealth*0.2)
+			hud_used.stamina.icon_state = "stamina_2"
+		else if(shown_stamloss > 0)
+			hud_used.stamina.icon_state = "stamina_1"
 		else
-			hud_used.stamina.icon_state = "stamina6"
+			hud_used.stamina.icon_state = "stamina_full"
 
 /mob/living/carbon/proc/update_spacesuit_hud_icon(cell_state = "empty")
 	if(hud_used?.spacesuit)
