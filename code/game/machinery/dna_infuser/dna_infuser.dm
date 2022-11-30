@@ -131,7 +131,7 @@
 	dump_inventory_contents(list(occupant))
 
 /obj/machinery/dna_infuser/relaymove(mob/living/user, direction)
-	if(user.stat)
+	if(user.stat || infusing)
 		return
 	open_machine()
 
