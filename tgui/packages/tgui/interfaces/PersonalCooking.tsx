@@ -244,7 +244,15 @@ export const PersonalCooking = (props, context) => {
                             }}>
                             <Stack>
                               <Stack.Item width="14px" textAlign="center">
-                                <Icon name={CATEGORY_ICONS[category]} />
+                                <Icon
+                                  name={
+                                    Object.keys(CATEGORY_ICONS).includes(
+                                      category
+                                    )
+                                      ? CATEGORY_ICONS[category]
+                                      : 'circle'
+                                  }
+                                />
                               </Stack.Item>
                               <Stack.Item grow>{category}</Stack.Item>
                               {category === 'Can Make' && (
@@ -339,7 +347,11 @@ const TypeContent = (props) => {
   return (
     <Stack>
       <Stack.Item width="14px" textAlign="center">
-        <Icon name={TYPE_ICONS[type]} />
+        <Icon
+          name={
+            Object.keys(TYPE_ICONS).includes(type) ? TYPE_ICONS[type] : 'circle'
+          }
+        />
       </Stack.Item>
       <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
         {type.toLowerCase()}
