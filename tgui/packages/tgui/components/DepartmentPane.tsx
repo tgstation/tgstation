@@ -36,12 +36,12 @@ export const DepartmentEntry: SFC<{
 
 export const DepartmentPane: SFC<{
   departments: Record<string, BaseDepartmentInfo>;
-  jobEntryBuilder: (
+  renderJobEntry: (
     jobName: string,
     job: any,
     department: BaseDepartmentInfo
   ) => object;
-  titleSubtextBuilder?: (department: BaseDepartmentInfo) => object;
+  renderTitleSubtext?: (department: BaseDepartmentInfo) => object;
   entryWidth: string;
 }> = (data) => {
   return (
@@ -70,12 +70,14 @@ export const DepartmentPane: SFC<{
                   .toString(),
               }}
               titleSubtext={
-                data.titleSubtextBuilder && data.titleSubtextBuilder(department)
+                data.renderTitleSubtext && data.renderTitleSubtext(department)
               }>
               <Stack vertical>
-                {Object.entries(department.jobs).map((job) =>
-                  data.jobEntryBuilder(job[0], job[1], department)
-                )}
+                {Object.entries(department.jobs).map((job) => (
+                  <Stack.Item key={job[0]}>
+                    {data.renderJobEntry(job[0], job[1], department)}
+                  </Stack.Item>
+                ))}
               </Stack>
             </DepartmentEntry>
           </Box>

@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, DepartmentEntry, DepartmentPane, Icon, Stack } from '../components';
+import { Button, DepartmentEntry, DepartmentPane, Icon } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
 import { SFC } from 'inferno';
@@ -43,56 +43,54 @@ export const JobEntry: SFC<{
   const department = data.department;
   const jobIcon = job.icon || JobToIcon[jobName] || null;
   return (
-    <Stack.Item fill>
-      <Button
-        width="100%"
-        style={{
-          // Try not to think too hard about this one.
-          'background-color': job.unavailable_reason
-            ? '#949494' // Grey background
-            : job.prioritized
-              ? '#16fc0f' // Bright green background
-              : Color.fromHex(department.color)
-                .darken(10)
-                .toString(),
-          'color': job.unavailable_reason
-            ? '#616161' // Dark grey font
+    <Button
+      width="100%"
+      style={{
+        // Try not to think too hard about this one.
+        'background-color': job.unavailable_reason
+          ? '#949494' // Grey background
+          : job.prioritized
+            ? '#16fc0f' // Bright green background
             : Color.fromHex(department.color)
-              .darken(90)
+              .darken(10)
               .toString(),
-          'font-size': '1.1rem',
-          'cursor': job.unavailable_reason ? 'initial' : 'pointer',
-        }}
-        tooltip={
-          job.unavailable_reason ||
-          (job.prioritized ? (
-            <>
-              <b style={{ 'margin-bottom': '1.5em' }}>
-                The HoP wants more people in this job!
-              </b>
-              {job.description}
-            </>
-          ) : (
-            job.description
-          ))
-        }
-        onClick={() => {
-          !job.unavailable_reason && data.act('SelectedJob', { job: jobName });
-        }}>
-        <>
-          {jobIcon && <Icon name={jobIcon} />}
-          {job.command ? <b>{jobName}</b> : jobName}
-          <span
-            style={{
-              'white-space': 'nowrap',
-              'position': 'absolute',
-              'right': '0.5em',
-            }}>
-            {job.used_slots} / {job.open_slots}
-          </span>
-        </>
-      </Button>
-    </Stack.Item>
+        'color': job.unavailable_reason
+          ? '#616161' // Dark grey font
+          : Color.fromHex(department.color)
+            .darken(90)
+            .toString(),
+        'font-size': '1.1rem',
+        'cursor': job.unavailable_reason ? 'initial' : 'pointer',
+      }}
+      tooltip={
+        job.unavailable_reason ||
+        (job.prioritized ? (
+          <>
+            <b style={{ 'margin-bottom': '1.5em' }}>
+              The HoP wants more people in this job!
+            </b>
+            {job.description}
+          </>
+        ) : (
+          job.description
+        ))
+      }
+      onClick={() => {
+        !job.unavailable_reason && data.act('SelectedJob', { job: jobName });
+      }}>
+      <>
+        {jobIcon && <Icon name={jobIcon} />}
+        {job.command ? <b>{jobName}</b> : jobName}
+        <span
+          style={{
+            'white-space': 'nowrap',
+            'position': 'absolute',
+            'right': '0.5em',
+          }}>
+          {job.used_slots} / {job.open_slots}
+        </span>
+      </>
+    </Button>
   );
 };
 
@@ -118,7 +116,7 @@ export const JobSelection = (props, context) => {
           }>
           <DepartmentPane
             departments={departments}
-            titleSubtextBuilder={(department) => {
+            renderTitleSubtext={(department) => {
               const department_data = department as Department;
               return (
                 <span
@@ -137,7 +135,7 @@ export const JobSelection = (props, context) => {
                 </span>
               );
             }}
-            jobEntryBuilder={(jobName, job, department) => {
+            renderJobEntry={(jobName, job, department) => {
               return (
                 <JobEntry
                   key={jobName}
