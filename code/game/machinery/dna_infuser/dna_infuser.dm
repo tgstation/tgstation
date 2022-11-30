@@ -41,13 +41,10 @@
 	. += span_notice("Alt-click to eject the infusion source, if one is inside.")
 
 /obj/machinery/dna_infuser/interact(mob/user)
-	if(user == occupant)
-		balloon_alert(user, "can't reach!")
-		return
 	if(infusing)
 		balloon_alert(user, "not while it's on!")
 		return
-	if(occupant && infusing_from)
+	if(occupant && infusing_from && user != occupant)
 		balloon_alert(user, "starting DNA infusion...")
 		start_infuse()
 		return
@@ -132,6 +129,11 @@
 	open_machine(drop = FALSE)
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
+
+/obj/machinery/dna_infuser/relaymove(mob/living/user, direction)
+	if(user.stat)
+		return
+	open_machine()
 
 /obj/machinery/dna_infuser/attackby(obj/item/used, mob/user, params)
 	if(infusing)
