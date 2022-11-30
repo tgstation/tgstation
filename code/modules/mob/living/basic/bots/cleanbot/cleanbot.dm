@@ -2,8 +2,7 @@
 /mob/living/basic/bot/cleanbot
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
-	base_icon_state = "cleanbot"
-	icon_state = "cleanbot"
+	icon_state = "cleanbot0"
 	pass_flags = PASSMOB | PASSFLAPS
 	layer = MOB_UPPER_LAYER
 	density = FALSE
@@ -17,6 +16,9 @@
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_type = CLEAN_BOT
 	hackables = "cleaning software"
+	greyscale_config = /datum/greyscale_config/buckets_cleanbot
+	///the bucket used to build us.
+	var/obj/item/reagent_containers/cup/bucket/build_bucket
 
 
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
@@ -97,7 +99,10 @@
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
 
 
-/mob/living/basic/bot/cleanbot/Initialize(mapload)
+/mob/living/basic/bot/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/bucket_obj)
+	if(!bucket_obj)
+		bucket_obj = new()
+	bucket_obj.forceMove(src)
 	. = ..()
 
 	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
@@ -113,7 +118,21 @@
 
 	GLOB.janitor_devices += src
 
+/mob/living/basic/bot/cleanbot/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	if(istype(arrived, /obj/item/reagent_containers/cup/bucket))
+		if(build_bucket && build_bucket != arrived)
+			qdel(build_bucket)
+		build_bucket = arrived
+		set_greyscale(build_bucket.greyscale_colors)
+	return ..()
+
+/mob/living/basic/bot/cleanbot/Exited(atom/movable/gone, direction)
+	if(gone == build_bucket)
+		build_bucket = null
+	return ..()
+
 /mob/living/basic/bot/cleanbot/Destroy()
+	QDEL_NULL(build_bucket)
 	GLOB.janitor_devices -= src
 	if(weapon)
 		var/atom/drop_loc = drop_location()
@@ -123,7 +142,7 @@
 
 /mob/living/basic/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()
-	new /obj/item/reagent_containers/cup/bucket(drop_loc)
+	build_bucket.forceMove(drop_loc)
 	new /obj/item/assembly/prox_sensor(drop_loc)
 	return ..()
 
