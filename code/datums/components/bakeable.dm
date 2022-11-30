@@ -64,10 +64,12 @@
 
 ///Ran when an object finished baking
 /datum/component/bakeable/proc/finish_baking(atom/used_oven)
-
 	var/atom/original_object = parent
 	var/obj/item/plate/oven_tray/used_tray = original_object.loc
 	var/atom/baked_result = new bake_result(used_tray)
+
+	if(positive_result)
+		SSblackbox.record_feedback("tally", "food_made", 1, baked_result.type)
 
 	if(who_baked_us)
 		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)
