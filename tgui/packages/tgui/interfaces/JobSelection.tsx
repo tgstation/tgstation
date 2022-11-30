@@ -18,7 +18,6 @@ type Job = {
 };
 
 type Department = {
-  color: string;
   open_slots: number;
   jobs: Record<string, Job>;
 } & BaseDepartmentInfo;
