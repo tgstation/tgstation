@@ -29,8 +29,7 @@
 	return ..()
 
 /datum/sm_delam/singularity/filters(obj/machinery/power/supermatter_crystal/sm)
-	if(!..())
-		return FALSE
+	..()
 
 	// override the ray from parent call.
 	sm.add_filter(name = "ray", priority = 1, params=list(
@@ -56,8 +55,6 @@
 	else
 		sm.remove_filter("icon")
 
-	return TRUE
-
 /datum/sm_delam/singularity/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
 	sm.remove_filter(list("outline", "icon"))
@@ -66,9 +63,6 @@
 	return list()
 
 /datum/sm_delam/singularity/lights(obj/machinery/power/supermatter_crystal/sm)
-	if(!sm.internal_energy && !sm.damage)
-		return
-
 	sm.set_light(
 		sm.light_range + clamp(sm.damage/2, 10, 50),
 		3,
@@ -106,8 +100,7 @@
 
 
 /datum/sm_delam/tesla/filters(obj/machinery/power/supermatter_crystal/sm)
-	if(!..())
-		return FALSE
+	..()
 
 	// override the ray from parent call.
 	sm.add_filter(name = "ray", priority = 1, params = list(
@@ -124,16 +117,11 @@
 		flags = FILTER_UNDERLAY
 	))
 
-	return TRUE
-
 /datum/sm_delam/tesla/on_deselect(obj/machinery/power/supermatter_crystal/sm)
 	. = ..()
 	sm.remove_filter(list("icon"))
 
 /datum/sm_delam/tesla/lights(obj/machinery/power/supermatter_crystal/sm)
-	if(!sm.internal_energy && !sm.damage)
-		return
-
 	sm.set_light(
 		sm.light_range + clamp(sm.damage * sm.internal_energy, 50, 500),
 		3,

@@ -86,12 +86,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	return list()
 
 /// Applies filters to the SM.
-/// Returns true if filters were applied. Should call parent.
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/filters(obj/machinery/power/supermatter_crystal/sm)
-	if(!sm.internal_energy && !sm.damage)
-		return FALSE
-
 	var/new_filter = isnull(sm.get_filter("ray"))
 
 	sm.add_filter(name = "ray", priority = 1, params = list(
@@ -108,14 +104,9 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		animate(sm.get_filter("ray"), offset = 10, time = 10 SECONDS, loop = -1)
 		animate(offset = 0, time = 10 SECONDS)
 
-	return TRUE
-
 // Change how bright the rock is.
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
-	if(!sm.internal_energy && !sm.damage)
-		return
-
 	sm.set_light(
 		sm.light_range + sm.internal_energy/200,
 		sm.light_power + sm.internal_energy/1000,
