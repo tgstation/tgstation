@@ -26,8 +26,7 @@ type Recipe = {
 
 const PlumbingTypeSection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { categories = [] } = data;
-  const { selected_category } = data;
+  const { categories = [], selected_category } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
     'categoryName',
