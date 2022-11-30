@@ -1,7 +1,3 @@
-/// override this if the bot has patrol behavior (like finding baddies)
-/datum/ai_planning_subtree/core_bot_behaviors/proc/PatrolBehavior(datum/ai_controller/controller, delta_time)
-	controller.queue_behavior(/datum/ai_behavior/move_to_next_patrol_point)
-
 ///Find the closest patrol point in the area!
 /datum/ai_behavior/find_closest_patrol_point
 	action_cooldown = 0

@@ -7,7 +7,9 @@
 	max_target_distance = 200 //It can go far to patrol.
 
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/core_bot_behaviors
+		/datum/ai_planning_subtree/bot_clear_ignore_list,
+		/datum/ai_planning_subtree/bot_summoning,
+		/datum/ai_planning_subtree/bot_patrolling
 	)
 
 	var/reset_access_timer_id
@@ -69,23 +71,26 @@
 	bot_pawn.diag_hud_set_botstat()
 	bot_pawn.diag_hud_set_botmode()
 
-
-///Handles basic behavior for a bot (Primarily patrolling)
-/datum/ai_planning_subtree/core_bot_behaviors
+///Handles the ocassional clearing of our ignore list!
+/datum/ai_planning_subtree/bot_clear_ignore_list
 	COOLDOWN_DECLARE(reset_ignore_cooldown)
 
-/datum/ai_planning_subtree/core_bot_behaviors/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/mob/living/basic/bot/bot_pawn = controller.pawn
-
+/datum/ai_planning_subtree/bot_clear_ignore_list/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	// occasionally reset our ignore list
 	if(COOLDOWN_FINISHED(src, reset_ignore_cooldown) && length(controller.blackboard[BB_IGNORE_LIST]))
 		COOLDOWN_START(src, reset_ignore_cooldown, AI_BOT_IGNORE_DURATION)
 		controller.blackboard[BB_IGNORE_LIST] = list()
 
+///Handles getting summoned
+/datum/ai_planning_subtree/bot_summoning/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	if(controller.blackboard[BB_BOT_SUMMON_WAYPOINT])
 		controller.set_movement_target(get_turf(controller.blackboard[BB_BOT_SUMMON_WAYPOINT]), /datum/ai_movement/jps)
 		controller.queue_behavior(/datum/ai_behavior/move_to_summon_location)
 		return SUBTREE_RETURN_FINISH_PLANNING
+
+///Handles patrolling for a bot
+/datum/ai_planning_subtree/bot_patrolling/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	var/mob/living/basic/bot/bot_pawn = controller.pawn
 
 	if(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL)
 		if(!controller.blackboard[BB_BOT_CURRENT_PATROL_POINT])
@@ -100,3 +105,6 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 
+/// override this if the bot has patrol behavior (like finding baddies)
+/datum/ai_planning_subtree/bot_patrolling/proc/PatrolBehavior(datum/ai_controller/controller, delta_time)
+	controller.queue_behavior(/datum/ai_behavior/move_to_next_patrol_point)
