@@ -836,7 +836,7 @@
 	var/list/keys = list()
 	for(var/key in input)
 		var/datum/sprite_accessory/value = input[key]
-		if(value.locked)
+		if(value?.locked)
 			continue
 		UNTYPED_LIST_ADD(keys, key)
 	return keys
