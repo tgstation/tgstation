@@ -1,5 +1,9 @@
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
-	verb_say = dna.species.say_mod
+	var/obj/item/organ/internal/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
+	if(!tongue)
+		verb_say = "gurgles"
+	else
+		verb_say = tongue.temp_say_mod || tongue.say_mod
 	return ..()
 
 /mob/living/carbon/human/GetVoice()

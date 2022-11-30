@@ -183,22 +183,23 @@
 			temp = 50
 		else
 			temp = getBruteLoss()
+		var/list/damage_desc = get_majority_bodypart_damage_desc()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor [dna.species.brute_damage_desc].\n"
+				msg += "[t_He] [t_has] minor [damage_desc[BRUTE]].\n"
 			else if(temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.brute_damage_desc]!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [damage_desc[BRUTE]]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe [dna.species.brute_damage_desc]!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [damage_desc[BRUTE]]!</B>\n"
 
 		temp = getFireLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor [dna.species.burn_damage_desc].\n"
+				msg += "[t_He] [t_has] minor [damage_desc[BURN]].\n"
 			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.burn_damage_desc]!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [damage_desc[BURN]]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe [dna.species.burn_damage_desc]!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [damage_desc[BURN]]!</B>\n"
 
 		temp = getCloneLoss()
 		if(temp)

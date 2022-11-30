@@ -113,6 +113,11 @@
 	var/medium_burn_msg = "blistered"
 	var/heavy_burn_msg = "peeling away"
 
+	//Damage messages used by examine(). the desc that is most common accross all bodyparts gets shown
+
+	var/brute_damage_desc = DEFAULT_BRUTE_EXAMINE_TEXT
+	var/burn_damage_desc = DEFAULT_BURN_EXAMINE_TEXT
+
 	/// The wounds currently afflicting this body part
 	var/list/wounds
 
