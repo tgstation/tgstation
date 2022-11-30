@@ -5167,21 +5167,19 @@
 /area/station/security/brig)
 "asx" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/status_display/door_timer{
-	id = "Cell 1";
-	name = "Cell 1";
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/status_display/door_timer/directional/south{
+	id = "Cell 1";
+	name = "Cell 1"
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "asz" = (
-/obj/machinery/status_display/door_timer{
-	id = "Cell 2";
-	name = "Cell 2";
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/status_display/door_timer/directional/south{
+	name = "Cell 2";
+	id = "Cell 2"
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "asA" = (
@@ -5192,12 +5190,11 @@
 /area/station/security/prison/safe)
 "asB" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/status_display/door_timer{
-	id = "Cell 3";
-	name = "Cell 3";
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/status_display/door_timer/directional/south{
+	id = "Cell 3";
+	name = "Cell 3"
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "asD" = (
