@@ -193,7 +193,8 @@
 		return
 
 	if(iscarbon(target))
-		close_machine(target)
+		if(ishuman(target))
+			close_machine(target)
 		return
 
 	if(!is_valid_infusion(target, user))
