@@ -71,6 +71,8 @@
 	var/obj/item/organ/internal/tongue/tongue = carbon_parent.getorganslot(ORGAN_SLOT_TONGUE)
 	if(tongue)
 		tongue.temp_say_mod = "signs"
+	//this speech relies on hands, which we have our own way of garbling speech when they're occupied, so we can have this always on
+	ADD_TRAIT(carbon_parent, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_HANDS)
 	carbon_parent.verb_ask = "signs"
 	carbon_parent.verb_exclaim = "signs"
 	carbon_parent.verb_whisper = "subtly signs"
@@ -96,6 +98,7 @@
 	var/obj/item/organ/internal/tongue/tongue = carbon_parent.getorganslot(ORGAN_SLOT_TONGUE)
 	if(tongue)
 		tongue.temp_say_mod = ""
+	REMOVE_TRAIT(carbon_parent, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_HANDS)
 	carbon_parent.verb_ask = initial(carbon_parent.verb_ask)
 	carbon_parent.verb_exclaim = initial(carbon_parent.verb_exclaim)
 	carbon_parent.verb_whisper = initial(carbon_parent.verb_whisper)
