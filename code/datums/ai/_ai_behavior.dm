@@ -23,6 +23,6 @@
 	controller.behavior_args -= type
 	if(behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //If this was a movement task, reset our movement target if necessary
 		if(!(behavior_flags & AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH))
-			controller.current_movement_target = null
+			controller.set_movement_target(null)
 		if(!(behavior_flags & AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH))
 			controller.ai_movement.stop_moving_towards(controller)

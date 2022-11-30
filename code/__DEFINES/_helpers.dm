@@ -23,3 +23,11 @@
 /// It will only work for datums mind, for datum reasons
 /// : because of the embedded typecheck
 #define text_ref(datum) (isdatum(datum) ? (datum:cached_ref ||= "\ref[datum]") : ("\ref[datum]"))
+
+/// ASSERT(), but it only actually does anything during unit tests
+#ifdef UNIT_TESTS
+#define TEST_ONLY_ASSERT(test, explanation) if(!(test)) {CRASH(explanation)}
+#else
+#define TEST_ONLY_ASSERT(test, explanation) 
+#endif
+
