@@ -132,7 +132,7 @@ export const PersonalCooking = (props, context) => {
     ),
     sortBy<Recipe>((recipe) => [
       -Number(craftability[recipe.ref]),
-      recipe.name.toLocaleLowerCase(),
+      recipe.name.toLowerCase(),
     ]),
   ])(data.recipes);
   if (searchText.length > 0) {
