@@ -1,10 +1,9 @@
 import { useBackend } from '../backend';
-import { Button, DepartmentEntry, DepartmentPane, Icon } from '../components';
+import { Box, Button, ColoredSection, Icon, Stack } from '../components';
 import { Window } from '../layouts';
 import { Color } from 'common/color';
 import { SFC } from 'inferno';
 import { JobToIcon } from './common/JobToIcon';
-import { BaseDepartment } from '../components/DepartmentPane';
 import { deepMerge } from 'common/collections';
 
 type Job = {
@@ -17,7 +16,9 @@ type Job = {
   description: string;
 };
 
-type Department = BaseDepartment<Job> & {
+type Department = {
+  color: string;
+  jobs: Record<string, Job>;
   open_slots: number;
 };
 
@@ -98,12 +99,15 @@ export const JobSelection = (props, context) => {
   if (!data?.departments_static) {
     return null; // Stop TGUI whitescreens with TGUI-dev!
   }
-  const departments = deepMerge(data.departments, data.departments_static); // Why the fuck is it so hard to clone objects properly in JS?!
+  const departments: Record<string, Department> = deepMerge(
+    data.departments,
+    data.departments_static
+  ); // Why the fuck is it so hard to clone objects properly in JS?!
 
   return (
     <Window width={1012} height={716}>
       <Window.Content scrollable>
-        <DepartmentEntry
+        <ColoredSection
           title="Job Selection"
           titleContents={
             <Button
@@ -113,43 +117,69 @@ export const JobSelection = (props, context) => {
               tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
             />
           }>
-          <DepartmentPane
-            departments={departments}
-            renderTitleSubtext={(department: Department) => {
-              const department_data = department;
+          <Box wrap="wrap" style={{ 'columns': '20em' }}>
+            {Object.entries(departments).map((departmentEntry) => {
+              const departmentName = departmentEntry[0];
+              const entry = departmentEntry[1];
               return (
-                <span
-                  style={{
-                    'white-space': 'nowrap',
-                    'position': 'absolute',
-                    'right': '0px',
-                    'clear': 'left',
-                    'color': Color.fromHex(department_data.color)
-                      .darken(60)
-                      .toString(),
-                  }}>
-                  {department_data.open_slots +
-                    (department_data.open_slots === 1 ? ' Slot' : ' Slots') +
-                    ' Available'}
-                </span>
+                <Box key={departmentName} minWidth="30%">
+                  <ColoredSection
+                    title={departmentName}
+                    style={{
+                      'background-color': entry.color,
+                      'margin-bottom': '1em',
+                      'break-inside': 'avoid-column',
+                    }}
+                    titleStyle={{
+                      'border-bottom-color': Color.fromHex(entry.color)
+                        .darken(50)
+                        .toString(),
+                      'min-height': '3.4rem',
+                    }}
+                    textStyle={{
+                      'color': Color.fromHex(entry.color)
+                        .darken(80)
+                        .toString(),
+                    }}
+                    titleSubtext={
+                      <span
+                        style={{
+                          'white-space': 'nowrap',
+                          'position': 'absolute',
+                          'right': '0px',
+                          'clear': 'left',
+                          'color': Color.fromHex(entry.color)
+                            .darken(60)
+                            .toString(),
+                        }}>
+                        {entry.open_slots +
+                          (entry.open_slots === 1 ? ' Slot' : ' Slots') +
+                          ' Available'}
+                      </span>
+                    }>
+                    <Stack vertical>
+                      {Object.entries(entry.jobs).map((job) => (
+                        <Stack.Item key={job[0]}>
+                          {
+                            <JobEntry
+                              key={job[0]}
+                              jobName={job[0]}
+                              job={job[1]}
+                              department={entry}
+                              onClick={() => {
+                                act('SelectedJob', { job: job[0] });
+                              }}
+                            />
+                          }
+                        </Stack.Item>
+                      ))}
+                    </Stack>
+                  </ColoredSection>
+                </Box>
               );
-            }}
-            renderJobEntry={(jobName, job, department: Department) => {
-              return (
-                <JobEntry
-                  key={jobName}
-                  jobName={jobName}
-                  job={job}
-                  department={department}
-                  onClick={() => {
-                    act('SelectedJob', { job: jobName });
-                  }}
-                />
-              );
-            }}
-            entryWidth="30%"
-          />
-        </DepartmentEntry>
+            })}
+          </Box>
+        </ColoredSection>
       </Window.Content>
     </Window>
   );
