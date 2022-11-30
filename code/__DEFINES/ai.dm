@@ -252,3 +252,10 @@
 
 ///Clean bot reservation traits
 #define TRAIT_AI_CLEANING_RESERVATION "trait_ai_cleaning_reservation"
+
+///Floor bot keys
+#define BB_FLOOR_BOT_TARGET "BB_floor_bot_target"
+#define BB_FLOOR_BOT_BUSY_DOING_FLOOR_WORK "BB_clean_bot_busy_doing_floor_work"
+
+///Floor bot reservation traits
+#define TRAIT_AI_FLOOR_WORK_RESERVATION "trait_ai_floor_work_reservation"

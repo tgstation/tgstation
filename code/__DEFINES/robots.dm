@@ -217,3 +217,10 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 ))
 
 #define CLEANBOT_CLEANING_TIME (1 SECONDS)
+
+
+//floorbot defines on what to do
+#define FLOORBOT_REPLACE_TILES (1<<0)
+#define FLOORBOT_PLACE_TILES (1<<1)
+#define FLOORBOT_FIX_FLOORS (1<<2)
+#define FLOORBOT_AUTO_TILE (1<<3)

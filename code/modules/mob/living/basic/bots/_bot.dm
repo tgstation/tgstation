@@ -177,13 +177,13 @@
 	bot_controller.call_bot(caller, waypoint, message, access)
 
 ///Resets the bots to its defaults, mostly important for cancelling summons
-/mob/living/basic/bot/proc/reset_bot(caller, turf/waypoint, message = TRUE)
+/mob/living/basic/bot/proc/reset_bot()
 	if(!istype(ai_controller, /datum/ai_controller/basic_controller/bot))
 		return //Cannot be called, we have no AI controller
 
 	var/datum/ai_controller/basic_controller/bot/bot_controller = ai_controller
 
-	bot_controller.reset_bot(caller, waypoint, message)
+	bot_controller.reset_bot()
 
 /mob/living/basic/bot/Bump(atom/A) //Leave no door unopened!
 	. = ..()
