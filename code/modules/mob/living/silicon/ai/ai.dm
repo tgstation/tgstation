@@ -562,11 +562,12 @@
 		to_chat(src, span_danger("Selected location is not visible."))
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
-	var/mob/living/simple_animal/bot/bot = bot_ref?.resolve()
+	var/mob/living/basic/bot/bot = bot_ref?.resolve()
 	if(!bot)
 		return
 
-	if(bot.calling_ai && bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
+	var/current_caller = bot.ai_controller.blackboard[BB_BOT_CURRENT_SUMMONER]
+	if(isAI(current_caller) && current_caller != src) //Prevents an override if another AI is controlling this bot.
 		to_chat(src, span_danger("Interface error. Unit is already in use."))
 		return
 	to_chat(src, span_notice("Sending command to bot..."))

@@ -51,7 +51,7 @@
 	if(connected_botpad.panel_open)
 		user?.balloon_alert(user, "Connected pad has its panel open! It won't work!")
 		return
-	if(!(locate(/mob/living/simple_animal/bot) in get_turf(connected_botpad)))
+	if(!(locate(/mob/living/basic/bot) in get_turf(connected_botpad)))
 		user?.balloon_alert(user, "No bots detected on the pad!")
 		return
 	connected_botpad.launch(user)

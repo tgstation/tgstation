@@ -80,7 +80,7 @@
 	if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
 		if(!can_finish_build(W, user))
 			return
-		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location(), bucket_obj)
+		var/mob/living/basic/bot/cleanbot/A = new(drop_location(), bucket_obj)
 		A.name = created_name
 		A.robot_arm = W.type
 		to_chat(user, span_notice("You add [W] to [src]. Beep boop!"))

@@ -132,10 +132,8 @@
 #define BOT_START_PATROL "Beginning Patrol"
 /// Patrolling
 #define BOT_PATROL "Patrolling"
-/// Summoned to a location
-#define BOT_SUMMON "Summoned by PDA"
 /// Responding to a call from the AI
-#define BOT_RESPONDING "Proceeding to AI waypoint"
+#define BOT_SUMMON "Being summoned"
 /// Currently moving
 #define BOT_MOVING "Moving"
 
@@ -217,3 +215,5 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 	"CLEANBOT_CLEAN_PESTS" = CLEANBOT_CLEAN_PESTS,
 	"CLEANBOT_CLEAN_DRAWINGS" = CLEANBOT_CLEAN_DRAWINGS,
 ))
+
+#define CLEANBOT_CLEANING_TIME (1 SECONDS)
