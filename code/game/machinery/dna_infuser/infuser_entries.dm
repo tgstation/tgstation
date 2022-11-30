@@ -134,7 +134,9 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 /datum/infuser_entry/roach
 	name = "Roach"
 	infuse_mob_name = "cockroach"
-	desc = "Cockroaches are everywhere."
+	desc = "It seems as if you're a fan of ancient literate by your interest in this. Assuredly, merging cockroach DNA into your genome \
+		will not cause you to become incapable of leaving your bed. These creatures are incredibly resilient to many things \
+		humans weak to, and we can use that! Who wouldn't like to survive a nuclear blast?"
 	threshold_desc = "you will no longer be gibbed by explosions, and gain incredible resistance to viruses."
 	qualities = list(
 		"resilience to attacks from behind",
