@@ -59,7 +59,7 @@
 	if(is_type_in_typecache(target, blacklisted_turfs))
 		return
 
-	INVOKE_ASYNC(src, .proc/try_carve_rune, target, user)
+	INVOKE_ASYNC(src, PROC_REF(try_carve_rune), target, user)
 
 /*
  * Begin trying to carve a rune. Go through a few checks, then call do_carve_rune if successful.
@@ -142,7 +142,7 @@
 
 	return ..()
 
-/datum/action/item_action/rune_shatter/IsAvailable()
+/datum/action/item_action/rune_shatter/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -238,11 +238,11 @@
 		return
 	var/mob/living/carbon/carbon_victim = victim
 	carbon_victim.adjustStaminaLoss(80)
-	carbon_victim.silent += 10
-	carbon_victim.adjust_timed_status_effect(1 MINUTES, /datum/status_effect/speech/stutter)
-	carbon_victim.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/confusion)
-	carbon_victim.set_timed_status_effect(20 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
-	carbon_victim.set_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+	carbon_victim.adjust_silence(20 SECONDS)
+	carbon_victim.adjust_stutter(1 MINUTES)
+	carbon_victim.adjust_confusion(5 SECONDS)
+	carbon_victim.set_jitter_if_lower(20 SECONDS)
+	carbon_victim.set_dizzy_if_lower(40 SECONDS)
 	carbon_victim.adjust_blindness(2)
 	carbon_victim.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 	playsound(src, 'sound/magic/blind.ogg', 75, TRUE)

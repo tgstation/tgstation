@@ -1,12 +1,13 @@
 /datum/surgery/lipoplasty
 	name = "Lipoplasty"
+	possible_locs = list(BODY_ZONE_CHEST)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/cut_fat,
 		/datum/surgery_step/remove_fat,
-		/datum/surgery_step/close)
-	possible_locs = list(BODY_ZONE_CHEST)
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
 	if(HAS_TRAIT(target, TRAIT_FAT) && target.nutrition >= NUTRITION_LEVEL_WELL_FED)
@@ -16,7 +17,7 @@
 
 //cut fat
 /datum/surgery_step/cut_fat
-	name = "cut excess fat"
+	name = "cut excess fat (circular saw)"
 	implements = list(
 		TOOL_SAW = 100,
 		/obj/item/hatchet = 35,
@@ -25,21 +26,29 @@
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] begins to cut away [target]'s excess fat."), span_notice("You begin to cut away [target]'s excess fat..."))
-	display_results(user, target, span_notice("You begin to cut away [target]'s excess fat..."),
-			span_notice("[user] begins to cut away [target]'s excess fat."),
-			span_notice("[user] begins to cut [target]'s [target_zone] with [tool]."))
+	display_results(
+		user,
+		target,
+		span_notice("You begin to cut away [target]'s excess fat..."),
+		span_notice("[user] begins to cut away [target]'s excess fat."),
+		span_notice("[user] begins to cut [target]'s [target_zone] with [tool]."),
+	)
 	display_pain(target, "You feel a stabbing in your [target_zone]!")
 
 /datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
-	display_results(user, target, span_notice("You cut [target]'s excess fat loose."),
-			span_notice("[user] cuts [target]'s excess fat loose!"),
-			span_notice("[user] finishes the cut on [target]'s [target_zone]."))
+	display_results(
+		user,
+		target,
+		span_notice("You cut [target]'s excess fat loose."),
+		span_notice("[user] cuts [target]'s excess fat loose!"),
+		span_notice("[user] finishes the cut on [target]'s [target_zone]."),
+	)
 	display_pain(target, "The fat in your [target_zone] comes loose, dangling and hurting like hell!")
 	return TRUE
 
 //remove fat
 /datum/surgery_step/remove_fat
-	name = "remove loose fat"
+	name = "remove loose fat (retractor)"
 	implements = list(
 		TOOL_RETRACTOR = 100,
 		TOOL_SCREWDRIVER = 45,
@@ -47,15 +56,23 @@
 	time = 32
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_notice("You begin to extract [target]'s loose fat..."),
-			span_notice("[user] begins to extract [target]'s loose fat!"),
-			span_notice("[user] begins to extract something from [target]'s [target_zone]."))
+	display_results(
+		user,
+		target,
+		span_notice("You begin to extract [target]'s loose fat..."),
+		span_notice("[user] begins to extract [target]'s loose fat!"),
+		span_notice("[user] begins to extract something from [target]'s [target_zone]."),
+	)
 	display_pain(target, "You feel an oddly painless tugging on your loose fat!")
 
 /datum/surgery_step/remove_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	display_results(user, target, span_notice("You extract [target]'s fat."),
-			span_notice("[user] extracts [target]'s fat!"),
-			span_notice("[user] extracts [target]'s fat!"))
+	display_results(
+		user,
+		target,
+		span_notice("You extract [target]'s fat."),
+		span_notice("[user] extracts [target]'s fat!"),
+		span_notice("[user] extracts [target]'s fat!"),
+	)
 	target.overeatduration = 0 //patient is unfatted
 	var/removednutriment = target.nutrition
 	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)

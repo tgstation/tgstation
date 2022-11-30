@@ -2,34 +2,96 @@
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
 //NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
-#define LOWEST_EVER_PLANE -200
+#define LOWEST_EVER_PLANE -100
 
-#define FIELD_OF_VISION_BLOCKER_PLANE -199
+#define FIELD_OF_VISION_BLOCKER_PLANE -90
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
-#define CLICKCATCHER_PLANE -99
+#define CLICKCATCHER_PLANE -80
 
-#define PLANE_SPACE -95
-#define PLANE_SPACE_PARALLAX -90
+#define PLANE_SPACE -25
+#define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -11
+#define GRAVITY_PULSE_PLANE -12
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define OPENSPACE_LAYER 600 //Openspace layer over all
+#define RENDER_PLANE_TRANSPARENT -9 //Transparent plane that shows openspace underneath the floor
 
-#define TRANSPARENT_FLOOR_PLANE -10 //Transparent plane that shows openspace underneath the floor
-#define OPENSPACE_PLANE -9 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -8 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define FLOOR_PLANE -8
 
+#define GAME_PLANE -7
+#define GAME_PLANE_FOV_HIDDEN -6
+#define GAME_PLANE_UPPER -5
+#define GAME_PLANE_UPPER_FOV_HIDDEN -4
 
-#define FLOOR_PLANE -7
-
-#define GAME_PLANE -6
-#define GAME_PLANE_FOV_HIDDEN -5
-#define GAME_PLANE_UPPER -4
-#define GAME_PLANE_UPPER_FOV_HIDDEN -3
-
+///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
+#define SEETHROUGH_PLANE -3
 #define ABOVE_GAME_PLANE -2
+
+#define RENDER_PLANE_GAME_WORLD -1
+
+#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+
+#define AREA_PLANE 2
+#define MASSIVE_OBJ_PLANE 3
+#define GHOST_PLANE 4
+#define POINT_PLANE 5
+
+//---------- LIGHTING -------------
+///Normal 1 per turf dynamic lighting underlays
+#define LIGHTING_PLANE 10
+
+///Lighting objects that are "free floating"
+#define O_LIGHTING_VISUAL_PLANE 11
+#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
+
+/// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
+#define EMISSIVE_PLANE 14
+
+#define RENDER_PLANE_LIGHTING 15
+
+///Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 16
+
+///---------------- MISC -----------------------
+
+///Pipecrawling images
+#define PIPECRAWL_IMAGES_PLANE 20
+
+///AI Camera Static
+#define CAMERA_STATIC_PLANE 21
+
+///Anything that wants to be part of the game plane, but also wants to draw above literally everything else
+#define HIGH_GAME_PLANE 22
+
+#define FULLSCREEN_PLANE 23
+
+///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
+
+///Popup Chat Messages
+#define RUNECHAT_PLANE 30
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 31
+
+//-------------------- HUD ---------------------
+//HUD layer defines
+#define HUD_PLANE 40
+#define ABOVE_HUD_PLANE 41
+
+///Plane of the "splash" icon used that shows on the lobby screen. only render plate planes should be above this
+#define SPLASHSCREEN_PLANE 50
+
+//-------------------- Rendering ---------------------
+#define RENDER_PLANE_GAME 100
+#define RENDER_PLANE_NON_GAME 101
+#define RENDER_PLANE_MASTER 102
+
+// Lummox I swear to god I will find you
+// NOTE! You can only ever have planes greater then -10000, if you add too many with large offsets you will brick multiz
+// Same can be said for large multiz maps. Tread carefully mappers
+#define HIGHEST_EVER_PLANE RENDER_PLANE_MASTER
+/// The range unique planes can be in
+#define PLANE_RANGE (HIGHEST_EVER_PLANE - LOWEST_EVER_PLANE)
 
 // PLANE_SPACE layer(s)
 #define SPACE_LAYER 1.8
@@ -50,6 +112,9 @@
 #define DISPOSAL_PIPE_LAYER 2.3
 #define GAS_PIPE_HIDDEN_LAYER 2.35 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define WIRE_LAYER 2.4
+#define TRAM_XING_LAYER 2.41
+#define TRAM_RAIL_LAYER 2.42
+#define TRAM_FLOOR_LAYER 2.43
 #define WIRE_BRIDGE_LAYER 2.44
 #define WIRE_TERMINAL_LAYER 2.45
 #define GAS_SCRUBBER_LAYER 2.46
@@ -57,6 +122,7 @@
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
 #define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
+#define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER 2.51
@@ -120,80 +186,39 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
-
-#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
-
-#define AREA_PLANE 60
-#define MASSIVE_OBJ_PLANE 70
-#define GHOST_PLANE 80
-#define POINT_PLANE 90
-
 //---------- LIGHTING -------------
-///Normal 1 per turf dynamic lighting underlays
-#define LIGHTING_PLANE 100
-
-///Lighting objects that are "free floating"
-#define O_LIGHTING_VISUAL_PLANE 110
-#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
-
-///Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 120
 
 #define LIGHTING_PRIMARY_LAYER 15	//The layer for the main lights of the station
 #define LIGHTING_PRIMARY_DIMMER_LAYER 15.1	//The layer that dims the main lights of the station
 #define LIGHTING_SECONDARY_LAYER 16	//The colourful, usually small lights that go on top
 
 
-///visibility + hiding of things outside of light source range
-#define BYOND_LIGHTING_PLANE 130
 
 
 //---------- EMISSIVES -------------
 //Layering order of these is not particularly meaningful.
 //Important part is the seperation of the planes for control via plane_master
 
-/// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
-#define EMISSIVE_PLANE 150
 /// The render target used by the emissive layer.
 #define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
 /// The layer you should use if you _really_ don't want an emissive overlay to be blocked.
 #define EMISSIVE_LAYER_UNBLOCKABLE 9999
 
-///---------------- MISC -----------------------
-
-///Pipecrawling images
-#define PIPECRAWL_IMAGES_PLANE 180
-
-///AI Camera Static
-#define CAMERA_STATIC_PLANE 200
-
-///Debug Atmos Overlays
-#define ATMOS_GROUP_PLANE 450
-
 ///--------------- FULLSCREEN IMAGES ------------
 
-#define FULLSCREEN_PLANE 500
 #define FLASH_LAYER 1
 #define FULLSCREEN_LAYER 2
 #define UI_DAMAGE_LAYER 3
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
-#define FOV_EFFECTS_LAYER 10000 //Blindness effects are not layer 4, they lie to you
+#define ECHO_LAYER 7
+
+#define FOV_EFFECT_LAYER 100
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
-
-///Popup Chat Messages
-#define RUNECHAT_PLANE 501
-/// Plane for balloon text (text that fades up)
-#define BALLOON_CHAT_PLANE 502
 /// Bubble for typing indicators
 #define TYPING_LAYER 500
-
-//-------------------- HUD ---------------------
-//HUD layer defines
-#define HUD_PLANE 1000
-#define ABOVE_HUD_PLANE 1100
 
 #define RADIAL_BACKGROUND_LAYER 0
 ///1000 is an unimportant number, it's just to normalize copied layers
@@ -204,14 +229,6 @@
 ///Layer for screentips
 #define SCREENTIP_LAYER 4
 
-///Plane of the "splash" icon used that shows on the lobby screen. only render plate planes should be above this
-#define SPLASHSCREEN_PLANE 9900
-
-//-------------------- Rendering ---------------------
-#define RENDER_PLANE_GAME 9990
-#define RENDER_PLANE_NON_GAME 9995
-#define RENDER_PLANE_MASTER 9999
-//----------------------------------------------------
 
 #define LOBBY_BACKGROUND_LAYER 3
 #define LOBBY_BUTTON_LAYER 4
@@ -222,3 +239,21 @@
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
 #define PLANE_MASTERS_COLORBLIND "plane_masters_colorblind"
+
+//Plane master critical flags
+//Describes how different plane masters behave when they are being culled for performance reasons
+/// This plane master will not go away if its layer is culled. useful for preserving effects
+#define PLANE_CRITICAL_DISPLAY (1<<0)
+/// This plane master will temporarially remove relays to non critical planes if it's layer is culled (and it's critical)
+/// This is VERY hacky, but needed to ensure that some instances of BLEND_MULITPLY work as expected (fuck you god damn parallax)
+/// It also implies that the critical plane has a *'d render target, making it mask itself
+#define PLANE_CRITICAL_NO_EMPTY_RELAY (1<<1)
+
+#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_EMPTY_RELAY)
+
+/// A value of /datum/preference/numeric/multiz_performance that disables the option
+#define MULTIZ_PERFORMANCE_DISABLE -1
+/// We expect at most 3 layers of multiz
+/// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
+/// If you modify this, you'll need to modify the tsx file too
+#define MAX_EXPECTED_Z_DEPTH 2

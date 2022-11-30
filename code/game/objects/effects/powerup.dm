@@ -20,7 +20,7 @@
 	if(lifetime)
 		QDEL_IN(src, lifetime)
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -64,15 +64,15 @@
 	var/heal_amount = 50
 	/// Does this pickup fully heal when picked up
 	var/full_heal = FALSE
-	/// If full heal, does this do an admin level heal?
-	var/admin_heal = FALSE
+	/// If full heal, what flags do we pass?
+	var/heal_flags = HEAL_ALL
 
 /obj/effect/powerup/health/trigger(mob/living/target)
 	. = ..()
 	if(!.)
 		return
 	if(full_heal)
-		target.fully_heal(admin_heal)
+		target.fully_heal(heal_flags)
 	else if(heal_amount)
 		target.heal_ordered_damage(heal_amount, list(BRUTE, BURN))
 

@@ -277,7 +277,7 @@
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "sink"
 	},
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/cup/bucket,
 /obj/item/clothing/suit/caution,
@@ -431,6 +431,18 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bu" = (
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hooded/wintercoat/hydro{
+	name = "service winter coat";
+	pixel_y = 4
+	},
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -450,8 +462,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "by" = (
-/obj/structure/table,
-/obj/machinery/reagentgrinder,
+/obj/machinery/oven,
+/obj/item/plate/oven_tray,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "bz" = (
@@ -618,19 +630,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cj" = (
-/obj/structure/table,
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/hooded/wintercoat/hydro{
-	name = "service winter coat";
-	pixel_y = 4
-	},
+/obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "ck" = (
@@ -743,7 +743,7 @@
 /area/awaymission/cabin)
 "cF" = (
 /obj/structure/table,
-/obj/structure/cable,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/cabin)
 "cG" = (
@@ -1765,7 +1765,7 @@
 /area/awaymission/cabin/caves/mountain)
 "fL" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/mouse{
+/mob/living/basic/mouse{
 	faction = list("sewer")
 	},
 /turf/open/floor/carpet,
@@ -2031,7 +2031,7 @@
 /obj/structure/table/wood,
 /obj/item/clothing/suit/hooded/wintercoat/hydro,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/head/hardhat,
+/obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/wood/freezing,
 /area/awaymission/cabin/lumbermill)
 "gZ" = (
@@ -2182,7 +2182,7 @@
 /area/awaymission/cabin)
 "hv" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/welding{
+/obj/item/clothing/head/utility/welding{
 	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3689,7 +3689,7 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/displaycase{
 	start_showpiece_type = /obj/item/dice/d6/space;
-	trophy_message = "Stolen from dice collector before he could enjoy his day."
+	desc = "Contains an artifact stolen from dice collector before he could enjoy his day."
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
@@ -3709,7 +3709,7 @@
 "sK" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/head/warden/police{
+/obj/item/clothing/head/hats/warden/police{
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 15, "bio" = 0, "fire" = 20, "acid" = 20);
 	desc = "I am the law!"
 	},
@@ -3842,7 +3842,7 @@
 	desc = "The dead body of a snowman. There's holes to stick your own body in it.";
 	name = "snowman corpse"
 	},
-/obj/item/clothing/head/snowman{
+/obj/item/clothing/head/costume/snowman{
 	desc = "The head of a dead snowman. There's enough room inside for your own head.";
 	pixel_x = -1;
 	pixel_y = 10
@@ -3852,10 +3852,9 @@
 "vD" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/clown;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: DO NOT GO SOUTH."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
+	inserted_disk = /obj/item/computer_disk/virus/clown;
+	name = "soviet tablet"
 	},
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
@@ -4000,10 +3999,9 @@
 "yR" = (
 /obj/structure/table/reinforced,
 /obj/item/modular_computer/tablet/pda/syndicate{
-	loaded_cartridge = /obj/item/computer_hardware/hard_drive/portable/virus/mime;
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Seems like it may have useful information on it.";
-	name = "soviet tablet";
-	note = "TRANSLATED TO GALACTIC COMMON: My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD.";
+	inserted_disk = /obj/item/computer_disk/virus/mime;
+	name = "soviet tablet"
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
@@ -4033,7 +4031,7 @@
 	pixel_y = 8;
 	throwforce = 2
 	},
-/obj/item/shield/riot/roman/fake{
+/obj/item/shield/roman/fake{
 	layer = 3.01;
 	pixel_x = -7
 	},
@@ -4205,7 +4203,7 @@
 	anchored = 1;
 	name = "Because"
 	},
-/obj/item/clothing/head/scarecrow_hat{
+/obj/item/clothing/head/costume/scarecrow_hat{
 	desc = "A replica straw hat that isn't actually made out of straw";
 	name = "synthetic straw hat";
 	pixel_x = -1;
@@ -4394,7 +4392,7 @@
 	anchored = 1;
 	name = "I Don't Know"
 	},
-/obj/item/clothing/head/bishopmitre{
+/obj/item/clothing/head/chaplain/bishopmitre{
 	pixel_x = -1;
 	pixel_y = 16
 	},
@@ -4858,7 +4856,7 @@
 	anchored = 1;
 	name = "Why"
 	},
-/obj/item/clothing/head/bandana{
+/obj/item/clothing/head/costume/pirate/bandana{
 	pixel_x = -1;
 	pixel_y = -1
 	},

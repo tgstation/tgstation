@@ -69,6 +69,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/dark_wizard,
 		/mob/living/simple_animal/hostile/faithless,
+		/mob/living/simple_animal/hostile/heretic_summon,
 		/mob/living/simple_animal/hostile/imp,
 		/mob/living/simple_animal/hostile/retaliate/bat,
 		/mob/living/simple_animal/hostile/retaliate/ghost,
@@ -107,7 +108,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 	"spiders" = typecacheof(list(/obj/structure/spider)),
 	"security" = typecacheof(list(
-		/obj/effect/hallucination/simple/securitron,
+		/obj/effect/client_image_holder/securitron,
 		/obj/item/clothing/under/rank/security/detective,
 		/obj/item/clothing/under/rank/security/head_of_security,
 		/obj/item/clothing/under/rank/security/officer,
@@ -127,7 +128,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 
 	"clowns" = typecacheof(list(
 		/obj/item/bedsheet/clown,
-		/obj/item/clothing/head/clownmitre,
+		/obj/item/clothing/head/chaplain/clownmitre,
 		/obj/item/clothing/mask/gas/clown_hat,
 		/obj/item/clothing/shoes/clown_shoes,
 		/obj/item/clothing/suit/chaplainsuit/clownpriest,
@@ -169,7 +170,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"lizards" = typecacheof(list(
-		/obj/item/clothing/head/lizard,
+		/obj/item/clothing/head/costume/lizard,
 		/obj/item/clothing/shoes/cowboy/lizard,
 		/obj/item/food/kebab/tail,
 		/obj/item/organ/external/tail/lizard,
@@ -249,7 +250,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	"doctors" = typecacheof(list(
 		/obj/item/cautery,
 		/obj/item/circular_saw,
-		/obj/item/clothing/head/plaguedoctorhat,
+		/obj/item/clothing/head/bio_hood/plague,
 		/obj/item/clothing/mask/gas/plaguedoctor,
 		/obj/item/clothing/suit/bio_suit/plaguedoctorsuit,
 		/obj/item/clothing/under/rank/medical,
@@ -293,7 +294,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/neck/cloak/cap,
 		/obj/item/clothing/neck/cloak/hop,
 		/obj/item/clothing/suit/hooded/wintercoat/captain,
-		/obj/item/clothing/suit/hooded/wintercoat/security/hos,
 		/obj/item/clothing/head/hooded/winterhood/engineering/ce,
 		/obj/item/clothing/suit/hooded/wintercoat/science/rd,
 		/obj/item/clothing/suit/hooded/wintercoat/hop,
@@ -336,16 +336,25 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"the supernatural" = typecacheof(list(
+		/obj/effect/floating_blade,
+		/obj/effect/heretic_influence,
+		/obj/effect/heretic_rune,
 		/obj/effect/rune,
+		/obj/effect/visible_heretic_influence,
 		/obj/item/clothing/head/hooded/cult_hoodie,
 		/obj/item/clothing/head/wizard,
+		/obj/item/clothing/mask/madness_mask,
+		/obj/item/clothing/neck/heretic_focus,
+		/obj/item/clothing/neck/eldritch_amulet,
 		/obj/item/clothing/suit/hooded/cultrobes,
 		/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/under/rank/civilian/chaplain,
+		/obj/item/codex_cicatrix,
 		/obj/item/cult_bastard,
-		/obj/item/gun/magic/staff,
-		/obj/item/gun/magic/wand,
+		/obj/item/gun/magic,
 		/obj/item/melee/cultblade,
+		/obj/item/melee/rune_carver,
+		/obj/item/melee/sickly_blade,
 		/obj/item/necromantic_stone,
 		/obj/item/nullrod,
 		/obj/item/restraints/legcuffs/bola/cult,
@@ -357,13 +366,16 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/staff,
 		/obj/item/storage/toolbox/haunted,
 		/obj/item/tome,
+		/obj/item/toy/cards/deck/tarot,
 		/obj/item/toy/eightball/haunted,
+		/obj/item/toy/eldritch_book,
+		/obj/item/toy/reality_pierce,
 		/obj/item/warp_whistle,
 		/obj/machinery/door/airlock/cult,
 		/obj/narsie,
 		/obj/structure/destructible/cult,
+		/obj/structure/destructible/eldritch_crucible,
 		/obj/structure/spirit_board,
-		/obj/item/toy/cards/deck/tarot,
 	)),
 
 	"aliens" = typecacheof(list(
@@ -402,7 +414,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"anime" = typecacheof(list(
-		/obj/item/clothing/head/kitty/genuine,
+		/obj/item/clothing/head/costume/kitty/genuine,
 		/obj/item/clothing/mask/gas/ninja,
 		/obj/item/clothing/under/syndicate/ninja,
 		/obj/item/clothing/under/costume/schoolgirl,
@@ -421,8 +433,8 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"birds" = typecacheof(list(
-		/obj/item/clothing/head/chicken,
-		/obj/item/clothing/head/griffin,
+		/obj/item/clothing/head/costume/chicken,
+		/obj/item/clothing/head/costume/griffin,
 		/obj/item/clothing/head/helmet/space/freedom,
 		/obj/item/clothing/mask/gas/owl_mask,
 		/obj/item/clothing/mask/gas/plaguedoctor,

@@ -111,7 +111,7 @@ There are several things that need to be remembered:
 				icon_file = MONKEY_UNIFORM_FILE
 
 			//Female sprites have lower priority than digitigrade sprites
-			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && uniform.female_sprite_flags != NO_FEMALE_UNIFORM) //Agggggggghhhhh
+			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 				woman = TRUE
 
 			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(uniform)))
@@ -277,8 +277,8 @@ There are several things that need to be remembered:
 
 	if(wear_neck)
 		var/obj/item/worn_item = wear_neck
-
-		if(!(ITEM_SLOT_NECK in check_obscured_slots()))
+		update_hud_neck(wear_neck)
+		if(!(ITEM_SLOT_NECK & check_obscured_slots()))
 			var/mutable_appearance/neck_overlay
 			var/icon_file
 
@@ -293,7 +293,6 @@ There are several things that need to be remembered:
 				neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
 				neck_overlay.pixel_y += dna.species.offset_features[OFFSET_NECK][2]
 			overlays_standing[NECK_LAYER] = neck_overlay
-		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
 
@@ -371,7 +370,7 @@ There are several things that need to be remembered:
 		var/icon_file
 
 		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-			icon_file = 'icons/mob/clothing/head.dmi'
+			icon_file = 'icons/mob/clothing/head/default.dmi'
 
 		head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file)
 
@@ -452,8 +451,8 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv
 
 		inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_LPOCKET) + 1]
+		inv.update_icon()
 		inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_RPOCKET) + 1]
-
 		inv.update_icon()
 
 		if(l_store)
@@ -484,7 +483,7 @@ There are several things that need to be remembered:
 		var/mutable_appearance/mask_overlay
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 
-		if(!(ITEM_SLOT_MASK in check_obscured_slots()))
+		if(!(ITEM_SLOT_MASK & check_obscured_slots()))
 
 			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 				icon_file = 'icons/mob/clothing/mask.dmi'
@@ -816,7 +815,6 @@ generate/load female uniform sprites matching all previously decided variables
 					missing_eyes.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 					missing_eyes.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
 				add_overlay(missing_eyes)
-
 	update_worn_head()
 	update_worn_mask()
 

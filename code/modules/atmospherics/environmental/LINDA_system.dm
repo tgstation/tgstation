@@ -209,7 +209,7 @@
 	if(!text || !air)
 		return
 
-	var/datum/gas_mixture/turf_mixture = SSair.parse_gas_string(text)
+	var/datum/gas_mixture/turf_mixture = SSair.parse_gas_string(text, /datum/gas_mixture/turf)
 
 	air.merge(turf_mixture)
 	archive()

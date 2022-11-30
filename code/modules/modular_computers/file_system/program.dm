@@ -80,17 +80,13 @@
 /datum/computer_file/program/proc/tap(atom/A, mob/living/user, params)
 	return FALSE
 
-/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = 0, loud = 0, mob/user = null)
+///Makes sure a program can run on this hardware (for apps limited to tablets/computers/laptops)
+/datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = NONE, loud = FALSE, mob/user)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
 			to_chat(user, span_danger("\The [computer] flashes a \"Hardware Error - Incompatible software\" warning."))
 		return FALSE
 	return TRUE
-
-/datum/computer_file/program/proc/get_signal(specific_action = 0)
-	if(computer)
-		return computer.get_ntnet_status(specific_action)
-	return 0
 
 // Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick(delta_time)
@@ -128,10 +124,8 @@
 
 	if(!length(access))
 		var/obj/item/card/id/accesscard
-		var/obj/item/computer_hardware/card_slot/card_slot
 		if(computer)
-			card_slot = computer.all_components[MC_CARD]
-			accesscard = card_slot?.GetID()
+			accesscard = computer.computer_id_slot?.GetID()
 
 		if(!accesscard)
 			if(loud)
@@ -170,10 +164,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(can_run(user, 1))
 		if(requires_ntnet)
-			var/obj/item/card/id/ID
-			var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
-			if(card_holder)
-				ID = card_holder.GetID()
+			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
@@ -203,13 +194,12 @@
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	program_state = PROGRAM_STATE_KILLED
+	if(src in computer.idle_threads)
+		computer.idle_threads.Remove(src)
 	if(requires_ntnet)
-		var/obj/item/card/id/ID
-		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
-		if(card_holder)
-			ID = card_holder.GetID()
-		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
-	return 1
+		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
+	return TRUE
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -252,7 +242,6 @@
 
 				if(user && istype(user))
 					computer.ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-
 
 /datum/computer_file/program/ui_host()
 	if(computer.physical)

@@ -272,30 +272,36 @@
 	name = "Crusader's Hood"
 	desc = "A brownish hood."
 	icon_state = "crusader"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/helmet/plate/crusader/red
 	icon_state = "crusader-red"
+	inhand_icon_state = null
 
 //Prophet helmet
 /obj/item/clothing/head/helmet/plate/crusader/prophet
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
 	icon_state = null
+	inhand_icon_state = null
 	flags_1 = 0
 	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
 	worn_y_offset = 6
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
 	icon_state = "prophet-red"
+	inhand_icon_state = null
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/blue
 	icon_state = "prophet-blue"
+	inhand_icon_state = null
 
 //Structure conversion staff
 /obj/item/godstaff

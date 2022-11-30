@@ -21,7 +21,7 @@
 /obj/structure/closet/body_bag,
 /mob/living/simple_animal/hostile/skeleton,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/head/hardhat,
+/obj/item/clothing/head/utility/hardhat,
 /obj/item/paper/calling_card,
 /turf/open/misc/asteroid,
 /area/station/maintenance/department/medical)

@@ -41,6 +41,11 @@
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
 #define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
 
+/// Logs a noticable message on GitHub, but will not mark as an error.
+/// Use this when something shouldn't happen and is of note, but shouldn't block CI.
+/// Does not mark the test as failed.
+#define TEST_NOTICE(source, message) source.log_for_test((##message), "notice", __FILE__, __LINE__)
+
 /// Constants indicating unit test completion status
 #define UNIT_TEST_PASSED 0
 #define UNIT_TEST_FAILED 1
@@ -48,7 +53,10 @@
 
 #define TEST_PRE 0
 #define TEST_DEFAULT 1
-#define TEST_DEL_WORLD INFINITY
+/// After most test steps, used for tests that run long so shorter issues can be noticed faster
+#define TEST_LONGER 10
+/// This must be the last test to run due to the inherent nature of the test iterating every single tangible atom in the game and qdeleting all of them (while taking long sleeps to make sure the garbage collector fires properly) taking a large amount of time.
+#define TEST_CREATE_AND_DESTROY INFINITY
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
@@ -66,15 +74,18 @@
 /// A trait source when adding traits through unit tests
 #define TRAIT_SOURCE_UNIT_TESTS "unit_tests"
 
+#include "ablative_hud.dm"
 #include "achievements.dm"
 #include "anchored_mobs.dm"
 #include "anonymous_themes.dm"
+#include "area_contents.dm"
 #include "autowiki.dm"
 #include "barsigns.dm"
 #include "bespoke_id.dm"
 #include "binary_insert.dm"
 #include "bloody_footprints.dm"
 #include "breath.dm"
+#include "cable_powernets.dm"
 #include "card_mismatch.dm"
 #include "chain_pull_through_space.dm"
 #include "chat_filter.dm"
@@ -84,10 +95,12 @@
 #include "component_tests.dm"
 #include "confusion.dm"
 #include "connect_loc.dm"
+#include "container_sanity.dm"
 #include "crayons.dm"
 #include "create_and_destroy.dm"
 #include "dcs_get_id_from_elements.dm"
 #include "designs.dm"
+#include "dragon_expiration.dm"
 #include "dummy_spawn.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
@@ -96,17 +109,23 @@
 #include "gas_transfer.dm"
 #include "get_turf_pixel.dm"
 #include "greyscale_config.dm"
+#include "hallucination_icons.dm"
 #include "heretic_knowledge.dm"
 #include "heretic_rituals.dm"
 #include "holidays.dm"
+#include "human_through_recycler.dm"
 #include "hydroponics_extractor_storage.dm"
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
+#include "inhands.dm"
+#include "json_savefile_importing.dm"
 #include "keybinding_init.dm"
 #include "knockoff_component.dm"
+#include "limbsanity.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
+#include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "mecha_damage.dm"
 #include "medical_wounds.dm"
@@ -117,14 +136,19 @@
 #include "mob_spawn.dm"
 #include "modsuit.dm"
 #include "modular_map_loader.dm"
+#include "monkey_business.dm"
+#include "mouse_bite_cable.dm"
 #include "novaflower_burn.dm"
 #include "ntnetwork_tests.dm"
 #include "nuke_cinematic.dm"
 #include "objectives.dm"
+#include "orderable_items.dm"
 #include "operating_table.dm"
 #include "outfit_sanity.dm"
 #include "paintings.dm"
 #include "pills.dm"
+#include "plane_double_transform.dm"
+#include "plane_dupe_detector.dm"
 #include "plantgrowth_tests.dm"
 #include "preference_species.dm"
 #include "preferences.dm"
@@ -147,11 +171,13 @@
 #include "security_officer_distribution.dm"
 #include "security_levels.dm"
 #include "serving_tray.dm"
+#include "simple_animal_freeze.dm"
 #include "siunit.dm"
 #include "slips.dm"
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_change_clothing.dm"
+#include "species_change_organs.dm"
 #include "species_config_sanity.dm"
 #include "species_unique_id.dm"
 #include "species_whitelists.dm"
@@ -159,16 +185,22 @@
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"
+#include "spritesheets.dm"
 #include "stack_singular_name.dm"
+#include "station_trait_tests.dm"
 #include "stomach.dm"
+#include "strange_reagent.dm"
 #include "strippable.dm"
 #include "subsystem_init.dm"
+#include "suit_storage_icons.dm"
 #include "surgeries.dm"
 #include "teleporters.dm"
 #include "tgui_create_message.dm"
 #include "timer_sanity.dm"
 #include "traitor.dm"
 #include "unit_test.dm"
+#include "verify_config_tags.dm"
+#include "verify_emoji_names.dm"
 #include "wizard_loadout.dm"
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

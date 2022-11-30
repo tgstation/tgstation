@@ -3,7 +3,7 @@
 	var/mob/host_mob
 
 /datum/unit_test/get_message_mods/Run()
-	host_mob = allocate(/mob/living/carbon/human)
+	host_mob = allocate(/mob/living/carbon/human/consistent)
 
 	test("Hello", "Hello", list())
 	test(";HELP", "HELP", list(MODE_HEADSET = TRUE))
@@ -28,7 +28,7 @@
 /datum/unit_test/say_signal/Run()
 	var/mob/living/dummy = allocate(/mob/living)
 
-	RegisterSignal(dummy, COMSIG_MOB_SAY, .proc/check_say)
+	RegisterSignal(dummy, COMSIG_MOB_SAY, PROC_REF(check_say))
 	dummy.say("Make sure the say signal gets the arglist say is past, no copies!")
 
 /datum/unit_test/say_signal/proc/check_say(mob/living/source, list/say_args)

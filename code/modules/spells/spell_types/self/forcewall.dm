@@ -17,15 +17,16 @@
 
 /datum/action/cooldown/spell/forcewall/cast(atom/cast_on)
 	. = ..()
-	new wall_type(get_turf(owner), owner)
+	for(var/turf/cast_turf as anything in get_turfs())
+		spawn_wall(cast_turf)
 
-	if(owner.dir == SOUTH || owner.dir == NORTH)
-		new wall_type(get_step(owner, EAST), owner, antimagic_flags)
-		new wall_type(get_step(owner, WEST), owner, antimagic_flags)
+/// This proc returns all the turfs on which we will spawn the walls.
+/datum/action/cooldown/spell/forcewall/proc/get_turfs()
+	return list(get_turf(owner), get_step(owner, turn(owner.dir, 90)), get_step(owner, turn(owner.dir, 270)))
 
-	else
-		new wall_type(get_step(owner, NORTH), owner, antimagic_flags)
-		new wall_type(get_step(owner, SOUTH), owner, antimagic_flags)
+/// This proc spawns a wall on the given turf.
+/datum/action/cooldown/spell/forcewall/proc/spawn_wall(turf/cast_turf)
+	new wall_type(cast_turf, owner, antimagic_flags)
 
 /datum/action/cooldown/spell/forcewall/cult
 	name = "Shield"
@@ -45,6 +46,7 @@
 	background_icon_state = "bg_mime"
 	icon_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_blockade"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 	panel = "Mime"
 	sound = null
 

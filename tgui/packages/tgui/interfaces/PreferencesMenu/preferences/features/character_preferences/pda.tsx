@@ -1,4 +1,4 @@
-import { Feature, FeatureColorInput, FeatureDropdownInput } from '../base';
+import { Feature, FeatureColorInput, FeatureDropdownInput, FeatureShortTextInput } from '../base';
 
 export const pda_color: Feature<string> = {
   name: 'PDA color',
@@ -12,4 +12,10 @@ export const pda_style: Feature<string> = {
   category: 'GAMEPLAY',
   description: 'The style of your equipped PDA. Changes font.',
   component: FeatureDropdownInput,
+};
+
+export const pda_ringtone: Feature<string> = {
+  name: 'PDA Ringtone',
+  description: "The ringtone you'll hear when someone sends you a PDA message.",
+  component: FeatureShortTextInput,
 };

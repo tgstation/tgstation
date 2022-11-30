@@ -51,11 +51,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	/// The typepath of the organ type required for our heart.
 	var/required_organ_type = /obj/item/organ/internal/heart
 
-/datum/heretic_knowledge/living_heart/on_research(mob/user)
+/datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	var/obj/item/organ/where_to_put_our_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
+	// Our heart slot is not valid to put a heart
+	if(!is_valid_heart(where_to_put_our_heart))
+		where_to_put_our_heart = null
 
 	// If a heretic is made from a species without a heart, we need to find a backup.
 	if(!where_to_put_our_heart)
@@ -67,12 +69,16 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 		for(var/backup_slot in backup_organs)
 			var/obj/item/organ/look_for_backup = user.getorganslot(backup_slot)
-			if(look_for_backup)
-				where_to_put_our_heart = look_for_backup
-				our_heretic.living_heart_organ_slot = backup_slot
-				required_organ_type = backup_organs[backup_slot]
-				to_chat(user, span_boldnotice("As your species does not have a heart, your Living Heart is located in your [look_for_backup.name]."))
-				break
+			// This backup slot is not a valid slot to put a heart
+			if(!is_valid_heart(look_for_backup))
+				continue
+
+			// We found a replacement place to put our heart
+			where_to_put_our_heart = look_for_backup
+			our_heretic.living_heart_organ_slot = backup_slot
+			required_organ_type = backup_organs[backup_slot]
+			to_chat(user, span_boldnotice("As your species does not have a heart, your Living Heart is located in your [look_for_backup.name]."))
+			break
 
 	if(where_to_put_our_heart)
 		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
@@ -86,8 +92,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	else
 		to_chat(user, span_boldnotice("You don't have a heart, or any chest organs for that matter. You didn't get a Living Heart because of it."))
 
-/datum/heretic_knowledge/living_heart/on_lose(mob/user)
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+/datum/heretic_knowledge/living_heart/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 	if(our_living_heart)
 		qdel(our_living_heart.GetComponent(/datum/component/living_heart))
@@ -114,7 +119,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	// By this point they are making a new heart
 	// If their current heart is organic / not synthetic, we can continue the ritual as normal
-	if(our_living_heart.status == ORGAN_ORGANIC && !(our_living_heart.organ_flags & ORGAN_SYNTHETIC))
+	if(is_valid_heart(our_living_heart))
 		return TRUE
 
 	// If their current heart is not organic / is synthetic, they need an organic replacement
@@ -127,9 +132,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	for(var/obj/item/organ/nearby_organ in atoms)
 		if(!istype(nearby_organ, required_organ_type))
 			continue
-		if(!nearby_organ.useable)
-			continue
-		if(nearby_organ.status != ORGAN_ORGANIC || (nearby_organ.organ_flags & (ORGAN_SYNTHETIC|ORGAN_FAILING)))
+		if(!is_valid_heart(nearby_organ))
 			continue
 
 		selected_atoms += nearby_organ
@@ -143,12 +146,12 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/obj/item/organ/our_new_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 
 	// Our heart is robotic or synthetic - we need to replace it, and we fortunately should have one by here
-	if(our_new_heart.status != ORGAN_ORGANIC || (our_new_heart.organ_flags & ORGAN_SYNTHETIC))
+	if(!is_valid_heart(our_new_heart))
 		var/obj/item/organ/our_replacement_heart = locate(required_organ_type) in selected_atoms
 		if(our_replacement_heart)
 			// Throw our current heart out of our chest, violently
 			user.visible_message(span_boldwarning("[user]'s [our_new_heart.name] bursts suddenly out of [user.p_their()] chest!"))
-			INVOKE_ASYNC(user, /mob/proc/emote, "scream")
+			INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 			// And put our organic heart in its place
 			our_replacement_heart.Insert(user, TRUE, TRUE)
@@ -160,13 +163,31 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(!our_new_heart)
 		CRASH("[type] somehow made it to on_finished_recipe without a heart. What?")
 
-	// Don't delete our shiny new heart
-	if(our_new_heart in selected_atoms)
-		selected_atoms -= our_new_heart
+	// Snowflakey, but if the user used a heart that wasn't beating
+	// they'll immediately collapse into a heart attack. Funny but not ideal.
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		carbon_user.set_heartattack(FALSE)
 
+	// Don't delete our shiny new heart
+	selected_atoms -= our_new_heart
+	// Make it the living heart
 	our_new_heart.AddComponent(/datum/component/living_heart)
 	to_chat(user, span_warning("You feel your [our_new_heart.name] begin pulse faster and faster as it awakens!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	return TRUE
+
+/// Checks if the passed heart is a valid heart to become a living heart
+/datum/heretic_knowledge/living_heart/proc/is_valid_heart(obj/item/organ/new_heart)
+	if(!new_heart)
+		return FALSE
+	if(!new_heart.useable)
+		return FALSE
+	if(new_heart.status != ORGAN_ORGANIC)
+		return FALSE
+	if(new_heart.organ_flags & (ORGAN_SYNTHETIC|ORGAN_FAILING))
+		return FALSE
+
 	return TRUE
 
 /**
@@ -184,4 +205,12 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
+	route = PATH_START
+
+/datum/heretic_knowledge/spell/cloak_of_shadows
+	name = "Cloak of Shadow"
+	desc = "Grants you the spell Cloak of Shadow. This spell will completely conceal your identity in a purple smoke \
+		for three minutes, assisting you in keeping secrecy. Requires a focus to cast."
+	spell_to_add = /datum/action/cooldown/spell/shadow_cloak
+	cost = 0
 	route = PATH_START

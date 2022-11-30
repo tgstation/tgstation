@@ -1,0 +1,227 @@
+## This is the configuration file for the job system.
+## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.
+## We use a system of keys here that directly correlate to the job, just to ensure they don't desync if we choose to change the name of a job.
+## You are able to change (as of now) four different variables in this file.
+## Total Positions are how many job slots you get in a shift, Spawn Positions are how many you get that load in at spawn. If you set this to -1, it is unrestricted.
+## Playtime Requirements is in minutes, and the job will unlock when a player reaches that amount of time.
+## However, that can be superseded by Required Account Age, which is a time in days that you need to have had an account on the server for.
+## As time goes on, more config options may be added to this file.
+## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.
+## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.
+## It's strongly advised you create your own version of this file rather than use the one provisioned on the codebase.
+
+## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.
+## If you want to override the codebase values, add the value and then uncomment that line by removing the # from the job key's name.
+## Ensure that the key is flush, do not introduce any whitespaces when you uncomment a key. For example:
+## "# Total Positions" should always be changed to "Total Positions", no additional spacing. 
+## Best of luck editing!
+
+[AI]
+"# Playtime Requirements" = 180
+"# Required Account Age" = 30
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[ASSISTANT]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = -1
+"# Total Positions" = -1
+
+[ATMOSPHERIC_TECHNICIAN]
+"# Playtime Requirements" = 60
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 3
+
+[BARTENDER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[BOTANIST]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 3
+
+[CAPTAIN]
+"# Playtime Requirements" = 180
+"# Required Account Age" = 14
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[CARGO_TECHNICIAN]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 3
+
+[CHAPLAIN]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[CHEMIST]
+"# Playtime Requirements" = 60
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[CHIEF_ENGINEER]
+"# Playtime Requirements" = 180
+"# Required Account Age" = 7
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[CHIEF_MEDICAL_OFFICER]
+"# Playtime Requirements" = 180
+"# Required Account Age" = 7
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[CLOWN]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[COOK]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 2
+
+[CURATOR]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[CYBORG]
+"# Playtime Requirements" = 120
+"# Required Account Age" = 21
+"# Spawn Positions" = 1
+"# Total Positions" = 0
+
+[DETECTIVE]
+"# Playtime Requirements" = 300
+"# Required Account Age" = 7
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[GENETICIST]
+"# Playtime Requirements" = 60
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[HEAD_OF_PERSONNEL]
+"# Playtime Requirements" = 180
+"# Required Account Age" = 10
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[HEAD_OF_SECURITY]
+"# Playtime Requirements" = 300
+"# Required Account Age" = 14
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[JANITOR]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 2
+
+[LAWYER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[MEDICAL_DOCTOR]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 3
+"# Total Positions" = 5
+
+[MIME]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[PARAMEDIC]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[PRISONER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 0
+
+[PSYCHOLOGIST]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[QUARTERMASTER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 7
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[RESEARCH_DIRECTOR]
+"# Playtime Requirements" = 180
+"# Required Account Age" = 7
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[ROBOTICIST]
+"# Playtime Requirements" = 60
+"# Required Account Age" = 0
+"# Spawn Positions" = 2
+"# Total Positions" = 2
+
+[SCIENTIST]
+"# Playtime Requirements" = 60
+"# Required Account Age" = 0
+"# Spawn Positions" = 3
+"# Total Positions" = 5
+
+[SECURITY_OFFICER]
+"# Playtime Requirements" = 300
+"# Required Account Age" = 7
+"# Spawn Positions" = 5
+"# Total Positions" = 5
+
+[SHAFT_MINER]
+"# Playtime Requirements" = 0
+"# Required Account Age" = 0
+"# Spawn Positions" = 3
+"# Total Positions" = 3
+
+[STATION_ENGINEER]
+"# Playtime Requirements" = 60
+"# Required Account Age" = 0
+"# Spawn Positions" = 5
+"# Total Positions" = 5
+
+[VIROLOGIST]
+"# Playtime Requirements" = 60
+"# Required Account Age" = 0
+"# Spawn Positions" = 1
+"# Total Positions" = 1
+
+[WARDEN]
+"# Playtime Requirements" = 300
+"# Required Account Age" = 7
+"# Spawn Positions" = 1
+"# Total Positions" = 1

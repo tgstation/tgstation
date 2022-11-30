@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "The alt click tab (obj tab?) will no longer cause massive clientside lag (unless you alt click that 2000 obj large tofu pile)"
-  - bugfix: "The alt click menu is snappier now, try usin it and let me know if anything blows up yeah?"

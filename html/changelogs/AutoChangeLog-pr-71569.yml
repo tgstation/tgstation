@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - rscadd: "plumbing constructor TGUI, just like Rapid Pipe Dispensers"
+  - rscdel: "plumbing constructor radials"
+  - code_imp: "categories for each item"

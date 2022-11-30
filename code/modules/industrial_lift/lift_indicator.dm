@@ -52,7 +52,7 @@
 			continue
 
 		lift_ref = WEAKREF(possible_match)
-		RegisterSignal(possible_match, COMSIG_LIFT_SET_DIRECTION, .proc/on_lift_direction)
+		RegisterSignal(possible_match, COMSIG_LIFT_SET_DIRECTION, PROC_REF(on_lift_direction))
 
 /obj/machinery/lift_indicator/examine(mob/user)
 	. = ..()
@@ -160,7 +160,7 @@
 	if(!is_operational)
 		return
 
-	. += emissive_appearance(icon, "[base_icon_state]e", alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]e", offset_spokesman = src, alpha = src.alpha)
 
 	if(!current_lift_direction)
 		return
@@ -168,6 +168,6 @@
 	var/arrow_icon_state = "[base_icon_state][current_lift_direction == UP ? "up" : "down"]"
 
 	. += mutable_appearance(icon, arrow_icon_state)
-	. += emissive_appearance(icon, "[arrow_icon_state]e", alpha = src.alpha)
+	. += emissive_appearance(icon, "[arrow_icon_state]e", offset_spokesman = src, alpha = src.alpha)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/lift_indicator, 38)

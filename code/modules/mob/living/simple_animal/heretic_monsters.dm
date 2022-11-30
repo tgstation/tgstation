@@ -53,8 +53,8 @@
 	melee_damage_upper = 10
 	maxHealth = 65
 	health = 65
-	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/internal/eyes)
+	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
+	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/left, /obj/item/organ/internal/eyes)
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
 		/datum/action/cooldown/spell/list_target/telepathy/eldritch,
@@ -77,7 +77,7 @@
 		linker_action_path = /datum/action/cooldown/spell/pointed/manse_link, \
 		link_message = on_link_message, \
 		unlink_message = on_unlink_message, \
-		post_unlink_callback = CALLBACK(src, .proc/after_unlink), \
+		post_unlink_callback = CALLBACK(src, PROC_REF(after_unlink)), \
 		speech_action_background_icon_state = "bg_ecult", \
 	)
 
@@ -120,7 +120,7 @@
 	if(QDELETED(unlinked_mob) || unlinked_mob.stat == DEAD)
 		return
 
-	INVOKE_ASYNC(unlinked_mob, /mob.proc/emote, "scream")
+	INVOKE_ASYNC(unlinked_mob, TYPE_PROC_REF(/mob, emote), "scream")
 	unlinked_mob.AdjustParalyzed(0.5 SECONDS) //micro stun
 
 // What if we took a linked list... But made it a mob?
@@ -175,7 +175,7 @@
 		worm_length = 3 //code breaks below 3, let's just not allow it.
 
 	oldloc = loc
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/update_chain_links)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(update_chain_links))
 	if(!spawn_bodyparts)
 		return
 
@@ -301,7 +301,7 @@
 	AttackingTarget()
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/AttackingTarget()
-	if(istype(target, /obj/item/bodypart/r_arm) || istype(target, /obj/item/bodypart/l_arm))
+	if(istype(target, /obj/item/bodypart/arm))
 		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
 		qdel(target)
 		heal()
@@ -356,7 +356,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/aoe/rust_conversion/small,
 		/datum/action/cooldown/spell/basic_projectile/rust_wave/short,
@@ -396,7 +396,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS
+	sight = SEE_TURFS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/pointed/cleave,
@@ -414,7 +414,7 @@
 	health = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_MOBS
+	sight = SEE_MOBS|SEE_BLACKNESS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/shapeshift/eldritch,
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,

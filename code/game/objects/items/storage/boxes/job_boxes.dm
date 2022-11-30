@@ -12,8 +12,21 @@
 	var/internal_type = /obj/item/tank/internals/emergency_oxygen
 	/// What medipen should be present in this box?
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
+	/// Are we crafted?
+	var/crafted = FALSE
+
+/obj/item/storage/box/survival/Initialize(mapload)
+	. = ..()
+	if(crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+		return
+	atom_storage.max_slots += 2
+	atom_storage.max_total_storage += 4
+	name = "large [name]"
+	transform = transform.Scale(1.25, 1)
 
 /obj/item/storage/box/survival/PopulateContents()
+	if(crafted)
+		return
 	if(!isnull(mask_type))
 		new mask_type(src)
 
@@ -64,18 +77,47 @@
 // Syndie survival box
 /obj/item/storage/box/survival/syndie
 	name = "operation-ready survival box"
-	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank."
+	desc = "A box with the essentials of your operation. This one is labelled to contain an extended-capacity tank and a handy guide on survival."
 	icon_state = "syndiebox"
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-	medipen_type = null
+	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
 
 /obj/item/storage/box/survival/syndie/PopulateContents()
 	..()
-	new /obj/item/crowbar/red(src)
-	new /obj/item/screwdriver/red(src)
-	new /obj/item/weldingtool/mini(src)
+	new /obj/item/tool_parcel(src)
+	new /obj/item/paper/fluff/operative(src)
+
+/obj/item/tool_parcel
+	name = "operative toolkit care package"
+	desc = "A small parcel. It contains a few items every operative needs."
+	w_class =  WEIGHT_CLASS_SMALL
+	icon = 'icons/obj/storage/storage.dmi'
+	icon_state = "deliverypackage2"
+
+/obj/item/tool_parcel/attack_self(mob/user)
+	. = ..()
+	new /obj/item/crowbar/red(get_turf(user))
+	new /obj/item/screwdriver/red(get_turf(user))
+	new /obj/item/weldingtool/mini(get_turf(user))
+	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	if(prob(5))
+		new /obj/item/storage/fancy/cigarettes/cigpack_syndicate(get_turf(user))
+		new /obj/item/lighter(get_turf(user))
+		to_chat(user, span_notice("...oh, someone left some cigarettes in here."))
+	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
+	qdel(src)
+
+/obj/item/storage/box/survival/centcom
+	name = "emergency response survival box"
+	desc = "A box with the bare essentials of ensuring the survival of your team. This one is labelled to contain a double tank."
+	illustration = "extendedtank"
+	internal_type = /obj/item/tank/internals/emergency_oxygen/double
+
+/obj/item/storage/box/survival/centcom/PopulateContents()
+	. = ..()
+	new /obj/item/crowbar(src)
 
 // Security survival box
 /obj/item/storage/box/survival/security
@@ -88,6 +130,12 @@
 // Medical survival box
 /obj/item/storage/box/survival/medical
 	mask_type = /obj/item/clothing/mask/breath/medical
+
+/obj/item/storage/box/survival/crafted
+	crafted = TRUE
+
+/obj/item/storage/box/survival/engineer/crafted
+	crafted = TRUE
 
 //Mime spell boxes
 
@@ -116,15 +164,15 @@
 	illustration = "heart"
 	foldable = null
 
-/obj/item/storage/box/hug/suicide_act(mob/user)
+/obj/item/storage/box/hug/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] clamps the box of hugs on [user.p_their()] jugular! Guess it wasn't such a hugbox after all.."))
-	return (BRUTELOSS)
+	return BRUTELOSS
 
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, SFX_RUSTLE, 50, TRUE, -5)
-	user.visible_message(span_notice("[user] hugs \the [src]."),span_notice("You hug \the [src]."))
+	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
+	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/black
 	icon_state = "hugbox_black"
@@ -137,7 +185,7 @@
 	illustration = "clown"
 
 /obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+	if((istype(I, /obj/item/bodypart/arm/left/robot)) || (istype(I, /obj/item/bodypart/arm/right/robot)))
 		if(contents.len) //prevent accidently deleting contents
 			balloon_alert(user, "items inside!")
 			return
@@ -151,11 +199,11 @@
 	else
 		return ..()
 
-/obj/item/storage/box/clown/suicide_act(mob/user)
+/obj/item/storage/box/clown/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
+	forceMove(user.drop_location())
 	var/obj/item/clothing/head/mob_holder/consumed = new(src, user)
-	user.forceMove(consumed)
 	consumed.desc = "It's [user.real_name]! It looks like [user.p_they()] committed suicide!"
 	return OXYLOSS
 
@@ -165,51 +213,39 @@
 	new /obj/item/stack/medical/ointment(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
-// Clown survival box
-/obj/item/storage/box/hug/survival/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen(src)
+//Clown survival box
+/obj/item/storage/box/survival/hug
+	name = "box of hugs"
+	desc = "A special box for sensitive people."
+	icon_state = "hugbox"
+	illustration = "heart"
+	foldable = null
+	mask_type = null
 
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
+//Mime survival box
+/obj/item/storage/box/survival/hug/black
+	icon_state = "hugbox_black"
+	illustration = "heart_black"
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
-		new /obj/item/flashlight/flare(src)
-		new /obj/item/radio/off(src)
+//Duplicated suicide/attack self procs, since the survival boxes are a subtype of box/survival
+/obj/item/storage/box/survival/hug/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] clamps the box of hugs on [user.p_their()] jugular! Guess it wasn't such a hugbox after all.."))
+	return BRUTELOSS
 
-/obj/item/storage/box/hug/black/survival/PopulateContents()
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-
-	if(!isplasmaman(loc))
-		new /obj/item/tank/internals/emergency_oxygen(src)
-	else
-		new /obj/item/tank/internals/plasmaman/belt(src)
-
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
-		new /obj/item/flashlight/flare(src)
-		new /obj/item/radio/off(src)
+/obj/item/storage/box/survival/hug/attack_self(mob/user)
+	..()
+	user.changeNext_move(CLICK_CD_MELEE)
+	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
+	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/plushes
 	name = "tactical cuddle kit"
 	desc = "A lovely little box filled with soft, cute plushies, perfect for calming down people who have just suffered a traumatic event. Legend has it there's a special part of hell \
 	for Medical Officers who just take the box for themselves."
 
-	/// the plushies that aren't of things trying to kill you
-	var/list/static/approved_by_corporate = list(
-		/obj/item/toy/plush/carpplushie, // well, maybe they can be something that tries to kill you a little bit
-		/obj/item/toy/plush/slimeplushie,
-		/obj/item/toy/plush/lizard_plushie,
-		/obj/item/toy/plush/snakeplushie,
-		/obj/item/toy/plush/plasmamanplushie,
-		/obj/item/toy/plush/beeplushie,
-		/obj/item/toy/plush/moth,
-		/obj/item/toy/plush/pkplush,
-	)
-
 /obj/item/storage/box/hug/plushes/PopulateContents()
 	for(var/i in 1 to 7)
-		var/plush_path = pick(approved_by_corporate)
+		var/plush_path = /obj/effect/spawner/random/entertainment/plushie
 		new plush_path(src)
 
 /obj/item/storage/box/skillchips

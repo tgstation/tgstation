@@ -175,7 +175,7 @@
 		return
 	if(!pad_ref?.resolve())
 		return
-	if(!usr.canUseTopic(src, BE_CLOSE) || (machine_stat & (NOPOWER|BROKEN)))
+	if(!usr.canUseTopic(src, be_close = TRUE) || (machine_stat & (NOPOWER|BROKEN)))
 		return
 	switch(action)
 		if("recalc")
@@ -274,7 +274,7 @@
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
-	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
+	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, PROC_REF(on_export))
 
 /obj/item/bounty_cube/Destroy()
 	if(radio)
@@ -370,7 +370,7 @@
 
 /obj/item/civ_bounty_beacon/attack_self()
 	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
-	addtimer(CALLBACK(src, .proc/launch_payload), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
 /obj/item/civ_bounty_beacon/proc/launch_payload()
 	playsound(src, SFX_SPARKS, 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

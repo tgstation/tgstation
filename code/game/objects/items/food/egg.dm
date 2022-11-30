@@ -17,8 +17,8 @@
 	desc = "An egg!"
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "egg"
+	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/eggyolk = 2, /datum/reagent/consumable/eggwhite = 4)
-	microwaved_type = /obj/item/food/boiledegg
 	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_TINY
 	ant_attracting = FALSE
@@ -26,11 +26,16 @@
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
 	var/static/chick_count = 0 //I copied this from the chicken_count (note the "en" in there) variable from chicken code.
 
+/obj/item/food/egg/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg)
+
 /obj/item/food/egg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10, /datum/reagent/consumable/mold = 10)
-	microwaved_type = /obj/item/food/boiledegg/rotten
 	foodtypes = GROSS
 	preserved_food = TRUE
+
+/obj/item/food/egg/rotten/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/boiledegg/rotten)
 
 /obj/item/food/egg/gland
 	desc = "An egg! It looks weird..."
@@ -110,27 +115,32 @@
 
 /obj/item/food/egg/blue
 	icon_state = "egg-blue"
-
+	inhand_icon_state = "egg-blue"
 /obj/item/food/egg/green
 	icon_state = "egg-green"
-
+	inhand_icon_state = "egg-green"
 /obj/item/food/egg/mime
 	icon_state = "egg-mime"
-
+	inhand_icon_state = "egg-mime"
 /obj/item/food/egg/orange
 	icon_state = "egg-orange"
+	inhand_icon_state = "egg-orange"
 
 /obj/item/food/egg/purple
 	icon_state = "egg-purple"
+	inhand_icon_state = "egg-purple"
 
 /obj/item/food/egg/rainbow
 	icon_state = "egg-rainbow"
+	inhand_icon_state = "egg-rainbow"
 
 /obj/item/food/egg/red
 	icon_state = "egg-red"
+	inhand_icon_state = "egg-red"
 
 /obj/item/food/egg/yellow
 	icon_state = "egg-yellow"
+	inhand_icon_state = "egg-yellow"
 
 /obj/item/food/friedegg
 	name = "fried egg"
@@ -164,6 +174,7 @@
 	desc = "A hard boiled egg."
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "egg"
+	inhand_icon_state = "egg"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("egg" = 1)
 	foodtypes = MEAT | BREAKFAST

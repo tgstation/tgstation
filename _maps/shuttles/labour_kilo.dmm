@@ -217,12 +217,9 @@
 	},
 /obj/docking_port/mobile{
 	dir = 8;
-	dwidth = 2;
-	height = 5;
 	shuttle_id = "laborcamp";
 	name = "labor camp shuttle";
-	port_direction = 4;
-	width = 9
+	port_direction = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -237,14 +234,14 @@
 /area/shuttle/labor)
 "w" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/labor)
 "x" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/labor)
 "y" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/labor)
 

@@ -21,7 +21,7 @@
 		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
-	if(M.stat != CONSCIOUS || (HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M)))
+	if(M.incapacitated() || (HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M)))
 		return FALSE
 	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
 		var/mob/living/kidnapped = dropping
@@ -58,7 +58,7 @@
 	if(occupant_amount() >= max_occupants)
 		return FALSE
 	var/atom/old_loc = loc
-	if(do_mob(forcer, kidnapped, get_enter_delay(kidnapped), extra_checks=CALLBACK(src, /obj/vehicle/sealed/car.proc/is_car_stationary, old_loc)))
+	if(do_mob(forcer, kidnapped, get_enter_delay(kidnapped), extra_checks=CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/car, is_car_stationary), old_loc)))
 		mob_forced_enter(kidnapped, silent)
 		return TRUE
 	return FALSE
@@ -95,9 +95,9 @@
 
 	if(trailer)
 		var/dir_to_move = get_dir(trailer.loc, loc)
-		var/did_move = step(src, direction)
+		var/did_move = try_step_multiz(direction)
 		if(did_move)
 			step(trailer, dir_to_move)
 		return did_move
 	after_move(direction)
-	return step(src, direction)
+	return try_step_multiz(direction)

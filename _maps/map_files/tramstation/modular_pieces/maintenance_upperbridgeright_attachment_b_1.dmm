@@ -36,7 +36,7 @@
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/head/hardhat,
+/obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "M" = (

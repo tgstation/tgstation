@@ -185,7 +185,7 @@
 				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
 			else
 				to_chat(owner, span_warning("You feel sick..."))
-			addtimer(CALLBACK(owner, /mob/living/carbon.proc/vomit, high_stress), 50) //blood vomit if high stress
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 50) //blood vomit if high stress
 		if(2)
 			if(high_stress)
 				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
@@ -193,14 +193,14 @@
 			else
 				to_chat(owner, span_warning("You can't stop shaking..."))
 
-			owner.adjust_timed_status_effect(40 SECONDS, /datum/status_effect/dizziness)
-			owner.adjust_timed_status_effect(20 SECONDS, /datum/status_effect/confusion)
-			owner.set_timed_status_effect(40 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			owner.adjust_dizzy(40 SECONDS)
+			owner.adjust_confusion(20 SECONDS)
+			owner.set_jitter_if_lower(40 SECONDS)
 
 		if(3, 4)
 			if(high_stress)
 				to_chat(owner, span_warning("You're going mad with loneliness!"))
-				owner.hallucination += 30
+				owner.adjust_hallucinations(60 SECONDS)
 			else
 				to_chat(owner, span_warning("You feel really lonely..."))
 
@@ -294,7 +294,7 @@
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
 
 	if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
-		addtimer(CALLBACK(src, .proc/hypnotrigger), 10) //to react AFTER the chat message
+		addtimer(CALLBACK(src, PROC_REF(hypnotrigger)), 10) //to react AFTER the chat message
 		hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], span_hypnophrase("*********"))
 
 /datum/brain_trauma/severe/hypnotic_trigger/proc/hypnotrigger()
@@ -307,7 +307,7 @@
 	scan_desc = "dyslexia"
 	gain_text = "<span class='warning'>You have trouble reading or writing...</span>"
 	lose_text = "<span class='notice'>Your suddenly remember how to read and write.</span>"
-	
+
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
 	..()

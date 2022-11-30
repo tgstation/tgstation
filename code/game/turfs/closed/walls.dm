@@ -40,11 +40,11 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
-		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
+		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, offset_spokesman = src, plane = FLOOR_PLANE)
 		if(fixed_underlay["space"])
 			underlay_appearance.icon = 'icons/turf/space.dmi'
 			underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
-			underlay_appearance.plane = PLANE_SPACE
+			SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 		else
 			underlay_appearance.icon = fixed_underlay["icon"]
 			underlay_appearance.icon_state = fixed_underlay["icon_state"]
@@ -129,15 +129,6 @@
 /turf/closed/wall/attack_paw(mob/living/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return attack_hand(user, modifiers)
-
-
-/turf/closed/wall/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src)
-	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		dismantle_wall(1)
-		return
 
 /turf/closed/wall/attack_hulk(mob/living/carbon/user)
 	..()
@@ -233,7 +224,7 @@
 			F.attach(src, user)
 		return TRUE
 	//Poster stuff
-	else if(istype(W, /obj/item/poster))
+	else if(istype(W, /obj/item/poster) && Adjacent(user)) //no tk memes.
 		place_poster(W,user)
 		return TRUE
 

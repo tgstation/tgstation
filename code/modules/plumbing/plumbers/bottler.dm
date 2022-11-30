@@ -8,6 +8,9 @@
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 100
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	///category for plumbing RCD
+	category="Storage"
+
 	///how much do we fill
 	var/wanted_amount = 10
 	///where things are sent
@@ -63,7 +66,7 @@
 		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
 	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = 100)
-	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return .
 	wanted_amount = new_amount
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))

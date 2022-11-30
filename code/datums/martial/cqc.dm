@@ -16,7 +16,7 @@
 
 /datum/martial_art/cqc/teach(mob/living/cqc_user, make_temporary)
 	. = ..()
-	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
 
 /datum/martial_art/cqc/on_remove(mob/living/cqc_user)
 	UnregisterSignal(cqc_user, COMSIG_PARENT_ATTACKBY)
@@ -38,7 +38,7 @@
 	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
 	if(!touch_spell)
 		return
-	INVOKE_ASYNC(touch_spell, /datum/action/cooldown/spell/touch.proc/do_hand_hit, touch_weapon, attacker, attacker)
+	INVOKE_ASYNC(touch_spell, TYPE_PROC_REF(/datum/action/cooldown/spell/touch, do_hand_hit), touch_weapon, attacker, attacker)
 	return COMPONENT_NO_AFTERATTACK
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
@@ -222,7 +222,7 @@
 			playsound(get_turf(D), 'sound/weapons/cqchit1.ogg', 50, TRUE, -1)
 			if(I && D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
-			D.set_timed_status_effect(4 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+			D.set_jitter_if_lower(4 SECONDS)
 			D.apply_damage(5, A.get_attack_type())
 	else
 		D.visible_message(span_danger("[A] fails to disarm [D]!"), \
