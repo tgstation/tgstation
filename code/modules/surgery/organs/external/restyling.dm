@@ -14,20 +14,13 @@
 
 	return valid_restyles
 
-///Invokes async to ask a mob if their limb if their limb has an external organ
-/mob/living/carbon/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
+///Someone used a restyling thingymajigga on our limb owner
+/obj/item/bodypart/proc/on_attempt_feature_restyle_mob(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
-
-///Asks the mob to ask their limb about restyling
-/mob/living/carbon/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
-	var/obj/item/bodypart/targeted_part = get_bodypart(body_zone)
-	if(!targeted_part)
-		to_chat(trimmer, span_warning("There's no bodypart there!"))
-		return FALSE
-	targeted_part.attempt_feature_restyle(source, trimmer, original_target, body_zone, restyle_type, style_speed)
-	return TRUE
+	//Check what body zone we are against the targeted zone, so we're sure we are the targeted limb
+	if(src.body_zone == body_zone)
+		INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
 ///Invoke async so we dont break signals
 /obj/item/bodypart/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
