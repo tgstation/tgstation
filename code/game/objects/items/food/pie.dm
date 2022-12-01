@@ -13,7 +13,7 @@
 	/// type is spawned 5 at a time and replaces this pie when processed by cutting tool
 	var/obj/item/food/pieslice/slice_type
 	/// so that the yield can change if it isnt 5
-	var/obj/item/food/pie/yield = 5
+	var/yield = 5
 
 /obj/item/food/pie/MakeProcessable()
 	if (slice_type)
