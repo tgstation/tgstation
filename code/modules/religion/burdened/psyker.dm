@@ -30,7 +30,6 @@
 	to_chat(owner, span_userdanger("Your head hurts... It can't fit your brain!"))
 	owner.adjust_disgust(33 * delta_time)
 	applyOrganDamage(5 * delta_time, 199)
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5 * delta_time)
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
