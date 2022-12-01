@@ -235,7 +235,6 @@
 	SIGNAL_HANDLER
 	log_bomber(null, "TTV valve opened via deepfrying", src, "last fingerprints = [fingerprintslast]")
 	toggle_valve()
-	///if it doesn't blow up, congratulations! it's inert anyways, so we don't care if it's deep fried anymore
 
 /obj/item/transfer_valve/ui_state(mob/user)
 	return GLOB.hands_state
