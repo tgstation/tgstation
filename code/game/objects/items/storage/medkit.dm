@@ -263,18 +263,51 @@
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+	atom_storage.max_slots = 12
+	atom_storage.max_total_storage = 24
 
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/defibrillator/compact/combat/loaded(src)
-	new /obj/item/reagent_containers/hypospray/combat(src)
-	new /obj/item/reagent_containers/pill/patch/libital(src)
-	new /obj/item/reagent_containers/pill/patch/libital(src)
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
-	new /obj/item/reagent_containers/pill/patch/aiuri(src)
-	new /obj/item/clothing/glasses/hud/health/night(src)
+	var/static/list/items_inside = list(
+		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/mesh/advanced = 2,
+		/obj/item/reagent_containers/pill/patch/libital = 4,
+		/obj/item/reagent_containers/pill/patch/aiuri = 4,
+		/obj/item/stack/medical/gauze = 2,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/scalpel = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/cautery = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/tactical/premium
+	name = "premium combat medical kit"
+	desc = "May or may not contain traces of lead."
+	grind_results = list(/datum/reagent/lead = 10)
+
+/obj/item/storage/medkit/tactical/premium/PopulateContents()
+	if(empty)
+		return
+	var/static/list/items_inside = list(
+		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/mesh/advanced = 2,
+		/obj/item/reagent_containers/pill/patch/libital = 3,
+		/obj/item/reagent_containers/pill/patch/aiuri = 3,
+		/obj/item/stack/medical/gauze = 2,
+		/obj/item/mod/module/thread_ripper = 1,
+		/obj/item/mod/module/surgical_processor/preloaded = 1,
+		/obj/item/mod/module/defibrillator/combat = 1,
+		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset = 1,
+		/obj/item/reagent_containers/hypospray/combat/empty = 1,
+		/obj/item/storage/box/evilmeds = 1,
+		/obj/item/reagent_containers/medigel/sterilizine = 1,
+		/obj/item/clothing/glasses/hud/health/night/science = 1,
+	)
+	generate_items_inside(items_inside,src)
 
 //medibot assembly
 /obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)

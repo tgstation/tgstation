@@ -55,10 +55,10 @@
 /datum/atom_hud/data/diagnostic
 
 /datum/atom_hud/data/diagnostic/basic
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD)
 
 /datum/atom_hud/data/diagnostic/advanced
-	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, DIAG_PATH_HUD)
+	hud_icons = list(DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD, DIAG_CIRCUIT_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD, DIAG_AIRLOCK_HUD, DIAG_LAUNCHPAD_HUD, DIAG_PATH_HUD)
 
 /datum/atom_hud/data/bot_path
 	// This hud exists so the bot can see itself, that's all
@@ -421,7 +421,6 @@ Diagnostic HUDs!
 	else
 		holder.icon_state = "hudnobatt"
 
-
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechstat()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
@@ -446,6 +445,16 @@ Diagnostic HUDs!
 		else
 			new_icon_state = "hudtracking"
 	holder.icon_state = new_icon_state
+
+///Shows inbuilt camera on the mech; if the camera's view range was affected by an EMP, shows a red blip while it's affected
+/obj/vehicle/sealed/mecha/proc/diag_hud_set_camera()
+	var/image/holder = hud_list[DIAG_CAMERA_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	if(chassis_camera.is_emp_scrambled)
+		holder.icon_state = "hudcamera_empd"
+		return
+	holder.icon_state = "hudcamera"
 
 /*~~~~~~~~~
 	Bots!

@@ -1,5 +1,0 @@
-author: "flowercuco"
-delete-after: True
-changes:
-  - qol: "pdas have a wrench deconstruct screentip"
-  - bugfix: "wrenching a pda no longer destroys all contents inside"

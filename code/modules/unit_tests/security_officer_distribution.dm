@@ -66,7 +66,7 @@
 
 	TEST_ASSERT(write_success, "Couldn't write department [SECURITY_OFFICER_DEPARTMENTS_TO_NAMES[preference]]")
 
-	var/mob/living/carbon/human/new_character = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/new_character = allocate(/mob/living/carbon/human/consistent)
 	new_character.mind_initialize()
 	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/security_officer))
 
@@ -85,7 +85,7 @@
 	var/list/distribution = list()
 
 	for (var/officer_preference in preferences_of_others)
-		var/mob/officer = allocate(/mob/living/carbon/human)
+		var/mob/officer = allocate(/mob/living/carbon/human/consistent)
 		distribution[officer] = officer_preference
 
 	var/result = get_new_officer_distribution_from_late_join(

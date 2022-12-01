@@ -28,12 +28,7 @@
 		TRAIT_VENTCRAWLER_NUDE,
 		TRAIT_WEAK_SOUL,
 	)
-	no_equip = list(
-		ITEM_SLOT_OCLOTHING,
-		ITEM_SLOT_GLOVES,
-		ITEM_SLOT_FEET,
-		ITEM_SLOT_SUITSTORE,
-	)
+	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
 	liked_food = MEAT | FRUIT | BUGS
 	disliked_food = CLOTH
@@ -235,7 +230,7 @@
 	UpdateButtons()
 
 
-/obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE)
+/obj/item/organ/internal/brain/primate/Insert(mob/living/carbon/primate, special = FALSE, drop_if_replaced = FALSE, no_id_transfer = FALSE)
 	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 

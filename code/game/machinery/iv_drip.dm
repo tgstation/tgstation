@@ -100,18 +100,17 @@
 			detach_iv()
 			return TRUE
 		if("changeRate")
-			change_transfer_rate(text2num(params["rate"]))
+			set_transfer_rate(text2num(params["rate"]))
 			return TRUE
 
 /// Sets the transfer rate to the provided value
-/obj/machinery/iv_drip/proc/change_transfer_rate(var/new_rate)
+/obj/machinery/iv_drip/proc/set_transfer_rate(var/new_rate)
 	if(!use_internal_storage && !reagent_container)
 		return
 	if(!attached)
 		return
-	if(!new_rate)
-		return
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(transfer_rate > 0)
@@ -196,9 +195,9 @@
 	if(!can_use_alt_click(user))
 		return ..()
 	if(transfer_rate > MIN_IV_TRANSFER_RATE)
-		transfer_rate = MIN_IV_TRANSFER_RATE
+		set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	else
-		transfer_rate = MAX_IV_TRANSFER_RATE
+		set_transfer_rate(MAX_IV_TRANSFER_RATE)
 	investigate_log("was set to [transfer_rate] u/sec. by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "transfer rate set to [transfer_rate] u/sec.")
 	update_appearance(UPDATE_ICON)

@@ -112,7 +112,7 @@
 	helmet = new /obj/item/clothing/head/mod(src)
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/mod(src)
-	chestplate.allowed += typecacheof(theme.allowed_suit_storage)
+	chestplate.allowed += theme.allowed_suit_storage
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	mod_parts += gauntlets
@@ -482,7 +482,7 @@
 
 	var/list/all_parts = mod_parts + src
 	for(var/obj/item/part in all_parts)
-		if(!(part.slot_flags in new_species.no_equip) || is_type_in_list(new_species, part.species_exception))
+		if(!(new_species.no_equip_flags & part.slot_flags) || is_type_in_list(new_species, part.species_exception))
 			continue
 		forceMove(drop_location())
 		return

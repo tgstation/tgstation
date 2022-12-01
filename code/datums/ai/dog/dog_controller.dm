@@ -86,7 +86,7 @@
 	var/mob/living/living_pawn = pawn
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return
-	current_movement_target = thrown_thing
+	set_movement_target(thrown_thing)
 	blackboard[BB_FETCH_TARGET] = thrown_thing
 	blackboard[BB_FETCH_DELIVER_TO] = throwing_datum.thrower
 	if(living_pawn.buckled)
@@ -272,7 +272,7 @@
 			if(pointed_item.obj_flags & ABSTRACT)
 				return
 			pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and barks excitedly!"))
-			current_movement_target = pointed_movable
+			set_movement_target(pointed_movable)
 			blackboard[BB_FETCH_TARGET] = pointed_movable
 			blackboard[BB_FETCH_DELIVER_TO] = pointing_friend
 			if(living_pawn.buckled)
@@ -280,7 +280,7 @@
 			queue_behavior(/datum/ai_behavior/fetch)
 		if(DOG_COMMAND_ATTACK)
 			pawn.visible_message(span_notice("[pawn] follows [pointing_friend]'s gesture towards [pointed_movable] and growls intensely!"))
-			current_movement_target = pointed_movable
+			set_movement_target(pointed_movable)
 			blackboard[BB_DOG_HARASS_TARGET] = WEAKREF(pointed_movable)
 			if(living_pawn.buckled)
 				queue_behavior(/datum/ai_behavior/resist)//in case they are in bed or something

@@ -35,13 +35,13 @@
 	var/random_color = TRUE
 	/// List of possible random colors
 	var/static/list/screwdriver_colors = list(
-		"blue" = "#1861d5",
-		"red" = "#ff0000",
-		"pink" = "#d5188d",
-		"brown" = "#a05212",
-		"green" = "#0e7f1b",
-		"cyan" = "#18a2d5",
-		"yellow" = "#ffa500"
+		COLOR_TOOL_BLUE,
+		COLOR_TOOL_RED,
+		COLOR_TOOL_PINK,
+		COLOR_TOOL_BROWN,
+		COLOR_TOOL_GREEN,
+		COLOR_TOOL_CYAN,
+		COLOR_TOOL_YELLOW,
 	)
 
 /obj/item/screwdriver/suicide_act(mob/living/user)
@@ -50,8 +50,7 @@
 
 /obj/item/screwdriver/Initialize(mapload)
 	if(random_color)
-		var/our_color = pick(screwdriver_colors)
-		set_greyscale(colors=list(screwdriver_colors[our_color]))
+		set_greyscale(colors = list(pick(screwdriver_colors)))
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
