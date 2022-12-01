@@ -105,18 +105,18 @@ export const JobSelection = (props, context) => {
   ); // Why the fuck is it so hard to clone objects properly in JS?!
 
   return (
-    <Window width={1012} height={716}>
+    <Window width={1012} height={666 /* Hahahahahaha */}>
       <Window.Content scrollable>
         <StyleableSection
-          title="Job Selection"
-          titleContents={
+          title={
             <Button
-              style={{ 'float': 'right' }}
+              style={{ 'position': 'absolute', 'right': '1em' }}
               onClick={() => act('SelectedJob', { 'job': 'Random' })}
               content="Random Job!"
               tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
             />
-          }>
+          }
+          titleStyle={{ 'min-height': '3.4em' }}>
           <Box wrap="wrap" style={{ 'columns': '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
               const departmentName = departmentEntry[0];
@@ -124,7 +124,25 @@ export const JobSelection = (props, context) => {
               return (
                 <Box key={departmentName} minWidth="30%">
                   <StyleableSection
-                    title={departmentName}
+                    title={
+                      <>
+                        {departmentName}
+                        <span
+                          style={{
+                            'font-size': '1rem',
+                            'white-space': 'nowrap',
+                            'position': 'absolute',
+                            'right': '1em',
+                            'color': Color.fromHex(entry.color)
+                              .darken(60)
+                              .toString(),
+                          }}>
+                          {entry.open_slots +
+                            (entry.open_slots === 1 ? ' Slot' : ' Slots') +
+                            ' Available'}
+                        </span>
+                      </>
+                    }
                     style={{
                       'background-color': entry.color,
                       'margin-bottom': '1em',
@@ -134,43 +152,24 @@ export const JobSelection = (props, context) => {
                       'border-bottom-color': Color.fromHex(entry.color)
                         .darken(50)
                         .toString(),
-                      'min-height': '3.4rem',
                     }}
                     textStyle={{
                       'color': Color.fromHex(entry.color)
                         .darken(80)
                         .toString(),
-                    }}
-                    titleSubtext={
-                      <span
-                        style={{
-                          'white-space': 'nowrap',
-                          'position': 'absolute',
-                          'right': '0px',
-                          'clear': 'left',
-                          'color': Color.fromHex(entry.color)
-                            .darken(60)
-                            .toString(),
-                        }}>
-                        {entry.open_slots +
-                          (entry.open_slots === 1 ? ' Slot' : ' Slots') +
-                          ' Available'}
-                      </span>
-                    }>
+                    }}>
                     <Stack vertical>
                       {Object.entries(entry.jobs).map((job) => (
                         <Stack.Item key={job[0]}>
-                          {
-                            <JobEntry
-                              key={job[0]}
-                              jobName={job[0]}
-                              job={job[1]}
-                              department={entry}
-                              onClick={() => {
-                                act('SelectedJob', { job: job[0] });
-                              }}
-                            />
-                          }
+                          <JobEntry
+                            key={job[0]}
+                            jobName={job[0]}
+                            job={job[1]}
+                            department={entry}
+                            onClick={() => {
+                              act('SelectedJob', { job: job[0] });
+                            }}
+                          />
                         </Stack.Item>
                       ))}
                     </Stack>

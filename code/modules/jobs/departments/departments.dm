@@ -1,7 +1,7 @@
 /// Singleton representing a category of jobs forming a department.
 /datum/job_department
 	/// Department as displayed on different menus.
-	var/department_name = "No department assigned"
+	var/department_name = DEPARTMENT_UNASSIGNED
 	/// Bitflags associated to the specific department.
 	var/department_bitflags = NONE
 	/// Typepath of the job datum leading this department.

@@ -140,7 +140,7 @@
 #define JOB_DISPLAY_ORDER_PRISONER 35
 
 
-#define DEPARTMENT_UNASSIGNED "No department assigned"
+#define DEPARTMENT_UNASSIGNED "No Department"
 
 #define DEPARTMENT_BITFLAG_SECURITY (1<<0)
 #define DEPARTMENT_SECURITY "Security"

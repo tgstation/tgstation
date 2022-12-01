@@ -7,7 +7,6 @@ export const StyleableSection: SFC<{
   titleStyle?;
   textStyle?;
   title?;
-  titleContents?;
   titleSubtext?;
 }> = (props) => {
   return (
@@ -16,7 +15,6 @@ export const StyleableSection: SFC<{
       <Box class="Section__title" style={props.titleStyle}>
         <Box class="Section__titleText" style={props.textStyle}>
           {props.title}
-          {props.titleContents}
         </Box>
         <div className="Section__buttons">{props.titleSubtext}</div>
       </Box>
