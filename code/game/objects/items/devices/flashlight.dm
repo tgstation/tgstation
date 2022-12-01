@@ -497,7 +497,7 @@
 	on = FALSE
 	update_appearance()
 
-/obj/item/flashlight/glowstick/update_appearance(updates=ALL)
+/obj/item/flashlight/glowstick/_update_appearance(updates=ALL)
 	. = ..()
 	if(fuel <= 0)
 		set_light_on(FALSE)

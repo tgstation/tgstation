@@ -16,7 +16,7 @@
 	SSmapping.nuke_tiles -= src
 	return ..()
 
-/turf/open/floor/circuit/update_appearance(updates)
+/turf/open/floor/circuit/_update_appearance(updates)
 	. = ..()
 	if(!on)
 		set_light(0)

@@ -143,7 +143,7 @@
 	current_lift_floor = new_floor
 	update_appearance()
 
-/obj/machinery/lift_indicator/update_appearance(updates)
+/obj/machinery/lift_indicator/_update_appearance(updates)
 	. = ..()
 
 	if(!is_operational)

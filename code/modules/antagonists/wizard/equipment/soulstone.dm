@@ -32,7 +32,7 @@
 	if(!base_name)
 		base_name = initial(name)
 
-/obj/item/soulstone/update_appearance(updates)
+/obj/item/soulstone/_update_appearance(updates)
 	. = ..()
 	for(var/mob/living/simple_animal/shade/sharded_shade in src)
 		switch(theme)

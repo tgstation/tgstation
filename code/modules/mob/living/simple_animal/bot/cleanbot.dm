@@ -106,7 +106,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/cleaner, CLEANBOT_CLEANING_TIME, \
-		on_cleaned_callback = CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance), UPDATE_ICON))
+		on_cleaned_callback = CALLBACK(src, TYPE_PROC_REF(/atom/, _update_appearance), UPDATE_ICON))
 
 	get_targets()
 	update_appearance(UPDATE_ICON)

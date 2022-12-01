@@ -555,7 +555,7 @@
 				), signal_source)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, signal_source)
 
-/obj/machinery/airalarm/update_appearance(updates)
+/obj/machinery/airalarm/_update_appearance(updates)
 	. = ..()
 
 	if(panel_open || (machine_stat & (NOPOWER|BROKEN)) || shorted)

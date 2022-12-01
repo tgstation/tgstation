@@ -842,7 +842,7 @@
 		if(!QDELETED(src))
 			update_appearance()
 
-/obj/structure/window/paperframe/update_appearance(updates)
+/obj/structure/window/paperframe/_update_appearance(updates)
 	. = ..()
 	set_opacity(atom_integrity >= max_integrity)
 

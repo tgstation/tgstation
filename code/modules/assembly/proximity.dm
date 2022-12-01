@@ -119,7 +119,7 @@
 	if(scanning && proximity_monitor.set_range(sense))
 		sense()
 
-/obj/item/assembly/prox_sensor/update_appearance()
+/obj/item/assembly/prox_sensor/_update_appearance()
 	. = ..()
 	holder?.update_appearance()
 

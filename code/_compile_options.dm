@@ -11,6 +11,10 @@
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
+/// Enables update_appearance "relevence" tracking
+/// This allows us to check which update_appearance procs are actually doing anything. Good thing to look in on once a year or so
+#define APPEARANCE_SUCCESS_TRACKING
+
 ///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING

@@ -23,7 +23,7 @@
 	. = ..()
 	update_appearance()
 
-/obj/item/book/granter/martial/carp/update_appearance(updates)
+/obj/item/book/granter/martial/carp/_update_appearance(updates)
 	. = ..()
 	if(uses <= 0)
 		name = "empty scroll"

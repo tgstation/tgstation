@@ -171,7 +171,7 @@
 			if(batong.cell)
 				batong.cell.charge = 0
 
-/obj/machinery/recharger/update_appearance(updates)
+/obj/machinery/recharger/_update_appearance(updates)
 	. = ..()
 	if((machine_stat & (NOPOWER|BROKEN)) || panel_open || !anchored)
 		luminosity = 0

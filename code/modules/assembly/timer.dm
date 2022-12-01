@@ -72,7 +72,7 @@
 		timer_end()
 		time = saved_time
 
-/obj/item/assembly/timer/update_appearance()
+/obj/item/assembly/timer/_update_appearance()
 	. = ..()
 	holder?.update_appearance()
 

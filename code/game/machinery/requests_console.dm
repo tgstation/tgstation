@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	max_integrity = 300
 	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
 
-/obj/machinery/requests_console/update_appearance(updates=ALL)
+/obj/machinery/requests_console/_update_appearance(updates=ALL)
 	. = ..()
 	if(machine_stat & NOPOWER)
 		set_light(0)

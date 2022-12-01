@@ -62,7 +62,7 @@
 	state = pick(LIGHTFLOOR_FLICKER, LIGHTFLOOR_BREAKING, LIGHTFLOOR_BROKEN)/// pick a broken state
 	update_appearance()
 
-/turf/open/floor/light/update_appearance(updates)
+/turf/open/floor/light/_update_appearance(updates)
 	. = ..()
 	if(!on)
 		set_light(0)

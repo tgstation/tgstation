@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	signal_state = new_state
 	update_appearance()
 
-/obj/machinery/crossing_signal/update_appearance(updates)
+/obj/machinery/crossing_signal/_update_appearance(updates)
 	. = ..()
 
 	if(!is_operational)

@@ -180,7 +180,7 @@
 	flick("flashshield_flash", src)
 	inhand_icon_state = "flashshield_flash"
 	owner?.update_held_items()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE)) //.5 second delay so the inhands sprite finishes its anim since inhands don't support flick().
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, _update_appearance)), 0.5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE)) //.5 second delay so the inhands sprite finishes its anim since inhands don't support flick().
 
 /obj/item/shield/riot/flash/attackby(obj/item/attackby_item, mob/user)
 	if(istype(attackby_item, /obj/item/assembly/flash/handheld))

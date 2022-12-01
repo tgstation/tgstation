@@ -264,7 +264,7 @@
 	else
 		..()
 
-/obj/machinery/vending/update_appearance(updates=ALL)
+/obj/machinery/vending/_update_appearance(updates=ALL)
 	. = ..()
 	if(machine_stat & BROKEN)
 		set_light(0)

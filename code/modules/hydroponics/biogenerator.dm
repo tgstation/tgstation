@@ -70,7 +70,7 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<br>And up to <b>[max_biomass]</b> units of biomass.")
 
-/obj/machinery/biogenerator/update_appearance()
+/obj/machinery/biogenerator/_update_appearance()
 	. = ..()
 	var/power = machine_stat & (NOPOWER|BROKEN) ? 0 : 1 + biomass / max_biomass + (processing & 1)
 	set_light(MINIMUM_USEFUL_LIGHT_RANGE, power, LIGHT_COLOR_CYAN)

@@ -68,7 +68,7 @@
 		return FALSE
 	return cpu.emag_act(user)
 
-/obj/machinery/modular_computer/update_appearance(updates)
+/obj/machinery/modular_computer/_update_appearance(updates)
 	. = ..()
 	set_light(cpu?.enabled ? light_strength : 0)
 

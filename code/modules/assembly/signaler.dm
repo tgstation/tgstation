@@ -59,7 +59,7 @@
 	signal()
 	return TRUE
 
-/obj/item/assembly/signaler/update_appearance()
+/obj/item/assembly/signaler/_update_appearance()
 	. = ..()
 	holder?.update_appearance()
 

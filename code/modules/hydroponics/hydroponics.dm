@@ -460,7 +460,7 @@
 
 	return
 
-/obj/machinery/hydroponics/update_appearance(updates)
+/obj/machinery/hydroponics/_update_appearance(updates)
 	. = ..()
 	if(self_sustaining)
 		set_light(3)

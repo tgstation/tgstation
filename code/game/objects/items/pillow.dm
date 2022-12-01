@@ -102,7 +102,7 @@
 	playsound(user,'sound/items/poster_ripped.ogg', 50)
 	update_appearance()
 
-/obj/item/pillow/update_appearance(updates)
+/obj/item/pillow/_update_appearance(updates)
 	. = ..()
 	if(!pillow_trophy)
 		desc = "A soft and fluffy pillow. You can smack someone with this! [tag_desc]"

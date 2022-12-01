@@ -55,7 +55,7 @@
 	update_appearance()
 	return secured
 
-/obj/item/assembly/infra/update_appearance(updates=ALL)
+/obj/item/assembly/infra/_update_appearance(updates=ALL)
 	. = ..()
 	holder?.update_appearance(updates)
 

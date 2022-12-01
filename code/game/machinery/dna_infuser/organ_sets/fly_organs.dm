@@ -130,7 +130,7 @@
 	icon_state = pick("brain-x-d", "liver-x", "kidneys-x", "spinner-x", "lungs-x", "random_fly_1", "random_fly_2", "random_fly_3", "random_fly_4", "random_fly_5")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fly)
 
-/obj/item/organ/internal/appendix/fly/update_appearance(updates=ALL)
+/obj/item/organ/internal/appendix/fly/_update_appearance(updates=ALL)
 	return ..(updates & ~(UPDATE_NAME|UPDATE_ICON)) //don't set name or icon thank you
 
 

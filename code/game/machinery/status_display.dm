@@ -96,14 +96,18 @@
 /obj/machinery/status_display/proc/set_messages(line1, line2)
 	line1 = uppertext(line1)
 	line2 = uppertext(line2)
+	var/changed = FALSE
 
 	if(line1 != message1)
 		message1 = line1
+		changed = TRUE
 
 	if(line2 != message2)
 		message2 = line2
+		changed = TRUE
 
-	update_appearance()
+	if(changed)
+		update_appearance()
 
 /**
  * Remove both message objs and null the fields.
@@ -136,7 +140,7 @@
 	vis_contents += new_status_display_text
 	return new_status_display_text
 
-/obj/machinery/status_display/update_appearance(updates=ALL)
+/obj/machinery/status_display/_update_appearance(updates=ALL)
 	. = ..()
 	if( \
 		(machine_stat & (NOPOWER|BROKEN)) || \

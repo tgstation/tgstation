@@ -84,7 +84,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 				sendEvent(KEYCARD_BSA_UNLOCK)
 				. = TRUE
 
-/obj/machinery/keycard_auth/update_appearance(updates)
+/obj/machinery/keycard_auth/_update_appearance(updates)
 	. = ..()
 
 	if(event_source && !(machine_stat & (NOPOWER|BROKEN)))

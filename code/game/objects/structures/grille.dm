@@ -30,7 +30,7 @@
 	. = ..()
 	update_appearance()
 
-/obj/structure/grille/update_appearance(updates)
+/obj/structure/grille/_update_appearance(updates)
 	if(QDELETED(src) || broken)
 		return
 

@@ -135,7 +135,7 @@
 	var/market_verb = "Customer"
 	var/payment_department = ACCOUNT_ENG
 
-	// For storing and overriding ui id
+	/// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
 	///Is this machine currently in the atmos machinery queue?
 	var/atmos_processing = FALSE
@@ -148,6 +148,9 @@
 	var/always_area_sensitive = FALSE
 	///Multiplier for power consumption.
 	var/machine_power_rectifier = 1
+	/// What was our power state the last time we updated its appearance?
+	/// TRUE for on, FALSE for off, -1 for never checked
+	var/appearance_power_state = -1
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)
@@ -973,12 +976,12 @@
 	for(var/obj/item/component_part as anything in component_parts)
 		if(printed_components[component_part.name])
 			continue //already printed so skip
-		
+
 		var/part_name = component_part.name
 		if (isstack(component_part))
 			var/obj/item/stack/stack_part = component_part
 			part_name = stack_part.singular_name
-		
+
 		text += span_notice("[icon2html(component_part, user)] [part_count[component_part.name]] [part_name]\s.")
 		printed_components[component_part.name] = TRUE
 

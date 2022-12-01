@@ -35,7 +35,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
 	update_appearance()
 
-/obj/machinery/light_switch/update_appearance(updates=ALL)
+/obj/machinery/light_switch/_update_appearance(updates=ALL)
 	. = ..()
 	luminosity = (machine_stat & NOPOWER) ? 0 : 1
 

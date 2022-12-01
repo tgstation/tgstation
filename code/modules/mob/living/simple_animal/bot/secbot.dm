@@ -307,7 +307,7 @@
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, _update_appearance)), 0.2 SECONDS)
 	var/threat = 5
 
 	if(harm)

@@ -185,7 +185,7 @@
 		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 15)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, _update_appearance)), 15)
 
 /obj/machinery/button/door
 	name = "door button"

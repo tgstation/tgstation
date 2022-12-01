@@ -46,7 +46,7 @@
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/simple_animal/bot, speak), "Honk!")
 	playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, _update_appearance)), 0.2 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/honkbot/bot_reset()
 	..()
@@ -59,7 +59,7 @@
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1) //HEEEEEEEEEEEENK!!
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, _update_appearance)), 0.2 SECONDS)
 	if(!ishuman(current_target))
 		current_target.Paralyze(8 SECONDS)
 		current_target.set_stutter(40 SECONDS)
@@ -99,7 +99,7 @@
 	. = ..()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, _update_appearance)), 0.2 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/honkbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -127,7 +127,7 @@
 
 	limiting_spam = TRUE // prevent spam
 	addtimer(CALLBACK(src, PROC_REF(limiting_spam_false)), cooldowntimehorn)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, _update_appearance)), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 //Honkbots don't care for NAP violations
 /mob/living/simple_animal/bot/secbot/honkbot/check_nap_violations()
@@ -142,5 +142,5 @@
 	playsound(loc, honksound, 50, TRUE, -1)
 	limiting_spam = TRUE // prevent spam
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, _update_appearance)), 0.2 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(limiting_spam_false)), cooldowntimehorn)

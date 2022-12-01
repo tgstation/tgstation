@@ -212,7 +212,7 @@
 			stack_trace("TTV gas merging failed.")
 
 		for(var/i in 1 to 6)
-			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 20 + (i - 1) * 10)
+			addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, _update_appearance)), 20 + (i - 1) * 10)
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()

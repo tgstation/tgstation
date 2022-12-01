@@ -244,7 +244,7 @@
 	SIGNAL_HANDLER
 	refresh_window()
 
-/obj/machinery/atmospherics/components/tank/update_appearance()
+/obj/machinery/atmospherics/components/tank/_update_appearance()
 	. = ..()
 	refresh_window()
 

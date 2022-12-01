@@ -93,7 +93,7 @@
 	A.holder_movement()
 	A.on_attach()
 
-/obj/item/assembly_holder/update_appearance(updates=ALL)
+/obj/item/assembly_holder/_update_appearance(updates=ALL)
 	. = ..()
 	master?.update_appearance(updates)
 

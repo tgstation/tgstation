@@ -372,7 +372,7 @@
 	pressure_charging = TRUE
 	update_appearance()
 
-/obj/machinery/disposal/bin/update_appearance(updates)
+/obj/machinery/disposal/bin/_update_appearance(updates)
 	. = ..()
 	if((machine_stat & (BROKEN|NOPOWER)) || panel_open)
 		luminosity = 0

@@ -20,7 +20,7 @@
 	. = ..()
 	update_appearance()
 
-/obj/item/book/granter/martial/plasma_fist/update_appearance(updates)
+/obj/item/book/granter/martial/plasma_fist/_update_appearance(updates)
 	. = ..()
 	if(uses <= 0)
 		name = "empty scroll"

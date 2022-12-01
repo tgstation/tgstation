@@ -104,7 +104,7 @@
 	QDEL_NULL(electronics)
 	return ..()
 
-/obj/structure/closet/update_appearance(updates=ALL)
+/obj/structure/closet/_update_appearance(updates=ALL)
 	. = ..()
 	if(opened || broken || !secure)
 		luminosity = 0

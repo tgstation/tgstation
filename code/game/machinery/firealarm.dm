@@ -104,7 +104,7 @@
 		soundloop.stop()
 	update_appearance()
 
-/obj/machinery/firealarm/update_appearance(updates)
+/obj/machinery/firealarm/_update_appearance(updates)
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)) && !(obj_flags & EMAGGED) && !(machine_stat & (BROKEN|NOPOWER)))
 		set_light(l_power = 0.8)
