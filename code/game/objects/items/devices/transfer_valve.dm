@@ -21,7 +21,6 @@
 	RegisterSignal(src, COMSIG_ITEM_FRIED, PROC_REF(on_fried))
 
 /obj/item/transfer_valve/Destroy()
-	UnregisterSignal(src, COMSIG_ITEM_FRIED)
 	attached_device = null
 	return ..()
 
