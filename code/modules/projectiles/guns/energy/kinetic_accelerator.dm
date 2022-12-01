@@ -58,7 +58,6 @@
 		I.play_tool_sound(src, 100)
 		for(var/a in modkits)
 			var/obj/item/borg/upgrade/modkit/M = a
-			user = new(drop_location())
 			M.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
