@@ -467,6 +467,7 @@
 	if(hud_used)
 		hud_used.build_hand_slots()
 
+	SEND_SIGNAL(src, COMSIG_MOB_NUM_HANDS_CHANGED)
 
 /mob/living/carbon/human/change_number_of_hands(amt)
 	var/old_limbs = held_items.len

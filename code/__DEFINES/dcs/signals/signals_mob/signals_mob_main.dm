@@ -171,3 +171,5 @@
 
 ///from living/flash_act(), when a mob is successfully flashed.
 #define COMSIG_MOB_FLASHED "mob_flashed"
+/// Called from /mob/change_number_of_hands().
+#define COMSIG_MOB_NUM_HANDS_CHANGED "mob_num_hands_changed"
