@@ -77,8 +77,8 @@
 	var/icon_gib = null
 	///Flip the sprite upside down on death. Mostly here for things lacking custom dead sprites.
 	var/flip_on_death = FALSE
-	///Invert the mob's density on death. A usually dense mob will become passable, a passable one will become dense.
-	var/flip_density_on_death = TRUE
+	///Removes density upon death, restores the original state if alive.
+	var/become_passable_on_death = TRUE
 
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
@@ -122,8 +122,8 @@
 		icon_state = icon_dead
 		if(flip_on_death)
 			transform = transform.Turn(180)
-		if (flip_density_on_death)
-			set_density(!density)
+		if (become_passable_on_death)
+			set_density(FALSE)
 
 /mob/living/basic/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
@@ -132,8 +132,8 @@
 	icon_state = icon_living
 	if (flip_on_death)
 		transform = transform.Turn(180)
-	if (flip_density_on_death)
-		set_density(!density)
+	if (become_passable_on_death)
+		set_density(initial(density))
 
 /mob/living/basic/proc/melee_attack(atom/target)
 	src.face_atom(target)

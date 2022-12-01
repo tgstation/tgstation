@@ -19,7 +19,8 @@
 		if(ghost_role.outfit_override)
 			TEST_FAIL("[ghost_role.type] has a defined \"outfit_override\" list, which is only for mapping. Do not set this!")
 
-		if(ghost_role.mob_type != /mob/living/carbon/human)
+		var/human_type = /mob/living/carbon/human // this exists to prevent being caught by checks
+		if(ghost_role.mob_type != human_type)
 			//vars that must not be set if the mob type isn't human
 			var/list/human_only_vars = list(
 				"mob_species",

@@ -90,7 +90,7 @@
 		ADD_TRAIT(wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
 		addtimer(CALLBACK(src, PROC_REF(ai_fall)), AI_FALL_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
 	var/atom/movable/mover = wearer || src
-	return step(mover, direction)
+	return mover.try_step_multiz(direction)
 
 #undef MOVE_DELAY
 #undef WEARER_DELAY
