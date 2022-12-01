@@ -55,6 +55,7 @@
 
 /obj/item/grenade/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT, type)
 	RegisterSignal(src, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(on_used_as_ingredient))
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
@@ -167,6 +168,7 @@
 		var/mob/mob = loc
 		mob.dropItemToGround(src)
 
+///Signal sent by someone putting the grenade in as an ingredient. Registers signals onto what it was put into so it can explode.
 /obj/item/grenade/proc/on_used_as_ingredient(datum/source, atom/used_in)
 	SIGNAL_HANDLER
 
@@ -174,10 +176,13 @@
 	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_KNIFE), PROC_REF(ingredient_detonation))
 	RegisterSignal(used_in, COMSIG_TOOL_ATOM_ACTED_PRIMARY(TOOL_ROLLINGPIN), PROC_REF(ingredient_detonation))
 
-/obj/item/grenade/proc/ingredient_detonation(datum/source, mob/living/target, mob/living/user, bitecount, bitesize)
+///Signal sent by someone eating food this is an ingredient in "used_in". Makes the grenade go kerblooey, destroying the food.
+/obj/item/grenade/proc/ingredient_detonation(atom/used_in, mob/living/target, mob/living/user, bitecount, bitesize)
 	SIGNAL_HANDLER
 
 	detonate()
+	//can't remove it as an ingredient so we need to get rid of the food. deleted ingredients not good
+	return DESTROY_FOOD
 
 /obj/item/grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)

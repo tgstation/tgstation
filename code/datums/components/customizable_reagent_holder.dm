@@ -110,7 +110,7 @@
 /datum/component/customizable_reagent_holder/proc/valid_ingredient(obj/ingredient)
 	if (HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
 		return FALSE
-	if(isgrenade(ingredient))
+	if(HAS_TRAIT(ingredient, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT))
 		return TRUE
 	switch (ingredient_type)
 		if (CUSTOM_INGREDIENT_TYPE_EDIBLE)
