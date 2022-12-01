@@ -91,6 +91,7 @@
 	behavior_flags = AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	action_cooldown = 1 SECONDS
 	var/scan_range = DEFAULT_SCAN_RANGE
+	var/turfs_only = FALSE
 
 /datum/ai_behavior/scan/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
@@ -109,17 +110,28 @@
 	var/found_target
 
 	for(var/turf/scanned_turf as anything in adjacent) //Let's see if there's something right next to us first!
-		found_target = targetting_datum.can_attack(living_pawn, scanned_turf)
+		found_target = targetting_datum.can_attack(living_pawn, scanned_turf, TRUE)
 
 		if(found_target)
 			on_find_target(controller, target_key, scanned_turf)
 			return
 
+		if(turfs_only)
+			continue
+
 		for(var/atom/scan in scanned_turf)
-			found_target = targetting_datum.can_attack(living_pawn, scan)
+			found_target = targetting_datum.can_attack(living_pawn, scan, TRUE)
 			if(found_target)
 				on_find_target(controller, target_key, scan)
 				return
+
+	if(turfs_only)
+		for(var/turf/scanned_turf in view(scan_range, living_pawn) - adjacent)
+			found_target = targetting_datum.can_attack(living_pawn, scanned_turf, TRUE)
+			if(found_target)
+				on_find_target(controller, target_key, scanned_turf)
+				return
+		return
 
 	for(var/atom/scanned_atom as anything in view(scan_range, living_pawn) - adjacent) //Search for something in range, minus what we already checked.
 		found_target = targetting_datum.can_attack(living_pawn, scanned_atom)
@@ -131,6 +143,9 @@
 /datum/ai_behavior/scan/proc/on_find_target(datum/ai_controller/controller, target_key, target)
 	controller.blackboard[target_key] = target
 	controller.CancelActions() //Found a target, time to replan!
+
+/datum/ai_behavior/scan/turfs_only
+	turfs_only = TRUE
 
 /datum/ai_behavior/force_bot_salute
 

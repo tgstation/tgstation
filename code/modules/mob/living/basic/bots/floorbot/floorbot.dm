@@ -224,14 +224,14 @@
 			toggle_magnet(TRUE)
 			set_current_mode(BOT_REPAIRING)
 			visible_message(span_notice("[src] begins [(target_floor.broken || target_floor.burnt) ? "repairing the floor" : "placing a floor tile"]."))
-			if(do_after(src, 20, target = target_floor) && mode == BOT_REPAIRING)
+			if(do_after(src, 20, target = target_floor))
 				success = TRUE
 
 		else if(was_replacing && tilestack && target_floor.type != tilestack.turf_type)
 			toggle_magnet(TRUE)
 			set_current_mode(BOT_REPAIRING)
 			visible_message(span_notice("[src] begins replacing the floor tiles."))
-			if(do_after(src, 20, target = target_floor) && mode == BOT_REPAIRING && tilestack)
+			if(do_after(src, 20, target = target_floor) && tilestack)
 				success = TRUE
 
 		if(success)

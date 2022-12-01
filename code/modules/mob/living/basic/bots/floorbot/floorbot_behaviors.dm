@@ -16,7 +16,7 @@
 	var/atom/target = controller.blackboard[target_key]
 
 	if(!targetting_datum.can_attack(controller.pawn, target))
-		finish_action(controller, FALSE)
+		finish_action(controller, FALSE, target_key)
 
 	if(DT_PROB(5, delta_time))
 		controller.pawn.audible_message("[controller.pawn] makes an excited beeping booping sound!")

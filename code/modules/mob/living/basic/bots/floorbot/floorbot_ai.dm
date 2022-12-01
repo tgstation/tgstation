@@ -27,10 +27,13 @@
 		//add else statement here that complains about being stuck!
 
 	if(controller.blackboard[BB_FLOOR_BOT_TARGET])
+		//if(get_dist(controller.pawn, controller.blackboard[BB_FLOOR_BOT_TARGET]) <= 1)
+		//	controller.set_movement_target(controller.blackboard[BB_FLOOR_BOT_TARGET], /datum/ai_movement/basic_avoidance)
+		//else
 		controller.set_movement_target(controller.blackboard[BB_FLOOR_BOT_TARGET])
 		controller.queue_behavior(/datum/ai_behavior/repair_floor, BB_FLOOR_BOT_TARGET, BB_TARGETTING_DATUM)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_planning_subtree/watch_for_tiles/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
-	controller.queue_behavior(/datum/ai_behavior/scan, BB_FLOOR_BOT_TARGET, BB_TARGETTING_DATUM)
+	controller.queue_behavior(/datum/ai_behavior/scan/turfs_only, BB_FLOOR_BOT_TARGET, BB_TARGETTING_DATUM)

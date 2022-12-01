@@ -359,6 +359,12 @@
 	COOLDOWN_DECLARE(repath_cooldown)
 	var/is_pathing = FALSE
 
+/datum/move_loop/has_target/jps/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
+	. = ..()
+	if(istype(extra_info, /datum/ai_controller))
+		var/datum/ai_controller/ai_controller = extra_info
+		movement_path = ai_controller.blackboard[BB_PATH_TO_USE]
+		message_admins("Made moveloop with existing path")
 
 /datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first)
 	. = ..()
@@ -381,7 +387,8 @@
 
 /datum/move_loop/has_target/jps/start_loop()
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(recalculate_path))
+	if(!movement_path)
+		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 
 /datum/move_loop/has_target/jps/Destroy()
 	id = null //Kill me
@@ -397,10 +404,17 @@
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
+	var/start_time = world.time
+	message_admins("Making a JPS path!")
 	is_pathing = TRUE
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
 	movement_path = get_path_to(moving, target, max_path_length, minimum_distance, id, simulated_only, avoid, skip_first)
 	is_pathing = FALSE
+	var/end_time = world.time - start_time
+	if(movement_path)
+		message_admins("Finished a JPS path after [end_time]ms! the length of the path is [movement_path.len]")
+	else
+		message_admins("FNo path after [end_time]ms!")
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))

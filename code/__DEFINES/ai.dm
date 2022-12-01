@@ -52,6 +52,8 @@
 #define BB_FOOD_TARGET "bb_food_target"
 ///Objects to ignore due to them being unreachable
 #define BB_IGNORE_LIST "BB__IGNORE_LIST"
+///Path we should use next time we use the JPS movement datum
+#define BB_PATH_TO_USE "BB_path_to_use"
 
 //for songs
 
