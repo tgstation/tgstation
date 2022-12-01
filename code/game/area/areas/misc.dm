@@ -10,7 +10,7 @@
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	area_flags = UNIQUE_AREA | NOT_HULLBREACHABLE
+	area_flags = UNIQUE_AREA | FLOORBOT_IGNORE
 	outdoors = TRUE
 	ambience_index = AMBIENCE_SPACE
 	flags_1 = CAN_BE_DIRTY_1
@@ -19,7 +19,7 @@
 
 /area/space/nearstation
 	icon_state = "space_near"
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT | NOT_HULLBREACHABLE
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT | FLOORBOT_IGNORE
 
 /area/misc/start
 	name = "start area"
