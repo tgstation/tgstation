@@ -20,6 +20,8 @@
 	atom_storage.max_slots = 4
 	atom_storage.locked = TRUE
 
+	register_context()
+
 /obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
 	var/locked = atom_storage.locked
 	if(W.GetID())
@@ -242,3 +244,14 @@
 	privacy_lock = atom_storage.locked
 	user.visible_message(span_notice("[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock."),
 					span_notice("You [privacy_lock ? "" : "un"]lock [src]'s privacy lock."))
+
+///screentips for lockboxes
+/obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(!held_item)
+		return NONE
+	if(src.broken)
+		return NONE
+	if(!held_item.GetID())
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = atom_storage.locked ? "Unlock with ID" : "Lock with ID"
+	return CONTEXTUAL_SCREENTIP_SET
