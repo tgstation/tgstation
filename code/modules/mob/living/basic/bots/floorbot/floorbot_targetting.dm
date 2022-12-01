@@ -32,7 +32,7 @@
 	if(isspaceturf(the_target))
 		var/area/target_area = get_area(the_target)
 		if(target_area.area_flags & FLOORBOT_IGNORE) //The area is space or a shuttle.
-			return TRUE
+			return FALSE
 
 	if(floorbot.floorbot_mode_flags & FLOORBOT_FIX_FLOORS && target_is_floor)
 		var/turf/open/floor/target_floor = the_target

@@ -109,3 +109,10 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define TELEPORT_CHANNEL_CULT "cult"
 /// Anything else
 #define TELEPORT_CHANNEL_FREE "free"
+
+
+
+///Return values for moveloop Move()
+#define MOVELOOP_NOT_READY -1
+//FALSE 0
+//TRUE 1

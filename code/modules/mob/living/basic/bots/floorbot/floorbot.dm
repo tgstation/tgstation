@@ -17,7 +17,7 @@
 
 	//path_image_color = "#FFA500"
 
-	var/floorbot_mode_flags = FLOORBOT_FIX_FLOORS
+	var/floorbot_mode_flags = FLOORBOT_FIX_FLOORS | FLOORBOT_REPLACE_TILES
 	var/targetdirection = NONE
 
 	var/maxtiles = 100

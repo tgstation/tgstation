@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Mobs that die in this area don't produce a dead chat message
 #define NO_DEATH_MESSAGE (1<<15)
 /// This area is not considered to be hull breachable, used by floorbots so they dont close up all of space.
-#define NOT_HULLBREACHABLE (1<<15)
+#define FLOORBOT_IGNORE (1<<15)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask

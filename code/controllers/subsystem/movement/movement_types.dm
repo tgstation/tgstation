@@ -25,8 +25,7 @@
 	var/timer = 0
 	///Is this loop running or not
 	var/running = FALSE
-	///Whether this loop can fail
-	var/can_fail = TRUE
+
 
 /datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	src.owner = owner
@@ -111,17 +110,11 @@
 		return
 
 	var/visual_delay = controller.visual_delay
-	var/success = move()
+	var/success = move() //Is not necesarily a bool, can also return MOVELOOP_NOT_READY
 
-	var/we_do_a_little_lying = success
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, success, delay * visual_delay)
 
-	if(!we_do_a_little_lying)
-		if(!can_fail)
-			we_do_a_little_lying = TRUE
-
-	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, we_do_a_little_lying, delay * visual_delay)
-
-	if(QDELETED(src) || !success) //Can happen
+	if(QDELETED(src) || success != TRUE) //Can happen
 		return
 
 	if(flags & MOVEMENT_LOOP_IGNORE_GLIDE)
@@ -364,6 +357,7 @@
 	var/list/movement_path
 	///Cooldown for repathing, prevents spam
 	COOLDOWN_DECLARE(repath_cooldown)
+	var/is_pathing = FALSE
 
 
 /datum/move_loop/has_target/jps/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, obj/item/card/id/id, simulated_only, turf/avoid, skip_first)
@@ -403,15 +397,17 @@
 	if(!COOLDOWN_FINISHED(src, repath_cooldown))
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
+	is_pathing = TRUE
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_REPATH)
-	can_fail = FALSE
 	movement_path = get_path_to(moving, target, max_path_length, minimum_distance, id, simulated_only, avoid, skip_first)
-	can_fail = TRUE
+	is_pathing = FALSE
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))
-		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
-		if(!length(movement_path))
+		if(is_pathing)
+			return MOVELOOP_NOT_READY
+		else
+			INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 			return FALSE
 
 	var/turf/next_step = movement_path[1]

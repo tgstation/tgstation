@@ -35,8 +35,6 @@
 
 		if(floorbot.repair(target))
 			finish_action(controller, TRUE, target_key)
-		else
-			finish_action(controller, FALSE, target_key)
 
 /datum/ai_behavior/repair_floor/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
