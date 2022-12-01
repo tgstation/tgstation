@@ -692,3 +692,33 @@
 
 	for(var/department_type in department_types)
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
+
+/datum/dynamic_ruleset/roundstart/silencer
+	name = "Silencer"
+	antag_flag = ROLE_SILENCER
+	antag_datum = /datum/antagonist/silencer
+	flags = LONE_RULESET
+	minimum_required_age = 7
+	/// it's every role but mime. i'm not typing that out
+	restricted_roles = list()
+	required_candidates = 1
+	weight = 1
+	cost = 2 //its one dude with nothing but a dream of some peace and quiet
+	requirements = list(30,20,10,10,10,10,10,10,10,10)
+
+/datum/dynamic_ruleset/roundstart/silencer/trim_candidates()
+	..()
+	candidates = GLOB.alive_player_list
+	for(var/mob/living/player as anything in candidates)
+		if(player.job != JOB_MIME)
+			candidates -= player
+			continue
+
+/datum/dynamic_ruleset/roundstart/silencer/pre_execute(population)
+	. = ..()
+	var/mob/the_silencer = pick_n_take(candidates)
+	assigned += the_silencer.mind
+	the_silencer.mind.special_role = ROLE_SILENCER
+	the_silencer.mind.restricted_roles = SSjob.name_occupations.Copy() - JOB_MIME
+	GLOB.pre_setup_antags += the_silencer.mind
+	return TRUE

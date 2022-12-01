@@ -14,6 +14,7 @@
 #define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
+#define ROLE_SILENCER "Silencer"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 
@@ -111,6 +112,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_MALF = 0,
 	ROLE_OPERATIVE = 14,
 	ROLE_REV_HEAD = 14,
+	ROLE_SILENCER = 0,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
 
