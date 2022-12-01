@@ -64126,7 +64126,7 @@
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/noslip/tram_platform,
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/right)
 "wZs" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
