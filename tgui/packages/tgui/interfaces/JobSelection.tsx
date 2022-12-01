@@ -66,10 +66,10 @@ export const JobEntry: SFC<{
         job.unavailable_reason ||
         (job.prioritized ? (
           <>
-            <p>
+            <p style={{ 'margin-top': '0px' }}>
               <b>The HoP wants more people in this job!</b>
             </p>
-            <p>{job.description}</p>
+            {job.description}
           </>
         ) : (
           job.description
