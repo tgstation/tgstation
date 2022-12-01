@@ -222,7 +222,7 @@
 	desc = "Project your psychics into a target to warp their view, and instill absolute terror that will cause them to fire their gun rapidly."
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	button_icon_state = "blind"
-	school = SCHOOL_HOLY
+	school = SCHOOL_PSYCHIC
 	cooldown_time = 1 MINUTES
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	spell_max_level = 1
@@ -304,7 +304,7 @@
 	desc = "Charge up your mind to shoot firearms faster and home in on your targets. Think smarter, not harder."
 	button_icon_state = "projectile"
 	sound = 'sound/weapons/gun/shotgun/rack.ogg'
-	school = SCHOOL_HOLY
+	school = SCHOOL_PSYCHIC
 	cooldown_time = 1 MINUTES
 	antimagic_flags = MAGIC_RESISTANCE_MIND
 	spell_max_level = 1
@@ -362,7 +362,7 @@
 /datum/action/cooldown/spell/forcewall/psychic_wall
 	name = "Psychic Wall"
 	desc = "Form a psychic wall, able to deflect projectiles and prevent things from going through."
-	school = SCHOOL_HOLY
+	school = SCHOOL_PSYCHIC
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 0 SECONDS
 	antimagic_flags = MAGIC_RESISTANCE_MIND

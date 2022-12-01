@@ -27,7 +27,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/proc/generate_pirate_name(spawn_gender)
 	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
 	var/endings = strings(PIRATE_NAMES_FILE, "endings")
-	return "[rank] [pick(beggings)][pick(endings)]"
+	return "[rank ? rank + " " : ""][pick(beggings)][pick(endings)]"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/Destroy()
 	if(spawn_oldpod)
@@ -72,7 +72,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/generate_pirate_name(spawn_gender)
 	var/first_name
-	switch(gender)
+	switch(spawn_gender)
 		if(MALE)
 			first_name = pick(GLOB.lizard_names_male)
 		if(FEMALE)
@@ -88,3 +88,19 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/gunner
 	rank = "Top-drawer"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/psykers
+	name = "mental energizer"
+	desc = "A cryo sleeper modified to keep the occupant mentally sharp. However that works..."
+	density = FALSE
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "remains"
+	spawn_oldpod = FALSE
+	prompt_name = "a psyker-ganger"
+	mob_species = /datum/species/human
+	outfit = /datum/outfit/pirate/psyker
+	rank = "Member"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/psykers/captain
+	rank = "Leader"
+	outfit = /datum/outfit/pirate/psyker/captain
