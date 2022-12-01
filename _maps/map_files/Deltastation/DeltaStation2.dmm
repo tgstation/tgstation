@@ -62557,7 +62557,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)
 "pnq" = (
-/obj/machinery/computer/chef_order,
+/obj/machinery/computer/order_console/cook,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
 	dir = 4
@@ -65794,7 +65794,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "pZo" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/bot,

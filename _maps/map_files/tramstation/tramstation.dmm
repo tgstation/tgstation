@@ -25144,7 +25144,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "jgk" = (
-/obj/machinery/computer/chef_order,
+/obj/machinery/computer/order_console/cook,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
@@ -63042,7 +63042,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "wGF" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},

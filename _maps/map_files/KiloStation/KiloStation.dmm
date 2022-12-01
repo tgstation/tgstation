@@ -38471,7 +38471,7 @@
 /turf/open/floor/grass,
 /area/station/medical/psychology)
 "kUy" = (
-/obj/machinery/computer/chef_order{
+/obj/machinery/computer/order_console/cook{
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
@@ -45206,7 +45206,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/station/science/xenobiology)
 "mQj" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
