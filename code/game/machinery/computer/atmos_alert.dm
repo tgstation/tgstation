@@ -70,7 +70,7 @@
 				priority_alarms += get_area_name(air_alarm, format_text = TRUE)
 
 	// Either we got new alarms, or we have no alarms anymore
-	if ((alarm_count == 0) != (minor_alarms + priority_alarms == 0))
+	if ((alarm_count == 0) != (minor_alarms.len + priority_alarms.len == 0))
 		update_appearance(UPDATE_ICON)
 
 	return TRUE
