@@ -10,10 +10,52 @@
 
 	icon_state_off = "burst_plasma_off"
 
-	///The specific gas to burn out of the engine heater. If none, burns any gas.
+	///The specific gas to burn out of the engine heater.
 	var/datum/gas/fuel_type
 	///How much fuel (in mols) of the specified gas should be used in a full burn.
 	var/fuel_use = 0
+
+	var/obj/machinery/atmospherics/fueled_engine_heater/connected_heater
+
+/obj/machinery/power/shuttle_engine/ship/fueled/proc/try_link_heater()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(connected_heater)
+		return
+
+	var/turf/candidate_turf = get_step(src, dir)
+	var/obj/machinery/atmospherics/fueled_engine_heater/candidate_heater = locate() in candidate_turf
+	if(!candidate_heater || candidate_heater.dir != turn(dir, 180))
+		return
+	on_heater_link(candidate_heater)
+
+/// Called when the engine is linked to a heater; must call parent first.
+/obj/machinery/power/shuttle_engine/ship/fueled/proc/on_heater_link(obj/machinery/atmospherics/fueled_engine_heater/connecting)
+	SHOULD_CALL_PARENT(TRUE)
+	if(connected_heater == connecting)
+		return
+	if(connected_heater)
+		on_heater_unlink()
+
+	connected_heater = connecting
+	connected_heater.connected_engine = src
+
+/// Called when the engine is unlinked from a heater; must call parent first.
+/obj/machinery/power/shuttle_engine/ship/fueled/proc/on_heater_unlink()
+	SHOULD_CALL_PARENT(TRUE)
+	if(!connected_heater)
+		return
+
+	connected_heater.connected_engine = null
+	connected_heater = null
+
+/obj/machinery/power/shuttle_engine/ship/fueled/LateInitialize()
+	. = ..()
+	try_link_heater()
+
+/obj/machinery/power/shuttle_engine/ship/fueled/Destroy()
+	if(connected_heater)
+		on_heater_unlink()
+	return ..()
 
 /obj/machinery/power/shuttle_engine/ship/fueled/burn_engine(percentage = 100)
 	. = ..()
@@ -22,30 +64,29 @@
 
 ///Returns how much fuel we have left
 /obj/machinery/power/shuttle_engine/ship/fueled/return_fuel()
-	. = ..()
-	var/datum/gas_mixture/air_contents = loc.return_air()
-	if(!air_contents)
-		return
-	return air_contents.return_volume(fuel_type)
+	if(fuel_type)
+		connected_heater.air_contents.assert_gas(fuel_type)
+		return connected_heater?.air_contents.gases[fuel_type][MOLES] || 0
+	return connected_heater?.air_contents.total_moles() || 0
 
 ///Returns how much fuel we can hold
 /obj/machinery/power/shuttle_engine/ship/fueled/return_fuel_cap()
-	. = ..()
-	var/datum/gas_mixture/air_contents = loc.return_air()
-	if(!air_contents)
-		return
-	return air_contents.return_volume()
+	return connected_heater.maximum_moles
 
 ///Consumes the needed fuel
 /obj/machinery/power/shuttle_engine/ship/fueled/proc/consume_fuel(amount)
-	var/datum/gas_mixture/air_contents = loc.return_air()
-	if(!air_contents)
-		return
+	if(!connected_heater?.air_contents)
+		return 0
 
-	var/starting_amt = air_contents.return_volume(fuel_type)
-	air_contents.remove_specific(fuel_type, amount)
-	return min(starting_amt, amount)
-
+	if(fuel_type)
+		connected_heater.air_contents.assert_gas(fuel_type)
+		var/avail_moles = connected_heater.air_contents.gases[fuel_type][MOLES]
+		. = min(amount, avail_moles)
+		connected_heater.air_contents.remove_specific(fuel_type, .)
+	else
+		var/avail_moles = connected_heater.air_contents.total_moles()
+		. = min(amount, avail_moles)
+		connected_heater.air_contents.remove(.)
 
 ///Plasma
 /obj/machinery/power/shuttle_engine/ship/fueled/plasma

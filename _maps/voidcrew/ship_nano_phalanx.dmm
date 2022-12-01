@@ -869,9 +869,7 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/station/medical/surgery)
 "kU" = (
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
+/obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
@@ -1108,6 +1106,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/medical/exam_room)
 "pf" = (

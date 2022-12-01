@@ -13,12 +13,19 @@
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	load_ship_templates()
 	return ..()
-/*
+
 /datum/controller/subsystem/mapping/loadWorld()
 	InitializeDefaultZLevels()
 
-/datum/controller/subsystem/mapping/generate_z_level_linkages()
-	return
+/datum/controller/subsystem/mapping/generate_linkages_for_z_level(z_level)
+	if(!isnum(z_level) || z_level <= 0)
+		return FALSE
+
+	if(multiz_levels.len < z_level)
+		multiz_levels.len = z_level
+
+	// TODO - MULTI-Z
+	multiz_levels[z_level] = list()
 
 /datum/controller/subsystem/mapping/setup_map_transitions()
 	return
@@ -26,7 +33,13 @@
 ///generates the list of GLOB.the_station_areas - We don't have a station, maybe we can make use of this one day for ships.
 /datum/controller/subsystem/mapping/generate_station_area_list()
 	return
-*/
+
+/// Only thing we want to do here is setup planetary atmos as needed
+/datum/controller/subsystem/mapping/setup_ruins()
+	var/datum/gas_mixture/immutable/planetary/lavaland_air = new
+	lavaland_air.parse_string_immutable(LAVALAND_DEFAULT_ATMOS)
+	SSair.planetary[LAVALAND_DEFAULT_ATMOS] = lavaland_air
+
 /datum/controller/subsystem/mapping/proc/load_ship_templates()
 	SHOULD_CALL_PARENT(TRUE)
 	if(ship_purchase_list.len) //don't build repeatedly
@@ -40,3 +53,12 @@
 				nt_ship_list[initial(shuttles.name)] = shuttles
 			if(SYNDICATE_SHIP)
 				syn_ship_list[initial(shuttles.name)] = shuttles
+
+/datum/controller/subsystem/mapping/get_station_center()
+	return SSovermap.overmap_centre || locate(OVERMAP_LEFT_SIDE_COORD, OVERMAP_NORTH_SIDE_COORD, OVERMAP_Z_LEVEL)
+
+/datum/controller/subsystem/mapping/get_turf_above(turf/T)
+	return SSovermap.calculate_turf_above(T)
+
+/datum/controller/subsystem/mapping/get_turf_below(turf/T)
+	return SSovermap.calculate_turf_below(T)

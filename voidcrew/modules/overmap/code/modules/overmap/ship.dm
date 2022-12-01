@@ -31,13 +31,14 @@
 	 * Player stuff
 	 */
 	///Shipwide bank account
-	var/datum/bank_account/ship/ship_account
+	// var/datum/bank_account/ship/ship_account
+
 	///Short memo of the ship shown to new joins
 	var/memo = ""
 	///Manifest list of people on the ship
 	var/list/manifest = list()
 	///Assoc list of remaining open job slots (job = remaining slots)
-	var/list/job_slots = list()
+	var/list/job_slots
 
 	/**
 	 * Faction stuff
@@ -55,13 +56,12 @@
 	/**
 	 * Stuff needed to render the map
 	 */
+
 	/// Name of the map
 	var/map_name
-	/// Actual screen of the map
+	/// The actual map screen
 	var/atom/movable/screen/map_view/cam_screen
-	/// List of plane masters used by the screen
-	var/list/cam_plane_masters = list()
-	/// Backgroudn of the screen
+	/// The background of the map, usually doesn't do anything, but this is here so ships can customize the background ig?
 	var/atom/movable/screen/background/cam_background
 
 /obj/structure/overmap/ship/Initialize(mapload)
@@ -72,33 +72,39 @@
 	display_name = "[faction_prefix] [name]"
 
 	map_name = "overmap_[REF(src)]_map"
+
 	cam_screen = new
-	cam_screen.name = "screen"
-	cam_screen.assigned_map = map_name
 	cam_screen.del_on_map_removal = FALSE
-	cam_screen.screen_loc = "[map_name]:1,1"
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		var/atom/movable/screen/plane_master/instance = new plane()
-		if(instance.blend_mode_override)
-			instance.blend_mode = instance.blend_mode_override
-		instance.assigned_map = map_name
-		instance.del_on_map_removal = FALSE
-		instance.screen_loc = "[map_name]:CENTER"
-		cam_plane_masters += instance
+	cam_screen.generate_view(map_name)
+
 	cam_background = new
-	cam_background.assigned_map = map_name
 	cam_background.del_on_map_removal = FALSE
+	cam_background.assigned_map = map_name
+
+	SSovermap.simulated_ships += src
+
+/obj/structure/overmap/ship/proc/assign_source_template(datum/map_template/shuttle/voidcrew/template)
+	if(source_template)
+		CRASH("ship [type] already has a source template but [template.type] was trying to assign itself as the source template")
+	source_template = template
+	job_slots = template.assemble_job_slots()
 
 /obj/structure/overmap/ship/Destroy()
+	source_template = null
+	shuttle?.intoTheSunset()
+	shuttle = null
+	SSovermap.simulated_ships -= src
+	// QDEL_NULL(ship_account)
+	manifest?.Cut()
+	job_slots?.Cut()
+	QDEL_NULL(ship_team)
 	QDEL_NULL(cam_screen)
-	QDEL_NULL(cam_plane_masters)
 	QDEL_NULL(cam_background)
 	return ..()
 
 /// Updates the screen for the helm console
 /obj/structure/overmap/ship/proc/update_screen()
 	var/list/visible_turfs = list()
-
 	var/list/visible_things = view(SHIP_VIEW_RANGE, src)
 
 	for(var/turf/visible_turf in visible_things)
@@ -109,7 +115,6 @@
 	var/size_y = bbox[4] - bbox[2] + 1
 
 	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
 	cam_background.fill_rect(1, 1, size_x, size_y)
 
 /// Resets the ships thrust back to zero
@@ -160,7 +165,6 @@
 
 /**
   * Bastardized version of GLOB.manifest.manifest_inject, but used per ship
-  *
   */
 /obj/structure/overmap/ship/proc/manifest_inject(mob/living/carbon/human/H, datum/job/human_job)
 	set waitfor = FALSE
@@ -173,8 +177,6 @@
 	RegisterSignal(crewmate, COMSIG_LIVING_DEATH, PROC_REF(on_member_death))
 	//Adds a faction hud to a newplayer documentation in _HELPERS/game.dm
 //	add_faction_hud(FACTION_HUD_GENERAL, faction_prefix, crewmate)
-
-
 
 /**
  * ##destroy_ship
@@ -190,6 +192,16 @@
 //	update_docked_bools() //voidcrew todo: ship functionality
 	qdel(src)
 
+/obj/structure/overmap/ship/proc/ship_announce(message, title, must_be_same_z_level = FALSE, sound)
+	var/list/announce_targets = list()
+	for(var/datum/mind/shipmate as anything in ship_team.members)
+		var/mob/crewmate = shipmate.current
+		if(!crewmate)
+			continue
+		if(must_be_same_z_level && crewmate.z != z)
+			continue
+		announce_targets += crewmate
+	priority_announce(message, title, sound || 'sound/ai/default/attention.ogg', null, "[name] Announcement", announce_targets)
 
 /**
  * Mob death/revive

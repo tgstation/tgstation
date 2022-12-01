@@ -285,11 +285,6 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/cup/bottle{
-	list_reagents = list(/datum/reagent/medicine/thializid=30);
-	name = "thializid bottle";
-	pixel_x = 5
-	},
 /obj/item/reagent_containers/syringe{
 	pixel_x = 7
 	},

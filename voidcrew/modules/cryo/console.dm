@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(cryopod_computers)
 		ui.open()
 
 /* //voidcrew todo: ship functionality
-/obj/machinery/computer/cryopod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override)
+/obj/machinery/computer/cryopod/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override)
 	. = ..()
 	linked_ship = port.current_ship
 
