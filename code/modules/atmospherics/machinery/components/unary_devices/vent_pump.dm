@@ -36,15 +36,38 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	. = ..()
 
-	var/area/area = get_area(src)
-	LAZYADD(area.air_vents, src)
+	if (!isnull(get_area(src)))
+		assign_to_area()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
+	disconnect_from_area()
+
 	var/area/vent_area = get_area(src)
 	if(vent_area)
 		vent_area.air_vents -= src
 
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
+	var/area/old_area = get_area(old_loc)
+	var/area/new_area = get_area(src)
+
+	if (old_area == new_area)
+		return
+
+	disconnect_from_area()
+	if (!isnull(new_area))
+		assign_to_area()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area()
+	var/area/area = get_area(src)
+	area.air_vents += src
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area()
+	var/area/area = get_area(src)
+	area?.air_vents -= src
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
