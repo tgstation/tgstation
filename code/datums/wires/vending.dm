@@ -1,6 +1,7 @@
 /datum/wires/vending
 	holder_type = /obj/machinery/vending
 	proper_name = "Vending Unit"
+	/// Keeps track of which language is selected
 	var/language_iterator = 1
 
 /datum/wires/vending/New(atom/holder)
@@ -14,53 +15,54 @@
 /datum/wires/vending/interactable(mob/user)
 	if(!..())
 		return FALSE
-	var/obj/machinery/vending/V = holder
-	if(!issilicon(user) && V.seconds_electrified && V.shock(user, 100))
+	var/obj/machinery/vending/vending_machine = holder
+	if(!issilicon(user) && vending_machine.seconds_electrified && vending_machine.shock(user, 100))
 		return FALSE
-	if(V.panel_open)
+	if(vending_machine.panel_open)
 		return TRUE
 
 /datum/wires/vending/get_status()
-	var/obj/machinery/vending/V = holder
-	var/datum/language/language = V.language_holder.selected_language
+	var/obj/machinery/vending/vending_machine = holder
+	var/datum/language/vending_language = vending_machine.language_holder.selected_language
 	var/list/status = list()
-	status += "The orange light is [V.seconds_electrified ? "on" : "off"]."
-	status += "The red light is [V.shoot_inventory ? "off" : "blinking"]."
-	status += "The green light is [V.extended_inventory ? "on" : "off"]."
-	status += "A [V.scan_id ? "purple" : "yellow"] light is on."
-	status += "A white light is [V.age_restrictions ? "on" : "off"]."
-	status += "The speaker light is [V.shut_up ? "off" : "on"]. The language is set to [language.name]."
+	status += "The orange light is [vending_machine.seconds_electrified ? "on" : "off"]."
+	status += "The red light is [vending_machine.shoot_inventory ? "off" : "blinking"]."
+	status += "The green light is [vending_machine.extended_inventory ? "on" : "off"]."
+	status += "A [vending_machine.scan_id ? "purple" : "yellow"] light is on."
+	status += "A white light is [vending_machine.age_restrictions ? "on" : "off"]."
+	status += "The speaker light is [vending_machine.shut_up ? "off" : "on"]. The language is set to [vending_language.name]."
 	return status
 
 /datum/wires/vending/on_pulse(wire)
-	var/obj/machinery/vending/V = holder
+	var/obj/machinery/vending/vending_machine = holder
 	switch(wire)
 		if(WIRE_THROW)
-			V.shoot_inventory = !V.shoot_inventory
+			vending_machine.shoot_inventory = !vending_machine.shoot_inventory
 		if(WIRE_CONTRABAND)
-			V.extended_inventory = !V.extended_inventory
+			vending_machine.extended_inventory = !vending_machine.extended_inventory
 		if(WIRE_SHOCK)
-			V.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
+			vending_machine.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
 		if(WIRE_IDSCAN)
-			V.scan_id = !V.scan_id
+			vending_machine.scan_id = !vending_machine.scan_id
 		if(WIRE_SPEAKER)
-			V.language_holder.selected_language = V.language_holder.spoken_languages[language_iterator % length(V.language_holder.spoken_languages)]
+			language_iterator = (language_iterator + 1) % length(vending_machine.language_holder.spoken_languages)
+			vending_machine.language_holder.selected_language = vending_machine.language_holder.spoken_languages[language_iterator]
 		if(WIRE_AGELIMIT)
-			V.age_restrictions = !V.age_restrictions
+			vending_machine.age_restrictions = !vending_machine.age_restrictions
 
 /datum/wires/vending/on_cut(wire, mend)
-	var/obj/machinery/vending/V = holder
+	var/obj/machinery/vending/vending_machine = holder
 	switch(wire)
 		if(WIRE_THROW)
-			V.shoot_inventory = !mend
+			vending_machine.shoot_inventory = !mend
 		if(WIRE_CONTRABAND)
-			V.extended_inventory = FALSE
+			vending_machine.extended_inventory = FALSE
 		if(WIRE_SHOCK)
 			if(mend)
-				V.seconds_electrified = MACHINE_NOT_ELECTRIFIED
+				vending_machine.seconds_electrified = MACHINE_NOT_ELECTRIFIED
 			else
-				V.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
+				vending_machine.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
 		if(WIRE_IDSCAN)
-			V.scan_id = mend
+			vending_machine.scan_id = mend
 		if(WIRE_SPEAKER)
-			V.shut_up = mend
+			vending_machine.shut_up = mend
