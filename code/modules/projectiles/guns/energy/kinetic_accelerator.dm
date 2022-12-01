@@ -69,7 +69,7 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!LAZYLEN(modkits))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 	var/list/display_names = list()
 	var/list/items = list()
