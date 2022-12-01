@@ -60,10 +60,9 @@
 		if (air_alarm.z != z)
 			continue
 
-		// get_area_name
 		switch (air_alarm.danger_level)
 			if (AIR_ALARM_ALERT_NONE)
-				// pass
+				continue
 			if (AIR_ALARM_ALERT_MINOR)
 				minor_alarms += get_area_name(air_alarm, format_text = TRUE)
 			if (AIR_ALARM_ALERT_SEVERE)
