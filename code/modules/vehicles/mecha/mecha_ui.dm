@@ -240,7 +240,11 @@
 			if(is_ic_filtered(userinput) || is_soft_ic_filtered(userinput))
 				tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 				return
+			if(userinput == format_text(name)) //default mecha names may have improper span artefacts in their name, so we format the name
+				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
+				return
 			name = userinput
+			chassis_camera.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
 			return

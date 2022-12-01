@@ -15341,7 +15341,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/chef_order{
+/obj/machinery/computer/order_console/cook{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/burnt_floor,
@@ -17579,7 +17579,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "gzJ" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /turf/open/floor/carpet,
 /area/station/medical/psychology)
 "gzO" = (
@@ -49644,7 +49644,7 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "rFF" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
@@ -50980,7 +50980,7 @@
 /obj/structure/sign/poster/official/get_your_legs{
 	pixel_y = 32
 	},
-/obj/structure/chair/sofa/right,
+/obj/structure/chair/sofa/right/brown,
 /obj/item/toy/plush/moth{
 	name = "Mender Moff"
 	},
