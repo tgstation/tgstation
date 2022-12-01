@@ -1169,7 +1169,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/right)
 "ayW" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -1274,7 +1274,7 @@
 	},
 /obj/structure/grille/tram,
 /obj/structure/window/reinforced/shuttle/tram,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "aBM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2457,7 +2457,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "bdz" = (
 /obj/structure/railing/corner{
@@ -3578,7 +3578,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "bxh" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
@@ -9134,7 +9134,7 @@
 "dns" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "dnB" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -13069,7 +13069,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "eGS" = (
 /obj/effect/decal/cleanable/dirt,
@@ -13295,12 +13295,7 @@
 "eMv" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/left)
 "eMH" = (
 /obj/effect/turf_decal/stripes/white/line{
@@ -13309,7 +13304,7 @@
 /obj/effect/turf_decal/caution/stand_clear/white{
 	dir = 8
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/left)
 "eMV" = (
 /obj/effect/decal/cleanable/dirt,
@@ -14135,7 +14130,7 @@
 "fbM" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/left)
 "fcs" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -22990,12 +22985,7 @@
 "irc" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/center)
 "ird" = (
 /obj/structure/railing/corner,
@@ -23746,12 +23736,7 @@
 "iDt" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/right)
 "iDv" = (
 /obj/structure/disposalpipe/segment,
@@ -24904,19 +24889,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
-"jar" = (
-/obj/effect/turf_decal/delivery/white,
-/obj/structure/holosign/barrier/atmos/tram,
-/obj/structure/fluff/tram_rail/floor{
-	dir = 1
-	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
-/area/station/hallway/primary/tram/center)
 "jay" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/window/reinforced,
@@ -32121,12 +32093,7 @@
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/left)
 "lzo" = (
 /obj/machinery/door/window/left/directional/south,
@@ -36232,7 +36199,7 @@
 	icon_state = "titanium"
 	},
 /obj/effect/landmark/lift_id,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "mXu" = (
 /obj/structure/sign/warning/vacuum{
@@ -37230,7 +37197,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "nnG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -37368,12 +37335,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/right)
 "npM" = (
 /obj/structure/disposaloutlet,
@@ -39163,7 +39125,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "obb" = (
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "obp" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -39383,12 +39345,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Eastern Tram Bridge 2"
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/right)
 "odF" = (
 /obj/machinery/airalarm/directional/north,
@@ -39931,7 +39888,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "opr" = (
 /obj/structure/disposalpipe/segment{
@@ -41365,7 +41322,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/right)
 "oTa" = (
 /obj/structure/railing{
@@ -44055,12 +44012,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Western Tram Bridge 1"
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/left)
 "pOo" = (
 /obj/structure/table,
@@ -45108,7 +45060,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "titanium"
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "qif" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -45449,7 +45401,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/left)
 "qoX" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -49584,6 +49536,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/medical)
+"rJv" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/structure/holosign/barrier/atmos/tram,
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/indestructible/tram_platform,
+/area/station/hallway/primary/tram/center)
 "rJw" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Checkpoint"
@@ -50063,12 +50023,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Eastern Tram Bridge 1"
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/center)
 "rPj" = (
 /obj/effect/turf_decal/box/white{
@@ -51047,7 +51002,7 @@
 	icon_state = "titanium"
 	},
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/center)
 "sjf" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -52261,12 +52216,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Hallway - Western Tram Bridge 2"
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/center)
 "sJg" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -52776,7 +52726,7 @@
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
 "sRW" = (
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/right)
 "sRZ" = (
 /turf/closed/wall/r_wall,
@@ -56190,7 +56140,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
 	},
-/turf/open/floor/noslip/tram_platform,
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/right)
 "ufj" = (
 /obj/machinery/computer/upload/borg{
@@ -58541,12 +58491,7 @@
 /obj/structure/fluff/tram_rail/floor{
 	dir = 1
 	},
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/left)
 "uWr" = (
 /obj/effect/decal/cleanable/dirt,
@@ -58668,7 +58613,7 @@
 "uZg" = (
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/right)
 "uZn" = (
 /obj/effect/turf_decal/siding/wideplating{
@@ -60323,7 +60268,7 @@
 /area/station/engineering/atmos)
 "vEa" = (
 /obj/effect/landmark/tram/right_part,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/right)
 "vEe" = (
 /obj/structure/window/reinforced/spawner,
@@ -60381,12 +60326,7 @@
 /obj/effect/turf_decal/delivery/white,
 /obj/structure/holosign/barrier/atmos/tram,
 /obj/structure/fluff/tram_rail/floor,
-/turf/open/floor/vault{
-	base_icon_state = "tram2";
-	icon_state = "tram2";
-	desc = "A sturdy looking tram platform.";
-	name = "tram platform"
-	},
+/turf/open/indestructible/tram_platform,
 /area/station/hallway/primary/tram/center)
 "vFp" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -61928,7 +61868,7 @@
 /area/station/cargo/storage)
 "wjR" = (
 /obj/effect/landmark/tram/left_part,
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/left)
 "wjT" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -62209,7 +62149,7 @@
 /turf/closed/wall,
 /area/station/science/lobby)
 "wpP" = (
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/left)
 "wqu" = (
 /obj/machinery/airalarm/directional/north,
@@ -63923,7 +63863,7 @@
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},
-/turf/open/floor/noslip/tram_plate,
+/turf/open/indestructible/tram_plate,
 /area/station/hallway/primary/tram/left)
 "wWo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -159554,7 +159494,7 @@ irc
 irc
 vFg
 dns
-irc
+rJv
 irc
 sIX
 pdW
@@ -170862,7 +170802,7 @@ irc
 irc
 vFg
 dns
-jar
+rJv
 irc
 rPi
 pdW

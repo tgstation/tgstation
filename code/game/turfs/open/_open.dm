@@ -83,6 +83,22 @@
 	heavyfootstep = null
 	var/sound = 'sound/effects/clownstep1.ogg'
 
+/turf/open/indestructible/tram_plate
+	name = "linear induction plate"
+	desc = "The linear induction plate that powers the tram."
+	icon_state = "tram_plate"
+	base_icon_state = "tram_plate"
+	footstep = FOOTSTEP_CATWALK
+	slowdown = -0.3
+
+/turf/open/indestructible/tram_platform
+	name = "tram platform"
+	desc = "A sturdy looking tram platform."
+	icon_state = "tram_platform"
+	base_icon_state = "tram_platform"
+	footstep = FOOTSTEP_CATWALK
+	slowdown = -0.3
+
 /turf/open/indestructible/honk/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/wet_floor, TURF_WET_SUPERLUBE, INFINITY, 0, INFINITY, TRUE)
