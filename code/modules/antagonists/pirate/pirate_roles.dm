@@ -92,10 +92,6 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers
 	name = "mental energizer"
 	desc = "A cryo sleeper modified to keep the occupant mentally sharp. However that works..."
-	density = FALSE
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "remains"
-	spawn_oldpod = FALSE
 	prompt_name = "a psyker-ganger"
 	mob_species = /datum/species/human
 	outfit = /datum/outfit/pirate/psyker
