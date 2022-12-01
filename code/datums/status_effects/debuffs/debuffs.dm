@@ -933,3 +933,42 @@
 /datum/status_effect/discoordinated/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, "[type]")
 	return ..()
+
+/datum/status_effect/decrepit
+	id = "decrepit"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/decrepit
+
+/atom/movable/screen/alert/status_effect/decrepit
+	name = "Decrepit"
+	desc = "You need a cane to help balance your movement."
+	icon_state = "weaken"
+
+/datum/status_effect/decrepit/on_apply()
+
+	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious() || owner.body_position == LYING_DOWN || quirk_holder.buckled )
+		return
+
+	if(quirk_holder.m_intent == MOVE_INTENT_WALK)
+		return
+
+	for(var/obj/item/held_cane in quirk_holder.held_items)
+		if(HAS_TRAIT(held_cane, TRAIT_CANE_TOOL))
+			return
+
+	switch(rand(0, 100))
+		if(0 to 70)
+			return
+		if(71 to 90)
+			to_chat(quirk_holder, span_warning("You feel off balance without your cane. It might be safer to walk..."))
+			return
+		if(91 to 100)
+			quirk_holder.Paralyze(1 SECONDS)
+			quirk_holder.Knockdown(4 SECONDS)
+			quirk_holder.visible_message(span_danger("[quirk_holder.name] loses their balance and falls down!"),
+				span_userdanger("You lose your balance and fall down!"), span_hear("You hear someone fall down!"), COMBAT_MESSAGE_RANGE, src)
+	return ..()
+
+/datum/status_effect/decrepit/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, "[type]")
+	return ..()

@@ -206,7 +206,6 @@
 	SIGNAL_HANDLER
 	update_movespeed(FALSE)
 
-
 /// Called when [TRAIT_SKITTISH] is added to the mob.
 /mob/living/proc/on_skittish_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -216,3 +215,12 @@
 /mob/living/proc/on_skittish_trait_loss(datum/source)
 	SIGNAL_HANDLER
 	RemoveElement(/datum/element/skittish)
+
+/// Called when [TRAIT_DECREPIT] is added to the mob.
+/mob/living/proc/on_decrepit_trait_gain()
+	SIGNAL_HANDLER
+	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, PROC_REF(handle_decrepit_movement))
+
+/// Called when [TRAIT_DECREPIT] is removed from the mob.
+/mob/living/proc/on_decrepit_trait_loss()
+	UnregisterSignal(quirk_holder, list(COMSIG_MOVABLE_MOVED))
