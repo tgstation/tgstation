@@ -130,3 +130,25 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		/obj/item/organ/internal/ears/fox,
 	)
 	infusion_desc = "inexcusable"
+
+/datum/infuser_entry/goliath
+	name = "Goliath"
+	infuse_mob_name = "Goliath"
+	desc = "The guy who said 'Whoever fights monsters should see to it that in the process he does not become a monster' clearly didn't see what a goliath miner can do!"
+	threshold_desc = "No idea, I didn't get that far!"
+	qualities = list(
+		"can breath in lavaland",
+		"immune to ashstorms",
+		"bulky hands can easily dig through basalt",
+		"skin heavily resistent against explosions",
+		"grow tentacles on your back, not backpack friendly...",
+	)
+	input_obj_or_mob = list(
+		/mob/living/simple_animal/hostile/asteroid/goliath,
+	)
+	output_organs = list(
+		/obj/item/organ/internal/lungs/lavaland/goliath,
+		/obj/item/organ/internal/heart/goliath,
+		/obj/item/organ/internal/brain/goliath,
+	)
+	infusion_desc = "inexcusable"
