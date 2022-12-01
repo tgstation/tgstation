@@ -43,7 +43,8 @@
 
 	var/mob/living/basic/bot/floorbot/floorbot = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
-	UNRESERVE_DATUM(target, TRAIT_AI_FLOOR_WORK_RESERVATION, floorbot)
+	if(target)
+		UNRESERVE_DATUM(target, TRAIT_AI_FLOOR_WORK_RESERVATION, floorbot)
 	floorbot.set_current_mode()
 
 	if(!succeeded)

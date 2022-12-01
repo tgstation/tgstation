@@ -109,27 +109,23 @@
 	var/found_target
 
 	for(var/turf/scanned_turf as anything in adjacent) //Let's see if there's something right next to us first!
-
-		if(found_target) //If we found something inside any of the loops, we should break.
-			break
-
 		found_target = targetting_datum.can_attack(living_pawn, scanned_turf)
 
 		if(found_target)
 			on_find_target(controller, target_key, scanned_turf)
-			break
+			return
 
 		for(var/atom/scan in scanned_turf)
 			found_target = targetting_datum.can_attack(living_pawn, scan)
 			if(found_target)
 				on_find_target(controller, target_key, scan)
-				break
+				return
 
 	for(var/atom/scanned_atom as anything in view(scan_range, living_pawn) - adjacent) //Search for something in range, minus what we already checked.
 		found_target = targetting_datum.can_attack(living_pawn, scanned_atom)
 		if(found_target)
 			on_find_target(controller, target_key, scanned_atom)
-			break
+			return
 
 ///Ran once bot has found a target during scanning
 /datum/ai_behavior/scan/proc/on_find_target(datum/ai_controller/controller, target_key, target)

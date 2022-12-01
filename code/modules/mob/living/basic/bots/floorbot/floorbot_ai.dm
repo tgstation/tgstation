@@ -27,7 +27,7 @@
 		//add else statement here that complains about being stuck!
 
 	if(controller.blackboard[BB_FLOOR_BOT_TARGET])
-		controller.set_movement_target(controller.blackboard[BB_FLOOR_BOT_TARGET], /datum/ai_movement/basic_avoidance)
+		controller.set_movement_target(controller.blackboard[BB_FLOOR_BOT_TARGET])
 		controller.queue_behavior(/datum/ai_behavior/repair_floor, BB_FLOOR_BOT_TARGET, BB_TARGETTING_DATUM)
 		return SUBTREE_RETURN_FINISH_PLANNING
 

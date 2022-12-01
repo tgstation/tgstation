@@ -15,6 +15,17 @@
 	if(!isopenturf(the_target))
 		return FALSE
 
+	var/turf/open/open_turf = the_target
+
+	//Check if the destination is in a tile we can't even enter.
+	var/reverse_dir = get_dir(open_turf, src)
+	for(var/obj/iter_object in open_turf)
+		// This is an optimization because of the massive call count of this code
+		if(!iter_object.density && iter_object.can_astar_pass == CANASTARPASS_DENSITY)
+			continue
+		if(!iter_object.CanAStarPass(floorbot.access_card, reverse_dir, floorbot, FALSE))
+			return FALSE
+
 	if(floorbot.bot_cover_flags & BOT_COVER_EMAGGED && target_is_floor && !target_is_plating)
 		return TRUE
 

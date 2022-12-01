@@ -91,6 +91,7 @@
 
 ///mobs should use move_resist instead of anchored.
 /mob/living/basic/bot/floorbot/proc/toggle_magnet(engage = TRUE, change_icon = TRUE)
+	/*
 	if(engage)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
 		move_resist = INFINITY
@@ -100,7 +101,7 @@
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
 		move_resist = initial(move_resist)
 		if(change_icon)
-			update_icon()
+			update_icon()*/
 
 // Variables sent to TGUI
 /mob/living/basic/bot/floorbot/ui_data(mob/user)
@@ -192,10 +193,11 @@
 
 /mob/living/basic/bot/floorbot/proc/repair(turf/target_turf)
 	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
-		toggle_magnet()
+		toggle_magnet(TRUE)
 		set_current_mode(BOT_REPAIRING)
 		visible_message(span_notice("[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] "))
 		if(!do_after(src, 20, target = target_turf))
+			toggle_magnet(FALSE)
 			return FALSE
 		if(floorbot_mode_flags & FLOORBOT_AUTO_TILE) //Build the floor and include a tile.
 			if(floorbot_mode_flags & FLOORBOT_REPLACE_TILES && tilestack)
@@ -203,10 +205,12 @@
 				tilestack.place_tile(target_turf, src)
 				if(!tilestack)
 					speak("Requesting refill of custom floor tiles to continue replacing.")
+				toggle_magnet(FALSE)
 				return TRUE
 			else
 				target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)	//make sure a hull is actually below the floor tile
 				target_turf.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
+				toggle_magnet(FALSE)
 				return TRUE
 		else //Build a hull plating without a floor tile.
 			target_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
@@ -218,14 +222,14 @@
 		var/was_replacing = floorbot_mode_flags & FLOORBOT_REPLACE_TILES //It could change in the meantime, so cache it.
 
 		if(target_floor.broken || target_floor.burnt || isplatingturf(target_floor))
-			toggle_magnet()
+			toggle_magnet(TRUE)
 			set_current_mode(BOT_REPAIRING)
 			visible_message(span_notice("[src] begins [(target_floor.broken || target_floor.burnt) ? "repairing the floor" : "placing a floor tile"]."))
 			if(do_after(src, 20, target = target_floor) && mode == BOT_REPAIRING)
 				success = TRUE
 
 		else if(was_replacing && tilestack && target_floor.type != tilestack.turf_type)
-			toggle_magnet()
+			toggle_magnet(TRUE)
 			set_current_mode(BOT_REPAIRING)
 			visible_message(span_notice("[src] begins replacing the floor tiles."))
 			if(do_after(src, 20, target = target_floor) && mode == BOT_REPAIRING && tilestack)
@@ -247,5 +251,7 @@
 			else	//place normal tile if it's plating anywhere else
 				target_floor = target_floor.make_plating(TRUE) || target_floor
 				target_floor.PlaceOnTop(/turf/open/floor/iron, flags = CHANGETURF_INHERIT_AIR)
+			toggle_magnet(FALSE)
 			return TRUE
+		toggle_magnet(FALSE)
 
