@@ -82,7 +82,7 @@
 			grilled_result.set_custom_materials(original_object.custom_materials)
 
 	if(IS_EDIBLE(grilled_result))
-		SSblackbox.record_feedback("tally", "food_made", 1, grilled_result.type)
+		BLACKBOX_LOG_FOOD_MADE(grilled_result.type)
 
 	SEND_SIGNAL(parent, COMSIG_ITEM_GRILLED, grilled_result)
 	if(who_placed_us)
