@@ -386,3 +386,15 @@
 	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/command_report_footnote()
+	set category = "Admin.Fun"
+	set name = "Command Report Footnote"
+	set desc = "Adds a footnote to the roundstart command report. "
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	SScommunications.command_report_footnote = tgui_input_text(usr, "What would you like your captive audience to know?", "P.S.")
+
+	if(SScommunications.command_report_footnote)
+		message_admins("[usr] has changed the command report footnote to: [SScommunications.command_report_footnote]")
