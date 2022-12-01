@@ -1117,5 +1117,10 @@
 		if(91 to 100)
 			quirk_holder.Paralyze(1 SECONDS)
 			quirk_holder.Knockdown(4 SECONDS)
-			quirk_holder.visible_message(span_danger("[quirk_holder.name] loses their balance and falls down!"),
-				span_userdanger("You lose your balance and fall down!"), span_hear("You hear someone fall down!"), COMBAT_MESSAGE_RANGE, src)
+			quirk_holder.visible_message(
+				span_danger("[quirk_holder.name] loses their balance and falls down!"),
+				span_userdanger("You lose your balance and fall down!"),
+				span_hear("You hear someone fall down!"),
+				COMBAT_MESSAGE_RANGE,
+				src,
+			)
