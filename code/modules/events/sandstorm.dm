@@ -1,7 +1,7 @@
 /**
  * Sandstorm Event: Throws dust/sand at one side of the station. High-intensity and relatively short,
- * however the incoming direction is given, along with preparation time. Damages can be reduced or
- * mitigated with a few people, but leaving the event to run on its own can lead to widespread breaches.
+ * however the incoming direction is given along with time to prepare. Damages can be reduced or
+ * mitigated with a few people actively working to fix things as the storm hits, but leaving the event to run on its own can lead to widespread breaches.
  *
  * Meant to be encountered mid-round, with enough spare manpower among the crew to properly respond.
  * Anyone with a welder or metal can contribute.
@@ -12,7 +12,7 @@
 	typepath = /datum/round_event/sandstorm //comments below are comparison for catastropic meteor wave numbers
 	max_occurrences = 3 //3
 	min_players = 35 //25
-	earliest_start = 30 MINUTES //45
+	earliest_start = 35 MINUTES //45
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."
 	///Where will the sandstorm be coming from -- Established in admin_setup, passed down to round_event
@@ -45,7 +45,7 @@
 	start_when = rand(50, 70)
 	start_when = 60
 	end_when = rand(90, 110)
-	start_when = 100
+	end_when = 100
 
 /datum/round_event/sandstorm/announce(fake)
 	var/datum/round_event_control/sandstorm/sandstorm_event = control
@@ -65,7 +65,7 @@
 		if(WEST)
 			start_side_text = "port"
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
-						All employees are encouraged to assist in repairs or mitigation of damage to external fittings and fixtures.", "Collision Priority Alert")
+						All employees are encouraged to assist in repairs or mitigation of damage to external fittings and fixtures.", "Collision Emergency Alert")
 
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(15, GLOB.meteorsE, start_side)
@@ -90,7 +90,7 @@
 
 /datum/round_event/sandstorm_classic
 	start_when = 1
-	end_when = 150 // ~5 min //I don't think this actually lasts 5 minutes unless you're counting the lag
+	end_when = 150 // ~5 min //I don't think this actually lasts 5 minutes unless you're including the lag it induces
 	announce_when = 0
 	fakeable = FALSE
 
