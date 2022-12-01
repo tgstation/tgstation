@@ -149,6 +149,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MUTE "mute"
 /// Emotemute. Can't... emote.
 #define TRAIT_EMOTEMUTE "emotemute"
+/// Needs a cane to move around normally
+#define TRAIT_DECREPIT "decrepit"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_NEARSIGHT "nearsighted"
 #define TRAIT_FAT "fat"

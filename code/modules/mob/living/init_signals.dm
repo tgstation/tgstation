@@ -44,6 +44,9 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_SKITTISH), PROC_REF(on_skittish_trait_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_SKITTISH), PROC_REF(on_skittish_trait_loss))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DECREPIT), PROC_REF(on_decrepit_trait_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DECREPIT), PROC_REF(on_decrepit_trait_loss))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER

@@ -1081,6 +1081,7 @@
 	icon = "person-cane"
 	value = -4
 	hardcore_value = 4
+	mob_trait = TRAIT_DECREPIT
 	gain_text = "<span class='danger'>You feel old!</span>"
 	lose_text = "<span class='notice'>You feel young again.</span>"
 	medical_record_text = "Patient suffers from a lack of mobility requiring a cane for support."
@@ -1117,10 +1118,5 @@
 		if(91 to 100)
 			quirk_holder.Paralyze(1 SECONDS)
 			quirk_holder.Knockdown(4 SECONDS)
-			quirk_holder.visible_message(
-				span_danger("[quirk_holder.name] loses their balance and falls down!"),
-				span_userdanger("You lose your balance and fall down!"),
-				span_hear("You hear someone fall down!"),
-				COMBAT_MESSAGE_RANGE,
-				src,
-			)
+			quirk_holder.visible_message(span_danger("[quirk_holder.name] loses their balance and falls down!"),
+				span_userdanger("You lose your balance and fall down!"), span_hear("You hear someone fall down!"), COMBAT_MESSAGE_RANGE, src)
