@@ -23,8 +23,7 @@
 /obj/item/organ/internal/lungs/carp
 	name = "mutated carp-lungs"
 	desc = "Carp DNA infused into what was once some normal lungs."
-	safe_oxygen_max = 16
-	safe_oxygen_min = 0
+	safe_oxygen_min = 0 //we don't breathe this!
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "lungs"
@@ -54,10 +53,9 @@
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
 	var/datum/species/rec_species = human_receiver.dna.species
-	if(!(rec_species.no_equip_flags & ITEM_SLOT_MASK))
-		rec_species.no_equip_flags += ITEM_SLOT_MASK
+	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
-	head.unarmed_damage_low = 10 // Yeah, biteing is pretty weak, blame the monkey super-nerf
+	head.unarmed_damage_low = 10
 	head.unarmed_damage_high = 15
 	head.unarmed_stun_threshold = 15
 
@@ -67,8 +65,7 @@
 		return
 	var/mob/living/carbon/human/human_receiver = tongue_owner
 	var/datum/species/rec_species = human_receiver.dna.species
-	if(!(initial(rec_species.no_equip_flags) & ITEM_SLOT_MASK))
-		rec_species.no_equip_flags -= ITEM_SLOT_MASK
+	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
 	var/obj/item/bodypart/head/head = human_receiver.get_bodypart(BODY_ZONE_HEAD)
 	head.unarmed_damage_low = initial(head.unarmed_damage_low)
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
@@ -76,7 +73,7 @@
 
 /obj/item/organ/internal/tongue/carp/on_life(delta_time, times_fired)
 	. = ..()
-	if(!prob(1))
+	if(owner.stat != CONSCIOUS || !prob(0.1))
 		return
 	owner.emote("cough")
 	var/turf/tooth_fairy = get_turf(owner)
@@ -146,5 +143,9 @@
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "skin has small patches of scales growing...")
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+
+#undef CARP_ORGAN_COLOR
+#undef CARP_SCLERA_COLOR
+#undef CARP_PUPIL_COLOR
 
 #undef CARP_COLORS
