@@ -8,6 +8,7 @@
  * it will make the tram more expensive to move and we dont want that because we dont want to return to the days where
  * the tram took a third of the tick per movement when its just carrying its default mapped in objects
  */
+
 /obj/structure/grille/tram/Initialize(mapload)
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
@@ -18,10 +19,15 @@
 	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive, mapload)
 
-/obj/machinery/power/shuttle_engine/propulsion/tram
-	//if this has opacity, then every movement of the tram causes lighting updates
-	//DO NOT put something on the tram roundstart that has opacity, it WILL overload SSlighting
-	opacity = FALSE
+/turf/open/floor/glass/reinforced/tram/Initialize(mapload)
+	. = ..()
+	RemoveElement(/datum/element/atmos_sensitive, mapload)
+
+/turf/open/floor/glass/reinforced/tram
+	name = "tram bridge"
+	desc = "It shakes a bit when you step, but lets you cross between sides quickly!"
+	plane = GAME_PLANE
+	layer = TRAM_XING_LAYER
 
 /obj/machinery/door/window/tram
 	icon = 'icons/obj/doors/tramdoor.dmi'

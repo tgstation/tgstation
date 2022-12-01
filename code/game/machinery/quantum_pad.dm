@@ -90,7 +90,7 @@
 			to_chat(user, span_notice("You insert [K] into [src]'s card slot, initiating the link procedure."))
 			if(do_after(user, 40, target = src))
 				to_chat(user, span_notice("You complete the link between [K] and [src]."))
-				K.qpad = src
+				K.set_pad(src)
 
 	if(default_deconstruction_crowbar(I))
 		return

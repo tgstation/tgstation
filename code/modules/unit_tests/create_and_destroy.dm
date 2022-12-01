@@ -49,8 +49,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	//Same to above. Needs a client / mob / hallucination to observe it to exist.
 	ignore += typesof(/obj/projectile/hallucination)
 	ignore += typesof(/obj/item/hallucinated)
-	//These want fried food to take on the shape of, we can't pass that in
-	ignore += typesof(/obj/item/food/deepfryholder)
 	//Can't pass in a thing to glow
 	ignore += typesof(/obj/effect/abstract/eye_lighting)
 	//We don't have a pod
