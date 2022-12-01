@@ -171,7 +171,7 @@
 
 	// if this works, then remove the other Initialization for randomized languages
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		randomize_language_if_on_station()
+		//randomize_language_if_on_station()
 
 	return INITIALIZE_HINT_LATELOAD
 

@@ -66,8 +66,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	GLOB.allCasters += src
 	GLOB.allbountyboards += src
 	update_appearance()
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		randomize_language_if_on_station()
+	//if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
+		//randomize_language_if_on_station()
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src

@@ -92,7 +92,10 @@
 	req_access = list(ACCESS_SYNDICATE)
 	age_restrictions = FALSE
 	initial_language_holder = /datum/language_holder/universal
-	language_holder.selected_language = /datum/language/codespeak // this may need to be setup during init	
+
+/obj/machinery/vending/boozeomat/syndicate_access/Initialize(mapload)
+	..()
+	language_holder.selected_language = /datum/language/codespeak
 
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"

@@ -219,7 +219,7 @@
 	power_change()
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		randomize_language_if_on_station()
+		//randomize_language_if_on_station()
 
 	if(onstation_override) //overrides the checks if true.
 		onstation = TRUE
