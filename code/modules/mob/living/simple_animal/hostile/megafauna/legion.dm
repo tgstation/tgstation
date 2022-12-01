@@ -206,7 +206,7 @@
 	return ..()
 
 
-///In addition to parent functionality, this will also turn the target into a small legion if they are unconcious.
+///In addition to parent functionality, this will also turn the target into a small legion if they are unconscious.
 /mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
 	. = ..()
 	if(!. || !ishuman(target))
