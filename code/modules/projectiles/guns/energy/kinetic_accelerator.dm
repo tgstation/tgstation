@@ -16,6 +16,21 @@
 	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
 
+/obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
+	. = ..()
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Detach a modkit", \
+	)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_CROWBAR = list(
+			SCREENTIP_CONTEXT_LMB = "Eject all modkits",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/item/gun/energy/recharge/kinetic_accelerator/shoot_with_empty_chamber(mob/living/user)
 	playsound(src, dry_fire_sound, 30, TRUE) //click sound but no to_chat message to cut on spam
 	return
@@ -43,6 +58,7 @@
 		I.play_tool_sound(src, 100)
 		for(var/a in modkits)
 			var/obj/item/borg/upgrade/modkit/M = a
+			user = new(drop_location())
 			M.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
@@ -50,32 +66,32 @@
 /obj/item/gun/energy/recharge/kinetic_accelerator/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!LAZYLEN(modkits))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/list/display_names = list()
 	var/list/items = list()
-	for(var/modkits_lenght in 1 to length(modkits))
-		var/obj/item/thing = modkits[modkits_lenght]
-		display_names["[thing.name] ([modkits_lenght])"] = REF(thing)
+	for(var/modkits_length in 1 to length(modkits))
+		var/obj/item/thing = modkits[modkits_length]
+		display_names["[thing.name] ([modkits_length])"] = REF(thing)
 		var/image/item_image = image(icon = thing.icon, icon_state = thing.icon_state)
 		if(length(thing.overlays))
 			item_image.copy_overlays(thing)
-		items += list("[thing.name] ([modkits_lenght])" = item_image)
+		items["[thing.name] ([modkits_length])"] = item_image
 
 	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_menu), user), radius = 36, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/modkit_reference = display_names[pick]
 	var/obj/item/borg/upgrade/modkit/modkit_to_remove = locate(modkit_reference) in modkits
 	if(!istype(modkit_to_remove))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!user.put_in_hands(modkit_to_remove))
-		modkit_to_remove.forceMove(get_turf(src))
-	update_appearance()
+		modkit_to_remove.forceMove(drop_location())
+	update_appearance(UPDATE_ICON)
 
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
