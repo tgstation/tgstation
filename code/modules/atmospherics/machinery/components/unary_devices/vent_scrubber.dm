@@ -43,16 +43,33 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize(mapload)
 	. = ..()
 
-	var/area/area = get_area(src)
-	area?.air_scrubbers += src
-
+	assign_to_area()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
-	var/area/scrub_area = get_area(src)
-	scrub_area?.air_scrubbers -= src
+	disconnect_from_area()
 	adjacent_turfs.Cut()
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
+	var/area/old_area = get_area(old_loc)
+	var/area/new_area = get_area(src)
+
+	if (old_area == new_area)
+		return
+
+	disconnect_from_area()
+	assign_to_area()
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/assign_to_area()
+	var/area/area = get_area(src)
+	area?.air_scrubbers += src
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/disconnect_from_area()
+	var/area/area = get_area(src)
+	area?.air_scrubbers -= src
 
 ///adds a gas or list of gases to our filter_types. used so that the scrubber can check if its supposed to be processing after each change
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/add_filters(filter_or_filters)

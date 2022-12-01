@@ -36,8 +36,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	. = ..()
 
-	if (!isnull(get_area(src)))
-		assign_to_area()
+	assign_to_area()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Destroy()
 	disconnect_from_area()
@@ -58,12 +57,11 @@
 		return
 
 	disconnect_from_area()
-	if (!isnull(new_area))
-		assign_to_area()
+	assign_to_area()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/assign_to_area()
 	var/area/area = get_area(src)
-	area.air_vents += src
+	area?.air_vents += src
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/disconnect_from_area()
 	var/area/area = get_area(src)
