@@ -65,5 +65,3 @@
 //This is an external call, "true" and "false" are how rust parses out booleans
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
-
-#define BLACKBOX_LOG_FOOD_MADE(food) SSblackbox.record_feedback("tally", "food_made", 1, food)
