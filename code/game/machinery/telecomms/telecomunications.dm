@@ -157,9 +157,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/process(delta_time)
 	update_power()
 
-	// Update the icon
-	update_appearance()
-
 	if(traffic > 0)
 		traffic -= netspeed * delta_time
 

@@ -165,8 +165,12 @@ DEFINE_BITFIELD(smoothing_junction, list(
 	else
 		CRASH("smooth_icon called for [src] with smoothing_flags == [smoothing_flags]")
 	SEND_SIGNAL(src, COMSIG_ATOM_SMOOTHED_ICON)
-	update_appearance(~UPDATE_SMOOTHING)
 
+// As a rule, movables will most always care about smoothing changes
+// Turfs on the other hand, don't, so we don't do the update for THEM unless they explicitly request it
+/atom/movable/smooth_icon()
+	. = ..()
+	update_appearance(~UPDATE_SMOOTHING)
 
 /atom/proc/corners_diagonal_smooth(adjacencies)
 	switch(adjacencies)
