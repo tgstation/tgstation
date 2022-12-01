@@ -161,7 +161,9 @@ export const PersonalCooking = (props, context) => {
                 <Stack.Item>
                   <Input
                     autoFocus
-                    placeholder={'Search...'}
+                    placeholder={
+                      'Find in ' + data.recipes.length + ' recipes...'
+                    }
                     value={searchText}
                     onInput={(e, value) => {
                       setPages(1);
@@ -245,13 +247,7 @@ export const PersonalCooking = (props, context) => {
                             <Stack>
                               <Stack.Item width="14px" textAlign="center">
                                 <Icon
-                                  name={
-                                    Object.keys(CATEGORY_ICONS).includes(
-                                      category
-                                    )
-                                      ? CATEGORY_ICONS[category]
-                                      : 'circle'
-                                  }
+                                  name={CATEGORY_ICONS[category] || 'circle'}
                                 />
                               </Stack.Item>
                               <Stack.Item grow>{category}</Stack.Item>
@@ -347,11 +343,7 @@ const TypeContent = (props) => {
   return (
     <Stack>
       <Stack.Item width="14px" textAlign="center">
-        <Icon
-          name={
-            Object.keys(TYPE_ICONS).includes(type) ? TYPE_ICONS[type] : 'circle'
-          }
-        />
+        <Icon name={TYPE_ICONS[type] || 'circle'} />
       </Stack.Item>
       <Stack.Item grow style={{ 'text-transform': 'capitalize' }}>
         {type.toLowerCase()}
