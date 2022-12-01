@@ -552,6 +552,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 /// If this item's been grilled
 #define TRAIT_FOOD_GRILLED "food_grilled"
+/// If this item's been fried
+#define TRAIT_FOOD_FRIED "food_fried"
 /// This is a silver slime created item
 #define TRAIT_FOOD_SILVER "food_silver"
 /// If this item's been made by a chef instead of being map-spawned or admin-spawned or such
