@@ -1,16 +1,16 @@
 //Contains a bunch of procs for different types, but in the end it just lets you restyle external_organs so thats why its here
 
-///Helper proc to fetch a list of styles a player might want to restyle their features into during the round
+///Helper proc to fetch a list of styles a player might want to restyle their features into during the round : returns list("Cabbage" = /datum/sprite_accessory/cabbage)
 /obj/item/organ/external/proc/get_valid_restyles()
-	var/static/list/valid_restyles //Static because there's no reason to do this more than once. If there is, you can overwrite/remove it
-	if(valid_restyles)
-		return valid_restyles
+	var/list/valid_restyles
 
 	valid_restyles = list()
-	for(var/datum/sprite_accessory/accessory as anything in get_global_feature_list())
-		if(initial(accessory.locked)) //locked is for stuff that shouldn't appear here
+	var/list/feature_list = get_global_feature_list()
+	for(var/accessory in feature_list)
+		var/datum/sprite_accessory/accessory_datum = feature_list[accessory]
+		if(initial(accessory_datum.locked)) //locked is for stuff that shouldn't appear here
 			continue
-		valid_restyles.Add(accessory)
+		valid_restyles[accessory] = accessory_datum
 
 	return valid_restyles
 
@@ -67,7 +67,8 @@
 
 ///Restyles the external organ from a list of valid options
 /obj/item/organ/external/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
-	var/new_style = tgui_input_list(trimmer, "Select a new style", "Grooming", get_valid_restyles())
+	var/list/restyles = get_valid_restyles()
+	var/new_style = tgui_input_list(trimmer, "Select a new style", "Grooming", restyles)
 
 	trimmer.visible_message(
 		span_notice("[trimmer] tries to change [original_target == trimmer ? trimmer.p_their() : original_target.name + "'s"] [name]."),
@@ -79,4 +80,5 @@
 			span_notice("You successfully change [original_target == trimmer ? "your" : original_target.name + "'s"] [name].")
 		)
 
-		simple_change_sprite(new_style)
+
+		simple_change_sprite(restyles[new_style]) //turn name to type and pass it on
