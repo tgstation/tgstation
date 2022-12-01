@@ -91,7 +91,6 @@
 
 ///mobs should use move_resist instead of anchored.
 /mob/living/basic/bot/floorbot/proc/toggle_magnet(engage = TRUE, change_icon = TRUE)
-	/*
 	if(engage)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
 		move_resist = INFINITY
@@ -101,7 +100,7 @@
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, BUSY_FLOORBOT_TRAIT)
 		move_resist = initial(move_resist)
 		if(change_icon)
-			update_icon()*/
+			update_icon()
 
 // Variables sent to TGUI
 /mob/living/basic/bot/floorbot/ui_data(mob/user)
