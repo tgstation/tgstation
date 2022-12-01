@@ -623,12 +623,13 @@
 /obj/machinery/power/apc/proc/grey_tide()
 	SIGNAL_HANDLER
 
-	if(is_station_level(z))
-		for(var/area_type in GLOB.grey_tide_areas)
-			if(istype(get_area(src), area_type))
-				lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
-				update_appearance()
-				update()
+	if(!is_station_level(z)) return
+
+	for(var/area_type in GLOB.grey_tide_areas)
+		if(istype(get_area(src), area_type))
+			lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
+			update_appearance()
+			update()
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

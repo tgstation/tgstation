@@ -19,8 +19,9 @@
 /obj/structure/closet/secure_closet/proc/grey_tide()
 	SIGNAL_HANDLER
 
-	if(is_station_level(z))
-		for(var/area_type in GLOB.grey_tide_areas)
-			if(istype(get_area(src), area_type))
-				locked = FALSE
-				update_appearance()
+	if(!is_station_level(z)) return
+
+	for(var/area_type in GLOB.grey_tide_areas)
+		if(istype(get_area(src), area_type))
+			locked = FALSE
+			update_appearance()

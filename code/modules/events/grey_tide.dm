@@ -47,8 +47,9 @@ GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
 		kill()
 
 /datum/round_event/grey_tide/tick()
-	if(ISMULTIPLE(activeFor, 12))
-		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE_LIGHT)
+	if(!ISMULTIPLE(activeFor, 12)) return
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE_LIGHT)
 
 // Objects currently impacted by the greytide event:
 // /obj/machinery/door/airlock -- Signal bolts open the door
