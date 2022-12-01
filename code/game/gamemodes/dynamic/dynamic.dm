@@ -337,7 +337,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	generate_station_goals(greenshift)
 	. += generate_station_goal_report()
 	. += generate_station_trait_report()
-	if(SScommunications.command_report_footnote)
+	if(length(SScommunications.command_report_footnotes))
 		. += generate_report_footnote()
 
 	print_command_report(., "Central Command Status Summary", announce=FALSE)

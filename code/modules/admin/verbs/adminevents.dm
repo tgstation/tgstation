@@ -389,12 +389,27 @@
 /client/proc/command_report_footnote()
 	set category = "Admin.Events"
 	set name = "Command Report Footnote"
-	set desc = "Adds a footnote to the roundstart command report. "
+	set desc = "Adds a footnote to the roundstart command report."
 
 	if(!check_rights(R_ADMIN))
 		return
 
-	SScommunications.command_report_footnote = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. It will likely not be seen if the report has already been sent.", "P.S.")
+	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
 
-	if(SScommunications.command_report_footnote)
-		message_admins("[usr] has changed the command report footnote to: [SScommunications.command_report_footnote]")
+	command_report_footnote.message = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. It will likely not be seen if the report has already been sent.", "P.S.")
+
+	if(!command_report_footnote.message)
+		return
+
+	command_report_footnote.signature = tgui_input_text(usr, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
+
+	if(!command_report_footnote.signature)
+		command_report_footnote.signature = "Anonymous"
+
+	SScommunications.command_report_footnotes += command_report_footnote
+
+	message_admins("[usr] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
+
+/datum/command_footnote
+	var/message
+	var/signature
