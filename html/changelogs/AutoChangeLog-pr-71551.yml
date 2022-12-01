@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored deep fried foods. Deep fried foods are still \"\"usable\"\" as their normal item, but are just edible."
-  - qol: "Silver Slime stuff can spawn grilled as well as fried."

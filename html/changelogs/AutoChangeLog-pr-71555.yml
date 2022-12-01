@@ -1,5 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - refactor: "Refactored the way the undertile component works, to allow it to have a bit more granularity as to when it's meant to be covered, but still visible, like for catwalks!"
-  - bugfix: "Catwalks no longer are affected by ambient occlusion, and now properly feel like actual floor tiles."

@@ -1,0 +1,21 @@
+2022-12-01:
+  GoldenAlpharex:
+  - refactor: Refactored the way the undertile component works, to allow it to have
+      a bit more granularity as to when it's meant to be covered, but still visible,
+      like for catwalks!
+  - bugfix: Catwalks no longer are affected by ambient occlusion, and now properly
+      feel like actual floor tiles.
+  Melbert:
+  - refactor: Refactored deep fried foods. Deep fried foods are still ""usable"" as
+      their normal item, but are just edible.
+  - qol: Silver Slime stuff can spawn grilled as well as fried.
+  SyncIt21:
+  - rscadd: plumbing constructor TGUI, just like Rapid Pipe Dispensers
+  - rscdel: plumbing constructor radials
+  - code_imp: categories for each item
+  tralezab:
+  - bugfix: fixed getting kicked out of your body sometimes when pursuing the carp
+      mutant
+  - bugfix: and carp lungs working incorrectly
+  - qol: better ui explanation on the infuser book
+  - qol: can drag people into the infuser chamber
