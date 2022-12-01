@@ -229,10 +229,10 @@
 	ADD_TRAIT(src, TRAIT_NO_MISSING_ITEM_ERROR, TRAIT_GENERIC)
 
 /obj/item/storage/lockbox/order/attackby(obj/item/W, mob/user, params)
-	if(!isidcard(W))
+	var/obj/item/card/id/id_card = W.GetID()
+	if(!id_card)
 		return ..()
 
-	var/obj/item/card/id/id_card = W
 	if(iscarbon(user))
 		add_fingerprint(user)
 
