@@ -142,15 +142,14 @@ SUBSYSTEM_DEF(shuttle)
 	while(length(pack_processing))
 		var/datum/supply_pack/pack = pack_processing[length(pack_processing)]
 		pack_processing.len--
+		if(!initial(pack.contains))
+			continue
 		if(ispath(pack, /datum/supply_pack))
 			pack = new pack
 
 		var/list/generated_packs = pack.generate_supply_packs()
 		if(generated_packs)
 			pack_processing += generated_packs
-			continue
-
-		if(!pack.contains)
 			continue
 
 		supply_packs[pack.id] = pack
