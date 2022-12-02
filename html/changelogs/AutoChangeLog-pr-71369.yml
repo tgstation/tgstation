@@ -1,4 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "rcds will now prioritize completing a girder over making a new wall on a turf"

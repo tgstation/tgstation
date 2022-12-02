@@ -22,14 +22,17 @@
 	var/mutable_appearance/top_overlay
 	///Type of ingredients to accept, [CUSTOM_INGREDIENT_TYPE_EDIBLE] for example.
 	var/ingredient_type
-
+	/// Adds screentips for all items that call on this proc, defaults to "Add"
+	var/screentip_verb
 
 /datum/component/customizable_reagent_holder/Initialize(
 		atom/replacement,
 		fill_type,
 		ingredient_type = CUSTOM_INGREDIENT_TYPE_EDIBLE,
 		max_ingredients = MAX_ATOM_OVERLAYS - 3, // The cap is >= MAX_ATOM_OVERLAYS so we reserve 2 for top /bottom of item + 1 to stay under cap
-		list/obj/item/initial_ingredients = null)
+		list/obj/item/initial_ingredients = null,
+		screentip_verb = "Add",
+)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/atom_parent = parent
@@ -37,10 +40,13 @@
 	if (!atom_parent.reagents && !replacement)
 		return COMPONENT_INCOMPATIBLE
 
+	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+
 	src.replacement = replacement
 	src.fill_type = fill_type
 	src.max_ingredients = max_ingredients
 	src.ingredient_type = ingredient_type
+	src.screentip_verb = screentip_verb
 
 	if (initial_ingredients)
 		for (var/_ingredient in initial_ingredients)
@@ -59,6 +65,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(customizable_attack))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_PROCESSED, PROC_REF(on_processed))
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 	ADD_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, REF(src))
 
 
@@ -68,6 +75,7 @@
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_ATOM_PROCESSED,
+		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 	))
 	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, REF(src))
 
@@ -98,26 +106,29 @@
 			ingredients_listed += "\a [ingredient.name][ending]"
 	examine_list += "It [LAZYLEN(ingredients) ? "contains [ingredients_listed]making a [custom_adjective()]-sized [initial(atom_parent.name)]" : "does not contain any ingredients"]."
 
+//// Proc that checks if an ingredient is valid or not, returning false if it isnt and true if it is.
+/datum/component/customizable_reagent_holder/proc/valid_ingredient(obj/ingredient)
+	if (HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
+		return FALSE
+	if(HAS_TRAIT(ingredient, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT))
+		return TRUE
+	switch (ingredient_type)
+		if (CUSTOM_INGREDIENT_TYPE_EDIBLE)
+			return IS_EDIBLE(ingredient)
+		if (CUSTOM_INGREDIENT_TYPE_DRYABLE)
+			return HAS_TRAIT(ingredient, TRAIT_DRYABLE)
+	return TRUE
 
 ///Handles when the customizable food is attacked by something.
 /datum/component/customizable_reagent_holder/proc/customizable_attack(datum/source, obj/ingredient, mob/attacker, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
-	var/valid_ingredient = TRUE
-
-	switch (ingredient_type)
-		if (CUSTOM_INGREDIENT_TYPE_EDIBLE)
-			valid_ingredient = IS_EDIBLE(ingredient)
-		if (CUSTOM_INGREDIENT_TYPE_DRYABLE)
-			valid_ingredient = HAS_TRAIT(ingredient, TRAIT_DRYABLE)
-
-	// only accept valid ingredients
-	if (!valid_ingredient || HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
-		to_chat(attacker, span_warning("[ingredient] doesn't belong on [parent]!"))
+	if (!valid_ingredient(ingredient))
+		attacker.balloon_alert(attacker, "doesn't go on that!")
 		return
 
 	if (LAZYLEN(ingredients) >= max_ingredients)
-		to_chat(attacker, span_warning("[parent] is too full for any more ingredients!"))
+		attacker.balloon_alert(attacker, "too full!")
 		return COMPONENT_NO_AFTERATTACK
 
 	var/atom/atom_parent = parent
@@ -188,6 +199,10 @@
 /datum/component/customizable_reagent_holder/proc/add_ingredient(obj/item/ingredient)
 	var/atom/atom_parent = parent
 	LAZYADD(ingredients, ingredient)
+	if(isitem(atom_parent))
+		var/obj/item/item_parent = atom_parent
+		if(ingredient.w_class > item_parent.w_class)
+			item_parent.w_class = ingredient.w_class
 	atom_parent.name = "[custom_adjective()] [custom_type()] [initial(atom_parent.name)]"
 	SEND_SIGNAL(atom_parent, COMSIG_ATOM_CUSTOMIZED, ingredient)
 	SEND_SIGNAL(ingredient, COMSIG_ITEM_USED_AS_INGREDIENT, atom_parent)
@@ -247,3 +262,22 @@
 	for (var/r in results)
 		var/atom/result = r
 		result.AddComponent(/datum/component/customizable_reagent_holder, null, fill_type, ingredient_type = ingredient_type, max_ingredients = max_ingredients, initial_ingredients = ingredients)
+
+/**
+ * Adds context sensitivy directly to the customizable reagent holder file for screentips
+ * Arguments:
+ * * source - refers to item that will display its screentip
+ * * context - refers to, in this case, an item that can be customized with other reagents or ingrideints
+ * * held_item - refers to the item in your hand, which is hopefully an ingredient
+ * * user - refers to user who will see the screentip when the proper context and tool are there
+ */
+/datum/component/customizable_reagent_holder/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
+	SIGNAL_HANDLER
+
+	// only accept valid ingredients
+	if (!valid_ingredient(held_item))
+		return NONE
+
+	context[SCREENTIP_CONTEXT_LMB] = "[screentip_verb] [held_item]"
+
+	return CONTEXTUAL_SCREENTIP_SET

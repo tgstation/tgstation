@@ -167,12 +167,10 @@
 		id.update_icon()
 
 		if(worn)
-			if(istype(worn, /obj/item/modular_computer/tablet/pda))
-				var/obj/item/modular_computer/tablet/pda/PDA = worn
-				var/obj/item/computer_hardware/card_slot/card = PDA.all_components[MC_CARD]
+			if(istype(worn, /obj/item/modular_computer/pda))
+				var/obj/item/modular_computer/pda/PDA = worn
+				PDA.InsertID(id, H)
 
-				if(card)
-					card.try_insert(id)
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
 				W.front_id = id

@@ -5,8 +5,7 @@
 /datum/unit_test/actions_moved_on_mind_transfer
 
 /datum/unit_test/actions_moved_on_mind_transfer/Run()
-
-	var/mob/living/carbon/human/wizard = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/wizard = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/basic/pet/dog/corgi/wizard_dog = allocate(/mob/living/basic/pet/dog/corgi)
 	wizard.mind_initialize()
 

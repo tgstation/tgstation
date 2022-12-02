@@ -2,8 +2,14 @@
 /datum/hud/proc/create_parallax(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
+
 	if (!apply_parallax_pref(viewmob)) //don't want shit computers to crash when specing someone with insane parallax, so use the viewer's pref
+		for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
+			parallax.hide_plane(screenmob)
 		return
+
+	for(var/atom/movable/screen/plane_master/parallax as anything in get_true_plane_masters(PLANE_SPACE_PARALLAX))
+		parallax.unhide_plane(screenmob)
 
 	if(!length(C.parallax_layers_cached))
 		C.parallax_layers_cached = list()
@@ -23,7 +29,7 @@
 	// We could do not do parallax for anything except the main plane group
 	// This could be changed, but it would require refactoring this whole thing
 	// And adding non client particular hooks for all the inputs, and I do not have the time I'm sorry :(
-	for(var/atom/movable/screen/plane_master/plane_master in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
+	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
 			C.screen += plane_master
@@ -39,7 +45,7 @@
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	C.screen -= (C.parallax_layers_cached)
-	for(var/atom/movable/screen/plane_master/plane_master in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
+	for(var/atom/movable/screen/plane_master/plane_master as anything in screenmob.hud_used.get_true_plane_masters(PLANE_SPACE))
 		if(screenmob != mymob)
 			C.screen -= locate(/atom/movable/screen/plane_master/parallax_white) in C.screen
 			C.screen += plane_master
@@ -50,7 +56,13 @@
 	var/mob/screenmob = viewmob || mymob
 
 	if(SSmapping.level_trait(screenmob.z, ZTRAIT_NOPARALLAX))
+		for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
+			white_space.hide_plane(screenmob)
 		return FALSE
+
+	for(var/atom/movable/screen/plane_master/white_space as anything in get_true_plane_masters(PLANE_SPACE))
+		white_space.unhide_plane(screenmob)
+
 	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
 		return FALSE
 

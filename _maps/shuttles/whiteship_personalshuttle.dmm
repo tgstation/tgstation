@@ -368,15 +368,12 @@
 	callTime = 250;
 	can_move_docking_ports = 1;
 	dir = 2;
-	dwidth = 5;
-	height = 13;
 	shuttle_id = "whiteship";
 	launch_status = 0;
 	movement_force = list("KNOCKDOWN"=0,"THROW"=0);
 	name = "White Ship";
 	port_direction = 2;
-	preferred_direction = 2;
-	width = 11
+	preferred_direction = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)

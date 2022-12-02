@@ -78,3 +78,19 @@
 /// For generating supply packs at runtime. Returns a list of supply packs to use instead of this one.
 /datum/supply_pack/proc/generate_supply_packs()
 	return
+
+/**
+ * Custom supply pack
+ * The contents are given on New rather than being static
+ * This is for adding custom orders to the Cargo console (like order consoles)
+ */
+/datum/supply_pack/custom
+	name = "mining order"
+	hidden = TRUE
+	crate_name = "shaft mining delivery crate"
+	access = list(ACCESS_MINING)
+
+/datum/supply_pack/custom/New(purchaser, list/given_contents)
+	. = ..()
+	name = "[purchaser]'s Mining Order"
+	contains = given_contents

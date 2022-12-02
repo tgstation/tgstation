@@ -37,7 +37,7 @@
 	var/malfunction_probability_coeff_modifier = 0
 	var/resetTime = 15
 	var/cloneMode = FALSE
-	var/list/item_reactions = list()
+	var/list/item_reactions
 	var/static/list/valid_items //valid items for special reactions like transforming
 	var/list/critical_items_typecache //items that can cause critical reactions
 
@@ -48,14 +48,28 @@
 	return temp_list
 
 /obj/machinery/rnd/experimentor/proc/valid_items()
-	if (!isnull(valid_items))
-		return valid_items
+	RETURN_TYPE(/list)
 
+	if (isnull(valid_items))
+		generate_valid_items_and_item_reactions()
+
+	return valid_items
+
+/obj/machinery/rnd/experimentor/proc/item_reactions()
+	RETURN_TYPE(/list)
+
+	if (isnull(item_reactions))
+		generate_valid_items_and_item_reactions()
+
+	return item_reactions
+
+/obj/machinery/rnd/experimentor/proc/generate_valid_items_and_item_reactions()
 	var/static/list/banned_typecache = typecacheof(list(
 		/obj/item/stock_parts/cell/infinite,
 		/obj/item/grenade/chem_grenade/tuberculosis
 	))
 
+	item_reactions = list()
 	valid_items = list()
 
 	for(var/I in typesof(/obj/item))
@@ -76,8 +90,6 @@
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
 				valid_items["[I]"] += rand(1,4)
-
-	return valid_items
 
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
@@ -212,6 +224,7 @@
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
 	var/obj/item/D = matching
 	if(D)
+		var/list/item_reactions = item_reactions()
 		if(item_reactions.Find("[D.type]"))
 			var/tor = item_reactions["[D.type]"]
 			if(tor == text2num(reaction))
@@ -474,7 +487,7 @@
 		var/globalMalf = rand(1,100)
 		if(globalMalf < 15)
 			visible_message(span_warning("[src]'s onboard detection system has malfunctioned!"))
-			item_reactions["[exp_on.type]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
+			item_reactions()["[exp_on.type]"] = pick(SCANTYPE_POKE,SCANTYPE_IRRADIATE,SCANTYPE_GAS,SCANTYPE_HEAT,SCANTYPE_COLD,SCANTYPE_OBLITERATE)
 			ejectItem()
 		if(globalMalf > 16 && globalMalf < 35)
 			visible_message(span_warning("[src] melts [exp_on], ian-izing the air around it!"))

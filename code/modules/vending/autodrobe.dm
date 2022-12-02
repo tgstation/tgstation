@@ -207,7 +207,7 @@
 		/obj/item/clothing/head/helmet/roman/legionnaire/fake = 1,
 		/obj/item/clothing/under/costume/roman = 1,
 		/obj/item/clothing/shoes/roman = 1,
-		/obj/item/shield/riot/roman/fake = 1,
+		/obj/item/shield/roman/fake = 1,
 		/obj/item/clothing/suit/chaplainsuit/clownpriest = 1,
 		/obj/item/clothing/head/chaplain/clownmitre = 1,
 		/obj/item/skub = 1,

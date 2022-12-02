@@ -88,7 +88,6 @@ Behavior that's still missing from this component that original food items had t
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(UseFromHand))
-		RegisterSignal(parent, COMSIG_ITEM_FRIED, PROC_REF(OnFried))
 		RegisterSignal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(used_to_customize))
 
 		var/obj/item/item = parent
@@ -107,7 +106,6 @@ Behavior that's still missing from this component that original food items had t
 		COMSIG_ATOM_ENTERED,
 		COMSIG_FOOD_INGREDIENT_ADDED,
 		COMSIG_ITEM_ATTACK,
-		COMSIG_ITEM_FRIED,
 		COMSIG_ITEM_USED_AS_INGREDIENT,
 		COMSIG_OOZE_EAT_ATOM,
 		COMSIG_PARENT_EXAMINE,
@@ -240,14 +238,6 @@ Behavior that's still missing from this component that original food items had t
 
 	return TryToEat(user, user)
 
-/datum/component/edible/proc/OnFried(datum/source, atom/fry_object)
-	SIGNAL_HANDLER
-	var/atom/our_atom = parent
-	fry_object.reagents.maximum_volume = our_atom.reagents.maximum_volume
-	our_atom.reagents.trans_to(fry_object, our_atom.reagents.total_volume)
-	qdel(our_atom)
-	return COMSIG_FRYING_HANDLED
-
 ///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.
 /datum/component/edible/proc/OnProcessed(datum/source, atom/original_atom, list/chosen_processing_option)
 	SIGNAL_HANDLER
@@ -297,7 +287,7 @@ Behavior that's still missing from this component that original food items had t
 	return TRUE
 
 /// Normal time to forcefeed someone something
-#define EAT_TIME_FORCE_FEED 3 SECONDS
+#define EAT_TIME_FORCE_FEED (3 SECONDS)
 /// Multiplier for eat time if the eater has TRAIT_VORACIOUS
 #define EAT_TIME_VORACIOUS_MULT 0.65 // voracious folk eat 35% faster
 /// Multiplier for how much longer it takes a voracious folk to eat while full
@@ -429,20 +419,31 @@ Behavior that's still missing from this component that original food items had t
 	if(eater.satiety > -200)
 		eater.satiety -= junkiness
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	if(owner.reagents.total_volume)
-		SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
-		var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
-		owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
-		bitecount++
-		checkLiked(fraction, eater)
-		if(!owner.reagents.total_volume)
-			On_Consume(eater, feeder)
+	if(!owner.reagents.total_volume)
+		return
+	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
+	if(sig_return & DESTROY_FOOD)
+		qdel(owner)
+		return
+	var/fraction = min(bite_consumption / owner.reagents.total_volume, 1)
+	owner.reagents.trans_to(eater, bite_consumption, transfered_by = feeder, methods = INGEST)
+	bitecount++
+	checkLiked(fraction, eater)
+	if(!owner.reagents.total_volume)
+		On_Consume(eater, feeder)
 
-		//Invoke our after eat callback if it is valid
-		if(after_eat)
-			after_eat.Invoke(eater, feeder, bitecount)
+	//Invoke our after eat callback if it is valid
+	if(after_eat)
+		after_eat.Invoke(eater, feeder, bitecount)
 
-		return TRUE
+	//Invoke the eater's stomach's after_eat callback if valid
+	if(iscarbon(eater))
+		var/mob/living/carbon/carbon_eater = eater
+		var/obj/item/organ/internal/stomach/stomach = carbon_eater.getorganslot(ORGAN_SLOT_STOMACH)
+		if(istype(stomach))
+			stomach.after_eat(owner)
+
+	return TRUE
 
 ///Checks whether or not the eater can actually consume the food
 /datum/component/edible/proc/CanConsume(mob/living/eater, mob/living/feeder)

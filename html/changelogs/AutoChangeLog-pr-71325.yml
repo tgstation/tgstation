@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes:
-  - balance: "Hotkey-based inventory management now applies the click cooldown to prevent it from being abusable in combat scenarios."

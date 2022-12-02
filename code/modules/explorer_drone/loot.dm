@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	if(!cell.use(charge_per_use))
 		to_chat(user,span_warning("[src] battery ran dry!"))
 		return
-	ADD_TRAIT(user,TRAIT_IMMOBILIZED,src)
+	ADD_TRAIT(user, TRAIT_IMMOBILIZED, REF(src))
 	to_chat(user,span_notice("You begin to charge [src]"))
 	inhand_icon_state = "firelance_charging"
 	user.update_held_items()
@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 				turf_to_melt.Melt()
 	inhand_icon_state = initial(inhand_icon_state)
 	user.update_held_items()
-	REMOVE_TRAIT(user,TRAIT_IMMOBILIZED,src)
+	REMOVE_TRAIT(user, TRAIT_IMMOBILIZED, REF(src))
 
 /// Additional windup checks
 /obj/item/firelance/proc/windup_checks()

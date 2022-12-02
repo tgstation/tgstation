@@ -90,7 +90,7 @@
 			RegisterSignal(card, COMSIG_ITEM_EQUIPPED, PROC_REF(on_card_planted))
 			AddComponent(/datum/component/traitor_objective_register, card, \
 				succeed_signals = null, \
-				fail_signals = COMSIG_PARENT_QDELETING, \
+				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = TRUE)
 
 /datum/traitor_objective/assassinate/calling_card/proc/on_card_planted(datum/source, mob/living/equipper, slot)
@@ -131,7 +131,7 @@
 	. = ..()
 	if(!.) //didn't generate
 		return FALSE
-	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = COMSIG_PARENT_QDELETING)
+	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = list(COMSIG_PARENT_QDELETING))
 	RegisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_target_dismembered))
 
 /datum/traitor_objective/assassinate/behead/ungenerate_objective()

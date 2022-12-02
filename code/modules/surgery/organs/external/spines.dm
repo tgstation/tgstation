@@ -6,10 +6,14 @@
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_SPINES
 	layers = EXTERNAL_ADJACENT|EXTERNAL_BEHIND
+
 	feature_key = "spines"
 	render_key = "spines"
 	preference = "feature_lizard_spines"
+
 	dna_block = DNA_SPINES_BLOCK
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
+
 	///A two-way reference between the tail and the spines because of wagging sprites. Bruh.
 	var/obj/item/organ/external/tail/lizard/paired_tail
 

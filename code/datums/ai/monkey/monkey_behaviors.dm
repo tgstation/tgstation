@@ -13,7 +13,7 @@
 
 		item_blacklist[target] = TRUE
 		if(istype(controller, /datum/ai_controller/monkey)) //What the fuck
-			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, /datum/ai_controller/monkey/proc/target_del)
+			controller.RegisterSignal(target, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/ai_controller/monkey,target_del))
 
 	controller.blackboard[BB_MONKEY_PICKUPTARGET] = null
 
@@ -143,7 +143,7 @@
 /datum/ai_behavior/monkey_attack_mob/setup(datum/ai_controller/controller, target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	controller.current_movement_target = target_ref?.resolve()
+	controller.set_movement_target(target_ref?.resolve())
 
 /datum/ai_behavior/monkey_attack_mob/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
@@ -241,7 +241,7 @@
 /datum/ai_behavior/disposal_mob/setup(datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	. = ..()
 	var/datum/weakref/target_ref = controller.blackboard[attack_target_key]
-	controller.current_movement_target = target_ref?.resolve()
+	controller.set_movement_target(target_ref?.resolve())
 
 /datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded, attack_target_key, disposal_target_key)
 	. = ..()
@@ -259,7 +259,7 @@
 	var/mob/living/target = target_ref?.resolve()
 	var/mob/living/living_pawn = controller.pawn
 
-	controller.current_movement_target = target
+	controller.set_movement_target(target)
 
 	if(!target)
 		finish_action(controller, FALSE)
@@ -272,7 +272,7 @@
 
 	var/datum/weakref/disposal_ref = controller.blackboard[disposal_target_key]
 	var/obj/machinery/disposal/disposal = disposal_ref.resolve()
-	controller.current_movement_target = disposal
+	controller.set_movement_target(disposal)
 
 	if(!disposal)
 		finish_action(controller, FALSE)
@@ -323,12 +323,11 @@
 		if(possible_enemy == controller.pawn)
 			continue // don't target ourselves
 		var/datum/weakref/enemy_ref = WEAKREF(possible_enemy)
-		if(enemy_ref in enemies)
-			continue // don't target enemies we already hate
-		if(!controller.blackboard[BB_MONKEY_AGGRESSIVE])
-			continue // don't target enemies if we're not aggressive
-		if(HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS])
-			continue // don't target monkeys if we're not supposed to
+		if(!enemies[enemy_ref]) //We don't hate this creature! But we might still attack it!
+			if(!controller.blackboard[BB_MONKEY_AGGRESSIVE]) //We are not aggressive either, so we won't attack!
+				continue
+			if(HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey) && !controller.blackboard[BB_MONKEY_TARGET_MONKEYS]) //Do not target poor monkes
+				continue
 		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
 		valids[enemy_ref] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
 

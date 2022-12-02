@@ -1,0 +1,8 @@
+author: "MTandi"
+delete-after: True
+changes:
+  - qol: "barrel works with the plant bag now"
+  - balance: "barrel volume increased to 600 units"
+  - bugfix: "barrel now properly converts nutriments into wine"
+  - bugfix: "added 4% nutriments to sugar cane, to allow rum creation"
+  - refactor: "barrel logic and fermentation refactoring"

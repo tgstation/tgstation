@@ -102,6 +102,28 @@
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
 	drink_type = BREAKFAST
+	var/lid_open = 0
+
+/obj/item/reagent_containers/cup/glass/coffee/no_lid
+	icon_state = "coffee_empty"
+	list_reagents = null
+
+/obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to toggle cup lid.")
+	return
+
+/obj/item/reagent_containers/cup/glass/coffee/AltClick(mob/user)
+	lid_open = !lid_open
+	update_icon_state()
+	return ..()
+
+/obj/item/reagent_containers/cup/glass/coffee/update_icon_state()
+	if(lid_open)
+		icon_state = reagents.total_volume ? "coffee_full" : "coffee_empty"
+	else
+		icon_state = "coffee"
+	return ..()
 
 /obj/item/reagent_containers/cup/glass/ice
 	name = "ice cup"
@@ -120,22 +142,25 @@
 /obj/item/reagent_containers/cup/glass/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
 	desc = "A drink served in a classy mug."
-	icon_state = "tea"
+	icon_state = "tea_empty"
+	base_icon_state = "tea"
 	inhand_icon_state = "coffee"
 	spillable = TRUE
 
 /obj/item/reagent_containers/cup/glass/mug/update_icon_state()
-	icon_state = reagents.total_volume ? "tea" : "tea_empty"
+	icon_state = "[base_icon_state][reagents.total_volume ? null : "_empty"]"
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/mug/tea
 	name = "Duke Purple tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
+	icon_state = "tea"
 	list_reagents = list(/datum/reagent/consumable/tea = 30)
 
 /obj/item/reagent_containers/cup/glass/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
+	icon_state = "tea"
 	list_reagents = list(/datum/reagent/consumable/hot_coco = 15, /datum/reagent/consumable/sugar = 5)
 	drink_type = SUGAR
 	resistance_flags = FREEZE_PROOF
@@ -145,10 +170,7 @@
 	name = "\improper Nanotrasen mug"
 	desc = "A mug to display your corporate pride."
 	icon_state = "mug_nt_empty"
-
-/obj/item/reagent_containers/cup/glass/mug/nanotrasen/update_icon_state()
-	icon_state = reagents.total_volume ? "mug_nt" : "mug_nt_empty"
-	return ..()
+	base_icon_state = "mug_nt"
 
 /obj/item/reagent_containers/cup/glass/coffee_cup
 	name = "coffee cup"

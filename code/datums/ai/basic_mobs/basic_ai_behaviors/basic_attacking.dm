@@ -9,7 +9,7 @@
 	var/atom/target = weak_target?.resolve()
 	if(!target)
 		return FALSE
-	controller.current_movement_target = target
+	controller.set_movement_target(target)
 
 /datum/ai_behavior/basic_melee_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
@@ -49,7 +49,7 @@
 	var/atom/target = weak_target?.resolve()
 	if(!target)
 		return FALSE
-	controller.current_movement_target = target
+	controller.set_movement_target(target)
 
 /datum/ai_behavior/basic_ranged_attack/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()

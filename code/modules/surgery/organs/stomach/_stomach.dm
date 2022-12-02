@@ -208,6 +208,10 @@
 /obj/item/organ/internal/stomach/get_availability(datum/species/owner_species)
 	return !(NOSTOMACH in owner_species.species_traits)
 
+///This gets called after the owner takes a bite of food
+/obj/item/organ/internal/stomach/proc/after_eat(atom/edible)
+	return
+
 /obj/item/organ/internal/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
 	var/old_disgust = disgusted.old_disgust
 	var/disgust = disgusted.disgust
