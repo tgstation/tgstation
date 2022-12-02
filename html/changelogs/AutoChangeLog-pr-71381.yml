@@ -1,0 +1,7 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - refactor: "Refactors podperson hair. You can now restyle it on any species"
+  - qol: "You can restyle podperson hair on the person, their decapitated head or straight on the hair organ"
+  - code_imp: "Restyling is now completely modular, you can make any external organ easily restylable"
+  - bugfix: "Fixes external organ harddel because limbs would keep the reference on drop_organs"
