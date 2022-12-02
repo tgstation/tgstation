@@ -11,8 +11,8 @@
 
 	///Are we burned?
 	var/burnt = FALSE
-	///Store our old sprite here for if our burned wings are healed
-	var/original_sprite = ""
+	///Store our old datum here for if our burned wings are healed
+	var/original_sprite_datum
 
 /obj/item/organ/external/wings/moth/get_global_feature_list()
 	return GLOB.moth_wings_list
@@ -65,8 +65,8 @@
 /obj/item/organ/external/wings/moth/proc/burn_wings()
 	burnt = TRUE
 
-	original_sprite = sprite_datum.name
-	set_sprite("Burnt Off")
+	original_sprite_datum = sprite_datum
+	simple_change_sprite(/datum/sprite_accessory/moth_wings/burnt_off)
 
 ///heal our wings back up!!
 /obj/item/organ/external/wings/moth/proc/heal_wings(datum/source, heal_flags)
@@ -77,4 +77,4 @@
 
 	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
 		burnt = FALSE
-		set_sprite(original_sprite)
+		simple_change_sprite(original_sprite_datum)
