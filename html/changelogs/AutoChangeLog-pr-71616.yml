@@ -1,4 +1,0 @@
-author: "CapybaraExtravagante"
-delete-after: True
-changes:
-  - bugfix: "Bots no longer get stuck behind windoors and firedoors when they could go through them in some way."

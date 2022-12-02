@@ -1,5 +1,0 @@
-author: "Tattle, PestoVerde322"
-delete-after: True
-changes:
-  - imageadd: "couches are now grayscale"
-  - code_imp: "random tool colours now use defines"
