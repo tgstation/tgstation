@@ -107,17 +107,6 @@
 		if(0 to 25)
 			. += span_warning("It's falling apart!")
 
-/obj/item/modular_computer/examine_more(mob/user)
-	. = ..()
-	. += "Storage capacity: [cpu.used_capacity]/[cpu.max_capacity]GQ"
-
-	for(var/datum/computer_file/app_examine as anything in cpu.stored_files)
-		if(app_examine.on_examine(src, user))
-			. += app_examine.on_examine(src, user)
-
-	if(Adjacent(user))
-		. += span_notice("Paper level: [cpu.stored_paper] / [cpu.max_paper].")
-
 /obj/item/modular_computer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 	if(held_item?.tool_behaviour == TOOL_WRENCH)

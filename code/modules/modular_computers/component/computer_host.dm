@@ -584,15 +584,28 @@
 /datum/modular_computer_host/proc/do_examine(datum/source, mob/user, list/examines)
 	SIGNAL_HANDLER
 	if(ntnet_bypass_rangelimit)
-		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
-	. += span_notice("It has [max_capacity] GQ of storage capacity.")
+		examines += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
+	examines += span_notice("It has [max_capacity] GQ of storage capacity.")
 
 	if(computer_id_slot)
 		if(physical.Adjacent(user))
-			. += "It has \the [computer_id_slot] card installed in its card slot."
+			examines += "It has \the [computer_id_slot] card installed in its card slot."
 		else
-			. += "Its identification card slot is currently occupied."
-		. += span_info("Alt-click [src] to eject the identification card.")
+			examines += "Its identification card slot is currently occupied."
+		examines += span_info("Alt-click [src] to eject the identification card.")
+
+
+/datum/modular_computer_host/proc/do_examine_more(datum/source, mob/user, list/examines)
+	SIGNAL_HANDLER
+	examines += "Storage capacity: [used_capacity]/[max_capacity]GQ"
+
+	for(var/datum/computer_file/app_examine as anything in stored_files)
+		var/examine = app_examine.on_examine(physical, user)
+		if(examine)
+			examines += examine
+
+	if(physical.Adjacent(user))
+		examines += span_notice("Paper level: [stored_paper] / [max_paper].")
 
 /datum/modular_computer_host/proc/do_ctrlshiftclick(datum/source, mob/user)
 	SIGNAL_HANDLER
