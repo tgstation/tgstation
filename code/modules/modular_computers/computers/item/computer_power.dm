@@ -46,5 +46,5 @@
 	return FALSE
 
 //Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
-/obj/item/modular_computer/tablet/integrated/check_power_override()
+/obj/item/modular_computer/pda/silicon/check_power_override()
 	return TRUE
