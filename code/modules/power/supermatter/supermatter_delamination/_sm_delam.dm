@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 
 	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
-		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
+		size = !!sm.internal_energy && clamp((sm.damage/100) * sm.internal_energy, 50, 125),
 		color = (sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR),
 		factor = clamp(sm.damage/600, 1, 10),
 		density = clamp(sm.damage/10, 12, 100)
@@ -108,10 +108,10 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
 	sm.set_light(
-		sm.light_range + sm.internal_energy/200,
-		sm.light_power + sm.internal_energy/1000,
-		sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
-		TRUE
+		l_range = 4 + sm.internal_energy/200,
+		l_power = 1 + sm.internal_energy/1000,
+		l_color = sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
+		l_on = !!sm.internal_energy,
 	)
 
 /// Returns a set of messages to be spouted during delams

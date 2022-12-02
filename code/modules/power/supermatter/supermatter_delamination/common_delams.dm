@@ -34,7 +34,7 @@
 	// override the ray from parent call.
 	sm.add_filter(name = "ray", priority = 1, params=list(
 		type = "rays",
-		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
+		size = !!sm.internal_energy && clamp((sm.damage/100) * sm.internal_energy, 50, 125),
 		color = SUPERMATTER_SINGULARITY_RAYS_COLOUR,
 		factor = clamp(sm.damage / 300, 1, 30),
 		density = clamp(sm.damage / 5, 12, 200)
@@ -64,10 +64,10 @@
 
 /datum/sm_delam/singularity/lights(obj/machinery/power/supermatter_crystal/sm)
 	sm.set_light(
-		sm.light_range + clamp(sm.damage/2, 10, 50),
-		3,
-		SUPERMATTER_SINGULARITY_LIGHT_COLOUR,
-		TRUE
+		l_range = sm.light_range + clamp(sm.damage/2, 10, 50),
+		l_power = 3,
+		l_color = SUPERMATTER_SINGULARITY_LIGHT_COLOUR,
+		l_on = !!sm.internal_energy,
 	)
 
 /// When we have too much power.
@@ -105,7 +105,7 @@
 	// override the ray from parent call.
 	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
-		size = clamp((sm.damage/100) * sm.internal_energy, 50, 125),
+		size = !!sm.internal_energy && clamp((sm.damage/100) * sm.internal_energy, 50, 125),
 		color = SUPERMATTER_TESLA_COLOUR,
 		factor = clamp(sm.damage/300, 1, 30),
 		density = clamp(sm.damage/5, 12, 200)
@@ -123,10 +123,10 @@
 
 /datum/sm_delam/tesla/lights(obj/machinery/power/supermatter_crystal/sm)
 	sm.set_light(
-		sm.light_range + clamp(sm.damage * sm.internal_energy, 50, 500),
-		3,
-		SUPERMATTER_TESLA_COLOUR,
-		TRUE,
+		l_range = sm.light_range + clamp(sm.damage * sm.internal_energy, 50, 500),
+		l_power = 3,
+		l_color = SUPERMATTER_TESLA_COLOUR,
+		l_on = !!sm.internal_energy,
 	)
 
 /// Default delam.
