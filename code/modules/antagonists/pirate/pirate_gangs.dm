@@ -103,7 +103,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	response_too_late = "Too late to beg for mercy!"
 	response_not_enough = "Trying to cheat us? You'll regret this!"
 
-///undead skeleton crew looking for booty
+///psychic gangster junkies who want some allowance to continue the gore-binge
 /datum/pirate_gang/psykers
 	name = "Roving Psyker-gang"
 
@@ -114,6 +114,6 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	threat_content = "Hello, you psychically dormant pawn-pieces. Our funds are running a little low, and we're not going to be able to continue our gore-binge! Wanna help us out?"
 	possible_answers = list("Send some funds so they go away.","We're not funding these junkies.")
 
-	response_received = "You guys aren't so bad for being dormant. Next gore-fest goes to you guys. Peace!"
+	response_received = "You guys aren't so bad for being dormants. Next gore-fest goes to you guys. Peace!"
 	response_too_late = "Oh, now you think we're worth the money. Pathetic dormants."
 	response_not_enough = "I don't need to be a psyker to see you're trying to cheat us. Fine, we'll do it the hard way."
