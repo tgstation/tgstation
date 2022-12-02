@@ -141,6 +141,7 @@
 		var/turf/location = loc
 		location.Entered(src, NONE)
 
+///angel wings, which relate to humans. comes with holiness.
 /obj/item/organ/external/wings/functional/angel
 	name = "angel wings"
 	desc = "Holier-than-thou attitude not included."
@@ -148,28 +149,34 @@
 
 	organ_traits = list(TRAIT_HOLY)
 
+///dragon wings, which relate to lizards.
 /obj/item/organ/external/wings/functional/dragon
 	name = "dragon wings"
 	desc = "Hey, HEY- NOT lizard wings. Dragon wings. Mighty dragon wings."
 	stored_feature_id = "Dragon"
 
+///robotic wings, which relate to androids.
 /obj/item/organ/external/wings/functional/robotic
 	name = "robotic wings"
 	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
 	stored_feature_id = "Robotic"
 
+///skeletal wings, which relate to skeletal races.
 /obj/item/organ/external/wings/functional/skeleton
 	name = "skeletal wings"
 	desc = "Powered by pure edgy-teenager-notebook-scribblings. Just kidding. But seriously, how do these keep you flying?!"
 	stored_feature_id = "Skeleton"
 
-/obj/item/organ/external/wings/functional/moth //i want this here for more behavior in the future, like moth wings burning off.
+///Prototype for moth wings, so in the future we can add burn off behavior.
+/obj/item/organ/external/wings/functional/moth
 
+///mothra wings, which relate to moths.
 /obj/item/organ/external/wings/functional/moth/mothra
 	name = "mothra wings"
 	desc = "Fly like the mighty mothra of legend once did."
 	stored_feature_id = "Mothra"
 
+///megamoth wings, which relate to moths as an alternate choice. they're both pretty cool.
 /obj/item/organ/external/wings/functional/moth/megamoth
 	name = "megamoth wings"
 	desc = "Don't get murderous."

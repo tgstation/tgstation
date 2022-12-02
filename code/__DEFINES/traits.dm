@@ -1003,6 +1003,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 // specific sources for TRAIT_SPEAKS_CLEARLY
 
+///trait source that tongues should use
 #define SPEAKING_FROM_TONGUE "tongue"
+///trait source that sign language should use
 #define SPEAKING_FROM_HANDS "hands"
 

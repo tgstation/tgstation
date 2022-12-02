@@ -542,8 +542,7 @@
 		if((methods & INGEST) && show_message)
 			to_chat(exposed_human, span_notice("<i>You feel nothing but a terrible aftertaste.</i>"))
 		return
-	var/obj/item/organ/external/wings/current_wings = exposed_human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(current_wings)
+	if(exposed_human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS))
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
 	else
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as wings burst out!"))
@@ -563,7 +562,7 @@
 	var/list/name2type = list()
 	for(var/obj/item/organ/external/wings/functional/possible_type as anything in wing_types)
 		var/datum/sprite_accessory/accessory = GLOB.wings_list[possible_type.name] //Gets the datum for every wing this species has, then prompts user with a radial menu
-		var/image/img = image(icon = 'icons/mob/species/wings.dmi', icon_state = "m_wingsopen_[accessory.icon_state]_BEHIND") //Process the HUD elements
+		var/image/img = image(icon = accessory.icon, icon_state = "m_wingsopen_[accessory.icon_state]_BEHIND") //Process the HUD elements
 		img.transform *= 0.5
 		img.pixel_x = -32
 		if(radial_wings[accessory.name])

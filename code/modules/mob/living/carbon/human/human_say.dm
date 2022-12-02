@@ -1,3 +1,5 @@
+
+
 /mob/living/carbon/human/say(message, bubble_type, list/spans, sanitize, datum/language/language, ignore_spam, forced, filterproof, message_range, datum/saymode/saymode)
 	if(!HAS_TRAIT(src, TRAIT_SPEAKS_CLEARLY))
 		var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
@@ -5,7 +7,7 @@
 		if(message[1] != "*")
 			message = tongueless_lower.Replace(message, pick("aa","oo","'"))
 			message = tongueless_upper.Replace(message, pick("AA","OO","'"))
-	. = ..()
+	return ..()
 
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
 	var/obj/item/organ/internal/tongue/tongue = getorganslot(ORGAN_SLOT_TONGUE)
