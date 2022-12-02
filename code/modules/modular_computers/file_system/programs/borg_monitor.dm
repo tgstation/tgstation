@@ -10,7 +10,6 @@
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	program_icon = "project-diagram"
-	var/emagged = FALSE ///Bool of if this app has already been emagged
 	var/list/loglist = list() ///A list to copy a borg's IC log list into
 	var/mob/living/silicon/robot/DL_source ///reference of a borg if we're downloading a log, or null if not.
 	var/DL_progress = -1 ///Progress of current download, 0 to 100, -1 for no current download
@@ -26,11 +25,9 @@
 	DL_progress = 0
 	return ..()
 
-/datum/computer_file/program/borg_monitor/run_emag()
-	if(emagged)
-		return FALSE
-	emagged = TRUE
-	return TRUE
+/datum/computer_file/program/borg_monitor/on_emag()
+	// we are informing our computer that emagging had an effect
+	return !emagged
 
 /datum/computer_file/program/borg_monitor/tap(atom/A, mob/living/user, params)
 	var/mob/living/silicon/robot/borgo = A
@@ -172,7 +169,7 @@
 	transfer_access = list()
 	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
 
-/datum/computer_file/program/borg_monitor/syndicate/run_emag()
+/datum/computer_file/program/borg_monitor/syndicate/on_emag()
 	return FALSE
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)

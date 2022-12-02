@@ -446,7 +446,7 @@
 	else
 		turn_on(user)
 
-/datum/modular_computer_host/proc/do_emag(mob/user, obj/item/card/emag/card)
+/datum/modular_computer_host/proc/do_emag(datum/source, mob/user, obj/item/card/emag/card)
 	SIGNAL_HANDLER
 	var/newemag = FALSE
 	for(var/datum/computer_file/program/app in stored_files)

@@ -15,6 +15,8 @@
 	var/extended_desc = "N/A"
 	/// Category in the NTDownloader.
 	var/category = PROGRAM_CATEGORY_MISC
+	/// Has this program been emagged?
+	var/emagged = FALSE
 	/// Program-specific screen icon state
 	var/program_icon_state = null
 	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
@@ -110,7 +112,7 @@
 	if(isAdminGhostAI(user))
 		return TRUE
 
-	if(!transfer && computer && (computer.physical.obj_flags & EMAGGED)) //emags can bypass the execution locks but not the download ones.
+	if(!transfer && emagged) //emags can bypass the execution locks but not the download ones.
 		return TRUE
 
 	// Defaults to required_access
@@ -125,7 +127,7 @@
 	if(!length(access))
 		var/obj/item/card/id/accesscard
 		if(computer)
-			accesscard = computer.computer_id_slot?.GetID()
+			accesscard = computer.computer_id_slot
 
 		if(!accesscard)
 			if(loud)
@@ -170,18 +172,25 @@
 		return TRUE
 	return FALSE
 
+/datum/computer_file/program/proc/run_emag()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	// we want to tell on_emag if our program has been emagged before, so this call comes before setting emagged to true
+	. = on_emag()
+	emagged = TRUE
+
 /**
  *
  *Called by the device when it is emagged.
  *
  *Emagging the device allows certain programs to unlock new functions. However, the program will
- *need to be downloaded first, and then handle the unlock on their own in their run_emag() proc.
+ *need to be downloaded first, and then handle the unlock on their own in their on_emag() proc.
  *The device will allow an emag to be run multiple times, so the user can re-emag to run the
- *override again, should they download something new. The run_emag() proc should return TRUE if
+ *override again, should they download something new. The on_emag() proc should return TRUE if
  *the emagging affected anything, and FALSE if no change was made (already emagged, or has no
  *emag functions).
 **/
-/datum/computer_file/program/proc/run_emag()
+
+/datum/computer_file/program/proc/on_emag()
 	return FALSE
 
 /**

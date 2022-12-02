@@ -17,7 +17,6 @@
 	var/download_completion = FALSE //GQ of downloaded data.
 	var/download_netspeed = 0
 	var/downloaderror = ""
-	var/emagged = FALSE
 	var/list/main_repo
 	var/list/antag_repo
 	var/list/show_categories = list(
@@ -32,13 +31,6 @@
 	. = ..()
 	main_repo = SSnetworks.station_network.available_station_software
 	antag_repo = SSnetworks.station_network.available_antag_software
-
-/datum/computer_file/program/ntnetdownload/run_emag()
-	if(emagged)
-		return FALSE
-	emagged = TRUE
-	return TRUE
-
 
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
