@@ -102,7 +102,7 @@
 		amount = min(amount, 0)
 	return ..()
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_health, forced)
+/mob/living/carbon/adjustStaminaLoss(amount, updating_stamina, forced)
 	. = ..()
 	if(amount > 0)
 		update_stamina()

@@ -409,7 +409,7 @@
 		victim.visible_message(span_notice("[victim] finishes applying [I] to [victim.p_their()] [limb.plaintext_zone], grimacing from the pain!"), span_notice("You finish applying [I] to your [limb.plaintext_zone], and your bones explode in pain!"))
 
 	limb.receive_damage(25, wound_bonus=CANT_WOUND)
-	victim.adjustStaminaLoss(2 * delta_time)
+	victim.adjustStaminaLoss(100)
 	gelled = TRUE
 
 /// skellies are less averse to bone gel, since they're literally all bone
