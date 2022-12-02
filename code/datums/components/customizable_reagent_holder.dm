@@ -110,6 +110,8 @@
 /datum/component/customizable_reagent_holder/proc/valid_ingredient(obj/ingredient)
 	if (HAS_TRAIT(ingredient, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER))
 		return FALSE
+	if(HAS_TRAIT(ingredient, TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT))
+		return TRUE
 	switch (ingredient_type)
 		if (CUSTOM_INGREDIENT_TYPE_EDIBLE)
 			return IS_EDIBLE(ingredient)
@@ -121,7 +123,6 @@
 /datum/component/customizable_reagent_holder/proc/customizable_attack(datum/source, obj/ingredient, mob/attacker, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
-	// only accept valid ingredients
 	if (!valid_ingredient(ingredient))
 		attacker.balloon_alert(attacker, "doesn't go on that!")
 		return
@@ -198,6 +199,10 @@
 /datum/component/customizable_reagent_holder/proc/add_ingredient(obj/item/ingredient)
 	var/atom/atom_parent = parent
 	LAZYADD(ingredients, ingredient)
+	if(isitem(atom_parent))
+		var/obj/item/item_parent = atom_parent
+		if(ingredient.w_class > item_parent.w_class)
+			item_parent.w_class = ingredient.w_class
 	atom_parent.name = "[custom_adjective()] [custom_type()] [initial(atom_parent.name)]"
 	SEND_SIGNAL(atom_parent, COMSIG_ATOM_CUSTOMIZED, ingredient)
 	SEND_SIGNAL(ingredient, COMSIG_ITEM_USED_AS_INGREDIENT, atom_parent)

@@ -12030,7 +12030,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/mine/laborcamp/security)
 "dBx" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/light_switch/directional/south,
 /obj/machinery/newscaster/directional/east,
@@ -24923,7 +24923,7 @@
 /turf/open/floor/iron,
 /area/station/science/ordnance)
 "hDg" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
@@ -24945,7 +24945,7 @@
 /turf/open/floor/engine,
 /area/station/science/genetics)
 "hDx" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera{
 	c_tag = "Mining Bunks";
@@ -30382,7 +30382,7 @@
 	},
 /area/mine/eva/lower)
 "jnM" = (
-/obj/structure/chair/sofa,
+/obj/structure/chair/sofa/middle/brown,
 /turf/open/floor/carpet/blue,
 /area/station/security/prison/work)
 "jnS" = (
@@ -31546,7 +31546,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "jHT" = (
-/obj/machinery/computer/chef_order{
+/obj/machinery/computer/order_console/cook{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -34964,7 +34964,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "kIu" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /obj/machinery/light/directional/north,
 /obj/effect/landmark/start/psychologist,
 /turf/open/floor/carpet/blue,
@@ -35481,7 +35481,7 @@
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "kPt" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -37167,7 +37167,7 @@
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
 "loN" = (
-/obj/structure/chair/sofa/right,
+/obj/structure/chair/sofa/right/brown,
 /obj/item/toy/plush/moth{
 	name = "Dr. Moff"
 	},
@@ -41759,7 +41759,7 @@
 /turf/closed/wall/ice,
 /area/icemoon/surface/outdoors/nospawn)
 "mSU" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	desc = "Hey, did you know you can get a pineapple on your burger here?";
 	dir = 1;
 	name = "The Regular's Sofa"
@@ -44368,7 +44368,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "nFk" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -45530,7 +45530,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
@@ -49179,7 +49179,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	desc = "Hey, did you know you can get a pineapple on your burger here?";
 	dir = 1;
 	name = "The Regular's Sofa"
@@ -52083,7 +52083,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "pYl" = (
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -65027,7 +65027,7 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 1
 	},
 /obj/machinery/newscaster/directional/east,
@@ -65703,7 +65703,7 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "ulm" = (
-/obj/structure/chair/sofa/corner,
+/obj/structure/chair/sofa/corner/brown,
 /obj/structure/cable,
 /turf/open/floor/carpet/blue,
 /area/station/security/prison/work)
@@ -68998,7 +68998,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/chair/sofa/right,
+/obj/structure/chair/sofa/right/brown,
 /turf/open/floor/carpet/blue,
 /area/station/security/prison/work)
 "vnT" = (
@@ -74063,7 +74063,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 1
 	},
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
@@ -75584,7 +75584,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/south,
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 1
 	},
 /turf/open/floor/iron/white,
@@ -78676,7 +78676,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/fore/lesser)
 "ykr" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/bar,
