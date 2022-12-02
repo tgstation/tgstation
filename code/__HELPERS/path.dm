@@ -28,7 +28,7 @@
 		return null
 
 	UNTIL(length(path))
-	if(length(path) == 1 && path[1] == null) // It's trash, just hand back null to make it easy
+	if(length(path) == 1 && path[1] == null || (QDELETED(caller) || QDELETED(end))) // It's trash, just hand back null to make it easy
 		return null
 	return path
 
