@@ -47,6 +47,11 @@
 	anchored = TRUE
 	density = TRUE
 
+/obj/structure/bouncy_castle/Initialize(mapload, mob/gored)
+	. = ..()
+	if(gored)
+		name = gored.real_name
+
 /obj/structure/bouncy_castle/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -56,3 +61,8 @@
 				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/item/paper/crumpled/fluff/fortune_teller
+	name = "scribbled note"
+	default_raw_text = "<b>Remember!</b> The customers love that gumball we have as a crystal ball. \
+		Even if it's completely useless to us, resist the urge to chew it."

@@ -12,7 +12,7 @@
 
 /obj/item/organ/internal/brain/psyker/Insert(mob/living/carbon/inserted_into, special, drop_if_replaced, no_id_transfer)
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
+	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
 /obj/item/organ/internal/brain/psyker/Remove(mob/living/carbon/removed_from, special, no_id_transfer)
