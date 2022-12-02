@@ -1,6 +1,10 @@
 /datum/modular_computer_host/silicon
 	hardware_flag = PROGRAM_SILICON
 
+//Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
+/datum/modular_computer_host/silicon/check_power_override()
+	return TRUE
+
 // our silicon friends get their message privately TODO: message clutter, return instead?
 /datum/modular_computer_host/silicon/say(message)
 	var/mob/silicon = physical

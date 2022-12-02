@@ -115,17 +115,15 @@
 	return . || NONE
 
 /obj/item/modular_computer/update_icon_state()
-	if(!cpu.bypass_state)
-		icon_state = cpu.powered_on ? icon_state_powered : icon_state_unpowered
+	if(!icon_state_powered || !icon_state_unpowered) //no valid icon, don't update.
+		return ..()
+	icon_state = enabled ? icon_state_powered : icon_state_unpowered
 	return ..()
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
 	var/init_icon = initial(icon)
-
 	if(!init_icon)
-		return
-	if(!display_overlays)
 		return
 
 	if(cpu.powered_on)

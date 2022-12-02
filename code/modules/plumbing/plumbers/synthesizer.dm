@@ -6,6 +6,10 @@
 	icon_state = "synthesizer"
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+
+	///category for plumbing RCD
+	category="Synthesizers"
+
 	///Amount we produce for every process. Ideally keep under 5 since thats currently the standard duct capacity
 	var/amount = 1
 	///I track them here because I have no idea how I'd make tgui loop like that

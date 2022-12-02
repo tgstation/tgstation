@@ -147,7 +147,7 @@ have ways of interacting with a specific mob and control it.
 		return FALSE
 
 	blackboard[BB_MONKEY_PICKUPTARGET] = weapon
-	current_movement_target = weapon
+	set_movement_target(weapon)
 	if(pickpocket)
 		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
 	else

@@ -51,8 +51,6 @@
 	var/hardware_flag = NONE
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
 
-	///Whether the icon state should be bypassed entirely, used for PDAs.
-	var/bypass_state = FALSE
 	///The theme, used for the main menu and file browser apps.
 	var/device_theme = "ntos"
 

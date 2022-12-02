@@ -7,7 +7,6 @@
 	icon_state_powered = "laptop"
 	icon_state_unpowered = "laptop-off"
 	icon_state_menu = "menu"
-	display_overlays = FALSE
 
 	w_class = WEIGHT_CLASS_NORMAL
 
@@ -113,8 +112,7 @@
 		slowdown = slowdown_open
 		w_class = w_class_open
 
-	screen_open = !screen_open
-	display_overlays = screen_open
+	screen_on = !screen_on
 	update_appearance()
 
 

@@ -33,6 +33,7 @@
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
+	var/drop_sound = 'sound/weapons/guillotine.ogg'
 	var/blade_status = GUILLOTINE_BLADE_RAISED
 	var/blade_sharpness = GUILLOTINE_BLADE_MAX_SHARP // How sharp the blade is
 	var/kill_count = 0
@@ -132,7 +133,7 @@
 		if (QDELETED(head))
 			return
 
-		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
+		playsound(src, drop_sound, 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
@@ -227,6 +228,7 @@
 			if (istype(S))
 				H.cut_overlays()
 				H.update_body_parts_head_only()
+				H.remove_overlay(BODY_ADJ_LAYER)
 				H.pixel_y += -GUILLOTINE_HEAD_OFFSET // Offset their body so it looks like they're in the guillotine
 				H.layer += GUILLOTINE_LAYER_DIFF
 			else

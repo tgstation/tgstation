@@ -469,6 +469,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	for (var/name in sprite_accessories)
 		var/datum/sprite_accessory/sprite_accessory = sprite_accessories[name]
+		if(sprite_accessory.locked)
+			continue
 
 		var/icon/final_icon
 

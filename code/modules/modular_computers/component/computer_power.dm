@@ -45,7 +45,3 @@
 ///Used by subtypes for special cases for power usage, returns TRUE if it should stop the use_power chain.
 /datum/modular_computer_host/proc/check_power_override()
 	return FALSE
-
-//Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
-/datum/modular_computer_host/tablet/integrated/check_power_override()
-	return TRUE
