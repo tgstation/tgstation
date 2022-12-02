@@ -434,6 +434,30 @@
 	name = "\improper Dormitories"
 	icon_state = "dorms"
 
+/area/station/commons/dorms/room1
+	name = "\improper Dorms Room 1"
+	icon_state = "room1"
+
+/area/station/commons/dorms/room2
+	name = "\improper Dorms Room 2"
+	icon_state = "room2"
+
+/area/station/commons/dorms/room3
+	name = "\improper Dorms Room 3"
+	icon_state = "room3"
+
+/area/station/commons/dorms/room4
+	name = "\improper Dorms Room 4"
+	icon_state = "room4"
+
+/area/station/commons/dorms/apartment1
+	name = "\improper Dorms Apartment 1"
+	icon_state = "apartment1"
+
+/area/station/commons/dorms/apartment2
+	name = "\improper Dorms Apartment 2"
+	icon_state = "apartment2"
+
 /area/station/commons/dorms/barracks
 	name = "\improper Sleep Barracks"
 
@@ -570,6 +594,10 @@
 	name = "\improper Diner"
 	icon_state = "diner"
 
+/area/station/service/kitchen/kitchen_backroom
+	name = "\improper Kitchen Backroom"
+	icon_state = "kitchen_backroom"
+
 /area/station/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
 	icon_state = "abandoned_kitchen"
@@ -625,6 +653,10 @@
 	mood_trait = TRAIT_INTROVERT
 	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
 	sound_environment = SOUND_AREA_LARGE_SOFTFLOOR
+
+/area/station/service/library/garden
+	name = "\improper Library Garden"
+	icon_state = "library_garden"
 
 /area/station/service/library/lounge
 	name = "\improper Library Lounge"
@@ -1003,6 +1035,10 @@
 	icon_state = "virology"
 	ambience_index = AMBIENCE_VIROLOGY
 
+/area/station/medical/virology/isolation
+	name = "Virology Isolation"
+	icon_state = "virology_isolation"
+
 /area/station/medical/morgue
 	name = "\improper Morgue"
 	icon_state = "morgue"
@@ -1175,6 +1211,10 @@
 	name = "\improper Firing Range"
 	icon_state = "firingrange"
 
+/area/station/security/eva
+	name = "\improper Security EVA"
+	icon_state = "sec_eva"
+
 /area/station/security/execution
 	icon_state = "execution_room"
 
@@ -1234,6 +1274,17 @@
 	name = "Aft Customs"
 	icon_state = "customs_point_aft"
 
+/area/security/checkpoint/first
+	name = "Security Post - First Floor"
+	icon_state = "checkpoint_1"
+
+/area/security/checkpoint/second
+	name = "Security Post - Second Floor"
+	icon_state = "checkpoint_2"
+
+/area/security/checkpoint/third
+	name = "Security Post - Third Floor"
+	icon_state = "checkpoint_3"
 //Cargo
 
 /area/station/cargo
