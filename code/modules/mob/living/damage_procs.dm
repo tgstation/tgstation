@@ -272,10 +272,19 @@
 	return staminaloss
 
 /mob/living/proc/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return FALSE
+	staminaloss = clamp((staminaloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	if(updating_health)
+		updatehealth()
 	return
 
 /mob/living/proc/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
-	return
+	var/current = getStaminaLoss()
+	var/diff = amount - current
+	if(!diff)
+		return
+	adjustStaminaLoss(diff, updating_health, forced)
 
 /**
  * heal ONE external organ, organ gets randomly selected from damaged ones.

@@ -106,27 +106,7 @@
 		amount = min(amount, 0)
 	return ..()
 
-/mob/living/carbon/getStaminaLoss()
-	. = 0
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		. += round(BP.stamina_dam * BP.stam_damage_coeff, DAMAGE_PRECISION)
 
-/mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && (status_flags & GODMODE))
-		return FALSE
-	if(amount > 0)
-		take_overall_damage(0, 0, amount, updating_health)
-	else
-		heal_overall_damage(0, 0, abs(amount), null, updating_health)
-	return amount
-
-/mob/living/carbon/setStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
-	var/current = getStaminaLoss()
-	var/diff = amount - current
-	if(!diff)
-		return
-	adjustStaminaLoss(diff, updating_health, forced)
 
 /**
  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
