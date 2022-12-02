@@ -483,6 +483,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "cJ" = (
@@ -823,7 +824,7 @@
 	},
 /obj/item/pai_card,
 /obj/item/clothing/shoes/cowboy/white,
-/obj/item/clothing/head/cowboy_hat_red,
+/obj/item/clothing/head/cowboy/red,
 /turf/open/floor/carpet,
 /area/station/commons)
 "jU" = (
@@ -958,11 +959,11 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/machinery/power/shuttle_engine/electric{
-	dir = 8
-	},
 /obj/structure/cable,
 /obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -1437,10 +1438,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/welding{
-	pixel_x = -2;
-	pixel_y = 1
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -1536,13 +1533,13 @@
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/shoes/cowboy,
 /obj/item/clothing/shoes/cowboy,
-/obj/item/clothing/head/cowboy_hat_brown,
-/obj/item/clothing/head/cowboy_hat_brown,
-/obj/item/clothing/head/cowboy_hat_brown,
-/obj/item/clothing/head/cowboy_hat_brown,
-/obj/item/clothing/head/cowboy_hat_brown,
-/obj/item/clothing/head/cowboy_hat_brown,
 /obj/machinery/firealarm/directional/west,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/head/cowboy/brown,
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons)
 "NI" = (
@@ -1603,7 +1600,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

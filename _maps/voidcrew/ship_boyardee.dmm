@@ -1050,12 +1050,12 @@
 /area/station/cargo/miningoffice)
 "Ap" = (
 /obj/item/storage/belt/janitor/full,
-/obj/structure/janitorialcart,
 /obj/item/watertank/janitor,
 /obj/item/mop,
 /obj/item/storage/bag/trash,
 /obj/effect/turf_decal/box,
 /obj/machinery/airalarm/directional/south,
+/obj/structure/mop_bucket/janitorialcart,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "Ar" = (
@@ -1203,10 +1203,10 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "Df" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/maintenance/central)
 "Dg" = (
@@ -1515,8 +1515,6 @@
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe/silver,
 /obj/item/pickaxe/silver,
-/obj/item/clothing/head/hardhat/orange,
-/obj/item/clothing/head/hardhat/orange,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/gps{
@@ -1530,6 +1528,8 @@
 	pixel_y = 7
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/clothing/head/utility/hardhat/orange,
+/obj/item/clothing/head/utility/hardhat/orange,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "JF" = (
@@ -1964,7 +1964,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "Uq" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -2137,8 +2137,8 @@
 /turf/open/floor/iron/dark,
 /area/station/construction)
 "Zl" = (
-/obj/machinery/power/apc/five_k/directional/west,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/commons/toilet)
 "Zz" = (

@@ -139,7 +139,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/station/commons)
 "iC" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -176,7 +176,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/station/commons)
 "lK" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -596,10 +596,10 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/station/commons)
 "RZ" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/medical)
 "SH" = (
@@ -676,10 +676,10 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/station/engineering)
 "YC" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering)
 "YI" = (

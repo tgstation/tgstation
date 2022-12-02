@@ -370,10 +370,10 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "wH" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "wO" = (
@@ -495,7 +495,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "Gf" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -641,9 +641,6 @@
 /obj/item/shield/riot,
 /obj/item/shield/riot,
 /obj/item/shield/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
 /obj/item/clothing/suit/armor/riot,
 /obj/item/clothing/suit/armor/riot,
 /obj/item/clothing/suit/armor/riot,
@@ -839,9 +836,6 @@
 /area/station/cargo/miningoffice)
 "VO" = (
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/firealarm/directional/north{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
@@ -861,6 +855,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/firealarm/directional/north{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/brig)
 "Wz" = (

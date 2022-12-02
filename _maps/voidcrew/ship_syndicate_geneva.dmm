@@ -55,14 +55,6 @@
 /obj/machinery/ore_silo,
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/command/bridge)
-"bK" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "spitfireshutters"
-	},
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/station/service/hydroponics)
 "ca" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -401,12 +393,10 @@
 /area/station/engineering/main)
 "lm" = (
 /obj/effect/spawner/structure/window,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/medical/surgery)
 "lr" = (
 /obj/effect/spawner/structure/window,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
 "lV" = (
@@ -439,7 +429,6 @@
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/dorms)
 "mX" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/docking_port/mobile/voidcrew{
 	can_move_docking_ports = 1;
 	dir = 2;
@@ -448,7 +437,7 @@
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "nc" = (
@@ -457,11 +446,10 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
 "nd" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/cmo)
 "nf" = (
@@ -1020,11 +1008,10 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "Ao" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "Au" = (
@@ -1048,11 +1035,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/circuit,
 /area/station/engineering/main)
-"AW" = (
-/obj/structure/grille,
-/obj/effect/spawner/structure/window,
-/turf/open/floor/plating,
-/area/station/medical/surgery)
 "AX" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1112,12 +1094,10 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "Cu" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "Cz" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
@@ -1138,7 +1118,6 @@
 	id = "spitfireshutters"
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/service/hydroponics)
 "Da" = (
@@ -1166,20 +1145,20 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/port)
 "Dl" = (
-/obj/machinery/power/shuttle_engine/liquid/oil,
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
+/obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "Dm" = (
-/obj/machinery/power/shuttle_engine/liquid/oil,
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
+/obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "Dt" = (
@@ -1252,11 +1231,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "Ge" = (
-/obj/machinery/power/shuttle_engine/liquid/oil,
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
+/obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "Gn" = (
@@ -1336,11 +1315,10 @@
 /turf/open/floor/plating,
 /area/station/cargo/miningoffice)
 "Hi" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/medical/surgery)
 "HS" = (
@@ -1378,7 +1356,6 @@
 /area/station/command/bridge)
 "ME" = (
 /obj/effect/spawner/structure/window,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "QH" = (
@@ -1386,7 +1363,6 @@
 /area/station/cargo/miningoffice)
 "Sc" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "SE" = (
@@ -1397,19 +1373,17 @@
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/dorms)
 "SR" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "Ux" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "spitfireshutters"
 	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "Vn" = (
@@ -1649,7 +1623,7 @@ ZB
 ZB
 ZB
 ZB
-bK
+CO
 cE
 dh
 el
@@ -1700,7 +1674,7 @@ aJ
 ss
 YX
 In
-AW
+lm
 In
 In
 In

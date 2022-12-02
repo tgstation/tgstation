@@ -383,8 +383,8 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery)
 "rj" = (
-/obj/machinery/power/shuttle_engine/liquid/oil,
 /obj/structure/window/reinforced/survival_pod,
+/obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "rA" = (
@@ -980,8 +980,8 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "SE" = (
-/obj/machinery/power/shuttle_engine/liquid/oil,
 /obj/structure/window/reinforced/survival_pod,
+/obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/plating,
 /area/station/cargo/office)
 "SI" = (

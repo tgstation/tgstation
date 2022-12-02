@@ -693,10 +693,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "Dl" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "Dn" = (

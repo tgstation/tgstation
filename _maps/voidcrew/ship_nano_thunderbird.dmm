@@ -32,8 +32,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/commons/dorms)
 "dh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "dm" = (
@@ -74,8 +73,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "dS" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/station/commons/dorms)
 "eO" = (
@@ -137,8 +135,7 @@
 /turf/open/floor/plating,
 /area/station/security/brig)
 "hx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/station/security/brig)
 "hJ" = (
@@ -233,10 +230,10 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/ai_monitored/security/armory)
 "nD" = (
-/obj/machinery/mineral/equipment_vendor,
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/computer/order_console/mining,
 /turf/open/floor/mineral/titanium,
 /area/station/cargo/miningoffice)
 "nV" = (
@@ -629,7 +626,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/hallway/primary/central)
 "MQ" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -647,10 +644,10 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/station/engineering/main)
 "Oa" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "OI" = (
@@ -851,8 +848,7 @@
 /turf/open/floor/mineral/titanium,
 /area/station/ai_monitored/security/armory)
 "Zy" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "ZX" = (

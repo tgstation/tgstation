@@ -8,12 +8,12 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "aD" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/engineering)
 "aI" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -149,8 +149,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "fy" = (
-/turf/open/floor/catwalk_floor,
-/area/station/external)
+/turf/open/floor/catwalk_floor)
 "fV" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "mining_ship_blast"
@@ -199,11 +198,11 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering)
 "gF" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/engineering)
 "he" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -422,7 +421,7 @@
 	},
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/commons)
 "lp" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
@@ -433,10 +432,6 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/clothing/head/welding{
-	pixel_x = -2;
-	pixel_y = 1
-	},
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/item/clothing/gloves/color/yellow,
@@ -444,6 +439,7 @@
 /obj/item/reagent_containers/cup/beaker{
 	list_reagents = list(/datum/reagent/fuel=50)
 	},
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/dark,
 /area/station/engineering)
 "ls" = (
@@ -691,15 +687,6 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/head/hardhat/orange{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/obj/item/clothing/head/hardhat/orange,
-/obj/item/clothing/head/hardhat/orange{
-	pixel_x = 4;
-	pixel_y = 4
-	},
 /obj/item/gps/mining,
 /obj/item/gps/mining,
 /obj/item/gps/mining,
@@ -711,6 +698,9 @@
 /obj/item/pickaxe/silver,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
+/obj/item/clothing/head/utility/hardhat/weldhat/orange,
+/obj/item/clothing/head/utility/hardhat/weldhat/orange,
+/obj/item/clothing/head/utility/hardhat/weldhat/orange,
 /turf/closed/wall/r_wall,
 /area/station/cargo/miningoffice)
 "tH" = (
@@ -875,11 +865,11 @@
 /turf/open/floor/plating/airless,
 /area/station/medical)
 "zq" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/space)
 "zF" = (
 /obj/structure/cable,
 /mob/living/simple_animal/sloth/paperwork,
@@ -932,9 +922,9 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
-/obj/item/clothing/head/cowboy_hat_brown,
-/obj/item/clothing/head/cowboy_hat_brown,
-/obj/item/clothing/head/cowboy_hat_brown,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/head/cowboy/brown,
+/obj/item/clothing/head/cowboy/brown,
 /turf/open/floor/iron/grimy,
 /area/station/commons)
 "AD" = (
@@ -1024,7 +1014,7 @@
 	width = 7
 	},
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/commons)
 "Ex" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -1061,7 +1051,7 @@
 /area/station/commons)
 "FC" = (
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/commons)
 "FN" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1181,10 +1171,6 @@
 /area/station/command/bridge)
 "JH" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/hardhat/orange{
-	pixel_x = -18;
-	pixel_y = 8
-	},
 /obj/item/phone{
 	pixel_x = 5;
 	pixel_y = 8
@@ -1195,7 +1181,13 @@
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
 	},
-/obj/item/clothing/head/cowboy_hat_red,
+/obj/item/clothing/head/utility/hardhat/weldhat/orange{
+	pixel_y = 7;
+	pixel_x = -5
+	},
+/obj/item/clothing/head/cowboy/red{
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "Ka" = (

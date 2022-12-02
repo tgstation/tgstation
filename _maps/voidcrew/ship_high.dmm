@@ -44,7 +44,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "bc" = (
-/obj/structure/mopbucket,
+/obj/effect/spawner/random/trash/mopbucket,
 /obj/item/mop,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -138,8 +138,15 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "dA" = (
-/turf/template_noop,
-/area/station/external)
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
+	dir = 1
+	},
+/obj/machinery/power/shuttle_engine/ship/electric{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/engineering/atmos)
 "dK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -1311,7 +1318,7 @@
 "AG" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/cargo/office)
 "AJ" = (
 /obj/machinery/holopad,
 /turf/open/floor/carpet,
@@ -1598,7 +1605,7 @@
 /area/station/commons/dorms)
 "GD" = (
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/cargo/office)
 "GG" = (
 /obj/effect/turf_decal/siding/blue/corner{
 	dir = 4
@@ -1842,10 +1849,10 @@
 /turf/open/floor/carpet/stellar,
 /area/station/commons/lounge)
 "Kt" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "Ku" = (
@@ -2132,8 +2139,7 @@
 /area/station/hallway/primary/central)
 "OT" = (
 /obj/machinery/light/floor,
-/turf/open/floor/catwalk_floor,
-/area/station/external)
+/turf/open/floor/catwalk_floor)
 "Pj" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix{
 	dir = 8
@@ -2329,7 +2335,7 @@
 "UB" = (
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/catwalk_floor,
-/area/station/external)
+/area/station/engineering/atmos)
 "UO" = (
 /obj/structure/table/wood,
 /obj/item/areaeditor,
@@ -2408,8 +2414,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "We" = (
-/turf/open/floor/catwalk_floor,
-/area/station/external)
+/turf/open/floor/catwalk_floor)
 "Ww" = (
 /obj/machinery/light{
 	dir = 8
@@ -2769,7 +2774,7 @@ wX
 ii
 JE
 aN
-GD
+xO
 Aq
 "}
 (6,1,1) = {"
@@ -2896,7 +2901,7 @@ JE
 JE
 oQ
 fG
-Kt
+dA
 "}
 (9,1,1) = {"
 DH
@@ -3037,10 +3042,10 @@ Do
 ni
 ni
 Fu
-dA
-dA
-dA
-dA
+Aq
+Aq
+Aq
+Aq
 Fu
 ay
 hE
@@ -3079,11 +3084,11 @@ DH
 ni
 We
 We
-dA
-dA
-dA
-dA
-dA
+Aq
+Aq
+Aq
+Aq
+Aq
 AC
 Qf
 wM
@@ -3121,10 +3126,10 @@ Aq
 Aq
 Aq
 We
-dA
-dA
-dA
-dA
+Aq
+Aq
+Aq
+Aq
 AC
 AC
 GY

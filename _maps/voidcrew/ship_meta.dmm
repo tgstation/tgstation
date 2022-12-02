@@ -165,10 +165,10 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "ax" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/engineering/main)
 "ay" = (
@@ -305,7 +305,7 @@
 /turf/open/floor/iron/white,
 /area/station/commons/dorms)
 "aL" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -495,9 +495,9 @@
 /obj/structure/rack,
 /obj/item/storage/belt/utility,
 /obj/item/weldingtool,
-/obj/item/clothing/head/welding,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/white,
 /area/station/cargo/warehouse)
 "bm" = (
@@ -1211,15 +1211,12 @@
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/clothing/head/welding{
-	pixel_x = -2;
-	pixel_y = 1
-	},
 /obj/machinery/computer/helm/viewscreen{
 	pixel_y = -30;
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "cJ" = (
@@ -1446,10 +1443,6 @@
 /area/station/cargo/warehouse)
 "dg" = (
 /obj/structure/rack,
-/obj/item/clothing/head/welding{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool{
 	pixel_x = 7;
@@ -2096,11 +2089,11 @@
 /turf/open/floor/iron/white,
 /area/station/cargo/warehouse)
 "Un" = (
-/obj/machinery/power/shuttle_engine/electric{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer4{
+	dir = 4
+	},
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

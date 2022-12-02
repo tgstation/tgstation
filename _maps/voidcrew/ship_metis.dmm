@@ -1,12 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
-/mob/living/simple_animal/hostile/rat,
 /obj/item/trash/semki,
 /obj/item/trash/boritos,
 /obj/item/circuitboard/machine/nanite_programmer,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/trashcart,
 /obj/structure/cable,
+/mob/living/basic/mouse/rat,
 /turf/open/floor/plating,
 /area/station/commons/storage/primary)
 "ag" = (
@@ -568,9 +568,9 @@
 /area/station/hallway/primary/aft)
 "jS" = (
 /obj/effect/decal/cleanable/blood,
-/obj/item/bodypart/r_arm/robot,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/bodypart/arm/right/robot,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/science/robotics)
 "ka" = (
@@ -1022,9 +1022,9 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/commons/toilet)
 "sk" = (
-/obj/item/bodypart/r_leg/robot,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/bodypart/leg/right/robot,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/science/robotics)
 "sn" = (
@@ -1039,8 +1039,9 @@
 /area/station/science/robotics)
 "sp" = (
 /obj/effect/decal/cleanable/oil,
-/obj/item/bodypart/l_arm/robot,
 /obj/machinery/airalarm/directional/west,
+/obj/item/bodypart/arm/left/robot,
+/obj/item/bodypart/leg/left/robot,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/science/robotics)
 "sr" = (
@@ -1079,7 +1080,6 @@
 /area/station/service/cafeteria)
 "sV" = (
 /obj/effect/decal/cleanable/oil,
-/obj/item/bodypart/l_leg/robot,
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/science/robotics)
 "to" = (
@@ -1100,10 +1100,7 @@
 "tw" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/clothing/suit/costume/xenos,
-/obj/item/clothing/head/xenos{
-	pixel_x = -1;
-	pixel_y = 10
-	},
+/obj/item/clothing/head/costume/xenos,
 /turf/open/floor/plating,
 /area/station/hallway/primary/aft)
 "tG" = (
@@ -1154,7 +1151,7 @@
 /area/station/ai_monitored/aisat)
 "vh" = (
 /obj/structure/cable,
-/obj/machinery/power/shuttle_engine/fueled{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1782,10 +1779,10 @@
 /turf/open/floor/mineral/titanium/tiled,
 /area/station/commons/toilet)
 "Fr" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "Fs" = (
@@ -2168,7 +2165,7 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
-/area/station/external)
+/area/station/engineering/main)
 "LG" = (
 /obj/machinery/holopad,
 /turf/open/floor/mineral/titanium/tiled/white,
@@ -2401,7 +2398,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/commons/storage/primary)
 "PA" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/cable,

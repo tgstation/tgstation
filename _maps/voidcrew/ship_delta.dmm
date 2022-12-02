@@ -201,7 +201,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/station/service/cafeteria)
 "ay" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -304,6 +304,7 @@
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
+/obj/item/clothing/head/hats/centhat,
 /turf/open/floor/iron,
 /area/station/service/cafeteria)
 "aL" = (
@@ -314,10 +315,10 @@
 /turf/open/floor/plating,
 /area/station/engineering)
 "aM" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/engineering)
 "aN" = (
@@ -533,13 +534,13 @@
 /obj/item/stack/rods,
 /obj/item/stack/cable_coil,
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/service/cafeteria)
 "bj" = (
 /obj/structure/grille,
 /obj/item/stack/rods,
 /obj/item/shard,
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/service/cafeteria)
 "bk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,
@@ -583,7 +584,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/service/cafeteria)
 "bq" = (
 /obj/structure/table,
 /obj/item/folder/blue{
@@ -708,14 +709,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/clothing/head/welding{
-	pixel_x = -3;
-	pixel_y = 5
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /obj/machinery/airalarm/directional/south,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/central)
 "bF" = (
@@ -866,13 +864,10 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/clothing/head/welding{
-	pixel_x = -2;
-	pixel_y = 1
-	},
 /obj/machinery/firealarm/directional/west{
 	dir = 4
 	},
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/plating,
 /area/station/engineering)
 "bX" = (
@@ -1039,12 +1034,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/remains/human{
 	desc = "They look like human remains, and have clearly been gnawed at."
-	},
-/obj/item/clothing/head/centhat{
-	desc = "There's a gouge through the top where something has clawed clean through it. Whoever was wearing it probably doesn't need a hat any more.";
-	name = "\improper damaged CentCom hat";
-	pixel_x = 2;
-	pixel_y = 2
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2013,7 +2002,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/cargo)
 "BI" = (
 /obj/machinery/atmospherics/components/tank/plasma{
 	dir = 1
@@ -2183,7 +2172,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/station/external)
+/area/station/cargo)
 "Zl" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,

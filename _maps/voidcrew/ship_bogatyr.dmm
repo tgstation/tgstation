@@ -79,6 +79,7 @@
 	desc = "A box containing a gift for worthy russians.";
 	name = "\proper russian science program"
 	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/purple,
 /area/station/science)
 "dH" = (
@@ -112,7 +113,6 @@
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -1
 	},
-/obj/item/clothing/head/welding,
 /obj/item/clothing/under/rank/engineering/engineer,
 /obj/item/clothing/gloves/color/yellow,
 /obj/effect/decal/cleanable/dirt,
@@ -120,6 +120,7 @@
 /obj/item/stack/cable_coil,
 /obj/machinery/power/terminal,
 /obj/structure/cable,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "fa" = (
@@ -180,11 +181,17 @@
 "iN" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/central)
+"jm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/station/maintenance/central)
 "jT" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "kh" = (
@@ -202,6 +209,7 @@
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/purple,
 /area/station/science)
 "lJ" = (
@@ -305,6 +313,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
+"pX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium/purple,
+/area/station/science)
 "qo" = (
 /turf/closed/wall/r_wall,
 /area/station/command/bridge)
@@ -553,6 +568,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/maintenance/central)
 "AH" = (
@@ -631,6 +647,7 @@
 /obj/item/gun/ballistic/revolver/russian,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/station/maintenance/central)
 "Dk" = (
@@ -923,6 +940,7 @@
 /obj/effect/decal/cleanable/blood/gibs/up,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/purple,
 /area/station/science)
 "PC" = (
@@ -1091,6 +1109,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/blue,
 /area/station/medical)
 "WR" = (
@@ -1117,13 +1136,13 @@
 /obj/structure/closet{
 	name = "mastercraft traditional russian clothes"
 	},
-/obj/item/clothing/head/ushanka,
-/obj/item/clothing/head/ushanka,
-/obj/item/clothing/head/ushanka,
 /obj/item/clothing/under/pants/track,
 /obj/item/clothing/under/pants/track,
 /obj/item/clothing/under/pants/track,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/head/costume/ushanka,
+/obj/item/clothing/head/costume/ushanka,
+/obj/item/clothing/head/costume/ushanka,
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons/dorms)
 "XL" = (
@@ -1137,6 +1156,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/item/radio/intercom/directional/north,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium/purple,
 /area/station/science)
 "YI" = (
@@ -1144,6 +1164,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons/dorms)
 "YV" = (
@@ -1156,6 +1177,7 @@
 /area/station/maintenance/central)
 "YY" = (
 /obj/machinery/light,
+/obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/maintenance/central)
 "Zr" = (
@@ -1332,7 +1354,7 @@ AV
 mM
 rO
 aL
-rO
+jm
 bC
 EN
 By
@@ -1392,7 +1414,7 @@ Zr
 WX
 Pv
 fa
-gs
+pX
 LY
 YI
 Qr

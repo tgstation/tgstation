@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ae" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/engineering/main)
 "bf" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -50,8 +50,7 @@
 	dir = 10
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/station/external)
+/turf/open/floor/plating)
 "ey" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/stripes/box,
@@ -576,8 +575,6 @@
 /obj/item/radio,
 /obj/item/radio,
 /obj/item/tank/internals/plasmaman/full,
-/obj/item/clothing/head/hardhat/red,
-/obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
@@ -935,8 +932,7 @@
 "My" = (
 /obj/structure/railing,
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/station/external)
+/turf/open/floor/plating)
 "MW" = (
 /obj/machinery/light{
 	dir = 8
@@ -995,12 +991,12 @@
 /turf/open/floor/noslip,
 /area/station/hallway/primary/central)
 "OT" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/engineering/main)
 "Pc" = (
 /turf/closed/wall/r_wall,
 /area/station/hallway/primary/central)
@@ -1068,8 +1064,7 @@
 	pixel_x = -8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/station/external)
+/turf/open/floor/plating)
 "Qo" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -1114,8 +1109,7 @@
 /area/station/engineering/main)
 "RD" = (
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/station/external)
+/turf/open/floor/plating)
 "Se" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -1231,8 +1225,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
-/area/station/external)
+/turf/open/floor/plating)
 "VM" = (
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{

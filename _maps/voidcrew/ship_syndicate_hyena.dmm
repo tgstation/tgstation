@@ -16,8 +16,8 @@
 "bd" = (
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/circuitboard/machine/mining_equipment_vendor,
 /obj/structure/closet/crate,
+/obj/item/circuitboard/computer/order_console/mining,
 /turf/open/floor/iron/dark,
 /area/station/cargo)
 "bl" = (
@@ -307,12 +307,12 @@
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/glasses/thermal/eyepatch,
-/obj/item/clothing/head/hos/syndicate,
 /obj/item/gun/ballistic/revolver,
 /obj/item/ammo_box/a357/match,
 /obj/item/pen/edagger,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/secure_closet/hos,
+/obj/item/clothing/head/hats/hos/syndicate,
 /turf/open/floor/carpet/black,
 /area/station/command/bridge)
 "hy" = (
@@ -727,10 +727,10 @@
 /obj/item/storage/belt/utility,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/welding,
-/obj/item/clothing/head/hardhat,
 /obj/item/clothing/head/soft/yellow,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/item/clothing/head/utility/hardhat,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "rM" = (
@@ -831,7 +831,6 @@
 /obj/item/storage/belt/mining,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/welding,
-/obj/item/clothing/head/hardhat/orange,
 /obj/item/clothing/head/soft/grey,
 /obj/machinery/light/small{
 	dir = 1
@@ -843,6 +842,7 @@
 	},
 /obj/item/gps/mining,
 /obj/machinery/airalarm/directional/north,
+/obj/item/clothing/head/utility/hardhat/orange,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "tI" = (
@@ -1114,7 +1114,6 @@
 /obj/item/storage/belt/mining,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/welding,
-/obj/item/clothing/head/hardhat/orange,
 /obj/item/clothing/head/soft/grey,
 /obj/item/storage/box/emptysandbags,
 /obj/item/kinetic_crusher{
@@ -1122,6 +1121,7 @@
 	pixel_y = 6
 	},
 /obj/item/gps/mining,
+/obj/item/clothing/head/utility/hardhat/orange,
 /turf/open/floor/iron/dark,
 /area/station/commons/storage/primary)
 "zZ" = (
@@ -1265,7 +1265,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/hull,
-/area/station/external)
+/area/station/commons/storage/primary)
 "DF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1604,6 +1604,10 @@
 /obj/structure/weightmachine/weightlifter,
 /turf/open/floor/iron/dark,
 /area/station/commons)
+"Li" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/station/maintenance/starboard)
 "Lj" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Port Thrusters"
@@ -1672,10 +1676,10 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo)
 "MF" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
 "MO" = (
@@ -1806,11 +1810,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/ai_monitored/security/armory)
 "PL" = (
-/obj/structure/window/reinforced/spawner/west,
-/obj/machinery/door/poddoor{
-	id = "wrecker_engine_port"
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "PT" = (
@@ -1944,7 +1949,7 @@
 /turf/open/floor/plating,
 /area/station/command/bridge)
 "TT" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1955,10 +1960,10 @@
 /turf/open/floor/iron/white,
 /area/station/cargo)
 "Ua" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "Uh" = (
@@ -2020,7 +2025,7 @@
 /area/station/maintenance/fore)
 "VG" = (
 /turf/open/floor/engine/hull,
-/area/station/external)
+/area/station/commons/storage/primary)
 "VQ" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot_white,
@@ -2054,7 +2059,6 @@
 /obj/item/storage/belt/utility/chief,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/glasses/welding,
-/obj/item/clothing/head/hardhat/white,
 /obj/item/storage/toolbox/syndicate,
 /obj/item/wrench/combat,
 /obj/item/ammo_box/magazine/m10mm/ap,
@@ -2134,7 +2138,7 @@
 /turf/open/floor/iron/dark,
 /area/station/cargo/office)
 "Xz" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -2217,7 +2221,7 @@
 "Zb" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/station/external)
+/area/station/hallway/primary/central)
 "Zg" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -2434,7 +2438,7 @@ jf
 Fe
 GV
 CW
-Zb
+Li
 "}
 (10,1,1) = {"
 Zb
@@ -2454,7 +2458,7 @@ Ay
 AP
 GV
 nn
-Zb
+Li
 "}
 (11,1,1) = {"
 Zb
@@ -2474,7 +2478,7 @@ Sd
 dQ
 Sg
 nn
-Zb
+Li
 "}
 (12,1,1) = {"
 Zb
@@ -2494,7 +2498,7 @@ Az
 pv
 GV
 nn
-Zb
+Li
 "}
 (13,1,1) = {"
 Zb
@@ -2513,8 +2517,8 @@ MR
 zq
 Iz
 GV
-Zb
-Zb
+Li
+Li
 "}
 (14,1,1) = {"
 Zb
@@ -2534,7 +2538,7 @@ GV
 GV
 GV
 nn
-Zb
+Li
 "}
 (15,1,1) = {"
 Zb
@@ -2554,7 +2558,7 @@ KW
 VY
 QW
 nn
-Zb
+Li
 "}
 (16,1,1) = {"
 Rn
@@ -2574,7 +2578,7 @@ Bg
 jY
 yn
 oO
-Zb
+Li
 "}
 (17,1,1) = {"
 cs

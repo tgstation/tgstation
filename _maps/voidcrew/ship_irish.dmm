@@ -66,13 +66,6 @@
 "fo" = (
 /turf/template_noop,
 /area/template_noop)
-"fJ" = (
-/obj/structure/cable,
-/obj/machinery/power/shuttle_engine/electric{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/external)
 "fL" = (
 /obj/structure/rack,
 /obj/item/clothing/mask/balaclava,
@@ -702,12 +695,12 @@
 /turf/open/floor/iron,
 /area/station/science)
 "PX" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/maintenance/aft)
 "Sj" = (
 /obj/machinery/cryopod,
 /obj/machinery/computer/cryopod{
@@ -808,7 +801,7 @@ PX
 PX
 PX
 PX
-fJ
+PX
 fo
 fo
 fo

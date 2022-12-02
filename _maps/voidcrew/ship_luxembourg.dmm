@@ -397,10 +397,10 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/station/command/bridge)
 "iR" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "iV" = (
@@ -709,7 +709,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "sh" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,

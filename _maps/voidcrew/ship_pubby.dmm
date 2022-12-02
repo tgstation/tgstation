@@ -565,7 +565,7 @@
 /turf/open/floor/engine,
 /area/station/cargo/warehouse)
 "yt" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -777,7 +777,7 @@
 /turf/open/floor/engine,
 /area/station/cargo/warehouse)
 "Ls" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -820,7 +820,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/mineral/equipment_vendor,
+/obj/machinery/computer/order_console/mining,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
 "No" = (

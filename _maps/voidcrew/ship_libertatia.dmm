@@ -101,16 +101,13 @@
 	},
 /turf/open/floor/pod/light,
 /area/station/command/bridge)
-"cF" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/station/external)
 "dD" = (
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo/miningoffice)
 "eV" = (
 /obj/structure/cable,
-/obj/machinery/power/shuttle_engine/electric{
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -156,7 +153,7 @@
 /area/station/command/bridge)
 "fq" = (
 /turf/open/floor/engine/hull,
-/area/station/external)
+/area/station/security/brig)
 "fG" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/station/security/brig)
@@ -332,7 +329,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/hull,
-/area/station/external)
+/area/station/security/brig)
 "pm" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -715,7 +712,7 @@
 /area/station/commons/lounge)
 "Cd" = (
 /obj/structure/cable,
-/obj/machinery/power/shuttle_engine/electric{
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -1418,7 +1415,6 @@
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/item/clothing/head/hardhat/orange,
 /obj/item/clothing/suit/hazardvest,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
@@ -1426,8 +1422,6 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/pickaxe/improvised,
 /obj/item/pickaxe/improvised,
-/obj/item/clothing/head/hardhat/orange,
-/obj/item/clothing/head/hardhat/orange,
 /turf/open/floor/pod/light,
 /area/station/cargo/miningoffice)
 "XB" = (
@@ -1515,10 +1509,10 @@ XJ
 XJ
 XJ
 XJ
-cF
-cF
-cF
-cF
+fG
+fG
+fG
+fG
 XJ
 XJ
 XJ
@@ -1920,10 +1914,10 @@ XJ
 XJ
 XJ
 XJ
-cF
-cF
-cF
-cF
+fG
+fG
+fG
+fG
 XJ
 XJ
 XJ

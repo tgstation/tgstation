@@ -37,10 +37,10 @@
 /obj/item/gun/ballistic/rocketlauncher/unrestricted,
 /obj/item/ammo_casing/caseless/rocket,
 /obj/item/ammo_casing/caseless/rocket,
-/obj/item/ammo_casing/caseless/rocket/hedp,
 /obj/structure/railing{
 	dir = 10
 	},
+/obj/item/ammo_casing/caseless/rocket/heap,
 /turf/open/floor/mineral/plastitanium,
 /area/station/cargo)
 "bl" = (
@@ -133,12 +133,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/station/command/bridge)
 "fy" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/engineering)
 "fR" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer4{
 	dir = 1
@@ -247,11 +247,11 @@
 /turf/open/floor/catwalk_floor,
 /area/station/command/bridge)
 "lZ" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/engineering)
 "mg" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 4

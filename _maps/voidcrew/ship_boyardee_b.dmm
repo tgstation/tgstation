@@ -421,8 +421,6 @@
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe/silver,
 /obj/item/pickaxe/silver,
-/obj/item/clothing/head/hardhat/orange,
-/obj/item/clothing/head/hardhat/orange,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/t_scanner/adv_mining_scanner/lesser,
 /obj/item/gps{
@@ -436,6 +434,9 @@
 /obj/item/radio/intercom{
 	pixel_x = -27
 	},
+/obj/item/clothing/head/utility/hardhat/orange,
+/obj/item/clothing/head/utility/hardhat/orange,
+/obj/item/clothing/head/utility/hardhat/orange,
 /turf/open/floor/iron/dark,
 /area/station/cargo/miningoffice)
 "mb" = (
@@ -996,10 +997,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance)
 "Df" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/station/maintenance)
 "Dx" = (
@@ -1629,7 +1630,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "Uq" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,

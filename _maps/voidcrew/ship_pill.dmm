@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/machinery/power/shuttle_engine/electric{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 4
+	},
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
 /turf/open/floor/carpet/neon/simple/red,
@@ -46,7 +46,6 @@
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
 /obj/item/weldingtool/experimental,
-/obj/item/clothing/head/welding,
 /obj/item/areaeditor,
 /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old,
 /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old,
@@ -88,6 +87,7 @@
 /obj/item/storage/toolbox/mechanical/old,
 /obj/item/storage/box/stockparts/basic,
 /obj/item/circuitboard/machine/autolathe,
+/obj/item/clothing/head/utility/welding,
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/storage/primary)
 

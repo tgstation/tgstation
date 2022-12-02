@@ -623,10 +623,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
-"ct" = (
-/obj/machinery/power/apc/auto_name/directional/south,
-/turf/open/floor/plating,
-/area/shuttle/voidcrew/box/engine)
 "cu" = (
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
@@ -694,6 +690,8 @@
 /obj/item/pickaxe/emergency,
 /obj/item/circuitboard/machine/ore_redemption,
 /obj/item/storage/box/lights/bulbs,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "cB" = (
@@ -1264,6 +1262,9 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/door/window/left/directional/east,
 /obj/structure/cable,
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "Dp" = (
@@ -1462,6 +1463,9 @@
 /obj/structure/closet/crate,
 /obj/item/circuitboard/machine/ore_redemption,
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/box/engine)
 "UN" = (
@@ -1728,7 +1732,7 @@ aS
 aa
 aS
 bp
-ct
+bm
 aS
 aS
 aa

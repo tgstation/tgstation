@@ -536,10 +536,10 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "gB" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "gP" = (
@@ -1706,7 +1706,7 @@
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "xB" = (
-/obj/machinery/power/shuttle_engine/fueled/plasma{
+/obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1853,7 +1853,7 @@
 "zC" = (
 /obj/machinery/camera/directional/north,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/mopbucket,
+/obj/effect/spawner/random/trash/mopbucket,
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "zD" = (
@@ -3217,7 +3217,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
 "UT" = (
-/obj/structure/chair/sofa{
+/obj/structure/chair/sofa/middle{
 	dir = 8
 	},
 /turf/open/floor/carpet/blue,

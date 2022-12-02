@@ -660,12 +660,12 @@
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
 "cl" = (
-/obj/machinery/power/shuttle_engine/electric{
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/maintenance/aft)
 "cr" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1229,9 +1229,6 @@
 "IJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
-/obj/item/clothing/head/jackbros{
-	pixel_y = 7
-	},
 /obj/item/clothing/shoes/jackbros{
 	pixel_y = -8
 	},
@@ -1240,6 +1237,9 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
+	},
+/obj/item/clothing/head/costume/jackbros{
+	pixel_y = 7
 	},
 /turf/open/floor/engine/cult,
 /area/station/science)
@@ -1435,7 +1435,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/external)
+/area/station/maintenance/aft)
 "RD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
