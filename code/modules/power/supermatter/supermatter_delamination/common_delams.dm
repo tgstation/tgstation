@@ -34,7 +34,7 @@
 	// override the ray from parent call.
 	sm.add_filter(name = "ray", priority = 1, params=list(
 		type = "rays",
-		size = !!sm.internal_energy && clamp((sm.damage/100) * sm.internal_energy, 50, 125),
+		size = sm.internal_energy ? clamp((sm.damage/100) * sm.internal_energy, 50, 125) : 1,
 		color = SUPERMATTER_SINGULARITY_RAYS_COLOUR,
 		factor = clamp(sm.damage / 300, 1, 30),
 		density = clamp(sm.damage / 5, 12, 200)
@@ -105,7 +105,7 @@
 	// override the ray from parent call.
 	sm.add_filter(name = "ray", priority = 1, params = list(
 		type = "rays",
-		size = !!sm.internal_energy && clamp((sm.damage/100) * sm.internal_energy, 50, 125),
+		size = sm.internal_energy ? clamp((sm.damage/100) * sm.internal_energy, 50, 125) : 1,
 		color = SUPERMATTER_TESLA_COLOUR,
 		factor = clamp(sm.damage/300, 1, 30),
 		density = clamp(sm.damage/5, 12, 200)
