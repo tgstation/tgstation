@@ -4532,6 +4532,7 @@
 #include "code\modules\surgery\coronary_bypass.dm"
 #include "code\modules\surgery\dental_implant.dm"
 #include "code\modules\surgery\dissection.dm"
+#include "code\modules\surgery\ear_surgery.dm"
 #include "code\modules\surgery\eye_surgery.dm"
 #include "code\modules\surgery\gastrectomy.dm"
 #include "code\modules\surgery\healing.dm"
