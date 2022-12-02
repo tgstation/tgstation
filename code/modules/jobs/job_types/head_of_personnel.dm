@@ -59,7 +59,7 @@
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/storage/box/ids = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/heads/hop
+	belt = /obj/item/modular_computer/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup

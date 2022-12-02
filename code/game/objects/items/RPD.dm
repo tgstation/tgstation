@@ -351,6 +351,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		for(var/i in 1 to cat.len)
 			var/datum/pipe_info/info = cat[i]
 			r += list(list("pipe_name" = info.name, "pipe_index" = i, "selected" = (info == recipe), "all_layers" = info.all_layers))
+			if(info == recipe)
+				data["selected_category"] = c
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 
 	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)

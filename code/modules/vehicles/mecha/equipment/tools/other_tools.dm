@@ -510,3 +510,21 @@
 	icon_state = initial(icon_state)
 	if(!locate(/obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay) in mech.contents) //if no others exist
 		mech.mech_type &= ~EXOSUIT_MODULE_CONCEALED_WEP_BAY
+
+/obj/item/mecha_parts/camera_kit
+	name = "exosuit-mounted camera"
+	desc = "A security camera meant for exosuit-mounted surveillance-on-the-go."
+	icon = 'icons/mecha/mecha_equipment.dmi'
+	icon_state = "mecha_camera"
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
+	if(mech.chassis_camera)
+		balloon_alert(user, "already has a camera!")
+		return FALSE
+
+	. = ..()
+
+	mech.chassis_camera = new /obj/machinery/camera/exosuit (mech)
+	mech.chassis_camera.update_c_tag(mech)
+	mech.diag_hud_set_camera()

@@ -9,7 +9,7 @@
 	///How many charges the virus has left
 	var/charges = 5
 
-/obj/item/computer_disk/virus/proc/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/proc/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	if(charges <= 0)
 		to_chat(user, span_notice("ERROR: Out of charges."))
 		return FALSE
@@ -26,7 +26,7 @@
 /obj/item/computer_disk/virus/clown
 	name = "\improper H.O.N.K. disk"
 
-/obj/item/computer_disk/virus/clown/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/clown/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -43,7 +43,7 @@
 /obj/item/computer_disk/virus/mime
 	name = "\improper sound of silence disk"
 
-/obj/item/computer_disk/virus/mime/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/mime/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -64,7 +64,7 @@
 	name = "\improper D.E.T.O.M.A.T.I.X. disk"
 	charges = 6
 
-/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/tablet/source, obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/detomatix/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -120,7 +120,7 @@
 	telecrystal_stack.use(telecrystal_stack.amount)
 
 
-/obj/item/computer_disk/virus/frame/send_virus(obj/item/modular_computer/tablet/target, mob/living/user)
+/obj/item/computer_disk/virus/frame/send_virus(obj/item/modular_computer/pda/target, mob/living/user)
 	. = ..()
 	if(!.)
 		return FALSE
