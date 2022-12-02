@@ -26,6 +26,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	critical_machine = TRUE
 	base_icon_state = "sm"
 	icon_state = "sm"
+	light_on = FALSE
 
 	///The id of our supermatter
 	var/uid = 1
