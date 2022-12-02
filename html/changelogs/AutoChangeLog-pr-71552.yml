@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - rscadd: "You can add grenades to food"
-  - rscadd: "Grenades explode when accidentally bitten into"
-  - balance: "Adding something large to custom food will make it, too, also large"

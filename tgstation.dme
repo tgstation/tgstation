@@ -4598,6 +4598,7 @@
 #include "code\modules\surgery\organs\tongue.dm"
 #include "code\modules\surgery\organs\vocal_cords.dm"
 #include "code\modules\surgery\organs\external\_external_organs.dm"
+#include "code\modules\surgery\organs\external\restyling.dm"
 #include "code\modules\surgery\organs\external\spines.dm"
 #include "code\modules\surgery\organs\external\tails.dm"
 #include "code\modules\surgery\organs\external\wings.dm"
