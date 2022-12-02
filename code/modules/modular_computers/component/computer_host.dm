@@ -1,10 +1,16 @@
 /**
  * `/datum/modular_computer_host`, the brains and logic of NtOS
+ *
  * Written similar to a component, except that you have to explicitly implement it in your `/obj`
- * Woe be upon ye, for there lie only shitcode beyond this point
+ * Woe be upon ye, for there lie only shitcode beyond this point.
+ *
+ * If you decide to implement this on your datum,
+ * THEN MAKE SURE THE SIGNALS THIS DATUM REGISTERS GET CALLED ON YOUR ATOM. I AM SERIOUS.
+ * Else I will find you. Then I will kill you.
+ * You think I am joking? Why not try me?
  */
 /datum/modular_computer_host
-	///Our object that holds us
+	///Our object that holds us.
 	var/atom/physical
 	///The type this host is valid on. Really only used for error proofing.
 	var/valid_on = null
@@ -37,7 +43,7 @@
 	///The program currently active on the tablet.
 	var/datum/computer_file/program/active_program
 	///Idle programs on background. They still receive process calls but can't be interacted with.
-	var/list/idle_threads = list()
+	var/list/datum/computer_file/program/idle_threads = list()
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 2
 
@@ -457,7 +463,7 @@
 		return
 	to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
 
-/datum/modular_computer_host/proc/do_attackby(obj/item/attacking_item, mob/user, params)
+/datum/modular_computer_host/proc/do_attackby(datum/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
 	// Check for ID first
 	if(isidcard(attacking_item) && insert_card(attacking_item, user))
@@ -538,11 +544,11 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN*/
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
-/datum/modular_computer_host/proc/do_interact(mob/user)
+/datum/modular_computer_host/proc/do_interact(datum/source, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(interact), user)
 
-/datum/modular_computer_host/proc/do_altclick(mob/user)
+/datum/modular_computer_host/proc/do_altclick(datum/source, mob/user)
 	SIGNAL_HANDLER
 	if(issilicon(user))
 		return
@@ -559,7 +565,7 @@
 		inserted_pai = null
 		return COMPONENT_CANCEL_CLICK_ALT
 
-/datum/modular_computer_host/proc/do_exited(atom/movable/gone, direction)
+/datum/modular_computer_host/proc/do_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(internal_cell == gone)
 		internal_cell = null
@@ -575,7 +581,7 @@
 	if(inserted_disk == gone)
 		inserted_disk = null
 
-/datum/modular_computer_host/proc/do_examine(mob/user)
+/datum/modular_computer_host/proc/do_examine(datum/source, mob/user, list/examines)
 	SIGNAL_HANDLER
 	if(ntnet_bypass_rangelimit)
 		. += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
@@ -588,18 +594,18 @@
 			. += "Its identification card slot is currently occupied."
 		. += span_info("Alt-click [src] to eject the identification card.")
 
-/datum/modular_computer_host/proc/do_ctrlshiftclick(mob/user)
+/datum/modular_computer_host/proc/do_ctrlshiftclick(datum/source, mob/user)
 	SIGNAL_HANDLER
 	if(!inserted_disk)
 		return
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), inserted_disk)
 	playsound(src, 'sound/machines/card_slide.ogg', 50)
 
-/datum/modular_computer_host/proc/do_attack_ghost(mob/dead/observer/user)
+/datum/modular_computer_host/proc/do_attack_ghost(datum/source, mob/dead/observer/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(interact_ghost), user)
 
-/datum/modular_computer_host/proc/interact_ghost(mob/dead/observer/user)
+/datum/modular_computer_host/proc/interact_ghost(datum/source, mob/dead/observer/user)
 	if(powered_on)
 		ui_interact(user)
 	else if(isAdminGhostAI(user))
@@ -608,11 +614,11 @@
 			turn_on(user)
 			ui_interact(user)
 
-/datum/modular_computer_host/proc/do_attack_self(mob/user)
+/datum/modular_computer_host/proc/do_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(interact), user)
 
-/datum/modular_computer_host/proc/do_add_context(atom/source, list/ctx, obj/item/item, mob/user)
+/datum/modular_computer_host/proc/do_add_context(datum/source, atom/source, list/ctx, obj/item/item, mob/user)
 	SIGNAL_HANDLER
 	if(computer_id_slot) // ID get removed first before pAIs
 		ctx[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
@@ -626,6 +632,6 @@
 
 	return . || NONE
 
-/datum/modular_computer_host/proc/do_integrity_failure()
+/datum/modular_computer_host/proc/do_integrity_failure(datum/source)
 	SIGNAL_HANDLER
 	shutdown_computer()
