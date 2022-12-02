@@ -146,8 +146,6 @@
 		if(istype(computer_id_slot))
 			QDEL_NULL(computer_id_slot)
 
-	remove_messenger()
-
 	unregister_signals()
 
 	STOP_PROCESSING(SSmodular_computers, src)
@@ -166,7 +164,6 @@
 	RegisterSignal(physical, COMSIG_ITEM_ATTACK_SELF, PROC_REF(do_attack_self))
 	RegisterSignal(physical, COMSIG_CLICK_ALT, PROC_REF(do_altclick))
 	RegisterSignal(physical, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(do_ctrlshiftclick))
-	RegisterSignal(physical, COMSIG_ATOM_TOOL_ACT("screwdriver"), PROC_REF(do_screwdriver_act))
 	RegisterSignal(physical, COMSIG_PARENT_ATTACKBY, PROC_REF(do_attackby))
 	RegisterSignal(physical, COMSIG_PARENT_EXAMINE, PROC_REF(do_examine))
 
@@ -331,17 +328,6 @@
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	powered_on = FALSE
 
-///Adds ourself to the global list of tablet messengers. TODO: Move this to the fucking subtype!!
-/datum/modular_computer_host/proc/add_messenger()
-	GLOB.TabletMessengers += src
-
-///Removes ourselves to the global list of tablet messengers. TODO: Move this to the fucking subtype!!
-/datum/modular_computer_host/proc/remove_messenger()
-	GLOB.TabletMessengers -= src
-
-/datum/modular_computer_host/proc/do_integrity_failure()
-	shutdown_computer()
-
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
  *
@@ -360,13 +346,6 @@
 	playsound(src, sound, 50, TRUE)
 	physical.visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
 
-// TODO: Component subtype...
-/datum/modular_computer_host/proc/ring(ringtone) // bring bring
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
-	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	physical.visible_message("*[ringtone]*")
 
 /datum/modular_computer_host/proc/send_sound()
 	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
@@ -380,7 +359,27 @@
 	return TRUE
 
 /**
- * InsertID
+ * Display a message in chat, forwards visible_message to our holder. This proc is a simpler implementation on purpose.
+ * Args:
+ * message - The message to be displayed
+ * range - Visible range of the message
+ */
+
+/datum/modular_computer_host/proc/visible_message(message, range = DEFAULT_MESSAGE_RANGE)
+	physical.visible_message(message, vision_distance = range)
+
+/**
+ * Will attempt to make our holder say something, if it even is an object.
+ * Args:
+ * message - The message to be said
+ */
+/datum/modular_computer_host/proc/say(message)
+	var/obj/holder_object = physical
+	if(!istype(holder_object))
+		return
+	holder_object.say(message)
+
+/**
  * Attempt to insert the ID in either card slot.
  * Args:
  * inserting_id - the ID being inserted
@@ -428,6 +427,18 @@
 		var/mob/living/carbon/human/human_wearer = user
 		if(human_wearer.wear_id == src)
 			human_wearer.sec_hud_set_ID()
+
+/datum/modular_computer_host/proc/print_text(text_to_print, paper_title = "")
+	if(!stored_paper)
+		return FALSE
+
+	var/obj/item/paper/printed_paper = new /obj/item/paper(physical.drop_location())
+	printed_paper.add_raw_text(text_to_print)
+	if(paper_title)
+		printed_paper.name = paper_title
+	printed_paper.update_appearance()
+	stored_paper--
+	return TRUE
 
 /datum/modular_computer_host/proc/interact(mob/user)
 	if(powered_on)
@@ -615,9 +626,6 @@
 
 	return . || NONE
 
-/datum/modular_computer_host/proc/do_screwdriver_act()
+/datum/modular_computer_host/proc/do_integrity_failure()
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(remove_part))
-
-/datum/modular_computer_host/proc/remove_part()
-	return
+	shutdown_computer()

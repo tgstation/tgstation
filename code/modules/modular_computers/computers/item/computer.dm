@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
-
 // This is the base type of computer
 // Other types expand it - tablets and laptops are subtypes
 // consoles use "procssor" item that is held inside it.
@@ -17,7 +15,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	/// Starting programs for this computer
 	var/list/datum/computer_file/program/starting_programs = list()
 	/// Our modular computer
-	var/datum/modular_computer_host/cpu = /datum/modular_computer_host
+	var/datum/modular_computer_host/item/cpu = /datum/modular_computer_host/item
 
 	/// Icon state when the computer is turned off.
 	var/icon_state_unpowered = null
@@ -37,7 +35,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 
-	cpu = AddComponent(/datum/modular_computer_host)
+	cpu = new(src)
 
 	//set_light_color(cpu.comp_light_color)
 	//set_light_range(cpu.comp_light_luminosity)
@@ -91,18 +89,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	if(cpu.computer_id_slot)
 		. += "\The [src] is displaying [cpu.computer_id_slot]."
 		. += cpu.computer_id_slot.get_id_examine_strings(user)
-
-/obj/item/modular_computer/proc/print_text(text_to_print, paper_title = "")
-	if(!cpu.stored_paper)
-		return FALSE
-
-	var/obj/item/paper/printed_paper = new /obj/item/paper(drop_location())
-	printed_paper.add_raw_text(text_to_print)
-	if(paper_title)
-		printed_paper.name = paper_title
-	printed_paper.update_appearance()
-	cpu.stored_paper--
-	return TRUE
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr

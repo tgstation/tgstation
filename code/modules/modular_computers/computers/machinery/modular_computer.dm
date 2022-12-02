@@ -90,45 +90,32 @@
 		return
 	return ..()
 
-/obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
-	if(cpu)
-		return cpu.screwdriver_act(user, tool)
-	return ..()
-
 /obj/machinery/modular_computer/wrench_act(mob/user, obj/item/tool)
-	if(cpu)
-		return cpu.wrench_act(user, tool)
-	return ..()
+	. = ..()
+	tool.play_tool_sound(src, user, 20, volume=20)
+	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
+	user.balloon_alert(user, "disassembled")
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/modular_computer/welder_act(mob/user, obj/item/tool)
-	if(cpu)
-		return cpu.welder_act(user, tool)
-	return ..()
+	. = ..()
+	if(atom_integrity == max_integrity)
+		to_chat(user, span_warning("\The [src] does not require repairs."))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
+	if(!tool.tool_start_check(user, amount=1))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
+	if(!tool.use_tool(src, user, 20, volume=50, amount=1))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair \the [src]."))
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/*/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
 	if (cpu && !user.combat_mode && !(flags_1 & NODECONSTRUCT_1))
 		return cpu.attackby(W, user)
-	return ..()
-
-// Stronger explosions cause serious damage to internal components
-// Minor explosions are mostly mitigitated by casing.
-/obj/machinery/modular_computer/ex_act(severity)
-	if(!cpu)
-		return ..()
-
-	switch(severity)
-		if(EXPLODE_DEVASTATE)
-			SSexplosions.high_mov_atom += cpu
-		if(EXPLODE_HEAVY)
-			SSexplosions.med_mov_atom += cpu
-		if(EXPLODE_LIGHT)
-			SSexplosions.low_mov_atom += cpu
-	return ..()
-
-// "Stun" weapons can cause minor damage to components (short-circuits?)
-// "Burn" damage is equally strong against internal components and exterior casing
-// "Brute" damage mostly damages the casing.
-/obj/machinery/modular_computer/bullet_act(obj/projectile/Proj)
-	if(cpu)
-		return cpu.bullet_act(Proj)
-	return ..()
+	return ..()*/
