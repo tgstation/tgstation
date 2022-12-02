@@ -781,7 +781,7 @@
  * Arguments:
  * - updates: A set of bitflags dictating what should be updated. Defaults to [ALL]
  */
-/atom/proc/_update_appearance(updates=ALL)
+/atom/proc/update_appearance(updates=ALL)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 

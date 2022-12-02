@@ -140,7 +140,7 @@
 	vis_contents += new_status_display_text
 	return new_status_display_text
 
-/obj/machinery/status_display/_update_appearance(updates=ALL)
+/obj/machinery/status_display/update_appearance(updates=ALL)
 	. = ..()
 	if( \
 		(machine_stat & (NOPOWER|BROKEN)) || \

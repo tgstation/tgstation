@@ -193,7 +193,7 @@
 		update_appearance()
 
 // Saves like 300ms of init by not duping calls in the above proc
-/obj/machinery/_update_appearance(updates)
+/obj/machinery/update_appearance(updates)
 	. = ..()
 	appearance_power_state = machine_stat & NOPOWER
 
