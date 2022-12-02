@@ -106,7 +106,7 @@
 		message2 = line2
 		message_changed = TRUE
 
-	if(should_update)
+	if(message_changed)
 		update_appearance()
 
 /**
