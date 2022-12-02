@@ -397,7 +397,12 @@
 		move_prob = (pressure_difference / pressure_resistance * PROBABILITY_BASE_PRECENT) - PROBABILITY_OFFSET
 	move_prob += pressure_resistance_prob_delta
 	if (move_prob > PROBABILITY_OFFSET && prob(move_prob) && (move_resist != INFINITY) && (!anchored && (max_force >= (move_resist * MOVE_FORCE_PUSH_RATIO))) || (anchored && (max_force >= (move_resist * MOVE_FORCE_FORCEPUSH_RATIO))))
-		step(src, direction)
+		if(pressure_difference > 800)//Lets assume the average spaceman is 80kg that would requires at least 800 newton to move them
+			var/throw_distance = sqrt(pressure_difference)/10
+			var/turf/target = get_ranged_target_turf(src, direction, throw_distance)
+			src.throw_at(target, throw_distance, 8)
+		else
+			step(src, direction)
 		last_high_pressure_movement_air_cycle = SSair.times_fired
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
