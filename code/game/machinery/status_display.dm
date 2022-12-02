@@ -96,17 +96,17 @@
 /obj/machinery/status_display/proc/set_messages(line1, line2)
 	line1 = uppertext(line1)
 	line2 = uppertext(line2)
-	var/changed = FALSE
 
+	var/message_changed = FALSE
 	if(line1 != message1)
 		message1 = line1
-		changed = TRUE
+		message_changed = TRUE
 
 	if(line2 != message2)
 		message2 = line2
-		changed = TRUE
+		message_changed = TRUE
 
-	if(changed)
+	if(should_update)
 		update_appearance()
 
 /**
