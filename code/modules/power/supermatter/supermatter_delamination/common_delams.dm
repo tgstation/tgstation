@@ -64,7 +64,7 @@
 
 /datum/sm_delam/singularity/lights(obj/machinery/power/supermatter_crystal/sm)
 	sm.set_light(
-		l_range = sm.light_range + clamp(sm.damage/2, 10, 50),
+		l_range = 4 + clamp(sm.damage/2, 10, 50),
 		l_power = 3,
 		l_color = SUPERMATTER_SINGULARITY_LIGHT_COLOUR,
 		l_on = !!sm.internal_energy,
@@ -123,7 +123,7 @@
 
 /datum/sm_delam/tesla/lights(obj/machinery/power/supermatter_crystal/sm)
 	sm.set_light(
-		l_range = sm.light_range + clamp(sm.damage * sm.internal_energy, 50, 500),
+		l_range = 4 + clamp(sm.damage * sm.internal_energy, 50, 500),
 		l_power = 3,
 		l_color = SUPERMATTER_TESLA_COLOUR,
 		l_on = !!sm.internal_energy,
