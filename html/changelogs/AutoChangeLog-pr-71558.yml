@@ -1,0 +1,5 @@
+author: "Hardly3D"
+delete-after: True
+changes:
+  - qol: "Added griddles and ovens to ruins and away missions such as Deep Storage, Underground Outpost and Beach Biodome."
+  - bugfix: "Overhauled beach biodome bar, fixed stools facing the wrong direction, as well as making the bar less boxy."

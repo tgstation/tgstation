@@ -51,10 +51,15 @@
 		return
 
 	var/mob/living/bumping = bumped_atom
+	if(!ISADVANCEDTOOLUSER(bumping)) // Unadvanced tool users can't mine anyway (this is a lie). This just prevents message spam from attackby()
+		return
+
 	var/obj/item/held_item = bumping.get_active_held_item()
 	// !held_item exists to be nice to snow. the other bit is for pickaxes obviously
-	if(!held_item || held_item.tool_behaviour == TOOL_MINING)
+	if(!held_item)
 		INVOKE_ASYNC(bumping, TYPE_PROC_REF(/mob, ClickOn), src)
+	else if(held_item.tool_behaviour == TOOL_MINING)
+		attackby(held_item, bumping)
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
@@ -149,11 +154,6 @@
 	addtimer(CALLBACK(src, PROC_REF(AfterChange), flags, old_type), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 	mined.update_visuals()
-
-/turf/closed/mineral/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
-		gets_drilled(user)
-	..()
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	balloon_alert(user, "digging...")

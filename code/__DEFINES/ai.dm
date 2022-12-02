@@ -22,6 +22,8 @@
 #define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
 ///Does finishing this task make the AI stop moving towards the target?
 #define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
+///Does this behavior NOT block planning?
+#define AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION (1<<4)
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)

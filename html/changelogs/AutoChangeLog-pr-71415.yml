@@ -1,7 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - rscadd: "Added a Rescue Hook, that will allow the fishing rod it's attached onto to become a lot more proficient at recovering corpses from chasms, at the expense of making it unusable for more traditional fishing. It isn't entirely lobstrosity-proof, however..."
-  - balance: "The magnetic hook can no longer fish out corpses from chasms, but will fish out items much more efficiently than any other hooks, while also being much less attractive to lobstrosities. Some still fall for it regardless, however."
-  - spellcheck: "Fixed the capitalization and punctuation in the description of multiple fishing accessories."
-  - code_imp: "Improved the code for fishing weights, to allow for different hooks to have some more noticeable results on the weights without having to add to an already massive proc."

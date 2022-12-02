@@ -339,7 +339,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/brownie_sheet/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/brownie, 4, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice")
 
 /obj/item/food/brownie
 	name = "brownie"

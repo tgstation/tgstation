@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - qol: "You can see what kind of spell a magicarp will cast by hovering your mouse over it."
-  - imageadd: "Megacarp now have a random colour."
-  - imagedel: "Magicarp are now colour coded based on their spell, or change randomly if they're Chaos Magicarp."

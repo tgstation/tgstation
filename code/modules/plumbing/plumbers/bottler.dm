@@ -8,6 +8,9 @@
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 100
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	///category for plumbing RCD
+	category="Storage"
+
 	///how much do we fill
 	var/wanted_amount = 10
 	///where things are sent

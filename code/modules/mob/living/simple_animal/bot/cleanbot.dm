@@ -295,7 +295,7 @@
 		if(target && path.len == 0 && (get_dist(src,target) > 1))
 			path = get_path_to(src, target, max_distance=30, mintargetdist=1, id=access_card)
 			mode = BOT_MOVING
-			if(!path.len)
+			if(length(path) == 0)
 				add_to_ignore(target)
 				target = null
 				path = list()
