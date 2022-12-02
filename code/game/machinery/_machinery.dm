@@ -100,6 +100,7 @@
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	initial_language_holder = /datum/language_holder/synthetic
 
 	var/machine_stat = NONE
 	var/use_power = IDLE_POWER_USE
@@ -300,8 +301,7 @@
 		use_power(7500/severity)
 		new /obj/effect/temp_visual/emp(loc)
 
-		// if the machine set the language holder var then we can randomize languages
-		if(initial_language_holder != initial(initial_language_holder) && prob(70/severity))
+		if(prob(70/severity))
 			language_holder.selected_language = language_holder.get_random_spoken_language()
 
 /**
