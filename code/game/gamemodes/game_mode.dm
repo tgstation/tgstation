@@ -22,7 +22,7 @@
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
 
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles))
 		var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
@@ -30,7 +30,7 @@
 			delay = (delay SECONDS)
 		else
 			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/reopen_roundstart_suicide_roles), delay)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reopen_roundstart_suicide_roles)), delay)
 
 	if(SSdbcore.Connect())
 		var/list/to_set = list()
@@ -202,14 +202,14 @@
 //Set result and news report here
 /datum/game_mode/proc/set_round_result()
 	SSticker.mode_result = "undefined"
+	// Something nuked the station - it wasn't nuke ops (they set their own via their rulset)
 	if(GLOB.station_was_nuked)
-		SSticker.news_report = STATION_DESTROYED_NUKE
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-		SSticker.news_report = STATION_EVACUATED
-		if(SSshuttle.emergency.is_hijacked())
-			SSticker.news_report = SHUTTLE_HIJACK
+		SSticker.news_report = STATION_NUKED
 	if(SSsupermatter_cascade.cascade_initiated)
 		SSticker.news_report = SUPERMATTER_CASCADE
+	// Only show this one if we have nothing better to show
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED && !SSticker.news_report)
+		SSticker.news_report = SSshuttle.emergency?.is_hijacked() ? SHUTTLE_HIJACK : STATION_EVACUATED
 
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()

@@ -69,7 +69,7 @@ SUBSYSTEM_DEF(economy)
 	/// We need this on the subsystem because of yielding and such
 	var/temporary_total = 0
 
-/datum/controller/subsystem/economy/Initialize(timeofday)
+/datum/controller/subsystem/economy/Initialize()
 	//removes cargo from the split
 	var/budget_to_hand_out = round(budget_pool / department_accounts.len -1)
 	if(time2text(world.timeofday, "DDD") == SUNDAY)
@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(economy)
 			new /datum/bank_account/department(dep_id, 0, player_account = FALSE)
 			continue
 		new /datum/bank_account/department(dep_id, budget_to_hand_out, player_account = FALSE)
-	return ..()
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/economy/Recover()
 	generated_accounts = SSeconomy.generated_accounts
@@ -219,7 +219,7 @@ SUBSYSTEM_DEF(economy)
  * * vendor: The object or structure medium that is charging the user. For Vending machines that's the machine, for payment component that's the parent, cargo that's the crate, etc.
  */
 /datum/controller/subsystem/economy/proc/track_purchase(datum/bank_account/account, price_to_use, vendor)
-	if(!account || !price_to_use || !vendor)
+	if(!account || isnull(price_to_use) || !vendor)
 		CRASH("Track purchases was missing an argument! (Account, Price, or Vendor.)")
 
 	audit_log += list(list(

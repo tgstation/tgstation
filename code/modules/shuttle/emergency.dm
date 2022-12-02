@@ -105,7 +105,7 @@
 		return
 
 	var/old_len = authorized.len
-	addtimer(CALLBACK(src, .proc/clear_recent_action, user), SHUTTLE_CONSOLE_ACTION_DELAY)
+	addtimer(CALLBACK(src, PROC_REF(clear_recent_action), user), SHUTTLE_CONSOLE_ACTION_DELAY)
 
 	switch(action)
 		if("authorize")
@@ -302,11 +302,7 @@
 
 /obj/docking_port/mobile/emergency
 	name = "emergency shuttle"
-	id = "emergency"
-
-	dwidth = 9
-	width = 22
-	height = 11
+	shuttle_id = "emergency"
 	dir = EAST
 	port_direction = WEST
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
@@ -491,7 +487,7 @@
 			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.areas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_WARMUP, areas)
 
@@ -503,7 +499,7 @@
 
 				//now move the actual emergency shuttle to its transit dock
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.areas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_LAUNCH, areas)
 				enterTransit()
@@ -511,7 +507,7 @@
 				launch_status = ENDGAME_LAUNCHED
 				setTimer(SSshuttle.emergency_escape_time * engine_coeff)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
-				INVOKE_ASYNC(SSticker, /datum/controller/subsystem/ticker.proc/poll_hearts)
+				INVOKE_ASYNC(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, poll_hearts))
 				SSmapping.mapvote() //If no map vote has been run yet, start one.
 
 		if(SHUTTLE_STRANDED, SHUTTLE_DISABLED)
@@ -521,7 +517,7 @@
 		if(SHUTTLE_ESCAPE)
 			if(sound_played && time_left <= HYPERSPACE_END_TIME)
 				var/list/areas = list()
-				for(var/area/shuttle/escape/E in GLOB.sortedAreas)
+				for(var/area/shuttle/escape/E in GLOB.areas)
 					areas += E
 				hyperspace_sound(HYPERSPACE_END, areas)
 			if(time_left <= PARALLAX_LOOP_TIME)
@@ -570,23 +566,19 @@
 
 /obj/docking_port/mobile/pod
 	name = "escape pod"
-	id = "pod"
-	dwidth = 1
-	width = 3
-	height = 4
+	shuttle_id = "pod"
 	launch_status = UNLAUNCHED
 
 /obj/docking_port/mobile/pod/request(obj/docking_port/stationary/S)
-	var/obj/machinery/computer/shuttle/C = getControlConsole()
-	if(!istype(C, /obj/machinery/computer/shuttle/pod))
-		return ..()
-	if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED || (C && (C.obj_flags & EMAGGED)))
-		if(launch_status == UNLAUNCHED)
-			launch_status = EARLY_LAUNCHED
-			return ..()
-	else
+	var/obj/machinery/computer/shuttle/connected_computer = get_control_console()
+	if(!istype(connected_computer, /obj/machinery/computer/shuttle/pod))
+		return FALSE
+	if(!(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) && !(connected_computer.obj_flags & EMAGGED))
 		to_chat(usr, span_warning("Escape pods will only launch during \"Code Red\" security alert."))
-		return TRUE
+		return FALSE
+	if(launch_status == UNLAUNCHED)
+		launch_status = EARLY_LAUNCHED
+		return ..()
 
 /obj/docking_port/mobile/pod/cancel()
 	return
@@ -603,7 +595,7 @@
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_lock)
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_lock))
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -612,10 +604,10 @@
 	locked = FALSE
 	to_chat(user, span_warning("You fry the pod's alert level checking system."))
 
-/obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/computer/shuttle/pod/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
 	if(port)
-		possible_destinations += ";[port.id]_lavaland"
+		possible_destinations += ";[port.shuttle_id]_lavaland"
 
 /**
  * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
@@ -629,14 +621,11 @@
 
 	if(obj_flags & EMAGGED)
 		return
-	locked = new_level < SEC_LEVEL_RED
+	locked = (new_level < SEC_LEVEL_RED)
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
-	id = "pod"
-	dwidth = 1
-	width = 3
-	height = 4
+	shuttle_id = "pod"
 	hidden = TRUE
 	var/target_area = /area/lavaland/surface/outdoors
 	var/edge_distance = 16
@@ -658,7 +647,7 @@
 			return
 
 	// Fallback: couldn't find anything
-	WARNING("docking port '[id]' could not be randomly placed in [target_area]: of [original_len] turfs, none were suitable")
+	WARNING("docking port '[shuttle_id]' could not be randomly placed in [target_area]: of [original_len] turfs, none were suitable")
 	return INITIALIZE_HINT_QDEL
 
 /obj/docking_port/stationary/random/icemoon
@@ -733,7 +722,7 @@
 /obj/item/storage/pod/AltClick(mob/user)
 	if(!can_interact(user))
 		return
-	..()
+	return ..()
 
 /obj/item/storage/pod/can_interact(mob/user)
 	if(!..())
@@ -745,10 +734,7 @@
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
-	id = "backup"
-	dwidth = 2
-	width = 8
-	height = 8
+	shuttle_id = "backup"
 	dir = EAST
 
 /obj/docking_port/mobile/emergency/backup/Initialize(mapload)
@@ -766,7 +752,7 @@
 		SSshuttle.backup_shuttle = null
 	return ..()
 
-/obj/docking_port/mobile/emergency/shuttle_build/register()
+/obj/docking_port/mobile/emergency/shuttle_build/postregister()
 	. = ..()
 	initiate_docking(SSshuttle.getDock("emergency_home"))
 

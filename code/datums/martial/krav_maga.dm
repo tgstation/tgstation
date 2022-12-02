@@ -112,10 +112,7 @@
 	to_chat(attacker, span_danger("You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!"))
 	playsound(get_turf(attacker), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
-	if(iscarbon(defender))
-		var/mob/living/carbon/carbon_defender = defender
-		if(carbon_defender.silent <= 10)
-			carbon_defender.silent = clamp(carbon_defender.silent + 10, 0, 10)
+	defender.adjust_silence_up_to(20 SECONDS, 20 SECONDS)
 	log_combat(attacker, defender, "neck chopped")
 	return TRUE
 
@@ -170,7 +167,7 @@
 
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	. = ..()
-	if(slot == ITEM_SLOT_GLOVES)
+	if(slot & ITEM_SLOT_GLOVES)
 		style.teach(user, TRUE)
 
 /obj/item/clothing/gloves/krav_maga/dropped(mob/user)
@@ -182,7 +179,7 @@
 	name = "krav maga gloves"
 	desc = "These gloves can teach you to perform Krav Maga using nanochips."
 	icon_state = "fightgloves"
-	inhand_icon_state = "fightgloves"
+	greyscale_colors = "#c41e0d"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
@@ -193,7 +190,7 @@
 	name = "combat gloves plus"
 	desc = "These tactical gloves are fireproof and electrically insulated, and through the use of nanochip technology will teach you the martial art of krav maga."
 	icon_state = "black"
-	inhand_icon_state = "blackgloves"
+	greyscale_colors = "#2f2e31"
 	siemens_coefficient = 0
 	strip_delay = 80
 	cold_protection = HANDS

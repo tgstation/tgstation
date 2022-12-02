@@ -9,7 +9,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 5000) //hardcore
 	build_path = /obj/item/storage/part_replacer
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_EXCHANGERS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/bs_rped
@@ -19,7 +21,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 15000, /datum/material/glass = 5000, /datum/material/silver = 2500) //hardcore
 	build_path = /obj/item/storage/part_replacer/bluespace
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_EXCHANGERS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 //Capacitors
@@ -30,7 +34,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 100)
 	build_path = /obj/item/stock_parts/capacitor
-	category = list(RND_CATEGORY_STOCK_PARTS, RND_CATEGORY_MACHINERY, RND_CATEGORY_INITIAL)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -41,7 +47,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 	build_path = /obj/item/stock_parts/capacitor/adv
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -52,7 +60,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/gold = 100)
 	build_path = /obj/item/stock_parts/capacitor/super
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -63,7 +73,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/gold = 100, /datum/material/diamond = 100)
 	build_path = /obj/item/stock_parts/capacitor/quadratic
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -75,7 +87,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/stock_parts/scanning_module
-	category = list(RND_CATEGORY_STOCK_PARTS, RND_CATEGORY_MACHINERY, RND_CATEGORY_INITIAL)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -86,7 +100,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 100)
 	build_path = /obj/item/stock_parts/scanning_module/adv
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -97,7 +113,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 150, /datum/material/silver = 60)
 	build_path = /obj/item/stock_parts/scanning_module/phasic
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -108,7 +126,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/diamond = 30, /datum/material/bluespace = 30)
 	build_path = /obj/item/stock_parts/scanning_module/triphasic
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -120,7 +140,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/stock_parts/manipulator
-	category = list(RND_CATEGORY_STOCK_PARTS, RND_CATEGORY_MACHINERY, RND_CATEGORY_INITIAL)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -131,7 +153,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150)
 	build_path = /obj/item/stock_parts/manipulator/nano
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -142,7 +166,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200)
 	build_path = /obj/item/stock_parts/manipulator/pico
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -153,7 +179,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/diamond = 30, /datum/material/titanium = 30)
 	build_path = /obj/item/stock_parts/manipulator/femto
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -165,7 +193,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100, /datum/material/glass = 50)
 	build_path = /obj/item/stock_parts/micro_laser
-	category = list(RND_CATEGORY_STOCK_PARTS, RND_CATEGORY_MACHINERY, RND_CATEGORY_INITIAL)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -176,7 +206,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150, /datum/material/glass = 100)
 	build_path = /obj/item/stock_parts/micro_laser/high
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -187,7 +219,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 150, /datum/material/uranium = 60)
 	build_path = /obj/item/stock_parts/micro_laser/ultra
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -198,7 +232,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200, /datum/material/glass = 200, /datum/material/uranium = 100, /datum/material/diamond = 60)
 	build_path = /obj/item/stock_parts/micro_laser/quadultra
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -209,7 +245,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/stock_parts/matter_bin
-	category = list(RND_CATEGORY_STOCK_PARTS, RND_CATEGORY_MACHINERY, RND_CATEGORY_INITIAL)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_1
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -220,7 +258,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 150)
 	build_path = /obj/item/stock_parts/matter_bin/adv
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_2
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -231,7 +271,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 200)
 	build_path = /obj/item/stock_parts/matter_bin/super
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_3
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -242,7 +284,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 250, /datum/material/diamond = 100, /datum/material/bluespace = 100)
 	build_path = /obj/item/stock_parts/matter_bin/bluespace
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_4
+	)
 	lathe_time_factor = 0.2
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
@@ -254,7 +298,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 100)
 	build_path = /obj/item/stock_parts/subspace/ansible
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TELECOMMS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/hyperwave_filter
@@ -264,7 +310,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 100)
 	build_path = /obj/item/stock_parts/subspace/filter
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TELECOMMS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/subspace_amplifier
@@ -274,7 +322,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/gold = 100, /datum/material/uranium = 100)
 	build_path = /obj/item/stock_parts/subspace/amplifier
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TELECOMMS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/subspace_treatment
@@ -284,7 +334,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/silver = 200)
 	build_path = /obj/item/stock_parts/subspace/treatment
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TELECOMMS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/subspace_analyzer
@@ -294,7 +346,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 100, /datum/material/gold = 100)
 	build_path = /obj/item/stock_parts/subspace/analyzer
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TELECOMMS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/subspace_crystal
@@ -304,7 +358,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 800, /datum/material/silver = 100, /datum/material/gold = 100)
 	build_path = /obj/item/stock_parts/subspace/crystal
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TELECOMMS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/subspace_transmitter
@@ -314,7 +370,9 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = 100, /datum/material/silver = 100, /datum/material/uranium = 100)
 	build_path = /obj/item/stock_parts/subspace/transmitter
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_TELECOMMS
+	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/card_reader
@@ -324,7 +382,10 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=50, /datum/material/glass=10)
 	build_path = /obj/item/stock_parts/card_reader
-	category = list(RND_CATEGORY_STOCK_PARTS)
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/water_recycler
 	name = "Water Recycler"
@@ -333,5 +394,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/plastic = 200, /datum/material/iron = 50)
 	build_path = /obj/item/stock_parts/water_recycler
-	category = list(RND_CATEGORY_STOCK_PARTS)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_MEDICAL
+	category = list(
+		RND_CATEGORY_STOCK_PARTS + RND_SUBCATEGORY_STOCK_PARTS_MISC
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE

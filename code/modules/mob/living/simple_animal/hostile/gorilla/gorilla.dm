@@ -154,9 +154,11 @@
 	being_polled_for = TRUE
 	var/list/mob/dead/candidates = poll_candidates_for_mob(
 		"Do you want to play as a Cargorilla?",
-		jobban_type = ROLE_SENTIENCE,
-		poll_time = 30 SECONDS,
-		target_mob = src,
+		ROLE_SENTIENCE,
+		ROLE_SENTIENCE,
+		30 SECONDS,
+		src,
+		POLL_IGNORE_CARGORILLA
 	)
 
 	being_polled_for = FALSE

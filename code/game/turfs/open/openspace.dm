@@ -1,16 +1,3 @@
-GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
-
-/atom/movable/openspace_backdrop
-	name = "openspace_backdrop"
-
-	anchored = TRUE
-
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "grey"
-	plane = OPENSPACE_BACKDROP_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	vis_flags = VIS_INHERIT_ID
-
 /turf/open/openspace
 	name = "open space"
 	desc = "Watch your step!"
@@ -31,8 +18,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	overlays += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
-	RegisterSignal(src, COMSIG_ATOM_INITIALIZED_ON, .proc/on_atom_created)
+	RegisterSignal(src, COMSIG_ATOM_INITIALIZED_ON, PROC_REF(on_atom_created))
 	var/area/our_area = loc
 	if(istype(our_area, /area/space))
 		force_no_gravity = TRUE
@@ -40,7 +26,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 
 /turf/open/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency, is_openspace = TRUE)
+	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
 	UnregisterSignal(src, COMSIG_ATOM_INITIALIZED_ON)
@@ -71,7 +57,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	SIGNAL_HANDLER
 	if(ismovable(created_atom))
 		//Drop it only when it's finished initializing, not before.
-		addtimer(CALLBACK(src, .proc/zfall_if_on_turf, created_atom), 0 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(zfall_if_on_turf), created_atom), 0 SECONDS)
 
 /turf/open/openspace/proc/zfall_if_on_turf(atom/movable/movable)
 	if(QDELETED(movable) || movable.loc != src)
@@ -102,8 +88,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 		return TRUE
 	return FALSE
 
-/turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
-	if(A.anchored)
+/turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination, allow_anchored_movement)
+	if(A.anchored && !allow_anchored_movement)
 		return FALSE
 	if(direction == DOWN)
 		for(var/obj/contained_object in contents)

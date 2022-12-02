@@ -307,7 +307,7 @@
 	icon_state = "petcollar"
 	var/tagname = null
 
-/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(!ismonkey(M))
 		return FALSE
 	return ..()

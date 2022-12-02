@@ -193,7 +193,7 @@
 	///How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
 	var/static/list/projectile_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
@@ -319,15 +319,23 @@
 
 	var/reagent_note
 	if(reagents?.reagent_list)
-		reagent_note = " REAGENTS:"
-		for(var/datum/reagent/R in reagents.reagent_list)
-			reagent_note += "[R.name] ([num2text(R.volume)])"
+		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
 
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
-	else
-		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
+		return BULLET_ACT_HIT
 
+	if(isvehicle(firer))
+		var/obj/vehicle/firing_vehicle = firer
+
+		var/list/logging_mobs = firing_vehicle.return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)
+		if(!LAZYLEN(logging_mobs))
+			logging_mobs = firing_vehicle.return_drivers()
+		for(var/mob/logged_mob as anything in logging_mobs)
+			log_combat(logged_mob, L, "shot", src, "from inside [firing_vehicle][logging_mobs.len > 1 ? " with multiple occupants" : null][reagent_note ? " and contained [reagent_note]" : null]")
+		return BULLET_ACT_HIT
+
+	L.log_message("has been shot by [firer] with [src][reagent_note ? " containing [reagent_note]" : null]", LOG_VICTIM, color="orange", log_globally=FALSE)
 	return BULLET_ACT_HIT
 
 /obj/projectile/proc/vol_by_damage()
@@ -693,11 +701,14 @@
 	LAZYINITLIST(impacted)
 	if(fired_from)
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
+	if(firer)
+		SEND_SIGNAL(firer, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, src, fired_from, original)
 	//If no angle needs to resolve it from xo/yo!
 	if(shrapnel_type && LAZYLEN(embedding))
 		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
+			//note: mecha projectile logging is handled in /obj/item/mecha_parts/mecha_equipment/weapon/action(). try to keep these messages roughly the sameish just for consistency's sake.
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
 		process_hit(get_turf(direct_target), direct_target)
 		if(QDELETED(src))

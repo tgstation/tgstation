@@ -159,12 +159,6 @@
 			if(occupants)
 				SSexplosions.low_mov_atom += occupants
 
-/obj/vehicle/sealed/mecha/handle_atom_del(atom/A)
-	if(A in occupants) //todo does not work and in wrong file
-		LAZYREMOVE(occupants, A)
-		icon_state = initial(icon_state)+"-open"
-		setDir(dir_in)
-
 /obj/vehicle/sealed/mecha/emp_act(severity)
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
@@ -174,9 +168,16 @@
 		take_damage(30 / severity, BURN, ENERGY, 1)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
+	//Mess with the focus of the inbuilt camera if present
+	if(chassis_camera && !chassis_camera.is_emp_scrambled)
+		chassis_camera.setViewRange(chassis_camera.short_range)
+		chassis_camera.is_emp_scrambled = TRUE
+		diag_hud_set_camera()
+		addtimer(CALLBACK(chassis_camera, TYPE_PROC_REF(/obj/machinery/camera/exosuit, emp_refocus), src), 10 SECONDS / severity)
+
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
-	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha.proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/vehicle/sealed/mecha, restore_equipment)), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = TRUE
 	set_mouse_pointer()
 
@@ -203,7 +204,9 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/user, params)
+/obj/vehicle/sealed/mecha/attackby(obj/item/W, mob/living/user, params)
+	if(user.combat_mode)
+		return ..()
 	if(istype(W, /obj/item/mmi))
 		if(mmi_move_inside(W,user))
 			to_chat(user, span_notice("[src]-[W] interface initialized successfully."))
@@ -292,6 +295,11 @@
 	log_combat(user, src, "attacked", attacking_item)
 	log_message("Attacked by [user]. Item - [attacking_item], Damage - [damage_taken]", LOG_MECHA)
 
+/obj/vehicle/sealed/mecha/attack_generic(mob/user, damage_amount, damage_type, damage_flag, effects, armor_penetration)
+	. = ..()
+	if(.)
+		try_damage_component(., user.zone_selected)
+
 /obj/vehicle/sealed/mecha/wrench_act(mob/living/user, obj/item/I)
 	..()
 	. = TRUE
@@ -306,6 +314,10 @@
 /obj/vehicle/sealed/mecha/crowbar_act(mob/living/user, obj/item/I)
 	..()
 	. = TRUE
+	if(istype(I, /obj/item/crowbar/mechremoval))
+		var/obj/item/crowbar/mechremoval/remover = I
+		remover.empty_mech(src, user)
+		return
 	if(construction_state == MECHA_LOOSE_BOLTS)
 		construction_state = MECHA_OPEN_HATCH
 		to_chat(user, span_notice("You open the hatch to the power unit."))
@@ -318,15 +330,14 @@
 	if(user.combat_mode)
 		return
 	. = TRUE
-	if(LAZYFIND(repairing_mobs, user))
-		balloon_alert(user, "you're already repairing it!")
+	if(DOING_INTERACTION(user, src))
+		balloon_alert(user, "you're already repairing this!")
 		return
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
 		return
 	if(!W.tool_start_check(user, amount=1))
 		return
-	LAZYADD(repairing_mobs, user)
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
 	var/did_the_thing
@@ -341,7 +352,6 @@
 		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
 	else
 		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
-	LAZYREMOVE(repairing_mobs, user)
 
 
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
@@ -382,7 +392,7 @@
 	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in flat_equipment)
 		ammo_needed = 0
 
-		if(!istype(gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic) && gun.ammo_type == A.ammo_type)
+		if(gun.ammo_type != A.ammo_type)
 			continue
 		found_gun = TRUE
 		if(A.direct_load)
@@ -400,8 +410,15 @@
 			playsound(get_turf(user),A.load_audio,50,TRUE)
 			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
 			A.rounds = A.rounds - ammo_needed
-			if(A.custom_materials)
-				A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
+			if(A.custom_materials)	//Change material content of the ammo box according to the amount of ammo deposited into the weapon
+				/// list of materials contained in the ammo box after we put it through the equation so we can stick this list into set_custom_materials()
+				var/list/new_material_content = list()
+				for(var/datum/material/current_material in A.custom_materials)
+					if(istype(current_material, /datum/material/iron))	//we can flatten an empty ammo box into a sheet of iron (2000 units) so we have to make sure the box always has this amount at minimum
+						new_material_content[current_material] = (A.custom_materials[current_material] - 2000) * (A.rounds / initial(A.rounds)) + 2000
+					else
+						new_material_content[current_material] = A.custom_materials[current_material] * (A.rounds / initial(A.rounds))
+				A.set_custom_materials(new_material_content)
 			A.update_name()
 			return TRUE
 
@@ -411,9 +428,12 @@
 			gun.projectiles_cache = gun.projectiles_cache + A.rounds
 		playsound(get_turf(user),A.load_audio,50,TRUE)
 		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
+		if(A.qdel_on_empty)
+			qdel(A)
+			return TRUE
 		A.rounds = 0
 		A.set_custom_materials(list(/datum/material/iron=2000))
-		A.update_name()
+		A.update_appearance()
 		return TRUE
 	if(!fail_chat_override)
 		if(found_gun)

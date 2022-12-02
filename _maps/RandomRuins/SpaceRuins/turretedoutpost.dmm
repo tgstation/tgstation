@@ -144,7 +144,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aB" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/head/ushanka,
+/obj/item/clothing/head/costume/ushanka,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4

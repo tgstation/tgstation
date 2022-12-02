@@ -22,7 +22,7 @@
 	name = "armor vest"
 	desc = "A slim Type I armored vest that provides decent protection against most types of damage."
 	icon_state = "armoralt"
-	inhand_icon_state = "armoralt"
+	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
 
@@ -30,6 +30,9 @@
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
 	icon_state = "armor"
 	inhand_icon_state = "armor"
+
+/obj/item/clothing/suit/armor/vest/alt/sec
+	icon_state = "armor_sec"
 
 /obj/item/clothing/suit/armor/vest/marine
 	name = "tactical armor vest"
@@ -68,7 +71,7 @@
 	name = "large armor vest"
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
-	inhand_icon_state = "blueshift"
+	inhand_icon_state = null
 	custom_premium_price = PAYCHECK_COMMAND
 
 /obj/item/clothing/suit/armor/vest/cuirass
@@ -95,6 +98,12 @@
 	inhand_icon_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 80
+
+/obj/item/clothing/suit/armor/hos/trenchcoat/winter
+	name = "head of security's winter trenchcoat"
+	desc = "A trenchcoat enhanced with a special lightweight kevlar, padded with wool on the collar and inside. You feel strangely lonely wearing this coat."
+	icon_state = "hoswinter"
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 
 /obj/item/clothing/suit/armor/hos/hos_formal
 	name = "\improper Head of Security's parade jacket"
@@ -153,7 +162,7 @@
 	name = "captain's parade coat"
 	desc = "For when an armoured vest isn't fashionable enough."
 	icon_state = "capformal"
-	inhand_icon_state = "capspacesuit"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
@@ -177,7 +186,7 @@
 	name = "bone armor"
 	desc = "A tribal armor plate, crafted from animal bone."
 	icon_state = "bonearmor"
-	inhand_icon_state = "bonearmor"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	armor = list(MELEE = 35, BULLET = 25, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
@@ -221,15 +230,6 @@
 /obj/item/clothing/suit/armor/vest/det_suit/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
-
-/obj/item/clothing/suit/armor/vest/infiltrator
-	name = "infiltrator vest"
-	desc = "This vest appears to be made of of highly flexible materials that absorb impacts with ease."
-	icon_state = "infiltrator"
-	inhand_icon_state = "infiltrator"
-	armor = list(MELEE = 40, BULLET = 40, LASER = 30, ENERGY = 40, BOMB = 70, BIO = 0, FIRE = 100, ACID = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	strip_delay = 80
 
 /obj/item/clothing/suit/armor/swat
 	name = "MK.I SWAT Suit"
@@ -301,26 +301,26 @@
 	name = "plate armour"
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
-	inhand_icon_state = "knight_green"
+	inhand_icon_state = null
 	allowed = list(/obj/item/nullrod, /obj/item/claymore, /obj/item/banner, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
-	inhand_icon_state = "knight_yellow"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/armor/riot/knight/blue
 	icon_state = "knight_blue"
-	inhand_icon_state = "knight_blue"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/armor/riot/knight/red
 	icon_state = "knight_red"
-	inhand_icon_state = "knight_red"
+	inhand_icon_state = null
 
 /obj/item/clothing/suit/armor/riot/knight/greyscale
 	name = "knight armour"
 	desc = "A classic suit of armour, able to be made from many different materials."
 	icon_state = "knight_greyscale"
-	inhand_icon_state = "knight_greyscale"
+	inhand_icon_state = null
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor = list(MELEE = 35, BULLET = 10, LASER = 10, ENERGY = 10, BOMB = 10, BIO = 10, FIRE = 40, ACID = 40, WOUND = 15)
 
@@ -328,7 +328,7 @@
 	name = "durathread vest"
 	desc = "A vest made of durathread with strips of leather acting as trauma plates."
 	icon_state = "durathread"
-	inhand_icon_state = "durathread"
+	inhand_icon_state = null
 	strip_delay = 60
 	equip_delay_other = 40
 	max_integrity = 200
@@ -339,14 +339,14 @@
 	name = "russian vest"
 	desc = "A bulletproof vest with forest camo. Good thing there's plenty of forests to hide in around here, right?"
 	icon_state = "rus_armor"
-	inhand_icon_state = "rus_armor"
+	inhand_icon_state = null
 	armor = list(MELEE = 25, BULLET = 30, LASER = 0, ENERGY = 10, BOMB = 10, BIO = 0, FIRE = 20, ACID = 50, WOUND = 10)
 
 /obj/item/clothing/suit/armor/vest/russian_coat
 	name = "russian battle coat"
 	desc = "Used in extremly cold fronts, made out of real bears."
 	icon_state = "rus_coat"
-	inhand_icon_state = "rus_coat"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -356,7 +356,7 @@
 	name = "\improper Elder Atmosian Armor"
 	desc = "A superb armor made with the toughest and rarest materials available to man."
 	icon_state = "h2armor"
-	inhand_icon_state = "h2armor"
+	inhand_icon_state = null
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor = list(MELEE = 25, BULLET = 20, LASER = 30, ENERGY = 30, BOMB = 85, BIO = 10, FIRE = 65, ACID = 40, WOUND = 15)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

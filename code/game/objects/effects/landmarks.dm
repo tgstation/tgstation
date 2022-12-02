@@ -356,6 +356,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.emergencyresponseteamspawn += loc
 	return INITIALIZE_HINT_QDEL
 
+/obj/effect/landmark/ert_shuttle_spawn
+	name = "ertshuttlespawn"
+	icon_state = "ert_spawn"
+
+/obj/effect/landmark/ert_shuttle_brief_spawn
+	name = "ertshuttlebriefspawn"
+	icon_state = "ert_brief_spawn"
+
 //ninja energy nets teleport victims here
 /obj/effect/landmark/holding_facility
 	name = "Holding Facility"
@@ -489,7 +497,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	var/mob/living/carbon/spawned_carbon = hangover_mob
 	spawned_carbon.set_resting(TRUE, silent = TRUE)
 	if(prob(50))
-		spawned_carbon.adjust_timed_status_effect(rand(30 SECONDS, 40 SECONDS), /datum/status_effect/drugginess)
+		spawned_carbon.adjust_drugginess(rand(30 SECONDS, 40 SECONDS))
 	else
 		spawned_carbon.adjust_drunk_effect(rand(15, 25))
 	spawned_carbon.adjust_disgust(rand(5, 55)) //How hungover are you?

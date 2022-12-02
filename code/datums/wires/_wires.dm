@@ -51,7 +51,7 @@
 	// If there is a dictionary key set, we'll want to use that. Otherwise, use the holder type.
 	var/key = dictionary_key ? dictionary_key : holder_type
 
-	RegisterSignal(holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdel)
+	RegisterSignal(holder, COMSIG_PARENT_QDELETING, PROC_REF(on_holder_qdel))
 	if(randomize)
 		randomize()
 	else
@@ -184,13 +184,14 @@
 		assemblies[color] = S
 		S.forceMove(holder)
 		S.connected = src
+		S.on_attach() // Notify assembly that it is attached
 		return S
 
 /datum/wires/proc/detach_assembly(color)
 	var/obj/item/assembly/S = get_attached(color)
 	if(S && istype(S))
 		assemblies -= color
-		S.connected = null
+		S.on_detach()		// Notify the assembly.  This should remove the reference to our holder
 		S.forceMove(holder.drop_location())
 		return S
 

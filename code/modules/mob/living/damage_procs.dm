@@ -153,11 +153,11 @@
 		apply_damage(stamina, STAMINA, null, blocked)
 
 	if(jitter && (status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
-		adjust_timed_status_effect(jitter, /datum/status_effect/jitter)
+		adjust_jitter(jitter)
 	if(slur)
-		adjust_timed_status_effect(slur, /datum/status_effect/speech/slurring/drunk)
+		adjust_slurring(slur)
 	if(stutter)
-		adjust_timed_status_effect(stutter, /datum/status_effect/speech/stutter)
+		adjust_stutter(stutter)
 
 	return TRUE
 
@@ -173,6 +173,14 @@
 		updatehealth()
 	return amount
 
+/mob/living/proc/setBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return
+	. = bruteloss
+	bruteloss = amount
+	if(updating_health)
+		updatehealth()
+
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
@@ -186,7 +194,7 @@
 
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && status_flags & GODMODE)
+	if(!forced && (status_flags & GODMODE))
 		return
 	. = oxyloss
 	oxyloss = amount
@@ -223,6 +231,14 @@
 	if(updating_health)
 		updatehealth()
 	return amount
+
+/mob/living/proc/setFireLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && (status_flags & GODMODE))
+		return
+	. = fireloss
+	fireloss = amount
+	if(updating_health)
+		updatehealth()
 
 /mob/living/proc/getCloneLoss()
 	return cloneloss

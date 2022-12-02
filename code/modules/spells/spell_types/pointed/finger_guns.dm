@@ -5,6 +5,7 @@
 	background_icon_state = "bg_mime"
 	icon_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "finger_guns0"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 	panel = "Mime"
 	sound = null
 
@@ -26,7 +27,7 @@
 	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
 
-/datum/action/cooldown/spell/pointed/projectile/finger_guns/can_invoke(feedback = TRUE)
+/datum/action/cooldown/spell/pointed/projectile/finger_guns/try_invoke(feedback = TRUE)
 	if(invocation_type == INVOCATION_EMOTE)
 		if(!ishuman(owner))
 			return FALSE

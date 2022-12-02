@@ -3,13 +3,13 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 8
 	},
 /turf/template_noop,
 /area/ruin/powered/shuttle/medium_1)
 "c" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 8
 	},
 /obj/structure/window/reinforced{
@@ -66,7 +66,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_1)
 "w" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 8
 	},
 /turf/template_noop,

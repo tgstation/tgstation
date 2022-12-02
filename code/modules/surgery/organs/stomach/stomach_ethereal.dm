@@ -2,6 +2,7 @@
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
+	organ_traits = list(TRAIT_NOHUNGER) // We have our own hunger mechanic.
 	///basically satiety but electrical
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 	///used to keep ethereals from spam draining power sources
@@ -14,14 +15,12 @@
 
 /obj/item/organ/internal/stomach/ethereal/Insert(mob/living/carbon/carbon, special = FALSE, drop_if_replaced = TRUE)
 	. = ..()
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
-	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
-	ADD_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
+	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
+	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
 
 /obj/item/organ/internal/stomach/ethereal/Remove(mob/living/carbon/carbon, special = FALSE)
 	UnregisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT)
-	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, REF(src))
 
 	owner.clear_mood_event("charge")
 	carbon.clear_alert(ALERT_ETHEREAL_CHARGE)

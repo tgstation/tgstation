@@ -24,16 +24,16 @@
 				. = FALSE
 			switch(dir)
 				if(SOUTHEAST)
-					if(object.dir != dir)
+					if(object.dir != SOUTH)
 						. = FALSE
 				if(SOUTHWEST)
-					if(object.dir != dir)
+					if(object.dir != WEST)
 						. = FALSE
 				if(NORTHEAST)
-					if(object.dir != dir)
+					if(object.dir != EAST)
 						. = FALSE
 				if(NORTHWEST)
-					if(object.dir != dir)
+					if(object.dir != NORTH)
 						. = FALSE
 			corners |= object
 			continue
@@ -92,20 +92,20 @@
 	update_appearance()
 	linked_interface.active = TRUE
 	linked_interface.update_appearance()
-	RegisterSignal(linked_interface, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+	RegisterSignal(linked_interface, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
 	linked_input.active = TRUE
 	linked_input.update_appearance()
-	RegisterSignal(linked_input, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+	RegisterSignal(linked_input, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
 	linked_output.active = TRUE
 	linked_output.update_appearance()
-	RegisterSignal(linked_output, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+	RegisterSignal(linked_output, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
 	linked_moderator.active = TRUE
 	linked_moderator.update_appearance()
-	RegisterSignal(linked_moderator, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+	RegisterSignal(linked_moderator, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
 	for(var/obj/machinery/hypertorus/corner/corner in corners)
 		corner.active = TRUE
 		corner.update_appearance()
-		RegisterSignal(corner, COMSIG_PARENT_QDELETING, .proc/unregister_signals)
+		RegisterSignal(corner, COMSIG_PARENT_QDELETING, PROC_REF(unregister_signals))
 	soundloop = new(src, TRUE)
 	soundloop.volume = 5
 
@@ -422,7 +422,7 @@
 			final_countdown = FALSE
 			return
 		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
-			sleep(10)
+			sleep(1 SECONDS)
 			continue
 		else if(i > 50)
 			if(i == 10 SECONDS && critical)
@@ -431,7 +431,7 @@
 		else
 			speaking = "[i*0.1]..."
 		radio.talk_into(src, speaking, common_channel)
-		sleep(10)
+		sleep(1 SECONDS)
 
 	meltdown()
 
@@ -556,29 +556,6 @@
 
 	qdel(src)
 
-/**
- * Induce hallucinations in nearby humans.
- *
- * force will make hallucinations ignore meson protection.
- */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/induce_hallucination(strength, delta_time, force=FALSE)
-	for(var/mob/living/carbon/human/human in view(src, HALLUCINATION_HFR(heat_output)))
-		if(!force && istype(human.glasses, /obj/item/clothing/glasses/meson))
-			continue
-		var/distance_root = sqrt(1 / max(1, get_dist(human, src)))
-		human.hallucination += strength * distance_root * delta_time
-		human.hallucination = clamp(human.hallucination, 0, 200)
-
-/**
- * Emit radiation
- */
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/emit_rads()
-	radiation_pulse(
-		src,
-		max_range = 6,
-		threshold = 0.3,
-	)
-
 /*
  * HFR cracking related procs
  */
@@ -650,4 +627,3 @@
 		)
 	spill_gases(cracked_part, moderator_internal, ratio = HYPERTORUS_STRONG_SPILL_INITIAL)
 	return
-

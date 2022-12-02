@@ -4,7 +4,7 @@
 	gender = FEMALE //All xenos are girls!!
 	dna = null
 	faction = list(ROLE_ALIEN)
-	sight = SEE_MOBS
+	sight = SEE_MOBS | SEE_BLACKNESS
 	see_in_dark = 4
 	verb_say = "hisses"
 	initial_language_holder = /datum/language_holder/alien
@@ -32,7 +32,6 @@
 
 	create_internal_organs()
 
-	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

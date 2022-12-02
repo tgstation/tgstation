@@ -285,7 +285,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	return ..()
 
 /obj/item/paper/secretrecipe
-	name = "old recipe"
+	name = "Old Recipe"
 
 	///List of possible recipes we could display
 	var/list/possible_recipes = list(/datum/chemical_reaction/randomized/secret_sauce, /datum/chemical_reaction/randomized/metalgen)
@@ -300,7 +300,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	if(SSpersistence.initialized)
 		UpdateInfo()
 	else
-		SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
+		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(UpdateInfo)))
 
 /obj/item/paper/secretrecipe/ui_static_data(mob/living/user)
 	. = ..()

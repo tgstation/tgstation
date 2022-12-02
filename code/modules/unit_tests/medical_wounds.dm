@@ -1,6 +1,6 @@
 /// This test is used to make sure a flesh-and-bone base human can suffer all the types of wounds, and that suffering more severe wounds removes and replaces the lesser wound. Also tests that [/mob/living/carbon/proc/fully_heal] removes all wounds
 /datum/unit_test/test_human_base/Run()
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 
 	/// the limbs have no wound resistance like the chest and head do, so let's go with the r_arm
 	var/obj/item/bodypart/tested_part = victim.get_bodypart(BODY_ZONE_R_ARM)
@@ -34,12 +34,12 @@
 			TEST_ASSERT_EQUAL(actual_wound.type, iter_test_wound, "Patient has wound of incorrect severity. Expected: [initial(iter_test_wound.name)] Got: [actual_wound]")
 			threshold_penalty = actual_wound.threshold_penalty
 		i++
-		victim.fully_heal(TRUE) // should clear all wounds between types
+		victim.fully_heal(ADMIN_HEAL_ALL) // should clear all wounds between types
 
 
 /// This test is used for making sure species with bones but no flesh (skeletons, plasmamen) can only suffer BONE_WOUNDS, and nothing tagged with FLESH_WOUND (it's possible to require both)
 /datum/unit_test/test_human_bone/Run()
-	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/victim = allocate(/mob/living/carbon/human/consistent)
 
 	/// the limbs have no wound resistance like the chest and head do, so let's go with the r_arm
 	var/obj/item/bodypart/tested_part = victim.get_bodypart(BODY_ZONE_R_ARM)
@@ -84,4 +84,4 @@
 				TEST_ASSERT_EQUAL(actual_wound.type, iter_test_wound, "Patient has wound of incorrect severity. Expected: [initial(iter_test_wound.name)] Got: [actual_wound]")
 				threshold_penalty = actual_wound.threshold_penalty
 		i++
-		victim.fully_heal(TRUE) // should clear all wounds between types
+		victim.fully_heal(ADMIN_HEAL_ALL) // should clear all wounds between types

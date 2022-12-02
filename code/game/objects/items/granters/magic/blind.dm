@@ -17,3 +17,17 @@
 	. = ..()
 	to_chat(user, span_warning("You go blind!"))
 	user.adjust_blindness(10)
+
+/obj/item/book/granter/action/spell/blind/wgw
+	name = "Woody's Got Wood"
+	pages_to_mastery = 69 // Andy's favorite number
+	uses = 0 // it's spent
+	desc = "This book looks dangerous. Only suffering awaits those who read."
+	remarks = list( // Death awaits
+		"T-T-This is bad...",
+		"This is REALLY bad...",
+		"I think my eyes are starting to bleed...",
+		"Please, make it stop...",
+		"HELP ME SOMEONE, WHY AM I READING THIS...",
+	)
+

@@ -245,12 +245,50 @@ Primarily used in reagents/reaction_agents
 		creation_purity = src.creation_purity
 	return creation_purity / normalise_num_to
 
-/proc/pretty_string_from_reagent_list(list/reagent_list)
+/**
+ * Gets the inverse purity of this reagent. Mostly used when converting from a normal reagent to it's inverse one.
+ *
+ * Arguments
+ * * purity - Overrides the purity used for determining the inverse purity.
+ */
+/datum/reagent/proc/get_inverse_purity(purity)
+	if(!inverse_chem || !inverse_chem_val)
+		return
+	if(!purity)
+		purity = src.purity
+	return min(1-inverse_chem_val + purity + 0.01, 1) //Gives inverse reactions a 1% purity threshold for being 100% pure to appease players with OCD.
+
+/**
+ * Input a reagent_list, outputs pretty readable text!
+ * Default output will be formatted as
+ * * water, 5 | silicon, 6 | soup, 4 | space lube, 8
+ *
+ * * names_only will remove the amount displays, showing
+ * * water | silicon | soup | space lube
+ *
+ * * join_text will alter the text between reagents
+ * * setting to ", " will result in
+ * * water, 5, silicon, 6, soup, 4, space lube, 8
+ *
+ * * final_and should be combined with the above. will format as
+ * * water, 5, silicon, 6, soup, 4, and space lube, 8
+ *
+ * * capitalize_names will result in
+ * * Water, 5 | Silicon, 6 | Soup, 4 | Space lube, 8
+ *
+ * * * use (reagents.reagent_list, names_only, join_text = ", ", final_and, capitalize_names) for the formatting
+ * * * Water, Silicon, Soup, and Space Lube
+ */
+/proc/pretty_string_from_reagent_list(list/reagent_list, names_only, join_text = " | ", final_and, capitalize_names)
 	//Convert reagent list to a printable string for logging etc
-	var/list/rs = list()
-	for (var/datum/reagent/R in reagent_list)
-		rs += "[R.name], [R.volume]"
+	var/list/reagent_strings = list()
+	var/reagents_left = reagent_list.len
+	var/intial_list_length = reagents_left
+	for (var/datum/reagent/reagent as anything in reagent_list)
+		reagents_left--
+		if(final_and && intial_list_length > 1 && reagents_left == 0)
+			reagent_strings += "and [capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
+		else
+			reagent_strings += "[capitalize_names ? capitalize(reagent.name) : reagent.name][names_only ? null : ", [reagent.volume]"]"
 
-	return rs.Join(" | ")
-
-
+	return reagent_strings.Join(join_text)

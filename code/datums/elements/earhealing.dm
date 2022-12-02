@@ -1,5 +1,5 @@
 /datum/element/earhealing
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 	var/list/user_by_item = list()
 
 /datum/element/earhealing/Attach(datum/target)
@@ -7,7 +7,7 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED), .proc/on_equip)
+	RegisterSignals(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED), PROC_REF(on_equip))
 
 /datum/element/earhealing/Detach(datum/target)
 	. = ..()
@@ -17,7 +17,7 @@
 /datum/element/earhealing/proc/on_equip(datum/source, mob/living/carbon/user, slot)
 	SIGNAL_HANDLER
 
-	if(slot == ITEM_SLOT_EARS && istype(user))
+	if((slot & ITEM_SLOT_EARS) && istype(user))
 		START_PROCESSING(SSdcs, src)
 		user_by_item[source] = user
 	else

@@ -2,7 +2,7 @@
 	name = "bone bracers"
 	desc = "For when you're expecting to get slapped on the wrist. Offers modest protection to your arms."
 	icon_state = "bracers"
-	inhand_icon_state = "bracers"
+	inhand_icon_state = null
 	strip_delay = 40
 	equip_delay_other = 20
 	body_parts_covered = ARMS

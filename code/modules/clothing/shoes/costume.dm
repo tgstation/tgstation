@@ -2,7 +2,7 @@
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
-	inhand_icon_state = "roman"
+	inhand_icon_state = "wizshoe"
 	strip_delay = 100
 	equip_delay_other = 100
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
@@ -12,7 +12,7 @@
 	name = "griffon boots"
 	desc = "A pair of costume boots fashioned after bird talons."
 	icon_state = "griffinboots"
-	inhand_icon_state = "griffinboots"
+	inhand_icon_state = null
 	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/griffin/Initialize(mapload)
@@ -47,6 +47,7 @@
 	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
 	name = "grilling sandals"
 	icon_state = "cookflops"
+	inhand_icon_state = "cookflops"
 	can_be_tied = FALSE
 	species_exception = list(/datum/species/golem)
 
@@ -54,28 +55,28 @@
 	name = "frosty boots"
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
-	inhand_icon_state = "JackFrostShoes_worn"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/swagshoes
 	name = "swag shoes"
 	desc = "They got me for my foams!"
 	icon_state = "SwagShoes"
-	inhand_icon_state = "SwagShoes"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/glow
 	name = "glow shoes"
 	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
 	icon_state = "glow_shoes"
-	inhand_icon_state = "glow_shoes"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/jackbros
 	name = "frosty boots"
 	desc = "For when you're stepping on up to the plate."
 	icon_state = "JackFrostShoes"
-	inhand_icon_state = "JackFrostShoes_worn"
+	inhand_icon_state = null
 
 /obj/item/clothing/shoes/saints
 	name = "saints sneakers"
 	desc = "Officially branded Saints sneakers. Incredibly valuable!"
 	icon_state = "saints_shoes"
-	inhand_icon_state = "saints_shoes"
+	inhand_icon_state = null

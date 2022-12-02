@@ -736,7 +736,7 @@
 
 /datum/chemical_reaction/pentaerythritol
 	results = list(/datum/reagent/pentaerythritol = 2)
-	required_reagents = list(/datum/reagent/acetaldehyde = 1, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/water = 1 )
+	required_reagents = list(/datum/reagent/acetaldehyde = 1, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/lye = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
 /datum/chemical_reaction/acetaldehyde
@@ -882,7 +882,6 @@
 		do_teleport(nearby_mob, get_turf(holder.my_atom), 3, no_effects=TRUE)
 		nearby_mob.Knockdown(20, TRUE)
 		nearby_mob.add_atom_colour("#cebfff", WASHABLE_COLOUR_PRIORITY)
-		to_chat()
 		do_sparks(3,FALSE,nearby_mob)
 	clear_products(holder, step_volume_added)
 

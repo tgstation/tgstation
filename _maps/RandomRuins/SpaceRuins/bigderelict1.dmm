@@ -71,13 +71,13 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "ar" = (
-/obj/structure/shuttle/engine/propulsion/burst/right{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "as" = (
-/obj/structure/shuttle/engine/propulsion/burst/left{
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -105,7 +105,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -117,7 +117,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -137,7 +137,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aC" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "aD" = (
 /obj/machinery/door/poddoor{
 	id = "bigderelictship"
@@ -195,7 +195,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aQ" = (
 /obj/structure/closet/crate/radiation,
-/obj/item/clothing/head/radiation,
+/obj/item/clothing/head/utility/radiation,
 /obj/item/clothing/suit/utility/radiation,
 /obj/item/geiger_counter,
 /turf/open/floor/mineral/titanium/yellow,
@@ -654,7 +654,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cI" = (
-/obj/structure/janitorialcart,
+/obj/structure/mop_bucket/janitorialcart,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -1128,7 +1128,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eC" = (
 /obj/structure/closet/crate,
-/obj/item/modular_computer/tablet/pda/clear,
+/obj/item/modular_computer/pda/clear,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1265,7 +1265,7 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "tu" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "tE" = (
 /obj/effect/decal/cleanable/blood/old{
 	dir = 4;

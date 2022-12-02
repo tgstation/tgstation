@@ -1,5 +1,4 @@
-GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire"))
-GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, ABOVE_LIGHTING_PLANE))
+GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire", appearance_flags = RESET_COLOR))
 
 /// Anything you can pick up and hold.
 /obj/item
@@ -132,8 +131,6 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	var/armour_penetration = 0
 	///Whether or not our object is easily hindered by the presence of armor
 	var/weak_against_armour = FALSE
-	///What objects the suit storage can store
-	var/list/allowed = null
 	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_self = 0
 	///In deciseconds, how long an item takes to put on another person
@@ -224,6 +221,9 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
 		AddComponent(/datum/component/butchering, speed = 8 SECONDS * toolspeed)
 
+	if(!greyscale_config && greyscale_colors && (greyscale_config_worn || greyscale_config_belt || greyscale_config_inhand_right || greyscale_config_inhand_left))
+		update_greyscale()
+
 	. = ..()
 
 	// Handle adding item associated actions
@@ -287,7 +287,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		CRASH("item add_item_action got a type or instance of something that wasn't an action.")
 
 	LAZYADD(actions, action)
-	RegisterSignal(action, COMSIG_PARENT_QDELETING, .proc/on_action_deleted)
+	RegisterSignal(action, COMSIG_PARENT_QDELETING, PROC_REF(on_action_deleted))
 	if(ismob(loc))
 		// We're being held or are equipped by someone while adding an action?
 		// Then they should also probably be granted the action, given it's in a correct slot
@@ -313,11 +313,20 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/proc/add_weapon_description()
 	AddElement(/datum/element/weapon_description)
 
-/obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
-	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
-		return 0
-	else
-		return 1
+/**
+ * Checks if an item is allowed to be used on an atom/target
+ * Returns TRUE if allowed.
+ *
+ * Args:
+ * target_self - Whether we will check if we (src) are in target, preventing people from using items on themselves.
+ * not_inside - Whether target (or target's loc) has to be a turf.
+ */
+/obj/item/proc/check_allowed_items(atom/target, not_inside = FALSE, target_self = FALSE)
+	if(!target_self && (src in target))
+		return FALSE
+	if(not_inside && !isturf(target.loc) && !isturf(target))
+		return FALSE
+	return TRUE
 
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
@@ -329,7 +338,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
  * Arguments:
  * * user: The mob that is suiciding
  */
-/obj/item/proc/suicide_act(mob/user)
+/obj/item/proc/suicide_act(mob/living/user)
 	return
 
 /obj/item/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
@@ -689,7 +698,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
 			playsound(src, equip_sound, EQUIP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
-		else if(slot == ITEM_SLOT_HANDS)
+		else if(slot & ITEM_SLOT_HANDS)
 			playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
 
@@ -707,7 +716,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 
 /// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
-	if(slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_LEGCUFFED) //these aren't true slots, so avoid granting actions there
+	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
 		return FALSE
 	return TRUE
 
@@ -718,14 +727,13 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
  * Arguments:
  * * disable_warning to TRUE if you wish it to not give you text outputs.
  * * slot is the slot we are trying to equip to
- * * equipper is the mob trying to equip the item
  * * bypass_equip_delay_self for whether we want to bypass the equip delay
  */
-/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/obj/item/proc/mob_can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
 	if(!M)
 		return FALSE
 
-	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self, ignore_equipped)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
@@ -783,7 +791,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		itempush = 0 //too light to push anything
 	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		var/volume = get_volume_by_throwforce_and_or_w_class()
-		if (throwforce > 0)
+		if (throwforce > 0 || HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
 			if (mob_throw_hit_sound)
 				playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
 			else if(hitsound)
@@ -801,7 +809,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	thrownby = WEAKREF(thrower)
-	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
+	callback = CALLBACK(src, PROC_REF(after_throw), callback) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
 
 /obj/item/proc/after_throw(datum/callback/callback)
@@ -924,11 +932,11 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		MO.desc = "Looks like this was \an [src] some time ago."
 		..()
 
-/obj/item/proc/microwave_act(obj/machinery/microwave/M)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, M) & COMPONENT_SUCCESFUL_MICROWAVE)
-		return TRUE
-	if(istype(M) && M.dirty < 100)
-		M.dirty++
+/obj/item/proc/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
+	SHOULD_CALL_PARENT(TRUE)
+
+	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
+
 
 /obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
 	return TRUE
@@ -972,7 +980,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		var/mob/living/L = usr
 		if(usr.client.prefs.read_preference(/datum/preference/toggle/enable_tooltips))
 			var/timedelay = usr.client.prefs.read_preference(/datum/preference/numeric/tooltip_delay) / 100
-			tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+			tip_timer = addtimer(CALLBACK(src, PROC_REF(openTip), location, control, params, usr), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
 		if(usr.client.prefs.read_preference(/datum/preference/toggle/item_outlines))
 			if(istype(L) && L.incapacitated())
 				apply_outline(COLOR_RED_GRAY) //if they're dead or handcuffed, let's show the outline as red to indicate that they can't interact with that right now
@@ -1039,7 +1047,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 
 	if(delay)
 		// Create a callback with checks that would be called every tick by do_after.
-		var/datum/callback/tool_check = CALLBACK(src, .proc/tool_check_callback, user, amount, extra_checks)
+		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks)
 
 		if(ismob(target))
 			if(!do_mob(user, target, delay, extra_checks=tool_check))
@@ -1100,18 +1108,22 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	return 0
 
 /obj/item/doMove(atom/destination)
-	if (ismob(loc))
-		var/mob/M = loc
-		var/hand_index = M.get_held_index_of_item(src)
-		if(hand_index)
-			M.held_items[hand_index] = null
-			M.update_held_items()
-			if(M.client)
-				M.client.screen -= src
-			layer = initial(layer)
-			plane = initial(plane)
-			appearance_flags &= ~NO_CLIENT_COLOR
-			dropped(M, FALSE)
+	if (!ismob(loc))
+		return ..()
+
+	var/mob/M = loc
+	var/hand_index = M.get_held_index_of_item(src)
+	if(!hand_index)
+		return ..()
+
+	M.held_items[hand_index] = null
+	M.update_held_items()
+	if(M.client)
+		M.client.screen -= src
+	layer = initial(layer)
+	SET_PLANE_IMPLICIT(src, initial(plane))
+	appearance_flags &= ~NO_CLIENT_COLOR
+	dropped(M, FALSE)
 	return ..()
 
 /obj/item/proc/embedded(atom/embedded_target, obj/item/bodypart/part)
@@ -1220,7 +1232,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
  */
 /obj/item/proc/on_accidental_consumption(mob/living/carbon/victim, mob/living/carbon/user, obj/item/source_item, discover_after = TRUE)
 	if(get_sharpness() && force >= 5) //if we've got something sharp with a decent force (ie, not plastic)
-		INVOKE_ASYNC(victim, /mob.proc/emote, "scream")
+		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 		victim.visible_message(span_warning("[victim] looks like [victim.p_theyve()] just bit something they shouldn't have!"), \
 							span_boldwarning("OH GOD! Was that a crunch? That didn't feel good at all!!"))
 
@@ -1349,7 +1361,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(!istype(loc, /turf))
 		return
 	var/image/pickup_animation = image(icon = src, loc = loc, layer = layer + 0.1)
-	pickup_animation.plane = GAME_PLANE
+	SET_PLANE(pickup_animation, GAME_PLANE, loc)
 	pickup_animation.transform.Scale(0.75)
 	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
@@ -1370,7 +1382,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 		to_y += 10
 		pickup_animation.pixel_x += 6 * (prob(50) ? 1 : -1) //6 to the right or left, helps break up the straight upward move
 
-	flick_overlay(pickup_animation, GLOB.clients, 4)
+	flick_overlay_global(pickup_animation, GLOB.clients, 4)
 	var/matrix/animation_matrix = new(pickup_animation.transform)
 	animation_matrix.Turn(pick(-30, 30))
 	animation_matrix.Scale(0.65)
@@ -1452,7 +1464,7 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 	if(!attack_image)
 		return
 
-	flick_overlay(attack_image, GLOB.clients, 10)
+	flick_overlay_global(attack_image, GLOB.clients, 10)
 	var/matrix/copy_transform = new(transform)
 	// And animate the attack!
 	animate(attack_image, alpha = 175, transform = copy_transform.Scale(0.75), pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
@@ -1469,14 +1481,69 @@ GLOBAL_DATUM_INIT(welding_sparks, /mutable_appearance, mutable_appearance('icons
 /obj/item/proc/set_painting_tool_color(chosen_color)
 	SEND_SIGNAL(src, COMSIG_PAINTING_TOOL_SET_COLOR, chosen_color)
 
-/// Triggered from a silver slime reaction, sends a signal for the listener in component/edible
-/obj/item/proc/mark_silver_slime_reaction()
-	SIGNAL_HANDLER
-	SEND_SIGNAL(src, COMSIG_FOOD_SILVER_SPAWNED)
-
 /**
  * Returns null if this object cannot be used to interact with physical writing mediums such as paper.
  * Returns a list of key attributes for this object interacting with paper otherwise.
  */
 /obj/item/proc/get_writing_implement_details()
 	return null
+
+/**
+ * When called on an item, and given a body targeting zone, this will return TRUE if the item slot matches the target zone, and FALSE otherwise.
+ * Currently supports the jumpsuit, outersuit, backpack, belt, gloves, hat, ears, neck, mask, eyes, and feet slots. All other slots will auto return FALSE.
+ */
+/obj/item/proc/compare_zone_to_item_slot(zone)
+	switch(slot_flags)
+		if(ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_BACK)
+			return (zone == BODY_ZONE_CHEST)
+		if(ITEM_SLOT_BELT)
+			return (zone == BODY_ZONE_PRECISE_GROIN)
+		if(ITEM_SLOT_GLOVES)
+			return (zone == BODY_ZONE_R_ARM || zone == BODY_ZONE_L_ARM)
+		if(ITEM_SLOT_HEAD, ITEM_SLOT_EARS, ITEM_SLOT_NECK)
+			return (zone == BODY_ZONE_HEAD)
+		if(ITEM_SLOT_MASK)
+			return (zone == BODY_ZONE_PRECISE_MOUTH)
+		if(ITEM_SLOT_EYES)
+			return (zone == BODY_ZONE_PRECISE_EYES)
+		if(ITEM_SLOT_FEET)
+			return (zone == BODY_ZONE_L_LEG || zone == BODY_ZONE_R_LEG)
+	return FALSE
+
+/**
+ * This proc calls at the begining of anytime an item is being equiped to a target by another mob.
+ * It handles initial messages, AFK stripping, and initial logging.
+ */
+/obj/item/proc/item_start_equip(atom/target, obj/item/equipping, mob/user, warn_dangerous = TRUE)
+
+	if(warn_dangerous && isclothing(equipping))
+		var/obj/item/clothing/clothing = equipping
+		if(clothing.clothing_flags & DANGEROUS_OBJECT)
+			target.visible_message(
+				span_danger("[user] tries to put [equipping] on [target]."),
+				span_userdanger("[user] tries to put [equipping] on you."),
+				ignored_mobs = user,
+			)
+
+		else
+			target.visible_message(
+				span_notice("[user] tries to put [equipping] on [target]."),
+				span_notice("[user] tries to put [equipping] on you."),
+				ignored_mobs = user,
+			)
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/victim_human = target
+			if(victim_human.key && !victim_human.client) // AKA braindead
+				if(victim_human.stat <= SOFT_CRIT && LAZYLEN(victim_human.afk_thefts) <= AFK_THEFT_MAX_MESSAGES)
+					var/list/new_entry = list(list(user.name, "tried equipping you with [equipping]", world.time))
+					LAZYADD(victim_human.afk_thefts, new_entry)
+
+			else if(victim_human.is_blind())
+				to_chat(target, span_userdanger("You feel someone trying to put something on you."))
+	user.do_item_attack_animation(target, used_item = equipping)
+
+	to_chat(user, span_notice("You try to put [equipping] on [target]..."))
+
+	user.log_message("is putting [equipping] on [key_name(target)]", LOG_ATTACK, color="red")
+	target.log_message("is having [equipping] put on them by [key_name(user)]", LOG_VICTIM, color="orange", log_globally=FALSE)

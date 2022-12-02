@@ -1,0 +1,153 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/effect/turf_decal/trimline/neutral/filled/warning,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"g" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"m" = (
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"w" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"x" = (
+/turf/closed/wall,
+/area/station/maintenance/starboard/greater)
+"y" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"z" = (
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"E" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"K" = (
+/obj/structure/ladder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/greater)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"R" = (
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"S" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+"U" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/greater)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+x
+x
+E
+x
+x
+"}
+(3,1,1) = {"
+a
+x
+x
+x
+U
+R
+g
+x
+"}
+(4,1,1) = {"
+w
+Q
+Q
+Q
+c
+K
+m
+x
+"}
+(5,1,1) = {"
+a
+x
+x
+x
+y
+z
+S
+x
+"}
+(6,1,1) = {"
+a
+a
+a
+x
+x
+E
+x
+x
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+"}

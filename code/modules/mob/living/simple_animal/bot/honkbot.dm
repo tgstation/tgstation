@@ -43,10 +43,10 @@
 
 /mob/living/simple_animal/bot/secbot/honkbot/knockOver(mob/living/carbon/tripped_target)
 	. = ..()
-	INVOKE_ASYNC(src, /mob/living/simple_animal/bot.proc/speak, "Honk!")
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/simple_animal/bot, speak), "Honk!")
 	playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/honkbot/bot_reset()
 	..()
@@ -59,18 +59,18 @@
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1) //HEEEEEEEEEEEENK!!
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 	if(!ishuman(current_target))
 		current_target.Paralyze(8 SECONDS)
-		current_target.set_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
-		addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntime)
+		current_target.set_stutter(40 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(limiting_spam_false)), cooldowntime)
 		return
 
-	current_target.set_timed_status_effect(40 SECONDS, /datum/status_effect/speech/stutter)
+	current_target.set_stutter(40 SECONDS)
 	var/obj/item/organ/internal/ears/target_ears = current_target.getorganslot(ORGAN_SLOT_EARS)
 	if(target_ears && !HAS_TRAIT(current_target, TRAIT_DEAF))
 		target_ears.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
-	current_target.set_timed_status_effect(100 SECONDS, /datum/status_effect/jitter, only_if_higher = TRUE)
+	current_target.set_jitter_if_lower(100 SECONDS)
 	current_target.Paralyze(6 SECONDS)
 	if(client) //prevent spam from players
 		limiting_spam = TRUE
@@ -83,7 +83,7 @@
 			var/mob/living/carbon/human/human_target = current_target
 			threatlevel = human_target.assess_threat(judgement_criteria)
 		threatlevel -= 6
-	addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntime)
+	addtimer(CALLBACK(src, PROC_REF(limiting_spam_false)), cooldowntime)
 
 	log_combat(src, current_target, "honked")
 
@@ -99,7 +99,7 @@
 	. = ..()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/honkbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	. = ..()
@@ -126,8 +126,8 @@
 		icon_state = "[initial(icon_state)]-c"
 
 	limiting_spam = TRUE // prevent spam
-	addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
-	addtimer(CALLBACK(src, /atom.proc/update_appearance), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(limiting_spam_false)), cooldowntimehorn)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 //Honkbots don't care for NAP violations
 /mob/living/simple_animal/bot/secbot/honkbot/check_nap_violations()
@@ -142,5 +142,5 @@
 	playsound(loc, honksound, 50, TRUE, -1)
 	limiting_spam = TRUE // prevent spam
 	icon_state = "[initial(icon_state)]-c"
-	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
-	addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(limiting_spam_false)), cooldowntimehorn)

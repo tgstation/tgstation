@@ -42,7 +42,7 @@
 /// Returns a fresh piece of paper
 /obj/item/paper_bin/proc/generate_paper()
 	var/obj/item/paper/paper = new papertype
-	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+	if(check_holidays(APRIL_FOOLS))
 		if(prob(30))
 			paper.add_raw_text("<font face=\"[CRAYON_FONT]\" color=\"red\"><b>HONK HONK HONK HONK HONK HONK HONK<br>HOOOOOOOOOOOOOOOOOOOOOONK<br>APRIL FOOLS</b></font>")
 			paper.AddElement(/datum/element/honkspam)
@@ -129,6 +129,12 @@
 /obj/item/paper_bin/proc/at_overlay_limit()
 	return overlays.len >= MAX_ATOM_OVERLAYS - 1
 
+/obj/item/paper_bin/proc/remove_paper(amount = 1)
+	var/obj/item/paper/top_paper = pop(paper_stack)
+	if(top_paper)
+		qdel(top_paper)
+	total_paper -= amount
+
 /obj/item/paper_bin/examine(mob/user)
 	. = ..()
 	if(total_paper)
@@ -146,7 +152,7 @@
 /obj/item/paper_bin/update_overlays()
 	. = ..()
 
-	var/static/reference_paper
+	var/static/obj/item/paper/reference_paper
 	if (isnull(reference_paper))
 		reference_paper = new /obj/item/paper
 
@@ -157,6 +163,9 @@
 		bin_overlay = mutable_appearance(icon, bin_overlay_string)
 
 	if(total_paper > 0)
+		if(total_paper > length(paper_stack))
+			SET_PLANE_EXPLICIT(reference_paper, initial(reference_paper.plane), src)
+			reference_paper.update_appearance() // Ensures all our overlays are on the right plane
 		for(var/paper_number in 1 to total_paper)
 			if(paper_number != total_paper && paper_number % PAPERS_PER_OVERLAY != 0) //only top paper and every nth paper get overlays
 				continue
@@ -196,9 +205,8 @@
 	var/obj/item/stack/cable_coil/binding_cable
 
 /obj/item/paper_bin/bundlenatural/Initialize(mapload)
-	binding_cable = new /obj/item/stack/cable_coil(src, 2)
-	binding_cable.color = COLOR_ORANGE_BROWN
-	binding_cable.cable_color = "brown"
+	binding_cable = new(src, 2)
+	binding_cable.set_cable_color(CABLE_COLOR_BROWN)
 	binding_cable.desc += " Non-natural."
 	return ..()
 

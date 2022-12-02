@@ -23,9 +23,9 @@
 /datum/uplink_item/bundles_tc/medical
 	name = "Medical bundle"
 	desc = "The support specialist: Aid your fellow operatives with this medical bundle. Contains a tactical medkit, \
-			a Donksoft LMG, a box of riot darts and a pair of magboots to rescue your friends in no-gravity environments."
+			a Donksoft LMG, a box of riot darts and a magboot MODsuit module to rescue your friends in no-gravity environments."
 	item = /obj/item/storage/backpack/duffelbag/syndie/med/medicalbundle
-	cost = 15 // normally 20
+	cost = 25 // normally 31
 	purchasable_from = UPLINK_NUKE_OPS
 
 /datum/uplink_item/bundles_tc/sniper
@@ -254,7 +254,7 @@
 /datum/uplink_item/ammo/shotgun/meteor
 	name = "12g Meteorslug Shells"
 	desc = "An alternative 8-round meteorslug magazine for use in the Bulldog shotgun. \
-		Great for blasting airlocks off their frames and knocking down enemies."
+		Great for blasting holes into the hull and knocking down enemies."
 	item = /obj/item/ammo_box/magazine/m12g/meteor
 	purchasable_from = UPLINK_NUKE_OPS
 
@@ -387,11 +387,11 @@
 	item = /obj/item/ammo_casing/caseless/rocket
 	cost = 4
 
-/datum/uplink_item/ammo/rocket/hedp
-	name = "84mm HEDP Rocket"
-	desc = "A high-yield HEDP rocket; extremely effective against armored targets, as well as surrounding personnel. \
+/datum/uplink_item/ammo/rocket/heap
+	name = "84mm HEAP Rocket"
+	desc = "A high-yield HEAP rocket; extremely effective against literally everything and anything near that thing that doesn't exist anymore. \
 			Strike fear into the hearts of your enemies."
-	item = /obj/item/ammo_casing/caseless/rocket/hedp
+	item = /obj/item/ammo_casing/caseless/rocket/heap
 	cost = 6
 
 /datum/uplink_item/ammo/surplus_smg
@@ -428,14 +428,18 @@
 /datum/uplink_item/explosives/clown_bomb_clownops
 	name = "Clown Bomb"
 	desc = "The Clown bomb is a hilarious device capable of massive pranks. It has an adjustable timer, \
-			with a minimum of 60 seconds, and can be bolted to the floor with a wrench to prevent \
-			movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
-			transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
-			be defused, and some crew may attempt to do so."
+		with a minimum of %MIN_BOMB_TIMER seconds, and can be bolted to the floor with a wrench to prevent \
+		movement. The bomb is bulky and cannot be moved; upon ordering this item, a smaller beacon will be \
+		transported to you that will teleport the actual bomb to it upon activation. Note that this bomb can \
+		be defused, and some crew may attempt to do so."
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
 	surplus = 0
 	purchasable_from = UPLINK_CLOWN_OPS
+
+/datum/uplink_item/explosives/clown_bomb_clownops/New()
+	. = ..()
+	desc = replacetext(desc, "%MIN_BOMB_TIMER", SYNDIEBOMB_MIN_TIMER_SECONDS)
 
 /datum/uplink_item/explosives/buzzkill
 	name = "Buzzkill Grenade Box"
@@ -655,11 +659,21 @@
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
-	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector \
-			for rapid healing, a medical night vision HUD for quick identification of injured personnel, \
-			and other supplies helpful for a field medic."
+	desc = "This first aid kit is a suspicious black and red. Included is a number of atropine medipens \
+			for rapid stabilization and detonation prevention, sutures and regenerative mesh for wound treatment, and patches \
+			for faster healing on the field. Also comes with basic medical tools and sterlizer."
 	item = /obj/item/storage/medkit/tactical
 	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/device_tools/medkit/premium
+	name = "Syndicate Combat Medical Suite"
+	desc = "This first aid kit is a suspicious black and red. Included is an unloaded combat chemical injector \
+			for suit-penetrative chem delivery, a medical science night vision HUD for quick identification of injured personnel and chemical supplies, \
+			improved medical supplies, including Interdyne-approved pharmaceuticals, a hacked cybernetic surgery toolset arm implant, \
+			and some helpful MODsuit modules for for field medical use and operative physiopharmaceutical augmentation."
+	item = /obj/item/storage/medkit/tactical/premium
+	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/device_tools/potion

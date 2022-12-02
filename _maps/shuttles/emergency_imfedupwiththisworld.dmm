@@ -4,10 +4,7 @@
 /area/shuttle/escape)
 "c" = (
 /obj/docking_port/mobile/emergency{
-	dwidth = 1;
-	height = 10;
-	name = "Oh Hi Daniel";
-	width = 12
+	name = "Oh Hi Daniel"
 	},
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,

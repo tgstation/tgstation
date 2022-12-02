@@ -1,7 +1,9 @@
 name: Codeowner Reviews
 
 # Controls when the workflow will run
-on: pull_request_target
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   assign-users:
@@ -10,10 +12,11 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      #Parse the Codeowner file
+      #Parse the Codeowner file on non draft PRs
       - name: CodeOwnersParser
+        if: github.event.pull_request.draft == false
         id: CodeOwnersParser
         uses: tgstation/CodeOwnersParser@v1
 

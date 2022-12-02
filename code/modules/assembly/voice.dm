@@ -13,7 +13,8 @@
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	var/listening = FALSE
-	var/recorded = "" //the activation message
+	/// The activation message is tracked using this var.
+	var/recorded = ""
 	var/mode = INCLUSIVE_MODE
 	var/static/list/modes = list(
 		"inclusive",
@@ -90,7 +91,7 @@
 /obj/item/assembly/voice/proc/send_pulse()
 	visible_message("clicks", visible_message_flags = EMOTE_MESSAGE)
 	playsound(src, 'sound/effects/whirthunk.ogg', 30)
-	addtimer(CALLBACK(src, .proc/pulse), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(pulse)), 2 SECONDS)
 
 /obj/item/assembly/voice/multitool_act(mob/living/user, obj/item/I)
 	..()

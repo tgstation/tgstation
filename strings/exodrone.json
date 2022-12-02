@@ -1,26 +1,26 @@
 {
 	"probe_names": [
-		"Voyager",
-		"Luna",
 		"Cassini",
 		"Galileo",
+		"Juno",
+		"Luna",
 		"Mariner",
-		"Sojourner",
 		"Pioneer",
 		"Rosetta",
-		"Juno",
+		"Sojourner",
 		"Stardust",
 		"Vega",
-		"Venera"
+		"Venera",
+		"Voyager"
 	],
 	"trading_station_names": [
-		"Big Bill's used cars",
-		"Jims Space Emporium",
-		"The Galactic Market",
-		"Turners Ship & Trade",
-		"Rocketing Deals",
+		"Big Bill Hells's used mechs",
 		"Cornerstore at the End of the Universe",
-		"Crazy Redd's Crazy Deals"
+		"Crazy Redd's Crazy Deals",
+		"Jims Space Emporium",
+		"Rocketing Deals",
+		"The Galactic Market",
+		"Turners Ship & Trade"
 	],
 	"planet_types": [
 		{
@@ -46,15 +46,15 @@
 		}
 	],
 	"alien_fauna": [
-		"xenomorph hunter",
 		"basilisk",
+		"unknown beast",
 		"very angry cow",
-		"unknown beast"
+		"xenomorph hunter"
 	],
 	"fluff_generic": [
-		"You find nothing interesting.",
 		"This place is emptier than assisstant's credit account.",
-		"You find a huge pile of boredom."
+		"You find a huge pile of boredom.",
+		"You find nothing interesting."
 	],
 	"fluff_space": [
 		"You detect stardrive activation readings nearby. By time time you arrive at the spot there's nothing there but space dust.",
@@ -62,8 +62,8 @@
 	],
 	"fluff_trading": [
 		"You encounter a maintenance drone busy at work. It ignores you completely.",
-		"You pass by security patrol. They give you suspicious stares.",
-		"You pass by a drunked local. Good thing smell is not conducted through the drone feed."
+		"You pass by a drunked local. Good thing smell is not conducted through the drone feed.",
+		"You pass by security patrol. They give you suspicious stares."
 	],
 	"fluff_ruins": [
 		"You encounter a broken statue. You can't tell what was it's original shape.",

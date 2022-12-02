@@ -40,6 +40,11 @@
 	/// Datum level flags
 	var/datum_flags = NONE
 
+	/// A cached version of our \ref
+	/// The brunt of \ref costs are in creating entries in the string tree (a tree of immutable strings)
+	/// This avoids doing that more then once per datum by ensuring ref strings always have a reference to them after they're first pulled
+	var/cached_ref
+
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
 
@@ -265,3 +270,11 @@
 		return
 	SEND_SIGNAL(source, COMSIG_CD_RESET(index), S_TIMER_COOLDOWN_TIMELEFT(source, index))
 	TIMER_COOLDOWN_END(source, index)
+
+///Generate a tag for this /datum, if it implements one
+///Should be called as early as possible, best would be in New, to avoid weakref mistargets
+///Really just don't use this, you don't need it, global lists will do just fine MOST of the time
+///We really only use it for mobs to make id'ing people easier
+/datum/proc/GenerateTag()
+	datum_flags |= DF_USE_TAG
+

@@ -156,7 +156,7 @@
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
 			var/obj/item/food/food_item = new food_type
-			food_item.mark_silver_slime_reaction()
+			ADD_TRAIT(food_item, TRAIT_FOOD_SILVER, INNATE_TRAIT)
 			if(!user.put_in_active_hand(food_item))
 				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
@@ -270,7 +270,7 @@
 				to_chat(user, span_warning("Your glow is already enhanced!"))
 				return
 			species.update_glow(user, 5)
-			addtimer(CALLBACK(species, /datum/species/jelly/luminescent.proc/update_glow, user, LUMINESCENT_DEFAULT_GLOW), 600)
+			addtimer(CALLBACK(species, TYPE_PROC_REF(/datum/species/jelly/luminescent, update_glow), user, LUMINESCENT_DEFAULT_GLOW), 600)
 			to_chat(user, span_notice("You start glowing brighter."))
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -459,6 +459,7 @@
 			if(do_after(user, 60, target = user))
 				to_chat(user, span_userdanger("You explode!"))
 				explosion(user, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 6, explosion_cause = src)
+				user.investigate_log("has been gibbed by an oil slime extract explosion.", INVESTIGATE_DEATHS)
 				user.gib()
 				return
 			to_chat(user, span_notice("You stop feeding [src], and the feeling passes."))
@@ -477,7 +478,7 @@
 				return
 			to_chat(user, span_notice("You feel your skin harden and become more resistant."))
 			species.armor += 25
-			addtimer(CALLBACK(src, .proc/reset_armor, species), 1200)
+			addtimer(CALLBACK(src, PROC_REF(reset_armor), species), 1200)
 			return 450
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -719,13 +720,8 @@
 		if(isanimal(dumb_mob))
 			var/mob/living/simple_animal/smart_animal = dumb_mob
 			smart_animal.sentience_act()
-		to_chat(dumb_mob, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
-		to_chat(dumb_mob, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
-		if(dumb_mob.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
-			to_chat(dumb_mob, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
+		dumb_mob.mind.add_antag_datum(/datum/antagonist/sentient_creature)
 		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
-		dumb_mob.copy_languages(user, LANGUAGE_MASTER)
-		dumb_mob.update_atom_languages()
 		after_success(user, dumb_mob)
 		qdel(src)
 	else
@@ -791,6 +787,7 @@
 	to_chat(user, span_notice("You drink the potion then place your hands on [switchy_mob]..."))
 
 	user.mind.transfer_to(switchy_mob)
+	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
 	switchy_mob.faction = user.faction.Copy()
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	switchy_mob.update_atom_languages()
