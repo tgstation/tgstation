@@ -404,7 +404,7 @@
 	command_report_footnote.signature = tgui_input_text(usr, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
 
 	if(!command_report_footnote.signature)
-		command_report_footnote.signature = "Anonymous"
+		command_report_footnote.signature = "Classified"
 
 	SScommunications.command_report_footnotes += command_report_footnote
 
