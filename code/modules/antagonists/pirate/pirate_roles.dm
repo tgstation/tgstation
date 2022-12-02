@@ -16,8 +16,8 @@
 	spawner_job_path = /datum/job/space_pirate
 	///Rank of the pirate on the ship, it's used in generating pirate names!
 	var/rank = "Deserter"
-	///Whether or not it will spawn a fluff structure upon opening.
-	var/spawn_oldpod = TRUE
+	///Path of the structure we spawn after creating a pirate.
+	var/fluff_spawn = /obj/structure/showcase/machinery/oldpod/used
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/special(mob/living/spawned_mob, mob/mob_possessor)
 	. = ..()
@@ -29,10 +29,10 @@
 	var/endings = strings(PIRATE_NAMES_FILE, "endings")
 	return "[rank ? rank + " " : ""][pick(beggings)][pick(endings)]"
 
-/obj/effect/mob_spawn/ghost_role/human/pirate/Destroy()
-	if(spawn_oldpod)
-		new /obj/structure/showcase/machinery/oldpod/used(drop_location())
-	return ..()
+/obj/effect/mob_spawn/ghost_role/human/pirate/create(mob/mob_possessor, newname)
+	. = ..()
+	if(fluff_spawn)
+		new fluff_spawn(drop_location())
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/captain
 	rank = "Renegade Leader"
@@ -47,11 +47,11 @@
 	density = FALSE
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "remains"
-	spawn_oldpod = FALSE
 	prompt_name = "a skeleton pirate"
 	mob_species = /datum/species/skeleton
 	outfit = /datum/outfit/pirate
 	rank = "Mate"
+	fluff_spawn = null
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain
 	rank = "Captain"
@@ -92,10 +92,12 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers
 	name = "mental energizer"
 	desc = "A cryo sleeper modified to keep the occupant mentally sharp. However that works..."
+	icon_state = "psykerpod"
 	prompt_name = "a psyker-ganger"
 	mob_species = /datum/species/human
 	outfit = /datum/outfit/pirate/psyker
 	rank = "Member"
+	fluff_spawn = /obj/structure/showcase/machinery/oldpod/used
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers/captain
 	rank = "Leader"
