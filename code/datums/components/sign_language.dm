@@ -68,13 +68,18 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_parent = parent
-	carbon_parent.dna?.species.say_mod = "signs"
+	var/obj/item/organ/internal/tongue/tongue = carbon_parent.getorganslot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.temp_say_mod = "signs"
+	//this speech relies on hands, which we have our own way of garbling speech when they're occupied, so we can have this always on
+	ADD_TRAIT(carbon_parent, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_HANDS)
 	carbon_parent.verb_ask = "signs"
 	carbon_parent.verb_exclaim = "signs"
 	carbon_parent.verb_whisper = "subtly signs"
 	carbon_parent.verb_sing = "rythmically signs"
 	carbon_parent.verb_yell = "emphatically signs"
 	carbon_parent.bubble_icon = "signlang"
+	RegisterSignal(carbon_parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_added_organ))
 	RegisterSignal(carbon_parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
 	RegisterSignal(carbon_parent, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(on_treat_living_message))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_TREAT_MESSAGE, PROC_REF(on_treat_message))
@@ -90,7 +95,10 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_parent = parent
-	carbon_parent.dna?.species.say_mod = initial(carbon_parent.dna.species.say_mod)
+	var/obj/item/organ/internal/tongue/tongue = carbon_parent.getorganslot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.temp_say_mod = ""
+	REMOVE_TRAIT(carbon_parent, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_HANDS)
 	carbon_parent.verb_ask = initial(carbon_parent.verb_ask)
 	carbon_parent.verb_exclaim = initial(carbon_parent.verb_exclaim)
 	carbon_parent.verb_whisper = initial(carbon_parent.verb_whisper)
@@ -98,6 +106,7 @@
 	carbon_parent.verb_yell = initial(carbon_parent.verb_yell)
 	carbon_parent.bubble_icon = initial(carbon_parent.bubble_icon)
 	UnregisterSignal(carbon_parent, list(
+		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_LIVING_TRY_SPEECH,
 		COMSIG_LIVING_TREAT_MESSAGE,
 		COMSIG_MOVABLE_TREAT_MESSAGE,
@@ -106,6 +115,16 @@
 		COMSIG_MOB_SAY
 	))
 	return TRUE
+
+///Signal proc for [COMSIG_CARBON_GAIN_ORGAN]
+///Applies the new say mod to any tongues that have appeared!
+/datum/component/sign_language/proc/on_added_organ(mob/living/source, obj/item/organ/new_organ)
+	SIGNAL_HANDLER
+
+	if(!istype(new_organ, /obj/item/organ/internal/tongue))
+		return
+	var/obj/item/organ/internal/tongue/new_tongue = new_organ
+	new_tongue.temp_say_mod = "signs"
 
 /// Signal proc for [COMSIG_LIVING_TRY_SPEECH]
 /// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)
