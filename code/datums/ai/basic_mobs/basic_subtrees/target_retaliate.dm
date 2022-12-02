@@ -54,7 +54,7 @@
 
 	finish_action(controller, succeeded = TRUE)
 
-/// Removes a (weakref to a) target from our blackboard list, as it is no longer a valid target
+/// Returns true if this target is valid for attacking based on current conditions
 /datum/ai_behavior/target_from_retaliate_list/proc/can_attack_target(mob/living/living_mob, atom/target, datum/targetting_datum/targetting_datum)
 	if (!target)
 		return FALSE
