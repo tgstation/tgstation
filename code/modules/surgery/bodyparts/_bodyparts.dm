@@ -510,7 +510,7 @@
 	burn_dam = new_value
 
 //Returns total damage.
-/obj/item/bodypart/proc/get_damage(include)
+/obj/item/bodypart/proc/get_damage()
 	var/total = brute_dam + burn_dam
 	return total
 

@@ -1809,6 +1809,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		drinker.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time)
+		drinker.adjustStaminaLoss(-2 * REM * delta_time)
 		. = TRUE
 	return ..()
 
@@ -2343,6 +2344,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		drinker.adjustOxyLoss(-1 * REM * delta_time, 0)
 		drinker.adjustToxLoss(-1 * REM * delta_time, 0)
+		drinker.adjustStaminaLoss(-1  * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
