@@ -34,7 +34,7 @@
 				M.visible_message(span_warning("[M.name] struggles to break free from the gelatinous resin!"),\
 					span_notice("You struggle to break free from the gelatinous resin... (Stay still for one minute.)"),\
 					span_hear("You hear squelching..."))
-				if(!do_after(M, 600, target = src))
+				if(!do_after(M, 60 SECONDS, target = src))
 					if(M?.buckled)
 						to_chat(M, span_warning("You fail to unbuckle yourself!"))
 					return
