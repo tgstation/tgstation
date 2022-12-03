@@ -49,7 +49,8 @@
 
 /obj/machinery/vending/medical/syndicate_access/Initialize(mapload)
 	..()
-	language_holder.selected_language = /datum/language/codespeak
+	var/datum/language_holder/syndicate_languages = get_language_holder()
+	syndicate_languages.selected_language = /datum/language/codespeak
 
 //Created out of a necessity to get these dumb chems out of the medical tools vendor.
 /obj/machinery/vending/drugs

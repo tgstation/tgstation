@@ -50,7 +50,8 @@
 
 /obj/machinery/vending/cigarette/syndicate/Initialize(mapload)
 	..()
-	language_holder.selected_language = /datum/language/codespeak
+	var/datum/language_holder/syndicate_languages = get_language_holder()
+	syndicate_languages.selected_language = /datum/language/codespeak
 
 /obj/machinery/vending/cigarette/beach //Used in the lavaland_biodome_beach.dmm ruin
 	name = "\improper ShadyCigs Ultra"
@@ -77,7 +78,8 @@
 
 /obj/machinery/vending/cigarette/beach/Initialize(mapload)
 	..()
-	language_holder.selected_language = /datum/language/beachbum
+	var/datum/language_holder/stoner_languages = get_language_holder()
+	stoner_languages.selected_language = /datum/language/beachbum
 
 /obj/item/vending_refill/cigarette
 	machine_name = "ShadyCigs Deluxe"

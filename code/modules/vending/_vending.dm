@@ -244,6 +244,12 @@
 /obj/machinery/vending/can_speak()
 	return !shut_up
 
+/obj/machinery/vending/emp_act(severity)
+	. = ..()
+	var/datum/language_holder/vending_languages = get_language_holder()
+	// if the language wire got pulsed during an EMP, this will make sure the language_iterator is synched correctly
+	vending_languages.selected_language = vending_languages.spoken_languages[wires.language_iterator]
+
 //Better would be to make constructable child
 /obj/machinery/vending/RefreshParts()
 	SHOULD_CALL_PARENT(FALSE)

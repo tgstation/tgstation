@@ -170,9 +170,8 @@
 		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
 	}
 
-	// if this works, then remove the other Initialization for randomized languages
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		//randomize_language_if_on_station()
+		randomize_language_if_on_station()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -302,7 +301,8 @@
 		new /obj/effect/temp_visual/emp(loc)
 
 		if(prob(70/severity))
-			language_holder.selected_language = language_holder.get_random_spoken_language()
+			var/datum/language_holder/machine_languages = get_language_holder()
+			machine_languages.selected_language = machine_languages.get_random_spoken_language()
 
 /**
  * Opens the machine.

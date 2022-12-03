@@ -23,18 +23,21 @@
 
 /datum/wires/vending/get_status()
 	var/obj/machinery/vending/vending_machine = holder
-	var/datum/language/vending_language = vending_machine.language_holder.selected_language
+	var/datum/language_holder/vending_languages = vending_machine.get_language_holder()
+	var/datum/language/current_language = vending_languages.selected_language
 	var/list/status = list()
 	status += "The orange light is [vending_machine.seconds_electrified ? "on" : "off"]."
 	status += "The red light is [vending_machine.shoot_inventory ? "off" : "blinking"]."
 	status += "The green light is [vending_machine.extended_inventory ? "on" : "off"]."
 	status += "A [vending_machine.scan_id ? "purple" : "yellow"] light is on."
 	status += "A white light is [vending_machine.age_restrictions ? "on" : "off"]."
-	status += "The speaker light is [vending_machine.shut_up ? "off" : "on"]. The language is set to [vending_language.name]."
+	status += "The speaker light is [vending_machine.shut_up ? "off" : "on"]. The language is set to [current_language.name]."
 	return status
 
 /datum/wires/vending/on_pulse(wire)
 	var/obj/machinery/vending/vending_machine = holder
+	var/datum/language_holder/vending_languages = vending_machine.get_language_holder()
+
 	switch(wire)
 		if(WIRE_THROW)
 			vending_machine.shoot_inventory = !vending_machine.shoot_inventory
@@ -45,8 +48,8 @@
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = !vending_machine.scan_id
 		if(WIRE_SPEAKER)
-			language_iterator = (language_iterator + 1) % length(vending_machine.language_holder.spoken_languages)
-			vending_machine.language_holder.selected_language = vending_machine.language_holder.spoken_languages[language_iterator]
+			language_iterator = (language_iterator + 1) % length(vending_languages.spoken_languages) // double check spoken_language list is a numbered array
+			vending_languages.selected_language = vending_languages.spoken_languages[language_iterator]
 		if(WIRE_AGELIMIT)
 			vending_machine.age_restrictions = !vending_machine.age_restrictions
 

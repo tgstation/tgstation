@@ -95,7 +95,8 @@
 
 /obj/machinery/vending/boozeomat/syndicate_access/Initialize(mapload)
 	..()
-	language_holder.selected_language = /datum/language/codespeak
+	var/datum/language_holder/syndicate_languages = get_language_holder()
+	syndicate_languages.selected_language = /datum/language/codespeak
 
 /obj/item/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
