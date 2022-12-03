@@ -68,7 +68,7 @@
 
 		if(ishuman(M))
 			var/mob/living/carbon/human/victim = M
-			if(((victim.wear_mask && istype(victim.wear_mask, /obj/item/clothing/mask/facehugger)) || HAS_TRAIT(victim, TRAIT_XENO_HOST)) && owner.stat != DEAD) //If they're a host or have a facehugger currently infecting them. Must be alive.
+			if(((victim.wear_mask && istype(victim.wear_mask, /obj/item/clothing/mask/facehugger)) || HAS_TRAIT(victim, TRAIT_XENO_HOST)) && victim.stat != DEAD) //If they're a host or have a facehugger currently infecting them. Must be alive.
 				victim.apply_status_effect(/datum/status_effect/nest_sustenance)
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
