@@ -217,9 +217,6 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_BOTS_GLITCHED))
-		//randomize_language_if_on_station()
-
 	if(onstation_override) //overrides the checks if true.
 		onstation = TRUE
 		return
@@ -246,8 +243,9 @@
 /obj/machinery/vending/emp_act(severity)
 	. = ..()
 	var/datum/language_holder/vending_languages = get_language_holder()
+	var/datum/wires/vending/vending_wires = wires
 	// if the language wire got pulsed during an EMP, this will make sure the language_iterator is synched correctly
-	vending_languages.selected_language = vending_languages.spoken_languages[wires.language_iterator]
+	vending_languages.selected_language = vending_languages.spoken_languages[vending_wires.language_iterator]
 
 //Better would be to make constructable child
 /obj/machinery/vending/RefreshParts()

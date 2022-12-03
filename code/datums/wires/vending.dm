@@ -10,6 +10,16 @@
 		WIRE_CONTRABAND, WIRE_IDSCAN
 	)
 	add_duds(1)
+
+	// need to check for glitched station trait
+
+	var/obj/machinery/vending/vending_machine = holder
+	// synch the current language to the language_iterator
+	var/datum/language_holder/vending_languages = vending_machine.get_language_holder()
+	for(var/i in vending_languages.spoken_languages)
+		if(vending_languages.selected_language == vending_languages.spoken_languages[i])
+			language_iterator = i
+			break
 	..()
 
 /datum/wires/vending/interactable(mob/user)
@@ -24,7 +34,7 @@
 /datum/wires/vending/get_status()
 	var/obj/machinery/vending/vending_machine = holder
 	var/datum/language_holder/vending_languages = vending_machine.get_language_holder()
-	var/datum/language/current_language = vending_languages.selected_language
+	var/datum/language/current_language = GLOB.language_datum_instances[vending_languages.get_selected_language()]
 	var/list/status = list()
 	status += "The orange light is [vending_machine.seconds_electrified ? "on" : "off"]."
 	status += "The red light is [vending_machine.shoot_inventory ? "off" : "blinking"]."
