@@ -58,7 +58,8 @@
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = !vending_machine.scan_id
 		if(WIRE_SPEAKER)
-			language_iterator = (language_iterator + 1) % length(vending_languages.spoken_languages) // double check spoken_language list is a numbered array
+			language_iterator %= length(vending_languages.spoken_languages)
+			language_iterator += 1
 			vending_languages.selected_language = vending_languages.spoken_languages[language_iterator]
 		if(WIRE_AGELIMIT)
 			vending_machine.age_restrictions = !vending_machine.age_restrictions
@@ -71,10 +72,7 @@
 		if(WIRE_CONTRABAND)
 			vending_machine.extended_inventory = FALSE
 		if(WIRE_SHOCK)
-			if(mend)
-				vending_machine.seconds_electrified = MACHINE_NOT_ELECTRIFIED
-			else
-				vending_machine.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
+			vending_machine.seconds_electrified = mend ? MACHINE_NOT_ELECTRIFIED : MACHINE_ELECTRIFIED_PERMANENT
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = mend
 		if(WIRE_SPEAKER)
