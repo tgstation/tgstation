@@ -454,7 +454,7 @@
 /datum/status_effect/nest_sustenance
 	id = "nest_sustenance"
 	duration = -1
-	tick_interval = 4
+	tick_interval = 0.4 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
 
 /datum/status_effect/nest_sustenance/tick(delta_time, times_fired)
