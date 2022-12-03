@@ -471,7 +471,7 @@
 		port_x_offset = min_x - x
 		port_y_offset = min_y - y
 
-	if(dir in list(SOUTH, WEST))
+	if(dir in list(EAST, WEST))
 		src.width = height
 		src.height = width
 	else
