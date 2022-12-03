@@ -63,8 +63,8 @@
 	paying_account,
 	department_destination,
 	coupon,
-	charge_on_purchase,
-	manifest_can_fail
+	charge_on_purchase = TRUE,
+	manifest_can_fail = TRUE,
 )
 	id = SSshuttle.order_number++
 	src.pack = pack
