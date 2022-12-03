@@ -1,0 +1,5 @@
+author: "itseasytosee"
+delete-after: True
+changes:
+  - bugfix: "Stamina damage display calculation should be much more sane and reliable now"
+  - imageadd: "Simplified the stamina hud"
