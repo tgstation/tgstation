@@ -44,6 +44,8 @@
 					span_notice("You break free from the gelatinous resin!"),\
 					span_hear("You hear squelching..."))
 
+			M.remove_status_effect(/datum/status_effect/nest_sustenance)
+
 			unbuckle_mob(M)
 			add_fingerprint(user)
 
@@ -63,6 +65,8 @@
 		M.visible_message(span_notice("[user.name] secretes a thick vile goo, securing [M.name] into [src]!"),\
 			span_danger("[user.name] drenches you in a foul-smelling resin, trapping you in [src]!"),\
 			span_hear("You hear squelching..."))
+		if(HAS_TRAIT(M, TRAIT_XENO_HOST))
+			M.apply_status_effect(/datum/status_effect/nest_sustenance)
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
 	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, type)
