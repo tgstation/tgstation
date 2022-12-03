@@ -94,7 +94,7 @@
 	initial_language_holder = /datum/language_holder/universal
 
 /obj/machinery/vending/boozeomat/syndicate_access/Initialize(mapload)
-	..()
+	. = ..()
 	var/datum/language_holder/syndicate_languages = get_language_holder()
 	syndicate_languages.selected_language = /datum/language/codespeak
 
