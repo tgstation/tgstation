@@ -28,3 +28,63 @@
 			slots = 3,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/bead
+	name = "Bead-Class Corporate Frigate"
+	area_type = /area/shuttle/voidcrew/bead
+	callTime = 25 SECONDS
+	dir = 1
+	port_direction = 4
+	preferred_direction = 4
+
+/// AREAS ///
+
+/// Command ///
+/area/shuttle/voidcrew/bead/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/// Security ///
+
+/area/shuttle/voidcrew/bead/brig
+	name = "Brig"
+	icon_state = "brig"
+
+/area/shuttle/voidcrew/bead/armory
+	name = "Armory"
+	icon_state = "armory"
+
+/// Engineering ///
+
+/area/shuttle/voidcrew/bead/engineering
+	name = "Engineering"
+	icon_state = "engine"
+
+/// Cargo ///
+
+/area/shuttle/voidcrew/bead/cargo
+	name = "Cargo Bay"
+	icon_state = "cargo_bay"
+
+/// Hallways ///
+
+/area/shuttle/voidcrew/bead/hallway
+	name = "Central Hallway"
+	icon_state = "centralhall"
+
+/// Maintenance ///
+
+/area/shuttle/voidcrew/bead/maintenance/aft
+	name = "Aft Maintenance"
+	icon_state = "aftmaint"
+
+/area/shuttle/voidcrew/bead/maintenance/port
+	name = "Port Maintenance"
+	icon_state = "portmaint"
+
+/area/shuttle/voidcrew/bead/maintenance/starboard
+	name = "Starboard Maintenance"
+	icon_state = "starboardmaint"
+
