@@ -462,10 +462,10 @@
 
 	owner.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
 	owner.reagents.add_reagent(/datum/reagent/medicine/epinephrine, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
-	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the vaccuum of space, but it will stop you from freezing or suffocating in low pressure
+	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 
 /atom/movable/screen/alert/status_effect/nest_sustenance
 	name = "Nest Vitalization"
-	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions."
-	icon_state = "lightningorb"
+	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill."
+	icon_state = "nest_life"
