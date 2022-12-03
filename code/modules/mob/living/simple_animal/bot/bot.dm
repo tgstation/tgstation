@@ -431,7 +431,11 @@
 		paicard.emp_act(severity)
 		src.visible_message(span_notice("[paicard] is flies out of [initial(src.name)]!"), span_warning("You are forcefully ejected from [initial(src.name)]!"))
 		ejectpai(0)
-	randomize_language_if_on_station() // this proc needs to ignore the station and just do randomize_language() instead
+
+	if(prob(70/severity))
+		var/datum/language_holder/bot_languages = get_language_holder()
+		bot_languages.selected_language = bot_languages.get_random_spoken_language()
+
 	if(bot_mode_flags & BOT_MODE_ON)
 		turn_off()
 	addtimer(CALLBACK(src, PROC_REF(emp_reset), was_on), severity * 30 SECONDS)
