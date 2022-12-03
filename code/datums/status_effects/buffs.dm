@@ -464,6 +464,8 @@
 		qdel(src)
 		return
 
+	owner.adjustBruteLoss(-2 * delta_time, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * delta_time, updating_health = FALSE)
 	owner.adjustOxyLoss(-4 * delta_time, updating_health = FALSE)
 	owner.adjustStaminaLoss(-4 * delta_time, updating_health = FALSE)
 	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
