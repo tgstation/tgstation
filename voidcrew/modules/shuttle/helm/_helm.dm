@@ -159,10 +159,10 @@
 	var/obj/docking_port/mobile/voidcrew/port = SSshuttle.get_containing_shuttle(src)
 	if(!istype(port))
 		port = null
-	
+
 	if(!port && last_resort) // todo: check for helm being constructed, damn those players
 		stack_trace("Failed to connect a helm to its ship, this is almost certainly a bug!")
-		
+
 	current_ship = port?.current_ship
 	return !!current_ship
 

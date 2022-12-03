@@ -9,22 +9,13 @@
 	state_open = TRUE
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
 
-	var/open_state = "cryopod-open"
+	///The icon state while the machine is closed.
 	var/close_state = "cryopod"
 
-	/// The last time the "no control computer" message was sent to admins.
-	var/last_no_computer_message = 0
-	/// The linked control computer.
-	var/datum/weakref/control_computer
-
+	///The ship we're connected to.
 	var/obj/docking_port/mobile/voidcrew/linked_ship
 
-/obj/machinery/cryopod/Initialize()
-	. = ..()
-	icon_state = open_state
-	return INITIALIZE_HINT_LATELOAD //Gotta populate the cryopod computer GLOB first
-
-/obj/machinery/cryopod/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/machinery/cryopod/connect_to_shuttle(mapload, obj/docking_port/mobile/voidcrew/port, obj/docking_port/stationary/dock)
 	. = ..()
 	linked_ship = port
 	linked_ship.spawn_points += src
@@ -35,49 +26,26 @@
 		linked_ship = null
 	return ..()
 
-/obj/machinery/cryopod/LateInitialize()
+/obj/machinery/cryopod/JoinPlayerHere(mob/joining_mob, buckle)
 	. = ..()
-	find_control_computer()
-
-/obj/machinery/cryopod/proc/find_control_computer(urgent = FALSE)
-	control_computer = null
-	for(var/obj/machinery/computer/cryopod/C as anything in GLOB.cryopod_computers)
-		if(get_area(C) == get_area(src))
-			control_computer = WEAKREF(C)
-			break
-
-	// Don't send messages unless we *need* the computer, and less than five minutes have passed since last time we messaged
-	if(!control_computer && urgent && last_no_computer_message + 5 MINUTES < world.time)
-		log_admin("Cryopod in [get_area(src)] could not find control computer!")
-		message_admins("Cryopod in [get_area(src)] could not find control computer!")
-		last_no_computer_message = world.time
-
-/obj/machinery/cryopod/JoinPlayerHere(mob/M, buckle)
-	. = ..()
-	close_machine(M, TRUE)
-
-/obj/machinery/cryopod/close_machine(mob/user, exiting = FALSE)
-	if(!control_computer?.resolve())
-		find_control_computer(TRUE)
-	if((isnull(user) || istype(user)) && state_open && !panel_open)
-		..(user)
-		if(exiting && istype(user, /mob/living/carbon))
-			var/mob/living/carbon/C = user
-			C.SetSleeping(50)
-			to_chat(occupant, "<span class='boldnotice'>You begin to wake from cryosleep...</span>")
-			icon_state = close_state
-			return
-	icon_state = close_state
+	close_machine(joining_mob)
 
 /obj/machinery/cryopod/open_machine()
-	..()
-	icon_state = open_state
-	density = TRUE
-	name = initial(name)
+	. = ..()
+	icon_state = initial(icon_state)
+	set_density(TRUE)
+
+/obj/machinery/cryopod/close_machine(mob/living/carbon/user)
+	. = ..()
+	to_chat(user, span_boldnotice("You begin to wake from cryosleep..."))
+	icon_state = close_state
+	user.SetStun(5 SECONDS)
 
 /obj/machinery/cryopod/container_resist_act(mob/living/user)
-	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",
-		"<span class='notice'>You climb out of [src]!</span>")
+	visible_message(
+		span_notice("[occupant] emerges from [src]!"),
+		span_notice("You climb out of [src]!"),
+	)
 	open_machine()
 
 /obj/machinery/cryopod/relaymove(mob/user)

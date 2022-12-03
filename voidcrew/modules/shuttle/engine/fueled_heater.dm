@@ -32,7 +32,7 @@
 	/// Whether this heater will filter out incompatible gases from the internal tank
 	var/filter_enabled = TRUE
 
-/obj/machinery/atmospherics/fueled_engine_heater/Initialize()
+/obj/machinery/atmospherics/fueled_engine_heater/Initialize(mapload)
 	air_contents = new(internal_volume)
 	. = ..()
 	register_context()

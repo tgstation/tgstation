@@ -23,7 +23,7 @@
 	fuel_reagents = list(/datum/reagent/fuel/oil = 50)
 
 
-/obj/machinery/power/shuttle_engine/ship/liquid/Initialize()
+/obj/machinery/power/shuttle_engine/ship/liquid/Initialize(mapload)
 	. = ..()
 	create_reagents(max_reagents, OPENCONTAINER)
 	AddComponent(/datum/component/plumbing/simple_demand)

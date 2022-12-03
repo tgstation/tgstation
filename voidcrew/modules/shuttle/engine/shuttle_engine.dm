@@ -67,7 +67,7 @@
 	else
 		icon_state = icon_state_off
 
-/obj/machinery/power/shuttle_engine/ship/Initialize()
+/obj/machinery/power/shuttle_engine/ship/Initialize(mapload)
 	. = ..()
 	update_appearance(UPDATE_ICON)
 

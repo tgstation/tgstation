@@ -21,7 +21,7 @@
 	var/message_cooldown = 0
 	var/datum/techweb/linked_techweb
 
-/obj/machinery/nanite_chamber/Initialize()
+/obj/machinery/nanite_chamber/Initialize(mapload)
 	. = ..()
 	occupant_typecache = GLOB.typecache_living
 

@@ -33,6 +33,10 @@
 	///Shipwide bank account
 	// var/datum/bank_account/ship/ship_account
 
+	///Timer between job managing delays
+	COOLDOWN_DECLARE(job_slot_adjustment_cooldown)
+	///Whether players are allowed to latejoin into this ship, toggled by the job managing console.
+	var/joining_allowed = TRUE
 	///Short memo of the ship shown to new joins
 	var/memo = ""
 	///Manifest list of people on the ship

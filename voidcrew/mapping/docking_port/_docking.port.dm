@@ -9,7 +9,7 @@
 	var/z_levels_above = 0
 	var/z_levels_below = 0
 
-	///The linked overmap object, if there is one
+	///The linked overmap object, if there is one. This is set AFTER Initialize, so do not set machine inits to this.
 	var/obj/structure/overmap/ship/current_ship
 
 	///List of spawn points on the ship.
@@ -22,7 +22,7 @@
 	unlink_from_z_level()
 	return ..()
 
-/obj/docking_port/mobile/voidcrew/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+/obj/docking_port/mobile/voidcrew/connect_to_shuttle(mapload, obj/docking_port/mobile/voidcrew/port, obj/docking_port/stationary/dock)
 	link_to_z_level()
 	return ..()
 
