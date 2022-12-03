@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
 			var/reciever_message = "Cargo order #[spawning_order.id] has shipped."
 			if(spawning_order.charge_on_purchase)
-				reciever_message += "[price] credits have been charged to your bank account"
+				reciever_message += " [price] credits have been charged to your bank account"
 			paying_for_this.bank_card_talk(reciever_message)
 			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
