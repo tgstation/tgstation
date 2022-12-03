@@ -43,5 +43,8 @@
 /datum/targetting_datum/floorbot/proc/confirm_path(mob/living/living_mob, turf/open/the_target, check_path)
 	if(!check_path)
 		return TRUE
-	living_mob.ai_controller.blackboard[BB_PATH_TO_USE] = get_path_to(living_mob, the_target, living_mob.ai_controller.max_target_distance, 0, living_mob.ai_controller.get_access(), simulated_only = FALSE)
-	return TRUE
+	var/list/found_path = get_path_to(living_mob, the_target, living_mob.ai_controller.max_target_distance, 0, living_mob.ai_controller.get_access(), simulated_only = FALSE)
+	if(found_path)
+		living_mob.ai_controller.blackboard[BB_PATH_TO_USE] = found_path
+		return TRUE
+	return FALSE
