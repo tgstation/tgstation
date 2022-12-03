@@ -41,6 +41,10 @@
 	var/draw_color
 	///Where does this organ inherit it's color from?
 	var/color_source = ORGAN_COLOR_INHERIT
+	///FALSE will set the color on the organ, TRUE will call get_overlay_color() for every layer and put it directly on the overlay
+	var/apply_color_to_layer = FALSE
+	///Indexes our generated colors for each layer, only used if apply_color_to_layer is TRUE
+	var/list/layer_to_color_index
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
@@ -156,6 +160,9 @@
 	if(sprite_datum.color_src)
 		appearance.color = draw_color
 
+	if(apply_color_to_layer)
+		appearance.color = layer_to_color_index["[image_layer]"]
+
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
 
@@ -250,12 +257,24 @@
 				return
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
 			draw_color = human_owner.hair_color
-	color = draw_color
+	//Fuck giving the whole thing the same color, instead every layer can have its own
+	if(apply_color_to_layer)
+		layer_to_color_index = list()
+		for(var/draw_layer in all_layers)
+			if(draw_layer & layers)
+				//We make our layer a string because it'll runtime if we index with integers out of sequence
+				layer_to_color_index["[bitflag_to_layer(draw_layer)]"] = get_overlay_color(draw_layer)
+	else
+		color = draw_color
 	return TRUE
 
 ///Colorizes the limb it's inserted to, if required.
 /obj/item/organ/external/proc/override_color(rgb_value)
 	CRASH("External organ color set to override with no override proc.")
+
+///Return a color for our specific layer
+/obj/item/organ/external/proc/get_overlay_color(draw_layer)
+	return draw_color
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
@@ -411,7 +430,12 @@
 	dna_block = DNA_POD_HAIR_BLOCK
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
-	color_source = ORGAN_COLOR_OVERRIDE
+	apply_color_to_layer = TRUE
+
+	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something
+	var/color_swapped_layer = EXTERNAL_FRONT
+	///The individual rgb colors are subtracted from this to get the color shifted layer
+	var/color_inverse_base = 255
 
 /obj/item/organ/external/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list
@@ -424,6 +448,9 @@
 /obj/item/organ/external/pod_hair/get_global_feature_list()
 	return GLOB.pod_hair_list
 
-/obj/item/organ/external/pod_hair/override_color(rgb_value)
-	var/list/rgb_list = rgb2num(rgb_value)
-	return rgb(255 - rgb_list[1], 255 - rgb_list[2], 255 - rgb_list[3])
+/obj/item/organ/external/pod_hair/get_overlay_color(draw_layer)
+	if(draw_layer != color_swapped_layer)
+		return ..()
+
+	var/list/rgb_list = rgb2num(draw_color)
+	return rgb(color_inverse_base - rgb_list[1], color_inverse_base - rgb_list[2], color_inverse_base - rgb_list[3])
