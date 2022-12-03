@@ -147,10 +147,6 @@
 	name = "Engine Access"
 	},
 /obj/structure/window/reinforced/plasma/spawner/east,
-/obj/machinery/door/poddoor{
-	id = "osprey_thruster_starboard";
-	name = "Thruster Blast Door"
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/starboard)
 "bI" = (
@@ -339,7 +335,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/service/dormitories)
@@ -667,7 +664,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/cargo)
@@ -752,7 +750,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/hallway/aft)
@@ -1098,7 +1097,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/research/robotics)
@@ -1254,7 +1254,8 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "ospreybridge"
+	id = "ospreybridge";
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral{
@@ -1598,7 +1599,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/service/cafeteria)
@@ -1627,6 +1629,15 @@
 	},
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/voidcrew/osprey/cargo/quartermaster)
+"oU" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "ospreywindows";
+	name = "Blast Shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/osprey/hallway/aft)
 "oW" = (
 /obj/machinery/door/airlock/command{
 	name = "Quartermaster's Office"
@@ -1718,7 +1729,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/cargo/warehouse)
@@ -1992,7 +2004,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/cargo/quartermaster)
@@ -2042,7 +2055,8 @@
 /area/shuttle/voidcrew/osprey/hallway/aft)
 "sU" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "ospreybridge"
+	id = "ospreybridge";
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
@@ -2068,10 +2082,11 @@
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/engineering)
 "td" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "ospreybridge"
-	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ospreybridge";
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/bridge)
 "tf" = (
@@ -2096,6 +2111,15 @@
 	},
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/voidcrew/osprey/bridge)
+"tx" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "ospreywindows";
+	name = "Blast Shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/osprey/service/dormitories)
 "tF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -2228,7 +2252,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/medbay/lobby)
@@ -2319,7 +2344,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/hallway/central)
@@ -2437,6 +2463,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/shuttle/voidcrew/osprey/service/dormitories)
+"wK" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "ospreywindows";
+	name = "Blast Shutters";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/osprey/hallway/aft)
 "wP" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -2573,7 +2608,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/service/janitor)
@@ -2947,7 +2983,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/research)
@@ -3061,13 +3098,6 @@
 "DI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/button/door{
-	dir = 8;
-	id = "osprey_thruster_port";
-	name = "Blast Door Control";
-	pixel_x = 24;
-	pixel_y = 5
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/port)
 "DP" = (
@@ -3091,7 +3121,8 @@
 	dir = 8
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "ospreybridge"
+	id = "ospreybridge";
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -3275,7 +3306,8 @@
 /area/shuttle/voidcrew/osprey/hallway/aft)
 "FE" = (
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "ospreybridge"
+	id = "ospreybridge";
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -3379,6 +3411,14 @@
 /obj/effect/turf_decal/bot_white/right,
 /turf/open/floor/iron/dark,
 /area/shuttle/voidcrew/osprey/cargo/mining_dock)
+"GT" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ospreybridge";
+	dir = 1
+	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/osprey/bridge)
 "Hd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/radio/intercom/directional/north,
@@ -3838,10 +3878,6 @@
 	},
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/structure/window/reinforced/plasma/spawner/west,
-/obj/machinery/door/poddoor{
-	id = "osprey_thruster_starboard";
-	name = "Thruster Blast Door"
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/starboard)
 "LB" = (
@@ -3865,7 +3901,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/engineering/atmospherics)
@@ -4045,7 +4082,8 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters{
 	id = "ospreywindows";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/medbay)
@@ -4106,13 +4144,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/maintenance,
-/obj/machinery/button/door{
-	dir = 4;
-	id = "osprey_thruster_starboard";
-	name = "Blast Door Control";
-	pixel_x = -24;
-	pixel_y = 5
-	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/maintenance/starboard)
 "Of" = (
@@ -4738,6 +4769,15 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/hallway/starboard)
+"Vd" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "ospreywindows";
+	name = "Blast Shutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/osprey/service/cafeteria)
 "Vl" = (
 /obj/machinery/washing_machine,
 /obj/machinery/airalarm/directional/south,
@@ -4800,6 +4840,15 @@
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/carpet/blue,
 /area/shuttle/voidcrew/osprey/bridge)
+"VR" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor/shutters{
+	id = "ospreywindows";
+	name = "Blast Shutters";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/osprey/hallway/central)
 "VT" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -5156,9 +5205,9 @@ XU
 XU
 Ki
 DQ
-oN
+Vd
 DQ
-oN
+Vd
 DQ
 DQ
 QC
@@ -5674,7 +5723,7 @@ XU
 XU
 XU
 XU
-gZ
+wK
 HV
 Hv
 Ox
@@ -5909,7 +5958,7 @@ ab
 tM
 NX
 UQ
-td
+GT
 Ng
 Is
 AW
@@ -6245,7 +6294,7 @@ gq
 Xo
 Xo
 Ml
-vA
+VR
 Ml
 sr
 sr
@@ -6370,7 +6419,7 @@ XU
 XU
 XU
 XU
-gZ
+wK
 fs
 PY
 PY
@@ -6429,7 +6478,7 @@ XU
 XU
 XU
 NZ
-gZ
+oU
 KL
 KL
 Nx
@@ -6896,9 +6945,9 @@ XU
 XU
 lI
 KL
-dd
+tx
 KL
-dd
+tx
 KL
 yx
 yx
