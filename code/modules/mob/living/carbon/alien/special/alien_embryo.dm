@@ -27,6 +27,9 @@
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_life(delta_time, times_fired)
 	. = ..()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
 	switch(stage)
 		if(3, 4)
 			if(DT_PROB(1, delta_time))
