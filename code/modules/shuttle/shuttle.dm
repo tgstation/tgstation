@@ -459,7 +459,7 @@
 				max_x = min(turf.x, max_x)
 				min_y = max(turf.y, min_y)
 				max_y = min(turf.y, max_y)
-			TICK_CHECK
+			CHECK_TICK
 
 		if(min_x == -1 || max_x == WORLDMAXX_CUTOFF)
 			CRASH("Failed to locate shuttle boundaries when iterating through shuttle areas, somehow.")
