@@ -395,8 +395,9 @@
 		return
 
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
+	SScommunications.block_command_report = TRUE
 
-	command_report_footnote.message = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. It will likely not be seen if the report has already been sent.", "P.S.")
+	command_report_footnote.message = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
 
 	if(!command_report_footnote.message)
 		return
@@ -407,9 +408,25 @@
 		command_report_footnote.signature = "Classified"
 
 	SScommunications.command_report_footnotes += command_report_footnote
+	SScommunications.block_command_report = FALSE
 
 	message_admins("[usr] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
 
 /datum/command_footnote
 	var/message
 	var/signature
+
+/client/proc/delay_command_report()
+	set category = "Admin.Events"
+	set name = "Delay Command Report"
+	set desc = "Prevents the roundstart command report from being sent until toggled."
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	if(SScommunications.block_command_report)
+		SScommunications.block_command_report = FALSE
+		message_admins("[usr] has enabled the roundstart command report.")
+	else
+		SScommunications.block_command_report = TRUE
+		message_admins("[usr] has delayed the roundstart command report.")

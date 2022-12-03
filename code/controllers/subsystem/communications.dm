@@ -15,6 +15,8 @@ SUBSYSTEM_DEF(communications)
 
 	/// A list of footnote datums, to be added to the bottom of the roundstart command report.
 	var/list/command_report_footnotes = list()
+	/// Delays the roundstart threat report when true
+	var/block_command_report = FALSE
 
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
