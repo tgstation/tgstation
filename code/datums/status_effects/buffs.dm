@@ -462,7 +462,7 @@
 
 	owner.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
 	owner.reagents.add_reagent(/datum/reagent/medicine/epinephrine, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
-	owner.adjust_bodytemperature(BODYTEMP_NORMAL) //Won't save you from the vaccuum of space, but it will stop you from freezing or suffocating in low pressure
+	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the vaccuum of space, but it will stop you from freezing or suffocating in low pressure
 
 
 /atom/movable/screen/alert/status_effect/nest_sustenance

@@ -64,10 +64,10 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/baby_momma = owner
 			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
-			if(owner.buckled)
-				if(istype(owner.buckled, /obj/structure/bed/nest)) //Being in a nest subtracts directly from the slowdown //Change this to check for the status effect maybe
-					slowdown -= 0.30
+			if(owner.stat != DEAD && owner.has_status_effect(/datum/status_effect/nest_sustenance))
+				slowdown -= 0.30 //Being in a nest subtracts directly from the slowdown
 
+		priority_announce("slowdown: [owner] and [slowdown]")
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
