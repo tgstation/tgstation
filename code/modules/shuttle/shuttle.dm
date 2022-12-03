@@ -483,14 +483,14 @@
 			dwidth = port_x_offset - 1
 			dheight = port_y_offset - 1
 		if(EAST)
-			port.dwidth = height - port_y_offset
-			port.dheight = port_x_offset - 1
+			dwidth = height - port_y_offset
+			dheight = port_x_offset - 1
 		if(SOUTH)
-			port.dwidth = width - port_x_offset
-			port.dheight = height - port_y_offset
+			dwidth = width - port_x_offset
+			dheight = height - port_y_offset
 		if(WEST)
-			port.dwidth = port_y_offset - 1
-			port.dheight = width - port_x_offset
+			dwidth = port_y_offset - 1
+			dheight = width - port_x_offset
 #undef WORLDMAXX_CUTOFF
 #undef WORLDMAXY_CUTOFF
 
