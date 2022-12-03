@@ -395,7 +395,7 @@
 		return
 
 	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
-	SScommunications.block_command_report = TRUE
+	SScommunications.block_command_report++ //Add a blocking condition to the counter until the inputs are done.
 
 	command_report_footnote.message = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
 
@@ -408,7 +408,7 @@
 		command_report_footnote.signature = "Classified"
 
 	SScommunications.command_report_footnotes += command_report_footnote
-	SScommunications.block_command_report = FALSE
+	SScommunications.block_command_report--
 
 	message_admins("[usr] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
 
@@ -424,9 +424,9 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(SScommunications.block_command_report)
-		SScommunications.block_command_report = FALSE
+	if(SScommunications.block_command_report) //If it's anything other than 0, decrease. If 0, increase.
+		SScommunications.block_command_report--
 		message_admins("[usr] has enabled the roundstart command report.")
 	else
-		SScommunications.block_command_report = TRUE
+		SScommunications.block_command_report++
 		message_admins("[usr] has delayed the roundstart command report.")
