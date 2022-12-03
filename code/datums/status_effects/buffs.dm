@@ -450,3 +450,22 @@
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
+
+/datum/status_effect/nest_sustenance
+	id = "nest_sustenance"
+	duration = -1
+	tick_interval = 4
+	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
+
+/datum/status_effect/nest_sustenance/tick(delta_time, times_fired)
+	. = ..()
+
+	owner.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
+	owner.reagents.add_reagent(/datum/reagent/medicine/epinephrine, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
+	owner.adjust_bodytemperature(BODYTEMP_NORMAL) //Won't save you from the vaccuum of space, but it will stop you from freezing or suffocating in low pressure
+
+
+/atom/movable/screen/alert/status_effect/nest_sustenance
+	name = "Nest Vitalization"
+	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions."
+	icon_state = "lightningorb"
