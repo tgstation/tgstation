@@ -167,7 +167,7 @@
 	inhand_icon_state = "artistic_toolbox"
 	material_flags = NONE
 
-/obj/item/storage/toolbox/Initialize(mapload)
+/obj/item/storage/toolbox/fishing/Initialize(mapload)
 	. = ..()
 	// Can hold fishing rod despite the size
 	var/static/list/exception_cache = typecacheof(/obj/item/fishing_rod)

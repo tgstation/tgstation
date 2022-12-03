@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - admin: "new admin verb -- Command Report Footnote. Lets you attach a signed message to the roundstart command report."
+  - admin: "new admin verb -- Delay Command Report. Lets you delay the roundstart command report indefinitely."

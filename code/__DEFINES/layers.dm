@@ -97,7 +97,6 @@
 #define SPACE_LAYER 1.8
 
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (GAME_PLANE) use this.
-#define OPENSPACE_LAYER 600 //Openspace layer over all turfs
 
 // GAME_PLANE layers
 #define CULT_OVERLAY_LAYER 2.01
@@ -113,6 +112,9 @@
 #define DISPOSAL_PIPE_LAYER 2.3
 #define GAS_PIPE_HIDDEN_LAYER 2.35 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define WIRE_LAYER 2.4
+#define TRAM_XING_LAYER 2.41
+#define TRAM_RAIL_LAYER 2.42
+#define TRAM_FLOOR_LAYER 2.43
 #define WIRE_BRIDGE_LAYER 2.44
 #define WIRE_TERMINAL_LAYER 2.45
 #define GAS_SCRUBBER_LAYER 2.46
@@ -210,6 +212,7 @@
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
+#define ECHO_LAYER 7
 
 #define FOV_EFFECT_LAYER 100
 

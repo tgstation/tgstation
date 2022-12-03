@@ -663,7 +663,7 @@
 	atom_storage.silent = TRUE
 
 /obj/item/storage/backpack/duffelbag/clown/syndie/PopulateContents()
-	new /obj/item/modular_computer/tablet/pda/clown(src)
+	new /obj/item/modular_computer/pda/clown(src)
 	new /obj/item/clothing/under/rank/civilian/clown(src)
 	new /obj/item/clothing/shoes/clown_shoes(src)
 	new /obj/item/clothing/mask/gas/clown_hat(src)
@@ -680,3 +680,21 @@
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
 	slowdown = 0
+
+/obj/item/storage/backpack/duffelbag/mining_conscript
+	name = "mining conscription kit"
+	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
+	icon_state = "duffel-explorer"
+	inhand_icon_state = "duffel-explorer"
+
+/obj/item/storage/backpack/duffelbag/mining_conscript/PopulateContents()
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/t_scanner/adv_mining_scanner/lesser(src)
+	new /obj/item/storage/bag/ore(src)
+	new /obj/item/clothing/suit/hooded/explorer(src)
+	new /obj/item/encryptionkey/headset_mining(src)
+	new /obj/item/clothing/mask/gas/explorer(src)
+	new /obj/item/card/id/advanced/mining(src)
+	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
+	new /obj/item/knife/combat/survival(src)
+	new /obj/item/flashlight/seclite(src)
