@@ -725,6 +725,10 @@
 	if(!component_parts || !component_parts.len)
 		return
 	var/parts_energy_rating = 0
+
+	for(var/datum/stock_part/part in component_parts)
+		parts_energy_rating += part.energy_rating()
+
 	for(var/obj/item/stock_parts/part in component_parts)
 		parts_energy_rating += part.energy_rating
 
@@ -755,8 +759,14 @@
 	if(!LAZYLEN(component_parts))
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
+
 	for(var/obj/item/part in component_parts)
 		part.forceMove(loc)
+
+	for (var/datum/stock_part/stock_part in component_parts)
+		var/part_type = stock_part.physical_object_type
+		new part_type(loc)
+
 	LAZYCLEARLIST(component_parts)
 	return ..()
 
@@ -956,31 +966,60 @@
 
 /obj/machinery/proc/display_parts(mob/user)
 	var/list/part_count = list()
-	for(var/obj/item/component_part in component_parts)
-		if(part_count[component_part.name])
-			part_count[component_part.name]++
+
+	for(var/component_part in component_parts)
+		var/component_name
+
+		if (istype(component_part, /datum/stock_part))
+			var/datum/stock_part/stock_part = component_part
+			component_name = initial(stock_part.physical_object_type.name)
+		else
+			var/atom/stock_part = component_part
+			component_name = stock_part.name
+
+		if(part_count[component_name])
+			part_count[component_name]++
 			continue
 
 		if(isstack(component_part))
 			var/obj/item/stack/stack_part = component_part
-			part_count[component_part.name] = stack_part.amount
+			part_count[component_name] = stack_part.amount
 		else
-			part_count[component_part.name] = 1
+			part_count[component_name] = 1
+
+	for (var/datum/stock_part/stock_part in component_parts)
+		part_count[stock_part.name()] += 1
 
 	var/list/printed_components = list()
 
 	var/text = span_notice("It contains the following parts:")
-	for(var/obj/item/component_part as anything in component_parts)
-		if(printed_components[component_part.name])
+	for(var/component_part_base in component_parts)
+		var/atom/component_part
+		var/component_name
+
+		if (istype(component_part_base, /datum/stock_part))
+			var/datum/stock_part/stock_part = component_part_base
+			component_part = stock_part.physical_object_reference
+			component_name = initial(stock_part.physical_object_type.name)
+		else
+			component_part = component_part_base
+			component_name = component_part.name
+
+		if (!istype(component_part))
+			stack_trace("[component_part_base] is not an /atom or a /datum/stock_part (or did not make one)")
+			continue
+
+		if(printed_components[component_name])
 			continue //already printed so skip
-		
-		var/part_name = component_part.name
+
+		var/part_name = component_name
 		if (isstack(component_part))
 			var/obj/item/stack/stack_part = component_part
 			part_name = stack_part.singular_name
-		
-		text += span_notice("[icon2html(component_part, user)] [part_count[component_part.name]] [part_name]\s.")
-		printed_components[component_part.name] = TRUE
+
+		// MBTODO: Icons
+		text += span_notice("[icon2html(component_part, user)] [part_count[component_name]] [part_name]\s.")
+		printed_components[component_name] = TRUE
 
 	return text
 
