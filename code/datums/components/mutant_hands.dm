@@ -1,3 +1,20 @@
+/**
+ * ## Mutant hands component
+ *
+ * This component applies to humans, and forces them to hold
+ * a certain typepath item in every hand no matter what*.
+ *
+ * For example, zombies being forced to hold "zombie claws" - disallowing them from holding items
+ * but giving them powerful weapons to infect people
+ *
+ * It is suggested that the item path supplied has NODROP (and likely DROPDEL),
+ * but nothing's preventing you from not having that.
+ *
+ * If they lose or gain hands, new mutant hands will be created immediately.
+ *
+ * Does not override nodrop items that already exist in hand slots.
+ * However if those nodrop items are lost, will immediately create a new mutant hand.
+ */
 /datum/component/mutant_hands
 	// First come, first serve
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -39,6 +56,14 @@
 
 	INVOKE_ASYNC(src, PROC_REF(remove_mutant_hands))
 
+/**
+ * Tries to give the parent mob mutant hands.
+ *
+ * * If a hand slot is empty, places the mutanthand type into their hand.
+ * * If a hand slot is filled with a nodrop item, it will instead hook a signal onto that item to check if / when it disappears.
+ * * If a hand slot is filled with a non-nodrop item, drops the item to the ground.
+ * * If a hand slot is filled with a hand already, does nothing.
+ */
 /datum/component/mutant_hands/proc/apply_mutant_hands()
 	var/mob/living/carbon/human/human_parent = parent
 	for(var/obj/item/hand_slot as anything in human_parent.held_items)
@@ -54,7 +79,7 @@
 				// We'll register some signals such that, if the item is removed at some point,
 				// We can instantly jump in and replace it with a new mutant hand
 				// But we need to override existing signals here - as the nodrop item could persist through multiple attempts
-				RegisterSignals(hand_slot, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETED), PROC_REF(on_nodrop_item_lost), override = TRUE)
+				RegisterSignals(hand_slot, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING), PROC_REF(on_nodrop_item_lost), override = TRUE)
 				continue
 			// Drop any existing non-nodrop items to the ground
 			human_parent.dropItemToGround(hand_slot)
@@ -65,6 +90,9 @@
 	// Record how many hands we ended up iterating over, to prevent un-necessary updates going forward
 	last_held_items_len = length(human_parent.held_items)
 
+/**
+ * Removes all mutant idems from the parent's hand slots
+ */
 /datum/component/mutant_hands/proc/remove_mutant_hands()
 	var/mob/living/carbon/human/human_parent = parent
 	for(var/obj/item/hand_slot as anything in human_parent.held_items)
@@ -75,6 +103,12 @@
 		// Just send it to the shadow realm, this will handle unequipping and remove it for us
 		qdel(hand_slot)
 
+/**
+ * Signal proc for any signals that may result in the number of hands of the parent mob changing
+ *
+ * If the length of the parent's hand indexes changes from our last hand application,
+ * attempts to insert new  mutant hands into new slots.
+ */
 /datum/component/mutant_hands/proc/try_reapply_hands(datum/source)
 	SIGNAL_HANDLER
 
@@ -90,16 +124,24 @@
 
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
+/**
+ * Signal proc when a nodrop item is dropped or deleted from our parent mob
+ *
+ * After having a pesky nodrop item disappear, we should replcace the slot with a mutant hand as intended
+ */
 /datum/component/mutant_hands/proc/on_nodrop_item_lost(datum/source, obj/item/unequipped)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(unequipped, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETED))
+	UnregisterSignal(unequipped, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
 
 	if(QDELING(src) || QDELING(parent))
 		return
 	// Just do a full re-application
 	INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
+/**
+ * General signal proc for when we recieve a signal that tells us to self delete
+ */
 /datum/component/mutant_hands/proc/destroy_self(datum/source)
 	SIGNAL_HANDLER
 
