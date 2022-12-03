@@ -140,7 +140,7 @@
 /obj/item/choice_beacon/holy/open_options_menu(mob/living/user)
 	if(GLOB.holy_armor_type)
 		to_chat(user, span_warning("A selection has already been made."))
-		spawn_option(GLOB.holy_armor_type, user)
+		consume_use(GLOB.holy_armor_type, user)
 		return
 
 	// Not bothering to cache this stuff because it'll only even be used once
