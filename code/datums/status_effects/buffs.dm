@@ -460,8 +460,8 @@
 /datum/status_effect/nest_sustenance/tick(delta_time, times_fired)
 	. = ..()
 
-	owner.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
-	owner.reagents.add_reagent(/datum/reagent/medicine/epinephrine, REAGENTS_METABOLISM * (delta_time / SSMOBS_DT))
+	owner.adjustOxyLoss(-4 * delta_time, updating_health = FALSE)
+	owner.adjustStaminaLoss(-4 * delta_time, updating_health = FALSE)
 	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
 
 
