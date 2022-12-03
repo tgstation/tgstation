@@ -138,7 +138,7 @@
 	return list("tram_platform-damaged1","tram_platform-damaged2")
 
 /turf/open/floor/noslip/tram_platform/setup_burnt_states()
-	return list("tram_platform-scorched1","tram_platform-scorched1")
+	return list("tram_platform-scorched1","tram_platform-scorched2")
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
