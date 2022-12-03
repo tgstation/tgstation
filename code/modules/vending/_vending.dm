@@ -64,7 +64,6 @@
 	payment_department = ACCOUNT_SRV
 	light_power = 0.5
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
-	initial_language_holder = /datum/language_holder/synthetic
 
 	/// Is the machine active (No sales pitches if off)!
 	var/active = 1

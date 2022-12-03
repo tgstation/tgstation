@@ -23,7 +23,6 @@ Nothing else in the console has ID requirements.
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/rdconsole
 	req_access = list(ACCESS_RESEARCH) // Locking and unlocking the console requires research access
-	initial_language_holder = /datum/language_holder/synthetic
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// The stored technology disk, if present
