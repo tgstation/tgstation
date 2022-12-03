@@ -1,6 +1,6 @@
-#define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
-#define LIVER_DEFAULT_TOX_LETHALITY 0.005 //lower values lower how harmful toxins are to the liver
-#define LIVER_FAILURE_STAGE_SECONDS 60 //amount of seconds before liver failure reaches a new stage
+///amount of seconds before liver failure reaches a new stage
+#define LIVER_FAILURE_STAGE_SECONDS 60
+
 /obj/item/organ/internal/liver
 	name = "liver"
 	icon_state = "liver"
@@ -269,3 +269,5 @@
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+
+#undef LIVER_FAILURE_STAGE_SECONDS

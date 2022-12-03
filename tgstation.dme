@@ -1477,6 +1477,7 @@
 #include "code\game\machinery\dna_infuser\organ_sets\fly_organs.dm"
 #include "code\game\machinery\dna_infuser\organ_sets\fox_organs.dm"
 #include "code\game\machinery\dna_infuser\organ_sets\rat_organs.dm"
+#include "code\game\machinery\dna_infuser\organ_sets\roach_organs.dm"
 #include "code\game\machinery\doors\airlock.dm"
 #include "code\game\machinery\doors\airlock_electronics.dm"
 #include "code\game\machinery\doors\airlock_types.dm"

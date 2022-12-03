@@ -147,11 +147,13 @@ GLOBAL_LIST_INIT(infuser_entries, prepare_entries())
 		"avoid toxins at all costs",
 	)
 	input_obj_or_mob = list(
-		/mob/living/basic/cockroach,
+		/mob/living/basic/cockroach, // Roaches disappear whey die but I'll leave this here regardless
+		/obj/item/food/dead_roach,
 	)
 	output_organs = list(
 		/obj/item/organ/internal/heart/roach,
 		/obj/item/organ/internal/stomach/roach,
 		/obj/item/organ/internal/liver/roach,
+		/obj/item/organ/internal/appendix/roach,
 	)
 	infusion_desc = "kafkaesque" // Gregor Samsa !!

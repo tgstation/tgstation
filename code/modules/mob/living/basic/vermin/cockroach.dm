@@ -31,7 +31,7 @@
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	. = ..()
-	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts)
+	var/static/list/roach_drops = list(/obj/effect/decal/cleanable/insectguts, /obj/item/food/dead_roach)
 	AddElement(/datum/element/death_drops, roach_drops)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
@@ -127,6 +127,7 @@
 		return TRUE
 	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
 	return FALSE
+
 /datum/ai_controller/basic_controller/cockroach/hauberoach
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/random_speech/cockroach,
@@ -140,3 +141,19 @@
 
 /datum/ai_behavior/basic_melee_attack/hauberoach //Slightly slower, as this is being made in feature freeze ;)
 	action_cooldown = 1 SECONDS
+
+/obj/item/food/dead_roach
+	name = "squashed roach"
+	desc = "Gross..."
+	icon = 'icons/mob/simple/animal.dmi'
+	icon_state = "cockroach"
+	bite_consumption = 10
+	eatverbs = list("chew")
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/liquidgibs = 2)
+	foodtypes = GORE | MEAT | GROSS
+	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
+	preserved_food = TRUE
+
+/obj/item/food/dead_roach/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)

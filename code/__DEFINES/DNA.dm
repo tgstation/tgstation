@@ -234,3 +234,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_POSITIVE_PERK "positive"
 #define SPECIES_NEGATIVE_PERK "negative"
 #define SPECIES_NEUTRAL_PERK "neutral"
+
+///amount of toxins the liver can filter out
+#define LIVER_DEFAULT_TOX_TOLERANCE 3
+///lower values lower how harmful toxins are to the liver
+#define LIVER_DEFAULT_TOX_LETHALITY 0.005
