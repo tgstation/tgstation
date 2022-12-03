@@ -8,8 +8,9 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	/// How many uses this item has before being deleted
 	var/uses = 1
-
+	/// Used in the deployment message - What company is sending the equipment, flavor
 	var/company_source = "Central Command"
+	/// Used inthe deployment message - What is the company saying with their message, flavor
 	var/company_message = span_bold("Item request received. Your package is inbound, please stand back from the landing site.")
 
 /obj/item/choice_beacon/interact(mob/user)
@@ -63,7 +64,7 @@
 	podspawn(list(
 		"target" = get_turf(src),
 		"style" = STYLE_BLUESPACE,
-		"spawn" = choice,
+		"spawn" = choice_path,
 	))
 
 /obj/item/choice_beacon/ingredient
@@ -91,7 +92,7 @@
 	var/static/list/hero_item_list
 	if(!hero_item_list)
 		hero_item_list = list()
-		for(var/obj/item/storage/box/hero/box in typesof(/obj/item/storage/box/hero))
+		for(var/obj/item/storage/box/hero/box as anything in typesof(/obj/item/storage/box/hero))
 			hero_item_list[initial(box.name)] = box
 	return hero_item_list
 
@@ -122,7 +123,7 @@
 
 // just drops the box at their feet, "quiet" and "sneaky"
 /obj/item/choice_beacon/augments/spawn_option(obj/choice_path, mob/living/user)
-	new choice(get_turf(user))
+	new choice_path(get_turf(user))
 	playsound(src, 'sound/weapons/emitter2.ogg', 50, extrarange = SILENCED_SOUND_EXTRARANGE)
 
 /obj/item/choice_beacon/holy
@@ -169,6 +170,6 @@
 
 /obj/item/choice_beacon/holy/spawn_option(obj/choice_path, mob/living/user)
 	playsound(src, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
-	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
-	GLOB.holy_armor_type = choice
+	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice_path]")
+	GLOB.holy_armor_type = choice_path
 	return ..()
