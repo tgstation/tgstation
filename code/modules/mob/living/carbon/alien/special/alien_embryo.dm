@@ -25,19 +25,11 @@
 		if(prob(10))
 			attempt_grow(gib_on_success = FALSE)
 
-/// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
-/obj/item/organ/internal/body_egg/alien_embryo/proc/advance_embryo_stage()
-	if(stage >= 6)
+/obj/item/organ/internal/body_egg/alien_embryo/on_life(delta_time, times_fired)
+	. = ..()
+	if(QDELETED(src) || QDELETED(owner))
 		return
-	if(++stage < 6)
-		INVOKE_ASYNC(src, PROC_REF(RefreshInfectionImage))
-		var/slowdown = 1
-		if(ishuman(owner))
-			var/mob/living/carbon/human/baby_momma = owner
-			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
-		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
-/obj/item/organ/internal/body_egg/alien_embryo/egg_process(delta_time, times_fired)
 	switch(stage)
 		if(3, 4)
 			if(DT_PROB(1, delta_time))
@@ -62,19 +54,31 @@
 				if(prob(20))
 					owner.adjustToxLoss(1)
 		if(6)
-			if(prob(50))
-				to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
-				owner.adjustToxLoss(5 * delta_time) // Why is this [TOX]?
+			to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
+			owner.adjustToxLoss(5 * delta_time) // Why is this [TOX]?
 
-			else
-				for(var/datum/surgery/operations as anything in owner.surgeries)
-					if(operations.location != BODY_ZONE_CHEST)
-						continue
-					if(!istype(operations.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
-						continue
-					attempt_grow(gib_on_success = FALSE)
-					return
-				attempt_grow()
+/// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
+/obj/item/organ/internal/body_egg/alien_embryo/proc/advance_embryo_stage()
+	if(stage >= 6)
+		return
+	if(++stage < 6)
+		INVOKE_ASYNC(src, PROC_REF(RefreshInfectionImage))
+		var/slowdown = 1
+		if(ishuman(owner))
+			var/mob/living/carbon/human/baby_momma = owner
+			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
+		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
+
+/obj/item/organ/internal/body_egg/alien_embryo/egg_process()
+	if(stage == 6 && prob(50))
+		for(var/datum/surgery/operations as anything in owner.surgeries)
+			if(operations.location != BODY_ZONE_CHEST)
+				continue
+			if(!istype(operations.get_surgery_step(), /datum/surgery_step/manipulate_organs/internal))
+				continue
+			attempt_grow(gib_on_success = FALSE)
+			return
+		attempt_grow()
 
 ///Attempt to burst an alien outside of the host, getting a ghost to play as the xeno.
 /obj/item/organ/internal/body_egg/alien_embryo/proc/attempt_grow(gib_on_success = TRUE)
