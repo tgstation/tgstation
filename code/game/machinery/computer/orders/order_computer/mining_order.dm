@@ -34,7 +34,11 @@
 	for(var/datum/orderable_item/item as anything in groceries)
 		things_to_order[item.item_path] = groceries[item]
 
-	var/datum/supply_pack/custom/mining_pack = new(purchaser, things_to_order)
+	var/datum/supply_pack/custom/mining_pack = new(
+		purchaser = purchaser, \
+		cost = get_total_cost(), \
+		contains = things_to_order,
+	)
 	var/datum/supply_order/new_order = new(
 		pack = mining_pack, \
 		orderer = purchaser, \
@@ -45,6 +49,7 @@
 		department_destination = null, \
 		coupon = null, \
 		charge_on_purchase = FALSE,
+		manifest_can_fail = FALSE,
 	)
 	if(ltsrbt_delivered)
 		var/obj/machinery/mining_ltsrbt/ltsrbt
