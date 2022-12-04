@@ -9,7 +9,7 @@
 	sound = 'sound/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 30 SECONDS
+	cooldown_time = 60 SECONDS
 	invocation = "F'LSH'NG S'LV'R!"
 	invocation_type = INVOCATION_SHOUT
 
@@ -122,5 +122,9 @@
 			var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
 			if(monster?.master == caster.mind)
 				return PROJECTILE_PIERCE_PHASE
+
+		if(victim.can_block_magic(MAGIC_RESISTANCE))
+			visible_message(span_warning("[src] drops to the ground and melts on contact [victim]!"))
+			return PROJECTILE_DELETE_WITHOUT_HITTING
 
 	return ..()

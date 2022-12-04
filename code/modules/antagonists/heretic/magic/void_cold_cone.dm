@@ -5,11 +5,10 @@
 		Additionally, objects hit will be frozen and can shatter, and ground hit will be iced over and slippery - \
 		though they may thaw shortly if used in room temperature."
 	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "entropic_plume"
+	button_icon_state = "icebeam"
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 1 MINUTES
+	cooldown_time = 30 SECONDS
 
 	invocation = "FR'ZE!"
 	invocation_type = INVOCATION_SHOUT
