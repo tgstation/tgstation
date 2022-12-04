@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/dash
 	name = "Dash"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Allows you to dash towards a position."
 	cooldown_time = 1.5 SECONDS

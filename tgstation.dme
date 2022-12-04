@@ -779,6 +779,7 @@
 #include "code\datums\cinematics\nuke_cinematics.dm"
 #include "code\datums\components\_component.dm"
 #include "code\datums\components\acid.dm"
+#include "code\datums\components\action_item_overlay.dm"
 #include "code\datums\components\admin_popup.dm"
 #include "code\datums\components\anti_magic.dm"
 #include "code\datums\components\aquarium.dm"

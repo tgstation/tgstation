@@ -72,7 +72,7 @@
 	else
 		turn_off(user)
 		to_chat(user, span_notice("You turn the jetpack off."))
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/tank/jetpack/proc/set_stabilizers(new_stabilizers)
 	if(new_stabilizers == stabilizers)
