@@ -49,8 +49,7 @@ check() {
 	shift
 	erro_msg=$1
 	shift
-	! $@
-	if $? ; then
+	if [ $@ ] ; then
 		st=1
 		echo -e "${RED}$erro_msg${NC}"
 	fi
