@@ -62,20 +62,20 @@ check() {
 section "map issues"
 check "TGM Format" \
 	"Non-TGM formatted map detected. Please convert it using Map Merger!" \
-	-U '^".+" = \(.+\)' $map_files
+	"-U '^\".+\" = \(.+\)' $map_files"
 
 check "comments" \
 	"Unexpected commented out line detected in this map file. Please remove it." \
-	'//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | $grep -v 'name|desc' \
+	"'//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | $grep -v 'name|desc'"
 
 check "conflict markers" \
 	"Merge conflict markers detected in map, please resolve all merge failures!" \
-	'Merge Conflict Marker' $map_files
+	"'Merge Conflict Marker' $map_files"
 
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
 part "conflict marker object" \
 	"Merge conflict markers detected in map, please resolve all merge failures." \
-	'/obj/merge_conflict_marker' $map_files
+	"'/obj/merge_conflict_marker' $map_files"
 
 part "iconstate tags"
 if $grep '^\ttag = "icon' $map_files;	then
