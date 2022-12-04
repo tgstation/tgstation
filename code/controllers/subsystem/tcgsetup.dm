@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(trading_card_game)
 //Let's load the cards before the map fires, so we can load cards on the map safely
 /datum/controller/subsystem/trading_card_game/Initialize()
 	reloadAllCardFiles()
-	return ..()
+	return SS_INIT_SUCCESS
 
 ///Loads all the card files
 /datum/controller/subsystem/trading_card_game/proc/loadAllCardFiles()
@@ -180,7 +180,7 @@ SUBSYSTEM_DEF(trading_card_game)
 			totalCards++
 			cardsByCount[id] += 1
 	var/toSend = "Out of [totalCards] cards"
-	for(var/id in sort_list(cardsByCount, /proc/cmp_num_string_asc))
+	for(var/id in sort_list(cardsByCount, GLOBAL_PROC_REF(cmp_num_string_asc)))
 		if(id)
 			var/datum/card/template = cached_cards[pack.series]["ALL"][id]
 			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"

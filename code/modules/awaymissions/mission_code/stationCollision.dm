@@ -29,8 +29,8 @@
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
 	B.inhand_icon_state = "melted"
-	B.lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
-	B.righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
+	B.lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
+	B.righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	new /obj/item/paper/fluff/awaymissions/stationcollision/safehint_paper_bible(B)
 	new /obj/item/pen(B)
 	return INITIALIZE_HINT_QDEL

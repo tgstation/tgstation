@@ -212,7 +212,20 @@
 	reqs = list(
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/pie/plain = 1,
-		/obj/item/food/chocolatebar = 2
+		/obj/item/food/chocolatebar = 2,
 	)
 	result = /obj/item/food/pie/frenchsilkpie
+	subcategory = CAT_PIE
+
+/datum/crafting_recipe/food/shepherds_pie
+	name = "Shepherds pie"
+	reqs = list(
+		/obj/item/food/mashed_potatoes = 1,
+		/obj/item/food/meat/cutlet = 3,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/corn = 1,
+		/obj/item/food/grown/garlic = 1,
+	)
+	result = /obj/item/food/pie/shepherds_pie
 	subcategory = CAT_PIE

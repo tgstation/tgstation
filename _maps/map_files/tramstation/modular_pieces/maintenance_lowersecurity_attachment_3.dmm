@@ -1,0 +1,186 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/maintenance/central/greater)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Security Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"g" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"h" = (
+/turf/open/misc/asteroid,
+/area/station/maintenance/central/greater)
+"j" = (
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/misc/asteroid,
+/area/station/maintenance/central/greater)
+"k" = (
+/obj/item/shovel,
+/turf/open/misc/asteroid,
+/area/station/maintenance/central/greater)
+"m" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid,
+/area/station/maintenance/central/greater)
+"o" = (
+/obj/item/stack/ore/glass,
+/turf/open/misc/asteroid,
+/area/station/maintenance/central/greater)
+"t" = (
+/mob/living/simple_animal/hostile/ant,
+/turf/open/misc/asteroid,
+/area/station/maintenance/central/greater)
+"x" = (
+/turf/closed/wall/rock/porous,
+/area/station/maintenance/central/greater)
+"F" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/barricade/wooden,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"G" = (
+/turf/template_noop,
+/area/template_noop)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+"I" = (
+/obj/structure/chair/stool/directional/west,
+/turf/open/misc/asteroid,
+/area/station/maintenance/central/greater)
+"L" = (
+/turf/closed/wall,
+/area/station/maintenance/central/greater)
+"M" = (
+/obj/item/relic,
+/turf/open/misc/asteroid{
+	icon_state = "asteroid_dug"
+	},
+/area/station/maintenance/central/greater)
+"N" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/structure/steam_vent,
+/turf/open/floor/plating,
+/area/station/maintenance/central/greater)
+"O" = (
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/misc/asteroid,
+/area/station/maintenance/central/greater)
+"Q" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/central/greater)
+
+(1,1,1) = {"
+G
+G
+G
+G
+G
+G
+G
+f
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+L
+Q
+H
+F
+"}
+(3,1,1) = {"
+a
+a
+O
+a
+a
+Q
+Q
+Q
+"}
+(4,1,1) = {"
+a
+t
+h
+o
+a
+N
+g
+h
+"}
+(5,1,1) = {"
+a
+O
+M
+O
+a
+O
+h
+h
+"}
+(6,1,1) = {"
+a
+o
+o
+k
+h
+h
+h
+a
+"}
+(7,1,1) = {"
+a
+h
+t
+h
+h
+h
+h
+a
+"}
+(8,1,1) = {"
+a
+a
+I
+j
+O
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+m
+m
+a
+a
+a
+"}
+(10,1,1) = {"
+x
+a
+a
+a
+a
+a
+a
+a
+"}

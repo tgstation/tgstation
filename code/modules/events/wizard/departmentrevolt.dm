@@ -13,7 +13,7 @@
 	///admin choice on whether this nation will have objectives to attack other nations, default true for !fun!
 	var/dangerous_nation = TRUE
 
-/datum/round_event_control/wizard/deprevolt/admin_setup()
+/datum/round_event_control/wizard/deprevolt/admin_setup(mob/admin)
 	if(!check_rights(R_FUN))
 		return
 

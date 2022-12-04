@@ -5,9 +5,6 @@
 	id = SPECIES_PODPERSON
 	species_traits = list(MUTCOLORS, EYECOLOR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_LITERATE,
 		TRAIT_PLANT_SAFE,
 	)
 	external_organs = list(
@@ -15,10 +12,7 @@
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list("plants", "vines")
-	attack_verb = "slash"
-	attack_effect = ATTACK_EFFECT_CLAW
-	attack_sound = 'sound/weapons/slice.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
+
 	burnmod = 1.25
 	heatmod = 1.5
 	payday_modifier = 0.75
@@ -30,11 +24,11 @@
 	species_language_holder = /datum/language_holder/plant
 
 	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/pod,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/pod,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/pod,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/pod,
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/pod,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/pod,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/pod,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/pod,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/pod,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
 	)
 
@@ -67,13 +61,6 @@
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
 
-/datum/species/pod/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
-	var/hairstyle = pick(GLOB.pod_hair_list)
-	human_mob.dna.features["pod_hair"] = hairstyle
-	mutant_bodyparts["pod_hair"] = hairstyle
-	human_mob.update_body()
 
-/datum/species/pod/proc/change_hairstyle(mob/living/carbon/human/human_mob, new_style)
-	var/obj/item/organ/external/organ = human_mob.getorganslot(ORGAN_SLOT_EXTERNAL_POD_HAIR)
-	organ.set_sprite(new_style)
-	human_mob.update_body_parts()
+/datum/species/pod/randomize_features(mob/living/carbon/human_mob)
+	randomize_external_organs(human_mob)

@@ -1,5 +1,5 @@
-/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self)
+/mob/living/carbon/human/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE)
+	return dna.species.can_equip(I, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped)
 
 /mob/living/carbon/human/get_item_by_slot(slot_id)
 	switch(slot_id)
@@ -116,13 +116,13 @@
 			if(belt)
 				return
 			belt = I
-			update_inv_belt()
+			update_worn_belt()
 		if(ITEM_SLOT_ID)
 			if(wear_id)
 				return
 			wear_id = I
 			sec_hud_set_ID()
-			update_inv_wear_id()
+			update_worn_id()
 		if(ITEM_SLOT_EARS)
 			if(ears)
 				return
@@ -141,17 +141,17 @@
 				clear_fullscreen("nearsighted")
 			if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 				update_sight()
-			update_inv_glasses()
+			update_worn_glasses()
 		if(ITEM_SLOT_GLOVES)
 			if(gloves)
 				return
 			gloves = I
-			update_inv_gloves()
+			update_worn_gloves()
 		if(ITEM_SLOT_FEET)
 			if(shoes)
 				return
 			shoes = I
-			update_inv_shoes()
+			update_worn_shoes()
 		if(ITEM_SLOT_OCLOTHING)
 			if(wear_suit)
 				return
@@ -159,29 +159,29 @@
 			wear_suit = I
 
 			if(I.flags_inv & HIDEJUMPSUIT)
-				update_inv_w_uniform()
+				update_worn_undersuit()
 			if(wear_suit.breakouttime) //when equipping a straightjacket
 				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 				stop_pulling() //can't pull if restrained
 				update_action_buttons_icon() //certain action buttons will no longer be usable.
-			update_inv_wear_suit()
+			update_worn_oversuit()
 		if(ITEM_SLOT_ICLOTHING)
 			if(w_uniform)
 				return
 			w_uniform = I
 			update_suit_sensors()
-			update_inv_w_uniform()
+			update_worn_undersuit()
 		if(ITEM_SLOT_LPOCKET)
 			l_store = I
-			update_inv_pockets()
+			update_pockets()
 		if(ITEM_SLOT_RPOCKET)
 			r_store = I
-			update_inv_pockets()
+			update_pockets()
 		if(ITEM_SLOT_SUITSTORE)
 			if(s_store)
 				return
 			s_store = I
-			update_inv_s_store()
+			update_suit_storage()
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 
@@ -218,8 +218,8 @@
 		wear_suit = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			if(I.flags_inv & HIDEJUMPSUIT)
-				update_inv_w_uniform()
-			update_inv_wear_suit()
+				update_worn_undersuit()
+			update_worn_oversuit()
 	else if(I == w_uniform)
 		if(invdrop)
 			if(r_store)
@@ -233,11 +233,11 @@
 		w_uniform = null
 		update_suit_sensors()
 		if(!QDELETED(src))
-			update_inv_w_uniform()
+			update_worn_undersuit()
 	else if(I == gloves)
 		gloves = null
 		if(!QDELETED(src))
-			update_inv_gloves()
+			update_worn_gloves()
 	else if(I == glasses)
 		glasses = null
 		var/obj/item/clothing/glasses/G = I
@@ -251,7 +251,7 @@
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))
 			update_sight()
 		if(!QDELETED(src))
-			update_inv_glasses()
+			update_worn_glasses()
 	else if(I == ears)
 		ears = null
 		if(!QDELETED(src))
@@ -259,49 +259,85 @@
 	else if(I == shoes)
 		shoes = null
 		if(!QDELETED(src))
-			update_inv_shoes()
+			update_worn_shoes()
 	else if(I == belt)
 		belt = null
 		if(!QDELETED(src))
-			update_inv_belt()
+			update_worn_belt()
 	else if(I == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
 		if(!QDELETED(src))
-			update_inv_wear_id()
+			update_worn_id()
 	else if(I == r_store)
 		r_store = null
 		if(!QDELETED(src))
-			update_inv_pockets()
+			update_pockets()
 	else if(I == l_store)
 		l_store = null
 		if(!QDELETED(src))
-			update_inv_pockets()
+			update_pockets()
 	else if(I == s_store)
 		s_store = null
 		if(!QDELETED(src))
-			update_inv_s_store()
+			update_suit_storage()
 	update_equipment_speed_mods()
 
 	// Send a signal for when we unequip an item that used to cover our feet/shoes. Used for bloody feet
 	if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
 		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_SHOECOVER, I, force, newloc, no_move, invdrop, silent)
 
+/mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
+	// Just close the tank if it's the one the mob already has open.
+	var/obj/item/existing_tank = is_external ? external : internal
+	if(tank == existing_tank)
+		return toggle_close_internals(is_external)
+	// Use breathing tube regardless of mask.
+	if(can_breathe_tube())
+		return toggle_open_internals(tank, is_external)
+	// Use mask in absence of tube.
+	if(isclothing(wear_mask) && ((wear_mask.visor_flags & MASKINTERNALS) || (wear_mask.clothing_flags & MASKINTERNALS)))
+		// Adjust dishevelled breathing mask back onto face.
+		if (wear_mask.mask_adjusted)
+			wear_mask.adjustmask(src)
+		return toggle_open_internals(tank, is_external)
+	// Use helmet in absence of tube or valid mask.
+	if(can_breathe_helmet())
+		return toggle_open_internals(tank, is_external)
+	// Notify user of missing valid breathing apparatus.
+	if (wear_mask)
+		// Invalid mask
+		to_chat(src, span_warning("[wear_mask] can't use [tank]!"))
+	else if (head)
+		// Invalid headgear
+		to_chat(src, span_warning("[head] isn't airtight! You need a mask!"))
+	else
+		// Not wearing any breathing apparatus.
+		to_chat(src, span_warning("You need a mask!"))
+
+/// Returns TRUE if the tank successfully toggles open/closed. Opens the tank only if a breathing apparatus is found.
+/mob/living/carbon/human/toggle_externals(obj/item/tank)
+	return toggle_internals(tank, TRUE)
+
 /mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
-		update_hair()
-	if(toggle_off && internal && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
-		internal = null
+		update_body_parts()
+	// Close internal air tank if mask was the only breathing apparatus.
+	if(invalid_internals())
+		cutoff_internals()
 	if(I.flags_inv & HIDEEYES)
-		update_inv_glasses()
+		update_worn_glasses()
 	sec_hud_set_security_status()
 	..()
 
 /mob/living/carbon/human/head_update(obj/item/I, forced)
 	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || forced)
-		update_hair()
+		update_body_parts()
+	// Close internal air tank if helmet was the only breathing apparatus.
+	if (invalid_internals())
+		cutoff_internals()
 	if(I.flags_inv & HIDEEYES || forced)
-		update_inv_glasses()
+		update_worn_glasses()
 	if(I.flags_inv & HIDEEARS || forced)
 		update_body()
 	sec_hud_set_security_status()
@@ -341,7 +377,7 @@
 			to_chat(src, span_warning("You have no [slot_item_name] to take something out of!"))
 			return
 		if(equip_to_slot_if_possible(thing, slot_type))
-			update_inv_hands()
+			update_held_items()
 		return
 	var/datum/storage/storage = equipped_item.atom_storage
 	if(!storage)
@@ -351,7 +387,7 @@
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	if(thing) // put thing in storage item
-		if(!equipped_item.atom_storage?.attempt_insert(equipped_item, thing, src))
+		if(!equipped_item.atom_storage?.attempt_insert(thing, src))
 			to_chat(src, span_warning("You can't fit [thing] into your [equipped_item.name]!"))
 		return
 	var/atom/real_location = storage.real_location?.resolve()

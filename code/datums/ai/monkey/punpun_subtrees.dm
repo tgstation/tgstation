@@ -1,5 +1,7 @@
 /datum/ai_planning_subtree/punpun_shenanigans/SelectBehaviors(datum/ai_controller/monkey/controller, delta_time)
 
+	controller.set_trip_mode(mode = FALSE) // pun pun doesn't fuck around
+
 	if(prob(5))
 		controller.queue_behavior(/datum/ai_behavior/use_in_hand)
 

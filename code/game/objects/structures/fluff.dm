@@ -192,10 +192,11 @@
 	desc = "A towering link of chains leading up to the ceiling."
 	icon = 'icons/effects/32x96.dmi'
 	icon_state = "chain"
-	layer = ABOVE_OBJ_LAYER
 	anchored = TRUE
 	density = TRUE
 	deconstructible = FALSE
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/structure/fluff/beach_towel
 	name = "beach towel"
@@ -272,8 +273,8 @@
 	desc = "Great for trams, not so great for skating."
 	icon = 'icons/obj/tram_rails.dmi'
 	icon_state = "rail"
-	layer = ABOVE_OPEN_TURF_LAYER
-	plane = FLOOR_PLANE
+	layer = TRAM_RAIL_LAYER
+	plane = GAME_PLANE
 	deconstructible = TRUE
 
 /obj/structure/fluff/tram_rail/floor

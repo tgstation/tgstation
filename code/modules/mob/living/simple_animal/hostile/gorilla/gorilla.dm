@@ -4,7 +4,7 @@
 /mob/living/simple_animal/hostile/gorilla
 	name = "Gorilla"
 	desc = "A ground-dwelling, predominantly herbivorous ape that inhabits the forests of central Africa."
-	icon = 'icons/mob/gorilla.dmi'
+	icon = 'icons/mob/simple/gorilla.dmi'
 	icon_state = "crawling"
 	icon_living = "crawling"
 	icon_dead = "dead"
@@ -43,8 +43,8 @@
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
 
-// Gorillas like to dismember limbs from unconcious mobs.
-// Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
+// Gorillas like to dismember limbs from unconscious mobs.
+// Returns null when the target is not an unconscious carbon mob; a list of limbs (possibly empty) otherwise.
 /mob/living/simple_animal/hostile/gorilla/proc/get_target_bodyparts(atom/hit_target)
 	if(!iscarbon(hit_target))
 		return
@@ -118,7 +118,7 @@
 
 /mob/living/simple_animal/hostile/gorilla/cargo_domestic
 	name = "Cargorilla" // Overriden, normally
-	icon = 'icons/mob/cargorillia.dmi'
+	icon = 'icons/mob/simple/cargorillia.dmi'
 	desc = "Cargo's pet gorilla. They seem to have an 'I love Mom' tattoo."
 	maxHealth = 200
 	health = 200
@@ -154,9 +154,11 @@
 	being_polled_for = TRUE
 	var/list/mob/dead/candidates = poll_candidates_for_mob(
 		"Do you want to play as a Cargorilla?",
-		jobban_type = ROLE_SENTIENCE,
-		poll_time = 30 SECONDS,
-		target_mob = src,
+		ROLE_SENTIENCE,
+		ROLE_SENTIENCE,
+		30 SECONDS,
+		src,
+		POLL_IGNORE_CARGORILLA
 	)
 
 	being_polled_for = FALSE

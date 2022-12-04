@@ -2,10 +2,10 @@
 /datum/species/human/felinid
 	name = "Felinid"
 	id = SPECIES_FELINE
-	say_mod = "meows"
 
 	mutant_bodyparts = list("ears" = "Cat", "wings" = "None")
 
+	mutanttongue = /obj/item/organ/internal/tongue/cat
 	mutantears = /obj/item/organ/internal/ears/cat
 	external_organs = list(
 		/obj/item/organ/external/tail/cat = "Cat",
@@ -40,6 +40,10 @@
 			ears.Insert(target_human, drop_if_replaced = FALSE)
 		else
 			mutantears = /obj/item/organ/internal/ears
+	return ..()
+
+/datum/species/human/felinid/randomize_features(mob/living/carbon/human/human_mob)
+	randomize_external_organs(human_mob)
 	return ..()
 
 /proc/mass_purrbation()
@@ -124,7 +128,7 @@
 /datum/species/human/felinid/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	human_for_preview.hairstyle = "Hime Cut"
 	human_for_preview.hair_color = "#ffcccc" // pink
-	human_for_preview.update_hair(is_creating = TRUE)
+	human_for_preview.update_body_parts()
 
 	var/obj/item/organ/internal/ears/cat/cat_ears = human_for_preview.getorgan(/obj/item/organ/internal/ears/cat)
 	if (cat_ears)

@@ -13,7 +13,7 @@
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
 	speak_chance = 1
-	icon = 'icons/mob/cult.dmi'
+	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	speed = 0
 	combat_mode = TRUE
 	stop_automated_movement = 1
@@ -404,7 +404,7 @@
 	icon_living = "harvester"
 	maxHealth = 40
 	health = 40
-	sight = SEE_MOBS
+	sight = SEE_MOBS | SEE_BLACKNESS
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	attack_verb_continuous = "butchers"

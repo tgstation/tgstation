@@ -115,7 +115,7 @@
 	icon_state = "0"
 
 /turf/open/floor/holofloor/space/Initialize(mapload)
-	icon_state = SPACE_ICON_STATE // so realistic
+	icon_state = SPACE_ICON_STATE(x, y, z) // so realistic
 	. = ..()
 
 /turf/open/floor/holofloor/hyperspace
@@ -148,7 +148,7 @@
 
 /turf/open/floor/holofloor/carpet/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, /atom/.proc/update_appearance), 1)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, update_appearance)), 1)
 
 /turf/open/floor/holofloor/carpet/update_icon(updates=ALL)
 	. = ..()

@@ -142,7 +142,7 @@
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
 	var/datum/round_event/ion_storm/add_law_only/ion = new()
-	ion.announceChance = announce_ion_laws
+	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Custom AI Law") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -287,7 +287,7 @@
 	if(!holder)
 		return
 
-	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), /proc/cmp_typepaths_asc)
+	var/weather_type = input("Choose a weather", "Weather")  as null|anything in sort_list(subtypesof(/datum/weather), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	if(!weather_type)
 		return
 
@@ -316,7 +316,7 @@
 
 	var/mob/living/marked_mob = holder.marked_datum
 
-	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+	var/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	var/ability_type = tgui_input_list(usr, "Choose an ability", "Ability", all_mob_actions)
 
@@ -386,3 +386,47 @@
 	log_admin("[key_name(usr)] removed mob ability [ability_name] from mob [marked_mob].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/command_report_footnote()
+	set category = "Admin.Events"
+	set name = "Command Report Footnote"
+	set desc = "Adds a footnote to the roundstart command report."
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/datum/command_footnote/command_report_footnote = new /datum/command_footnote()
+	SScommunications.block_command_report++ //Add a blocking condition to the counter until the inputs are done.
+
+	command_report_footnote.message = tgui_input_text(usr, "This message will be attached to the bottom of the roundstart threat report. Be sure to delay the roundstart report if you need extra time.", "P.S.")
+
+	if(!command_report_footnote.message)
+		return
+
+	command_report_footnote.signature = tgui_input_text(usr, "Whose signature will appear on this footnote?", "Also sign here, here, aaand here.")
+
+	if(!command_report_footnote.signature)
+		command_report_footnote.signature = "Classified"
+
+	SScommunications.command_report_footnotes += command_report_footnote
+	SScommunications.block_command_report--
+
+	message_admins("[usr] has added a footnote to the command report: [command_report_footnote.message], signed [command_report_footnote.signature]")
+
+/datum/command_footnote
+	var/message
+	var/signature
+
+/client/proc/delay_command_report()
+	set category = "Admin.Events"
+	set name = "Delay Command Report"
+	set desc = "Prevents the roundstart command report from being sent until toggled."
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	if(SScommunications.block_command_report) //If it's anything other than 0, decrease. If 0, increase.
+		SScommunications.block_command_report--
+		message_admins("[usr] has enabled the roundstart command report.")
+	else
+		SScommunications.block_command_report++
+		message_admins("[usr] has delayed the roundstart command report.")

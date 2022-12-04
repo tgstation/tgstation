@@ -1,12 +1,5 @@
 #define RDSCREEN_NOBREAK "<NO_HTML_BREAK>"
 
-//! Defines for the Protolathe screens, see: [/obj/machinery/rnd/production/protolathe]
-#define RESEARCH_FABRICATOR_SCREEN_MAIN 1
-#define RESEARCH_FABRICATOR_SCREEN_CHEMICALS 2
-#define RESEARCH_FABRICATOR_SCREEN_MATERIALS 3
-#define RESEARCH_FABRICATOR_SCREEN_SEARCH 4
-#define RESEARCH_FABRICATOR_SCREEN_CATEGORYVIEW 5
-
 /// For instances where we don't want a design showing up due to it being for debug/sanity purposes
 #define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
 
@@ -74,3 +67,5 @@
 #define SCIPAPER_COOPERATION_INDEX 1
 #define SCIPAPER_FUNDING_INDEX 2
 #define SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER 0.01
+/// How much money is one point of gain worth.
+#define SCIPAPER_GAIN_TO_MONEY 125

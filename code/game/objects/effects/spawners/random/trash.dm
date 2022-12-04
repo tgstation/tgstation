@@ -11,9 +11,8 @@
 		/obj/item/shard = 10,
 		/obj/effect/spawner/random/trash/cigbutt = 10,
 		/obj/effect/spawner/random/trash/botanical_waste = 5,
-		/obj/item/reagent_containers/cup = 5,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 5,
 		/obj/item/broken_bottle = 5,
-		/obj/item/reagent_containers/cup/bowl = 5,
 		/obj/item/light/tube/broken = 5,
 		/obj/item/light/bulb/broken = 5,
 		/obj/item/assembly/mousetrap/armed = 5,
@@ -143,7 +142,8 @@
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/reagent_containers/cup/bucket = 2,
 		/obj/effect/decal/cleanable/blood/old = 2,
-		/obj/structure/mopbucket = 2,
+		/obj/structure/mop_bucket = 2,
+		/mob/living/simple_animal/axolotl = 1,
 	)
 
 /obj/effect/spawner/random/trash/graffiti
@@ -163,17 +163,23 @@
 		"shotgun", "arrow", "line", "thinline", "shortline", "body", "chevron",
 		"footprint", "clawprint", "pawprint",
 	)
-	color = COLOR_WHITE //sets the color of the graffiti (used for mapedits)
-	var/random_color = TRUE //whether the graffiti will spawn with a random color (used for mapedits)
-	var/random_icon = TRUE // whether the graffiti will spawn with the same icon
+	// This sets the color of the graffiti (used for mapedits)
+	color = COLOR_WHITE
+	/// Whether the graffiti will spawn with a random color (used for mapedits)
+	var/random_color = TRUE
+	/// Whether the graffiti will spawn with this spawner's icon_state instead of a random one (used for mapedits)
+	var/random_icon = TRUE
 
-/obj/effect/spawner/random/trash/graffiti/proc/select_graffiti(graffiti_decal)
-	var/obj/effect/decal/cleanable/crayon/decal = graffiti_decal
-	color = random_color && "#[random_short_color()]" || color
-	icon_state = random_icon && pick(graffiti_icons) || icon_state
+/obj/effect/spawner/random/trash/graffiti/make_item(spawn_loc, type_path_to_make)
+	var/obj/effect/decal/cleanable/crayon/graffiti_decal = ..()
+	if(istype(graffiti_decal))
+		color = random_color && "#[random_short_color()]" || color
+		icon_state = random_icon && pick(graffiti_icons) || icon_state
 
-	decal.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
-	decal.icon_state = icon_state
+		graffiti_decal.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+		graffiti_decal.icon_state = icon_state
+
+	return graffiti_decal
 
 /obj/effect/spawner/random/trash/mopbucket
 	name = "mop bucket spawner"
@@ -181,7 +187,7 @@
 	spawn_loot_count = 2
 	spawn_loot_double = FALSE
 	loot = list(
-		/obj/structure/mopbucket = 10,
+		/obj/structure/mop_bucket = 10,
 		/obj/item/mop = 5,
 		/obj/item/clothing/suit/caution = 3,
 		/obj/item/reagent_containers/cup/bucket = 1,

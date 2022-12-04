@@ -7,6 +7,7 @@
 #define CHANNEL_AMBIENCE 1019
 #define CHANNEL_BUZZ 1018
 #define CHANNEL_TRAITOR 1017
+#define CHANNEL_CHARGED_SPELL 1016
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -42,6 +43,7 @@
 #define AMBIENCE_ENGI "engi"
 #define AMBIENCE_MINING "mining"
 #define AMBIENCE_MEDICAL "med"
+#define AMBIENCE_VIROLOGY "viro"
 #define AMBIENCE_SPOOKY "spooky"
 #define AMBIENCE_SPACE "space"
 #define AMBIENCE_MAINT "maint"

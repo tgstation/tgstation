@@ -1,0 +1,98 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/mop_bucket,
+/obj/item/mop,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"p" = (
+/turf/template_noop,
+/area/template_noop)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"A" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Custodial Closet"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/flashlight,
+/obj/structure/sign/poster/official/tactical_game_cards{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = -12;
+	pixel_y = -2
+	},
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"Q" = (
+/turf/closed/wall,
+/area/station/maintenance/department/science)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+"W" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/science)
+
+(1,1,1) = {"
+p
+Q
+Q
+Q
+Q
+"}
+(2,1,1) = {"
+p
+K
+M
+T
+Q
+"}
+(3,1,1) = {"
+p
+z
+z
+W
+Q
+"}
+(4,1,1) = {"
+A
+z
+a
+b
+Q
+"}
+(5,1,1) = {"
+p
+Q
+Q
+Q
+Q
+"}

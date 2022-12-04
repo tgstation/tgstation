@@ -159,6 +159,7 @@
 
 ///Apparently this is only used by AI datums for basic mobs. A player controlling a basic mob will call attack_animal() when clicking another atom.
 /atom/proc/attack_basic_mob(mob/user, list/modifiers)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_BASIC_MOB, user)
 
 ///Attacked by monkey. It doesn't need its own *_secondary proc as it just uses attack_hand_secondary instead.
@@ -264,9 +265,21 @@
 	pAI
 */
 
-/mob/living/silicon/pai/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)//Stops runtimes due to attack_animal being the default
+/mob/living/silicon/pai/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	attack_target.attack_pai(src, modifiers)
+
+/mob/living/silicon/pai/resolve_right_click_attack(atom/target, list/modifiers)
+	return target.attack_pai_secondary(src, modifiers)
+
+/atom/proc/attack_pai(mob/user, list/modifiers)
 	return
 
+/**
+ * Called when a pAI right clicks an atom.
+ * Returns a SECONDARY_ATTACK_* value.
+ */
+/atom/proc/attack_pai_secondary(mob/user, list/modifiers)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /*
 	Simple animals
@@ -275,14 +288,14 @@
 /mob/living/simple_animal/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	if(dextrous && (isitem(attack_target) || !combat_mode))
 		attack_target.attack_hand(src, modifiers)
-		update_inv_hands()
+		update_held_items()
 	else
 		return ..()
 
 /mob/living/simple_animal/resolve_right_click_attack(atom/target, list/modifiers)
 	if(dextrous && (isitem(target) || !combat_mode))
 		. = target.attack_hand_secondary(src, modifiers)
-		update_inv_hands()
+		update_held_items()
 	else
 		return ..()
 

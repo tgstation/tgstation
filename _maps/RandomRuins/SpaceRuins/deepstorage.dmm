@@ -4,14 +4,14 @@
 /area/template_noop)
 "ab" = (
 /turf/closed/mineral/random/low_chance,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "ae" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder,
 /obj/machinery/light/directional/south,
 /obj/item/reagent_containers/cup/beaker/large{
-	pixel_y = -1;
-	pixel_x = -15
+	pixel_x = -15;
+	pixel_y = -1
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
@@ -381,16 +381,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "ba" = (
-/obj/structure/table,
-/obj/item/reagent_containers/condiment/peppermill,
-/obj/item/reagent_containers/condiment/saltshaker{
-	pixel_x = 4;
-	pixel_y = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
-/obj/item/knife/kitchen,
+/obj/machinery/oven,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bb" = (
@@ -626,6 +620,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bM" = (
@@ -633,6 +628,13 @@
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/structure/table,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/condiment/peppermill,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bN" = (
@@ -645,7 +647,7 @@
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bO" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/vending/dinnerware,
+/obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/deepstorage/kitchen)
 "bP" = (
@@ -780,10 +782,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "cg" = (
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 4;
-	name = "Hydroponics APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/five_k/directional/east{
+	name = "Hydroponics APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -1097,10 +1097,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage)
 "cQ" = (
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 4;
-	name = "Storage APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/five_k/directional/east{
+	name = "Storage APC"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1537,10 +1535,8 @@
 /obj/item/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
 	},
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 4;
-	name = "Armory APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/five_k/directional/east{
+	name = "Armory APC"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -2075,10 +2071,8 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/power/apc/highcap/five_k{
-	dir = 4;
-	name = "Dormitory APC";
-	pixel_x = 25
+/obj/machinery/power/apc/highcap/five_k/directional/east{
+	name = "Dormitory APC"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2114,7 +2108,7 @@
 "fJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("deepo2" = "Oxygen Supply");
+	atmos_chambers = list("deepo2"="Oxygen Supply");
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -2434,7 +2428,7 @@
 "gC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("deepn2" = "Nitrogen Supply");
+	atmos_chambers = list("deepn2"="Nitrogen Supply");
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -2513,8 +2507,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage)
 "gR" = (
-/obj/structure/grille,
-/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "gT" = (
@@ -2688,7 +2681,7 @@
 "hr" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/mineral/random/low_chance,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "hA" = (
 /obj/effect/baseturf_helper/asteroid/airless,
 /turf/closed/wall/mineral/iron,
@@ -2808,7 +2801,7 @@
 /area/ruin/space/has_grav/deepstorage/dorm)
 "Az" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/ten_k/directional/east,
+/obj/machinery/power/apc/highcap/ten_k/directional/east,
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "AI" = (
@@ -2823,8 +2816,8 @@
 	pixel_y = -1
 	},
 /obj/item/reagent_containers/cup/beaker/large{
-	pixel_y = -1;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/deepstorage/pharmacy)
@@ -2875,7 +2868,7 @@
 /area/ruin/space/has_grav/deepstorage/pharmacy)
 "Iy" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "JV" = (
 /obj/item/reagent_containers/cup/beaker/large,
 /turf/open/floor/engine,

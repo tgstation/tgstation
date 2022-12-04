@@ -17,6 +17,10 @@
 	if (CONFIG_GET(flag/log_job_debug))
 		WRITE_LOG(GLOB.world_job_debug_log, "JOB: [text]")
 
+/// Logging for lua scripting
+/proc/log_lua(text)
+	WRITE_LOG(GLOB.lua_log, text)
+
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
 #ifdef UNIT_TESTS
@@ -40,6 +44,13 @@
 /proc/log_query_debug(text)
 	WRITE_LOG(GLOB.query_debug_log, "SQL: [text]")
 
+/* Log to the logfile only. */
+/proc/log_runtime(text)
+	WRITE_LOG(GLOB.world_runtime_log, text)
+
+/proc/log_signal(text)
+	WRITE_LOG(GLOB.signals_log, text)
+
 /// Logging for DB errors
 /proc/log_sql(text)
 	WRITE_LOG(GLOB.sql_error_log, "SQL: [text]")
@@ -48,17 +59,9 @@
 /proc/log_topic(text)
 	WRITE_LOG(GLOB.world_game_log, "TOPIC: [text]")
 
-/* Log to the logfile only. */
-/proc/log_runtime(text)
-	WRITE_LOG(GLOB.world_runtime_log, text)
-
 /// Log to both DD and the logfile.
 /proc/log_world(text)
 #ifdef USE_CUSTOM_ERROR_HANDLER
 	WRITE_LOG(GLOB.world_runtime_log, text)
 #endif
 	SEND_TEXT(world.log, text)
-
-/// Logging for lua scripting
-/proc/log_lua(text)
-	WRITE_LOG(GLOB.lua_log, text)

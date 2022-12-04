@@ -17,7 +17,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	category = EVENT_CATEGORY_SPACE
 	description = "The station passes through an immovable rod."
 
-/datum/round_event_control/immovable_rod/admin_setup()
+/datum/round_event_control/immovable_rod/admin_setup(mob/admin)
 	if(!check_rights(R_FUN))
 		return
 
@@ -31,7 +31,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	log_admin("[key_name_admin(usr)] has aimed an immovable rod [force_looping ? "(forced looping)" : ""] at [AREACOORD(special_target)].")
 
 /datum/round_event/immovable_rod
-	announceWhen = 5
+	announce_when = 5
 
 /datum/round_event/immovable_rod/announce(fake)
 	priority_announce("What the fuck was that?!", "General Alert")
@@ -87,7 +87,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
+	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))
 
 	if(special_target)
 		SSmove_manager.home_onto(src, special_target)

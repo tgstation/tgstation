@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	new_lift_platform.lift_master_datum = src
 	LAZYADD(lift_platforms, new_lift_platform)
-	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
+	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, PROC_REF(remove_lift_platforms))
 
 	check_for_landmarks(new_lift_platform)
 
@@ -346,10 +346,10 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	playsound(prime_lift, 'sound/mecha/hydraulic.ogg', 25, vary = TRUE, frequency = clamp(hydraulic_sfx_duration / lift_move_duration, 0.33, 3))
 
 	// Move the lift after a timer
-	addtimer(CALLBACK(src, .proc/move_lift_vertically, direction, user), lift_move_duration, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(move_lift_vertically), direction, user), lift_move_duration, TIMER_UNIQUE)
 	// Open doors after the set duration if supplied
 	if(isnum(door_duration))
-		addtimer(CALLBACK(src, .proc/open_lift_doors_callback), door_duration, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(open_lift_doors_callback)), door_duration, TIMER_UNIQUE)
 
 	// Here on we only care about lifts going DOWN
 	if(direction != DOWN)
@@ -389,6 +389,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	// Lock controls, to prevent moving-while-moving memes
 	set_controls(LIFT_PLATFORM_LOCKED)
+	// Send out a signal that we're going
+	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	// Close all lift doors
 	update_lift_doors(action = CLOSE_DOORS)
 
@@ -409,8 +411,15 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		user = user,
 	)
 
-	addtimer(CALLBACK(src, .proc/set_controls, LIFT_PLATFORM_UNLOCKED), lift_move_duration * 1.5)
+	addtimer(CALLBACK(src, PROC_REF(finish_simple_move_wrapper)), lift_move_duration * 1.5)
 	return TRUE
+
+/**
+ * Wrap everything up from simple_move_wrapper finishing its movement
+ */
+/datum/lift_master/proc/finish_simple_move_wrapper()
+	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
+	set_controls(LIFT_PLATFORM_UNLOCKED)
 
 /**
  * Moves the lift to the passed z-level.
@@ -447,6 +456,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 	// Okay we're ready to start moving now.
 	set_controls(LIFT_PLATFORM_LOCKED)
+	// Send out a signal that we're going
+	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, direction)
 	var/travel_speed = prime_lift.elevator_vertical_speed
 
 	// Close all lift doors
@@ -468,7 +479,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		if(QDELETED(src) || QDELETED(prime_lift))
 			return
 
-	addtimer(CALLBACK(src, .proc/open_lift_doors_callback), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(open_lift_doors_callback)), 2 SECONDS)
+	SEND_SIGNAL(src, COMSIG_LIFT_SET_DIRECTION, 0)
 	set_controls(LIFT_PLATFORM_UNLOCKED)
 	return TRUE
 
@@ -493,10 +505,10 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 
 		switch(action)
 			if(OPEN_DOORS)
-				INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/open)
+				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 
 			if(CLOSE_DOORS)
-				INVOKE_ASYNC(elevator_door, /obj/machinery/door/poddoor.proc/close)
+				INVOKE_ASYNC(elevator_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
 
 			else
 				stack_trace("Elevator lift update_lift_doors called with an improper action ([action]).")

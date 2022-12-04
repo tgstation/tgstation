@@ -1,7 +1,7 @@
 /obj/item/gun/grenadelauncher
 	name = "grenade launcher"
 	desc = "A terrible, terrible thing. It's really awful!"
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "riotgun"
 	inhand_icon_state = "riotgun"
 	w_class = WEIGHT_CLASS_BULKY
@@ -20,15 +20,14 @@
 
 	if(istype(I, /obj/item/grenade/c4))
 		return
-	if((istype(I, /obj/item/grenade)))
+	if((isgrenade(I)))
 		if(grenades.len < max_grenades)
 			if(!user.transferItemToLoc(I, src))
 				return
 			grenades += I
-			to_chat(user, span_notice("You put the grenade in the grenade launcher."))
-			to_chat(user, span_notice("[grenades.len] / [max_grenades] Grenades."))
+			balloon_alert(user, "[grenades.len] / [max_grenades] grenades loaded")
 		else
-			to_chat(usr, span_warning("The grenade launcher cannot hold more grenades!"))
+			balloon_alert(user, "it's already full!")
 
 /obj/item/gun/grenadelauncher/can_shoot()
 	return grenades.len
@@ -46,4 +45,4 @@
 	F.active = 1
 	F.icon_state = initial(F.icon_state) + "_active"
 	playsound(user.loc, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
-	addtimer(CALLBACK(F, /obj/item/grenade.proc/detonate), 15)
+	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade, detonate)), 15)

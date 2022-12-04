@@ -12,6 +12,7 @@
 	exp_requirements = 120
 	exp_required_type = EXP_TYPE_CREW
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "CYBORG"
 
 	display_order = JOB_DISPLAY_ORDER_CYBORG
 

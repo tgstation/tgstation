@@ -12,6 +12,7 @@
  *
  * Mark of Ash
  * Ritual of Knowledge
+ * Fire Blast
  * Mask of Madness
  * > Sidepaths:
  *   Curse of Corrosion
@@ -39,11 +40,6 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	route = PATH_ASH
 
-/datum/heretic_knowledge/limited_amount/starting/base_ash/on_research(mob/user)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 /datum/heretic_knowledge/ashen_grasp
 	name = "Grasp of Ash"
 	desc = "Your Mansus Grasp will burn the eyes of the victim, causing damage and blindness."
@@ -53,10 +49,10 @@
 	cost = 1
 	route = PATH_ASH
 
-/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -110,8 +106,20 @@
 		grasp.UpdateButtons()
 
 /datum/heretic_knowledge/knowledge_ritual/ash
-	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
+	next_knowledge = list(/datum/heretic_knowledge/spell/fire_blast)
 	route = PATH_ASH
+
+/datum/heretic_knowledge/spell/fire_blast
+	name = "Volcano Blast"
+	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
+		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
+		the beam will continue to another target."
+	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
+	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
+	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
+	cost = 1
+	route = PATH_ASH
+
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
@@ -158,7 +166,7 @@
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
 	next_knowledge = list(
-		/datum/heretic_knowledge/final/ash_final,
+		/datum/heretic_knowledge/ultimate/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/summon/rusty,
 	)
@@ -166,7 +174,7 @@
 	cost = 1
 	route = PATH_ASH
 
-/datum/heretic_knowledge/final/ash_final
+/datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
 	desc = "The ascension ritual of the Path of Ash. \
 		Bring 3 burning or husked corpses to a transumation rune to complete the ritual. \
@@ -188,7 +196,7 @@
 		TRAIT_NOFIRE,
 	)
 
-/datum/heretic_knowledge/final/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
+/datum/heretic_knowledge/ultimate/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
 	if(!.)
 		return
@@ -199,7 +207,7 @@
 		return TRUE
 	return FALSE
 
-/datum/heretic_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	priority_announce("[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 
@@ -208,6 +216,12 @@
 
 	var/datum/action/cooldown/spell/fire_cascade/big/screen_wide_fire_spell = new(user.mind)
 	screen_wide_fire_spell.Grant(user)
+
+	var/datum/action/cooldown/spell/charged/beam/fire_blast/existing_beam_spell = locate() in user.actions
+	if(existing_beam_spell)
+		existing_beam_spell.max_beam_bounces *= 2 // Double beams
+		existing_beam_spell.beam_duration *= 0.66 // Faster beams
+		existing_beam_spell.cooldown_time *= 0.66 // Lower cooldown
 
 	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
 	for(var/trait in traits_to_apply)

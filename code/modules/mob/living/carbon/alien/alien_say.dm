@@ -16,7 +16,7 @@
 			var/link = FOLLOW_LINK(S, src)
 			to_chat(S, "[link] [rendered]")
 
-/mob/living/carbon/alien/humanoid/royal/queen/alien_talk(message, shown_name = name)
+/mob/living/carbon/alien/adult/royal/queen/alien_talk(message, shown_name = name)
 	..(message, shown_name, TRUE)
 
 /mob/living/carbon/hivecheck()

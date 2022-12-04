@@ -8,9 +8,9 @@ SUBSYSTEM_DEF(addiction)
 	///Dictionary of addiction.type || addiction ref
 	var/list/all_addictions = list()
 
-/datum/controller/subsystem/addiction/Initialize(timeofday)
+/datum/controller/subsystem/addiction/Initialize()
 	InitializeAddictions()
-	return ..()
+	return SS_INIT_SUCCESS
 
 ///Ran on initialize, populates the addiction dictionary
 /datum/controller/subsystem/addiction/proc/InitializeAddictions()

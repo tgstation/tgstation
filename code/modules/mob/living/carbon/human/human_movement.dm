@@ -15,12 +15,12 @@
 	if (!(lube & GALOSHES_DONT_HELP))
 		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
 			return FALSE
-		if(shoes && istype(shoes, /obj/item/clothing))
+		if(shoes && isclothing(shoes))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP)
 				return FALSE
 	if (lube & SLIDE_ICE)
-		if(shoes && istype(shoes, /obj/item/clothing))
+		if(shoes && isclothing(shoes))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP_ICE)
 				return FALSE

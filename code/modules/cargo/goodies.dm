@@ -228,8 +228,44 @@
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/storage/box/fishing_lines)
 
+/datum/supply_pack/goody/fishing_hook_rescue
+	name = "Rescue Fishing Hook"
+	desc = "For when your fellow miner has inevitably fallen into a chasm, and it's up to you to save them."
+	cost = PAYCHECK_CREW * 12
+	contains = list(/obj/item/fishing_hook/rescue)
+
 /datum/supply_pack/goody/premium_bait
 	name = "Deluxe fishing bait"
 	desc = "When the standard variety is not good enough for you."
 	cost = PAYCHECK_CREW
 	contains = list(/obj/item/bait_can/worm/premium)
+
+/datum/supply_pack/goody/coffee_mug
+	name = "Coffee Mug"
+	desc = "A bog standard coffee mug, for drinking coffee."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/reagent_containers/cup/glass/mug)
+
+/datum/supply_pack/goody/nt_mug
+	name = "Nanotrasen Coffee Mug"
+	desc = "A blue mug bearing the logo of your corporate masters. Usually given out at inductions or events, we'll send one out special for a nominal fee."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/reagent_containers/cup/glass/mug/nanotrasen)
+
+/datum/supply_pack/goody/coffee_cartridge
+	name = "Coffee Cartridge"
+	desc = "A basic cartridge for a coffeemaker. Makes 4 pots."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/coffee_cartridge)
+
+/datum/supply_pack/goody/coffee_cartridge_fancy
+	name = "Fancy Coffee Cartridge"
+	desc = "A fancy cartridge for a coffeemaker. Makes 4 pots."
+	cost = PAYCHECK_CREW
+	contains = list(/obj/item/coffee_cartridge/fancy)
+
+/datum/supply_pack/goody/coffeepot
+	name = "Coffeepot"
+	desc = "A standard-sized coffeepot, for use with a coffeemaker."
+	cost = PAYCHECK_CREW
+	contains = list(/obj/item/reagent_containers/cup/coffeepot)

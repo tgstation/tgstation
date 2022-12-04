@@ -57,8 +57,8 @@
 /obj/item/valentine
 	name = "valentine"
 	desc = "A Valentine's card! Wonder what it says..."
-	icon = 'icons/obj/playing_cards.dmi'
-	icon_state = "sc_Ace of Hearts_syndicate" // shut up // bye felicia 
+	icon = 'icons/obj/toys/playing_cards.dmi'
+	icon_state = "sc_Ace of Hearts_syndicate" // shut up // bye felicia
 	var/message = "A generic message of love or whatever."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
@@ -74,7 +74,7 @@
 			return
 		var/recipient = tgui_input_text(user, "Who is receiving this valentine?", "To:", max_length = MAX_NAME_LEN)
 		var/sender = tgui_input_text(user, "Who is sending this valentine?", "From:", max_length = MAX_NAME_LEN)
-		if(!user.canUseTopic(src, BE_CLOSE))
+		if(!user.canUseTopic(src, be_close = TRUE))
 			return
 		if(recipient && sender)
 			name = "valentine - To: [recipient] From: [sender]"
@@ -96,7 +96,7 @@
 
 /obj/item/food/candyheart
 	name = "candy heart"
-	icon = 'icons/obj/holiday_misc.dmi'
+	icon = 'icons/obj/holiday/holiday_misc.dmi'
 	icon_state = "candyheart"
 	desc = "A heart-shaped candy that reads: "
 	food_reagents = list(/datum/reagent/consumable/sugar = 2)

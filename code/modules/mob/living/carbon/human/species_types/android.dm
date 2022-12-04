@@ -1,15 +1,11 @@
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
-	say_mod = "states"
-	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING)
+	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING, NOSTOMACH)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_GENELESS,
 		TRAIT_LIMBATTACHMENT,
-		TRAIT_LITERATE,
 		TRAIT_NOBREATH,
 		TRAIT_NOCLONELOSS,
 		TRAIT_NOFIRE,
@@ -23,24 +19,21 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_TOXIMMUNE,
 	)
-	brute_damage_desc = ROBOTIC_BRUTE_EXAMINE_TEXT
-	burn_damage_desc = ROBOTIC_BURN_EXAMINE_TEXT
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
-	damage_overlay_type = "synth"
 	mutanttongue = /obj/item/organ/internal/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
-	wings_icons = list("Robotic")
+	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/robot,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/robot,
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/robot,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/robot,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/robot,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/robot,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/robot,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot,
 	)
 	examine_limb_id = SPECIES_HUMAN
 

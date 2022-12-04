@@ -5,6 +5,7 @@
 	"map_file": "IceBoxStation.dmm",
 	"space_ruin_levels": 0,
 	"space_empty_levels": 0,
+	"planetary": 1,
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
@@ -43,6 +44,7 @@
 		}
 	],
 	"minetype": "none",
+	"blacklist_file": "iceruinblacklist.txt",
 	"job_changes": {
 		"Cook": {
 			"additional_cqc_areas": ["/area/station/service/kitchen/diner"]

@@ -630,6 +630,9 @@
 /obj/machinery/button/elevator/directional/north{
 	id = "test_vator"
 	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "test_vator"
+	},
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "di" = (
@@ -1072,6 +1075,9 @@
 /obj/structure/industrial_lift/public,
 /obj/effect/turf_decal/siding/white{
 	dir = 6
+	},
+/obj/machinery/lift_indicator/directional/east{
+	linked_elevator_id = "test_vator"
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/storage/primary)
@@ -1659,6 +1665,9 @@
 /obj/machinery/button/elevator/directional/north{
 	id = "test_vator"
 	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "test_vator"
+	},
 /turf/open/openspace,
 /area/station/engineering/storage)
 "LM" = (
@@ -1857,6 +1866,9 @@
 "VF" = (
 /obj/machinery/button/elevator/directional/north{
 	id = "test_vator"
+	},
+/obj/machinery/lift_indicator/directional/north{
+	linked_elevator_id = "test_vator"
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)

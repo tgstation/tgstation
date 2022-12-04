@@ -75,7 +75,7 @@
 		/obj/item/stack/sheet/mineral/metal_hydrogen= /datum/species/golem/mhydrogen,
 	)
 
-	if(!istype(I, /obj/item/stack))
+	if(!isstack(I))
 		return
 	var/obj/item/stack/stuff_stack = I
 	var/species = golem_shell_species_types[stuff_stack.merge_type]

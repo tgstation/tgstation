@@ -48,7 +48,7 @@
  */
 /datum/scar/proc/generate(obj/item/bodypart/BP, datum/wound/W, add_to_scars=TRUE)
 	limb = BP
-	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, PROC_REF(limb_gone))
 
 	severity = W.severity
 	if(limb.owner)
@@ -92,7 +92,7 @@
 		return
 
 	limb = BP
-	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
+	RegisterSignal(limb, COMSIG_PARENT_QDELETING, PROC_REF(limb_gone))
 	if(limb.owner)
 		victim = limb.owner
 		if(victim.get_biological_state() != biology)
@@ -136,7 +136,7 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			msg = span_smallnoticeital("<b>[msg]</b>")
 		if(WOUND_SEVERITY_LOSS)
-			msg = "[victim.p_their(TRUE)] [limb.name] [description]." // different format
+			msg = "[victim.p_their(TRUE)] [limb.plaintext_zone] [description]." // different format
 			msg = span_notice("<i><b>[msg]</b></i>")
 	return "\t[msg]"
 

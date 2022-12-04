@@ -5,7 +5,7 @@
 /mob/living/simple_animal/hostile/asteroid/lobstrosity
 	name = "arctic lobstrosity"
 	desc = "A marvel of evolution gone wrong, the frosty ice produces underground lakes where these ill tempered seafood gather. Beware its charge."
-	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon = 'icons/mob/simple/icemoon/icemoon_monsters.dmi'
 	icon_state = "arctic_lobstrosity"
 	icon_living = "arctic_lobstrosity"
 	icon_dead = "arctic_lobstrosity_dead"
@@ -29,7 +29,11 @@
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	vision_range = 5
 	aggro_vision_range = 7
-	butcher_results = list(/obj/item/food/meat/crab = 2, /obj/item/stack/sheet/bone = 2)
+	butcher_results = list(
+		/obj/item/food/meat/crab = 2,
+		/obj/item/stack/sheet/bone = 2,
+		/obj/item/organ/internal/monster_core/rush_gland = 1,
+	)
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	crusher_loot = /obj/item/crusher_trophy/lobster_claw

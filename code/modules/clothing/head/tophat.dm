@@ -1,6 +1,6 @@
-#define RABBIT_CD_TIME 30 SECONDS
+#define RABBIT_CD_TIME (30 SECONDS)
 
-/obj/item/clothing/head/that
+/obj/item/clothing/head/hats/tophat
 	name = "top-hat"
 	desc = "It's an amish looking hat."
 	icon_state = "tophat"
@@ -10,12 +10,12 @@
 	/// Cooldown for how often we can pull rabbits out of here
 	COOLDOWN_DECLARE(rabbit_cooldown)
 
-/obj/item/clothing/head/that/attackby(obj/item/hitby_item, mob/user, params)
+/obj/item/clothing/head/hats/tophat/attackby(obj/item/hitby_item, mob/user, params)
 	. = ..()
 	if(istype(hitby_item, /obj/item/gun/magic/wand))
 		abracadabra(hitby_item, user)
 
-/obj/item/clothing/head/that/proc/abracadabra(obj/item/hitby_wand, mob/magician)
+/obj/item/clothing/head/hats/tophat/proc/abracadabra(obj/item/hitby_wand, mob/magician)
 	if(!COOLDOWN_FINISHED(src, rabbit_cooldown))
 		to_chat(magician, span_warning("You can't find another rabbit in [src]! Seems another hasn't gotten lost in there yet..."))
 		return
@@ -34,7 +34,7 @@
 				barry.say(pick("BUZZ BUZZ", "PULLING A RABBIT OUT OF A HAT IS A TIRED TROPE", "I DIDN'T ASK TO BEE HERE"), forced = "bee hat")
 	else
 		magician.visible_message(span_notice("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bunny! Cute!"), span_notice("You tap [src] with your [hitby_wand.name] and pull out a cute bunny!"))
-		var/mob/living/simple_animal/rabbit/bunbun = new(get_turf(magician))
+		var/mob/living/basic/rabbit/bunbun = new(get_turf(magician))
 		bunbun.mob_try_pickup(magician, instant=TRUE)
 
 #undef RABBIT_CD_TIME

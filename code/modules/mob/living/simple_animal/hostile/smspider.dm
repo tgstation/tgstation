@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/smspider
 	name = "supermatter spider"
 	desc= "A sliver of supermatter placed upon a robotically enhanced pedestal."
-	icon = 'icons/mob/smspider.dmi'
+	icon = 'icons/mob/simple/smspider.dmi'
 	icon_state = "smspider"
 	icon_living = "smspider"
 	icon_dead = "smspider_dead"
@@ -37,6 +37,7 @@
 		playsound(get_turf(src), 'sound/effects/supermatter.ogg', 10, TRUE)
 		visible_message(span_danger("[src] knocks into [target], turning them to dust in a brilliant flash of light!"))
 		var/mob/living/victim = target
+		victim.investigate_log("has been dusted by [src].", INVESTIGATE_DEATHS)
 		victim.dust()
 		if(!overcharged)
 			death()

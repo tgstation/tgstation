@@ -1,5 +1,5 @@
 /// Checks if potential_weakref is a weakref of thing.
-#define IS_WEAKREF_OF(thing, potential_weakref) (istype(thing, /datum) && !isnull(potential_weakref) && thing.weak_reference == potential_weakref)
+#define IS_WEAKREF_OF(thing, potential_weakref) (isdatum(thing) && !isnull(potential_weakref) && thing.weak_reference == potential_weakref)
 
 //For these two procs refs MUST be ref = TRUE format like typecaches!
 /proc/weakref_filter_list(list/things, list/refs)

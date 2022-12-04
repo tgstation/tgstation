@@ -12,6 +12,7 @@
  *
  * Mark of the Blade
  * Ritual of Knowledge
+ * Realignment
  * Stance of the Scarred Duelist
  * > Sidepaths:
  *   Carving Knife
@@ -28,9 +29,9 @@
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
 	desc = "Opens up the path of blades to you. \
-		Allows you to transmute a knife with two bars of silver to create a Darkened Blade. \
+		Allows you to transmute a knife with two bars of silver to create a Sundered Blade. \
 		You can create up to five at a time."
-	gain_text = "Our great ancestors forged swords and practiced sparring on the even of great battles."
+	gain_text = "Our great ancestors forged swords and practiced sparring on the eve of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -49,10 +50,10 @@
 	cost = 1
 	route = PATH_BLADE
 
-/datum/heretic_knowledge/blade_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+/datum/heretic_knowledge/blade_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
 
-/datum/heretic_knowledge/blade_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/blade_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/blade_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -92,13 +93,14 @@
 	playsound(get_turf(target), 'sound/weapons/guillotine.ogg', 100, TRUE)
 
 /// The cooldown duration between trigers of blade dance
-#define BLADE_DANCE_COOLDOWN 20 SECONDS
+#define BLADE_DANCE_COOLDOWN (20 SECONDS)
 
 /datum/heretic_knowledge/blade_dance
 	name = "Dance of the Brand"
 	desc = "Being attacked while wielding a Heretic Blade in either hand will deliver a riposte \
 		towards your attacker. This effect can only trigger once every 20 seconds."
-	gain_text = "Having the prowess to wield such a thing requires great dedication and terror."
+	gain_text = "The footsoldier was known to be a fearsome duelist. \
+		Their general quickly appointed them as their personal Champion."
 	next_knowledge = list(
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
 		/datum/heretic_knowledge/mark/blade_mark,
@@ -111,10 +113,10 @@
 	/// Used instead of cooldowns, so we can give feedback when it's ready again
 	var/riposte_ready = TRUE
 
-/datum/heretic_knowledge/blade_dance/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_shield_reaction)
+/datum/heretic_knowledge/blade_dance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_shield_reaction))
 
-/datum/heretic_knowledge/blade_dance/on_lose(mob/user)
+/datum/heretic_knowledge/blade_dance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
 
 /datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
@@ -164,11 +166,11 @@
 		return
 
 	// If we made it here, deliver the strike
-	INVOKE_ASYNC(src, .proc/counter_attack, source, attacker, striking_with, attack_text)
+	INVOKE_ASYNC(src, PROC_REF(counter_attack), source, attacker, striking_with, attack_text)
 
 	// And reset after a bit
 	riposte_ready = FALSE
-	addtimer(CALLBACK(src, .proc/reset_riposte, source), BLADE_DANCE_COOLDOWN)
+	addtimer(CALLBACK(src, PROC_REF(reset_riposte), source), BLADE_DANCE_COOLDOWN)
 
 /datum/heretic_knowledge/blade_dance/proc/counter_attack(mob/living/carbon/human/source, mob/living/target, obj/item/melee/sickly_blade/weapon, attack_text)
 	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
@@ -192,20 +194,19 @@
 		the victim will be unable to leave their current room until it expires or is triggered. \
 		Triggering the mark will summon a knife that will orbit you for a short time. \
 		The knife will block any attack directed towards you, but is consumed on use."
-	gain_text = "There was no room for cowardace here. Those who ran were scolded. \
-		That is how I met them. Their name was The Colonel."
+	gain_text = "His general wished to end the war, but the Champion knew there could be no life without death. \
+		He would slay the coward himself, and anyone who tried to run."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/blade)
 	route = PATH_BLADE
 	mark_type = /datum/status_effect/eldritch/blade
 
 /datum/heretic_knowledge/mark/blade_mark/create_mark(mob/living/source, mob/living/target)
 	var/datum/status_effect/eldritch/blade/blade_mark = ..()
-	if(!istype(blade_mark))
-		return
-
-	var/area/to_lock_to = get_area(target)
-	blade_mark.locked_to = to_lock_to
-	to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+	if(istype(blade_mark))
+		var/area/to_lock_to = get_area(target)
+		blade_mark.locked_to = to_lock_to
+		to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+	return blade_mark
 
 /datum/heretic_knowledge/mark/blade_mark/trigger_mark(mob/living/source, mob/living/target)
 	. = ..()
@@ -214,19 +215,30 @@
 	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
 
 /datum/heretic_knowledge/knowledge_ritual/blade
-	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
+	next_knowledge = list(/datum/heretic_knowledge/spell/realignment)
 	route = PATH_BLADE
 
-/// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Scarred Duelist.
-#define BLOOD_FLOW_PER_SEVEIRTY 1
+/datum/heretic_knowledge/spell/realignment
+	name = "Realignment"
+	desc = "Grants you Realignment a spell that wil realign your body rapidly for a short period. \
+		During this process, you will rapidly regenerate stamina and stuns, however, you will be unable to attack. \
+		This spell can be casted in rapid succession, but doing so will increase the cooldown."
+	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
+	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
+	spell_to_add = /datum/action/cooldown/spell/realignment
+	cost = 1
+	route = PATH_BLADE
+
+/// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
+#define BLOOD_FLOW_PER_SEVEIRTY -1
 
 /datum/heretic_knowledge/duel_stance
-	name = "Stance of the Scarred Duelist"
+	name = "Stance of the Torn Champion"
 	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
 		Additionally, when damaged below 50% of your maximum health, \
 		you gain increased resistance to gaining wounds and resistance to batons."
-	gain_text = "The Colonel was many things though out the age. But now, he is blind; he is deaf; \
-		he cannot be wounded; and he cannot be denied. His methods ensure that."
+	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
+		He was without rival, equal, or purpose."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/blade,
 		/datum/heretic_knowledge/reroll_targets,
@@ -238,15 +250,15 @@
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 
-/datum/heretic_knowledge/duel_stance/on_gain(mob/user)
+/datum/heretic_knowledge/duel_stance/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	ADD_TRAIT(user, TRAIT_NODISMEMBER, type)
-	RegisterSignal(user, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, .proc/on_wound_gain)
-	RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, .proc/on_health_update)
+	RegisterSignal(user, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(user, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_wound_gain))
+	RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, PROC_REF(on_health_update))
 
 	on_health_update(user) // Run this once, so if the knowledge is learned while hurt it activates properly
 
-/datum/heretic_knowledge/duel_stance/on_lose(mob/user)
+/datum/heretic_knowledge/duel_stance/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	REMOVE_TRAIT(user, TRAIT_NODISMEMBER, type)
 	if(in_duelist_stance)
 		REMOVE_TRAIT(user, TRAIT_HARDLY_WOUNDED, type)
@@ -267,7 +279,7 @@
 	if(gained_wound.blood_flow <= 0)
 		return
 
-	gained_wound.blood_flow -= (gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
+	gained_wound.adjust_blood_flow(gained_wound.severity * BLOOD_FLOW_PER_SEVEIRTY)
 
 /datum/heretic_knowledge/duel_stance/proc/on_health_update(mob/living/source)
 	SIGNAL_HANDLER
@@ -290,12 +302,17 @@
 
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Swift Blades"
-	desc = "Attacking someone with a Darkened Blade in both hands \
+	desc = "Attacking someone with a Sundered Blade in both hands \
 		will now deliver a blow with both at once, dealing two attacks in rapid succession. \
 		The second blow will be slightly weaker."
-	gain_text = "From here, I began to learn the Colonel's arts. The prowess was finally mine to have."
+	gain_text = "I found him cleaved in twain, halves locked in a duel without end; \
+		a flurry of blades, neither hitting their mark, for the Champion was indomitable."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
+	/// How much force do we apply to the offhand?
+	var/offand_force_decrement = 0
+	/// How much force was the last weapon we offhanded with? If it's different, we need to re-calculate the decrement
+	var/last_weapon_force = -1
 
 /datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(target == source)
@@ -310,23 +327,41 @@
 		return
 
 	// Give it a short delay (for style, also lets people dodge it I guess)
-	addtimer(CALLBACK(src, .proc/follow_up_attack, source, target, off_hand), 0.25 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(follow_up_attack), source, target, off_hand), 0.25 SECONDS)
 
 /datum/heretic_knowledge/blade_upgrade/blade/proc/follow_up_attack(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(QDELETED(source) || QDELETED(target) || QDELETED(blade))
 		return
-	// Sanity to ensure that the blade we're delivering
-	// an offhand attack with is actually our offhand
+	// Sanity to ensure that the blade we're delivering an offhand attack with is ACTUALLY our offhand
 	if(blade != source.get_inactive_held_item())
 		return
+	// And we easily could've moved away
 	if(!source.Adjacent(target))
 		return
 
-	// Blade are 17 force: 17 + 17 = 34 (3 hits to crit, unarmored)
-	// So, -5 force is put on the offhand blade: 17 + 12 = 29 (4 hits to crit, unarmored)
-	blade.force -= 5
+	// Check if we need to recaclulate our offhand force
+	// This is just so we don't run this block every attack, that's wasteful
+	if(last_weapon_force != blade.force)
+		offand_force_decrement = 0
+		// We want to make sure that the offhand blade increases their hits to crit by one, just about
+		// So, let's do some quick math. Yes this'll be inaccurate if their mainhand blade is modified (whetstone), no I don't care
+		// Find how much force we need to detract from the second blade
+		var/hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2))
+		while(hits_to_crit_on_average <= 3) // 3 hits and beyond is a bit too absurd
+			if(offand_force_decrement + 2 > blade.force * 0.5) // But also cutting the force beyond half is absurd
+				break
+
+			offand_force_decrement += 2
+			hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2 - offand_force_decrement))
+
+	// Save the force as our last weapon force
+	last_weapon_force = blade.force
+	// Subtract the decrement
+	blade.force -= offand_force_decrement
+	// Perform the offhand attack
 	blade.melee_attack_chain(source, target)
-	blade.force += 5
+	// Restore the force.
+	blade.force = last_weapon_force
 
 /datum/heretic_knowledge/spell/furious_steel
 	name = "Furious Steel"
@@ -334,17 +369,18 @@
 		orbiting blades around you. These blades will protect you from all attacks, \
 		but are consumed on use. Additionally, you can click to fire the blades \
 		at a target, dealing damage and causing bleeding."
-	gain_text = "His arts were those that ensured an ending."
+	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
+		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
-		/datum/heretic_knowledge/final/blade_final,
+		/datum/heretic_knowledge/ultimate/blade_final,
 		/datum/heretic_knowledge/rifle,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
 	cost = 1
 	route = PATH_BLADE
 
-/datum/heretic_knowledge/final/blade_final
+/datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"
 	desc = "The ascension ritual of the Path of Blades. \
 		Bring 3 headless corpses to a transmutation rune to complete the ritual. \
@@ -352,32 +388,31 @@
 		These blades will protect you from all attacks, but are consumed on use. \
 		Your Furious Steel spell will also have a shorter cooldown. \
 		Additionally, you become a master of combat, gaining full wound and stun immunity. \
-		Your Darkened Blades deal bonus damage and healing you on attack for a portion of the damage dealt."
-	gain_text = "The Colonel, in all of his expertise, revealed to me the three roots of victory. \
-		Cunning. Strength. And agony! This was their secret doctrine! With this knowledge in my potential, \
+		Your Sundered Blades deal bonus damage and healing you on attack for a portion of the damage dealt."
+	gain_text = "The Torn Champion is freed! I will become the blade reunited, and with my greater ambition, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 	route = PATH_BLADE
 
-/datum/heretic_knowledge/final/blade_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
+/datum/heretic_knowledge/ultimate/blade_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	return !sacrifice.get_bodypart(BODY_ZONE_HEAD)
 
-/datum/heretic_knowledge/final/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Master of blades, the Colonel's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce("[generate_heretic_text()] Master of blades, the Torn Champion's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.client?.give_award(/datum/award/achievement/misc/blade_ascension, user)
 	ADD_TRAIT(user, TRAIT_STUNIMMUNE, name)
 	ADD_TRAIT(user, TRAIT_NEVER_WOUNDED, name)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, 1 MINUTES)
 
 	var/datum/action/cooldown/spell/pointed/projectile/furious_steel/steel_spell = locate() in user.actions
-	steel_spell?.cooldown_time /= 3
+	steel_spell?.cooldown_time /= 2
 
-/datum/heretic_knowledge/final/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/heretic_knowledge/ultimate/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
 	if(target == source)

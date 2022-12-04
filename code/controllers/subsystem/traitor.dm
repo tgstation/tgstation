@@ -40,8 +40,7 @@ SUBSYSTEM_DEF(traitor)
 	/// A list of all existing objectives by type
 	var/list/all_objectives_by_type = list()
 
-/datum/controller/subsystem/traitor/Initialize(start_timeofday)
-	. = ..()
+/datum/controller/subsystem/traitor/Initialize()
 	category_handler = new()
 	traitor_debug_panel = new(category_handler)
 
@@ -52,6 +51,7 @@ SUBSYSTEM_DEF(traitor)
 			if(!actual_typepath)
 				log_world("[configuration_path] has an invalid type ([typepath]) that doesn't exist in the codebase! Please correct or remove [typepath]")
 			configuration_data[actual_typepath] = data[typepath]
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/traitor/fire(resumed)
 	var/player_count = length(GLOB.alive_player_list)
@@ -89,7 +89,7 @@ SUBSYSTEM_DEF(traitor)
 	uplink_handlers |= uplink_handler
 	// An uplink handler can be registered multiple times if they get assigned to new uplinks, so
 	// override is set to TRUE here because it is intentional that they could get added multiple times.
-	RegisterSignal(uplink_handler, COMSIG_PARENT_QDELETING, .proc/uplink_handler_deleted, override = TRUE)
+	RegisterSignal(uplink_handler, COMSIG_PARENT_QDELETING, PROC_REF(uplink_handler_deleted), override = TRUE)
 
 /datum/controller/subsystem/traitor/proc/uplink_handler_deleted(datum/uplink_handler/uplink_handler)
 	SIGNAL_HANDLER

@@ -1,5 +1,3 @@
-#define INFINITE -1
-
 /obj/item/autosurgeon
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
@@ -34,7 +32,7 @@
 	. = ..()
 	if(stored_organ)
 		. += loaded_overlay
-		. += emissive_appearance(icon, loaded_overlay)
+		. += emissive_appearance(icon, loaded_overlay, src)
 
 /obj/item/autosurgeon/proc/load_organ(obj/item/organ/loaded_organ, mob/living/user)
 	if(user)
@@ -105,7 +103,7 @@
 	use_autosurgeon(target, user, 8 SECONDS)
 
 /obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/organ))
+	if(isorgan(attacking_item))
 		load_organ(attacking_item, user)
 	else
 		return ..()
@@ -162,7 +160,9 @@
 	modified this one to only insert... tongues. Horrifying."
 	starting_organ = /obj/item/organ/internal/tongue
 
-
 /obj/item/autosurgeon/syndicate/commsagent/Initialize(mapload)
 	. = ..()
 	organ_whitelist += /obj/item/organ/internal/tongue
+
+/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
+	starting_organ = /obj/item/organ/internal/cyberimp/arm/surgery/emagged

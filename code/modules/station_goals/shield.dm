@@ -62,8 +62,9 @@
 			. = TRUE
 
 /obj/machinery/computer/sat_control/proc/toggle(id)
+	var/turf/current_turf = get_turf(src)
 	for(var/obj/machinery/satellite/S in GLOB.machines)
-		if(S.id == id && S.z == z)
+		if(S.id == id && is_valid_z_level(get_turf(S), current_turf))
 			S.toggle()
 
 /obj/machinery/computer/sat_control/ui_data()
@@ -179,6 +180,8 @@
 	// Update the weight of all meteor events
 	for(var/datum/round_event_control/meteor_wave/meteors in SSevents.control)
 		meteors.weight *= mod
+	for(var/datum/round_event_control/stray_meteor/stray_meteor in SSevents.control)
+		stray_meteor.weight *= mod
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()

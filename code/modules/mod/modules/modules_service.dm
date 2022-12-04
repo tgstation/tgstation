@@ -36,7 +36,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!istype(target, /obj/item))
+	if(!isitem(target))
 		return
 	if(!isturf(target.loc))
 		balloon_alert(mod.wearer, "must be on the floor!")
@@ -46,7 +46,7 @@
 	spark_effect.set_up(2, 1, mod.wearer)
 	spark_effect.start()
 	mod.wearer.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
-	if(microwave_target.microwave_act())
+	if(microwave_target.microwave_act(microwaver = mod.wearer) & COMPONENT_MICROWAVE_SUCCESS)
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
 	else
 		balloon_alert(mod.wearer, "can't be microwaved!")

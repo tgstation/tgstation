@@ -55,10 +55,10 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	name = "Old pamphlet"
 
 /obj/item/paper/fluff/ruins/forgottenship/password/Initialize(mapload)
-	. = ..()
 	default_raw_text = "Welcome to most advanced cruiser owned by Cyber Sun Industries!<br>You might notice, that this cruiser is equipped with 12 prototype laser turrets making any hostile boarding attempts futile.<br>Other facilities built on the ship are: Simple atmospheric system, Camera system with built-in X-ray visors and Safety module, enabling emergency engines in case of... you know, emergency.<br>Emergency system will bring you to nearest syndicate pod containing everything needed for human life.<br><br><b>In case of emergency, you must remember the pod-door activation code - [GLOB.fscpassword]</b><br><br>Cyber Sun Industries (C) 2484."
 	icon_state = "paper_words"
 	inhand_icon_state = "paper"
+	return ..()
 
 /obj/item/paper/fluff/ruins/forgottenship/powerissues
 	name = "Power issues"

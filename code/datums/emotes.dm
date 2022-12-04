@@ -189,7 +189,7 @@
 	. = msg
 	if(!muzzle_ignore && user.is_muzzled() && emote_type & EMOTE_AUDIBLE)
 		return "makes a [pick("strong ", "weak ", "")]noise."
-	if(user.mind && user.mind.miming && message_mime)
+	if(user.mind?.miming && message_mime)
 		. = message_mime
 	if(isalienadult(user) && message_alien)
 		. = message_alien
@@ -227,7 +227,6 @@
  * Returns a bool about whether or not the user can run the emote.
  */
 /datum/emote/proc/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
-	. = TRUE
 	if(!is_type_in_typecache(user, mob_type_allowed_typecache))
 		return FALSE
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
@@ -250,10 +249,10 @@
 			to_chat(user, span_warning("You cannot use your hands to [key] right now!"))
 			return FALSE
 
-	if(isliving(user))
-		var/mob/living/sender = user
-		if(HAS_TRAIT(sender, TRAIT_EMOTEMUTE))
-			return FALSE
+	if(HAS_TRAIT(user, TRAIT_EMOTEMUTE))
+		return FALSE
+
+	return TRUE
 
 /**
  * Check to see if the user should play a sound when performing the emote.

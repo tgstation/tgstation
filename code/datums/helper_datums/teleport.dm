@@ -15,6 +15,7 @@
 		/obj/effect/wisp = FALSE,
 		/obj/effect/mob_spawn = FALSE,
 		/obj/effect/immovablerod = FALSE,
+		/obj/effect/meteor = FALSE,
 	))
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)

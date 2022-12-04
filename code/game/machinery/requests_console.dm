@@ -109,7 +109,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		screen_state = "[base_icon_state]0"
 
 	. += mutable_appearance(icon, screen_state)
-	. += emissive_appearance(icon, screen_state, alpha = src.alpha)
+	. += emissive_appearance(icon, screen_state, src, alpha = src.alpha)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
@@ -334,7 +334,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				Radio.set_frequency(radio_freq)
 				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
 				update_appearance()
-				addtimer(CALLBACK(src, .proc/clear_emergency), 5 MINUTES)
+				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 
 	if(href_list["send"] && message && to_department && priority)
 

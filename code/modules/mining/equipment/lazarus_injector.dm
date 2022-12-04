@@ -9,7 +9,7 @@
 /obj/item/lazarus_injector
 	name = "lazarus injector"
 	desc = "An injector with a cocktail of nanomachines and chemicals, this device can seemingly raise animals from the dead, making them become friendly to the user. Unfortunately, the process is useless on higher forms of life and incredibly costly, so these were hidden in storage until an executive thought they'd be great motivation for some of their employees."
-	icon = 'icons/obj/syringe.dmi'
+	icon = 'icons/obj/medical/syringe.dmi'
 	icon_state = "lazarus_hypo"
 	inhand_icon_state = "hypo"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
@@ -42,7 +42,7 @@
 		return
 
 	target_animal.faction = list("neutral")
-	target_animal.revive(full_heal = TRUE, admin_revive = TRUE)
+	target_animal.revive(HEAL_ALL)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/target_hostile = target_animal
 		if(malfunctioning)

@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(explosions)
 		else
 			continue
 
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/wipe_color_and_text, wipe_colours), 100)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(wipe_color_and_text), wipe_colours), 100)
 
 /proc/wipe_color_and_text(list/atom/wiping)
 	for(var/i in wiping)
@@ -557,7 +557,7 @@ SUBSYSTEM_DEF(explosions)
 			listener.playsound_local(epicenter, null, echo_volume, TRUE, frequency, sound_to_use = echo_sound, distance_multiplier = 0)
 
 		if(creaking) // 5 seconds after the bang, the station begins to creak
-			addtimer(CALLBACK(listener, /mob/proc/playsound_local, epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), TRUE, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
+			addtimer(CALLBACK(listener, TYPE_PROC_REF(/mob, playsound_local), epicenter, null, rand(FREQ_LOWER, FREQ_UPPER), TRUE, frequency, null, null, FALSE, hull_creaking_sound, 0), CREAK_DELAY)
 
 #undef CREAK_DELAY
 #undef QUAKE_CREAK_PROB
@@ -731,6 +731,8 @@ SUBSYSTEM_DEF(explosions)
 			var/throw_dir = L[2]
 			var/max_range = L[3]
 			for(var/atom/movable/A in T)
+				if(QDELETED(A))
+					continue
 				if(!A.anchored && A.move_resist != INFINITY)
 					var/atom_throw_range = rand(throw_range, max_range)
 					var/turf/throw_at = get_ranged_target_turf(A, throw_dir, atom_throw_range)

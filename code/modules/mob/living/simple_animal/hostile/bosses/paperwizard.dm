@@ -6,7 +6,7 @@
 	boss_abilities = list(/datum/action/boss/wizard_summon_minions, /datum/action/boss/wizard_mimic)
 	faction = list("hostile","stickman")
 	del_on_death = TRUE
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "paperwizard"
 	ranged = 1
 	environment_smash = ENVIRONMENT_SMASH_NONE
@@ -47,7 +47,7 @@
 	///How many minions we should spawn
 	var/minions_to_summon = 3
 
-/datum/action/boss/wizard_summon_minions/IsAvailable()
+/datum/action/boss/wizard_summon_minions/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -68,7 +68,7 @@
 	for(var/i in 1 to summon_amount)
 		var/atom/chosen_minion = pick_n_take(minions)
 		chosen_minion = new chosen_minion(get_step(boss, pick_n_take(directions)))
-		RegisterSignal(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/lost_minion)
+		RegisterSignals(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 		summoned_minions++
 
 /// Called when a minion is qdeleted or dies, removes it from our minion list
