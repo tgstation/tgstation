@@ -185,11 +185,12 @@
 	end_processing()
 	dump_inventory_contents()
 
-	// Don't delete the stock part singletons
-	for (var/atom/atom_part in component_parts)
-		qdel(atom_part)
+	if (!isnull(component_parts))
+		// Don't delete the stock part singletons
+		for (var/atom/atom_part in component_parts)
+			qdel(atom_part)
 
-	component_parts.Cut()
+		component_parts.Cut()
 
 	QDEL_NULL(circuit)
 	unset_static_power()
