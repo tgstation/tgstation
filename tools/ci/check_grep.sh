@@ -42,10 +42,13 @@ part() {
 }
 
 check() {
+	echo "part: $1"
 	part $1
 	shift
+	echo "error message: $2"
 	erro_msg=$1
 	shift
+	echo "rest: $@"
 
 	set +e
 	$grep "$@"
@@ -60,9 +63,7 @@ check() {
 }
 
 section "map issues"
-check "TGM Format" \
-	"Non-TGM formatted map detected. Please convert it using Map Merger!" \
-	-U '^".+" = \(.+\)' $map_files
+check "TGM Format" "Non-TGM formatted map detected. Please convert it using Map Merger!" -U '^".+" = \(.+\)' $map_files
 
 check "comments" \
 	"Unexpected commented out line detected in this map file. Please remove it." \
