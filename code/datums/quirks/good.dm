@@ -293,3 +293,43 @@
 
 /datum/quirk/item_quirk/signer/remove()
 	qdel(quirk_holder.GetComponent(/datum/component/sign_language))
+
+/datum/quirk/linguist
+	name = "Linguist"
+	desc = "You studied hard in school and know how to speak an extra language."
+	icon = "book"
+	value = 6
+	gain_text = "<span class='notice'>You've developed fluency in another language."
+	lose_text = "<span class='notice'>You forget the words to a familiar language."
+	medical_record_text = "Patient is fluent in multiple languages."
+	mail_goodies = list(/obj/item/taperecorder) // for translation
+	var/other_language 
+
+/datum/quirk/linguist/add()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	
+	other_language = other_language || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/other_language)
+	switch(other_language)
+		if("Voltaic")
+			other_language = /datum/language/voltaic
+		if("Nekomimetic")
+			other_language = /datum/language/nekomimetic
+		if("Draconic")
+			other_language = /datum/language/draconic
+		if("Moffic")
+			other_language = /datum/language/moffic
+		if("Calcic")
+			other_language = /datum/language/calcic
+		else
+			other_language = /datum/language/uncommon
+
+	if(human_holder.has_language(other_language))
+		other_language = /datum/language/uncommon
+
+	user.grant_language(other_language, source=LANGUAGE_QUIRK)
+	//user.remove_blocked_language(other_language, source=LANGUAGE_QUIRK)	
+
+/datum/quirk/linguist/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	//human_holder.remove_blocked_language(/datum/language/common)
+	human_holder.remove_language(other_language, source=LANGUAGE_QUIRK)
