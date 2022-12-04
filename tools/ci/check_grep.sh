@@ -44,6 +44,18 @@ part() {
 	echo -e "${GREEN} $padded- $1${NC}"
 }
 
+check() {
+	part $1
+	shift
+	erro_msg=$1
+	shift
+	$@
+	if $? ; then
+		st=1
+		echo -e "${RED}$erro_msg${NC}"
+	fi
+}
+
 section "map issues"
 
 part "TGM"
@@ -266,12 +278,10 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
     echo -e "${RED}ERROR: Changed files contains a proc argument starting with 'var'.${NC}"
     st=1
 fi;
-part "balloon_alert sanity"
-if $grep 'balloon_alert\(".+"\)' $code_files; then
-	echo
-	echo -e "${RED}ERROR: Found a balloon alert with improper arguments.${NC}"
-	st=1
-fi;
+check "balloon_alert sanity" \
+	"Found a balloon alert with improper arguments." \
+	"$grep 'balloon_alert\(".+"\)' $code_files"
+
 part "common spelling mistakes"
 if $grep -i 'centcomm' $code_files; then
 	echo
