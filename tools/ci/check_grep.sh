@@ -2,7 +2,7 @@
 set -euo pipefail
 
 #nb: must be bash to support shopt globstar
-shopt -s globstar
+# shopt -s globstar
 
 #ANSI Escape Codes for colors to increase contrast of errors
 RED="\033[0;31m"
