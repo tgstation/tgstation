@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Tram turfs will now correctly show damage instead of reverting to a default icon."
