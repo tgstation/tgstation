@@ -22,6 +22,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 // Higher numbers beat lower numbers
 ///Standard, go lower then this if you want to override, higher otherwise
 #define MOVEMENT_DEFAULT_PRIORITY 10
+#define MOVEMENT_HYPERSPACE_PRIORITY 11
 ///Very few things should override this
 #define MOVEMENT_SPACE_PRIORITY 100
 ///Higher then the heavens

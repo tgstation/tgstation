@@ -21,9 +21,9 @@
 
 /turf/open/space/transit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(!locate(/obj/structure/lattice) in src) //we dont have a lattice
-		var/turf/throw_target = get_edge_target_turf(arrived, turn(dir, 180))
-		arrived.safe_throw_at(throw_target, 200, 1, spin = FALSE, force = MOVE_FORCE_EXTREMELY_STRONG)
+
+	if(!HAS_TRAIT(arrived, TRAIT_HYPERSPACED))
+		arrived.AddComponent(/datum/component/shuttle_cling, dir)
 
 /turf/open/space/transit/Exited(atom/movable/gone, direction)
 	. = ..()
