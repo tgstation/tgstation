@@ -243,7 +243,7 @@
 		var/amount = min(transfer_rate * delta_time, drip_reagents.maximum_volume - drip_reagents.total_volume)
 		// If the beaker is full, ping
 		if(!amount)
-			transfer_rate = MIN_IV_TRANSFER_RATE
+			set_transfer_rate(MIN_IV_TRANSFER_RATE)
 			visible_message(span_hear("[src] pings."))
 			return
 
@@ -294,9 +294,8 @@
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
-	transfer_rate = MIN_IV_TRANSFER_RATE
+	set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	attached = null
-	update_appearance(UPDATE_ICON)
 
 /// Get the reagents used by IV drip
 /obj/machinery/iv_drip/proc/get_reagents()
@@ -346,9 +345,8 @@
 		mode = IV_INJECTING
 		return
 	mode = !mode
-	transfer_rate = MIN_IV_TRANSFER_RATE
+	set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	to_chat(usr, span_notice("The IV drip is now [mode ? "injecting" : "taking blood"]."))
-	update_appearance(UPDATE_ICON)
 
 /obj/machinery/iv_drip/examine(mob/user)
 	. = ..()

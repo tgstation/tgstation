@@ -19,7 +19,7 @@
 	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
 	if(teleport)
 		teleport.name = name
-		teleport.icon_icon = icon
+		teleport.button_icon = icon
 		teleport.button_icon_state = icon_state
 
 /obj/item/teleportation_scroll/item_action_slot_check(slot, mob/user)
