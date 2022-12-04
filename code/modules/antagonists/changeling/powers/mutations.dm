@@ -275,7 +275,7 @@
 	to_chat(user, span_warning("The [name] is not ready yet."))
 
 /obj/item/gun/magic/tentacle/attack_secondary(mob/living/victim, mob/living/user, params)
-	. = ..()
+	..()
 	return fire_gun(victim, user)
 
 /obj/item/gun/magic/tentacle/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
