@@ -27,11 +27,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/datum/powernet/powernet
 	var/cable_color = CABLE_COLOR_YELLOW
 
-	/// If TRUE, then after init, update_appearance() will be called.
-	/// Used to make sure cables connecting to each other don't naively
-	/// update for every adjacent cable.
-	var/going_to_update_appearance = FALSE
-
 /obj/structure/cable/layer1
 	color = CABLE_HEX_COLOR_RED
 	cable_color = CABLE_COLOR_RED
