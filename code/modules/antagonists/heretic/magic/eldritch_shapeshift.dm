@@ -3,7 +3,8 @@
 	name = "Shapechange"
 	desc = "A spell that allows you to take on the form of another creature, gaining their abilities. \
 		After making your choice, you will be unable to change to another."
-	background_icon_state = "bg_ecult"
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
 
 	school = SCHOOL_FORBIDDEN
 	invocation = "SH'PE"

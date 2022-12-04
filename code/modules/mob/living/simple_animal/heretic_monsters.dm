@@ -78,7 +78,7 @@
 		link_message = on_link_message, \
 		unlink_message = on_unlink_message, \
 		post_unlink_callback = CALLBACK(src, PROC_REF(after_unlink)), \
-		speech_action_background_icon_state = "bg_ecult", \
+		speech_action_background_icon_state = "bg_heretic", \
 	)
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/attack_animal(mob/living/simple_animal/user, list/modifiers)
