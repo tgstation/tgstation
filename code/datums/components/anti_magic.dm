@@ -72,7 +72,6 @@
 
 	if(!(inventory_flags & slot)) //Check that the slot is valid for antimagic
 		unregister_antimagic_signals(equipper)
-		casting_restriction_alert = FALSE
 		return
 
 	register_antimagic_signals(parent)
