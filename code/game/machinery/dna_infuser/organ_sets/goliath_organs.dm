@@ -1,7 +1,7 @@
 
-#define GOLIATH_ORGAN_COLOR "#4caee7"
-#define GOLIATH_SCLERA_COLOR "#ffffff"
-#define GOLIATH_PUPIL_COLOR "#00b1b1"
+#define GOLIATH_ORGAN_COLOR "#875652"
+#define GOLIATH_SCLERA_COLOR "#ac0f32"
+#define GOLIATH_PUPIL_COLOR "#FF0000"
 
 #define GOLIATH_COLORS GOLIATH_ORGAN_COLOR + GOLIATH_SCLERA_COLOR + GOLIATH_PUPIL_COLOR
 
@@ -29,8 +29,8 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
-	eye_color_left = "f00"
-	eye_color_right = "f00"
+	eye_color_left = "#FF0000"
+	eye_color_right = "#FF0000"
 
 /obj/item/organ/internal/eyes/night_vision/goliath/Initialize(mapload)
 	. = ..()
@@ -57,7 +57,7 @@
 
 /obj/item/organ/internal/lungs/lavaland/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "small tendrils grow on their back.", BODY_ZONE_HEAD)
+	AddElement(/datum/element/noticable_organ, "small tendrils grow on their back.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 ///goliath brain. you can't use gloves but one of your arms becomes a tendril hammer that can be used to mine!
@@ -74,7 +74,7 @@
 
 /obj/item/organ/internal/brain/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "arm is just a tendril hammer...")
+	AddElement(/datum/element/noticable_organ, "arm is just a tendril hammer...", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 /obj/item/organ/internal/brain/goliath/Insert(mob/living/carbon/brain_owner, special, drop_if_replaced, no_id_transfer)
@@ -103,7 +103,7 @@
 
 /obj/item/goliath_infuser_hammer
 	name = "tendril hammer"
-	desc = "A mass of tendrils have replaced your arm."
+	desc = "A mass of plates held by tendrils has replaced an arm."
 	icon = 'icons/obj/weapons/goliath_hammer.dmi'
 	icon_state = "goliath_hammer"
 	inhand_icon_state = "goliath_hammer"
@@ -172,7 +172,7 @@
 
 /obj/item/organ/internal/heart/goliath/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "skin has small hide plates growing...")
+	AddElement(/datum/element/noticable_organ, "skin has small hide plates growing...", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
 #undef GOLIATH_COLORS
