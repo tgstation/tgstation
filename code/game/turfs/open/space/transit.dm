@@ -11,31 +11,30 @@
 	underlay_appearance.icon_state = "speedspace_ns_[get_transit_state(asking_turf)]"
 	underlay_appearance.transform = turn(matrix(), get_transit_angle(asking_turf))
 
-/turf/open/space/transit/south
-	dir = SOUTH
+/turf/open/space/transit/update_icon()
+	. = ..()
+	transform = turn(matrix(), get_transit_angle(src))
 
-/turf/open/space/transit/north
-	dir = NORTH
-
-/turf/open/space/transit/horizontal
-	dir = WEST
-
-/turf/open/space/transit/west
-	dir = WEST
-
-/turf/open/space/transit/east
-	dir = EAST
+/turf/open/space/transit/update_icon_state()
+	icon_state = "speedspace_ns_[get_transit_state(src)]"
+	return ..()
 
 /turf/open/space/transit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(!locate(/obj/structure/lattice) in src)
-		throw_atom(arrived)
+	if(!locate(/obj/structure/lattice) in src) //we dont have a lattice
+		var/turf/throw_target = get_edge_target_turf(arrived, turn(dir, 180))
+		arrived.safe_throw_at(throw_target, 200, 1, spin = FALSE, force = MOVE_FORCE_EXTREMELY_STRONG)
+
+/turf/open/space/transit/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	var/turf/location = gone.loc
+	if(istype(location, /turf/open/space) && !istype(location, src.type))//they got forced out of transit area into default space tiles
+		throw_atom(gone) //launch them into game space, away from transitspace
 
 /turf/open/space/transit/proc/throw_atom(atom/movable/AM)
 	if(!AM || istype(AM, /obj/docking_port) || istype(AM, /obj/effect/abstract))
 		return
-	if(AM.loc != src) // Multi-tile objects are "in" multiple locs but its loc is it's true placement.
-		return // Don't move multi tile objects if their origin isn't in transit
 	var/max = world.maxx-TRANSITIONEDGE
 	var/min = 1+TRANSITIONEDGE
 
@@ -70,7 +69,6 @@
 	var/turf/T = locate(_x, _y, _z)
 	AM.forceMove(T)
 
-
 /turf/open/space/transit/CanBuildHere()
 	return SSshuttle.is_in_shuttle_bounds(src)
 
@@ -81,13 +79,20 @@
 	for(var/atom/movable/AM in src)
 		throw_atom(AM)
 
-/turf/open/space/transit/update_icon()
-	. = ..()
-	transform = turn(matrix(), get_transit_angle(src))
+/turf/open/space/transit/south
+	dir = SOUTH
 
-/turf/open/space/transit/update_icon_state()
-	icon_state = "speedspace_ns_[get_transit_state(src)]"
-	return ..()
+/turf/open/space/transit/north
+	dir = NORTH
+
+/turf/open/space/transit/horizontal
+	dir = WEST
+
+/turf/open/space/transit/west
+	dir = WEST
+
+/turf/open/space/transit/east
+	dir = EAST
 
 /proc/get_transit_state(turf/T)
 	var/p = 9
