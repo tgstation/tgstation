@@ -25,7 +25,6 @@
 /datum/surgery/ear_surgery/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/internal/ears/target_ears = target.getorganslot(ORGAN_SLOT_EARS)
 	if(!target_ears)
-		to_chat(user, span_warning("It's hard to do surgery on someone's ears when [target.p_they()] [target.p_do()]n't have any."))
 		return FALSE
 	return TRUE
 
@@ -49,9 +48,9 @@
 		span_notice("[user] completes the surgery on [target]'s ears."),
 	)
 	display_pain(target, "Your head swims, but it seems like you can hear a little better now!")
-	target_ears.deaf = (0)
+	target_ears.deaf = FALSE
 	target_ears.setOrganDamage(0)
-	target.adjust_dizzy_up_to(15 SECONDS, 30 SECONDS)
+	target.adjust_dizzy_up_to(45 SECONDS, 60 SECONDS)
 	return ..()
 
 /datum/surgery_step/fix_ears/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
