@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - admin: "Renamed \"End Round Normally\" in Check Antagonists to \"Undelay Round End\""
