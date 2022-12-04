@@ -112,7 +112,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 		return .
 
 	var/list/nice_list = list()
-	for(var/component_path as anything in req_components)
+	for(var/component_path in req_components)
 		if(!ispath(component_path))
 			continue
 

@@ -42,7 +42,7 @@
 		return
 
 	var/list/nice_list = list()
-	for(var/component as anything in req_components)
+	for(var/component in req_components)
 		if(!ispath(component))
 			stack_trace("An item in [src]'s req_components list is not a path!")
 			continue
@@ -63,7 +63,7 @@
 		return
 
 	req_component_names = list()
-	for(var/component_path as anything in req_components)
+	for(var/component_path in req_components)
 		if(!ispath(component_path))
 			continue
 
