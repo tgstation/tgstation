@@ -659,6 +659,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return TRUE
 
 /obj/item/construction/rcd/attack_self(mob/user)
+
+
+/obj/item/construction/rcd/attack_self_secondary(mob/user, modifiers)
+	. = ..()
 	ui_interact(user)
 
 /obj/item/construction/rcd/proc/target_check(atom/A, mob/user) // only returns true for stuff the device can actually work with

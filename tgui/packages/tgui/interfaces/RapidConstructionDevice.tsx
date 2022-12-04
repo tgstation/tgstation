@@ -131,12 +131,7 @@ const DesignSection = (props, context) => {
           }>
           <Stack>
             <Stack.Item>
-              <Box
-                className={classes(['rcd-tgui32x32', design.icon])}
-                style={{
-                  transform: 'scale(1.5) translate(9%, 9%)',
-                }}
-              />
+              <Box className={classes(['rcd-tgui32x32', design.icon])} />
             </Stack.Item>
             <Stack.Item>
               <span>&nbsp;&nbsp;</span>
@@ -147,11 +142,6 @@ const DesignSection = (props, context) => {
               </Section>
             </Stack.Item>
           </Stack>
-          <Section
-            style={{
-              height: '10px',
-            }}
-          />
         </Button>
       ))}
     </Section>
