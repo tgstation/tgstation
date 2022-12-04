@@ -49,7 +49,13 @@ check() {
 	shift
 	erro_msg=$1
 	shift
-	if [ $("$@") ] ; then
+
+	set +e
+	$@
+	eval_stat=$?
+	set -e
+
+	if [ $eval_stat ] ; then
 		st=1
 		echo -e "${RED}$erro_msg${NC}"
 	fi
