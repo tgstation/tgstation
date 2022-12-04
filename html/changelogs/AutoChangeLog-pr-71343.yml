@@ -1,6 +1,0 @@
-author: "Comxy"
-delete-after: True
-changes:
-  - rscadd: "Frogs and cockroaches can now be converted to the regal rats army."
-  - bugfix: "Converted rat do not attack mouses anymore."
-  - imageadd: "New sewer cockroach and trash frog sprites"
