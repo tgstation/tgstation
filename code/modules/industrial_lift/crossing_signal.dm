@@ -1,6 +1,7 @@
 #define XING_STATE_GREEN 0
 #define XING_STATE_AMBER 1
 #define XING_STATE_RED 2
+#define XING_STATE_MALF 3
 #define XING_SIGNAL_DIRECTION_WEST "west-"
 #define XING_SIGNAL_DIRECTION_EAST "east-"
 
@@ -68,8 +69,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	if(obj_flags & EMAGGED)
 		return
 	balloon_alert(user, "disabled motion sensors")
-	if(signal_state != XING_STATE_GREEN)
-		set_signal_state(XING_STATE_GREEN)
+	if(signal_state != XING_STATE_MALF)
+		set_signal_state(XING_STATE_MALF)
 	obj_flags |= EMAGGED
 
 /**
@@ -203,6 +204,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
 			new_color = COLOR_VIBRANT_LIME
 		if(XING_STATE_AMBER)
 			new_color = COLOR_YELLOW
+		if(XING_STATE_MALF)
+			new_color = COLOR_BRIGHT_BLUE
 		else
 			new_color = COLOR_RED
 
@@ -250,3 +253,4 @@ GLOBAL_LIST_EMPTY(tram_signals)
 #undef XING_STATE_GREEN
 #undef XING_STATE_AMBER
 #undef XING_STATE_RED
+#undef XING_STATE_MALF

@@ -1,6 +1,6 @@
 #define TRAM_MALFUNCTION_TIME_UPPER 420
 #define TRAM_MALFUNCTION_TIME_LOWER 240
-#define XING_STATE_GREEN 0
+#define XING_STATE_MALF 3
 
 /datum/round_event_control/tram_malfunction
 	name = "Tram Malfunction"
@@ -42,8 +42,8 @@
 
 		signal.obj_flags |= EMAGGED
 
-		if(signal.signal_state != XING_STATE_GREEN)
-			signal.set_signal_state(XING_STATE_GREEN)
+		if(signal.signal_state != XING_STATE_MALF)
+			signal.set_signal_state(XING_STATE_MALF)
 
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		original_lethality = tram.collision_lethality
@@ -61,4 +61,4 @@
 
 #undef TRAM_MALFUNCTION_TIME_UPPER
 #undef TRAM_MALFUNCTION_TIME_LOWER
-#undef XING_STATE_GREEN
+#undef XING_STATE_MALF
