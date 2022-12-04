@@ -1,8 +1,10 @@
 import { classes } from 'common/react';
 import { multiline } from 'common/string';
+import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ColorBox, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
+import { Space } from './RapidConstructionDevice.tsx';
 
 const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'];
 
@@ -38,11 +40,12 @@ const TOOLS = [
 
 export const ColorItem = (props, context) => {
   const { act, data } = useBackend(context);
-  const { selected_color } = data;
+  const { selected_color, space } = data;
   return (
     <LabeledList.Item label="Color">
+      {space ? <Space /> : ''}
       <Box inline width="64px" color={data.paint_colors[selected_color]}>
-        {selected_color}
+        {capitalizeAll(selected_color)}
       </Box>
       {Object.keys(data.paint_colors).map((colorName) => (
         <ColorBox

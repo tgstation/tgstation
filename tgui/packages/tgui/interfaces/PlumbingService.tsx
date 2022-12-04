@@ -1,11 +1,13 @@
+import { useBackend, useLocalState } from '../backend';
+import { capitalizeAll } from 'common/string';
 import { BooleanLike, classes } from 'common/react';
 import { Window } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
 import { Section, Tabs, Button, Stack, Box } from '../components';
 import { ColorItem, LayerSelect } from './RapidPipeDispenser';
-import { capitalizeAll } from 'common/string';
+import { SiloItem, MatterItem } from './RapidConstructionDevice';
 
 type Data = {
+  silo_upgraded: BooleanLike;
   layer_icon: string;
   categories: Category[];
   selected_category: string;
@@ -70,7 +72,7 @@ const PlumbingTypeSection = (props, context) => {
               />
             </Stack.Item>
             <Stack.Item>
-              <span style={{ width: '7px' }} />
+              <span>&nbsp;&nbsp;</span>
             </Stack.Item>
             <Stack.Item>
               <Section verticalAlign="middle">
@@ -84,9 +86,13 @@ const PlumbingTypeSection = (props, context) => {
   );
 };
 
-const ColorSection = (props, context) => {
+const StaticSection = (props, context) => {
+  const { data } = useBackend<Data>(context);
+  const { silo_upgraded } = data;
   return (
     <Section>
+      <MatterItem />
+      {silo_upgraded ? <SiloItem /> : ''}
       <ColorItem />
     </Section>
   );
@@ -126,7 +132,7 @@ export const PlumbingService = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <ColorSection />
+            <StaticSection />
           </Stack.Item>
           <Stack.Item grow>
             <Stack fill>

@@ -334,7 +334,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"preview_rows" = recipe.get_preview(p_dir),
 		"categories" = list(),
 		"selected_color" = paint_color,
-		"mode" = mode
+		"mode" = mode,
+		"space" = FALSE
 	)
 
 	var/list/recipes

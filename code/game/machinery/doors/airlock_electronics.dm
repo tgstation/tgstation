@@ -53,9 +53,10 @@
 	return data
 
 /obj/item/electronics/airlock/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
+	if(!params["rcd"]) //if this wasen't call by the rcd then do these checks else skip them
+		. = ..()
+		if(.)
+			return
 
 	switch(action)
 		if("clear_all")
