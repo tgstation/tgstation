@@ -1,9 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-#nb: must be bash to support shopt globstar
-# shopt -s globstar
-
 #ANSI Escape Codes for colors to increase contrast of errors
 RED="\033[0;31m"
 GREEN="\033[0;32m"
@@ -51,43 +48,35 @@ check() {
 	shift
 
 	set +e
-	$@
+	$grep $@
 	eval_stat=$?
 	set -e
 
 	if [ $eval_stat ] ; then
 		st=1
-		echo -e "${RED}$erro_msg${NC}"
+		echo -e
+		echo -e "${RED}ERROR: $erro_msg${NC}"
 	fi
 }
 
 section "map issues"
+check "TGM Format" \
+	"Non-TGM formatted map detected. Please convert it using Map Merger!" \
+	-U '^".+" = \(.+\)' $map_files
 
-part "TGM"
-if $grep -U '^".+" = \(.+\)' $map_files;	then
-	echo
-    echo -e "${RED}ERROR: Non-TGM formatted map detected. Please convert it using Map Merger!${NC}"
-    st=1
-fi;
-part "comments"
-if $grep '//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | $grep -v 'name|desc'; then
-	echo
-	echo -e "${RED}ERROR: Unexpected commented out line detected in this map file. Please remove it.${NC}"
-	st=1
-fi;
-part "conflict markers"
-if $grep 'Merge Conflict Marker' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Merge conflict markers detected in map, please resolve all merge failures!${NC}"
-    st=1
-fi;
+check "comments" \
+	"Unexpected commented out line detected in this map file. Please remove it." \
+	'//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | $grep -v 'name|desc' \
+
+check "conflict markers" \
+	"Merge conflict markers detected in map, please resolve all merge failures!" \
+	'Merge Conflict Marker' $map_files
+
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
-part "conflict marker object"
-if $grep '/obj/merge_conflict_marker' $map_files; then
-	echo
-    echo -e "${RED}ERROR: Merge conflict markers detected in map, please resolve all merge failures!${NC}"
-    st=1
-fi;
+part "conflict marker object" \
+	"Merge conflict markers detected in map, please resolve all merge failures." \
+	'/obj/merge_conflict_marker' $map_files
+
 part "iconstate tags"
 if $grep '^\ttag = "icon' $map_files;	then
 	echo
