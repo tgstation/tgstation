@@ -82,3 +82,34 @@
   - code_imp: made the disable_gas var on supermatter preserve the current variables
       instead of zeroing them.
   - code_imp: registered the supermatter filters on the filter debug menu.
+2022-12-04:
+  Comxy:
+  - rscadd: Frogs and cockroaches can now be converted to the regal rats army.
+  - bugfix: Converted rat do not attack mouses anymore.
+  - imageadd: New sewer cockroach and trash frog sprites
+  JohnFulpWillard:
+  - bugfix: Mining orders will no longer say they charged you credits.
+  - qol: The cargo console now properly displays the amount of mining points used
+      to purchase something.
+  - qol: Mining orders no longer have manifest errors.
+  MTandi:
+  - bugfix: Automated IV drip transfer rate controls now unavailable on injection,
+      since the transfer rate is managed by the plumbing network
+  Rhials:
+  - spellcheck: removes a bunch of instances of "unconcious" from the code.
+  - rscadd: Paperwork! Huge paperwork. Gigantic. You can stamp it and send it to Centcom
+      via cargo for BIG MONEY.
+  - rscadd: New shuttle loan event variant -- You get a bunch of paperwork!
+  - rscadd: Ancient paperwork has appeared in the maintenance tunnels!
+  - admin: new admin verb -- Command Report Footnote. Lets you attach a signed message
+      to the roundstart command report.
+  - admin: new admin verb -- Delay Command Report. Lets you delay the roundstart command
+      report indefinitely.
+  etherware-novice:
+  - imageadd: indicator when a pda contains a pai
+  itseasytosee:
+  - bugfix: Stamina damage display calculation should be much more sane and reliable
+      now
+  - imageadd: Simplified the stamina hud
+  private-tristan:
+  - spellcheck: stabilized oil now correctly has you smell like sulfur

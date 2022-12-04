@@ -13,7 +13,6 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
-	base_icon_state = "spellcard"
 	cast_range = 40
 	projectile_type = /obj/projectile/magic/spellcard
 	projectile_amount = 5

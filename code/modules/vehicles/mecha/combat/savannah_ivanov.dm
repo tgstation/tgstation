@@ -118,7 +118,7 @@
 		return
 	S_TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_SKYFALL, skyfall_cooldown_time)
 	button_icon_state = "mech_savannah_cooldown"
-	UpdateButtons()
+	build_all_button_icons()
 	addtimer(CALLBACK(src, PROC_REF(reset_button_icon)), skyfall_cooldown_time)
 	for(var/mob/living/shaken in range(7, chassis))
 		shake_camera(shaken, 3, 3)
@@ -221,7 +221,7 @@
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/reset_button_icon()
 	button_icon_state = "mech_savannah"
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike
 	name = "Ivanov Strike"
@@ -256,7 +256,7 @@
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/reset_button_icon()
 	button_icon_state = "mech_ivanov"
-	UpdateButtons()
+	build_all_button_icons()
 
 /**
  * ## start_missile_targeting
@@ -324,7 +324,7 @@
 		"explosionSize" = list(0,0,1,2)
 	))
 	button_icon_state = "mech_ivanov_cooldown"
-	UpdateButtons()
+	build_all_button_icons()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/action/vehicle/sealed/mecha/ivanov_strike, reset_button_icon)), strike_cooldown_time)
 
 //misc effects
