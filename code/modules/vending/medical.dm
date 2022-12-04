@@ -45,12 +45,7 @@
 /obj/machinery/vending/medical/syndicate_access
 	name = "\improper SyndiMed Plus"
 	req_access = list(ACCESS_SYNDICATE)
-	initial_language_holder = /datum/language_holder/universal
-
-/obj/machinery/vending/medical/syndicate_access/Initialize(mapload)
-	. = ..()
-	var/datum/language_holder/syndicate_languages = get_language_holder()
-	syndicate_languages.selected_language = /datum/language/codespeak
+	initial_language_holder = /datum/language_holder/syndicate
 
 //Created out of a necessity to get these dumb chems out of the medical tools vendor.
 /obj/machinery/vending/drugs

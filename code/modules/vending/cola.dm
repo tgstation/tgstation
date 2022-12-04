@@ -106,7 +106,6 @@
 	product_ads = "Refreshing!;Thirsty for DNA? Satiate your craving!;Over 1 trillion souls drank!;Made with real DNA!;The hivemind demands your thirst!;Drink up!;Absorb your thirst."
 	light_mask = "shamblers-light-mask"
 	light_color = COLOR_MOSTLY_PURE_PINK
-	initial_language_holder = /datum/language_holder/universal
 
 /obj/machinery/vending/cola/shamblers/Initialize(mapload)
 	. = ..()
