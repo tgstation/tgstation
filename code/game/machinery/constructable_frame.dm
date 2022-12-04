@@ -330,7 +330,7 @@
 
 				if (ispath(stock_part_base, /datum/stock_part))
 					// We can't just reuse stock_part_path here or its singleton,
-					// or else putting ina tier 2 part will deconstruct to a tier 1 part.
+					// or else putting in a tier 2 part will deconstruct to a tier 1 part.
 					var/stock_part_datum = GLOB.stock_part_datums_per_object[P.type]
 					if (isnull(stock_part_datum))
 						stack_trace("[P.type] does not have an associated stock part datum!")

@@ -112,8 +112,8 @@
 	resetTime = initial(resetTime)
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		resetTime = max(1, resetTime - M.rating)
-	for(var/obj/item/stock_parts/scanning_module/M in component_parts)
-		malfunction_probability_coeff += M.rating*2
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		malfunction_probability_coeff += scanning_module.tier * 2
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		malfunction_probability_coeff += M.rating
 

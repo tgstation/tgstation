@@ -168,7 +168,7 @@ The console is located at computer/gulag_teleporter.dm
 	build_path = /obj/machinery/gulag_teleporter
 	req_components = list(
 							/obj/item/stack/ore/bluespace_crystal = 2,
-							/obj/item/stock_parts/scanning_module,
+							/datum/stock_part/scanning_module,
 							/obj/item/stock_parts/manipulator)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
