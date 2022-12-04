@@ -121,8 +121,8 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			if(!purchase_items(used_id_card))
 				return
 			//So miners cant spam buy crates for a very low price
-			if(get_total_cost() < 200)
-				say("For the LTSRBT delivery order needs to cost more then 200 points!")
+			if(get_total_cost() < CARGO_CRATE_VALUE)
+				say("For the LTSRBT delivery order needs to cost more or equal to [CARGO_CRATE_VALUE] points!")
 				return
 			order_groceries(living_user, used_id_card, grocery_list, ltsrbt_delivered = (action == "ltsrbt_deliver"))
 			grocery_list.Cut()
