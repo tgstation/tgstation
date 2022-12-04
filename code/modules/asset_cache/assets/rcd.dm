@@ -6,9 +6,9 @@
 
 	//load all category essential icon_states. format is icon_file = list of icon states we need from that file
 	var/list/essentials = list(
-		"icons/hud/radial.dmi" = list("wallfloor", "windowsize", "windowtype", "cnorth", "csouth", "ceast", "cwest", "chair", "stool", "windoor", "secure_windoor"),
-		"icons/obj/structures.dmi" = list("window0", "rwindow0", "table", "glass_table"),
-		"icons/obj/stock_parts.dmi" = list("box_1"),
+		'icons/hud/radial.dmi' = list("wallfloor", "windowsize", "windowtype", "cnorth", "csouth", "ceast", "cwest", "chair", "stool", "windoor", "secure_windoor"),
+		'icons/obj/structures.dmi' = list("window0", "rwindow0", "table", "glass_table"),
+		'icons/obj/stock_parts.dmi' = list("box_1"),
 	)
 
 	for(var/icon_file as anything in essentials)
@@ -17,22 +17,22 @@
 
 	//for each airlock type we create its overlayed version with the suffix Glass in the sprite name
 	var/list/airlocks = list(
-		"Standard" = "icons/obj/doors/airlocks/station/public.dmi",
-		"Public" = "icons/obj/doors/airlocks/station2/glass.dmi",
-		"Engineering" = "icons/obj/doors/airlocks/station/engineering.dmi",
-		"Atmospherics" = "icons/obj/doors/airlocks/station/atmos.dmi",
-		"Security" = "icons/obj/doors/airlocks/station/security.dmi",
-		"Command" = "icons/obj/doors/airlocks/station/command.dmi",
-		"Medical" = "icons/obj/doors/airlocks/station/medical.dmi",
-		"Research" = "icons/obj/doors/airlocks/station/research.dmi",
-		"Freezer" = "icons/obj/doors/airlocks/station/freezer.dmi",
-		"Virology" = "icons/obj/doors/airlocks/station/virology.dmi",
-		"Mining" = "icons/obj/doors/airlocks/station/mining.dmi",
-		"Maintenance" = "icons/obj/doors/airlocks/station/maintenance.dmi",
-		"External" = "icons/obj/doors/airlocks/external/external.dmi",
-		"External-Maintenance" = "icons/obj/doors/airlocks/station/maintenanceexternal.dmi",
-		"Airtight-Hatch" = "icons/obj/doors/airlocks/hatch/centcom.dmi",
-		"Maintenance-Hatch" = "icons/obj/doors/airlocks/hatch/maintenance.dmi"
+		"Standard" = 'icons/obj/doors/airlocks/station/public.dmi',
+		"Public" = 'icons/obj/doors/airlocks/station2/glass.dmi',
+		"Engineering" = 'icons/obj/doors/airlocks/station/engineering.dmi',
+		"Atmospherics" = 'icons/obj/doors/airlocks/station/atmos.dmi',
+		"Security" = 'icons/obj/doors/airlocks/station/security.dmi',
+		"Command" = 'icons/obj/doors/airlocks/station/command.dmi',
+		"Medical" = 'icons/obj/doors/airlocks/station/medical.dmi',
+		"Research" = 'icons/obj/doors/airlocks/station/research.dmi',
+		"Freezer" = 'icons/obj/doors/airlocks/station/freezer.dmi',
+		"Virology" = 'icons/obj/doors/airlocks/station/virology.dmi',
+		"Mining" = 'icons/obj/doors/airlocks/station/mining.dmi',
+		"Maintenance" = 'icons/obj/doors/airlocks/station/maintenance.dmi',
+		"External" = 'icons/obj/doors/airlocks/external/external.dmi',
+		"External-Maintenance" = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi',
+		"Airtight-Hatch" = 'icons/obj/doors/airlocks/hatch/centcom.dmi',
+		"Maintenance-Hatch" = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
 	)
 	//these 3 types dont have glass doors
 	var/list/exclusion = list("Freezer", "Airtight-Hatch", "Maintenance Hatch")
