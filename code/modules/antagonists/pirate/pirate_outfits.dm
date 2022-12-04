@@ -83,6 +83,10 @@
 
 	id_trim = /datum/id_trim/pirate/psykers
 
+/datum/outfit/pirate/psyker/post_equip(mob/living/carbon/human/equipped)
+	. = ..()
+	equipped.psykerize()
+
 /datum/outfit/pirate/psyker/captain
 	name = "Psyker-gang Leader"
 

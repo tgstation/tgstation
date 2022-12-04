@@ -60,8 +60,8 @@
 "dq" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
-	pixel_y = 6;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = 9;
@@ -108,6 +108,20 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"gE" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/ammo_box/c38/match{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/ammo_box/c38/match{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/ammo_box/c38/match,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/pirate)
 "gW" = (
 /obj/docking_port/mobile/pirate{
 	launch_status = 0;
@@ -118,8 +132,8 @@
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
-	shuttle_id = "pirate_home";
 	name = "Deep Space";
+	shuttle_id = "pirate_home";
 	width = 17
 	},
 /turf/open/floor/catwalk_floor,
@@ -289,9 +303,9 @@
 /area/shuttle/pirate)
 "qz" = (
 /obj/structure/curtain/cloth/fancy/mechanical{
-	id = "fortune_tell";
+	icon_state = "bounty-open";
 	icon_type = "bounty";
-	icon_state = "bounty-open"
+	id = "fortune_tell"
 	},
 /turf/open/floor/glass,
 /area/shuttle/pirate)
@@ -369,13 +383,21 @@
 "vw" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/door/poddoor/preopen{
-	name = "External Blast Door";
-	id = "psyker_bridge"
+	id = "psyker_bridge";
+	name = "External Blast Door"
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "vT" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/pirate)
+"ws" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/storage/box/lethalshot{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "wu" = (
@@ -405,19 +427,19 @@
 "xs" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/structure/tank_holder{
-	pixel_y = 12;
-	name = "ball holder";
-	desc = "A metallic frame that can hold crystal balls. Comes with lights!";
 	anchored = 1;
-	light_range = 3;
+	desc = "A metallic frame that can hold crystal balls. Comes with lights!";
+	light_color = "#0074FF";
 	light_power = 2;
-	light_color = "#0074FF"
+	light_range = 3;
+	name = "ball holder";
+	pixel_y = 12
 	},
 /obj/item/food/gumball{
-	pixel_y = 8;
-	name = "crystal ball";
+	alpha = 175;
 	desc = "A colorful, sugary crystal ball.";
-	alpha = 175
+	name = "crystal ball";
+	pixel_y = 8
 	},
 /turf/open/floor/glass,
 /area/shuttle/pirate)
@@ -507,12 +529,12 @@
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/cup/glass/bottle/hooch{
-	pixel_y = 11;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 11
 	},
 /obj/item/reagent_containers/cup/glass/ice/prison{
-	pixel_y = 2;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -524,9 +546,9 @@
 /area/shuttle/pirate)
 "De" = (
 /obj/structure/curtain/cloth/fancy/mechanical/start_closed{
-	id = "fortune_tell";
 	icon_state = "bounty-closed";
-	icon_type = "bounty"
+	icon_type = "bounty";
+	id = "fortune_tell"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/carpet/black,
@@ -843,13 +865,22 @@
 /area/shuttle/pirate)
 "TL" = (
 /obj/machinery/button/door/directional/east{
-	name = "External Bolt Control";
 	id = "psykerexternal";
+	name = "External Bolt Control";
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/iron/grimy,
+/area/shuttle/pirate)
+"Ui" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
+/obj/structure/table/reinforced/plasmarglass,
+/obj/item/gun/ballistic/revolver/c38{
+	pixel_y = 3
+	},
+/obj/item/gun/ballistic/revolver/c38,
+/turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "Vi" = (
 /obj/effect/decal/cleanable/food/egg_smudge,
@@ -864,9 +895,9 @@
 "VF" = (
 /obj/structure/fans/tiny,
 /obj/structure/curtain/cloth/fancy/mechanical/start_closed{
-	id = "fortune_tell";
 	icon_state = "bounty-closed";
-	icon_type = "bounty"
+	icon_type = "bounty";
+	id = "fortune_tell"
 	},
 /turf/open/floor/carpet/black,
 /area/shuttle/pirate)
@@ -951,6 +982,9 @@
 "ZW" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
+/obj/item/gun/ballistic/shotgun/lethal{
+	pixel_y = 4
+	},
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 
@@ -1133,7 +1167,7 @@ eZ
 CW
 ZW
 bV
-ZW
+ws
 CW
 oL
 Pz
@@ -1187,7 +1221,7 @@ CW
 CW
 GT
 Dw
-ZW
+Ui
 CW
 yd
 Pz
@@ -1241,7 +1275,7 @@ EM
 mR
 vT
 bV
-ZW
+gE
 CW
 yd
 yd

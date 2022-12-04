@@ -17,6 +17,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /datum/pirate_gang
 	///name of this gang, for spawning feedback
 	var/name = "Space Bugs"
+
 	///the random ship name chosen from pirates.json
 	var/ship_name
 	///the ship they load in on.
@@ -51,7 +52,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 ///returns a new comm_message datum from this pirate gang
 /datum/pirate_gang/proc/generate_message(payoff)
 	var/built_threat_content = replacetext(threat_content, "%SHIPNAME", ship_name)
-	built_threat_content = replacetext(threat_content, "%PAYOFF", payoff)
+	built_threat_content = replacetext(built_threat_content, "%PAYOFF", payoff)
 	return new /datum/comm_message(threat_title, built_threat_content, possible_answers)
 
 ///classic FTL-esque space pirates.
@@ -107,13 +108,13 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /datum/pirate_gang/psykers
 	name = "Roving Psyker-gang"
 
-	ship_template = /datum/map_template/shuttle/pirate/dutchman
+	ship_template = /datum/map_template/shuttle/pirate/psykers
 	ship_name_pool = "psyker_names" //just points to THE ONE AND ONLY
 
 	threat_title = "Junkie tribute"
-	threat_content = "Hello, you psychically dormant pawn-pieces. Our funds are running a little low, and we're not going to be able to continue our gore-binge! Wanna help us out?"
+	threat_content = "Hello, you psychically dormant pawn-pieces. It's the %SHIPNAME! Our funds are running a little low, and we're not going to be able to continue our gore-binge! %PAYOFF credits should do, wanna help us out?"
 	possible_answers = list("Send some funds so they go away.","We're not funding these junkies.")
 
 	response_received = "You guys aren't so bad for being dormants. Next gore-fest goes to you guys. Peace!"
 	response_too_late = "Oh, now you think we're worth the money. Pathetic dormants."
-	response_not_enough = "I don't need to be a psyker to see you're trying to cheat us. Fine, we'll do it the hard way."
+	response_not_enough = "You really shouldn't have messed with us. You're in for a psychic nightmare."

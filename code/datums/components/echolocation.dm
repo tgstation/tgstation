@@ -40,7 +40,7 @@
 	if(!danger_turfs)
 		danger_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/chasm, /turf/open/lava))
 	if(!allowed_paths)
-		allowed_paths = typecacheof(list(/turf/closed, /obj, /mob/living)) + danger_turfs
+		allowed_paths = typecacheof(list(/turf/closed, /obj, /mob/living)) + danger_turfs - typecacheof(/obj/effect/decal)
 	if(!isnull(echo_range))
 		src.echo_range = echo_range
 	if(!isnull(cooldown_time))
@@ -98,7 +98,7 @@
 	images[current_time] = list()
 	receivers[current_time] = list()
 	for(var/mob/living/viewer in filtered)
-		if(blocking_trait && !HAS_TRAIT(viewer, blocking_trait))
+		if(blocking_trait && HAS_TRAIT(viewer, blocking_trait))
 			continue
 		if(HAS_TRAIT_FROM(viewer, TRAIT_ECHOLOCATION_RECEIVER, echo_group))
 			receivers[current_time] += viewer

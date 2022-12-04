@@ -1,5 +1,5 @@
 {
-	"beginnings":[
+	"generic_beginnings":[
 		"Comet",
 		"Ion",
 		"Laser",
@@ -11,7 +11,7 @@
 		"Star",
 		"Void"
 	],
-	"endings":[
+	"generic_endings":[
 		"beard",
 		"bilge",
 		"deck",
@@ -23,6 +23,46 @@
 		"keel",
 		"knot",
 		"salt"
+	],
+	"psyker_beginnings":[
+		"Arch",
+		"Brain",
+		"Cheeze",
+		"Corpo",
+		"Crazy-",
+		"Cronen-",
+		"Dain",
+		"Doctor",
+		"Flesh",
+		"Fortune",
+		"Gore",
+		"Mad",
+		"Mind",
+		"Professor",
+		"Psychic-",
+		"Psycho",
+		"Snirby",
+		"Stun",
+		"Super",
+		"Wise"
+	],
+	"psyker_endings":[
+		"bound",
+		"brain",
+		"brammage",
+		"gore",
+		"guy",
+		"head",
+		"locked",
+		"naut",
+		"nuts",
+		"rat",
+		"reader",
+		"scanner",
+		"sponge",
+		"storm",
+		"teller",
+		"whiz"
 	],
 	"rogue_names":[
 		"Abyssal Titan",

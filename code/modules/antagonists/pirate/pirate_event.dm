@@ -7,6 +7,21 @@
 	dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_INVASION
 	description = "The crew will either pay up, or face a pirate assault."
+	///admin chosen pirate team
+	var/datum/pirate_gang/chosen_gang
+
+/datum/round_event_control/pirates/admin_setup(mob/admin)
+	var/list/gang_choices = list("Random")
+
+	for(var/datum/pirate_gang/possible_gang as anything in GLOB.pirate_gangs)
+		gang_choices[possible_gang.name] = possible_gang
+
+	var/datum/pirate_gang/chosen = tgui_input_list(usr, "Select pirate gang", "TICKETS TO THE SPONGEBOB MOVIE!!", gang_choices)
+	if(!chosen)
+		return ADMIN_CANCEL_EVENT
+	if(chosen == "Random")
+		return //still do the event, but chosen_gang is still null, so it will pick from the choices
+	chosen_gang = gang_choices["chosen"]
 
 /datum/round_event_control/pirates/preRunEvent()
 	if (!SSmapping.empty_space)
@@ -14,10 +29,12 @@
 	return ..()
 
 /datum/round_event/pirates/start()
-	send_pirate_threat()
+	var/datum/round_event_control/pirates/pirate_control = control
+	send_pirate_threat(pirate_control.chosen_gang)
 
-/proc/send_pirate_threat()
-	var/datum/pirate_gang/chosen_gang = pick_n_take(GLOB.pirate_gangs)
+/proc/send_pirate_threat(datum/pirate_gang/chosen_gang)
+	if(!chosen_gang)
+		chosen_gang = pick_n_take(GLOB.pirate_gangs)
 	//set payoff
 	var/payoff = 0
 	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
