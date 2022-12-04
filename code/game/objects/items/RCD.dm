@@ -191,6 +191,7 @@ RLD
 
 ///shared action for toggling silo link rcd,rld & plumbing
 /obj/item/construction/ui_act(action, list/params)
+	..()
 	if(action == "toggle_silo")
 		if(silo_mats)
 			if(!silo_mats.mat_container && !silo_link) // Allow them to turn off an invalid link
