@@ -115,7 +115,7 @@
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-	attack_verb_continuous = list("smashes", "bashes", "hammers", "crunches")
+	attack_verb_continuous = list("smashes", "bashes", "hammers", "crunches", "punches")
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
 	hitsound = 'sound/effects/bamf.ogg'
 	tool_behaviour = TOOL_MINING
