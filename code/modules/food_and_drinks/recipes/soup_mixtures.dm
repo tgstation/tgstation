@@ -21,11 +21,13 @@
 	overheat_temp = 540
 	optimal_ph_min = 1
 	optimal_ph_max = 14
-	required_reagents = list(/datum/reagent/water = 50)
+	required_reagents = null
 	mob_react = FALSE
 	required_other = TRUE
 	required_container = /obj/item/reagent_containers/cup/soup_pot
 	mix_message = "You smell something good coming from the steaming soup."
+	reaction_tags = REACTION_TAG_FOOD | REACTION_TAG_EASY
+	// reaction_flags = REACTION_INSTANT // melbert todo; try to remove this
 
 	/// An assoc list of what ingredients are necessary to how much is needed
 	var/list/required_ingredients
@@ -92,7 +94,17 @@
 	foodtypes = MEAT
 	data = list("meat" = 1)
 
+// MELBERT TODO REMOVE ITS FOR TEST
+/obj/item/meatball_maker/Initialize(mapload)
+	. = ..()
+	new /obj/item/food/meatball(loc)
+	new /obj/item/food/grown/carrot(loc)
+	new /obj/item/food/grown/potato(loc)
+	new /obj/item/reagent_containers/cup/soup_pot(loc)
+	return INITIALIZE_HINT_QDEL
+
 /datum/chemical_reaction/food/soup/meatballsoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/meatball = 1,
 		/obj/item/food/grown/carrot = 1,
@@ -117,6 +129,7 @@
 	data = list("vegetables" = 1)
 
 /datum/chemical_reaction/food/soup/vegetable_soup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/corn = 1,
@@ -141,6 +154,7 @@
 	data = list("nettles" = 1)
 
 /datum/chemical_reaction/food/soup/nettlesoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/nettle = 1,
 		/obj/item/food/grown/potato = 1,
@@ -169,6 +183,7 @@
 */
 
 /datum/chemical_reaction/food/soup/hotchili
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/chili = 1,
@@ -176,6 +191,7 @@
 	)
 
 /datum/chemical_reaction/food/soup/coldchili
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/icepepper = 1,
@@ -183,6 +199,7 @@
 	)
 
 /datum/chemical_reaction/food/soup/clownchili
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/chili = 1,
@@ -190,17 +207,20 @@
 		/obj/item/clothing/shoes/clown_shoes = 1,
 	)
 /datum/chemical_reaction/food/soup/tomatosoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 2,
 	)
 
 /datum/chemical_reaction/food/soup/eyeballsoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 2,
 		/obj/item/organ/internal/eyes = 1,
 	)
 
 /datum/chemical_reaction/food/soup/misosoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/soydope = 2,
 		/obj/item/food/tofu = 2,
@@ -257,6 +277,7 @@
 	)
 
 /datum/chemical_reaction/food/soup/mysterysoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/badrecipe = 1,
 		/obj/item/food/tofu = 1,
@@ -274,12 +295,14 @@
 	)
 
 /datum/chemical_reaction/food/soup/beetsoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/whitebeet = 1,
 		/obj/item/food/grown/cabbage = 1,
 	)
 
 /datum/chemical_reaction/food/soup/stew
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/meat/cutlet = 3,
@@ -317,18 +340,21 @@
 	)
 
 /datum/chemical_reaction/food/soup/redbeetsoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/redbeet = 1,
 		/obj/item/food/grown/cabbage = 1,
 	)
 
 /datum/chemical_reaction/food/soup/onionsoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/cheese/wedge = 1,
 	)
 
 /datum/chemical_reaction/food/soup/bisque
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/meat/crab = 1,
 		/obj/item/food/salad/boiledrice = 1,
@@ -354,6 +380,7 @@
 	)
 
 /datum/chemical_reaction/food/soup/peasoup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/grown/peas = 2,
 		/obj/item/food/grown/parsnip = 1,
@@ -420,6 +447,7 @@
 	)
 
 /datum/chemical_reaction/food/soup/meatball_noodles
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/meat/rawcutlet = 2,
 		/obj/item/food/grown/onion = 1,
@@ -441,6 +469,7 @@
 	)
 
 /datum/chemical_reaction/food/soup/jellyfish_stew
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/canned_jellyfish = 1,
 		/obj/item/food/grown/soybeans = 1,
@@ -449,6 +478,7 @@
 	)
 
 /datum/chemical_reaction/food/soup/rootbread_soup
+	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
 		/obj/item/food/breadslice/root = 2,
 		/obj/item/food/grown/garlic = 1,

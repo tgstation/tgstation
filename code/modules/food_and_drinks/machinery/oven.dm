@@ -13,6 +13,7 @@
 	desc = "Why do they call it oven when you of in the cold food of out hot eat the food?"
 	icon = 'icons/obj/machines/kitchenmachines.dmi'
 	icon_state = "oven_off"
+	base_icon_state = "oven"
 	density = TRUE
 	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	layer = BELOW_OBJ_LAYER
@@ -41,21 +42,21 @@
 
 /obj/machinery/oven/update_icon_state()
 	if(!open && used_tray?.contents.len)
-		icon_state = "oven_on"
+		icon_state = "[base_icon_state]_on"
 	else
-		icon_state = "oven_off"
+		icon_state = "[base_icon_state]_off"
 	return ..()
 
 /obj/machinery/oven/update_overlays()
 	. = ..()
 	if(open)
-		var/mutable_appearance/door_overlay = mutable_appearance(icon, "oven_lid_open")
+		var/mutable_appearance/door_overlay = mutable_appearance(icon, "[base_icon_state]_lid_open")
 		door_overlay.pixel_y = OVEN_LID_Y_OFFSET
 		. += door_overlay
 	else
-		. += mutable_appearance(icon, "oven_lid_closed")
+		. += mutable_appearance(icon, "[base_icon_state]_lid_closed")
 		if(used_tray?.contents.len)
-			. += emissive_appearance(icon, "oven_light_mask", src, alpha = src.alpha)
+			. += emissive_appearance(icon, "[base_icon_state]_light_mask", src, alpha = src.alpha)
 
 /obj/machinery/oven/process(delta_time)
 	..()
@@ -178,6 +179,18 @@
 /obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool, time = 2 SECONDS)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/oven/range
+	name = "range"
+	desc = "And oven AND a stove, I guess that's why it's called a range!"
+	icon_state = "range_off"
+	base_icon_state = "range"
+	pass_flags_self = PASSMACHINE|PASSTABLE|LETPASSTHROW // It's roughly the height of a table.
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
+
+/obj/machinery/oven/range/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/stove)
 
 /obj/item/plate/oven_tray
 	name = "oven tray"
