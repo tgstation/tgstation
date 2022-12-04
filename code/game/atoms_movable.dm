@@ -1418,6 +1418,10 @@
 /atom/movable/proc/randomize_language_if_on_station()
 	var/turf/atom_turf = get_turf(src)
 	var/area/atom_area = get_area(src)
+
+	if(!atom_turf) // some machines spawn in nullspace
+		return
+
 	if(!is_station_level(atom_turf.z) && !istype(atom_area, /area/shuttle/escape))
 		// Why snowflake check for escape shuttle? Well, a lot of shuttles spawn with machines
 		// but docked at centcom, and I wanted those machines to also speak funny languages
