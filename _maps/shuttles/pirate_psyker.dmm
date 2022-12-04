@@ -225,6 +225,7 @@
 "nc" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/fuel_pool,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "nk" = (
@@ -343,9 +344,7 @@
 /area/shuttle/pirate)
 "tT" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate{
-	dir = 4;
-	x_offset = -4;
-	y_offset = -8
+	dir = 4
 	},
 /obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
@@ -578,7 +577,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "Gv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/space_heater,
@@ -667,7 +665,7 @@
 /turf/open/floor/iron/freezer,
 /area/shuttle/pirate)
 "Kp" = (
-/obj/structure/billboard/space_cola{
+/obj/structure/billboard/fortune_telling{
 	pixel_y = 16
 	},
 /turf/open/floor/catwalk_floor,
@@ -871,6 +869,10 @@
 	icon_type = "bounty"
 	},
 /turf/open/floor/carpet/black,
+/area/shuttle/pirate)
+"Ww" = (
+/obj/machinery/light/floor,
+/turf/open/floor/catwalk_floor,
 /area/shuttle/pirate)
 "Wy" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/psykers/captain,
@@ -1485,7 +1487,7 @@ js
 nc
 gA
 CW
-oq
+Ww
 ca
 yd
 yd

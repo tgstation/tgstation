@@ -30,9 +30,9 @@
 	return "[rank ? rank + " " : ""][pick(beggings)][pick(endings)]"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/create(mob/mob_possessor, newname)
-	. = ..()
 	if(fluff_spawn)
 		new fluff_spawn(drop_location())
+	return ..()
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/captain
 	rank = "Renegade Leader"
