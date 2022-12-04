@@ -149,7 +149,7 @@
 		airlock.wires.cut(WIRE_AI)
 	if(airlock.autoname)
 		airlock.name = get_area_name(src, TRUE)
-	update_appearance()
+	airlock.update_appearance()
 	qdel(src)
 
 /obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)
