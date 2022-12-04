@@ -150,8 +150,8 @@
 	if(!get_reagents())
 		to_chat(usr, span_warning("There's nothing attached to the IV drip!"))
 		return
-	if(!target.reagents)
-		to_chat(usr, span_warning("Target can't hold reagents!"))
+	if(!target.is_injectable(usr))
+		to_chat(usr, span_warning("Can't inject into this!"))
 		return
 	if(attached)
 		visible_message(span_warning("[attached] is detached from [src]."))
