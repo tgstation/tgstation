@@ -205,6 +205,7 @@
 #include "code\__DEFINES\turbine_defines.dm"
 #include "code\__DEFINES\turfs.dm"
 #include "code\__DEFINES\typeids.dm"
+#include "code\__DEFINES\unit_tests.dm"
 #include "code\__DEFINES\uplink.dm"
 #include "code\__DEFINES\vehicles.dm"
 #include "code\__DEFINES\verb_manager.dm"
