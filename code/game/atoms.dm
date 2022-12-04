@@ -1844,7 +1844,7 @@
 
 		var/positive_grav = 0
 		var/negative_grav = 0
-		for(var/gravity_influence as anything in forced_gravity)//our gravity is the strongest return forced gravity we get
+		for(var/gravity_influence in forced_gravity)//our gravity is the strongest return forced gravity we get
 			positive_grav = max(positive_grav, gravity_influence)
 			negative_grav = min(negative_grav, gravity_influence)
 
