@@ -1,6 +1,6 @@
 /obj/item/reagent_containers/hypospray/medipen/gore
 	name = "gore autoinjector"
-	desc = "A ghetto looking autoinjector filled with gore, aka dirty kronkaine. Probably shouldn't take this while in the job, but it is a super-stimulant."
+	desc = "A ghetto looking autoinjector filled with gore, aka dirty kronkaine. Probably shouldn't take this while in the job, but it is a super-stimulant. Don't take two at once."
 	volume = 15
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/drug/kronkaine/gore = 15)
@@ -38,3 +38,31 @@
 			psychic_ability.StartCooldown()
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
+
+/obj/structure/bouncy_castle
+	name = "bouncy castle"
+	desc = "And if you do drugs, you go to hell before you die. Please."
+	icon = 'icons/obj/bouncy_castle.dmi'
+	icon_state = "bouncy_castle"
+	anchored = TRUE
+	density = TRUE
+
+/obj/structure/bouncy_castle/Initialize(mapload, mob/gored)
+	. = ..()
+	if(gored)
+		name = gored.real_name
+
+/obj/structure/bouncy_castle/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(damage_amount)
+				playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+			else
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+		if(BURN)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+
+/obj/item/paper/crumpled/fluff/fortune_teller
+	name = "scribbled note"
+	default_raw_text = "<b>Remember!</b> The customers love that gumball we have as a crystal ball. \
+		Even if it's completely useless to us, resist the urge to chew it."

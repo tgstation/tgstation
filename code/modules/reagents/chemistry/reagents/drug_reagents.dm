@@ -795,10 +795,10 @@
 	ph = 4
 	chemical_flags = NONE
 
-/datum/reagent/drug/kronkaine/gore/overdose_process(mob/living/gored, delta_time, times_fired)
-	gored.emote("scream")
+/datum/reagent/drug/kronkaine/gore/overdose_start(mob/living/gored)
 	gored.visible_message(
-		span_danger("[kronkaine_fiend] explodes in a shower of gore!"),
+		span_danger("[gored] explodes in a shower of gore!"),
 		span_userdanger("GORE! GORE! GORE! YOU'RE GORE! TOO MUCH GORE! YOU'RE GORE! GORE! IT'S OVER! GORE! GORE! YOU'RE GORE! TOO MUCH G-")
 	)
-	gored.gib()
+	new /obj/structure/bouncy_castle(gored.loc, gored)
+	gored.gib(TRUE, TRUE, TRUE) //no brain, no organs, no bodyparts
