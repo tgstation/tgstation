@@ -579,8 +579,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			continue
 
 		designs = list() //initialize all designs under this category
-		for(var/i in 1 to root_categories[root_category][sub_category].len)
-			var/list/design = root_categories[root_category][sub_category][i]
+		var/list/target_category =  root_categories[root_category][sub_category]
+		for(var/i in 1 to target_category.len)
+			var/list/design = target_category[i]
 
 			//get/infer icon_state based on category
 			if(sub_category == "Solid AirLocks")
