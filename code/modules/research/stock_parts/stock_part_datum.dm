@@ -11,6 +11,12 @@
 	/// What object does this stock part refer to?
 	var/obj/item/physical_object_type
 
+	/// What's the base path that this stock part refers to?
+	/// For example, a tier 2 capacitor will have a physical_object_type
+	/// of /obj/item/capacitor/tier2, but a physical_object_base_type of
+	/// /obj/item/capacitor
+	var/obj/item/physical_object_base_type
+
 	/// A single instance of the physical object type.
 	/// Used for icons, should never be moved out.
 	var/obj/item/physical_object_reference
@@ -20,9 +26,7 @@
 
 /datum/stock_part/Destroy()
 	SHOULD_CALL_PARENT(FALSE)
-
-	// MBTODO: I know /obj/machinery/Destroy() requests this
-	// This should CRASH
+	stack_trace("[type] is trying to Destroy. It is a singleton, this should not be happening")
 	return QDEL_HINT_LETMELIVE
 
 /// Returns the name of the physical object
@@ -66,6 +70,7 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 /datum/stock_part/scanning_module
 	tier = 1
 	physical_object_type = /obj/item/stock_parts/scanning_module
+	physical_object_base_type = /obj/item/stock_parts/scanning_module
 
 /datum/stock_part/scanning_module/tier2
 	tier = 2

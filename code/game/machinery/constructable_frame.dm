@@ -67,30 +67,24 @@
 		if(!ispath(component_path))
 			continue
 
-		var/component_name
-
 		if(ispath(component_path, /obj/item/stack))
 			var/obj/item/stack/stack_path = component_path
-			component_name = initial(stack_path.name)
 			if(initial(stack_path.singular_name))
 				req_component_names[component_path] = initial(stack_path.singular_name)
-				continue
+			else
+				req_component_names[component_path] = initial(stack_path.name)
 		else if(ispath(component_path, /datum/stock_part))
 			var/datum/stock_part/stock_part = component_path
-			component_path = initial(stock_part.physical_object_type)
-			ASSERT(ispath(component_path, /obj/item/stock_parts))
+			var/obj/item/physical_object_type = initial(stock_part.physical_object_type)
 
-		if(ispath(component_path, /obj/item/stock_parts))
+			req_component_names[component_path] = initial(physical_object_type.name)
+		else if(ispath(component_path, /obj/item/stock_parts))
 			var/obj/item/stock_parts/stock_part = component_path
-			component_name = initial(stock_part.name)
 
 			if(!specific_parts && initial(stock_part.base_name))
 				req_component_names[component_path] = initial(stock_part.base_name)
 			else
 				req_component_names[component_path] = initial(stock_part.name)
-
-		ASSERT(component_name)
-		req_component_names[component_path] = component_name
 
 /obj/structure/frame/machine/proc/get_req_components_amt()
 	var/amt = 0
