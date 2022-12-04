@@ -171,7 +171,7 @@ const ConfigureSection = (props, context) => {
 
 export const RapidConstructionDevice = (props, context) => {
   return (
-    <Window width={450} height={580}>
+    <Window width={450} height={590}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>

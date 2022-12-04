@@ -61,7 +61,7 @@
 
 /datum/action/innate/construction/configure_mode
 	name = "Configure RCD"
-	icon_icon = 'icons/obj/tools.dmi'
+	button_icon = 'icons/obj/tools.dmi'
 	button_icon_state = "rcd"
 
 /datum/action/innate/construction/configure_mode/Activate()
