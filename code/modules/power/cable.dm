@@ -27,6 +27,11 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	var/datum/powernet/powernet
 	var/cable_color = CABLE_COLOR_YELLOW
 
+	/// If TRUE, then after init, update_appearance() will be called.
+	/// Used to make sure cables connecting to each other don't naively
+	/// update for every adjacent cable.
+	var/going_to_update_appearance = FALSE
+
 /obj/structure/cable/layer1
 	color = CABLE_HEX_COLOR_RED
 	cable_color = CABLE_COLOR_RED
@@ -54,6 +59,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		var/turf/turf_loc = loc
 		turf_loc.add_blueprints_preround(src)
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/cable/LateInitialize()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
@@ -102,9 +111,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
-				C.update_appearance()
 
-	update_appearance()
+				// We will update on LateInitialize otherwise.
+				if (MC_RUNNING(SSatoms.init_stage))
+					C.update_appearance(UPDATE_ICON)
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
