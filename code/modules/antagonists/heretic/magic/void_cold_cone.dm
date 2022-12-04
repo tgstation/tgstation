@@ -6,11 +6,10 @@
 		though they may thaw shortly if used in room temperature."
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "entropic_plume"
+	button_icon_state = "icebeam"
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 1 MINUTES
+	cooldown_time = 30 SECONDS
 
 	invocation = "FR'ZE!"
 	invocation_type = INVOCATION_SHOUT

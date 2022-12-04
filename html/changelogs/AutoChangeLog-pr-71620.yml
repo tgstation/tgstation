@@ -1,0 +1,9 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Heretic: Furious Steel's cooldown has been doubled (30s -> 60s), and abides by antimagic"
+  - balance: "Heretic: Cleave's cooldown has increased by 5s, range has been decreased to 4 tiles, and wound applied now has natural clotting"
+  - balance: "Heretic: Blood Siphon's range has been decreased to 6 tiles"
+  - balance: "Heretic: Void Pull and Phase abide by antimagic"
+  - balance: "Heretic: Halved Void Blast's cooldown to 30s"
+  - qol: "Heretic: Void Blast and Rust Formation now have distinct icons"
