@@ -71,8 +71,8 @@
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	var/is_bone_creature = limb.biological_state == BIO_BONE
-	if(!gelled || (!taped && !is_bone_creature))
+	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & BIO_FLESH))
+	if(!gelled || (!taped && !is_bone_limb))
 		return
 
 	regen_ticks_current++
@@ -82,7 +82,7 @@
 		if(victim.IsSleeping() && DT_PROB(30, delta_time))
 			regen_ticks_current += 1
 
-	if(!is_bone_creature && DT_PROB(severity * 1.5, delta_time))
+	if(!is_bone_limb && DT_PROB(severity * 1.5, delta_time))
 		victim.take_bodypart_damage(rand(1, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
 		if(prob(33))
 			to_chat(victim, span_danger("You feel a sharp pain in your body as your bones are reforming!"))
