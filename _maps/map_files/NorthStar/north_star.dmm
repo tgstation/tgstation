@@ -10672,6 +10672,7 @@
 /obj/item/clothing/under/rank/prisoner/skirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/poster/official/random/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
 "cMh" = (
@@ -78544,6 +78545,7 @@
 /obj/machinery/light/red/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor4/port)
 "vPA" = (
@@ -80831,6 +80833,7 @@
 /area/station/maintenance/floor1/port)
 "wvd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/service)
 "wve" = (
@@ -170876,7 +170879,7 @@ qdV
 qdV
 qdV
 qdV
-qdV
+mCt
 mCt
 knP
 cpW
@@ -171130,7 +171133,7 @@ wGN
 qdV
 nkh
 mCt
-qdV
+mCt
 bII
 bII
 bII
@@ -171390,7 +171393,7 @@ qdV
 qdV
 qdV
 qdV
-qdV
+mCt
 poD
 oyh
 xpI
@@ -171644,7 +171647,7 @@ xJC
 wYH
 wYH
 wYH
-qdV
+mCt
 bII
 bII
 bII
@@ -171904,7 +171907,7 @@ qdV
 qwK
 qdV
 qdV
-qdV
+mCt
 ebA
 lXs
 wwu
@@ -172158,7 +172161,7 @@ xJC
 wYH
 wYH
 wYH
-qdV
+mCt
 bII
 bII
 bII
@@ -172418,7 +172421,7 @@ qdV
 qdV
 qdV
 qdV
-qdV
+mCt
 ebA
 lXs
 gqP
@@ -172672,7 +172675,7 @@ xJC
 wYH
 wYH
 wYH
-qdV
+mCt
 bII
 bII
 bII
@@ -203559,10 +203562,10 @@ sKX
 aeu
 eSI
 gYb
+gYb
 pUV
 pUV
-pUV
-pUV
+gYb
 aRY
 hgN
 sxi
@@ -203815,12 +203818,12 @@ cCq
 cCq
 cCq
 cCq
-pUV
+gYb
 gEf
 org
 gEf
 pUV
-pUV
+gYb
 aRY
 wzm
 ucA
@@ -204586,7 +204589,7 @@ oyh
 oyh
 oyh
 fZV
-pUV
+gYb
 qDI
 pUV
 syi
@@ -204843,12 +204846,12 @@ oyh
 oyh
 oyh
 fZV
-pUV
+gYb
 gEf
 pUV
 gEf
 pUV
-pUV
+gYb
 aRY
 wzm
 oyh
@@ -205100,11 +205103,11 @@ oyh
 oyh
 oyh
 keE
+gYb
 pUV
 pUV
 pUV
-pUV
-pUV
+gYb
 aRY
 cFx
 aWB
@@ -265454,7 +265457,7 @@ ucA
 ucA
 vOv
 oyh
-lfU
+bjb
 wzm
 oyh
 oyh
@@ -267767,7 +267770,7 @@ uXM
 uTx
 uTx
 lfU
-lfU
+bjb
 lDb
 lfU
 lfU
@@ -268281,7 +268284,7 @@ kFO
 lfU
 lfU
 lfU
-lfU
+bjb
 lfU
 lfU
 lfU
@@ -268795,7 +268798,7 @@ kFO
 lfU
 lfU
 lfU
-lfU
+bjb
 lfU
 lfU
 lfU
@@ -329716,7 +329719,7 @@ aFj
 aFj
 aFj
 fnL
-hzI
+kZZ
 tOV
 szK
 szK
