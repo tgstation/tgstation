@@ -87,24 +87,25 @@ SUBSYSTEM_DEF(achievements)
  *
  * Arguments:
  * * ckey - The ckey of the player whose achievement we're updating.
- * * achievement_key - The key of the achievement we're updating.
+ * * achievement_key - The typepath of the achievement we're updating.
  * * new_value (optional) - The new value for the achievement, defaulting to TRUE.
  * * additive (optional) - Whether or not the achievement is additive, defaulting to `FALSE`.
  * If set to `FALSE`, will simply overwrite the value on the database using the `new_value`.
  * If set to `TRUE`, it will add `new_value` to the value already present in the database.
  * You should only be setting this to `TRUE` for scores, achievements are binary.
  */
-/datum/controller/subsystem/achievements/proc/update_achievement(ckey, achievement_key, new_value = TRUE, additive = FALSE)
-	if(!ckey || !achievement_key)
+/datum/controller/subsystem/achievements/proc/update_achievement(ckey, achievement_type, new_value = TRUE, additive = FALSE)
+	if(!ckey || !achievement_type)
+		return
+
+	var/datum/award/award = awards[achievement_type]
+
+	if(!award)
 		return
 
 	var/datum/db_query/query = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("achievements")] (ckey, achievement_key, value) VALUES(:ckey, :achievement_key, :value) ON DUPLICATE KEY UPDATE value = [additive ? "value + " : ""]VALUES(value)",
-		list(
-			"ckey" = ckey,
-			"achievement_key" = achievement_key,
-			"value" = new_value,
-		)
+		award.get_changed_rows(ckey, new_value),
 	)
 
 	query.Execute(async = TRUE)
@@ -118,27 +119,27 @@ SUBSYSTEM_DEF(achievements)
  *
  * Arguments:
  * * ckey - The ckey of the player whose achievement we're updating.
- * * achievement_key - The key of the achievement we're updating.
+ * * achievement_type - The typepath of the achievement we're updating.
  * * new_value (optional) - The new value for the achievement, defaulting to TRUE.
  * * additive (optional) - Whether or not the achievement is additive, defaulting to `FALSE`.
  * If set to `FALSE`, will simply overwrite the value on the database using the `new_value`.
  * If set to `TRUE`, it will add `new_value` to the value already present in the database.
  * You should only be setting this to `TRUE` for scores, achievements are binary.
  */
-/datum/controller/subsystem/achievements/proc/queue_achievement_update(ckey, achievement_key, new_value = TRUE, additive = FALSE)
-	if(!ckey || !achievement_key)
+/datum/controller/subsystem/achievements/proc/queue_achievement_update(ckey, achievement_type, new_value = TRUE, additive = FALSE)
+	if(!ckey || !achievement_type)
 		return
 
 	if(SSticker.current_state != GAME_STATE_FINISHED || post_roundend)
-		update_achievement(ckey, achievement_key, new_value, additive)
+		update_achievement(ckey, achievement_type, new_value, additive)
 		return
 
-	var/datum/award/award = awards[achievement_key]
+	var/datum/award/award = awards[achievement_type]
 
 	if(!award)
 		return
 
-	var/datum/award/score/score = scores[achievement_key]
+	var/datum/award/score/score = scores[achievement_type]
 
 	if(score && score.additive)
 		additive_achievement_query_arguments += list(award.get_changed_rows(ckey, new_value))
