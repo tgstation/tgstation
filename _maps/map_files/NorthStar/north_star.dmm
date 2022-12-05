@@ -11699,7 +11699,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer2{
 	dir = 4
 	},
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos{
+/obj/machinery/airlock_controller/incinerator_atmos{
 	pixel_y = 26
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer4{
@@ -46093,7 +46093,7 @@
 	name = "Burn Chamber Interior Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
+/obj/machinery/airlock_controller/incinerator_ordmix{
 	pixel_x = 24
 	},
 /obj/effect/mapping_helpers/airlock/access/all/science/ordnance,
