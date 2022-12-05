@@ -1,6 +1,6 @@
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
-	icon_state = "0"
+	icon_state = "space"
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
@@ -45,7 +45,6 @@
  */
 /turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
-	icon_state = SPACE_ICON_STATE(x, y, z)
 	air = space_gas
 
 	if(flags_1 & INITIALIZED_1)
