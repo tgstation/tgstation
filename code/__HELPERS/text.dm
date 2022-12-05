@@ -1039,7 +1039,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	for (var/section in sectionSize)
 		var/sectionRender = ""
-		var/repeatAmount = FLOOR(( section / totalSize ) * numSquares, 1)
+		var/repeatAmount = FLOOR((section / totalSize) * numSquares, 1)
 		if(repeatAmount < 1)
 			returnList += ""
 			continue
