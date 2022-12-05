@@ -33,7 +33,7 @@
 
 	uniform = /obj/item/clothing/under/rank/civilian/janitor
 	gloves = /obj/item/clothing/gloves/color/black
-	head =  /obj/item/clothing/head/soft/purple
+	head = /obj/item/clothing/head/soft/purple
 
 /datum/antagonist/paradox_clone/on_gain()
 	forge_objectives()
