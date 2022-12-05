@@ -26,7 +26,6 @@
 
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
-	init_network_id(NETWORK_DOOR_AIRLOCKS)
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
 		setDir(set_dir)
@@ -47,15 +46,12 @@
 	src.unres_sides = unres_sides
 	update_appearance(UPDATE_ICON)
 
-	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, PROC_REF(ntnet_receive))
-
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	AddComponent(/datum/component/ntnet_interface)
 
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
@@ -375,34 +371,6 @@
 			flick("[base_state]closing", src)
 		if("deny")
 			flick("[base_state]deny", src)
-
-/obj/machinery/door/window/check_access_ntnet(datum/netdata/data)
-	return !requiresID() || ..()
-
-/obj/machinery/door/window/proc/ntnet_receive(datum/source, datum/netdata/data)
-	SIGNAL_HANDLER
-
-	// Check if the airlock is powered.
-	if(!hasPower())
-		return
-
-	// Handle received packet.
-	var/command = data.data["data"]
-	var/command_value = data.data["data_secondary"]
-	switch(command)
-		if("open")
-			if(command_value == "on" && !density)
-				return
-
-			if(command_value == "off" && density)
-				return
-
-			if(density)
-				INVOKE_ASYNC(src, PROC_REF(open))
-			else
-				INVOKE_ASYNC(src, PROC_REF(close))
-		if("touch")
-			INVOKE_ASYNC(src, PROC_REF(open_and_close))
 
 /obj/machinery/door/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
