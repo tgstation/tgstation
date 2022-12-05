@@ -117,7 +117,7 @@
 			var/mob/living/carbon/human/knower = owner
 			if(!istype(knower))
 				return
-			INVOKE_ASYNC(knower, TYPE_PROC_REF(/mob/living/carbon/human, psykerize))
+			INVOKE_ASYNC(knower, TYPE_PROC_REF(/mob/living/carbon/human, slow_psykerize))
 
 /// Signal to decrease burden_level (see update_burden proc) if an organ is added
 /datum/brain_trauma/special/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)

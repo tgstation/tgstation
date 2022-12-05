@@ -37,7 +37,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
 	//This demands a borg, so we'll let if off easy
-	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
+	ignore += typesof(/obj/item/modular_computer/pda/silicon)
 	//This one demands a computer, ditto
 	ignore += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
@@ -96,6 +96,8 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	ignore += typesof(/obj/machinery/computer/holodeck)
 	//runtimes if not paired with a landmark
 	ignore += typesof(/obj/structure/industrial_lift)
+	// Runtimes if the associated machinery does not exist, but not the base type
+	ignore += subtypesof(/obj/machinery/airlock_controller)
 
 	var/list/cached_contents = spawn_at.contents.Copy()
 	var/original_turf_type = spawn_at.type

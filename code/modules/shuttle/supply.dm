@@ -151,7 +151,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			paying_for_this = spawning_order.paying_account
 			if(spawning_order.pack.goody)
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
-			paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] has shipped. [price] credits have been charged to your bank account.")
+			var/reciever_message = "Cargo order #[spawning_order.id] has shipped."
+			if(spawning_order.charge_on_purchase)
+				reciever_message += " [price] credits have been charged to your bank account"
+			paying_for_this.bank_card_talk(reciever_message)
 			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
@@ -195,7 +198,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			for (var/item in our_order.pack.contains)
 				misc_contents[buyer] += item
 			misc_costs[buyer] += our_order.pack.cost
-			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id]  "
+			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id] "
 
 	for(var/I in miscboxes)
 		var/datum/supply_order/SO = new/datum/supply_order()

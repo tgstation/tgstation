@@ -330,11 +330,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			return
 
 	// OTHER
-	if(istype(attacking_item, /obj/item/modular_computer/tablet))
+	if(istype(attacking_item, /obj/item/modular_computer/pda))
 		var/itemname = ""
 		var/info = ""
 
-		var/obj/item/modular_computer/tablet/computer = attacking_item
+		var/obj/item/modular_computer/computer = attacking_item
 		for(var/datum/computer_file/program/notepad/notepad_app in computer.stored_files)
 			info = notepad_app.written_note
 			break
@@ -346,7 +346,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		user.log_talk(itemname, LOG_GAME, log_globally=TRUE, tag="Pressed to camera")
 		user.changeNext_move(CLICK_CD_MELEE)
 
-		for(var/mob/potential_viewer in GLOB.player_list)
+		for(var/mob/potential_viewer as anything in GLOB.player_list)
 			if(isAI(potential_viewer))
 				var/mob/living/silicon/ai/ai = potential_viewer
 				if(ai.control_disabled || (ai.stat == DEAD))

@@ -26,7 +26,7 @@
 
 /obj/item/storage/box/pdas/PopulateContents()
 	for(var/i in 1 to 4)
-		new /obj/item/modular_computer/tablet/pda(src)
+		new /obj/item/modular_computer/pda(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
