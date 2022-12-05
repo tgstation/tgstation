@@ -230,7 +230,6 @@
 	if(!user)
 		return
 	pictures_left--
-	var/turf/current_turf = get_turf(src)
 	var/obj/item/photo/new_photo = new(get_turf(src), picture)
 	if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
 		to_chat(user, span_notice("[pictures_left] photos left."))

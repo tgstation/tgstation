@@ -29,6 +29,7 @@
 	if((file.size + used_capacity) > max_capacity)
 		return FALSE
 	stored_files.Add(file)
+	file.disk_host = src
 	used_capacity += file.size
 	return TRUE
 

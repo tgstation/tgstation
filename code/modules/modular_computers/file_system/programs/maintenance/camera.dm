@@ -7,6 +7,7 @@
 	usage_flags = PROGRAM_TABLET
 	tgui_id = "NtosCamera"
 	program_icon = "camera"
+
 	/// Camera built-into the tablet.
 	var/obj/item/camera/internal_camera
 	/// Latest picture taken by the app.
@@ -14,9 +15,9 @@
 	/// How many pictures were taken already, used for the camera's TGUI photo display
 	var/picture_number = 1
 
-/datum/computer_file/program/maintenance/camera/New()
+/datum/computer_file/program/maintenance/camera/on_install()
 	. = ..()
-	internal_camera = new()
+	internal_camera = new(computer)
 	internal_camera.print_picture_on_snap = FALSE
 
 /datum/computer_file/program/maintenance/camera/Destroy()
@@ -28,7 +29,6 @@
 
 /datum/computer_file/program/maintenance/camera/tap(atom/tapped_atom, mob/living/user, params)
 	. = ..()
-
 	if(internal_picture)
 		QDEL_NULL(internal_picture)
 	var/turf/our_turf = get_turf(tapped_atom)
@@ -43,10 +43,7 @@
 		user << browse_rsc(internal_picture.picture_image, "tmp_photo[picture_number].png")
 		data["photo"] = "tmp_photo[picture_number].png"
 
-	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
-	if(printer)
-		data["has_printer"] = !!printer
-		data["paper_left"] = printer.stored_paper
+	data["paper_left"] = computer.stored_paper
 
 	return data
 
@@ -55,15 +52,12 @@
 	if(.)
 		return
 
+	var/mob/living/user = usr
 	switch(action)
 		if("print_photo")
-			var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
-			if(!printer)
-				to_chat(usr, span_notice("Hardware error: Printer not found."))
-				return
-			if(printer.stored_paper <= 0)
+			if(computer.stored_paper <= 0)
 				to_chat(usr, span_notice("Hardware error: Printer out of paper."))
 				return
-			internal_camera.printpicture(usr, internal_picture)
-			printer.stored_paper--
+			internal_camera.printpicture(user, internal_picture)
+			computer.stored_paper--
 			computer.visible_message(span_notice("\The [computer] prints out a paper."))

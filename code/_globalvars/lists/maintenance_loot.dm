@@ -249,8 +249,9 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
-	list(//data disks
-		/obj/item/computer_hardware/hard_drive/portable/maintenance/scanner = 1,
+	list(//computer disks
+		/obj/item/computer_disk/maintenance/scanner = 1,
+		/obj/item/computer_disk/maintenance/camera = 1,
 	) = 6,
 
 	list(//modsuits

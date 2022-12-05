@@ -4,7 +4,7 @@ import { Button, Box, NoticeBox, Stack } from '../components';
 
 export const NtosCamera = (props, context) => {
   return (
-    <NtosWindow>
+    <NtosWindow width={400} height={350}>
       <NtosWindow.Content scrollable>
         <NtosCameraContent />
       </NtosWindow.Content>
@@ -14,40 +14,24 @@ export const NtosCamera = (props, context) => {
 
 export const NtosCameraContent = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    photo,
-    has_printer,
-    paper_left,
-  } = data;
+  const { photo, paper_left } = data;
 
   if (!photo) {
-    return (
-      <NoticeBox>
-        PHOTO NOT FOUND: Right-click with the app open to snap a photo!
-      </NoticeBox>
-    );
+    return <NoticeBox>Phototrasen Images - Tap to snap a photo!</NoticeBox>;
   }
 
   return (
     <Stack fill vertical>
       <Stack.Item>
-        <Box
-          as="img"
-          src={photo} />
+        <Button
+          fluid
+          content="Print photo"
+          disabled={paper_left === 0}
+          onClick={() => act('print_photo')}
+        />
       </Stack.Item>
       <Stack.Item>
-        {!has_printer && (
-          <NoticeBox>
-            PRINTER NOT FOUND: Photo unable to be printed.
-          </NoticeBox>
-        )}
-        {has_printer && (
-          <Button
-            content="Print photo"
-            disabled={paper_left === 0}
-            onClick={() => act('print_photo')}
-          />
-        )}
+        <Box as="img" src={photo} />
       </Stack.Item>
     </Stack>
   );

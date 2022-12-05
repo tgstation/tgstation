@@ -213,7 +213,6 @@
 /obj/item/modular_computer/pda/medical/paramedic
 	name = "paramedic PDA"
 	starting_programs = list(
-		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
 		/datum/computer_file/program/radar/lifeline,
 	)
