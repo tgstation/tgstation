@@ -445,7 +445,7 @@
 	var/port_y_offset = loading_from?.port_y_offset
 	var/width = loading_from?.width
 	var/height = loading_from?.height
-	if(!istype(loading_from))
+	if(!loading_from)
 		if(!length(shuttle_areas))
 			CRASH("Attempted to calculate a docking port's information without a template before it was assigned any areas!")
 		// no template given, use shuttle_areas to calculate width and height
