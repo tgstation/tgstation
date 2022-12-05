@@ -809,7 +809,7 @@
 
 	. = list()
 
-	var/image_dir = 0
+	var/image_dir = NONE
 	if(dropped)
 		image_dir = SOUTH
 		if(dmg_overlay_type)
@@ -889,7 +889,7 @@
 			//remove the old, unmasked image
 			. -= limb_image
 			//add two masked images based on the old one
-			. += leg_source.generate_masked_leg(limb_image, body_zone)
+			. += leg_source.generate_masked_leg(limb_image, image_dir)
 
 	if(!is_husked)
 		//Draw external organs like horns and frills
@@ -905,7 +905,7 @@
 						external_organ.bitflag_to_layer(external_layer),
 						limb_gender,
 					)
-		return .
+	return .
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
