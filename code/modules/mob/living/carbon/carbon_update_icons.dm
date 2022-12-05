@@ -604,7 +604,7 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
  *
  * Returns the list of masked images, or `null` if the limb_overlay didn't exist
  */
-/obj/item/bodypart/leg/proc/generate_masked_leg(image/limb_overlay)
+/obj/item/bodypart/leg/proc/generate_masked_leg(mutable_appearance/limb_overlay)
 	RETURN_TYPE(/list)
 	if(!limb_overlay)
 		return
