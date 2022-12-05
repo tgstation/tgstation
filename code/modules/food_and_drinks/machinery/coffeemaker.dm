@@ -272,19 +272,19 @@
 
 /obj/machinery/coffeemaker/proc/try_brew()
 	if(!cartridge)
-		balloon_alert("no coffee cartidge inserted!")
+		balloon_alert(usr, "no coffee cartidge inserted!")
 		return FALSE
 	if(cartridge.charges < 1)
-		balloon_alert("coffee cartidge empty!")
+		balloon_alert(usr, "coffee cartidge empty!")
 		return FALSE
 	if(!coffeepot)
-		balloon_alert("no coffeepot inside!")
+		balloon_alert(usr, "no coffeepot inside!")
 		return FALSE
 	if(machine_stat & (NOPOWER|BROKEN))
-		balloon_alert("machine unpowered!")
+		balloon_alert(usr, "machine unpowered!")
 		return FALSE
 	if(coffeepot.reagents.total_volume >= coffeepot.reagents.maximum_volume)
-		balloon_alert("the coffeepot is already full!")
+		balloon_alert(usr, "the coffeepot is already full!")
 		return FALSE
 	return TRUE
 
