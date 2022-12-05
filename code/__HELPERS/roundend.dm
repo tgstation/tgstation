@@ -351,9 +351,7 @@
 		barSections += (popcount[POPCOUNT_SURVIVORS] - popcount[POPCOUNT_ESCAPEES])  // stranded
 		barSections += (total_players - popcount[POPCOUNT_SURVIVORS])  // dead
 
-		to_chat(world, json_encode(barSections))
 		var/list/renderedBar = generate_aggregate_bar(ROUNDEND_BAR_SIZE, barSections, totalSize = total_players)
-		to_chat(world, json_encode(renderedBar))
 
 		parts += "<B>( [join_color_list(renderedBar, ROUNDEND_BAR_COLOR)] )</B>"
 		parts += "<B>\
