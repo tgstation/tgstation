@@ -89,7 +89,7 @@
 
 		data[achievement_type] = value
 
-	SSachievements.update_achievement(owner_ckey, award.database_id, value, additive)
+	SSachievements.queue_achievement_update(owner_ckey, achievement_type, value, additive)
 
 
 ///Getter for the status/score of an achievement
