@@ -31,7 +31,8 @@
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
 	var/mob/living/basic/mouse/movement_target
 	gold_core_spawnable = FRIENDLY_SPAWN
-	collar_type = "cat"
+	collar_icon_state = "cat"
+	has_collar_resting_icon_state = TRUE
 	can_be_held = TRUE
 	held_state = "cat2"
 	///only for attacking rats
@@ -72,7 +73,7 @@
 	icon_state = "breadcat"
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"
-	collar_type = null
+	collar_icon_state = null
 	held_state = "breadcat"
 	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/item/organ/internal/ears/cat = 1, /obj/item/organ/external/tail/cat = 1, /obj/item/food/breadslice/plain = 1)
 
@@ -86,12 +87,13 @@
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
-	collar_type = null
+	collar_icon_state = null
 	unique_pet = TRUE
 	held_state = "original"
 
 /mob/living/simple_animal/pet/cat/original/add_cell_sample()
 	return
+
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
 	desc = "D'aaawwww."
@@ -101,7 +103,7 @@
 	density = FALSE
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	collar_type = "kitten"
+	collar_icon_state = "kitten"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~
 /mob/living/simple_animal/pet/cat/runtime
@@ -199,11 +201,8 @@
 		return
 	if (resting)
 		icon_state = "[icon_living]_rest"
-		collar_type = "[initial(collar_type)]_rest"
 	else
 		icon_state = "[icon_living]"
-		collar_type = "[initial(collar_type)]"
-	regenerate_icons()
 
 
 /mob/living/simple_animal/pet/cat/Life(delta_time = SSMOBS_DT, times_fired)
@@ -215,7 +214,7 @@
 			manual_emote(pick("sits down.", "crouches on [p_their()] hind legs.", "looks alert."))
 			set_resting(TRUE)
 			icon_state = "[icon_living]_sit"
-			collar_type = "[initial(collar_type)]_sit"
+			cut_overlays() // No collar support in sitting state
 		else if(DT_PROB(0.5, delta_time))
 			if (resting)
 				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))

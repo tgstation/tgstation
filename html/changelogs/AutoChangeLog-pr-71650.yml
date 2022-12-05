@@ -1,0 +1,5 @@
+author: "Tralezab code, Fikou's map, PigeonVerde and Halcyon for sprites!"
+delete-after: True
+changes:
+  - rscadd: "Psyker-gangers are new pirates"
+  - refactor: "refactored pirate code so we can add more in the future"
