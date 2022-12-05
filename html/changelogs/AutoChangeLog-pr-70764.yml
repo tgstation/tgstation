@@ -1,0 +1,6 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - balance: "Change liver to not purge toxins instantly for low amounts. Instead the toxin effect gets skipped while it is metabolized normally, however it still does liver damage. This fixes bite increments for food, cigarettes, and drinks where the toxins would purge without building up to harmful levels."
+  - balance: "Change the formula for how toxins effect livers.  Livers will be damaged based on the units of toxin present and their lethality."
+  - balance: "Change alien liver toxin resistance value to be -33% and cybernetic liver toxin resistance value to be +50%"
