@@ -2,7 +2,7 @@
 set -euo pipefail
 
 #nb: must be bash to support shopt globstar
-# shopt -s globstar
+shopt -s globstar
 
 #ANSI Escape Codes for colors to increase contrast of errors
 RED="\033[0;31m"
@@ -14,7 +14,7 @@ st=0
 
 # check for ripgrep
 if command -v rg >/dev/null 2>&1; then
-	grep="rg --no-ignore"
+	grep="rg"
 	pcre2_support=1
 	if [ ! rg -P '' >/dev/null 2>&1 ] ; then
 		pcre2_support=0
