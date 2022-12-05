@@ -189,9 +189,11 @@
 		for(var/obj/O in contents)
 			O.emp_act(severity)
 
-/obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
+/obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params, no_holdup = FALSE)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
 		return ..() //if they're out of range, just shootem.
+	if(no_holdup)
+		return ..()
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
 		if(gunpoint_component.target == victim)
