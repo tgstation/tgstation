@@ -61,7 +61,7 @@
 
 	biology = victim?.get_biological_state() || BIO_FLESH_BONE
 
-	if(biology == BIO_JUST_BONE)
+	if(biology == BIO_BONE)
 		description = pick_list(BONE_SCAR_FILE, W.scar_keyword) || "general disfigurement"
 	else // no specific support for flesh w/o bone scars since it's not really useful
 		description = pick_list(FLESH_SCAR_FILE, W.scar_keyword) || "general disfigurement"

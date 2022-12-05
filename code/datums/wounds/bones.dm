@@ -71,7 +71,7 @@
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	var/is_bone_creature = victim.get_biological_state() == BIO_JUST_BONE
+	var/is_bone_creature = victim.get_biological_state() == BIO_BONE
 	if(!gelled || (!taped && !is_bone_creature))
 		return
 
@@ -370,7 +370,7 @@
 /// if someone is using bone gel on our wound
 /datum/wound/blunt/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	// skellies get treated nicer with bone gel since their "reattach dismembered limbs by hand" ability sucks when it's still critically wounded
-	if(victim.get_biological_state() == BIO_JUST_BONE)
+	if(victim.get_biological_state() == BIO_BONE)
 		skelly_gel(I, user)
 		return
 
@@ -412,7 +412,7 @@
 
 /// skellies are less averse to bone gel, since they're literally all bone
 /datum/wound/blunt/proc/skelly_gel(obj/item/stack/medical/bone_gel/I, mob/user)
-	if(victim.get_biological_state() != BIO_JUST_BONE)
+	if(victim.get_biological_state() != BIO_BONE)
 		return // poser
 
 	if(gelled)
@@ -473,7 +473,7 @@
 	. += "<div class='ml-3'>"
 
 	if(severity > WOUND_SEVERITY_MODERATE)
-		if(victim.get_biological_state() == BIO_JUST_BONE)
+		if(victim.get_biological_state() == BIO_BONE)
 			if(!gelled)
 				. += "Recommended Treatment: Apply bone gel directly to injured limb. Creatures of pure bone don't seem to mind bone gel application nearly as much as fleshed individuals. Surgical tape will also be unnecessary.\n"
 			else

@@ -102,13 +102,13 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 // ~biology defines
 // What kind of biology we have, and what wounds we can suffer, mostly relies on the HAS_FLESH and HAS_BONE species traits on human species
 /// golems and androids, cannot suffer any wounds
-#define BIO_INORGANIC 0
+#define BIO_INORGANIC NONE
 /// skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
-#define BIO_JUST_BONE 1
+#define BIO_BONE (1<<0)
 /// nothing right now, maybe slimepeople in the future, can only suffer slashing, piercing, and burn wounds
-#define BIO_JUST_FLESH 2
-/// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_JUST_BONE and BIO_JUST_FLESH
-#define BIO_FLESH_BONE 3
+#define BIO_FLESH (1<<1)
+/// standard humanoids, can suffer all wounds, needs mangled bone and flesh to dismember. conveniently, what you get when you combine BIO_BONE and BIO_FLESH
+#define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
 
 
 // ~wound flag defines
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 #define SCAR_SAVE_PRECISE_LOCATION 4
 /// The severity the scar had
 #define SCAR_SAVE_SEVERITY 5
-/// Whether this is a BIO_JUST_BONE scar, a BIO_JUST_FLESH scar, or a BIO_FLESH_BONE scar (so you can't load fleshy human scars on a plasmaman character)
+/// Whether this is a BIO_BONE scar, a BIO_FLESH scar, or a BIO_FLESH_BONE scar (so you can't load fleshy human scars on a plasmaman character)
 #define SCAR_SAVE_BIOLOGY 6
 /// Which character slot this was saved to
 #define SCAR_SAVE_CHAR_SLOT 7
