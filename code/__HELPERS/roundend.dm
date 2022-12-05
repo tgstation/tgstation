@@ -817,3 +817,5 @@
 				return
 			qdel(query_update_everything_ranks)
 		qdel(query_check_everything_ranks)
+
+#undef ROUNDEND_BAR_SIZE
