@@ -26,6 +26,7 @@
 /datum/pet_command/New(mob/living/parent)
 	. = ..()
 	weak_parent = WEAKREF(parent)
+	parent.ai_controller.blackboard[command_key] = WEAKREF(src)
 
 /// Register a new guy we want to listen to
 /datum/pet_command/proc/add_new_friend(mob/living/tamer)
@@ -94,12 +95,23 @@
 	return list("[command_name]" = choice)
 
 /**
+ * Execute an AI action on the provided controller, what we should actually do when this command is active.
+ * This should basically always be called from a planning subtree which passes its own controller.
+ * Return SUBTREE_RETURN_FINISH_PLANNING to pass that instruction on to the controller, or don't if you don't want that.
+ */
+/datum/pet_command/proc/execute_action(datum/ai_controller/controller)
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Pet command execute action not implemented.")
+
+/**
  * # Point Targetting Pet Command
  * As above but also listens for you pointing at something and marks it as a target
  */
 /datum/pet_command/point_targetting
 	/// Text describing an action we perform upon receiving a new target
 	var/pointed_reaction
+	/// Blackboard key for targetting datum, this is likely going to need it
+	var/targetting_datum_key = BB_PET_TARGETTING_DATUM
 
 /datum/pet_command/point_targetting/add_new_friend(mob/living/tamer)
 	. = ..()

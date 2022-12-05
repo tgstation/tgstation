@@ -13,6 +13,9 @@
 	speech_commands = list("sit", "stay", "stop")
 	command_feedback = "sits"
 
+/datum/pet_command/idle/execute_action(datum/ai_controller/controller)
+	return SUBTREE_RETURN_FINISH_PLANNING // This cancels further AI planning
+
 /**
  * # Pet Command: Stop
  * Tells a pet to exit command mode and resume its normal behaviour, which includes regular target-seeking and what have you
@@ -25,6 +28,9 @@
 	command_key = PET_COMMAND_NONE
 	speech_commands = list("free", "loose")
 	command_feedback = "relaxes"
+
+/datum/pet_command/free/execute_action(datum/ai_controller/controller)
+	return // Just move on to the next planning subtree.
 
 /**
  * # Pet Command: Follow
@@ -42,6 +48,10 @@
 	. = ..()
 	set_command_target(parent, commander)
 
+/datum/pet_command/follow/execute_action(datum/ai_controller/controller)
+	controller.queue_behavior(/datum/ai_behavior/pet_follow_friend, BB_CURRENT_PET_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
 /**
  * # Pet Command: Attack
  * Tells a pet to chase and bite the next thing you point at
@@ -56,10 +66,10 @@
 	speech_commands = list("attack", "sic", "kill")
 	command_feedback = "growl"
 	pointed_reaction = "growls"
-	/// Blackboard key for targetting datum
-	var/targetting_key = BB_PET_TARGETTING_DATUM
 	/// Balloon alert to display if providing an invalid target
 	var/refuse_reaction = "shakes head"
+	/// Attack behaviour to use, generally you will want to override this to add some kind of cooldown
+	var/attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 // Refuse to target things we can't target, chiefly other friends
 /datum/pet_command/point_targetting/attack/set_command_target(mob/living/parent, atom/target)
@@ -68,7 +78,7 @@
 	var/mob/living/living_parent = parent
 	if (!living_parent.ai_controller)
 		return
-	var/datum/targetting_datum/targeter = living_parent.ai_controller.blackboard[BB_PET_TARGETTING_DATUM]
+	var/datum/targetting_datum/targeter = living_parent.ai_controller.blackboard[targetting_datum_key]
 	if (!targeter)
 		return
 	if (!targeter.can_attack(living_parent, target))
@@ -81,6 +91,10 @@
 	var/mob/living/living_parent = parent
 	living_parent.balloon_alert_to_viewers("[refuse_reaction]")
 	living_parent.visible_message(span_notice("[living_parent] refuses to attack [target]."))
+
+/datum/pet_command/point_targetting/attack/execute_action(datum/ai_controller/controller)
+	controller.queue_behavior(attack_behaviour, BB_CURRENT_PET_TARGET, targetting_datum_key)
+	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
  * # Pet Command: Targetted Ability
@@ -95,3 +109,16 @@
 	speech_commands = list("shoot", "blast", "cast")
 	command_feedback = "growl"
 	pointed_reaction = "growls"
+	/// Blackboard key where a reference to some kind of mob ability is stored
+	var/pet_ability_key
+
+/datum/pet_command/point_targetting/use_ability/execute_action(datum/ai_controller/controller)
+	if (!pet_ability_key)
+		return
+	var/datum/action/cooldown/using_action = controller.blackboard[pet_ability_key]
+	if (QDELETED(using_action))
+		return
+	// We don't check if the target exists because we want to 'sit attentively' if we've been instructed to attack but not given one yet
+	// We also don't check if the cooldown is over because there's no way a pet owner can know that, the behaviour will handle it
+	controller.queue_behavior(/datum/ai_behavior/pet_use_ability, pet_ability_key, targetting_datum_key)
+	return SUBTREE_RETURN_FINISH_PLANNING

@@ -356,16 +356,13 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning/rat,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/rat,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
 		/datum/ai_planning_subtree/random_speech/mouse,
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
 	)
-
-/datum/ai_planning_subtree/pet_planning/rat
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack/rat
 
 /datum/ai_planning_subtree/basic_melee_attack_subtree/rat
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/rat

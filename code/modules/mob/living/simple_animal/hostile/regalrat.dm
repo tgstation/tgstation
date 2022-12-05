@@ -235,13 +235,6 @@
 	domain()
 	StartCooldown()
 
-// Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targetting/attack/mouse
-	speech_commands = list("attack", "sic", "kill", "cheese 'em")
-	command_feedback = "squeak!"
-	pointed_reaction = "squeaks aggressively!"
-	refuse_reaction = "quivers"
-
 /**
  * This action checks all nearby mice, and converts them into hostile rats.
  * If no mice are nearby, creates a new one.
@@ -304,6 +297,14 @@
 		to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
 
 	StartCooldown()
+
+// Command you can give to a mouse to make it kill someone
+/datum/pet_command/point_targetting/attack/mouse
+	speech_commands = list("attack", "sic", "kill", "cheese em")
+	command_feedback = "squeak!"
+	pointed_reaction = "squeaks aggressively!"
+	refuse_reaction = "quivers"
+	attack_behaviour = /datum/ai_behavior/basic_melee_attack/rat
 
 /**
  *Spittle; harmless reagent that is added by rat king, and makes you disgusted.
