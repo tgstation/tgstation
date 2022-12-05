@@ -27,7 +27,7 @@ else
 	grep=grep
 	code_files="-r --include=code/**/**.dm"
 	map_files="-r --include=_maps/**/**.dmm"
-	ignore_515_proc_marker="--exclude=/code/__byond_version_compat.dm"
+	code_x_515="-r --include=code/**/!(__byond_version_compat).dm"
 fi
 
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
@@ -314,7 +314,7 @@ done
 
 section "515 Proc Syntax"
 part "proc ref syntax"
-if $grep '\.proc/' $ignore_515_proc_marker $code_files ; then
+if $grep '\.proc/' $code_x_515 ; then
     echo
     echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
     st=1
