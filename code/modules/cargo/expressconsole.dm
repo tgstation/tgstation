@@ -199,6 +199,7 @@
 						if(empty_turfs?.len)
 							LZ = pick(empty_turfs)
 					if (SO.pack.get_cost() <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
+						investigate_log("[key_name(usr)] launched a supply pod at [AREACOORD(LZ)] of type [SO.pack.type]", INVESTIGATE_CARGO)
 						TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 5 SECONDS)
 						D.adjust_money(-SO.pack.get_cost())
 						if(pack.special_pod)
@@ -220,6 +221,7 @@
 						D.adjust_money(-(SO.pack.get_cost() * (0.72*MAX_EMAG_ROCKETS)))
 
 						SO.generateRequisition(get_turf(src))
+						investigate_log("[key_name(usr)] launched an emagged supply pod at [AREACOORD(LZ)] of type [SO.pack.type]", INVESTIGATE_CARGO)
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
