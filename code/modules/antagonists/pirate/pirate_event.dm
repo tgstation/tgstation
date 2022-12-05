@@ -67,7 +67,8 @@
 	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for pirate crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 
-	var/datum/map_template/shuttle/pirate/ship = new chosen_gang.ship_template
+	var/template_key = "pirate_[chosen_gang.ship_template_id]"
+	var/datum/map_template/shuttle/pirate/ship = SSmapping.shuttle_templates[template_key]
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value

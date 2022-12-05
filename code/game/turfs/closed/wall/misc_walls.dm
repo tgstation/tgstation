@@ -136,6 +136,6 @@
 	canSmoothWith = null
 	smoothing_groups = null
 
-/turf/open/wall/space/Initialize(mapload)
+/turf/closed/wall/space/Initialize(mapload)
 	. = ..()
 	icon_state = SPACE_ICON_STATE(x, y, z)

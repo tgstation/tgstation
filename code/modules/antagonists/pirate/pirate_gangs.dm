@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	///the random ship name chosen from pirates.json
 	var/ship_name
 	///the ship they load in on.
-	var/ship_template = /datum/map_template/shuttle/pirate
+	var/ship_template_id = "ERROR"
 	///the key to the json list of pirate names
 	var/ship_name_pool = "some_json_key"
 	///inbound message title the station recieves
@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /datum/pirate_gang/rogues
 	name = "Rogues"
 
-	ship_template = /datum/map_template/shuttle/pirate/default
+	ship_template_id = "default"
 	ship_name_pool = "rogue_names"
 
 	threat_title = "Sector protection offer"
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /datum/pirate_gang/silverscales
 	name = "Silverscales"
 
-	ship_template = /datum/map_template/shuttle/pirate/silverscale
+	ship_template_id = "silverscale"
 	ship_name_pool = "silverscale_names"
 
 	threat_title = "Tribute request"
@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /datum/pirate_gang/skeletons
 	name = "Skeleton Pirates"
 
-	ship_template = /datum/map_template/shuttle/pirate/dutchman
+	ship_template_id = "dutchman"
 	ship_name_pool = "skeleton_names" //just points to THE ONE AND ONLY
 
 	threat_title = "Transfer of goods"
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /datum/pirate_gang/psykers
 	name = "Roving Psyker-gang"
 
-	ship_template = /datum/map_template/shuttle/pirate/psykers
+	ship_template_id = "psyker"
 	ship_name_pool = "psyker_names" //just points to THE ONE AND ONLY
 
 	threat_title = "Junkie tribute"
