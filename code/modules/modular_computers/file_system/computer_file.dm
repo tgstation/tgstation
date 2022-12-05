@@ -13,7 +13,7 @@
 	var/static/file_uid = 0
 	///The modular computer hosting the file.
 	var/obj/item/modular_computer/computer
-	///If stored
+	///The computer disk hosting the file.
 	var/obj/item/computer_disk/disk_host
 
 /datum/computer_file/New()
