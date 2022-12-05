@@ -5,14 +5,15 @@ import { Color } from 'common/color';
 import { SFC } from 'inferno';
 import { JobToIcon } from './common/JobToIcon';
 import { deepMerge } from 'common/collections';
+import { BooleanLike } from 'common/react';
 
 type Job = {
   unavailable_reason: string | null;
-  command: boolean;
+  command: BooleanLike;
   open_slots: number;
   used_slots: number;
   icon: string;
-  prioritized: boolean;
+  prioritized: BooleanLike;
   description: string;
 };
 
@@ -27,8 +28,8 @@ type Data = {
   departments: Record<string, Department>;
   alert_state: string;
   shuttle_status: string;
-  disable_jobs_for_non_observers: boolean;
-  priority: boolean;
+  disable_jobs_for_non_observers: BooleanLike;
+  priority: BooleanLike;
   round_duration: string;
 };
 
@@ -102,7 +103,7 @@ export const JobSelection = (props, context) => {
   const departments: Record<string, Department> = deepMerge(
     data.departments,
     data.departments_static
-  ); // Why the fuck is it so hard to clone objects properly in JS?!
+  );
 
   return (
     <Window width={1012} height={666 /* Hahahahahaha */}>
@@ -111,7 +112,7 @@ export const JobSelection = (props, context) => {
           title={
             <Button
               style={{ 'position': 'absolute', 'right': '1em' }}
-              onClick={() => act('SelectedJob', { 'job': 'Random' })}
+              onClick={() => act('select_job', { 'job': 'Random' })}
               content="Random Job!"
               tooltip="Roll target random job. You can re-roll or cancel your random job if you don't like it."
             />
@@ -138,8 +139,8 @@ export const JobSelection = (props, context) => {
                               .toString(),
                           }}>
                           {entry.open_slots +
-                            (entry.open_slots === 1 ? ' Slot' : ' Slots') +
-                            ' Available'}
+                            (entry.open_slots === 1 ? ' slot' : ' slots') +
+                            ' available'}
                         </span>
                       </>
                     }
@@ -167,7 +168,7 @@ export const JobSelection = (props, context) => {
                             job={job[1]}
                             department={entry}
                             onClick={() => {
-                              act('SelectedJob', { job: job[0] });
+                              act('select_job', { job: job[0] });
                             }}
                           />
                         </Stack.Item>

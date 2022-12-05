@@ -7,7 +7,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 /// Makes a list of jobs and pushes them to a DM list selector. Just in case someone did a special kind of fucky-wucky with TGUI.
 /datum/latejoin_menu/proc/fallback_ui(mob/dead/new_player/user)
 	var/list/jobs = list()
-	for(var/datum/job/job in SSjob.joinable_occupations)
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		jobs += job.title
 
 	var/input_contents = input(user, "Pick a job to join as:", "Latejoin Job Selection") as null|anything in jobs
@@ -91,7 +91,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			var/list/job_data = list(
 				"command" = !!(job_datum.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND),
 				"description" = job_datum.description,
-				"icon" = initial(trim.orbit_icon)
+				"icon" = initial(trim.orbit_icon),
 			)
 
 			department_jobs[job_datum.title] = job_data
@@ -113,38 +113,13 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	var/mob/dead/new_player/owner = ui.user
 
 	switch(action)
-		if("SelectedJob")
+		if("select_job")
 			if(params["job"] == "Random")
-				var/list/dept_data = list()
-				for(var/datum/job_department/department as anything in SSjob.joinable_departments)
-					for(var/datum/job/job_datum as anything in department.department_jobs)
-						if(owner.IsJobUnavailable(job_datum.title, latejoin = TRUE) != JOB_AVAILABLE)
-							continue
-						dept_data += job_datum.title
-
-				if(dept_data.len <= 0) //Congratufuckinglations
-					tgui_alert(owner, "There are literally no random jobs available for you on this server, ahelp for assistance.", "Oh No!")
+				var/job = get_random_job(owner)
+				if(!job)
 					return TRUE
 
-				var/random_job
-
-				while(random_job != JOB_CHOICE_YES)
-					if(dept_data.len <= 0)
-						tgui_alert(owner, "It seems that there are no more random jobs available for you!", "Oh No!")
-						return TRUE
-
-					var/random = pick_n_take(dept_data)
-					var/list/random_job_options = list(JOB_CHOICE_YES, JOB_CHOICE_CANCEL)
-
-					if(dept_data.len > 0)
-						random_job_options.Insert(2, JOB_CHOICE_REROLL) // Add reroll in the middle, it makes more sense, I think.
-
-					random_job = tgui_alert(owner, "[random]?", "Random Job", random_job_options)
-
-					if(random_job == JOB_CHOICE_CANCEL)
-						return TRUE
-					if(random_job == JOB_CHOICE_YES)
-						params["job"] = random
+				params["job"] = job
 
 			if(!SSticker?.IsRoundInProgress())
 				tgui_alert(owner, "The round is either not ready, or has already finished...", "Oh No!")
@@ -168,6 +143,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE
 
+			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
 			owner.AttemptLateSpawn(params["job"])
 			return TRUE
 
@@ -186,6 +162,38 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 			owner.vote_on_poll_handler(poll, params)
 			return TRUE
+
+/// Gives the user a random job that they can join as, and prompts them if they'd actually like to keep it, rerolling if not. Cancellable by the user.
+/// WARNING: BLOCKS THREAD!
+/datum/latejoin_menu/proc/get_random_job(mob/dead/new_player/owner)
+	var/list/dept_data = list()
+
+	for(var/datum/job_department/department as anything in SSjob.joinable_departments)
+		for(var/datum/job/job_datum as anything in department.department_jobs)
+			if(owner.IsJobUnavailable(job_datum.title, latejoin = TRUE) != JOB_AVAILABLE)
+				continue
+			dept_data += job_datum.title
+
+	if(dept_data.len <= 0) //Congratufuckinglations
+		tgui_alert(owner, "There are literally no random jobs available for you on this server, ahelp for assistance.", "Oh No!")
+		return
+
+	var/random_job
+
+	while(random_job != JOB_CHOICE_YES)
+		if(dept_data.len <= 0)
+			tgui_alert(owner, "It seems that there are no more random jobs available for you!", "Oh No!")
+			return
+
+		var/random = pick_n_take(dept_data)
+		var/list/random_job_options = list(JOB_CHOICE_YES, JOB_CHOICE_REROLL, JOB_CHOICE_CANCEL)
+
+		random_job = tgui_alert(owner, "[random]?", "Random Job", random_job_options)
+
+		if(random_job == JOB_CHOICE_CANCEL)
+			return
+		if(random_job == JOB_CHOICE_YES)
+			return random
 
 #undef JOB_CHOICE_YES
 #undef JOB_CHOICE_REROLL
