@@ -46,20 +46,21 @@
 	qdel(Query)
 
 	for(var/T in subtypesof(/datum/award))
-		var/datum/award/A = SSachievements.awards[T]
-		if(!A || !A.name) //Skip abstract achievements types
+		var/datum/award/award = SSachievements.awards[T]
+		if(!award || !award.name) //Skip abstract achievements types
 			continue
 		if(!data[T])
-			data[T] = A.parse_value(kv[A.database_id])
+			data[T] = award.parse_value(kv[award.database_id])
 			original_cached_data[T] = data[T]
 
 ///Updates local cache with db data for the given achievement type if it wasn't loaded yet.
 /datum/achievement_data/proc/get_data(achievement_type)
-	var/datum/award/A = SSachievements.awards[achievement_type]
-	if(!A.name)
+	var/datum/award/award = SSachievements.awards[achievement_type]
+	if(!award.name)
 		return FALSE
+
 	if(!data[achievement_type])
-		data[achievement_type] = A.load(owner_ckey)
+		data[achievement_type] = award.load(owner_ckey)
 		original_cached_data[achievement_type] = data[achievement_type]
 
 ///Unlocks an achievement of a specific type. achievement type is a typepath to the award, user is the mob getting the award, and value is an optional value to be used for defining a score to add to the leaderboard
