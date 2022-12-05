@@ -4,7 +4,7 @@
 	dir = SOUTH
 	baseturfs = /turf/open/space/transit
 	flags_1 = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
-	explosion_block = INFINITY
+	explosive_resistance = INFINITY
 
 /turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()

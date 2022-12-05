@@ -190,6 +190,7 @@
 	var/static/list/banned_combinations = list(-1, 47, 95, 203, 311, 325, 422, 473, 488, 500, 511)
 
 /obj/structure/light_puzzle/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	var/generated_board = -1
 	while(generated_board in banned_combinations)

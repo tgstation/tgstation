@@ -39,8 +39,8 @@
 	///HUD images that this atom can provide.
 	var/list/hud_possible
 
-	///Value used to increment ex_act() if reactionary_explosions is on
-	var/explosion_block = 0
+	///How much this atom resists explosions by, in the end
+	var/explosive_resistance = 0
 
 	/**
 	 * used to store the different colors on an atom
@@ -1813,6 +1813,17 @@
 	base_pixel_y = new_value
 
 	pixel_y = pixel_y + base_pixel_y - .
+
+// Not a valid operation, turfs and movables handle block differently
+/atom/proc/set_explosion_block(new_block)
+	return
+
+/atom/movable/set_explosion_block(new_block)
+	var/old_block = explosion_block
+	explosive_resistance -= old_block
+	explosion_block = new_block
+	explosive_resistance += new_block
+	SEND_SIGNAL(src, COMSIG_MOVABLE_EXPLOSION_BLOCK_CHANGED, old_block, new_block)
 
 /**
  * Returns true if this atom has gravity for the passed in turf

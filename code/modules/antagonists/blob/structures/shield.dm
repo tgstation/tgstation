@@ -12,6 +12,10 @@
 	atmosblock = TRUE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
 
+/obj/structure/blob/shield/Initialize(mapload, owner_overmind)
+	AddElement(/datum/element/blocks_explosives)
+	return ..()
+
 /obj/structure/blob/shield/scannerreport()
 	if(atmosblock)
 		return "Will prevent the spread of atmospheric changes."

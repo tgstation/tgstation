@@ -26,6 +26,7 @@
 	var/slicing_duration = 100
 
 /obj/structure/tramwall/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	var/obj/item/stack/initialized_mineral = new mineral
 	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
