@@ -9,7 +9,7 @@
 	var/lastattempt = null
 	var/attempts = 10
 	var/codelen = 4
-	var/qdel_on_unlock = FALSE
+	var/qdel_on_open = FALSE
 	var/spawned_loot = FALSE
 	var/loot
 	tamperproof = 90
@@ -118,10 +118,6 @@
 		return
 	if(tamperproof)
 		return
-	if(qdel_on_unlock)
-		open(user, TRUE)
-		qdel(src)
-		return
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
@@ -129,6 +125,13 @@
 		boom()
 		return
 	return ..()
+
+/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+	. = ..()
+	if(qdel_on_open)
+		open(user, TRUE)
+		qdel(src)
+		return
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
 	switch(loot)
@@ -221,7 +224,7 @@
 			new /obj/item/dnainjector/xraymut(src)
 		if(94)
 			new /mob/living/simple_animal/hostile/mimic/crate(src)
-			qdel_on_unlock = TRUE
+			qdel_on_open = TRUE
 		if(95)
 			new /obj/item/toy/plush/nukeplushie(src)
 		if(96)
