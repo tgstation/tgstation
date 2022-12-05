@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	/// if TRUE, we will gib anyone we land on top of. if FALSE, we will just apply damage with a serious wound penalty.
 	var/violent_landing = TRUE
 	/// damage multiplier if a mob is hit by the lift while it is moving horizontally
-	var/collision_lethality = 1
+	var/collision_lethality = 2
 	/// How long does it take for the elevator to move vertically?
 	var/elevator_vertical_speed = 2 SECONDS
 

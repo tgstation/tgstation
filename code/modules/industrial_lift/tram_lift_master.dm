@@ -8,7 +8,7 @@
 	var/travel_distance = 0
 
 	///multiplier on how much damage/force the tram imparts on things it hits
-	var/collision_lethality = 1
+	var/collision_lethality = 2
 
 	/// reference to the destination landmark we consider ourselves "at". since we potentially span multiple z levels we dont actually
 	/// know where on us this platform is. as long as we know THAT its on us we can just move the distance and direction between this
