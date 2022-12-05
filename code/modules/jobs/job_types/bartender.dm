@@ -39,9 +39,8 @@
 	var/datum/venue/bar = SSrestaurant.all_venues[/datum/venue/bar]
 	var/award_score = bar.total_income
 	var/award_status = winner.get_award_status(/datum/award/score/bartender_tourist_score)
-	if(award_score - award_status > 0)
-		award_score -= award_status
-	winner.give_award(/datum/award/score/bartender_tourist_score, winner.mob, award_score)
+	if(award_score > award_status)
+		winner.give_award(/datum/award/score/bartender_tourist_score, winner.mob, award_score)
 
 
 /datum/outfit/job/bartender

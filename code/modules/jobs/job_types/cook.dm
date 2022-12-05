@@ -52,8 +52,7 @@
 	var/award_score = restaurant.total_income
 	var/award_status = winner.get_award_status(/datum/award/score/chef_tourist_score)
 	if(award_score > award_status)
-		award_score -= award_status
-	winner.give_award(/datum/award/score/chef_tourist_score, winner.mob, award_score)
+		winner.give_award(/datum/award/score/chef_tourist_score, winner.mob, award_score)
 
 
 /datum/outfit/job/cook
