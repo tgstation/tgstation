@@ -176,7 +176,6 @@ export const EventTabs = (props, context) => {
     'category',
     categories[0]
   );
-  const [announce, setAnnounce] = useLocalState(context, 'announce', true);
 
   const layerCats = paginate(categories, CATEGORY_PAGE_ITEMS);
 
