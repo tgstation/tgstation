@@ -1,6 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
+#nb: must be bash to support shopt globstar
+shopt -s globstar
+
 #ANSI Escape Codes for colors to increase contrast of errors
 RED="\033[0;31m"
 GREEN="\033[0;32m"
@@ -41,43 +44,33 @@ part() {
 	echo -e "${GREEN} $padded- $1${NC}"
 }
 
-check() {
-	echo "part: $1"
-	part $1
-	shift
-	echo "error message: $2"
-	erro_msg=$1
-	shift
-	echo "rest: $@"
-
-	set +e
-	$grep "$@"
-	eval_stat=$?
-	set -e
-
-	if [ $eval_stat ] ; then
-		st=1
-		echo -e
-		echo -e "${RED}ERROR: $erro_msg${NC}"
-	fi
-}
-
 section "map issues"
-check "TGM Format" "Non-TGM formatted map detected. Please convert it using Map Merger!" -U '^".+" = \(.+\)' $map_files
 
-check "comments" \
-	"Unexpected commented out line detected in this map file. Please remove it." \
-	'//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | $grep -v 'name|desc'
-
-check "conflict markers" \
-	"Merge conflict markers detected in map, please resolve all merge failures!" \
-	'Merge Conflict Marker' $map_files
-
+part "TGM"
+if $grep -U '^".+" = \(.+\)' $map_files;	then
+	echo
+    echo -e "${RED}ERROR: Non-TGM formatted map detected. Please convert it using Map Merger!${NC}"
+    st=1
+fi;
+part "comments"
+if $grep '//' $map_files | $grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | $grep -v 'name|desc'; then
+	echo
+	echo -e "${RED}ERROR: Unexpected commented out line detected in this map file. Please remove it.${NC}"
+	st=1
+fi;
+part "conflict markers"
+if $grep 'Merge Conflict Marker' $map_files; then
+	echo
+    echo -e "${RED}ERROR: Merge conflict markers detected in map, please resolve all merge failures!${NC}"
+    st=1
+fi;
 # We check for this as well to ensure people aren't actually using this mapping effect in their maps.
-part "conflict marker object" \
-	"Merge conflict markers detected in map, please resolve all merge failures." \
-	'/obj/merge_conflict_marker' $map_files
-
+part "conflict marker object"
+if $grep '/obj/merge_conflict_marker' $map_files; then
+	echo
+    echo -e "${RED}ERROR: Merge conflict markers detected in map, please resolve all merge failures!${NC}"
+    st=1
+fi;
 part "iconstate tags"
 if $grep '^\ttag = "icon' $map_files;	then
 	echo
@@ -273,10 +266,12 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
     echo -e "${RED}ERROR: Changed files contains a proc argument starting with 'var'.${NC}"
     st=1
 fi;
-check "balloon_alert sanity" \
-	"Found a balloon alert with improper arguments." \
-	"$grep 'balloon_alert\(".+"\)' $code_files"
-
+part "balloon_alert sanity"
+if $grep 'balloon_alert\(".+"\)' $code_files; then
+	echo
+	echo -e "${RED}ERROR: Found a balloon alert with improper arguments.${NC}"
+	st=1
+fi;
 part "common spelling mistakes"
 if $grep -i 'centcomm' $code_files; then
 	echo
