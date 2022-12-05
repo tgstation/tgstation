@@ -6,5 +6,4 @@
 # Example:
 # 500.1337: runtimestation
 
-# Commented out until 515 is fully ready
-# 515.1595: runtimestation
+515.1596: runtimestation

@@ -1,6 +1,6 @@
 /// Test that stop, drop, and roll lowers fire stacks
 /datum/unit_test/stop_drop_and_roll/Run()
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
 	TEST_ASSERT_EQUAL(human.fire_stacks, 0, "Human does not have 0 fire stacks pre-ignition")
 
@@ -20,7 +20,7 @@
 
 /// Test that you can resist out of a container
 /datum/unit_test/container_resist/Run()
-	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	var/obj/structure/closet/closet = allocate(/obj/structure/closet, get_turf(human))
 
 	closet.open(human)

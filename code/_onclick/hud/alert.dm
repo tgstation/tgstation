@@ -341,6 +341,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/give/proc/handle_transfer()
 	var/mob/living/carbon/taker = owner
 	taker.take(offerer, receiving)
+	SEND_SIGNAL(offerer, COMSIG_CARBON_ITEM_GIVEN, taker, receiving)
 
 /atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	. = ..()

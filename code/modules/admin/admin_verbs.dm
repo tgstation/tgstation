@@ -86,6 +86,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/list_dna,
 	/client/proc/list_fingerprints,
 	/client/proc/message_pda, /*send a message to somebody on PDA*/
+	/client/proc/fax_panel, /*send a paper to fax*/
+	/datum/admins/proc/trophy_manager,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -116,6 +118,8 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/admin_away,
 	/client/proc/add_mob_ability,
 	/client/proc/remove_mob_ability,
+	/client/proc/command_report_footnote,
+	/client/proc/delay_command_report,
 	/datum/admins/proc/station_traits_panel,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)

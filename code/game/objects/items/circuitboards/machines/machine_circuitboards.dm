@@ -973,6 +973,18 @@
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stack/cable_coil = 2)
 
+
+/obj/item/circuitboard/machine/dna_infuser
+	name = "DNA Infuser"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/dna_infuser
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stack/cable_coil = 2,
+	)
+
 /obj/item/circuitboard/machine/mechpad
 	name = "Mecha Orbital Pad"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
@@ -1184,19 +1196,6 @@
 		/obj/item/stock_parts/card_reader = 1)
 
 //Supply
-
-/obj/item/circuitboard/machine/mining_equipment_vendor
-	name = "Mining Equipment Vendor"
-	greyscale_colors = CIRCUIT_COLOR_SUPPLY
-	build_path = /obj/machinery/mineral/equipment_vendor
-	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/matter_bin = 3)
-
-/obj/item/circuitboard/machine/mining_equipment_vendor/golem
-	name = "Golem Ship Equipment Vendor"
-	build_path = /obj/machinery/mineral/equipment_vendor/golem
-
 /obj/item/circuitboard/machine/ore_redemption
 	name = "Ore Redemption"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
@@ -1382,4 +1381,16 @@
 		/obj/item/stock_parts/water_recycler = 1,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/coffeemaker/impressa
+	name = "Impressa Coffeemaker"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/coffeemaker/impressa
+	req_components = list(
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/reagent_containers/cup/beaker = 2,
+		/obj/item/stock_parts/water_recycler = 1,
+		/obj/item/stock_parts/capacitor/adv = 1,
+		/obj/item/stock_parts/micro_laser/high = 2,
 	)

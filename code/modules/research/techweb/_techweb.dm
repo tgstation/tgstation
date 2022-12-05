@@ -7,6 +7,11 @@
  * on research consoles, servers, and disks. They are NOT global.
  */
 /datum/techweb
+	///The id/name of the whole Techweb viewable to players.
+	var/id = "Generic"
+	/// Organization name, used for display
+	var/organization = "Third-Party"
+
 	/// Already unlocked and all designs are now available. Assoc list, id = TRUE
 	var/list/researched_nodes = list()
 	/// Visible nodes, doesn't mean it can be researched. Assoc list, id = TRUE
@@ -25,12 +30,8 @@
 	var/list/deconstructed_items = list()
 	/// Available research points, type = number
 	var/list/research_points = list()
-	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
-	var/id = "generic"
 	/// IC logs
 	var/list/research_logs = list()
-	/// Organization name, used for display
-	var/organization = "Third-Party"
 	/// Current per-second production, used for display only.
 	var/list/last_bitcoins = list()
 	/// Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
@@ -41,6 +42,11 @@
 	var/list/available_experiments = list()
 	/// Completed experiments
 	var/list/completed_experiments = list()
+
+	///All RD consoles connected to this individual techweb.
+	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
+	///All research servers connected to this individual techweb.
+	var/list/obj/machinery/rnd/server/techweb_servers = list()
 
 	/**
 	 * Assoc list of relationships with various partners
@@ -62,6 +68,7 @@
 	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
 	initialize_published_papers()
 	return ..()
+
 /datum/techweb/admin
 	id = "ADMIN"
 	organization = "CentCom"
@@ -75,14 +82,6 @@
 		research_points[i] = INFINITY
 	hidden_nodes = list()
 
-/datum/techweb/science //Global science techweb for RND consoles.
-	id = "SCIENCE"
-	organization = "Nanotrasen"
-
-/datum/techweb/bepis //Should contain only 1 BEPIS tech selected at random.
-	id = "EXPERIMENTAL"
-	organization = "Nanotrasen R&D"
-
 /datum/techweb/bepis/New(remove_tech = TRUE)
 	. = ..()
 	var/bepis_id = pick(SSresearch.techweb_nodes_experimental) //To add a new tech to the BEPIS, add the ID to this pick list.
@@ -92,6 +91,7 @@
 	update_node_status(BN)
 	if(remove_tech)
 		SSresearch.techweb_nodes_experimental -= bepis_id
+		log_research("[BN.display_name] has been removed from experimental nodes through the BEPIS techweb's \"remove tech\" feature.")
 
 /datum/techweb/Destroy()
 	researched_nodes = null
@@ -285,8 +285,7 @@
  */
 /datum/techweb/proc/add_experiments(list/experiment_list)
 	. = TRUE
-	for (var/experiment_type in experiment_list)
-		var/datum/experiment/experiment = experiment_type
+	for (var/datum/experiment/experiment as anything in experiment_list)
 		. = . && add_experiment(experiment)
 
 /**
@@ -298,7 +297,7 @@
 /datum/techweb/proc/complete_experiment(datum/experiment/completed_experiment)
 	available_experiments -= completed_experiment
 	completed_experiments[completed_experiment.type] = completed_experiment
-	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb id [id]")
+	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization]")
 
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
@@ -313,8 +312,11 @@
 	if(!force)
 		if(!available_nodes[node.id] || (auto_adjust_cost && (!can_afford(node.get_price(src)))) || !have_experiments_for_node(node))
 			return FALSE
+	var/log_message = "[id]/[organization] researched node [node.id]"
 	if(auto_adjust_cost)
-		remove_point_list(node.get_price(src))
+		var/node_cost = node.get_price(src)
+		remove_point_list(node_cost)
+		log_message += " at the cost of [node_cost]"
 	researched_nodes[node.id] = TRUE //Add to our researched list
 	for(var/id in node.unlock_ids)
 		visible_nodes[id] = TRUE
@@ -330,12 +332,13 @@
 	if(get_that_dosh)
 		var/datum/bank_account/science_department_bank_account = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		science_department_bank_account?.adjust_money(SSeconomy.techweb_bounty)
-	return TRUE
+		log_message += ", gaining [SSeconomy.techweb_bounty] to [science_department_bank_account] for it."
 
-/datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
-	. = ..()
-	if(.)
-		node.on_research()
+	// Avoid logging the same 300+ lines at the beginning of every round
+	if (MC_RUNNING())
+		log_research(log_message)
+
+	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)
 	return unresearch_node(SSresearch.techweb_node_by_id(id))
@@ -523,3 +526,16 @@
 			handler.announce_message_to_all("The [experiment.name] has been completed!")
 
 	return TRUE
+
+/datum/techweb/science //Global science techweb for RND consoles.
+	id = "SCIENCE"
+	organization = "Nanotrasen"
+
+/datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
+	. = ..()
+	if(.)
+		node.on_research()
+
+/datum/techweb/bepis //Should contain only 1 BEPIS tech selected at random.
+	id = "EXPERIMENTAL"
+	organization = "Nanotrasen R&D"

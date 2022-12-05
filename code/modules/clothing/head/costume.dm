@@ -172,21 +172,25 @@
 
 /obj/item/clothing/head/costume/irs
 	name = "internal revenue service cap"
+	desc = "Even in space, you can't avoid the tax collectors."
 	icon_state = "irs_hat"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/tmc
 	name = "Lost M.C. bandana"
+	desc = "A small, red bandana tied thin."
 	icon_state = "tmc_hat"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/deckers
 	name = "Decker headphones"
+	desc = "A neon-blue pair of headphones. They look neo-futuristic."
 	icon_state = "decker_hat"
 	inhand_icon_state = null
 
 /obj/item/clothing/head/costume/yuri
 	name = "yuri initiate helmet"
+	desc = "A strange, whitish helmet with 3 eyeholes."
 	icon_state = "yuri_helmet"
 	inhand_icon_state = null
 	clothing_flags = SNUG_FIT
@@ -194,5 +198,7 @@
 
 /obj/item/clothing/head/costume/allies
 	name = "allies helmet"
+	desc = "An ancient military helmet worn by the bravest of warriors. \
+	It's only a replica, and probably wouldn't protect you from anything."
 	icon_state = "allies_helmet"
 	inhand_icon_state = null

@@ -173,7 +173,7 @@
 
 	if(area)
 		if(area.apc)
-			log_mapping("Duplicate APC created at [AREACOORD(src)]. Original at [AREACOORD(area.apc)].")
+			log_mapping("Duplicate APC created at [AREACOORD(src)] [area.type]. Original at [AREACOORD(area.apc)] [area.type].")
 		area.apc = src
 
 	update_appearance()

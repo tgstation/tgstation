@@ -299,6 +299,22 @@
 	list_reagents = list(/datum/reagent/consumable/cherryjelly = 50)
 	fill_icon_thresholds = null
 
+//technically condiment packs but they are non transparent
+
+/obj/item/reagent_containers/condiment/creamer
+	name = "coffee creamer pack"
+	desc = "Better not think about what they're making this from."
+	icon_state = "condi_creamer"
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/creamer = 5)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/condiment/chocolate
+	name = "chocolate sprinkle pack"
+	desc= "The amount of sugar thats already there wasn't enough for you?"
+	icon_state = "condi_chocolate"
+	list_reagents = list(/datum/reagent/consumable/choccyshake = 10)
+
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 
 /obj/item/reagent_containers/condiment/pack
@@ -331,7 +347,7 @@
 
 /obj/item/reagent_containers/condiment/pack/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_add), TRUE)
+	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_add), TRUE)
 	RegisterSignal(reagents, COMSIG_REAGENTS_DEL_REAGENT, PROC_REF(on_reagent_del), TRUE)
 
 /obj/item/reagent_containers/condiment/pack/update_icon()
@@ -395,6 +411,7 @@
 /obj/item/reagent_containers/condiment/pack/astrotame
 	name = "astrotame pack"
 	originalname = "astrotame"
+	volume = 5
 	list_reagents = list(/datum/reagent/consumable/astrotame = 5)
 
 /obj/item/reagent_containers/condiment/pack/bbqsauce
@@ -405,9 +422,11 @@
 /obj/item/reagent_containers/condiment/pack/creamer
 	name = "creamer pack"
 	originalname = "creamer"
-	list_reagents = list(/datum/reagent/consumable/creamer = 5)
+	volume = 5
+	list_reagents = list(/datum/reagent/consumable/cream = 5)
 
 /obj/item/reagent_containers/condiment/pack/sugar
 	name = "sugar pack"
 	originalname = "sugar"
+	volume = 5
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)

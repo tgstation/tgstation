@@ -5,6 +5,8 @@
 	alert_type = /atom/movable/screen/alert/status_effect/ghoul
 	/// The new max health value set for the ghoul, if supplied
 	var/new_max_health
+	/// What, if any, stamina modifier we applied to the ghoul mob
+	var/stamina_mod_applied
 	/// Reference to the master of the ghoul's mind
 	var/datum/mind/master_mind
 	/// An optional callback invoked when a ghoul is made (on_apply)
@@ -51,6 +53,9 @@
 	human_target.revive(ADMIN_HEAL_ALL) // Have to do an admin heal here, otherwise they'll likely just die due to missing organs or limbs
 
 	if(new_max_health)
+		if(new_max_health < human_target.maxHealth)
+			stamina_mod_applied = (new_max_health / human_target.maxHealth)
+			human_target.physiology.stamina_mod *= stamina_mod_applied
 		human_target.setMaxHealth(new_max_health)
 		human_target.health = new_max_health
 
@@ -78,6 +83,8 @@
 	var/mob/living/carbon/human/human_target = owner
 
 	if(new_max_health)
+		if(isnum(stamina_mod_applied))
+			human_target.physiology.stamina_mod /= stamina_mod_applied
 		human_target.setMaxHealth(initial(human_target.maxHealth))
 
 	on_lost_callback?.Invoke(human_target)

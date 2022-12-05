@@ -1,4 +1,4 @@
-#define RABBIT_CD_TIME 30 SECONDS
+#define RABBIT_CD_TIME (30 SECONDS)
 
 /obj/item/clothing/head/hats/tophat
 	name = "top-hat"

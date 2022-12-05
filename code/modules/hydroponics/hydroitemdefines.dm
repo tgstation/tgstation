@@ -557,7 +557,7 @@
 
 /obj/item/secateurs
 	name = "secateurs"
-	desc = "It's a tool for cutting grafts off plants."
+	desc = "It's a tool for cutting grafts off plants. Right-click to stylize podperson hair or other plant features!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
 	inhand_icon_state = null
@@ -574,36 +574,16 @@
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/// Secateurs can be used to style podperson "hair"
-/obj/item/secateurs/attack(mob/trimmed, mob/living/trimmer)
-	if(ispodperson(trimmed))
-		var/mob/living/carbon/human/pod = trimmed
-		var/location = trimmer.zone_selected
-		if((location in list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_HEAD)) && !pod.get_bodypart(BODY_ZONE_HEAD))
-			to_chat(trimmer, span_warning("[pod] [pod.p_do()]n't have a head!"))
-			return
-		if(location == BODY_ZONE_HEAD && !trimmer.combat_mode)
-			if(!trimmer.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
-				return
-			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
-			if(isnull(new_style))
-				return
-			trimmer.visible_message(
-				span_notice("[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
-				span_notice("You try to change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
-			)
-			if(new_style && do_after(trimmer, 6 SECONDS, target = pod))
-				trimmer.visible_message(
-					span_notice("[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
-					span_notice("You successfully change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
-				)
-
-				var/datum/species/pod/species = pod.dna?.species
-				species?.change_hairstyle(pod, new_style)
-		else
-			return ..()
-	else
+///Catch right clicks so we can stylize!
+/obj/item/secateurs/pre_attack_secondary(atom/target, mob/living/user, params)
+	if(user.combat_mode)
 		return ..()
+	restyle(target, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+///Send a signal to whatever we clicked and ask them if they wanna be PLANT RESTYLED YEAAAAAAAH
+/obj/item/secateurs/proc/restyle(atom/target, mob/living/user)
+	SEND_SIGNAL(target, COMSIG_ATOM_RESTYLE, user, target, user.zone_selected, EXTERNAL_RESTYLE_PLANT, 6 SECONDS)
 
 /obj/item/geneshears
 	name = "Botanogenetic Plant Shears"

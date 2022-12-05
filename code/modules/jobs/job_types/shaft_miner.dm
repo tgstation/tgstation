@@ -17,6 +17,8 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
+	mind_traits = list(TRAIT_DETECT_STORM)
+
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER
 	bounty_types = CIV_JOB_MINE
 	departments_list = list(
@@ -40,7 +42,7 @@
 		/obj/item/mining_voucher = 1,
 		/obj/item/stack/marker_beacon/ten = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/shaftminer
+	belt = /obj/item/modular_computer/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots/mining

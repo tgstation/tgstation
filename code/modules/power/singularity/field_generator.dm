@@ -156,7 +156,7 @@ no power level overlay is currently in the overlays list.
 
 
 /obj/machinery/field/generator/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(user.environment_smash & ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
+	if(user.environment_smash == ENVIRONMENT_SMASH_RWALLS && active == FG_OFFLINE && state != FG_UNSECURED)
 		set_anchored(FALSE)
 		user.visible_message(span_warning("[user] rips [src] free from its moorings!"))
 	else

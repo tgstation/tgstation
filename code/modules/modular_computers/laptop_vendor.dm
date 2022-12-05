@@ -9,17 +9,14 @@
 	density = TRUE
 
 	// The actual laptop/tablet
-	var/obj/item/modular_computer/laptop/fabricated_laptop = null
-	var/obj/item/modular_computer/tablet/fabricated_tablet = null
+	var/obj/item/modular_computer/laptop/fabricated_laptop
+	var/obj/item/modular_computer/pda/fabricated_tablet
 
 	// Utility vars
 	var/state = 0 // 0: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
 	var/devtype = 0 // 0: None(unselected), 1: Laptop, 2: Tablet
 	var/total_price = 0 // Price of currently vended device.
 	var/credits = 0
-
-	// Device loadout
-	var/dev_card = 0 // 0: None, 1: Standard
 
 // Removes all traces of old order and allows you to begin configuration from scratch.
 /obj/machinery/lapvend/proc/reset_order()
@@ -31,7 +28,6 @@
 	if(fabricated_tablet)
 		qdel(fabricated_tablet)
 		fabricated_tablet = null
-	dev_card = 0
 
 // Recalculates the price and optionally even fabricates the device.
 /obj/machinery/lapvend/proc/fabricate_and_recalc_price(fabricate = FALSE)
@@ -39,24 +35,13 @@
 	if(devtype == 1) // Laptop, generally cheaper to make it accessible for most station roles
 		if(fabricate)
 			fabricated_laptop = new /obj/item/modular_computer/laptop/buildable(src)
-			fabricated_laptop.install_component(new /obj/item/computer_hardware/card_slot)
 		total_price = 99
-		if(dev_card)
-			total_price += 199
-			if(fabricate)
-				fabricated_laptop.install_component(new /obj/item/computer_hardware/card_slot/secondary)
 
 		return total_price
 	else if(devtype == 2) // Tablet, more expensive, not everyone could probably afford this.
 		if(fabricate)
 			fabricated_tablet = new(src)
-			fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot)
 		total_price = 199
-		if(dev_card)
-			total_price += 199
-			if(fabricate)
-				fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot/secondary)
-		return total_price
 	return FALSE
 
 /obj/machinery/lapvend/ui_act(action, params)
@@ -83,10 +68,6 @@
 	switch(action)
 		if("confirm_order")
 			state = 2 // Wait for ID swipe for payment processing
-			fabricate_and_recalc_price(FALSE)
-			return TRUE
-		if("hw_card")
-			dev_card = text2num(params["card"])
 			fabricate_and_recalc_price(FALSE)
 			return TRUE
 	return FALSE
@@ -145,7 +126,6 @@
 	data["state"] = state
 	if(state == 1)
 		data["devtype"] = devtype
-		data["hw_card"] = dev_card
 	if(state == 1 || state == 2)
 		data["totalprice"] = total_price
 		data["credits"] = credits
