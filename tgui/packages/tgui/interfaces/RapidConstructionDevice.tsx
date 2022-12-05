@@ -6,10 +6,10 @@ import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
 import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
-  matterLeft: Number;
-  space: Boolean;
-  silo_upgraded: Boolean;
-  silo_enabled: Boolean;
+  matterLeft: number;
+  space: BooleanLike;
+  silo_upgraded: BooleanLike;
+  silo_enabled: BooleanLike;
   root_categories: string[];
   selected_root: string;
   categories: Category[];
