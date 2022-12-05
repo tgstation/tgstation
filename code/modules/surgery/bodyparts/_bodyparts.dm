@@ -25,11 +25,11 @@
 	/**
 	 * A bitfield of biological states, exclusively used to determine which wounds this limb will get,
 	 * as well as how easily it will happen.
-	 * Gets set based on the first owner we are attached to.
+	 * Set to BIO_FLESH_BONE because most species have both flesh and bone in their limbs.
 	 *
 	 * This has absolutely no meaning for robotic limbs.
 	 */
-	var/biological_state
+	var/biological_state = BIO_FLESH_BONE
 	///A bitfield of bodytypes for clothing, surgery, and misc information
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
@@ -769,8 +769,6 @@
 	// There should technically to be an ishuman(owner) check here, but it is absent because no basetype carbons use bodyparts
 	// No, xenos don't actually use bodyparts. Don't ask.
 	var/mob/living/carbon/human/human_owner = owner
-	biological_state = human_owner.get_biological_state()
-
 	var/datum/species/owner_species = human_owner.dna.species
 	species_flags_list = owner_species.species_traits
 	limb_gender = (human_owner.physique == MALE) ? "m" : "f"

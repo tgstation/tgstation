@@ -8,7 +8,11 @@
 	fixed_mut_color = "#DBBF92"
 	hair_color = "#FF4B19" //cap color, spot color uses eye color
 
-	species_traits = list(MUTCOLORS, NOEYESPRITES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
+	species_traits = list(
+		MUTCOLORS,
+		NOEYESPRITES,
+		NO_UNDERWEAR,
+	)
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOFLASH,

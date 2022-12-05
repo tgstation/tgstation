@@ -59,7 +59,7 @@
 		if(victim)
 			LAZYADD(victim.all_scars, src)
 
-	biology = victim?.get_biological_state() || BIO_FLESH_BONE
+	biology = limb?.biological_state || BIO_FLESH_BONE
 
 	if(biology == BIO_BONE)
 		description = pick_list(BONE_SCAR_FILE, W.scar_keyword) || "general disfigurement"
@@ -95,7 +95,7 @@
 	RegisterSignal(limb, COMSIG_PARENT_QDELETING, PROC_REF(limb_gone))
 	if(limb.owner)
 		victim = limb.owner
-		if(victim.get_biological_state() != biology)
+		if(limb.biological_state != biology)
 			qdel(src)
 			return
 		LAZYADD(victim.all_scars, src)

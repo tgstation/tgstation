@@ -230,9 +230,6 @@
 	WRITE_FILE(F["scar[char_index]-[scar_index]"], sanitize_text(valid_scars))
 	WRITE_FILE(F["current_scar_index"], sanitize_integer(scar_index))
 
-/mob/living/carbon/human/get_biological_state()
-	return dna.species.get_biological_state()
-
 ///Returns death message for mob examine text
 /mob/living/carbon/human/proc/generate_death_examine_text()
 	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)

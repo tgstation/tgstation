@@ -1,7 +1,12 @@
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
-	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING, NOSTOMACH)
+	species_traits = list(
+		NOBLOOD,
+		NO_DNA_COPY,
+		NOTRANSSTING,
+		NOSTOMACH,
+	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_GENELESS,

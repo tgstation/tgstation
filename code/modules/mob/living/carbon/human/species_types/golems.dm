@@ -2,7 +2,13 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = SPECIES_GOLEM
-	species_traits = list(NOBLOOD,NOTRANSSTING, MUTCOLORS,NO_UNDERWEAR, NO_DNA_COPY)
+	species_traits = list(
+		NOBLOOD,
+		NOTRANSSTING,
+		MUTCOLORS,
+		NO_UNDERWEAR,
+		NO_DNA_COPY,
+	)
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_NOBREATH,
@@ -1136,12 +1142,16 @@
 	special_names = list("Head", "Broth", "Fracture", "Rattler", "Appetit")
 	liked_food = GROSS | MEAT | RAW | GORE
 	toxic_food = null
-	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYESPRITES,HAS_BONE)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/internal/tongue/bone
 	mutantstomach = /obj/item/organ/internal/stomach/bone
 	sexes = FALSE
 	fixed_mut_color = null
+	species_traits = list(
+		NOBLOOD,
+		NO_UNDERWEAR,
+		NOEYESPRITES,
+	)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,

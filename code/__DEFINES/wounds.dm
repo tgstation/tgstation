@@ -100,7 +100,7 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 
 
 // ~biology defines
-// What kind of biology we have, and what wounds we can suffer, mostly relies on the HAS_FLESH and HAS_BONE species traits on human species
+// What kind of biology a limb has, and what wounds it can suffer
 /// golems and androids, cannot suffer any wounds
 #define BIO_INORGANIC NONE
 /// skeletons and plasmemes, can only suffer bone wounds, only needs mangled bone to be able to dismember
@@ -112,9 +112,9 @@ GLOBAL_LIST_INIT(global_all_wound_types, list(/datum/wound/blunt/critical, /datu
 
 
 // ~wound flag defines
-/// If this wound requires having the HAS_FLESH flag for humanoids
+/// If this wound requires having the BIO_FLESH biological_state on the limb
 #define FLESH_WOUND (1<<0)
-/// If this wound requires having the HAS_BONE flag for humanaoids
+/// If this wound requires having the BIO_BONE biological_state on the limb
 #define BONE_WOUND (1<<1)
 /// If having this wound counts as mangled flesh for dismemberment
 #define MANGLES_FLESH (1<<2)

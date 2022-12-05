@@ -2,7 +2,11 @@
 	name = "Abductor"
 	id = SPECIES_ABDUCTOR
 	sexes = FALSE
-	species_traits = list(NOBLOOD, NOEYESPRITES, NOSTOMACH)
+	species_traits = list(
+		NOBLOOD,
+		NOEYESPRITES,
+		NOSTOMACH,
+	)
 	inherent_traits = list(
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,

@@ -114,11 +114,10 @@
 		qdel(src)
 		return
 
-	if(ishuman(L.owner))
-		var/mob/living/carbon/human/H = L.owner
-		if(((wound_flags & BONE_WOUND) && !(HAS_BONE in H.dna.species.species_traits)) || ((wound_flags & FLESH_WOUND) && !(HAS_FLESH in H.dna.species.species_traits)))
-			qdel(src)
-			return
+	// Checks for biological state, to ensure only valid wounds are applied on the limb
+	if(((wound_flags & BONE_WOUND) && !(L.biological_state & BIO_BONE)) || ((wound_flags & FLESH_WOUND) && !(L.biological_state & BIO_FLESH)))
+		qdel(src)
+		return
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds

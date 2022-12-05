@@ -1727,16 +1727,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	former_tail_owner.clear_mood_event("tail_balance_lost")
 	former_tail_owner.clear_mood_event("wrong_tail_regained")
 
-/**
- * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds
- */
-/datum/species/proc/get_biological_state(mob/living/carbon/human/H)
-	. = BIO_INORGANIC
-	if(HAS_FLESH in species_traits)
-		. |= BIO_FLESH
-	if(HAS_BONE in species_traits)
-		. |= BIO_BONE
-
 ///Species override for unarmed attacks because the attack_hand proc was made by a mouth-breathing troglodyte on a tricycle. Also to whoever thought it would be a good idea to make it so the original spec_unarmedattack was not actually linked to unarmed attack needs to be checked by a doctor because they clearly have a vast empty space in their head.
 /datum/species/proc/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	return FALSE

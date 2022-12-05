@@ -3,7 +3,11 @@
 	name = "\improper Jellyperson"
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
-	species_traits = list(MUTCOLORS,EYECOLOR,NOBLOOD)
+	species_traits = list(
+		MUTCOLORS,
+		EYECOLOR,
+		NOBLOOD,
+	)
 	inherent_traits = list(
 		TRAIT_TOXINLOVER,
 	)

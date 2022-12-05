@@ -116,7 +116,7 @@
 	var/extra_wound_details = ""
 	if(I.damtype == BRUTE && hit_bodypart.can_dismember())
 		var/mangled_state = hit_bodypart.get_mangled_state()
-		var/bio_state = get_biological_state()
+		var/bio_state = hit_bodypart.biological_state
 		if(mangled_state == BODYPART_MANGLED_BOTH)
 			extra_wound_details = ", threatening to sever it entirely"
 		else if((mangled_state == BODYPART_MANGLED_FLESH && I.get_sharpness()) || (mangled_state & BODYPART_MANGLED_BONE && bio_state == BIO_BONE))
