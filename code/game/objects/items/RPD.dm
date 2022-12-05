@@ -624,7 +624,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						if(queued_p_flipped)
 							tube.setDir(turn(queued_p_dir, 45))
-							tube.SimpleRotateFlip()
+							var/datum/component/simple_rotation/rotcomp = tube.GetComponent(/datum/component/simple_rotation)
+							rotcomp?.Rotate(user, ROTATION_FLIP)
 
 						tube.add_fingerprint(usr)
 						if(mode & WRENCH_MODE)
