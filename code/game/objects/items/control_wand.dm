@@ -34,12 +34,29 @@
 /obj/item/door_remote/afterattack(atom/target, mob/user)
 	. = ..()
 
-	var/obj/machinery/door/door = istype(target, /obj/machinery/door) ? target : (locate() in get_turf(target))
-	if (!istype(door))
+	var/obj/machinery/door/door
+
+	if (istype(target, /obj/machinery/door))
+		door = target
+
+		if (!door.opens_with_door_remote)
+			return
+	else
+		for (var/obj/machinery/door/door_on_turf in get_turf(target))
+			if (door_on_turf.opens_with_door_remote)
+				door = door_on_turf
+
+		if (isnull(door))
+			return
+
+	if (!door.check_access_list(access_list) || !door.requiresID())
+		target.balloon_alert(user, "can't access!")
 		return
 
-	if (!door.check_access_list(access_list) || door.requiresID())
-		target.balloon_alert(user, "can't access!")
+	var/obj/machinery/door/airlock/airlock = door
+
+	if (!door.hasPower() || (istype(airlock) && !airlock.canAIControl()))
+		target.balloon_alert(user, mode == WAND_OPEN ? "it won't budge!" : "nothing happens!")
 		return
 
 	switch (mode)
@@ -49,7 +66,6 @@
 			else
 				door.close()
 		if (WAND_BOLT)
-			var/obj/machinery/door/airlock/airlock = door
 			if (!istype(airlock))
 				target.balloon_alert(user, "only airlocks!")
 				return
@@ -59,7 +75,6 @@
 			else
 				airlock.bolt()
 		if (WAND_EMERGENCY)
-			var/obj/machinery/door/airlock/airlock = door
 			if (!istype(airlock))
 				target.balloon_alert(user, "only airlocks!")
 				return

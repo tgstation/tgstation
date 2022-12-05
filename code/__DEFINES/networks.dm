@@ -22,9 +22,6 @@
 /// various sub networks pieces
 #define __NETWORK_LIMBO "LIMBO"
 #define __NETWORK_TOOLS "TOOLS"
-#define __NETWORK_REMOTES "REMOTES"
-#define __NETWORK_AIRLOCKS "AIRLOCKS"
-#define __NETWORK_DOORS "DOORS"
 #define __NETWORK_ATMOS "ATMOS"
 #define __NETWORK_SCUBBERS "AIRLOCKS"
 #define __NETWORK_AIRALARMS "AIRALARMS"
