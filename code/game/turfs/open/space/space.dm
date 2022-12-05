@@ -182,7 +182,7 @@
 
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
+	underlay_appearance.icon_state = "space"
 	SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 	return TRUE
 
