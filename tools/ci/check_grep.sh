@@ -21,13 +21,13 @@ if command -v rg >/dev/null 2>&1; then
 	fi
 	code_files="code/**/**.dm"
 	map_files="_maps/**/**.dmm"
-	ignore_515_proc_marker='-g !__byond_version_compat.dm'
+	ignore_515_proc_marker='-g !code/__byond_version_compat.dm'
 else
 	pcre2_support=0
 	grep=grep
 	code_files="-r --include=code/**/**.dm"
 	map_files="-r --include=_maps/**/**.dmm"
-	ignore_515_proc_marker="--exclude=__byond_version_compat.dm"
+	ignore_515_proc_marker="--exclude=code/__byond_version_compat.dm"
 fi
 
 echo -e "${BLUE}Using grep provider at $(which $grep)${NC}"
