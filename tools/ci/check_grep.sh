@@ -19,8 +19,8 @@ if command -v rg >/dev/null 2>&1; then
 	if [ ! rg -P '' >/dev/null 2>&1 ] ; then
 		pcre2_support=0
 	fi
-	code_files="-g **.dm"
-	map_files="-g **.dmm"
+	code_files="code/**/**.dm"
+	map_files="_maps/**/**.dmm"
 	ignore_515_proc_marker='-g !__byond_version_compat.dm'
 else
 	pcre2_support=0
