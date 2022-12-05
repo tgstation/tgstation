@@ -1,11 +1,11 @@
 
 /obj/item/bodypart/proc/can_dismember(obj/item/item)
-	if(dismemberable)
+	if(mutilation_allowed)
 		return TRUE
 
 ///Remove target limb from it's owner, with side effects.
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE, silent=TRUE)
-	if(!owner || !dismemberable)
+	if(!owner || !mutilation_allowed)
 		return FALSE
 	var/mob/living/carbon/limb_owner = owner
 	if(limb_owner.status_flags & GODMODE)
@@ -53,7 +53,7 @@
 	if(!owner)
 		return FALSE
 	var/mob/living/carbon/chest_owner = owner
-	if(!dismemberable)
+	if(!mutilation_allowed)
 		return FALSE
 	if(HAS_TRAIT(chest_owner, TRAIT_NODISMEMBER))
 		return FALSE
