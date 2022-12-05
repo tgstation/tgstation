@@ -23,7 +23,8 @@
 	var/mob/living/carbon/owner
 
 	/**
-	 * A bitfield of biological states, exclusively to determine which wounds this limb can get.
+	 * A bitfield of biological states, exclusively used to determine which wounds this limb will get,
+	 * as well as how easily it will happen.
 	 * Gets set based on the first owner we are attached to.
 	 *
 	 * This has absolutely no meaning for robotic limbs.
