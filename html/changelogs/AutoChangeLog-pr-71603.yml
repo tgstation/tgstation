@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes:
-  - qol: "Right clicking a PKA with an empty hand will show a radial menu that lets you remove modkits one at the time."

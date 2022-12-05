@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Fixes a typo that meant auxiliary effects from projectiles (.38 rubber stamina, ebow stamina/knockdown/blur) checked a generally nonexistent armor value that was defined on a per-/atom level. As a consequence, such auxiliary effects from projectiles now actually respect the armored equipment of hit targets/limbs/etc. On living mobs that have armor equipped, anyway."
