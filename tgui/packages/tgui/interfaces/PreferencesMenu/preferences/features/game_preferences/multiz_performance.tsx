@@ -5,6 +5,7 @@ export const multiz_performance: Feature<number> = {
   category: 'GAMEPLAY',
   description: 'How detailed multi-z is. Lower this to improve performance',
   component: createDropdownInput({
+    [-2]: 'High',
     [-1]: 'Standard',
     1: 'Medium',
     0: 'Low',

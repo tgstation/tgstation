@@ -1280,15 +1280,15 @@
 	name = "Aft Customs"
 	icon_state = "customs_point_aft"
 
-/area/security/checkpoint/first
+/area/station/security/checkpoint/first
 	name = "Security Post - First Floor"
 	icon_state = "checkpoint_1"
 
-/area/security/checkpoint/second
+/area/station/security/checkpoint/second
 	name = "Security Post - Second Floor"
 	icon_state = "checkpoint_2"
 
-/area/security/checkpoint/third
+/area/station/security/checkpoint/third
 	name = "Security Post - Third Floor"
 	icon_state = "checkpoint_3"
 //Cargo

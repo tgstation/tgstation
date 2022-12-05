@@ -504,6 +504,11 @@
 	name = "kilo transport ferry"
 	description = "Standard issue CentCom Ferry for Kilo pattern stations. Includes additional equipment and rechargers."
 
+/datum/map_template/shuttle/ferry/northstar
+	suffix = "northstar"
+	name = "north star transport ferry"
+	description = "In the very depths of the frontier, you'll need a rugged shuttle capable of delivering crew, this is that."
+
 /datum/map_template/shuttle/whiteship/box
 	suffix = "box"
 	name = "Hospital Ship"
@@ -759,6 +764,10 @@
 /datum/map_template/shuttle/snowdin/excavation
 	suffix = "excavation"
 	name = "Snowdin Excavation Elevator"
+
+/datum/map_template/shuttle/arrival/northstar
+	suffix = "northstar"
+	name = "arrival shuttle (North Star)"
 
 // Custom ERT shuttles
 /datum/map_template/shuttle/ert/bounty
