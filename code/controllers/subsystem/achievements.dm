@@ -37,9 +37,9 @@ SUBSYSTEM_DEF(achievements)
 	// update_metadata()
 
 	for(var/i in GLOB.clients)
-		var/client/C = i
-		if(!C.player_details.achievements.initialized)
-			C.player_details.achievements.InitializeData()
+		var/client/achieving_client = i
+		if(!achieving_client.player_details.achievements.initialized)
+			achieving_client.player_details.achievements.InitializeData()
 
 	return SS_INIT_SUCCESS
 
@@ -49,37 +49,16 @@ SUBSYSTEM_DEF(achievements)
 /datum/controller/subsystem/achievements/proc/save_achievements_to_db()
 	var/list/cheevos_to_save = list()
 	for(var/ckey in GLOB.player_details)
-		var/datum/player_details/PD = GLOB.player_details[ckey]
-		if(!PD || !PD.achievements)
+		var/datum/player_details/player_details = GLOB.player_details[ckey]
+		if(!player_details || !player_details.achievements)
 			continue
-		cheevos_to_save += PD.achievements.get_changed_data()
+
+		cheevos_to_save += player_details.achievements.get_changed_data()
+
 	if(!length(cheevos_to_save))
 		return
-	SSdbcore.MassInsert(format_table_name("achievements"),cheevos_to_save,duplicate_key = TRUE)
 
-//Update the metadata if any are behind
-/datum/controller/subsystem/achievements/proc/update_metadata()
-	var/list/current_metadata = list()
-	//select metadata here
-	var/datum/db_query/Q = SSdbcore.NewQuery("SELECT achievement_key,achievement_version FROM [format_table_name("achievement_metadata")]")
-	if(!Q.Execute(async = TRUE))
-		qdel(Q)
-		return
-	else
-		while(Q.NextRow())
-			current_metadata[Q.item[1]] = text2num(Q.item[2])
-		qdel(Q)
-
-	var/list/to_update = list()
-	for(var/T in awards)
-		var/datum/award/A = awards[T]
-		if(!A.database_id)
-			continue
-		if(!current_metadata[A.database_id] || current_metadata[A.database_id] < A.achievement_version)
-			to_update += list(A.get_metadata_row())
-
-	if(to_update.len)
-		SSdbcore.MassInsert(format_table_name("achievement_metadata"),to_update,duplicate_key = TRUE)
+	SSdbcore.MassInsert(format_table_name("achievements"), cheevos_to_save, duplicate_key = TRUE)
 
 
 /**
