@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixed a runtime from hovering over stuff like bread with an empty hand."
