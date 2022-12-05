@@ -279,6 +279,10 @@
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
 
+	// Send the roundend achievement queries so they get updated in one or two
+	// big queries rather than possibly over a hundred.
+	SSachievements.run_roundend_achievements_queries()
+
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
 	standard_reboot()
