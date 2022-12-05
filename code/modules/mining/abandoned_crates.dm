@@ -129,9 +129,7 @@
 /obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(qdel_on_open)
-		open(user, TRUE)
 		qdel(src)
-		return
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
 	switch(loot)
