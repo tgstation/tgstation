@@ -356,10 +356,10 @@
 
 		parts += "<B>( [join_color_list(renderedBar, ROUNDEND_BAR_COLOR)] )</B>"
 		parts += "<B>\
-		<span class=[ROUNDEND_BAR_COLOR[1]]>Shuttle</span>:\
-		<span class=[ROUNDEND_BAR_COLOR[2]]>No-Shuttle Escape</span>:\
-		<span class=[ROUNDEND_BAR_COLOR[3]]>Stranded</span>:\
-		<span class=[ROUNDEND_BAR_COLOR[4]]>Dead</span></B>"
+			<span class=[ROUNDEND_BAR_COLOR[1]]>Shuttle</span>:\
+			<span class=[ROUNDEND_BAR_COLOR[2]]>No-Shuttle Escape</span>:\
+			<span class=[ROUNDEND_BAR_COLOR[3]]>Stranded</span>:\
+			<span class=[ROUNDEND_BAR_COLOR[4]]>Dead</span></B>"
 
 		if(SSblackbox.first_death)
 			var/list/ded = SSblackbox.first_death
