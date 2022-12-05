@@ -113,7 +113,6 @@
 	final_image.loc = images_are_static ? get_turf(input) : input
 	final_image.dir = input.dir
 	final_image.alpha = 0
-	final_image.appearance_flags |= PASS_MOUSE
 	if(images_are_static)
 		final_image.pixel_x = input.pixel_x
 		final_image.pixel_y = input.pixel_y
