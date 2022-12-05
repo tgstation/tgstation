@@ -25,8 +25,8 @@ if command -v rg >/dev/null 2>&1; then
 else
 	pcre2_support=0
 	grep=grep
-	code_files="-r --include=*.dm"
-	map_files="-r --include=*.dmm"
+	code_files="-r --include=code/**/**.dm"
+	map_files="-r --include=_maps/**/**.dmm"
 	ignore_515_proc_marker="--exclude=__byond_version_compat.dm"
 fi
 
@@ -247,7 +247,7 @@ fi;
 
 section "unit tests"
 part "mob/living/carbon/human usage"
-if $grep 'mob/living/carbon/human[, (){}]' code/modules/unit_tests/*.dm; then
+if $grep 'mob/living/carbon/human[, (){}]' code/modules/unit_tests/**/**.dm; then
 	echo
 	echo -e "${RED}ERROR: Usage of mob/living/carbon/human detected in a unit test, please use mob/living/carbon/human/consistent.${NC}"
 	st=1
