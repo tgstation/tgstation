@@ -248,6 +248,7 @@
 					return
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item, parent)
+			summon_signal()
 		if("lock")
 			if(!lockable)
 				return TRUE
@@ -291,6 +292,7 @@
 			if(!objective.finish_objective(ui.user))
 				return
 			uplink_handler.complete_objective(objective)
+			summon_signal()
 		if("objective_abort")
 			uplink_handler.abort_objective(objective)
 	return TRUE
