@@ -14,7 +14,7 @@ st=0
 
 # check for ripgrep
 if command -v rg >/dev/null 2>&1; then
-	grep=rg
+	grep="rg --no-ignore"
 	pcre2_support=1
 	if [ ! rg -P '' >/dev/null 2>&1 ] ; then
 		pcre2_support=0
