@@ -161,6 +161,6 @@
 
 	dump_ingredients()
 
-/obj/item/reagent_containers/cup/soup_pot/proc/dump_ingredients(atom/loc_override)
+/obj/item/reagent_containers/cup/soup_pot/proc/dump_ingredients(atom/drop_loc = drop_location())
 	for(var/obj/item/ingredient as anything in added_ingredients)
-		ingredient.forceMove(loc_override || drop_location())
+		ingredient.forceMove(drop_loc)
