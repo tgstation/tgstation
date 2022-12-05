@@ -514,6 +514,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		radial_menu["Glass"][airlock_name] = list("icon" = icon, "coordinates" = list("Root" = "AirLocks", "Category" = "Glass AirLocks", "Index" = glass_ref++))
 
 
+/obj/item/construction/rcd/examine(mob/user)
+	. = ..()
+	. += "Right click to see full screen options"
 
 /obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag)
