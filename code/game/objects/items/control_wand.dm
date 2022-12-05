@@ -45,6 +45,7 @@
 		for (var/obj/machinery/door/door_on_turf in get_turf(target))
 			if (door_on_turf.opens_with_door_remote)
 				door = door_on_turf
+				break
 
 		if (isnull(door))
 			return
