@@ -23,7 +23,6 @@
 /// Something is in our way, get it outta here
 /datum/ai_behavior/attack_obstructions
 	action_cooldown = 1 SECONDS
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM
 	/// If we should attack walls, be prepared for complaints about breaches
 	var/can_attack_turfs = FALSE
 
