@@ -364,10 +364,10 @@
 	nearby_roach.icon_state += "_sewer"
 	nearby_roach.maxHealth += 1
 	nearby_roach.health += 1
-	make_minion(nearby_roach, " ...Except this one looks very robust.", minion_commands)
+	make_minion(nearby_roach, " <br>This one looks extra robust.", minion_commands)
 	return TRUE
 
-/// Turns a frog into a crazy frog
+/// Turns a frog into a crazy frog. This doesn't do anything interesting and should when it becomes a basic mob.
 /datum/action/cooldown/riot/proc/convert_frog(mob/living/simple_animal/hostile/retaliate/frog/nearby_frog, list/converted_check_list)
 	// No need to convert when not on the same team.
 	if(faction_check(nearby_frog.faction, converted_check_list))
@@ -383,7 +383,8 @@
 	nearby_frog.health += 10
 	nearby_frog.melee_damage_lower += 1
 	nearby_frog.melee_damage_upper += 5
-	make_minion(nearby_frog, " ...Except this one lives in a trash bag.")
+	var/crazy_frog_desc = " ...[findtext(nearby_frog.name, "rare") ? "even though" : "perhaps because"] they live in a trash bag."
+	make_minion(nearby_frog, crazy_frog_desc)
 	return TRUE
 
 // Command you can give to a mouse to make it kill someone
