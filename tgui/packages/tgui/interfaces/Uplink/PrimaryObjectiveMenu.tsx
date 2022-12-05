@@ -1,4 +1,4 @@
-import { Box, Dimmer, Section } from '../../components';
+import { Box, Dimmer, Section, Stack } from '../../components';
 import { ObjectiveElement } from './ObjectiveMenu';
 
 type PrimaryObjectiveMenuProps = {
@@ -49,29 +49,33 @@ export const PrimaryObjectiveMenu = (
         </Dimmer>
       )}
       <Section>
-        {primary_objectives.map((prim_obj, index) => (
-          <ObjectiveElement
-            key={prim_obj.id}
-            name={'Objective ' + (index + 1)}
-            description={prim_obj}
-            reputation={{
-              minutesLessThan: 0,
-              title: 'none',
-              gradient:
-                index === primary_objectives.length - 1
-                  ? 'reputation-good'
-                  : 'reputation-very-good',
-            }}
-            telecrystalReward={0}
-            telecrystalPenalty={0}
-            progressionReward={0}
-            originalProgression={0}
-            HideTcRep={1}
-            canAbort={false}
-            grow={false}
-            finalObjective={false}
-          />
-        ))}
+        <Stack vertical fill scrollable>
+          {primary_objectives.map((prim_obj, index) => (
+            <Stack.Item>
+              <ObjectiveElement
+                key={prim_obj.id}
+                name={prim_obj["task_name"]}
+                description={prim_obj["task_text"]}
+                reputation={{
+                  minutesLessThan: 0,
+                  title: 'none',
+                  gradient:
+                    index === primary_objectives.length - 1
+                      ? 'reputation-good'
+                      : 'reputation-very-good',
+                }}
+                telecrystalReward={0}
+                telecrystalPenalty={0}
+                progressionReward={0}
+                originalProgression={0}
+                HideTcRep={1}
+                canAbort={false}
+                grow={false}
+                finalObjective={false}
+              />
+            </Stack.Item>
+          ))}
+        </Stack>
       </Section>
     </Section>
   );
