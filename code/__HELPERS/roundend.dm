@@ -5,7 +5,7 @@
 #define SERVER_LAST_ROUND "server last round"
 
 #define ROUNDEND_BAR_SIZE 20
-#define ROUNDEND_BAR_COLOR list("greentext", "medradio", "engradio", "redtext")  // using actual spans? heresey
+#define ROUNDEND_BAR_COLOR list("greentext", "info", "marooned", "redtext")  // using actual spans? heresey
 
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
@@ -344,11 +344,23 @@
 			popcount[POPCOUNT_ESCAPEES], \
 			popcount[POPCOUNT_ESCAPEES] - popcount[POPCOUNT_SHUTTLE_ESCAPEES])  // non shuttle escapees
 
-		parts += "[FOURSPACES]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
-		barSections += popcount[POPCOUNT_SURVIVORS] - popcount[POPCOUNT_ESCAPEES]  // stranded
+		else
+			barSections += list(0, 0) // 0 escapees, those fields are empty
 
-		var/list/renderedBar = generate_aggregate_bar(ROUNDEND_BAR_SIZE, barSections, total_size = total_players)
-		parts += "<B>[join_color_list(renderedBar, ROUNDEND_BAR_COLOR)]</B>"
+		parts += "[FOURSPACES]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
+		barSections += (popcount[POPCOUNT_SURVIVORS] - popcount[POPCOUNT_ESCAPEES])  // stranded
+		barSections += (total_players - popcount[POPCOUNT_SURVIVORS])  // dead
+
+		to_chat(world, json_encode(barSections))
+		var/list/renderedBar = generate_aggregate_bar(ROUNDEND_BAR_SIZE, barSections, totalSize = total_players)
+		to_chat(world, json_encode(renderedBar))
+
+		parts += "<B>( [join_color_list(renderedBar, ROUNDEND_BAR_COLOR)] )</B>"
+		parts += "<B>\
+		<span class=[ROUNDEND_BAR_COLOR[1]]>Shuttle</span>:\
+		<span class=[ROUNDEND_BAR_COLOR[2]]>No-Shuttle Escape</span>:\
+		<span class=[ROUNDEND_BAR_COLOR[3]]>Stranded</span>:\
+		<span class=[ROUNDEND_BAR_COLOR[4]]>Dead</span></B>"
 
 		if(SSblackbox.first_death)
 			var/list/ded = SSblackbox.first_death

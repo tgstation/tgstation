@@ -1041,10 +1041,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		var/sectionRender = ""
 		var/repeatAmount = FLOOR(( section / totalSize ) * numSquares, 1)
 		if(repeatAmount < 1)
+			returnList += ""
 			continue
 		for(var/i in 1 to repeatAmount)
 			sectionRender += "#"
 		returnList += sectionRender
+		to_chat(world, json_encode(returnList))
 
 	if(listSum < totalSize)
 		var/sectionRender = ""
@@ -1057,12 +1059,14 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 // Returns new list that joins the first arg, while coloring each section by the associated span, repeating the last span if running out
 /proc/join_color_list(var/list/joined_list, var/list/span_list)
-	var/return_joined = ""
-	for(var/i in length(joined_list))
+	var/return_merged = ""
+	for(var/i in 1 to length(joined_list))
+		to_chat(world, i)
 		var/active_span = span_list[i] || span_list[length(span_list)]
-		return_joined += "<span class=[active_span]>[joined_list[i]]</span>"
-
-	return return_joined
+		to_chat(world, active_span)
+		return_merged += "<span class=[active_span]>[joined_list[i]]</span>"
+		to_chat(world, return_merged)
+	return return_merged
 
 /**
  * Formats a number to human readable form with the appropriate SI unit.
