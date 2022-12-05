@@ -37,7 +37,7 @@
 
 /datum/antagonist/paradox_clone/on_gain()
 	forge_objectives()
-	. = ..()
+	return ..()
 
 /datum/antagonist/paradox_clone/proc/forge_objectives()
 
