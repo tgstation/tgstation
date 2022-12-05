@@ -119,7 +119,9 @@
 	if(tamperproof)
 		return
 	if(qdel_on_unlock)
+		open(user, TRUE)
 		qdel(src)
+		return
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
