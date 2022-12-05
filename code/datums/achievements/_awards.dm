@@ -91,6 +91,11 @@
 	var/track_high_scores = TRUE
 	var/list/high_scores = list()
 
+	/// Are we additive? Basically, does granting this score increment its value,
+	/// rather than overwriting it?
+	var/additive = FALSE
+
+
 /datum/award/score/New()
 	. = ..()
 	if(track_high_scores)

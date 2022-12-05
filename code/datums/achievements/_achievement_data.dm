@@ -68,15 +68,29 @@
 
 	if(!SSachievements.achievements_enabled)
 		return
-	var/datum/award/A = SSachievements.awards[achievement_type]
+
+	var/datum/award/award = SSachievements.awards[achievement_type]
 	get_data(achievement_type) //Get the current status first if necessary
-	if(istype(A, /datum/award/achievement))
+	var/additive = FALSE
+
+	if(istype(award, /datum/award/achievement))
 		if(data[achievement_type]) //You already unlocked it so don't bother running the unlock proc
 			return
+
 		data[achievement_type] = TRUE
-		A.on_unlock(user) //Only on default achievement, as scores keep going up.
-	else if(istype(A, /datum/award/score))
-		data[achievement_type] += value
+		award.on_unlock(user) //Only on default achievement, as scores keep going up.
+
+	else if(istype(award, /datum/award/score))
+		var/datum/award/score/score = SSachievements.scores[achievement_type]
+		additive = score.additive
+
+		if(additive)
+			value = data[achievement_type] + value
+
+		data[achievement_type] = value
+
+	SSachievements.update_achievement(owner_ckey, award.database_id, value, additive)
+
 
 ///Getter for the status/score of an achievement
 /datum/achievement_data/proc/get_achievement_status(achievement_type)
