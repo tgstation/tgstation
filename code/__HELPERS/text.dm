@@ -1042,15 +1042,15 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 
 	for (var/section in section_size)
-		var/sectionRender = ""
-		var/repeatAmount = FLOOR((section / total_size) * num_squares, 1)
+		var/section_render = ""
+		var/repeat_amount = FLOOR((section / total_size) * num_squares, 1)
 		return_list += repeat_string(repeat_amount, "#")
 
 	if(listSum < total_size)
-		var/sectionRender = ""
+		var/section_render = ""
 		for(var/i in 1 to ((total_size - listSum) / total_size) * num_squares)  // yep this is an eyesore
-			sectionRender += "_"
-		return_list += sectionRender
+			section_render += "_"
+		return_list += section_render
 
 	return return_list
 
