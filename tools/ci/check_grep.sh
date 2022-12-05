@@ -247,7 +247,7 @@ fi;
 
 section "unit tests"
 part "mob/living/carbon/human usage"
-if $grep 'mob/living/carbon/human[, (){}]' $code_files; then
+if $grep 'mob/living/carbon/human[, (){}]' code/modules/unit_tests/*.dm; then
 	echo
 	echo -e "${RED}ERROR: Usage of mob/living/carbon/human detected in a unit test, please use mob/living/carbon/human/consistent.${NC}"
 	st=1
@@ -267,7 +267,7 @@ if $grep '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' $code_files; then
     st=1
 fi;
 part "balloon_alert sanity"
-if $grep 'balloon_alert\(".+"\)' $code_files; then
+if $grep 'balloon_alert\(".*"\)' $code_files; then
 	echo
 	echo -e "${RED}ERROR: Found a balloon alert with improper arguments.${NC}"
 	st=1
