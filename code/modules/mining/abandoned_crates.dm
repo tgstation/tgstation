@@ -9,8 +9,9 @@
 	var/lastattempt = null
 	var/attempts = 10
 	var/codelen = 4
-	var/qdel_on_open = FALSE
+	var/qdel_on_unlock = FALSE
 	var/spawned_loot = FALSE
+	var/loot
 	tamperproof = 90
 
 	// Stop people from "diving into" the crate accidentally, and then detonating it.
@@ -24,6 +25,7 @@
 		var/dig = pick(digits)
 		code += dig
 		digits -= dig  //there are never matching digits in the answer
+	loot = rand(1,100) //100 different crates with varying chances of spawning
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user, list/modifiers)
@@ -45,9 +47,6 @@
 			if(input == code)
 				if(!spawned_loot)
 					spawn_loot()
-				if(qdel_on_open)
-					qdel(src)
-					return
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 				togglelock(user)
 			else if(!input || !sanitycheck || length(sanitised) != codelen)
@@ -119,6 +118,8 @@
 		return
 	if(tamperproof)
 		return
+	if(qdel_on_unlock)
+		qdel(src)
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
@@ -128,7 +129,6 @@
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
-	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
 			new /obj/item/reagent_containers/cup/glass/bottle/rum(src)
@@ -219,7 +219,7 @@
 			new /obj/item/dnainjector/xraymut(src)
 		if(94)
 			new /mob/living/simple_animal/hostile/mimic/crate(src)
-			qdel_on_open = TRUE
+			qdel_on_unlock = TRUE
 		if(95)
 			new /obj/item/toy/plush/nukeplushie(src)
 		if(96)
