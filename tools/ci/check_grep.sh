@@ -21,7 +21,7 @@ if command -v rg >/dev/null 2>&1; then
 	fi
 	code_files="code/**/**.dm"
 	map_files="_maps/**/**.dmm"
-	ignore_515_proc_marker='-g !/code/__byond_version_compat.dm'
+	ignore_515_proc_marker="-g '!/code/__byond_version_compat.dm'"
 else
 	pcre2_support=0
 	grep=grep
@@ -314,7 +314,7 @@ done
 
 section "515 Proc Syntax"
 part "proc ref syntax"
-if $grep '\.proc/' $code_files $ignore_515_proc_marker; then
+if $grep '\.proc/' $ignore_515_proc_marker $code_files ; then
     echo
     echo -e "${RED}ERROR: Outdated proc reference use detected in code, please use proc reference helpers.${NC}"
     st=1
