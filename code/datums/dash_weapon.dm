@@ -2,7 +2,7 @@
 /datum/action/innate/dash
 	name = "Dash"
 	desc = "Teleport to the targeted location."
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "jetboot"
 	/// How many dash charges do we have?
 	var/current_charges = 1
@@ -65,7 +65,7 @@
 	playsound(target_turf, dash_sound, 25, TRUE)
 	current_charges--
 	addtimer(CALLBACK(src, PROC_REF(charge)), charge_rate)
-	owner?.update_action_buttons_icon()
+	owner?.update_mob_action_buttons()
 
 	return TRUE
 
@@ -82,5 +82,5 @@
 
 	if(!owner)
 		return
-	owner.update_action_buttons_icon()
+	owner.update_mob_action_buttons()
 	dashing_item.balloon_alert(owner, "[current_charges]/[max_charges] dash charges")

@@ -1,4 +1,0 @@
-author: "etherware-novice"
-delete-after: True
-changes:
-  - bugfix: "limits how much you get alerted by icebox storms"

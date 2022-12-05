@@ -282,6 +282,7 @@
 /obj/item/bodypart/chest/mushroom
 	limb_id = SPECIES_MUSHROOM
 	is_dimorphic = TRUE
+	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
 
 /obj/item/bodypart/arm/left/mushroom
 	limb_id = SPECIES_MUSHROOM
@@ -317,6 +318,7 @@
 	limb_id = SPECIES_GOLEM
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
+	bodypart_traits = list(TRAIT_NO_JUMPSUIT)
 
 /obj/item/bodypart/arm/left/golem
 	limb_id = SPECIES_GOLEM

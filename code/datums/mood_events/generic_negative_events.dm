@@ -409,3 +409,7 @@
 
 /datum/mood_event/body_purist/add_effects(power)
 	mood_change = power
+
+/datum/mood_event/unsatisfied_nomad
+	description = "I've been here too long! I want to go out and explore space!"
+	mood_change = -3

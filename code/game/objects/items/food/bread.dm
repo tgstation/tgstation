@@ -8,7 +8,7 @@
 	/// type is spawned 5 at a time and replaces this bread loaf when processed by cutting tool
 	var/obj/item/food/breadslice/slice_type
 	/// so that the yield can change if it isnt 5
-	var/obj/item/food/bread/yield = 5
+	var/yield = 5
 
 /obj/item/food/bread/Initialize(mapload)
 	. = ..()

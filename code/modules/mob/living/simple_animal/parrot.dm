@@ -654,7 +654,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 					item = I
 					break
 		if(item)
-			if(!get_path_to(src, item)) // WHY DO WE DISREGARD THE PATH AHHHHHH
+			if(!length(get_path_to(src, item))) // WHY DO WE DISREGARD THE PATH AHHHHHH
 				item = null
 				continue
 			return item

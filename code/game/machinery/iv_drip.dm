@@ -33,6 +33,10 @@
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
 	var/use_internal_storage = FALSE
+	///If we're using the internal container, fill us UP with the below : list(/datum/reagent/water = 5000)
+	var/internal_list_reagents
+	///How many reagents can we hold?
+	var/internal_volume_maximum = 100
 	///Typecache of containers we accept
 	var/static/list/drip_containers = typecacheof(list(
 		/obj/item/reagent_containers/blood,
@@ -46,7 +50,9 @@
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	if(use_internal_storage)
-		create_reagents(100, TRANSPARENT)
+		create_reagents(internal_volume_maximum, TRANSPARENT)
+		if(internal_list_reagents)
+			reagents.add_reagent_list(internal_list_reagents)
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/iv_drip/Destroy()
@@ -83,7 +89,7 @@
 		data["containerMaxVolume"] = drip_reagents.maximum_volume
 		data["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
 	data["useInternalStorage"] = use_internal_storage
-	data["isContainerRemovable"] = !use_internal_storage && !istype(src, /obj/machinery/iv_drip/saline)
+	data["isContainerRemovable"] = !use_internal_storage
 	return data
 
 /obj/machinery/iv_drip/ui_act(action, params)
@@ -100,18 +106,17 @@
 			detach_iv()
 			return TRUE
 		if("changeRate")
-			change_transfer_rate(text2num(params["rate"]))
+			set_transfer_rate(text2num(params["rate"]))
 			return TRUE
 
 /// Sets the transfer rate to the provided value
-/obj/machinery/iv_drip/proc/change_transfer_rate(var/new_rate)
+/obj/machinery/iv_drip/proc/set_transfer_rate(var/new_rate)
 	if(!use_internal_storage && !reagent_container)
 		return
 	if(!attached)
 		return
-	if(!new_rate)
-		return
 	transfer_rate = round(clamp(new_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), IV_TRANSFER_RATE_STEP)
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(transfer_rate > 0)
@@ -151,8 +156,8 @@
 	if(!get_reagents())
 		to_chat(usr, span_warning("There's nothing attached to the IV drip!"))
 		return
-	if(!target.reagents)
-		to_chat(usr, span_warning("Target can't hold reagents!"))
+	if(!target.is_injectable(usr))
+		to_chat(usr, span_warning("Can't inject into this!"))
 		return
 	if(attached)
 		visible_message(span_warning("[attached] is detached from [src]."))
@@ -196,9 +201,9 @@
 	if(!can_use_alt_click(user))
 		return ..()
 	if(transfer_rate > MIN_IV_TRANSFER_RATE)
-		transfer_rate = MIN_IV_TRANSFER_RATE
+		set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	else
-		transfer_rate = MAX_IV_TRANSFER_RATE
+		set_transfer_rate(MAX_IV_TRANSFER_RATE)
 	investigate_log("was set to [transfer_rate] u/sec. by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "transfer rate set to [transfer_rate] u/sec.")
 	update_appearance(UPDATE_ICON)
@@ -244,7 +249,7 @@
 		var/amount = min(transfer_rate * delta_time, drip_reagents.maximum_volume - drip_reagents.total_volume)
 		// If the beaker is full, ping
 		if(!amount)
-			transfer_rate = MIN_IV_TRANSFER_RATE
+			set_transfer_rate(MIN_IV_TRANSFER_RATE)
 			visible_message(span_hear("[src] pings."))
 			return
 
@@ -295,9 +300,8 @@
 	if(attached)
 		visible_message(span_notice("[attached] is detached from [src]."))
 	SEND_SIGNAL(src, COMSIG_IV_DETACH, attached)
-	transfer_rate = MIN_IV_TRANSFER_RATE
+	set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	attached = null
-	update_appearance(UPDATE_ICON)
 
 /// Get the reagents used by IV drip
 /obj/machinery/iv_drip/proc/get_reagents()
@@ -347,9 +351,8 @@
 		mode = IV_INJECTING
 		return
 	mode = !mode
-	transfer_rate = MIN_IV_TRANSFER_RATE
+	set_transfer_rate(MIN_IV_TRANSFER_RATE)
 	to_chat(usr, span_notice("The IV drip is now [mode ? "injecting" : "taking blood"]."))
-	update_appearance(UPDATE_ICON)
 
 /obj/machinery/iv_drip/examine(mob/user)
 	. = ..()
@@ -387,16 +390,13 @@
 	density = TRUE
 	inject_only = TRUE
 
+	use_internal_storage = TRUE
+	internal_list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)
+	internal_volume_maximum = 5000
+
 /obj/machinery/iv_drip/saline/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
-	reagent_container = new /obj/item/reagent_containers/cup/saline(src)
-
-/obj/machinery/iv_drip/saline/eject_beaker()
-	return
-
-/obj/machinery/iv_drip/saline/toggle_mode()
-	return
 
 ///modified IV that can be anchored and takes plumbing in- and output
 /obj/machinery/iv_drip/plumbing
