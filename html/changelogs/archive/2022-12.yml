@@ -113,3 +113,48 @@
   - imageadd: Simplified the stamina hud
   private-tristan:
   - spellcheck: stabilized oil now correctly has you smell like sulfur
+2022-12-05:
+  Guillaume Prata:
+  - qol: Right clicking a PKA with an empty hand will show a radial menu that lets
+      you remove modkits one at the time.
+  KittyNoodle:
+  - rscadd: You can now cry when in crit
+  LT3:
+  - bugfix: Tram turfs will now correctly show damage instead of reverting to a default
+      icon.
+  Melbert:
+  - bugfix: Fixed a runtime from hovering over stuff like bread with an empty hand.
+  - balance: 'Heretic: Furious Steel''s cooldown has been doubled (30s -> 60s), and
+      abides by antimagic'
+  - balance: 'Heretic: Cleave''s cooldown has increased by 5s, range has been decreased
+      to 4 tiles, and wound applied now has natural clotting'
+  - balance: 'Heretic: Blood Siphon''s range has been decreased to 6 tiles'
+  - balance: 'Heretic: Void Pull and Phase abide by antimagic'
+  - balance: 'Heretic: Halved Void Blast''s cooldown to 30s'
+  - qol: 'Heretic: Void Blast and Rust Formation now have distinct icons'
+  - bugfix: Fixes a runtime when alien larva exploded their host that caused the larva
+      organ to not be deleted afterwards.
+  - rscadd: Observers can now see what action buttons an observed mob has. No, you
+      can't click them. And no it doesn't show EVERY action.
+  - refactor: Refactored how action button icons are generated. Some actions will
+      now use a colored border when active instead of just turning green. Cooldown
+      text will also appear on the top layer of actions too. If you see any funky
+      lookin' icons (namely their borders), let me know.
+  - refactor: Bluespace Golem's teleport action is now a cooldown action.
+  - bugfix: Construct actions go to the middle of the screen like expected.
+  - bugfix: Fixed a runtime from alien larva processing after they've gibbed their
+      host.
+  Mothblocks:
+  - admin: Renamed "End Round Normally" in Check Antagonists to "Undelay Round End"
+  Salex08:
+  - bugfix: fixes being able to stack deepfried bluespace body bags into bluespace
+      body bag
+  Striders13:
+  - qol: Penthrite from luxury pens now gives you a status effect instead of a balloon
+      alert
+  timothymtorres:
+  - rscadd: Add brave bull now makes you fearless and you can ignore phobias while
+      it's in your system.
+  - qol: Add roundstart tip to let new doctors now that morgue trays and freezers
+      prevent organ decay
+  - code_imp: Renamed organ decay proc to be `toggle_organ_decay` instead of `recursive_organ_check`

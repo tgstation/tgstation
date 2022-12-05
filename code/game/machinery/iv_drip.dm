@@ -33,6 +33,10 @@
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
 	var/use_internal_storage = FALSE
+	///If we're using the internal container, fill us UP with the below : list(/datum/reagent/water = 5000)
+	var/internal_list_reagents
+	///How many reagents can we hold?
+	var/internal_volume_maximum = 100
 	///Typecache of containers we accept
 	var/static/list/drip_containers = typecacheof(list(
 		/obj/item/reagent_containers/blood,
@@ -46,7 +50,9 @@
 	. = ..()
 	update_appearance(UPDATE_ICON)
 	if(use_internal_storage)
-		create_reagents(100, TRANSPARENT)
+		create_reagents(internal_volume_maximum, TRANSPARENT)
+		if(internal_list_reagents)
+			reagents.add_reagent_list(internal_list_reagents)
 	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/iv_drip/Destroy()
@@ -83,7 +89,7 @@
 		data["containerMaxVolume"] = drip_reagents.maximum_volume
 		data["containerReagentColor"] = mix_color_from_reagents(drip_reagents.reagent_list)
 	data["useInternalStorage"] = use_internal_storage
-	data["isContainerRemovable"] = !use_internal_storage && !istype(src, /obj/machinery/iv_drip/saline)
+	data["isContainerRemovable"] = !use_internal_storage
 	return data
 
 /obj/machinery/iv_drip/ui_act(action, params)
@@ -150,8 +156,8 @@
 	if(!get_reagents())
 		to_chat(usr, span_warning("There's nothing attached to the IV drip!"))
 		return
-	if(!target.reagents)
-		to_chat(usr, span_warning("Target can't hold reagents!"))
+	if(!target.is_injectable(usr))
+		to_chat(usr, span_warning("Can't inject into this!"))
 		return
 	if(attached)
 		visible_message(span_warning("[attached] is detached from [src]."))
@@ -384,16 +390,13 @@
 	density = TRUE
 	inject_only = TRUE
 
+	use_internal_storage = TRUE
+	internal_list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)
+	internal_volume_maximum = 5000
+
 /obj/machinery/iv_drip/saline/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
 	. = ..()
-	reagent_container = new /obj/item/reagent_containers/cup/saline(src)
-
-/obj/machinery/iv_drip/saline/eject_beaker()
-	return
-
-/obj/machinery/iv_drip/saline/toggle_mode()
-	return
 
 ///modified IV that can be anchored and takes plumbing in- and output
 /obj/machinery/iv_drip/plumbing

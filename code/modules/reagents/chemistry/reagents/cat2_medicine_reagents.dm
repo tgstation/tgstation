@@ -504,9 +504,14 @@
 	inverse_chem_val = 0.25
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/atom/movable/screen/alert/penthrite
+	name = "Strong Heartbeat"
+	desc = "Your heart beats with great force!"
+	icon_state = "penthrite"
+
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	user.balloon_alert(user, "your heart beats with a great force")
+	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
 	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
 	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
 	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
@@ -540,7 +545,7 @@
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
-	user.balloon_alert(user, "your heart relaxes")
+	user.clear_alert("penthrite")
 	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
 	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
 	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)
