@@ -351,6 +351,8 @@ RLD
 		),
 	)
 
+	var/list/radial_menu = null
+
 	var/design_title = "Wall/Floor" ///english name for the design to check if it was selected or not
 	var/design_category = "Structures"
 	var/root_category = "Construction"
@@ -399,6 +401,119 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
+
+	//Manually create a list version of the radial menu
+
+	//Load all icons for the menu. code copied from rcd.dm in asset cache
+	var/list/icon_list = list()
+	var/list/essentials = list(
+		'icons/hud/radial.dmi' = list("wallfloor", "windowsize", "windowtype", "grillewindow", "cnorth", "csouth", "ceast", "cwest", "chair", "stool", "windoor", "secure_windoor", "airlock", "airlocktype", "access", "computer_dir"),
+		'icons/obj/structures.dmi' = list("window0", "rwindow0", "table", "glass_table"),
+		'icons/obj/stock_parts.dmi' = list("box_1"),
+		'icons/obj/mining.dmi' = list("silo"),
+		'icons/obj/doors/airlocks/station/public.dmi' = list("closed")
+	)
+	var/icon/icon
+	for(var/icon_file as anything in essentials)
+		for(var/icon_state as anything in essentials[icon_file])
+			icon = icon(icon = icon_file, icon_state = icon_state)
+			if(icon_state == "closed")
+				icon.Blend(icon(icon = icon_file, icon_state = "fill_closed", dir = SOUTH), ICON_OVERLAY)
+				icon_list["airlock-solid"] = icon
+
+				icon = icon(icon = icon_file, icon_state = icon_state)
+				icon_list["airlock-glass"] = icon
+			else
+				icon = icon(icon = icon_file, icon_state = icon_state)
+				if(icon_state == "window0" || icon_state == "rwindow0")
+					icon.Blend(icon(icon = 'icons/obj/structures.dmi', icon_state = "grille"), ICON_UNDERLAY)
+				icon_list[icon_state] = icon
+
+	//Initialize the radial menu
+	radial_menu = list(
+		"Main Menu" = list(
+			"Airlock" = list("icon" = icon_list["airlock"]),
+			"Grills & Windows" = list("icon" = icon_list["grillewindow"]),
+			"Floors & Walls" = list("icon" = icon_list["wallfloor"], "coordinates" = list("Root" = "Construction", "Category" = "Structures", "Index" = 1)),
+			"Machine Frame" = list("icon" = icon_list["box_1"], "requires" = RCD_UPGRADE_FRAMES, "coordinates" = list("Root" = "Construction", "Category" = "Machines", "Index" = 1)),
+			"Computer Frames" = list("icon" = icon_list["computer_dir"], "requires" = RCD_UPGRADE_FRAMES),
+			"Silo Link" = list("icon" = icon_list["silo"], "requires" = RCD_UPGRADE_SILO_LINK),
+			"Furnishing" = list("icon" = icon_list["chair"], "requires" = RCD_UPGRADE_FURNISHING),
+		),
+		"Grills & Windows" = list(
+			"Directional Window" = list("icon" = icon_list["windowsize"], "coordinates" = list("Root" = "Construction", "Category" = "Structures", "Index" = 2)),
+			"Directional Reinforced Window" = list("icon" = icon_list["windowtype"], "coordinates" = list("Root" = "Construction", "Category" = "Structures", "Index" = 3)),
+			"Fulltile Window" = list("icon" = icon_list["window0"], "coordinates" = list("Root" = "Construction", "Category" = "Structures", "Index" = 4)),
+			"Fulltile Reinforced Window" = list("icon" = icon_list["rwindow0"], "coordinates" = list("Root" = "Construction", "Category" = "Structures", "Index" = 5))
+		),
+		"Airlock" = list(
+			"Change Airlock Type" = list("icon" = icon_list["airlocktype"]),
+			"Change Airlock Access" = list("icon" = icon_list["access"]),
+		),
+		"Change Airlock Type" = list(
+			"Solid" = list("icon" = icon_list["airlock-solid"]),
+			"Glass" = list("icon" = icon_list["airlock-glass"]),
+			"Windoor" = list("icon" = icon_list["windoor"], "coordinates" = list("Root" = "AirLocks", "Category" = "Windoors", "Index" = 1)),
+			"Secure Windoor" = list("icon" = icon_list["secure_windoor"], "coordinates" = list("Root" = "AirLocks", "Category" = "Windoors", "Index" = 2)),
+		),
+		"Computer Frames" = list(
+			"North" = list("icon" = icon_list["cnorth"], "coordinates" = list("Root" = "Construction", "Category" = "Machines", "Index" = 2)),
+			"East" = list("icon" = icon_list["ceast"], "coordinates" = list("Root" = "Construction", "Category" = "Machines", "Index" = 4)),
+			"South" = list("icon" = icon_list["csouth"], "coordinates" = list("Root" = "Construction", "Category" = "Machines", "Index" = 3)),
+			"West" = list("icon" = icon_list["cwest"], "coordinates" = list("Root" = "Construction", "Category" = "Machines", "Index" = 5)),
+		),
+		"Furnishing" = list(
+			"Chair" = list("icon" = icon_list["chair"], "coordinates" = list("Root" = "Construction", "Category" = "Furniture", "Index" = 1)),
+			"Stool" = list("icon" = icon_list["stool"], "coordinates" = list("Root" = "Construction", "Category" = "Furniture", "Index" = 2)),
+			"Table" = list("icon" = icon_list["table"], "coordinates" = list("Root" = "Construction", "Category" = "Furniture", "Index" = 3)),
+			"Glass Table" = list("icon" = icon_list["glass_table"], "coordinates" = list("Root" = "Construction", "Category" = "Furniture", "Index" = 4)),
+		),
+	)
+
+	//initialize airlock radial menus
+	var/list/airlocks = list(
+		"Standard" = 'icons/obj/doors/airlocks/station/public.dmi',
+		"Public" = 'icons/obj/doors/airlocks/station2/glass.dmi',
+		"Engineering" = 'icons/obj/doors/airlocks/station/engineering.dmi',
+		"Atmospherics" = 'icons/obj/doors/airlocks/station/atmos.dmi',
+		"Security" = 'icons/obj/doors/airlocks/station/security.dmi',
+		"Command" = 'icons/obj/doors/airlocks/station/command.dmi',
+		"Medical" = 'icons/obj/doors/airlocks/station/medical.dmi',
+		"Research" = 'icons/obj/doors/airlocks/station/research.dmi',
+		"Freezer" = 'icons/obj/doors/airlocks/station/freezer.dmi',
+		"Virology" = 'icons/obj/doors/airlocks/station/virology.dmi',
+		"Mining" = 'icons/obj/doors/airlocks/station/mining.dmi',
+		"Maintenance" = 'icons/obj/doors/airlocks/station/maintenance.dmi',
+		"External" = 'icons/obj/doors/airlocks/external/external.dmi',
+		"External-Maintenance" = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi',
+		"Airtight-Hatch" = 'icons/obj/doors/airlocks/hatch/centcom.dmi',
+		"Maintenance-Hatch" = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
+	)
+	var/list/exclusion = list("Freezer", "Airtight-Hatch", "Maintenance Hatch")
+	radial_menu["Solid"] = list()
+	radial_menu["Glass"] = list()
+
+	var/skip
+	var/solid_ref=1
+	var/glass_ref=1
+	for(var/airlock_name as anything in airlocks)
+		skip = FALSE
+
+		icon = icon(icon = airlocks[airlock_name] , icon_state = "closed" , dir = SOUTH)
+		icon.Blend(icon(icon = airlocks[airlock_name], icon_state = "fill_closed", dir = SOUTH), ICON_OVERLAY)
+		radial_menu["Solid"][airlock_name] = list("icon" = icon, "coordinates" = list("Root" = "AirLocks", "Category" = "Solid AirLocks", "Index" = solid_ref++))
+
+		for(var/exclude as anything in exclusion)
+			if(airlock_name == exclude)
+				skip = TRUE
+				break
+		if(skip)
+			continue
+
+		icon = icon(airlocks[airlock_name] , "closed" , SOUTH)
+		radial_menu["Glass"][airlock_name] = list("icon" = icon, "coordinates" = list("Root" = "AirLocks", "Category" = "Glass AirLocks", "Index" = glass_ref++))
+
+
 
 /obj/item/construction/rcd/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	if(proximity_flag)
@@ -659,6 +774,46 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	return TRUE
 
 /obj/item/construction/rcd/attack_self(mob/user)
+	var/current_menu = "Main Menu"
+	var/target_list
+	var/filtered_list
+	var/requires
+	var/list/selected_option
+
+	//keep showing radial menus until either the user has selected an option or has closed the menu
+	while(TRUE)
+		//create a displayable list from the current menu
+		filtered_list = list()
+		target_list = radial_menu[current_menu]
+		for(var/option as anything in target_list)
+			//check if this option requires an upgrade
+			requires = target_list[option]["requires"]
+			if(requires != null && !(upgrade & requires))
+				continue
+			filtered_list[option] = target_list[option]["icon"]
+
+		var/choice = show_radial_menu(user, src, filtered_list, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
+		if(!check_menu(user))
+			return
+		if(!choice)
+			return
+
+		//special check if SiloLink Or AirLock Access
+		if(choice == "Silo Link")
+			ui_act("toggle_silo", list())
+			return
+		else if(choice == "Change Airlock Access")
+			airlock_electronics.ui_interact(user)
+			return
+		selected_option =  target_list[choice]
+
+		//if the choice has coordinates then we dont need to open more menus else we find out what other menus it needs to open and repeat the loop
+		var/list/coordinates = selected_option["coordinates"]
+		if(coordinates != null)
+			root_category = coordinates["Root"]
+			ui_act("design", list("category" = coordinates["Category"], "index" = coordinates["Index"]))
+			return
+		current_menu = choice //else keep showing its assosiated menus
 
 
 /obj/item/construction/rcd/attack_self_secondary(mob/user, modifiers)

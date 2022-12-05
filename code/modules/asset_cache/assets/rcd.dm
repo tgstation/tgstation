@@ -11,9 +11,13 @@
 		'icons/obj/stock_parts.dmi' = list("box_1"),
 	)
 
+	var/icon/icon
 	for(var/icon_file as anything in essentials)
 		for(var/icon_state as anything in essentials[icon_file])
-			Insert(sprite_name = icon_state, I = icon_file, icon_state = icon_state)
+			icon = icon(icon = icon_file, icon_state = icon_state)
+			if(icon_state == "window0" || icon_state == "rwindow0")
+				icon.Blend(icon(icon = 'icons/obj/structures.dmi', icon_state = "grille"), ICON_UNDERLAY)
+			Insert(sprite_name = icon_state, I = icon)
 
 	//for each airlock type we create its overlayed version with the suffix Glass in the sprite name
 	var/list/airlocks = list(
@@ -42,7 +46,7 @@
 		skip = FALSE
 
 		//solid door with overlay
-		var/icon/icon = icon(icon = airlocks[airlock_name] , icon_state = "closed" , dir = SOUTH)
+		icon = icon(icon = airlocks[airlock_name] , icon_state = "closed" , dir = SOUTH)
 		icon.Blend(icon(icon = airlocks[airlock_name], icon_state = "fill_closed", dir = SOUTH), ICON_OVERLAY)
 		Insert(sprite_name = airlock_name, I = icon)
 

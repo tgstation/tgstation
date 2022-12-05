@@ -1,5 +1,5 @@
 import { Window } from '../layouts';
-import { classes } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
@@ -14,7 +14,7 @@ type Data = {
   selected_root: string;
   categories: Category[];
   selected_category: string;
-  display_tabs: Boolean;
+  display_tabs: BooleanLike;
 };
 
 type Category = {
