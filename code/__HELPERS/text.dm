@@ -1022,6 +1022,48 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		loadstring += i <= limit ? "█" : "░"
 	return "\[[loadstring]\]"
 
+
+/proc/generate_aggregate_bar(numSquares, list/sectionSize, totalSize=null)
+	var/list/returnList = list()
+
+	// calculate the sum of the entire list bc theres no builtin
+	var/listSum = 0
+	for(var/num in sectionSize)
+		if(!isnum(num))
+			continue
+		listSum += num
+
+	if(isnull(totalSize) || totalSize > listSum)
+		totalSize = listSum
+
+
+	for (var/section in sectionSize)
+		var/sectionRender = ""
+		var/repeatAmount = FLOOR(( section / totalSize ) * numSquares, 1)
+		if(repeatAmount < 1)
+			continue
+		for(var/i in 1 to repeatAmount)
+			sectionRender += "#"
+		returnList += sectionRender
+
+	if(listSum < totalSize)
+		var/sectionRender = ""
+		for(var/i in 1 to ((totalSize - listSum) / totalSize) * numSquares)  // yep this is an eyesore
+			sectionRender += "_"
+		returnList += sectionRender
+
+	return returnList
+
+
+// Returns new list that joins the first arg, while coloring each section by the associated span, repeating the last span if running out
+/proc/join_color_list(var/list/joined_list, var/list/span_list)
+	var/return_joined = ""
+	for(var/i in length(joined_list))
+		var/active_span = span_list[i] || span_list[length(span_list)]
+		return_joined += "<span class=[active_span]>[joined_list[i]]</span>"
+
+	return return_joined
+
 /**
  * Formats a number to human readable form with the appropriate SI unit.
  *

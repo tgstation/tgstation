@@ -4,6 +4,9 @@
 #define PERSONAL_LAST_ROUND "personal last round"
 #define SERVER_LAST_ROUND "server last round"
 
+#define ROUNDEND_BAR_SIZE 20
+#define ROUNDEND_BAR_COLOR list("greentext", "medradio", "engradio", "redtext")  // using actual spans? heresey
+
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	gather_antag_data()
 	record_nuke_disk_location()
@@ -330,11 +333,23 @@
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
+		/// the proportions used for the rendered list
+		var/barSections = list()
 		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
 			parts += "<BR>[FOURSPACES]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
 			parts += "[FOURSPACES](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
+
+			barSections += list( \
+			popcount[POPCOUNT_ESCAPEES], \
+			popcount[POPCOUNT_ESCAPEES] - popcount[POPCOUNT_SHUTTLE_ESCAPEES])  // non shuttle escapees
+
 		parts += "[FOURSPACES]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
+		barSections += popcount[POPCOUNT_SURVIVORS] - popcount[POPCOUNT_ESCAPEES]  // stranded
+
+		var/list/renderedBar = generate_aggregate_bar(ROUNDEND_BAR_SIZE, barSections, total_size = total_players)
+		parts += "<B>[join_color_list(renderedBar, ROUNDEND_BAR_COLOR)]</B>"
+
 		if(SSblackbox.first_death)
 			var/list/ded = SSblackbox.first_death
 			if(ded.len)
