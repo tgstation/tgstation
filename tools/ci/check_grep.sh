@@ -247,7 +247,9 @@ fi;
 
 section "unit tests"
 part "mob/living/carbon/human usage"
-if $grep 'mob/living/carbon/human[, (){}]' code/modules/unit_tests/**/**.dm; then
+if $grep 'allocate\(/mob/living/carbon/human[,\)]' code/modules/unit_tests/**/**.dm ||
+	$grep 'new /mob/living/carbon/human\s?\(' ||
+	$grep 'var/mob/living/carbon/human/\w+\s?=\s?new' ; then
 	echo
 	echo -e "${RED}ERROR: Usage of mob/living/carbon/human detected in a unit test, please use mob/living/carbon/human/consistent.${NC}"
 	st=1
