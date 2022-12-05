@@ -2,7 +2,7 @@
 set -euo pipefail
 
 #nb: must be bash to support shopt globstar
-shopt -s globstar
+shopt -s globstar extglob
 
 #ANSI Escape Codes for colors to increase contrast of errors
 RED="\033[0;31m"
@@ -21,7 +21,7 @@ if command -v rg >/dev/null 2>&1; then
 	fi
 	code_files="code/**/**.dm"
 	map_files="_maps/**/**.dmm"
-	ignore_515_proc_marker="-g '!__byond_version_compat.dm'"
+	code_x_515="code/**/!(__byond_version_compat).dm"
 else
 	pcre2_support=0
 	grep=grep
