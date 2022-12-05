@@ -7651,7 +7651,7 @@
 /obj/machinery/door/airlock/security{
 	name = "Private Investigator's Office"
 	},
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/station/security/detectives_office/private_investigators_office)
 "bTe" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
