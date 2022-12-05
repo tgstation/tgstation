@@ -21,8 +21,8 @@
 	/// Can fish reproduce in this quarium.
 	var/allow_breeding = FALSE
 
-	var/glass_icon_state = "aquarium_glass"
-	var/broken_glass_icon_state = "aquarium_glass_broken"
+	var/container_icon_state = "aquarium_glass"
+	var/broken_container_icon_state = "aquarium_glass_broken"
 
 	//This is the area where fish can swim
 	var/aquarium_zone_min_px = 2
@@ -93,7 +93,7 @@
 		. += "panel"
 
 	//Glass overlay goes on top of everything else.
-	var/mutable_appearance/glass_overlay = mutable_appearance(icon,broken ? broken_glass_icon_state : glass_icon_state,layer=AQUARIUM_MAX_OFFSET-1)
+	var/mutable_appearance/glass_overlay = mutable_appearance(icon,broken ? broken_container_icon_state : container_icon_state,layer=AQUARIUM_MAX_OFFSET-1)
 	. += glass_overlay
 
 /obj/structure/aquarium/examine(mob/user)

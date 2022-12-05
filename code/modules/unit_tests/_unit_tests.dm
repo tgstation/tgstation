@@ -101,6 +101,7 @@
 #include "dcs_get_id_from_elements.dm"
 #include "designs.dm"
 #include "dragon_expiration.dm"
+#include "drink_icons.dm"
 #include "dummy_spawn.dm"
 #include "dynamic_ruleset_sanity.dm"
 #include "egg_glands.dm"
