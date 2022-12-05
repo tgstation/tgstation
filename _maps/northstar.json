@@ -7,7 +7,7 @@
 	"shuttles": {
 		"emergency": "emergency_delta",
 		"ferry": "ferry_fancy",
-		"cargo": "cargo_delta",
+		"cargo": "cargo_box",
 		"whiteship": "whiteship_delta"
 	},
 	"space_ruin_levels": 3,
