@@ -1015,40 +1015,44 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	catch
 		return null
 
-/proc/num2loadingbar(percent as num, numSquares = 20, reverse = FALSE)
+/proc/num2loadingbar(percent as num, num_squares = 20, reverse = FALSE)
 	var/loadstring = ""
-	for (var/i in 1 to numSquares)
-		var/limit = reverse ? numSquares - percent*numSquares : percent*numSquares
+	for (var/i in 1 to num_squares)
+		var/limit = reverse ? num_squares - percent*num_squares : percent*num_squares
 		loadstring += i <= limit ? "█" : "░"
 	return "\[[loadstring]\]"
 
 
-/proc/generate_aggregate_bar(numSquares, list/sectionSize, totalSize=null)
-	var/list/returnList = list()
+// num_squares determines the total size of the bar when the list is concatenated
+// section_size is a list of how much weight each section gets
+// total_size forces the sum of section_size to be at least what is passed, adding ___ padding at the end
+/// generates an aggregate bar, splitting up each section into a string and returning a list
+/proc/generate_aggregate_bar(num_squares, list/section_size, total_size=null)
+	var/list/return_list = list()
 
 	// calculate the sum of the entire list bc theres no builtin
 	var/listSum = 0
-	for(var/num in sectionSize)
+	for(var/num in section_size)
 		if(!isnum(num))
 			continue
 		listSum += num
 
-	if(isnull(totalSize) || totalSize > listSum)
-		totalSize = listSum
+	if(isnull(total_size) || total_size > listSum)
+		total_size = listSum
 
 
-	for (var/section in sectionSize)
+	for (var/section in section_size)
 		var/sectionRender = ""
-		var/repeatAmount = FLOOR((section / totalSize) * numSquares, 1)
+		var/repeatAmount = FLOOR((section / total_size) * num_squares, 1)
 		return_list += repeat_string(repeat_amount, "#")
 
-	if(listSum < totalSize)
+	if(listSum < total_size)
 		var/sectionRender = ""
-		for(var/i in 1 to ((totalSize - listSum) / totalSize) * numSquares)  // yep this is an eyesore
+		for(var/i in 1 to ((total_size - listSum) / total_size) * num_squares)  // yep this is an eyesore
 			sectionRender += "_"
-		returnList += sectionRender
+		return_list += sectionRender
 
-	return returnList
+	return return_list
 
 
 // Returns new list that joins the first arg, while coloring each section by the associated span, repeating the last span if running out

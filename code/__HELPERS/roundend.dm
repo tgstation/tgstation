@@ -334,27 +334,27 @@
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
 		/// the proportions used for the rendered list
-		var/barSections = list()
+		var/bar_sections = list()
 		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
 			parts += "<BR>[FOURSPACES]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
 			parts += "[FOURSPACES](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
 
-			barSections += list(
+			bar_sections += list(
 				popcount[POPCOUNT_ESCAPEES],
 				popcount[POPCOUNT_ESCAPEES] - popcount[POPCOUNT_SHUTTLE_ESCAPEES],  // non shuttle escapees
 			)
 
 		else
-			barSections += list(0, 0) // 0 escapees, those fields are empty
+			bar_sections += list(0, 0) // 0 escapees, those fields are empty
 
 		parts += "[FOURSPACES]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
-		barSections += (popcount[POPCOUNT_SURVIVORS] - popcount[POPCOUNT_ESCAPEES])  // stranded
-		barSections += (total_players - popcount[POPCOUNT_SURVIVORS])  // dead
+		bar_sections += (popcount[POPCOUNT_SURVIVORS] - popcount[POPCOUNT_ESCAPEES]) // stranded
+		bar_sections += (total_players - popcount[POPCOUNT_SURVIVORS]) // dead
 
-		var/list/renderedBar = generate_aggregate_bar(ROUNDEND_BAR_SIZE, barSections, totalSize = total_players)
+		var/list/rendered_bar = generate_aggregate_bar(ROUNDEND_BAR_SIZE, bar_sections)
 
-		parts += "<B>( [join_color_list(renderedBar, ROUNDEND_BAR_COLOR)] )</B>"
+		parts += "<B>( [join_color_list(rendered_bar, ROUNDEND_BAR_COLOR)] )</B>"
 		parts += "<B>\
 			<span class=[ROUNDEND_BAR_COLOR[1]]>Shuttle</span>:\
 			<span class=[ROUNDEND_BAR_COLOR[2]]>No-Shuttle Escape</span>:\
