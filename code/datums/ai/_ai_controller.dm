@@ -255,7 +255,7 @@ multiple modular subtrees with behaviors
 
 	if(!behavior.setup(arglist(arguments)))
 		return
-	LAZYADDASSOC(current_behaviors, behavior)
+	LAZYADDASSOC(current_behaviors, behavior, TRUE)
 	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))
