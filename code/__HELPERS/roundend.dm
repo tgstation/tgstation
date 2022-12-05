@@ -340,9 +340,10 @@
 			parts += "<BR>[FOURSPACES]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
 			parts += "[FOURSPACES](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
 
-			barSections += list( \
-			popcount[POPCOUNT_ESCAPEES], \
-			popcount[POPCOUNT_ESCAPEES] - popcount[POPCOUNT_SHUTTLE_ESCAPEES])  // non shuttle escapees
+			barSections += list(
+				popcount[POPCOUNT_ESCAPEES],
+				popcount[POPCOUNT_ESCAPEES] - popcount[POPCOUNT_SHUTTLE_ESCAPEES],  // non shuttle escapees
+			)
 
 		else
 			barSections += list(0, 0) // 0 escapees, those fields are empty
