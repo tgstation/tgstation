@@ -100,7 +100,7 @@
 	name = "augment beacon"
 	desc = "Summons augmentations. Can be used 3 times!"
 	uses = 3
-	company_source = "S.E.L.F"
+	company_source = "S.E.L.F."
 	company_message = span_bold("Item request received. Your package has been teleported, use the autosurgeon supplied to apply the upgrade.")
 
 /obj/item/choice_beacon/augments/generate_display_names()
