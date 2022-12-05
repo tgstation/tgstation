@@ -46,7 +46,7 @@
 	if(!istype(attacking_item, /obj/item/reagent_containers/cup/soup_pot))
 		return
 
-	if(user.transferItemToLoc(attacking_item, src))
+	if(user.transferItemToLoc(attacking_item, parent))
 		add_soup_pot(attacking_item, user)
 	return COMPONENT_NO_AFTERATTACK
 
@@ -70,7 +70,7 @@
 	SIGNAL_HANDLER
 
 	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_RMB] = "Turn on stove"
+		context[SCREENTIP_CONTEXT_RMB] = "Turn [on ? "off":"on"] stove"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/reagent_containers/cup/soup_pot))
@@ -85,12 +85,16 @@
 	pot.vis_flags |= VIS_INHERIT_PLANE
 
 	soup_pot = pot
+	soup_pot.pixel_x = 0
+	soup_pot.pixel_y = 8
 
 /datum/component/stove/proc/remove_soup_pot()
 	var/obj/real_parent = parent
 	soup_pot.flags_1 &= ~IS_ONTOP_1
 	soup_pot.vis_flags &= ~VIS_INHERIT_PLANE
 	real_parent.vis_contents -= soup_pot
+	soup_pot.pixel_x = soup_pot.base_pixel_x
+	soup_pot.pixel_y = soup_pot.base_pixel_y
 	soup_pot = null
 
 /obj/item/reagent_containers/cup/soup_pot
@@ -120,7 +124,7 @@
 )
 
 	if(!isnull(held_item) && can_add_ingredient(held_item))
-		context[SCREENTIP_CONTEXT_RMB] = "Add Ingredient"
+		context[SCREENTIP_CONTEXT_RMB] = "Add ingredient"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE

@@ -148,6 +148,10 @@
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
 
+/obj/item/kitchen/spoon/Initialize(mapload)
+	. = ..()
+	create_reagents(5, INJECTABLE|OPENCONTAINER|DUNKABLE)
+
 /obj/item/kitchen/spoon/plastic
 	name = "plastic spoon"
 	icon_state = "plastic_spoon"
@@ -159,5 +163,13 @@
 /obj/item/kitchen/spoon/plastic/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
+
+/obj/item/kitchen/spoon/soup_ladle
+	name = "ladle"
+	desc = "What is a ladle but a comically large spoon?"
+
+/obj/item/kitchen/spoon/soup_ladle/Initialize(mapload)
+	. = ..()
+	create_reagents(20, INJECTABLE|OPENCONTAINER)
 
 #undef PLASTIC_BREAK_PROBABILITY
