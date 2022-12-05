@@ -27,6 +27,7 @@ type Design = {
   design_id: Number;
   selected: Boolean;
   icon: string;
+  transform: string;
 };
 
 export const Space = (props, context) => {
@@ -121,6 +122,7 @@ const DesignSection = (props, context) => {
           key={design.design_id}
           fluid
           ellipsis
+          height="31px"
           color="transparent"
           selected={design.selected}
           onClick={() =>
@@ -131,7 +133,12 @@ const DesignSection = (props, context) => {
           }>
           <Stack>
             <Stack.Item>
-              <Box className={classes(['rcd-tgui32x32', design.icon])} />
+              <Box
+                className={classes(['rcd-tgui32x32', design.icon])}
+                style={{
+                  transform: design.transform,
+                }}
+              />
             </Stack.Item>
             <Stack.Item>
               <span>&nbsp;&nbsp;</span>

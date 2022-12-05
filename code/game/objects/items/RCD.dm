@@ -689,6 +689,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	data["categories"] = list()
 	var/list/designs
 	var/icon
+	var/transform
 	for(var/list/sub_category as anything in root_categories[root_category])
 		//skip category if upgrades were not installed for these
 		if(sub_category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
@@ -710,7 +711,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				icon = design["icon"]
 			icon = replacetext(icon," ","-") //css class names cannot have spaces in them
 
-			designs += list(list("design_id" = i, "selected" = ((design["title"] == design_title) && (sub_category == design_category)), "title" = design["title"], "icon" = icon))
+			transform = "scale(1.0)"
+			if(icon == "window0" || icon == "rwindow0")
+				transform = "scale(0.7)"
+			designs += list(list("design_id" = i, "selected" = ((design["title"] == design_title) && (sub_category == design_category)), "title" = design["title"], "icon" = icon, "transform" = transform))
 		data["categories"] += list(list("cat_name" = sub_category, "designs" = designs))
 
 	//merge airlock_electronics ui data with this
