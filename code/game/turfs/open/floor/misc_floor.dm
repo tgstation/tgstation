@@ -128,6 +128,18 @@
 /turf/open/floor/noslip/setup_burnt_states()
 	return list("noslip-scorched1","noslip-scorched2")
 
+/turf/open/floor/noslip/tram_plate/setup_broken_states()
+	return list("tram_plate-damaged1","tram_plate-damaged2")
+
+/turf/open/floor/noslip/tram_plate/setup_burnt_states()
+	return list("tram_plate-scorched1","tram_plate-scorched2")
+
+/turf/open/floor/noslip/tram_platform/setup_broken_states()
+	return list("tram_platform-damaged1","tram_platform-damaged2")
+
+/turf/open/floor/noslip/tram_platform/setup_burnt_states()
+	return list("tram_platform-scorched1","tram_platform-scorched2")
+
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
