@@ -299,6 +299,7 @@
 "qq" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
 /obj/machinery/light/cold/directional/south,
+/obj/item/statuebust,
 /turf/open/floor/iron/white/diagonal,
 /area/shuttle/pirate)
 "qz" = (
@@ -979,6 +980,11 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate)
+"ZC" = (
+/obj/effect/turf_decal/tile/dark_blue/diagonal_centre,
+/obj/item/statuebust,
+/turf/open/floor/iron/white/diagonal,
+/area/shuttle/pirate)
 "ZW" = (
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /obj/structure/table/reinforced/plasmarglass,
@@ -1166,7 +1172,7 @@ Xp
 eZ
 CW
 ZW
-bV
+ZC
 ws
 CW
 oL
