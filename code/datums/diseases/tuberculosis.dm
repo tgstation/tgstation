@@ -9,7 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 2.5 //like hell are you getting out of hell
 	desc = "A rare highly transmissible virulent virus. Few samples exist, rumoured to be carefully grown and cultured by clandestine bio-weapon specialists. Causes fever, blood vomiting, lung damage, weight loss, and fatigue."
-	required_organs = list(/obj/item/organ/lungs)
+	required_organs = list(/obj/item/organ/internal/lungs)
 	severity = DISEASE_SEVERITY_BIOHAZARD
 	bypasses_immunity = TRUE // TB primarily impacts the lungs; it's also bacterial or fungal in nature; viral immunity should do nothing.
 
@@ -30,7 +30,7 @@
 		if(4)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, span_userdanger("You see four of everything!"))
-				affected_mob.set_timed_status_effect(10 SECONDS, /datum/status_effect/dizziness, only_if_higher = TRUE)
+				affected_mob.set_dizzy_if_lower(10 SECONDS)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, span_danger("You feel a sharp pain from your lower chest!"))
 				affected_mob.adjustOxyLoss(5, FALSE)
@@ -49,7 +49,7 @@
 				affected_mob.AdjustSleeping(100)
 			if(DT_PROB(1, delta_time))
 				to_chat(affected_mob, span_userdanger("You feel your mind relax and your thoughts drift!"))
-				affected_mob.adjust_timed_status_effect(8 SECONDS, /datum/status_effect/confusion, max_duration = 100 SECONDS)
+				affected_mob.adjust_confusion_up_to(8 SECONDS, 100 SECONDS)
 			if(DT_PROB(5, delta_time))
 				affected_mob.vomit(20)
 			if(DT_PROB(1.5, delta_time))

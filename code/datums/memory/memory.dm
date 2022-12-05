@@ -48,7 +48,7 @@
 		/mob/living/simple_animal/hostile/carp,
 		/mob/living/simple_animal/hostile/bear,
 		/mob/living/simple_animal/hostile/mushroom,
-		/mob/living/simple_animal/hostile/statue,
+		/mob/living/simple_animal/hostile/netherworld/statue,
 		/mob/living/simple_animal/hostile/retaliate/bat,
 		/mob/living/simple_animal/hostile/retaliate/goat,
 		/mob/living/simple_animal/hostile/killertomato,
@@ -70,13 +70,14 @@
 		/mob/living/simple_animal/crab,
 		/mob/living/simple_animal/pet/dog/pug,
 		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/mouse,
+		/mob/living/basic/mouse,
 		/mob/living/simple_animal/chicken,
 		/mob/living/basic/cow,
 		/mob/living/simple_animal/hostile/lizard,
 		/mob/living/simple_animal/pet/fox,
 		/mob/living/simple_animal/butterfly,
 		/mob/living/simple_animal/pet/cat/cak,
+		/mob/living/simple_animal/pet/dog/breaddog,
 		/mob/living/simple_animal/chick,
 		/mob/living/basic/cow/wisdom,
 		/obj/item/skub,
@@ -107,15 +108,15 @@
 
 	if(victim_mood != MOODLESS_MEMORY) //How the victim felt when it all happend.
 		switch(victim_mood)
-			if(MOOD_LEVEL_SAD4 to MOOD_LEVEL_SAD2)
+			if(MOOD_SAD4 to MOOD_SAD2)
 				story_moods = strings(MEMORY_FILE, "sad")
 				if("[action]_sad" in GLOB.string_cache[MEMORY_FILE])
 					story_moods += strings(MEMORY_FILE, "[action]_sad")
-			if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_HAPPY2)
+			if(MOOD_SAD2 to MOOD_HAPPY2)
 				story_moods = strings(MEMORY_FILE, "neutral")
 				if("[action]_neutral" in GLOB.string_cache[MEMORY_FILE])
 					story_moods += strings(MEMORY_FILE, "[action]_neutral")
-			if(MOOD_LEVEL_HAPPY2 to MOOD_LEVEL_HAPPY4)
+			if(MOOD_HAPPY2 to MOOD_HAPPY4)
 				story_moods = strings(MEMORY_FILE, "happy")
 				if("[action]_happy" in GLOB.string_cache[MEMORY_FILE])
 					story_moods += strings(MEMORY_FILE, "[action]_happy")
@@ -189,9 +190,9 @@
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
 		if(memory_flags & MEMORY_FLAG_NOSTATIONNAME)
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [CURRENT_STATION_YEAR]."
 		else
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [GLOB.year_integer+540] on [station_name()]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [CURRENT_STATION_YEAR] on [station_name()]."
 
 	parsed_story = trim_right(parsed_story)
 
@@ -204,5 +205,3 @@
 		var/detail = extra_info[key]
 		line = replacetext(line, "%[key]", "[detail]")
 	name = line
-
-

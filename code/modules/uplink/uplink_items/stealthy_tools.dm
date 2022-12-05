@@ -21,10 +21,10 @@
 /datum/uplink_item/stealthy_tools/ai_detector
 	name = "Artificial Intelligence Detector"
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it, and can be \
-			activated to display their exact viewing location and nearby security camera blind spots. Knowing when \
-			an artificial intelligence is watching you is useful for knowing when to maintain cover, and finding nearby \
-			blind spots can help you identify escape routes."
+			activated to get an rough estimate of the AI's presence. Knowing when \
+			an artificial intelligence is watching you is useful for knowing when to maintain cover."
 	item = /obj/item/multitool/ai_detect
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	cost = 1
 
 /datum/uplink_item/stealthy_tools/chameleon
@@ -57,6 +57,11 @@
 	item = /obj/item/flashlight/emp
 	cost = 4
 	surplus = 30
+
+/datum/uplink_item/stealthy_tools/emplight/New()
+	..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
+		cost *= 3
 
 /datum/uplink_item/stealthy_tools/mulligan
 	name = "Mulligan"

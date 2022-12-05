@@ -78,10 +78,10 @@
 		ready_implants--
 		if(!replenishing && auto_replenish)
 			replenishing = TRUE
-			addtimer(CALLBACK(src,.proc/replenish),replenish_cooldown)
+			addtimer(CALLBACK(src, PROC_REF(replenish)),replenish_cooldown)
 		if(injection_cooldown > 0)
 			ready = FALSE
-			addtimer(CALLBACK(src,.proc/set_ready),injection_cooldown)
+			addtimer(CALLBACK(src, PROC_REF(set_ready)),injection_cooldown)
 	else
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 	update_appearance()
@@ -93,7 +93,7 @@
 		if(P.implant(M))
 			visible_message(span_warning("[M] is implanted by [src]."))
 			return TRUE
-	else if(istype(I, /obj/item/organ))
+	else if(isorgan(I))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
 		visible_message(span_warning("[M] is implanted by [src]."))
@@ -195,7 +195,7 @@
 			return FALSE
 		objective = tgui_input_text(user, "What order do you want to imprint on [C]?", "Brainwashing", max_length = 120)
 		message_admins("[ADMIN_LOOKUPFLW(user)] set brainwash machine objective to '[objective]'.")
-		log_game("[key_name(user)] set brainwash machine objective to '[objective]'.")
+		user.log_message("set brainwash machine objective to '[objective]'.", LOG_GAME)
 	if(HAS_TRAIT(C, TRAIT_MINDSHIELD))
 		return FALSE
 	brainwash(C, objective)

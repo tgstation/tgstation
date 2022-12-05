@@ -21,7 +21,7 @@
 /// Returns the appearance of the order that appears when hovering over the mob with the cursor
 /datum/custom_order/proc/get_order_appearance()
 	stack_trace("[type]/get_order_appearance() not set")
-	return image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble") // empty thought bubble
+	return image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble") // empty thought bubble
 
 /// Returns the order line shout by the mob and also shown to the player when examining it.
 /datum/custom_order/proc/get_order_line()
@@ -36,7 +36,7 @@
 	var/mob/living/carbon/buffet = our_venue.restaurant_portal?.turned_on_portal?.resolve()
 	if (!istype(buffet)) // Always asks for the clothes that you have on, but this is a fallback.
 		wanted_clothing_type = pick_weight(list(
-			/obj/item/clothing/head/chefhat = 3,
+			/obj/item/clothing/head/utility/chefhat = 3,
 			/obj/item/clothing/shoes/sneakers/black = 3,
 			/obj/item/clothing/gloves/color/black = 1,
 		))
@@ -91,14 +91,14 @@
 	if(wanted_flavors.len > 1 && length(unique_list) == 1)
 		icecream_name = "[make_tuple(wanted_flavors.len)] [wanted_flavors[1]] ice cream ([initial(cone_type.name)])"
 	else
-		sortTim(wanted_flavors, cmp = /proc/cmp_text_asc)
+		sortTim(wanted_flavors, cmp = GLOBAL_PROC_REF(cmp_text_asc))
 		icecream_name = "[english_list(wanted_flavors)] ice cream ([initial(cone_type.name)])"
 
 /datum/custom_order/icecream/get_order_line(datum/venue/our_venue)
 	return "I'll take \a [icecream_name]"
 
 /datum/custom_order/icecream/get_order_appearance(datum/venue/our_venue)
-	var/image/food_image = image(icon = 'icons/obj/machines/restaurant_portal.dmi' , icon_state = "thought_bubble")
+	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
 	var/image/i_scream = image('icons/obj/kitchen.dmi', initial(cone_type.icon_state))
 
 	var/added_offset = 0

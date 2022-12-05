@@ -22,7 +22,7 @@
 		return "You encountered [name] but could not understand what they want without a translator."
 	var/obj/want = required_path
 	var/obj/gives = traded_path
-	return "Encountered [name] willing to trade [initial(want.name)] for [initial(gives.name)]"
+	return "Encountered [name] willing to trade [initial(gives.name)] for [initial(want.name)]"
 
 /datum/exploration_event/simple/trader/get_description(obj/item/exodrone/drone)
 	if(requires_translator && !drone.has_tool(EXODRONE_TOOL_TRANSLATOR))
@@ -89,7 +89,7 @@
 	requires_translator = FALSE
 	required_site_traits = list(EXPLORATION_SITE_HABITABLE,EXPLORATION_SITE_CIVILIZED)
 	band_values = list(EXOSCANNER_BAND_LIFE=1)
-	required_path = list(/obj/item/organ/heart,/obj/item/organ/liver,/obj/item/organ/stomach,/obj/item/organ/eyes)
+	required_path = list(/obj/item/organ/internal/heart,/obj/item/organ/internal/liver,/obj/item/organ/internal/stomach,/obj/item/organ/internal/eyes)
 	traded_path = list(/obj/item/implanter/explosive)
 	amount = 1
 

@@ -1,45 +1,62 @@
-/obj/effect/proc_holder/spell/pointed/void_phase
+/datum/action/cooldown/spell/pointed/void_phase
 	name = "Void Phase"
-	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble around your pointed destination and your current location. It has a minimum range of 3 tiles and a maximum range of 9 tiles."
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "voidblink"
-	action_background_icon_state = "bg_ecult"
-	invocation = "RE'L'TY PH'S'E"
-	invocation_type = INVOCATION_WHISPER
+	desc = "Let's you blink to your pointed destination, causes 3x3 aoe damage bubble \
+		around your pointed destination and your current location. \
+		It has a minimum range of 3 tiles and a maximum range of 9 tiles."
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "voidblink"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
+
 	school = SCHOOL_FORBIDDEN
-	selection_type = "range"
-	clothes_req = FALSE
-	range = 9
-	charge_max = 300
+	cooldown_time = 30 SECONDS
 
-/obj/effect/proc_holder/spell/pointed/void_phase/can_target(atom/target, mob/user, silent)
+	invocation = "RE'L'TY PH'S'E."
+	invocation_type = INVOCATION_WHISPER
+	spell_requirements = NONE
+
+	cast_range = 9
+	/// The minimum range to cast the phase.
+	var/min_cast_range = 3
+	/// The radius of damage around the void bubble
+	var/damage_radius = 1
+
+/datum/action/cooldown/spell/pointed/void_phase/before_cast(atom/cast_on)
 	. = ..()
-	if(get_dist(get_turf(user), get_turf(target)) < 3 )
-		user.balloon_alert(user, "too close!")
-		return FALSE
+	if(. & SPELL_CANCEL_CAST)
+		return
 
-/obj/effect/proc_holder/spell/pointed/void_phase/cast(list/targets, mob/user)
+	if(owner && get_dist(get_turf(owner), get_turf(cast_on)) < min_cast_range)
+		cast_on.balloon_alert(owner, "too close!")
+		return . | SPELL_CANCEL_CAST
+
+/datum/action/cooldown/spell/pointed/void_phase/cast(atom/cast_on)
 	. = ..()
-	var/target = targets[1]
-	var/turf/targeted_turf = get_turf(target)
+	var/turf/source_turf = get_turf(owner)
+	var/turf/targeted_turf = get_turf(cast_on)
 
-	playsound(user,'sound/magic/voidblink.ogg',100)
-	playsound(targeted_turf,'sound/magic/voidblink.ogg',100)
+	cause_aoe(source_turf, /obj/effect/temp_visual/voidin)
+	cause_aoe(targeted_turf, /obj/effect/temp_visual/voidout)
 
-	new /obj/effect/temp_visual/voidin(user.drop_location())
-	new /obj/effect/temp_visual/voidout(targeted_turf)
+	do_teleport(
+		owner,
+		targeted_turf,
+		precision = 1,
+		no_effects = TRUE,
+		channel = TELEPORT_CHANNEL_MAGIC,
+	)
 
-	for(var/mob/living/living_mob in range(1, user) - user)
-		if(IS_HERETIC_OR_MONSTER(living_mob))
+/// Does the AOE effect of the blinka t the passed turf
+/datum/action/cooldown/spell/pointed/void_phase/proc/cause_aoe(turf/target_turf, effect_type = /obj/effect/temp_visual/voidin)
+	new effect_type(target_turf)
+	playsound(target_turf, 'sound/magic/voidblink.ogg', 60, FALSE)
+	for(var/mob/living/living_mob in range(damage_radius, target_turf))
+		if(IS_HERETIC_OR_MONSTER(living_mob) || living_mob == owner)
 			continue
-		living_mob.adjustBruteLoss(40)
-
-	for(var/mob/living/living_mob in range(1, targeted_turf) - user)
-		if(IS_HERETIC_OR_MONSTER(living_mob))
+		if(living_mob.can_block_magic(antimagic_flags))
 			continue
-		living_mob.adjustBruteLoss(40)
-
-	do_teleport(user,targeted_turf,TRUE,no_effects = TRUE,channel=TELEPORT_CHANNEL_MAGIC)
+		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
 
 /obj/effect/temp_visual/voidin
 	icon = 'icons/effects/96x96.dmi'

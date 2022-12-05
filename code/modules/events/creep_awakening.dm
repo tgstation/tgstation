@@ -3,6 +3,8 @@
 	typepath = /datum/round_event/obsessed
 	max_occurrences = 1
 	min_players = 20
+	category = EVENT_CATEGORY_HEALTH
+	description = "A random crewmember becomes obsessed with another."
 
 /datum/round_event/obsessed
 	fakeable = FALSE
@@ -17,7 +19,7 @@
 			continue
 		if(H.mind.has_antag_datum(/datum/antagonist/obsessed))
 			continue
-		if(!H.getorgan(/obj/item/organ/brain))
+		if(!H.getorgan(/obj/item/organ/internal/brain))
 			continue
 		H.gain_trauma(/datum/brain_trauma/special/obsessed)
 		announce_to_ghosts(H)

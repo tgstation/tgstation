@@ -1,34 +1,35 @@
 /datum/surgery/advanced/lobotomy
 	name = "Lobotomy"
 	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
-	steps = list(
-	/datum/surgery_step/incise,
-	/datum/surgery_step/retract_skin,
-	/datum/surgery_step/saw,
-	/datum/surgery_step/clamp_bleeders,
-	/datum/surgery_step/lobotomize,
-	/datum/surgery_step/close)
-
-	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_HEAD)
-	requires_bodypart_type = 0
+	requires_bodypart_type = NONE
+	steps = list(
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/saw,
+		/datum/surgery_step/clamp_bleeders,
+		/datum/surgery_step/lobotomize,
+		/datum/surgery_step/close,
+	)
 
 /datum/surgery/advanced/lobotomy/can_start(mob/user, mob/living/carbon/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE
 	return TRUE
 
 /datum/surgery_step/lobotomize
-	name = "perform lobotomy"
+	name = "perform lobotomy (scalpel)"
 	implements = list(
 		TOOL_SCALPEL = 85,
 		/obj/item/melee/energy/sword = 55,
 		/obj/item/knife = 35,
 		/obj/item/shard = 25,
-		/obj/item = 20)
+		/obj/item = 20,
+	)
 	time = 100
 	preop_sound = 'sound/surgery/scalpel1.ogg'
 	success_sound = 'sound/surgery/scalpel2.ogg'
@@ -40,22 +41,30 @@
 	return TRUE
 
 /datum/surgery_step/lobotomize/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, span_notice("You begin to perform a lobotomy on [target]'s brain..."),
+	display_results(
+		user,
+		target,
+		span_notice("You begin to perform a lobotomy on [target]'s brain..."),
 		span_notice("[user] begins to perform a lobotomy on [target]'s brain."),
-		span_notice("[user] begins to perform surgery on [target]'s brain."))
+		span_notice("[user] begins to perform surgery on [target]'s brain."),
+	)
 	display_pain(target, "Your head pounds with unimaginable pain!")
 
 /datum/surgery_step/lobotomize/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	display_results(user, target, span_notice("You succeed in lobotomizing [target]."),
-			span_notice("[user] successfully lobotomizes [target]!"),
-			span_notice("[user] completes the surgery on [target]'s brain."))
+	display_results(
+		user,
+		target,
+		span_notice("You succeed in lobotomizing [target]."),
+		span_notice("[user] successfully lobotomizes [target]!"),
+		span_notice("[user] completes the surgery on [target]'s brain."),
+	)
 	display_pain(target, "Your head goes totally numb for a moment, the pain is overwhelming!")
 
 	target.cure_all_traumas(TRAUMA_RESILIENCE_LOBOTOMY)
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	if(prob(75)) // 75% chance to get a trauma from this
-		switch(rand(1,3))//Now let's see what hopefully-not-important part of the brain we cut off
+		switch(rand(1, 3))//Now let's see what hopefully-not-important part of the brain we cut off
 			if(1)
 				target.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_MAGIC)
 			if(2)
@@ -68,11 +77,15 @@
 	return ..()
 
 /datum/surgery_step/lobotomize/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(target_brain)
-		display_results(user, target, span_warning("You remove the wrong part, causing more damage!"),
+		display_results(
+			user,
+			target,
+			span_warning("You remove the wrong part, causing more damage!"),
 			span_notice("[user] successfully lobotomizes [target]!"),
-			span_notice("[user] completes the surgery on [target]'s brain."))
+			span_notice("[user] completes the surgery on [target]'s brain."),
+		)
 		display_pain(target, "The pain in your head only seems to get worse!")
 		target_brain.applyOrganDamage(80)
 		switch(rand(1,3))

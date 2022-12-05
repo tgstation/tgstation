@@ -1,6 +1,6 @@
 // Station areas and shuttles
 
-/area/station/
+/area/station
 	name = "Station Areas"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
@@ -13,6 +13,9 @@
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
+	forced_ambience = TRUE
+	ambient_buzz = 'sound/ambience/source_corridor2.ogg'
+	ambient_buzz_vol = 20
 
 //Maintenance - Departmental
 
@@ -36,6 +39,9 @@
 /area/station/maintenance/department/eva
 	name = "EVA Maintenance"
 	icon_state = "maint_eva"
+
+/area/station/maintenance/department/eva/abandoned
+	name = "Abandoned EVA Storage"
 
 /area/station/maintenance/department/electrical
 	name = "Electrical Maintenance"
@@ -400,6 +406,10 @@
 	name = "\improper Research Director's Office"
 	icon_state = "rd_office"
 
+/area/station/command/heads_quarters/qm
+	name = "\improper Quartermaster's Office"
+	icon_state = "qm_office"
+
 //Command - Teleporters
 
 /area/station/command/teleporter
@@ -411,21 +421,6 @@
 	name = "\improper Gateway"
 	icon_state = "gateway"
 	ambience_index = AMBIENCE_ENGI
-
-//Command - AI Monitored
-
-/area/ai_monitored/command/storage/eva
-	name = "EVA Storage"
-	icon_state = "eva"
-	ambience_index = AMBIENCE_DANGER
-
-/area/ai_monitored/command/storage/eva/upper
-	name = "Upper EVA Storage"
-
-/area/ai_monitored/command/nuke_storage
-	name = "\improper Vault"
-	icon_state = "nuke_storage"
-	airlock_wires = /datum/wires/airlock/command
 
 //Commons
 
@@ -523,7 +518,7 @@
 
 //Commons - Storage
 /area/station/commons/storage
-	sound_environment = SOUND_AREA_STANDARD_STATION
+	name = "\improper Commons Storage"
 
 /area/station/commons/storage/tools
 	name = "\improper Auxiliary Tool Storage"
@@ -557,6 +552,10 @@
 /area/station/service/cafeteria
 	name = "\improper Cafeteria"
 	icon_state = "cafeteria"
+
+/area/station/service/barber
+	name = "\improper Barber"
+	icon_state = "barber"
 
 /area/station/service/kitchen
 	name = "\improper Kitchen"
@@ -592,6 +591,10 @@
 	name = "\improper Atrium"
 	icon_state = "bar"
 	sound_environment = SOUND_AREA_WOODFLOOR
+
+/area/station/service/bar/backroom
+	name = "\improper Bar Backroom"
+	icon_state = "bar_backroom"
 
 /area/station/service/electronic_marketing_den
 	name = "\improper Electronic Marketing Den"
@@ -828,19 +831,18 @@
 
 //Engineering - Construction
 
-/area/construction
+/area/station/construction
 	name = "\improper Construction Area"
-	icon = 'icons/area/areas_station.dmi'
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
-/area/construction/mining/aux_base
+/area/station/construction/mining/aux_base
 	name = "Auxiliary Base Construction"
 	icon_state = "aux_base_construction"
 	sound_environment = SOUND_AREA_MEDIUM_SOFTFLOOR
 
-/area/construction/storage_wing
+/area/station/construction/storage_wing
 	name = "\improper Storage Wing"
 	icon_state = "storage_wing"
 
@@ -999,6 +1001,7 @@
 /area/station/medical/virology
 	name = "Virology"
 	icon_state = "virology"
+	ambience_index = AMBIENCE_VIROLOGY
 
 /area/station/medical/morgue
 	name = "\improper Morgue"
@@ -1082,6 +1085,10 @@
 	name = "\improper Brig Overlook"
 	icon_state = "upperbrig"
 
+/area/station/security/brig/entrance
+	name = "\improper Brig Entrance"
+	icon_state = "brigentry"
+
 /area/station/security/courtroom
 	name = "\improper Courtroom"
 	icon_state = "courtroom"
@@ -1136,7 +1143,7 @@
 
 /area/station/security/processing
 	name = "\improper Labor Shuttle Dock"
-	icon_state = "sec_processing"
+	icon_state = "sec_labor_processing"
 
 /area/station/security/processing/cremation
 	name = "\improper Security Crematorium"
@@ -1152,6 +1159,11 @@
 	name = "Brig Control"
 	icon_state = "warden"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
+
+/area/station/security/evidence
+	name = "Evidence Storage"
+	icon_state = "evidence"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/station/security/detectives_office
 	name = "\improper Detective's Office"
@@ -1181,11 +1193,13 @@
 	name = "\improper Security Checkpoint"
 	icon_state = "checkpoint"
 
-/area/station/security/checkpoint/auxiliary
-	icon_state = "checkpoint_aux"
-
 /area/station/security/checkpoint/escape
+	name = "\improper Departures Security Checkpoint"
 	icon_state = "checkpoint_esc"
+
+/area/station/security/checkpoint/arrivals
+	name = "\improper Arrivals Security Checkpoint"
+	icon_state = "checkpoint_arr"
 
 /area/station/security/checkpoint/supply
 	name = "Security Post - Cargo Bay"
@@ -1198,6 +1212,9 @@
 /area/station/security/checkpoint/medical
 	name = "Security Post - Medbay"
 	icon_state = "checkpoint_med"
+
+/area/station/security/checkpoint/medical/medsci
+	name = "Security Post - Medsci"
 
 /area/station/security/checkpoint/science
 	name = "Security Post - Science"
@@ -1223,16 +1240,6 @@
 	name = "Aft Customs"
 	icon_state = "customs_point_aft"
 
-//Security - AI Monitored
-/area/ai_monitored/security/armory
-	name = "\improper Armory"
-	icon_state = "armory"
-	ambience_index = AMBIENCE_DANGER
-	airlock_wires = /datum/wires/airlock/security
-
-/area/ai_monitored/security/armory/upper
-	name = "Upper Armory"
-
 //Cargo
 
 /area/station/cargo
@@ -1244,7 +1251,6 @@
 /area/station/cargo/sorting
 	name = "\improper Delivery Office"
 	icon_state = "cargo_delivery"
-	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/station/cargo/warehouse
 	name = "\improper Warehouse"
@@ -1270,10 +1276,6 @@
 /area/station/cargo/lobby
 	name = "\improper Cargo Lobby"
 	icon_state = "cargo_lobby"
-
-/area/station/cargo/qm
-	name = "\improper Quartermaster's Office"
-	icon_state = "quart_office"
 
 /area/station/cargo/miningdock
 	name = "\improper Mining Dock"
@@ -1327,51 +1329,62 @@
 	name = "\improper Cytology Lab"
 	icon_state = "cytology"
 
-/area/station/science/storage
-	name = "Ordnance Storage"
+// Use this for the main lab. If test equipment, storage, etc is also present use this one too.
+/area/station/science/ordnance
+	name = "\improper Ordnance Lab"
+	icon_state = "ord_main"
+
+/area/station/science/ordnance/office
+	name = "\improper Ordnance Office"
+	icon_state = "ord_office"
+
+/area/station/science/ordnance/storage
+	name = "\improper Ordnance Storage"
 	icon_state = "ord_storage"
 
-/area/station/science/test_area
-	name = "\improper Ordnance Test Area"
+/area/station/science/ordnance/burnchamber
+	name = "\improper Ordnance Burn Chamber"
+	icon_state = "ord_burn"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+
+/area/station/science/ordnance/freezerchamber
+	name = "\improper Ordnance Freezer Chamber"
+	icon_state = "ord_freeze"
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+
+// Room for equipments and such
+/area/station/science/ordnance/testlab
+	name = "\improper Ordnance Testing Lab"
 	icon_state = "ord_test"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
-/area/station/science/mixing
-	name = "\improper Ordnance Mixing Lab"
-	icon_state = "ord_mix"
-
-/area/station/science/mixing/chamber
-	name = "\improper Ordnance Mixing Chamber"
-	icon_state = "ord_mix_chamber"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
-
-/area/station/science/mixing/hallway
-	name = "\improper Ordnance Mixing Hallway"
-	icon_state = "ord_mix_hallway"
-
-/area/station/science/mixing/launch
-	name = "\improper Ordnance Mixing Launch Site"
-	icon_state = "ord_mix_launch"
+/area/station/science/ordnance/bomb
+	name = "\improper Ordnance Bomb Site"
+	icon_state = "ord_boom"
 
 /area/station/science/genetics
 	name = "\improper Genetics Lab"
 	icon_state = "geneticssci"
 
-/area/station/science/misc_lab
-	name = "\improper Testing Lab"
-	icon_state = "ord_misc"
-
-/area/station/science/misc_lab/range
-	name = "\improper Research Testing Range"
-	icon_state = "ord_range"
-
 /area/station/science/server
 	name = "\improper Research Division Server Room"
 	icon_state = "server"
 
+/area/station/science/circuits
+	name = "\improper Circuit Lab"
+	icon_state = "cir_lab"
+
 /area/station/science/explab
 	name = "\improper Experimentation Lab"
 	icon_state = "exp_lab"
+
+// Useless room
+/area/station/science/auxlab
+	name = "\improper Auxiliary Lab"
+	icon_state = "aux_lab"
+
+/area/station/science/auxlab/firing_range
+	name = "\improper Research Firing Range"
 
 /area/station/science/robotics
 	name = "Robotics"

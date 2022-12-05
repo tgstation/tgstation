@@ -21,7 +21,7 @@
 /obj/item/toy/crayon
 	name = "red crayon"
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
-	icon = 'icons/obj/crayons.dmi'
+	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonred"
 	worn_icon_state = "crayon"
 
@@ -46,7 +46,7 @@
 	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
-	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
+	var/static/list/graffiti_large_h = list("yiffhell", "furrypride", "secborg", "paint")
 
 	var/static/list/all_drawables = graffiti + symbols + drawings + oriented + runes + graffiti_large_h
 
@@ -74,9 +74,9 @@
 	var/post_noise = FALSE
 
 /obj/item/toy/crayon/proc/isValidSurface(surface)
-	return istype(surface, /turf/open/floor)
+	return isfloorturf(surface)
 
-/obj/item/toy/crayon/suicide_act(mob/user)
+/obj/item/toy/crayon/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.add_atom_colour(paint_color)
 	return (BRUTELOSS|OXYLOSS)
@@ -162,7 +162,7 @@
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
-	if(has_cap && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+	if(has_cap && user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 		is_capped = !is_capped
 		to_chat(user, span_notice("The cap on [src] is now [is_capped ? "on" : "off"]."))
 		update_appearance()
@@ -328,14 +328,6 @@
 	else if(drawing in graffiti|oriented)
 		temp = "graffiti"
 
-	var/gang_mode
-	if(user.mind)
-		gang_mode = user.mind.has_antag_datum(/datum/antagonist/gang)
-
-	if(gang_mode && (!can_claim_for_gang(user, target, gang_mode)))
-		return
-
-
 	var/graf_rot
 	if(drawing in oriented)
 		switch(user.dir)
@@ -367,7 +359,7 @@
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
 
-	if(gang_mode || !instant)
+	if(!instant)
 		if(!do_after(user, 50, target = target))
 			return
 
@@ -384,34 +376,28 @@
 
 	if(actually_paints)
 		var/obj/effect/decal/cleanable/crayon/C
-		if(gang_mode)
-			if(!can_claim_for_gang(user, target))
-				return
-			tag_for_gang(user, target, gang_mode)
-			affected_turfs += target
-		else
-			switch(paint_mode)
-				if(PAINT_NORMAL)
-					C = new(target, paint_color, drawing, temp, graf_rot)
-					C.pixel_x = clickx
-					C.pixel_y = clicky
+		switch(paint_mode)
+			if(PAINT_NORMAL)
+				C = new(target, paint_color, drawing, temp, graf_rot)
+				C.pixel_x = clickx
+				C.pixel_y = clicky
+				affected_turfs += target
+			if(PAINT_LARGE_HORIZONTAL)
+				var/turf/left = locate(target.x-1,target.y,target.z)
+				var/turf/right = locate(target.x+1,target.y,target.z)
+				if(isValidSurface(left) && isValidSurface(right))
+					C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
+					affected_turfs += left
+					affected_turfs += right
 					affected_turfs += target
-				if(PAINT_LARGE_HORIZONTAL)
-					var/turf/left = locate(target.x-1,target.y,target.z)
-					var/turf/right = locate(target.x+1,target.y,target.z)
-					if(isValidSurface(left) && isValidSurface(right))
-						C = new(left, paint_color, drawing, temp, graf_rot, PAINT_LARGE_HORIZONTAL_ICON)
-						affected_turfs += left
-						affected_turfs += right
-						affected_turfs += target
-					else
-						to_chat(user, span_warning("There isn't enough space to paint!"))
-						return
-			C.add_hiddenprint(user)
-			if(istagger)
-				C.AddElement(/datum/element/art, GOOD_ART)
-			else
-				C.AddElement(/datum/element/art, BAD_ART)
+				else
+					to_chat(user, span_warning("There isn't enough space to paint!"))
+					return
+		C.add_hiddenprint(user)
+		if(istagger)
+			C.AddElement(/datum/element/art, GOOD_ART)
+		else
+			C.AddElement(/datum/element/art, BAD_ART)
 
 	if(!instant)
 		to_chat(user, span_notice("You finish drawing \the [temp]."))
@@ -454,48 +440,13 @@
 	else
 		..()
 
-/obj/item/toy/crayon/proc/can_claim_for_gang(mob/user, atom/target, datum/antagonist/gang/user_gang)
-	var/area/A = get_area(target)
-	if(!A || (!is_station_level(A.z)))
-		to_chat(user, span_warning("[A] is unsuitable for tagging."))
-		return FALSE
-
-	var/spraying_over = FALSE
-	for(var/obj/effect/decal/cleanable/crayon/gang/G in target)
-		spraying_over = TRUE
-
-	for(var/obj/machinery/power/apc in target)
-		to_chat(user, span_warning("You can't tag an APC."))
-		return FALSE
-
-	var/obj/effect/decal/cleanable/crayon/gang/occupying_gang = territory_claimed(A, user)
-	if(occupying_gang && !spraying_over)
-		if(occupying_gang.my_gang == user_gang.my_gang)
-			to_chat(user, span_danger("[A] has already been tagged by our gang!"))
-		else
-			to_chat(user, span_danger("[A] has already been tagged by a gang! You must find and spray over the old tag instead!"))
-		return FALSE
-
-	// stolen from oldgang lmao
-	return TRUE
-
-/obj/item/toy/crayon/proc/tag_for_gang(mob/user, atom/target, datum/antagonist/gang/user_gang)
-	for(var/obj/effect/decal/cleanable/crayon/old_marking in target)
-		qdel(old_marking)
-
-	var/area/territory = get_area(target)
-
-	var/obj/effect/decal/cleanable/crayon/gang/tag = new /obj/effect/decal/cleanable/crayon/gang(target)
-	tag.my_gang = user_gang.my_gang
-	tag.icon_state = "[user_gang.gang_id]_tag"
-	tag.name = "[tag.my_gang.name] gang tag"
-	tag.desc = "Looks like someone's claimed this area for [tag.my_gang.name]."
-	to_chat(user, span_notice("You tagged [territory] for [tag.my_gang.name]!"))
-
-/obj/item/toy/crayon/proc/territory_claimed(area/territory, mob/user)
-	for(var/obj/effect/decal/cleanable/crayon/gang/G in GLOB.gang_tags)
-		if(get_area(G) == territory)
-			return G
+/obj/item/toy/crayon/get_writing_implement_details()
+	return list(
+		interaction_mode = MODE_WRITING,
+		font = CRAYON_FONT,
+		color = paint_color,
+		use_bold = TRUE,
+	)
 
 /obj/item/toy/crayon/red
 	name = "red crayon"
@@ -592,16 +543,14 @@
 /obj/item/storage/crayons
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
-	icon = 'icons/obj/crayons.dmi'
+	icon = 'icons/obj/art/crayons.dmi'
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = 2000)
 
 /obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 7
-	STR.set_holdable(list(/obj/item/toy/crayon))
+	create_storage(canhold = list(/obj/item/toy/crayon))
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -616,7 +565,7 @@
 /obj/item/storage/crayons/update_overlays()
 	. = ..()
 	for(var/obj/item/toy/crayon/crayon in contents)
-		. += mutable_appearance('icons/obj/crayons.dmi', crayon.crayon_color)
+		. += mutable_appearance('icons/obj/art/crayons.dmi', crayon.crayon_color)
 
 /obj/item/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
@@ -663,6 +612,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	desc = "A metallic container containing tasty paint."
 	w_class = WEIGHT_CLASS_SMALL
+	custom_price = PAYCHECK_CREW * 2.5
 
 	instant = TRUE
 	edible = FALSE
@@ -677,18 +627,18 @@
 	post_noise = FALSE
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
-	return (istype(surface, /turf/open/floor) || istype(surface, /turf/closed/wall))
+	return (isfloorturf(surface) || iswallturf(surface))
 
 
-/obj/item/toy/crayon/spraycan/suicide_act(mob/user)
+/obj/item/toy/crayon/spraycan/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, but nothing happens!"))
-		user.say("MEDIOCRE!!", forced="spraycan suicide")
+		user.say("MEDIOCRE!!", forced = "spraycan suicide")
 		return SHAME
 	else
 		user.visible_message(span_suicide("[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!"))
-		user.say("WITNESS ME!!", forced="spraycan suicide")
+		user.say("WITNESS ME!!", forced = "spraycan suicide")
 		if(pre_noise || post_noise)
 			playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		if(can_change_colour)
@@ -698,8 +648,7 @@
 			H.update_lips("spray_face", paint_color)
 		var/used = use_charges(user, 10, FALSE)
 		reagents.trans_to(user, used, volume_multiplier, transfered_by = user, methods = VAPOR)
-
-		return (OXYLOSS)
+		return OXYLOSS
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
 	. = ..()
@@ -737,7 +686,7 @@
 
 		if(C.client)
 			C.blur_eyes(3)
-			C.blind_eyes(1)
+			C.adjust_blindness(1)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS. Warning: don't add a stun here. It's a roundstart item with some quirks.
 			C.apply_effects(eyeblur = 5, jitter = 10)
 			flash_color(C, flash_color=paint_color, flash_time=40)
@@ -776,7 +725,7 @@
 				var/obj/item/target_item = target
 				var/mob/living/holder = target.loc
 				if(holder.is_holding(target_item))
-					holder.update_inv_hands()
+					holder.update_held_items()
 				else
 					holder.update_clothing(target_item.slot_flags)
 			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
@@ -799,18 +748,20 @@
 	if(check_empty(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(istype(target, /obj/item/bodypart) && actually_paints)
+	if(isbodypart(target) && actually_paints)
 		var/obj/item/bodypart/limb = target
 		if(!IS_ORGANIC_LIMB(limb))
 			var/list/skins = list()
 			var/static/list/style_list_icons = list("standard" = 'icons/mob/augmentation/augments.dmi', "engineer" = 'icons/mob/augmentation/augments_engineer.dmi', "security" = 'icons/mob/augmentation/augments_security.dmi', "mining" = 'icons/mob/augmentation/augments_mining.dmi')
 			for(var/skin_option in style_list_icons)
-				var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = limb.icon_state)
+				var/image/part_image = image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.body_zone]")
+				if(limb.aux_zone) //Hands
+					part_image.overlays += image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.aux_zone]")
 				skins += list("[skin_option]" = part_image)
 			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
 			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
-				limb.icon = style_list_icons[choice]
+				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.color)
 		paint_color = target.color
@@ -822,7 +773,7 @@
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
@@ -832,7 +783,7 @@
 /obj/item/toy/crayon/spraycan/update_overlays()
 	. = ..()
 	if(use_overlays)
-		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
+		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/art/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
 		. += spray_overlay
 
@@ -886,7 +837,7 @@
 	volume_multiplier = 5
 
 /obj/item/toy/crayon/spraycan/lubecan/isValidSurface(surface)
-	return istype(surface, /turf/open/floor)
+	return isfloorturf(surface)
 
 /obj/item/toy/crayon/spraycan/mimecan
 	name = "silent spraycan"

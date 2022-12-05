@@ -12,6 +12,7 @@
  *
  * Mark of Rust
  * Ritual of Knowledge
+ * Rust Construction
  * Aggressive Spread
  * > Sidepaths:
  *   Curse of Corrosion
@@ -39,11 +40,6 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	route = PATH_RUST
 
-/datum/heretic_knowledge/limited_amount/starting/base_rust/on_research(mob/user)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.heretic_path = route
-
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
 	desc = "Your Mansus Grasp will deal 500 damage to non-living matter and rust any surface it touches. \
@@ -53,11 +49,11 @@
 	cost = 1
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_fist/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, .proc/on_secondary_mansus_grasp)
+/datum/heretic_knowledge/rust_fist/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, PROC_REF(on_secondary_mansus_grasp))
 
-/datum/heretic_knowledge/rust_fist/on_lose(mob/user)
+/datum/heretic_knowledge/rust_fist/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
 
 /datum/heretic_knowledge/rust_fist/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -72,7 +68,7 @@
 	SIGNAL_HANDLER
 
 	target.rust_heretic_act()
-	return COMPONENT_USE_CHARGE
+	return COMPONENT_USE_HAND
 
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
@@ -87,11 +83,11 @@
 	cost = 1
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_regen/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
+/datum/heretic_knowledge/rust_regen/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
-/datum/heretic_knowledge/rust_regen/on_lose(mob/user)
+/datum/heretic_knowledge/rust_regen/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
 
 /*
@@ -122,12 +118,17 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
+	// Heals all damage + Stamina
 	source.adjustBruteLoss(-2, FALSE)
 	source.adjustFireLoss(-2, FALSE)
-	source.adjustToxLoss(-2, FALSE, forced = TRUE)
+	source.adjustToxLoss(-2, FALSE, forced = TRUE) // Slimes are people to
 	source.adjustOxyLoss(-0.5, FALSE)
 	source.adjustStaminaLoss(-2)
-	source.AdjustAllImmobility(-5)
+	// Reduces duration of stuns/etc
+	source.AdjustAllImmobility(-0.5 SECONDS)
+	// Heals blood loss
+	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
+		source.blood_volume += 2.5 * delta_time
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
@@ -139,7 +140,18 @@
 	mark_type = /datum/status_effect/eldritch/rust
 
 /datum/heretic_knowledge/knowledge_ritual/rust
+	next_knowledge = list(/datum/heretic_knowledge/spell/rust_construction)
+	route = PATH_RUST
+
+/datum/heretic_knowledge/spell/rust_construction
+	name = "Rust Construction"
+	desc = "Grants you Rust Construction, a spell that allows you to raise a wall out of a rusted floor. \
+		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
+	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
+		they no longer looked man made. Or perhaps they never were in the first place."
 	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
+	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
+	cost = 1
 	route = PATH_RUST
 
 /datum/heretic_knowledge/spell/area_conversion
@@ -153,7 +165,7 @@
 		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/crucible,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
+	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1
 	route = PATH_RUST
 
@@ -178,14 +190,14 @@
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
 		/datum/heretic_knowledge/rifle,
-		/datum/heretic_knowledge/final/rust_final,
+		/datum/heretic_knowledge/ultimate/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
+	spell_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 1
 	route = PATH_RUST
 
-/datum/heretic_knowledge/final/rust_final
+/datum/heretic_knowledge/ultimate/rust_final
 	name = "Rustbringer's Oath"
 	desc = "The ascension ritual of the Path of Rust. \
 		Bring 3 corpses to a transumation rune on the bridge of the station to complete the ritual. \
@@ -201,7 +213,7 @@
 	var/area/ritual_location = /area/station/command/bridge
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
-		TRAIT_BATON_RESISTANCE,
+		TRAIT_STUNIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_PUSHIMMUNE,
 		TRAIT_SHOCKIMMUNE,
@@ -216,14 +228,14 @@
 		TRAIT_NOBREATH,
 		)
 
-/datum/heretic_knowledge/final/rust_final/on_research(mob/user)
+/datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	// This map doesn't have a Bridge, for some reason??
 	// Let them complete the ritual anywhere
 	if(!GLOB.areas_by_type[ritual_location])
 		ritual_location = null
 
-/datum/heretic_knowledge/final/rust_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/rust_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(ritual_location)
 		var/area/our_area = get_area(loc)
 		if(!istype(our_area, ritual_location))
@@ -232,12 +244,12 @@
 
 	return ..()
 
-/datum/heretic_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
 	priority_announce("[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	new /datum/rust_spread(loc)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
 
 /**
@@ -245,7 +257,7 @@
  *
  * Gives our heretic ([source]) buffs if they stand on rust.
  */
-/datum/heretic_knowledge/final/rust_final/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
+/datum/heretic_knowledge/ultimate/rust_final/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
 	// If we're on a rusty turf, and haven't given out our traits, buff our guy
@@ -268,7 +280,7 @@
  *
  * Gradually heals the heretic ([source]) on rust.
  */
-/datum/heretic_knowledge/final/rust_final/proc/on_life(mob/living/source, delta_time, times_fired)
+/datum/heretic_knowledge/ultimate/rust_final/proc/on_life(mob/living/source, delta_time, times_fired)
 	SIGNAL_HANDLER
 
 	var/turf/our_turf = get_turf(source)

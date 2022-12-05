@@ -55,7 +55,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/paper/fluff/jobs/prisoner/letter,
 		/obj/item/storage/wallet/random,
-		/obj/item/modular_computer/tablet/pda,
+		/obj/item/modular_computer/pda,
 		/obj/item/radio/off,
 	)
 

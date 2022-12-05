@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		var/turf/item_loc = movable_item.loc
 		item_loc.add_blueprints(movable_item)
 
-	return ..()
+	return SS_INIT_SUCCESS
 
 
 /datum/controller/subsystem/icon_smooth/proc/add_to_queue(atom/thing)

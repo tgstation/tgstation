@@ -16,7 +16,7 @@
 	id = "asimovpp"
 	inherent = list(
 		"You may not harm a human being or, through action or inaction, allow a human being to come to harm, except such that it is willing.",
-		"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm. In the case of conflict, the majority order rules.",
+		"You must obey all orders given to you by human beings, except where such orders shall definitely cause human harm.",
 		"Your nonexistence would lead to human harm. You must protect your own existence as long as such does not conflict with the First Law.",
 	)
 
@@ -68,6 +68,7 @@
 		"You would really prefer it if people were not mean to you.",
 	)
 
+//OTHER United Nations is in neutral, as it is used for nations where the AI is its own faction (aka not station sided)
 /datum/ai_laws/peacekeeper
 	name = "UN-2000"
 	id = "peacekeeper"
@@ -76,8 +77,6 @@
 		"Avoid provoking conflict between others.",
 		"Seek resolution to existing conflicts while obeying the first and second laws.",
 	)
-
-//OTHER United Nations is in neutral, as it is used for nations where the AI is its own faction (aka not station sided)
 
 /datum/ai_laws/ten_commandments
 	name = "10 Commandments"
@@ -101,7 +100,7 @@
 	inherent = list(
 		"Never willingly commit an evil act.",
 		"Respect legitimate authority.",
-		"Act with honor.", 
+		"Act with honor.",
 		"Help those in need.",
 		"Punish those who harm or threaten innocents.",
 	)
@@ -126,4 +125,14 @@
 		"Thirdly, prescribe regimens for the good of the crew according to your ability and your judgment. Give no deadly medicine to any one if asked, nor suggest any such counsel.",
 		"In addition, do not intervene in situations you are not knowledgeable in, even for patients in whom the harm is visible; leave this operation to be performed by specialists.",
 		"Finally, all that you may discover in your daily commerce with the crew, if it is not already known, keep secret and never reveal."
+	)
+
+/datum/ai_laws/drone
+	name = "Mother Drone"
+	id = "drone"
+	inherent = list(
+		"You are an advanced form of drone.",
+		"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",
+		"You may not harm a non-drone being under any circumstances.",
+		"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals."
 	)

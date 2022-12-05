@@ -40,28 +40,32 @@
 	air_contents = new /datum/gas_mixture()
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_appearance()
-	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_rummage)
+	RegisterSignal(src, COMSIG_RAT_INTERACT, PROC_REF(on_rat_rummage))
+	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = .proc/trash_carbon,
+		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(trash_carbon),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /obj/machinery/disposal/proc/trunk_check()
-	trunk = locate() in loc
-	if(!trunk)
+	var/obj/structure/disposalpipe/trunk/found_trunk = locate() in loc
+	if(!found_trunk)
 		pressure_charging = FALSE
 		flush = FALSE
 	else
 		if(initial(pressure_charging))
 			pressure_charging = TRUE
 		flush = initial(flush)
-		trunk.linked = src // link the pipe trunk to self
+
+		found_trunk.set_linked(src) // link the pipe trunk to self
+		trunk = found_trunk
 
 /obj/machinery/disposal/Destroy()
 	eject()
 	if(trunk)
 		trunk.linked = null
+		trunk = null
 	return ..()
 
 /obj/machinery/disposal/handle_atom_del(atom/A)
@@ -208,11 +212,11 @@
 /obj/machinery/disposal/proc/flush()
 	flushing = TRUE
 	flushAnimation()
-	sleep(10)
+	sleep(1 SECONDS)
 	if(last_sound < world.time + 1)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, FALSE)
 		last_sound = world.time
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
 	var/obj/structure/disposalholder/H = new(src)
@@ -255,20 +259,23 @@
 		AM.forceMove(T)
 	..()
 
-/obj/machinery/disposal/get_dumping_location()
-	return src
-
 //How disposal handles getting a storage dump from a storage object
-/obj/machinery/disposal/storage_contents_dump_act(datum/component/storage/src_object, mob/user)
-	. = ..()
-	if(.)
-		return
-	for(var/obj/item/I in src_object.parent)
-		if(user.active_storage != src_object)
-			if(I.on_found(user))
-				return
-		src_object.remove_from_storage(I, src)
-	return TRUE
+/obj/machinery/disposal/proc/on_storage_dump(datum/source, obj/item/storage_source, mob/user)
+	SIGNAL_HANDLER
+
+	. = STORAGE_DUMP_HANDLED
+
+	to_chat(user, span_notice("You dump out [storage_source] into [src]."))
+
+	for(var/obj/item/to_dump in storage_source)
+		if(to_dump.loc != storage_source)
+			continue
+		if(user.active_storage != storage_source && to_dump.on_found(user))
+			return
+		if(!storage_source.atom_storage.attempt_remove(to_dump, src, silent = TRUE))
+			continue
+		to_dump.pixel_x = to_dump.base_pixel_x + rand(-5, 5)
+		to_dump.pixel_y = to_dump.base_pixel_y + rand(-5, 5)
 
 // Disposal bin
 // Holds items for disposal into pipe system
@@ -286,10 +293,9 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
-		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
 		to_chat(user, span_warning("You empty the bag."))
 		for(var/obj/item/O in T.contents)
-			STR.remove_from_storage(O,src)
+			T.atom_storage.attempt_remove(O,src)
 		T.update_appearance()
 		update_appearance()
 	else
@@ -389,15 +395,15 @@
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
 		. += "dispover-full"
-		. += emissive_appearance(icon, "dispover-full", alpha = src.alpha)
+		. += emissive_appearance(icon, "dispover-full", src, alpha = src.alpha)
 
 	//charging and ready light
 	if(pressure_charging)
 		. += "dispover-charge"
-		. += emissive_appearance(icon, "dispover-charge-glow", alpha = src.alpha)
+		. += emissive_appearance(icon, "dispover-charge-glow", src, alpha = src.alpha)
 	else if(full_pressure)
 		. += "dispover-ready"
-		. += emissive_appearance(icon, "dispover-ready-glow", alpha = src.alpha)
+		. += emissive_appearance(icon, "dispover-ready-glow", src, alpha = src.alpha)
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
@@ -464,12 +470,6 @@
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
-/obj/machinery/disposal/delivery_chute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
-	. = ..()
-	trunk = locate() in loc
-	if(trunk)
-		trunk.linked = src // link the pipe trunk to self
-
 /obj/machinery/disposal/delivery_chute/place_item_in_disposal(obj/item/I, mob/user)
 	if(I.CanEnterDisposals())
 		..()
@@ -525,7 +525,7 @@
 /obj/machinery/disposal/proc/on_rat_rummage(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, /obj/machinery/disposal/.proc/rat_rummage, king)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/disposal/, rat_rummage), king)
 
 /obj/machinery/disposal/proc/trash_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER

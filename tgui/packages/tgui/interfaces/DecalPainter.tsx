@@ -30,6 +30,15 @@ type DecalPainterData = {
   current_custom_color: string;
 };
 
+const filterBoxColor = (color: string) => {
+  if (!color.startsWith('#')) {
+    return color;
+  }
+
+  // cut alpha
+  return color.substring(0, 7);
+};
+
 export const DecalPainter = (props, context) => {
   const { act, data } = useBackend<DecalPainterData>(context);
 
@@ -53,8 +62,9 @@ export const DecalPainter = (props, context) => {
                 onClick={() =>
                   act('select color', {
                     color: color.color,
-                  })}>
-                <ColorBox color={color.color} mr={0.5} />
+                  })
+                }>
+                <ColorBox color={filterBoxColor(color.color)} mr={0.5} />
                 {color.name}
               </Button>
             );
@@ -94,9 +104,9 @@ export const DecalPainter = (props, context) => {
                   align="fill"
                   justify="fill">
                   {data.dir_list.map((dir) => {
-                    const selected
-                      = decal.decal === data.current_decal
-                      && dir.dir === data.current_dir;
+                    const selected =
+                      decal.decal === data.current_decal &&
+                      dir.dir === data.current_dir;
 
                     return (
                       <IconButton
@@ -146,7 +156,8 @@ const IconButton = (props: IconButtonParams, context) => {
         act('select decal', {
           decal: props.decal,
           dir: props.dir,
-        })}>
+        })
+      }>
       <div className={icon} style={{ display: 'block' }} />
     </Button>
   );

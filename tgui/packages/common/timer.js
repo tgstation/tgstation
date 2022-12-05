@@ -29,10 +29,30 @@ export const debounce = (fn, time, immediate = false) => {
 };
 
 /**
+ * Returns a function, that, when invoked, will only be triggered at most once
+ * during a given window of time.
+ */
+export const throttle = (fn, time) => {
+  let previouslyRun, queuedToRun;
+  return function invokeFn(...args) {
+    const now = Date.now();
+    queuedToRun = clearTimeout(queuedToRun);
+    if (!previouslyRun || now - previouslyRun >= time) {
+      fn.apply(null, args);
+      previouslyRun = now;
+    } else {
+      queuedToRun = setTimeout(
+        invokeFn.bind(null, ...args),
+        time - (now - previouslyRun)
+      );
+    }
+  };
+};
+
+/**
  * Suspends an asynchronous function for N milliseconds.
  *
  * @param {number} time
  */
-export const sleep = time => (
-  new Promise(resolve => setTimeout(resolve, time))
-);
+export const sleep = (time) =>
+  new Promise((resolve) => setTimeout(resolve, time));

@@ -1,80 +1,5 @@
 //Security modules for MODsuits
 
-///Cloaking - Lowers the user's visibility, can be interrupted by being touched or attacked.
-/obj/item/mod/module/stealth
-	name = "MOD prototype cloaking module"
-	desc = "A complete retrofitting of the suit, this is a form of visual concealment tech employing esoteric technology \
-		to bend light around the user, as well as mimetic materials to make the surface of the suit match the \
-		surroundings based off sensor data. For some reason, this tech is rarely seen."
-	icon_state = "cloak"
-	module_type = MODULE_TOGGLE
-	complexity = 4
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 2
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
-	incompatible_modules = list(/obj/item/mod/module/stealth)
-	cooldown_time = 5 SECONDS
-	/// Whether or not the cloak turns off on bumping.
-	var/bumpoff = TRUE
-	/// The alpha applied when the cloak is on.
-	var/stealth_alpha = 50
-
-/obj/item/mod/module/stealth/on_activation()
-	. = ..()
-	if(!.)
-		return
-	if(bumpoff)
-		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, .proc/unstealth)
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
-	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
-	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
-	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
-	drain_power(use_power_cost)
-
-/obj/item/mod/module/stealth/on_deactivation(display_message = TRUE, deleting = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(bumpoff)
-		UnregisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP)
-	UnregisterSignal(mod.wearer, list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED))
-	animate(mod.wearer, alpha = 255, time = 1.5 SECONDS)
-
-/obj/item/mod/module/stealth/proc/unstealth(datum/source)
-	SIGNAL_HANDLER
-
-	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
-	do_sparks(2, TRUE, src)
-	drain_power(use_power_cost)
-	on_deactivation(display_message = TRUE, deleting = FALSE)
-
-/obj/item/mod/module/stealth/proc/on_unarmed_attack(datum/source, atom/target)
-	SIGNAL_HANDLER
-
-	if(!isliving(target))
-		return
-	unstealth(source)
-
-/obj/item/mod/module/stealth/proc/on_bullet_act(datum/source, obj/projectile/projectile)
-	SIGNAL_HANDLER
-
-	if(projectile.nodamage)
-		return
-	unstealth(source)
-
-/obj/item/mod/module/stealth/ninja
-	name = "MOD advanced cloaking module"
-	desc = "The latest in stealth technology, this module is a definite upgrade over previous versions. \
-		The field has been tuned to be even more responsive and fast-acting, with enough stability to \
-		continue operation of the field even if the user bumps into others. \
-		The power draw has been reduced drastically, making this perfect for activities like \
-		standing near sentry turrets for extended periods of time."
-	icon_state = "cloak_ninja"
-	bumpoff = FALSE
-	stealth_alpha = 20
-	active_power_cost = DEFAULT_CHARGE_DRAIN
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
-	cooldown_time = 3 SECONDS
-
 ///Magnetic Harness - Automatically puts guns in your suit storage when you drop them.
 /obj/item/mod/module/magnetic_harness
 	name = "MOD magnetic harness module"
@@ -105,7 +30,7 @@
 	mod.chestplate.allowed -= (guns_typecache - already_allowed_guns)
 
 /obj/item/mod/module/magnetic_harness/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM, .proc/check_dropped_item)
+	RegisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(check_dropped_item))
 
 /obj/item/mod/module/magnetic_harness/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_MOB_UNEQUIPPED_ITEM)
@@ -117,7 +42,7 @@
 		return
 	if(new_location != get_turf(src))
 		return
-	addtimer(CALLBACK(src, .proc/pick_up_item, dropped_item), magnet_delay)
+	addtimer(CALLBACK(src, PROC_REF(pick_up_item), dropped_item), magnet_delay)
 
 /obj/item/mod/module/magnetic_harness/proc/pick_up_item(obj/item/item)
 	if(!isturf(item.loc) || !item.Adjacent(mod.wearer))
@@ -142,7 +67,7 @@
 	overlay_state_use = "module_pepper_used"
 
 /obj/item/mod/module/pepper_shoulders/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_check_shields)
+	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, PROC_REF(on_check_shields))
 
 /obj/item/mod/module/pepper_shoulders/on_suit_deactivation(deleting = FALSE)
 	UnregisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)
@@ -155,8 +80,8 @@
 	var/datum/reagents/capsaicin_holder = new(10)
 	capsaicin_holder.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 10)
 	var/datum/effect_system/fluid_spread/smoke/chem/quick/smoke = new
-	smoke.set_up(1, location = get_turf(src), carry = capsaicin_holder)
-	smoke.start()
+	smoke.set_up(1, holder = src, location = get_turf(src), carry = capsaicin_holder)
+	smoke.start(log = TRUE)
 	QDEL_NULL(capsaicin_holder) // Reagents have a ref to their holder which has a ref to them. No leaks please.
 
 /obj/item/mod/module/pepper_shoulders/proc/on_check_shields()
@@ -219,3 +144,244 @@
 /obj/item/mod/module/holster/Destroy()
 	QDEL_NULL(holstered)
 	return ..()
+
+///Megaphone - Lets you speak loud.
+/obj/item/mod/module/megaphone
+	name = "MOD megaphone module"
+	desc = "A microchip megaphone linked to a MODsuit, for very important purposes, like: loudness."
+	icon_state = "megaphone"
+	module_type = MODULE_TOGGLE
+	complexity = 1
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	incompatible_modules = list(/obj/item/mod/module/megaphone)
+	cooldown_time = 0.5 SECONDS
+	/// List of spans we add to the speaker.
+	var/list/voicespan = list(SPAN_COMMAND)
+
+/obj/item/mod/module/megaphone/on_activation()
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/obj/item/mod/module/megaphone/on_deactivation(display_message = TRUE, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
+
+/obj/item/mod/module/megaphone/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+
+	speech_args[SPEECH_SPANS] |= voicespan
+	drain_power(use_power_cost)
+
+///Criminal Capture - Generates hardlight bags you can put people in and sinch.
+/obj/item/mod/module/criminalcapture
+	name = "MOD criminal capture module"
+	desc = "The private security that had orders to take in people dead were quite \
+		happy with their space-proofed suit, but for those who wanted to bring back \
+		whomever their targets were still breathing needed a way to \"share\" the \
+		space-proofing. And thus: criminal capture! Creates a hardlight prisoner transport bag \
+		around the apprehended that has breathable atmospheric conditions."
+	icon_state = "criminal_capture"
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	incompatible_modules = list(/obj/item/mod/module/criminalcapture)
+	cooldown_time = 0.5 SECONDS
+	/// Time to capture a prisoner.
+	var/capture_time = 2.5 SECONDS
+	/// Time to dematerialize a bodybag.
+	var/packup_time = 1 SECONDS
+	/// Typepath of our bodybag
+	var/bodybag_type = /obj/structure/closet/body_bag/environmental/prisoner/hardlight
+	/// Our linked bodybag.
+	var/obj/structure/closet/body_bag/linked_bodybag
+
+/obj/item/mod/module/criminalcapture/on_process(delta_time)
+	idle_power_cost = linked_bodybag ? (DEFAULT_CHARGE_DRAIN * 3) : 0
+	return ..()
+
+/obj/item/mod/module/criminalcapture/on_deactivation(display_message, deleting)
+	. = ..()
+	if(!.)
+		return
+	if(!linked_bodybag)
+		return
+	packup()
+
+/obj/item/mod/module/criminalcapture/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(!mod.wearer.Adjacent(target))
+		return
+	if(target == linked_bodybag)
+		playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
+		if(!do_after(mod.wearer, packup_time, target = target))
+			balloon_alert(mod.wearer, "interrupted!")
+		packup()
+		return
+	if(linked_bodybag)
+		return
+	var/turf/target_turf = get_turf(target)
+	if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+		return
+	playsound(src, 'sound/machines/ding.ogg', 25, TRUE)
+	if(!do_after(mod.wearer, capture_time, target = target))
+		balloon_alert(mod.wearer, "interrupted!")
+		return
+	if(linked_bodybag)
+		return
+	linked_bodybag = new bodybag_type(target_turf)
+	linked_bodybag.take_contents()
+	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
+	RegisterSignal(linked_bodybag, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
+
+/obj/item/mod/module/criminalcapture/proc/packup()
+	if(!linked_bodybag)
+		return
+	playsound(linked_bodybag, 'sound/weapons/egloves.ogg', 80, TRUE)
+	apply_wibbly_filters(linked_bodybag)
+	animate(linked_bodybag, 0.5 SECONDS, alpha = 50, flags = ANIMATION_PARALLEL)
+	addtimer(CALLBACK(src, PROC_REF(delete_bag), linked_bodybag), 0.5 SECONDS)
+	linked_bodybag = null
+
+/obj/item/mod/module/criminalcapture/proc/check_range()
+	SIGNAL_HANDLER
+
+	if(get_dist(mod.wearer, linked_bodybag) <= 9)
+		return
+	packup()
+
+/obj/item/mod/module/criminalcapture/proc/delete_bag(obj/structure/closet/body_bag/bag)
+	if(mod?.wearer)
+		UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_range))
+		balloon_alert(mod.wearer, "bag dissipated")
+	bag.open(force = TRUE)
+	qdel(bag)
+
+///Mirage grenade dispenser - Dispenses grenades that copy the user's appearance.
+/obj/item/mod/module/dispenser/mirage
+	name = "MOD mirage grenade dispenser module"
+	desc = "This module can create mirage grenades at the user's liking. These grenades create holographic copies of the user."
+	icon_state = "mirage_grenade"
+	cooldown_time = 20 SECONDS
+	overlay_state_inactive = "module_mirage_grenade"
+	dispense_type = /obj/item/grenade/mirage
+
+/obj/item/mod/module/dispenser/mirage/on_use()
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/grenade/mirage/grenade = .
+	grenade.arm_grenade(mod.wearer)
+
+/obj/item/grenade/mirage
+	name = "mirage grenade"
+	desc = "A special device that, when activated, produces a holographic copy of the user."
+	icon_state = "mirage"
+	inhand_icon_state = "flashbang"
+	det_time = 3 SECONDS
+	/// Mob that threw the grenade.
+	var/mob/living/thrower
+
+/obj/item/grenade/mirage/arm_grenade(mob/user, delayoverride, msg, volume)
+	. = ..()
+	thrower = user
+
+/obj/item/grenade/mirage/detonate(mob/living/lanced_by)
+	. = ..()
+	do_sparks(rand(3, 6), FALSE, src)
+	if(thrower)
+		var/mob/living/simple_animal/hostile/illusion/mirage/mirage = new(get_turf(src))
+		mirage.Copy_Parent(thrower, 15 SECONDS)
+	qdel(src)
+
+///Projectile Dampener - Weakens projectiles in range.
+/obj/item/mod/module/projectile_dampener
+	name = "MOD projectile dampener module"
+	desc = "Using technology from peaceborgs, this module weakens all projectiles in nearby range."
+	icon_state = "projectile_dampener"
+	module_type = MODULE_TOGGLE
+	complexity = 3
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/projectile_dampener)
+	cooldown_time = 1.5 SECONDS
+	/// Radius of the dampening field.
+	var/field_radius = 2
+	/// Damage multiplier on projectiles.
+	var/damage_multiplier = 0.75
+	/// Speed multiplier on projectiles, higher means slower.
+	var/speed_multiplier = 2.5
+	/// List of all tracked projectiles.
+	var/list/tracked_projectiles = list()
+	/// Effect image on projectiles.
+	var/image/projectile_effect
+	/// The dampening field
+	var/datum/proximity_monitor/advanced/projectile_dampener/dampening_field
+
+/obj/item/mod/module/projectile_dampener/Initialize(mapload)
+	. = ..()
+	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
+
+/obj/item/mod/module/projectile_dampener/on_activation()
+	. = ..()
+	if(!.)
+		return
+	if(istype(dampening_field))
+		QDEL_NULL(dampening_field)
+	dampening_field = new(mod.wearer, field_radius, TRUE, src)
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, PROC_REF(dampen_projectile))
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, PROC_REF(release_projectile))
+
+/obj/item/mod/module/projectile_dampener/on_deactivation(display_message, deleting = FALSE)
+	. = ..()
+	if(!.)
+		return
+	QDEL_NULL(dampening_field)
+
+/obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
+	projectile.damage *= damage_multiplier
+	projectile.speed *= speed_multiplier
+	projectile.add_overlay(projectile_effect)
+
+/obj/item/mod/module/projectile_dampener/proc/release_projectile(datum/source, obj/projectile/projectile)
+	SIGNAL_HANDLER
+
+	projectile.damage /= damage_multiplier
+	projectile.speed /= speed_multiplier
+	projectile.cut_overlay(projectile_effect)
+
+///Active Sonar - Displays a hud circle on the turf of any living creatures in the given radius
+/obj/item/mod/module/active_sonar
+	name = "MOD active sonar"
+	desc = "Ancient tech from the 20th century, this module uses sonic waves to detect living creatures within the user's radius. \
+		Its loud ping is much harder to hide in an indoor station than in the outdoor operations it was designed for."
+	icon_state = "active_sonar"
+	module_type = MODULE_USABLE
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	complexity = 3
+	incompatible_modules = list(/obj/item/mod/module/active_sonar)
+	cooldown_time = 25 SECONDS
+
+/obj/item/mod/module/active_sonar/on_use()
+	. = ..()
+	if(!.)
+		return
+	balloon_alert(mod.wearer, "readying sonar...")
+	playsound(mod.wearer, 'sound/mecha/skyfall_power_up.ogg', vol = 20, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	if(!do_after(mod.wearer, 1.1 SECONDS, target = mod))
+		return
+	var/creatures_detected = 0
+	for(var/mob/living/creature in range(9, mod.wearer))
+		if(creature == mod.wearer || creature.stat == DEAD)
+			continue
+		new /obj/effect/temp_visual/sonar_ping(mod.wearer.loc, mod.wearer, creature)
+		creatures_detected++
+	playsound(mod.wearer, 'sound/effects/ping_hit.ogg', vol = 75, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE) // Should be audible for the radius of the sonar
+	to_chat(mod.wearer, span_notice("You slam your fist into the ground, sending out a sonic wave that detects [creatures_detected] living beings nearby!"))

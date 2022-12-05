@@ -18,25 +18,23 @@
 		BLOOD_CLANS,
 	)
 	inherent_traits = list(
-		TRAIT_ADVANCEDTOOLUSER,
-		TRAIT_CAN_STRIP,
-		TRAIT_NOHUNGER,
 		TRAIT_NOBREATH,
+		TRAIT_NOHUNGER,
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutant_bodyparts = list("wings" = "None")
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
-	mutantheart = /obj/item/organ/heart/vampire
-	mutanttongue = /obj/item/organ/tongue/vampire
+	mutantheart = /obj/item/organ/internal/heart/vampire
+	mutanttongue = /obj/item/organ/internal/tongue/vampire
 	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 
 /datum/species/vampire/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+	if(check_holidays(HALLOWEEN))
 		return TRUE
 	return ..()
 
@@ -58,9 +56,7 @@
 	vampire.blood_volume -= 0.125 * delta_time
 	if(vampire.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(vampire, span_danger("You ran out of blood!"))
-		var/obj/shapeshift_holder/holder = locate() in vampire
-		if(holder)
-			holder.shape.dust() //vampires do not have batform anymore, but this would still lead to very weird stuff with other shapeshift holders
+		vampire.investigate_log("has been dusted by a lack of blood (vampire).", INVESTIGATE_DEATHS)
 		vampire.dust()
 	var/area/A = get_area(vampire)
 	if(istype(A, /area/station/service/chapel))
@@ -145,7 +141,7 @@
 
 	return to_add
 
-/obj/item/organ/tongue/vampire
+/obj/item/organ/internal/tongue/vampire
 	name = "vampire tongue"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	color = "#1C1C1C"
@@ -159,7 +155,7 @@
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/H = owner
-		var/obj/item/organ/tongue/vampire/V = target
+		var/obj/item/organ/internal/tongue/vampire/V = target
 		if(!COOLDOWN_FINISHED(V, drain_cooldown))
 			to_chat(H, span_warning("You just drained blood, wait a few seconds!"))
 			return
@@ -195,7 +191,7 @@
 			if(!victim.blood_volume)
 				to_chat(H, span_notice("You finish off [victim]'s blood supply."))
 
-/obj/item/organ/heart/vampire
+/obj/item/organ/internal/heart/vampire
 	name = "vampire heart"
 	color = "#1C1C1C"
 

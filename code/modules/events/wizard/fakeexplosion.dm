@@ -4,8 +4,8 @@
 	typepath = /datum/round_event/wizard/fake_explosion
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
+	description = "The nuclear explosion cutscene begins to play to scare the crew."
 
 /datum/round_event/wizard/fake_explosion/start()
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	sleep(100)
-	Cinematic(CINEMATIC_NUKE_FAKE,world)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/nuke/fake, world), 10 SECONDS)

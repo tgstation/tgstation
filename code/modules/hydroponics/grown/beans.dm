@@ -103,6 +103,6 @@
 	name = "jumping bean"
 	desc = "Umm, what's causing it to move like that?"
 	icon_state = "jumpingbean"
-	foodtypes = FRUIT
+	foodtypes = FRUIT | BUGS
 	tastes = list("bugs" = 1)
-	
+

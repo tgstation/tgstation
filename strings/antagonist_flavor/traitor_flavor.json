@@ -64,7 +64,7 @@
         "uplink": "You have been provided with a standard uplink to accomplish your task."
     },
     "Internal Affairs Agent": {
-        "allies": "Death to the Syndicate. Killing infiltrators is a whole different kind of internal affair we fully approve of dealing with.",
+        "allies": "Do NOT reveal your agent status, to anyone. Work to root out corruption from the station from the shadows.",
         "goal": "While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.",
         "introduction": "You are the Internal Affairs Agent.",
         "roundend_report": "was part of Nanotrasen Internal Affairs.",
@@ -98,7 +98,7 @@
     },
     "Waffle Corporation": {
         "allies": "Members of Donk Co. are to be killed on sight; they are not allowed to be on the station while we're around. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives.",
-        "goal": "You are not here for a stationwide demonstration. Again, other Waffle Co. Traitors may be, so watch out. Your job is to only accomplish your objectives.",
+        "goal": "You are not here for a station-wide demonstration. Again, other Waffle Co. Traitors may be, so watch out. Your job is to only accomplish your objectives.",
         "introduction": "You are the Waffle Co. Traitor.",
         "roundend_report": "was an employee from Waffle Corporation.",
         "ui_theme": "syndicate",
@@ -106,7 +106,7 @@
     },
     "Waffle Corporation Terrorist": {
         "allies": "Most other syndicate operatives are not to be trusted, except for members of the Gorlex Marauders. Do not trust fellow members of the Waffle.co (but try not to rat them out), as they might have been assigned opposing objectives.",
-        "goal": "Our investors need a demonstation of our pledge to destroying Nanotrasen. Let's give them a loud one!",
+        "goal": "Our investors need a demonstration of our pledge to destroying Nanotrasen. Let's give them a loud one!",
         "introduction": "You are the Waffle Corporation Terrorist.",
         "roundend_report": "was a terrorist from Waffle Corporation.",
         "ui_theme": "syndicate",

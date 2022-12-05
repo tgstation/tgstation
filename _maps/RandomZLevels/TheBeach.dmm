@@ -12,7 +12,7 @@
 	},
 /area/awaymission/beach)
 "ac" = (
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "ad" = (
 /turf/open/misc/beach/coastline_b{
@@ -123,9 +123,9 @@
 	desc = "Now this is what island exploration is all about.";
 	name = "Treasure Chest"
 	},
-/obj/item/clothing/head/pirate,
+/obj/item/clothing/head/costume/pirate,
 /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/suit/pirate,
+/obj/item/clothing/suit/costume/pirate,
 /obj/item/claymore/cutlass{
 	desc = "A piratey, foam sword used by kids to train themselves in the business of \"negotiating\" the transfer of treasure.";
 	force = 0;
@@ -141,7 +141,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "av" = (
-/turf/open/water/beach{
+/turf/open/water/beach/biodome{
 	desc = "What's the difference?";
 	name = "coastline water"
 	},
@@ -197,7 +197,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "aH" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind{
+/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
 	pixel_x = -17;
 	pixel_y = 17
 	},
@@ -208,7 +208,7 @@
 	pixel_x = -16;
 	pixel_y = 1
 	},
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "aK" = (
 /mob/living/simple_animal/crab,
@@ -224,7 +224,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "aS" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime{
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime{
 	pixel_x = -12;
 	pixel_y = 14
 	},
@@ -371,20 +371,20 @@
 "bs" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "changlinhut2";
-	name = "changing room"
+	name = "Changing Room"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bt" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "changlinhut1";
-	name = "changing room"
+	name = "Changing Room"
 	},
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "bu" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_y = 3
 	},
 /turf/open/floor/wood,
@@ -508,22 +508,18 @@
 "bM" = (
 /obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/sand,
-/obj/structure/sink{
-	pixel_y = 32
-	},
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bN" = (
 /obj/structure/mirror/directional/west,
 /obj/effect/turf_decal/sand,
-/obj/structure/sink{
-	pixel_y = 32
-	},
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/awaymission/beach)
 "bO" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/tequila{
+/obj/item/reagent_containers/cup/glass/bottle/tequila{
 	pixel_y = 2
 	},
 /turf/open/floor/wood,
@@ -601,7 +597,7 @@
 "bX" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "toilet1";
-	name = "restroom stall"
+	name = "Restroom Stall"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
@@ -609,7 +605,7 @@
 "bY" = (
 /obj/machinery/door/airlock/sandstone{
 	id_tag = "toilet2";
-	name = "restroom stall"
+	name = "Restroom Stall"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/iron/white,
@@ -638,17 +634,13 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cd" = (
-/obj/effect/turf_decal/sand,
 /obj/machinery/vending/cola/starkist,
+/obj/effect/turf_decal/sand,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cf" = (
-/obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/smoke{
-	pixel_y = -32
-	},
-/obj/machinery/vending/cigarette/beach,
-/turf/open/misc/beach/sand,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "cg" = (
 /obj/effect/turf_decal/sand,
@@ -679,8 +671,8 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cl" = (
+/obj/machinery/processor,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cn" = (
@@ -709,22 +701,23 @@
 /area/awaymission/beach)
 "cr" = (
 /obj/structure/closet/secure_closet/freezer/kitchen{
-	req_access = list(25)
+	req_access = list("kitchen")
 	},
 /obj/item/storage/fancy/egg_box,
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/mayonnaise,
-/obj/item/reagent_containers/food/condiment/sugar,
-/obj/item/reagent_containers/food/condiment/sugar,
-/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/mayonnaise,
+/obj/item/reagent_containers/condiment/sugar,
+/obj/item/reagent_containers/condiment/sugar,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cs" = (
-/obj/machinery/processor,
-/turf/open/floor/wood,
+/obj/effect/spawner/random/vending/snackvend,
+/obj/effect/turf_decal/sand,
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "ct" = (
 /obj/effect/turf_decal/stripes/white/corner,
@@ -785,7 +778,7 @@
 /area/awaymission/beach)
 "cD" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/glass/rag{
+/obj/item/reagent_containers/cup/rag{
 	pixel_y = 7
 	},
 /obj/item/food/burger/crab{
@@ -796,12 +789,12 @@
 /area/awaymission/beach)
 "cE" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
+/obj/item/reagent_containers/cup/soda_cans/dr_gibb,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cF" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "cG" = (
@@ -809,8 +802,8 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cH" = (
-/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/sand,
+/obj/structure/chair/stool/directional/north,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cI" = (
@@ -843,12 +836,12 @@
 /area/awaymission/beach)
 "cN" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/soda_cans/sodawater,
-/obj/item/reagent_containers/food/drinks/soda_cans/shamblers,
-/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
-/obj/item/reagent_containers/food/drinks/soda_cans/air,
-/obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter,
-/obj/item/reagent_containers/food/drinks/soda_cans/tonic,
+/obj/item/reagent_containers/cup/soda_cans/sodawater,
+/obj/item/reagent_containers/cup/soda_cans/shamblers,
+/obj/item/reagent_containers/cup/soda_cans/pwr_game,
+/obj/item/reagent_containers/cup/soda_cans/air,
+/obj/item/reagent_containers/cup/soda_cans/canned_laughter,
+/obj/item/reagent_containers/cup/soda_cans/tonic,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cO" = (
@@ -856,11 +849,11 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cP" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime{
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime{
 	pixel_x = -12;
 	pixel_y = -7
 	},
-/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb{
+/obj/item/reagent_containers/cup/soda_cans/dr_gibb{
 	pixel_x = 13;
 	pixel_y = -7
 	},
@@ -868,7 +861,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cQ" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/starkist{
+/obj/item/reagent_containers/cup/soda_cans/starkist{
 	pixel_x = -12;
 	pixel_y = -6
 	},
@@ -876,14 +869,14 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cR" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/cola{
+/obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = -8;
 	pixel_y = -4
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cS" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb{
+/obj/item/reagent_containers/cup/soda_cans/dr_gibb{
 	pixel_x = -9;
 	pixel_y = -9
 	},
@@ -891,15 +884,15 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cT" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
+/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cU" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/cola{
+/obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = -8;
 	pixel_y = -6
 	},
-/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind{
+/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
 	pixel_x = 15
 	},
 /obj/structure/fluff/beach_umbrella/science,
@@ -913,13 +906,13 @@
 /turf/open/misc/beach/coastline_t/sandwater_inner,
 /area/awaymission/beach)
 "cW" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime{
+/obj/item/reagent_containers/cup/soda_cans/lemon_lime{
 	pixel_x = -12
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cX" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/cola{
+/obj/item/reagent_containers/cup/soda_cans/cola{
 	pixel_x = -5;
 	pixel_y = -5
 	},
@@ -927,7 +920,7 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "cY" = (
-/obj/item/reagent_containers/food/drinks/soda_cans/starkist{
+/obj/item/reagent_containers/cup/soda_cans/starkist{
 	pixel_x = -6
 	},
 /turf/open/misc/beach/sand,
@@ -936,7 +929,7 @@
 /obj/item/clothing/head/collectable/paper{
 	desc = "What looks like an ordinary paper hat is actually a rare and valuable collector's edition paper hat. Keep away from fire, Curators, and ocean waves."
 	},
-/turf/open/water/beach,
+/turf/open/water/beach/biodome,
 /area/awaymission/beach)
 "da" = (
 /mob/living/simple_animal/parrot,
@@ -973,7 +966,7 @@
 /area/awaymission/beach)
 "hw" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/ale,
+/obj/item/reagent_containers/cup/glass/bottle/ale,
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "iy" = (
@@ -995,13 +988,14 @@
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "lx" = (
-/obj/effect/turf_decal/sand,
-/obj/effect/spawner/random/vending/snackvend,
-/turf/open/misc/beach/sand,
+/obj/structure/table/wood,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/reagent_containers/cup/glass/shaker,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "lA" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/maltliquor{
+/obj/item/reagent_containers/cup/glass/bottle/maltliquor{
 	pixel_y = 3
 	},
 /turf/open/floor/wood,
@@ -1015,7 +1009,7 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "mV" = (
-/obj/item/reagent_containers/food/drinks/bottle/beer/light{
+/obj/item/reagent_containers/cup/glass/bottle/beer/light{
 	pixel_x = -14;
 	pixel_y = 15
 	},
@@ -1027,11 +1021,12 @@
 /turf/open/floor/wood,
 /area/awaymission/beach)
 "sG" = (
-/obj/structure/table/wood,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/wood,
+/obj/effect/turf_decal/sand,
+/obj/structure/sign/poster/contraband/smoke{
+	pixel_y = -32
+	},
+/obj/machinery/vending/cigarette/beach,
+/turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "wr" = (
 /obj/item/toy/seashell{
@@ -1062,7 +1057,7 @@
 /area/awaymission/beach)
 "zc" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/sake{
+/obj/item/reagent_containers/cup/glass/bottle/sake{
 	pixel_y = 4
 	},
 /turf/open/floor/wood,
@@ -1100,11 +1095,24 @@
 	},
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
+"FG" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/turf/open/floor/wood,
+/area/awaymission/beach)
 "He" = (
 /obj/structure/fluff/beach_umbrella/syndi,
 /turf/open/misc/beach/coastline_t/sandwater_inner{
 	dir = 1
 	},
+/area/awaymission/beach)
+"HN" = (
+/obj/machinery/griddle,
+/turf/open/floor/wood,
+/area/awaymission/beach)
+"Jr" = (
+/obj/machinery/oven,
+/turf/open/floor/wood,
 /area/awaymission/beach)
 "Kg" = (
 /obj/item/flashlight/flare/torch{
@@ -1126,16 +1134,16 @@
 /area/awaymission/beach)
 "Nr" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
 "QQ" = (
-/obj/item/reagent_containers/food/drinks/bottle/rum{
+/obj/item/reagent_containers/cup/glass/bottle/rum{
 	pixel_y = 2
 	},
 /obj/structure/table/wood,
@@ -1154,6 +1162,10 @@
 /obj/item/food/meat/slab/gorilla,
 /turf/open/misc/beach/sand,
 /area/awaymission/beach)
+"Sg" = (
+/obj/structure/sink/kitchen/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/beach)
 "SR" = (
 /obj/machinery/food_cart,
 /turf/open/misc/beach/sand,
@@ -1163,8 +1175,13 @@
 /obj/item/storage/photo_album,
 /turf/open/floor/wood,
 /area/awaymission/beach)
+"Vn" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/table/wood,
+/turf/open/misc/beach/sand,
+/area/awaymission/beach)
 "Vx" = (
-/obj/item/reagent_containers/food/drinks/bottle/wine{
+/obj/item/reagent_containers/cup/glass/bottle/wine{
 	pixel_y = 4
 	},
 /obj/structure/table/wood,
@@ -6594,10 +6611,10 @@ aX
 aX
 ak
 ba
+ba
 cd
 aX
-ci
-bd
+co
 bd
 bd
 hw
@@ -6701,11 +6718,11 @@ bQ
 aX
 ak
 ba
-lx
+ba
+cs
 aX
-cj
-bd
-bd
+cn
+ck
 bd
 hw
 cH
@@ -6809,9 +6826,9 @@ bX
 ba
 ba
 ba
+cg
 aX
-ck
-bd
+cp
 bd
 bd
 cC
@@ -6916,9 +6933,9 @@ aX
 ak
 ba
 ba
+Vn
 aX
-cl
-bd
+cj
 bd
 bd
 cD
@@ -7023,9 +7040,9 @@ ak
 ak
 ba
 ba
+Vn
 aX
-sG
-bd
+ci
 bd
 bd
 mF
@@ -7129,10 +7146,10 @@ ba
 ba
 ba
 ba
-cf
+ba
+sG
 aX
-cn
-bd
+lx
 bd
 bd
 cE
@@ -7238,8 +7255,8 @@ ak
 ba
 ba
 aX
-co
-bd
+aX
+aX
 bd
 bd
 cF
@@ -7345,7 +7362,7 @@ ak
 ba
 ba
 aX
-cp
+cq
 bd
 bd
 bd
@@ -7452,9 +7469,9 @@ ba
 ba
 ba
 aX
-cq
+Jr
 bd
-bd
+FG
 bd
 Tr
 cH
@@ -7557,11 +7574,11 @@ bQ
 aX
 ak
 ba
-lx
+ba
 aX
+HN
 bd
-bd
-bd
+cf
 bd
 xA
 cH
@@ -7664,14 +7681,14 @@ aX
 aX
 ak
 ba
-cg
+ba
 aX
-cr
-cs
-cw
+Sg
 bd
-aX
-cI
+bd
+bd
+cf
+cH
 ba
 ak
 ak
@@ -7773,12 +7790,12 @@ ak
 ba
 ba
 aX
+cf
+cr
+cl
+cw
 aX
-aX
-aX
-aX
-aX
-ba
+cI
 ba
 ak
 ak
@@ -7879,12 +7896,12 @@ ak
 ak
 ba
 ba
-ba
-ba
-ba
-ba
-ba
-ba
+aX
+aX
+aX
+aX
+aX
+aX
 ba
 ba
 ak
@@ -7984,16 +8001,16 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
+ba
 ak
 ak
 ak

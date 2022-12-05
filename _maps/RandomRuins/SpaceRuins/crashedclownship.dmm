@@ -4,27 +4,27 @@
 /area/template_noop)
 "b" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "c" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/space)
 "d" = (
 /turf/closed/wall/mineral/bananium,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "e" = (
 /obj/machinery/door/airlock/bananium,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "f" = (
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "g" = (
 /obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "h" = (
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "i" = (
 /obj/structure/closet/crate,
 /obj/item/stack/ore/bananium,
@@ -33,26 +33,26 @@
 /obj/item/stack/ore/bananium,
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "j" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "k" = (
 /obj/structure/closet/secure_closet{
 	name = "clown locker";
-	req_access_txt = "46"
+	req_access = list("theatre")
 	},
 /obj/item/clothing/shoes/clown_shoes/banana_shoes,
 /obj/item/gps/spaceruin,
 /obj/effect/spawner/random/maintenance/two,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "l" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	color = "#FFFF00";
 	dir = 4
 	},
@@ -63,27 +63,27 @@
 /turf/open/floor/plating/airless{
 	color = "#FFFF00"
 	},
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "m" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	color = "#FFFF00";
 	dir = 4
 	},
 /turf/template_noop,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "n" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "o" = (
 /obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "p" = (
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "q" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -92,17 +92,17 @@
 	dir = 8
 	},
 /turf/open/misc/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "r" = (
 /obj/effect/mob_spawn/corpse/human/clown{
 	name = "Clown Pilot"
 	},
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "s" = (
 /obj/item/paper/fluff/ruins/crashedclownship/true_nation,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "t" = (
 /obj/structure/grille{
 	color = "#FFFF00"
@@ -121,28 +121,28 @@
 /turf/open/floor/plating/airless{
 	color = "#FFFF00"
 	},
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "u" = (
 /obj/item/shard,
 /obj/structure/chair{
 	dir = 8
 	},
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "v" = (
 /obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "w" = (
 /obj/item/storage/bag/ore,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "x" = (
 /obj/item/pickaxe,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "y" = (
 /obj/structure/closet/crate,
 /obj/item/stack/ore/bananium,
@@ -150,11 +150,11 @@
 /obj/item/stack/ore/bananium,
 /obj/item/stack/ore/bananium,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 "z" = (
 /obj/item/shovel,
 /turf/open/floor/mineral/bananium/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav)
 
 (1,1,1) = {"
 a

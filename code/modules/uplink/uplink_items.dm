@@ -89,7 +89,7 @@
 		A = new spawn_path(get_turf(user))
 	else
 		A = spawn_path
-	if(ishuman(user) && istype(A, /obj/item))
+	if(ishuman(user) && isitem(A))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
 			to_chat(H, span_boldnotice("[A] materializes into your hands!"))

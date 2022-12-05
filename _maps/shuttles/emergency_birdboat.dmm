@@ -31,7 +31,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ag" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -71,7 +71,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "ap" = (
-/obj/structure/shuttle/engine/propulsion{
+/obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -90,7 +90,7 @@
 /area/shuttle/escape)
 "as" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "bridge door"
+	name = "Bridge Door"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
@@ -99,7 +99,7 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "au" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
@@ -125,9 +125,9 @@
 /area/shuttle/escape/brig)
 "az" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "security airlock"
+	name = "Security Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aA" = (
@@ -184,11 +184,8 @@
 /obj/machinery/door/airlock/titanium,
 /obj/docking_port/mobile/emergency{
 	dir = 8;
-	dwidth = 6;
-	height = 18;
 	name = "Birdboat emergency escape shuttle";
-	port_direction = 4;
-	width = 14
+	port_direction = 4
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -281,7 +278,7 @@
 /area/shuttle/escape)
 "aZ" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "bridge door"
+	name = "Bridge Door"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,

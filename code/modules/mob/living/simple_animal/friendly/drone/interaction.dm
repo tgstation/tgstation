@@ -28,6 +28,9 @@
 			else
 				to_chat(drone, span_warning("You need to remain still to cannibalize [src]!"))
 
+/mob/living/simple_animal/drone/attack_drone_secondary(mob/living/simple_animal/drone/drone)
+	return SECONDARY_ATTACK_CALL_NORMAL
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/simple_animal/drone/attack_hand(mob/user, list/modifiers)
 	if(ishuman(user))
@@ -80,7 +83,7 @@
 		return
 	user.visible_message(span_notice("[user] begins to reactivate [src]."), span_notice("You begin to reactivate [src]..."))
 	if(do_after(user, 30, 1, target = src))
-		revive(full_heal = TRUE, admin_revive = FALSE)
+		revive(HEAL_ALL)
 		user.visible_message(span_notice("[user] reactivates [src]!"), span_notice("You reactivate [src]."))
 		alert_drones(DRONE_NET_CONNECT)
 		if(G)

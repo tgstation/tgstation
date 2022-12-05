@@ -24,7 +24,7 @@
 		filtered_modules[AM.category][AM] = AM
 
 	for(var/category in filtered_modules)
-		filtered_modules[category] = sortTim(filtered_modules[category], /proc/cmp_malfmodules_priority)
+		filtered_modules[category] = sortTim(filtered_modules[category], GLOBAL_PROC_REF(cmp_malfmodules_priority))
 
 	return filtered_modules
 
@@ -120,6 +120,7 @@
 			else //Adding uses to an existing module
 				action.uses += initial(action.uses)
 				action.desc = "[initial(action.desc)] It has [action.uses] use\s remaining."
-				action.UpdateButtons()
+				action.build_all_button_icons()
 	processing_time -= AM.cost
+	log_malf_upgrades("[key_name(AI)] purchased [AM.name]")
 	SSblackbox.record_feedback("nested tally", "malfunction_modules_bought", 1, list("[initial(AM.name)]", "[AM.cost]"))

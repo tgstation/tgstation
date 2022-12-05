@@ -1,7 +1,7 @@
 /proc/generate_possible_values_for_sprite_accessories_on_head(accessories)
 	var/list/values = possible_values_for_sprite_accessory_list(accessories)
 
-	var/icon/head_icon = icon('icons/mob/human_parts_greyscale.dmi', "human_head_m")
+	var/icon/head_icon = icon('icons/mob/species/human/bodyparts_greyscale.dmi', "human_head_m")
 	head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
 	for (var/name in values)
@@ -34,20 +34,21 @@
 	if(!hetero)
 		target.eye_color_right = value
 
-	var/obj/item/organ/eyes/eyes_organ = target.getorgan(/obj/item/organ/eyes)
+	var/obj/item/organ/internal/eyes/eyes_organ = target.getorgan(/obj/item/organ/internal/eyes)
 	if (!eyes_organ || !istype(eyes_organ))
 		return
-	
+
 	if (!initial(eyes_organ.eye_color_left))
 		eyes_organ.eye_color_left = value
 	eyes_organ.old_eye_color_left = value
 
 	if(hetero) // Don't override the snowflakes please
 		return
-	
+
 	if (!initial(eyes_organ.eye_color_right))
 		eyes_organ.eye_color_right = value
 	eyes_organ.old_eye_color_right = value
+	eyes_organ.refresh()
 
 /datum/preference/color/eye_color/create_default_value()
 	return random_eye_color()
@@ -65,7 +66,7 @@
 
 /datum/preference/choiced/facial_hairstyle/apply_to_human(mob/living/carbon/human/target, value)
 	target.facial_hairstyle = value
-	target.update_hair(is_creating = TRUE)
+	target.update_body_parts()
 
 /datum/preference/choiced/facial_hairstyle/compile_constant_data()
 	var/list/data = ..()
@@ -82,7 +83,7 @@
 
 /datum/preference/color/facial_hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.facial_hair_color = value
-	target.update_hair(is_creating = TRUE)
+	target.update_body_parts()
 
 /datum/preference/choiced/facial_hair_gradient
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
@@ -91,12 +92,12 @@
 	relevant_species_trait = FACEHAIR
 
 /datum/preference/choiced/facial_hair_gradient/init_possible_values()
-	return assoc_to_keys(GLOB.facial_hair_gradients_list)
+	return assoc_to_keys_features(GLOB.facial_hair_gradients_list)
 
 /datum/preference/choiced/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	LAZYSETLEN(target.grad_style, GRADIENTS_LEN)
 	target.grad_style[GRADIENT_FACIAL_HAIR_KEY] = value
-	target.update_hair(is_creating = TRUE)
+	target.update_body_parts()
 
 /datum/preference/choiced/facial_hair_gradient/create_default_value()
 	return "None"
@@ -110,7 +111,7 @@
 /datum/preference/color/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	LAZYSETLEN(target.grad_color, GRADIENTS_LEN)
 	target.grad_color[GRADIENT_FACIAL_HAIR_KEY] = value
-	target.update_hair(is_creating = TRUE)
+	target.update_body_parts()
 
 /datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))
@@ -154,12 +155,12 @@
 	relevant_species_trait = HAIR
 
 /datum/preference/choiced/hair_gradient/init_possible_values()
-	return assoc_to_keys(GLOB.hair_gradients_list)
+	return assoc_to_keys_features(GLOB.hair_gradients_list)
 
 /datum/preference/choiced/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	LAZYSETLEN(target.grad_style, GRADIENTS_LEN)
 	target.grad_style[GRADIENT_HAIR_KEY] = value
-	target.update_hair(is_creating = TRUE)
+	target.update_body_parts()
 
 /datum/preference/choiced/hair_gradient/create_default_value()
 	return "None"
@@ -173,7 +174,7 @@
 /datum/preference/color/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	LAZYSETLEN(target.grad_color, GRADIENTS_LEN)
 	target.grad_color[GRADIENT_HAIR_KEY] = value
-	target.update_hair(is_creating = TRUE)
+	target.update_body_parts()
 
 /datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

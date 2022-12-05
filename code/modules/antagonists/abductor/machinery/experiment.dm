@@ -132,7 +132,7 @@
 	if(H.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "Specimen deceased."
-	var/obj/item/organ/heart/gland/GlandTest = locate() in H.internal_organs
+	var/obj/item/organ/internal/heart/gland/GlandTest = locate() in H.internal_organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "No glands detected!"
@@ -141,7 +141,7 @@
 		LAZYADD(history, H)
 		LAZYADD(abductee_minds, H.mind)
 		say("Processing specimen...")
-		sleep(5)
+		sleep(0.5 SECONDS)
 		switch(text2num(type))
 			if(1)
 				to_chat(H, span_warning("You feel violated."))
@@ -149,11 +149,11 @@
 				to_chat(H, span_warning("You feel yourself being sliced apart and put back together."))
 			if(3)
 				to_chat(H, span_warning("You feel intensely watched."))
-		sleep(5)
+		sleep(0.5 SECONDS)
 		user_abductor.team.abductees += H.mind
 		H.mind.add_antag_datum(/datum/antagonist/abductee)
 
-		for(var/obj/item/organ/heart/gland/G in H.internal_organs)
+		for(var/obj/item/organ/internal/heart/gland/G in H.internal_organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)

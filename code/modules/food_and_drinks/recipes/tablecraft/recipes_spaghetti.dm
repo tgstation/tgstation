@@ -41,7 +41,7 @@
 /datum/crafting_recipe/food/beefnoodle
 	name = "Beef noodle"
 	reqs = list(
-		/obj/item/reagent_containers/glass/bowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/spaghetti/boiledspaghetti = 1,
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/grown/cabbage = 1

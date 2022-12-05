@@ -1,6 +1,12 @@
 ///Get a random food item exluding the blocked ones
 /proc/get_random_food()
-	var/list/blocked = list(/obj/item/food/bread,
+	var/static/list/allowed_food = list()
+
+	if(!LAZYLEN(allowed_food)) //it's static so we only ever do this once
+		var/list/blocked = list(
+		/obj/item/food/drug,
+		/obj/item/food/spaghetti,
+		/obj/item/food/bread,
 		/obj/item/food/breadslice,
 		/obj/item/food/cake,
 		/obj/item/food/cakeslice,
@@ -15,7 +21,6 @@
 		/obj/item/food/soup,
 		/obj/item/food/grown,
 		/obj/item/food/grown/mushroom,
-		/obj/item/food/deepfryholder,
 		/obj/item/food/clothing,
 		/obj/item/food/meat/slab/human/mutant,
 		/obj/item/food/grown/ash_flora,
@@ -23,15 +28,21 @@
 		/obj/item/food/grown/shell
 		)
 
-	return pick(subtypesof(/obj/item/food) - blocked)
+		var/list/unfiltered_allowed_food = subtypesof(/obj/item/food) - blocked
+		for(var/obj/item/food/food as anything in unfiltered_allowed_food)
+			if(!initial(food.icon_state)) //food with no icon_state should probably not be spawned
+				continue
+			allowed_food.Add(food)
+
+	return pick(allowed_food)
 
 ///Gets a random drink excluding the blocked type
 /proc/get_random_drink()
 	var/list/blocked = list(
-		/obj/item/reagent_containers/food/drinks/soda_cans,
-		/obj/item/reagent_containers/food/drinks/bottle
+		/obj/item/reagent_containers/cup/soda_cans,
+		/obj/item/reagent_containers/cup/glass/bottle
 		)
-	return pick(subtypesof(/obj/item/reagent_containers/food/drinks) - blocked)
+	return pick(subtypesof(/obj/item/reagent_containers/cup/glass) - blocked)
 
 ///Picks a string of symbols to display as the law number for hacked or ion laws
 /proc/ion_num() //! is at the start to prevent us from changing say modes via get_message_mode()

@@ -82,9 +82,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	///Leaving onto conveyor detection won't work at this point, but that's alright since it's an optimization anyway
 	///Should be fine without it
 	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXITED = .proc/conveyable_exit,
-		COMSIG_ATOM_ENTERED = .proc/conveyable_enter,
-		COMSIG_ATOM_INITIALIZED_ON = .proc/conveyable_enter
+		COMSIG_ATOM_EXITED = PROC_REF(conveyable_exit),
+		COMSIG_ATOM_ENTERED = PROC_REF(conveyable_enter),
+		COMSIG_ATOM_INITIALIZED_ON = PROC_REF(conveyable_enter)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	update_move_direction()
@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	update_move_direction()
 
-/obj/machinery/conveyor/Moved(atom/OldLoc, Dir)
+/obj/machinery/conveyor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -131,10 +131,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			continue
 		neighbors["[direction]"] = TRUE
 		valid.neighbors["[DIRFLIP(direction)]"] = TRUE
-		RegisterSignal(valid, COMSIG_MOVABLE_MOVED, .proc/nearby_belt_changed, override=TRUE)
-		RegisterSignal(valid, COMSIG_PARENT_QDELETING, .proc/nearby_belt_changed, override=TRUE)
-		valid.RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/nearby_belt_changed, override=TRUE)
-		valid.RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/nearby_belt_changed, override=TRUE)
+		RegisterSignal(valid, COMSIG_MOVABLE_MOVED, PROC_REF(nearby_belt_changed), override=TRUE)
+		RegisterSignal(valid, COMSIG_PARENT_QDELETING, PROC_REF(nearby_belt_changed), override=TRUE)
+		valid.RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(nearby_belt_changed), override=TRUE)
+		valid.RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(nearby_belt_changed), override=TRUE)
 
 /obj/machinery/conveyor/proc/nearby_belt_changed(datum/source)
 	SIGNAL_HANDLER
@@ -200,29 +200,27 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	operating = new_value
 	update_appearance()
 	update_move_direction()
-	if(!operating) //If we ever turn off, disable moveloops
+	//If we ever turn off, disable moveloops
+	if(operating == CONVEYOR_OFF)
 		for(var/atom/movable/movable in get_turf(src))
 			stop_conveying(movable)
 
 /obj/machinery/conveyor/proc/update()
-	. = TRUE
 	if(machine_stat & NOPOWER)
 		set_operating(FALSE)
 		return FALSE
-	if(!operating) //If we're on, start conveying so moveloops on our tile can be refreshed if they stopped for some reason
-		return
-	for(var/atom/movable/movable in get_turf(src))
-		start_conveying(movable)
+
+	update_appearance()
+	// If we're on, start conveying so moveloops on our tile can be refreshed if they stopped for some reason
+	if(operating != CONVEYOR_OFF)
+		for(var/atom/movable/movable in get_turf(src))
+			start_conveying(movable)
+	return TRUE
 
 /obj/machinery/conveyor/proc/conveyable_enter(datum/source, atom/convayable)
 	SIGNAL_HANDLER
 	if(operating == CONVEYOR_OFF)
 		SSmove_manager.stop_looping(convayable, SSconveyors)
-		return
-	var/datum/move_loop/move/moving_loop = SSmove_manager.processing_on(convayable, SSconveyors)
-	if(moving_loop)
-		moving_loop.direction = movedir
-		moving_loop.delay = speed SECONDS
 		return
 	start_conveying(convayable)
 
@@ -233,10 +231,18 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		SSmove_manager.stop_looping(convayable, SSconveyors)
 
 /obj/machinery/conveyor/proc/start_conveying(atom/movable/moving)
+	if(QDELETED(moving))
+		return
+	var/datum/move_loop/move/moving_loop = SSmove_manager.processing_on(moving, SSconveyors)
+	if(moving_loop)
+		moving_loop.direction = movedir
+		moving_loop.delay = speed * 1 SECONDS
+		return
+
 	var/static/list/unconveyables = typecacheof(list(/obj/effect, /mob/dead))
 	if(!istype(moving) || is_type_in_typecache(moving, unconveyables) || moving == src)
 		return
-	moving.AddComponent(/datum/component/convey, movedir, speed SECONDS)
+	moving.AddComponent(/datum/component/convey, movedir, speed * 1 SECONDS)
 
 /obj/machinery/conveyor/proc/stop_conveying(atom/movable/thing)
 	if(!ismovable(thing))
@@ -284,7 +290,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(attacking_item, drop_location())
-	
+
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 
@@ -403,8 +409,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return TRUE
 
 /obj/machinery/conveyor_switch/multitool_act(mob/living/user, obj/item/I)
-	var/input_speed = tgui_input_number(user, "Set the speed of the conveyor belts in seconds", "Speed", conveyor_speed, 20, 0.2)
-	if(!input_speed || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/input_speed = tgui_input_number(user, "Set the speed of the conveyor belts in seconds", "Speed", conveyor_speed, 20, 0.2, round_value = FALSE)
+	if(!input_speed || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	conveyor_speed = input_speed
 	to_chat(user, span_notice("You change the time between moves to [input_speed] seconds."))
@@ -437,6 +443,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	. += span_notice("[src] is set to [oneway ? "one way" : "default"] configuration. It can be changed with a <b>screwdriver</b>.")
 	. += span_notice("[src] is set to [invert_icon ? "inverted": "normal"] position. It can be rotated with a <b>wrench</b>.")
+	. += span_notice("[src] is set to move [conveyor_speed] seconds per belt. It can be changed with a <b>multitool</b>.")
 
 /obj/machinery/conveyor_switch/oneway
 	icon_state = "conveyor_switch_oneway"
@@ -526,7 +533,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/item/paper/guides/conveyor
 	name = "paper- 'Nano-it-up U-build series, #9: Build your very own conveyor belt, in SPACE'"
-	info = "<h1>Congratulations!</h1><p>You are now the proud owner of the best conveyor set available for \
+	default_raw_text = "<h1>Congratulations!</h1><p>You are now the proud owner of the best conveyor set available for \
 		space mail order! We at Nano-it-up know you love to prepare your own structures without wasting time, \
 		so we have devised a special streamlined assembly procedure that puts all other mail-order products to \
 		shame!</p><p>Firstly, you need to link the conveyor switch assembly to each of the conveyor belt \
@@ -566,7 +573,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(!attached_switch)
 		return
 
-	INVOKE_ASYNC(src, .proc/update_conveyers, port)
+	INVOKE_ASYNC(src, PROC_REF(update_conveyers), port)
 
 /obj/item/circuit_component/conveyor_switch/proc/update_conveyers(datum/port/input/port)
 	if(!attached_switch)

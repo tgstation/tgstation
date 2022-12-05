@@ -58,7 +58,7 @@
 "am" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba,
-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka{
+/obj/item/reagent_containers/cup/glass/bottle/vodka/badminka{
 	pixel_x = 5;
 	pixel_y = 18
 	},
@@ -96,7 +96,7 @@
 	name = "window shutters";
 	pixel_x = 26;
 	pixel_y = -6;
-	req_access_txt = "19"
+	req_access = list("command")
 	},
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/button/door{
@@ -104,7 +104,7 @@
 	name = "release bears";
 	pixel_x = 26;
 	pixel_y = 6;
-	req_access_txt = "20"
+	req_access = list("captain")
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -181,7 +181,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Brig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "aJ" = (
@@ -215,7 +215,7 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Emergency Shuttle Airlock"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "aP" = (
@@ -257,7 +257,6 @@
 /area/shuttle/escape)
 "aW" = (
 /obj/docking_port/mobile/emergency{
-	height = 15;
 	name = "Mother Russia Bleeds"
 	},
 /obj/machinery/door/airlock/security/glass{
@@ -279,7 +278,7 @@
 "aZ" = (
 /obj/effect/decal/cleanable/shreds,
 /obj/machinery/door/window{
-	name = "fight pit"
+	name = "Fight Pit"
 	},
 /turf/open/floor/engine,
 /area/shuttle/escape)
@@ -312,7 +311,7 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bf" = (
@@ -407,7 +406,7 @@
 "bt" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/table,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/cup/glass/bottle/vodka,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "bu" = (
@@ -471,12 +470,12 @@
 /area/shuttle/escape)
 "bH" = (
 /obj/structure/closet,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
+/obj/item/reagent_containers/cup/glass/bottle/beer,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bI" = (
@@ -492,11 +491,11 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bL" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bM" = (

@@ -2,15 +2,15 @@
 
 //ITEM INVENTORY WEIGHT, FOR w_class
 /// Usually items smaller then a human hand, (e.g. playing cards, lighter, scalpel, coins/holochips)
-#define WEIGHT_CLASS_TINY     1
+#define WEIGHT_CLASS_TINY 1
 /// Pockets can hold small and tiny items, (e.g. flashlight, multitool, grenades, GPS device)
-#define WEIGHT_CLASS_SMALL    2
+#define WEIGHT_CLASS_SMALL 2
 /// Standard backpacks can carry tiny, small & normal items, (e.g. fire extinguisher, stun baton, gas mask, metal sheets)
-#define WEIGHT_CLASS_NORMAL   3
+#define WEIGHT_CLASS_NORMAL 3
 /// Items that can be weilded or equipped but not stored in an inventory, (e.g. defibrillator, backpack, space suits)
-#define WEIGHT_CLASS_BULKY    4
+#define WEIGHT_CLASS_BULKY 4
 /// Usually represents objects that require two hands to operate, (e.g. shotgun, two-handed melee weapons)
-#define WEIGHT_CLASS_HUGE     5
+#define WEIGHT_CLASS_HUGE 5
 /// Essentially means it cannot be picked up or placed in an inventory, (e.g. mech parts, safe)
 #define WEIGHT_CLASS_GIGANTIC 6
 
@@ -66,6 +66,9 @@
 
 //SLOT GROUP HELPERS
 #define ITEM_SLOT_POCKETS (ITEM_SLOT_LPOCKET|ITEM_SLOT_RPOCKET)
+/// Slots that are physically on you
+#define ITEM_SLOT_ON_BODY (ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_EYES | ITEM_SLOT_EARS | \
+	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update check_obscured_slots() if you add more.
@@ -132,6 +135,8 @@
 #define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
 ///The sprite works fine for digitigrade legs as-is.
 #define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
+///has a sprite for monkeys
+#define CLOTHING_MONKEY_VARIATION (1<<3)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)
@@ -148,7 +153,7 @@
 /// How many messages you can remember while logged out before you stop remembering new ones
 #define AFK_THEFT_MAX_MESSAGES 10
 /// If someone logs back in and there are entries older than this, just tell them they can't remember who it was or when
-#define AFK_THEFT_FORGET_DETAILS_TIME 5 MINUTES
+#define AFK_THEFT_FORGET_DETAILS_TIME (5 MINUTES)
 /// The index of the entry in 'afk_thefts' with the person's visible name at the time
 #define AFK_THEFT_NAME 1
 /// The index of the entry in 'afk_thefts' with the text
@@ -158,7 +163,7 @@
 
 //Allowed equipment lists for security vests.
 
-GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
+GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
 	/obj/item/detective_scanner,
@@ -176,9 +181,9 @@ GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/thermal,
-	)))
+))
 
-GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
+GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
 	/obj/item/flashlight,
@@ -193,9 +198,9 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/thermal,
-	)))
+))
 
-GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
+GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
 	/obj/item/gun/ballistic,
@@ -206,7 +211,7 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/thermal,
-	)))
+))
 
 /// String for items placed into the left pocket.
 #define LOCATION_LPOCKET "in your left pocket"

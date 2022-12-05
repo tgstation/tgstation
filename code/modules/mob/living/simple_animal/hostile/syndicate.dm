@@ -17,7 +17,7 @@
 /mob/living/simple_animal/hostile/syndicate
 	name = "Syndicate Operative"
 	desc = "Death to Nanotrasen."
-	icon = 'icons/mob/simple_human.dmi'
+	icon = 'icons/mob/simple/simple_human.dmi'
 	icon_state = "syndicate"
 	icon_living = "syndicate"
 	icon_dead = "syndicate_dead"
@@ -314,7 +314,7 @@
 	bubble_icon = "syndibot"
 	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
-	deathmessage = "is smashed into pieces!"
+	death_message = "is smashed into pieces!"
 
 /mob/living/simple_animal/hostile/viscerator/Initialize(mapload)
 	. = ..()

@@ -68,7 +68,7 @@
 	src.animation_getter = animation_getter
 	src.animation_update_signals = animation_update_signals
 	if(animation_update_signals)
-		RegisterSignal(parent, animation_update_signals, .proc/generate_animation)
+		RegisterSignals(parent, animation_update_signals, PROC_REF(generate_animation))
 
 	if(istype(parent,/obj/item/fish))
 		InitializeFromFish()
@@ -77,8 +77,8 @@
 	else
 		InitializeOther()
 
-	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/enter_aquarium)
+	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(enter_aquarium))
 
 	//If component is added to something already in aquarium at the time initialize it properly.
 	var/atom/movable/movable_parent = parent
@@ -134,7 +134,7 @@
 
 /datum/component/aquarium_content/PreTransfer()
 	. = ..()
-	REMOVE_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)
+	REMOVE_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, REF(src))
 
 /datum/component/aquarium_content/Destroy(force, silent)
 	if(current_aquarium)
@@ -160,9 +160,9 @@
 
 /datum/component/aquarium_content/proc/on_inserted(atom/aquarium)
 	current_aquarium = aquarium
-	RegisterSignal(current_aquarium, COMSIG_ATOM_EXITED, .proc/on_removed)
-	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_SURFACE_CHANGED, .proc/on_surface_changed)
-	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_FLUID_CHANGED,.proc/on_fluid_changed)
+	RegisterSignal(current_aquarium, COMSIG_ATOM_EXITED, PROC_REF(on_removed))
+	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_SURFACE_CHANGED, PROC_REF(on_surface_changed))
+	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_FLUID_CHANGED, PROC_REF(on_fluid_changed))
 
 	if(processing)
 		START_PROCESSING(SSobj, src)
@@ -301,4 +301,3 @@
 	UnregisterSignal(current_aquarium, list(COMSIG_AQUARIUM_SURFACE_CHANGED, COMSIG_AQUARIUM_FLUID_CHANGED, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_EXITED))
 	remove_visual_from_aquarium()
 	current_aquarium = null
-

@@ -31,7 +31,7 @@ RSF
 	var/dispense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	///An associated list of atoms and charge costs. This can contain a separate list, as long as it's associated item is an object
-	var/list/cost_by_item = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 20,
+	var/list/cost_by_item = list(/obj/item/reagent_containers/cup/glass/drinkingglass = 20,
 								/obj/item/paper = 10,
 								/obj/item/storage/dice = 200,
 								/obj/item/pen = 50,
@@ -86,7 +86,7 @@ RSF
 	var/cost = 0
 	//Warning, prepare for bodgecode
 	while(islist(target))//While target is a list we continue the loop
-		var/picked = show_radial_menu(user, src, formRadial(target), custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+		var/picked = show_radial_menu(user, src, formRadial(target), custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE)
 		if(!check_menu(user) || picked == null)
 			return
 		for(var/emem in target)//Back through target agian

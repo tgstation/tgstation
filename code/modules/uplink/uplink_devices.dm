@@ -7,11 +7,11 @@
 	name = "station bounced radio"
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "radio"
-	inhand_icon_state = "walkietalkie"
+	inhand_icon_state = "radio"
 	worn_icon_state = "radio"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	dog_fashion = /datum/dog_fashion/back
 
 	flags_1 = CONDUCT_1

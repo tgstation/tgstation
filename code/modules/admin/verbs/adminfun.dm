@@ -76,6 +76,7 @@
 
 	var/mob/living/living_victim = victim
 	if (istype(living_victim))
+		living_victim.investigate_log("has been gibbed by an admin.", INVESTIGATE_DEATHS)
 		if(confirm == "Yes")
 			living_victim.gib()
 		else
@@ -143,7 +144,7 @@
 
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/H = i
-		new /obj/item/organ/zombie_infection/nodamage(H)
+		new /obj/item/organ/internal/zombie_infection/nodamage(H)
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
@@ -160,7 +161,7 @@
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
+	for(var/obj/item/organ/internal/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")
@@ -217,9 +218,11 @@
 		return
 	smite.effect(src, target)
 
+///"Turns" people into bread. Really, we just add them to the contents of the bread food item.
 /proc/breadify(atom/movable/target)
-	var/obj/item/food/bread/plain/bread = new(get_turf(target))
-	target.forceMove(bread)
+	var/obj/item/food/bread/plain/smite/tomb = new(get_turf(target))
+	target.forceMove(tomb)
+	target.AddComponent(/datum/component/itembound, tomb)
 
 /**
  * firing_squad is a proc for the :B:erforate smite to shoot each individual bullet at them, so that we can add actual delays without sleep() nonsense

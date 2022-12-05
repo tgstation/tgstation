@@ -53,7 +53,7 @@
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
 	var/list/data = list()
 
-	var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core.resolve()
+	var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core?.resolve()
 
 	data["connected"] = main_control ? TRUE : FALSE
 	if(!main_control)

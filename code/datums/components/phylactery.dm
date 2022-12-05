@@ -43,15 +43,15 @@
 	src.stun_per_resurrection = stun_per_resurrection
 	src.phylactery_color = phylactery_color
 
-	RegisterSignal(lich_mind, COMSIG_PARENT_QDELETING, .proc/on_lich_mind_lost)
-	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, .proc/check_if_lich_died)
+	RegisterSignal(lich_mind, COMSIG_PARENT_QDELETING, PROC_REF(on_lich_mind_lost))
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, PROC_REF(check_if_lich_died))
 
 	var/obj/obj_parent = parent
 	obj_parent.name = "ensouled [obj_parent.name]"
 	obj_parent.add_atom_colour(phylactery_color, ADMIN_COLOUR_PRIORITY)
 	obj_parent.AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
-	RegisterSignal(obj_parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(obj_parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 	SSpoints_of_interest.make_point_of_interest(obj_parent)
 
@@ -128,11 +128,11 @@
 	// If we aren't gibbed, we need to check if the lich is
 	// revived at some point between returning
 	if(!gibbed)
-		RegisterSignal(died, COMSIG_LIVING_REVIVE, .proc/stop_timer)
+		RegisterSignal(died, COMSIG_LIVING_REVIVE, PROC_REF(stop_timer))
 
 	// Start revival
 	var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
-	revive_timer = addtimer(CALLBACK(src, .proc/revive_lich, died), time_to_revive, TIMER_UNIQUE|TIMER_STOPPABLE)
+	revive_timer = addtimer(CALLBACK(src, PROC_REF(revive_lich), died), time_to_revive, TIMER_UNIQUE|TIMER_STOPPABLE)
 	to_chat(died, span_green("You feel your soul being dragged back to this world... \
 		<b>you will revive at your phylactery in [time_to_revive / 10 / 60] minute\s.</b>"))
 
@@ -141,7 +141,7 @@
  *
  * If our lich's mob is revived at some point before returning, stop the timer
  */
-/datum/component/phylactery/proc/stop_timer(mob/living/source, full_heal, admin_revive)
+/datum/component/phylactery/proc/stop_timer(mob/living/source, full_heal_flags)
 	SIGNAL_HANDLER
 
 	deltimer(revive_timer)
@@ -169,7 +169,7 @@
 	var/mob/living/carbon/human/lich = new(parent_turf)
 	ADD_TRAIT(lich, TRAIT_NO_SOUL, LICH_TRAIT)
 
-	var/obj/item/organ/brain/new_lich_brain = lich.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/internal/brain/new_lich_brain = lich.getorganslot(ORGAN_SLOT_BRAIN)
 	if(new_lich_brain) // Prevent MMI cheese
 		new_lich_brain.organ_flags &= ~ORGAN_VITAL
 		new_lich_brain.decoy_override = TRUE
@@ -201,7 +201,7 @@
 			var/mob/living/carbon/carbon_body = corpse
 			for(var/obj/item/organ/to_drop as anything in carbon_body.internal_organs)
 				// Skip the brain - it can disappear, we don't need it anymore
-				if(istype(to_drop, /obj/item/organ/brain))
+				if(istype(to_drop, /obj/item/organ/internal/brain))
 					continue
 
 				// For the rest, drop all the organs onto the floor (for style)

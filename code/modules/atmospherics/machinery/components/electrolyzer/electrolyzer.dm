@@ -5,7 +5,7 @@
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
-	icon = 'icons/obj/atmos.dmi'
+	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "electrolyzer-off"
 	name = "space electrolyzer"
 	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
@@ -35,6 +35,22 @@
 	SSair.start_processing_machine(src)
 	update_appearance()
 
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Toggle power", \
+	)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Open hatch",
+		),
+
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Anchor",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/machinery/electrolyzer/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
@@ -54,6 +70,10 @@
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
+	if(in_range(user, src) || isobserver(user))
+		. += span_notice("<b>Right-click</b> to toggle [on ? "off" : "on"].")
+	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
+
 
 /obj/machinery/electrolyzer/update_icon_state()
 	icon_state = "electrolyzer-[on ? "[mode]" : "off"]"
@@ -101,10 +121,11 @@
 
 	air_update_turf(FALSE, FALSE)
 
+	var/power_to_use = (5 * (3 * working_power) * working_power) / (efficiency + working_power)
 	if(anchored)
-		return
-
-	cell.use((5 * (3 * working_power) * working_power) / (efficiency + working_power))
+		use_power(power_to_use)
+	else
+		cell.use(power_to_use)
 
 /obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/env)
 	for(var/reaction in GLOB.electrolyzer_reactions)
@@ -145,13 +166,6 @@
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/electrolyzer/default_unfasten_wrench(mob/user, obj/item/wrench, time)
-	. = ..()
-	if(anchored)
-		update_use_power(ACTIVE_POWER_USE)
-	else
-		update_use_power(NO_POWER_USE)
-
 /obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(istype(I, /obj/item/stock_parts/cell))
@@ -171,6 +185,21 @@
 
 		return
 	return ..()
+
+/obj/machinery/electrolyzer/attack_hand_secondary(mob/user, list/modifiers)
+	if(!can_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	toggle_power(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/electrolyzer/proc/toggle_power(user)
+	on = !on
+	mode = ELECTROLYZER_MODE_STANDBY
+	if(!isnull(user))
+		balloon_alert(user, "turned [on ? "on" : "off"]")
+	update_appearance()
+	if(on)
+		SSair.start_processing_machine(src)
 
 /obj/machinery/electrolyzer/ui_state(mob/user)
 	return GLOB.physical_state
@@ -197,12 +226,7 @@
 		return
 	switch(action)
 		if("power")
-			on = !on
-			mode = ELECTROLYZER_MODE_STANDBY
-			usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
-			update_appearance()
-			if (on)
-				SSair.start_processing_machine(src)
+			toggle_power()
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)

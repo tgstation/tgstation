@@ -31,7 +31,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/shell/allowed(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & COMPONENT_AIRLOCK_SHELL_ALLOW)
+	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & COMPONENT_OBJ_ALLOW)
 		return TRUE
 	return isAdminGhostAI(user)
 
@@ -88,9 +88,9 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
 		attached_airlock = shell
-		RegisterSignal(shell, COMSIG_AIRLOCK_SET_BOLT, .proc/on_airlock_set_bolted)
-		RegisterSignal(shell, COMSIG_AIRLOCK_OPEN, .proc/on_airlock_open)
-		RegisterSignal(shell, COMSIG_AIRLOCK_CLOSE, .proc/on_airlock_closed)
+		RegisterSignal(shell, COMSIG_AIRLOCK_SET_BOLT, PROC_REF(on_airlock_set_bolted))
+		RegisterSignal(shell, COMSIG_AIRLOCK_OPEN, PROC_REF(on_airlock_open))
+		RegisterSignal(shell, COMSIG_AIRLOCK_CLOSE, PROC_REF(on_airlock_closed))
 
 /obj/item/circuit_component/airlock/unregister_shell(atom/movable/shell)
 	attached_airlock = null
@@ -129,9 +129,9 @@
 	if(COMPONENT_TRIGGERED_BY(unbolt, port))
 		attached_airlock.unbolt()
 	if(COMPONENT_TRIGGERED_BY(open, port) && attached_airlock.density)
-		INVOKE_ASYNC(attached_airlock, /obj/machinery/door/airlock.proc/open)
+		INVOKE_ASYNC(attached_airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, open))
 	if(COMPONENT_TRIGGERED_BY(close, port) && !attached_airlock.density)
-		INVOKE_ASYNC(attached_airlock, /obj/machinery/door/airlock.proc/close)
+		INVOKE_ASYNC(attached_airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, close))
 
 
 /obj/item/circuit_component/airlock_access_event
@@ -156,18 +156,22 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
 		attached_airlock = shell
-		RegisterSignal(shell, COMSIG_AIRLOCK_SHELL_ALLOWED , .proc/handle_allowed)
+		RegisterSignals(shell, list(
+			COMSIG_OBJ_ALLOWED,
+			COMSIG_AIRLOCK_SHELL_ALLOWED,
+		), PROC_REF(handle_allowed))
 
 /obj/item/circuit_component/airlock_access_event/unregister_shell(atom/movable/shell)
 	attached_airlock = null
 	UnregisterSignal(shell, list(
-		COMSIG_AIRLOCK_SHELL_ALLOWED ,
+		COMSIG_OBJ_ALLOWED,
+		COMSIG_AIRLOCK_SHELL_ALLOWED
 	))
 	return ..()
 
 
 /obj/item/circuit_component/airlock_access_event/populate_ports()
-	open_airlock = add_input_port("Should Open Airlock", PORT_TYPE_RESPONSE_SIGNAL, trigger = .proc/should_open_airlock)
+	open_airlock = add_input_port("Should Open Airlock", PORT_TYPE_RESPONSE_SIGNAL, trigger = PROC_REF(should_open_airlock))
 	accessing_entity = add_output_port("Accessing Entity", PORT_TYPE_ATOM)
 	event_triggered = add_output_port("Event Triggered", PORT_TYPE_INSTANT_SIGNAL)
 
@@ -193,4 +197,6 @@
 		return
 
 	if(result["should_open"])
-		return COMPONENT_AIRLOCK_SHELL_ALLOW 
+		return COMPONENT_OBJ_ALLOW
+	else
+		return COMPONENT_OBJ_DISALLOW

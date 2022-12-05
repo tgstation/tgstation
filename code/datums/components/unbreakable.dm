@@ -11,7 +11,7 @@
 	return ..()
 
 /datum/component/unbreakable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_STATCHANGE, .proc/surge)
+	RegisterSignal(parent, COMSIG_MOB_STATCHANGE, PROC_REF(surge))
 
 /datum/component/unbreakable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_STATCHANGE)

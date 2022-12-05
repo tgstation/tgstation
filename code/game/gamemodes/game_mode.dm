@@ -22,7 +22,7 @@
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
 
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles))
 		var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
@@ -30,7 +30,7 @@
 			delay = (delay SECONDS)
 		else
 			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/reopen_roundstart_suicide_roles), delay)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reopen_roundstart_suicide_roles)), delay)
 
 	if(SSdbcore.Connect())
 		var/list/to_set = list()
@@ -75,9 +75,12 @@
 	if(!GLOB.station_goals.len)
 		return
 	. = "<hr><b>Special Orders for [station_name()]:</b><BR>"
+	var/list/goal_reports = list()
 	for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
 		station_goal.on_report()
-		. += station_goal.get_report()
+		goal_reports += station_goal.get_report()
+
+	. += goal_reports.Join("<hr>")
 	return
 
 /*
@@ -94,6 +97,16 @@
 	if(trait_list_string != "")
 		return "<hr><b>Identified shift divergencies:</b><BR>" + trait_list_string
 	return
+
+/datum/game_mode/proc/generate_report_footnote()
+	var/footnote_pile = ""
+
+	for(var/datum/command_footnote/footnote in SScommunications.command_report_footnotes)
+		footnote_pile += "[footnote.message]<BR>"
+		footnote_pile += "<i>[footnote.signature]</i><BR>"
+		footnote_pile += "<BR>"
+
+	return "<hr><b>Additional Notes: </b><BR><BR>" + footnote_pile
 
 /proc/reopen_roundstart_suicide_roles()
 	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
@@ -185,6 +198,11 @@
 /datum/game_mode/proc/generate_station_goals(greenshift)
 	var/goal_budget = greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget)
 	var/list/possible = subtypesof(/datum/station_goal)
+	if(!(SSmapping.empty_space))
+		for(var/datum/station_goal/goal in possible)
+			if(goal.requires_space)
+				///Removes all goals that require space if space is not present
+				possible -= goal
 	var/goal_weights = 0
 	while(possible.len && goal_weights < goal_budget)
 		var/datum/station_goal/picked = pick_n_take(possible)
@@ -194,12 +212,14 @@
 //Set result and news report here
 /datum/game_mode/proc/set_round_result()
 	SSticker.mode_result = "undefined"
+	// Something nuked the station - it wasn't nuke ops (they set their own via their rulset)
 	if(GLOB.station_was_nuked)
-		SSticker.news_report = STATION_DESTROYED_NUKE
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-		SSticker.news_report = STATION_EVACUATED
-		if(SSshuttle.emergency.is_hijacked())
-			SSticker.news_report = SHUTTLE_HIJACK
+		SSticker.news_report = STATION_NUKED
+	if(SSsupermatter_cascade.cascade_initiated)
+		SSticker.news_report = SUPERMATTER_CASCADE
+	// Only show this one if we have nothing better to show
+	if(EMERGENCY_ESCAPED_OR_ENDGAMED && !SSticker.news_report)
+		SSticker.news_report = SSshuttle.emergency?.is_hijacked() ? SHUTTLE_HIJACK : STATION_EVACUATED
 
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()

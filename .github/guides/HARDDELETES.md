@@ -1,11 +1,24 @@
 # Hard Deletes
+
+> Garbage collection is pretty gothic when you think about it. 
+>
+>An object in code is like a ghost, clinging to its former life, and especially to the people it knew. It can only pass on and truly die when it has dealt with its unfinished business. And only when its been forgotten by everyone who ever knew it. If even one other object remembers it, it has a connection to the living world that lets it keep hanging on
+>
+>There is a kind of sombre tone to fixing GC errors too, its almost shamanistic, making sure all these little objects clear up their final affairs in life before they die, to ensure they don't become ghosts
+>
+> -- <cite>Nanako</cite>
+
+### Table of contents
+
 1. [What is hard deletion](#What-is-hard-deletion)
 2. [Causes of hard deletes](#causes-of-hard-deletes)
 3. [Detecting hard deletes](#detecting-hard-deletes)
 4. [Techniques for fixing hard deletes](#techniques-for-fixing-hard-deletes)
 5. [Help my code is erroring how fix](#help-my-code-is-erroring-how-fix)
 
+
 ## What is Hard Deletion
+
 Hard deletion is a very expensive operation that basically clears all references to some "thing" from memory. Objects that undergo this process are referred to as hard deletes, or simply harddels
 
 What follows is a discussion of the theory behind this, why we would ever do it, and the what we do to avoid doing it as often as possible
@@ -245,7 +258,7 @@ Here's an example
         UnregisterSignal(target, COMSIG_PARENT_QDELETING) //We need to make sure any old signals are cleared
     target = new_target
     if(target)
-        RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_target) //Call clear_target if target is ever qdel()'d
+        RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(clear_target)) //Call clear_target if target is ever qdel()'d
 
 /somemob/proc/clear_target(datum/source)
     SIGNAL_HANDLER
@@ -263,3 +276,14 @@ First, do a quick check.
 Are you doing anything to the object in `Initialize()` that you don't undo in `Destroy()`? I don't mean like, setting its name, but are you adding it to any lists, stuff like that
 
 If this fails, you're just gonna have to read over this doc. You can skip the theory if you'd like, but it's all pretty important for having an understanding of this problem
+
+## Misc facts
+
+> i like rust and all, buuut it removes garbage collecctor, and i pretend garbage collector is a cute girl checking my code
+>
+> -- <cite>Armhulenn</cite>
+
+- The reference tracker, while powerful, is incredibly easy to break<br>
+If it weren't for those unit tests we'd still be missing list["a"] = list(ref)
+- Everyone but me sucks, because everyone but me keeps adding new hard deletes
+- Garbage collection is a spook, best practice is to use a random reference in place of null, it scares the compiler demons

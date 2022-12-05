@@ -11,15 +11,7 @@
 		to_chat(user, span_notice("We must exit the pipes before we can transform back!"))
 		return FALSE
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	var/list/names = list()
-	for(var/datum/changeling_profile/prof in changeling.stored_profiles)
-		names += "[prof.name]"
-
-	var/chosen_name = tgui_input_list(user, "Target DNA", "Transformation", sort_list(names))
-	if(isnull(chosen_name))
-		return
-
-	var/datum/changeling_profile/chosen_prof = changeling.get_dna(chosen_name)
+	var/datum/changeling_profile/chosen_prof = changeling.select_dna()
 	if(!chosen_prof)
 		return
 	if(!user || user.notransform)
@@ -29,26 +21,41 @@
 	changeling.purchased_powers -= src
 	Remove(user)
 
-	var/newmob = user.humanize()
+	var/datum/dna/chosen_dna = chosen_prof.dna
+	var/datum/species/chosen_species = chosen_dna.species
+	user.humanize(chosen_species)
 
-	changeling.transform(newmob, chosen_prof)
+	changeling.transform(user, chosen_prof)
+	user.regenerate_icons()
+	// Delete ourselves when we're done.
+	qdel(src)
 	return TRUE
 
 // Subtype used when a changeling uses lesser form.
 /datum/action/changeling/humanform/from_monkey
 	desc = "We change back into a human. Costs 5 chemicals."
 
-/datum/action/changeling/humanform/from_monkey/sting_action(mob/living/carbon/user)
+/datum/action/changeling/humanform/from_monkey/Grant(mob/granted_to)
 	. = ..()
-	if(!.)
-		return
+	RegisterSignal(granted_to, COMSIG_MONKEY_HUMANIZE, PROC_REF(give_lesserform))
 
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+/datum/action/changeling/humanform/from_monkey/Remove(mob/remove_from)
+	UnregisterSignal(remove_from, COMSIG_MONKEY_HUMANIZE)
+	return ..()
+
+/**
+ * Called on COMSIG_MONKEY_HUMANIZE
+ * Handles giving the new lesserform ability
+ * Removing ourselves is handled by parent already, so it's not needed here like it is on lesserform.
+ *
+ * Args:
+ * source - Monkey user who is now turning into a human
+ */
+/datum/action/changeling/humanform/from_monkey/proc/give_lesserform(mob/living/carbon/source)
+	SIGNAL_HANDLER
+
+	var/datum/antagonist/changeling/changeling = source.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/action/changeling/lesserform/monkey_form_ability = new()
 	changeling.purchased_powers += monkey_form_ability
 
-	monkey_form_ability.Grant(user)
-
-	// Delete ourselves when we're done.
-	qdel(src)
-	return TRUE
+	monkey_form_ability.Grant(source)

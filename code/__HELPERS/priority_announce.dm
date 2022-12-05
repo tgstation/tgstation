@@ -46,7 +46,7 @@
 	for(var/mob/target in players)
 		if(!isnewplayer(target) && target.can_hear())
 			to_chat(target, announcement)
-			if(target.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
+			if(target.client.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 				SEND_SOUND(target, sound_to_play)
 
 /**
@@ -69,7 +69,7 @@
 		to_chat(mob_to_teleport, announcement)
 		SEND_SOUND(mob_to_teleport, meeting_sound) //no preferences here, you must hear the funny sound
 		mob_to_teleport.overlay_fullscreen("emergency_meeting", /atom/movable/screen/fullscreen/emergency_meeting, 1)
-		addtimer(CALLBACK(mob_to_teleport, /mob/.proc/clear_fullscreen, "emergency_meeting"), 3 SECONDS)
+		addtimer(CALLBACK(mob_to_teleport, TYPE_PROC_REF(/mob/, clear_fullscreen), "emergency_meeting"), 3 SECONDS)
 
 		if (is_station_level(mob_to_teleport.z)) //teleport the mob to the crew meeting
 			var/turf/target
@@ -94,7 +94,19 @@
 
 	SScommunications.send_message(M)
 
-/proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE, list/players)
+/**
+ * Sends a minor annoucement to players.
+ * Minor announcements are large text, with the title in red and message in white.
+ * Only mobs that can hear can see the announcements.
+ *
+ * message - the message contents of the announcement.
+ * title - the title of the announcement, which is often "who sent it".
+ * alert - whether this announcement is an alert, or just a notice. Only changes the sound that is played by default.
+ * html_encode - if TRUE, we will html encode our title and message before sending it, to prevent player input abuse.
+ * players - optional, a list mobs to send the announcement to. If unset, sends to all palyers.
+ * sound_override - optional, use the passed sound file instead of the default notice sounds.
+ */
+/proc/minor_announce(message, title = "Attention:", alert, html_encode = TRUE, list/players, sound_override)
 	if(!message)
 		return
 
@@ -106,10 +118,12 @@
 		players = GLOB.player_list
 
 	for(var/mob/target in players)
-		if(!isnewplayer(target) && target.can_hear())
-			to_chat(target, "[span_minorannounce("<font color = red>[title]</font color><BR>[message]")]<BR>")
-			if(target.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-				if(alert)
-					SEND_SOUND(target, sound('sound/misc/notice1.ogg'))
-				else
-					SEND_SOUND(target, sound('sound/misc/notice2.ogg'))
+		if(isnewplayer(target))
+			continue
+		if(!target.can_hear())
+			continue
+
+		to_chat(target, "[span_minorannounce("<font color = red>[title]</font color><BR>[message]")]<BR>")
+		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+			var/sound_to_play = sound_override || (alert ? 'sound/misc/notice1.ogg' : 'sound/misc/notice2.ogg')
+			SEND_SOUND(target, sound(sound_to_play))

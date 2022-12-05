@@ -1,7 +1,7 @@
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/assemblies.dmi'
+	icon = 'icons/obj/assemblies/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -10,7 +10,7 @@
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/mob/living/silicon/robot = null //Appears unused.
 	var/obj/vehicle/sealed/mecha = null //This does not appear to be used outside of reference in mecha.dm.
-	var/obj/item/organ/brain/brain = null //The actual brain
+	var/obj/item/organ/internal/brain/brain = null //The actual brain
 	var/datum/ai_laws/laws = new()
 	var/force_replace_ai_name = FALSE
 	var/overrides_aicore_laws = FALSE // Whether the laws on the MMI, if any, override possible pre-existing laws loaded on the AI core.
@@ -36,7 +36,7 @@
 	if(!brain)
 		icon_state = "[base_icon_state]_off"
 		return ..()
-	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
+	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/internal/brain/alien) ? "_alien" : null]"
 	return ..()
 
 /obj/item/mmi/update_overlays()
@@ -52,13 +52,25 @@
 
 /obj/item/mmi/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/brain/newbrain = O
+	if(istype(O, /obj/item/organ/internal/brain)) //Time to stick a brain in it --NEO
+		var/obj/item/organ/internal/brain/newbrain = O
 		if(brain)
 			to_chat(user, span_warning("There's already a brain in the MMI!"))
 			return
-		if(!newbrain.brainmob)
-			to_chat(user, span_warning("You aren't sure where this brain came from, but you're pretty sure it's a useless brain!"))
+		if(newbrain.suicided)
+			to_chat(user, span_warning("[newbrain] is completely useless."))
+			return
+		if(!newbrain.brainmob?.mind || !newbrain.brainmob)
+			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
+			if(install != "Yes")
+				return
+			if(!user.transferItemToLoc(newbrain, src))
+				return
+			user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
+			brain = newbrain
+			brain.organ_flags |= ORGAN_FROZEN
+			name = "[initial(name)]: [copytext(newbrain.name, 1, -8)]"
+			update_appearance()
 			return
 
 		if(!user.transferItemToLoc(O, src))
@@ -88,14 +100,14 @@
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_appearance()
-		if(istype(brain, /obj/item/organ/brain/alien))
+		if(istype(brain, /obj/item/organ/internal/brain/alien))
 			braintype = "Xenoborg" //HISS....Beep.
 		else
 			braintype = "Cyborg"
 
 		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
-		log_game("[key_name(user)] has put the brain of [key_name(brainmob)] into an MMI at [AREACOORD(src)]")
+		user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee
@@ -113,14 +125,15 @@
 		to_chat(user, span_notice("You unlock and upend [src], spilling the brain onto the floor."))
 
 /obj/item/mmi/proc/eject_brain(mob/user)
-	brainmob.container = null //Reset brainmob mmi var.
-	brainmob.forceMove(brain) //Throw mob into brain.
-	brainmob.set_stat(DEAD)
-	brainmob.emp_damage = 0
-	brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
-	brain.brainmob = brainmob //Set the brain to use the brainmob
-	log_game("[key_name(user)] has ejected the brain of [key_name(brainmob)] from an MMI at [AREACOORD(src)]")
-	brainmob = null //Set mmi brainmob var to null
+	if(brainmob)
+		brainmob.container = null //Reset brainmob mmi var.
+		brainmob.forceMove(brain) //Throw mob into brain.
+		brainmob.set_stat(DEAD)
+		brainmob.emp_damage = 0
+		brainmob.reset_perspective() //so the brainmob follows the brain organ instead of the mmi. And to update our vision
+		brain.brainmob = brainmob //Set the brain to use the brainmob
+		user.log_message("has ejected the brain of [key_name(brainmob)] from an MMI", LOG_GAME)
+		brainmob = null //Set mmi brainmob var to null
 	brain.forceMove(drop_location())
 	if(Adjacent(user))
 		user.put_in_hands(brain)
@@ -141,7 +154,7 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/brain/newbrain = H.getorgan(/obj/item/organ/brain)
+		var/obj/item/organ/internal/brain/newbrain = H.getorgan(/obj/item/organ/internal/brain)
 		newbrain.forceMove(src)
 		brain = newbrain
 	else if(!brain)
@@ -151,7 +164,7 @@
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()
-	if(istype(brain, /obj/item/organ/brain/alien))
+	if(istype(brain, /obj/item/organ/internal/brain/alien))
 		braintype = "Xenoborg" //HISS....Beep.
 	else
 		braintype = "Cyborg"
@@ -252,7 +265,7 @@
 	var/mob/living/brain/B = brainmob
 	if(!B)
 		if(user)
-			to_chat(user, span_warning("\The [src] indicates that there is no brain present!"))
+			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
 		return FALSE
 	if(!B.key || !B.mind)
 		if(user)

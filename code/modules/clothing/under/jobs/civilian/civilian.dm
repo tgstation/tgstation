@@ -48,6 +48,7 @@
 	name = "cook's suit"
 	desc = "A suit which is given only to the most <b>hardcore</b> cooks in space."
 	icon_state = "chef"
+	inhand_icon_state = "chef"
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/civilian/chef/skirt
@@ -60,14 +61,14 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel
-	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."
-	name = "head of personnel's jumpsuit"
+	desc = "A slick uniform worn by those to earn the position of \"Head of Personnel\"."
+	name = "head of personnel's uniform"
 	icon_state = "hop"
 	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt
-	name = "head of personnel's jumpskirt"
-	desc = "It's a jumpskirt worn by someone who works in the position of \"Head of Personnel\"."
+	name = "head of personnel's skirt"
+	desc = "A slick uniform and skirt combo worn by those to earn the position of \"Head of Personnel\"."
 	icon_state = "hop_skirt"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -113,6 +114,7 @@
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"
 	icon_state = "janitor"
+	inhand_icon_state = "janitor"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/civilian/janitor/skirt
@@ -202,7 +204,7 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	name = "blue suit"
-	desc = "A classy suit and tie."
+	desc = "A classy suit."
 	icon_state = "bluesuit"
 	inhand_icon_state = "b_suit"
 	can_adjust = TRUE
@@ -210,7 +212,7 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt
 	name = "blue suitskirt"
-	desc = "A classy suitskirt and tie."
+	desc = "A classy suitskirt."
 	icon_state = "bluesuit_skirt"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -251,4 +253,6 @@
 	name = "grilling shorts"
 	desc = "For when all you want in life is to grill for god's sake!"
 	icon_state = "cookjorts"
+	inhand_icon_state = "cookjorts"
 	can_adjust = FALSE
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY

@@ -53,7 +53,7 @@
 
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
-	if(istype(affected_mob, /mob/living/carbon) && affected_mob.stat != DEAD)
+	if(iscarbon(affected_mob) && affected_mob.stat != DEAD)
 		if(length(stage5))
 			to_chat(affected_mob, pick(stage5))
 		if(QDELETED(affected_mob))
@@ -88,10 +88,11 @@
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
-		affected_mob.ghostize(0)
+		affected_mob.ghostize(FALSE)
 		affected_mob.key = C.key
 	else
 		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
+		new_mob.investigate_log("has been killed because there was no one to replace them as a job-banned player.", INVESTIGATE_DEATHS)
 		new_mob.death()
 		if (!QDELETED(new_mob))
 			new_mob.ghostize(can_reenter_corpse = FALSE)
@@ -137,7 +138,7 @@
 		if(3)
 			if(DT_PROB(2, delta_time))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
-				affected_mob.adjust_timed_status_effect(10 SECONDS, /datum/status_effect/confusion)
+				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
 			if(DT_PROB(1.5, delta_time))
 				affected_mob.say(pick("Eeek, ook ook!", "Eee-eeek!", "Eeee!", "Ungh, ungh."), forced = "jungle fever")
@@ -194,7 +195,7 @@
 	stage3 = list("<span class='danger'>Your throat feels very scratchy.</span>", "Your skin feels tight.", "<span class='danger'>You can feel something move...inside.</span>")
 	stage4 = list("<span class='danger'>Your skin feels very tight.</span>", "<span class='danger'>Your blood boils!</span>", "<span class='danger'>You can feel... something...inside you.</span>")
 	stage5 = list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
-	new_form = /mob/living/carbon/alien/humanoid/hunter
+	new_form = /mob/living/carbon/alien/adult/hunter
 	bantype = ROLE_ALIEN
 
 
@@ -227,7 +228,7 @@
 	stage3 = list("<span class='danger'>Your appendages are melting away.</span>", "<span class='danger'>Your limbs begin to lose their shape.</span>")
 	stage4 = list("<span class='danger'>You are turning into a slime.</span>")
 	stage5 = list("<span class='danger'>You have become a slime.</span>")
-	new_form = /mob/living/simple_animal/slime/random
+	new_form = /mob/living/simple_animal/slime
 
 
 /datum/disease/transformation/slime/stage_act(delta_time, times_fired)
@@ -237,15 +238,22 @@
 
 	switch(stage)
 		if(1)
-			if(ishuman(affected_mob) && affected_mob.dna)
-				if(affected_mob.dna.species.id == SPECIES_SLIMEPERSON || affected_mob.dna.species.id == SPECIES_STARGAZER || affected_mob.dna.species.id == SPECIES_LUMINESCENT)
+			if(ishuman(affected_mob))
+				var/mob/living/carbon/human/human = affected_mob
+				if(isjellyperson(human))
 					stage = 5
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(human.dna.species.id != SPECIES_SLIMEPERSON && affected_mob.dna.species.id != SPECIES_STARGAZER && affected_mob.dna.species.id != SPECIES_LUMINESCENT)
+				if(!ismonkey(human) && !isjellyperson(human))
 					human.set_species(/datum/species/jelly/slime)
 
+/datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
+	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
+		var/mob/living/carbon/human/human = affected_mob
+		if(!ismonkey(human))
+			new_form = /mob/living/simple_animal/slime/random
+	return ..()
 
 /datum/disease/transformation/corgi
 	name = "The Barkening"

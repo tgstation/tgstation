@@ -11,6 +11,8 @@
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
+#define isgenerator(A) (istype(A, /generator))
+
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
@@ -54,6 +56,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
+#define isasteroidturf(A) (istype(A, /turf/open/misc/asteroid))
+
 #define istransparentturf(A) (HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
 
 //Mobs
@@ -66,6 +70,8 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
+#define isdummy(A) (istype(A, /mob/living/carbon/human/dummy))
+
 //Human sub-species
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
@@ -75,7 +81,6 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define isjellyperson(A) (is_species(A, /datum/species/jelly))
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
-#define isluminescent(A) (is_species(A, /datum/species/jelly/luminescent))
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
 #define ismoth(A) (is_species(A, /datum/species/moth))
@@ -91,15 +96,15 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid) || istype(A, /mob/living/simple_animal/hostile/alien))
+#define isalienadult(A) (istype(A, /mob/living/carbon/alien/adult) || istype(A, /mob/living/simple_animal/hostile/alien))
 
-#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
+#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/adult/hunter))
 
-#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/adult/sentinel))
 
-#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/humanoid/royal))
+#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/adult/royal))
 
-#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
+#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/adult/royal/queen))
 
 //Silicon mobs
 #define issilicon(A) (istype(A, /mob/living/silicon))
@@ -115,8 +120,15 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 // basic mobs
 #define isbasicmob(A) (istype(A, /mob/living/basic))
 
+#define iscow(A) (istype(A, /mob/living/basic/cow))
+
 /// returns whether or not the atom is either a basic mob OR simple animal
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
+
+/// asteroid mobs, which are both simple and basic atm
+#define isminingpath(A) (ispath(A, /mob/living/simple_animal/hostile/asteroid) || ispath(A, /mob/living/basic/mining))
+
+#define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
 
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
@@ -127,9 +139,7 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
-#define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
-
-#define iscow(A) (istype(A, /mob/living/basic/cow))
+#define ismouse(A) (istype(A, /mob/living/basic/mouse))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
@@ -143,8 +153,6 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
-#define israt(A) (istype(A, /mob/living/simple_animal/hostile/rat))
-
 #define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
@@ -154,6 +162,9 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
+
+#define isspider(A) (istype(A, /mob/living/simple_animal/hostile/giant_spider))
+
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -200,6 +211,10 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 #define ismopable(A) (A && (A.layer <= FLOOR_CLEAN_LAYER)) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
 
 #define isorgan(A) (istype(A, /obj/item/organ))
+
+#define isinternalorgan(A) (istype(A, /obj/item/organ/internal))
+
+#define isexternalorgan(A) (istype(A, /obj/item/organ/external))
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
 
@@ -264,3 +279,5 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 #define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))
 #define is_research_director_job(job_type) (istype(job_type, /datum/job/research_director))
 #define is_unassigned_job(job_type) (istype(job_type, /datum/job/unassigned))
+
+#define isprojectilespell(thing) (istype(thing, /datum/action/cooldown/spell/pointed/projectile))

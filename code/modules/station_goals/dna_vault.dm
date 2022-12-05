@@ -1,7 +1,7 @@
 //Crew has to create dna vault
 // Cargo can order DNA samplers + DNA vault boards
-// DNA vault requires x animals ,y plants, z human dna
-// DNA vaults require high tier stock parts and cold
+// DNA vault requires x animals, y plants, z human dna
+// DNA vaults require high tier stock parts
 // After completion each crewmember can receive single upgrade chosen out of 2 for the mob.
 #define VAULT_TOXIN "Toxin Adaptation"
 #define VAULT_NOBREATH "Lung Enhancement"
@@ -32,15 +32,17 @@
 			.++
 
 /datum/station_goal/dna_vault/get_report()
-	return {"Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.
-		We need you to construct a DNA Vault aboard your station.
-
-		The DNA Vault needs to contain samples of:
-		[animal_count] unique animal data
-		[plant_count] unique non-standard plant data
-		[human_count] unique sapient humanoid DNA data
-
-		Base vault parts are available for shipping via cargo."}
+	return list(
+		"<blockquote>Our long term prediction systems indicate a 99% chance of system-wide cataclysm in the near future.",
+		"We need you to construct a DNA Vault aboard your station.",
+		"",
+		"The DNA Vault needs to contain samples of:",
+		"* [animal_count] unique animal data",
+		"* [plant_count] unique non-standard plant data",
+		"* [human_count] unique sapient humanoid DNA data",
+		"",
+		"Base vault parts are available for shipping via cargo.</blockquote>",
+	).Join("\n")
 
 
 /datum/station_goal/dna_vault/on_report()
@@ -108,11 +110,10 @@
 	return ..()
 
 /obj/machinery/dna_vault/Destroy()
-	for(var/V in fillers)
-		var/obj/structure/filler/filler = V
+	for(var/obj/structure/filler/filler as anything in fillers)
 		filler.parent = null
 		qdel(filler)
-	. = ..()
+	return ..()
 
 /obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -122,13 +123,14 @@
 		ui.open()
 
 /obj/machinery/dna_vault/proc/roll_powers(mob/user)
-	if(user in power_lottery)
+	var/datum/weakref/user_weakref = WEAKREF(user)
+	if((user_weakref in power_lottery) || isdead(user))
 		return
 	var/list/L = list()
 	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
 	L += pick_n_take(possible_powers)
 	L += pick_n_take(possible_powers)
-	power_lottery[user] = L
+	power_lottery[user_weakref] = L
 
 /obj/machinery/dna_vault/ui_data(mob/user) //TODO Make it % bars maybe
 	var/list/data = list()
@@ -143,7 +145,7 @@
 	data["choiceA"] = ""
 	data["choiceB"] = ""
 	if(user && completed)
-		var/list/L = power_lottery[user]
+		var/list/L = power_lottery[WEAKREF(user)]
 		if(L?.len)
 			data["used"] = FALSE
 			data["choiceA"] = L[1]
@@ -186,38 +188,40 @@
 	else
 		return ..()
 
-/obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H,upgrade_type)
-	if(!(upgrade_type in power_lottery[H]))
+/obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
+	var/datum/weakref/human_weakref = WEAKREF(H)
+	if(!(upgrade_type in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
 	var/datum/species/S = H.dna.species
 	switch(upgrade_type)
 		if(VAULT_TOXIN)
 			to_chat(H, span_notice("You feel resistant to airborne toxins."))
-			if(locate(/obj/item/organ/lungs) in H.internal_organs)
-				var/obj/item/organ/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
+			if(locate(/obj/item/organ/internal/lungs) in H.internal_organs)
+				var/obj/item/organ/internal/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
 				L.plas_breath_dam_min = 0
 				L.plas_breath_dam_max = 0
-			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, DNA_VAULT_TRAIT)
 		if(VAULT_NOBREATH)
 			to_chat(H, span_notice("Your lungs feel great."))
-			ADD_TRAIT(H, TRAIT_NOBREATH, "dna_vault")
+			ADD_TRAIT(H, TRAIT_NOBREATH, DNA_VAULT_TRAIT)
 		if(VAULT_FIREPROOF)
 			to_chat(H, span_notice("You feel fireproof."))
 			S.burnmod = 0.5
-			ADD_TRAIT(H, TRAIT_RESISTHEAT, "dna_vault")
-			ADD_TRAIT(H, TRAIT_NOFIRE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_RESISTHEAT, DNA_VAULT_TRAIT)
+			ADD_TRAIT(H, TRAIT_NOFIRE, DNA_VAULT_TRAIT)
 		if(VAULT_STUNTIME)
 			to_chat(H, span_notice("Nothing can keep you down for long."))
 			S.stunmod = 0.5
 		if(VAULT_ARMOUR)
 			to_chat(H, span_notice("You feel tough."))
 			S.armor = 30
-			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")
+			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, DNA_VAULT_TRAIT)
 		if(VAULT_SPEED)
 			to_chat(H, span_notice("Your legs feel faster."))
 			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 		if(VAULT_QUICK)
 			to_chat(H, span_notice("Your arms move as fast as lightning."))
 			H.next_move_modifier = 0.5
-	power_lottery[H] = list()
+	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
+	power_lottery[human_weakref] = list()
 	use_power(active_power_usage)

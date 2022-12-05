@@ -3,6 +3,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "thermo_base"
+	plane = GAME_PLANE
 
 	name = "Temperature control unit"
 	desc = "Heats or cools gas in connected pipes."
@@ -123,12 +124,8 @@
 	balloon_alert(user, "temperature reset to [target_temperature] K")
 	update_appearance()
 
-/** Performs heat calculation for the freezer. The full equation for this whole process is:
- * T3 = (C1 * T1 + (C1 * C2) / (C1 + C2) * (T2 - T1)) / C1.
- * C1 is main port heat capacity, T1 is the temp.
- * C2 and T2 is for the heat capacity of the freezer and temperature that we desire respectively.
- * T3 is the temperature we get
- */
+/// Performs heat calculation for the freezer.
+/// We just equalize the gasmix with an object at temp = var/target_temperature and heat cap = var/heat_capacity
 /obj/machinery/atmospherics/components/unary/thermomachine/process_atmos()
 	if(!on)
 		return
@@ -151,8 +148,8 @@
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - port.temperature
 
-	// This variable holds the (C1*C2) / (C1+C2) * (T2-T1) part of the equation.
-	var/heat_amount = temperature_target_delta * (port_capacity * heat_capacity / (port_capacity + heat_capacity))
+	// We perfectly can do W1+W2 / C1+C2 here but this lets us count the power easily.
+	var/heat_amount = CALCULATE_CONDUCTION_ENERGY(temperature_target_delta, port_capacity, heat_capacity)
 
 	port.temperature = max(((port.temperature * port_capacity) + heat_amount) / port_capacity, TCMB)
 
@@ -200,7 +197,7 @@
 	if(!panel_open)
 		return
 	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
-	pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
+	set_pipe_color(GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]])
 	visible_message("<span class='notice'>You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]].")
 	update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS

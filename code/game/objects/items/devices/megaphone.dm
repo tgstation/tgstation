@@ -4,8 +4,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "megaphone"
 	inhand_icon_state = "megaphone"
-	lefthand_file = 'icons/mob/inhands/misc/megaphone_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/megaphone_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/items/megaphone_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/megaphone_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	siemens_coefficient = 1
 	var/spamcheck = 0
@@ -19,8 +19,8 @@
 
 /obj/item/megaphone/equipped(mob/M, slot)
 	. = ..()
-	if (slot == ITEM_SLOT_HANDS && !HAS_TRAIT(M, TRAIT_SIGN_LANG))
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	if ((slot & ITEM_SLOT_HANDS) && !HAS_TRAIT(M, TRAIT_SIGN_LANG))
+		RegisterSignal(M, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	else
 		UnregisterSignal(M, COMSIG_MOB_SAY)
 

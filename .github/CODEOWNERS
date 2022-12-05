@@ -6,12 +6,6 @@
 
 # MAINTAINERS
 
-# Cobby
-
-/code/modules/reagents/ @ExcessiveUseOfCobblestone
-/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
-
 # Cyberboss
 
 /code/__HELPERS/jatum.dm @Cyberboss
@@ -26,17 +20,36 @@
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
 
+# Dragomagol/Tattle
+/code/__HELPERS/logging/ @dragomagol
+
+# Fikou
+
+/code/modules/awaymissions/ @Fikou
+/code/modules/mining/ @Fikou
+/code/modules/mod/ @Fikou
+/code/modules/ruins/lavalandruin_code/ @Fikou
+/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+
 # JohnFulpWizard
 
 /code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
+/code/modules/modular_computers/ @JohnFulpWillard
 
 # Kylerace
 
 /code/__DEFINES/spatial_gridmap.dm @Kylerace
 /code/controllers/subsystem/spatial_gridmap.dm @Kylerace
 
+# LemonInTheDark
+
+/.github/guides/VISUALS.md @LemonInTheDark
+/code/_onclick/hud/ @LemonInTheDark
+/code/__DEFINES/layers.dm @LemonInTheDark
+
 # Mothblocks
 
+/.github/workflows/ @Mothblocks
 /code/game/gamemodes/ @Mothblocks
 /code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
@@ -45,6 +58,9 @@
 /code/modules/preferences_menu.dm @Mothblocks
 /code/modules/preferences_savefile.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+/tools/pull_request_hooks/ @Mothblocks
+/tools/screenshot-test-comparison/ @Mothblocks
+/tools/test_merge_bot/ @Mothblocks
 
 # MrMelbert
 
@@ -77,24 +93,40 @@
 /code/controllers/subsystem/chat.dm @stylemistake
 /code/controllers/subsystem/ping.dm @stylemistake
 /code/controllers/subsystem/tgui.dm @stylemistake
-/code/modules/tgchat @stylemistake
-/code/modules/tgui @stylemistake
-/code/modules/tgui_panel @stylemistake
-/tgui @stylemistake
+/code/modules/tgchat/ @stylemistake
+/code/modules/tgui/ @stylemistake
+/code/modules/tgui_panel/ @stylemistake
+/tgui/ @stylemistake
+
+# stylemistake (explicitly disowned)
+
+/tgui/packages/tgui/interfaces/
+/tgui/packages/tgui/styles/interfaces/
+/tgui/packages/tgui-panel/styles/goon/chat-dark.scss
+/tgui/packages/tgui-panel/styles/goon/chat-light.scss
+
+# SuperNovaa41
+
+/code/modules/forensics/ @SuperNovaa41
+/code/datums/mood.dm @SuperNovaa41
+
+# tralezab
+/code/__DEFINES/basic_mobs.dm @tralezab
+/code/datums/ai @tralezab
+/code/modules/mob/living/basic/ @tralezab
 
 # Watermelon914
 
 /code/modules/wiremod/ @Watermelon914
+/code/modules/antagonists/traitor/ @Watermelon914
 
 # CONTRIBUTORS
 
-# Fikou
+# Cobby
 
-/code/modules/mod/ @Fikou
-/code/modules/ruins/lavaland_ruin_code.dm @Fikou
-/code/modules/ruins/lavalandruin_code/ @Fikou
-/code/modules/mining/ @Fikou
-/code/modules/awaymissions/ @Fikou
+/code/modules/reagents/ @ExcessiveUseOfCobblestone
+/code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
+/code/game/objects/items/storage/medkit.dm @ExcessiveUseOfCobblestone
 
 # Jordie0608
 
@@ -105,7 +137,9 @@
 # Kapu1178
 
 /code/modules/surgery/bodyparts/ @Kapu1178
+/code/modules/surgery/organs/ @Kapu1178
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
+/code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
 # MrStonedOne
 
@@ -131,10 +165,16 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
+# Time-Green
+
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
+
 # MULTIPLE OWNERS
 
 /_maps/ @EOBGames @Maurukas @san7890 @ShizCalev
 /icons/ @Imaginos16 @Krysonism @Twaticus
+/icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
@@ -146,6 +186,8 @@
 /tools/build/ @MrStonedOne @stylemistake
 /tools/LinuxOneShot/ @Cyberboss @MrStonedOne
 /tools/tgs4_scripts/ @Cyberboss @MrStonedOne
+
+/tools/WebhookProcessor/ @BraveMole @TiviPlus
 
 # SIC SEMPER TYRANNIS
 

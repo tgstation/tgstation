@@ -1,0 +1,4 @@
+author: "Striders13"
+delete-after: True
+changes:
+  - qol: "Penthrite from luxury pens now gives you a status effect instead of a balloon alert"

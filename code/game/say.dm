@@ -13,6 +13,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_COMMAND]" = "comradio",
 	"[FREQ_AI_PRIVATE]" = "aiprivradio",
 	"[FREQ_SYNDICATE]" = "syndradio",
+	"[FREQ_UPLINK]" = "syndradio",  // this probably shouldnt appear ingame
 	"[FREQ_CENTCOM]" = "centcomradio",
 	"[FREQ_CTF_RED]" = "redteamradio",
 	"[FREQ_CTF_BLUE]" = "blueteamradio",
@@ -20,26 +21,60 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
 	))
 
-/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, range = 7)
-	if(!can_speak())
+/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = FALSE, message_range = 7, datum/saymode/saymode = null)
+	if(!try_speak(message, ignore_spam, forced, filterproof))
 		return
 	if(sanitize)
 		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
-	if(message == "" || !message)
+	if(!message || message == "")
 		return
 	spans |= speech_span
 	if(!language)
 		language = get_selected_language()
-	send_speech(message, range, src, , spans, message_language=language)
+	send_speech(message, message_range, src, bubble_type, spans, message_language = language, forced = forced)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 
-/atom/movable/proc/can_speak()
-	//SHOULD_BE_PURE(TRUE)
+
+/**
+ * Checks if our movable can speak the provided message, passing it through filters
+ * and spam detection. Does not call can_speak. CAN include feedback messages about
+ * why someone can or can't speak
+ *
+ * Used in [proc/say] and other methods of speech (radios) after a movable has inputted some message.
+ * If you just want to check if the movable is able to speak in character, use [proc/can_speak] instead.
+ *
+ * Parameters:
+ * - message (string): the original message
+ * - ignore_spam (bool): should we ignore spam?
+ * - forced (null|string): what was it forced by? null if voluntary
+ * - filterproof (bool): are we filterproof?
+ *
+ * Returns:
+ * 	TRUE of FASE depending on if our movable can speak
+ */
+/atom/movable/proc/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	return TRUE
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list())
+/**
+ * Checks if our movable can currently speak, vocally, in general.
+ * Should NOT include feedback messages about why someone can or can't speak
+
+ * Used in various places to check if a movable is simply able to speak in general,
+ * regardless of OOC status (being muted) and regardless of what they're actually saying.
+ *
+ * Checked AFTER handling of xeno channels.
+ * (I'm not sure what this comment means, but it was here in the past, so I'll maintain it here.)
+ *
+ * allow_mimes - Determines if this check should skip over mimes. (Only matters for living mobs and up.)
+ * If FALSE, this check will always fail if the movable has a mind and is miming.
+ * if TRUE, we will check if the movable can speak REGARDLESS of if they have an active mime vow.
+ */
+/atom/movable/proc/can_speak(allow_mimes = FALSE)
+	return TRUE
+
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE)
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
 	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
 		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
@@ -91,6 +126,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return verb_yell
 	else if(message_mods[MODE_SING])
 		. = verb_sing
+	else if(message_mods[WHISPER_MODE])
+		. = verb_whisper
 	else if(ending == "?")
 		return verb_ask
 	else if(ending == "!")
@@ -105,6 +142,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/say_mod = message_mods[MODE_CUSTOM_SAY_EMOTE]
 	if (!say_mod)
 		say_mod = say_mod(input, message_mods)
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SAY_QUOTE, args)
 
 	if(copytext_char(input, -2) == "!!")
 		spans |= SPAN_YELL
@@ -129,6 +168,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 #undef ENCODE_HTML_EMPHASIS
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods = list(), no_quote = FALSE)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_TREAT_MESSAGE, args)
 	var/atom/movable/source = speaker.GetSource() || speaker //is the speaker virtual
 	if(has_language(language))
 		return no_quote ? raw_message : source.say_quote(raw_message, spans, message_mods)
@@ -171,9 +211,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 /atom/movable/proc/GetVoice()
 	return "[src]" //Returns the atom's name, prepended with 'The' if it's not a proper noun
-
-/atom/movable/proc/IsVocal()
-	return TRUE
 
 /atom/movable/proc/get_alt_name()
 
@@ -220,7 +257,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 	else if(iscyborg(M))  // Cyborg
 		var/mob/living/silicon/robot/B = M
 		job = "[B.designation] Cyborg"
-	else if(istype(M, /mob/living/silicon/pai))  // Personal AI (pAI)
+	else if(ispAI(M))  // Personal AI (pAI)
 		job = JOB_PERSONAL_AI
 	else if(isobj(M))  // Cold, emotionless machines
 		job = "Machine"

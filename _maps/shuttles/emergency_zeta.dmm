@@ -45,7 +45,7 @@
 /obj/machinery/door/airlock/abductor{
 	name = "Holding Facility"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape/brig)
 "jJ" = (
@@ -198,10 +198,10 @@
 /area/shuttle/escape/brig)
 "IM" = (
 /obj/structure/table/abductor,
-/obj/item/organ/heart/gland/access{
+/obj/item/organ/internal/heart/gland/access{
 	pixel_x = 10
 	},
-/obj/item/organ/heart/gland/egg,
+/obj/item/organ/internal/heart/gland/egg,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "JK" = (
@@ -234,8 +234,7 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "Qf" = (
-/obj/machinery/shower{
-	dir = 8;
+/obj/machinery/shower/directional/west{
 	name = "emergency shower"
 	},
 /turf/open/floor/plating/abductor,
@@ -290,9 +289,7 @@
 	name = "Transport Ship Zeta"
 	},
 /obj/docking_port/mobile/emergency{
-	height = 21;
-	name = "Zeta emergency shuttle";
-	width = 21
+	name = "Zeta emergency shuttle"
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)

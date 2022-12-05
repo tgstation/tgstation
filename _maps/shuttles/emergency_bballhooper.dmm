@@ -1,0 +1,1301 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/structure/holohoop{
+	dir = 8;
+	name = "Hopping Jezzertons"
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"bc" = (
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"bx" = (
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"bF" = (
+/obj/structure/chair{
+	dir = 1;
+	name = "Ringside Seat";
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"ca" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/chair/stool/directional/south{
+	can_buckle = 1;
+	name = "FOOLS-SIT-DOWNER";
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"cD" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"df" = (
+/obj/structure/chair{
+	dir = 8;
+	name = "Ringside Seat";
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"ea" = (
+/obj/machinery/light/cold/directional/south,
+/obj/structure/chair{
+	dir = 1;
+	name = "Ringside Seat";
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	},
+/obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"eg" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/blue/corner,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"eF" = (
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"ff" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"gl" = (
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"go" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"gY" = (
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/clothing/suit/hazardvest{
+	desc = "A high-visibility lifejacket complete with whistle and slot for oxygen tanks.";
+	name = "emergency lifejacket"
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/tank/internals/emergency_oxygen{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/item/clothing/head/utility/hardhat/orange{
+	name = "protective hat";
+	pixel_y = 9
+	},
+/obj/structure/closet/crate{
+	name = "lifejackets"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"iT" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"jw" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/obj/docking_port/mobile/emergency{
+	name = "B-BALLER emergency shuttle"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"kL" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/green/warning,
+/obj/effect/turf_decal/trimline/green/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"lA" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/end{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"lL" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/red/warning,
+/obj/effect/turf_decal/trimline/red/filled/arrow_ccw{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"mq" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"mV" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/table,
+/obj/item/bonesetter,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"oB" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"pg" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/blue/warning,
+/obj/effect/turf_decal/trimline/blue/filled/arrow_cw{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"pC" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/green/filled/warning,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"pZ" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"qL" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"qM" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"rb" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/reagent_dispensers/watertank{
+	name = "HATERADE";
+	desc = "Use this to water down those salty haters."
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"sa" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/item/paper/crumpled{
+	default_raw_text = "HOLY FUCKING SHIT THIS WAS A MISTAKE -KY";
+	name = "The Commisioner's Note";
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/structure/fireaxecabinet/directional/east,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"st" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/shrink_ccw,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"su" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"sQ" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "TIMEOUT BOX"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"td" = (
+/obj/structure/window/reinforced/spawner,
+/obj/item/restraints/handcuffs{
+	pixel_y = -7;
+	pixel_x = -5
+	},
+/obj/structure/chair/stool/directional/south{
+	can_buckle = 1;
+	name = "FOOLS-SIT-DOWNER";
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"tQ" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"uk" = (
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
+	},
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"uF" = (
+/obj/structure/rack,
+/obj/item/latexballon{
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"vt" = (
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"vu" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"vz" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "Ringside Seat";
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"xc" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/chair/stool/directional/south{
+	can_buckle = 1;
+	name = "FOOLS-SIT-DOWNER";
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"xA" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/table,
+/obj/item/tank/internals/anesthetic,
+/obj/item/clothing/mask/breath/medical{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"yG" = (
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"yJ" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"zh" = (
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher";
+	pixel_y = 5
+	},
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -26;
+	pixel_y = -8
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"zB" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/filled/arrow_ccw,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"zC" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"AW" = (
+/obj/structure/extinguisher_cabinet/directional/north{
+	name = "USE WHEN OVERHEATING"
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"Ba" = (
+/obj/structure/table,
+/obj/machinery/light/small/directional/west,
+/obj/item/storage/medkit/fire{
+	pixel_y = 3;
+	pixel_x = -4
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"By" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "MEDICAL INFIRMARY"
+	},
+/obj/machinery/shower/directional/west{
+	name = "emergency shower"
+	},
+/obj/machinery/vending/wallmed/directional/east{
+	name = "Hooper's First Medical Kit"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"BJ" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/door/airlock/command/glass{
+	name = "Announcer's Box"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"BL" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 2
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"BO" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"BT" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "TIMEOUT BOX"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"Ce" = (
+/obj/machinery/light/cold/directional/south,
+/obj/structure/chair{
+	dir = 1;
+	name = "Ringside Seat";
+	desc = "Do keep in mind, we will assess your account 2000 credits for sitting in this chair upon arrival."
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Cf" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Db" = (
+/obj/effect/turf_decal/tile/green/diagonal_edge,
+/obj/item/toy/beach_ball/holoball,
+/turf/open/floor/iron/diagonal,
+/area/shuttle/escape)
+"DO" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/clothing/shoes/swagshoes,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"DW" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/red/warning,
+/obj/effect/turf_decal/trimline/red/filled/shrink_ccw{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Ea" = (
+/turf/template_noop,
+/area/template_noop)
+"EF" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Fp" = (
+/obj/machinery/light/cold/directional/north,
+/obj/structure/rack{
+	name = "Referee's Gear"
+	},
+/obj/item/clothing/suit/hazardvest{
+	name = "Referee's Vest"
+	},
+/obj/item/clothing/mask/whistle{
+	name = "Referee's Whistle"
+	},
+/obj/item/coin/titanium{
+	pixel_y = 2
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Fs" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/shrink_cw,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"GQ" = (
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"HO" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/filled/arrow_cw,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Ia" = (
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"IJ" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/escape)
+"IW" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Ja" = (
+/obj/structure/closet/emcloset,
+/obj/item/crowbar,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Jv" = (
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"JR" = (
+/obj/structure/table,
+/obj/item/clothing/head/utility/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/machinery/light/cold/directional/north,
+/obj/item/clothing/head/utility/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/utility/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/item/clothing/head/utility/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/clothing/head/utility/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/utility/hardhat/red{
+	name = "A La Penners' Helmet";
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"JW" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 10
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Ku" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/trimline/blue/warning,
+/obj/effect/turf_decal/trimline/blue/filled/shrink_cw{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"KL" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"KW" = (
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape)
+"MD" = (
+/obj/machinery/light/cold/directional/east,
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"MH" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Emergency Shuttle Airlock"
+	},
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"MN" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/line{
+	dir = 10
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"NO" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
+"Oq" = (
+/obj/machinery/light/cold/directional/north,
+/obj/structure/rack{
+	name = "SPARE B-BALLS"
+	},
+/obj/item/toy/beach_ball/holoball{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/toy/beach_ball/holoball{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/toy/beach_ball/holoball{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"OK" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Pe" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Qy" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"QD" = (
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"QN" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"QW" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Rh" = (
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/shuttle/escape)
+"Sd" = (
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Sv" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"SV" = (
+/obj/effect/turf_decal/tile/neutral/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Tf" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"Tg" = (
+/obj/structure/table,
+/obj/item/clothing/head/utility/hardhat/dblue{
+	pixel_x = 8;
+	pixel_y = -5;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/utility/hardhat/dblue{
+	pixel_x = 8;
+	pixel_y = 1;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/utility/hardhat/dblue{
+	pixel_x = 8;
+	pixel_y = 9;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/utility/hardhat/dblue{
+	pixel_x = -7;
+	pixel_y = -5;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/utility/hardhat/dblue{
+	pixel_x = -7;
+	pixel_y = 1;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/obj/item/clothing/head/utility/hardhat/dblue{
+	pixel_x = -7;
+	pixel_y = 9;
+	name = "Hopping Jezzerton's Helmet"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Tu" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/structure/holohoop{
+	dir = 4;
+	name = "A La Penners"
+	},
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Ty" = (
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/red/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"TH" = (
+/obj/machinery/light/cold/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Ua" = (
+/obj/effect/turf_decal/stripes/white/line,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Uh" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"Ut" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 9
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"VX" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/end{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"Wg" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/trimline/red/filled/warning{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"YB" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+"YF" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/blue/filled/warning{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"YS" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/chair/stool/directional/south{
+	can_buckle = 1;
+	name = "FOOLS-SIT-DOWNER";
+	desc = "GET THAT BAD PLAYA SAT DOWN. MAKE SURE THEY ARE STILL ORIENTED IN THE DIRECTION OF THE GAME, HOWEVER."
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
+
+(1,1,1) = {"
+NO
+MH
+NO
+jw
+NO
+go
+go
+go
+NO
+MH
+NO
+MH
+NO
+NO
+Ea
+"}
+(2,1,1) = {"
+NO
+KW
+NO
+Qy
+Qy
+Qy
+Qy
+Qy
+TH
+Qy
+Qy
+KL
+NO
+QW
+Tf
+"}
+(3,1,1) = {"
+NO
+KW
+NO
+gY
+Qy
+Qy
+Qy
+Qy
+Qy
+Qy
+Qy
+Qy
+NO
+QW
+Tf
+"}
+(4,1,1) = {"
+NO
+su
+IJ
+NO
+IJ
+JR
+vz
+vz
+Qy
+vz
+vz
+Qy
+NO
+QW
+Tf
+"}
+(5,1,1) = {"
+go
+KW
+sQ
+zh
+td
+Qy
+Cf
+Sv
+Tu
+BL
+JW
+Ce
+NO
+QW
+Tf
+"}
+(6,1,1) = {"
+go
+KW
+ca
+YB
+YS
+Qy
+yJ
+zC
+oB
+Ty
+iT
+bF
+NO
+QW
+Tf
+"}
+(7,1,1) = {"
+go
+KW
+xc
+gl
+BT
+Qy
+Wg
+BO
+BO
+BO
+Pe
+bF
+NO
+QW
+Tf
+"}
+(8,1,1) = {"
+NO
+QN
+IJ
+NO
+IJ
+Oq
+Fs
+Jv
+Jv
+Jv
+DW
+Ce
+NO
+QW
+Tf
+"}
+(9,1,1) = {"
+NO
+vt
+BJ
+qL
+go
+Qy
+HO
+Jv
+Jv
+Jv
+lL
+bF
+NO
+QW
+Tf
+"}
+(10,1,1) = {"
+go
+QN
+uk
+qL
+go
+Qy
+HO
+bx
+VX
+GQ
+lL
+bF
+NO
+QW
+Tf
+"}
+(11,1,1) = {"
+go
+QN
+Rh
+qL
+go
+Qy
+pC
+OK
+Db
+OK
+kL
+ea
+NO
+QW
+Tf
+"}
+(12,1,1) = {"
+go
+QN
+yG
+qL
+go
+Qy
+zB
+eF
+lA
+SV
+pg
+bF
+NO
+QW
+Tf
+"}
+(13,1,1) = {"
+NO
+AW
+MD
+sa
+go
+Qy
+zB
+Jv
+Jv
+Jv
+pg
+bF
+NO
+QW
+Tf
+"}
+(14,1,1) = {"
+NO
+QN
+IJ
+NO
+IJ
+Fp
+st
+Jv
+Jv
+Jv
+Ku
+Ce
+NO
+QW
+Tf
+"}
+(15,1,1) = {"
+NO
+Uh
+Sd
+Ba
+Ia
+Qy
+Ut
+vu
+vu
+vu
+IW
+bF
+NO
+QW
+Tf
+"}
+(16,1,1) = {"
+go
+Uh
+QD
+Uh
+bc
+Qy
+pZ
+eg
+EF
+MN
+Ua
+bF
+NO
+QW
+Tf
+"}
+(17,1,1) = {"
+go
+Uh
+xA
+Uh
+Uh
+Qy
+mq
+ff
+ae
+YF
+cD
+Ce
+NO
+QW
+Tf
+"}
+(18,1,1) = {"
+go
+Uh
+qM
+Uh
+DO
+Qy
+df
+df
+Qy
+df
+df
+Qy
+NO
+QW
+Tf
+"}
+(19,1,1) = {"
+NO
+Uh
+rb
+Uh
+mV
+uF
+Qy
+Qy
+Qy
+Qy
+Qy
+Qy
+NO
+QW
+Tf
+"}
+(20,1,1) = {"
+NO
+Uh
+By
+tQ
+Ja
+Tg
+Qy
+Qy
+Qy
+Qy
+Qy
+gY
+NO
+QW
+Tf
+"}
+(21,1,1) = {"
+NO
+go
+NO
+go
+NO
+go
+go
+go
+go
+go
+go
+go
+NO
+NO
+Ea
+"}

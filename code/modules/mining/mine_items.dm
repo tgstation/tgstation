@@ -26,7 +26,7 @@
 	icon_door = "mixed"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
-	new /obj/item/storage/backpack/duffelbag(src)
+	new /obj/item/storage/backpack/duffelbag/explorer(src)
 	new /obj/item/storage/backpack/explorer(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
 	new /obj/item/clothing/under/rank/cargo/miner/lavaland(src)
@@ -76,7 +76,6 @@
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 	no_destination_swap = TRUE
-	var/static/list/dumb_rev_heads = list()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user, list/modifiers)
@@ -88,7 +87,6 @@
 	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
 		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
 		return
-
 	return ..()
 
 /obj/machinery/computer/shuttle/mining/common
@@ -97,6 +95,26 @@
 	circuit = /obj/item/circuitboard/computer/mining_shuttle/common
 	shuttleId = "mining_common"
 	possible_destinations = "commonmining_home;lavaland_common_away;landing_zone_dock;mining_public"
+
+/obj/docking_port/stationary/mining_home
+	name = "SS13: Mining Dock"
+	shuttle_id = "mining_home"
+	roundstart_template = /datum/map_template/shuttle/mining/delta
+	width = 7
+	dwidth = 3
+	height = 5
+
+/obj/docking_port/stationary/mining_home/kilo
+	roundstart_template = /datum/map_template/shuttle/mining/kilo
+	height = 10
+
+/obj/docking_port/stationary/mining_home/common
+	name = "SS13: Common Mining Dock"
+	shuttle_id = "commonmining_home"
+	roundstart_template = /datum/map_template/shuttle/mining_common/meta
+
+/obj/docking_port/stationary/mining_home/common/kilo
+	roundstart_template = /datum/map_template/shuttle/mining_common/kilo
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
 

@@ -105,21 +105,12 @@
 /datum/reagent/gunpowder/on_new(data)
 	. = ..()
 	if(holder?.my_atom)
-		RegisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT, .proc/on_ex_act)
+		RegisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT, PROC_REF(on_ex_act))
 
 /datum/reagent/gunpowder/Destroy()
 	if(holder?.my_atom)
 		UnregisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT)
 	return ..()
-
-/datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	. = TRUE
-	..()
-	if(!isplasmaman(M))
-		return
-	M.set_timed_status_effect(30 SECONDS * REM * delta_time, /datum/status_effect/drugginess)
-	if(M.hallucination < volume)
-		M.hallucination += 5 * REM * delta_time
 
 /datum/reagent/gunpowder/proc/on_ex_act(atom/source, severity, target)
 	SIGNAL_HANDLER
@@ -233,10 +224,8 @@
 	taste_description = "icey bitterness"
 	purity = REAGENT_STANDARD_PURITY
 	self_consuming = TRUE
-	impure_chem = /datum/reagent/consumable/ice
 	inverse_chem_val = 0.5
 	inverse_chem = /datum/reagent/inverse/cryostylane
-	failed_chem = null
 	burning_volume = 0.05
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS
 
@@ -351,10 +340,10 @@
 		shock_timer = 0 //immune to shocks
 		M.AdjustAllImmobility(-40  *REM * delta_time)
 		M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-		if(isluminescent(M))
+		if(is_species(M, /datum/species/jelly/luminescent))
 			var/mob/living/carbon/human/H = M
 			var/datum/species/jelly/luminescent/L = H.dna.species
-			L.extract_cooldown = max(L.extract_cooldown - (20 * REM * delta_time), 0)
+			L.extract_cooldown = max(L.extract_cooldown - (2 SECONDS * REM * delta_time), 0)
 	..()
 
 /datum/reagent/firefighting_foam

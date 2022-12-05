@@ -26,9 +26,15 @@
 /datum/status_effect/fire_handler/on_creation(mob/living/new_owner, new_stacks, forced = FALSE)
 	. = ..()
 
-	if(isanimal(owner))
+	if(isbasicmob(owner))
 		qdel(src)
 		return
+
+	if(isanimal(owner))
+		var/mob/living/simple_animal/animal_owner = owner
+		if(!animal_owner.flammable)
+			qdel(src)
+			return
 
 	owner = new_owner
 	set_stacks(new_stacks)
@@ -120,6 +126,7 @@
 
 /datum/status_effect/fire_handler/fire_stacks
 	id = "fire_stacks" //fire_stacks and wet_stacks should have different IDs or else has_status_effect won't work
+	remove_on_fullheal = TRUE
 
 	enemy_types = list(/datum/status_effect/fire_handler/wet_stacks)
 	stack_modifier = 1
@@ -138,10 +145,13 @@
 		qdel(src)
 		return TRUE
 
-	if(!on_fire || isanimal(owner))
+	if(!on_fire)
 		return TRUE
 
-	if(iscyborg(owner))
+	if(isanimal(owner))
+		var/mob/living/simple_animal/animal_owner = owner
+		adjust_stacks(animal_owner.fire_stack_removal_speed * delta_time)
+	else if(iscyborg(owner))
 		adjust_stacks(-0.55 * delta_time)
 	else
 		adjust_stacks(-0.05 * delta_time)
@@ -195,7 +205,7 @@
 		return
 
 	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * delta_time)
-	SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
 	victim.mind?.add_memory(MEMORY_FIRE, list(DETAIL_PROTAGONIST = victim), story_value = STORY_VALUE_OKAY)
 
 /**
@@ -220,6 +230,7 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	cache_stacks()
 	update_overlay()
+	return TRUE
 
 /**
  * Handles mob extinguishing, should be the only way to set on_fire to FALSE
@@ -230,10 +241,16 @@
 		qdel(firelight_ref)
 
 	on_fire = FALSE
-	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
+	owner.clear_mood_event("on_fire")
 	SEND_SIGNAL(owner, COMSIG_LIVING_EXTINGUISHED, owner)
 	cache_stacks()
 	update_overlay()
+	if(!iscarbon(owner))
+		return
+
+	for(var/obj/item/equipped in owner.get_equipped_items())
+		equipped.wash(CLEAN_TYPE_ACID)
+		equipped.extinguish()
 
 /datum/status_effect/fire_handler/fire_stacks/on_remove()
 	if(on_fire)

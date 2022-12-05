@@ -18,22 +18,23 @@
 		to_chat(occupants, "[icon2html(src, occupants)][span_warning("Air port connection has been severed!")]")
 		log_message("Lost connection to gas port.", LOG_MECHA)
 
-/obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0)
+// Do whatever you do to mobs to these fuckers too
+/obj/vehicle/sealed/mecha/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 
-	var/atom/backup = get_spacemove_backup(movement_dir)
-	if(backup && movement_dir)
-		if(isturf(backup)) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
+	var/atom/movable/backup = get_spacemove_backup(movement_dir, continuous_move)
+	if(backup)
+		if(!istype(backup) || !movement_dir || backup.anchored || continuous_move) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
 			return TRUE
-		if(istype(backup, /atom/movable))
-			var/atom/movable/movable_backup = backup
-			if((!movable_backup.anchored) && (movable_backup.newtonian_move(turn(movement_dir, 180))))
-				step_silent = TRUE
-				if(return_drivers())
-					to_chat(occupants, "[icon2html(src, occupants)][span_info("The [src] push off [movable_backup] to propel yourself.")]")
-			return TRUE
+		last_pushoff = world.time
+		if(backup.newtonian_move(turn(movement_dir, 180), instant = TRUE))
+			backup.last_pushoff = world.time
+			step_silent = TRUE
+			if(return_drivers())
+				to_chat(occupants, "[icon2html(src, occupants)][span_info("The [src] push off [backup] to propel yourself.")]")
+		return TRUE
 
 	if(active_thrusters?.thrust(movement_dir))
 		step_silent = TRUE
@@ -118,7 +119,7 @@
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally
-	. = step(src,direction, dir)
+	. = try_step_multiz(direction)
 	if(phasing)
 		use_power(phasing_energy_drain)
 	if(strafe)
@@ -147,3 +148,31 @@
 		var/mob/mob_obstacle = obstacle
 		if(mob_obstacle.move_resist <= move_force)
 			step(obstacle, dir)
+
+//Following procs are camera static update related and are basically ripped off of code\modules\mob\living\silicon\silicon_movement.dm
+
+//We only call a camera static update if we have successfully moved and have a camera installed
+/obj/vehicle/sealed/mecha/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	if(chassis_camera)
+		update_camera_location(old_loc)
+
+/obj/vehicle/sealed/mecha/proc/update_camera_location(oldLoc)
+	oldLoc = get_turf(oldLoc)
+	if(!updating && oldLoc != get_turf(src))
+		updating = TRUE
+		do_camera_update(oldLoc)
+
+///The static update delay on movement of the camera in a mech we use
+#define MECH_CAMERA_BUFFER 0.5 SECONDS
+
+/**
+ * The actual update - also passes our unique update buffer. This makes our static update faster than stationary cameras,
+ * helping us to avoid running out of the camera's FoV. An EMPd mecha with a lowered view_range on its camera can still
+ * sometimes run out into static before updating, however.
+*/
+/obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
+	if(oldLoc != get_turf(src))
+		GLOB.cameranet.updatePortableCamera(chassis_camera, MECH_CAMERA_BUFFER)
+	updating = FALSE
+#undef MECH_CAMERA_BUFFER

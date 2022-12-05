@@ -18,7 +18,7 @@
 	return ..()
 
 /datum/component/surgery_initiator/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(initiate_surgery_moment))
 
 /datum/component/surgery_initiator/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
@@ -38,7 +38,7 @@
 	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
-	INVOKE_ASYNC(src, .proc/do_initiate_surgery_moment, target, user)
+	INVOKE_ASYNC(src, PROC_REF(do_initiate_surgery_moment), target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/surgery_initiator/proc/do_initiate_surgery_moment(mob/living/target, mob/user)
@@ -69,8 +69,8 @@
 	last_user_ref = WEAKREF(user)
 	surgery_target_ref = WEAKREF(target)
 
-	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, .proc/on_set_selected_zone)
-	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, .proc/on_mob_surgery_started)
+	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, PROC_REF(on_set_selected_zone))
+	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_mob_surgery_started))
 
 	ui_interact(user)
 
@@ -87,15 +87,15 @@
 		if(!surgery.possible_locs.Find(user.zone_selected))
 			continue
 		if(affecting)
-			if(!surgery.requires_bodypart)
+			if(!(surgery.surgery_flags & SURGERY_REQUIRE_LIMB))
 				continue
 			if(surgery.requires_bodypart_type && !(affecting.bodytype & surgery.requires_bodypart_type))
 				continue
-			if(surgery.requires_real_bodypart && affecting.is_pseudopart)
+			if((surgery.surgery_flags & SURGERY_REQUIRES_REAL_LIMB) && affecting.is_pseudopart)
 				continue
-		else if(carbon_target && surgery.requires_bodypart) //mob with no limb in surgery zone when we need a limb
+		else if(carbon_target && (surgery.surgery_flags & SURGERY_REQUIRE_LIMB)) //mob with no limb in surgery zone when we need a limb
 			continue
-		if(surgery.lying_required && target.body_position != LYING_DOWN)
+		if((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && target.body_position != LYING_DOWN)
 			continue
 		if(!surgery.can_start(user, target))
 			continue
@@ -121,9 +121,6 @@
 		patient.balloon_alert(user, "stopped work on [parse_zone(selected_zone)]")
 
 		qdel(the_surgery)
-		return
-
-	if(!the_surgery.can_cancel)
 		return
 
 	var/required_tool_type = TOOL_CAUTERY
@@ -292,19 +289,18 @@
 		var/mob/living/carbon/carbon_target = target
 		affecting_limb = carbon_target.get_bodypart(check_zone(selected_zone))
 
-	if (surgery.requires_bodypart == isnull(affecting_limb))
-		if (surgery.requires_bodypart)
+	if ((surgery.surgery_flags & SURGERY_REQUIRE_LIMB) == isnull(affecting_limb))
+		if (surgery.surgery_flags & SURGERY_REQUIRE_LIMB)
 			target.balloon_alert(user, "patient has no [parse_zone(selected_zone)]!")
 		else
 			target.balloon_alert(user, "patient has \a [parse_zone(selected_zone)]!")
-
 		return
 
 	if (!isnull(affecting_limb) && surgery.requires_bodypart_type && !(affecting_limb.bodytype & surgery.requires_bodypart_type))
 		target.balloon_alert(user, "not the right type of limb!")
 		return
 
-	if (surgery.lying_required && target.body_position != LYING_DOWN)
+	if ((surgery.surgery_flags & SURGERY_REQUIRE_RESTING) && target.body_position != LYING_DOWN)
 		target.balloon_alert(user, "patient is not lying down!")
 		return
 
@@ -334,5 +330,7 @@
 	var/mob/living/user = last_user_ref?.resolve()
 	if (isnull(user))
 		return FALSE
+	if(surgery.surgery_flags & SURGERY_IGNORE_CLOTHES)
+		return FALSE
 
-	return !surgery.ignore_clothes && !get_location_accessible(target, user.zone_selected)
+	return !get_location_accessible(target, user.zone_selected)

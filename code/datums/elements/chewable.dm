@@ -1,8 +1,8 @@
 /// Anything with this element will provide the reagents inside the
 /// item to the user when it is equipped.
 /datum/element/chewable
-	element_flags = ELEMENT_DETACH | ELEMENT_BESPOKE
-	id_arg_index = 2
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM
@@ -26,10 +26,11 @@
 
 	src.slots_to_check = slots_to_check || target_item.slot_flags
 
-	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_dropped)
-	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+	RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
+	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 
 /datum/element/chewable/Detach(datum/source, force)
+	. = ..()
 	processing -= source
 	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED))
 

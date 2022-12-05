@@ -9,6 +9,7 @@
 	opacity = TRUE
 	density = TRUE
 	blocks_air = TRUE
+	init_air = FALSE
 	always_lit = TRUE
 	bullet_bounce_sound = null
 	turf_flags = NOJAUNT
@@ -43,15 +44,15 @@
 /turf/cordon/Adjacent(atom/neighbor, atom/target, atom/movable/mover)
 	return FALSE
 
-/area/cordon
+/area/misc/cordon
 	name = "CORDON"
 	icon_state = "cordon"
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	area_flags = UNIQUE_AREA|NOTELEPORT|HIDDEN_AREA|NO_ALERTS
+	area_flags = UNIQUE_AREA|NOTELEPORT|HIDDEN_AREA
 	requires_power = FALSE
 
-/area/cordon/Entered(atom/movable/arrived, area/old_area)
+/area/misc/cordon/Entered(atom/movable/arrived, area/old_area)
 	. = ..()
 	for(var/mob/living/enterer as anything in arrived.get_all_contents_type(/mob/living))
 		to_chat(enterer, span_userdanger("This was a bad idea..."))

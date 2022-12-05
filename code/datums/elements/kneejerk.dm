@@ -1,6 +1,5 @@
 /// An element which enables certain items to tap people on their knees to measure brain health
 /datum/element/kneejerk
-	element_flags = ELEMENT_DETACH
 
 /datum/element/kneejerk/Attach(datum/target)
 	. = ..()
@@ -8,7 +7,7 @@
 	if (!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_item_attack)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_item_attack))
 
 /datum/element/kneejerk/Detach(datum/source, ...)
 	. = ..()
@@ -27,16 +26,16 @@
 
 /datum/element/kneejerk/proc/tap_knee(obj/item/item, mob/living/target, mob/living/user)
 	var/selected_zone = user.zone_selected
-	var/obj/item/bodypart/r_leg = target.get_bodypart(BODY_ZONE_R_LEG)
-	var/obj/item/bodypart/l_leg = target.get_bodypart(BODY_ZONE_L_LEG)
-	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
+	var/obj/item/bodypart/leg/right = target.get_bodypart(BODY_ZONE_R_LEG)
+	var/obj/item/bodypart/leg/left = target.get_bodypart(BODY_ZONE_L_LEG)
+	var/obj/item/organ/internal/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 
 	if(!ishuman(target))
 		return
 
-	if((selected_zone == BODY_ZONE_R_LEG) && !r_leg)
+	if((selected_zone == BODY_ZONE_R_LEG) && !right)
 		return
-	if((selected_zone == BODY_ZONE_L_LEG) && !l_leg)
+	if((selected_zone == BODY_ZONE_L_LEG) && !left)
 		return
 
 	user.do_attack_animation(target)

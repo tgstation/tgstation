@@ -3,7 +3,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger"
 	base_icon_state = "recharger"
-	desc = "A charging dock for energy based weaponry."
+	desc = "A charging dock for energy based weaponry, PDAs, and other devices."
 	circuit = /obj/item/circuitboard/machine/recharger
 	pass_flags = PASSTABLE
 	var/obj/item/charging = null
@@ -189,13 +189,13 @@
 
 	if(!charging)
 		. += mutable_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
-		. += emissive_appearance(icon, "[base_icon_state]-empty", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-empty", src, alpha = src.alpha)
 		return
 
 	if(using_power)
 		. += mutable_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
-		. += emissive_appearance(icon, "[base_icon_state]-charging", alpha = src.alpha)
+		. += emissive_appearance(icon, "[base_icon_state]-charging", src, alpha = src.alpha)
 		return
 
 	. += mutable_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)
-	. += emissive_appearance(icon, "[base_icon_state]-full", alpha = src.alpha)
+	. += emissive_appearance(icon, "[base_icon_state]-full", src, alpha = src.alpha)

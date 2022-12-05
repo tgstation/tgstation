@@ -55,7 +55,7 @@
 		try_keep_home(new_spawn)
 	else
 		new_spawn.mind.enslave_mind_to_creator(owner)
-		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
+		new_spawn.log_message("possessed a golem shell enslaved to [key_name(owner)].", LOG_GAME)
 		log_admin("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
@@ -69,7 +69,7 @@
 		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/free_golem))
 
 /obj/effect/mob_spawn/ghost_role/human/golem/proc/try_keep_home(mob/new_spawn)
-	var/static/list/allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin)) + typecacheof(/area/survivalpod)
+	var/static/list/allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin)) + typecacheof(/area/misc/survivalpod)
 
 	ADD_TRAIT(new_spawn, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION, INNATE_TRAIT)
 	new_spawn.AddComponent(/datum/component/hazard_area, area_whitelist = allowed_areas)
@@ -85,7 +85,7 @@
 			return
 		if(QDELETED(src) || uses <= 0)
 			return
-		log_game("[key_name(H)] golem-swapped into [src]")
+		H.log_message("golem-swapped into [src].", LOG_GAME)
 		H.visible_message(span_notice("A faint light leaves [H], moving to [src] and animating it!"),span_notice("You leave your old body behind, and transfer into [src]!"))
 		show_flavor = FALSE
 		var/mob/living/carbon/human/newgolem = create(newname = H.real_name)

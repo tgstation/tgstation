@@ -5,14 +5,18 @@
 	desc = "It's a cape that can be worn around your neck."
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
-	inhand_icon_state = "qmcloak"
+	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESUITSTORAGE
 
-/obj/item/clothing/neck/cloak/suicide_act(mob/user)
+/obj/item/clothing/neck/cloak/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/surgery_initiator)
+
+/obj/item/clothing/neck/cloak/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	return(OXYLOSS)
+	return OXYLOSS
 
 /obj/item/clothing/neck/cloak/hos
 	name = "head of security's cloak"
@@ -58,7 +62,7 @@
 	. += span_notice("You notice a powerful aura about this cloak, suggesting that only the truly experienced may wield it.")
 
 /obj/item/clothing/neck/cloak/skill_reward/proc/check_wearable(mob/user)
-	return user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY
+	return user.mind?.get_skill_level(associated_skill_path) >= SKILL_LEVEL_LEGENDARY
 
 /obj/item/clothing/neck/cloak/skill_reward/proc/unworthy_unequip(mob/user)
 	to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [src]."))
@@ -68,12 +72,12 @@
 	return FALSE
 
 /obj/item/clothing/neck/cloak/skill_reward/equipped(mob/user, slot)
-	if (check_wearable(user))
+	if (!check_wearable(user))
 		unworthy_unequip(user)
 	return ..()
 
 /obj/item/clothing/neck/cloak/skill_reward/attack_hand(mob/user, list/modifiers)
-	if (check_wearable(user))
+	if (!check_wearable(user))
 		unworthy_unequip(user)
 	return ..()
 

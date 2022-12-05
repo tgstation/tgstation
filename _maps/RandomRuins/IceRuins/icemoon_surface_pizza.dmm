@@ -39,11 +39,11 @@
 /obj/structure/sign/poster/official/moth_meth{
 	pixel_y = 32
 	},
-/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "bV" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -85,7 +85,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "cH" = (
-/obj/structure/chair/sofa/corner{
+/obj/structure/chair/sofa/corner/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -174,16 +174,16 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/reagent_containers/food/drinks/colocup,
+/obj/item/reagent_containers/cup/glass/colocup,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
 /area/ruin/pizzeria)
 "fa" = (
 /obj/machinery/door/airlock{
-	name = "Kitchen";
-	req_access_txt = "28"
+	name = "Kitchen"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/pizzeria/kitchen)
 "fo" = (
@@ -480,7 +480,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "qo" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 8
 	},
 /obj/item/trash/can,
@@ -549,9 +549,9 @@
 /area/ruin/pizzeria/kitchen)
 "rY" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
-/obj/item/reagent_containers/food/condiment/flour,
-/obj/item/reagent_containers/food/condiment/milk,
-/obj/item/reagent_containers/food/condiment/milk{
+/obj/item/reagent_containers/condiment/flour,
+/obj/item/reagent_containers/condiment/milk,
+/obj/item/reagent_containers/condiment/milk{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -633,7 +633,7 @@
 /turf/open/floor/plating,
 /area/ruin/pizzeria)
 "wd" = (
-/obj/structure/chair/sofa/left{
+/obj/structure/chair/sofa/left/brown{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -698,7 +698,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_x = 5
 	},
 /turf/open/floor/iron/dark/side{
@@ -754,10 +754,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
 "Aa" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
 /obj/structure/mirror/directional/west,
@@ -797,9 +794,9 @@
 "AA" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock{
-	name = "Kitchen";
-	req_access_txt = "28"
+	name = "Kitchen"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
 /turf/open/floor/iron/white/smooth_large,
 /area/ruin/pizzeria/kitchen)
@@ -939,7 +936,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/pizzeria/kitchen)
 "Fe" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/toilet{
 	dir = 8
 	},
@@ -990,9 +987,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/light/warm/directional/north,
-/obj/structure/sign/departments/restroom{
-	pixel_y = 32
-	},
+/obj/structure/sign/departments/restroom/directional/north,
 /turf/open/floor/iron/dark/side{
 	dir = 5
 	},
@@ -1013,9 +1008,7 @@
 /obj/structure/closet/crate/trashcart,
 /obj/item/toy/crayon/spraycan,
 /obj/item/camera,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/effect/spawner/random/trash/botanical_waste,
 /obj/item/seeds/tomato,
 /obj/item/seeds/wheat,
@@ -1101,7 +1094,7 @@
 /area/ruin/pizzeria)
 "JM" = (
 /obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/cup/bucket,
 /obj/item/storage/bag/trash,
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -1140,11 +1133,11 @@
 /area/ruin/pizzeria)
 "Lg" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -1295,11 +1288,11 @@
 /area/ruin/pizzeria/kitchen)
 "PA" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -1336,13 +1329,13 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_y = 11
 	},
 /turf/open/floor/iron/checker,
 /area/ruin/pizzeria)
 "Qg" = (
-/obj/structure/chair/sofa/left,
+/obj/structure/chair/sofa/left/brown,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -1407,7 +1400,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Sw" = (
-/obj/structure/chair/sofa,
+/obj/structure/chair/sofa/middle/brown,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -1529,11 +1522,11 @@
 /area/icemoon/surface/outdoors/nospawn)
 "Vs" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/condiment/saltshaker{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/condiment/peppermill{
+/obj/item/reagent_containers/condiment/peppermill{
 	pixel_x = -5;
 	pixel_y = 2
 	},
@@ -1555,7 +1548,7 @@
 	},
 /area/ruin/pizzeria)
 "VK" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
@@ -1626,7 +1619,7 @@
 	},
 /area/ruin/pizzeria)
 "Xc" = (
-/obj/structure/chair/sofa/right{
+/obj/structure/chair/sofa/right/brown{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -1655,7 +1648,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/item/reagent_containers/food/drinks/colocup{
+/obj/item/reagent_containers/cup/glass/colocup{
 	pixel_x = 5
 	},
 /turf/open/floor/iron/checker,
@@ -1663,9 +1656,9 @@
 "Ym" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
-	name = "Maintenance Access";
-	req_access_txt = "28"
+	name = "Maintenance Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden,
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)

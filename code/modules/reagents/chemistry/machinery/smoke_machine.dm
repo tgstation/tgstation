@@ -3,7 +3,7 @@
 /obj/machinery/smoke_machine
 	name = "smoke machine"
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "smoke0"
 	base_icon_state = "smoke"
 	density = TRUE
@@ -18,7 +18,8 @@
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
 
-/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location = null, datum/reagents/carry = null, efficiency = 10, silent=FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location = null, datum/reagents/carry = null, efficiency = 10, silent=FALSE)
+	src.holder = holder
 	src.location = get_turf(location)
 	src.amount = amount
 	carry?.copy_to(chemholder, 20)
@@ -87,7 +88,7 @@
 	if(on && !smoke_test)
 		update_appearance()
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
-		smoke.set_up(setting * 3, location = location, carry = reagents, efficiency = efficiency)
+		smoke.set_up(setting * 3, holder = src, location = location, carry = reagents, efficiency = efficiency)
 		smoke.start()
 		use_power(active_power_usage)
 
@@ -100,7 +101,7 @@
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
+	if(is_reagent_container(I) && I.is_open_container())
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
@@ -160,7 +161,7 @@
 			update_appearance()
 			if(on)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
-				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
+				usr.log_message("activated a smoke machine that contains [english_list(reagents.reagent_list)]", LOG_GAME)
 				log_combat(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
 		if("goScreen")
 			screen = params["screen"]

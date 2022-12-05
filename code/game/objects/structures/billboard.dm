@@ -3,11 +3,17 @@
 	desc = "A blank billboard, with space for all kinds of advertising."
 	icon = 'icons/obj/billboard.dmi'
 	icon_state = "billboard_blank"
+	plane = ABOVE_GAME_PLANE
 	max_integrity = 1000
 	bound_width = 96
-	bound_height = 64
+	bound_height = 32
 	density = TRUE
 	anchored = TRUE
+
+/obj/structure/billboard/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_BILLBOARD)
 
 /obj/structure/billboard/donk_n_go
 	name = "\improper Donk-n-Go billboard"
@@ -33,6 +39,21 @@
 	name = "\improper Azik Interstellar billboard"
 	desc = "A billboard advertising Azik Interstellar and their newest model: the Autocrat Solar Sailer. Azik Interstellar: Tiziran Refinement for Galactic Necessities."
 	icon_state = "billboard_azik"
+
+/obj/structure/billboard/cvr
+	name = "\improper Charlemagne von Rheinland billboard"
+	desc = "A billboard advertising Charlemagne von Rheinland's Germania-class superyacht. Charlemagne von Rheinland: Die Werft der Könige."
+	icon_state = "billboard_cvr"
+
+/obj/structure/billboard/twenty_four_seven
+	name = "\improper 24-Seven billboard"
+	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Everyday."
+	icon_state = "billboard_twenty_four_seven"
+
+/obj/structure/billboard/starway
+	name = "\improper Starway Transit billboard"
+	desc = "A billboard advertising Starway Transit's direct flight from New Moscow to New York: only 2000 credits for an economy class berth. Starway: Your Ticket to the Stars."
+	icon_state = "billboard_starway"
 
 /obj/structure/billboard/lizards_gas
 	name = "\improper The Lizard's Gas billboard"

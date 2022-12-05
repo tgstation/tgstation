@@ -158,11 +158,11 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
-/obj/item/clothing/head/hardhat/orange{
+/obj/item/clothing/head/utility/hardhat/orange{
 	name = "protective hat";
 	pixel_y = 9
 	},
@@ -246,7 +246,7 @@
 /area/shuttle/mining/large)
 "D" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "E" = (
@@ -255,7 +255,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/mining/large)
 "F" = (
-/obj/structure/shuttle/engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/mining/large)
 "G" = (
@@ -297,9 +297,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "K" = (
-/obj/structure/sign/warning/vacuum/external{
-	pixel_x = 32
-	},
+/obj/structure/sign/warning/vacuum/external/directional/east,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -321,12 +319,9 @@
 	dir = 1
 	},
 /obj/docking_port/mobile{
-	dwidth = 3;
-	height = 10;
-	id = "mining";
+	shuttle_id = "mining";
 	name = "mining shuttle";
-	port_direction = 2;
-	width = 7
+	port_direction = 2
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,

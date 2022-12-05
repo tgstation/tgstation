@@ -103,12 +103,19 @@
 	subcategory = CAT_PIZZA
 
 /datum/crafting_recipe/food/antspizza
-	name = "Ant Party pizza"
+	name = "Ant Party pizza slice"
 	reqs = list(
-		/obj/item/food/pizzabread = 1,
-		/obj/item/food/cheese/wedge = 2,
-		/obj/item/food/grown/tomato = 1,
-		/datum/reagent/ants = 20
+		/obj/item/food/pizzaslice/margherita = 1,
+		/datum/reagent/ants = 4
 	)
-	result = /obj/item/food/pizza/ants
+	result = /obj/item/food/pizzaslice/ants
+	subcategory = CAT_PIZZA
+
+/datum/crafting_recipe/food/energypizza
+	name = "Energy pizza"
+	reqs = list(
+		/obj/item/food/flatdough = 1,
+		/obj/item/stock_parts/cell = 2,
+	)
+	result = /obj/item/food/pizza/energy/raw
 	subcategory = CAT_PIZZA

@@ -3,7 +3,7 @@
 	name = "Maid in the Mirror"
 	real_name = "Maid in the Mirror"
 	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "stand"
 	icon_living = "stand" // Placeholder sprite
 	speak_emote = list("whispers")
@@ -14,15 +14,15 @@
 	health = 80
 	melee_damage_lower = 12
 	melee_damage_upper = 16
-	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
-	deathmessage = "shatters and vanishes, releasing a gust of cold air."
+	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS | SEE_BLACKNESS
+	death_message = "shatters and vanishes, releasing a gust of cold air."
 	loot = list(
 		/obj/item/shard,
 		/obj/effect/decal/cleanable/ash,
 		/obj/item/clothing/suit/armor,
-		/obj/item/organ/lungs,
+		/obj/item/organ/internal/lungs,
 	)
-	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/mirror_walk)
+	actions_to_add = list(/datum/action/cooldown/spell/jaunt/mirror_walk)
 
 	/// Whether we take damage when we're examined
 	var/weak_on_examine = TRUE
@@ -42,6 +42,9 @@
 	if(!weak_on_examine)
 		return
 
+	if(!isliving(user) || user.stat == DEAD)
+		return
+
 	if(IS_HERETIC_OR_MONSTER(user) || user == src)
 		return
 
@@ -59,7 +62,7 @@
 		recent_examiner_refs += user_ref
 		apply_damage(maxHealth * 0.1) // We take 10% of our health as damage upon being examined
 		playsound(src, 'sound/effects/ghost2.ogg', 40, TRUE)
-		addtimer(CALLBACK(src, .proc/clear_recent_examiner, user_ref), recent_examine_damage_cooldown)
+		addtimer(CALLBACK(src, PROC_REF(clear_recent_examiner), user_ref), recent_examine_damage_cooldown)
 
 	// If we're examined on low enough health we die straight up
 	else

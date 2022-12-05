@@ -98,7 +98,7 @@
 	visible_message(span_notice("The [name] begins warming up!"))
 	say("Initializing harvest protocol.")
 	update_appearance()
-	addtimer(CALLBACK(src, .proc/harvest), interval)
+	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
 /obj/machinery/harvester/proc/harvest()
 	warming_up = FALSE
@@ -115,7 +115,7 @@
 		var/turf/T = get_step(src,adir)
 		if(!T)
 			continue
-		if(istype(T, /turf/closed))
+		if(isclosedturf(T))
 			continue
 		target = T
 		break
@@ -133,7 +133,7 @@
 		operation_order.Remove(BP)
 		break
 	use_power(active_power_usage)
-	addtimer(CALLBACK(src, .proc/harvest), interval)
+	addtimer(CALLBACK(src, PROC_REF(harvest)), interval)
 
 /obj/machinery/harvester/proc/end_harvesting()
 	warming_up = FALSE

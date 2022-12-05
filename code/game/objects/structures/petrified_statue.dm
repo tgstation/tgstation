@@ -43,8 +43,8 @@
 
 /obj/structure/statue/petrified/Destroy()
 
-	if(istype(src.loc, /mob/living/simple_animal/hostile/statue))
-		var/mob/living/simple_animal/hostile/statue/S = src.loc
+	if(istype(src.loc, /mob/living/simple_animal/hostile/netherworld/statue))
+		var/mob/living/simple_animal/hostile/netherworld/statue/S = src.loc
 		forceMove(S.loc)
 		if(S.mind)
 			if(petrified_mob)
@@ -69,8 +69,9 @@
 /obj/structure/statue/petrified/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		if(petrified_mob)
+			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
 			petrified_mob.dust()
-	visible_message(span_danger("[src] shatters!."))
+	visible_message(span_danger("[src] shatters!"))
 	qdel(src)
 
 

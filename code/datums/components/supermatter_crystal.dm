@@ -7,17 +7,16 @@
 
 /datum/component/supermatter_crystal/Initialize(datum/callback/tool_act_callback, datum/callback/consume_callback)
 
-	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/blob_hit)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, .proc/paw_hit)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/animal_hit)
-	RegisterSignal(parent, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_hit)
-	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, .proc/unarmed_hit)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/hand_hit)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_hit)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/tool_hit)
-	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/bumped_hit)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/bump_hit)
-	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_Z_FALL, .proc/intercept_z_fall)
+	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, PROC_REF(blob_hit))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, PROC_REF(paw_hit))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, PROC_REF(animal_hit))
+	RegisterSignal(parent, COMSIG_ATOM_HULK_ATTACK, PROC_REF(hulk_hit))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_hit))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_hit))
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby_hit))
+	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), PROC_REF(tool_hit))
+	RegisterSignal(parent, COMSIG_ATOM_BUMPED, PROC_REF(bumped_hit))
+	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_Z_FALL, PROC_REF(intercept_z_fall))
 
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
@@ -33,7 +32,6 @@
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
 		COMSIG_ATOM_BUMPED,
-		COMSIG_MOVABLE_BUMP,
 		COMSIG_ATOM_INTERCEPT_Z_FALL,
 	)
 
@@ -110,7 +108,7 @@
 			)
 			return
 
-		var/obj/item/organ/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
+		var/obj/item/organ/internal/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
 		if(licking_tongue)
 			dust_mob(source, user,
 				span_danger("As [user] hesitantly leans in and licks [atom_source] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!"),
@@ -190,12 +188,17 @@
 	SIGNAL_HANDLER
 	if(tool_act_callback)
 		tool_act_callback.Invoke(user, tool)
-		return
+		return COMPONENT_BLOCK_TOOL_ATTACK
 	attackby_hit(source, tool, user)
 
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
 	SIGNAL_HANDLER
 	var/atom/atom_source = source
+	var/obj/machinery/power/supermatter_crystal/our_supermatter = parent // Why is this a component?
+	if(!istype(our_supermatter))
+		our_supermatter = null // so we don't runtime on the next line....
+	if(our_supermatter?.has_been_powered)
+		our_supermatter.log_activation(source = atom_source)
 	if(isliving(hit_object))
 		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [atom_source] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 			span_userdanger("You slam into \the [atom_source] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
@@ -208,50 +211,6 @@
 
 	playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 	consume(atom_source, hit_object)
-
-/datum/component/supermatter_crystal/proc/bump_hit(datum/source, atom/bumped_atom)
-	SIGNAL_HANDLER
-	var/atom/atom_source = source
-	if(isturf(bumped_atom))
-		var/turf/bumped_turf = bumped_atom
-		var/bumped_name = "\the [bumped_atom]"
-		var/bumped_text = span_danger("\The [atom_source] smacks into [bumped_name] and [bumped_atom.p_they()] rapidly flashes to ash!")
-		if(!bumped_turf.Melt())
-			return
-
-		atom_source.visible_message(
-			bumped_text,
-			null,
-			span_hear("You hear a loud crack as you are washed with a wave of heat.")
-		)
-		playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
-
-		var/suspicion = null
-		if (atom_source.fingerprintslast)
-			suspicion = "- and was last touched by [atom_source.fingerprintslast]"
-			message_admins("\The [atom_source] has consumed [bumped_name][suspicion].")
-		atom_source.investigate_log("has consumed [bumped_name][suspicion].")
-
-		radiation_pulse(atom_source, max_range = 6, threshold = 0.2, chance = 50)
-		return
-
-	if(isliving(bumped_atom))
-		atom_source.visible_message(
-			span_danger("\The [atom_source] slams into \the [bumped_atom] inducing a resonance... [bumped_atom.p_their()] body starts to glow and burst into flames before flashing into dust!"),
-			span_userdanger("\The [atom_source] slams into you as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
-			span_hear("You hear an unearthly noise as a wave of heat washes over you.")
-		)
-	else if(isobj(bumped_atom) && !iseffect(bumped_atom))
-		atom_source.visible_message(
-			span_danger("\The [atom_source] smacks into \the [bumped_atom] and [bumped_atom.p_they()] rapidly flashes to ash."),
-			null,
-			span_hear("You hear a loud crack as you are washed with a wave of heat.")
-		)
-	else
-		return
-
-	playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
-	consume(atom_source, bumped_atom)
 
 /datum/component/supermatter_crystal/proc/intercept_z_fall(datum/source, list/falling_movables, levels)
 	SIGNAL_HANDLER
@@ -286,6 +245,7 @@
 			return
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
+		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
@@ -320,6 +280,9 @@
 		else
 			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 	consume_returns(matter_increase, damage_increase)
+	var/obj/machinery/power/supermatter_crystal/our_crystal = parent
+	if(!our_crystal.has_been_powered)
+		our_crystal.log_activation(source = consumed_object)
 
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)
 	if(consume_callback)

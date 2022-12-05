@@ -38,7 +38,7 @@
 	turret = new(loc)
 	turret.base = src
 
-/obj/vehicle/ridden/atv/turret/Moved()
+/obj/vehicle/ridden/atv/turret/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(!turret)
 		return
@@ -51,33 +51,49 @@
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = ABOVE_MOB_LAYER
-			turret.plane = GAME_PLANE_UPPER
+			SET_PLANE(turret, GAME_PLANE_UPPER, our_turf)
 		if(EAST)
 			turret.pixel_x = base_pixel_x - 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
+			SET_PLANE(turret, GAME_PLANE, our_turf)
 		if(SOUTH)
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
+			SET_PLANE(turret, GAME_PLANE, our_turf)
 		if(WEST)
 			turret.pixel_x = base_pixel_x + 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
-			turret.plane = GAME_PLANE
+			SET_PLANE(turret, GAME_PLANE, our_turf)
 
-/obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/I)
+/obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/W)
+	if(user.combat_mode)
+		return
+	. = TRUE
+	if(DOING_INTERACTION(user, src))
+		balloon_alert(user, "you're already repairing it!")
+		return
 	if(atom_integrity >= max_integrity)
-		return TRUE
-	if(!I.use_tool(src, user, 0, volume=50, amount=1))
-		return TRUE
-	user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to \the [src]."))
-	atom_integrity += min(10, max_integrity-atom_integrity)
-	if(atom_integrity == max_integrity)
-		to_chat(user, span_notice("It looks to be fully repaired now."))
-	return TRUE
+		balloon_alert(user, "it's not damaged!")
+		return
+	if(!W.tool_start_check(user, amount=1))
+		return
+	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
+	audible_message(span_hear("You hear welding."))
+	var/did_the_thing
+	while(atom_integrity < max_integrity)
+		if(W.use_tool(src, user, 2.5 SECONDS, volume=50, amount=1))
+			did_the_thing = TRUE
+			atom_integrity += min(10, (max_integrity - atom_integrity))
+			audible_message(span_hear("You hear welding."))
+		else
+			break
+	if(did_the_thing)
+		user.balloon_alert_to_viewers("[(atom_integrity >= max_integrity) ? "fully" : "partially"] repaired [src]")
+	else
+		user.balloon_alert_to_viewers("stopped welding [src]", "interrupted the repair!")
 
 /obj/vehicle/ridden/atv/atom_break()
 	START_PROCESSING(SSobj, src)
@@ -89,7 +105,7 @@
 	if(DT_PROB(10, delta_time))
 		return
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, location = src)
+	smoke.set_up(0, holder = src, location = src)
 	smoke.start()
 
 /obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)

@@ -5,7 +5,8 @@
 /datum/action/changeling
 	name = "Prototype Sting - Debug button, ahelp this"
 	background_icon_state = "bg_changeling"
-	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	overlay_icon_state = "bg_changeling_border"
+	button_icon = 'icons/mob/actions/actions_changeling.dmi'
 	var/needs_button = TRUE//for passive abilities like hivemind that dont need a button
 	var/helptext = "" // Details
 	var/chemical_cost = 0 // negative chemical cost is for passive abilities (chemical glands)
@@ -46,7 +47,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
  *The deduction of the cost of this power.
  *Returns TRUE on a successful activation.
  */
-/datum/action/changeling/proc/try_to_sting(mob/user, mob/target)
+/datum/action/changeling/proc/try_to_sting(mob/living/user, mob/living/target)
 	if(!can_sting(user, target))
 		return FALSE
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -57,15 +58,15 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 		return TRUE
 	return FALSE
 
-/datum/action/changeling/proc/sting_action(mob/user, mob/target)
+/datum/action/changeling/proc/sting_action(mob/living/user, mob/living/target)
 	SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]"))
 	return FALSE
 
-/datum/action/changeling/proc/sting_feedback(mob/user, mob/target)
+/datum/action/changeling/proc/sting_feedback(mob/living/user, mob/living/target)
 	return FALSE
 
 // Fairly important to remember to return 1 on success >.< // Return TRUE not 1 >.<
-/datum/action/changeling/proc/can_sting(mob/living/user, mob/target)
+/datum/action/changeling/proc/can_sting(mob/living/user, mob/living/target)
 	if(!can_be_used_by(user))
 		return FALSE
 	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -86,7 +87,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 		return FALSE
 	return TRUE
 
-/datum/action/changeling/proc/can_be_used_by(mob/user)
+/datum/action/changeling/proc/can_be_used_by(mob/living/user)
 	if(QDELETED(user))
 		return FALSE
 	if(!ishuman(user))

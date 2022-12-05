@@ -12,7 +12,7 @@
 /obj/item/gun/blastcannon
 	name = "blast cannon"
 	desc = "A surprisingly portable device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
-	icon = 'icons/obj/guns/wide_guns.dmi'
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
 	icon_state = "blastcannon_empty"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
@@ -51,7 +51,7 @@
 	. = ..()
 	if(!pin)
 		pin = new
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/channel_blastwave)
+	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, PROC_REF(channel_blastwave))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/blastcannon/Destroy()
@@ -136,7 +136,7 @@
 	var/turf/current_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
 	message_admins("Blastcannon transfer valve opened by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(current_turf)] while aiming at [ADMIN_VERBOSEJMP(target_turf)] (target).")
-	log_game("Blastcannon transfer valve opened by [key_name(user)] at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).")
+	user.log_message("opened blastcannon transfer valve at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).", LOG_GAME)
 	bomb.toggle_valve()
 	update_appearance()
 	return
@@ -161,15 +161,15 @@
 		return
 
 	if(!ismob(loc))
-		INVOKE_ASYNC(src, .proc/fire_dropped, heavy, medium, light)
+		INVOKE_ASYNC(src, PROC_REF(fire_dropped), heavy, medium, light)
 		return
 
 	var/mob/holding = loc
 	var/target = cached_target?.resolve()
 	if(target && (holding.get_active_held_item() == src) && cached_firer && (holding == cached_firer.resolve()))
-		INVOKE_ASYNC(src, .proc/fire_intentionally, target, holding, heavy, medium, light, cached_modifiers)
+		INVOKE_ASYNC(src, PROC_REF(fire_intentionally), target, holding, heavy, medium, light, cached_modifiers)
 	else
-		INVOKE_ASYNC(src, .proc/fire_accidentally, holding, heavy, medium, light)
+		INVOKE_ASYNC(src, PROC_REF(fire_accidentally), holding, heavy, medium, light)
 	return
 
 /**
@@ -221,7 +221,8 @@
 	var/turf/start_turf = get_turf(src)
 	var/turf/target_turf = get_turf(target)
 	message_admins("Blast wave fired from [ADMIN_VERBOSEJMP(start_turf)] at [ADMIN_VERBOSEJMP(target_turf)] ([target]) by [ADMIN_LOOKUPFLW(firer)] with power [heavy]/[medium]/[light].")
-	log_game("Blast wave fired from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) by [key_name(firer)] with power [heavy]/[medium]/[light].")
+	firer.log_message("fired a blast wave from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) with power [heavy]/[medium]/[light].", LOG_GAME)
+	firer.log_message("fired a blast wave from [AREACOORD(start_turf)] at [AREACOORD(target_turf)] ([target]) with power [heavy]/[medium]/[light].", LOG_ATTACK, log_globally = FALSE)
 	fire_blastwave(target, heavy, medium, light, modifiers)
 	return
 

@@ -33,7 +33,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Power") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	var/list/results = list()
 
-	for (var/datum/powernet/PN in GLOB.powernets)
+	for (var/datum/powernet/PN in SSmachines.powernets)
 		if (!PN.nodes || !PN.nodes.len)
 			if(PN.cables && (PN.cables.len > 1))
 				var/obj/structure/cable/C = PN.cables[1]
@@ -45,12 +45,12 @@
 				results += "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]"
 
 	for(var/turf/T in world.contents)
-		var/found_one = FALSE
+		var/cable_layers //cache all cable layers (which are bitflags) present
 		for(var/obj/structure/cable/C in T.contents)
-			if(found_one)
+			if(cable_layers & C.cable_layer)
 				results += "Doubled wire at [ADMIN_VERBOSEJMP(C)]"
 			else
-				found_one = TRUE
+				cable_layers |= C.cable_layer
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T.contents
 		if(term)
 			var/obj/structure/cable/C = locate(/obj/structure/cable) in T.contents

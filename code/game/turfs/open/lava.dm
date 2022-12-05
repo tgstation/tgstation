@@ -1,4 +1,8 @@
-///LAVA
+/*
+ * LAVA
+ * PLASMA LAVA
+ * MAFIA PLASMA LAVA
+ */
 
 /turf/open/lava
 	name = "lava"
@@ -26,6 +30,12 @@
 	var/immunity_trait = TRAIT_LAVA_IMMUNE
 	/// objects with these flags won't burn.
 	var/immunity_resistance_flags = LAVA_PROOF
+	/// the temperature that this turf will attempt to heat/cool gasses too in a heat exchanger, in kelvin
+	var/lava_temperature = 5000
+
+/turf/open/lava/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_LAVALAND_LAVA)
 
 /turf/open/lava/ex_act(severity, target)
 	return
@@ -99,7 +109,7 @@
 	. = 700000
 
 /turf/open/lava/GetTemperature()
-	. = 5000
+	. = lava_temperature
 
 /turf/open/lava/TakeTemperature(temp)
 
@@ -118,6 +128,20 @@
 		else
 			to_chat(user, span_warning("You need one rod to build a heatproof lattice."))
 		return
+	// Light a cigarette in the lava
+	if(istype(C, /obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/ciggie = C
+		if(ciggie.lit)
+			to_chat(user, span_warning("The [ciggie.name] is already lit!"))
+			return TRUE
+		var/clumsy_modifier = HAS_TRAIT(user, TRAIT_CLUMSY) ? 2 : 1
+		if(prob(25 * clumsy_modifier ))
+			ciggie.light(span_warning("[user] expertly dips \the [ciggie.name] into [src], along with the rest of [user.p_their()] arm. What a dumbass."))
+			var/obj/item/bodypart/affecting = user.get_active_hand()
+			affecting?.receive_damage(burn = 90)
+		else
+			ciggie.light(span_rose("[user] expertly dips \the [ciggie.name] into [src], lighting it with the scorching heat of the planet. Witnessing such a feat is almost enough to make you cry."))
+		return TRUE
 
 /turf/open/lava/proc/is_safe()
 	//if anything matching this typecache is found in the lava, we don't burn things
@@ -231,6 +255,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_LAVA)
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_LAVA)
+	underfloor_accessibility = 2 //This avoids strangeness when routing pipes / wires along catwalks over lava
 
 /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -239,3 +264,91 @@
 
 /turf/open/lava/smooth/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/lava/plasma
+	name = "liquid plasma"
+	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
+	icon_state = "liquidplasma"
+	initial_gas_mix = "n2=82;plasma=24;TEMP=120"
+	baseturfs = /turf/open/lava/plasma
+
+	light_range = 3
+	light_power = 0.75
+	light_color = LIGHT_COLOR_PURPLE
+	immunity_trait = TRAIT_SNOWSTORM_IMMUNE
+	immunity_resistance_flags = FREEZE_PROOF
+	lava_temperature = 100
+
+/turf/open/lava/plasma/examine(mob/user)
+	. = ..()
+	. += span_info("Some <b>liquid plasma<b> could probably be scooped up with a <b>container</b>.")
+
+/turf/open/lava/plasma/attackby(obj/item/I, mob/user, params)
+	if(!I.is_open_container())
+		return ..()
+	if(!I.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(5, 10)))
+		to_chat(user, span_warning("[I] is full."))
+		return
+	user.visible_message(span_notice("[user] scoops some plasma from the [src] with [I]."), span_notice("You scoop out some plasma from the [src] using [I]."))
+
+/turf/open/lava/plasma/do_burn(atom/movable/burn_target, delta_time = 1)
+	. = TRUE
+	if(isobj(burn_target))
+		return FALSE // Does nothing against objects. Old code.
+
+	var/mob/living/burn_living = burn_target
+	burn_living.adjustFireLoss(2)
+	if(QDELETED(burn_living))
+		return
+	burn_living.adjust_fire_stacks(20) //dipping into a stream of plasma would probably make you more flammable than usual
+	burn_living.adjust_bodytemperature(-rand(50,65)) //its cold, man
+	if(!ishuman(burn_living) || DT_PROB(65, delta_time))
+		return
+	var/mob/living/carbon/human/burn_human = burn_living
+	var/datum/species/burn_species = burn_human.dna.species
+	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android)) //ignore plasmamen/robotic species
+		return
+
+	var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
+	var/list/robo_parts = list()//keep a reference of robotic parts so we know if we can turn them into a plasmaman
+	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
+		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
+			plasma_parts += burn_limb
+		if(!IS_ORGANIC_LIMB(burn_limb))
+			robo_parts += burn_limb
+
+	burn_human.adjustToxLoss(15)
+	burn_human.adjustFireLoss(25)
+	if(plasma_parts.len)
+		var/obj/item/bodypart/burn_limb = pick(plasma_parts) //using the above-mentioned list to get a choice of limbs
+		burn_human.emote("scream")
+		var/obj/item/bodypart/plasmalimb
+		switch(burn_limb.body_zone) //get plasmaman limb to swap in
+			if(BODY_ZONE_L_ARM)
+				plasmalimb = new /obj/item/bodypart/arm/left/plasmaman
+			if(BODY_ZONE_R_ARM)
+				plasmalimb = new /obj/item/bodypart/arm/right/plasmaman
+			if(BODY_ZONE_L_LEG)
+				plasmalimb = new /obj/item/bodypart/leg/left/plasmaman
+			if(BODY_ZONE_R_LEG)
+				plasmalimb = new /obj/item/bodypart/leg/right/plasmaman
+			if(BODY_ZONE_CHEST)
+				plasmalimb = new /obj/item/bodypart/chest/plasmaman
+			if(BODY_ZONE_HEAD)
+				plasmalimb = new /obj/item/bodypart/head/plasmaman
+		burn_human.del_and_replace_bodypart(plasmalimb)
+		burn_human.update_body_parts()
+		burn_human.emote("scream")
+		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \
+			span_userdanger("You scream out in pain as your [burn_limb.plaintext_zone] melts down to the bone, leaving an eerie plasma-like glow where flesh used to be!"))
+	if(!plasma_parts.len && !robo_parts.len) //a person with no potential organic limbs left AND no robotic limbs, time to turn them into a plasmaman
+		burn_human.ignite_mob()
+		burn_human.set_species(/datum/species/plasmaman)
+		burn_human.visible_message(span_warning("[burn_human] bursts into a brilliant purple flame as [burn_human.p_their()] entire body is that of a skeleton!"), \
+			span_userdanger("Your senses numb as all of your remaining flesh is turned into a purple slurry, sloshing off your body and leaving only your bones to show in a vibrant purple!"))
+
+//mafia specific tame happy plasma (normal atmos, no slowdown)
+/turf/open/lava/plasma/mafia
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	baseturfs = /turf/open/lava/plasma/mafia
+	slowdown = 0

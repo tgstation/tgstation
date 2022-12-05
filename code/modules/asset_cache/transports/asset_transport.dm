@@ -14,7 +14,7 @@
 /datum/asset_transport/proc/Load()
 	if (CONFIG_GET(flag/asset_simple_preload))
 		for(var/client/C in GLOB.clients)
-			addtimer(CALLBACK(src, .proc/send_assets_slow, C, preload), 1 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(send_assets_slow), C, preload), 1 SECONDS)
 
 /// Initialize - Called when SSassets initializes.
 /datum/asset_transport/proc/Initialize(list/assets)
@@ -22,18 +22,24 @@
 	if (!CONFIG_GET(flag/asset_simple_preload))
 		return
 	for(var/client/C in GLOB.clients)
-		addtimer(CALLBACK(src, .proc/send_assets_slow, C, preload), 1 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(send_assets_slow), C, preload), 1 SECONDS)
 
 
-/// Register a browser asset with the asset cache system
-/// asset_name - the identifier of the asset
-/// asset - the actual asset file (or an asset_cache_item datum)
-/// returns a /datum/asset_cache_item.
-/// mutiple calls to register the same asset under the same asset_name return the same datum
-/datum/asset_transport/proc/register_asset(asset_name, asset)
+/**
+ * Register a browser asset with the asset cache system.
+ * returns a /datum/asset_cache_item.
+ * mutiple calls to register the same asset under the same asset_name return the same datum.
+ *
+ * Arguments:
+ * * asset_name - the identifier of the asset.
+ * * asset - the actual asset file (or an asset_cache_item datum).
+ * * file_hash - optional, a hash of the contents of the asset files contents. used so asset_cache_item doesnt have to hash it again
+ * * dmi_file_path - optional, means that the given asset is from the rsc and thus we dont need to do some expensive operations
+ */
+/datum/asset_transport/proc/register_asset(asset_name, asset, file_hash, dmi_file_path)
 	var/datum/asset_cache_item/ACI = asset
 	if (!istype(ACI))
-		ACI = new(asset_name, asset)
+		ACI = new(asset_name, asset, file_hash, dmi_file_path)
 		if (!ACI || !ACI.hash)
 			CRASH("ERROR: Invalid asset: [asset_name]:[asset]:[ACI]")
 	if (SSassets.cache[asset_name])
@@ -131,7 +137,7 @@
 
 			client.sent_assets[new_asset_name] = ACI.hash
 
-		addtimer(CALLBACK(client, /client/proc/asset_cache_update_json), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(client, TYPE_PROC_REF(/client, asset_cache_update_json)), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 		return TRUE
 	return FALSE
 

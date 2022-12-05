@@ -23,7 +23,7 @@ RLD
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=100000)
-	req_access_txt = "11"
+	req_access = list(ACCESS_ENGINE_EQUIP)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	var/datum/effect_system/spark_spread/spark_system
@@ -87,7 +87,7 @@ RLD
 	upgrade |= rcd_up.upgrade
 	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
 		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rcd_up)
 
 /// Inserts matter into the RCD allowing it to build
@@ -105,9 +105,9 @@ RLD
 		if(R.ammoamt <= 0)
 			qdel(R)
 		matter += load
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 		loaded = TRUE
-	else if(istype(O, /obj/item/stack))
+	else if(isstack(O))
 		loaded = loadwithsheets(O, user)
 	if(loaded)
 		to_chat(user, span_notice("[src] now holds [matter]/[max_matter] matter-units."))
@@ -124,17 +124,17 @@ RLD
 		var/amount_to_use = min(S.amount, maxsheets)
 		S.use(amount_to_use)
 		matter += value*amount_to_use
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 		to_chat(user, span_notice("You insert [amount_to_use] [S.name] sheets into [src]. "))
 		return TRUE
 	to_chat(user, span_warning("You can't insert any more [S.name] sheets into [src]!"))
 	return FALSE
 
 /obj/item/construction/proc/activate()
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 
 /obj/item/construction/attack_self(mob/user)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
+	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	if(prob(20))
 		spark_system.start()
 
@@ -358,7 +358,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			T.rcd_act(user, src, RCD_FLOORWALL)
 		useResource(16, user)
 		activate()
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		user.gib()
 		return MANUAL_SUICIDE
 
@@ -370,7 +370,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	toggle_window_glass(usr)
@@ -380,7 +380,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	set category = "Object"
 	set src in view(1)
 
-	if(!usr.canUseTopic(src, BE_CLOSE))
+	if(!usr.canUseTopic(src, be_close = TRUE))
 		return
 
 	toggle_window_size(usr)
@@ -444,7 +444,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"SOUTH" = image(icon = 'icons/hud/radial.dmi', icon_state = "csouth"),
 		"WEST" = image(icon = 'icons/hud/radial.dmi', icon_state = "cwest")
 		)
-	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/computerdirs = show_radial_menu(user, src, computer_dirs, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(computerdirs)
@@ -510,11 +510,11 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, remote_anchor || src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
+	var/airlockcat = show_radial_menu(user, remote_anchor || src, solid_or_glass_choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, solid_choices, radius = 42, custom_check = CALLBACK(src, PROC_REF(check_menu), user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock
@@ -555,7 +555,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
+				var/airlockpaint = show_radial_menu(user, remote_anchor || src, glass_choices, radius = 42, custom_check = CALLBACK(src, PROC_REF(check_menu), user, remote_anchor), require_near = remote_anchor ? FALSE : TRUE, tooltips = TRUE)
 				switch(airlockpaint)
 					if("Standard")
 						airlock_type = /obj/machinery/door/airlock/glass
@@ -607,7 +607,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		"Table" = image(icon = 'icons/hud/radial.dmi', icon_state = "table"),
 		"Glass Table" = image(icon = 'icons/hud/radial.dmi', icon_state = "glass_table")
 		)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -640,7 +640,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(rcd_results["mode"] == RCD_MACHINE || rcd_results["mode"] == RCD_COMPUTER || rcd_results["mode"] == RCD_FURNISHING)
 		var/turf/target_turf = get_turf(A)
 		if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
-			playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+			playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 			qdel(rcd_effect)
 			return FALSE
 	if(!do_after(user, delay, target = A))
@@ -655,7 +655,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	rcd_effect.end_animation()
 	useResource(rcd_results["cost"], user)
 	activate()
-	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	return TRUE
 
 /obj/item/construction/rcd/Initialize(mapload)
@@ -705,7 +705,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			choices += list(
 			"Change Furnishing Type" = image(icon = 'icons/hud/radial.dmi', icon_state = "chair")
 			)
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)
@@ -774,7 +774,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		buzz loudly!</b></span>","<span class='danger'><b>[src] begins \
 		vibrating violently!</b></span>")
 	// 5 seconds to get rid of it
-	addtimer(CALLBACK(src, .proc/detonate_pulse_explode), 50)
+	addtimer(CALLBACK(src, PROC_REF(detonate_pulse_explode)), 50)
 
 /obj/item/construction/rcd/proc/detonate_pulse_explode()
 	explosion(src, light_impact_range = 3, flame_range = 1, flash_range = 1)
@@ -848,7 +848,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
 /obj/item/rcd_ammo
-	name = "compressed matter cartridge"
+	name = "RCD matter cartridge"
 	desc = "Highly compressed matter for the RCD."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcdammo"
@@ -980,7 +980,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				if(checkResource(deconcost, user))
 					to_chat(user, span_notice("You start deconstructing [A]..."))
 					user.Beam(A,icon_state="light_beam", time = 15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+					playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, decondelay, target = A))
 						if(!useResource(deconcost, user))
 							return FALSE
@@ -994,8 +994,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				if(checkResource(floorcost, user))
 					to_chat(user, span_notice("You start building a wall light..."))
 					user.Beam(A,icon_state="light_beam", time = 15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
+					playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+					playsound(loc, 'sound/effects/light_flicker.ogg', 50, FALSE)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(W))
 							return FALSE
@@ -1009,7 +1009,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 								candidates += C
 						if(!candidates.len)
 							to_chat(user, span_warning("Valid target not found..."))
-							playsound(src.loc, 'sound/misc/compiler-failure.ogg', 30, TRUE)
+							playsound(loc, 'sound/misc/compiler-failure.ogg', 30, TRUE)
 							return FALSE
 						for(var/turf/open/O in candidates)
 							if(istype(O))
@@ -1040,8 +1040,8 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				if(checkResource(floorcost, user))
 					to_chat(user, span_notice("You start building a floor light..."))
 					user.Beam(A,icon_state="light_beam", time = 15)
-					playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-					playsound(src.loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
+					playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+					playsound(loc, 'sound/effects/light_flicker.ogg', 50, TRUE)
 					if(do_after(user, floordelay, target = A))
 						if(!istype(F))
 							return FALSE
@@ -1095,117 +1095,268 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	max_matter = 200
 
 	///type of the plumbing machine
-	var/blueprint = null
+	var/obj/machinery/blueprint = null
 	///index, used in the attack self to get the type. stored here since it doesnt change
 	var/list/choices = list()
-	///index, used in the attack self to get the type. stored here since it doesnt change
-	var/list/name_to_type = list()
 	///All info for construction
 	var/list/machinery_data = list("cost" = list())
 	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
 	var/list/plumbing_design_types
-	///Possible layers to pick from
-	var/static/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
 	///Current selected layer
 	var/current_layer = "Default Layer"
+	///Current selected color, for ducts
+	var/current_color = "omni"
+	///maps layer name to layer number value. didnt make this global cause only this class needs it
+	var/static/list/name_to_number = list(
+		"First Layer" = 1,
+		"Second Layer" = 2,
+		"Default Layer" = 3,
+		"Fourth Layer" = 4,
+		"Fifth Layer" = 5,
+	)
 
 /obj/item/construction/plumbing/Initialize(mapload)
 	. = ..()
+
+	//design types supported for this plumbing rcd
 	set_plumbing_designs()
 
-/obj/item/construction/plumbing/attack_self(mob/user)
-	..()
-	if(!choices.len)
-		for(var/A in plumbing_design_types)
-			var/obj/machinery/plumbing/M = A
+	//set cost of each machine & initial blueprint
+	for(var/obj/machinery/plumbing/plumbing_type as anything in plumbing_design_types)
+		machinery_data["cost"][plumbing_type] = plumbing_design_types[plumbing_type]
+	blueprint =  plumbing_design_types[1]
 
-			choices += list(initial(M.name) = image(icon = initial(M.icon), icon_state = initial(M.icon_state)))
-			name_to_type[initial(M.name)] = M
-			machinery_data["cost"][A] = plumbing_design_types[A]
-
-	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	if(!check_menu(user))
-		return
-
-	blueprint = name_to_type[choice]
-	playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
-	to_chat(user, span_notice("You change [name]s blueprint to '[choice]'."))
-
-///Set the list of designs this plumbing rcd can make
 /obj/item/construction/plumbing/proc/set_plumbing_designs()
 	plumbing_design_types = list(
-	/obj/machinery/plumbing/input = 5,
-	/obj/machinery/plumbing/output = 5,
-	/obj/machinery/plumbing/tank = 20,
-	/obj/machinery/plumbing/synthesizer = 15,
-	/obj/machinery/plumbing/reaction_chamber = 15,
-	/obj/machinery/plumbing/buffer = 10,
-	/obj/machinery/plumbing/layer_manifold = 5,
-	//Above are the most common machinery which is shown on the first cycle. Keep new additions below THIS line, unless they're probably gonna be needed alot
-	/obj/machinery/plumbing/pill_press = 20,
-	/obj/machinery/plumbing/acclimator = 10,
-	/obj/machinery/plumbing/bottler = 50,
-	/obj/machinery/plumbing/disposer = 10,
-	/obj/machinery/plumbing/fermenter = 30,
-	/obj/machinery/plumbing/filter = 5,
-	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/liquid_pump = 35,
-	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/sender = 20,
-	/obj/machinery/iv_drip/plumbing = 20
-)
+		//category 1 Synthesizers i.e devices which creates , reacts & destroys chemicals
+		/obj/machinery/plumbing/synthesizer = 15,
+		/obj/machinery/plumbing/reaction_chamber/chem = 15,
+		/obj/machinery/plumbing/grinder_chemical = 30,
+		/obj/machinery/plumbing/growing_vat = 20,
+		/obj/machinery/plumbing/fermenter = 30,
+		/obj/machinery/plumbing/liquid_pump = 35, //extracting chemicals from ground is one way of creation
+		/obj/machinery/plumbing/disposer = 10,
+		/obj/machinery/plumbing/buffer = 10, //creates chemicals as it waits for other buffers containing other chemicals and when mixed creates new chemicals
+
+		//category 2 distributors i.e devices which inject , move around , remove chemicals from the network
+		/obj/machinery/duct = 1,
+		/obj/machinery/plumbing/layer_manifold = 5,
+		/obj/machinery/plumbing/input = 5,
+		/obj/machinery/plumbing/filter = 5,
+		/obj/machinery/plumbing/splitter = 5,
+		/obj/machinery/plumbing/sender = 20,
+		/obj/machinery/plumbing/output = 5,
+
+		//category 3 Storage i.e devices which stores & makes the processed chemicals ready for consumption
+		/obj/machinery/plumbing/tank = 20,
+		/obj/machinery/plumbing/acclimator = 10,
+		/obj/machinery/plumbing/bottler = 50,
+		/obj/machinery/plumbing/pill_press = 20,
+		/obj/machinery/iv_drip/plumbing = 20
+	)
+
+/obj/item/construction/plumbing/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot & ITEM_SLOT_HANDS)
+		RegisterSignal(user, COMSIG_MOUSE_SCROLL_ON, PROC_REF(mouse_wheeled))
+	else
+		UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
+
+/obj/item/construction/plumbing/dropped(mob/user, silent)
+	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
+	return ..()
+
+/obj/item/construction/plumbing/cyborg_unequip(mob/user)
+	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
+	return ..()
+
+/obj/item/construction/plumbing/attack_self(mob/user)
+	ui_interact(user)
+
+/obj/item/construction/plumbing/examine(mob/user)
+	. = ..()
+	. += "You can scroll your mouse wheel to change the piping layer."
+	. += "You can right click a fluid duct to set the Plumbing RPD to its color and layer."
+
+/obj/item/construction/plumbing/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PlumbingService", name)
+		ui.open()
+
+/obj/item/construction/plumbing/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/plumbing),
+	)
+
+/obj/item/construction/plumbing/ui_static_data(mob/user)
+	return list("paint_colors" = GLOB.pipe_paint_colors)
+
+
+///find which category this design belongs to
+/obj/item/construction/plumbing/proc/get_category(obj/machinery/recipe)
+	if(ispath(recipe, /obj/machinery/plumbing))
+		var/obj/machinery/plumbing/plumbing_design = recipe
+		return initial(plumbing_design.category)
+	else if(ispath(recipe , /obj/machinery/duct))
+		return "Distribution"
+	else
+		return "Storage"
+
+/obj/item/construction/plumbing/ui_data(mob/user)
+	var/list/data = list()
+	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
+	data["selected_color"] = current_color
+	data["layer_icon"] = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"
+	data["selected_category"] = get_category(blueprint)
+
+	var/list/category_list = list()
+	var/category_name = ""
+	var/obj/machinery/recipe = null
+
+	for(var/i in 1 to plumbing_design_types.len)
+		recipe = plumbing_design_types[i]
+
+		category_name = get_category(recipe) //get category of design
+		if(!category_list[category_name])
+			var/list/item_list = list()
+			item_list["cat_name"] = category_name //used by RapidPipeDispenser.js
+			item_list["recipes"] = list() //used by RapidPipeDispenser.js
+			category_list[category_name] = item_list
+
+		//add item to category
+		category_list[category_name]["recipes"] += list(list(
+			"index" = i,
+			"icon" = initial(recipe.icon_state),
+			"name" = initial(recipe.name),
+			"selected" = (initial(blueprint.name) == initial(recipe.name))
+		))
+
+	data["categories"] = list()
+	for(category_name in category_list)
+		data["categories"] += list(category_list[category_name])
+
+	return data
+
+/obj/item/construction/plumbing/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("color")
+			var/color = params["paint_color"]
+			if(GLOB.pipe_paint_colors[color] != null) //validate if the color is in the allowed list of values
+				current_color = color
+		if("piping_layer")
+			var/bitflag = text2num(params["piping_layer"])  //convert from layer number back to layer string
+			bitflag = 1 << (bitflag - 1)
+			var/layer = GLOB.plumbing_layer_names["[bitflag]"]
+			if(layer != null) //validate if this value exists in the list
+				current_layer = layer
+		if("recipe")
+			var/design = plumbing_design_types[text2num(params["id"])]
+			if(design != null) //validate if design is valid
+				blueprint = design
+			playsound(src, 'sound/effects/pop.ogg', 50, vary = FALSE)
+
+	return TRUE
+
 
 ///pretty much rcd_create, but named differently to make myself feel less bad for copypasting from a sibling-type
-/obj/item/construction/plumbing/proc/create_machine(atom/A, mob/user)
-	if(!machinery_data || !isopenturf(A))
+/obj/item/construction/plumbing/proc/create_machine(atom/destination, mob/user)
+	if(!machinery_data || !isopenturf(destination))
 		return FALSE
 
+	if(!canPlace(destination))
+		to_chat(user, span_notice("There is something blocking you from placing a [initial(blueprint.name)] there."))
+		return
 	if(checkResource(machinery_data["cost"][blueprint], user) && blueprint)
 		//"cost" is relative to delay at a rate of 10 matter/second  (1matter/decisecond) rather than playing with 2 different variables since everyone set it to this rate anyways.
-		if(do_after(user, machinery_data["cost"][blueprint], target = A))
-			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(A))
+		if(do_after(user, machinery_data["cost"][blueprint], target = destination))
+			if(checkResource(machinery_data["cost"][blueprint], user) && canPlace(destination))
 				useResource(machinery_data["cost"][blueprint], user)
 				activate()
-				playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-				new blueprint (A, FALSE, layers[current_layer])
+				playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
+				if(ispath(blueprint, /obj/machinery/duct))
+					var/is_omni = current_color == DUCT_COLOR_OMNI
+					new blueprint(destination, FALSE, GLOB.pipe_paint_colors[current_color], GLOB.plumbing_layers[current_layer], null, is_omni)
+				else
+					new blueprint(destination, FALSE, GLOB.plumbing_layers[current_layer])
 				return TRUE
 
-/obj/item/construction/plumbing/proc/canPlace(turf/T)
-	if(!isopenturf(T))
+/obj/item/construction/plumbing/proc/canPlace(turf/destination)
+	if(!isopenturf(destination))
 		return FALSE
 	. = TRUE
-	for(var/obj/O in T.contents)
-		if(O.density) //let's not built ontop of dense stuff, like big machines and other obstacles, it kills my immershion
+
+	var/layer_id = GLOB.plumbing_layers[current_layer]
+
+	for(var/obj/content_obj in destination.contents)
+		// Let's not built ontop of dense stuff, if this is also dense.
+		if(initial(blueprint.density) && content_obj.density)
 			return FALSE
 
-/obj/item/construction/plumbing/afterattack(atom/A, mob/user, proximity)
+		// Ducts can overlap other plumbing objects IF the layers are different
+
+		// make sure plumbling isn't overlapping.
+		for(var/datum/component/plumbing/plumber as anything in content_obj.GetComponents(/datum/component/plumbing))
+			if(plumber.ducting_layer & layer_id)
+				return FALSE
+
+		if(istype(content_obj, /obj/machinery/duct))
+			// Make sure ducts aren't overlapping.
+			var/obj/machinery/duct/duct_machine = content_obj
+			if(duct_machine.duct_layer & layer_id)
+				return FALSE
+
+/obj/item/construction/plumbing/pre_attack_secondary(obj/machinery/target, mob/user, params)
+	if(!istype(target, /obj/machinery/duct))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	var/obj/machinery/duct/duct = target
+	if(duct.duct_layer && duct.duct_color)
+		current_color = GLOB.pipe_color_name[duct.duct_color]
+		current_layer = GLOB.plumbing_layer_names["[duct.duct_layer]"]
+		balloon_alert(user, "using [current_color], layer [current_layer]")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/construction/plumbing/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!prox_check(proximity))
 		return
-	if(istype(A, /obj/machinery/plumbing))
-		var/obj/machinery/plumbing/P = A
-		if(P.anchored)
-			to_chat(user, span_warning("The [P.name] needs to be unanchored!"))
+	if(istype(target, /obj/machinery/plumbing))
+		var/obj/machinery/machine_target = target
+		if(machine_target.anchored)
+			to_chat(user, span_warning("The [target.name] needs to be unanchored!"))
 			return
-		if(do_after(user, 20, target = P))
-			P.deconstruct() //Let's not substract matter
+		if(do_after(user, 20, target = target))
+			machine_target.deconstruct() //Let's not substract matter
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE) //this is just such a great sound effect
 	else
-		create_machine(A, user)
+		create_machine(target, user)
 
 /obj/item/construction/plumbing/AltClick(mob/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	ui_interact(user)
+
+/obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
+	SIGNAL_HANDLER
+	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+		return
+	if(delta_y == 0)
 		return
 
-	//this is just cycling options through a list
-	var/current_loc = layers.Find(current_layer) + 1
-
-	if(current_loc > layers.len)
-		current_loc = 1
-
-	//We want the key (the define), not the index (the string)
-	current_layer = layers[current_loc]
-	to_chat(user, span_notice("You switch [src] to [current_layer]."))
+	if(delta_y < 0)
+		var/current_loc = GLOB.plumbing_layers.Find(current_layer) + 1
+		if(current_loc > GLOB.plumbing_layers.len)
+			current_loc = 1
+		current_layer = GLOB.plumbing_layers[current_loc]
+	else
+		var/current_loc = GLOB.plumbing_layers.Find(current_layer) - 1
+		if(current_loc < 1)
+			current_loc = GLOB.plumbing_layers.len
+		current_layer = GLOB.plumbing_layers[current_loc]
+	to_chat(source, span_notice("You set the layer to [current_layer]."))
 
 /obj/item/construction/plumbing/research
 	name = "research plumbing constructor"
@@ -1218,17 +1369,57 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/plumbing/research/set_plumbing_designs()
 	plumbing_design_types = list(
-	/obj/machinery/plumbing/input = 5,
-	/obj/machinery/plumbing/output = 5,
-	/obj/machinery/plumbing/tank = 20,
-	/obj/machinery/plumbing/acclimator = 10,
-	/obj/machinery/plumbing/filter = 5,
-	/obj/machinery/plumbing/grinder_chemical = 30,
-	/obj/machinery/plumbing/reaction_chamber = 15,
-	/obj/machinery/plumbing/splitter = 5,
-	/obj/machinery/plumbing/disposer = 10,
-	/obj/machinery/plumbing/growing_vat = 20
-)
+		//category 1 synthesizers
+		/obj/machinery/plumbing/reaction_chamber = 15,
+		/obj/machinery/plumbing/grinder_chemical = 30,
+		/obj/machinery/plumbing/disposer = 10,
+		/obj/machinery/plumbing/growing_vat = 20,
+
+		//category 2 Distributors
+		/obj/machinery/duct = 1,
+		/obj/machinery/plumbing/input = 5,
+		/obj/machinery/plumbing/filter = 5,
+		/obj/machinery/plumbing/splitter = 5,
+		/obj/machinery/plumbing/output = 5,
+
+		//category 3 storage
+		/obj/machinery/plumbing/tank = 20,
+		/obj/machinery/plumbing/acclimator = 10,
+	)
+
+/obj/item/construction/plumbing/service
+	name = "service plumbing constructor"
+	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to make a brewery."
+	icon_state = "plumberer_service"
+	has_ammobar = TRUE
+
+/obj/item/construction/plumbing/service/set_plumbing_designs()
+	plumbing_design_types = list(
+		//category 1 synthesizers
+		/obj/machinery/plumbing/synthesizer/soda = 15,
+		/obj/machinery/plumbing/synthesizer/beer = 15,
+		/obj/machinery/plumbing/reaction_chamber = 15,
+		/obj/machinery/plumbing/buffer = 10,
+		/obj/machinery/plumbing/fermenter = 30,
+		/obj/machinery/plumbing/grinder_chemical = 30,
+		/obj/machinery/plumbing/disposer = 10,
+
+
+		//category 2 distributors
+		/obj/machinery/duct = 1,
+		/obj/machinery/plumbing/layer_manifold = 5,
+		/obj/machinery/plumbing/input = 5,
+		/obj/machinery/plumbing/filter = 5,
+		/obj/machinery/plumbing/splitter = 5,
+		/obj/machinery/plumbing/output/tap = 5,
+		/obj/machinery/plumbing/sender = 20,
+
+		//category 3 storage
+		/obj/machinery/plumbing/bottler = 50,
+		/obj/machinery/plumbing/tank = 20,
+		/obj/machinery/plumbing/acclimator = 10,
+	)
+
 
 
 /obj/item/rcd_upgrade
@@ -1256,6 +1447,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /datum/action/item_action/rcd_scan
 	name = "Destruction Scan"
 	desc = "Scans the surrounding area for destruction. Scanned structures will rebuild significantly faster."
+
+/datum/action/item_action/pick_color
+	name = "Choose A Color"
 
 #undef GLOW_MODE
 #undef LIGHT_MODE

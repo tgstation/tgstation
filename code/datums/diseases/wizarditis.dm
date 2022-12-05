@@ -90,8 +90,9 @@ STI KALY - blind
 	var/area/thearea = pick(theareas)
 
 	var/list/L = list()
+	var/turf/mob_turf = get_turf(affected_mob)
 	for(var/turf/T in get_area_turfs(thearea.type))
-		if(T.z != affected_mob.z)
+		if(!is_valid_z_level(T, mob_turf))
 			continue
 		if(T.name == "space")
 			continue

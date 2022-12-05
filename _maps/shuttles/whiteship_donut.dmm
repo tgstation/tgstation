@@ -13,13 +13,10 @@
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/docking_port/mobile{
 	dir = 2;
-	dwidth = 8;
-	height = 17;
-	id = "whiteship";
+	shuttle_id = "whiteship";
 	launch_status = 0;
 	name = "White Ship";
-	port_direction = 2;
-	width = 9
+	port_direction = 2
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -64,13 +61,13 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "am" = (
-/obj/structure/shuttle/engine/propulsion/right{
+/obj/machinery/power/shuttle_engine/propulsion/right{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "an" = (
-/obj/structure/shuttle/engine/propulsion/left{
+/obj/machinery/power/shuttle_engine/propulsion/left{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -90,7 +87,7 @@
 /turf/template_noop,
 /area/shuttle/abandoned)
 "ar" = (
-/obj/structure/shuttle/engine/heater{
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 1
 	},
 /obj/structure/window/reinforced,
@@ -172,14 +169,14 @@
 "aF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "restroom"
+	name = "Restroom"
 	},
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
 "aG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "mech bay"
+	name = "Mech Bay"
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
@@ -241,10 +238,7 @@
 /area/shuttle/abandoned)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12
-	},
+/obj/structure/sink/directional/east,
 /obj/item/soap,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
@@ -282,14 +276,14 @@
 "aW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/door/airlock/titanium{
-	name = "Cockpit";
-	req_access_txt = "109"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/admin/captain,
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "aX" = (
-/obj/structure/shuttle/engine/heater,
+/obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced{
 	dir = 1;
 	layer = 2.9
@@ -347,11 +341,11 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "be" = (
-/obj/structure/shuttle/engine/propulsion/left,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "bf" = (
-/obj/structure/shuttle/engine/propulsion/right,
+/obj/machinery/power/shuttle_engine/propulsion/right,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "bg" = (
@@ -425,7 +419,7 @@
 /area/shuttle/abandoned)
 "bn" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/food/drinks/mug,
+/obj/item/reagent_containers/cup/glass/mug,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)

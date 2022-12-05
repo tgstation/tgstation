@@ -19,7 +19,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/hilbertshotel/Initialize(mapload)
 	. = ..()
 	//Load templates
-	INVOKE_ASYNC(src, .proc/prepare_rooms)
+	INVOKE_ASYNC(src, PROC_REF(prepare_rooms))
 
 /obj/item/hilbertshotel/proc/prepare_rooms()
 	hotelRoomTemp = new()
@@ -149,7 +149,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	user.forceMove(locate(roomReservation.bottom_left_coords[1] + hotelRoomTemp.landingZoneRelativeX, roomReservation.bottom_left_coords[2] + hotelRoomTemp.landingZoneRelativeY, roomReservation.bottom_left_coords[3]))
 
 /obj/item/hilbertshotel/proc/linkTurfs(datum/turf_reservation/currentReservation, currentRoomnumber)
-	var/area/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
+	var/area/misc/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
 	currentArea.name = "Hilbert's Hotel Room [currentRoomnumber]"
 	currentArea.parentSphere = src
 	currentArea.storageTurf = storageTurf
@@ -307,10 +307,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_larva(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_larva(mob/user, list/modifiers)
 	promptExit(user)
 
-/turf/closed/indestructible/hoteldoor/attack_slime(mob/user)
+/turf/closed/indestructible/hoteldoor/attack_slime(mob/user, list/modifiers)
 	promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_robot(mob/user)
@@ -325,12 +325,12 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		var/datum/action/peephole_cancel/PHC = new
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
 		PHC.Grant(user)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, /atom/.proc/check_eye, user)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/atom/, check_eye), user)
 
 /turf/closed/indestructible/hoteldoor/check_eye(mob/user)
 	if(get_dist(get_turf(src), get_turf(user)) >= 2)
 		for(var/datum/action/peephole_cancel/PHC in user.actions)
-			INVOKE_ASYNC(PHC, /datum/action/peephole_cancel.proc/Trigger)
+			INVOKE_ASYNC(PHC, TYPE_PROC_REF(/datum/action/peephole_cancel, Trigger))
 
 /datum/action/peephole_cancel
 	name = "Cancel View"
@@ -345,7 +345,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	qdel(src)
 
-/area/hilbertshotel
+// Despite using the ruins.dmi, hilbertshotel is not a ruin
+/area/misc/hilbertshotel
 	name = "Hilbert's Hotel Room"
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
@@ -359,7 +360,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	var/datum/turf_reservation/reservation
 	var/turf/storageTurf
 
-/area/hilbertshotel/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/area/misc/hilbertshotel/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(istype(arrived, /obj/item/hilbertshotel))
 		relocate(arrived)
@@ -368,7 +369,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		if(parentSphere == H)
 			relocate(H)
 
-/area/hilbertshotel/proc/relocate(obj/item/hilbertshotel/H)
+/area/misc/hilbertshotel/proc/relocate(obj/item/hilbertshotel/H)
 	if(prob(0.135685)) //Because screw you
 		qdel(H)
 		return
@@ -380,6 +381,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	// Let's gib the last person to have selected a room number in it.
 	if(unforeseen_consequences)
 		to_chat(unforeseen_consequences, span_warning("\The [H] starts to resonate. Forcing it to enter itself induces a bluespace paradox, violently tearing your body apart."))
+		unforeseen_consequences.investigate_log("has been gibbed by using [H] while inside of it.", INVESTIGATE_DEATHS)
 		unforeseen_consequences.gib()
 
 	var/turf/targetturf = find_safe_turf()
@@ -396,7 +398,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(M, span_danger("[H] almost implodes in upon itself, but quickly rebounds, shooting off into a random point in space!"))
 	H.forceMove(targetturf)
 
-/area/hilbertshotel/Exited(atom/movable/gone, direction)
+/area/misc/hilbertshotel/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(ismob(gone))
 		var/mob/M = gone
@@ -410,7 +412,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 			if(!stillPopulated)
 				storeRoom()
 
-/area/hilbertshotel/proc/storeRoom()
+/area/misc/hilbertshotel/proc/storeRoom()
 	var/roomSize = (reservation.top_right_coords[1]-reservation.bottom_left_coords[1]+1)*(reservation.top_right_coords[2]-reservation.bottom_left_coords[2]+1)
 	var/storage[roomSize]
 	var/turfNumber = 1
@@ -432,7 +434,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	parentSphere.activeRooms -= "[roomnumber]"
 	qdel(reservation)
 
-/area/hilbertshotelstorage
+/area/misc/hilbertshotelstorage
 	name = "Hilbert's Hotel Storage Room"
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
@@ -493,19 +495,22 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		else
 			to_chat(user, "No vacated rooms.")
 
+/obj/effect/landmark/lift_id/hilbert
+	specific_lift_id = HILBERT_TRAM
+
 /obj/effect/landmark/tram/left_part/hilbert
+	specific_lift_id = HILBERT_TRAM
 	destination_id = "left_part_hilbert"
-	tram_id = "tram_hilbert"
 	tgui_icons = list("Reception" = "briefcase", "Botany" = "leaf", "Chemistry" = "flask")
 
 /obj/effect/landmark/tram/middle_part/hilbert
+	specific_lift_id = HILBERT_TRAM
 	destination_id = "middle_part_hilbert"
-	tram_id = "tram_hilbert"
 	tgui_icons = list("Processing" = "cogs", "Xenobiology" = "paw")
 
 /obj/effect/landmark/tram/right_part/hilbert
+	specific_lift_id = HILBERT_TRAM
 	destination_id = "right_part_hilbert"
-	tram_id = "tram_hilbert"
 	tgui_icons = list("Ordnance" = "bullseye", "Office" = "user", "Dormitories" = "bed")
 
 /obj/item/keycard/hilbert
@@ -519,6 +524,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	puzzle_id = "hilbert_office"
 
 /datum/outfit/doctorhilbert
+	name = "Doctor Hilbert"
 	id = /obj/item/card/id/advanced/silver
 	uniform = /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	shoes = /obj/item/clothing/shoes/sneakers/brown
@@ -536,18 +542,18 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "note to the institute"
 
 /obj/item/paper/crumpled/ruins/note_institute/Initialize(mapload)
-	. = ..()
-	info = {"Note to the Institute<br>
+	default_raw_text = {"Note to the Institute<br>
 	If you're reading this, I hope you're from the Institute. First things first, I should apologise. I won't be coming back to teach in the new semester.<br>
 	We've made some powerful enemies. Very powerful. More powerful than any of you can imagine, and so we can't come back.<br>
 	So, we've made the decision to vanish. Perhaps more literally than you might think. Do not try to find us- for your own safety.<br>
 	I've left some of our effects in the Hotel. Room number <u>[uppertext(num2hex(GLOB.hhMysteryRoomNumber, 0))]</u>. To anyone who should know, that should make sense.<br>
 	Best of luck with the research. From all of us in the Hilbert Group, it's been a pleasure working with you.<br>
 	- David, Phil, Fiona and Jen"}
+	return ..()
 
 /obj/item/paper/crumpled/ruins/postdocs_memo
 	name = "memo to the postdocs"
-	info = {"Memo to the Postdocs
+	default_raw_text = {"Memo to the Postdocs
 	Remember, if you're going in to retrieve the prototype for any reason (not that you should be without my supervision), that the security systems are always live- they have no shutoff.<br>
 	Instead, remember: what you can't see can't hurt you.<br>
 	Take care of the lab during my vacation. See you all in June.<br>
@@ -555,7 +561,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/crumpled/ruins/hotel_note
 	name = "hotel note"
-	info = {"Hotel Note<br>
+	default_raw_text = {"Hotel Note<br>
 	Well, you figured out the puzzle. Looks like someone's done their homework on my research.<br>
 	I suppose you deserve to know some more about our situation. Our research has attracted some undue attention and so, for our own safety, we've taken to the Bluespace.<br>
 	Yes, you did read that correctly. I'm sure the physics and maths would bore you, but in layman's terms, the manifested link to the Bluespace the crystals provide can be exploited. With the correct technology, one can "surf" the Bluespace, as Jen likes to call it.<br>
@@ -566,7 +572,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /obj/item/paper/fluff/ruins/docslabnotes
 	name = "lab notebook page"
-	info = {"Laboratory Notebook<br>
+	default_raw_text = {"Laboratory Notebook<br>
 	PROPERTY OF DOCTOR D. HILBERT<br>
 	May 10th, 2555<br>
 	Finally, my new facility is complete, and not a moment too soon!<br>
@@ -587,53 +593,64 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	In the meantime, I've taken to assembling the first prototype of the device. By exploiting the pocket's ability to create an infinite region of space within a finite area, I've made... well, I suppose it could be called a "Pocket Dimension". Within, I've created a nifty system that recursively produces subspace rooms, spatially linking them to any of the infinite points on the pocket's surface. Fiona says it's akin to a hotel, and I'm inclined to agree.<br>
 	Hilbert's Hotel. I like the sound of that.<br>"}
 
-/obj/item/paper/fluff/ruins/romans_emails
-	name = "e-mail readout - 14.05.2558"
-	info = {"Logs of Roman P.<br>
-	<h4>New Job</h4><br>
-	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
-	Hello sis! Figured I should update you on what's going on with the career change.<br>
-	First day on the new job. It's a pretty boring position, but hey- it's not like I was finding anything in New Vladimir. I'm just glad to have something to pay the bills.<br>
-	Suppose I should say what's involved: I'm essentially playing housekeeper for some scientist and his cohort of student assistants. Far above my pay grade to understand what they do, but they seem excited enough. Talking about "pockets", for whatever reason. Maybe they're designing the next innovation in clothes?<br>
-	Anyway, that's pretty much it. I'm living on their station for pretty much the duration, so I'm not sure if I'll be able to make it to Mama's birthday. Sorry about that- I'll do my best to make it up to her (and you) when I get some leave.<br>
-	Hope to see you soon,<br>
-	Little Brother Roman<br>
-	<br>
-	<h4>Visitors</h4><br>
-	<i>Sent to: david_hilbert@physics.mit.edu</i><br>
-	Morning Doctor. Sorry to email you when you're on holiday, but you did tell me to update you on anything suspicious.<br>
-	There's been a ship that's been hanging around the facility for a few days. Figured that was odd enough, given how far from anything important we are, but it got stranger when one of them finally came over to talk.<br>
-	I know I'm not a native speaker, but I couldn't make out his accent. Wasn't like anything I've heard before, anyway.<br>
-	He kept asking where you were, and if he could come in to speak to you. Of course, I turned him away- even if you had been around I'd have been hesitant to let him in.<br>
-	As an aside, the postdocs told me to pass on a message. Apparently they've made a breakthrough, which sounds good and all.<br>
-	Regards,<br>
-	Roman<br>
-	<br>
-	<h4>Weird Times</h4><br>
-	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
-	Hi sis! How was Christmas? Are Mama and Papa doing well? I'm really sorry I couldn't be there, but I've been working my fingers to the bone at work.<br>
-	I figure I should tell you a bit about how it's been going here. I know, I know, you keep calling me a workaholic, but it's really... strange, I guess?<br>
-	I keep getting little glimpses into the research that's happening. They're messing around with bluespace- you know, the tech that makes FTL engines work? I'm not sure what exactly they're doing with it, but they're talking more and more about pockets every day now.<br>
-	Not only that, but I'm starting to hear strange noises from the labs I'm not allowed into. Nothing super terrifying, you know, we're not talking xenomorphs, but more like industrial sounds. Crashes, bangs, occasional high-pitched whining, you know the sort. Like a broken vacuum cleaner.<br>
-	I know it's not the instruments or I'd have heard it before, so it must be something new they've been working on. Exciting, I suppose, but I'm starting to wonder if I'm in over my head working here. Maybe I should start looking for a new job, somewhere closer to home.<br>
-	Hope to see you at Papa's birthday. I've requested leave for it, and I'm just waiting on the Doc's response.<br>
-	See you soon,<br>
-	Little Brother Roman<br>
-	<br>
-	<h4>End of Leave</h4><br>
-	<i>Sent to: david_hilbert@physics.mit.edu</i><br>
-	Morning Doctor. Where is everyone? I got back from leave and the station was empty. Have you all went on holiday without telling me?<br>
-	And what the hell happened to the ordnance lab? I couldn't even open the door to get in, it was fused shut!<br>
-	Look, I don't feel safe staying on the station with it in this state, so I'm calling an engineer and heading home until I hear back from you.<br>
-	Regards,<br>
-	Roman<br>
-	<br>
-	<h4>Looking for a New Job</h4><br>
-	<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br>
-	Hi sis. First things first, sorry for missing your engagement party. There's been a... situation at work.<br>
-	In fact, that's most of why I'm writing this. I have absolutely no idea what happened, but the Doctor and the students are gone. Just up and left. The facility's abandoned.<br>
-	But like, it's clear they left in a hurry. Hell, there's still coffee in the cups. I'd question it further, but they were always kinda... odd, I guess? The whole thing gives me chills and I don't think I want to dig any deeper.<br>
-	I dropped his university an email and called in the authorities. All that's left now, I guess, is to find a new job. Would your boss happen to be hiring?<br>
-	See you soon,<br>
-	Little Brother Roman
-	"}
+/obj/machinery/computer/terminal/hilbert
+	upperinfo = "EMAIL READOUT - 14/05/2558"
+	content = list(
+		"<b>New Job</b><br> \
+		<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br> \
+		Hello sis! Figured I should update you on what's going on with the career change.<br> \
+		First day on the new job. It's a pretty boring position, but hey- it's not like I was finding anything in New Vladimir. I'm just glad to have something to pay the bills.<br> \
+		Suppose I should say what's involved: I'm essentially playing housekeeper for some scientist and his cohort of student assistants. Far above my pay grade to understand what they do, but they seem excited enough. Talking about \"pockets\", for whatever reason. Maybe they're designing the next innovation in clothes?<br> \
+		Anyway, that's pretty much it. I'm living on their station for pretty much the duration, so I'm not sure if I'll be able to make it to Mama's birthday. Sorry about that- I'll do my best to make it up to her (and you) when I get some leave.<br> \
+		Hope to see you soon,<br> \
+		Little Brother Roman",
+		"<b>Visitors</b><br> \
+		<i>Sent to: david_hilbert@physics.mit.edu</i><br> \
+		Morning Doctor. Sorry to email you when you're on holiday, but you did tell me to update you on anything suspicious.<br> \
+		There's been a ship that's been hanging around the facility for a few days. Figured that was odd enough, given how far from anything important we are, but it got stranger when one of them finally came over to talk.<br> \
+		I know I'm not a native speaker, but I couldn't make out his accent. Wasn't like anything I've heard before, anyway.<br> \
+		He kept asking where you were, and if he could come in to speak to you. Of course, I turned him away- even if you had been around I'd have been hesitant to let him in.<br> \
+		As an aside, the postdocs told me to pass on a message. Apparently they've made a breakthrough, which sounds good and all.<br> \
+		Regards,<br> \
+		Roman<br>",
+		"<b>Weird Times</b><br> \
+		<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br> \
+		Hi sis! How was Christmas? Are Mama and Papa doing well? I'm really sorry I couldn't be there, but I've been working my fingers to the bone at work.<br> \
+		I figure I should tell you a bit about how it's been going here. I know, I know, you keep calling me a workaholic, but it's really... strange, I guess?<br> \
+		I keep getting little glimpses into the research that's happening. They're messing around with bluespace- you know, the tech that makes FTL engines work? I'm not sure what exactly they're doing with it, but they're talking more and more about pockets every day now.<br> \
+		Not only that, but I'm starting to hear strange noises from the labs I'm not allowed into. Nothing super terrifying, you know, we're not talking xenomorphs, but more like industrial sounds. Crashes, bangs, occasional high-pitched whining, you know the sort. Like a broken vacuum cleaner.<br> \
+		I know it's not the instruments or I'd have heard it before, so it must be something new they've been working on. Exciting, I suppose, but I'm starting to wonder if I'm in over my head working here. Maybe I should start looking for a new job, somewhere closer to home.<br> \
+		Hope to see you at Papa's birthday. I've requested leave for it, and I'm just waiting on the Doc's response.<br> \
+		See you soon,<br> \
+		Little Brother Roman<br>",
+		"<b>End of Leave</b><br> \
+		<i>Sent to: david_hilbert@physics.mit.edu</i><br> \
+		Morning Doctor. Where is everyone? I got back from leave and the station was empty. Have you all went on holiday without telling me?<br> \
+		And what the hell happened to the ordnance lab? I couldn't even open the door to get in, it was fused shut!<br> \
+		Look, I don't feel safe staying on the station with it in this state, so I'm calling an engineer and heading home until I hear back from you.<br> \
+		Regards,<br> \
+		Roman<br>",
+		"<b>Looking for a New Job</b><br> \
+		<i>Sent to: natalya_petroyenko@kosmokomm.net</i><br> \
+		Hi sis. First things first, sorry for missing your engagement party. There's been a... situation at work.<br> \
+		In fact, that's most of why I'm writing this. I have absolutely no idea what happened, but the Doctor and the students are gone. Just up and left. The facility's abandoned.<br> \
+		But like, it's clear they left in a hurry. Hell, there's still coffee in the cups. I'd question it further, but they were always kinda... odd, I guess? The whole thing gives me chills and I don't think I want to dig any deeper.<br> \
+		I dropped his university an email and called in the authorities. All that's left now, I guess, is to find a new job. Would your boss happen to be hiring?<br> \
+		See you soon,<br> \
+		Little Brother Roman",
+	)
+
+/obj/structure/showcase/machinery/tv/broken
+	name = "broken tv"
+	desc = "Nothing plays."
+
+/obj/structure/showcase/machinery/tv/broken/Initialize(mapload)
+	. = ..()
+	add_overlay("television_broken")
+
+/obj/machinery/porta_turret/syndicate/teleport
+	name = "displacement turret"
+	desc = "A ballistic machine gun auto-turret that fires bluespace bullets."
+	lethal_projectile = /obj/projectile/magic/teleport
+	stun_projectile = /obj/projectile/magic/teleport
+	faction = list("turret")

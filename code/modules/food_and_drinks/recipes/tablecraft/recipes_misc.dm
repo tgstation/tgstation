@@ -101,9 +101,9 @@
 	reqs = list(
 		/datum/reagent/consumable/ethanol/vodka = 25,
 		/obj/item/food/grown/holymelon = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/vodka = 1
+		/obj/item/reagent_containers/cup/glass/bottle/vodka = 1
 	)
-	parts = list(/obj/item/reagent_containers/food/drinks/bottle/vodka = 1)
+	parts = list(/obj/item/reagent_containers/cup/glass/bottle/vodka = 1)
 	result = /obj/item/food/melonkeg
 	subcategory = CAT_MISCFOOD
 
@@ -162,8 +162,8 @@
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
 	name = "Living bear/butter hybrid"
 	reqs = list(
-		/obj/item/organ/brain = 1,
-		/obj/item/organ/heart = 1,
+		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
 		/obj/item/food/butter = 10,
 		/obj/item/food/meat/slab = 5,
 		/datum/reagent/blood = 50,
@@ -187,7 +187,7 @@
 	name = "Royal Cheese"
 	reqs = list(
 		/obj/item/food/cheese/wheel = 1,
-		/obj/item/clothing/head/crown = 1,
+		/obj/item/clothing/head/costume/crown = 1,
 		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5
 	)
@@ -207,7 +207,7 @@
 /datum/crafting_recipe/food/pesto
 	name = "Pesto"
 	reqs = list(
-		/obj/item/food/firm_cheese_slice = 1,
+		/obj/item/food/cheese/firm_cheese_slice = 1,
 		/datum/reagent/consumable/salt = 5,
 		/obj/item/food/grown/herbs = 2,
 		/obj/item/food/grown/garlic = 1,
@@ -241,9 +241,9 @@
 /datum/crafting_recipe/food/pierogi
 	name = "Pierogi"
 	reqs = list(
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/potato = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/food/bun = 1
 	)
 	result = /obj/item/food/pierogi
 	subcategory = CAT_MISCFOOD
@@ -254,7 +254,91 @@
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/salad/boiledrice = 1,
 		/obj/item/food/grown/cabbage = 1,
-		/obj/item/food/grown/tomato = 1
+		/obj/item/food/grown/tomato = 1,
 	)
 	result = /obj/item/food/stuffed_cabbage
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/granola_bar
+	name = "Granola bar"
+	reqs = list(
+		/obj/item/food/grown/oat = 1,
+		/obj/item/food/grown/peanut = 1,
+		/obj/item/food/chocolatebar = 1,
+		/obj/item/food/no_raisin = 1,
+		/datum/reagent/consumable/sugar = 2,
+	)
+	result = /obj/item/food/granola_bar
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/onigiri
+	name = "Onigiri"
+	reqs = list(
+		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/seaweedsheet = 1,
+	)
+	result = /obj/item/food/onigiri
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/mashed_potatoes
+	name = "Mashed potatoes"
+	reqs = list(
+		/obj/item/food/grown/potato = 2,
+		/obj/item/food/grown/garlic = 1,
+		/obj/item/food/butter = 1,
+		/datum/reagent/consumable/milk = 1,
+	)
+	result = /obj/item/food/mashed_potatoes
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/pacoca
+	name = "Pacoca"
+	reqs = list(
+		/obj/item/food/grown/peanut = 2,
+		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/salt = 2,
+	)
+	result = /obj/item/food/pacoca
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/pickles_jar
+	name = "Jar of pickles"
+	reqs = list(
+		/obj/item/reagent_containers/cup/beaker/large = 1,
+		/obj/item/food/grown/cucumber = 10,
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/salt = 10,
+	)
+	result = /obj/item/storage/fancy/pickles_jar
+	category = CAT_FOOD
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/springroll
+	name = "Spring roll"
+	reqs = list(
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/cucumber = 1,
+		/obj/item/food/grown/chili = 1,
+		/datum/reagent/consumable/rice = 10,
+		/datum/reagent/water = 10,
+	)
+	result = /obj/item/food/springroll
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/caramel_popcorn
+	name = "Caramel popcorn"
+	reqs = list(
+		/obj/item/food/popcorn = 1,
+		/datum/reagent/consumable/caramel = 3,
+	)
+	result = /obj/item/food/popcorn/caramel
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/salty_popcorn
+	name = "Salty popcorn"
+	reqs = list(
+		/obj/item/food/popcorn = 1,
+		/datum/reagent/consumable/salt = 3,
+	)
+	result = /obj/item/food/popcorn/salty
 	subcategory = CAT_MISCFOOD
