@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 		return
 
 	malfunctioning = FALSE
-	update_appearance()
+	process()
 
 /**
  * Finds the tram, just like the tram computer
