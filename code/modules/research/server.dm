@@ -38,24 +38,24 @@
 	var/rating = 0
 
 	///only one scanning module so rating will always be rating of that component
-	for(var/obj/item/stock_parts/scanning_module/scanning_module in component_parts)
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
 		//tier 4 module will give us 4 times the efficiency
-		rating += scanning_module.rating
+		rating += scanning_module.tier
 
-	///get temp of the turf server is located in
+	//get temp of the turf server is located in
 	var/atom/target=get_turf(src)
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
-		return 0  ///server does not work in space obviously
+		return 0  //server does not work in space obviously
 
 	var/totalTemp=0
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	for(var/datum/gas_mixture/air as anything in airs)
 		var/temp = air.return_temperature()
 		totalTemp+=temp
-	totalTemp/=airs.len ///average of all temps. Not accurate but atleast something
+	totalTemp/=airs.len //average of all temps. Not accurate but atleast something
 
-	///gigher tier parts require more cooling and have lower temp requirments
+	//higher tier parts require more cooling and have lower temp requirments
 	var/scale=rating
 	if(scale==1)
 		scale=0
@@ -80,8 +80,8 @@
 		return "N/A"
 
 	var/rating = 0
-	for(var/obj/item/stock_parts/scanning_module/scanning_module in component_parts)
-		rating += scanning_module.rating
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		rating += scanning_module.tier
 
 	var/max_obtainable=rating*1.5
 	var/efficiency=calculate_efficiency()
@@ -217,7 +217,7 @@
 
 		var/status_text = server.get_status_text()
 		var/disable_text = server.research_disabled ? "<font color=red>Disabled</font>" : "<font color=lightgreen>Online</font>"
-		var/efficiency=server.efficienct_percentage()
+		var/efficiency= server.efficienct_percentage()
 
 		server_info += "<tr><td style='width:25%'>[server.name]</td>"
 		server_info += "<td style='width:25%'>[status_text]</td>"
@@ -285,13 +285,6 @@
 
 /obj/machinery/rnd/server/master/efficienct_percentage()
 	return "N/A"
-
-/obj/machinery/rnd/server/master/toggle_disable(mob/user)
-	.=..()
-
-	for(var/obj/machinery/rnd/server/miner in SSresearch.servers)
-		miner.research_disabled=!research_disabled
-		miner.toggle_disable(usr)
 
 /obj/machinery/rnd/server/master/Destroy()
 	if (source_code_hdd && (deconstruction_state == HDD_OVERLOADED))
