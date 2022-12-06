@@ -50,7 +50,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT_TWO_TALL)
+	AddComponent(/datum/component/seethrough, SEE_THROUGH_MAP_DEFAULT_TWO_TALL, clickthrough = FALSE)
 
 /obj/structure/necropolis_gate/Destroy(force)
 	qdel(sight_blocker)

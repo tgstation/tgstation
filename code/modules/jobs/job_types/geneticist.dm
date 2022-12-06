@@ -41,7 +41,7 @@
 	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/tablet/pda/geneticist
+	belt = /obj/item/modular_computer/pda/geneticist
 	ears = /obj/item/radio/headset/headset_sci
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_pocket = /obj/item/sequence_scanner

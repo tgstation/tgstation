@@ -97,7 +97,6 @@
 #define SPACE_LAYER 1.8
 
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define. Most floors (FLOOR_PLANE) and walls (GAME_PLANE) use this.
-#define OPENSPACE_LAYER 600 //Openspace layer over all turfs
 
 // GAME_PLANE layers
 #define CULT_OVERLAY_LAYER 2.01
@@ -113,6 +112,9 @@
 #define DISPOSAL_PIPE_LAYER 2.3
 #define GAS_PIPE_HIDDEN_LAYER 2.35 //layer = initial(layer) + piping_layer / 1000 in atmospherics/update_icon() to determine order of pipe overlap
 #define WIRE_LAYER 2.4
+#define TRAM_XING_LAYER 2.41
+#define TRAM_RAIL_LAYER 2.42
+#define TRAM_FLOOR_LAYER 2.43
 #define WIRE_BRIDGE_LAYER 2.44
 #define WIRE_TERMINAL_LAYER 2.45
 #define GAS_SCRUBBER_LAYER 2.46
@@ -120,6 +122,7 @@
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
 #define PLUMBING_PIPE_VISIBILE_LAYER 2.495//layer = initial(layer) + ducting_layer / 3333 in atmospherics/handle_layer() to determine order of duct overlap
+#define BOT_PATH_LAYER 2.497
 #define LOW_OBJ_LAYER 2.5
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER 2.51
@@ -209,6 +212,7 @@
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
+#define ECHO_LAYER 7
 
 #define FOV_EFFECT_LAYER 100
 
@@ -235,3 +239,21 @@
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
 #define PLANE_MASTERS_COLORBLIND "plane_masters_colorblind"
+
+//Plane master critical flags
+//Describes how different plane masters behave when they are being culled for performance reasons
+/// This plane master will not go away if its layer is culled. useful for preserving effects
+#define PLANE_CRITICAL_DISPLAY (1<<0)
+/// This plane master will temporarially remove relays to non critical planes if it's layer is culled (and it's critical)
+/// This is VERY hacky, but needed to ensure that some instances of BLEND_MULITPLY work as expected (fuck you god damn parallax)
+/// It also implies that the critical plane has a *'d render target, making it mask itself
+#define PLANE_CRITICAL_NO_EMPTY_RELAY (1<<1)
+
+#define PLANE_CRITICAL_FUCKO_PARALLAX (PLANE_CRITICAL_DISPLAY|PLANE_CRITICAL_NO_EMPTY_RELAY)
+
+/// A value of /datum/preference/numeric/multiz_performance that disables the option
+#define MULTIZ_PERFORMANCE_DISABLE -1
+/// We expect at most 3 layers of multiz
+/// Increment this define if you make a huge map. We unit test for it too just to make it easy for you
+/// If you modify this, you'll need to modify the tsx file too
+#define MAX_EXPECTED_Z_DEPTH 2

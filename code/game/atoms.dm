@@ -173,6 +173,8 @@
 
 	/// the datum handler for our contents - see create_storage() for creation method
 	var/datum/storage/atom_storage
+	/// How this atom should react to having its astar blocking checked
+	var/can_astar_pass = CANASTARPASS_DENSITY
 
 /**
  * Called when an atom is created in byond (built in engine proc)
@@ -1632,7 +1634,7 @@
 
 /obj/item/update_filters()
 	. = ..()
-	update_action_buttons()
+	update_item_action_buttons()
 
 /atom/proc/get_filter(name)
 	if(filter_data && filter_data[name])
@@ -1840,11 +1842,16 @@
 		if(!length(forced_gravity))
 			SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
 
-		var/max_grav = 0
-		for(var/i in forced_gravity)//our gravity is the strongest return forced gravity we get
-			max_grav = max(max_grav, i)
-		//cut so we can reuse the list, this is ok since forced gravity movers are exceedingly rare compared to all other movement
-		return max_grav
+		var/positive_grav = 0
+		var/negative_grav = 0
+		//our gravity is sum of the most massive positive and negative numbers returned by the signal
+		//so that adding two forced_gravity elements with an effect size of 1 each doesnt add to 2 gravity
+		//but negative force gravity effects can cancel out positive ones
+		for(var/gravity_influence in forced_gravity)
+			positive_grav = max(positive_grav, gravity_influence)
+			negative_grav = min(negative_grav, gravity_influence)
+
+		return (positive_grav + negative_grav)
 
 	var/area/turf_area = gravity_turf.loc
 
@@ -2067,6 +2074,9 @@
  * * to_dir- What direction we're trying to move in, relevant for things like directional windows that only block movement in certain directions
  * * caller- The movable we're checking pass flags for, if we're making any such checks
  * * no_id: When true, doors with public access will count as impassible
+ *
+ * IMPORTANT NOTE: /turf/proc/LinkBlockedWithAccess assumes that overrides of CanAStarPass will always return true if density is FALSE
+ * If this is NOT you, ensure you edit your can_astar_pass variable. Check __DEFINES/path.dm
  **/
 /atom/proc/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller, no_id = FALSE)
 	if(caller && (caller.pass_flags & pass_flags_self))

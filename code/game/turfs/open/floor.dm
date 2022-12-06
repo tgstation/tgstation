@@ -18,6 +18,7 @@
 	heat_capacity = 10000
 	tiled_dirt = TRUE
 
+
 	overfloor_placed = TRUE
 
 	/// Determines the type of damage overlay that will be used for the tile
@@ -28,6 +29,8 @@
 	var/floor_tile = null
 	var/list/broken_states
 	var/list/burnt_states
+	/// Determines if you can deconstruct this with a RCD
+	var/rcd_proof = FALSE
 
 /turf/open/floor/Initialize(mapload)
 	. = ..()
@@ -250,6 +253,9 @@
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
 		if(RCD_FLOORWALL)
+			var/obj/structure/girder/girder = locate() in src
+			if(girder)
+				return girder.rcd_vals(user, the_rcd)
 			return rcd_result_with_memory(
 				list("mode" = RCD_FLOORWALL, "delay" = 2 SECONDS, "cost" = 16),
 				src, RCD_MEMORY_WALL,
@@ -277,6 +283,10 @@
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
+			var/obj/structure/girder/girder = locate() in src
+			if(girder)
+				return girder.rcd_act(user, the_rcd, passed_mode)
+
 			to_chat(user, span_notice("You build a wall."))
 			PlaceOnTop(/turf/closed/wall)
 			return TRUE
@@ -323,11 +333,15 @@
 			new_airlock.update_appearance()
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			var/old_turf_name = name
-			if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
+			if(rcd_proof)
+				balloon_alert(user, "it's too thick!")
 				return FALSE
-			to_chat(user, span_notice("You deconstruct the [old_turf_name]."))
-			return TRUE
+			else
+				var/old_turf_name = name
+				if(!ScrapeAway(flags = CHANGETURF_INHERIT_AIR))
+					return FALSE
+				to_chat(user, span_notice("You deconstruct the [old_turf_name]."))
+				return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)
 				return FALSE

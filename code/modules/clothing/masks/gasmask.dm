@@ -153,6 +153,7 @@
 	name = "plague doctor mask"
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT|HIDEHAIR
 	inhand_icon_state = "gas_mask"
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
@@ -217,7 +218,7 @@
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
 		user.update_worn_mask()
-		update_action_buttons()
+		update_item_action_buttons()
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
 
@@ -277,7 +278,7 @@
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
 		user.update_worn_mask()
-		update_action_buttons()
+		update_item_action_buttons()
 		to_chat(user, span_notice("Your Mime Mask has now morphed into [choice]!"))
 		return TRUE
 
@@ -367,7 +368,7 @@
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
 		user.update_worn_mask()
-		update_action_buttons()
+		update_item_action_buttons()
 		to_chat(M, span_notice("The Tiki Mask has now changed into the [choice] Mask!"))
 		return 1
 

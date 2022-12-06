@@ -63,7 +63,7 @@
 		var/armor_check = check_projectile_armor(def_zone, P, is_silent = TRUE)
 		armor_check = min(ARMOR_MAX_BLOCK, armor_check) //cap damage reduction at 90%
 		apply_damage(P.damage, P.damage_type, def_zone, armor_check, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
-		apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
+		apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor_check, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
 	return . ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
@@ -231,6 +231,7 @@
 		return TRUE
 
 /mob/living/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	. = ..()
 	if(user.melee_damage_upper == 0)
 		if(user != src)
 			visible_message(span_notice("\The [user] [user.friendly_verb_continuous] [src]!"), \

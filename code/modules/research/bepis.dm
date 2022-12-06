@@ -4,10 +4,10 @@
 
 #define MACHINE_OPERATION 100000
 #define MACHINE_OVERLOAD 500000
-#define MAJOR_THRESHOLD 6*CARGO_CRATE_VALUE
-#define MINOR_THRESHOLD 4*CARGO_CRATE_VALUE
-#define STANDARD_DEVIATION 2*CARGO_CRATE_VALUE
-#define PART_CASH_OFFSET_AMOUNT 0.5*CARGO_CRATE_VALUE
+#define MAJOR_THRESHOLD (6*CARGO_CRATE_VALUE)
+#define MINOR_THRESHOLD (4*CARGO_CRATE_VALUE)
+#define STANDARD_DEVIATION (2*CARGO_CRATE_VALUE)
+#define PART_CASH_OFFSET_AMOUNT (0.5*CARGO_CRATE_VALUE)
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -100,8 +100,8 @@
 	for(var/obj/item/stock_parts/micro_laser/Laser in component_parts)
 		L += ((Laser.rating - 1) * PART_CASH_OFFSET_AMOUNT)
 	negative_cash_offset = L
-	for(var/obj/item/stock_parts/scanning_module/Scan in component_parts)
-		S += ((Scan.rating - 1) * 0.25)
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		S += ((scanning_module.tier - 1) * 0.25)
 	inaccuracy_percentage = (1.5 - S)
 
 /obj/machinery/rnd/bepis/update_icon_state()

@@ -227,7 +227,7 @@ SUBSYSTEM_DEF(statpanels)
 		// Now, we're gonna queue image generation out of those refs
 		to_make += turf_item
 		already_seen[turf_item] = OBJ_IMAGE_LOADING
-		obj_window.RegisterSignal(turf_item, COMSIG_PARENT_QDELETING, /datum/object_window_info/proc/viewing_atom_deleted) // we reset cache if anything in it gets deleted
+		obj_window.RegisterSignal(turf_item, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/object_window_info,viewing_atom_deleted)) // we reset cache if anything in it gets deleted
 	return turf_items
 
 #undef OBJ_IMAGE_LOADING

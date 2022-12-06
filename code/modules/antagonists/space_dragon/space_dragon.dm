@@ -92,6 +92,7 @@
 		to_chat(owner.current, span_boldwarning("You've failed to summon the rift in a timely manner! You're being pulled back from whence you came!"))
 		destroy_rifts()
 		SEND_SOUND(owner.current, sound('sound/magic/demon_dies.ogg'))
+		owner.current.death(/* gibbed = */ TRUE)
 		QDEL_NULL(owner.current)
 
 /**

@@ -179,8 +179,9 @@
  * * message - The message to announce
  */
 /datum/component/experiment_handler/proc/announce_message_to_all(message)
-	for(var/experiment in GLOB.experiment_handlers)
-		var/datum/component/experiment_handler/experi_handler = experiment
+	for(var/datum/component/experiment_handler/experi_handler as anything in GLOB.experiment_handlers)
+		if(experi_handler.linked_web != linked_web)
+			continue
 		var/atom/movable/experi_parent = experi_handler.parent
 		experi_parent.say(message)
 
@@ -247,7 +248,7 @@
  */
 /datum/component/experiment_handler/proc/configure_experiment_click(datum/source, mob/user)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, /datum/proc/ui_interact, user)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 
 /**
  * Attempts to link this experiment_handler to a provided techweb
@@ -353,17 +354,22 @@
 	. = list(
 		"always_active" = config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE,
 		"has_start_callback" = !isnull(start_experiment_callback))
-	.["servers"] = list()
-	for (var/obj/machinery/rnd/server/server in get_available_servers())
+	.["techwebs"] = list()
+	for (var/datum/techweb/techwebs as anything in SSresearch.techwebs)
+		if(!length(techwebs.techweb_servers)) //no servers, we don't care
+			continue
+		var/obj/machinery/rnd/server = techwebs.techweb_servers[1] //get the first machine possible
+		if(!is_valid_z_level(get_turf(user), get_turf(server)))
+			continue
 		var/list/data = list(
 			name = server.name,
-			web_id = server.stored_research?.id,
-			web_org = server.stored_research?.organization,
-			location = get_area(server),
-			selected = !isnull(linked_web) && server.stored_research == linked_web,
-			ref = REF(server)
+			web_id = techwebs.id,
+			web_org = techwebs.organization,
+			selected = (techwebs == linked_web),
+			ref = REF(server),
+			all_servers = techwebs.techweb_servers,
 		)
-		.["servers"] += list(data)
+		.["techwebs"] += list(data)
 	.["experiments"] = list()
 	if (linked_web)
 		for (var/datum/experiment/experiment in linked_web.available_experiments)

@@ -111,7 +111,7 @@
 		qdel(src)
 		return
 
-	RegisterSignal(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
+	RegisterSignals(resolve_parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
 	RegisterSignal(resolve_parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
 	RegisterSignal(resolve_parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(on_mousedropped_onto))
 
@@ -122,7 +122,7 @@
 
 	RegisterSignal(resolve_parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(mass_empty))
 
-	RegisterSignal(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
+	RegisterSignals(resolve_parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
 	RegisterSignal(resolve_parent, COMSIG_PARENT_ATTACKBY_SECONDARY, PROC_REF(open_storage_attackby_secondary))
 
 	RegisterSignal(resolve_location, COMSIG_ATOM_ENTERED, PROC_REF(handle_enter))
@@ -851,9 +851,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(numerical_stacking)
 		numbered_contents = process_numerical_display()
 		adjusted_contents = numbered_contents.len
+	//if the ammount of contents reaches some multiplier of the final column (and its not the last slot), let the player view an additional row
+	var/additional_row = (!(adjusted_contents % screen_max_columns) && adjusted_contents < max_slots)
 
 	var/columns = clamp(max_slots, 1, screen_max_columns)
-	var/rows = clamp(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
+	var/rows = clamp(CEILING(adjusted_contents / columns, 1) + additional_row, 1, screen_max_rows)
 
 	orient_item_boxes(rows, columns, numbered_contents)
 
@@ -1101,5 +1103,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!resolve_parent)
 		return
 
-	animate(resolve_parent, time = 1.5, loop = 0, transform = matrix().Scale(1.07, 0.9))
-	animate(time = 2, transform = null)
+	var/matrix/old_matrix = resolve_parent.transform
+	animate(resolve_parent, time = 1.5, loop = 0, transform = resolve_parent.transform.Scale(1.07, 0.9))
+	animate(time = 2, transform = old_matrix)

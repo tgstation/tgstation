@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(lifts)
 /obj/structure/industrial_lift/proc/set_movement_registrations(list/turfs_to_set)
 	for(var/turf/turf_loc as anything in turfs_to_set || locs)
 		RegisterSignal(turf_loc, COMSIG_ATOM_EXITED, PROC_REF(UncrossedRemoveItemFromLift))
-		RegisterSignal(turf_loc, list(COMSIG_ATOM_ENTERED,COMSIG_ATOM_INITIALIZED_ON), PROC_REF(AddItemOnLift))
+		RegisterSignals(turf_loc, list(COMSIG_ATOM_ENTERED,COMSIG_ATOM_INITIALIZED_ON), PROC_REF(AddItemOnLift))
 
 ///unset our movement registrations from turfs that no longer contain us (or every loc if turfs_to_unset is unspecified)
 /obj/structure/industrial_lift/proc/unset_movement_registrations(list/turfs_to_unset)
@@ -780,6 +780,8 @@ GLOBAL_LIST_EMPTY(lifts)
 	desc = "A tram for tramversing the station."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "titanium_yellow"
+	layer = TRAM_FLOOR_LAYER
+	plane = GAME_PLANE
 	base_icon_state = null
 	smoothing_flags = NONE
 	smoothing_groups = null

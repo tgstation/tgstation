@@ -1,5 +1,5 @@
 ///Time before being allowed to select a new cult leader again
-#define CULT_POLL_WAIT 240 SECONDS
+#define CULT_POLL_WAIT (240 SECONDS)
 
 /// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
 #define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
@@ -17,14 +17,14 @@
 /proc/cheap_hypotenuse(Ax, Ay, Bx, By)
 	return sqrt(abs(Ax - Bx) ** 2 + abs(Ay - By) ** 2) //A squared + B squared = C squared
 
-/** recursive_organ_check
+/** toggle_organ_decay
  * inputs: first_object (object to start with)
  * outputs:
  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
  *  within 'first_object', toggling their frozen flag. This check excludes items held within other safe organ
  *  storage units, so that only the lowest level of container dictates whether we do or don't decompose
  */
-/proc/recursive_organ_check(atom/first_object)
+/proc/toggle_organ_decay(atom/first_object)
 
 	var/list/processing_list = list(first_object)
 	var/list/processed_list = list()

@@ -38,6 +38,16 @@
 	icon_file = 'icons/mob/simple/carp.dmi'
 	json_config = 'code/datums/greyscale/json_configs/carp.json'
 
+/datum/greyscale_config/carp_magic
+	name = "Magicarp"
+	icon_file = 'icons/mob/simple/carp.dmi'
+	json_config = 'code/datums/greyscale/json_configs/carp_magic.json'
+
+/datum/greyscale_config/carp_mega
+	name = "Megacarp"
+	icon_file = 'icons/mob/simple/broadMobs.dmi'
+	json_config = 'code/datums/greyscale/json_configs/carp_mega.json'
+
 /datum/greyscale_config/carp/disk_mouth
 	name = "Space Carp, Disk in Mouth"
 	json_config = 'code/datums/greyscale/json_configs/carp_disk_mouth.json'
@@ -971,3 +981,7 @@
 	icon_file = 'icons/obj/radio.dmi'
 	json_config = 'code/datums/greyscale/json_configs/encryptionkey_security.json'
 
+/datum/greyscale_config/quantum_keycard
+	name = "Quantum Keycard"
+	icon_file = 'icons/obj/device.dmi'
+	json_config = 'code/datums/greyscale/json_configs/quantum_keycard.json'
