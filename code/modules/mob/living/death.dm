@@ -20,6 +20,7 @@
 		spread_bodyparts(no_brain, no_organs)
 
 	spawn_gibs(no_bodyparts)
+	SEND_SIGNAL(src, COMSIG_LIVING_GIBBED, no_brain, no_organs, no_bodyparts)
 	qdel(src)
 
 /mob/living/proc/gib_animation()

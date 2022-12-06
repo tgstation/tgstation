@@ -1,0 +1,5 @@
+author: "Azlan, Fikou, MTandi"
+delete-after: True
+changes:
+  - imageadd: "Void suit and jetpack resprited"
+  - bugfix: "Also fixed the issue with all jetpack sprites not updating on the back"
