@@ -909,7 +909,7 @@
 	clone.equipOutfit(human_cloned.mind.assigned_role.outfit)
 
 	var/obj/item/clothing/under/sensor_clothes = clone.w_uniform
-	var/obj/item/modular_computer/tablet/pda/messenger = locate() in clone
+	var/obj/item/modular_computer/pda/messenger = locate() in clone
 	if(messenger)
 		var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
 		if(message_app)
