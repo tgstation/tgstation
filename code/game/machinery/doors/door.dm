@@ -46,6 +46,7 @@
 	var/can_open_with_hands = TRUE /// Whether or not the door can be opened by hand (used for blast doors and shutters)
 
 /obj/machinery/door/Initialize(mapload)
+	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	set_init_door_layer()
 	update_freelook_sight()
@@ -69,7 +70,6 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/can_barricade)
-	AddElement(/datum/element/blocks_explosives)
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
