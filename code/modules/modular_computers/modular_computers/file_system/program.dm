@@ -57,7 +57,7 @@
 	return temp
 
 // Relays icon update to the computer.
-/datum/computer_file/program/proc/update_compute_appearance(updates=ALL)
+/datum/computer_file/program/proc/update_computer_appearance(updates=ALL)
 	computer?.relay_appearance_update()
 
 /**

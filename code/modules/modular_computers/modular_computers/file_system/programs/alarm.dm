@@ -32,12 +32,12 @@
 	if(has_alert)
 		program_icon_state = "alert-red"
 		ui_header = "alarm_red.gif"
-		update_computer_icon()
+		update_computer_appearance()
 	else
 		if(!has_alert)
 			program_icon_state = "alert-green"
 			ui_header = "alarm_green.gif"
-			update_computer_icon()
+			update_computer_appearance()
 	return 1
 
 /datum/computer_file/program/alarm_monitor/ui_data(mob/user)

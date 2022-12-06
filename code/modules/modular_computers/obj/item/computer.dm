@@ -26,7 +26,7 @@
 	/// If FALSE, don't draw overlays on this device at all
 	var/display_overlays = TRUE
 	/// If FALSE, do not let wrenches deconstruct this item
-	var/deconstructible = TRUE
+	var/deconstructable = TRUE
 
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
