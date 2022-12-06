@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	/// if TRUE, we will gib anyone we land on top of. if FALSE, we will just apply damage with a serious wound penalty.
 	var/violent_landing = TRUE
 	/// damage multiplier if a mob is hit by the lift while it is moving horizontally
-	var/collision_lethality = 2
+	var/collision_lethality = 1
 	/// How long does it take for the elevator to move vertically?
 	var/elevator_vertical_speed = 2 SECONDS
 
@@ -389,7 +389,7 @@ GLOBAL_LIST_EMPTY(lifts)
 					continue
 				to_chat(collided, span_userdanger("[src] collides into you!"))
 				playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
-				var/damage = rand(5, 10) * collision_lethality
+				var/damage = rand(9, 24) * collision_lethality
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_HEAD)
 				collided.apply_damage(2 * damage, BRUTE, BODY_ZONE_CHEST)
 				collided.apply_damage(0.5 * damage, BRUTE, BODY_ZONE_L_LEG)
