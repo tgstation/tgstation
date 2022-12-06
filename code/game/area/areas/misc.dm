@@ -34,3 +34,10 @@
 	has_gravity = STANDARD_GRAVITY
 	name = "Test Room"
 	icon_state = "test_room"
+
+/area/misc/lazy_pivot_allocation
+	icon_state = "lazy_pivot"
+	requires_power = TRUE
+	always_unpowered = TRUE
+	static_lighting = FALSE
+	area_flags = UNIQUE_AREA

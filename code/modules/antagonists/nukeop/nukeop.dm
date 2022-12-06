@@ -105,8 +105,6 @@
 			number = nuke_team.members.Find(owner)
 			owner.current.real_name = "[nuke_team.syndicate_name] Operative #[number]"
 
-
-
 /datum/antagonist/nukeop/proc/memorize_code()
 	if(nuke_team && nuke_team.tracked_nuke && nuke_team.memorized_code)
 		antag_memory += "<B>[nuke_team.tracked_nuke] Code</B>: [nuke_team.memorized_code]<br>"
@@ -129,6 +127,7 @@
 	owner.current.forceMove(pick(GLOB.nukeop_leader_start))
 
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	if(!new_team)
 		if(!always_new_team)
 			for(var/datum/antagonist/nukeop/N in GLOB.antagonists)

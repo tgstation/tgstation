@@ -443,6 +443,67 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "portal_exit"
 	var/id
 
+/**
+ * Landmark to designate certain areas that do not need to exist nor be loaded at world start
+ * but do want to be loaded under certain circumstances. Use this for stuff like the nukie base or wizden, aka stuff that only matters when their antag is rolled.
+ */
+/obj/effect/landmark/lazy_template_pivot
+	name = "lazy template pivot"
+	icon_state = "lazy_pivot" // todo: icons for all this shit
+	var/key
+	var/map_path
+
+/obj/effect/landmark/lazy_template_pivot/Initialize(mapload)
+	GLOB.lazy_template_pivots += src
+	return ..()
+
+/obj/effect/landmark/lazy_template_pivot/Destroy(...)
+	GLOB.lazy_template_pivots -= src
+	return ..()
+
+/**
+ * Does the grunt work of loading the template onto itself.
+ * Has a basic check to ensure that the loaded template isn't larger than the preallocated area.
+ */
+/obj/effect/landmark/lazy_template_pivot/proc/lazy_load()
+	var/turf/my_turf = get_turf(src)
+
+	if(!map_path || !fexists(map_path))
+		CRASH("lazy_template_pivot [type] has an invalid map_path: '[map_path]'")
+
+	var/datum/map_template/loading = new(path = map_path, cache = TRUE)
+
+	// ensure that what we're loading isn't larger than the allocation
+	var/list/affected = loading.get_affected_turfs(my_turf)
+	for(var/turf/turf as anything in affected)
+		var/area/turf_area = get_area(turf)
+		if(turf_area.type != /area/misc/lazy_pivot_allocation)
+			CRASH("Attempted to load a lazy template pivot larger than the allocation for the pivot")
+
+	// change the area of the turfs to space
+	var/area/space_area = GLOB.areas_by_type[/area/space]
+	for(var/turf/turf as anything in affected)
+		var/area/turf_area = get_area(turf)
+		turf_area.turfs_to_uncontain += turf
+		space_area.contents += turf
+		space_area.contained_turfs += turf
+		turf.baseturfs = /turf/baseturf_bottom
+
+	if(!loading.load(my_turf))
+		stack_trace("Failed to lazy load!")
+	// we did our job, so now we bid aedieu
+	qdel(src)
+
+/obj/effect/landmark/lazy_template_pivot/nukie_base
+	icon_state = "nukie"
+	key = LAZY_TEMPLATE_KEY_NUKIEBASE
+	map_path = "_maps/templates/lazy_templates/nukie_base.dmm"
+
+/obj/effect/landmark/lazy_template_pivot/wizard_dem
+	icon_state = "wizard_den"
+	key = LAZY_TEMPLATE_KEY_WIZARDDEN
+	map_path = "_maps/templates/lazy_templates/wizard_den.dmm"
+
 /// Marks the bottom left of the testing zone.
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.
 /obj/effect/landmark/unit_test_bottom_left

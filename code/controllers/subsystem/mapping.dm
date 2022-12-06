@@ -86,6 +86,9 @@ SUBSYSTEM_DEF(mapping)
 	/// list of traits and their associated z leves
 	var/list/z_trait_levels = list()
 
+	/// list of lazy templates that have been loaded
+	var/list/loaded_lazy_templates
+
 /datum/controller/subsystem/mapping/PreInit()
 	..()
 #ifdef FORCE_MAP
@@ -843,6 +846,22 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				true_to_offset_planes[string_real] = list()
 
 			true_to_offset_planes[string_real] |= offset_plane
+
+/datum/controller/subsystem/mapping/proc/lazy_load_template(template_key)
+	if(LAZYACCESS(loaded_lazy_templates, template_key))
+		return
+	LAZYADDASSOC(loaded_lazy_templates, template_key, TRUE)
+
+	var/obj/effect/landmark/lazy_template_pivot/found
+	for(var/obj/effect/landmark/lazy_template_pivot/lazy_template_pivot in GLOB.lazy_template_pivots)
+		if(lazy_template_pivot.key != template_key)
+			continue
+		found = lazy_template_pivot
+		break
+
+	if(!found)
+		CRASH("Attempted to load lazy template '[template_key]' but no marker with that key in GLOB.lazy_template_pivots!")
+	found.lazy_load()
 
 /proc/generate_lighting_appearance_by_z(z_level)
 	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
