@@ -107,7 +107,6 @@
 	update(trigger = FALSE)
 
 /obj/machinery/light/Destroy()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE_LIGHT)
 	var/area/local_area =get_room_area(src)
 	if(local_area)
 		on = FALSE
