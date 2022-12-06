@@ -1045,7 +1045,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 
 /obj/structure/sign/poster/official/festive
 	name = "Festive Notice Poster"
-	desc = "A poster that informs of active holidays. None are today, so you should get back to work.
+	desc = "A poster that informs of active holidays. None are today, so you should get back to work."
 	icon_state = "holiday_none"
 
 /obj/structure/sign/poster/official/festive/Initialize()
