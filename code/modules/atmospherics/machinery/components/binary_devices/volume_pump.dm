@@ -23,12 +23,6 @@
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked
 	var/overclocked = FALSE
-	///Frequency for radio signaling
-	var/frequency = 0
-	///ID for radio signaling
-	var/id = null
-	///Connection to the radio processing
-	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/volume_pump/Initialize(mapload)
 	. = ..()
@@ -49,10 +43,6 @@
 		investigate_log("was set to [transfer_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 		balloon_alert(user, "volume output set to [transfer_rate] L/s")
 		update_appearance()
-	return ..()
-
-/obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
-	SSradio.remove_object(src,frequency)
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
@@ -99,33 +89,6 @@
 	if(overclocked)
 		. += "Its warning light is on[on ? " and it's spewing gas!" : "."]"
 
-/**
- * Called in atmos_init(), used to change or remove the radio frequency from the component
- * Arguments:
- * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
- */
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
-
-/**
- * Called in atmos_init(), send the component status to the radio device connected
- */
-/obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
-	var/datum/signal/signal = new(list(
-		"tag" = id,
-		"device" = "APV",
-		"power" = on,
-		"transfer_rate" = transfer_rate,
-		"sigtype" = "status"
-	))
-	radio_connection.post_signal(src, signal)
-
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -138,11 +101,6 @@
 	data["rate"] = round(transfer_rate)
 	data["max_rate"] = round(MAX_TRANSFER_RATE)
 	return data
-
-/obj/machinery/atmospherics/components/binary/volume_pump/atmos_init()
-	. = ..()
-
-	set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	. = ..()
@@ -164,32 +122,6 @@
 			if(.)
 				transfer_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
-
-/obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return
-
-	var/old_on = on //for logging
-
-	if("power" in signal.data)
-		set_on(text2num(signal.data["power"]))
-
-	if("power_toggle" in signal.data)
-		set_on(!on)
-
-	if("set_transfer_rate" in signal.data)
-		var/datum/gas_mixture/air1 = airs[1]
-		transfer_rate = clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
-
-	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
-
-	if("status" in signal.data)
-		broadcast_status()
-		return //do not update_appearance
-
-	broadcast_status()
 	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)

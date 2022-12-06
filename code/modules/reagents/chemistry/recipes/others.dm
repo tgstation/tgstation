@@ -562,7 +562,7 @@
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in rand(1, created_volume) to created_volume) // More lulz.
-		new /mob/living/simple_animal/pet/dog/corgi(location)
+		new /mob/living/basic/pet/dog/corgi(location)
 	..()
 
 //monkey powder heehoo
