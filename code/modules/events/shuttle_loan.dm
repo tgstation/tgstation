@@ -1,12 +1,12 @@
-#define HIJACK_SYNDIE 1
-#define RUSKY_PARTY 2
-#define SPIDER_GIFT 3
-#define DEPARTMENT_RESUPPLY 4
-#define ANTIDOTE_NEEDED 5
-#define PIZZA_DELIVERY 6
-#define ITS_HIP_TO 7
-#define MY_GOD_JC 8
-#define PAPERS_PLEASE 9
+#define HIJACK_SYNDIE "syndies"
+#define RUSKY_PARTY "ruskies"
+#define SPIDER_GIFT "spiders"
+#define DEPARTMENT_RESUPPLY "resupplies"
+#define ANTIDOTE_NEEDED "disease"
+#define PIZZA_DELIVERY "pizza"
+#define ITS_HIP_TO "bees"
+#define MY_GOD_JC "bomb"
+#define PAPERS_PLEASE "paperwork"
 
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
@@ -29,6 +29,8 @@
 	)
 	///The types of loan events already run (and to be excluded if the event triggers).
 	var/list/run_events = list()
+	///The admin-selected loan offer ID.
+	var/chosen_event
 
 /datum/round_event_control/shuttle_loan/can_spawn_event(players_amt)
 	. = ..()
@@ -40,6 +42,9 @@
 /datum/round_event_control/shuttle_loan/admin_setup()
 	if(!check_rights(R_FUN))
 		return ADMIN_CANCEL_EVENT
+
+	if(tgui_alert(usr, "Select a loan offer?", "Trade Offer:", list("Yes", "No")) == "Yes")
+		chosen_event = tgui_input_list(usr, "What would you like to offer the crew?", "Throw them a bone.", shuttle_loan_offers)
 
 	for(var/datum/round_event/shuttle_loan/loan_event in SSevents.running)
 		loan_event.kill() //Force out the old event for a new one to take its place
@@ -54,20 +59,20 @@
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
-
 	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't call control, because it hasn't been set yet
-		var/list/loan_list = list()
-		loan_list += loan_event_control.shuttle_loan_offers
-		var/list/run_events = loan_event_control.run_events //Ask the round_event_control which loans have already been offered
-
-		loan_list -= run_events //Remove the already offered loans from the candidate list
-
-		if(!length(loan_list)) //If we somehow run out of loans, they all become available again
+		if(loan_event_control.chosen_event) //Pass down the admin selection and clean it for future use.
+			dispatch_type = loan_event_control.chosen_event
+			loan_event_control.chosen_event = null
+		else //Otherwise, generate and pick from the list of offerable offers.
+			var/list/loan_list = list()
 			loan_list += loan_event_control.shuttle_loan_offers
-			run_events.Cut()
-
-		dispatch_type = pick(loan_list) //Pick a loan to offer, and add it to the blacklist
-		loan_event_control.run_events += dispatch_type
+			var/list/run_events = loan_event_control.run_events //Ask the round_event_control which loans have already been offered
+			loan_list -= run_events //Remove the already offered loans from the candidate list
+			if(!length(loan_list)) //If we somehow run out of loans, they all become available again
+				loan_list += loan_event_control.shuttle_loan_offers
+				run_events.Cut()
+			dispatch_type = pick(loan_list) //Pick a loan to offer
+		loan_event_control.run_events += dispatch_type //Regardless of admin selection,
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
