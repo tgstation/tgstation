@@ -713,6 +713,7 @@
 /obj/item/food/beef_stroganoff
 	name = "beef stroganoff"
 	desc = "A russian dish that consists of beef and sauce. Really popular in japan, or at least that's what my animes would allude to."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "beefstroganoff"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 16, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("beef" = 3, "sour cream" = 1, "salt" = 1, "pepper" = 1)
