@@ -25,6 +25,8 @@
 	var/icon_state_menu = "menu"
 	/// If FALSE, don't draw overlays on this device at all
 	var/display_overlays = TRUE
+	/// If FALSE, do not let wrenches deconstruct this item
+	var/deconstructible = TRUE
 
 	/// Allow people with chunky fingers to use?
 	var/allow_chunky = FALSE
@@ -152,7 +154,8 @@
 	return TRUE
 
 /obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
+	if(!deconstructable)
+		return ..()
 	tool.play_tool_sound(src, user, 20, volume=20)
 	new /obj/item/stack/sheet/iron(get_turf(loc), steel_sheet_cost)
 	user.balloon_alert(user, "disassembled")

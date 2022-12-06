@@ -21,6 +21,7 @@
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 
 	cpu = /datum/modular_computer_host/item/pda
+	deconstructable = FALSE // PDAs are important enough not to be deconstructed.
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
