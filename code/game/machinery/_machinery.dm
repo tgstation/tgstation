@@ -1027,9 +1027,6 @@
 		else
 			part_count[component_name] = 1
 
-	for (var/datum/stock_part/stock_part in component_parts)
-		part_count[stock_part.name()] += 1
-
 	var/list/printed_components = list()
 
 	var/text = span_notice("It contains the following parts:")
