@@ -1,4 +1,4 @@
-/// Makes sure items with defined inhand_icon_states... actually have icons that exist!
+/// Makes sure food items actually have icons that exist!
 /datum/unit_test/missing_food_icons
 	var/static/list/possible_icon_states = list()
 	/// additional_food_location is for downstream modularity support.
