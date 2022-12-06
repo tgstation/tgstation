@@ -111,17 +111,19 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(eat), AM)
 
-/obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
+/obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return
-	if(iseffect(AM0))
+	if(iseffect(morsel))
 		return
-	if(!isturf(AM0.loc))
+	if(!isturf(morsel.loc))
 		return //I don't know how you called Crossed() but stop it.
+	if(morsel.resistance_flags & INDESTRUCTIBLE)
+		return
 
-	var/list/to_eat = AM0.get_all_contents()
+	var/list/to_eat = morsel.get_all_contents()
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()
@@ -156,10 +158,10 @@
 		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
 	if(not_eaten)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
-	if(!ismob(AM0))
-		qdel(AM0)
+	if(!ismob(morsel))
+		qdel(morsel)
 	else // Lets not qdel a mob, yes?
-		for(var/iterable in AM0.contents)
+		for(var/iterable in morsel.contents)
 			var/atom/movable/content = iterable
 			qdel(content)
 

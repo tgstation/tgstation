@@ -11,14 +11,14 @@
 		return null
 	return format_text ? format_text(checked_area.name) : checked_area.name
 
-/** recursive_organ_check
+/** toggle_organ_decay
  * inputs: first_object (object to start with)
  * outputs:
  * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
  *  within 'first_object', toggling their frozen flag. This check excludes items held within other safe organ
  *  storage units, so that only the lowest level of container dictates whether we do or don't decompose
  */
-/proc/recursive_organ_check(atom/first_object)
+/proc/toggle_organ_decay(atom/first_object)
 
 	var/list/processing_list = list(first_object)
 	var/list/processed_list = list()

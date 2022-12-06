@@ -49,6 +49,11 @@
 	name = "opened cryogenic pod"
 	desc = "A cryogenic pod that has recently discharged its occupant. The pod appears non-functional."
 
+/obj/structure/showcase/machinery/oldpod/used/psyker
+	name = "opened mental energizer"
+	desc = "A mental energizer that has recently discharged its occupant. The pod appears non-functional."
+	icon_state = "psykerpod-open"
+
 /obj/structure/showcase/cyborg/old
 	name = "Cyborg Statue"
 	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze."
@@ -159,8 +164,8 @@
 
 	switch(deconstruction_state)
 		if(SHOWCASE_CONSTRUCTED)
-			. += "The showcase is fully constructed."
+			. += "It's fully constructed."
 		if(SHOWCASE_SCREWDRIVERED)
-			. += "The showcase has its screws loosened."
+			. += "It has its screws loosened."
 		else
 			. += "If you see this, something is wrong."

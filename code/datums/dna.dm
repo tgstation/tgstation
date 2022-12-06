@@ -870,7 +870,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				to_chat(src, span_phobia("LOOK UP!"))
 				addtimer(CALLBACK(src, PROC_REF(something_horrible_mindmelt)), 30)
 			if(6)
-				psykerize()
+				slow_psykerize()
 
 /mob/living/carbon/human/proc/something_horrible_mindmelt()
 	if(!is_blind())
