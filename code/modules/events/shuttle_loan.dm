@@ -44,7 +44,7 @@
 		return ADMIN_CANCEL_EVENT
 
 	if(tgui_alert(usr, "Select a loan offer?", "Trade Offer:", list("Yes", "No")) == "Yes")
-		chosen_event = tgui_input_list(usr, "What would you like to offer the crew?", "Throw them a bone.", shuttle_loan_offers)
+		chosen_event = tgui_input_list(usr, "What deal would you like to offer the crew?", "Throw them a bone.", shuttle_loan_offers)
 
 	for(var/datum/round_event/shuttle_loan/loan_event in SSevents.running)
 		loan_event.kill() //Force out the old event for a new one to take its place
@@ -53,7 +53,7 @@
 	announce_when = 1
 	end_when = 500
 	var/dispatched = FALSE
-	var/dispatch_type = 0
+	var/dispatch_type = "none"
 	var/bonus_points = 10000
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 	var/loan_type //for logging
@@ -72,7 +72,7 @@
 				loan_list += loan_event_control.shuttle_loan_offers
 				run_events.Cut()
 			dispatch_type = pick(loan_list) //Pick a loan to offer
-		loan_event_control.run_events += dispatch_type //Regardless of admin selection,
+		loan_event_control.run_events += dispatch_type //Regardless of admin selection, we add the event being run to the run_events list
 
 /datum/round_event/shuttle_loan/announce(fake)
 	SSshuttle.shuttle_loan = src
@@ -104,6 +104,9 @@
 			priority_announce("Cargo: A neighboring station needs some help handling some paperwork. Could you help process it for us?", "CentCom Paperwork Division")
 			thanks_msg = "The cargo shuttle should return in five minutes. Payment will be rendered when the paperwork is processed and returned."
 			bonus_points = 0 //Payout is made when the stamped papers are returned
+		else
+			log_game("Shuttle Loan event could not find [dispatch_type] event to offer.")
+			kill()
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
