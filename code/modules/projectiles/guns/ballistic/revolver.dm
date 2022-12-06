@@ -96,10 +96,12 @@
 /obj/item/gun/ballistic/revolver/ignition_effect(atom/A, mob/user)
 	if(last_fire && last_fire + 15 SECONDS > world.time)
 		. = span_notice("[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.")
+
 /obj/item/gun/ballistic/revolver/syndicate
 	name = "\improper S-357"
 	desc = "A 7 round revolver chambered in .357. It has 'Scarborough Arms' engraved on it"
 	icon_state = "syndicate_revolver"
+
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
 	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
