@@ -303,9 +303,9 @@
 		if(limb_hit)
 			organ_hit_text = " in \the [parse_zone(limb_hit)]"
 			if(limb_hit == BODY_ZONE_HEAD)
-			if(ishuman(L) && !nodamage && !blocked)
-				var/mob/living/carbon/human/courier = L
-				courier.adjustOrganLoss(ORGAN_SLOT_BRAIN, 200, 200)
+				if(ishuman(L) && !nodamage && !blocked)
+					var/mob/living/carbon/human/courier = L
+					courier.adjustOrganLoss(ORGAN_SLOT_BRAIN, 200, 200)
 		if(suppressed==SUPPRESSED_VERY)
 			playsound(loc, hitsound, 5, TRUE, -1)
 		else if(suppressed)
