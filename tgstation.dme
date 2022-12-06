@@ -540,7 +540,6 @@
 #include "code\controllers\subsystem\materials.dm"
 #include "code\controllers\subsystem\minor_mapping.dm"
 #include "code\controllers\subsystem\mobs.dm"
-#include "code\controllers\subsystem\modular_computers.dm"
 #include "code\controllers\subsystem\moods.dm"
 #include "code\controllers\subsystem\mouse_entered.dm"
 #include "code\controllers\subsystem\nightshift.dm"
