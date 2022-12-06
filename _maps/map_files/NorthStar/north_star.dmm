@@ -18300,11 +18300,11 @@
 	c_tag = "Security - Warden's Office"
 	},
 /obj/structure/bed/dogbed/mcgriff,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/fourcorners,
+/mob/living/basic/pet/dog/pug/mcgriff,
 /turf/open/floor/iron/dark,
 /area/station/security/warden)
 "eWg" = (
@@ -26467,7 +26467,7 @@
 /area/station/hallway/floor2/aft)
 "hnC" = (
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/ian,
+/mob/living/basic/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "hnG" = (
