@@ -26,7 +26,7 @@
 	var/icon_state = initial(item.icon_state)
 	#ifdef UNIT_TESTS
 	if(!(icon_state in icon_states(icon_file)))
-		stack_trace("Atom [path] with icon '[icon_file]' missing state '[icon_state]'")
+		stack_trace("Atom [atom] with icon '[icon_file]' missing state '[icon_state]'")
 		return
 	#endif
 	var/icon/I = icon(icon_file, icon_state, SOUTH)
