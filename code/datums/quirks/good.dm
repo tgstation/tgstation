@@ -306,7 +306,7 @@
 	var/datum/language/language
 
 /datum/quirk/linguist/add()
-	var/mob/living/carbon/human/human_holder = quirk_holder
+	//var/mob/living/carbon/human/human_holder = quirk_holder
 	var/list/roundstart_languages = list(
 		/datum/language/uncommon,
 		/datum/language/voltaic,
@@ -316,9 +316,9 @@
 		/datum/language/calcic
 	)
 
-	language = language || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/linguist)
+	language = language || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/language)
 	switch(language)
-		if("Voltaic")
+		if("Voltaic") // only ethereals can speak
 			language = /datum/language/voltaic
 		if("Nekomimetic")
 			language = /datum/language/nekomimetic
@@ -326,17 +326,16 @@
 			language = /datum/language/draconic
 		if("Moffic")
 			language = /datum/language/moffic
-		if("Calcic")
+		if("Calcic") // only plasmamen can speak
 			language = /datum/language/calcic
 		if("Uncommon")
 			language = /datum/language/uncommon
 		else
 			language = pick(roundstart_languages)
 
-
-	if(human_holder.has_language(language))
+	if(quirk_holder.has_language(language))
 		for(var/datum/language/possible_language in roundstart_languages)
-			if(human_holder.has_language(possible_language))
+			if(quirk_holder.has_language(possible_language))
 				roundstart_languages -= possible_language
 
 		if(!length(roundstart_languages))
@@ -345,12 +344,7 @@
 
 		language = pick(roundstart_languages)
 
-	// var/datum/language/lang_instance = GLOB.language_datum_instances[language]
-
-	human_holder.grant_language(language, source=LANGUAGE_QUIRK)
-	//user.remove_blocked_language(language, source=LANGUAGE_QUIRK)
+	quirk_holder.grant_language(language, source=LANGUAGE_QUIRK)
 
 /datum/quirk/linguist/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	//human_holder.remove_blocked_language(/datum/language/common)
-	human_holder.remove_language(language, source=LANGUAGE_QUIRK)
+	quirk_holder.remove_language(language, source=LANGUAGE_QUIRK)

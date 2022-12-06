@@ -1,6 +1,6 @@
 import { FeatureChoiced, FeatureDropdownInput } from '../base';
 
-export const linguist: FeatureChoiced = {
-  name: 'Linguist',
+export const language: FeatureChoiced = {
+  name: 'Language',
   component: FeatureDropdownInput,
 };
