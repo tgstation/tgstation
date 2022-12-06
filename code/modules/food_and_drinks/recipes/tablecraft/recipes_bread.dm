@@ -11,7 +11,7 @@
 		/obj/item/food/cheese/wedge = 3
 	)
 	result = /obj/item/food/bread/meat
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/xenomeatbread
 	name = "Xenomeat bread"
@@ -21,7 +21,7 @@
 		/obj/item/food/cheese/wedge = 3
 	)
 	result = /obj/item/food/bread/xenomeat
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/spidermeatbread
 	name = "Spidermeat bread"
@@ -31,7 +31,7 @@
 		/obj/item/food/cheese/wedge = 3
 	)
 	result = /obj/item/food/bread/spidermeat
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/sausagebread
 	name = "Sausage bread"
@@ -40,7 +40,7 @@
 		/obj/item/food/sausage = 2,
 	)
 	result = /obj/item/food/bread/sausage
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/banananutbread
 	name = "Banana nut bread"
@@ -51,7 +51,7 @@
 		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/bread/banana
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/tofubread
 	name = "Tofu bread"
@@ -61,7 +61,7 @@
 		/obj/item/food/cheese/wedge = 3
 	)
 	result = /obj/item/food/bread/tofu
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/creamcheesebread
 	name = "Cream cheese bread"
@@ -71,7 +71,7 @@
 		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/bread/creamcheese
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/mimanabread
 	name = "Mimana bread"
@@ -82,7 +82,7 @@
 		/obj/item/food/grown/banana/mime = 1
 	)
 	result = /obj/item/food/bread/mimana
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/garlicbread
 	name = "Garlic Bread"
@@ -92,7 +92,7 @@
 				/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/garlicbread
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/butterbiscuit
 	name = "Butter Biscuit"
@@ -101,7 +101,7 @@
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/butterbiscuit
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/butterdog
 	name = "Butterdog"
@@ -110,7 +110,7 @@
 		/obj/item/food/butter = 3,
 		)
 	result = /obj/item/food/butterdog
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/baguette
 	name = "Baguette"
@@ -120,7 +120,7 @@
 		/obj/item/food/pastrybase = 2
 	)
 	result = /obj/item/food/baguette
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/raw_breadstick
 	name = "Raw breadstick"
@@ -130,20 +130,20 @@
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/raw_breadstick
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/breaddog
 	name = "Living dog/bread hybrid"
 	reqs = list(
 		/obj/item/organ/internal/brain = 1,
 		/obj/item/organ/internal/heart = 1,
-		/obj/item/food/bread = 2,
+		/obj/item/food/bread/plain = 2,
 		/obj/item/food/meat/slab = 3,
 		/datum/reagent/blood = 30,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
 	result = /mob/living/basic/pet/dog/breaddog
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 ////////////////////////////////////////////////TOAST////////////////////////////////////////////////
 
@@ -154,7 +154,7 @@
 		/obj/item/food/breadslice/plain = 1
 	)
 	result = /obj/item/food/jelliedtoast/slime
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/jelliedyoast
 	name = "Jellied toast"
@@ -163,7 +163,7 @@
 		/obj/item/food/breadslice/plain = 1
 	)
 	result = /obj/item/food/jelliedtoast/cherry
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/butteredtoast
 	name = "Buttered Toast"
@@ -172,7 +172,7 @@
 		/obj/item/food/butter = 1
 	)
 	result = /obj/item/food/butteredtoast
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/twobread
 	name = "Two bread"
@@ -181,7 +181,7 @@
 		/obj/item/food/breadslice/plain = 2
 	)
 	result = /obj/item/food/twobread
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/moldybread // why would you make this?
 	name = "Moldy Bread"
@@ -190,7 +190,7 @@
 		/obj/item/food/grown/mushroom/amanita = 1
 		)
 	result = /obj/item/food/breadslice/moldy
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/breadcat
 	name = "Bread cat/bread hybrid"
@@ -203,7 +203,7 @@
 		/datum/reagent/medicine/strange_reagent = 5
 	)
 	result = /mob/living/simple_animal/pet/cat/breadcat
-	subcategory = CAT_BREAD
+	category = CAT_BREAD
 
 /datum/crafting_recipe/food/frenchtoast
 	name = "Raw french toast"
@@ -213,4 +213,4 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/food/raw_frenchtoast
-	subcategory = CAT_BREAD
+	category = CAT_BREAD

@@ -11,6 +11,7 @@
 	shot_glass_icon_state = "shotglassred"
 	penetrates_skin = NONE
 	ph = 7.4
+	default_container = /obj/item/reagent_containers/blood
 
 	// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -167,6 +168,7 @@
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+	default_container = /obj/item/reagent_containers/cup/glass/waterbottle
 
 /*
  * Water reaction to turf
@@ -252,6 +254,7 @@
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 	ph = 7.5 //God is alkaline
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/holywater
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -1053,6 +1056,7 @@
 	ph = 4
 	material = /datum/material/uranium
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/effect/decal/cleanable/greenglow
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustToxLoss(tox_damage * delta_time * REM)
@@ -1660,6 +1664,7 @@
 	burning_volume = 0.05 //but has a lot of hydrocarbons
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = null
+	default_container = /obj/effect/decal/cleanable/oil
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"
@@ -1962,6 +1967,7 @@
 	taste_description = "ash"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/effect/decal/cleanable/ash
 
 // Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 /datum/reagent/ash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)

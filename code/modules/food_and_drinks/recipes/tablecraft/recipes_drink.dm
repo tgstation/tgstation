@@ -114,7 +114,7 @@
 	result = /obj/item/reagent_containers/cup/glass/sillycup/smallcarton
 	time = 10
 	reqs = list(/obj/item/stack/sheet/cardboard = 1)
-	category = CAT_DRINK
+	category = CAT_CONTAINERS
 
 /datum/crafting_recipe/candycornliquor
 	name = "candy corn liquor"

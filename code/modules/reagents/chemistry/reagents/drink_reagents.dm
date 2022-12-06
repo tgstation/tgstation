@@ -14,6 +14,7 @@
 	glass_desc = "Vitamins! Yay!"
 	ph = 3.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/orangejuice
 
 /datum/reagent/consumable/orangejuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getOxyLoss() && DT_PROB(16, delta_time))
@@ -30,6 +31,7 @@
 	glass_name = "glass of tomato juice"
 	glass_desc = "Are you sure this is tomato juice?"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getFireLoss() && DT_PROB(10, delta_time))
@@ -47,6 +49,7 @@
 	glass_desc = "A glass of sweet-sour lime juice."
 	ph = 2.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/limejuice
 
 /datum/reagent/consumable/limejuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
@@ -231,6 +234,7 @@
 	glass_desc = "White and nutritious goodness!"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/milk
 
 	// Milk is good for humans, but bad for plants. The sugars cannot be used by plants, and the milk fat harms growth. Not shrooms though. I can't deal with this now...
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -257,6 +261,7 @@
 	glass_name = "glass of soy milk"
 	glass_desc = "White and nutritious soy goodness!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/condiment/soymilk
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
@@ -273,6 +278,7 @@
 	glass_name = "glass of cream"
 	glass_desc = "Ewwww..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/cream
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
@@ -319,6 +325,7 @@
 	glass_desc = "Drinking it from here would not seem right."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
+	default_container = /obj/item/reagent_containers/cup/glass/mug/tea
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_dizzy(-4 SECONDS * REM * delta_time)
@@ -737,6 +744,7 @@
 	glass_name = "glass of ice"
 	glass_desc = "Generally, you're supposed to put something else in there too..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/ice
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -1032,6 +1040,7 @@
 	glass_name = "glass of menthol"
 	glass_desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/menthol
 
 /datum/reagent/consumable/menthol/on_mob_life(mob/living/L, delta_time, times_fired)
 	L.apply_status_effect(/datum/status_effect/throat_soothed)
@@ -1062,6 +1071,7 @@
 	glass_name = "glass of pineapple juice"
 	glass_desc = "Tart, tropical, and hotly debated."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/juice/pineapplejuice
 
 /datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
 	name = "Peach Juice"

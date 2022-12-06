@@ -72,4 +72,4 @@
 	reqs = list(/obj/item/stack/rods = 1,
 				/obj/item/stack/sheet/cardboard = 2)
 	time = 80
-	category = CAT_MISC
+	category = CAT_ENTERTAINMENT

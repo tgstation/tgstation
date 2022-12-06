@@ -1,6 +1,7 @@
 /obj/item/botpad_remote
 	name = "Bot pad controller"
-	desc = "Use this device to control the connected bot pad. Left-click for launch, right-click for recall."
+	desc = "Use this device to control the connected bot pad."
+	desc_controls = "Left-click for launch, right-click for recall."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "botpad_controller"
 	w_class = WEIGHT_CLASS_SMALL

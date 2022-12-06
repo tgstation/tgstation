@@ -546,7 +546,8 @@
 
 /obj/item/clothing/glasses/debug
 	name = "debug glasses"
-	desc = "Medical, security and diagnostic hud. Alt click to toggle xray."
+	desc = "Medical, security and diagnostic hud."
+	desc_controls = "Alt click to toggle xray."
 	icon_state = "nvgmeson"
 	inhand_icon_state = "nvgmeson"
 	flags_cover = GLASSESCOVERSEYES

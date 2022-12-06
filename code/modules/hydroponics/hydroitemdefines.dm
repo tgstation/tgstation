@@ -557,7 +557,8 @@
 
 /obj/item/secateurs
 	name = "secateurs"
-	desc = "It's a tool for cutting grafts off plants. Right-click to stylize podperson hair or other plant features!"
+	desc = "It's a tool for cutting grafts off plants or changing podperson looks."
+	desc_controls = "Right-click to stylize podperson hair or other plant features!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
 	inhand_icon_state = null

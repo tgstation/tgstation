@@ -285,6 +285,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassclear"
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS //Very high proof
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/vodka
 
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
@@ -345,6 +346,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Now you want to Pray for a pirate suit, don't you?"
 	shot_glass_icon_state = "shotglassbrown"
 	ph = 6.5
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/rum
 
 /datum/reagent/consumable/ethanol/tequila
 	name = "Tequila"
@@ -386,6 +388,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	ph = 3.45
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
+	default_container = /obj/item/reagent_containers/cup/glass/bottle/wine
 
 /datum/reagent/consumable/ethanol/wine/on_merge(data)
 	. = ..()
