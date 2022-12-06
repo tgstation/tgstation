@@ -98,6 +98,16 @@
 		return "<hr><b>Identified shift divergencies:</b><BR>" + trait_list_string
 	return
 
+/datum/game_mode/proc/generate_report_footnote()
+	var/footnote_pile = ""
+
+	for(var/datum/command_footnote/footnote in SScommunications.command_report_footnotes)
+		footnote_pile += "[footnote.message]<BR>"
+		footnote_pile += "<i>[footnote.signature]</i><BR>"
+		footnote_pile += "<BR>"
+
+	return "<hr><b>Additional Notes: </b><BR><BR>" + footnote_pile
+
 /proc/reopen_roundstart_suicide_roles()
 	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
 	var/list/reopened_jobs = list()
