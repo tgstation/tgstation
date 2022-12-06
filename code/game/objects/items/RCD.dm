@@ -690,8 +690,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	data["selected_category"] = design_category
 	data["selected_design"] = design_title
 	data["categories"] = list()
-	var/list/designs
-	var/icon
+
 	for(var/list/sub_category as anything in root_categories[root_category])
 		//skip category if upgrades were not installed for these
 		if(sub_category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
@@ -699,12 +698,13 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		if(sub_category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
 			continue
 
-		designs = list() //initialize all designs under this category
+		var/list/designs = list() //initialize all designs under this category
 		var/list/target_category =  root_categories[root_category][sub_category]
 		for(var/i in 1 to target_category.len)
 			var/list/design = target_category[i]
 
 			//get/infer icon_state based on category
+			var/icon
 			if(sub_category == "Solid AirLocks")
 				icon = "[design["title"]]"
 			else if(sub_category == "Glass AirLocks")
@@ -718,7 +718,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	//merge airlock_electronics ui data with this
 	var/list/airlock_data = airlock_electronics.ui_data(user)
-	for(var/key as anything in airlock_data)
+	for(var/key in airlock_data)
 		data[key] = airlock_data[key]
 
 	return data
@@ -728,54 +728,55 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	if(.)
 		return
 
-	if(action == "root_category")
-		var/new_root = params["root_category"]
-		if(root_categories[new_root] != null || new_root == "AirLock Access") //is a valid category
-			root_category = new_root
+	switch(action)
+		if("root_category")
+			var/new_root = params["root_category"]
+			if(root_categories[new_root] != null || new_root == "AirLock Access") //is a valid category
+				root_category = new_root
 
-	else if(action == "design")
-		var/category_name = params["category"]
-		var/index = params["index"]
+		else if("design")
+			var/category_name = params["category"]
+			var/index = params["index"]
 
-		var/list/root = root_categories[root_category]
-		if(root == null) //not a valid root
-			return TRUE
-		var/list/category = root[category_name]
-		if(category == null) //not a valid category
-			return TRUE
-		var/list/design = category[index]
-		if(design == null) //not a valid design
-			return TRUE
+			var/list/root = root_categories[root_category]
+			if(root == null) //not a valid root
+				return TRUE
+			var/list/category = root[category_name]
+			if(category == null) //not a valid category
+				return TRUE
+			var/list/design = category[index]
+			if(design == null) //not a valid design
+				return TRUE
 
-		design_category = category_name
-		design_title = design["title"]
+			design_category = category_name
+			design_title = design["title"]
 
-		if(category_name == "Structures")
-			construction_mode = design["construction_mode"]
-			if(design["window_type"] != null)
-				window_type = design["window_type"]
-			if(design["window_glass"] != null)
-				window_glass = design["window_glass"]
-			if(design["window_size"] != null)
-				window_size = design["window_size"]
-		else if(category_name == "Machines")
-			construction_mode = design["construction_mode"]
-			if(design["computer_dir"] != null)
-				computer_dir = design["computer_dir"]
-		else if(category_name == "Furniture")
-			construction_mode = RCD_FURNISHING
-			furnish_type = design["furnish_type"]
-			furnish_cost = design["furnish_cost"]
-			furnish_delay = design["furnish_delay"]
+			if(category_name == "Structures")
+				construction_mode = design["construction_mode"]
+				if(design["window_type"] != null)
+					window_type = design["window_type"]
+				if(design["window_glass"] != null)
+					window_glass = design["window_glass"]
+				if(design["window_size"] != null)
+					window_size = design["window_size"]
+			else if(category_name == "Machines")
+				construction_mode = design["construction_mode"]
+				if(design["computer_dir"] != null)
+					computer_dir = design["computer_dir"]
+			else if(category_name == "Furniture")
+				construction_mode = RCD_FURNISHING
+				furnish_type = design["furnish_type"]
+				furnish_cost = design["furnish_cost"]
+				furnish_delay = design["furnish_delay"]
 
-		if(root_category == "AirLocks")
-			construction_mode = RCD_AIRLOCK
-			airlock_glass = (category_name != "Solid AirLocks")
-			airlock_type = design["airlock_type"]
+			if(root_category == "AirLocks")
+				construction_mode = RCD_AIRLOCK
+				airlock_glass = (category_name != "Solid AirLocks")
+				airlock_type = design["airlock_type"]
 
-	else
-		params["rcd"] = TRUE
-		airlock_electronics.ui_act(action, params)
+		else
+			params["rcd"] = TRUE
+			airlock_electronics.ui_act(action, params)
 
 	return TRUE
 
