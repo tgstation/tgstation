@@ -7,3 +7,14 @@ GLOBAL_LIST_INIT(nearsighted_glasses, list(
 	"Regular",
 	"Thin",
 ))
+
+///Types of languages that can be selected at character selection with the Linguist quirk
+GLOBAL_LIST_INIT(linguist_languages, list(
+	"Random",
+	"Voltaic",
+	"Nekomimetic",
+	"Draconic",
+	"Moffic",
+	"Calcic",
+	"Uncommon",
+))

@@ -7,6 +7,7 @@
 #define LANGUAGE_ALL "all" // For use in full removal only.
 #define LANGUAGE_ATOM "atom"
 #define LANGUAGE_MIND "mind"
+#define LANGUAGE_QUIRK "quirk"
 
 #define LANGUAGE_ABSORB "absorb"
 #define LANGUAGE_APHASIA "aphasia"

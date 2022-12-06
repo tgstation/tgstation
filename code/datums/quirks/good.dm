@@ -303,33 +303,54 @@
 	lose_text = "<span class='notice'>You forget the words to a familiar language."
 	medical_record_text = "Patient is fluent in multiple languages."
 	mail_goodies = list(/obj/item/taperecorder) // for translation
-	var/other_language 
+	var/datum/language/language
 
 /datum/quirk/linguist/add()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	
-	other_language = other_language || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/other_language)
-	switch(other_language)
+	var/list/roundstart_languages = list(
+		/datum/language/uncommon,
+		/datum/language/voltaic,
+		/datum/language/nekomimetic,
+		/datum/language/draconic,
+		/datum/language/moffic,
+		/datum/language/calcic
+	)
+
+	language = language || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/linguist)
+	switch(language)
 		if("Voltaic")
-			other_language = /datum/language/voltaic
+			language = /datum/language/voltaic
 		if("Nekomimetic")
-			other_language = /datum/language/nekomimetic
+			language = /datum/language/nekomimetic
 		if("Draconic")
-			other_language = /datum/language/draconic
+			language = /datum/language/draconic
 		if("Moffic")
-			other_language = /datum/language/moffic
+			language = /datum/language/moffic
 		if("Calcic")
-			other_language = /datum/language/calcic
+			language = /datum/language/calcic
+		if("Uncommon")
+			language = /datum/language/uncommon
 		else
-			other_language = /datum/language/uncommon
+			language = pick(roundstart_languages)
 
-	if(human_holder.has_language(other_language))
-		other_language = /datum/language/uncommon
 
-	user.grant_language(other_language, source=LANGUAGE_QUIRK)
-	//user.remove_blocked_language(other_language, source=LANGUAGE_QUIRK)	
+	if(human_holder.has_language(language))
+		for(var/datum/language/possible_language in roundstart_languages)
+			if(human_holder.has_language(possible_language))
+				roundstart_languages -= possible_language
+
+		if(!length(roundstart_languages))
+			to_chat(quirk_holder, span_boldnotice("You are already familiar with every common language. Nothing else can be learned as a linguist."))
+			return
+
+		language = pick(roundstart_languages)
+
+	// var/datum/language/lang_instance = GLOB.language_datum_instances[language]
+
+	human_holder.grant_language(language, source=LANGUAGE_QUIRK)
+	//user.remove_blocked_language(language, source=LANGUAGE_QUIRK)
 
 /datum/quirk/linguist/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	//human_holder.remove_blocked_language(/datum/language/common)
-	human_holder.remove_language(other_language, source=LANGUAGE_QUIRK)
+	human_holder.remove_language(language, source=LANGUAGE_QUIRK)
