@@ -69,7 +69,7 @@
 		. += mutable_appearance(initial(icon), "id_overlay")
 	if(light_on)
 		. += mutable_appearance(initial(icon), "light_overlay")
-	if(inserted_pai)
+	if(cpu.inserted_pai)
 		. += mutable_appearance(initial(icon), "pai_inserted")
 
 /obj/item/modular_computer/pda/attack_ai(mob/user)

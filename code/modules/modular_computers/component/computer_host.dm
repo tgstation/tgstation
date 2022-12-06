@@ -238,7 +238,7 @@
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /datum/modular_computer_host/proc/get_ntnet_status(specific_action = 0)
-	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
+	if(!SSmodular_computers.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
 		return NTNET_NO_SIGNAL
 
 	// computers are connected through ethernet
@@ -345,8 +345,8 @@
 		physical.visible_message(span_notice("\The [physical] shuts down."))
 	powered_on = FALSE
 
-/datum/modular_computer_host/proc/relay_appearance_update()
-	physical.update_appearance()
+/datum/modular_computer_host/proc/relay_appearance_update(updates = ALL)
+	physical.update_appearance(updates)
 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
