@@ -62,7 +62,7 @@ type ForceEventData = {
 
 export const ForceEvent = (props, context) => {
   return (
-    <Window title="Force Event" width={450} height={450}>
+    <Window theme="admin" title="Force Event" width={450} height={450}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
