@@ -7,7 +7,8 @@
 	preview_outfit = /datum/outfit/paradox_clone
 	count_against_dynamic_roll_chance = TRUE
 
-	var/datum/weakref/original_ref ///antags target
+	///Weakref to the clone's original, the target.
+	var/datum/weakref/original_ref
 
 /datum/antagonist/paradox_clone/get_preview_icon()
 	var/icon/final_icon = render_preview_outfit(preview_outfit)
@@ -40,14 +41,14 @@
 
 /datum/antagonist/paradox_clone/Destroy()
 	original_ref = null
-	..()
+	return ..()
 
 /datum/antagonist/paradox_clone/proc/forge_objectives()
 
 	if(!original_ref)//admins didn't set one
 		original_ref = WEAKREF(find_original())
 	if(!original_ref)//we didn't find one
-		stack_trace("No target found, aborting.")
+		stack_trace("[src] was unable to find a target.")
 		qdel(src)
 		return
 
@@ -62,8 +63,8 @@
 	var/list/possible_targets = list() //filters out silicons and simplemobs
 	var/chosen_victim  //The cloned player
 
-	for(var/mob/player as anything in GLOB.player_list)//prevents cloning of non-crew
-		if(!player.client || !player.mind || isnewplayer(player) || player.stat == DEAD || isbrain(player))
+	for(var/mob/living/carbon/human/player as anything in GLOB.player_list)//prevents cloning of non-crew
+		if(!player.client || !player.mind || player.stat == DEAD)
 			continue
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue

@@ -861,7 +861,8 @@
 	weight = 4
 	cost = 3
 	repeatable = TRUE
-	var/list/possible_spawns = list() ///places the antag can spawn
+	///List of places the antag can spawn
+	var/list/possible_spawns = list()
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
 	for(var/turf/warp_point in GLOB.xeno_spawn)
