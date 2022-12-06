@@ -420,15 +420,15 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	for(var/icon_file as anything in essentials)
 		for(var/icon_state as anything in essentials[icon_file])
 			icon = icon(icon = icon_file, icon_state = icon_state)
-			if(icon_state == "closed")
+			if(icon_state == "closed") //special operation to create closed airlock icon by blending
 				icon.Blend(icon(icon = icon_file, icon_state = "fill_closed", dir = SOUTH), ICON_OVERLAY)
 				icon_list["airlock-solid"] = icon
 
-				icon = icon(icon = icon_file, icon_state = icon_state)
+				icon = icon(icon = icon_file, icon_state = icon_state) //special operation to create glass airlock icon no blending
 				icon_list["airlock-glass"] = icon
 			else
 				icon = icon(icon = icon_file, icon_state = icon_state)
-				if(icon_state == "window0" || icon_state == "rwindow0")
+				if(icon_state == "window0" || icon_state == "rwindow0") //blend window icons with grill icon to create grilled fulltile window icons
 					icon.Blend(icon(icon = 'icons/obj/structures.dmi', icon_state = "grille"), ICON_UNDERLAY)
 				icon_list[icon_state] = icon
 
