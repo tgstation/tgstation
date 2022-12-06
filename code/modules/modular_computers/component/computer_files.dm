@@ -1,4 +1,23 @@
 /**
+ * create_file
+ *
+ * Creates a new file and immediately stores it on the modular computer. Internally
+ * just creates the file datum and calls `store_file`. Returns the new file if it was successful.
+ */
+/datum/modular_computer_host/proc/create_file(filetype)
+	if(!ispath(filetype, /datum/computer_file))
+		CRASH("Attempted to create non-computer file type [filetype]")
+
+	var/datum/computer_file/new_file = new filetype
+
+	if(!can_store_file(new_file))
+		qdel(new_file)
+		return null
+
+	store_file(new_file)
+	return new_file
+
+/**
  * store_file
  *
  * Adds an already initialized file to the computer, checking if one already exists.
@@ -16,6 +35,7 @@
 
 	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
 	file_storing.computer = src
+	file_storing.physical = physical
 	stored_files.Add(file_storing)
 	used_capacity += file_storing.size
 	SEND_SIGNAL(file_storing, COMSIG_MODULAR_COMPUTER_FILE_ADDED)
@@ -43,6 +63,8 @@
 	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 	stored_files.Remove(file_removing)
 	used_capacity -= file_removing.size
+	file_removing.computer = null
+	file_removing.physical = null
 	SEND_SIGNAL(file_removing, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 	return TRUE
 

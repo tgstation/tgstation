@@ -83,7 +83,7 @@
 	for(var/canvas_type in typesof(/obj/item/canvas))
 		printed_canvas = canvas_type
 		if(initial(printed_canvas.width) == art_width && initial(printed_canvas.height) == art_height)
-			printed_canvas = new canvas_type(get_turf(computer.physical))
+			printed_canvas = new canvas_type(get_turf(physical))
 			break
 		printed_canvas = null
 	if(!printed_canvas)
@@ -98,6 +98,6 @@
 	printed_canvas.no_save = TRUE
 	printed_canvas.update_icon()
 	to_chat(usr, span_notice("You have printed [chosen_portrait.title] onto a new canvas."))
-	playsound(computer.physical, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	playsound(physical, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 #undef CANVAS_PAPER_COST

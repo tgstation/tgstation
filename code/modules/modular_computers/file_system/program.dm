@@ -57,9 +57,8 @@
 	return temp
 
 // Relays icon update to the computer.
-/datum/computer_file/program/proc/update_computer_icon()
-	if(computer)
-		computer.physical.update_appearance()
+/datum/computer_file/program/proc/update_compute_appearance(updates=ALL)
+	computer?.relay_appearance_update()
 
 /**
  *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
@@ -241,8 +240,8 @@
 					computer.ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
 
 /datum/computer_file/program/ui_host()
-	if(computer.physical)
-		return computer.physical
+	if(physical)
+		return physical
 	else
 		return computer
 

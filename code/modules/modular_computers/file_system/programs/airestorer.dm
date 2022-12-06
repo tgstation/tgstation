@@ -66,20 +66,20 @@
 		return FALSE
 
 	if(stored_card)
-		to_chat(user, span_warning("You try to insert \the [attacking_item] into \the [computer.physical.name], but the slot is occupied."))
+		to_chat(user, span_warning("You try to insert \the [attacking_item] into \the [physical.name], but the slot is occupied."))
 		return FALSE
-	if(user && !user.transferItemToLoc(attacking_item, computer.physical))
+	if(user && !user.transferItemToLoc(attacking_item, physical))
 		return FALSE
 
 	stored_card = attacking_item
-	to_chat(user, span_notice("You insert \the [attacking_item] into \the [computer.physical.name]."))
+	to_chat(user, span_notice("You insert \the [attacking_item] into \the [physical.name]."))
 
 	return TRUE
 
 /datum/computer_file/program/ai_restorer/try_eject(mob/living/user, forced = FALSE)
 	if(!stored_card)
 		if(user)
-			to_chat(user, span_warning("There is no card in \the [computer.physical.name]."))
+			to_chat(user, span_warning("There is no card in \the [physical.name]."))
 		return FALSE
 
 	if(restoring && !forced)
@@ -87,11 +87,11 @@
 			to_chat(user, span_warning("Safeties prevent you from removing the card until reconstruction is complete..."))
 		return FALSE
 
-	if(user && computer.physical.Adjacent(user))
-		to_chat(user, span_notice("You remove [stored_card] from [computer.physical.name]."))
+	if(user && physical.Adjacent(user))
+		to_chat(user, span_notice("You remove [stored_card] from [physical.name]."))
 		user.put_in_hands(stored_card)
 	else
-		stored_card.forceMove(computer.physical.drop_location())
+		stored_card.forceMove(physical.drop_location())
 
 	stored_card = null
 	restoring = FALSE
@@ -110,7 +110,7 @@
 			var/mob/living/silicon/ai/A = stored_card.AI
 			if(A && A.health < 100)
 				restoring = TRUE
-				A.notify_ghost_cloning("Your core files are being restored!", source = computer.physical)
+				A.notify_ghost_cloning("Your core files are being restored!", source = physical)
 			return TRUE
 		if("PRG_eject")
 			if(stored_card)

@@ -13,6 +13,8 @@
 	var/static/file_uid = 0
 	///The modular computer hosting the file.
 	var/datum/modular_computer_host/computer
+	///The atom that holds the computer. NOTE: Check for convenience functions in `computer` before using procs on this!
+	var/atom/physical
 
 /datum/computer_file/New()
 	..()
@@ -22,6 +24,7 @@
 	if(computer)
 		computer.remove_file(src)
 		computer = null
+		physical = null
 	return ..()
 
 // Returns independent copy of this file.

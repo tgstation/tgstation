@@ -23,8 +23,8 @@
 	SIGNAL_HANDLER
 	if(atmozphere_mode != ATMOZPHERE_SCAN_CLICK)
 		return
-	atmos_scan(user=user, target=get_turf(computer.physical), silent=FALSE)
-	on_analyze(source=source, target=get_turf(computer.physical))
+	atmos_scan(user=user, target=get_turf(physical), silent=FALSE)
+	on_analyze(source=source, target=get_turf(physical))
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Keep this in sync with it's tool based counterpart [/obj/proc/analyzer_act] and [/atom/proc/tool_act]
@@ -33,7 +33,7 @@
 		return FALSE
 	if(!atmos_scan(user=user, target=A, silent=FALSE))
 		return FALSE
-	on_analyze(source=computer.physical, target=A)
+	on_analyze(source=physical, target=A)
 	return TRUE
 
 /// Updates our gasmix data if on click mode.
@@ -55,7 +55,7 @@
 
 /datum/computer_file/program/atmosscan/ui_data(mob/user)
 	var/list/data = get_header_data()
-	var/turf/turf = get_turf(computer.physical)
+	var/turf/turf = get_turf(physical)
 	data["atmozphereMode"] = atmozphere_mode
 	data["clickAtmozphereCompatible"] = (computer.hardware_flag & PROGRAM_TABLET)
 	switch (atmozphere_mode) //Null air wont cause errors, don't worry.
@@ -75,13 +75,13 @@
 		if("scantoggle")
 			if(atmozphere_mode == ATMOZPHERE_SCAN_CLICK)
 				atmozphere_mode = ATMOZPHERE_SCAN_ENV
-				UnregisterSignal(computer.physical, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
+				UnregisterSignal(physical, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 				return TRUE
 			if(!(computer.hardware_flag & PROGRAM_TABLET))
 				computer.say("Device incompatible for scanning objects!")
 				return FALSE
 			atmozphere_mode = ATMOZPHERE_SCAN_CLICK
-			RegisterSignal(computer.physical, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(turf_analyze))
-			var/turf/turf = get_turf(computer.physical)
+			RegisterSignal(physical, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(turf_analyze))
+			var/turf/turf = get_turf(physical)
 			last_gasmix_data = list(gas_mixture_parser(turf?.return_air(), "Location Reading"))
 			return TRUE

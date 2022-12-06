@@ -115,4 +115,4 @@
 		ui_header = "smmon_[last_status].gif"
 		program_icon_state = "smmon_[last_status]"
 		if(istype(computer))
-			computer.relay_appearance_update()
+			update_computer_appearance()

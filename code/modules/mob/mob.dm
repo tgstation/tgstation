@@ -1095,7 +1095,7 @@
 			var/datum/modular_computer_host/item/pda/tablet = PDA.cpu
 			if(tablet.saved_identification == oldname)
 				tablet.saved_identification = newname
-				tablet.relay_appearance_update()
+				PDA.update_appearance()
 				if(!search_id)
 					break
 				search_pda = 0

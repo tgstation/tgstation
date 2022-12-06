@@ -69,7 +69,7 @@
 			if("[i.req_number]" == "[current_ref_num]")
 				active_request = i
 				break
-	var/obj/physical_obj = computer.physical // this could be a mob, check type; TODO: this is dumb, make a helper proc from this
+	var/obj/physical_obj = physical // this could be a mob, check type; TODO: this is dumb, make a helper proc from this
 	if(active_request)
 		for(var/datum/bank_account/j in active_request.applicants)
 			if("[j.account_id]" == "[current_app_num]")

@@ -108,7 +108,7 @@
 		if("PDA_ringSet")
 			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
 			var/mob/living/usr_mob = usr
-			if(!new_ringtone || !in_range(computer.physical, usr_mob) || computer.physical.loc != usr_mob)
+			if(!new_ringtone || !in_range(physical, usr_mob) || physical.loc != usr_mob)
 				return
 
 			if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
@@ -233,7 +233,7 @@
 
 	if (!input_message || !sending_and_receiving)
 		return
-	if(!user.canUseTopic(computer.physical, be_close = TRUE))
+	if(!user.canUseTopic(physical, be_close = TRUE))
 		return
 	return sanitize(input_message)
 
@@ -251,7 +251,7 @@
 		to_chat(user, span_warning("The subspace transmitter of your tablet is still cooling down!"))
 		return FALSE
 
-	var/turf/position = get_turf(computer.physical)
+	var/turf/position = get_turf(physical)
 	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
 		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
@@ -281,7 +281,7 @@
 	if (prob(1))
 		message += " Sent from my PDA"
 
-	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer.physical, list(
+	var/datum/signal/subspace/messaging/tablet_msg/signal = new(physical, list(
 		"name" = fake_name || computer.saved_identification,
 		"job" = fake_job || computer.saved_job,
 		"message" = html_decode(message),
@@ -358,10 +358,10 @@
 
 	var/mob/living/L = null
 	if(istype(computer, /datum/modular_computer_host/item))
-		L = get(computer.physical, /mob/living)
+		L = get(physical, /mob/living)
 	//Maybe they are a pAI!
 	else if(istype(computer, /datum/modular_computer_host/silicon))
-		L = computer.physical
+		L = physical
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
@@ -386,9 +386,9 @@
 
 /datum/computer_file/program/messenger/proc/ring(ringtone) // bring bring
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(computer.physical, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+		playsound(physical, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 	else
-		playsound(computer.physical, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(physical, 'sound/machines/twobeep_high.ogg', 50, TRUE)
 	computer.audible_message("*[ringtone]*")
 
 /// topic call that answers to people pressing "(Reply)" in chat
@@ -403,12 +403,12 @@
 	if(computer.active_program != src)
 		if(!computer.open_program(usr, src))
 			return
-	if(!href_list["close"] && usr.canUseTopic(computer.physical, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!href_list["close"] && usr.canUseTopic(physical, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		switch(href_list["choice"])
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))
 			if("mess_us_up")
 				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
-					var/obj/item/modular_computer/pda/pda = computer.physical
+					var/obj/item/modular_computer/pda/pda = physical
 					pda.explode(usr, from_message_menu = TRUE)
 					return

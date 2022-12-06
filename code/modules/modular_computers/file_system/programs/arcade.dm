@@ -28,22 +28,22 @@
 	user?.mind?.adjust_experience(/datum/skill/gaming, 1)
 	if(boss_hp <= 0)
 		heads_up = "You have crushed [boss_name]! Rejoice!"
-		playsound(computer.physical, 'sound/arcade/win.ogg', 50)
+		playsound(physical, 'sound/arcade/win.ogg', 50)
 		game_active = FALSE
 		program_icon_state = "arcade_off"
 		if(istype(computer))
-			computer.relay_appearance_update()
+			update_computer_appearance()
 		ticket_count += 1
 		user?.mind?.adjust_experience(/datum/skill/gaming, 50)
 		usr.won_game()
 		sleep(1 SECONDS)
 	else if(player_hp <= 0 || player_mp <= 0)
 		heads_up = "You have been defeated... how will the station survive?"
-		playsound(computer.physical, 'sound/arcade/lose.ogg', 50)
+		playsound(physical, 'sound/arcade/lose.ogg', 50)
 		game_active = FALSE
 		program_icon_state = "arcade_off"
 		if(istype(computer))
-			computer.relay_appearance_update()
+			update_computer_appearance()
 		user?.mind?.adjust_experience(/datum/skill/gaming, 10)
 		usr.lost_game()
 		sleep(1 SECONDS)
@@ -60,17 +60,17 @@
 		return
 	if (boss_mp <= 5)
 		heads_up = "[boss_mpamt] magic power has been stolen from you!"
-		playsound(computer.physical, 'sound/arcade/steal.ogg', 50, TRUE)
+		playsound(physical, 'sound/arcade/steal.ogg', 50, TRUE)
 		player_mp -= boss_mpamt
 		boss_mp += boss_mpamt
 	else if(boss_mp > 5 && boss_hp <12)
 		heads_up = "[boss_name] heals for [bossheal] health!"
-		playsound(computer.physical, 'sound/arcade/heal.ogg', 50, TRUE)
+		playsound(physical, 'sound/arcade/heal.ogg', 50, TRUE)
 		boss_hp += bossheal
 		boss_mp -= boss_mpamt
 	else
 		heads_up = "[boss_name] attacks you for [boss_attackamt] damage!"
-		playsound(computer.physical, 'sound/arcade/hit.ogg', 50, TRUE)
+		playsound(physical, 'sound/arcade/hit.ogg', 50, TRUE)
 		player_hp -= boss_attackamt
 
 	pause_state = FALSE
@@ -112,7 +112,7 @@
 				attackamt = rand(2,6) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You attack for [attackamt] damage."
-			playsound(computer.physical, 'sound/arcade/hit.ogg', 50, TRUE)
+			playsound(physical, 'sound/arcade/hit.ogg', 50, TRUE)
 			boss_hp -= attackamt
 			sleep(1 SECONDS)
 			game_check()
@@ -129,7 +129,7 @@
 				healcost = rand(1, maxPointCost)
 			pause_state = TRUE
 			heads_up = "You heal for [healamt] damage."
-			playsound(computer.physical, 'sound/arcade/heal.ogg', 50, TRUE)
+			playsound(physical, 'sound/arcade/heal.ogg', 50, TRUE)
 			player_hp += healamt
 			player_mp -= healcost
 			sleep(1 SECONDS)
@@ -142,7 +142,7 @@
 				rechargeamt = rand(4,7) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You regain [rechargeamt] magic power."
-			playsound(computer.physical, 'sound/arcade/mana.ogg', 50, TRUE)
+			playsound(physical, 'sound/arcade/mana.ogg', 50, TRUE)
 			player_mp += rechargeamt
 			sleep(1 SECONDS)
 			game_check()
@@ -155,8 +155,8 @@
 			else
 				computer.visible_message(span_notice("\The [computer] prints out a sheet of paper."))
 				if(ticket_count >= 1)
-					new /obj/item/stack/arcadeticket((get_turf(computer.physical)), 1)
-					to_chat(usr, span_notice("[computer.physical] dispenses a ticket!"))
+					new /obj/item/stack/arcadeticket((get_turf(physical)), 1)
+					to_chat(usr, span_notice("[physical] dispenses a ticket!"))
 					ticket_count -= 1
 					computer.stored_paper -= 1
 				else
@@ -172,4 +172,4 @@
 			boss_id = rand(1,6)
 			pause_state = FALSE
 			if(istype(computer))
-				computer.relay_appearance_update()
+				update_computer_appearance()

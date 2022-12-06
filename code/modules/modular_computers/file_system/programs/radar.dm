@@ -87,7 +87,7 @@
 	if(!trackable(signal))
 		return
 
-	var/turf/here_turf = (get_turf(computer.physical))
+	var/turf/here_turf = (get_turf(physical))
 	var/turf/target_turf = (get_turf(signal))
 	var/userot = FALSE
 	var/rot = 0
@@ -125,9 +125,9 @@
  **arg1 is the atom being evaluated.
 */
 /datum/computer_file/program/radar/proc/trackable(atom/movable/signal)
-	if(!signal || !computer.physical)
+	if(!signal || !physical)
 		return FALSE
-	var/turf/here = get_turf(computer.physical)
+	var/turf/here = get_turf(physical)
 	var/turf/there = get_turf(signal)
 	if(!here || !there)
 		return FALSE //I was still getting a runtime even after the above check while scanning, so fuck it
@@ -174,11 +174,11 @@
 	if(!trackable(signal))
 		program_icon_state = "[initial(program_icon_state)]lost"
 		if(last_icon_state != program_icon_state)
-			computer.relay_appearance_update()
+			update_computer_appearance()
 			last_icon_state = program_icon_state
 		return
 
-	var/here_turf = get_turf(computer.physical)
+	var/here_turf = get_turf(physical)
 	var/target_turf = get_turf(signal)
 	var/trackdistance = get_dist_euclidian(here_turf, target_turf)
 	switch(trackdistance)
@@ -192,7 +192,7 @@
 			program_icon_state = "[initial(program_icon_state)]far"
 
 	if(last_icon_state != program_icon_state)
-		computer.relay_appearance_update()
+		update_computer_appearance()
 		last_icon_state = program_icon_state
 	//computer.setDir(get_dir(here_turf, target_turf))
 
@@ -378,11 +378,11 @@
 		return
 
 	playsound(computer, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
-	var/mob/living/mob_holder = get(computer.physical, /mob/living)
+	var/mob/living/mob_holder = get(physical, /mob/living)
 	if(istype(mob_holder))
-		to_chat(mob_holder, span_userdanger("Your [computer.physical] vibrates and lets out an ominous alarm. Uh oh."))
+		to_chat(mob_holder, span_userdanger("Your [physical] vibrates and lets out an ominous alarm. Uh oh."))
 	else
 		computer.audible_message(
-			span_danger("[computer.physical] vibrates and lets out an ominous alarm. Uh oh."),
-			span_notice("[computer.physical] begins to vibrate rapidly. Wonder what that means..."),
+			span_danger("[physical] vibrates and lets out an ominous alarm. Uh oh."),
+			span_notice("[physical] begins to vibrate rapidly. Wonder what that means..."),
 		)
