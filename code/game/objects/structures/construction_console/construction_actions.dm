@@ -3,7 +3,7 @@
 
 ///Generic construction action for base [construction consoles][/obj/machinery/computer/camera_advanced/base_construction].
 /datum/action/innate/construction
-	icon_icon = 'icons/mob/actions/actions_construction.dmi'
+	button_icon = 'icons/mob/actions/actions_construction.dmi'
 	///Console's eye mob
 	var/mob/camera/ai_eye/remote/base_construction/remote_eye
 	///Console itself

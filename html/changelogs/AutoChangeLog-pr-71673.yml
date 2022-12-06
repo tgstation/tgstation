@@ -1,0 +1,4 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - bugfix: "trying to clean something while it's already being cleaned will no longer prematurely remove the cleaning animation"

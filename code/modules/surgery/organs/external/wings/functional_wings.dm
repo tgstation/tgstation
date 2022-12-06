@@ -1,27 +1,20 @@
-///Wing base type. doesn't really do anything
-/obj/item/organ/external/wings
-	name = "wings"
-	desc = "Spread your wings and FLLLLLLLLYYYYY!"
+///hud action for starting and stopping flight
+/datum/action/innate/flight
+	name = "Toggle Flight"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
+	button_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon_state = "flight"
 
-	zone = BODY_ZONE_CHEST
-	slot = ORGAN_SLOT_EXTERNAL_WINGS
-	layers = ALL_EXTERNAL_OVERLAYS
-
-	use_mob_sprite_as_obj_sprite = BODY_BEHIND_LAYER
-	feature_key = "wings"
-
-/obj/item/organ/external/wings/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!human.wear_suit)
-		return TRUE
-	if(!(human.wear_suit.flags_inv & HIDEJUMPSUIT))
-		return TRUE
-	if(human.wear_suit.species_exception && is_type_in_list(src, human.wear_suit.species_exception))
-		return TRUE
-	return FALSE
-
-///Checks if the wings can soften short falls
-/obj/item/organ/external/wings/proc/can_soften_fall()
-	return TRUE
+/datum/action/innate/flight/Activate()
+	var/mob/living/carbon/human/human = owner
+	var/obj/item/organ/external/wings/functional/wings = human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(wings && wings.can_fly(human))
+		wings.toggle_flight(human)
+		if(!(human.movement_type & FLYING))
+			to_chat(human, span_notice("You settle gently back onto the ground..."))
+		else
+			to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
+			human.set_resting(FALSE, TRUE)
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/external/wings/functional
@@ -148,101 +141,47 @@
 		var/turf/location = loc
 		location.Entered(src, NONE)
 
-///hud action for starting and stopping flight
-/datum/action/innate/flight
-	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "flight"
+///angel wings, which relate to humans. comes with holiness.
+/obj/item/organ/external/wings/functional/angel
+	name = "angel wings"
+	desc = "Holier-than-thou attitude not included."
+	stored_feature_id = "Angel"
 
-/datum/action/innate/flight/Activate()
-	var/mob/living/carbon/human/human = owner
-	var/obj/item/organ/external/wings/functional/wings = human.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-	if(wings && wings.can_fly(human))
-		wings.toggle_flight(human)
-		if(!(human.movement_type & FLYING))
-			to_chat(human, span_notice("You settle gently back onto the ground..."))
-		else
-			to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
-			human.set_resting(FALSE, TRUE)
+	organ_traits = list(TRAIT_HOLY)
 
-///Moth wings! They can flutter in low-grav and burn off in heat
-/obj/item/organ/external/wings/moth
-	name = "moth wings"
-	desc = "Spread your wings and FLOOOOAAAAAT!"
+///dragon wings, which relate to lizards.
+/obj/item/organ/external/wings/functional/dragon
+	name = "dragon wings"
+	desc = "Hey, HEY- NOT lizard wings. Dragon wings. Mighty dragon wings."
+	stored_feature_id = "Dragon"
 
-	feature_key = "moth_wings"
-	preference = "feature_moth_wings"
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+///robotic wings, which relate to androids.
+/obj/item/organ/external/wings/functional/robotic
+	name = "robotic wings"
+	desc = "Using microscopic hover-engines, or \"microwings,\" as they're known in the trade, these tiny devices are able to lift a few grams at a time. Gathering enough of them, and you can lift impressively large things."
+	stored_feature_id = "Robotic"
 
-	dna_block = DNA_MOTH_WINGS_BLOCK
+///skeletal wings, which relate to skeletal races.
+/obj/item/organ/external/wings/functional/skeleton
+	name = "skeletal wings"
+	desc = "Powered by pure edgy-teenager-notebook-scribblings. Just kidding. But seriously, how do these keep you flying?!"
+	stored_feature_id = "Skeleton"
 
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old datum here for if our burned wings are healed
 	var/original_sprite_datum
+///Prototype for moth wings, so in the future we can add burn off behavior.
+/obj/item/organ/external/wings/functional/moth
 
-/obj/item/organ/external/wings/moth/get_global_feature_list()
-	return GLOB.moth_wings_list
+///mothra wings, which relate to moths.
+/obj/item/organ/external/wings/functional/moth/mothra
+	name = "mothra wings"
+	desc = "Fly like the mighty mothra of legend once did."
+	stored_feature_id = "Mothra"
 
-/obj/item/organ/external/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
-		return TRUE
-	return FALSE
-
-/obj/item/organ/external/wings/moth/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
-	. = ..()
-
-	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_wings))
-	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_wings))
-	RegisterSignal(reciever, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(update_float_move))
-
-/obj/item/organ/external/wings/moth/Remove(mob/living/carbon/organ_owner, special, moving)
-	. = ..()
-
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
-	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
-
-/obj/item/organ/external/wings/moth/can_soften_fall()
-	return !burnt
-
-///Check if we can flutter around
-/obj/item/organ/external/wings/moth/proc/update_float_move()
-	SIGNAL_HANDLER
-
-	if(!isspaceturf(owner.loc) && !burnt)
-		var/datum/gas_mixture/current = owner.loc.return_air()
-		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
-			ADD_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
-			return
-
-	REMOVE_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
-
-///check if our wings can burn off ;_;
-/obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
-	SIGNAL_HANDLER
-
-	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
-		to_chat(human, span_danger("Your precious wings burn to a crisp!"))
-		human.add_mood_event("burnt_wings", /datum/mood_event/burnt_wings)
-
-		burn_wings()
-		human.update_body_parts()
-
-///burn the wings off
-/obj/item/organ/external/wings/moth/proc/burn_wings()
-	burnt = TRUE
-
-	original_sprite_datum = sprite_datum
-	simple_change_sprite(/datum/sprite_accessory/moth_wings/burnt_off)
-
-///heal our wings back up!!
-/obj/item/organ/external/wings/moth/proc/heal_wings(datum/source, heal_flags)
-	SIGNAL_HANDLER
-
-	if(!burnt)
-		return
-
-	if(heal_flags & (HEAL_LIMBS|HEAL_ORGANS))
-		burnt = FALSE
-		simple_change_sprite(original_sprite_datum)
+///megamoth wings, which relate to moths as an alternate choice. they're both pretty cool.
+/obj/item/organ/external/wings/functional/moth/megamoth
+	name = "megamoth wings"
+	desc = "Don't get murderous."
+	stored_feature_id = "Megamoth"

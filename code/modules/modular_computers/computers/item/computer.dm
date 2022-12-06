@@ -154,7 +154,7 @@
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
-	update_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	return TRUE
 
 /obj/item/modular_computer/wrench_act_secondary(mob/living/user, obj/item/tool)
