@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes:
-  - bugfix: "Psyker brains that aren't in psyker heads no longer take twice as much brain damage from that as intended, nor can they suffer complete brain death due to that."
