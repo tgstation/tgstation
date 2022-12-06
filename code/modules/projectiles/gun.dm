@@ -43,6 +43,8 @@
 	var/semicd = 0 //cooldown handler
 	var/weapon_weight = WEAPON_LIGHT
 	var/dual_wield_spread = 24 //additional spread when dual wielding
+	///Can we hold up our target with this? Default to yes
+	var/can_hold_up = TRUE
 
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
@@ -192,6 +194,8 @@
 /obj/item/gun/afterattack_secondary(mob/living/victim, mob/living/user, params)
 	if(!isliving(victim) || !IN_GIVEN_RANGE(user, victim, GUNPOINT_SHOOTER_STRAY_RANGE))
 		return ..() //if they're out of range, just shootem.
+	if(!can_hold_up)
+		return ..()
 	var/datum/component/gunpoint/gunpoint_component = user.GetComponent(/datum/component/gunpoint)
 	if (gunpoint_component)
 		if(gunpoint_component.target == victim)
