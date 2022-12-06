@@ -87,7 +87,7 @@
 	if(!trackable(signal))
 		return
 
-	var/turf/here_turf = (get_turf(computer))
+	var/turf/here_turf = (get_turf(computer.physical))
 	var/turf/target_turf = (get_turf(signal))
 	var/userot = FALSE
 	var/rot = 0
@@ -125,9 +125,9 @@
  **arg1 is the atom being evaluated.
 */
 /datum/computer_file/program/radar/proc/trackable(atom/movable/signal)
-	if(!signal || !computer)
+	if(!signal || !computer.physical)
 		return FALSE
-	var/turf/here = get_turf(computer)
+	var/turf/here = get_turf(computer.physical)
 	var/turf/there = get_turf(signal)
 	if(!here || !there)
 		return FALSE //I was still getting a runtime even after the above check while scanning, so fuck it
@@ -174,11 +174,11 @@
 	if(!trackable(signal))
 		program_icon_state = "[initial(program_icon_state)]lost"
 		if(last_icon_state != program_icon_state)
-			computer.update_appearance()
+			computer.relay_appearance_update()
 			last_icon_state = program_icon_state
 		return
 
-	var/here_turf = get_turf(computer)
+	var/here_turf = get_turf(computer.physical)
 	var/target_turf = get_turf(signal)
 	var/trackdistance = get_dist_euclidian(here_turf, target_turf)
 	switch(trackdistance)
@@ -192,9 +192,9 @@
 			program_icon_state = "[initial(program_icon_state)]far"
 
 	if(last_icon_state != program_icon_state)
-		computer.update_appearance()
+		computer.relay_appearance_update()
 		last_icon_state = program_icon_state
-	computer.setDir(get_dir(here_turf, target_turf))
+	//computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
 /datum/computer_file/program/radar/process_tick(delta_time)
@@ -378,10 +378,11 @@
 		return
 
 	playsound(computer, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
-	if(isliving(computer.loc))
-		to_chat(computer.loc, span_userdanger("Your [computer.name] vibrates and lets out an ominous alarm. Uh oh."))
+	var/mob/living/mob_holder = get(computer.physical, /mob/living)
+	if(istype(mob_holder))
+		to_chat(mob_holder, span_userdanger("Your [computer.physical] vibrates and lets out an ominous alarm. Uh oh."))
 	else
 		computer.audible_message(
-			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),
-			span_notice("[computer] begins to vibrate rapidly. Wonder what that means..."),
+			span_danger("[computer.physical] vibrates and lets out an ominous alarm. Uh oh."),
+			span_notice("[computer.physical] begins to vibrate rapidly. Wonder what that means..."),
 		)

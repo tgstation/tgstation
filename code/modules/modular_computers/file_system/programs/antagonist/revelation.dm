@@ -25,13 +25,13 @@
 			addtimer(CALLBACK(modularInterface.physical, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
 			return
 
-		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
+		computer.visible_message(span_notice("\The [computer.physical]'s screen brightly flashes and loud electrical buzzing is heard."))
 		computer.turn_off()
 		computer.relay_appearance_update()
 		computer.physical.take_damage(25, BRUTE, 0, 0)
 		if(computer.internal_cell && prob(25))
 			QDEL_NULL(computer.internal_cell)
-			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))
+			computer.visible_message(span_notice("\The [computer.physical]'s battery explodes in rain of sparks."))
 			var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 			spark_system.start()
 

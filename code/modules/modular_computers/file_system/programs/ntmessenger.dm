@@ -59,7 +59,7 @@
 	var/list/dictionary = list()
 
 	for(var/datum/modular_computer_host/item/pda/messenger as anything in GetViewableDevices(sort_by_job))
-		if(messenger.saved_identification && messenger.saved_job && !(messenger == computer))
+		if(messenger.saved_identification && messenger.saved_job && messenger != computer)
 			var/list/data = list()
 			data["name"] = messenger.saved_identification
 			data["job"] = messenger.saved_job
@@ -108,7 +108,7 @@
 		if("PDA_ringSet")
 			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
 			var/mob/living/usr_mob = usr
-			if(!new_ringtone || !in_range(computer, usr_mob) || computer.physical.loc != usr_mob)
+			if(!new_ringtone || !in_range(computer.physical, usr_mob) || computer.physical.loc != usr_mob)
 				return
 
 			if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
@@ -251,7 +251,7 @@
 		to_chat(user, span_warning("The subspace transmitter of your tablet is still cooling down!"))
 		return FALSE
 
-	var/turf/position = get_turf(computer)
+	var/turf/position = get_turf(computer.physical)
 	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
 		var/turf/jammer_turf = get_turf(jammer)
 		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
@@ -281,7 +281,7 @@
 	if (prob(1))
 		message += " Sent from my PDA"
 
-	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer, list(
+	var/datum/signal/subspace/messaging/tablet_msg/signal = new(computer.physical, list(
 		"name" = fake_name || computer.saved_identification,
 		"job" = fake_job || computer.saved_job,
 		"message" = html_decode(message),

@@ -39,8 +39,8 @@
 	if(!networked)
 		GLOB.allbountyboards += computer
 		networked = TRUE
-	if(computer.computer_id_slot)
-		current_user = computer.computer_id_slot?.registered_account
+	if(computer.inserted_id)
+		current_user = computer.inserted_id?.registered_account
 	for(var/i in GLOB.request_list)
 		if(!i)
 			continue
@@ -97,14 +97,14 @@
 					physical_obj.say("Please swipe a valid ID first.")
 				return TRUE
 			if(current_user.account_holder == active_request.owner)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				playsound(physical_obj, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			active_request.applicants += list(current_user)
 		if("payApplicant")
 			if(!current_user)
 				return
 			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+				playsound(physical_obj, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
 			request_target.transfer_money(current_user, active_request.value, "Bounties: Request Completed")
 			if(istype(physical_obj))
@@ -119,10 +119,10 @@
 				return TRUE
 		if("deleteRequest")
 			if(!current_user)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				playsound(physical_obj, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			if(active_request.owner != current_user.account_holder)
-				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				playsound(physical_obj, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			if(istype(physical_obj))
 				physical_obj.say("Deleted current request.")

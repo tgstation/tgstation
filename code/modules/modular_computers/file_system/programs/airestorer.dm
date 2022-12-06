@@ -68,7 +68,7 @@
 	if(stored_card)
 		to_chat(user, span_warning("You try to insert \the [attacking_item] into \the [computer.physical.name], but the slot is occupied."))
 		return FALSE
-	if(user && !user.transferItemToLoc(attacking_item, computer))
+	if(user && !user.transferItemToLoc(attacking_item, computer.physical))
 		return FALSE
 
 	stored_card = attacking_item
@@ -110,7 +110,7 @@
 			var/mob/living/silicon/ai/A = stored_card.AI
 			if(A && A.health < 100)
 				restoring = TRUE
-				A.notify_ghost_cloning("Your core files are being restored!", source = computer)
+				A.notify_ghost_cloning("Your core files are being restored!", source = computer.physical)
 			return TRUE
 		if("PRG_eject")
 			if(stored_card)

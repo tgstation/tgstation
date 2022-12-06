@@ -37,7 +37,7 @@
 	DL_progress = 0
 
 	var/username = "unknown user"
-	var/obj/item/card/id/stored_card = computer.computer_id_slot
+	var/obj/item/card/id/stored_card = computer.inserted_id
 	if(istype(stored_card) && stored_card.registered_name)
 		username = "user [stored_card.registered_name]"
 	to_chat(borgo, span_userdanger("Request received from [username] for the system log file. Upload in progress."))//Damning evidence may be contained, so warn the borg
@@ -49,8 +49,9 @@
 		DL_progress = -1
 		return
 
-	var/turf/here = get_turf(computer)
+	var/turf/here = get_turf(computer.physical)
 	var/turf/there = get_turf(DL_source)
+	var/datum/modular_computer_host/silicon/cyborg/borgcpu = DL_source.modularInterface
 	if(!here.Adjacent(there))//If someone walked away, cancel the download
 		to_chat(DL_source, span_danger("Log upload failed: general connection error."))//Let the borg know the upload stopped
 		DL_source = null
@@ -58,11 +59,11 @@
 		return
 
 	if(DL_progress == 100)
-		if(!DL_source || !DL_source.modularInterface) //sanity check, in case the borg or their modular tablet poofs somehow
+		if(!DL_source || !borgcpu) //sanity check, in case the borg or their modular tablet poofs somehow
 			loglist = list("System log of unit [DL_source.name]")
 			loglist += "Error -- Download corrupted."
 		else
-			loglist = DL_source.modularInterface.borglog.Copy()
+			loglist = borgcpu.borglog.Copy()
 			loglist.Insert(1,"System log of unit [DL_source.name]")
 		DL_progress = -1
 		DL_source = null
@@ -141,7 +142,7 @@
 
 ///This proc is used to determin if a borg should be shown in the list (based on the borg's scrambledcodes var). Syndicate version overrides this to show only syndicate borgs.
 /datum/computer_file/program/borg_monitor/proc/evaluate_borg(mob/living/silicon/robot/R)
-	if(!is_valid_z_level(get_turf(computer), get_turf(R)))
+	if(!is_valid_z_level(get_turf(computer.physical), get_turf(R)))
 		return FALSE
 	if(R.scrambledcodes)
 		return FALSE
@@ -149,7 +150,7 @@
 
 ///Gets the ID's name, if one is inserted into the device. This is a separate proc solely to be overridden by the syndicate version of the app.
 /datum/computer_file/program/borg_monitor/proc/checkID()
-	var/obj/item/card/id/ID = computer.computer_id_slot
+	var/obj/item/card/id/ID = computer.inserted_id
 	if(!ID)
 		if(emagged)
 			return "STDERR:UNDF"
@@ -173,7 +174,7 @@
 	return FALSE
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
-	if(!is_valid_z_level(get_turf(computer), get_turf(R)))
+	if(!is_valid_z_level(get_turf(computer.physical), get_turf(R)))
 		return FALSE
 	if(!R.scrambledcodes)
 		return FALSE

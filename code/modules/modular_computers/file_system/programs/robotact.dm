@@ -20,7 +20,7 @@
 
 /datum/computer_file/program/robotact/on_start(mob/living/user)
 	if(!istype(computer, /datum/modular_computer_host/silicon/cyborg))
-		to_chat(user, span_warning("A warning flashes across \the [computer]: Device Incompatible."))
+		computer.visible_message(span_warning("A warning flashes across \the [computer.physical]: Device Incompatible."))
 		return FALSE
 	. = ..()
 	if(.)
@@ -173,7 +173,6 @@
 /datum/computer_file/program/robotact/proc/force_full_update()
 	if(!istype(computer, /datum/modular_computer_host/silicon/cyborg))
 		return
-	var/datum/modular_computer_host/silicon/cyborg/tablet = computer
-	var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.physical, src)
+	var/datum/tgui/active_ui = SStgui.get_open_ui(computer.physical, src) // tablet.physical <- our borg
 	if(active_ui)
 		active_ui.send_full_update()

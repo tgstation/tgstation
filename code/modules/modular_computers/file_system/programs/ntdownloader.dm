@@ -113,7 +113,7 @@
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
 	var/list/data = get_header_data()
 	var/list/access = computer.inserted_id?.GetAccess()
-	if(isnull(access)) // no ID at all
+	if(isnull(access)) // no ID at all, this can happen because we use a nullable operator
 		access = list()
 
 	data["downloading"] = !!downloaded_file

@@ -223,9 +223,9 @@
 			if(partner && node)
 				if(partner.purchase_boost(linked_techweb, node))
 					computer.say("Purchase succesful.")
-					playsound(computer, 'sound/machines/ping.ogg', 25)
+					playsound(computer.physical, 'sound/machines/ping.ogg', 25)
 					return TRUE
-			playsound(computer, 'sound/machines/terminal_error.ogg', 25)
+			playsound(computer.physical, 'sound/machines/terminal_error.ogg', 25)
 			return FALSE
 
 /// Publication and adding points.
@@ -236,7 +236,7 @@
 		UnregisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 		selected_file = null
 		SStgui.update_uis(src)
-		playsound(computer, 'sound/machines/ping.ogg', 25)
+		playsound(computer.physical, 'sound/machines/ping.ogg', 25)
 		return TRUE
-	playsound(computer, 'sound/machines/terminal_error.ogg', 25)
+	playsound(computer.physical, 'sound/machines/terminal_error.ogg', 25)
 	return FALSE
