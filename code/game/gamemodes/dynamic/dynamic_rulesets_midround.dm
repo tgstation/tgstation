@@ -861,7 +861,7 @@
 	weight = 4
 	cost = 3
 	repeatable = TRUE
-	var/list/possible_spawns = list()
+	var/list/possible_spawns = list() ///places the antag can spawn
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
 	for(var/turf/warp_point in GLOB.xeno_spawn)
@@ -884,27 +884,29 @@
 
 	//cloning appearence/name/dna
 	var/datum/antagonist/paradox_clone/cloned = player_mind.has_antag_datum(/datum/antagonist/paradox_clone)
-	var/mob/living/carbon/carbon_cloned = cloned.original.current //target
-	var/mob/living/carbon/human/human_cloned = cloned.original.current
+	var/datum/mind/owner_mind = cloned.original_ref.resolve()
+	var/mob/living/carbon/human/human_cloned = owner_mind.current
 
-	clone.fully_replace_character_name(null, carbon_cloned.dna.real_name)
-	clone.name = carbon_cloned.name
-	carbon_cloned.dna.transfer_identity(clone, transfer_SE=1)
+	clone.fully_replace_character_name(null, human_cloned.dna.real_name)
+	clone.name = human_cloned.name
+	human_cloned.dna.transfer_identity(clone, transfer_SE=1)
+	clone.age = human_cloned.age
 	clone.underwear = human_cloned.underwear
 	clone.undershirt = human_cloned.undershirt
 	clone.socks = human_cloned.socks
 	for(var/datum/quirk/target_quirk as anything in human_cloned.quirks)
 		clone.add_quirk(target_quirk.type)
 	clone.updateappearance(mutcolor_update=1)
+	clone.update_body()
 	clone.domutcheck()
 
 	//cloning clothing/ID/bag
-	clone.mind.assigned_role = carbon_cloned.mind.assigned_role
+	clone.mind.assigned_role = human_cloned.mind.assigned_role
 
-	if(isplasmaman(carbon_cloned))
-		clone.equipOutfit(carbon_cloned.mind.assigned_role.plasmaman_outfit)
+	if(isplasmaman(human_cloned))
+		clone.equipOutfit(human_cloned.mind.assigned_role.plasmaman_outfit)
 		clone.internal = clone.get_item_for_held_index(1)
-	clone.equipOutfit(carbon_cloned.mind.assigned_role.outfit)
+	clone.equipOutfit(human_cloned.mind.assigned_role.outfit)
 
 	var/obj/item/clothing/under/sensor_clothes = clone.w_uniform
 	var/obj/item/modular_computer/tablet/pda/messenger = locate() in clone

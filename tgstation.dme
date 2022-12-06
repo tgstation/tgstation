@@ -3007,7 +3007,6 @@
 #include "code\modules\events\ghost_role\morph_event.dm"
 #include "code\modules\events\ghost_role\nightmare.dm"
 #include "code\modules\events\ghost_role\operative.dm"
-#include "code\modules\events\ghost_role\paradox_clone_event.dm"
 #include "code\modules\events\ghost_role\pirates.dm"
 #include "code\modules\events\ghost_role\revenant_event.dm"
 #include "code\modules\events\ghost_role\sentience.dm"

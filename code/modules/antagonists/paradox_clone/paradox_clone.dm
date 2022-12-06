@@ -7,8 +7,8 @@
 	suicide_cry = "THERE CAN BE ONLY ONE!!"
 	preview_outfit = /datum/outfit/paradox_clone
 	count_against_dynamic_roll_chance = TRUE
-	//our target
-	var/datum/mind/original
+
+	var/datum/weakref/original_ref ///antags target
 
 /datum/antagonist/paradox_clone/get_preview_icon()
 	var/icon/final_icon = render_preview_outfit(preview_outfit)
@@ -39,17 +39,22 @@
 	forge_objectives()
 	. = ..()
 
+/datum/antagonist/paradox_clone/Destroy()
+	original_ref = null
+	..()
+
 /datum/antagonist/paradox_clone/proc/forge_objectives()
 
-	if(!original)//admins didn't set one
-		original = find_original()
-	if(!original)//we didn't find one
+	if(!original_ref)//admins didn't set one
+		original_ref = WEAKREF(find_original())
+	if(!original_ref)//we didn't find one
+		stack_trace("No target found, aborting.")
 		qdel(src)
 		return
 
 	var/datum/objective/assassinate/paradox_clone/kill = new
 	kill.owner = owner
-	kill.target = original
+	kill.target = original_ref.resolve()
 	kill.update_explanation_text()
 	objectives += kill
 
@@ -73,6 +78,7 @@
 	return chosen_victim
 
 /datum/objective/assassinate/paradox_clone
+	name = "clone assassinate"
 
 /datum/objective/assassinate/paradox_clone/update_explanation_text()
 	..()
