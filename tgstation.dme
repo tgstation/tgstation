@@ -4386,6 +4386,7 @@
 #include "code\modules\research\ordnance\doppler_array.dm"
 #include "code\modules\research\ordnance\scipaper_partner.dm"
 #include "code\modules\research\ordnance\tank_compressor.dm"
+#include "code\modules\research\stock_parts\stock_part_datum.dm"
 #include "code\modules\research\techweb\__techweb_helpers.dm"
 #include "code\modules\research\techweb\_techweb.dm"
 #include "code\modules\research\techweb\_techweb_node.dm"
