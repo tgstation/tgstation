@@ -9,9 +9,9 @@
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8
 	taste_description = "oranges"
-	container_icon_state = "glass_orange"
-	container_name = "glass of orange juice"
-	container_desc = "Vitamins! Yay!"
+	glass_icon_state = "glass_orange"
+	glass_name = "glass of orange juice"
+	glass_desc = "Vitamins! Yay!"
 	ph = 3.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -26,9 +26,9 @@
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
 	taste_description = "tomatoes"
-	container_icon_state = "glass_red"
-	container_name = "glass of tomato juice"
-	container_desc = "Are you sure this is tomato juice?"
+	glass_icon_state = "glass_red"
+	glass_name = "glass of tomato juice"
+	glass_desc = "Are you sure this is tomato juice?"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -42,9 +42,9 @@
 	description = "The sweet-sour juice of limes."
 	color = "#365E30" // rgb: 54, 94, 48
 	taste_description = "unbearable sourness"
-	container_icon_state = "glass_green"
-	container_name = "glass of lime juice"
-	container_desc = "A glass of sweet-sour lime juice."
+	glass_icon_state = "glass_green"
+	glass_name = "glass of lime juice"
+	glass_desc = "A glass of sweet-sour lime juice."
 	ph = 2.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -59,9 +59,9 @@
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
 	taste_description = "carrots"
-	container_icon_state = "carrotjuice"
-	container_name = "glass of  carrot juice"
-	container_desc = "It's just like a carrot but without crunching."
+	glass_icon_state = "carrotjuice"
+	glass_name = "glass of  carrot juice"
+	glass_desc = "It's just like a carrot but without crunching."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/carrotjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -83,9 +83,9 @@
 	description = "A delicious blend of several different kinds of berries."
 	color = "#863333" // rgb: 134, 51, 51
 	taste_description = "berries"
-	container_icon_state = "berryjuice"
-	container_name = "glass of berry juice"
-	container_desc = "Berry juice. Or maybe it's jam. Who cares?"
+	glass_icon_state = "berryjuice"
+	glass_name = "glass of berry juice"
+	glass_desc = "Berry juice. Or maybe it's jam. Who cares?"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/applejuice
@@ -100,9 +100,9 @@
 	description = "A tasty juice blended from various kinds of very deadly and toxic berries."
 	color = "#863353" // rgb: 134, 51, 83
 	taste_description = "berries"
-	container_icon_state = "poisonberryjuice"
-	container_name = "glass of berry juice"
-	container_desc = "Berry juice. Or maybe it's poison. Who cares?"
+	glass_icon_state = "poisonberryjuice"
+	glass_name = "glass of berry juice"
+	glass_desc = "Berry juice. Or maybe it's poison. Who cares?"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/poisonberryjuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -115,9 +115,9 @@
 	description = "Delicious juice made from watermelon."
 	color = "#863333" // rgb: 134, 51, 51
 	taste_description = "juicy watermelon"
-	container_icon_state = "glass_red"
-	container_name = "glass of watermelon juice"
-	container_desc = "A glass of watermelon juice."
+	glass_icon_state = "glass_red"
+	glass_name = "glass of watermelon juice"
+	glass_desc = "A glass of watermelon juice."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/lemonjuice
@@ -125,9 +125,9 @@
 	description = "This juice is VERY sour."
 	color = "#863333" // rgb: 175, 175, 0
 	taste_description = "sourness"
-	container_icon_state = "lemonglass"
-	container_name = "glass of lemon juice"
-	container_desc = "Sour..."
+	glass_icon_state = "lemonglass"
+	glass_name = "glass of lemon juice"
+	glass_desc = "Sour..."
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -136,9 +136,9 @@
 	description = "The raw essence of a banana. HONK"
 	color = "#863333" // rgb: 175, 175, 0
 	taste_description = "banana"
-	container_icon_state = "banana"
-	container_name = "glass of banana juice"
-	container_desc = "The raw essence of a banana. HONK."
+	glass_icon_state = "banana"
+	glass_name = "glass of banana juice"
+	glass_desc = "The raw essence of a banana. HONK."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -152,10 +152,10 @@
 	name = "Nothing"
 	description = "Absolutely nothing."
 	taste_description = "nothing"
-	container_icon_state = "nothing"
-	container_name = "nothing"
-	container_desc = "Absolutely nothing."
-	shot_container_icon_state = "shotglass"
+	glass_icon_state = "nothing"
+	glass_name = "nothing"
+	glass_desc = "Absolutely nothing."
+	shot_glass_icon_state = "shotglass"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
@@ -199,9 +199,9 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "irish sadness"
-	container_icon_state = "glass_brown"
-	container_name = "glass of potato juice"
-	container_desc = "Bleh..."
+	glass_icon_state = "glass_brown"
+	glass_name = "glass of potato juice"
+	glass_desc = "Bleh..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/grapejuice
@@ -216,9 +216,9 @@
 	description = "Refreshing and slightly acidic beverage."
 	color = "#b6062c"
 	taste_description = "plums"
-	container_icon_state = "plumjuiceglass"
-	container_name = "glass of plum juice"
-	container_desc = "Noice."
+	glass_icon_state = "plumjuiceglass"
+	glass_name = "glass of plum juice"
+	glass_desc = "Noice."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/milk
@@ -226,9 +226,9 @@
 	description = "An opaque white liquid produced by the mammary glands of mammals."
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_description = "milk"
-	container_icon_state = "glass_white"
-	container_name = "glass of milk"
-	container_desc = "White and nutritious goodness!"
+	glass_icon_state = "glass_white"
+	glass_name = "glass of milk"
+	glass_desc = "White and nutritious goodness!"
 	ph = 6.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -253,9 +253,9 @@
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
 	taste_description = "soy milk"
-	container_icon_state = "glass_white"
-	container_name = "glass of soy milk"
-	container_desc = "White and nutritious soy goodness!"
+	glass_icon_state = "glass_white"
+	glass_name = "glass of soy milk"
+	glass_desc = "White and nutritious soy goodness!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -269,9 +269,9 @@
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#DFD7AF" // rgb: 223, 215, 175
 	taste_description = "creamy milk"
-	container_icon_state = "glass_white"
-	container_name = "glass of cream"
-	container_desc = "Ewwww..."
+	glass_icon_state = "glass_white"
+	glass_name = "glass of cream"
+	glass_desc = "Ewwww..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -287,9 +287,9 @@
 	nutriment_factor = 0
 	overdose_threshold = 80
 	taste_description = "bitterness"
-	container_icon_state = "glass_brown"
-	container_name = "glass of coffee"
-	container_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
+	glass_icon_state = "glass_brown"
+	glass_name = "glass of coffee"
+	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
 
@@ -314,9 +314,9 @@
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "tart black tea"
-	container_icon_state = "teaglass"
-	container_name = "glass of tea"
-	container_desc = "Drinking it from here would not seem right."
+	glass_icon_state = "teaglass"
+	glass_name = "glass of tea"
+	glass_desc = "Drinking it from here would not seem right."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
 
@@ -337,9 +337,9 @@
 	color = "#FFE978"
 	quality = DRINK_NICE
 	taste_description = "sunshine and summertime"
-	container_icon_state = "lemonpitcher"
-	container_name = "pitcher of lemonade"
-	container_desc = "This drink leaves you feeling nostalgic for some reason."
+	glass_icon_state = "lemonpitcher"
+	glass_name = "pitcher of lemonade"
+	glass_desc = "This drink leaves you feeling nostalgic for some reason."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 
@@ -350,9 +350,9 @@
 	quality = DRINK_NICE
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	taste_description = "bitter tea"
-	container_icon_state = "arnold_palmer"
-	container_name = "Arnold Palmer"
-	container_desc = "You feel like taking a few golf swings after a few swigs of this."
+	glass_icon_state = "arnold_palmer"
+	glass_name = "Arnold Palmer"
+	glass_desc = "You feel like taking a few golf swings after a few swigs of this."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -367,9 +367,9 @@
 	color = "#102838" // rgb: 16, 40, 56
 	nutriment_factor = 0
 	taste_description = "bitter coldness"
-	container_icon_state = "icedcoffeeglass"
-	container_name = "iced coffee"
-	container_desc = "A drink to perk you up and refresh you!"
+	glass_icon_state = "icedcoffeeglass"
+	glass_name = "iced coffee"
+	glass_desc = "A drink to perk you up and refresh you!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -387,9 +387,9 @@
 	color = "#102838" // rgb: 16, 40, 56
 	nutriment_factor = 0
 	taste_description = "bitter coldness and a hint of smoke"
-	container_icon_state = "hoticecoffee"
-	container_name = "hot ice coffee"
-	container_desc = "A sharp drink, this can't have come cheap"
+	glass_icon_state = "hoticecoffee"
+	glass_name = "hot ice coffee"
+	glass_desc = "A sharp drink, this can't have come cheap"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -408,9 +408,9 @@
 	color = "#104038" // rgb: 16, 64, 56
 	nutriment_factor = 0
 	taste_description = "sweet tea"
-	container_icon_state = "icedteaglass"
-	container_name = "iced tea"
-	container_desc = "All natural, antioxidant-rich flavour sensation."
+	glass_icon_state = "icedteaglass"
+	glass_name = "iced tea"
+	glass_desc = "All natural, antioxidant-rich flavour sensation."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -428,9 +428,9 @@
 	description = "A refreshing beverage."
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
-	container_icon_state = "spacecola"
-	container_name = "glass of Space Cola"
-	container_desc = "A glass of refreshing Space Cola."
+	glass_icon_state = "spacecola"
+	glass_name = "glass of Space Cola"
+	glass_desc = "A glass of refreshing Space Cola."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -444,9 +444,9 @@
 	color = "#53090B"
 	quality = DRINK_GOOD
 	taste_description = "fruity overlysweet cola"
-	container_icon_state = "royrogers"
-	container_name = "Roy Rogers"
-	container_desc = "90% sugar in a glass."
+	glass_icon_state = "royrogers"
+	glass_name = "Roy Rogers"
+	glass_desc = "90% sugar in a glass."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/roy_rogers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -461,9 +461,9 @@
 	color = "#100800" // rgb: 16, 8, 0
 	quality = DRINK_VERYGOOD
 	taste_description = "the future"
-	container_icon_state = "nuka_colaglass"
-	container_name = "glass of Nuka Cola"
-	container_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
+	glass_icon_state = "nuka_colaglass"
+	glass_name = "glass of Nuka Cola"
+	glass_desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
@@ -492,9 +492,9 @@
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	taste_description = "a monstrous sugar rush"
-	container_icon_state = "spacecola"
-	container_name = "glass of root beer"
-	container_desc = "A glass of highly potent, incredibly sugary root beer."
+	glass_icon_state = "spacecola"
+	glass_name = "glass of root beer"
+	glass_desc = "A glass of highly potent, incredibly sugary root beer."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	/// If we activated the effect
 	var/effect_enabled = FALSE
@@ -529,9 +529,9 @@
 	color = "#EEFF00" // rgb: 238, 255, 0
 	quality = DRINK_VERYGOOD
 	taste_description = "carbonated oil"
-	container_icon_state = "grey_bull_glass"
-	container_name = "glass of Grey Bull"
-	container_desc = "Surprisingly it isn't grey."
+	glass_icon_state = "grey_bull_glass"
+	glass_name = "glass of Grey Bull"
+	glass_desc = "Surprisingly it isn't grey."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/grey_bull/on_mob_metabolize(mob/living/L)
@@ -555,9 +555,9 @@
 	description = "Blows right through you like a space wind."
 	color = "#102000" // rgb: 16, 32, 0
 	taste_description = "sweet citrus soda"
-	container_icon_state = "Space_mountain_wind_glass"
-	container_name = "glass of Space Mountain Wind"
-	container_desc = "Space Mountain Wind. As you know, there are no mountains in space, only wind."
+	glass_icon_state = "Space_mountain_wind_glass"
+	glass_name = "glass of Space Mountain Wind"
+	glass_desc = "Space Mountain Wind. As you know, there are no mountains in space, only wind."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -573,9 +573,9 @@
 	description = "A delicious blend of 42 different flavours."
 	color = "#102000" // rgb: 16, 32, 0
 	taste_description = "cherry soda" // FALSE ADVERTISING
-	container_icon_state = "dr_gibb_glass"
-	container_name = "glass of Dr. Gibb"
-	container_desc = "Dr. Gibb. Not as dangerous as the container_name might imply."
+	glass_icon_state = "dr_gibb_glass"
+	glass_name = "glass of Dr. Gibb"
+	glass_desc = "Dr. Gibb. Not as dangerous as the container_name might imply."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -588,9 +588,9 @@
 	description = "Tastes like a hull breach in your mouth."
 	color = "#00FF00" // rgb: 0, 255, 0
 	taste_description = "cherry soda"
-	container_icon_state = "space-up_glass"
-	container_name = "glass of Space-Up"
-	container_desc = "Space-up. It helps you keep your cool."
+	glass_icon_state = "space-up_glass"
+	glass_name = "glass of Space-Up"
+	glass_desc = "Space-up. It helps you keep your cool."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
@@ -603,9 +603,9 @@
 	description = "A tangy substance made of 0.5% natural citrus!"
 	color = "#8CFF00" // rgb: 135, 255, 0
 	taste_description = "tangy lime and lemon soda"
-	container_icon_state = "lemonlime"
-	container_name = "glass of lemon-lime"
-	container_desc = "You're pretty certain a real fruit has never actually touched this."
+	glass_icon_state = "lemonlime"
+	glass_name = "glass of lemon-lime"
+	glass_desc = "You're pretty certain a real fruit has never actually touched this."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
@@ -619,9 +619,9 @@
 	description = "The only drink with the PWR that true gamers crave."
 	color = "#9385bf" // rgb: 58, 52, 75
 	taste_description = "sweet and salty tang"
-	container_icon_state = "pwrgame"
-	container_name = "glass of Pwr Game"
-	container_desc = "Goes well with a Vlad's salad."
+	glass_icon_state = "pwrgame"
+	glass_name = "glass of Pwr Game"
+	glass_desc = "Goes well with a Vlad's salad."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/pwr_game/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
@@ -642,9 +642,9 @@
 	description = "~Shake me up some of that Shambler's Juice!~"
 	color = "#f00060" // rgb: 94, 0, 38
 	taste_description = "carbonated metallic soda"
-	container_icon_state = "shamblerjuice"
-	container_name = "glass of Shambler's juice"
-	container_desc = "Mmm mm, shambly."
+	glass_icon_state = "shamblerjuice"
+	glass_name = "glass of Shambler's juice"
+	glass_desc = "Mmm mm, shambly."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/shamblers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -656,9 +656,9 @@
 	description = "A can of club soda. Why not make a scotch and soda?"
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "carbonated water"
-	container_icon_state = "glass_clearcarb"
-	container_name = "glass of soda water"
-	container_desc = "Soda water. Why not make a scotch and soda?"
+	glass_icon_state = "glass_clearcarb"
+	glass_name = "glass of soda water"
+	glass_desc = "Soda water. Why not make a scotch and soda?"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
@@ -681,9 +681,9 @@
 	description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
 	color = "#0064C8" // rgb: 0, 100, 200
 	taste_description = "tart and fresh"
-	container_icon_state = "glass_clearcarb"
-	container_name = "glass of tonic water"
-	container_desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+	glass_icon_state = "glass_clearcarb"
+	glass_name = "glass of tonic water"
+	glass_desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -700,9 +700,9 @@
 	color = "#f39b03" // rgb: 243, 155, 3
 	overdose_threshold = 60
 	taste_description = "barbecue and nostalgia"
-	container_icon_state = "monkey_energy_glass"
-	container_name = "glass of Monkey Energy"
-	container_desc = "You can unleash the ape, but without the pop of the can?"
+	glass_icon_state = "monkey_energy_glass"
+	glass_name = "glass of Monkey Energy"
+	glass_desc = "You can unleash the ape, but without the pop of the can?"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -733,9 +733,9 @@
 	reagent_state = SOLID
 	color = "#619494" // rgb: 97, 148, 148
 	taste_description = "ice"
-	container_icon_state = "iceglass"
-	container_name = "glass of ice"
-	container_desc = "Generally, you're supposed to put something else in there too..."
+	glass_icon_state = "iceglass"
+	glass_name = "glass of ice"
+	glass_desc = "Generally, you're supposed to put something else in there too..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -748,9 +748,9 @@
 	color = "#cc6404" // rgb: 204,100,4
 	quality = DRINK_NICE
 	taste_description = "creamy coffee"
-	container_icon_state = "soy_latte"
-	container_name = "soy latte"
-	container_desc = "A nice and refreshing beverage while you're reading."
+	glass_icon_state = "soy_latte"
+	glass_name = "soy latte"
+	glass_desc = "A nice and refreshing beverage while you're reading."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 
@@ -771,9 +771,9 @@
 	color = "#cc6404" // rgb: 204,100,4
 	quality = DRINK_NICE
 	taste_description = "bitter cream"
-	container_icon_state = "cafe_latte"
-	container_name = "cafe latte"
-	container_desc = "A nice, strong and refreshing beverage while you're reading."
+	glass_icon_state = "cafe_latte"
+	glass_name = "cafe latte"
+	glass_desc = "A nice, strong and refreshing beverage while you're reading."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_EASY
 
@@ -794,9 +794,9 @@
 	color = "#FF8CFF" // rgb: 255, 140, 255
 	quality = DRINK_VERYGOOD
 	taste_description = "homely fruit"
-	container_icon_state = "doctorsdelightglass"
-	container_name = "Doctor's Delight"
-	container_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
+	glass_icon_state = "doctorsdelightglass"
+	glass_name = "Doctor's Delight"
+	glass_desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -818,9 +818,9 @@
 	color = "#FF6A50"
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tangy fruit"
-	container_icon_state = "cinderella"
-	container_name = "Cinderella"
-	container_desc = "There is not a single drop of alcohol in this thing."
+	glass_icon_state = "cinderella"
+	glass_name = "Cinderella"
+	glass_desc = "There is not a single drop of alcohol in this thing."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cinderella/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -834,9 +834,9 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	taste_description = "creamy tart cherry"
-	container_icon_state = "cherryshake"
-	container_name = "cherry shake"
-	container_desc = "A cherry flavored milkshake."
+	glass_icon_state = "cherryshake"
+	glass_name = "cherry shake"
+	glass_desc = "A cherry flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
@@ -847,9 +847,9 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	taste_description = "creamy blue cherry"
-	container_icon_state = "bluecherryshake"
-	container_name = "blue cherry shake"
-	container_desc = "An exotic blue milkshake."
+	glass_icon_state = "bluecherryshake"
+	glass_name = "blue cherry shake"
+	glass_desc = "An exotic blue milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vanillashake
@@ -859,9 +859,9 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	taste_description = "sweet creamy vanilla"
-	container_icon_state = "vanillashake"
-	container_name = "vanilla shake"
-	container_desc = "A vanilla flavored milkshake."
+	glass_icon_state = "vanillashake"
+	glass_name = "vanilla shake"
+	glass_desc = "A vanilla flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
@@ -872,9 +872,9 @@
 	quality = DRINK_GOOD
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	taste_description = "sweet rich creamy caramel"
-	container_icon_state = "caramelshake"
-	container_name = "caramel shake"
-	container_desc = "A caramel flavored milkshake."
+	glass_icon_state = "caramelshake"
+	glass_name = "caramel shake"
+	glass_desc = "A caramel flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
@@ -885,9 +885,9 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	taste_description = "sweet creamy chocolate"
-	container_icon_state = "choccyshake"
-	container_name = "chocolate shake"
-	container_desc = "A chocolate flavored milkshake."
+	glass_icon_state = "choccyshake"
+	glass_name = "chocolate shake"
+	glass_desc = "A chocolate flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
@@ -898,9 +898,9 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	taste_description = "sweet strawberries and milk"
-	container_icon_state = "strawberryshake"
-	container_name = "strawberry shake"
-	container_desc = "A strawberry flavored milkshake."
+	glass_icon_state = "strawberryshake"
+	glass_name = "strawberry shake"
+	glass_desc = "A strawberry flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
@@ -911,9 +911,9 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	taste_description = "thick banana"
-	container_icon_state = "bananashake"
-	container_name = "banana shake"
-	container_desc = "A banana flavored milkshake."
+	glass_icon_state = "bananashake"
+	glass_name = "banana shake"
+	glass_desc = "A banana flavored milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
@@ -924,9 +924,9 @@
 	quality = DRINK_VERYGOOD
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "creamy pumpkin"
-	container_icon_state = "pumpkin_latte"
-	container_name = "pumpkin latte"
-	container_desc = "A mix of coffee and pumpkin juice."
+	glass_icon_state = "pumpkin_latte"
+	glass_name = "pumpkin latte"
+	glass_desc = "A mix of coffee and pumpkin juice."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/gibbfloats
@@ -936,9 +936,9 @@
 	quality = DRINK_NICE
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "creamy cherry"
-	container_icon_state = "gibbfloats"
-	container_name = "Gibbfloat"
-	container_desc = "Dr. Gibb with ice cream on top."
+	glass_icon_state = "gibbfloats"
+	glass_name = "Gibbfloat"
+	glass_desc = "Dr. Gibb with ice cream on top."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/pumpkinjuice
@@ -961,9 +961,9 @@
 	color = "#EEFF00"
 	quality = DRINK_NICE
 	taste_description = "extreme bitterness"
-	container_icon_state = "triplecitrus" //needs own sprite mine are trash //your sprite is great tho
-	container_name = "glass of triple citrus"
-	container_desc = "A mixture of citrus juices. Tangy, yet smooth."
+	glass_icon_state = "triplecitrus" //needs own sprite mine are trash //your sprite is great tho
+	glass_name = "glass of triple citrus"
+	glass_desc = "A mixture of citrus juices. Tangy, yet smooth."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/grape_soda
@@ -971,8 +971,8 @@
 	description = "Beloved by children and teetotalers."
 	color = "#E6CDFF"
 	taste_description = "grape soda"
-	container_name = "glass of grape juice"
-	container_desc = "It's grape (soda)!"
+	glass_name = "glass of grape juice"
+	glass_desc = "It's grape (soda)!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/grape_soda/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -993,9 +993,9 @@
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
-	container_icon_state = "chocolateglass"
-	container_name = "glass of hot coco"
-	container_desc = "A favorite winter drink to warm you up."
+	glass_icon_state = "chocolateglass"
+	glass_name = "glass of hot coco"
+	glass_desc = "A favorite winter drink to warm you up."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1014,9 +1014,9 @@
 	color = "#57372A"
 	quality = DRINK_VERYGOOD
 	taste_description = "thick creamy chocolate"
-	container_icon_state = "italiancoco"
-	container_name = "glass of italian coco"
-	container_desc = "A spin on a winter favourite, made to please."
+	glass_icon_state = "italiancoco"
+	glass_name = "glass of italian coco"
+	glass_desc = "A spin on a winter favourite, made to please."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1028,9 +1028,9 @@
 	description = "Alleviates coughing symptoms one might have."
 	color = "#80AF9C"
 	taste_description = "mint"
-	container_icon_state = "glass_green"
-	container_name = "glass of menthol"
-	container_desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	glass_icon_state = "glass_green"
+	glass_name = "glass of menthol"
+	glass_desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/menthol/on_mob_life(mob/living/L, delta_time, times_fired)
@@ -1042,8 +1042,8 @@
 	description = "Not cherry flavored!"
 	color = "#EA1D26"
 	taste_description = "sweet pomegranates"
-	container_name = "glass of grenadine"
-	container_desc = "Delicious flavored syrup."
+	glass_name = "glass of grenadine"
+	glass_desc = "Delicious flavored syrup."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/parsnipjuice
@@ -1051,7 +1051,7 @@
 	description = "Why..."
 	color = "#FFA500"
 	taste_description = "parsnip"
-	container_name = "glass of parsnip juice"
+	glass_name = "glass of parsnip juice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/pineapplejuice
@@ -1059,8 +1059,8 @@
 	description = "Tart, tropical, and hotly debated."
 	color = "#F7D435"
 	taste_description = "pineapple"
-	container_name = "glass of pineapple juice"
-	container_desc = "Tart, tropical, and hotly debated."
+	glass_name = "glass of pineapple juice"
+	glass_desc = "Tart, tropical, and hotly debated."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/peachjuice //Intended to be extremely rare due to being the limiting ingredients in the blazaam drink
@@ -1068,7 +1068,7 @@
 	description = "Just peachy."
 	color = "#E78108"
 	taste_description = "peaches"
-	container_name = "glass of peach juice"
+	glass_name = "glass of peach juice"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cream_soda
@@ -1077,9 +1077,9 @@
 	color = "#dcb137"
 	quality = DRINK_VERYGOOD
 	taste_description = "fizzy vanilla"
-	container_icon_state = "cream_soda"
-	container_name = "Cream Soda"
-	container_desc = "A classic space-American vanilla flavored soft drink."
+	glass_icon_state = "cream_soda"
+	glass_name = "Cream Soda"
+	glass_desc = "A classic space-American vanilla flavored soft drink."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1092,9 +1092,9 @@
 	color = "#f7d26a"
 	quality = DRINK_NICE
 	taste_description = "sweet ginger spice"
-	container_icon_state = "soldry"
-	container_name = "Sol Dry"
-	container_desc = "A soothing, mellow drink made from ginger."
+	glass_icon_state = "soldry"
+	glass_name = "Sol Dry"
+	glass_desc = "A soothing, mellow drink made from ginger."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1107,9 +1107,9 @@
 	color = "#F43724"
 	quality = DRINK_GOOD
 	taste_description = "sweet cherry syrup and ginger spice"
-	container_icon_state = "shirleytemple"
-	container_name = "Shirley Temple"
-	container_desc = "Ginger ale with processed grenadine. "
+	glass_icon_state = "shirleytemple"
+	glass_name = "Shirley Temple"
+	glass_desc = "Ginger ale with processed grenadine. "
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/shirley_temple/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1122,9 +1122,9 @@
 	color = "#e6ddc3"
 	quality = DRINK_GOOD
 	taste_description = "wonder"
-	container_icon_state = "red_queen"
-	container_name = "Red Queen"
-	container_desc = "DRINK ME."
+	glass_icon_state = "red_queen"
+	glass_name = "Red Queen"
+	glass_desc = "DRINK ME."
 	var/current_size = RESIZE_DEFAULT_SIZE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -1152,9 +1152,9 @@
 	color = "#F9E43D"
 	description = "Exotic! You feel like you are on vacation already."
 	taste_description = "succulent bungo"
-	container_icon_state = "glass_yellow"
-	container_name = "glass of bungo juice"
-	container_desc = "Exotic! You feel like you are on vacation already."
+	glass_icon_state = "glass_yellow"
+	glass_name = "glass of bungo juice"
+	glass_desc = "Exotic! You feel like you are on vacation already."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/prunomix
@@ -1162,9 +1162,9 @@
 	color = "#E78108"
 	description = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
 	taste_description = "garbage"
-	container_icon_state = "glass_orange"
-	container_name = "glass of pruno mixture"
-	container_desc = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
+	glass_icon_state = "glass_orange"
+	glass_name = "glass of pruno mixture"
+	glass_desc = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/aloejuice
@@ -1172,9 +1172,9 @@
 	color = "#A3C48B"
 	description = "A healthy and refreshing juice."
 	taste_description = "vegetable"
-	container_icon_state = "glass_yellow"
-	container_name = "glass of aloe juice"
-	container_desc = "A healthy and refreshing juice."
+	glass_icon_state = "glass_yellow"
+	glass_name = "glass of aloe juice"
+	glass_desc = "A healthy and refreshing juice."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/aloejuice/on_mob_life(mob/living/M, delta_time, times_fired)
@@ -1189,9 +1189,9 @@
 	color = "#D25B66"
 	quality = DRINK_VERYGOOD
 	taste_description = "cool refreshing watermelon"
-	container_icon_state = "aguafresca"
-	container_name = "Agua Fresca"
-	container_desc = "90% water, but still refreshing."
+	glass_icon_state = "aguafresca"
+	glass_name = "Agua Fresca"
+	glass_desc = "90% water, but still refreshing."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1206,9 +1206,9 @@
 	color = "#674945" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	taste_description = "mushrooms"
-	container_icon_state = "mushroom_tea_glass"
-	container_name = "glass of mushroom tea"
-	container_desc = "Oddly savoury for a drink."
+	glass_icon_state = "mushroom_tea_glass"
+	glass_name = "glass of mushroom tea"
+	glass_desc = "Oddly savoury for a drink."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1224,9 +1224,9 @@
 	color = "#554862"
 	nutriment_factor = 0
 	taste_description = "fiery itchy pain"
-	container_icon_state = "toechtauese_syrup"
-	container_name = "glass of töchtaüse juice"
-	container_desc = "Raw, unadulterated töchtaüse juice. One swig will fill you with regrets."
+	glass_icon_state = "toechtauese_syrup"
+	glass_name = "glass of töchtaüse juice"
+	glass_desc = "Raw, unadulterated töchtaüse juice. One swig will fill you with regrets."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/toechtauese_syrup
@@ -1235,9 +1235,9 @@
 	color = "#554862"
 	nutriment_factor = 0
 	taste_description = "sugar, spice, and nothing nice"
-	container_icon_state = "toechtauese_syrup"
-	container_name = "glass of töchtaüse syrup"
-	container_desc = "Not for drinking on its own."
+	glass_icon_state = "toechtauese_syrup"
+	glass_name = "glass of töchtaüse syrup"
+	glass_desc = "Not for drinking on its own."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
@@ -1247,9 +1247,9 @@
 	color = "#FF9999"
 	nutriment_factor = 0
 	taste_description = "strawberry and banana"
-	container_icon_state = "strawberry_banana"
-	container_name = "strawberry banana smoothie"
-	container_desc = "A classic drink which countless souls have bonded over..."
+	glass_icon_state = "strawberry_banana"
+	glass_name = "strawberry banana smoothie"
+	glass_desc = "A classic drink which countless souls have bonded over..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/berry_blast
@@ -1258,9 +1258,9 @@
 	color = "#A76DC5"
 	nutriment_factor = 0
 	taste_description = "mixed berry"
-	container_icon_state = "berry_blast"
-	container_name = "berry blast smoothie"
-	container_desc = "A classic drink, freshly made with hand picked berries. Or, maybe not."
+	glass_icon_state = "berry_blast"
+	glass_name = "berry blast smoothie"
+	glass_desc = "A classic drink, freshly made with hand picked berries. Or, maybe not."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/funky_monkey
@@ -1269,9 +1269,9 @@
 	color = "#663300"
 	nutriment_factor = 0
 	taste_description = "chocolate and banana"
-	container_icon_state = "funky_monkey"
-	container_name = "funky monkey smoothie"
-	container_desc = "A classic drink made with chocolate and banana. No monkeys were harmed, officially."
+	glass_icon_state = "funky_monkey"
+	glass_name = "funky monkey smoothie"
+	glass_desc = "A classic drink made with chocolate and banana. No monkeys were harmed, officially."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/green_giant
@@ -1280,9 +1280,9 @@
 	color = "#003300"
 	nutriment_factor = 0
 	taste_description = "green, just green"
-	container_icon_state = "green_giant"
-	container_name = "green giant smoothie"
-	container_desc = "A classic drink, if you enjoy juiced wheatgrass and chia seeds."
+	glass_icon_state = "green_giant"
+	glass_name = "green giant smoothie"
+	glass_desc = "A classic drink, if you enjoy juiced wheatgrass and chia seeds."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/melon_baller
@@ -1291,9 +1291,9 @@
 	color = "#D22F55"
 	nutriment_factor = 0
 	taste_description = "fresh melon"
-	container_icon_state = "melon_baller"
-	container_name = "melon baller smoothie"
-	container_desc = "A wonderfully fresh melon smoothie. Guaranteed to brighten your day."
+	glass_icon_state = "melon_baller"
+	glass_name = "melon baller smoothie"
+	glass_desc = "A wonderfully fresh melon smoothie. Guaranteed to brighten your day."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/vanilla_dream
@@ -1302,9 +1302,9 @@
 	color = "#FFF3DD"
 	nutriment_factor = 0
 	taste_description = "creamy vanilla"
-	container_icon_state = "vanilla_dream"
-	container_name = "vanilla dream smoothie"
-	container_desc = "A classic drink made with vanilla and fresh cream."
+	glass_icon_state = "vanilla_dream"
+	glass_name = "vanilla dream smoothie"
+	glass_desc = "A classic drink made with vanilla and fresh cream."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cucumberjuice
@@ -1312,9 +1312,9 @@
 	description = "Ordinary cucumber juice, nothing from the fantasy world."
 	color = "#6cd87a"
 	taste_description = "light cucumber"
-	container_icon_state = "glass_cucumber"
-	container_name = "glass of cucumber juice"
-	container_desc = "A glass of cucumber juice."
+	glass_icon_state = "glass_cucumber"
+	glass_name = "glass of cucumber juice"
+	glass_desc = "A glass of cucumber juice."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
@@ -1324,9 +1324,9 @@
 	color = "#6cd87a"
 	quality = DRINK_GOOD
 	taste_description = "citrus soda with cucumber"
-	container_icon_state = "cucumber_lemonade"
-	container_name = "cucumber lemonade"
-	container_desc = "The smell of cucumber from lemonade, I'm sure I won't get poisoned?."
+	glass_icon_state = "cucumber_lemonade"
+	glass_name = "cucumber lemonade"
+	glass_desc = "The smell of cucumber from lemonade, I'm sure I won't get poisoned?."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
