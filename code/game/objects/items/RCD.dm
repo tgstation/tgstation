@@ -353,11 +353,13 @@ RLD
 
 	var/static/list/radial_menu = null
 
-	var/design_title = "Wall/Floor" ///english name for the design to check if it was selected or not
+	///english name for the design to check if it was selected or not
+	var/design_title = "Wall/Floor"
 	var/design_category = "Structures"
 	var/root_category = "Construction"
 	var/closed = FALSE
-	var/ui_always_active = FALSE ///used by construction_console
+	///used by construction_console
+	var/ui_always_active = FALSE
 
 	var/mode = RCD_FLOORWALL
 	var/construction_mode = RCD_FLOORWALL
