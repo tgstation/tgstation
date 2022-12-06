@@ -351,7 +351,7 @@ RLD
 		),
 	)
 
-	var/list/radial_menu = null
+	var/static/list/radial_menu = null
 
 	var/design_title = "Wall/Floor" ///english name for the design to check if it was selected or not
 	var/design_category = "Structures"
@@ -402,9 +402,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	. = ..()
 	AddElement(/datum/element/openspace_item_click_handler)
 
-	//Manually create a list version of the radial menu
+	//Create the radial menu as a static list only at the beginning of the map for all RCD instances to share
+	if(!mapload)
+		return
 
-	//Load all icons for the menu. code copied from rcd.dm in asset cache
 	var/list/icon_list = list()
 	var/list/essentials = list(
 		'icons/hud/radial.dmi' = list("wallfloor", "windowsize", "windowtype", "grillewindow", "cnorth", "csouth", "ceast", "cwest", "chair", "stool", "windoor", "secure_windoor", "airlock", "airlocktype", "access", "computer_dir"),
@@ -686,10 +687,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 	//create the category list
 	data["selected_category"] = design_category
+	data["selected_design"] = design_title
 	data["categories"] = list()
 	var/list/designs
 	var/icon
-	var/transform
 	for(var/list/sub_category as anything in root_categories[root_category])
 		//skip category if upgrades were not installed for these
 		if(sub_category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
@@ -711,10 +712,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				icon = design["icon"]
 			icon = replacetext(icon," ","-") //css class names cannot have spaces in them
 
-			transform = "scale(1.0)"
-			if(icon == "window0" || icon == "rwindow0")
-				transform = "scale(0.7)"
-			designs += list(list("design_id" = i, "selected" = ((design["title"] == design_title) && (sub_category == design_category)), "title" = design["title"], "icon" = icon, "transform" = transform))
+			designs += list(list("design_id" = i, "title" = design["title"], "icon" = icon))
 		data["categories"] += list(list("cat_name" = sub_category, "designs" = designs))
 
 	//merge airlock_electronics ui data with this
@@ -1320,6 +1318,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	data["selected_color"] = current_color
 	data["layer_icon"] = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"
 	data["selected_category"] = get_category(blueprint)
+	data["selected_recipe"] = initial(blueprint.name)
 
 	var/list/category_list = list()
 	var/category_name = ""
@@ -1340,7 +1339,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			"index" = i,
 			"icon" = initial(recipe.icon_state),
 			"name" = initial(recipe.name),
-			"selected" = (initial(blueprint.name) == initial(recipe.name))
 		))
 
 	data["categories"] = list()

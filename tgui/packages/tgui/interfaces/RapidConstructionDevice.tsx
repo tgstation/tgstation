@@ -14,6 +14,7 @@ type Data = {
   selected_root: string;
   categories: Category[];
   selected_category: string;
+  selected_design: string;
   display_tabs: BooleanLike;
 };
 
@@ -25,9 +26,7 @@ type Category = {
 type Design = {
   title: string;
   design_id: Number;
-  selected: Boolean;
   icon: string;
-  transform: string;
 };
 
 export const Space = (props, context) => {
@@ -95,7 +94,7 @@ const InfoSection = (props, context) => {
 
 const DesignSection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { categories = [], selected_category } = data;
+  const { categories = [], selected_category, selected_design } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
     'categoryName',
@@ -124,31 +123,29 @@ const DesignSection = (props, context) => {
           ellipsis
           height="31px"
           color="transparent"
-          selected={design.selected}
+          selected={
+            design.title === selected_design &&
+            shownCategory.cat_name === selected_category
+          }
           onClick={() =>
             act('design', {
               category: shownCategory.cat_name,
               index: design.design_id,
             })
           }>
-          <Stack>
-            <Stack.Item>
-              <Box
-                className={classes(['rcd-tgui32x32', design.icon])}
-                style={{
-                  transform: design.transform,
-                }}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <span>&nbsp;&nbsp;</span>
-            </Stack.Item>
-            <Stack.Item>
-              <Section verticalAlign="middle">
-                {capitalizeAll(design.title)}
-              </Section>
-            </Stack.Item>
-          </Stack>
+          <Box
+            inline
+            verticalAlign="middle"
+            mr="10px"
+            className={classes(['rcd-tgui32x32', design.icon])}
+            style={{
+              transform:
+                design.icon === 'window0' || design.icon === 'rwindow0'
+                  ? 'scale(0.7)'
+                  : 'scale(1.0)',
+            }}
+          />
+          <span>{capitalizeAll(design.title)}</span>
         </Button>
       ))}
     </Section>

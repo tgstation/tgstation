@@ -11,6 +11,7 @@ type Data = {
   layer_icon: string;
   categories: Category[];
   selected_category: string;
+  selected_recipe: string;
 };
 
 type Category = {
@@ -28,7 +29,7 @@ type Recipe = {
 
 const PlumbingTypeSection = (props, context) => {
   const { act, data } = useBackend<Data>(context);
-  const { categories = [], selected_category } = data;
+  const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
     context,
     'categoryName',
@@ -56,30 +57,22 @@ const PlumbingTypeSection = (props, context) => {
           fluid
           ellipsis
           color="transparent"
-          selected={recipe.selected}
+          selected={recipe.name === selected_recipe}
           onClick={() =>
             act('recipe', {
               id: recipe.index,
             })
           }>
-          <Stack>
-            <Stack.Item>
-              <Box
-                className={classes(['plumbing-tgui32x32', recipe.icon])}
-                style={{
-                  transform: 'scale(1.5) translate(9%, 9.5%)',
-                }}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <span>&nbsp;&nbsp;</span>
-            </Stack.Item>
-            <Stack.Item>
-              <Section verticalAlign="middle">
-                {capitalizeAll(recipe.name)}
-              </Section>
-            </Stack.Item>
-          </Stack>
+          <Box
+            inline
+            verticalAlign="middle"
+            mr="20px"
+            className={classes(['plumbing-tgui32x32', recipe.icon])}
+            style={{
+              transform: 'scale(1.5) translate(9.5%, 9.5%)',
+            }}
+          />
+          <span>{capitalizeAll(recipe.name)}</span>
         </Button>
       ))}
     </Section>
