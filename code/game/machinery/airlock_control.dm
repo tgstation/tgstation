@@ -39,16 +39,11 @@
 	locked = FALSE
 	return ..()
 
-/obj/machinery/door/airlock/Destroy()
-	if(frequency)
-		SSradio.remove_object(src,frequency)
-	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE)
-	return ..()
-
 /obj/machinery/door/airlock/proc/grey_tide()
 	SIGNAL_HANDLER
 
-	if(!is_station_level(z) || critical_machine) return //Skip doors in critical positions, such as the SM chamber.
+	if(!is_station_level(z) || critical_machine)
+		return //Skip doors in critical positions, such as the SM chamber.
 
 	for(var/area_type in GLOB.grey_tide_areas)
 		if(istype(get_area(src), area_type))

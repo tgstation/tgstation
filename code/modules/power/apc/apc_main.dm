@@ -209,8 +209,6 @@
 	if(terminal)
 		disconnect_terminal()
 
-	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE)
-
 	. = ..()
 
 /obj/machinery/power/apc/handle_atom_del(atom/deleting_atom)
@@ -623,7 +621,8 @@
 /obj/machinery/power/apc/proc/grey_tide()
 	SIGNAL_HANDLER
 
-	if(!is_station_level(z)) return
+	if(!is_station_level(z))
+		return
 
 	for(var/area_type in GLOB.grey_tide_areas)
 		if(istype(get_area(src), area_type))

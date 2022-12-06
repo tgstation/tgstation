@@ -72,10 +72,6 @@
 		timer_end() // open doors, reset timer, clear status screen
 	update_content()
 
-/obj/machinery/status_display/door_timer/Destroy()
-	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE)
-
 /**
  * Update the display content.
  */
@@ -270,7 +266,8 @@
 /obj/machinery/status_display/door_timer/proc/grey_tide()
 	SIGNAL_HANDLER
 
-	if(!is_station_level(z)) return
+	if(!is_station_level(z))
+		return
 
 	for(var/area_type in GLOB.grey_tide_areas)
 		if(istype(get_area(src), area_type))
