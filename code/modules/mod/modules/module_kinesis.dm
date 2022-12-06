@@ -94,13 +94,12 @@
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
-	kinesis_catcher.calculate_params()
-	if(!kinesis_catcher.given_turf)
-		clear_grab()
-		return
 	drain_power(use_power_cost/10)
+	if(kinesis_catcher.mouse_params)
+		kinesis_catcher.calculate_params()
+	if(!kinesis_catcher.given_turf)
+		return
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
-	grabbed_atom.set_glide_size()
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
 		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - world.icon_size/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - world.icon_size/2)
 			return //spare us redrawing if we are standing still
@@ -110,7 +109,7 @@
 	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
 	kinesis_beam.redrawing()
 	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
-	if(grabbed_atom.Move(next_turf))
+	if(grabbed_atom.Move(next_turf, get_dir(grabbed_atom, next_turf), 8))
 		if(isitem(grabbed_atom) && (mod.wearer in next_turf))
 			var/obj/item/grabbed_item = grabbed_atom
 			clear_grab()
@@ -266,8 +265,8 @@
 
 /atom/movable/screen/fullscreen/kinesis/proc/calculate_params()
 	var/list/modifiers = params2list(mouse_params)
-	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X)) || view_list[1]*world.icon_size/2
-	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y)) || view_list[2]*world.icon_size/2
+	var/icon_x = text2num(LAZYACCESS(modifiers, VIS_X))
+	var/icon_y = text2num(LAZYACCESS(modifiers, VIS_Y))
 	var/our_x = round(icon_x / world.icon_size)
 	var/our_y = round(icon_y / world.icon_size)
 	given_turf = locate(kinesis_user.x+our_x-round(view_list[1]/2),kinesis_user.y+our_y-round(view_list[2]/2),kinesis_user.z)
