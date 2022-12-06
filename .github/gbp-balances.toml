@@ -60,7 +60,7 @@
 3384919 = 15 # ORCACommander
 3503632 = 3 # BebeYoshi
 3589655 = 63 # Ryll-Ryll
-3625094 = 64 # MTandi
+3625094 = 65 # MTandi
 3681297 = 14 # monster860
 3789327 = 17 # iprice
 3805405 = 7 # vpellen
@@ -447,7 +447,7 @@
 31362902 = 5 # RyverStyx
 31657169 = 4 # JoshAdamPowell
 31713423 = 5 # Kerbin-Fiber
-31829017 = 17 # Hatterhat
+31829017 = 20 # Hatterhat
 31856346 = -6 # Sebbe9123
 31995558 = 4 # Michiyamenotehifunana
 32263167 = 16 # raffclar
@@ -485,7 +485,7 @@
 34965105 = 11 # rhomm-dev
 35031555 = 20 # Cyprex
 35091844 = -30 # XSlayer300
-35135081 = 954 # Mothblocks
+35135081 = 964 # Mothblocks
 35203040 = 4 # Kurgis
 35225170 = 2 # Colovorat
 35280504 = 5 # gwhit94
@@ -932,7 +932,7 @@
 91609255 = 2 # SuperSlayer0
 91702996 = 3 # KittyCatMeowMeow
 91917171 = 0 # FA120
-92416224 = 27 # TheBoondock
+92416224 = 30 # TheBoondock
 92578337 = -3 # LukasBeedellCodestuff
 92743514 = 3 # MentalCow
 
@@ -942,7 +942,7 @@
 95004236 = 35 # SmoSmoSmoSmok
 95130227 = 3 # StrangeWeirdKitten
 95765134 = 19 # Ebb-Real
-98195197 = 3 # celulamp
+98195197 = -1 # celulamp
 98357253 = -3 # DannyBoy3642
 98856144 = 41 # orthography
 99276929 = 6 # bun235
