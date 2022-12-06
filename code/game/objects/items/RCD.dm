@@ -497,24 +497,23 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	radial_menu["Glass"] = list()
 
 	var/skip
+	//we have two diffrent refs as some airlock types have to be excluded for glass airlocks hence the indices will change
 	var/solid_ref=1
 	var/glass_ref=1
 	for(var/airlock_name as anything in airlocks)
 		skip = FALSE
 
+		var/airlock_solid_design_index = solid_ref++
 		icon = icon(icon = airlocks[airlock_name] , icon_state = "closed" , dir = SOUTH)
 		icon.Blend(icon(icon = airlocks[airlock_name], icon_state = "fill_closed", dir = SOUTH), ICON_OVERLAY)
-		radial_menu["Solid"][airlock_name] = list("icon" = icon, "coordinates" = list("Root" = "AirLocks", "Category" = "Solid AirLocks", "Index" = solid_ref++))
+		radial_menu["Solid"][airlock_name] = list("icon" = icon, "coordinates" = list("Root" = "AirLocks", "Category" = "Solid AirLocks", "Index" = airlock_solid_design_index))
 
-		for(var/exclude as anything in exclusion)
-			if(airlock_name == exclude)
-				skip = TRUE
-				break
-		if(skip)
+		if(airlock_name in exclusion)
 			continue
 
+		var/airlock_glass_design_index = glass_ref++
 		icon = icon(airlocks[airlock_name] , "closed" , SOUTH)
-		radial_menu["Glass"][airlock_name] = list("icon" = icon, "coordinates" = list("Root" = "AirLocks", "Category" = "Glass AirLocks", "Index" = glass_ref++))
+		radial_menu["Glass"][airlock_name] = list("icon" = icon, "coordinates" = list("Root" = "AirLocks", "Category" = "Glass AirLocks", "Index" = airlock_glass_design_index))
 
 
 /obj/item/construction/rcd/examine(mob/user)
