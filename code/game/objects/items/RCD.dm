@@ -664,7 +664,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
  * else use parent method to decide the state for normal usage
  */
 /obj/item/construction/rcd/ui_state(mob/user)
-	return ui_always_active? GLOB.always_state : ..()
+	return ui_always_active ? GLOB.always_state : ..()
 
 /obj/item/construction/rcd/ui_static_data(mob/user)
 	return airlock_electronics.ui_static_data(user)
