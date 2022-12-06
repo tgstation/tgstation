@@ -184,7 +184,7 @@ RLD
 	data["matterLeft"] = total_matter
 
 	//silo details
-	data["silo_upgraded"] = upgrade & RCD_UPGRADE_SILO_LINK
+	data["silo_upgraded"] = !!(upgrade & RCD_UPGRADE_SILO_LINK)
 	data["silo_enabled"] = silo_link
 
 	return data
