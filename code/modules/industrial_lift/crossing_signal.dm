@@ -137,8 +137,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	// Check for stopped states.
 	if(!tram || !is_operational)
 		// Tram missing, or we lost power.
-		// Tram missing is always safe (green)
-		set_signal_state(XING_STATE_GREEN, force = !is_operational)
+		// Tram missing throw the error message (blue)
+		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
 	use_power(active_power_usage)
@@ -146,7 +146,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/obj/structure/industrial_lift/tram/tram_part = tram.return_closest_platform_to(src)
 
 	if(QDELETED(tram_part))
-		set_signal_state(XING_STATE_GREEN, force = !is_operational)
+		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
 	// Everything will be based on position and travel direction
@@ -217,12 +217,12 @@ GLOBAL_LIST_EMPTY(tram_signals)
 
 	var/new_color
 	switch(signal_state)
+		if(XING_STATE_MALF)
+			new_color = COLOR_BRIGHT_BLUE
 		if(XING_STATE_GREEN)
 			new_color = COLOR_VIBRANT_LIME
 		if(XING_STATE_AMBER)
 			new_color = COLOR_YELLOW
-		if(XING_STATE_MALF)
-			new_color = COLOR_BRIGHT_BLUE
 		else
 			new_color = COLOR_RED
 
