@@ -130,12 +130,6 @@
 		. += mutable_appearance(init_icon, "bsod")
 		. += mutable_appearance(init_icon, "broken")
 
-/obj/item/modular_computer/proc/add_log(text)
-	if(!cpu.get_ntnet_status())
-		return FALSE
-
-	return SSnetworks.add_log(text, network_id)
-
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight()
