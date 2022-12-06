@@ -1,0 +1,5 @@
+author: "Tastyfish"
+delete-after: True
+changes:
+  - bugfix: "Lisa no longer uses bluespace when interacting with Ian."
+  - refactor: "A large portion of dog code was re-written; please report any strange bugs."

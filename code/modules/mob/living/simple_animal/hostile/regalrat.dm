@@ -26,7 +26,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
-	faction = list(FACTION_RAT)
+	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES)
 	///Whether or not the regal rat is already opening an airlock
 	var/opening_airlock = FALSE
 	///The spell that the rat uses to generate miasma
@@ -212,8 +212,9 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 6 SECONDS
 	melee_cooldown_time = 0 SECONDS
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
+	overlay_icon_state = "bg_clock_border"
 	button_icon_state = "coffer"
 
 /datum/action/cooldown/domain/proc/domain()
@@ -243,9 +244,10 @@
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
 	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
+	overlay_icon_state = "bg_clock_border"
 	cooldown_time = 8 SECONDS
 	melee_cooldown_time = 0 SECONDS
 
@@ -257,35 +259,100 @@
 /datum/action/cooldown/riot/proc/riot()
 	var/cap = CONFIG_GET(number/ratcap)
 	var/uplifted_mice = FALSE
-	for(var/mob/living/basic/mouse/nearby_mouse in oview(owner, 5))
-		// This mouse is already rat controlled, let's not bother with it.
-		if(istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
+	var/uplifted_frog = FALSE
+	var/uplifted_roach = FALSE
+	var/list/converted_check_list = list(FACTION_RAT)
+	for(var/mob/living/simple_animal/hostile/retaliate/frog/nearby_frog in oview(owner, 5))
+		// No need to convert when not on the same team.
+		if(faction_check(nearby_frog.faction, converted_check_list))
 			continue
-		var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
+		if(nearby_frog.name == "frog")
+			nearby_frog.name = "trash frog"
+			nearby_frog.icon_state += "_trash"
+			nearby_frog.icon_living += "_trash"
+			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
+		else if(nearby_frog.name == "rare frog")
+			nearby_frog.name = "rare trash frog"
+			nearby_frog.icon_state += "_trash"
+			nearby_frog.icon_living += "_trash"
+			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
+		nearby_frog.desc += " ...Except this one lives in a trash bag."
+		nearby_frog.maxHealth += 10
+		nearby_frog.health += 10
+		nearby_frog.melee_damage_lower += 1
+		nearby_frog.melee_damage_upper += 5
+		nearby_frog.faction = owner.faction.Copy()
+		uplifted_frog = TRUE
+		break
 
-		// Buffs our combat stats to that of a rat
-		nearby_mouse.melee_damage_lower = initial(rat_path.melee_damage_lower)
-		nearby_mouse.melee_damage_upper = initial(rat_path.melee_damage_upper)
-		nearby_mouse.obj_damage = initial(rat_path.obj_damage)
-		nearby_mouse.maxHealth = initial(rat_path.maxHealth)
-		nearby_mouse.health = initial(rat_path.health)
-		// Replace our AI with a rat one
-		nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
-		// Give a hint in description too
-		nearby_mouse.desc += " ...Except this one looks corrupted and aggressive."
-		// Now we share factions!
-		nearby_mouse.faction = owner.faction.Copy()
-		uplifted_mice = TRUE
-
-	if(uplifted_mice)
-		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
-
-	else if(LAZYLEN(SSmobs.cheeserats) < cap)
-		new /mob/living/basic/mouse(owner.loc)
-		owner.visible_message(span_warning("[owner] commands a rat to their side!"))
-
+	if(uplifted_frog)
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them trash frogs!"))
 	else
-		to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
+		for(var/mob/living/basic/cockroach/nearby_roach in oview(owner, 5))
+			// No need to convert when not on the same team.
+			if(faction_check(nearby_roach.faction, converted_check_list))
+				continue
+			if(istype(nearby_roach, /mob/living/basic/cockroach/glockroach))
+				if(nearby_roach.name == "glockroach")
+					nearby_roach.name = "sewer glockroach"
+				nearby_roach.melee_damage_lower += 0.5
+				nearby_roach.melee_damage_upper += 2
+			else if(istype(nearby_roach, /mob/living/basic/cockroach/hauberoach))
+				if(nearby_roach.name == "hauberoach")
+					nearby_roach.name = "sewer hauberoach"
+				nearby_roach.melee_damage_lower += 0.5
+				nearby_roach.melee_damage_upper += 2
+			else
+				if(nearby_roach.name == "cockroach")
+					nearby_roach.name = "sewer cockroach"
+				nearby_roach.melee_damage_lower += 2
+				nearby_roach.melee_damage_upper += 4
+				nearby_roach.obj_damage += 5
+				nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
+			nearby_roach.desc += " ...Except this one looks very robust."
+			nearby_roach.icon_state += "_sewer"
+			nearby_roach.maxHealth += 1
+			nearby_roach.health += 1
+			nearby_roach.faction = owner.faction.Copy()
+			uplifted_roach = TRUE
+			break
+
+	if(uplifted_roach)
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into sewer roaches!"))
+	else if(!uplifted_frog)
+		for(var/mob/living/basic/mouse/nearby_mouse in oview(owner, 5))
+			// This mouse is already rat controlled, let's not bother with it.
+			if(istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
+				continue
+			var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
+
+			// Change name
+			if(nearby_mouse.name == "mouse")
+				nearby_mouse.name = initial(rat_path.name)
+			// Buffs our combat stats to that of a rat
+			nearby_mouse.melee_damage_lower = initial(rat_path.melee_damage_lower)
+			nearby_mouse.melee_damage_upper = initial(rat_path.melee_damage_upper)
+			nearby_mouse.obj_damage = initial(rat_path.obj_damage)
+			nearby_mouse.maxHealth = initial(rat_path.maxHealth)
+			nearby_mouse.health = initial(rat_path.health)
+			// Replace our AI with a rat one
+			nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
+			// Give a hint in description too
+			nearby_mouse.desc += " ...Except this one looks corrupted and aggressive."
+			// Now we share factions!
+			nearby_mouse.faction = owner.faction.Copy()
+			uplifted_mice = TRUE
+			break
+
+		if(uplifted_mice)
+			owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
+
+		else if(LAZYLEN(SSmobs.cheeserats) < cap)
+			new /mob/living/basic/mouse(owner.loc)
+			owner.visible_message(span_warning("[owner] commands a rat to their side!"))
+
+		else
+			to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
 
 	StartCooldown()
 

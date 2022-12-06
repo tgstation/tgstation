@@ -3,8 +3,9 @@
 	name = "Realignment"
 	desc = "Realign yourself, rapidly regenerating stamina and reducing any stuns or knockdowns. \
 		You cannot attack while realigning. Can be casted multiple times in short succession, but each cast lengthens the cooldown."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/obj/implants.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/obj/implants.dmi'
 	button_icon_state = "adrenal"
 	// sound = 'sound/magic/whistlereset.ogg'
 
@@ -33,20 +34,18 @@
 		var/reduction_timer = max(cooldown_time * spell_max_level * 0.5, 1.5 MINUTES)
 		addtimer(CALLBACK(src, PROC_REF(delevel_spell)), reduction_timer)
 
-/datum/action/cooldown/spell/realignment/update_spell_name()
-	var/spell_title = ""
+/datum/action/cooldown/spell/realignment/get_spell_title()
 	switch(spell_level)
 		if(1, 2)
-			spell_title = "Hasty " // Hasty Realignment
+			return "Hasty " // Hasty Realignment
 		if(3, 4)
-			spell_title = "" // Realignment
+			return "" // Realignment
 		if(5, 6, 7)
-			spell_title = "Slowed " // Slowed Realignment
+			return "Slowed " // Slowed Realignment
 		if(8, 9, 10)
-			spell_title = "Laborious " // Laborious Realignment (don't reach here)
+			return "Laborious " // Laborious Realignment (don't reach here)
 
-	name = "[spell_title][initial(name)]"
-	UpdateButtons()
+	return ""
 
 /datum/status_effect/realignment
 	id = "realigment"

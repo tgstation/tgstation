@@ -59,7 +59,7 @@
 		/obj/item/melee/baton/telescopic = 1,
 		/obj/item/storage/box/ids = 1,
 		)
-	belt = /obj/item/modular_computer/tablet/pda/heads/hop
+	belt = /obj/item/modular_computer/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup
@@ -79,7 +79,7 @@
 /datum/job/head_of_personnel/get_mail_goodies(mob/recipient)
 	. = ..()
 	// Strange Reagent if the pet is dead.
-	for(var/mob/living/simple_animal/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
+	for(var/mob/living/basic/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
 		. += list(/datum/reagent/medicine/strange_reagent = 20)
 		break
 

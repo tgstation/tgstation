@@ -2,8 +2,9 @@
 	name = "Void Pull"
 	desc = "Calls the void, damaging, knocking down, and stunning people nearby. \
 		Distant foes are also pulled closer to you (but not damaged)."
-	background_icon_state = "bg_ecult"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_heretic"
+	overlay_icon_state = "bg_heretic_border"
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "voidpull"
 	sound = 'sound/magic/voidblink.ogg'
 
@@ -32,7 +33,7 @@
 	for(var/mob/living/nearby_living as anything in get_things_to_cast_on(cast_on, damage_radius))
 		nearby_living.apply_damage(30, BRUTE, wound_bonus = CANT_WOUND)
 
-/datum/action/cooldown/spell/aoe/void_pull/get_things_to_cast_on(atom/center, radius_override = 0)
+/datum/action/cooldown/spell/aoe/void_pull/get_things_to_cast_on(atom/center, radius_override = 1)
 	var/list/things = list()
 	for(var/mob/living/nearby_mob in view(radius_override || aoe_radius, center))
 		if(nearby_mob == owner || nearby_mob == center)
@@ -41,6 +42,8 @@
 		if(!isturf(nearby_mob.loc))
 			continue
 		if(IS_HERETIC_OR_MONSTER(nearby_mob))
+			continue
+		if(nearby_mob.can_block_magic(antimagic_flags))
 			continue
 
 		things += nearby_mob

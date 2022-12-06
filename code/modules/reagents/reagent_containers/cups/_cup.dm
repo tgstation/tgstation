@@ -504,11 +504,6 @@
 		return
 	to_chat(user, span_warning("You can't grind this!"))
 
-/obj/item/reagent_containers/cup/saline
-	name = "saline canister"
-	volume = 5000
-	list_reagents = list(/datum/reagent/medicine/salglu_solution = 5000)
-
 //Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
 /obj/item/reagent_containers/cup/coffeepot
 	name = "coffeepot"
