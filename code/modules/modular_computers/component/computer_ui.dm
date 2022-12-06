@@ -12,12 +12,11 @@
 	if(!user.can_read(src, READING_CHECK_LITERACY))
 		return
 
-	// TODO
-/*	if(ishuman(user) && !allow_chunky)
+	if(ishuman(user) && !allow_chunky)
 		var/mob/living/carbon/human/human_user = user
 		if(human_user.check_chunky_fingers())
 			physical.balloon_alert(human_user, "fingers are too big!")
-			return*/
+			return
 
 	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
 	if(!powered_on && !issilicon(user))
@@ -43,13 +42,7 @@
 		if(ui.open())
 			ui.send_asset(get_asset_datum(/datum/asset/simple/headers))
 
-/datum/modular_computer_host/ui_static_data(mob/user)
-	. = ..()
-	var/list/data = list()
 
-	data["show_imprint"] = istype(src, /obj/item/modular_computer/pda)
-
-	return data
 
 /datum/modular_computer_host/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -61,8 +54,8 @@
 	)
 
 	data["proposed_login"] = list(
-		IDName = computer_id_slot?.registered_name,
-		IDJob = computer_id_slot?.assignment,
+		IDName = inserted_id?.registered_name,
+		IDJob = inserted_id?.assignment,
 	)
 
 
@@ -105,7 +98,7 @@
 			kill_program()
 			return TRUE
 		if("PC_shutdown")
-			shutdown_computer()
+			turn_off()
 			return TRUE
 		if("PC_minimize")
 			var/mob/user = usr
@@ -135,7 +128,7 @@
 			open_program(usr, find_file_by_name(params["name"]))
 
 		if("PC_toggle_light")
-			//return toggle_flashlight()
+			return toggle_flashlight()
 
 		if("PC_light_color")
 			/*var/mob/user = usr
@@ -158,7 +151,6 @@
 						return
 
 					user.put_in_hands(inserted_disk)
-					inserted_disk = null
 					playsound(src, 'sound/machines/card_slide.ogg', 50)
 					return TRUE
 
@@ -177,8 +169,8 @@
 						return TRUE
 
 		if("PC_Imprint_ID")
-			saved_identification = computer_id_slot.registered_name
-			saved_job = computer_id_slot.assignment
+			saved_identification = inserted_id.registered_name
+			saved_job = inserted_id.assignment
 			//UpdateDisplay()
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 

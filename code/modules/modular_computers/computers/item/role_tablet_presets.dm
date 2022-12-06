@@ -21,8 +21,8 @@
 
 /obj/item/modular_computer/pda/heads/captain/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(tab_no_detonate))
-	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
+	RegisterSignal(cpu, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(tab_no_detonate))
+	for(var/datum/computer_file/program/messenger/messenger_app in cpu.stored_files)
 		messenger_app.spam_mode = TRUE
 
 /obj/item/modular_computer/pda/heads/captain/proc/tab_no_detonate()
@@ -105,7 +105,6 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#D6B328#6506CA#927444"
 	inserted_item = /obj/item/pen/survival
-	stored_paper = 20
 	starting_programs = list(
 		/datum/computer_file/program/crew_manifest,
 		/datum/computer_file/program/status,
@@ -115,6 +114,10 @@
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/robocontrol,
 	)
+
+/obj/item/modular_computer/pda/heads/quartermaster/Initialize(mapload)
+	. = ..()
+	cpu.stored_paper = 20
 
 /**
  * Security
@@ -219,7 +222,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
-		/datum/computer_file/program/radar/lifeline,
+		///datum/computer_file/program/radar/lifeline,
 	)
 
 /obj/item/modular_computer/pda/viro
@@ -247,12 +250,15 @@
 /obj/item/modular_computer/pda/cargo
 	name = "cargo technician PDA"
 	greyscale_colors = "#D6B328#6506CA"
-	stored_paper = 20
 	starting_programs = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/budgetorders,
 		/datum/computer_file/program/robocontrol,
 	)
+
+/obj/item/modular_computer/pda/cargo/Initialize(mapload)
+	. = ..()
+	cpu.stored_paper = 20
 
 /obj/item/modular_computer/pda/shaftminer
 	name = "shaft miner PDA"
@@ -269,10 +275,10 @@
 /obj/item/modular_computer/pda/janitor
 	name = "janitor PDA"
 	greyscale_colors = "#933ea8#235AB2"
-	starting_programs = list(
+	/*starting_programs = list(
 		/datum/computer_file/program/skill_tracker,
 		/datum/computer_file/program/radar/custodial_locator,
-	)
+	)*/
 
 /obj/item/modular_computer/pda/chaplain
 	name = "chaplain PDA"
@@ -289,7 +295,7 @@
 
 /obj/item/modular_computer/pda/lawyer/Initialize(mapload)
 	. = ..()
-	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
+	for(var/datum/computer_file/program/messenger/messenger_app in cpu.stored_files)
 		messenger_app.spam_mode = TRUE
 
 /obj/item/modular_computer/pda/botanist
@@ -307,7 +313,6 @@
 
 /obj/item/modular_computer/pda/clown
 	name = "clown PDA"
-	inserted_disk = /obj/item/computer_disk/virus/clown
 	icon_state = "pda-clown"
 	greyscale_config = null
 	greyscale_colors = null
@@ -317,14 +322,15 @@
 	. = ..()
 	AddComponent(/datum/component/slippery/clowning, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, PROC_REF(AfterSlip)), slot_whitelist = list(ITEM_SLOT_ID, ITEM_SLOT_BELT))
 	AddComponent(/datum/component/wearertargeting/sitcomlaughter, CALLBACK(src, PROC_REF(after_sitcom_laugh)))
+	cpu.insert_disk(null, new /obj/item/computer_disk/virus/clown)
 
 /obj/item/modular_computer/pda/clown/update_overlays()
 	. = ..()
 	. += mutable_appearance(icon, "pda_stripe_clown") // clowns have eyes that go over their screen, so it needs to be compiled last
 
 /obj/item/modular_computer/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
-	if (istype(M) && (M.real_name != saved_identification))
-		var/obj/item/computer_disk/virus/clown/cart = inserted_disk
+	if (istype(M) && (M.real_name != cpu.saved_identification))
+		var/obj/item/computer_disk/virus/clown/cart = cpu.inserted_disk
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 			playsound(src,'sound/machines/ping.ogg',30,TRUE)
@@ -334,7 +340,6 @@
 
 /obj/item/modular_computer/pda/mime
 	name = "mime PDA"
-	inserted_disk = /obj/item/computer_disk/virus/mime
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
 	inserted_item = /obj/item/toy/crayon/mime
@@ -347,6 +352,7 @@
 	for(var/datum/computer_file/program/messenger/msg in cpu.stored_files)
 		msg.mime_mode = TRUE
 		msg.ringer_status = FALSE
+
 
 /obj/item/modular_computer/pda/curator
 	name = "curator PDA"
@@ -384,14 +390,12 @@
 	name = "military PDA"
 	greyscale_colors = "#891417#80FF80"
 
-
 /obj/item/modular_computer/pda/syndicate/Initialize(mapload)
 	. = ..()
 	cpu.saved_identification = "John Doe"
 	cpu.saved_job = "Citizen"
 	cpu.device_theme = "syndicate"
-	var/datum/computer_file/program/messenger/msg = locate() in cpu.stored_files
-	if(msg)
+	for(var/datum/computer_file/program/messenger/msg in cpu.stored_files)
 		msg.invisible = TRUE
 
 /obj/item/modular_computer/pda/clear
@@ -399,4 +403,7 @@
 	icon_state = "pda-clear"
 	greyscale_config = null
 	greyscale_colors = null
-	long_ranged = TRUE
+
+/obj/item/modular_computer/pda/clear/Initialize(mapload)
+	. = ..()
+	cpu.ntnet_bypass_rangelimit = TRUE

@@ -53,7 +53,7 @@
 			if(!SSnetworks.station_network)
 				return
 
-			var/obj/item/modular_computer/target_tablet = locate(params["ref"]) in GLOB.TabletMessengers
+			var/datum/modular_computer_host/item/pda/target_tablet = locate(params["ref"]) in GLOB.TabletMessengers
 			if(!istype(target_tablet))
 				return
 			for(var/datum/computer_file/program/messenger/messenger_app in target_tablet.stored_files)
@@ -83,7 +83,7 @@
 	data["ntnetmaxlogs"] = SSnetworks.setting_maxlogcount
 
 	data["tablets"] = list()
-	for(var/obj/item/modular_computer/messenger in GetViewableDevices())
+	for(var/datum/modular_computer_host/item/pda/messenger in GetViewableDevices())
 		var/list/tablet_data = list()
 		if(messenger.saved_identification)
 			for(var/datum/computer_file/program/messenger/messenger_app in computer.stored_files)

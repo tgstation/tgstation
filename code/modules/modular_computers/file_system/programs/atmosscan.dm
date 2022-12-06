@@ -78,7 +78,7 @@
 				UnregisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 				return TRUE
 			if(!(computer.hardware_flag & PROGRAM_TABLET))
-				computer.physical.say("Device incompatible for scanning objects!")
+				computer.say("Device incompatible for scanning objects!")
 				return FALSE
 			atmozphere_mode = ATMOZPHERE_SCAN_CLICK
 			RegisterSignal(computer, COMSIG_ITEM_ATTACK_SELF_SECONDARY, PROC_REF(turf_analyze))

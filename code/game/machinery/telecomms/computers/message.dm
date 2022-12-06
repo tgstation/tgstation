@@ -393,7 +393,7 @@
 					if("Recepient")
 						// Get out list of viable tablets
 						var/list/viewable_tablets = list()
-						for (var/obj/item/modular_computer/tablet as anything in GLOB.TabletMessengers)
+						for (var/datum/modular_computer_host/item/pda/tablet as anything in GLOB.TabletMessengers)
 							var/datum/computer_file/program/messenger/message_app = locate() in tablet.stored_files
 							if(!message_app || message_app.invisible)
 								continue

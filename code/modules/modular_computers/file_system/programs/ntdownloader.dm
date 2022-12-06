@@ -50,14 +50,9 @@
 
 	ui_header = "downloader_running.gif"
 
-	if(PRG in main_repo)
-		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from NTNet Software Repository.")
-		hacked_download = FALSE
-	else if(PRG in antag_repo)
-		generate_network_log("Began downloading file **ENCRYPTED**.[PRG.filetype] from unspecified server.")
+	if(PRG in antag_repo)//generate_network_log("Began downloading file **ENCRYPTED**.[PRG.filetype] from unspecified server.")
 		hacked_download = TRUE
 	else
-		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from unspecified server.")
 		hacked_download = FALSE
 
 	downloaded_file = PRG.clone()
@@ -65,7 +60,6 @@
 /datum/computer_file/program/ntnetdownload/proc/abort_file_download()
 	if(!downloaded_file)
 		return
-	generate_network_log("Aborted download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
 	downloaded_file = null
 	download_completion = FALSE
 	ui_header = "downloader_finished.gif"
@@ -73,7 +67,6 @@
 /datum/computer_file/program/ntnetdownload/proc/complete_file_download()
 	if(!downloaded_file)
 		return
-	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
 	if(!computer || !computer.store_file(downloaded_file))
 		// The download failed
 		downloaderror = "I/O ERROR - Unable to save file. Check whether you have enough free space on your hard drive and whether your hard drive is properly connected. If the issue persists contact your system administrator for assistance."
@@ -118,7 +111,9 @@
 
 /datum/computer_file/program/ntnetdownload/ui_data(mob/user)
 	var/list/data = get_header_data()
-	var/list/access = computer.GetAccess()
+	var/list/access = computer.inserted_id?.GetAccess()
+	if(isnull(access)) // no ID at all
+		access = list()
 
 	data["downloading"] = !!downloaded_file
 	data["error"] = downloaderror || FALSE

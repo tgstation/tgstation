@@ -58,7 +58,7 @@
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
 
-	for(var/obj/item/modular_computer/messenger in GetViewableDevices(sort_by_job))
+	for(var/datum/modular_computer_host/item/pda/messenger as anything in GetViewableDevices(sort_by_job))
 		if(messenger.saved_identification && messenger.saved_job && !(messenger == computer))
 			var/list/data = list()
 			data["name"] = messenger.saved_identification
@@ -79,16 +79,13 @@
 	else
 		sortmode = GLOBAL_PROC_REF(cmp_pdaname_asc)
 
-	for(var/obj/item/modular_computer/P in sort_list(GLOB.TabletMessengers, sortmode))
-		for(var/datum/computer_file/program/messenger/app in P.stored_files)
-			if(!P.saved_identification || !P.saved_job || app.invisible || app.monitor_hidden)
+	for(var/datum/modular_computer_host/item/pda/pda as anything in sort_list(GLOB.TabletMessengers, sortmode))
+		for(var/datum/computer_file/program/messenger/app in pda.stored_files)
+			if(!pda.saved_identification || !pda.saved_job || app.invisible || app.monitor_hidden)
 				continue
-			dictionary += P
+			dictionary += pda
 
 	return dictionary
-
-/datum/computer_file/program/messenger/proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
-	return "[messenger.saved_identification] ([messenger.saved_job])"
 
 /datum/computer_file/program/messenger/proc/ProcessPhoto()
 	if(saved_image)
@@ -111,7 +108,7 @@
 		if("PDA_ringSet")
 			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
 			var/mob/living/usr_mob = usr
-			if(!new_ringtone || !in_range(computer, usr_mob) || computer.loc != usr_mob)
+			if(!new_ringtone || !in_range(computer, usr_mob) || computer.physical.loc != usr_mob)
 				return
 
 			if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
@@ -151,7 +148,7 @@
 
 			var/list/targets = list()
 
-			for(var/obj/item/modular_computer/mc in GetViewableDevices())
+			for(var/datum/modular_computer_host/item/pda/mc in GetViewableDevices())
 				targets += mc
 
 			if(targets.len > 0)
@@ -164,7 +161,7 @@
 				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
 				return
 
-			var/obj/item/modular_computer/target = locate(params["ref"])
+			var/datum/modular_computer_host/item/pda/target = locate(params["ref"])
 			if(!target)
 				return // we don't want tommy sending his messages to nullspace
 
@@ -236,11 +233,11 @@
 
 	if (!input_message || !sending_and_receiving)
 		return
-	if(!user.canUseTopic(computer, be_close = TRUE))
+	if(!user.canUseTopic(computer.physical, be_close = TRUE))
 		return
 	return sanitize(input_message)
 
-/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/obj/item/modular_computer/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
+/datum/computer_file/program/messenger/proc/send_message(mob/living/user, list/datum/modular_computer_host/item/pda/targets, everyone = FALSE, rigged = FALSE, fake_name = null, fake_job = null)
 	if(!targets.len)
 		return FALSE
 
@@ -274,7 +271,7 @@
 
 	// Send the signal
 	var/list/string_targets = list()
-	for (var/obj/item/modular_computer/comp in targets)
+	for (var/datum/modular_computer_host/item/pda/comp in targets)
 		if (comp.saved_identification && comp.saved_job)  // != src is checked by the UI
 			string_targets += STRINGIFY_PDA_TARGET(comp.saved_identification, comp.saved_job)
 
@@ -360,11 +357,11 @@
 	messages += list(message_data)
 
 	var/mob/living/L = null
-	if(computer.loc && isliving(computer.loc))
-		L = computer.loc
+	if(istype(computer, /datum/modular_computer_host/item))
+		L = get(computer.physical, /mob/living)
 	//Maybe they are a pAI!
-	else
-		L = get(computer, /mob/living/silicon)
+	else if(istype(computer, /datum/modular_computer_host/silicon))
+		L = computer.physical
 
 	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
 		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
@@ -384,8 +381,15 @@
 			to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
 
 
-	if (ringer_status)
-		computer.ring(ringtone)
+	if(ringer_status && istype(computer, /datum/modular_computer_host/item/pda))
+		ring(ringtone)
+
+/datum/computer_file/program/messenger/proc/ring(ringtone) // bring bring
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
+		playsound(computer.physical, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
+	else
+		playsound(computer.physical, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+	computer.audible_message("*[ringtone]*")
 
 /// topic call that answers to people pressing "(Reply)" in chat
 /datum/computer_file/program/messenger/Topic(href, href_list)
@@ -393,18 +397,18 @@
 	if(QDELETED(src))
 		return
 	// send an activation message, open the messenger, kill whoever reads this nesting mess
-	if(!computer.enabled)
+	if(!computer.powered_on)
 		if(!computer.turn_on(usr, open_ui = FALSE))
 			return
 	if(computer.active_program != src)
 		if(!computer.open_program(usr, src))
 			return
-	if(!href_list["close"] && usr.canUseTopic(computer, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
+	if(!href_list["close"] && usr.canUseTopic(computer.physical, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		switch(href_list["choice"])
 			if("Message")
 				send_message(usr, list(locate(href_list["target"])))
 			if("mess_us_up")
 				if(!HAS_TRAIT(src, TRAIT_PDA_CAN_EXPLODE))
-					var/obj/item/modular_computer/pda/comp = computer
-					comp.explode(usr, from_message_menu = TRUE)
+					var/obj/item/modular_computer/pda/pda = computer.physical
+					pda.explode(usr, from_message_menu = TRUE)
 					return

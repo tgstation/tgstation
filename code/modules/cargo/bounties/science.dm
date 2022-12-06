@@ -66,7 +66,7 @@
 		return FALSE
 	if(require_powered)
 		var/obj/item/modular_computer/computer = O
-		if(!istype(computer) || !computer.enabled)
+		if(!istype(computer) || !computer.cpu.powered_on)
 			return FALSE
 	return TRUE
 

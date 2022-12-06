@@ -28,7 +28,7 @@
 	var/list/mulelist = list()
 
 	if(computer)
-		data["id_owner"] = computer.computer_id_slot || ""
+		data["id_owner"] = computer.inserted_id || ""
 
 	botcount = 0
 
@@ -88,7 +88,7 @@
 	if(.)
 		return
 	var/mob/current_user = ui.user
-	var/obj/item/card/id/id_card = computer?.computer_id_slot
+	var/obj/item/card/id/id_card = computer?.inserted_id
 
 	var/list/standard_actions = list(
 		"patroloff",
@@ -118,15 +118,15 @@
 		if("summon")
 			simple_bot.bot_control(action, current_user, id_card ? id_card.access : current_access)
 		if("ejectcard")
-			if(!computer || !computer.computer_id_slot)
+			if(!computer || !computer.inserted_id)
 				return
 			if(id_card)
 				GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
-				computer.RemoveID(usr)
+				computer.remove_card(usr)
 			else
 				playsound(get_turf(ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
 		if("changedroneaccess")
-			if(!computer || !computer.computer_id_slot || !id_card)
+			if(!computer || !computer.inserted_id || !id_card)
 				to_chat(current_user, span_notice("No ID found, authorization failed."))
 				return
 			if(isdrone(current_user))

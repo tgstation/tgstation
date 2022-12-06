@@ -362,8 +362,9 @@
 /datum/action/item_action/chameleon/change/tablet/apply_job_data(datum/job/job_datum)
 	..()
 	var/obj/item/modular_computer/pda/agent_pda = target
-	if(istype(agent_pda) && istype(job_datum))
-		agent_pda.saved_job = job_datum.title
+	var/datum/modular_computer_host/item/pda/pda_cpu = agent_pda.cpu
+	if(istype(pda_cpu) && istype(job_datum))
+		pda_cpu.saved_job = job_datum.title
 
 
 /obj/item/clothing/under/chameleon

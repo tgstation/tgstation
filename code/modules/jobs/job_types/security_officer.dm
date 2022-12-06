@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		partners += partner.real_name
 
 	if (partners.len)
-		for (var/obj/item/modular_computer/pda as anything in GLOB.TabletMessengers)
+		for (var/datum/modular_computer_host/item/pda/pda as anything in GLOB.TabletMessengers)
 			if (pda.saved_identification in partners)
 				targets += pda
 

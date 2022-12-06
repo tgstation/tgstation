@@ -28,7 +28,7 @@
 			active_program.event_powerfailure(0)
 		for(var/datum/computer_file/program/programs as anything in idle_threads)
 			programs.event_powerfailure(background = TRUE)
-		shutdown_computer(0)
+		turn_off(loud = FALSE)
 
 // Handles power-related things, such as battery interaction, recharging, shutdown when it's discharged
 /datum/modular_computer_host/proc/handle_power(delta_time)

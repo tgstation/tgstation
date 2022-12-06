@@ -91,13 +91,12 @@
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 5)
 
+
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
-	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
+	. = ..()
+	if(modularInterface)
 		modularInterface.saved_identification = real_name
 		modularInterface.saved_job = "Cyborg"
-	return ..()
-
 
 /**
  * Sets the tablet theme and icon
@@ -108,13 +107,13 @@
 /mob/living/silicon/robot/proc/set_modularInterface_theme()
 	if(istype(model, /obj/item/robot_model/syndicate) || emagged)
 		modularInterface.device_theme = "syndicate"
-		modularInterface.icon_state = "tablet-silicon-syndicate"
+		//modularInterface.icon_state = "tablet-silicon-syndicate"
 	else
 		modularInterface.device_theme = "ntos"
-		modularInterface.icon_state = "tablet-silicon"
-		modularInterface.icon_state_powered = "tablet-silicon"
-		modularInterface.icon_state_unpowered = "tablet-silicon"
-	modularInterface.update_icon()
+		//modularInterface.icon_state = "tablet-silicon"
+		//modularInterface.icon_state_powered = "tablet-silicon"
+		//modularInterface.icon_state_unpowered = "tablet-silicon"
+	//modularInterface.update_icon()
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()

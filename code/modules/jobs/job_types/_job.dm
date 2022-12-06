@@ -358,18 +358,18 @@
 		equipped.sec_hud_set_ID()
 
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
+	var/datum/modular_computer_host/item/pda/pda_cpu
 
 	if(istype(pda))
-		pda.saved_identification = equipped.real_name
-		pda.saved_job = equipped_job.title
-		pda.update_ringtone(equipped_job.job_tone)
-		pda.UpdateDisplay()
+		pda_cpu = pda.cpu
+	if(istype(pda_cpu))
+		pda_cpu.saved_identification = equipped.real_name
+		pda_cpu.saved_job = equipped_job.title
+		pda.update_appearance()
 
 		var/client/equipped_client = GLOB.directory[ckey(equipped.mind?.key)]
 
-		if(equipped_client)
-			pda.update_ringtone_pref(equipped_client)
-
+		pda.update_ringtone_pref(equipped_client, equipped_job.job_tone)
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()

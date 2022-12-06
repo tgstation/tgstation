@@ -71,7 +71,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	if(.)
 		return
 
-	var/obj/item/card/id/user_id = computer.computer_id_slot
+	var/obj/item/card/id/user_id = computer.inserted_id
 	if(!user_id || !(ACCESS_CHANGE_IDS in user_id.access))
 		return
 
@@ -123,7 +123,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/data = get_header_data()
 
 	var/authed = FALSE
-	var/obj/item/card/id/user_id = computer.computer_id_slot
+	var/obj/item/card/id/user_id = computer.inserted_id
 	if(user_id && (ACCESS_CHANGE_IDS in user_id.access))
 		authed = TRUE
 

@@ -52,7 +52,7 @@
 		"points" = stored_research.research_points,
 		"points_last_tick" = stored_research.last_bitcoins,
 		"web_org" = stored_research.organization,
-		"sec_protocols" = !(computer.obj_flags & EMAGGED),
+		"sec_protocols" = !emagged,
 		"t_disk" = null, //Not doing disk operations on the app, use the console for that.
 		"d_disk" = null, //See above.
 		"locked" = locked,
@@ -100,10 +100,10 @@
 
 	switch (action)
 		if ("toggleLock")
-			if(computer.obj_flags & EMAGGED)
+			if(emagged)
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
-			if(lock_access in computer?.computer_id_slot?.access)
+			if(lock_access in computer?.inserted_id?.access)
 				locked = !locked
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
@@ -199,7 +199,7 @@
 		return FALSE
 	var/list/price = tech_node.get_price(stored_research)
 	if(stored_research.can_afford(price))
-		computer.investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
+		computer.physical.investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id] via [computer].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = tech_node.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
 		if(stored_research.research_node_id(id))

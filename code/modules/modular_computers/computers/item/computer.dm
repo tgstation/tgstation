@@ -35,7 +35,7 @@
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 
-	cpu = new(src)
+	cpu = new cpu(src)
 
 	//set_light_color(cpu.comp_light_color)
 	//set_light_range(cpu.comp_light_luminosity)
@@ -44,14 +44,12 @@
 	//cpu.UpdateDisplay()
 
 	register_context()
-	init_network_id(NETWORK_TABLETS)
-
-	// TODO: host subtype for PDAs
-	//cpu.has_light = TRUE
 
 	add_item_action(/datum/action/item_action/toggle_computer_light)
 
 /obj/item/modular_computer/Destroy()
+	if(istype(cpu))
+		QDEL_NULL(cpu)
 	return ..()
 
 // shameless copy of newscaster photo saving
@@ -75,20 +73,20 @@
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
 /obj/item/modular_computer/GetAccess()
-	if(cpu.computer_id_slot)
-		return cpu.computer_id_slot.GetAccess()
+	if(cpu.inserted_id)
+		return cpu.inserted_id.GetAccess()
 	return ..()
 
 /obj/item/modular_computer/GetID()
-	if(cpu.computer_id_slot)
-		return cpu.computer_id_slot
+	if(cpu.inserted_id)
+		return cpu.inserted_id
 	return ..()
 
 /obj/item/modular_computer/get_id_examine_strings(mob/user)
 	. = ..()
-	if(cpu.computer_id_slot)
-		. += "\The [src] is displaying [cpu.computer_id_slot]."
-		. += cpu.computer_id_slot.get_id_examine_strings(user)
+	if(cpu.inserted_id)
+		. += "\The [src] is displaying [cpu.inserted_id]."
+		. += cpu.inserted_id.get_id_examine_strings(user)
 
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
@@ -117,7 +115,7 @@
 /obj/item/modular_computer/update_icon_state()
 	if(!icon_state_powered || !icon_state_unpowered) //no valid icon, don't update.
 		return ..()
-	icon_state = enabled ? icon_state_powered : icon_state_unpowered
+	icon_state = cpu.powered_on ? icon_state_powered : icon_state_unpowered
 	return ..()
 
 /obj/item/modular_computer/update_overlays()

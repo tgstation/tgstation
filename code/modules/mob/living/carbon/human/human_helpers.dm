@@ -14,9 +14,9 @@
 	if(id)
 		. = id.assignment
 	else
-		var/obj/item/modular_computer/pda = wear_id
+		var/obj/item/modular_computer/pda/pda = wear_id
 		if(istype(pda))
-			. = pda.saved_job
+			. = pda.cpu.saved_job
 		else
 			return if_no_id
 	if(!.)
@@ -30,9 +30,9 @@
 		return if_no_id
 	if(id)
 		return id.registered_name
-	var/obj/item/modular_computer/pda = wear_id
+	var/obj/item/modular_computer/pda/pda = wear_id
 	if(istype(pda))
-		return pda.saved_identification
+		return pda.cpu.saved_identification
 	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
@@ -76,8 +76,8 @@
 		id = wallet.front_id
 	if(istype(id))
 		. = id.registered_name
-	else if(istype(pda) && pda.computer_id_slot)
-		. = pda.computer_id_slot.registered_name
+	else if(istype(pda) && pda.cpu.inserted_id)
+		. = pda.cpu.inserted_id.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
 	return

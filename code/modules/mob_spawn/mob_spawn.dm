@@ -254,11 +254,10 @@
 	. = ..()
 	if(conceal_presence)
 		// We don't want corpse PDAs to show up in the messenger list.
-		var/obj/item/modular_computer/pda/messenger = locate() in spawned_human
-		if(messenger)
-			var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
-			if(message_app)
-				message_app.invisible = TRUE
+		var/obj/item/modular_computer/pda/tablet = locate() in spawned_human
+		if(istype(tablet))
+			for(var/datum/computer_file/program/messenger/app in tablet.cpu.stored_files)
+				app.invisible = TRUE
 		// Or on crew monitors
 		var/obj/item/clothing/under/sensor_clothes = spawned_human.w_uniform
 		if(istype(sensor_clothes))

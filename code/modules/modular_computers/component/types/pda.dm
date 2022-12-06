@@ -12,6 +12,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	valid_on = /obj/item/modular_computer/pda // waiting for merge
 	has_light = TRUE
 	max_capacity = 64
+	comp_light_luminosity = 2.3
 
 /datum/modular_computer_host/item/pda/New(datum/holder)
 	. = ..()
@@ -21,17 +22,21 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	. = ..()
 	remove_messenger()
 
+/// A simple proc to set the ringtone from a pda.
+/datum/modular_computer_host/item/pda/proc/update_ringtone(new_ringtone)
+	if(!istext(new_ringtone))
+		return
+	for(var/datum/computer_file/program/messenger/messenger_app in stored_files)
+		messenger_app.ringtone = new_ringtone
+
 ///Adds ourself to the global list of tablet messengers.
-/datum/modular_computer_host/proc/add_messenger()
+/datum/modular_computer_host/item/pda/proc/add_messenger()
 	GLOB.TabletMessengers += src
 
 ///Removes ourselves to the global list of tablet messengers.
-/datum/modular_computer_host/proc/remove_messenger()
+/datum/modular_computer_host/item/pda/proc/remove_messenger()
 	GLOB.TabletMessengers -= src
 
-/datum/modular_computer_host/item/pda/proc/ring(ringtone) // bring bring
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
-		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
-	else
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-	physical.visible_message("*[ringtone]*")
+/datum/modular_computer_host/item/pda/ui_static_data(mob/user)
+	. = ..()
+	.["show_imprint"] = TRUE

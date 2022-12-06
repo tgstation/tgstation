@@ -128,10 +128,10 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 /proc/cmp_typepaths_asc(A, B)
 	return sorttext("[B]","[A]")
 
-/proc/cmp_pdaname_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
+/proc/cmp_pdaname_asc(datum/modular_computer_host/item/pda/A, datum/modular_computer_host/item/pda/B)
 	return sorttext(B?.saved_identification, A?.saved_identification)
 
-/proc/cmp_pdajob_asc(obj/item/modular_computer/A, obj/item/modular_computer/B)
+/proc/cmp_pdajob_asc(datum/modular_computer_host/item/pda/A, datum/modular_computer_host/item/pda/B)
 	return sorttext(B?.saved_job, A?.saved_job)
 
 /proc/cmp_num_string_asc(A, B)

@@ -265,8 +265,8 @@
 	sec_briefcase.contents += new /obj/item/grenade/c4/x4
 
 	var/obj/item/modular_computer/pda/heads/pda = H.belt
-	pda.saved_identification = H.real_name
-	pda.saved_job = "Reaper"
+	pda.cpu.saved_identification = H.real_name
+	pda.cpu.saved_job = "Reaper"
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name

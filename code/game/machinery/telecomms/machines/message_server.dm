@@ -171,7 +171,7 @@
 /datum/signal/subspace/messaging/tablet_msg/proc/format_target()
 	if (length(data["targets"]) > 1)
 		return "Everyone"
-	var/obj/item/modular_computer/target = data["targets"][1]
+	var/datum/modular_computer_host/item/pda/target = data["targets"][1]
 	return "[target.saved_identification] ([target.saved_job])"
 
 /datum/signal/subspace/messaging/tablet_msg/proc/format_message()
@@ -180,7 +180,7 @@
 /datum/signal/subspace/messaging/tablet_msg/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
-	for (var/obj/item/modular_computer/comp in data["targets"])
+	for (var/datum/modular_computer_host/item/pda/comp in data["targets"])
 		if(!QDELETED(comp))
 			for(var/datum/computer_file/program/messenger/app in comp.stored_files)
 				if(!QDELETED(app))

@@ -26,11 +26,11 @@
 	var/available_pdas = list()
 
 /datum/admin_pda_panel/New()
-	for(var/obj/item/modular_computer/computer in GLOB.TabletMessengers)
-		for(var/datum/computer_file/program/messenger/app in computer.stored_files)
-			if(!computer.saved_identification || !computer.saved_job || app.monitor_hidden || app.invisible)
+	for(var/datum/modular_computer_host/item/pda/pda in GLOB.TabletMessengers)
+		for(var/datum/computer_file/program/messenger/app in pda.stored_files)
+			if(!pda.saved_identification || !pda.saved_job || app.monitor_hidden || app.invisible)
 				continue
-			available_pdas += list(list("tablet" = computer, "name" = computer.saved_identification))
+			available_pdas += list(list("tablet" = pda, "name" = pda.saved_identification))
 
 /datum/admin_pda_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -64,7 +64,7 @@
 				if(!spam && target["name"] != params["user"])
 					continue
 				targets += target["tablet"]
-			
+
 			if(!length(targets))
 				to_chat(usr, span_warning("ERROR: Target is unavaiable(or not choosed)."))
 				return

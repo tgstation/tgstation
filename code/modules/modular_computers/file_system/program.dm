@@ -15,7 +15,7 @@
 	var/extended_desc = "N/A"
 	/// Category in the NTDownloader.
 	var/category = PROGRAM_CATEGORY_MISC
-	/// Has this program been emagged?
+	/// Flag for checking if this program has been emagged. Set by run_emag, can be restored manually.
 	var/emagged = FALSE
 	/// Program-specific screen icon state
 	var/program_icon_state = null
@@ -60,12 +60,6 @@
 /datum/computer_file/program/proc/update_computer_icon()
 	if(computer)
 		computer.physical.update_appearance()
-
-// Attempts to create a log in global ntnet datum. Returns 1 on success, 0 on fail.
-/datum/computer_file/program/proc/generate_network_log(text)
-	if(computer)
-		return computer.physical.add_log(text)
-	return 0
 
 /**
  *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
@@ -127,7 +121,7 @@
 	if(!length(access))
 		var/obj/item/card/id/accesscard
 		if(computer)
-			accesscard = computer.computer_id_slot
+			accesscard = computer.inserted_id
 
 		if(!accesscard)
 			if(loud)
@@ -165,15 +159,11 @@
 /datum/computer_file/program/proc/on_start(mob/living/user)
 	SHOULD_CALL_PARENT(TRUE)
 	if(can_run(user, 1))
-		if(requires_ntnet)
-			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
-			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
 	return FALSE
 
 /datum/computer_file/program/proc/run_emag()
-	SHOULD_NOT_OVERRIDE(TRUE)
 	// we want to tell on_emag if our program has been emagged before, so this call comes before setting emagged to true
 	. = on_emag()
 	emagged = TRUE
@@ -191,6 +181,7 @@
 **/
 
 /datum/computer_file/program/proc/on_emag()
+	SHOULD_NOT_SLEEP(TRUE)
 	return FALSE
 
 /**
@@ -205,9 +196,6 @@
 	program_state = PROGRAM_STATE_KILLED
 	if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
-	if(requires_ntnet)
-		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
-		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 	return TRUE
 
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
@@ -234,7 +222,7 @@
 				ui.close()
 				return TRUE
 			if("PC_shutdown")
-				computer.shutdown_computer()
+				computer.turn_off()
 				ui.close()
 				return TRUE
 			if("PC_minimize")

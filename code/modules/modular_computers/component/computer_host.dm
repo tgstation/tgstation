@@ -16,11 +16,11 @@
 	var/valid_on = null
 
 	///The ID currently stored in the computer.
-	var/obj/item/card/id/computer_id_slot
+	var/obj/item/card/id/inserted_id
 	///The disk in this PDA. If set, this will be inserted on Initialize.
 	var/obj/item/computer_disk/inserted_disk
 	///The power cell the computer uses to run on.
-	var/obj/item/stock_parts/cell/internal_cell = /obj/item/stock_parts/cell
+	var/obj/item/stock_parts/cell/internal_cell
 	///A pAI currently loaded into the modular computer.
 	var/obj/item/pai_card/inserted_pai
 
@@ -62,7 +62,7 @@
 	///Looping sound for when the computer is on.
 	var/datum/looping_sound/computer/soundloop
 	///Whether or not this modular computer uses the looping sound
-	var/looping_sound = TRUE
+	var/looping_sound = FALSE
 
 	///If the computer has a flashlight/LED light built-in.
 	var/has_light = FALSE
@@ -97,27 +97,26 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
-/datum/modular_computer_host/New(datum/holder)
-	. = ..()
+	var/allow_chunky = FALSE
 
+/datum/modular_computer_host/New(datum/holder, cell_type = /obj/item/stock_parts/cell, disk_type = null)
 	if(isnull(valid_on))
-		stack_trace("We were attaching a modular computer host that is defined as abstract! Type: [type]")
+		stack_trace("Instantiated abstract modular computer; Type: [type]")
 		qdel(src)
 		return
 
 	if(!istype(holder, valid_on))
-		stack_trace("We were attaching a modular computer host to an invalid holder! Expected: [valid_on], Got: [holder.type]")
+		stack_trace("Invalid modular computer holder; Expected: [valid_on], Got: [holder.type]")
 		qdel(src)
 		return
 
 	physical = holder
 
-	if(inserted_disk)
-		inserted_disk = new inserted_disk(src)
-	if(internal_cell)
-		internal_cell = new internal_cell(src)
+	if(disk_type)
+		inserted_disk = new disk_type(physical)
+	if(cell_type)
+		internal_cell = new cell_type(physical)
 
-	add_messenger()
 	install_default_programs()
 
 	register_signals()
@@ -133,11 +132,11 @@
 	QDEL_NULL(soundloop)
 	QDEL_LIST(stored_files)
 
-	if(!force) // our internal stuff gets a chance to live
-		var droploc = physical.drop_location()
+	var/droploc = physical.drop_location()
+	if(!force && droploc) // our internal stuff gets a chance to live
 		// refs get cleared in do_exited
 		internal_cell?.forceMove(droploc)
-		computer_id_slot?.forceMove(droploc)
+		inserted_id?.forceMove(droploc)
 		inserted_disk?.forceMove(droploc)
 		inserted_pai?.forceMove(droploc)
 	else
@@ -147,8 +146,8 @@
 			QDEL_NULL(inserted_disk)
 		if(istype(inserted_pai))
 			QDEL_NULL(inserted_pai)
-		if(istype(computer_id_slot))
-			QDEL_NULL(computer_id_slot)
+		if(istype(inserted_id))
+			QDEL_NULL(inserted_id)
 
 	unregister_signals()
 
@@ -164,22 +163,27 @@
 	RegisterSignal(physical, COMSIG_ATOM_EMAG_ACT, PROC_REF(do_emag))
 	RegisterSignal(physical, COMSIG_ATOM_EXITED, PROC_REF(do_exited))
 	RegisterSignal(physical, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(do_add_context))
+	RegisterSignal(physical, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(do_screwdriver_act))
 	RegisterSignal(physical, COMSIG_ATOM_UI_INTERACT, PROC_REF(do_interact))
 	RegisterSignal(physical, COMSIG_ITEM_ATTACK_SELF, PROC_REF(do_attack_self))
 	RegisterSignal(physical, COMSIG_CLICK_ALT, PROC_REF(do_altclick))
 	RegisterSignal(physical, COMSIG_CLICK_CTRL_SHIFT, PROC_REF(do_ctrlshiftclick))
 	RegisterSignal(physical, COMSIG_PARENT_ATTACKBY, PROC_REF(do_attackby))
 	RegisterSignal(physical, COMSIG_PARENT_EXAMINE, PROC_REF(do_examine))
+	RegisterSignal(physical, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(do_examine_more))
 
 /datum/modular_computer_host/proc/unregister_signals()
 	UnregisterSignal(physical, list(
 		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_BREAK,
-		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_EMAG_ACT,
+		COMSIG_ATOM_EXITED,
+		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
+		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_UI_INTERACT,
 		COMSIG_ITEM_ATTACK_SELF,
 		COMSIG_CLICK_ALT,
+		COMSIG_CLICK_CTRL_SHIFT,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_PARENT_EXAMINE,
 	))
@@ -215,6 +219,15 @@
 ///Returns the reference to our internal cell, if we are allowed to have one in our context
 /datum/modular_computer_host/proc/get_cell()
 	return internal_cell
+
+///Finds how hard it is to send a virus to this tablet, checking all programs downloaded.
+/datum/modular_computer_host/proc/get_detomatix_difficulty()
+	var/detomatix_difficulty
+
+	for(var/datum/computer_file/program/downloaded_apps in stored_files)
+		detomatix_difficulty += downloaded_apps.detomatix_resistance
+
+	return detomatix_difficulty
 
 ///Sets up all our default starting programs, but not your starting programs. Install those manually.
 /datum/modular_computer_host/proc/install_default_programs()
@@ -265,7 +278,7 @@
 		CRASH("tried to open program that does not belong to this computer")
 
 	if(!program || !istype(program)) // Program not found or it's not executable program.
-		to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+		to_chat(user, span_danger("\The [physical]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
 		return FALSE
 
 	// The program is already running. Resume it.
@@ -273,18 +286,18 @@
 		program.program_state = PROGRAM_STATE_ACTIVE
 		active_program = program
 		program.alert_pending = FALSE
-		idle_threads.Remove(program)
+		LAZYREMOVE(idle_threads, program)
 		return TRUE
 
 	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
 		return FALSE
 
 	if(idle_threads.len > max_idle_programs)
-		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
+		to_chat(user, span_danger("\The [physical] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 		return FALSE
 
 	if(program.requires_ntnet && !get_ntnet_status(program.requires_ntnet_feature)) // The program requires NTNet connection, but we are not connected to NTNet.
-		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
+		to_chat(user, span_danger("\The [physical]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
 
 	if(!program.on_start(user))
@@ -299,16 +312,16 @@
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(nonfunctional)
 		if(issynth)
-			to_chat(user, span_warning("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
+			to_chat(user, span_warning("You send an activation signal to \the [physical], but it responds with an error code. It must be damaged."))
 		else
 			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
 	if(use_power()) // use_power() checks if the PC is powered
 		if(issynth)
-			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
+			to_chat(user, span_notice("You send an activation signal to \the [physical], turning it on."))
 		else
-			to_chat(user, span_notice("You press the power button and start up \the [src]."))
+			to_chat(user, span_notice("You press the power button and start up \the [physical]."))
 		if(looping_sound)
 			soundloop.start()
 		powered_on = TRUE
@@ -317,20 +330,23 @@
 		return TRUE
 	else // Unpowered
 		if(issynth)
-			to_chat(user, span_warning("You send an activation signal to \the [src] but it does not respond."))
+			to_chat(user, span_warning("You send an activation signal to \the [physical] but it does not respond."))
 		else
-			to_chat(user, span_warning("You press the power button but \the [src] does not respond."))
+			to_chat(user, span_warning("You press the power button but \the [physical] does not respond."))
 		return FALSE
 
-/datum/modular_computer_host/proc/shutdown_computer(loud = 1)
+/datum/modular_computer_host/proc/turn_off(loud = TRUE)
 	kill_program(forced = TRUE)
 	for(var/datum/computer_file/program/P in idle_threads)
 		P.kill_program(forced = TRUE)
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
-		physical.visible_message(span_notice("\The [src] shuts down."))
+		physical.visible_message(span_notice("\The [physical] shuts down."))
 	powered_on = FALSE
+
+/datum/modular_computer_host/proc/relay_appearance_update()
+	physical.update_appearance()
 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
@@ -347,12 +363,12 @@
 /datum/modular_computer_host/proc/alert_call(datum/computer_file/program/caller, alerttext, sound = 'sound/machines/twobeep_high.ogg')
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return FALSE
-	playsound(src, sound, 50, TRUE)
-	physical.visible_message(span_notice("[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]"))
+	playsound(physical, sound, 50, TRUE)
+	visible_message(span_notice("[icon2html(physical)] [span_notice("The [physical] displays a [caller.filedesc] notification: [alerttext]")]"))
 
 
 /datum/modular_computer_host/proc/send_sound()
-	playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+	playsound(physical, 'sound/machines/terminal_success.ogg', 15, TRUE)
 
 // TODO: Component subtype...
 /datum/modular_computer_host/proc/set_flashlight_color(color)
@@ -362,25 +378,44 @@
 	physical.set_light_color(color)
 	return TRUE
 
+/datum/modular_computer_host/proc/toggle_flashlight()
+	return FALSE
+
 /**
- * Display a message in chat, forwards visible_message to our holder. This proc is a simpler implementation on purpose.
+ * Display an audible message in chat, forwards visible_message to our holder.
+ * This proc is a simpler implementation to [atom/visible_message].
  * Args:
  * message - The message to be displayed
+ * sender - The program that sent this message
  * range - Visible range of the message
  */
 
-/datum/modular_computer_host/proc/visible_message(message, range = DEFAULT_MESSAGE_RANGE)
+/datum/modular_computer_host/proc/audible_message(message, datum/computer_file/sender, range = DEFAULT_MESSAGE_RANGE)
+	physical.audible_message(message, hearing_distance = range)
+
+/**
+ * Display a visible message in chat, forwards visible_message to our holder.
+ * This proc is a simpler implementation to [atom/visible_message].
+ * Args:
+ * message - The message to be displayed
+ * sender - The program that sent this message
+ * range - Visible range of the message
+ */
+
+/datum/modular_computer_host/proc/visible_message(message, datum/computer_file/sender, range = DEFAULT_MESSAGE_RANGE)
 	physical.visible_message(message, vision_distance = range)
+
 
 /**
  * Will attempt to make our holder say something, if it even is an object.
  * Args:
  * message - The message to be said
+ * sender - The program that sent this message
  */
-/datum/modular_computer_host/proc/say(message)
-	var/obj/holder_object = physical
-	if(!istype(holder_object))
+/datum/modular_computer_host/proc/say(message, datum/computer_file/sender)
+	if(!isobj(physical))
 		return
+	var/obj/holder_object = physical
 	holder_object.say(message)
 
 /**
@@ -391,7 +426,7 @@
  */
 /datum/modular_computer_host/proc/insert_card(obj/item/card/inserting_id, mob/user)
 	//all slots taken
-	if(computer_id_slot)
+	if(inserted_id)
 		return
 
 	if(user)
@@ -401,12 +436,12 @@
 	else
 		inserting_id.forceMove(physical)
 
-	computer_id_slot = inserting_id
+	inserted_id = inserting_id
 
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	playsound(physical, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
-		if(human_wearer.wear_id == src)
+		if(human_wearer.wear_id == physical)
 			human_wearer.sec_hud_set_ID()
 	return
 
@@ -417,20 +452,31 @@
  */
 /datum/modular_computer_host/proc/remove_card(mob/user)
 	if(user)
-		if(!issilicon(user) && in_range(src, user))
-			user.put_in_hands(computer_id_slot)
+		if(!issilicon(user) && in_range(physical, user))
+			user.put_in_hands(inserted_id)
 		physical.balloon_alert(user, "removed ID")
 		to_chat(user, span_notice("You remove the card from the card slot."))
 	else
-		computer_id_slot.forceMove(physical.drop_location())
+		inserted_id.forceMove(physical.drop_location())
 
-	computer_id_slot = null
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	inserted_id = null
+	playsound(physical, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
-		if(human_wearer.wear_id == src)
+		if(human_wearer.wear_id == physical)
 			human_wearer.sec_hud_set_ID()
+
+/datum/modular_computer_host/proc/insert_disk(mob/user, obj/item/computer_disk/disk)
+	if(!istype(user))
+		disk.forceMove(physical)
+		return TRUE
+	return user.transferItemToLoc(disk, physical)
+
+/datum/modular_computer_host/proc/remove_disk(mob/user)
+	if(!inserted_disk)
+		return FALSE
+	return user.put_in_hands(inserted_disk)
 
 /datum/modular_computer_host/proc/print_text(text_to_print, paper_title = "")
 	if(!stored_paper)
@@ -457,9 +503,9 @@
 		if(app.run_emag())
 			newemag = TRUE
 	if(newemag)
-		to_chat(user, span_notice("You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
+		to_chat(user, span_notice("You swipe \the [physical]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
 		return
-	to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
+	to_chat(user, span_notice("You swipe \the [physical]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
 
 /datum/modular_computer_host/proc/do_attackby(datum/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
@@ -468,13 +514,13 @@
 		return COMPONENT_NO_AFTERATTACK
 
 	// Check for cash next
-	if(computer_id_slot && iscash(attacking_item))
-		INVOKE_ASYNC(computer_id_slot, TYPE_PROC_REF(/obj/item/card/id, attackby), attacking_item, user) // If we do, try and put that attacking object in (cant sleep, so call asynchronously)
+	if(inserted_id && iscash(attacking_item))
+		INVOKE_ASYNC(inserted_id, TYPE_PROC_REF(/atom, attackby), attacking_item, user) // If we do, try and put that attacking object in (cant sleep, so call asynchronously)
 		return COMPONENT_NO_AFTERATTACK
 
 	// Inserting a pAI
 	if(istype(attacking_item, /obj/item/pai_card) && !inserted_pai)
-		if(!user.transferItemToLoc(attacking_item, src))
+		if(!user.transferItemToLoc(attacking_item, physical))
 			return
 		inserted_pai = attacking_item
 		physical.balloon_alert(user, "inserted pai")
@@ -484,12 +530,12 @@
 		if(ismachinery(physical))
 			return
 		if(internal_cell)
-			to_chat(user, span_warning("You try to connect \the [attacking_item] to \the [src], but its connectors are occupied."))
+			to_chat(user, span_warning("You try to connect \the [attacking_item] to \the [physical], but its connectors are occupied."))
 			return
 		if(user && !user.transferItemToLoc(attacking_item, physical))
 			return
 		internal_cell = attacking_item
-		to_chat(user, span_notice("You plug \the [attacking_item] to \the [src]."))
+		to_chat(user, span_notice("You plug \the [attacking_item] to \the [physical]."))
 		return
 
 	// Check if any Applications need it
@@ -526,11 +572,8 @@
 
 	// Insert a data disk
 	if(istype(attacking_item, /obj/item/computer_disk))
-		if(!user.transferItemToLoc(attacking_item, src))
-			return
-		inserted_disk = attacking_item
-		playsound(src, 'sound/machines/card_slide.ogg', 50)
-		return
+		INVOKE_ASYNC(src, PROC_REF(insert_disk), user, attacking_item)
+		return COMPONENT_NO_AFTERATTACK
 
 // TODO: DEFINITELY NEED A COMPONENT SUBTYPE FOR THIS HERE NOW!!
 /*/datum/modular_computer_host/proc/do_preattack_secondary()
@@ -550,10 +593,10 @@
 	SIGNAL_HANDLER
 	if(issilicon(user))
 		return
-	if(!user.canUseTopic(src, be_close = TRUE))
+	if(!user.canUseTopic(physical, be_close = TRUE))
 		return
 
-	if(!computer_id_slot)
+	if(!inserted_id)
 		INVOKE_ASYNC(src, PROC_REF(remove_card), user)
 		return COMPONENT_CANCEL_CLICK_ALT
 
@@ -563,14 +606,33 @@
 		inserted_pai = null
 		return COMPONENT_CANCEL_CLICK_ALT
 
+/datum/modular_computer_host/proc/do_entered(datum/source, atom/movable/arrived)
+	SIGNAL_HANDLER
+	if(isidcard(arrived))
+		if(!isnull(inserted_id))
+			CRASH("Attempted to insert card in occupied slot!")
+		inserted_id = arrived
+	else if(istype(arrived, /obj/item/computer_disk))
+		if(!isnull(inserted_disk))
+			CRASH("Attempted to insert disk in occupied slot!")
+		inserted_disk = arrived
+	else if(ispAI(arrived))
+		if(!isnull(inserted_pai))
+			CRASH("Attempted to insert pAI in occupied slot!")
+		inserted_pai = arrived
+	else if(istype(arrived, /obj/item/stock_parts/cell))
+		if(!isnull(internal_cell))
+			CRASH("Attempted to insert cell in occupied slot!")
+		internal_cell = arrived
+
 /datum/modular_computer_host/proc/do_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(internal_cell == gone)
 		internal_cell = null
 		if(powered_on && !use_power())
-			shutdown_computer()
-	if(computer_id_slot == gone)
-		computer_id_slot = null
+			turn_off()
+	if(inserted_id == gone)
+		inserted_id = null
 		if(ishuman(physical.loc))
 			var/mob/living/carbon/human/human_wearer = physical.loc
 			human_wearer.sec_hud_set_ID()
@@ -585,12 +647,12 @@
 		examines += "It is upgraded with an experimental long-ranged network capabilities, picking up NTNet frequencies while further away."
 	examines += span_notice("It has [max_capacity] GQ of storage capacity.")
 
-	if(computer_id_slot)
+	if(inserted_id)
 		if(physical.Adjacent(user))
-			examines += "It has \the [computer_id_slot] card installed in its card slot."
+			examines += "It has \the [inserted_id] card installed in its card slot."
 		else
 			examines += "Its identification card slot is currently occupied."
-		examines += span_info("Alt-click [src] to eject the identification card.")
+		examines += span_info("Alt-click [physical] to eject the identification card.")
 
 
 /datum/modular_computer_host/proc/do_examine_more(datum/source, mob/user, list/examines)
@@ -610,7 +672,7 @@
 	if(!inserted_disk)
 		return
 	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), inserted_disk)
-	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	playsound(physical, 'sound/machines/card_slide.ogg', 50)
 
 /datum/modular_computer_host/proc/do_attack_ghost(datum/source, mob/dead/observer/user)
 	SIGNAL_HANDLER
@@ -629,20 +691,22 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(interact), user)
 
-/datum/modular_computer_host/proc/do_add_context(datum/source, atom/source, list/ctx, obj/item/item, mob/user)
+/datum/modular_computer_host/proc/do_add_context(atom/source, list/ctx, obj/item/item, mob/user)
 	SIGNAL_HANDLER
-	if(computer_id_slot) // ID get removed first before pAIs
-		ctx[SCREENTIP_CONTEXT_ALT_LMB] = "Remove ID"
+	if(inserted_id) // ID get removed first before pAIs
+		ctx[SCREENTIP_CONTEXT_ALT_LMB] += "Remove ID"
 		. = CONTEXTUAL_SCREENTIP_SET
 	else if(inserted_pai)
-		ctx[SCREENTIP_CONTEXT_ALT_LMB] = "Remove pAI"
+		ctx[SCREENTIP_CONTEXT_ALT_LMB] += "Remove pAI"
 		. = CONTEXTUAL_SCREENTIP_SET
 	if(inserted_disk)
-		ctx[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Remove SSD"
+		ctx[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] += "Remove SSD"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 	return . || NONE
 
 /datum/modular_computer_host/proc/do_integrity_failure(datum/source)
 	SIGNAL_HANDLER
-	shutdown_computer()
+	turn_off()
+
+/datum/modular_computer_host/proc/do_screwdriver_act(datum/source)

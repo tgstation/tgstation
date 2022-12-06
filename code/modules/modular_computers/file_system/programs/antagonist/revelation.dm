@@ -19,16 +19,16 @@
 
 /datum/computer_file/program/revelation/proc/activate()
 	if(computer)
-		if(istype(computer, /obj/item/modular_computer/pda/silicon)) //If this is a borg's integrated tablet
-			var/obj/item/modular_computer/pda/silicon/modularInterface = computer
-			to_chat(modularInterface.silicon_owner,span_userdanger("SYSTEM PURGE DETECTED/"))
-			addtimer(CALLBACK(modularInterface.silicon_owner, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
+		if(istype(computer, /datum/modular_computer_host/silicon/cyborg)) //If this is a borg's integrated tablet
+			var/datum/modular_computer_host/silicon/cyborg/modularInterface = computer
+			to_chat(modularInterface.physical, span_userdanger("SYSTEM PURGE DETECTED"))
+			addtimer(CALLBACK(modularInterface.physical, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
 			return
 
 		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
-		computer.enabled = FALSE
-		computer.update_appearance()
-		computer.take_damage(25, BRUTE, 0, 0)
+		computer.turn_off()
+		computer.relay_appearance_update()
+		computer.physical.take_damage(25, BRUTE, 0, 0)
 		if(computer.internal_cell && prob(25))
 			QDEL_NULL(computer.internal_cell)
 			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))

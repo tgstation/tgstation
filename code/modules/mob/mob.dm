@@ -1092,9 +1092,10 @@
 
 		else if( search_pda && istype(A, /obj/item/modular_computer/pda) )
 			var/obj/item/modular_computer/pda/PDA = A
-			if(PDA.saved_identification == oldname)
-				PDA.saved_identification = newname
-				PDA.UpdateDisplay()
+			var/datum/modular_computer_host/item/pda/tablet = PDA.cpu
+			if(tablet.saved_identification == oldname)
+				tablet.saved_identification = newname
+				tablet.relay_appearance_update()
 				if(!search_id)
 					break
 				search_pda = 0

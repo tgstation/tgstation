@@ -49,7 +49,7 @@
 	var/hack_software = FALSE //Will be able to use hacking actions
 	interaction_range = 7 //wireless control range
 
-	var/obj/item/modular_computer/pda/silicon/modularInterface
+	var/datum/modular_computer_host/silicon/modularInterface = /datum/modular_computer_host/silicon
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
@@ -81,28 +81,29 @@
 
 /mob/living/silicon/proc/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/pda/silicon(src)
+		modularInterface = new modularInterface(src)
 	if(isAI(src))
 		modularInterface.saved_job = "AI"
 	if(ispAI(src))
 		modularInterface.saved_job = "pAI Messenger"
 
-	modularInterface.layer = ABOVE_HUD_PLANE
-	SET_PLANE_EXPLICIT(modularInterface, ABOVE_HUD_PLANE, src)
+	//modularInterface.layer = ABOVE_HUD_PLANE
+	//SET_PLANE_EXPLICIT(modularInterface, ABOVE_HUD_PLANE, src)
 	modularInterface.saved_identification = real_name || name
 
 /mob/living/silicon/robot/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg(src)
+		modularInterface = new modularInterface(src)
 		modularInterface.saved_job = "Cyborg"
 	return ..()
 
+/*
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
 		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
 		modularInterface.saved_job = "Cyborg"
 	return ..()
-
+*/
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -450,10 +451,11 @@
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
-	var/mob/living/silicon/robot/robo = modularInterface.silicon_owner
+	var/datum/modular_computer_host/silicon/cyborg/borginterface = modularInterface
+	var/mob/living/silicon/robot/robo = borginterface.physical
 	if(istype(robo))
-		modularInterface.borglog += "[station_time_timestamp()] - [string]"
-	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
+		borginterface.borglog += "[station_time_timestamp()] - [string]"
+	var/datum/computer_file/program/robotact/program = borginterface.get_robotact()
 	if(program)
 		program.force_full_update()
 
