@@ -64,8 +64,8 @@
 	var/list/possible_targets = list() //filters out silicons and simplemobs
 	var/chosen_victim  //The cloned player
 
-	for(var/mob/player as anything in GLOB.player_list)//prevents cloning of non-crew
-		if(!player.client || !player.mind || isnewplayer(player) || player.stat == DEAD || isbrain(player))
+	for(var/mob/living/carbon/human/player as anything in GLOB.player_list)//prevents cloning of non-crew
+		if(!player.client || !player.mind || player.stat == DEAD)
 			continue
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
