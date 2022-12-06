@@ -3,8 +3,8 @@ The /tg/ codebase allows mixing of hardcoded and dynamically-loaded Z-levels.
 Z-levels can be reordered as desired and their properties are set by "traits".
 See code/datums/map_config.dm for how a particular station's traits may be chosen.
 The list DEFAULT_MAP_TRAITS at the bottom of this file should correspond to
-the maps that are hardcoded, as set in _maps/_basemap.dm. SSmapping is
-responsible for loading every non-hardcoded Z-level.
+the maps that are hardcoded, generally Central Command.
+SSmapping is responsible for loading every non-hardcoded Z-level.
 
 As of April 26th, 2022, the typical Z-levels for a single-level station are:
 1: CentCom
@@ -31,7 +31,7 @@ to trust the words presented within.
 
 We also provide this information to you so that you can have an at-a-glance look at how
 Z-Levels are arranged. It is extremely ill-advised to ever use the location of a Z-Level
-to assign traits to it or use it in coding. Use Z-Traits (ZTRAITs) for these. 
+to assign traits to it or use it in coding. Use Z-Traits (ZTRAITs) for these.
 
 If you want to start toying around with Z-Levels, do not take these words for fact.
 Always compile, always use that verb, and always make sure that it works for what you want to do.
