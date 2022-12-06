@@ -33,8 +33,8 @@ const TYPE_ICONS = {
 
 const CATEGORY_ICONS_CRAFTING = {
   'Can Make': 'hammer',
-  'Weapons Ranged': 'gun',
   'Weapons Melee': 'hand-fist',
+  'Weapons Ranged': 'gun',
   'Weapon Ammo': 'box',
   'Robotics': 'robot',
   'Misc': 'shapes',
