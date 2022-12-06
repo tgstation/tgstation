@@ -3949,7 +3949,6 @@
 #include "code\modules\modular_computers\computers\item\laptop.dm"
 #include "code\modules\modular_computers\computers\item\laptop_presets.dm"
 #include "code\modules\modular_computers\computers\item\pda.dm"
-#include "code\modules\modular_computers\computers\item\processor.dm"
 #include "code\modules\modular_computers\computers\item\role_tablet_presets.dm"
 #include "code\modules\modular_computers\computers\item\disks\computer_disk.dm"
 #include "code\modules\modular_computers\computers\item\disks\role_disks.dm"
