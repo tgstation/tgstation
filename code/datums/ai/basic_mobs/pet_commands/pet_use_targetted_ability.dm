@@ -23,5 +23,4 @@
 
 /datum/ai_behavior/pet_use_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
-	controller.blackboard[BB_ACTIVE_PET_COMMAND] = PET_COMMAND_IDLE // Wait for further instruction
 	controller.blackboard[target_key] = null

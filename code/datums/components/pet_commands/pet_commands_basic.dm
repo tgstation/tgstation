@@ -9,7 +9,6 @@
 	command_desc = "Command your pet to stay idle in this location."
 	radial_icon = 'icons/testing/turf_analysis.dmi'
 	radial_icon_state = "red_arrow"
-	command_key = PET_COMMAND_IDLE
 	speech_commands = list("sit", "stay", "stop")
 	command_feedback = "sits"
 
@@ -25,7 +24,6 @@
 	command_desc = "Allow your pet to resume its natural behaviours."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "repulse"
-	command_key = PET_COMMAND_NONE
 	speech_commands = list("free", "loose")
 	command_feedback = "relaxes"
 
@@ -41,7 +39,6 @@
 	command_desc = "Command your pet to accompany you."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "summons"
-	command_key = PET_COMMAND_FOLLOW
 	speech_commands = list("heel", "follow")
 
 /datum/pet_command/follow/set_command_active(mob/living/parent, mob/living/commander)
@@ -50,6 +47,52 @@
 
 /datum/pet_command/follow/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(/datum/ai_behavior/pet_follow_friend, BB_CURRENT_PET_TARGET)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/**
+ * # Pet Command: Play Dead
+ * Pretend to be dead for a random period of time
+ */
+/datum/pet_command/play_dead
+	command_name = "Play Dead"
+	command_desc = "Play a macabre trick."
+	radial_icon = 'icons/mob/simple/pets.dmi'
+	radial_icon_state = "puppy_dead"
+	speech_commands = list("play dead") // Don't get too creative here, people talk about dying pretty often
+
+/datum/pet_command/idle/execute_action(datum/ai_controller/controller)
+	controller.queue_behavior(/datum/ai_behavior/play_dead)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/**
+ * # Pet Command: Good Boy
+ * React if complimented
+ */
+/datum/pet_command/good_boy
+	command_name = "Good Boy"
+	command_desc = "Give your pet a compliment."
+	hidden = TRUE
+
+/datum/pet_command/good_boy/New(mob/living/parent)
+	. = ..()
+	speech_commands += "good [parent.name]"
+	switch (parent.gender)
+		if (MALE)
+			speech_commands += "good boy"
+			return
+		if (FEMALE)
+			speech_commands += "good girl"
+			return
+	// If we get past this point someone has finally added a non-binary dog
+
+/datum/pet_command/good_boy/execute_action(datum/ai_controller/controller)
+	controller.blackboard[BB_ACTIVE_PET_COMMAND] = null
+	var/mob/living/parent = weak_parent.resolve()
+	if (!parent)
+		return SUBTREE_RETURN_FINISH_PLANNING
+
+	new /obj/effect/temp_visual/heart(parent.loc)
+	parent.emote("spin")
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
@@ -62,7 +105,6 @@
 	radial_icon = 'icons/effects/effects.dmi'
 	radial_icon_state = "bite"
 
-	command_key = PET_COMMAND_ATTACK
 	speech_commands = list("attack", "sic", "kill")
 	command_feedback = "growl"
 	pointed_reaction = "growls"
@@ -105,7 +147,6 @@
 	command_desc = "Command your pet to use one of its special skills on something that you point out to it."
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "projectile"
-	command_key = PET_COMMAND_USE_ABILITY
 	speech_commands = list("shoot", "blast", "cast")
 	command_feedback = "growl"
 	pointed_reaction = "growls"
