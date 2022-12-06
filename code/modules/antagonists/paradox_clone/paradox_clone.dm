@@ -8,7 +8,8 @@
 	preview_outfit = /datum/outfit/paradox_clone
 	count_against_dynamic_roll_chance = TRUE
 
-	var/datum/weakref/original_ref ///antags target
+	///Weakref to the clone's original, the target.
+	var/datum/weakref/original_ref
 
 /datum/antagonist/paradox_clone/get_preview_icon()
 	var/icon/final_icon = render_preview_outfit(preview_outfit)
