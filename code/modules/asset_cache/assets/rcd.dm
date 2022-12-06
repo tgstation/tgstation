@@ -41,7 +41,6 @@
 	//these 3 types dont have glass doors
 	var/list/exclusion = list("Freezer", "Airtight-Hatch", "Maintenance Hatch")
 
-	var/skip
 	for(var/airlock_name as anything in airlocks)
 		skip = FALSE
 
@@ -51,11 +50,7 @@
 		Insert(sprite_name = airlock_name, I = icon)
 
 		//exclude these glass types
-		for(var/exclude as anything in exclusion)
-			if(airlock_name == exclude)
-				skip = TRUE
-				break
-		if(skip)
+		for(airlock_name in exclusion)
 			continue
 
 		//glass door no overlay
