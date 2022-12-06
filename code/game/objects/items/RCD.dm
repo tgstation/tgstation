@@ -347,7 +347,6 @@ RLD
 				list("airlock_type" = /obj/machinery/door/airlock/hatch, "title" = "Airtight Hatch"),
 				list("airlock_type" = /obj/machinery/door/airlock/maintenance_hatch, "title" = "Maintenance Hatch"),
 			),
-
 		),
 	)
 
@@ -496,12 +495,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	radial_menu["Solid"] = list()
 	radial_menu["Glass"] = list()
 
-	var/skip
 	//we have two diffrent refs as some airlock types have to be excluded for glass airlocks hence the indices will change
 	var/solid_ref=1
 	var/glass_ref=1
 	for(var/airlock_name as anything in airlocks)
-		skip = FALSE
 
 		var/airlock_solid_design_index = solid_ref++
 		icon = icon(icon = airlocks[airlock_name] , icon_state = "closed" , dir = SOUTH)
@@ -679,12 +676,9 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	//main categories
 	data["selected_root"] = root_category
 	data["root_categories"] = list()
-	for(var/category as anything in root_categories)
+	for(var/category in root_categories)
 		data["root_categories"] += category
 	data["root_categories"] += "AirLock Access"
-
-	//we display the normal tabs only if the selected catagory isnt AirLock Access else we display the AirLockInterface
-	data["display_tabs"] = (root_category != "AirLock Access")
 
 	//create the category list
 	data["selected_category"] = design_category
@@ -734,7 +728,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			if(root_categories[new_root] != null || new_root == "AirLock Access") //is a valid category
 				root_category = new_root
 
-		else if("design")
+		if("design")
 			var/category_name = params["category"]
 			var/index = params["index"]
 

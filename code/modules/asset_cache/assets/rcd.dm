@@ -39,18 +39,16 @@
 		"Maintenance-Hatch" = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
 	)
 	//these 3 types dont have glass doors
-	var/list/exclusion = list("Freezer", "Airtight-Hatch", "Maintenance Hatch")
+	var/list/exclusion = list("Freezer", "Airtight-Hatch", "Maintenance-Hatch")
 
-	for(var/airlock_name as anything in airlocks)
-		skip = FALSE
-
+	for(var/airlock_name in airlocks)
 		//solid door with overlay
 		icon = icon(icon = airlocks[airlock_name] , icon_state = "closed" , dir = SOUTH)
 		icon.Blend(icon(icon = airlocks[airlock_name], icon_state = "fill_closed", dir = SOUTH), ICON_OVERLAY)
 		Insert(sprite_name = airlock_name, I = icon)
 
 		//exclude these glass types
-		for(airlock_name in exclusion)
+		if(airlock_name in exclusion)
 			continue
 
 		//glass door no overlay

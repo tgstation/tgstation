@@ -154,11 +154,15 @@ const DesignSection = (props, context) => {
 
 const ConfigureSection = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { display_tabs } = data;
+  const { selected_root } = data;
 
   return (
     <Stack.Item grow>
-      {display_tabs ? <DesignSection /> : <AirLockMainSection />}
+      {selected_root === 'AirLock Access' ? (
+        <AirLockMainSection />
+      ) : (
+        <DesignSection />
+      )}
     </Stack.Item>
   );
 };
