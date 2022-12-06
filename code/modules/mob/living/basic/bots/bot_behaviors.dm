@@ -101,11 +101,15 @@
 
 	var/turf/current_turf = get_turf(living_pawn)
 
+	if(controller.blackboard["testing_key"])
+		return
+
 	if(!current_turf)
 		return
 
 	var/list/adjacent = current_turf.get_atmos_adjacent_turfs(1)
 
+	controller.blackboard["testing_key"] = TRUE
 
 	var/found_target
 
@@ -131,6 +135,7 @@
 			if(found_target)
 				on_find_target(controller, target_key, scanned_turf)
 				return
+		controller.blackboard["testing_key"] = FALSE
 		return
 
 	for(var/atom/scanned_atom as anything in view(scan_range, living_pawn) - adjacent) //Search for something in range, minus what we already checked.
@@ -139,9 +144,14 @@
 			on_find_target(controller, target_key, scanned_atom)
 			return
 
+	controller.blackboard["testing_key"] = FALSE
+
+
+
 ///Ran once bot has found a target during scanning
 /datum/ai_behavior/scan/proc/on_find_target(datum/ai_controller/controller, target_key, target)
 	controller.blackboard[target_key] = target
+	controller.blackboard["testing_key"] = FALSE
 	controller.CancelActions() //Found a target, time to replan!
 
 /datum/ai_behavior/scan/turfs_only
