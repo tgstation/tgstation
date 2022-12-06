@@ -2,7 +2,6 @@
 	name = "\improper Paradox Clone"
 	roundend_category = "Paradox Clone"
 	job_rank = ROLE_PARADOX_CLONE
-	prevent_roundtype_conversion = FALSE
 	antag_hud_name = "paradox_clone"
 	suicide_cry = "THERE CAN BE ONLY ONE!!"
 	preview_outfit = /datum/outfit/paradox_clone
