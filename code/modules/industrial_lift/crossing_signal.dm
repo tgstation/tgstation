@@ -43,6 +43,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/red_distance_threshold = 33
 	/// If the signal is facing east or west
 	var/signal_direction
+	/// Are we malfunctioning?
+	var/malfunctioning = FALSE
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
@@ -72,6 +74,18 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	if(signal_state != XING_STATE_MALF)
 		set_signal_state(XING_STATE_MALF)
 	obj_flags |= EMAGGED
+
+/obj/machinery/crossing_signal/proc/start_malfunction()
+	if(signal_state != XING_STATE_MALF)
+		malfunctioning = TRUE
+		set_signal_state(XING_STATE_MALF)
+
+/obj/machinery/crossing_signal/proc/end_malfunction()
+	if(obj_flags & EMAGGED)
+		return
+
+	malfunctioning = FALSE
+	update_appearance()
 
 /**
  * Finds the tram, just like the tram computer
@@ -104,8 +118,11 @@ GLOBAL_LIST_EMPTY(tram_signals)
  * Returns whether we are still processing.
  */
 /obj/machinery/crossing_signal/proc/update_operating()
-	//emagged crossing signals dont update
+	// Emagged crossing signals don't update
 	if(obj_flags & EMAGGED)
+		return
+	// Malfunctioning signals don't update
+	if(malfunctioning)
 		return
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
