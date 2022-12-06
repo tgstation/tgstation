@@ -41,7 +41,7 @@
 
 /datum/antagonist/paradox_clone/Destroy()
 	original_ref = null
-	..()
+	return ..()
 
 /datum/antagonist/paradox_clone/proc/forge_objectives()
 
