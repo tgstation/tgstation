@@ -48,7 +48,7 @@
 	if(!original_ref)//admins didn't set one
 		original_ref = WEAKREF(find_original())
 	if(!original_ref)//we didn't find one
-		stack_trace("No target found, aborting.")
+		stack_trace("[src] was unable to find a target.")
 		qdel(src)
 		return
 
