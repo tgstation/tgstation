@@ -16,5 +16,5 @@ GLOBAL_LIST_INIT(linguist_languages, list(
 	"Draconic",
 	"Moffic",
 	"Calcic",
-	"Uncommon",
+	"Galactic Uncommon",
 ))

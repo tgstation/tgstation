@@ -299,50 +299,40 @@
 	desc = "You studied hard in school and know how to speak an extra language."
 	icon = "book"
 	value = 6
-	gain_text = "<span class='notice'>You've developed fluency in another language."
+	gain_text = "<span class='notice'>You have fluency with another language."
 	lose_text = "<span class='notice'>You forget the words to a familiar language."
 	medical_record_text = "Patient is fluent in multiple languages."
 	mail_goodies = list(/obj/item/taperecorder) // for translation
 	var/datum/language/language
 
 /datum/quirk/linguist/add()
-	//var/mob/living/carbon/human/human_holder = quirk_holder
-	var/list/roundstart_languages = list(
-		/datum/language/uncommon,
-		/datum/language/voltaic,
-		/datum/language/nekomimetic,
-		/datum/language/draconic,
-		/datum/language/moffic,
-		/datum/language/calcic,
+	var/list/common_languages = list(
+		"Galactic Uncommon" = /datum/language/uncommon,
+		"Voltaic" = /datum/language/voltaic,
+		"Nekomimetic" = /datum/language/nekomimetic,
+		"Draconic" = /datum/language/draconic,
+		"Moffic" = /datum/language/moffic,
+		"Calcic" = /datum/language/calcic,
 	)
 
-	language = language || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/language)
-	switch(language)
-		if("Voltaic") // only ethereals can speak
-			language = /datum/language/voltaic
-		if("Nekomimetic")
-			language = /datum/language/nekomimetic
-		if("Draconic")
-			language = /datum/language/draconic
-		if("Moffic")
-			language = /datum/language/moffic
-		if("Calcic") // only plasmamen can speak
-			language = /datum/language/calcic
-		if("Uncommon")
-			language = /datum/language/uncommon
-		else
-			language = pick(roundstart_languages)
+	language = quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/language)
+	if(isnull(language))
+		var/test = "The preference for language was null somehow?" // for testing
 
+	language = common_languages[language] || common_languages[pick(common_languages)]
+
+	// if our language preference is already learned, then we select a random one
 	if(quirk_holder.has_language(language))
-		for(var/datum/language/possible_language in roundstart_languages)
-			if(quirk_holder.has_language(possible_language))
-				roundstart_languages -= possible_language
+		for(var/possible_language in common_languages)
+			if(quirk_holder.has_language(common_languages[possible_language]))
+				var/datum/language/language_instance = GLOB.language_datum_instances[language]
+				common_languages -= language_instance.name
 
-		if(!length(roundstart_languages))
+		if(!length(common_languages))
 			to_chat(quirk_holder, span_boldnotice("You are already familiar with every common language. Nothing else can be learned as a linguist."))
 			return
 
-		language = pick(roundstart_languages)
+		language = common_languages[pick(common_languages)]
 
 	quirk_holder.grant_language(language, source=LANGUAGE_QUIRK)
 
