@@ -46,7 +46,7 @@
 
 /datum/reagent/consumable/tomatojuice/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getFireLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(0, 1, 0)
+		M.heal_bodypart_damage(0, 1)
 		. = TRUE
 	..()
 
@@ -185,7 +185,7 @@
 /datum/reagent/consumable/banana/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/obj/item/organ/internal/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(M))
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 0)
+		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	..()
 
@@ -312,7 +312,7 @@
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0)
 		. = TRUE
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 1 * delta_time)
@@ -333,7 +333,7 @@
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(1, 0, 0)
+		M.heal_bodypart_damage(1, 0)
 		. = TRUE
 	..()
 
@@ -352,7 +352,7 @@
 
 /datum/reagent/consumable/cream/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(1, 0, 0)
+		M.heal_bodypart_damage(1, 0)
 		. = TRUE
 	..()
 
@@ -908,7 +908,7 @@
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	M.set_jitter_if_lower(10 SECONDS * REM * delta_time)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(1,0, 0)
+		M.heal_bodypart_damage(1,0)
 	..()
 	. = TRUE
 
@@ -935,7 +935,7 @@
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	M.set_jitter_if_lower(10 SECONDS * REM * delta_time)
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(1, 0, 0)
+		M.heal_bodypart_damage(1, 0)
 	..()
 	. = TRUE
 
@@ -1212,7 +1212,7 @@
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(1, 0, 0)
+		M.heal_bodypart_damage(1, 0)
 		. = TRUE
 	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2 * REM * delta_time)
