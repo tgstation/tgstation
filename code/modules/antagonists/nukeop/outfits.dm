@@ -28,6 +28,7 @@
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/nukie, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
+	SSmapping.lazy_load_template(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	var/obj/item/radio/radio = nukie.ears
 	radio.set_frequency(FREQ_SYNDICATE)
 	radio.freqlock = RADIO_FREQENCY_LOCKED
