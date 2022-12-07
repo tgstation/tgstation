@@ -7,8 +7,8 @@
 /datum/pet_command/idle
 	command_name = "Stay"
 	command_desc = "Command your pet to stay idle in this location."
-	radial_icon = 'icons/testing/turf_analysis.dmi'
-	radial_icon_state = "red_arrow"
+	radial_icon = 'icons/obj/objects.dmi'
+	radial_icon_state = "dogbed"
 	speech_commands = list("sit", "stay", "stop")
 	command_feedback = "sits"
 
@@ -28,6 +28,7 @@
 	command_feedback = "relaxes"
 
 /datum/pet_command/free/execute_action(datum/ai_controller/controller)
+	controller.blackboard[BB_ACTIVE_PET_COMMAND] = null
 	return // Just move on to the next planning subtree.
 
 /**
@@ -37,8 +38,8 @@
 /datum/pet_command/follow
 	command_name = "Follow"
 	command_desc = "Command your pet to accompany you."
-	radial_icon = 'icons/mob/actions/actions_spells.dmi'
-	radial_icon_state = "summons"
+	radial_icon = 'icons/testing/turf_analysis.dmi'
+	radial_icon_state = "red_arrow"
 	speech_commands = list("heel", "follow")
 
 /datum/pet_command/follow/set_command_active(mob/living/parent, mob/living/commander)

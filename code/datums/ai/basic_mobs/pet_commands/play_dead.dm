@@ -21,4 +21,4 @@
 		return
 	basic_pawn.visible_message(span_notice("[basic_pawn] miraculously springs back to life!"))
 	basic_pawn.look_alive()
-	parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] = null
+	controller.blackboard[BB_ACTIVE_PET_COMMAND] = null

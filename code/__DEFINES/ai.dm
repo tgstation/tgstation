@@ -157,14 +157,8 @@
 ///Dog AI controller blackboard keys
 
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
-#define BB_FETCH_TARGET "BB_FETCH_TARGET"
 #define BB_FETCH_IGNORE_LIST "BB_FETCH_IGNORE_LISTlist"
 #define BB_FETCH_DELIVER_TO "BB_FETCH_DELIVER_TO"
-#define BB_DOG_FRIENDS "BB_DOG_FRIENDS"
-#define BB_DOG_ORDER_MODE "BB_DOG_ORDER_MODE"
-#define BB_DOG_PLAYING_DEAD "BB_DOG_PLAYING_DEAD"
-#define BB_DOG_HARASS_TARGET "BB_DOG_HARASS_TARGET"
-#define BB_DOG_HARASS_FRUSTRATION "BB_DOG_HARASS_FRUSTRATION"
 #define BB_DOG_IS_SLOW "BB_DOG_IS_SLOW"
 
 /// Basically, what is our vision/hearing range for picking up on things to fetch/

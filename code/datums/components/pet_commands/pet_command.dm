@@ -31,6 +31,10 @@
 /datum/pet_command/proc/add_new_friend(mob/living/tamer)
 	RegisterSignal(tamer, COMSIG_MOB_SAY, PROC_REF(respond_to_command))
 
+/// Stop listening to a guy
+/datum/pet_command/proc/remove_friend(mob/living/unfriended)
+	UnregisterSignal(unfriended, COMSIG_MOB_SAY)
+
 /// Respond to something that one of our friends has asked us to do
 /datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args)
 	SIGNAL_HANDLER
@@ -118,24 +122,27 @@
 	. = ..()
 	RegisterSignal(tamer, COMSIG_MOB_POINTED, PROC_REF(look_for_target))
 
+/datum/pet_command/point_targetting/remove_friend(mob/living/unfriended)
+	. = ..()
+	UnregisterSignal(unfriended, COMSIG_MOB_POINTED)
+
 /// Target the pointed atom for actions
 /datum/pet_command/point_targetting/proc/look_for_target(mob/living/friend, atom/pointed_atom)
 	SIGNAL_HANDLER
 
-
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
-		return
+		return FALSE
 	if (!parent.ai_controller)
-		return
+		return FALSE
 	if (IS_DEAD_OR_INCAP(parent))
-		return
+		return FALSE
 	if (parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND] != WEAKREF(src)) // We're not listening right now
-		return
+		return FALSE
 	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == WEAKREF(pointed_atom)) // That's already our target
-		return
+		return FALSE
 	if (!can_see(parent, pointed_atom, sense_radius))
-		return
+		return FALSE
 
 	parent.ai_controller.CancelActions()
 	// Deciding if they can actually do anything with this target is the behaviour's job
