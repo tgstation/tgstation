@@ -580,9 +580,7 @@
 /obj/structure/aquarium{
 	fluid_type = "Saltwater"
 	},
-/obj/effect/turf_decal/tile/dark/anticorner/contrasted{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/dark/anticorner/contrasted,
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "EQ" = (
