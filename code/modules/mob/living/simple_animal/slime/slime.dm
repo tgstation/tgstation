@@ -559,4 +559,6 @@
 		set_leader(null)
 	remove_friend(source)
 
+/mob/living/simple_animal/slime/rainbow/Initialize(mapload, new_colour="rainbow", new_is_adult)
+	. = ..(mapload, new_colour, new_is_adult)
 #undef SLIME_CARES_ABOUT

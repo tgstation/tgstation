@@ -15,18 +15,17 @@
 	if(heavy_range > light_range)
 		light_range = heavy_range
 
-	for(var/A in spiral_range(light_range, epicenter))
-		var/atom/T = A
-		var/distance = get_dist(epicenter, T)
+	for(var/atom/A as() in spiral_range(light_range, epicenter))
+		var/distance = get_dist(epicenter, A)
 		if(distance < 0)
 			distance = 0
 		if(distance < heavy_range)
-			T.emp_act(EMP_HEAVY)
+			A.emp_act(EMP_HEAVY)
 		else if(distance == heavy_range)
 			if(prob(50))
-				T.emp_act(EMP_HEAVY)
+				A.emp_act(EMP_HEAVY)
 			else
-				T.emp_act(EMP_LIGHT)
+				A.emp_act(EMP_LIGHT)
 		else if(distance <= light_range)
-			T.emp_act(EMP_LIGHT)
+			A.emp_act(EMP_LIGHT)
 	return 1
