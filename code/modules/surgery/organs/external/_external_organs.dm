@@ -159,7 +159,7 @@
 		appearance.color = draw_color
 
 	if(apply_color_to_layer)
-		appearance.color = get_overlay_color(bitflag_to_layer(image_layer))
+		appearance.color = get_overlay_color(image_layer)
 
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
@@ -440,7 +440,7 @@
 	return GLOB.pod_hair_list
 
 /obj/item/organ/external/pod_hair/get_overlay_color(draw_layer)
-	if(draw_layer != color_swapped_layer)
+	if(draw_layer != bitflag_to_layer(color_swapped_layer))
 		return ..()
 
 	var/list/rgb_list = rgb2num(draw_color)
