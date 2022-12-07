@@ -58,34 +58,45 @@
 	item_parent.icon_state = icon_state_pre_change
 	on_icon_reset?.Invoke()
 
+/// Signal proc for [COMSIG_ATOM_UPDATE_NAME] to update the name to our style
 /datum/component/takes_reagent_appearance/proc/on_update_name(datum/source)
 	SIGNAL_HANDLER
 
 	var/obj/item/item_parent = parent
 	var/datum/glass_style/main_style = get_main_reagent_style()
 	if(isnull(main_style))
+		// no style (reset)
 		item_parent.name = initial(item_parent.name)
 	else if(main_style.name)
+		// style
 		item_parent.name = main_style.name
 	else
+		// style but no name
 		return
 
+	// We did everything thank you
 	return COMSIG_ATOM_NO_UPDATE_NAME
 
+/// Signal proc for [COMSIG_ATOM_UPDATE_DESC] to update the description to our style
 /datum/component/takes_reagent_appearance/proc/on_update_desc(datum/source)
 	SIGNAL_HANDLER
 
 	var/obj/item/item_parent = parent
 	var/datum/glass_style/main_style = get_main_reagent_style()
 	if(isnull(main_style))
+		// no style (reset)
 		item_parent.desc = initial(item_parent.desc)
 	else if(main_style.desc)
+		// style
 		item_parent.desc = main_style.desc
 	else
+		// style but no desc
 		return
 
+	// We did everything thank you
 	return COMSIG_ATOM_NO_UPDATE_DESC
 
+/// Signal proc for [COMSIG_ATOM_UPDATE_ICON_STATE] to update the icon and icon state to our style
 /datum/component/takes_reagent_appearance/proc/on_update_state(datum/source)
 	SIGNAL_HANDLER
 
@@ -93,19 +104,31 @@
 	var/datum/glass_style/main_style = get_main_reagent_style()
 
 	if(isnull(main_style))
+		// no style (reset)
 		item_parent.icon = icon_pre_change
 		item_parent.icon_state = icon_state_pre_change
 		on_icon_reset?.Invoke()
 	else
+		// style
 		if(main_style.icon)
 			item_parent.icon = main_style.icon
 		if(main_style.icon_state)
 			item_parent.icon_state = main_style.icon_state
 		on_icon_changed?.Invoke(main_style)
 
+	// We did everything thank you
 	return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
+/**
+ * Gets the correspinding style based on the parent's state and reagents within
+ *
+ * * Returns null if its reagents are empty
+ * * Returns null if no majority reagent was found
+ * * Otherwise returns a glass style datum
+ */
 /datum/component/takes_reagent_appearance/proc/get_main_reagent_style()
+	RETURN_TYPE(/datum/glass_style)
+
 	var/obj/item/item_parent = parent
 	if(item_parent.reagents.total_volume <= 0)
 		return null
