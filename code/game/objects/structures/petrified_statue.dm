@@ -76,10 +76,9 @@
 				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.getorganslot(ORGAN_SLOT_BRAIN)
 				petrified_carbon.internal_organs.Remove(carbon_brain)
 				carbon_brain.forceMove(get_turf(src))
-				//petrified_carbon.spill_organs(no_brain = FALSE, no_organs = TRUE, no_bodyparts = TRUE)
 				carbon_brain.name = "petrified [carbon_brain.name]"
 				carbon_brain.desc = "[carbon_brain.desc] This one seems a bit more... smooth than a normal brain. Probably'd still work."
-				carbon_brain.icon_state = "brain-stone"
+				carbon_brain.add_atom_colour(list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0)), FIXED_COLOUR_PRIORITY)
 				destruction_message = "[src] shatters, a solid brain tumbling out!"
 			petrified_mob.dust()
 	visible_message(span_danger(destruction_message))
