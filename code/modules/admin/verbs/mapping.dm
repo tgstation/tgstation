@@ -491,9 +491,11 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	if(!check_rights(R_SPAWN))
 		return
 
+	var/list/choices
 	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", LAZY_TEMPLATE_KEY_LIST_ALL)
 	if(!choice)
 		return
+	choice = choices[choice]
 
 	if(!length(GLOB.lazy_template_pivots[choice]))
 		to_chat(usr, span_warning("No pivot found with that key! This is probably an error."))
