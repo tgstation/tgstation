@@ -2,9 +2,14 @@
  * ## "Takes reagent appearance" Component
  *
  * Bit of a mouthful, but when applied to an item that can hold reagents (primarily reagent containers),
- * said item will take on the appearance based on the majority share reagent inside
+ * said item will take on an appearance based on the majority share reagent inside
+ *
+ * This is more than just "changing the color a bit" or "applies an overlay", this is
+ * an entire icon / icon state / name change, making it look like a different item entirely
  *
  * This is done by cross-referencing the glass style datums. See [/datum/glass_style] for more information about that.
+ *
+ * An example usage is bartender mixed drinks - each reagent gets its own fancy drink sprite
  */
 /datum/component/takes_reagent_appearance
 	/// Icon file when attached to the item
