@@ -87,6 +87,23 @@
 	name = "lavaland baseturf editor"
 	baseturf = /turf/open/lava/smooth/lava_land_surface
 
+/obj/effect/baseturf_helper/reinforced_plating
+	name = "reinforced plating baseturf editor"
+	baseturf = /turf/open/floor/plating/reinforced
+	baseturf_to_replace = list(/turf/open/floor/plating,/turf/open/space,/turf/baseturf_bottom)
+
+//This applies the reinforced plating to the above Z level for every tile in the area where this is placed
+/obj/effect/baseturf_helper/reinforced_plating/ceiling
+	name = "reinforced ceiling plating baseturf editor"
+
+/obj/effect/baseturf_helper/reinforced_plating/ceiling/replace_baseturf(turf/thing)
+	var/turf/ceiling = get_step_multiz(thing, UP)
+	if(isnull(ceiling))
+		CRASH("baseturf helper is attempting to modify the Z level above but there is no Z level above above it.")
+	if(isspaceturf(ceiling) || istype(ceiling, /turf/open/openspace))
+		return
+	return ..(ceiling)
+
 
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'

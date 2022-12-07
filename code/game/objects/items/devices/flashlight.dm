@@ -58,7 +58,7 @@
 	on = !on
 	playsound(user, on ? sound_on : sound_off, 40, TRUE)
 	update_brightness(user)
-	update_action_buttons()
+	update_item_action_buttons()
 
 /obj/item/flashlight/attack_self(mob/user)
 	toggle_light(user)

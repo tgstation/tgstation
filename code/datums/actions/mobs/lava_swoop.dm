@@ -3,7 +3,7 @@
 
 /datum/action/cooldown/mob_cooldown/lava_swoop
 	name = "Lava Swoop"
-	icon_icon = 'icons/effects/effects.dmi'
+	button_icon = 'icons/effects/effects.dmi'
 	button_icon_state = "lavastaff_warn"
 	desc = "Allows you to chase a target while raining lava down."
 	cooldown_time = 4 SECONDS

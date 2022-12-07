@@ -370,7 +370,7 @@
 	)
 
 /datum/component/construction/mecha/gygax
-	result = /obj/vehicle/sealed/mecha/combat/gygax
+	result = /obj/vehicle/sealed/mecha/gygax
 	base_icon = "gygax"
 
 	circuit_control = /obj/item/circuitboard/mecha/gygax/main
@@ -461,7 +461,7 @@
 	)
 
 /datum/component/construction/mecha/honker
-	result = /obj/vehicle/sealed/mecha/combat/honker
+	result = /obj/vehicle/sealed/mecha/honker
 	steps = list(
 		list(
 			"key" = /obj/item/bikehorn,
@@ -582,7 +582,7 @@
 	)
 
 /datum/component/construction/mecha/durand
-	result = /obj/vehicle/sealed/mecha/combat/durand
+	result = /obj/vehicle/sealed/mecha/durand
 	base_icon = "durand"
 
 	circuit_control = /obj/item/circuitboard/mecha/durand/main
@@ -608,7 +608,7 @@
 	)
 
 /datum/component/construction/mecha/phazon
-	result = /obj/vehicle/sealed/mecha/combat/phazon
+	result = /obj/vehicle/sealed/mecha/phazon
 	base_icon = "phazon"
 
 	circuit_control = /obj/item/circuitboard/mecha/phazon/main
@@ -744,7 +744,7 @@
 	)
 
 /datum/component/construction/mecha/savannah_ivanov
-	result = /obj/vehicle/sealed/mecha/combat/savannah_ivanov
+	result = /obj/vehicle/sealed/mecha/savannah_ivanov
 	base_icon = "savannah_ivanov"
 
 	circuit_control = /obj/item/circuitboard/mecha/savannah_ivanov/main
@@ -770,7 +770,7 @@
 	)
 
 /datum/component/construction/mecha/odysseus
-	result = /obj/vehicle/sealed/mecha/medical/odysseus
+	result = /obj/vehicle/sealed/mecha/odysseus
 	base_icon = "odysseus"
 
 	circuit_control = /obj/item/circuitboard/mecha/odysseus/main
