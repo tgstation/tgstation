@@ -130,7 +130,7 @@
 		qdel(src)
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
-	loot = rand(1,100) //100 different crates with varying chances of spawning
+	var/loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
 			new /obj/item/reagent_containers/cup/glass/bottle/rum(src)
