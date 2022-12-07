@@ -118,7 +118,7 @@
 
 	if(unsuitable_atmos_damage != 0)
 		//String assoc list returns a cached list, so this is like a static list to pass into the element below.
-		atmos_requirements = string_assoc_list(atmos_requirements)
+		habitable_atmos = string_assoc_list(habitable_atmos)
 		AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
 
 	if(unsuitable_cold_damage != 0 && unsuitable_heat_damage != 0)
