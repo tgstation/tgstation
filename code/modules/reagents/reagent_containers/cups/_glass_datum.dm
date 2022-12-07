@@ -21,15 +21,17 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 			continue
 
 		var/datum/glass_style/new_style = new style()
-		if(!islist(final_list[new_style.required_container_type]))
-			final_list[new_style.required_container_type] = list()
+		var/container_type = new_style.required_container_type
+		var/reagent_type = new_style.required_drink_type
+		if(!islist(final_list[container_type]))
+			final_list[container_type] = list()
 		// Check that our slot is free. If it's not free, this is an error
-		if(final_list[new_style.required_container_type][new_style.required_drink_type])
+		if(final_list[container_type][reagent_type])
 			stack_trace("[style] collided with another glass style singleton during instantiation. \
-				This means its reagent ([new_style.required_drink_type]) has two styles set for the same container type. \
+				This means its reagent ([reagent_type]) has two styles set for the same container type. \
 				This is invalid - please correct this.")
 
-		final_list[new_style.required_container_type][new_style.required_drink_type] = new_style
+		final_list[container_type][reagent_type] = new_style
 
 	return final_list
 
