@@ -47,9 +47,10 @@
 	SHOULD_CALL_PARENT(FALSE)
 	air = space_gas
 
-	if(flags_1 & INITIALIZED_1)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	flags_1 |= INITIALIZED_1
+	if (PERFORM_ALL_TESTS(focus_only/multiple_space_initialization))
+		if(flags_1 & INITIALIZED_1)
+			stack_trace("Warning: [src]([type]) initialized multiple times!")
+		flags_1 |= INITIALIZED_1
 
 
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
