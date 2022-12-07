@@ -155,7 +155,7 @@
 			approved_types |= T
 
 	var/obj/structure/sign/poster/selected = pick(approved_types)
-	if(SSevents.holidays && prob(30))
+	if(length(GLOB.holidays) && prob(30))  // its the holidays! lets get festive
 		selected = /obj/structure/sign/poster/official/festive
 
 	name = initial(selected.name)
@@ -1050,10 +1050,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 
 /obj/structure/sign/poster/official/festive/Initialize()
 	. = ..()
-	if(!length(SSevents.holidays)
+	if(!length(GLOB.holidays))
 		return
-	var/active_holiday = pick(SSevents.holidays)
-	var/datum/holiday/holi_data = SSevents.holidays[active_holiday]
+	var/active_holiday = pick(GLOB.holidays)
+	var/datum/holiday/holi_data = GLOB.holidays[active_holiday]
 
 	name = holi_data.poster_name
 	desc = holi_data.poster_desc
