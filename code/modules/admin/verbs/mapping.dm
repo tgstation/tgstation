@@ -505,4 +505,4 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		message_admins("[key_name(usr)] has loaded the lazy template '[choice]'")
 		SSmapping.lazy_load_template(choice)
 
-	admin_follow(GLOB.lazy_template_pivots[key][1])
+	admin_follow(GLOB.lazy_template_pivots[choice][1])
