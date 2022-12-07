@@ -42,8 +42,9 @@
 		return //Skip doors in critical positions, such as the SM chamber.
 
 	for(var/area_type in GLOB.grey_tide_areas)
-		if(istype(get_area(src), area_type))
-			INVOKE_ASYNC(src, PROC_REF(prison_open)) //Sleep gets called further down in open(), so we have to invoke async
+		if(!istype(get_area(src), area_type))
+			continue
+		INVOKE_ASYNC(src, PROC_REF(prison_open)) //Sleep gets called further down in open(), so we have to invoke async
 
 /obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
