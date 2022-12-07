@@ -325,8 +325,7 @@
 	if(quirk_holder.has_language(language))
 		for(var/possible_language in common_languages)
 			if(quirk_holder.has_language(common_languages[possible_language]))
-				var/datum/language/language_instance = GLOB.language_datum_instances[language]
-				common_languages -= language_instance.name
+				common_languages -= possible_language // test to make sure this is removing properly
 
 		if(!length(common_languages))
 			to_chat(quirk_holder, span_boldnotice("You are already familiar with every common language. Nothing else can be learned as a linguist."))
