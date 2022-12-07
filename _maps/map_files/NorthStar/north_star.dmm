@@ -7247,8 +7247,7 @@
 /area/station/maintenance/floor2/starboard/aft)
 "bMW" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/cable,
-/obj/structure/grille,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/port)
 "bNb" = (
@@ -9667,7 +9666,6 @@
 	name = "Garden"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "cvP" = (
@@ -10733,7 +10731,6 @@
 /obj/machinery/door/airlock{
 	name = "Locker Room"
 	},
-/obj/machinery/door/firedoor,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/commons/locker)
@@ -13109,7 +13106,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
 "dvJ" = (
@@ -13375,8 +13371,7 @@
 /area/station/science/xenobiology/hallway)
 "dzY" = (
 /obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/spawner,
+/obj/effect/spawner/structure/window/hollow/directional,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor4/starboard/fore)
 "dAc" = (
@@ -14671,7 +14666,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "dRX" = (
@@ -45229,7 +45223,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/command/hop,
 /obj/machinery/door/poddoor/preopen{
 	id = "hopblast";
-	name = "HoP Blast door"
+	name = "HoP Blast Door"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -46595,7 +46589,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hopblast";
-	name = "HoP Blast door"
+	name = "HoP Blast Door"
 	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
@@ -46641,8 +46635,7 @@
 /turf/open/floor/iron/checker,
 /area/station/service/bar/atrium)
 "mKY" = (
-/obj/structure/grille,
-/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/port/aft)
 "mLk" = (
@@ -60527,7 +60520,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "AI Chamber entrance shutters";
-	name = "AI Chamber entrance shutters"
+	name = "AI Chamber Entrance Shutters"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -65488,6 +65481,10 @@
 /obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron,
 /area/station/service/janitor)
+"rPA" = (
+/obj/effect/spawner/structure/window/hollow/directional,
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor4/starboard/fore)
 "rPB" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
@@ -68382,6 +68379,9 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/theater)
+"sKW" = (
+/turf/open/floor/pod/light,
+/area/station/maintenance/floor1/starboard)
 "sKX" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -69160,7 +69160,6 @@
 /area/station/commons/dorms/apartment2)
 "sWm" = (
 /obj/structure/cable,
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/security/lockers)
@@ -74833,7 +74832,7 @@
 	},
 /obj/machinery/door/poddoor/preopen{
 	id = "hopblast";
-	name = "HoP Blast door"
+	name = "HoP Blast Door"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor/left/directional/north{
@@ -76353,7 +76352,6 @@
 /area/station/service/bar/atrium)
 "vaB" = (
 /obj/structure/cable,
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hos)
@@ -84017,6 +84015,14 @@
 /obj/machinery/shieldgen,
 /turf/open/floor/plating,
 /area/station/maintenance/floor2/starboard/aft)
+"xcA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/floor1/port)
 "xcG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -88065,6 +88071,11 @@
 /obj/structure/closet/firecloset/full,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/hallway/secondary/exit/escape_pod)
+"ykO" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/space)
 "ykP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -114769,8 +114780,8 @@ xgH
 xgH
 rLU
 xgH
-fmb
-fmb
+xcA
+xcA
 fmb
 fmb
 fmb
@@ -121680,7 +121691,7 @@ whV
 clp
 clp
 bel
-fmN
+sKW
 kCF
 osQ
 tRj
@@ -137895,7 +137906,7 @@ odS
 rkc
 pCv
 vcr
-mKY
+deF
 mKY
 mGp
 uhx
@@ -304403,7 +304414,7 @@ ucA
 xHe
 xHe
 gBs
-dzY
+rPA
 lJp
 aNs
 glw
@@ -312142,7 +312153,7 @@ aDE
 saB
 iqR
 apg
-sWm
+ykO
 rHf
 cdf
 ooN
