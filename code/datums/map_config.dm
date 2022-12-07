@@ -202,10 +202,15 @@
 			library_areas += path
 
 	if("innate_station_traits" in json)
-		if(!islist(json["innate_station_traits" in json]))
+		if(!islist(json["innate_station_traits"]))
 			log_world("map_config \"innate_station_traits\" field is missing or invalid!")
 			return
-		innate_station_traits = json["innate_station_traits"]
+		for(var/path_as_text in json["innate_station_traits"])
+			var/path = text2path(path_as_text)
+			if(!ispath(path, /datum/station_trait))
+				stack_trace("Invalid path in mapping config for innate station traits: \[[path_as_text]\]")
+				continue
+			innate_station_traits += path
 
 	defaulted = FALSE
 	return TRUE
