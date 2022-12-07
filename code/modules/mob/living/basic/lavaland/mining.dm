@@ -4,8 +4,8 @@
 	combat_mode = TRUE
 	faction = list("mining")
 	unsuitable_atmos_damage = 0
-	min_body_temp = 0
-	max_body_temp = INFINITY
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = INFINITY
 
 /mob/living/basic/mining/Initialize(mapload)
 	. = ..()

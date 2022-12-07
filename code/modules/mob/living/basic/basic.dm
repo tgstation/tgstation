@@ -91,9 +91,9 @@
 	var/unsuitable_atmos_damage = 1
 
 	///Minimal body temperature without receiving damage
-	var/min_body_temp = 250
+	var/minimum_survivable_temperature = 250
 	///Maximal body temperature without receiving damage
-	var/max_body_temp = 350
+	var/maximum_survivable_temperature = 350
 	///This damage is taken when the body temp is too cold. Set both this and unsuitable_heat_damage to 0 to avoid adding the basic_body_temp_sensitive element.
 	var/unsuitable_cold_damage = 1
 	///This damage is taken when the body temp is too hot. Set both this and unsuitable_cold_damage to 0 to avoid adding the basic_body_temp_sensitive element.
@@ -122,7 +122,7 @@
 		AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage)
 
 	if(unsuitable_cold_damage != 0 && unsuitable_heat_damage != 0)
-		AddElement(/datum/element/basic_body_temp_sensitive, min_body_temp, max_body_temp, unsuitable_cold_damage, unsuitable_heat_damage)
+		AddElement(/datum/element/basic_body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage)
 
 /mob/living/basic/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
