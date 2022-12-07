@@ -43,11 +43,12 @@ GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
 
 /datum/round_event/grey_tide/start()
 	if(!length(GLOB.grey_tide_areas))
-		log_world("ERROR: Could not initiate grey-tide. No areas in the list!")
+		stack_trace("Could not initiate grey-tide. No areas in the list!")
 		kill()
 
 /datum/round_event/grey_tide/tick()
-	if(!ISMULTIPLE(activeFor, 12)) return
+	if(!ISMULTIPLE(activeFor, 12))
+		return
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE_LIGHT)
 

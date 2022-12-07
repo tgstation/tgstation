@@ -635,8 +635,9 @@
 	SIGNAL_HANDLER
 
 	for(var/area_type in GLOB.grey_tide_areas)
-		if(istype(get_area(src), area_type))
-			INVOKE_ASYNC(src, PROC_REF(flicker))
+		if(!istype(get_area(src), area_type))
+			continue
+		INVOKE_ASYNC(src, PROC_REF(flicker))
 
 /obj/machinery/light/floor
 	name = "floor light"

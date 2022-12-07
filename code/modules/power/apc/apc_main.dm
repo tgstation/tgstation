@@ -625,10 +625,11 @@
 		return
 
 	for(var/area_type in GLOB.grey_tide_areas)
-		if(istype(get_area(src), area_type))
-			lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
-			update_appearance()
-			update()
+		if(!istype(get_area(src), area_type))
+			continue
+		lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
+		update_appearance(UPDATE_ICON)
+		update()
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

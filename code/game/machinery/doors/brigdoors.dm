@@ -270,8 +270,9 @@
 		return
 
 	for(var/area_type in GLOB.grey_tide_areas)
-		if(istype(get_area(src), area_type))
-			timer_end(forced = TRUE)
+		if(!istype(get_area(src), area_type))
+			continue
+		timer_end(forced = TRUE)
 
 #undef PRESET_SHORT
 #undef PRESET_MEDIUM

@@ -19,6 +19,7 @@
 		return
 
 	for(var/area_type in GLOB.grey_tide_areas)
-		if(istype(get_area(src), area_type))
-			locked = FALSE
-			update_appearance()
+		if(!istype(get_area(src), area_type))
+			continue
+		locked = FALSE
+		update_appearance(UPDATE_ICON)

@@ -10,10 +10,6 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
-/obj/machinery/door/airlock/receive_signal(datum/signal/signal)
-	if(!signal)
-		return
-
 /// Forces the airlock to unbolt and open
 /obj/machinery/door/airlock/proc/secure_open()
 	locked = FALSE
