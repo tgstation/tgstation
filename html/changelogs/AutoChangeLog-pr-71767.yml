@@ -1,0 +1,4 @@
+author: "SargesC"
+delete-after: True
+changes:
+  - bugfix: "Ashen heretic blade is now fire resistant"
