@@ -21,15 +21,15 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 			continue
 
 		var/datum/glass_style/new_style = new style()
-		if(!islist(final_list[new_type.required_container_type]))
-			final_list[new_type.required_container_type] = list()
+		if(!islist(final_list[new_style.required_container_type]))
+			final_list[new_style.required_container_type] = list()
 		// Check that our slot is free. If it's not free, this is an error
-		if(final_list[new_type.required_container_type][required_drink_type])
+		if(final_list[new_style.required_container_type][new_style.required_drink_type])
 			stack_trace("[style] collided with another glass style singleton during instantiation. \
-				This means its reagent ([required_drink_type]) has two styles set for the same container type. \
+				This means its reagent ([new_style.required_drink_type]) has two styles set for the same container type. \
 				This is invalid - please correct this.")
 
-		final_list[new_type.required_container_type][required_drink_type] = new_style
+		final_list[new_style.required_container_type][new_style.required_drink_type] = new_style
 
 	return final_list
 
@@ -70,3 +70,8 @@ GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 	required_container_type = /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass
 	icon = 'icons/obj/drinks/shot_glasses.dmi'
 	// shot glasses drop name and desc anyways.
+
+/datum/glass_style/juicebox
+	required_container_type = /obj/item/reagent_containers/cup/glass/sillycup/smallcarton
+	/// This style changes the "drink type" of the container it's placed it, it's like food types
+	var/drink_type = NONE

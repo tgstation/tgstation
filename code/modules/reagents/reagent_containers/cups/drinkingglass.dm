@@ -18,20 +18,15 @@
 	//the screwdriver cocktail can make a drinking glass into the world's worst screwdriver. beautiful.
 	toolspeed = 25
 
-	/// For use in the takes reagent appearance component
-	/// This prefix is added before reagent specific icon states
-	/// To get the final glass icon state to use
-	var/glass_icon_prefix = "glass"
-
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()
 	if(!length(reagents.reagent_list))
 		renamedByPlayer = FALSE //so new drinks can rename the glass
 
-	AddComponent(/datum/component/takes_reagent_appearance, glass_icon_prefix, CALLBACK(src, PROC_REF(on_glass_change)), CALLBACK(src, PROC_REF(on_glass_reset)))
+	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_glass_change)), CALLBACK(src, PROC_REF(on_glass_reset)))
 
 /// Having our icon state change removes fill thresholds
-/obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_glass_change()
+/obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_glass_change(datum/glass_style/style)
 	fill_icon_thresholds = null
 
 /// And having our icon reset restores our fill thresholds
@@ -57,7 +52,6 @@
 	volume = 15
 	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_CREW * 0.4
-	glass_icon_prefix = "shotglass"
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass/update_name(updates)
 	if(renamedByPlayer)

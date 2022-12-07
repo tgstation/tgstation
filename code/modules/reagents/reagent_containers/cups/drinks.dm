@@ -368,98 +368,18 @@
 	icon_state = "juicebox"
 	volume = 15 //I figure if you have to craft these it should at least be slightly better than something you can get for free from a watercooler
 
-/// Reagent container icon updates, especially this one, are complete jank. I will need to rework them after this is merged.
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/on_reagent_change(datum/reagents/holder, ...)
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/Initialize(mapload, vol)
 	. = ..()
-	if(!length(reagents.reagent_list))
-		drink_type = NONE /// Why are drink types on the _container_? TODO: move these to the reagents //im waiting
+	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_glass_change)), CALLBACK(src, PROC_REF(on_glass_reset)))
+
+/// Having our icon state change changes our food type
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_glass_change(datum/glass_style/juicebox/style)
+	if(!istype(style))
 		return
+	drink_type = style.drink_type
 
-	// MELBERT TODO THIS GOES TOO
-	switch(reagents.get_master_reagent_id())
-		if(/datum/reagent/consumable/orangejuice)
-			drink_type = FRUIT | BREAKFAST
-		if(/datum/reagent/consumable/milk)
-			drink_type = DAIRY | BREAKFAST
-		if(/datum/reagent/consumable/applejuice)
-			drink_type = FRUIT
-		if(/datum/reagent/consumable/grapejuice)
-			drink_type = FRUIT
-		if(/datum/reagent/consumable/pineapplejuice)
-			drink_type = FRUIT | PINEAPPLE
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			drink_type = SUGAR
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			drink_type = MEAT
-
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/update_name(updates)
-	. = ..()
-	if(!length(reagents.reagent_list))
-		name = "small carton"
-		return
-
-	switch(reagents.get_master_reagent_id())
-		if(/datum/reagent/consumable/orangejuice)
-			name = "orange juice box"
-		if(/datum/reagent/consumable/milk)
-			name = "carton of milk"
-		if(/datum/reagent/consumable/applejuice)
-			name = "apple juice box"
-		if(/datum/reagent/consumable/grapejuice)
-			name = "grape juice box"
-		if(/datum/reagent/consumable/pineapplejuice)
-			name = "pineapple juice box"
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			name = "carton of chocolate milk"
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			name = "carton of eggnog"
-
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/update_desc(updates)
-	. = ..()
-	if(!length(reagents.reagent_list))
-		desc = "A small carton, intended for holding drinks."
-		return
-
-	switch(reagents.get_master_reagent_id())
-		if(/datum/reagent/consumable/orangejuice)
-			desc = "A great source of vitamins. Stay healthy!"
-		if(/datum/reagent/consumable/milk)
-			desc = "An excellent source of calcium for growing space explorers."
-		if(/datum/reagent/consumable/applejuice)
-			desc = "Sweet apple juice. Don't be late for school!"
-		if(/datum/reagent/consumable/grapejuice)
-			desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
-		if(/datum/reagent/consumable/pineapplejuice)
-			desc = "Why would you even want this?"
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			desc = "Milk for cool kids!"
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			desc = "For enjoying the most wonderful time of the year."
-
-
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/update_icon_state()
-	. = ..()
-	if(!length(reagents.reagent_list))
-		icon_state = "juicebox"
-		return
-
-	switch(reagents.get_master_reagent_id()) // Thanks to update_name not existing we need to do this whole switch twice
-		if(/datum/reagent/consumable/orangejuice)
-			icon_state = "orangebox"
-		if(/datum/reagent/consumable/milk)
-			icon_state = "milkbox"
-		if(/datum/reagent/consumable/applejuice)
-			icon_state = "juicebox"
-		if(/datum/reagent/consumable/grapejuice)
-			icon_state = "grapebox"
-		if(/datum/reagent/consumable/pineapplejuice)
-			icon_state = "pineapplebox"
-		if(/datum/reagent/consumable/milk/chocolate_milk)
-			icon_state = "chocolatebox"
-		if(/datum/reagent/consumable/ethanol/eggnog)
-			icon_state = "nog2"
-		else
-			icon_state = "juicebox"
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_glass_reset()
+	drink_type = NONE
 
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)

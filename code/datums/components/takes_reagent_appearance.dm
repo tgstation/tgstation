@@ -84,7 +84,7 @@
 			item_parent.icon = main_style.icon
 		if(main_style.icon_state)
 			item_parent.icon_state = main_style.icon_state
-		on_icon_changed?.Invoke()
+		on_icon_changed?.Invoke(main_style)
 
 	return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
