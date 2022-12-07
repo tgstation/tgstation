@@ -9,6 +9,12 @@
 // The minimum O2 moles in the cryotube before it switches off.
 #define CRYO_MIN_GAS_MOLES 5
 #define CRYO_BREAKOUT_TIME (30 SECONDS)
+///The default release pressure for cryotubes. If you change the composition of anesthetic mix canisters, change this as well.
+#define CRYO_DEFAULT_RELEASE_PRESSURE 25
+///The minimum pressure that a cryotube can be set to.
+#define CRYO_MIN_RELEASE_PRESSURE 0
+///The maximum pressure that a cryotube can be set to.
+#define CRYO_MAX_RELEASE_PRESSURE 200
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/visual/cryo_occupant
@@ -89,6 +95,9 @@
 
 	var/autoeject = TRUE
 	var/volume = 100
+
+	/// The pressure of the gases we supply to our occupant.
+	var/distribute_pressure = CRYO_DEFAULT_RELEASE_PRESSURE
 
 	var/efficiency = 1
 	var/sleep_factor = 0.00125
@@ -338,12 +347,12 @@
 		update_parents()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
-
+	var/datum/gas_mixture/air1 = airs[1]
+	if(!air1?.total_moles())
+		return null
 	if(breath_request <= 0)
 		return null
-	var/datum/gas_mixture/air1 = airs[1]
-	var/breath_percentage = breath_request / air1.volume
-	return air1.remove(air1.total_moles() * breath_percentage)
+	return air1.remove(distribute_pressure*breath_request/(R_IDEAL_GAS_EQUATION*air1.temperature))
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/assume_air(datum/gas_mixture/giver)
 	airs[1].merge(giver)
@@ -452,6 +461,13 @@
 		ui = new(user, src, "Cryo", name)
 		ui.open()
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/ui_static_data()
+	. = list (
+		"defaultReleasePressure" = CRYO_DEFAULT_RELEASE_PRESSURE,
+		"minReleasePressure" = CRYO_MIN_RELEASE_PRESSURE,
+		"maxReleasePressure" = CRYO_MAX_RELEASE_PRESSURE,
+	)
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
 	var/list/data = list()
 	data["isOperating"] = on
@@ -489,6 +505,7 @@
 
 	var/datum/gas_mixture/air1 = airs[1]
 	data["cellTemperature"] = round(air1.temperature, 1)
+	data["releasePressure"] = round(distribute_pressure)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
 	var/beakerContents = list()
@@ -525,6 +542,22 @@
 					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
+		if("pressure")
+			var/pressure = params["pressure"]
+			if(pressure == "reset")
+				pressure = initial(distribute_pressure)
+				. = TRUE
+			else if(pressure == "min")
+				pressure = CRYO_MIN_RELEASE_PRESSURE
+				. = TRUE
+			else if(pressure == "max")
+				pressure = CRYO_MAX_RELEASE_PRESSURE
+				. = TRUE
+			else if(text2num(pressure) != null)
+				pressure = text2num(pressure)
+				. = TRUE
+			if(.)
+				distribute_pressure = clamp(round(pressure), CRYO_MIN_RELEASE_PRESSURE, CRYO_MAX_RELEASE_PRESSURE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_interact(mob/user)
 	return ..() && user.loc != src

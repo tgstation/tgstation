@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, LabeledList, ProgressBar, Section } from '../components';
+import { AnimatedNumber, Button, LabeledList, ProgressBar, Section, NumberInput } from '../components';
 import { BeakerContents } from './common/BeakerContents';
 import { Window } from '../layouts';
 
@@ -94,6 +94,49 @@ const CryoContent = (props, context) => {
               icon={data.autoEject ? 'sign-out-alt' : 'sign-in-alt'}
               onClick={() => act('autoeject')}
               content={data.autoEject ? 'Auto' : 'Manual'}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Pressure">
+            <Button
+              icon="fast-backward"
+              disabled={data.ReleasePressure === data.minReleasePressure}
+              onClick={() =>
+                act('pressure', {
+                  pressure: 'min',
+                })
+              }
+            />
+            <NumberInput
+              animated
+              value={parseFloat(data.releasePressure)}
+              width="65px"
+              unit="kPa"
+              minValue={data.minReleasePressure}
+              maxValue={data.maxReleasePressure}
+              onChange={(e, value) =>
+                act('pressure', {
+                  pressure: value,
+                })
+              }
+            />
+            <Button
+              icon="fast-forward"
+              disabled={data.ReleasePressure === data.maxReleasePressure}
+              onClick={() =>
+                act('pressure', {
+                  pressure: 'max',
+                })
+              }
+            />
+            <Button
+              icon="undo"
+              content=""
+              disabled={data.ReleasePressure === data.defaultReleasePressure}
+              onClick={() =>
+                act('pressure', {
+                  pressure: 'reset',
+                })
+              }
             />
           </LabeledList.Item>
         </LabeledList>
