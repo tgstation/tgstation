@@ -102,6 +102,7 @@
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "coffee"
+	base_icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/coffee = 30)
 	spillable = TRUE
 	resistance_flags = FREEZE_PROOF
@@ -125,9 +126,9 @@
 
 /obj/item/reagent_containers/cup/glass/coffee/update_icon_state()
 	if(lid_open)
-		icon_state = reagents.total_volume ? "coffee_full" : "coffee_empty"
+		icon_state = reagents.total_volume ? "[base_icon_state]_full" : "[base_icon_state]_empty"
 	else
-		icon_state = "coffee"
+		icon_state = base_icon_state
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/ice
@@ -181,14 +182,16 @@
 /obj/item/reagent_containers/cup/glass/coffee_cup
 	name = "coffee cup"
 	desc = "A heat-formed plastic coffee cup. Can theoretically be used for other hot drinks, if you're feeling adventurous."
+	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "coffee_cup_e"
+	base_icon_state = "coffee_cup"
 	possible_transfer_amounts = list(10)
 	volume = 30
 	spillable = TRUE
 	isGlass = FALSE
 
 /obj/item/reagent_containers/cup/glass/coffee_cup/update_icon_state()
-	icon_state = reagents.total_volume ? "coffee_cup" : "coffee_cup_e"
+	icon_state = reagents.total_volume ? base_icon_state : "[base_icon_state]_e"
 	return ..()
 
 /obj/item/reagent_containers/cup/glass/dry_ramen
