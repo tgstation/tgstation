@@ -496,6 +496,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	map_width = 32
 	map_height = 44
 
+/obj/effect/landmark/lazy_template_pivot/ninja_holding_facility
+	icon_state = "ninja_holding"
+	key = LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY
+	map_path = "_maps/templates/lazy_templates/ninja_den.dmm"
+	map_width = 51
+	map_height = 35
+
 /// Marks the bottom left of the testing zone.
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.
 /obj/effect/landmark/unit_test_bottom_left
