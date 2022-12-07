@@ -46,6 +46,7 @@
 	/// How well this program will help combat detomatix viruses.
 	var/detomatix_resistance = NONE
 
+///Clones the program datum. Used for downloading something from NTNET.
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
 	temp.required_access = required_access
@@ -56,9 +57,9 @@
 	temp.usage_flags = usage_flags
 	return temp
 
-// Relays icon update to the computer.
+///Relays icon update to the computer.
 /datum/computer_file/program/proc/update_computer_appearance(updates=ALL)
-	computer?.relay_appearance_update()
+	computer?.relay_appearance_update(updates)
 
 /**
  *Runs when the device is used to attack an atom in non-combat mode using right click (secondary).
@@ -83,7 +84,7 @@
 		return FALSE
 	return TRUE
 
-// Called by Process() on device that runs us, once every tick.
+///Called by Process() on device that runs us, once every tick.
 /datum/computer_file/program/proc/process_tick(delta_time)
 	return TRUE
 
@@ -163,6 +164,7 @@
 	return FALSE
 
 /datum/computer_file/program/proc/run_emag()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	// we want to tell on_emag if our program has been emagged before, so this call comes before setting emagged to true
 	. = on_emag()
 	emagged = TRUE

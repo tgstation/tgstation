@@ -99,7 +99,7 @@
 
 	var/allow_chunky = FALSE
 
-/datum/modular_computer_host/New(datum/holder, cell_type = /obj/item/stock_parts/cell, disk_type = null)
+/datum/modular_computer_host/New(atom/holder, cell_type = /obj/item/stock_parts/cell, disk_type = null)
 	if(isnull(valid_on))
 		stack_trace("Instantiated abstract modular computer; Type: [type]")
 		qdel(src)
@@ -633,8 +633,8 @@
 			turn_off()
 	if(inserted_id == gone)
 		inserted_id = null
-		if(ishuman(physical.loc))
-			var/mob/living/carbon/human/human_wearer = physical.loc
+		var/mob/living/carbon/human/human_wearer = get(physical, /mob/living/carbon/human)
+		if(istype(human_wearer))
 			human_wearer.sec_hud_set_ID()
 	if(inserted_pai == gone)
 		inserted_pai = null
@@ -653,7 +653,6 @@
 		else
 			examines += "Its identification card slot is currently occupied."
 		examines += span_info("Alt-click [physical] to eject the identification card.")
-
 
 /datum/modular_computer_host/proc/do_examine_more(datum/source, mob/user, list/examines)
 	SIGNAL_HANDLER
@@ -709,4 +708,8 @@
 	SIGNAL_HANDLER
 	turn_off()
 
-/datum/modular_computer_host/proc/do_screwdriver_act(datum/source)
+/datum/modular_computer_host/proc/do_screwdriver_act(atom/source, mob/living/user, obj/item/tool, list/recipes)
+	SIGNAL_HANDLER
+	if(internal_cell)
+		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), internal_cell)
+		return

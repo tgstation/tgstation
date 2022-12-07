@@ -90,7 +90,7 @@
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 5)
-
+	lamp_color = COLOR_RED
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	. = ..()

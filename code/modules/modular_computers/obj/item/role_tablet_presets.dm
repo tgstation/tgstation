@@ -222,7 +222,7 @@
 	starting_programs = list(
 		/datum/computer_file/program/phys_scanner/medical,
 		/datum/computer_file/program/records/medical,
-		///datum/computer_file/program/radar/lifeline,
+		/datum/computer_file/program/radar/lifeline,
 	)
 
 /obj/item/modular_computer/pda/viro
@@ -275,10 +275,10 @@
 /obj/item/modular_computer/pda/janitor
 	name = "janitor PDA"
 	greyscale_colors = "#933ea8#235AB2"
-	/*starting_programs = list(
+	starting_programs = list(
 		/datum/computer_file/program/skill_tracker,
 		/datum/computer_file/program/radar/custodial_locator,
-	)*/
+	)
 
 /obj/item/modular_computer/pda/chaplain
 	name = "chaplain PDA"

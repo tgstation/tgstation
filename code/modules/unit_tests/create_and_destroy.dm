@@ -36,8 +36,6 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 	//This turf existing is an error in and of itself
 	ignore += typesof(/turf/baseturf_skipover)
 	ignore += typesof(/turf/baseturf_bottom)
-	//This demands a borg, so we'll let if off easy
-	ignore += typesof(/obj/item/modular_computer/pda/silicon)
 	//Very finiky, blacklisting to make things easier
 	ignore += typesof(/obj/item/poster/wanted)
 	//This expects a seed, we can't pass it

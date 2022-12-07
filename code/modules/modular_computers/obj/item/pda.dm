@@ -244,10 +244,10 @@
 	greyscale_config = null
 	greyscale_colors = null
 
-	/*starting_programs = list(
+	starting_programs = list(
 		/datum/computer_file/program/ntnetdownload/syndicate,
 		/datum/computer_file/program/radar/fission360,
-	)*/
+	)
 
 /obj/item/modular_computer/pda/nukeops/Initialize(mapload)
 	. = ..()
@@ -261,6 +261,7 @@
 	to_chat(user, span_notice("You swipe \the [src]. Its screen briefly shows a message reading \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\"."))
 	return FALSE
 
+/*
 /**
  * Silicon PDA
  *
@@ -300,15 +301,7 @@
 		stack_trace("[type] initialized outside of a silicon, deleting.")
 		return INITIALIZE_HINT_QDEL
 
-/obj/item/modular_computer/pda/silicon/ui_state(mob/user)
-	return GLOB.reverse_contained_state
-
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
 	//device_theme = "syndicate"
-
-/obj/item/modular_computer/pda/silicon/cyborg/syndicate/Initialize(mapload)
-	. = ..()
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
-		robo.lamp_color = COLOR_RED //Syndicate likes it red
+*/

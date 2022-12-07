@@ -13,10 +13,14 @@
 
 ///Private helper proc for silicons that displays a chat message. You should probably not call this directly.
 /datum/modular_computer_host/silicon/proc/silicon_push_notification(message, sender)
-	to_chat(physical, span_notice("Received push notification from [isnull(sender) ? sender : "NtOS"]: \"[message]\""))
+	to_chat(physical, span_notice("Received push notification from [!isnull(sender) ? sender : "NtOS"]: \"[message]\""))
 
 /datum/modular_computer_host/silicon/ui_state(mob/user)
 	return GLOB.reverse_contained_state
+
+// We don't inherit any of the signals because silicons work differently from everything else
+/datum/modular_computer_host/silicon/register_signals()
+	return
 
 /datum/modular_computer_host/silicon/cyborg
 	valid_on = /mob/living/silicon/robot
