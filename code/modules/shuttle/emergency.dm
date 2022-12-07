@@ -677,8 +677,10 @@
 	anchored = TRUE
 	density = FALSE
 	icon = 'icons/obj/storage/storage.dmi'
-	icon_state = "safe"
+	icon_state = "wall_safe"
 	var/unlocked = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 
 /obj/item/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)
