@@ -25,6 +25,10 @@
 	basic_mob_flags = DEL_ON_DEATH
 	faction = list("hostile", FACTION_MAINT_CREATURES)
 
+	unsuitable_atmos_damage = 0
+	min_body_temp = 270
+	max_body_temp = INFINITY
+
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
 	var/cockroach_cell_line = CELL_LINE_TABLE_COCKROACH
