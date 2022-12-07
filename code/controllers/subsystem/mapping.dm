@@ -853,7 +853,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		return
 	LAZYADDASSOC(loaded_lazy_templates, template_key, TRUE)
 
-	var/obj/effect/landmark/lazy_template_pivot/found
 	for(var/obj/effect/landmark/lazy_template_pivot/lazy_template_pivot as anything in GLOB.lazy_template_pivots[template_key])
 		lazy_template_pivot.lazy_load()
 
