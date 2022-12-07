@@ -56,7 +56,7 @@
 	#define VAR_FINAL var/SpacemanDMM_final
 	///Private vars can only be called by things of exactly the same type.
 	#define VAR_PRIVATE var/SpacemanDMM_private
-	///Protected vars can only be call by things of the same type *or subtypes*.
+	///Protected vars can only be called by things of the same type *or subtypes*.
 	#define VAR_PROTECTED var/SpacemanDMM_protected
 #else
 	#define RETURN_TYPE(X)
