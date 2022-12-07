@@ -1608,7 +1608,7 @@
 	passive_bleed_modifier = 0.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/glass_style/drinking_glass/seraka_extract
+/datum/glass_style/drinking_glass/banana_peel
 	required_drink_type = /datum/reagent/medicine/coagulant/banana_peel
 	name = "glass of banana peel pulp"
 	desc = "Ancient Clown Lore says that pulped banana peels are good for your blood, \

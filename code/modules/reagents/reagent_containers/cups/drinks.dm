@@ -373,15 +373,15 @@
 
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton/Initialize(mapload, vol)
 	. = ..()
-	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_glass_change)), CALLBACK(src, PROC_REF(on_glass_reset)))
+	AddComponent(/datum/component/takes_reagent_appearance, CALLBACK(src, PROC_REF(on_box_change)), CALLBACK(src, PROC_REF(on_box_reset)))
 
 /// Having our icon state change changes our food type
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_glass_change(datum/glass_style/juicebox/style)
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_box_change(datum/glass_style/juicebox/style)
 	if(!istype(style))
 		return
 	drink_type = style.drink_type
 
-/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_glass_reset()
+/obj/item/reagent_containers/cup/glass/sillycup/smallcarton/proc/on_box_reset()
 	drink_type = NONE
 
 /obj/item/reagent_containers/cup/glass/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)

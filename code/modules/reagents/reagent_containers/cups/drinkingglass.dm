@@ -33,7 +33,7 @@
 
 /// And having our icon reset restores our fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_glass_reset()
-	fill_icon_thresholds ||= list(1)
+	fill_icon_thresholds ||= list(0)
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //

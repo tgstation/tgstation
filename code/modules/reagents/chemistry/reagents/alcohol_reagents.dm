@@ -2867,6 +2867,10 @@
 	taste_description = "a sweet and sour slice of apple"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/glass_style/shot_glass/jack_rose
+	required_drink_type = /datum/reagent/consumable/ethanol/jack_rose
+	icon_state = "shotglassred"
+
 /datum/glass_style/drinking_glass/jack_rose
 	required_drink_type = /datum/reagent/consumable/ethanol/jack_rose
 	name = "Jack Rose"

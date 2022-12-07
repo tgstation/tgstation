@@ -44,12 +44,12 @@
 	return ..()
 
 /datum/component/takes_reagent_appearance/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_NAME, PROC_REF(on_update_name))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_DESC, PROC_REF(on_update_desc))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON_STATE, PROC_REF(on_update_state))
+	RegisterSignal(parent, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_update_appearance))
 
 /datum/component/takes_reagent_appearance/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ATOM_UPDATE_NAME, COMSIG_ATOM_UPDATE_DESC, COMSIG_ATOM_UPDATE_ICON_STATE))
+	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_APPEARANCE)
+	if(QDELING(parent))
+		return
 
 	var/obj/item/item_parent = parent
 	item_parent.name = initial(item_parent.name)
@@ -57,67 +57,85 @@
 	item_parent.icon = icon_pre_change
 	item_parent.icon_state = icon_state_pre_change
 	on_icon_reset?.Invoke()
+	item_parent.update_appearance()
 
-/// Signal proc for [COMSIG_ATOM_UPDATE_NAME] to update the name to our style
-/datum/component/takes_reagent_appearance/proc/on_update_name(datum/source)
+/// Signal proc for [COMSIG_ATOM_UPDATE_APPEARANCE]
+/// We hook into the update appearance proc to perform our own update based on our glass style
+/// Preventing any further updates down the line on successes
+/datum/component/takes_reagent_appearance/proc/on_update_appearance(datum/source, updates)
 	SIGNAL_HANDLER
 
-	var/obj/item/item_parent = parent
+	. = NONE
+
 	var/datum/glass_style/main_style = get_main_reagent_style()
-	if(isnull(main_style))
+	if(updates & UPDATE_NAME)
+		. |= update_name(main_style)
+	if(updates & UPDATE_DESC)
+		. |= update_desc(main_style)
+	if(updates & UPDATE_ICON)
+		. |= update_icon(main_style)
+	return .
+
+/**
+ * Performs the name update.
+ *
+ * * Returns [COMSIG_ATOM_NO_UPDATE_NAME] if one was complete
+ * * Returns [NONE] if nothing happened
+ * * Returns [NONE] if the name was reset to initial state
+ */
+/datum/component/takes_reagent_appearance/proc/update_name(datum/glass_style/style)
+	var/obj/item/item_parent = parent
+	if(isnull(style))
 		// no style (reset)
 		item_parent.name = initial(item_parent.name)
-	else if(main_style.name)
+	else if(style.name)
 		// style
-		item_parent.name = main_style.name
-	else
-		// style but no name
-		return
+		item_parent.name = style.name
+		return COMSIG_ATOM_NO_UPDATE_NAME
 
-	// We did everything thank you
-	return COMSIG_ATOM_NO_UPDATE_NAME
+	return NONE
 
-/// Signal proc for [COMSIG_ATOM_UPDATE_DESC] to update the description to our style
-/datum/component/takes_reagent_appearance/proc/on_update_desc(datum/source)
-	SIGNAL_HANDLER
-
+/**
+ * Performs the description update.
+ *
+ * * Returns [COMSIG_ATOM_NO_UPDATE_DESC] if one was complete
+ * * Returns [NONE] if nothing happened
+ * * Returns [NONE] if the description was reset to initial state
+ */
+/datum/component/takes_reagent_appearance/proc/update_desc(datum/glass_style/style)
 	var/obj/item/item_parent = parent
-	var/datum/glass_style/main_style = get_main_reagent_style()
-	if(isnull(main_style))
+	if(isnull(style))
 		// no style (reset)
 		item_parent.desc = initial(item_parent.desc)
-	else if(main_style.desc)
+	else if(style.desc)
 		// style
-		item_parent.desc = main_style.desc
-	else
-		// style but no desc
-		return
+		item_parent.desc = style.desc
+		return COMSIG_ATOM_NO_UPDATE_DESC
 
-	// We did everything thank you
-	return COMSIG_ATOM_NO_UPDATE_DESC
+	return NONE
 
-/// Signal proc for [COMSIG_ATOM_UPDATE_ICON_STATE] to update the icon and icon state to our style
-/datum/component/takes_reagent_appearance/proc/on_update_state(datum/source)
-	SIGNAL_HANDLER
-
+/**
+ * Performs the icon update.
+ *
+ * * Returns [COMSIG_ATOM_NO_UPDATE_ICON] if an icon or icon state ocurred
+ * * Returns [NONE] if the icon or icon state was reset to base state
+ */
+/datum/component/takes_reagent_appearance/proc/update_icon(datum/glass_style/style)
 	var/obj/item/item_parent = parent
-	var/datum/glass_style/main_style = get_main_reagent_style()
-
-	if(isnull(main_style))
+	if(isnull(style))
 		// no style (reset)
 		item_parent.icon = icon_pre_change
 		item_parent.icon_state = icon_state_pre_change
-		on_icon_reset?.Invoke()
-	else
+	else if(style.icon && style.icon_state)
 		// style
-		if(main_style.icon)
-			item_parent.icon = main_style.icon
-		if(main_style.icon_state)
-			item_parent.icon_state = main_style.icon_state
-		on_icon_changed?.Invoke(main_style)
+		item_parent.icon = style.icon
+		item_parent.icon_state = style.icon_state
+		on_icon_changed?.Invoke(style)
+		return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
-	// We did everything thank you
-	return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+	// Reset gets invoked regardless, as further updates may "reset" the icon yet
+	on_icon_reset?.Invoke()
+	return NONE
 
 /**
  * Gets the correspinding style based on the parent's state and reagents within
