@@ -43,8 +43,6 @@
 	var/color_source = ORGAN_COLOR_INHERIT
 	///FALSE will set the color on the organ, TRUE will call get_overlay_color() for every layer and put it directly on the overlay
 	var/apply_color_to_layer = FALSE
-	///Indexes our generated colors for each layer, only used if apply_color_to_layer is TRUE
-	var/list/layer_to_color_index
 
 	///Does this organ have any bodytypes to pass to it's ownerlimb?
 	var/external_bodytypes = NONE
@@ -161,7 +159,7 @@
 		appearance.color = draw_color
 
 	if(apply_color_to_layer)
-		appearance.color = layer_to_color_index["[image_layer]"]
+		appearance.color = get_overlay_color(bitflag_to_layer(image_layer))
 
 	if(sprite_datum.center)
 		center_image(appearance, sprite_datum.dimension_x, sprite_datum.dimension_y)
@@ -257,14 +255,7 @@
 				return
 			var/mob/living/carbon/human/human_owner = ownerlimb.owner
 			draw_color = human_owner.hair_color
-	//Fuck giving the whole thing the same color, instead every layer can have its own
-	if(apply_color_to_layer)
-		layer_to_color_index = list()
-		for(var/draw_layer in all_layers)
-			if(draw_layer & layers)
-				//We make our layer a string because it'll runtime if we index with integers out of sequence
-				layer_to_color_index["[bitflag_to_layer(draw_layer)]"] = get_overlay_color(draw_layer)
-	else
+	if(!apply_color_to_layer)
 		color = draw_color
 	return TRUE
 
