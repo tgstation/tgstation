@@ -58,7 +58,7 @@
 	// Limb disabling variables
 	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	var/bodypart_disabled = FALSE
-	///The percentage of damage needed to disable a limb. Any value between 0 and 1.1 enables limb disabling via damage. Applies to both physical and stamina damage.
+	///The percentage of damage taken against max limb damage required to disable a limb. Any value between 0 and 1.1 enables limb disabling via damage. Applies to both physical and stamina damage.
 	var/disabling_threshold_percentage = 0
 	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
 	var/can_be_disabled = FALSE //Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
