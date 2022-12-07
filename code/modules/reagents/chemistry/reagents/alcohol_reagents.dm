@@ -2672,6 +2672,13 @@
 	var/list/tastes = list("bad coding" = 1) //List of tastes. See above.
 	ph = 4
 
+/datum/glass_style/drinking_glass/fruit_wine
+	required_drink_type = /datum/reagent/consumable/ethanol/fruit_wine
+	// This should really be dynamic like "glass of pineapple wine" or something
+	// but seeing as fruit wine half doesn't work already I'm not inclined to add support for that now
+	name = "glass of fruit wine"
+	desc = "A wine made from grown plants."
+
 /datum/reagent/consumable/ethanol/fruit_wine/on_new(list/data)
 	if(!data)
 		return
@@ -2711,9 +2718,6 @@
 	var/const/minimum_percent = 0.15 //Percentages measured between 0 and 1.
 	var/list/primary_tastes = list()
 	var/list/secondary_tastes = list()
-	// melbert todo
-	// glass_name = "glass of [name]"
-	// glass_desc = description
 	for(var/taste in tastes)
 		switch(tastes[taste])
 			if(minimum_percent*2 to INFINITY)
