@@ -148,6 +148,7 @@ export const EventSection = (props, context) => {
               {eventPage.map((event) => (
                 <Stack.Item grow key={event.type}>
                   <Button
+                    tooltip={event.description}
                     fluid
                     onClick={() =>
                       act('forceevent', {
