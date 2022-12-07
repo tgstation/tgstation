@@ -9,10 +9,10 @@
 
 /datum/round_event_control/sandstorm
 	name = "Sandstorm: Directional"
-	typepath = /datum/round_event/sandstorm //comments below are comparison for catastropic meteor wave numbers
-	max_occurrences = 3 //3
-	min_players = 35 //25
-	earliest_start = 35 MINUTES //45
+	typepath = /datum/round_event/sandstorm
+	max_occurrences = 3
+	min_players = 35
+	earliest_start = 35 MINUTES
 	category = EVENT_CATEGORY_SPACE
 	description = "A wave of space dust continually grinds down a side of the station."
 	///Where will the sandstorm be coming from -- Established in admin_setup, passed down to round_event
@@ -42,10 +42,8 @@
 	var/start_side
 
 /datum/round_event/sandstorm/setup()
-	start_when = rand(50, 70)
-	start_when = 60
-	end_when = rand(90, 110)
-	end_when = 100
+	start_when = rand(70, 90)
+	end_when = rand(110, 140)
 
 /datum/round_event/sandstorm/announce(fake)
 	var/datum/round_event_control/sandstorm/sandstorm_event = control
@@ -64,8 +62,12 @@
 			start_side_text = "starboard"
 		if(WEST)
 			start_side_text = "port"
+		else
+			log_game("Sandstorm event given [start_side] as unrecognized direction. Cancelling event...")
+			kill()
+
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
-						All employees are encouraged to assist in repairs or mitigation of damage to external fittings and fixtures.", "Collision Emergency Alert")
+		Impact is expected in the next two minutes. All employees are encouranged to assist in repairs and damage mitigation if possible.", "Collision Emergency Alert")
 
 /datum/round_event/sandstorm/tick()
 	spawn_meteors(15, GLOB.meteorsE, start_side)
@@ -76,7 +78,7 @@
  * Uses space dust, meaning walls/rwalls are quickly chewed up very quickly.
  *
  * Super dangerous, super funny, preserved for future admin use in case the new event reminds
- * them that this exists. It is unchanged from its original form.
+ * them that this exists. It is unchanged from its original form and is arguably perfect.
  */
 
 /datum/round_event_control/sandstorm_classic
