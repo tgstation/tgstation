@@ -454,7 +454,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	var/map_path
 
 /obj/effect/landmark/lazy_template_pivot/Initialize(mapload)
-	LAZYADDASSOC(GLOB.lazy_template_pivots, key, src)
+	LAZYADDASSOCLIST(GLOB.lazy_template_pivots, key, src)
 	return ..()
 
 /obj/effect/landmark/lazy_template_pivot/Destroy(...)
