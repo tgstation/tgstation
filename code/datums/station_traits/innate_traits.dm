@@ -70,7 +70,7 @@
 	if(!uniform)
 		return
 	uniform = new uniform()
-	laceups = new /obj/item/clothing/shoes/laceup()
+	var/laceups = new /obj/item/clothing/shoes/laceup()
 	var/old_shoes = crewmember.shoes
 	if(old_shoes)
 		qdel(old_shoes)
