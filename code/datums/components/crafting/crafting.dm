@@ -418,7 +418,7 @@
 
 		data["recipes"] += list(build_crafting_data(R))
 
-	var/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
+	var/list/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
 
 	// Prepare atom data
 	for(var/path in atoms)
@@ -482,7 +482,7 @@
 ///
 /datum/component/personal_crafting/proc/build_crafting_data(datum/crafting_recipe/recipe)
 	var/list/data = list()
-	var/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
+	var/list/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
 
 	data["ref"] = "[REF(recipe)]"
 	var/atom/atom = recipe.result
