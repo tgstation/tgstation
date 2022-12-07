@@ -11,7 +11,6 @@
 	var/codelen = 4
 	var/qdel_on_open = FALSE
 	var/spawned_loot = FALSE
-	var/loot
 	tamperproof = 90
 
 	// Stop people from "diving into" the crate accidentally, and then detonating it.
@@ -25,7 +24,6 @@
 		var/dig = pick(digits)
 		code += dig
 		digits -= dig  //there are never matching digits in the answer
-	loot = rand(1,100) //100 different crates with varying chances of spawning
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/closet/crate/secure/loot/attack_hand(mob/user, list/modifiers)
@@ -132,6 +130,7 @@
 		qdel(src)
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
+	loot = rand(1,100) //100 different crates with varying chances of spawning
 	switch(loot)
 		if(1 to 5) //5% chance
 			new /obj/item/reagent_containers/cup/glass/bottle/rum(src)
