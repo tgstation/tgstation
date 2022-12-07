@@ -495,7 +495,7 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	if(!choice)
 		return
 
-	if(!length(GLOB.lazy_template_pivots))
+	if(!length(GLOB.lazy_template_pivots[choice]))
 		to_chat(usr, span_warning("No pivot found with that key! This is probably an error."))
 		return
 
