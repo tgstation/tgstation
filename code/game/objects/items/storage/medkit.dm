@@ -553,6 +553,7 @@
 /obj/item/storage/organbox
 	name = "organ transport box"
 	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "organbox"
 	base_icon_state = "organbox"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
