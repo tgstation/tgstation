@@ -298,7 +298,7 @@
 	name = "Linguist"
 	desc = "You studied hard in school and know how to speak an extra language."
 	icon = "book"
-	value = 6
+	value = 4
 	gain_text = "<span class='notice'>You have fluency with another language."
 	lose_text = "<span class='notice'>You forget the words to a familiar language."
 	medical_record_text = "Patient is fluent in multiple languages."
@@ -316,9 +316,6 @@
 	)
 
 	language = quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/language)
-	if(isnull(language))
-		var/test = "The preference for language was null somehow?" // for testing
-
 	language = common_languages[language] || common_languages[pick(common_languages)]
 
 	// if our language preference is already learned, then we select a random one
