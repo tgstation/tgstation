@@ -60,8 +60,7 @@
 	if(!department_to_jumpsuit)
 		return
 	var/obj/item/clothing/uniform
-	var/obj/item/clothing/shoes/laceup/laceups
-	var/list/departments = job.departments_list.Copy()
+	var/list/departments = job.departments_list ? job.departments_list.Copy() : list()
 	if(job.department_for_prefs)
 		departments += job.department_for_prefs
 	for(var/datum/job_department/department as anything in list() + job.departments_list)
@@ -71,7 +70,7 @@
 	if(!uniform)
 		return
 	uniform = new uniform()
-	laceups = new laceups()
+	laceups = new /obj/item/clothing/shoes/laceup()
 	var/old_shoes = crewmember.shoes
 	if(old_shoes)
 		qdel(old_shoes)
