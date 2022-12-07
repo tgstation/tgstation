@@ -59,17 +59,7 @@
 	src.result = stack_recipe.result_type
 	src.result_amount = stack_recipe.res_amount
 	src.reqs[material] = stack_recipe.req_amount
-	if(ispath(material, /obj/item/stack/sheet/runed_metal))
-		src.category = CAT_CULT
-	else
-		src.category = stack_recipe.category ? stack_recipe.category :
-		ispath(stack_recipe.result_type, /obj/item/clothing) ? CAT_CLOTHING :
-		ispath(stack_recipe.result_type, /obj/item/stack/tile) ? CAT_TILES :
-		ispath(stack_recipe.result_type, /obj/structure/window) ? CAT_WINDOWS :
-		ispath(stack_recipe.result_type, /obj/structure/door_assembly) || ispath(stack_recipe.result_type, /obj/structure/mineral_door) || ispath(stack_recipe.result_type, /obj/structure/firelock_frame) ? CAT_DOORS :
-		ispath(stack_recipe.result_type, /obj/structure/) ? CAT_FURNITURE :
-		ispath(stack_recipe.result_type, /obj/item/wallframe) ? CAT_EQUIPMENT :
-		ispath(stack_recipe.result_type, /obj/item/storage) ? CAT_CONTAINERS : CAT_MISC
+	src.category = stack_recipe.category || CAT_MISC
 
 /**
  * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client

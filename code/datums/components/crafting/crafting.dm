@@ -382,14 +382,6 @@
 		var/mob/living/carbon/carbon = user
 		data["diet"] = carbon.dna.species.get_species_diet()
 
-	data["atom_data"] = list()
-	for(var/path in (mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms))
-		var/atom/atom = path
-		data["atom_data"] += list(list(
-			"name" = initial(atom.name),
-			"is_reagent" = ispath(atom, /datum/reagent/)
-		))
-
 	for(var/R in (mode ? GLOB.cooking_recipes : GLOB.crafting_recipes))
 		var/datum/crafting_recipe/recipe = R
 
@@ -426,11 +418,21 @@
 
 		data["recipes"] += list(build_crafting_data(R))
 
+	var/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
+
+	// Prepare atom data
+	for(var/path in atoms)
+		var/atom/atom = path
+		data["atom_data"] += list(list(
+			"name" = initial(atom.name),
+			"is_reagent" = ispath(atom, /datum/reagent/)
+		))
+
 	// Prepare materials data
 	for(var/atom/path as anything in material_occurences)
 		if(material_occurences[path] == 1)
 			continue // Don't include materials that appear only once
-		var/id = mode ? GLOB.cooking_recipes_atoms.Find(path) : GLOB.crafting_recipes_atoms.Find(path)
+		var/id = atoms.Find(path)
 		data["material_occurences"] += list(list(
 				"atom_id" = "[id]",
 				"occurences" = material_occurences[path]
@@ -480,9 +482,11 @@
 ///
 /datum/component/personal_crafting/proc/build_crafting_data(datum/crafting_recipe/recipe)
 	var/list/data = list()
+	var/atoms = mode ? GLOB.cooking_recipes_atoms : GLOB.crafting_recipes_atoms
+
 	data["ref"] = "[REF(recipe)]"
 	var/atom/atom = recipe.result
-	data["result"] = mode ? GLOB.cooking_recipes_atoms.Find(atom) : GLOB.crafting_recipes_atoms.Find(atom)
+	data["result"] = atoms.Find(atom)
 
 	// Foodtypes
 	if(ispath(recipe.result, /obj/item/food))
@@ -523,26 +527,26 @@
 	if(recipe.tool_paths)
 		data["tool_paths"] = list()
 		for(var/req_atom as anything in recipe.tool_paths)
-			data["tool_paths"] += mode ? GLOB.cooking_recipes_atoms.Find(req_atom) : GLOB.crafting_recipes_atoms.Find(req_atom)
+			data["tool_paths"] += atoms.Find(req_atom)
 
 	// Machinery
 	if(recipe.machinery)
 		data["machinery"] = list()
 		for(var/req_atom as anything in recipe.machinery)
-			data["machinery"] += mode ? GLOB.cooking_recipes_atoms.Find(req_atom) : GLOB.crafting_recipes_atoms.Find(req_atom)
+			data["machinery"] += atoms.Find(req_atom)
 
 	// Ingredients / Materials
 	if(recipe.reqs.len)
 		data["reqs"] = list()
 		for(var/req_atom as anything in recipe.reqs)
-			var/id = mode ? GLOB.cooking_recipes_atoms.Find(req_atom) : GLOB.crafting_recipes_atoms.Find(req_atom)
+			var/id = atoms.Find(req_atom)
 			data["reqs"]["[id]"] = recipe.reqs[req_atom]
 
 	// Catalysts
 	if(recipe.chem_catalysts.len)
 		data["chem_catalysts"] = list()
 		for(var/req_atom as anything in recipe.chem_catalysts)
-			var/id = mode ? GLOB.cooking_recipes_atoms.Find(req_atom) : GLOB.crafting_recipes_atoms.Find(req_atom)
+			var/id = atoms.Find(req_atom)
 			data["chem_catalysts"]["[id]"] = recipe.chem_catalysts[req_atom]
 
 	// Reaction data
@@ -557,7 +561,7 @@
 			data["steps"] += "Heat up to [reaction.required_temp]K"
 		if(reaction.required_container)
 			var/atom/req_atom = reaction.required_container
-			var/id = mode ? GLOB.cooking_recipes_atoms.Find(req_atom) : GLOB.crafting_recipes_atoms.Find(req_atom)
+			var/id = atoms.Find(req_atom)
 			data["reqs"]["[id]"] = 1
 			data["steps"] += "Add all ingredients into the [initial(req_atom.name)]"
 

@@ -63,7 +63,7 @@
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster
 	src.trait_modifier = trait_modifier
-	src.category = category
+	src.category = src.category || category || CAT_MISC
 
 /datum/stack_recipe/radial
 	/// Optional info to be shown on the radial option for this item
@@ -88,7 +88,8 @@
 	required_noun,
 	category,
 )
-
+	if(category)
+		src.category = category
 	if(desc)
 		src.desc = desc
 	if(required_noun)
