@@ -10,6 +10,11 @@
 #define CRYO_MIN_GAS_MOLES 5
 #define CRYO_BREAKOUT_TIME (30 SECONDS)
 
+// alert modes for crit alarms, dying_crit alerts for all, dying_dead only alerts for when the person dies, and off is off
+#define ALERT_DYING_OFF 0
+#define ALERT_DYING_DEAD 1
+#define ALERT_DYING_CRIT 2
+
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/visual/cryo_occupant
 	icon = 'icons/obj/medical/cryogenics.dmi'
@@ -113,6 +118,9 @@
 	var/treating_wounds = FALSE
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
+
+	/// only alert of a dying patient when entering into crit/dead
+	var/alert_dying = ALERT_DYING_CRIT
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize(mapload)
@@ -262,6 +270,9 @@
 	if(!check_nap_violations())
 		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
+		if(alert_dying >= ALERT_DYING_DEAD)
+			radio.talk_into(src, "Patient vitals ceased. Please manually revive and inspect tube.", radio_channel)
+			alert_dying = ALERT_DYING_OFF // we're giving up
 		return
 	if(mob_occupant.get_organic_health() >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 		if(iscarbon(mob_occupant))
@@ -284,6 +295,16 @@
 				open_machine()
 			radio.talk_into(src, msg, radio_channel)
 			return
+
+	// theyre crit, alert the medstaff
+	if(mob_occupant.get_organic_health() < 0 && alert_dying >= ALERT_DYING_CRIT)
+		radio.talk_into(src, "Patient dropped to critical levels. Please cease healing and examine tube.", radio_channel)
+		alert_dying = ALERT_DYING_DEAD
+
+	// they were in crit and healed
+	if(mob_occupant.get_organic_health() >= 0 && alert_dying <= ALERT_DYING_DEAD)
+		radio.talk_into(src, "Patient vitals stabilizing.", radio_channel)
+		alert_dying = ALERT_DYING_CRIT
 
 	var/datum/gas_mixture/air1 = airs[1]
 
@@ -367,6 +388,8 @@
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
 		flick("pod-close-anim", src)
 		..(user)
+		// we probably already know if theyre crit if theyre crit
+		alert_dying = user.get_organic_health() > 0 ? ALERT_DYING_CRIT : ALERT_DYING_DEAD
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist_act(mob/living/user)
