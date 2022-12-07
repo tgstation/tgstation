@@ -12,6 +12,7 @@
 	},
 	"space_ruin_levels": 3,
 	"space_empty_levels": 1,
+	"innate_station_traits": "/datum/station_trait/trek",
 	"traits": [
 		{
 			"Up": 1,

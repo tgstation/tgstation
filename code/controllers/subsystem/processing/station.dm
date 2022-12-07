@@ -44,6 +44,9 @@ PROCESSING_SUBSYSTEM_DEF(station)
 			setup_trait(station_trait_path)
 
 		return
+	
+		for(var/trait_typepath in SSmapping.config.innate_station_traits)
+			setup_trait(trait_typepath)
 
 	for(var/i in subtypesof(/datum/station_trait))
 		var/datum/station_trait/trait_typepath = i

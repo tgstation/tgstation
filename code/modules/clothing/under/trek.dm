@@ -28,12 +28,31 @@
 
 /obj/item/clothing/under/trek/medsci
 	name = "medsci uniform"
-	desc = "An outdated worn by medical/science officers."
+	desc = "An outdated uniform worn by medical/science officers."
 	icon_state = "trek_tos"
 	inhand_icon_state = "b_suit"
 	greyscale_config = /datum/greyscale_config/trek
 	greyscale_config_worn = /datum/greyscale_config/trek/worn
 	greyscale_colors = "#5FA4CC"
+
+/obj/item/clothing/under/trek/srvcar
+	name = "service uniform"
+	desc = "An outdated uniform worn by service and supply staff."
+	icon_state = "trek_tos"
+	inhand_icon_state = "g_suit"
+	greyscale_config = /datum/greyscale_config/trek
+	greyscale_config_worn = /datum/greyscale_config/trek/worn
+	greyscale_colors = "#9FED58"
+
+/obj/item/clothing/under/trek/assistant
+	name = "service uniform"
+	desc = "An outdated uniform worn by ship assistants."
+	icon_state = "trek_tos"
+	inhand_icon_state = "gy_suit"
+	greyscale_config = /datum/greyscale_config/trek
+	greyscale_config_worn = /datum/greyscale_config/trek/worn
+	greyscale_colors = "#818181"
+
 
 /*
 *	The Next Generation
@@ -47,6 +66,12 @@
 /obj/item/clothing/under/trek/medsci/next
 	icon_state = "trek_next"
 
+/obj/item/clothing/under/trek/srvcar/next
+	icon_state = "trek_next"
+
+/obj/item/clothing/under/trek/assistant/next
+	icon_state = "trek_next"
+
 /*
 *	Voyager
 */
@@ -57,6 +82,12 @@
 	icon_state = "trek_voy"
 
 /obj/item/clothing/under/trek/medsci/voy
+	icon_state = "trek_voy"
+
+/obj/item/clothing/under/trek/srvcar/voy
+	icon_state = "trek_voy"
+
+/obj/item/clothing/under/trek/assistant/voy
 	icon_state = "trek_voy"
 
 /*
@@ -73,6 +104,14 @@
 	inhand_icon_state = "bl_suit"
 
 /obj/item/clothing/under/trek/medsci/ent
+	icon_state = "trek_ent"
+	inhand_icon_state = "bl_suit"
+
+/obj/item/clothing/under/trek/srvcar/ent
+	icon_state = "trek_ent"
+	inhand_icon_state = "bl_suit"
+
+/obj/item/clothing/under/trek/assistant/ent
 	icon_state = "trek_ent"
 	inhand_icon_state = "bl_suit"
 

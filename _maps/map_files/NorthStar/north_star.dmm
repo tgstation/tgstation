@@ -40650,6 +40650,16 @@
 	},
 /turf/open/floor/plating,
 /area/station/security/brig)
+"lju" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/smooth,
+/area/station/cargo/office)
 "ljL" = (
 /obj/structure/sign/poster/contraband/moffuchis_pizza,
 /turf/closed/wall,
@@ -46925,11 +46935,15 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/floor2/fore)
 "mPn" = (
-/obj/machinery/rnd/production/protolathe/department/cargo,
-/obj/effect/turf_decal/siding/thinplating_new{
-	dir = 9
-	},
 /obj/structure/sign/poster/official/random/directional/east,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/iron/smooth,
 /area/station/cargo/office)
 "mPo" = (
@@ -49611,6 +49625,10 @@
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/station/cargo/office)
 "nvO" = (
@@ -49789,7 +49807,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/siding/thinplating_new{
-	dir = 5
+	dir = 1
 	},
 /turf/open/floor/iron/smooth,
 /area/station/cargo/office)
@@ -51711,10 +51729,17 @@
 "nXl" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil,
-/obj/effect/turf_decal/siding/thinplating_new{
+/obj/item/multitool,
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/siding/thinplating_new/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/item/multitool,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/station/cargo/office)
 "nXm" = (
@@ -112120,7 +112145,7 @@ kFP
 mMd
 kFP
 jPv
-rPi
+fgN
 rpj
 ppf
 imJ
@@ -112633,8 +112658,8 @@ lyw
 bzN
 dny
 gPr
-nUM
-rPi
+lju
+fgN
 rpj
 ppf
 fhZ
