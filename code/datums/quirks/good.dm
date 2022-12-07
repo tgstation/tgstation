@@ -313,7 +313,7 @@
 		/datum/language/nekomimetic,
 		/datum/language/draconic,
 		/datum/language/moffic,
-		/datum/language/calcic
+		/datum/language/calcic,
 	)
 
 	language = language || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/language)
