@@ -33,10 +33,8 @@
 	light_on = FALSE
 	light_range = 8
 	generic_canpass = FALSE
-	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD, DIAG_CAMERA_HUD)
 	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
-	///What direction will the mech face when entered/powered on? Defaults to South.
-	var/dir_in = SOUTH
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/normal_step_energy_drain = 10
 	///How much energy the mech will consume each time it moves. this is the current active energy consumed
@@ -86,7 +84,12 @@
 
 	///Special version of the radio, which is unsellable
 	var/obj/item/radio/mech/radio
+	///List of installed remote tracking beacons, including AI control beacons
 	var/list/trackers = list()
+	///Camera installed into the mech
+	var/obj/machinery/camera/exosuit/chassis_camera
+	///Portable camera camerachunk update
+	var/updating = FALSE
 
 	var/max_temperature = 25000
 
@@ -260,9 +263,11 @@
 			thing.attach(src, FALSE)
 			equip_by_category[key] -= path
 
+	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
+
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
-		mob_exit(ejectee, TRUE, TRUE)
+		mob_exit(ejectee, silent = TRUE)
 
 	if(LAZYLEN(flat_equipment))
 		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
@@ -281,6 +286,8 @@
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
 	QDEL_NULL(ui_view)
+	QDEL_NULL(trackers)
+	QDEL_NULL(chassis_camera)
 
 	GLOB.mechas_list -= src //global mech list
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -302,7 +309,7 @@
 			else
 				mob_exit(ai,silent = TRUE, forced = TRUE) // so we dont ghost the AI
 			continue
-		mob_exit(occupant, FALSE, TRUE)
+		mob_exit(occupant, forced = TRUE)
 		occupant.SetSleeping(destruction_sleep_duration)
 
 	if(wreckage)
@@ -519,8 +526,7 @@
 
 	for(var/mob/living/occupant as anything in occupants)
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
-			visible_message(span_warning("[occupant] tumbles out of the cockpit!"))
-			mob_exit(occupant) //bye bye
+			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
 		if(cell)
 			var/cellcharge = cell.charge/cell.maxcharge
@@ -659,7 +665,7 @@
 	for(var/mob/M in speech_bubble_recipients)
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
-	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), image('icons/mob/effects/talk.dmi', src, "machine[say_test(speech_args[SPEECH_MESSAGE])]",MOB_LAYER+1), speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay_global), image('icons/mob/effects/talk.dmi', src, "machine[say_test(speech_args[SPEECH_MESSAGE])]",MOB_LAYER+1), speech_bubble_recipients, 30)
 
 
 /////////////////////////

@@ -47,6 +47,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/plane_offset_blacklist
 	/// List of render targets that do not allow for offsetting
 	var/list/render_offset_blacklist
+	/// List of plane masters that are of critical priority
+	var/list/critical_planes
 	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
@@ -110,7 +112,10 @@ SUBSYSTEM_DEF(mapping)
 	true_to_offset_planes["[FLOAT_PLANE]"] = list(FLOAT_PLANE)
 	plane_to_offset["[FLOAT_PLANE]"] = 0
 	plane_offset_blacklist = list()
+	// You aren't allowed to offset a floatplane that'll just fuck it all up
+	plane_offset_blacklist["[FLOAT_PLANE]"] = TRUE
 	render_offset_blacklist = list()
+	critical_planes = list()
 	create_plane_offsets(0, 0)
 	initialize_biomes()
 	loadWorld()
@@ -537,9 +542,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
-	var/list/banned = generateMapList("lavaruinblacklist.txt")
-	banned += generateMapList("spaceruinblacklist.txt")
-	banned += generateMapList("iceruinblacklist.txt")
+	var/list/banned = generateMapList("spaceruinblacklist.txt")
+	if(config.minetype == "lavaland")
+		banned += generateMapList("lavaruinblacklist.txt")
+	else if(config.blacklist_file)
+		banned += generateMapList(config.blacklist_file)
 
 	for(var/item in sort_list(subtypesof(/datum/map_template/ruin), GLOBAL_PROC_REF(cmp_ruincost_priority)))
 		var/datum/map_template/ruin/ruin_type = item
@@ -795,6 +802,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 	generate_offset_lists(old_max + 1, max_plane_offset)
 	SEND_SIGNAL(src, COMSIG_PLANE_OFFSET_INCREASE, old_max, max_plane_offset)
+	// Sanity check
+	if(max_plane_offset > MAX_EXPECTED_Z_DEPTH)
+		stack_trace("We've loaded a map deeper then the max expected z depth. Preferences won't cover visually disabling all of it!")
 
 /// Takes an offset to generate misc lists to, and a base to start from
 /// Use this to react globally to maintain parity with plane offsets
@@ -825,6 +835,9 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 				render_offset_blacklist[render_target] = TRUE
 				if(plane_offset != 0)
 					continue
+
+			if(initial(master_type.critical) & PLANE_CRITICAL_DISPLAY)
+				critical_planes[string_plane] = TRUE
 
 			plane_offset_to_true[string_plane] = plane_to_use
 			plane_to_offset[string_plane] = plane_offset

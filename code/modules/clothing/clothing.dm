@@ -351,6 +351,17 @@
 		else
 			to_chat(M, span_warning("[src] start[p_s()] to fall apart!"))
 
+// you just dont get the same feeling with handwashed clothes
+/obj/item/clothing/machine_wash()
+	. = ..()
+	var/fresh_mood = AddComponent( \
+		/datum/component/onwear_mood, \
+		saved_event_type = /datum/mood_event/fresh_laundry, \
+		examine_string = "[src] looks crisp and pristine.", \
+	)
+
+	QDEL_IN(fresh_mood, 2 MINUTES)
+
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	damaged_clothes = damaged_state
@@ -400,7 +411,7 @@ BLIND     // can't see anything
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
-	update_action_buttons()
+	update_item_action_buttons()
 	return TRUE
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags

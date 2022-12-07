@@ -10,6 +10,14 @@
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+	/// type is spawned 5 at a time and replaces this pie when processed by cutting tool
+	var/obj/item/food/pieslice/slice_type
+	/// so that the yield can change if it isnt 5
+	var/yield = 5
+
+/obj/item/food/pie/MakeProcessable()
+	if (slice_type)
+		AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, yield, table_required = TRUE, screentip_verb = "Slice")
 
 /obj/item/food/pieslice
 	name = "pie slice"
@@ -158,9 +166,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("pie" = 1, "pumpkin" = 1)
 	foodtypes = GRAIN | VEGETABLES | SUGAR
-
-/obj/item/food/pie/pumpkinpie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/pumpkin, 5, table_required = TRUE)
+	slice_type = /obj/item/food/pieslice/pumpkin
 
 /obj/item/food/pieslice/pumpkin
 	name = "pumpkin pie slice"
@@ -217,9 +223,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 13, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
 	foodtypes = GRAIN | VEGETABLES
-
-/obj/item/food/pie/blumpkinpie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/blumpkin, 5, table_required = TRUE)
+	slice_type = /obj/item/food/pieslice/blumpkin
 
 /obj/item/food/pieslice/blumpkin
 	name = "blumpkin pie slice"
@@ -237,9 +241,7 @@
 	tastes = list("jelly" = 1, "sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_EXOTIC
-
-/obj/item/food/pie/dulcedebatata/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/dulcedebatata, 5, table_required = TRUE)
+	slice_type = /obj/item/food/pieslice/dulcedebatata
 
 /obj/item/food/pieslice/dulcedebatata
 	name = "dulce de batata slice"
@@ -264,9 +266,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("nuts" = 1, "pie" = 1)
 	foodtypes = NUTS | SUGAR
-
-/obj/item/food/pie/baklava/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/baklava, 6, 20, table_required = TRUE)
+	slice_type = /obj/item/food/pieslice/baklava
+	yield = 6
 
 /obj/item/food/pieslice/baklava
 	name = "baklava dish"
@@ -282,6 +283,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("pie" = 1, "smooth chocolate" = 1, "whipped cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
+	slice_type = /obj/item/food/pieslice/frenchsilk
 
 /obj/item/food/pieslice/frenchsilk
 	name = "french silk pie slice"
@@ -291,8 +293,6 @@
 	tastes = list("pie" = 1, "smooth chocolate" = 1, "whipped cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 
-/obj/item/food/pie/frenchsilkpie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/frenchsilk, 5)
 
 /obj/item/food/pie/shepherds_pie
 	name = "shepherds pie"
@@ -301,6 +301,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 40, /datum/reagent/consumable/nutriment/vitamin = 12, /datum/reagent/consumable/nutriment/protein = 20)
 	tastes = list("juicy meat" = 2, "mashed potatoes" = 2, "baked veggies" = 2)
 	foodtypes = MEAT | DAIRY | VEGETABLES
+	slice_type = /obj/item/food/pieslice/shepherds_pie
+	yield = 4
 
 /obj/item/food/pieslice/shepherds_pie
 	name = "shepherds pie slice"
@@ -309,6 +311,3 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("juicy meat" = 1, "mashed potatoes" = 1, "baked veggies" = 1)
 	foodtypes = MEAT | DAIRY | VEGETABLES
-
-/obj/item/food/pie/shepherds_pie/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/shepherds_pie, 4)

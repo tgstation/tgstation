@@ -13,6 +13,11 @@ SUBSYSTEM_DEF(communications)
 	/// Are we trying to send a cross-station message that contains soft-filtered words? If so, flip to TRUE to extend the time admins have to cancel the message.
 	var/soft_filtering = FALSE
 
+	/// A list of footnote datums, to be added to the bottom of the roundstart command report.
+	var/list/command_report_footnotes = list()
+	/// A counter of conditions that are blocking the command report from printing. Counter incremements up for every blocking condition, and de-incrememnts when it is complete.
+	var/block_command_report = 0
+
 /datum/controller/subsystem/communications/proc/can_announce(mob/living/user, is_silicon)
 	if(is_silicon && COOLDOWN_FINISHED(src, silicon_message_cooldown))
 		return TRUE
@@ -66,7 +71,7 @@ SUBSYSTEM_DEF(communications)
 	message_admins("[ADMIN_LOOKUPFLW(user)] has called an emergency meeting.")
 
 /datum/controller/subsystem/communications/proc/send_message(datum/comm_message/sending,print = TRUE,unique = FALSE)
-	for(var/obj/machinery/computer/communications/C in GLOB.machines)
+	for(var/obj/machinery/computer/communications/C in GLOB.shuttle_caller_list)
 		if(!(C.machine_stat & (BROKEN|NOPOWER)) && is_station_level(C.z))
 			if(unique)
 				C.add_message(sending)

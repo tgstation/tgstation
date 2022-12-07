@@ -141,7 +141,7 @@
  *
  * If our lich's mob is revived at some point before returning, stop the timer
  */
-/datum/component/phylactery/proc/stop_timer(mob/living/source, full_heal, admin_revive)
+/datum/component/phylactery/proc/stop_timer(mob/living/source, full_heal_flags)
 	SIGNAL_HANDLER
 
 	deltimer(revive_timer)

@@ -32,8 +32,6 @@
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"
 ///from base of mob/living/revive() (full_heal, admin_revive)
 #define COMSIG_LIVING_REVIVE "living_revive"
-///from base of /mob/living/regenerate_limbs(): (noheal, excluded_limbs)
-#define COMSIG_LIVING_REGENERATE_LIMBS "living_regen_limbs"
 ///from base of mob/living/set_buckled(): (new_buckled)
 #define COMSIG_LIVING_SET_BUCKLED "living_set_buckled"
 ///from base of mob/living/set_body_position()
@@ -42,12 +40,18 @@
 #define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
 ///From living/Life(). (deltatime, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
+///From living/set_resting(): (new_resting, silent, instant)
+#define COMSIG_LIVING_RESTING "living_resting"
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
 
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
+
+///from base of mob/living/gib(): (no_brain, no_organs, no_bodyparts)
+///Note that it is fired regardless of whether the mob was dead beforehand or not.
+#define COMSIG_LIVING_GIBBED "living_gibbed"
 
 ///from base of mob/living/Write_Memory(): (dead, gibbed)
 #define COMSIG_LIVING_WRITE_MEMORY "living_write_memory"
@@ -75,7 +79,7 @@
 ///from base of /mob/living/can_track(): (mob/user)
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"
 	#define COMPONENT_CANT_TRACK (1<<0)
-///from end of fully_heal(): (admin_revive)
+///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
 /// from start of /mob/living/handle_breathing(): (delta_time, times_fired)
 #define COMSIG_LIVING_HANDLE_BREATHING "living_handle_breathing"

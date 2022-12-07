@@ -105,11 +105,10 @@ There are several things that need to be remembered:
 		var/woman
 		if(!uniform_overlay)
 			//BEGIN SPECIES HANDLING
-			if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
-				icon_file = DIGITIGRADE_UNIFORM_FILE
 			if((dna?.species.bodytype & BODYTYPE_MONKEY) && (uniform.supports_variations_flags & CLOTHING_MONKEY_VARIATION))
 				icon_file = MONKEY_UNIFORM_FILE
-
+			else if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+				icon_file = DIGITIGRADE_UNIFORM_FILE
 			//Female sprites have lower priority than digitigrade sprites
 			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && !(uniform.female_sprite_flags & NO_FEMALE_UNIFORM)) //Agggggggghhhhh
 				woman = TRUE
@@ -277,8 +276,8 @@ There are several things that need to be remembered:
 
 	if(wear_neck)
 		var/obj/item/worn_item = wear_neck
-
-		if(!(ITEM_SLOT_NECK in check_obscured_slots()))
+		update_hud_neck(wear_neck)
+		if(!(ITEM_SLOT_NECK & check_obscured_slots()))
 			var/mutable_appearance/neck_overlay
 			var/icon_file
 
@@ -293,7 +292,6 @@ There are several things that need to be remembered:
 				neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
 				neck_overlay.pixel_y += dna.species.offset_features[OFFSET_NECK][2]
 			overlays_standing[NECK_LAYER] = neck_overlay
-		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
 
@@ -484,7 +482,7 @@ There are several things that need to be remembered:
 		var/mutable_appearance/mask_overlay
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 
-		if(!(ITEM_SLOT_MASK in check_obscured_slots()))
+		if(!(ITEM_SLOT_MASK & check_obscured_slots()))
 
 			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 				icon_file = 'icons/mob/clothing/mask.dmi'
@@ -816,7 +814,6 @@ generate/load female uniform sprites matching all previously decided variables
 					missing_eyes.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 					missing_eyes.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
 				add_overlay(missing_eyes)
-
 	update_worn_head()
 	update_worn_mask()
 

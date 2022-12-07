@@ -9,13 +9,10 @@
 	vend_reply = "Game on!"
 	products = list(
 		/obj/item/computer_disk = 8,
-		/obj/item/computer_hardware/battery = 8,
 		/obj/item/modular_computer/laptop = 4,
-		/obj/item/modular_computer/tablet = 4,
-		/obj/item/stock_parts/cell/computer = 8,
+		/obj/item/modular_computer/pda = 4,
 	)
 	premium = list(
-		/obj/item/computer_hardware/card_slot = 2,
 		/obj/item/pai_card = 2,
 	)
 	refill_canister = /obj/item/vending_refill/modularpc

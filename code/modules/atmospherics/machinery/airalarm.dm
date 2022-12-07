@@ -60,6 +60,7 @@
 #define AALARM_MODE_SIPHON 7 //Scrubbers suck air
 #define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
 #define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output
+#define AALARM_MODE_MAX AALARM_MODE_REFILL
 
 #define AALARM_REPORT_TIMEOUT 100
 
@@ -77,7 +78,10 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 90, ACID = 30)
 	resistance_flags = FIRE_PROOF
 
-	var/danger_level = 0
+	/// Current alert level, found in code/__DEFINES/atmospherics/atmos_machinery.dm
+	/// AIR_ALARM_ALERT_NONE, AIR_ALARM_ALERT_MINOR, AIR_ALARM_ALERT_SEVERE
+	var/danger_level = AIR_ALARM_ALERT_NONE
+
 	var/mode = AALARM_MODE_SCRUBBING
 	///A reference to the area we are in
 	var/area/my_area
@@ -87,9 +91,6 @@
 	var/shorted = 0
 	var/buildstage = AIRALARM_BUILD_COMPLETE // 2 = complete, 1 = no wires,  0 = circuit gone
 
-	var/frequency = FREQ_ATMOS_CONTROL
-	var/alarm_frequency = FREQ_ATMOS_ALARMS
-	var/datum/radio_frequency/radio_connection
 	///Represents a signel source of atmos alarms, complains to all the listeners if one of our thresholds is violated
 	var/datum/alarm_handler/alarm_manager
 
@@ -120,6 +121,8 @@
 		/datum/gas/halon = new/datum/tlv/dangerous
 	)
 
+GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
+
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	wires = new /datum/wires/airalarm(src)
@@ -137,7 +140,6 @@
 	my_area = get_area(src)
 	update_appearance()
 
-	set_frequency(frequency)
 	AddElement(/datum/element/connect_loc, atmos_connections)
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/air_alarm_general,
@@ -146,14 +148,14 @@
 		/obj/item/circuit_component/air_alarm_vents
 	))
 
-
+	GLOB.air_alarms += src
 
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
-	SSradio.remove_object(src, frequency)
 	QDEL_NULL(wires)
 	QDEL_NULL(alarm_manager)
+	GLOB.air_alarms -= src
 	return ..()
 
 /obj/machinery/airalarm/examine(mob/user)
@@ -227,38 +229,34 @@
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
-		for(var/id_tag in my_area.air_vent_info)
-			var/long_name = GLOB.air_vent_names[id_tag]
-			var/list/info = my_area.air_vent_info[id_tag]
-			if(!info || info["frequency"] != frequency)
-				continue
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 			data["vents"] += list(list(
-					"id_tag" = id_tag,
-					"long_name" = sanitize(long_name),
-					"power" = info["power"],
-					"checks" = info["checks"],
-					"excheck" = info["checks"]&1,
-					"incheck" = info["checks"]&2,
-					"direction" = info["direction"],
-					"external" = info["external"],
-					"internal" = info["internal"],
-					"extdefault"= (info["external"] == ONE_ATMOSPHERE),
-					"intdefault"= (info["internal"] == 0)
-				))
+				"ref" = REF(vent),
+				"long_name" = sanitize(vent.name),
+				"power" = vent.on,
+				"checks" = vent.pressure_checks,
+				"excheck" = vent.pressure_checks & ATMOS_EXTERNAL_BOUND,
+				"incheck" = vent.pressure_checks & ATMOS_INTERNAL_BOUND,
+				"direction" = vent.pump_direction,
+				"external" = vent.external_pressure_bound,
+				"internal" = vent.internal_pressure_bound,
+				"extdefault" = (vent.external_pressure_bound == ONE_ATMOSPHERE),
+				"intdefault" = (vent.internal_pressure_bound == 0)
+			))
 		data["scrubbers"] = list()
-		for(var/id_tag in my_area.air_scrub_info)
-			var/long_name = GLOB.air_scrub_names[id_tag]
-			var/list/info = my_area.air_scrub_info[id_tag]
-			if(!info || info["frequency"] != frequency)
-				continue
+		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+			var/list/filter_types = list()
+			for (var/path in GLOB.meta_gas_info)
+				var/list/gas = GLOB.meta_gas_info[path]
+				filter_types += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in scrubber.filter_types)))
 			data["scrubbers"] += list(list(
-					"id_tag" = id_tag,
-					"long_name" = sanitize(long_name),
-					"power" = info["power"],
-					"scrubbing" = info["scrubbing"],
-					"widenet" = info["widenet"],
-					"filter_types" = info["filter_types"]
-				))
+				"ref" = REF(scrubber),
+				"long_name" = sanitize(scrubber.name),
+				"power" = scrubber.on,
+				"scrubbing" = scrubber.scrubbing,
+				"widenet" = scrubber.widenet,
+				"filter_types" = filter_types,
+			))
 		data["mode"] = mode
 		data["modes"] = list()
 		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", "mode" = AALARM_MODE_SCRUBBING, "selected" = mode == AALARM_MODE_SCRUBBING, "danger" = 0))
@@ -309,33 +307,109 @@
 		return
 	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
-	var/device_id = params["id_tag"]
-	switch(action)
-		if("lock")
-			if(usr.has_unlimited_silicon_privilege && !wires.is_cut(WIRE_IDSCAN))
-				locked = !locked
-				. = TRUE
-		if("power", "toggle_filter", "widenet", "scrubbing", "direction")
-			send_signal(device_id, list("[action]" = params["val"]), usr)
-			. = TRUE
-		if("excheck")
-			send_signal(device_id, list("checks" = text2num(params["val"])^1), usr)
-			. = TRUE
-		if("incheck")
-			send_signal(device_id, list("checks" = text2num(params["val"])^2), usr)
-			. = TRUE
-		if("set_external_pressure", "set_internal_pressure")
-			var/target = params["value"]
-			if(!isnull(target))
-				send_signal(device_id, list("[action]" = target), usr)
-				. = TRUE
-		if("reset_external_pressure")
-			send_signal(device_id, list("reset_external_pressure"), usr)
-			. = TRUE
-		if("reset_internal_pressure")
-			send_signal(device_id, list("reset_internal_pressure"), usr)
-			. = TRUE
-		if("threshold")
+
+	var/mob/user = usr
+	var/area/area = get_area(src)
+	ASSERT(!isnull(area))
+
+	var/ref = params["ref"]
+
+	// Possible machines this can refer to
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = isnull(ref) ? null : locate(ref) in area.air_vents
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = isnull(ref) ? null : locate(ref) in area.air_scrubbers
+
+	switch (action)
+		if ("power")
+			if (!isnull(vent))
+				vent.on = !!params["val"]
+				vent.update_appearance(UPDATE_ICON)
+				vent.check_atmos_process()
+			else if (!isnull(scrubber))
+				scrubber.on = !!params["val"]
+				scrubber.update_appearance(UPDATE_ICON)
+				scrubber.check_atmos_process()
+		if ("direction")
+			if (isnull(vent))
+				return TRUE
+
+			var/value = params["val"]
+
+			if (value == ATMOS_DIRECTION_SIPHONING || value == ATMOS_DIRECTION_RELEASING)
+				vent.pump_direction = value
+				vent.update_appearance(UPDATE_ICON)
+		if ("incheck")
+			if (isnull(vent))
+				return TRUE
+
+			var/new_checks = clamp((text2num(params["val"]) || 0) ^ ATMOS_INTERNAL_BOUND, NONE, ATMOS_BOUND_MAX)
+			vent.pressure_checks = new_checks
+			vent.update_appearance(UPDATE_ICON)
+		if ("excheck")
+			if (isnull(vent))
+				return TRUE
+
+			var/new_checks = clamp((text2num(params["val"]) || 0) ^ ATMOS_EXTERNAL_BOUND, NONE, ATMOS_BOUND_MAX)
+			vent.pressure_checks = new_checks
+			vent.update_appearance(UPDATE_ICON)
+		if ("set_internal_pressure")
+			if (isnull(vent))
+				return TRUE
+
+			var/old_pressure = vent.internal_pressure_bound
+			var/new_pressure = clamp(text2num(params["value"]), 0, ATMOS_PUMP_MAX_PRESSURE)
+			vent.internal_pressure_bound = new_pressure
+			if (old_pressure != new_pressure)
+				vent.investigate_log(" internal pressure was set to [new_pressure] by [key_name(user)]", INVESTIGATE_ATMOS)
+		if ("reset_internal_pressure")
+			if (isnull(vent))
+				return TRUE
+
+			if (vent.internal_pressure_bound != 0)
+				vent.internal_pressure_bound = 0
+				vent.investigate_log(" internal pressure was reset by [key_name(user)]", INVESTIGATE_ATMOS)
+		if ("set_external_pressure")
+			if (isnull(vent))
+				return TRUE
+
+			var/old_pressure = vent.external_pressure_bound
+			var/new_pressure = clamp(text2num(params["value"]), 0, ATMOS_PUMP_MAX_PRESSURE)
+
+			if (old_pressure == new_pressure)
+				return TRUE
+
+			vent.external_pressure_bound = new_pressure
+			vent.investigate_log(" external pressure was set to [new_pressure] by [key_name(user)]", INVESTIGATE_ATMOS)
+			vent.update_appearance(UPDATE_ICON)
+		if ("reset_external_pressure")
+			if (isnull(vent))
+				return TRUE
+
+			if (vent.external_pressure_bound == ATMOS_PUMP_MAX_PRESSURE)
+				return TRUE
+
+			vent.external_pressure_bound = ATMOS_PUMP_MAX_PRESSURE
+			vent.investigate_log(" internal pressure was reset by [key_name(user)]", INVESTIGATE_ATMOS)
+			vent.update_appearance(UPDATE_ICON)
+		if ("scrubbing")
+			if (isnull(scrubber))
+				return TRUE
+
+			scrubber.set_scrubbing(!!params["val"], user)
+		if ("widenet")
+			if (isnull(scrubber))
+				return TRUE
+
+			scrubber.set_widenet(!!params["val"])
+		if ("toggle_filter")
+			if (isnull(scrubber))
+				return TRUE
+
+			scrubber.toggle_filters(params["val"])
+		if ("mode")
+			mode = clamp(round(text2num(params["mode"])), AALARM_MODE_SCRUBBING, AALARM_MODE_MAX)
+			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(user)]", INVESTIGATE_ATMOS)
+			apply_mode(user)
+		if ("threshold")
 			var/env = params["env"]
 			if(text2path(env))
 				env = text2path(env)
@@ -354,21 +428,16 @@
 				var/turf/our_turf = get_turf(src)
 				var/datum/gas_mixture/environment = our_turf.return_air()
 				check_air_dangerlevel(our_turf, environment, environment.temperature)
-				. = TRUE
-		if("mode")
-			mode = text2num(params["mode"])
-			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
-			apply_mode(usr)
-			. = TRUE
-		if("alarm")
-			if(alarm_manager.send_alarm(ALARM_ATMOS))
-				post_alert(2)
-			. = TRUE
-		if("reset")
-			if(alarm_manager.clear_alarm(ALARM_ATMOS))
-				post_alert(0)
-			. = TRUE
+		if ("mode")
+			if (alarm_manager.send_alarm(ALARM_ATMOS))
+				danger_level = AIR_ALARM_ALERT_SEVERE
+		if ("reset")
+			if (alarm_manager.clear_alarm(ALARM_ATMOS))
+				danger_level = AIR_ALARM_ALERT_NONE
+
 	update_appearance()
+
+	return TRUE
 
 
 /obj/machinery/airalarm/proc/reset(wire)
@@ -395,23 +464,6 @@
 	else
 		return FALSE
 
-/obj/machinery/airalarm/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_TO_AIRALARM)
-
-/obj/machinery/airalarm/proc/send_signal(target, list/command, atom/user)//sends signal 'command' to 'target'. Returns 0 if no radio connection, 1 otherwise
-	if(!radio_connection)
-		return FALSE
-
-	var/datum/signal/signal = new(command)
-	signal.data["tag"] = target
-	signal.data["sigtype"] = "command"
-	signal.data["user"] = user
-	radio_connection.post_signal(src, signal, RADIO_FROM_AIRALARM)
-
-	return TRUE
-
 /obj/machinery/airalarm/proc/get_mode_name(mode_value)
 	switch(mode_value)
 		if(AALARM_MODE_SCRUBBING)
@@ -433,127 +485,113 @@
 		if(AALARM_MODE_FLOOD)
 			return "Flood"
 
-/obj/machinery/airalarm/proc/apply_mode(atom/signal_source)
-	switch(mode)
-		if(AALARM_MODE_SCRUBBING)
-			for(var/device_id in my_area.air_scrub_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide),
-					"scrubbing" = 1,
-					"widenet" = 0
-				), signal_source)
-			for(var/device_id in my_area.air_vent_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"checks" = 1,
-					"set_external_pressure" = ONE_ATMOSPHERE
-				), signal_source)
-		if(AALARM_MODE_CONTAMINATED)
-			for(var/device_id in my_area.air_scrub_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"set_filters" = list(
-						/datum/gas/carbon_dioxide,
-						/datum/gas/miasma,
-						/datum/gas/plasma,
-						/datum/gas/water_vapor,
-						/datum/gas/hypernoblium,
-						/datum/gas/nitrous_oxide,
-						/datum/gas/nitrium,
-						/datum/gas/tritium,
-						/datum/gas/bz,
-						/datum/gas/pluoxium,
-						/datum/gas/freon,
-						/datum/gas/hydrogen,
-						/datum/gas/healium,
-						/datum/gas/proto_nitrate,
-						/datum/gas/zauker,
-						/datum/gas/helium,
-						/datum/gas/antinoblium,
-						/datum/gas/halon,
-					),
-					"scrubbing" = 1,
-					"widenet" = 1
-				), signal_source)
-			for(var/device_id in my_area.air_vent_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"checks" = 1,
-					"set_external_pressure" = ONE_ATMOSPHERE
-				), signal_source)
-		if(AALARM_MODE_VENTING)
-			for(var/device_id in my_area.air_scrub_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"widenet" = 0,
-					"scrubbing" = 0
-				), signal_source)
-			for(var/device_id in my_area.air_vent_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"checks" = 1,
-					"set_external_pressure" = ONE_ATMOSPHERE*2
-				), signal_source)
-		if(AALARM_MODE_REFILL)
-			for(var/device_id in my_area.air_scrub_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide),
-					"scrubbing" = 1,
-					"widenet" = 0
-				), signal_source)
-			for(var/device_id in my_area.air_vent_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"checks" = 1,
-					"set_external_pressure" = ONE_ATMOSPHERE * 3
-				), signal_source)
-		if(AALARM_MODE_PANIC,
-			AALARM_MODE_REPLACEMENT)
-			for(var/device_id in my_area.air_scrub_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"widenet" = 1,
-					"scrubbing" = 0
-				), signal_source)
-			for(var/device_id in my_area.air_vent_info)
-				send_signal(device_id, list(
-					"power" = 0
-				), signal_source)
-		if(AALARM_MODE_SIPHON)
-			for(var/device_id in my_area.air_scrub_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"widenet" = 0,
-					"scrubbing" = 0
-				), signal_source)
-			for(var/device_id in my_area.air_vent_info)
-				send_signal(device_id, list(
-					"power" = 0
-				), signal_source)
+/obj/machinery/airalarm/proc/apply_mode(atom/source)
+	switch (mode)
+		if (AALARM_MODE_SCRUBBING)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_EXTERNAL_BOUND
+				vent.external_pressure_bound = ONE_ATMOSPHERE
+				vent.update_appearance(UPDATE_ICON)
 
-		if(AALARM_MODE_OFF)
-			for(var/device_id in my_area.air_scrub_info)
-				send_signal(device_id, list(
-					"power" = 0
-				), signal_source)
-			for(var/device_id in my_area.air_vent_info)
-				send_signal(device_id, list(
-					"power" = 0
-				), signal_source)
-		if(AALARM_MODE_FLOOD)
-			for(var/device_id in my_area.air_scrub_info)
-				send_signal(device_id, list(
-					"power" = 0
-				), signal_source)
-			for(var/device_id in my_area.air_vent_info)
-				send_signal(device_id, list(
-					"power" = 1,
-					"checks" = 2,
-					"set_internal_pressure" = 0
-				), signal_source)
-	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, signal_source)
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.filter_types = list(/datum/gas/carbon_dioxide)
+				scrubber.set_scrubbing(TRUE)
+				scrubber.set_widenet(FALSE)
+		if (AALARM_MODE_CONTAMINATED)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_EXTERNAL_BOUND
+				vent.external_pressure_bound = ONE_ATMOSPHERE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.filter_types = list(
+					/datum/gas/carbon_dioxide,
+					/datum/gas/miasma,
+					/datum/gas/plasma,
+					/datum/gas/water_vapor,
+					/datum/gas/hypernoblium,
+					/datum/gas/nitrous_oxide,
+					/datum/gas/nitrium,
+					/datum/gas/tritium,
+					/datum/gas/bz,
+					/datum/gas/pluoxium,
+					/datum/gas/freon,
+					/datum/gas/hydrogen,
+					/datum/gas/healium,
+					/datum/gas/proto_nitrate,
+					/datum/gas/zauker,
+					/datum/gas/helium,
+					/datum/gas/antinoblium,
+					/datum/gas/halon,
+				)
+				scrubber.set_scrubbing(TRUE)
+				scrubber.set_widenet(TRUE)
+		if (AALARM_MODE_VENTING)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_EXTERNAL_BOUND
+				vent.external_pressure_bound = ONE_ATMOSPHERE * 2
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.set_widenet(FALSE)
+				scrubber.set_scrubbing(FALSE)
+		if (AALARM_MODE_REFILL)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_EXTERNAL_BOUND
+				vent.external_pressure_bound = ONE_ATMOSPHERE * 3
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+
+				scrubber.filter_types = list(/datum/gas/carbon_dioxide)
+				scrubber.set_widenet(FALSE)
+				scrubber.set_scrubbing(FALSE)
+		if (AALARM_MODE_PANIC, AALARM_MODE_REPLACEMENT)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = FALSE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.set_widenet(TRUE)
+				scrubber.set_scrubbing(FALSE)
+		if (AALARM_MODE_SIPHON)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = FALSE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = TRUE
+				scrubber.set_widenet(FALSE)
+				scrubber.set_scrubbing(FALSE)
+		if (AALARM_MODE_OFF)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = FALSE
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = FALSE
+				scrubber.update_appearance(UPDATE_ICON)
+		if (AALARM_MODE_FLOOD)
+			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
+				vent.on = TRUE
+				vent.pressure_checks = ATMOS_INTERNAL_BOUND
+				vent.internal_pressure_bound = 0
+				vent.update_appearance(UPDATE_ICON)
+
+			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
+				scrubber.on = FALSE
+				scrubber.update_appearance(UPDATE_ICON)
+
+	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
 
 /obj/machinery/airalarm/update_appearance(updates)
 	. = ..()
@@ -649,26 +687,6 @@
 		mode = AALARM_MODE_SCRUBBING
 		INVOKE_ASYNC(src, PROC_REF(apply_mode), src)
 
-
-/obj/machinery/airalarm/proc/post_alert(alert_level)
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/alert_signal = new(list(
-		"zone" = get_area_name(src, TRUE),
-		"type" = "Atmospheric"
-	))
-	if(alert_level==2)
-		alert_signal.data["alert"] = "severe"
-	else if (alert_level==1)
-		alert_signal.data["alert"] = "minor"
-	else if (alert_level==0)
-		alert_signal.data["alert"] = "clear"
-
-	frequency.post_signal(src, alert_signal, range = -1)
-
 /obj/machinery/airalarm/proc/apply_danger_level()
 
 	var/new_area_danger_level = 0
@@ -682,7 +700,7 @@
 	else
 		did_anything_happen = alarm_manager.clear_alarm(ALARM_ATMOS)
 	if(did_anything_happen) //if something actually changed
-		post_alert(new_area_danger_level)
+		danger_level = new_area_danger_level
 
 	update_appearance()
 
@@ -758,7 +776,7 @@
 						locked = FALSE
 						mode = 1
 						shorted = 0
-						post_alert(0)
+						danger_level = AIR_ALARM_ALERT_NONE
 						buildstage = AIRALARM_BUILD_COMPLETE
 						update_appearance()
 				return
@@ -1007,10 +1025,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 
 	if(port == enable_fire_alarm)
 		if(connected_alarm.alarm_manager.send_alarm(ALARM_ATMOS))
-			INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF(/obj/machinery/airalarm, post_alert), 2)
+			connected_alarm.danger_level = AIR_ALARM_ALERT_SEVERE
 	else
 		if(connected_alarm.alarm_manager.clear_alarm(ALARM_ATMOS))
-			INVOKE_ASYNC(connected_alarm, TYPE_PROC_REF(/obj/machinery/airalarm, post_alert), 0)
+			connected_alarm.danger_level = AIR_ALARM_ALERT_NONE
 
 /obj/item/circuit_component/air_alarm_general/proc/set_mode(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1217,7 +1235,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		parent.add_component(component)
 		RegisterSignal(component, COMSIG_PARENT_QDELETING, PROC_REF(on_duplicate_removed))
 		component.connected_alarm = connected_alarm
-		component.scrubbers.possible_options = connected_alarm.my_area.air_scrub_info
+		component.scrubbers.possible_options = extract_id_tags(connected_alarm.my_area.air_scrubbers)
 		scrubber_duplicates += component
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/on_duplicate_removed(datum/source)
@@ -1265,7 +1283,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	. = ..()
 	if(istype(shell, /obj/machinery/airalarm))
 		connected_alarm = shell
-		scrubbers.possible_options = connected_alarm.my_area.air_scrub_info
+		scrubbers.possible_options = extract_id_tags(connected_alarm.my_area.air_scrubbers)
 
 /obj/item/circuit_component/air_alarm_scrubbers/unregister_usb_parent(atom/movable/shell)
 	connected_alarm = null
@@ -1290,16 +1308,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
 	var/list/valid_filters = list()
 	for(var/info in gas_filter.value)
-		if(gas_id2path(info) == "")
+		var/gas_type = gas_id2path(info)
+		if(!gas_type)
 			continue
-		valid_filters += info
+		valid_filters += gas_type
 
-	connected_alarm.send_signal(scrubber_id, list(
-		"set_filters" = valid_filters,
-	))
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if(isnull(scrubber))
+		return
+
+	scrubber.filter_types = valid_filters
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_scrubber(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1309,16 +1329,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
+	// var/scrubber_id = scrubbers.value
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if (isnull(scrubber))
+		return
 
-	if(port == enable)
-		connected_alarm.send_signal(scrubber_id, list(
-			"power" = TRUE,
-		))
-	else
-		connected_alarm.send_signal(scrubber_id, list(
-			"power" = FALSE,
-		))
+	scrubber.on = (port == enable)
+	scrubber.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_range(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1328,16 +1345,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if(isnull(scrubber))
+		return
 
-	if(port == enable_extended_range)
-		connected_alarm.send_signal(scrubber_id, list(
-			"widenet" = TRUE,
-		))
-	else
-		connected_alarm.send_signal(scrubber_id, list(
-			"widenet" = FALSE,
-		))
+	scrubber.widenet = (port == enable_extended_range)
+	scrubber.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/toggle_siphon(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1347,36 +1360,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if(isnull(scrubber))
+		return
 
-	if(port == enable_siphon)
-		connected_alarm.send_signal(scrubber_id, list(
-			"scrubbing" = FALSE,
-		))
-	else
-		connected_alarm.send_signal(scrubber_id, list(
-			"scrubbing" = TRUE,
-		))
+	scrubber.scrubbing = (port != enable_siphon)
+	scrubber.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/air_alarm_scrubbers/proc/update_data()
 	CIRCUIT_TRIGGER
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = scrubbers.value
-
-	var/list/info = connected_alarm.my_area.air_scrub_info[scrubber_id]
-	if(!info || info["frequency"] != connected_alarm.frequency)
+	var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber = find_by_id_tag(connected_alarm.my_area.air_scrubbers, scrubbers.value)
+	if(isnull(scrubber))
 		return
 
-	enabled.set_value(info["power"])
-	is_siphoning.set_value(!info["scrubbing"])
+	enabled.set_value(scrubber.on)
+	is_siphoning.set_value(scrubber.scrubbing == ATMOS_DIRECTION_SCRUBBING)
 
 	var/list/filtered = list()
 
-	for(var/list/data as anything in info["filter_types"])
-		if(data["enabled"])
-			filtered += data["gas_id"]
+	for(var/datum/gas/gas_type as anything in scrubber.filter_types)
+		filtered += initial(gas_type.id)
 
 	filtering.set_value(filtered)
 
@@ -1449,7 +1455,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 		RegisterSignal(component, COMSIG_PARENT_QDELETING, PROC_REF(on_duplicate_removed))
 		vent_duplicates += component
 		component.connected_alarm = connected_alarm
-		component.vents.possible_options = connected_alarm.my_area.air_vent_info
+		component.vents.possible_options = extract_id_tags(connected_alarm.my_area.air_vents)
 
 /obj/item/circuit_component/air_alarm_vents/proc/on_duplicate_removed(datum/source)
 	SIGNAL_HANDLER
@@ -1504,7 +1510,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	. = ..()
 	if(istype(shell, /obj/machinery/airalarm))
 		connected_alarm = shell
-		vents.possible_options = connected_alarm.my_area.air_vent_info
+		vents.possible_options = extract_id_tags(connected_alarm.my_area.air_vents)
 
 /obj/item/circuit_component/air_alarm_vents/unregister_usb_parent(atom/movable/shell)
 	connected_alarm = null
@@ -1521,19 +1527,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
+		return
 
-	if(port == enable)
-		connected_alarm.send_signal(vent_id, list(
-			"power" = TRUE,
-		))
-	else
-		connected_alarm.send_signal(vent_id, list(
-			"power" = FALSE,
-		))
+	vent.on = (port == enable)
+	vent.update_appearance(UPDATE_ICON)
 
-#define EXT_BOUND 1
-#define INT_BOUND 2
 #define NO_BOUND 3
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_external(datum/port/input/port)
@@ -1544,19 +1544,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
-	var/list/info = connected_alarm.my_area.air_vent_info[vent_id]
-	if(!info || info["frequency"] != connected_alarm.frequency)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
 		return
 
 	if(port == enable_external)
-		connected_alarm.send_signal(vent_id, list(
-			"checks" = (info["checks"] | EXT_BOUND),
-		))
+		vent.pressure_checks |= ATMOS_EXTERNAL_BOUND
 	else
-		connected_alarm.send_signal(vent_id, list(
-			"checks" = (info["checks"] & ~EXT_BOUND),
-		))
+		vent.pressure_checks &= ~ATMOS_EXTERNAL_BOUND
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_internal(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1566,19 +1561,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
-	var/list/info = connected_alarm.my_area.air_vent_info[vent_id]
-	if(!info || info["frequency"] != connected_alarm.frequency)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
 		return
 
 	if(port == enable_internal)
-		connected_alarm.send_signal(vent_id, list(
-			"checks" = (info["checks"] | INT_BOUND),
-		))
+		vent.pressure_checks |= ATMOS_INTERNAL_BOUND
 	else
-		connected_alarm.send_signal(vent_id, list(
-			"checks" = (info["checks"] & ~INT_BOUND),
-		))
+		vent.pressure_checks &= ~ATMOS_INTERNAL_BOUND
 
 /obj/item/circuit_component/air_alarm_vents/proc/set_internal_pressure(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1588,11 +1578,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
+		return
 
-	connected_alarm.send_signal(vent_id, list(
-		"set_internal_pressure" = internal_pressure.value || 0,
-	))
+	vent.internal_pressure_bound = clamp(internal_pressure.value, 0, ATMOS_PUMP_MAX_PRESSURE)
 
 /obj/item/circuit_component/air_alarm_vents/proc/set_external_pressure(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1602,12 +1592,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
+		return
 
-	connected_alarm.send_signal(vent_id, list(
-		"set_external_pressure" = external_pressure.value || 0,
-	))
-
+	vent.internal_pressure_bound = clamp(external_pressure.value, 0, ATMOS_PUMP_MAX_PRESSURE)
 
 /obj/item/circuit_component/air_alarm_vents/proc/toggle_siphon(datum/port/input/port)
 	CIRCUIT_TRIGGER
@@ -1617,38 +1606,44 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/scrubber_id = vents.value
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
+		return
 
-	if(port == enable_siphon)
-		connected_alarm.send_signal(scrubber_id, list(
-			"direction" = FALSE,
-		))
-	else
-		connected_alarm.send_signal(scrubber_id, list(
-			"direction" = TRUE,
-		))
+	vent.pump_direction = (port == enable_siphon) ? ATMOS_DIRECTION_SIPHONING : ATMOS_DIRECTION_RELEASING
 
 /obj/item/circuit_component/air_alarm_vents/proc/update_data()
 	CIRCUIT_TRIGGER
 	if(!connected_alarm || connected_alarm.locked)
 		return
 
-	var/vent_id = vents.value
-
-	var/list/info = connected_alarm.my_area.air_vent_info[vent_id]
-	if(!info || info["frequency"] != connected_alarm.frequency)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent = find_by_id_tag(connected_alarm.my_area.air_vents, vents.value)
+	if(isnull(vent))
 		return
 
-	enabled.set_value(info["power"])
-	is_siphoning.set_value(!info["direction"])
-	internal_on.set_value(!!(info["checks"] & INT_BOUND))
-	current_internal_pressure.set_value(info["internal"])
-	external_on.set_value(!!(info["checks"] & EXT_BOUND))
-	current_external_pressure.set_value(info["external"])
+	enabled.set_value(vent.on)
+	is_siphoning.set_value(vent.pump_direction == ATMOS_DIRECTION_SIPHONING)
+	internal_on.set_value(!!(vent.pressure_checks & ATMOS_INTERNAL_BOUND))
+	current_internal_pressure.set_value(vent.internal_pressure_bound)
+	external_on.set_value(!!(vent.pressure_checks & ATMOS_EXTERNAL_BOUND))
+	current_external_pressure.set_value(vent.external_pressure_bound)
 	update_received.set_value(COMPONENT_SIGNAL)
 
-#undef EXT_BOUND
-#undef INT_BOUND
+/proc/extract_id_tags(list/objects)
+	var/list/tags = list()
+
+	for (var/obj/object as anything in objects)
+		tags += object.id_tag
+
+	return tags
+
+/proc/find_by_id_tag(list/objects, id_tag)
+	for (var/obj/object as anything in objects)
+		if (object.id_tag == id_tag)
+			return object
+
+	return null
+
 #undef NO_BOUND
 
 #undef AALARM_MODE_SCRUBBING
@@ -1661,3 +1656,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 24)
 #undef AALARM_MODE_CONTAMINATED
 #undef AALARM_MODE_REFILL
 #undef AALARM_REPORT_TIMEOUT
+#undef AALARM_MODE_MAX

@@ -20,6 +20,8 @@ GLOBAL_LIST(chemical_reactions_list) //list of all /datum/chemical_reaction datu
 GLOBAL_LIST(chemical_reactions_list_reactant_index) //list of all /datum/chemical_reaction datums. Used during chemical reactions. Indexed by REACTANT types
 GLOBAL_LIST(chemical_reactions_list_product_index) //list of all /datum/chemical_reaction datums. Used for the reaction lookup UI. Indexed by PRODUCT type
 GLOBAL_LIST_INIT(chemical_reagents_list, init_chemical_reagent_list()) //list of all /datum/reagent datums indexed by reagent id. Used by chemistry stuff
+/// names of reagents used by plumbing UI.
+GLOBAL_LIST_INIT(chemical_name_list, init_chemical_name_list())
 GLOBAL_LIST(chemical_reactions_results_lookup_list) //List of all reactions with their associated product and result ids. Used for reaction lookups
 GLOBAL_LIST(fake_reagent_blacklist) //List of all reagents that are parent types used to define a bunch of children - but aren't used themselves as anything.
 GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
@@ -50,8 +52,8 @@ GLOBAL_LIST_EMPTY(ai_status_displays)
 GLOBAL_LIST_EMPTY(mob_spawners)     // All mob_spawn objects
 GLOBAL_LIST_EMPTY(alert_consoles) // Station alert consoles, /obj/machinery/computer/station_alert
 
-GLOBAL_LIST_EMPTY(air_scrub_names) // Name list of all air scrubbers
-GLOBAL_LIST_EMPTY(air_vent_names) // Name list of all air vents
-
 GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas) // List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
 GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas) // List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.
+
+///List of all types of '/obj/machinery/mining_ltsrbt'
+GLOBAL_LIST_EMPTY(mining_ltsrbt)

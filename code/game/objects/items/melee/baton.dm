@@ -36,6 +36,8 @@
 	var/stun_animation = TRUE
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
+	/// Boolean on whether people with chunky fingers can use this baton.
+	var/chunky_finger_usable = FALSE
 
 	/// The context to show when the baton is active and targetting a living thing
 	var/context_living_target_active = "Stun"
@@ -120,6 +122,12 @@
 	if(clumsy_check(user, target))
 		return BATON_ATTACK_DONE
 
+	if(!chunky_finger_usable && ishuman(user))
+		var/mob/living/carbon/human/potential_chunky_finger_human = user
+		if(potential_chunky_finger_human.check_chunky_fingers() && user.is_holding(src))
+			balloon_alert(potential_chunky_finger_human, "fingers are too big!")
+			return BATON_ATTACK_DONE
+
 	if(!active || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return BATON_DO_NORMAL_ATTACK
 
@@ -188,7 +196,7 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
-		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+		target.apply_damage(stamina_damage, STAMINA)
 		if(!trait_check)
 			target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override))
 		additional_effects_non_cyborg(target, user)
@@ -256,7 +264,7 @@
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
 		user.Knockdown(clumsy_knockdown_time)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
+		user.apply_damage(stamina_damage, STAMINA)
 		additional_effects_non_cyborg(user, user) // user is the target here
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)

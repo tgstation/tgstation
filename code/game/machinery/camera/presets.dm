@@ -66,6 +66,39 @@
 
 	c_tag = "[format_text(camera_area.name)] #[number]"
 
+///The internal camera object for exosuits, applied by the camera upgrade
+/obj/machinery/camera/exosuit
+	c_tag = "Exosuit: unspecified"
+	desc = "This camera belongs in a mecha. If you see this, tell a coder!"
+	network = list("ss13", "rd")
+	short_range = 1 //used when the camera gets EMPd
+	///Number of the camera and thus the name of the mech
+	var/number = 0
+	///Currently used name of the mech
+	var/current_name = null
+	///Whether the camera was recently affected by an EMP and is thus unfocused, shortening view_range
+	var/is_emp_scrambled = FALSE
+
+///Restore the camera's view default view range after an EMP
+/obj/machinery/camera/exosuit/proc/emp_refocus(obj/vehicle/sealed/mecha/our_chassis)
+	is_emp_scrambled = FALSE
+	setViewRange(initial(view_range))
+	our_chassis.diag_hud_set_camera()
+
+///Updates the c_tag of the mech camera while preventing duplicate c_tag usage due to having mechs with the same name
+/obj/machinery/camera/exosuit/proc/update_c_tag(obj/vehicle/sealed/mecha/mech)
+	//List of all used mech names
+	var/static/list/existing_mech_names = list()
+	//Name of the mech passed with this proc. We use format_text to wipe away stuff like `\initial` to prevent c_tag from erroring out
+	var/mech_name = format_text(mech.name)
+
+	if(current_name && current_name != mech_name) //decrease by 1 to preserve correct naming numeration
+		existing_mech_names[current_name] -= 1
+	number = existing_mech_names[mech_name] + 1
+	existing_mech_names[mech_name] = number
+
+	c_tag = "Exosuit: [mech_name] #[number]"
+	current_name = mech_name
 
 // UPGRADE PROCS
 

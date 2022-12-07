@@ -164,7 +164,7 @@
 			var/obj/item/circuit_component/vendor_component/vendor_component = new(parent)
 			parent.add_component(vendor_component, user)
 			vendor_components += vendor_component
-			RegisterSignal(vendor_component, list(
+			RegisterSignals(vendor_component, list(
 				COMSIG_PARENT_QDELETING,
 				COMSIG_CIRCUIT_COMPONENT_REMOVED,
 			), PROC_REF(remove_vendor_component))

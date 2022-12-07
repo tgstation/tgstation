@@ -17,7 +17,7 @@
 	allowed += list(
 		/obj/item/flashlight,
 		/obj/item/lighter,
-		/obj/item/modular_computer/tablet/pda,
+		/obj/item/modular_computer/pda,
 		/obj/item/radio,
 		/obj/item/storage/bag/books,
 		/obj/item/storage/fancy/cigarettes,

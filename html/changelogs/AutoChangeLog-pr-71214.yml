@@ -1,4 +1,0 @@
-author: "Cheshify"
-delete-after: True
-changes:
-  - bugfix: "A few tiles on icebox's lavaland ruin aren't active turfs anymore."

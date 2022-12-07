@@ -54,6 +54,28 @@
 	emote_hear = list("bleats.")
 	emote_see = list("shakes her head.", "stares into the distance.")
 
+/datum/ai_planning_subtree/random_speech/rabbit
+	speech_chance = 10
+	speak = list("Mrrp.", "CHIRP!", "Mrrp?") // rabbits make some weird noises dude i don't know what to tell you
+	emote_hear = list("hops.")
+	emote_see = list("hops around.", "bounces up and down.")
+
+/// For the easter subvariant of rabbits, these ones actually speak catchphrases.
+/datum/ai_planning_subtree/random_speech/rabbit/easter
+	speak = list(
+		"Hop into Easter!",
+		"Come get your eggs!",
+		"Prizes for everyone!",
+	)
+
+/// These ones have a space mask on, so their catchphrases are muffled.
+/datum/ai_planning_subtree/random_speech/rabbit/easter/space
+	speak = list(
+		"Hmph mmph mmmph!",
+		"Mmphe mmphe mmphe!",
+		"Hmm mmm mmm!",
+	)
+
 /datum/ai_planning_subtree/random_speech/cow
 	speech_chance = 1
 	speak = list("moo?","moo","MOOOOOO")
@@ -67,3 +89,16 @@
 /datum/ai_planning_subtree/random_speech/cow/wisdom/New()
 	. = ..()
 	speak = GLOB.wisdoms //Done here so it's setup properly
+
+/datum/ai_planning_subtree/random_speech/dog
+	speech_chance = 1
+
+/datum/ai_planning_subtree/random_speech/dog/SelectBehaviors(datum/ai_controller/controller, delta_time)
+	if(!isdog(controller.pawn))
+		return
+
+	// Stay in sync with dog fashion.
+	var/mob/living/basic/pet/dog/dog_pawn = controller.pawn
+	dog_pawn.update_dog_speech(src)
+
+	return ..()

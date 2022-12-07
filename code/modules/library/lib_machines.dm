@@ -28,6 +28,8 @@
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
+	// This fixes consoles to be ON the tables, rather than their keyboards floating a bit
+	pixel_y = 8
 	///The current title we're searching for
 	var/title = ""
 	///The category we're searching for
@@ -245,7 +247,7 @@
 	var/checkout
 	var/duedate
 
-#define PRINTER_COOLDOWN 6 SECONDS
+#define PRINTER_COOLDOWN (6 SECONDS)
 #define LIBRARY_NEWSFEED "Nanotrasen Book Club"
 //The different states the computer can be in, only send the info we need yeah?
 #define LIBRARY_INVENTORY 1

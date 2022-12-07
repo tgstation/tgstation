@@ -254,7 +254,7 @@
 	. = ..()
 	if(conceal_presence)
 		// We don't want corpse PDAs to show up in the messenger list.
-		var/obj/item/modular_computer/tablet/pda/messenger = locate() in spawned_human
+		var/obj/item/modular_computer/pda/messenger = locate() in spawned_human
 		if(messenger)
 			var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
 			if(message_app)

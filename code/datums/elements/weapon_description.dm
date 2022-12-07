@@ -7,7 +7,7 @@
  */
 /datum/element/weapon_description
 	element_flags = ELEMENT_BESPOKE
-	id_arg_index = 2
+	argument_hash_start_idx = 2
 
 	// Additional proc to be run for specific object types
 	var/attached_proc

@@ -14,7 +14,7 @@
 
 	// Gotta create ourselves a rune and a user to start.
 	var/obj/effect/heretic_rune/big/our_rune = allocate(/obj/effect/heretic_rune/big)
-	var/mob/living/carbon/human/our_heretic = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/our_heretic = allocate(/mob/living/carbon/human/consistent)
 	// -- Note for the human dummy we create:
 	// The user does not actually NEED a heretic antag datum for the type of rituals we're testing,
 	// so we don't give them one here. The heretic antag datum has side effects when applied,

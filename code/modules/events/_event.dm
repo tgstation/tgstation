@@ -146,6 +146,7 @@ Runs the event
 /// Any special things admins can do while triggering this event to "improve" it.
 /// Return [ADMIN_CANCEL_EVENT] to stop the event from actually happening after all
 /datum/round_event_control/proc/admin_setup(mob/admin)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /datum/round_event //NOTE: Times are measured in master controller ticks!

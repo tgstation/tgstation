@@ -229,7 +229,7 @@
 
 /// Updates the blood displayed on parent
 /datum/forensics/proc/check_blood()
-	if(!isitem(parent.resolve()))
+	if(!parent || !isitem(parent.resolve()))
 		return
 	if(!length(blood_DNA))
 		return
