@@ -452,6 +452,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	icon_state = "lazy_pivot" // todo: icons for all this shit
 	var/key
 	var/map_path
+	var/map_width
+	var/map_height
 
 /obj/effect/landmark/lazy_template_pivot/Initialize(mapload)
 	LAZYADDASSOCLIST(GLOB.lazy_template_pivots, key, src)
@@ -473,27 +475,26 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 
 	var/datum/map_template/loading = new(path = map_path, cache = TRUE)
 
-	// ensure that what we're loading isn't larger than the allocation
-	var/list/affected = loading.get_affected_turfs(my_turf)
-	for(var/turf/turf as anything in affected)
-		var/area/turf_area = get_area(turf)
-		if(turf_area.type != /area/misc/lazy_pivot_allocation)
-			CRASH("Attempted to load a lazy template pivot larger than the allocation for the pivot")
+	// ensure that what we're loading isn't larger than whats expected
+	if(map_width != loading.width || map_height != loading.height)
+		CRASH("Pivot and template do not coincide with their boundaries.")
 
 	if(!loading.load(my_turf))
 		stack_trace("Failed to lazy load!")
-	// we did our job, so now we bid aedieu
-	qdel(src)
 
 /obj/effect/landmark/lazy_template_pivot/nukie_base
 	icon_state = "nukie"
 	key = LAZY_TEMPLATE_KEY_NUKIEBASE
 	map_path = "_maps/templates/lazy_templates/nukie_base.dmm"
+	map_width = 89
+	map_height = 100
 
 /obj/effect/landmark/lazy_template_pivot/wizard_dem
 	icon_state = "wizard_den"
 	key = LAZY_TEMPLATE_KEY_WIZARDDEN
 	map_path = "_maps/templates/lazy_templates/wizard_den.dmm"
+	map_width = 32
+	map_height = 44
 
 /// Marks the bottom left of the testing zone.
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.

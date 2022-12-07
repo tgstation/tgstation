@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
 	/client/proc/check_for_obstructed_atmospherics,
+	/client/proc/force_load_lazy_template,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -483,3 +484,25 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		var/datum/browser/popup = new(usr, "atmospherics_obstructions", "Atmospherics Obstructions", 900, 750)
 		popup.set_content(results.Join())
 		popup.open()
+
+/client/proc/force_load_lazy_template()
+	set name = "Force Load Lazy Template"
+	set category = "Mapping"
+	if(!check_rights(R_SPAWN))
+		return
+
+	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", LAZY_TEMPLATE_KEY_LIST_ALL)
+	if(!choice)
+		return
+
+	if(!length(GLOB.lazy_template_pivots))
+		to_chat(usr, span_warning("No pivot found with that key! This is probably an error."))
+		return
+
+	if(LAZYACCESS(SSmapping.loaded_lazy_templates, choice))
+		to_chat(usr, span_nicegreen("That template has already been loaded!"))
+	else
+		message_admins("[key_name(usr)] has loaded the lazy template '[choice]'")
+		SSmapping.lazy_load_template(choice)
+
+	admin_follow(GLOB.lazy_template_pivots[key][1])
