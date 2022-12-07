@@ -370,7 +370,6 @@
 	required_drink_type = /datum/reagent/consumable/coffee
 	name = "glass of coffee"
 	desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
-	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "glass_brown"
 
 /datum/reagent/consumable/coffee/overdose_process(mob/living/M, delta_time, times_fired)
@@ -401,7 +400,6 @@
 	required_drink_type = /datum/reagent/consumable/tea
 	name = "glass of tea"
 	desc = "Drinking it from here would not seem right."
-	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "teaglass"
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -428,6 +426,7 @@
 	required_drink_type = /datum/reagent/consumable/lemonade
 	name = "pitcher of lemonade"
 	desc = "This drink leaves you feeling nostalgic for some reason."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "lemonpitcher"
 
 /datum/reagent/consumable/tea/arnold_palmer
@@ -443,6 +442,7 @@
 	required_drink_type = /datum/reagent/consumable/tea/arnold_palmer
 	name = "Arnold Palmer"
 	desc = "You feel like taking a few golf swings after a few swigs of this."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "arnold_palmer"
 
 /datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -512,6 +512,7 @@
 	required_drink_type = /datum/reagent/consumable/icetea
 	name = "iced tea"
 	desc = "All natural, antioxidant-rich flavour sensation."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "icedteaglass"
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -574,6 +575,7 @@
 	required_drink_type = /datum/reagent/consumable/nuka_cola
 	name = "glass of Nuka Cola"
 	desc = "Don't cry, Don't raise your eye, It's only nuclear wasteland."
+	icon = 'icons/obj/drinks/soda.dmi'
 	icon_state = "nuka_colaglass"
 
 /datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
@@ -896,6 +898,7 @@
 	required_drink_type = /datum/reagent/consumable/soy_latte
 	name = "soy latte"
 	desc = "A nice and refreshing beverage while you're reading."
+	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "soy_latte"
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -922,6 +925,7 @@
 	required_drink_type = /datum/reagent/consumable/cafe_latte
 	name = "cafe latte"
 	desc = "A nice, strong and refreshing beverage while you're reading."
+	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "cafe_latte"
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -947,6 +951,7 @@
 	required_drink_type = /datum/reagent/consumable/doctor_delight
 	name = "Doctor's Delight"
 	desc = "The space doctor's favorite. Guaranteed to restore bodily injury; side effects include cravings and hunger."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "doctorsdelightglass"
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -974,6 +979,7 @@
 	required_drink_type = /datum/reagent/consumable/cinderella
 	name = "Cinderella"
 	desc = "There is not a single drop of alcohol in this thing."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "cinderella"
 
 /datum/reagent/consumable/cinderella/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -994,6 +1000,7 @@
 	required_drink_type = /datum/reagent/consumable/cherryshake
 	name = "cherry shake"
 	desc = "A cherry flavored milkshake."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "cherryshake"
 
 /datum/reagent/consumable/bluecherryshake
@@ -1009,6 +1016,7 @@
 	required_drink_type = /datum/reagent/consumable/bluecherryshake
 	name = "blue cherry shake"
 	desc = "An exotic blue milkshake."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "bluecherryshake"
 
 /datum/reagent/consumable/vanillashake
@@ -1025,6 +1033,7 @@
 	required_drink_type = /datum/reagent/consumable/vanillashake
 	name = "vanilla shake"
 	desc = "A vanilla flavored milkshake."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "vanillashake"
 
 /datum/reagent/consumable/caramelshake
@@ -1041,6 +1050,7 @@
 	required_drink_type = /datum/reagent/consumable/caramelshake
 	name = "caramel shake"
 	desc = "A caramel flavored milkshake."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "caramelshake"
 
 /datum/reagent/consumable/choccyshake
@@ -1057,6 +1067,7 @@
 	required_drink_type = /datum/reagent/consumable/choccyshake
 	name = "chocolate shake"
 	desc = "A chocolate flavored milkshake."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "choccyshake"
 
 /datum/reagent/consumable/strawberryshake
@@ -1073,6 +1084,7 @@
 	required_drink_type = /datum/reagent/consumable/strawberryshake
 	name = "strawberry shake"
 	desc = "A strawberry flavored milkshake."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "strawberryshake"
 
 /datum/reagent/consumable/bananashake
@@ -1089,6 +1101,7 @@
 	required_drink_type = /datum/reagent/consumable/bananashake
 	name = "banana shake"
 	desc = "A banana flavored milkshake."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "bananashake"
 
 /datum/reagent/consumable/pumpkin_latte
@@ -1104,6 +1117,7 @@
 	required_drink_type = /datum/reagent/consumable/pumpkin_latte
 	name = "pumpkin latte"
 	desc = "A mix of coffee and pumpkin juice."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "pumpkin_latte"
 
 /datum/reagent/consumable/gibbfloats
@@ -1119,6 +1133,7 @@
 	required_drink_type = /datum/reagent/consumable/gibbfloats
 	name = "Gibbfloat"
 	desc = "Dr. Gibb with ice cream on top."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "gibbfloats"
 
 /datum/reagent/consumable/pumpkinjuice
@@ -1147,6 +1162,7 @@
 	required_drink_type = /datum/reagent/consumable/triple_citrus
 	name = "glass of triple citrus"
 	desc = "A mixture of citrus juices. Tangy, yet smooth."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "triplecitrus" //needs own sprite mine are trash //your sprite is great tho
 
 /datum/reagent/consumable/grape_soda
@@ -1215,6 +1231,7 @@
 	required_drink_type = /datum/reagent/consumable/italian_coco
 	name = "glass of italian coco"
 	desc = "A spin on a winter favourite, made to please."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "italiancoco"
 
 /datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1303,6 +1320,7 @@
 	required_drink_type = /datum/reagent/consumable/cream_soda
 	name = "Cream Soda"
 	desc = "A classic space-American vanilla flavored soft drink."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "cream_soda"
 
 /datum/reagent/consumable/cream_soda/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1339,6 +1357,7 @@
 	required_drink_type = /datum/reagent/consumable/shirley_temple
 	name = "Shirley Temple"
 	desc = "Ginger ale with processed grenadine. "
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "shirleytemple"
 
 /datum/reagent/consumable/shirley_temple/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1358,6 +1377,7 @@
 	required_drink_type = /datum/reagent/consumable/red_queen
 	name = "Red Queen"
 	desc = "DRINK ME."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "red_queen"
 
 /datum/reagent/consumable/red_queen/on_mob_life(mob/living/carbon/H, delta_time, times_fired)
@@ -1436,6 +1456,7 @@
 	required_drink_type = /datum/reagent/consumable/agua_fresca
 	name = "Agua Fresca"
 	desc = "90% water, but still refreshing."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "aguafresca"
 
 /datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1505,6 +1526,7 @@
 	required_drink_type = /datum/reagent/consumable/strawberry_banana
 	name = "strawberry banana smoothie"
 	desc = "A classic drink which countless souls have bonded over..."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "strawberry_banana"
 
 /datum/reagent/consumable/berry_blast
@@ -1519,6 +1541,7 @@
 	required_drink_type = /datum/reagent/consumable/berry_blast
 	name = "berry blast smoothie"
 	desc = "A classic drink, freshly made with hand picked berries. Or, maybe not."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "berry_blast"
 
 /datum/reagent/consumable/funky_monkey
@@ -1533,6 +1556,7 @@
 	required_drink_type = /datum/reagent/consumable/funky_monkey
 	name = "funky monkey smoothie"
 	desc = "A classic drink made with chocolate and banana. No monkeys were harmed, officially."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "funky_monkey"
 
 /datum/reagent/consumable/green_giant
@@ -1547,6 +1571,7 @@
 	required_drink_type = /datum/reagent/consumable/green_giant
 	name = "green giant smoothie"
 	desc = "A classic drink, if you enjoy juiced wheatgrass and chia seeds."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "green_giant"
 
 /datum/reagent/consumable/melon_baller
@@ -1561,6 +1586,7 @@
 	required_drink_type = /datum/reagent/consumable/melon_baller
 	name = "melon baller smoothie"
 	desc = "A wonderfully fresh melon smoothie. Guaranteed to brighten your day."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "melon_baller"
 
 /datum/reagent/consumable/vanilla_dream
@@ -1575,6 +1601,7 @@
 	required_drink_type = /datum/reagent/consumable/vanilla_dream
 	name = "vanilla dream smoothie"
 	desc = "A classic drink made with vanilla and fresh cream."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "vanilla_dream"
 
 /datum/reagent/consumable/cucumberjuice
@@ -1602,8 +1629,8 @@
 	required_drink_type = /datum/reagent/consumable/cucumberlemonade
 	name = "cucumber lemonade"
 	desc = "The smell of cucumber from lemonade, I'm sure I won't get poisoned?."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "cucumber_lemonade"
-
 
 /datum/reagent/consumable/cucumberlemonade/on_mob_life(mob/living/carbon/doll, delta_time, times_fired)
 	doll.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, doll.get_body_temp_normal())

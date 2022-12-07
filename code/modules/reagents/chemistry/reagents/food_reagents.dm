@@ -929,6 +929,7 @@
 	required_drink_type = /datum/reagent/consumable/chocolatepudding
 	name = "chocolate pudding"
 	desc = "Tasty."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "chocolatepudding"
 
 /datum/reagent/consumable/vanillapudding
@@ -944,6 +945,7 @@
 	required_drink_type = /datum/reagent/consumable/vanillapudding
 	name = "vanilla pudding"
 	desc = "Tasty."
+	icon = 'icons/obj/drinks/shakes.dmi'
 	icon_state = "vanillapudding"
 
 /datum/reagent/consumable/laughsyrup
