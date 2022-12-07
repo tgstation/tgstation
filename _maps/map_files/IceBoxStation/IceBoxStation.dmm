@@ -755,7 +755,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/cup/glass/britcup{
+/obj/item/reagent_containers/cup/glass/mug/britcup{
 	pixel_x = 8;
 	pixel_y = 8
 	},

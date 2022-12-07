@@ -980,6 +980,22 @@
 	M.adjust_disgust(-5 * REM * delta_time)
 	return ..()
 
+/datum/reagent/consumable/cherryshake
+	name = "Cherry Shake"
+	description = "A cherry flavored milkshake."
+	color = "#FFB6C1"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	taste_description = "creamy tart cherry"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
+/datum/glass_style/drinking_glass/cherryshake
+	required_drink_type = /datum/reagent/consumable/cherryshake
+	name = "cherry shake"
+	desc = "A cherry flavored milkshake."
+	icon_state = "cherryshake"
+
 /datum/reagent/consumable/bluecherryshake
 	name = "Blue Cherry Shake"
 	description = "An exotic milkshake."
@@ -1157,7 +1173,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/glass_style/juicebox/chocolate_milk
-	required_drink_type = /datum/reagent/consumable/chocolate_milk
+	required_drink_type = /datum/reagent/consumable/milk/chocolate_milk
 	name = "carton of chocolate milk"
 	desc = "Milk for cool kids!"
 	icon_state = "chocolatebox"
@@ -1447,6 +1463,21 @@
 		M.adjustOxyLoss(-0.5 * REM * delta_time, 0)
 	..()
 	. = TRUE
+
+//Moth Stuff
+/datum/reagent/consumable/toechtauese_juice
+	name = "Töchtaüse Juice"
+	description = "An unpleasant juice made from töchtaüse berries. Best made into a syrup, unless you enjoy pain."
+	color = "#554862"
+	nutriment_factor = 0
+	taste_description = "fiery itchy pain"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/toechtauese_juice
+	required_drink_type = /datum/reagent/consumable/toechtauese_juice
+	name = "glass of töchtaüse juice"
+	desc = "Raw, unadulterated töchtaüse juice. One swig will fill you with regrets."
+	icon_state = "toechtauese_syrup"
 
 /datum/reagent/consumable/toechtauese_syrup
 	name = "Töchtaüse Syrup"

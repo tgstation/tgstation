@@ -9466,7 +9466,7 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/item/reagent_containers/cup/glass/britcup{
+/obj/item/reagent_containers/cup/glass/mug/britcup{
 	pixel_y = 2
 	},
 /turf/open/floor/iron,
@@ -39216,7 +39216,7 @@
 /area/station/commons/fitness/recreation)
 "nUr" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/glass/britcup{
+/obj/item/reagent_containers/cup/glass/mug/britcup{
 	pixel_x = -6;
 	pixel_y = 11
 	},

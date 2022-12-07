@@ -27019,7 +27019,7 @@
 /obj/item/pen{
 	pixel_x = -7
 	},
-/obj/item/reagent_containers/cup/glass/britcup{
+/obj/item/reagent_containers/cup/glass/mug/britcup{
 	pixel_x = 6;
 	pixel_y = -4
 	},

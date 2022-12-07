@@ -1564,6 +1564,21 @@
 	desc = "A drink from Nanotrasen. Made from live aliens."
 	icon_state = "acidspitglass"
 
+/datum/reagent/consumable/ethanol/amasec
+	name = "Amasec"
+	description = "Official drink of the Nanotrasen Gun-Club!"
+	color = "#e0e058" // rgb: 224,224,88
+	boozepwr = 35
+	quality = DRINK_GOOD
+	taste_description = "dark and metallic"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/glass_style/drinking_glass/amasec
+	required_drink_type = /datum/reagent/consumable/ethanol/amasec
+	name = "Amasec"
+	desc = "Always handy before COMBAT!!!"
+	icon_state = "amasecglass"
+
 /datum/reagent/consumable/ethanol/changelingsting
 	name = "Changeling Sting"
 	description = "You take a tiny sip and feel a burning sensation..."
@@ -2000,7 +2015,7 @@
 	icon_state = "glass_yellow"
 
 /datum/glass_style/juicebox/eggnog
-	required_drink_type = /datum/reagent/consumable/eggnog
+	required_drink_type = /datum/reagent/consumable/ethanol/eggnog
 	name = "carton of eggnog"
 	desc = "Tasty grape juice in a fun little container. Non-alcoholic!"
 	icon_state = "grapebox"
