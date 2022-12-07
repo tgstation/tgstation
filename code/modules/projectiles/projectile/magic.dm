@@ -536,7 +536,7 @@
 	nodamage = FALSE
 
 	/// Heavy explosion range of the fireball
-	var/exp_heavy = 0
+	var/exp_heavy = 1
 	/// Light explosion range of the fireball
 	var/exp_light = 2
 	/// Fire radius of the fireball
