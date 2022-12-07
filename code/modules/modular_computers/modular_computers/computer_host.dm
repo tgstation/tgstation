@@ -81,6 +81,7 @@
 	// Modular computers can run on various devices. Each DEVICE (Laptop, Console & Tablet)
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
+	var/atom_icon = null
 
 	///The full name of the stored ID card's identity. These vars should probably be on the PDA.
 	var/saved_identification
@@ -111,6 +112,8 @@
 		return
 
 	physical = holder
+
+	atom_icon = physical.icon
 
 	if(disk_type)
 		inserted_disk = new disk_type(physical)
@@ -363,6 +366,8 @@
 			CRASH("Attempted to insert cell in occupied slot!")
 		internal_cell = arrived
 
+	relay_appearance_update(UPDATE_ICON)
+
 /datum/modular_computer_host/proc/do_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(internal_cell == gone)
@@ -378,6 +383,8 @@
 		inserted_pai = null
 	if(inserted_disk == gone)
 		inserted_disk = null
+
+	relay_appearance_update(UPDATE_ICON)
 
 /datum/modular_computer_host/proc/do_examine(datum/source, mob/user, list/examines)
 	SIGNAL_HANDLER
@@ -451,3 +458,8 @@
 	if(internal_cell)
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, put_in_hands), internal_cell)
 		return
+
+/datum/modular_computer_host/proc/do_update_overlays(atom/source, list/new_overlays)
+	SIGNAL_HANDLER
+	if(powered_on && active_program)
+		. += mutable_appearance(atom_icon, active_program.program_icon_state)
