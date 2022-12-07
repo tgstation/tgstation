@@ -39,7 +39,7 @@
 
 	brute_damage_desc = ROBOTIC_BRUTE_EXAMINE_TEXT
 	burn_damage_desc = ROBOTIC_BURN_EXAMINE_TEXT
-	disabled_at_max_damage = TRUE
+	disabling_threshold_percentage = TRUE
 
 /obj/item/bodypart/arm/right/robot
 	name = "cyborg right arm"
@@ -59,7 +59,7 @@
 
 	brute_reduction = 5
 	burn_reduction = 4
-	disabled_at_max_damage = TRUE
+	disabling_threshold_percentage = TRUE
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -88,7 +88,7 @@
 
 	brute_reduction = 5
 	burn_reduction = 4
-	disabled_at_max_damage = TRUE
+	disabling_threshold_percentage = TRUE
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -117,7 +117,7 @@
 
 	brute_reduction = 5
 	burn_reduction = 4
-	disabled_at_max_damage = TRUE
+	disabling_threshold_percentage = TRUE
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG

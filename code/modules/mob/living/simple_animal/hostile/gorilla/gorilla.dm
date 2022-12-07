@@ -57,7 +57,7 @@
 	for(var/obj/item/bodypart/part as anything in carbon_target.bodyparts)
 		if(part.body_part == HEAD || part.body_part == CHEST)
 			continue
-		if(part.mutilation_allowed)
+		if(part.dismemberable)
 			continue
 		parts += part
 	return parts

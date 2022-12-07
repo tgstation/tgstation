@@ -441,7 +441,7 @@
 		for(var/X in C.bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(BP.body_part != HEAD && BP.body_part != CHEST)
-				if(BP.mutilation_allowed)
+				if(BP.dismemberable)
 					parts += BP
 				else
 					undismembermerable_limbs++

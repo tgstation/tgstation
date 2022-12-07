@@ -58,8 +58,8 @@
 	// Limb disabling variables
 	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	var/bodypart_disabled = FALSE
-	///Determines if a limb is disabled from reaching maximum damage on that limb. TRUE means that it can be, FALSE means that it needs to be disabled in some other way (such as wounds)
-	var/disabled_at_max_damage = FALSE
+	///The percentage of damage needed to disable a limb. Any value between 0 and 1.1 enables limb disabling via damage. Applies to both physical and stamina damage.
+	var/disabling_threshold_percentage = 0
 	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
 	var/can_be_disabled = FALSE //Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
 
@@ -83,14 +83,13 @@
 	///The maximum brute OR burn damage a bodypart can take. Once we hit this cap, no more damage of either type!
 	var/max_damage = 0
 
-	// Limb cremation tracking variable
 	///Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
 
 	// Damage reduction variables for damage handled on the limb level. Handled after worn armor.
-	///Amount removed from brute damage inflicted on the limb.
+	///Amount subtracted from brute damage inflicted on the limb.
 	var/brute_reduction = 0
-	///Amount removed from brute damage inflicted on the limb.
+	///Amount subtracted from brute damage inflicted on the limb.
 	var/burn_reduction = 0
 
 	//Coloring and proper item icon update
@@ -102,7 +101,7 @@
 	var/variable_color = ""
 
 	///whether the limb can be mutilated, including dismemberment for appendages and heads, and disembowelment for chests. TRUE means it can be subjected to these effects.
-	var/mutilation_allowed = TRUE
+	var/dismemberable = TRUE
 
 	var/px_x = 0
 	var/px_y = 0
@@ -589,7 +588,7 @@
 	var/total_damage = max(brute_dam + burn_dam, stamina_dam)
 
 	// this block of checks is for limbs that can be disabled, but not through pure damage (AKA limbs that suffer wounds, human/monkey parts and such)
-	if(!disabled_at_max_damage)
+	if(!disabling_threshold_percentage)
 		if(total_damage < max_damage)
 			last_maxed = FALSE
 		else
@@ -600,7 +599,7 @@
 		return
 
 	// we're now dealing solely with limbs that can be disabled through pure damage, AKA robot parts
-	if(total_damage >= max_damage * disabled_at_max_damage)
+	if(total_damage >= max_damage * disabling_threshold_percentage)
 		if(!last_maxed)
 			if(owner.stat < UNCONSCIOUS)
 				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")
