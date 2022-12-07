@@ -118,6 +118,7 @@ GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 GLOBAL_LIST_EMPTY(bar_areas)
+/// Record map of LT_KEY -> Pivots[]
 GLOBAL_LIST_EMPTY(lazy_template_pivots)
 
 /// Away missions
