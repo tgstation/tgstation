@@ -1092,6 +1092,7 @@
 /datum/reagent/consumable/ethanol/moonshine
 	name = "Moonshine"
 	description = "You've really hit rock bottom now... your liver packed its bags and left last night."
+	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha) (like water)
 	boozepwr = 95
 	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1533,6 +1534,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet 'n creamy"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	//somewhat annoying mix
 	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/glass_style/drinking_glass/aloe
@@ -1621,10 +1623,8 @@
 	icon_state = "changelingsting"
 
 /datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
-	if(target.mind) //Changeling Sting assists in the recharging of changeling chemicals.
-		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			changeling.adjust_chemicals(metabolization_rate * REM * delta_time)
+	var/datum/antagonist/changeling/changeling = target.mind?.has_antag_datum(/datum/antagonist/changeling)
+	changeling?.adjust_chemicals(metabolization_rate * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irishcarbomb
@@ -1779,6 +1779,7 @@
 /datum/reagent/consumable/ethanol/whiskey_sour //Requested since we had whiskey cola and soda but not sour.
 	name = "Whiskey Sour"
 	description = "Lemon juice/whiskey/sugar mixture. Moderate alcohol content."
+	color = rgb(255, 201, 49)
 	boozepwr = 35
 	quality = DRINK_GOOD
 	taste_description = "sour lemons"
@@ -1812,6 +1813,7 @@
 /datum/reagent/consumable/ethanol/fetching_fizz //A reference to one of my favorite games of all time. Pulls nearby ores to the imbiber!
 	name = "Fetching Fizz"
 	description = "Whiskey sour/iron/uranium mixture resulting in a highly magnetic slurry. Mild alcohol content." //Requires no alcohol to make but has alcohol anyway because ~magic~
+	color = rgb(255, 91, 15)
 	boozepwr = 10
 	quality = DRINK_VERYGOOD
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
@@ -1861,6 +1863,7 @@
 /datum/reagent/consumable/ethanol/bacchus_blessing //An EXTREMELY powerful drink. Smashed in seconds, dead in minutes.
 	name = "Bacchus' Blessing"
 	description = "Unidentifiable mixture. Unmeasurably high alcohol content."
+	color = rgb(51, 19, 3) //Sickly brown
 	boozepwr = 300 //I warned you
 	taste_description = "a wall of bricks"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -3087,7 +3090,7 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "pina_colada"
 
-/datum/reagent/consumable/ethanol/pruno
+/datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
 	name = "Pruno"
 	color = "#E78108"
 	description = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."

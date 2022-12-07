@@ -1626,5 +1626,5 @@
 
 /datum/glass_style/drinking_glass/seraka_extract
 	required_drink_type = /datum/reagent/medicine/coagulant/seraka_extract
-	name ="glass of seraka extract"
+	name = "glass of seraka extract"
 	desc = "Deeply savoury, bitter, and makes your blood clot up in your veins. A great drink, all things considered."
