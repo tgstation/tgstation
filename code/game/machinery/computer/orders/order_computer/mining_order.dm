@@ -157,8 +157,8 @@
 
 /**********************Mining Point Card**********************/
 
-#define TO_USER_ID "To ID"
-#define TO_POINT_CARD "To Card"
+#define TO_USER_ID "Transfer Card → ID"
+#define TO_POINT_CARD "ID → Transfer Card"
 
 /obj/item/card/mining_point_card
 	name = "mining point transfer card"
@@ -175,9 +175,6 @@
 /obj/item/card/mining_point_card/attackby(obj/item/attacking_item, mob/user, params)
 	if(!isidcard(attacking_item))
 		return ..()
-	if(!points)
-		to_chat(user, span_alert("There's no points left on [src]."))
-		return
 	var/obj/item/card/id/attacking_id = attacking_item
 	balloon_alert(user, "starting transfer")
 	var/point_movement = tgui_alert(user, "To ID (from card) or to card (from ID)?", "Mining Points Transfer", list(TO_USER_ID, TO_POINT_CARD))

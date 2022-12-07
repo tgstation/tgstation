@@ -659,6 +659,7 @@
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
+	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "crabrangoon"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 5)
 	w_class = WEIGHT_CLASS_SMALL

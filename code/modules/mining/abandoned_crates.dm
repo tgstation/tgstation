@@ -45,9 +45,6 @@
 			if(input == code)
 				if(!spawned_loot)
 					spawn_loot()
-				if(qdel_on_open)
-					qdel(src)
-					return
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 				togglelock(user)
 			else if(!input || !sanitycheck || length(sanitised) != codelen)
@@ -126,6 +123,11 @@
 		boom()
 		return
 	return ..()
+
+/obj/structure/closet/crate/secure/loot/open(mob/living/user, force = FALSE)
+	. = ..()
+	if(qdel_on_open)
+		qdel(src)
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
