@@ -191,3 +191,48 @@
       based on the units of toxin present and their lethality.
   - balance: Change alien liver toxin resistance value to be -33% and cybernetic liver
       toxin resistance value to be +50%
+2022-12-07:
+  Azlan, Fikou, MTandi:
+  - imageadd: Void suit and jetpack resprited
+  - bugfix: Also fixed the issue with all jetpack sprites not updating on the back
+  Fikou:
+  - qol: hop has basic cargo access
+  Hatterhat:
+  - bugfix: Mining point cards have slightly more readable buttons now, and also can
+      be reused even after running out of points.
+  JohnFulpWillard:
+  - refactor: Modular computers NTnet and applications run on its own subsystem, please
+      report any new bugs you may find.
+  - bugfix: You can now order canisters again.
+  Kylerace:
+  - bugfix: the atrocinator modsuit module's negative gravity now works again. have
+      fun on the ceiling
+  - bugfix: queuing clicks should work correctly now
+  MTandi:
+  - qol: Charlie station stores space suits in proper storage
+  RikuTheKiller:
+  - bugfix: Ephedrine now rewards you instead of punishing you for making it pure.
+  Salex08:
+  - bugfix: fixes a oversight with mining ltsrbt which would allow them to spam buy
+      crates for very low mining points
+  - qol: Increases the amount of marker beacons you can buy in a row from 1 to 10
+  TheBoondock:
+  - bugfix: fixed using the changeling tentacle arm via right mouse click holding
+      people up instead of firing it. Now it will fire like normal
+  celulamp:
+  - rscadd: ' Key can now hurt people by stabbing or throwing.'
+  - code_imp: changed the keys code to make it able to hurt ppl
+  flowercuco:
+  - qol: lockboxes have screentips,
+  - qol: cargo goodies can be opened with your ID even if it is inside a PDA or Wallet
+  - bugfix: captain can no longer open cargo goodies
+  - imageadd: secure lockboxes have a broken sprite when emag'd
+  - bugfix: crab rangoon is not invisible
+  kawoppi:
+  - bugfix: trying to clean something while it's already being cleaned will no longer
+      prematurely remove the cleaning animation
+  lizardqueenlexi:
+  - bugfix: Fixed a bug that made certain inserted organs drop on the floor.
+  - bugfix: Made digitigrade clothing render correctly on female characters.
+  nevimer:
+  - qol: the AI HUD now flex-scales and is reorganized.
