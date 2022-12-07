@@ -12,7 +12,7 @@
 	internals_req_access = list(ACCESS_CENT_SPECOPS)
 	wreckage = /obj/structure/mecha_wreckage/marauder
 	mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
-	mech_type = EXOSUIT_MODULE_COMBAT
+	mech_type = EXOSUIT_MODULE_MARAUDER
 	force = 45
 	max_equip_by_category = list(
 		MECHA_UTILITY = 3,
@@ -70,7 +70,7 @@
 		SEND_SOUND(owner, sound('sound/mecha/imag_enh.ogg', volume=50))
 	else
 		owner.client.view_size.resetToDefault()
-	UpdateButtons()
+	build_all_button_icons()
 
 /obj/vehicle/sealed/mecha/combat/marauder/seraph
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
@@ -126,4 +126,3 @@
 		MECHA_POWER = list(),
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster),
 	)
-

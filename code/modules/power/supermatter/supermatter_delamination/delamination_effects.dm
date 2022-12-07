@@ -7,7 +7,7 @@
 /// Just the mobs apparently.
 /datum/sm_delam/proc/effect_irradiate(obj/machinery/power/supermatter_crystal/sm)
 	var/turf/sm_turf = get_turf(sm)
-	for (var/mob/living/victim in range(20, sm))
+	for (var/mob/living/victim in range(DETONATION_RADIATION_RANGE, sm))
 		if(!is_valid_z_level(get_turf(victim), sm_turf))
 			continue
 		if(victim.z == 0)
@@ -64,13 +64,13 @@
 		var/extended_spawn = 0
 		if(DT_PROB(1, next_spawn))
 			extended_spawn = rand(5 MINUTES, 15 MINUTES)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/supermatter_anomaly_gen, anomaly_location, anomaly_to_spawn, TRUE), current_spawn + extended_spawn)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(supermatter_anomaly_gen), anomaly_location, anomaly_to_spawn, TRUE), current_spawn + extended_spawn)
 	return TRUE
 
 /// Explodes
 /datum/sm_delam/proc/effect_explosion(obj/machinery/power/supermatter_crystal/sm)
 	var/explosion_power = sm.explosion_power
-	var/power_scaling = sm.gasmix_power_ratio
+	var/power_scaling = sm.gas_heat_power_generation
 	var/turf/sm_turf = get_turf(sm)
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(origin = sm_turf,

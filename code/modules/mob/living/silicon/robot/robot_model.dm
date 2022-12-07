@@ -124,7 +124,7 @@
 		return
 	var/list/held_modules = cyborg.held_items.Copy()
 	var/active_module = cyborg.module_active
-	cyborg.uneq_all()
+	cyborg.drop_all_held_items()
 	modules = list()
 	for(var/obj/item/module in basic_modules)
 		add_module(module, FALSE, FALSE)
@@ -192,7 +192,7 @@
 	cyborg.diag_hud_set_aishell()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
-	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
+	INVOKE_ASYNC(new_model, PROC_REF(do_transform_animation))
 	qdel(src)
 	return new_model
 
@@ -203,7 +203,7 @@
 		for(var/skin in borg_skins)
 			var/list/details = borg_skins[skin]
 			reskin_icons[skin] = image(icon = details[SKIN_ICON] || 'icons/mob/silicon/robots.dmi', icon_state = details[SKIN_ICON_STATE])
-		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, .proc/check_menu, cyborg, old_model), radius = 38, require_near = TRUE)
+		var/borg_skin = show_radial_menu(cyborg, cyborg, reskin_icons, custom_check = CALLBACK(src, PROC_REF(check_menu), cyborg, old_model), radius = 38, require_near = TRUE)
 		if(!borg_skin)
 			return FALSE
 		var/list/details = borg_skins[borg_skin]
@@ -237,17 +237,17 @@
 
 /obj/item/robot_model/proc/do_transform_delay()
 	var/mob/living/silicon/robot/cyborg = loc
-	sleep(1)
+	sleep(0.1 SECONDS)
 	flick("[cyborg_base_icon]_transform", cyborg)
 	cyborg.notransform = TRUE
 	if(locked_transform)
 		cyborg.SetLockdown(TRUE)
 		cyborg.set_anchored(TRUE)
 	cyborg.logevent("Chassis model has been set to [name].")
-	sleep(1)
+	sleep(0.1 SECONDS)
 	for(var/i in 1 to 4)
 		playsound(cyborg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-		sleep(7)
+		sleep(0.7 SECONDS)
 	cyborg.SetLockdown(FALSE)
 	cyborg.setDir(SOUTH)
 	cyborg.set_anchored(FALSE)
@@ -382,7 +382,7 @@
 /datum/action/toggle_buffer
 	name = "Activate Auto-Wash"
 	desc = "Trade speed and water for a clean floor."
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "activate_wash"
 	var/static/datum/callback/allow_buffer_activate
 	var/block_buffer_change	= FALSE
@@ -396,7 +396,7 @@
 
 /datum/action/toggle_buffer/New(Target)
 	if(!allow_buffer_activate)
-		allow_buffer_activate = CALLBACK(src, .proc/allow_buffer_activate)
+		allow_buffer_activate = CALLBACK(src, PROC_REF(allow_buffer_activate))
 	return ..()
 
 /datum/action/toggle_buffer/Destroy()
@@ -409,7 +409,7 @@
 	. = ..()
 	wash_audio = new(owner)
 
-/datum/action/toggle_buffer/IsAvailable()
+/datum/action/toggle_buffer/IsAvailable(feedback = FALSE)
 	if(!iscyborg(owner))
 		return FALSE
 	return ..()
@@ -472,7 +472,7 @@
 	buffer_on = TRUE
 	// Slow em down a bunch
 	robot_owner.add_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-	RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, .proc/clean)
+	RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, PROC_REF(clean))
 	//This is basically just about adding a shake to the borg, effect should look ilke an engine's running
 	var/base_x = robot_owner.base_pixel_x
 	var/base_y = robot_owner.base_pixel_y
@@ -487,7 +487,7 @@
 	if(!wash_audio.is_active())
 		wash_audio.start()
 	clean()
-	UpdateButtons()
+	build_all_button_icons()
 
 /// Start the process of disabling the buffer. Plays some effects, waits a bit, then finishes
 /datum/action/toggle_buffer/proc/deactivate_wash()
@@ -508,8 +508,8 @@
 		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 	// Reset our animations
 	animate(pixel_x = base_x, pixel_y = base_y, time = 2)
-	addtimer(CALLBACK(wash_audio, /datum/looping_sound/proc/stop), time_left)
-	addtimer(CALLBACK(src, .proc/turn_off_wash), finished_by)
+	addtimer(CALLBACK(wash_audio, TYPE_PROC_REF(/datum/looping_sound, stop)), time_left)
+	addtimer(CALLBACK(src, PROC_REF(turn_off_wash)), finished_by)
 
 /// Called by [deactivate_wash] on a timer to allow noises and animation to play out.
 /// Finally disables the buffer. Doesn't do everything mind, just the stuff that we wanted to delay
@@ -517,7 +517,7 @@
 	var/mob/living/silicon/robot/robot_owner = owner
 	buffer_on = FALSE
 	robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-	UpdateButtons()
+	build_all_button_icons()
 
 /// Should we keep trying to activate our buffer, or did you fuck it up somehow
 /datum/action/toggle_buffer/proc/allow_buffer_activate()
@@ -554,14 +554,18 @@
 	// We use more water doing this then mopping
 	reagents.remove_any(2) //reaction() doesn't use up the reagents
 
-/datum/action/toggle_buffer/UpdateButtons(status_only = FALSE, force = FALSE)
+/datum/action/toggle_buffer/update_button_name(atom/movable/screen/movable/action_button/current_button, force)
 	if(buffer_on)
 		name = "De-Activate Auto-Wash"
-		button_icon_state = "deactivate_wash"
 	else
 		name = "Activate Auto-Wash"
-		button_icon_state = "activate_wash"
+	return ..()
 
+/datum/action/toggle_buffer/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
+	if(buffer_on)
+		button_icon_state = "deactivate_wash"
+	else
+		button_icon_state = "activate_wash"
 	return ..()
 
 /obj/item/reagent_containers/spray/cyborg_drying
@@ -611,6 +615,7 @@
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
 		/obj/item/bonesetter,
+		/obj/item/blood_filter,
 		/obj/item/extinguisher/mini,
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,

@@ -158,10 +158,10 @@
 	shot_glass_icon_state = "shotglass"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(ishuman(M) && M.mind?.miming)
-		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+/datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(ishuman(drinker) && drinker.mind?.miming)
+		drinker.set_silence_if_lower(MIMEDRINK_SILENCE_DURATION)
+		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	..()
 
@@ -891,6 +891,32 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
+/datum/reagent/consumable/strawberryshake
+	name = "Strawberry Shake"
+	description = "A strawberry milkshake."
+	color = "#ff7b7b"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	taste_description = "sweet strawberries and milk"
+	glass_icon_state = "strawberryshake"
+	glass_name = "strawberry shake"
+	glass_desc = "A strawberry flavored milkshake."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
+/datum/reagent/consumable/bananashake
+	name = "Banana Shake"
+	description = "A banana milkshake. Stuff that clowns drink at their honkday parties."
+	color = "#f2d554"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	taste_description = "thick banana"
+	glass_icon_state = "bananashake"
+	glass_name = "banana shake"
+	glass_desc = "A banana flavored milkshake."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
 /datum/reagent/consumable/pumpkin_latte
 	name = "Pumpkin Latte"
 	description = "A mix of pumpkin juice and coffee."
@@ -1284,7 +1310,7 @@
 /datum/reagent/consumable/cucumberjuice
 	name = "Cucumber Juice"
 	description = "Ordinary cucumber juice, nothing from the fantasy world."
-	color = "#6cd87a" 
+	color = "#6cd87a"
 	taste_description = "light cucumber"
 	glass_icon_state = "glass_cucumber"
 	glass_name = "glass of cucumber juice"

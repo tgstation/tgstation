@@ -50,6 +50,22 @@
 	update_appearance()
 	SSair.start_processing_machine(src)
 
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Toggle power", \
+	)
+
+	var/static/list/tool_behaviors = list(
+		TOOL_SCREWDRIVER = list(
+			SCREENTIP_CONTEXT_LMB = "Open hatch",
+		),
+
+		TOOL_WRENCH = list(
+			SCREENTIP_CONTEXT_LMB = "Anchor",
+		),
+	)
+	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+
 /obj/machinery/space_heater/Destroy()
 	SSair.stop_processing_machine(src)
 	return..()
@@ -187,8 +203,8 @@
 
 /obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
-		return
-	toggle_power()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	toggle_power(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
@@ -260,12 +276,13 @@
 	panel_open = TRUE
 	update_appearance()
 
-/obj/machinery/space_heater/proc/toggle_power()
+/obj/machinery/space_heater/proc/toggle_power(user)
 	on = !on
 	mode = HEATER_MODE_STANDBY
-	usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
+	if(!isnull(user))
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 	update_appearance()
-	if (on)
+	if(on)
 		SSair.start_processing_machine(src)
 
 ///For use with heating reagents in a ghetto way
@@ -398,7 +415,7 @@
 
 /obj/machinery/space_heater/improvised_chem_heater/AltClick(mob/living/user)
 	. = ..()
-	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE))
 		return
 	replace_beaker(user)
 

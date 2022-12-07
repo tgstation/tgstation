@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /datum/gateway_destination/gateway/post_transfer(atom/movable/AM)
 	. = ..()
-	addtimer(CALLBACK(AM,/atom/movable.proc/setDir,SOUTH),0)
+	addtimer(CALLBACK(AM, TYPE_PROC_REF(/atom/movable, setDir),SOUTH),0)
 
 /* Special home destination, so we can check exile implants */
 /datum/gateway_destination/gateway/home
@@ -421,7 +421,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	// Rather then that, let's just render a little preview port to the console, because for reasons that's trivial
 	vis_contents = null
 
-	if(!our_destination)
+	var/turf/center_turf = our_destination?.get_target_turf()
+	if(!center_turf)
 		// Draw static
 		cam_background.icon_state = "scanline2"
 		cam_background.color = null
@@ -430,7 +431,6 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 	cam_background.add_filter("portal_blur", 1, list("type" = "blur", "size" = 0.5))
 
-	var/turf/center_turf = our_destination.get_target_turf()
 	vis_contents += block(locate(center_turf.x - 1, center_turf.y - 1, center_turf.z), locate(center_turf.x + 1, center_turf.y + 1, center_turf.z))
 	cam_background.icon_state = "scanline4"
 	cam_background.color = "#adadff"

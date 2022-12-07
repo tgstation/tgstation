@@ -99,6 +99,11 @@
 #define set_drugginess(duration) set_timed_status_effect(duration, /datum/status_effect/drugginess)
 #define set_drugginess_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/drugginess, TRUE)
 
+#define adjust_silence(duration) adjust_timed_status_effect(duration, /datum/status_effect/silenced)
+#define adjust_silence_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/silenced, up_to)
+#define set_silence(duration) set_timed_status_effect(duration, /datum/status_effect/silenced)
+#define set_silence_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/silenced, TRUE)
+
 #define adjust_hallucinations(duration) adjust_timed_status_effect(duration, /datum/status_effect/hallucination)
 #define adjust_hallucinations_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/hallucination, up_to)
 #define set_hallucinations(duration) set_timed_status_effect(duration, /datum/status_effect/hallucination)

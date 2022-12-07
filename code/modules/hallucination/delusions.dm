@@ -26,24 +26,30 @@
 
 /datum/hallucination/delusion/New(
 	mob/living/hallucinator,
-	duration = 30 SECONDS,
-	affects_us = TRUE,
-	affects_others = FALSE,
-	skip_nearby = TRUE,
-	play_wabbajack = FALSE,
+	duration,
+	affects_us,
+	affects_others,
+	skip_nearby,
+	play_wabbajack,
 )
 
-	src.duration = duration
-	src.affects_us = affects_us
-	src.affects_others = affects_others
-	src.skip_nearby = skip_nearby
-	src.play_wabbajack = play_wabbajack
+	if(isnum(duration))
+		src.duration = duration
+	if(!isnull(affects_us))
+		src.affects_us = affects_us
+	if(!isnull(affects_others))
+		src.affects_others = affects_others
+	if(!isnull(skip_nearby))
+		src.skip_nearby = skip_nearby
+	if(!isnull(play_wabbajack))
+		src.play_wabbajack = play_wabbajack
+
 	return ..()
 
 /datum/hallucination/delusion/Destroy()
-	if(!QDELETED(hallucinator))
-		for(var/image/to_remove as anything in delusions)
-			hallucinator.client?.images -= to_remove
+	if(!QDELETED(hallucinator) && LAZYLEN(delusions))
+		hallucinator.client?.images -= delusions
+		LAZYNULL(delusions)
 
 	return ..()
 
@@ -99,11 +105,11 @@
 
 /datum/hallucination/delusion/custom/New(
 	mob/living/hallucinator,
-	duration = 30 SECONDS,
-	affects_us = TRUE,
-	affects_others = FALSE,
-	skip_nearby = FALSE,
-	play_wabbajack = FALSE,
+	duration,
+	affects_us,
+	affects_others,
+	skip_nearby,
+	play_wabbajack,
 	custom_icon_file,
 	custom_icon_state,
 	custom_name,
@@ -167,11 +173,50 @@
 	delusion_name = "demon"
 
 /datum/hallucination/delusion/preset/cyborg
-	play_wabbajack = TRUE
 	delusion_icon_file = 'icons/mob/silicon/robots.dmi'
 	delusion_icon_state = "robot"
 	delusion_name = "cyborg"
+	play_wabbajack = TRUE
 
 /datum/hallucination/delusion/preset/cyborg/make_delusion_image(mob/over_who)
 	. = ..()
 	hallucinator.playsound_local(get_turf(over_who), 'sound/voice/liveagain.ogg', 75, TRUE)
+
+/datum/hallucination/delusion/preset/ghost
+	delusion_icon_file = 'icons/mob/simple/mob.dmi'
+	delusion_icon_state = "ghost"
+	delusion_name = "ghost"
+	affects_others = TRUE
+
+/datum/hallucination/delusion/preset/ghost/make_delusion_image(mob/over_who)
+	var/image/funny_image = ..()
+	funny_image.name = over_who.name
+	DO_FLOATING_ANIM(funny_image)
+	return funny_image
+
+/datum/hallucination/delusion/preset/syndies
+	random_hallucination_weight = 1
+	delusion_icon_file = 'icons/mob/simple/simple_human.dmi'
+	delusion_icon_state = "syndicate_space"
+	delusion_name = "Syndicate"
+	affects_others = TRUE
+	affects_us = FALSE
+
+/datum/hallucination/delusion/preset/syndies/make_delusion_image(mob/over_who)
+	var/static/list/syndicate_icon_states
+
+	if(!syndicate_icon_states)
+		syndicate_icon_states = list()
+		for(var/state in icon_states(delusion_icon_file))
+			if(!findtext(state, "syndicate"))
+				continue
+
+			syndicate_icon_states += state
+
+	if(length(syndicate_icon_states) > 0)
+		delusion_name = over_who.name
+		delusion_icon_state = pick(syndicate_icon_states)
+	else
+		stack_trace("Hey! The hallucination [type] couldn't find a single icon state to use, it'll be invisible. Correct this.")
+
+	return ..()

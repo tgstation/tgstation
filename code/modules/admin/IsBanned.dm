@@ -109,9 +109,9 @@
 			return
 		GLOB.stickybanadminexemptions[ckey] = world.time
 		stoplag() // sleep a byond tick
-		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
+		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(restore_stickybans)), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
 		return
-		
+
 	var/list/ban = ..() //default pager ban stuff
 
 	if (ban)
@@ -181,7 +181,7 @@
 				//do not convert to timer.
 				spawn (5)
 					world.SetConfig("ban", bannedckey, null)
-					sleep(1)
+					sleep(1 TICKS)
 					world.SetConfig("ban", bannedckey, null)
 					if (!ban["fromdb"])
 						cachedban = cachedban.Copy() //so old references to the list still see the ban as reverting

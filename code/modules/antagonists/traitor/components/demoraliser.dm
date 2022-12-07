@@ -11,7 +11,7 @@
 /datum/proximity_monitor/advanced/demoraliser/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, datum/demoralise_moods/moods)
 	. = ..()
 	src.moods = moods
-	RegisterSignal(host, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	RegisterSignal(host, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/proximity_monitor/advanced/demoraliser/field_turf_crossed(atom/movable/crossed, turf/location)
 	if (!isliving(crossed))
@@ -148,5 +148,33 @@
 /datum/mood_event/traitor_graffiti_auth
 	description = "Which of these layabouts drew that Syndicate logo?!"
 	mood_change = -3
+	timeout = 2 MINUTES
+	hidden = TRUE
+
+/datum/demoralise_moods/module
+	mood_category = "module"
+	antag_notification = "I feel oddly refreshed."
+	antag_mood = /datum/mood_event/traitor_module_antag
+	crew_notification = "My head hurts. It feels like something is driving nails into my brain!"
+	crew_mood = /datum/mood_event/traitor_module_crew
+	authority_notification = "My heads beginning to spin. The enemy is at the gate. I'm all alone..."
+	authority_mood = /datum/mood_event/traitor_module_auth
+	reading_requirements = (READING_CHECK_LIGHT)
+
+/datum/mood_event/traitor_module_antag
+	description = "I think I'll cause problems on purpose."
+	mood_change = 1
+	timeout = 2 MINUTES
+	hidden = TRUE
+
+/datum/mood_event/traitor_module_crew
+	description = "They're on the station! I know it! They're going to get me!"
+	mood_change = -4
+	timeout = 2 MINUTES
+	hidden = TRUE
+
+/datum/mood_event/traitor_module_auth
+	description = "Nobody on this station is on my side, and the enemy could be anyone! I have to take more drastic measures..."
+	mood_change = -5
 	timeout = 2 MINUTES
 	hidden = TRUE

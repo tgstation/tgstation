@@ -4,7 +4,8 @@
 	desc = "Find inner peace, here, in the box."
 	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_agent"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	overlay_icon_state = "bg_agent_border"
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "deploy_box"
 	///The type of closet this action spawns.
 	var/boxtype = /obj/structure/closet/cardboard/agent
@@ -34,7 +35,7 @@
 /datum/action/item_action/agent_box/Grant(mob/grant_to)
 	. = ..()
 	if(owner)
-		RegisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT, .proc/suicide_act)
+		RegisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT, PROC_REF(suicide_act))
 
 /datum/action/item_action/agent_box/Remove(mob/M)
 	if(owner)
@@ -52,4 +53,7 @@
 	box.open()
 	owner.visible_message(span_suicide("[owner] falls out of [box]! It looks like [owner.p_they()] committed suicide!"))
 	owner.throw_at(get_turf(owner))
+	if(isliving(owner))
+		var/mob/living/suicider = owner
+		suicider.suicide_log()
 	return OXYLOSS

@@ -6,7 +6,7 @@
 		/obj/item/stack/ore/bluespace_crystal = 2,
 		/obj/item/stock_parts/subspace/ansible = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/scanning_module = 2)
+		/datum/stock_part/scanning_module = 2)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/machinery/ltsrbt
@@ -51,8 +51,8 @@
 	. = ..()
 	recharge_time = base_recharge_time
 	// On tier 4 recharge_time should be 20 and by default it is 80 as scanning modules should be tier 1.
-	for(var/obj/item/stock_parts/scanning_module/scan in component_parts)
-		recharge_time -= scan.rating * 10
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		recharge_time -= scanning_module.tier * 10
 	recharge_cooldown = recharge_time
 
 	power_efficiency = 0

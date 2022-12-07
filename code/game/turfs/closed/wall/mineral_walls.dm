@@ -100,7 +100,7 @@
 
 /turf/closed/wall/mineral/uranium/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, .proc/radiate)
+	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, PROC_REF(radiate))
 
 /turf/closed/wall/mineral/uranium/proc/radiate()
 	SIGNAL_HANDLER

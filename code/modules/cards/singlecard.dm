@@ -168,7 +168,9 @@
 			// only decks cause a balloon alert
 			user.balloon_alert_to_viewers("deals a card")
 
-		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location(), list(src, card))
+		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location())
+		new_cardhand.insert(src)
+		new_cardhand.insert(card)
 		new_cardhand.pixel_x = pixel_x
 		new_cardhand.pixel_y = pixel_y
 
@@ -207,7 +209,7 @@
 			return
 
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
-		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))
+		if(!cardtext || !user.canUseTopic(src, be_close = TRUE))
 			return
 
 		cardname = cardtext
@@ -228,7 +230,7 @@
 	attack_self(user)
 
 /obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
-	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+	if(!ishuman(user) || !user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
 		return
 
 	Flip()
@@ -236,7 +238,7 @@
 		user.balloon_alert_to_viewers("flips a card")
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+	if(user.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = TRUE, need_hands = !iscyborg(user)))
 		transform = turn(transform, 90)
 		// use the simple_rotation component to make this turn with Alt+RMB & Alt+LMB at some point in the future - TimT
 	return ..()

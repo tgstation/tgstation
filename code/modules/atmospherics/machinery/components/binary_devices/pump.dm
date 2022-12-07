@@ -21,12 +21,6 @@
 	vent_movement = NONE
 	///Pressure that the pump will reach when on
 	var/target_pressure = ONE_ATMOSPHERE
-	///Frequency for radio signaling
-	var/frequency = 0
-	///ID for radio signaling
-	var/id = null
-	///Connection to the radio processing
-	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/atmospherics/components/binary/pump/Initialize(mapload)
 	. = ..()
@@ -49,12 +43,6 @@
 		update_appearance()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/pump/Destroy()
-	SSradio.remove_object(src,frequency)
-	if(radio_connection)
-		radio_connection = null
-	return ..()
-
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
 	icon_state = (on && is_operational) ? "pump_on-[set_overlay_offset(piping_layer)]" : "pump_off-[set_overlay_offset(piping_layer)]"
 
@@ -67,33 +55,6 @@
 
 	if(air1.pump_gas_to(air2, target_pressure))
 		update_parents()
-
-/**
- * Called in atmos_init(), used to change or remove the radio frequency from the component
- * Arguments:
- * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
- */
-/obj/machinery/atmospherics/components/binary/pump/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	if(frequency)
-		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
-
-/**
- * Called in atmos_init(), send the component status to the radio device connected
- */
-/obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
-	if(!radio_connection)
-		return
-
-	var/datum/signal/signal = new(list(
-		"tag" = id,
-		"device" = "AGP",
-		"power" = on,
-		"target_output" = target_pressure,
-		"sigtype" = "status"
-	))
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -128,36 +89,6 @@
 			if(.)
 				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
-
-/obj/machinery/atmospherics/components/binary/pump/atmos_init()
-	..()
-	if(frequency)
-		set_frequency(frequency)
-
-/obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return
-
-	var/old_on = on //for logging
-
-	if("power" in signal.data)
-		set_on(text2num(signal.data["power"]))
-
-	if("power_toggle" in signal.data)
-		set_on(!on)
-
-	if("set_output_pressure" in signal.data)
-		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
-
-	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
-
-	if("status" in signal.data)
-		broadcast_status()
-		return
-
-	broadcast_status()
 	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
@@ -219,10 +150,10 @@
 	var/obj/machinery/atmospherics/components/binary/pump/connected_pump
 
 /obj/item/circuit_component/atmos_pump/populate_ports()
-	pressure_value = add_input_port("New Pressure", PORT_TYPE_NUMBER, trigger = .proc/set_pump_pressure)
-	on = add_input_port("Turn On", PORT_TYPE_SIGNAL, trigger = .proc/set_pump_on)
-	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL, trigger = .proc/set_pump_off)
-	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL, trigger = .proc/request_pump_data)
+	pressure_value = add_input_port("New Pressure", PORT_TYPE_NUMBER, trigger = PROC_REF(set_pump_pressure))
+	on = add_input_port("Turn On", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_pump_on))
+	off = add_input_port("Turn Off", PORT_TYPE_SIGNAL, trigger = PROC_REF(set_pump_off))
+	request_data = add_input_port("Request Port Data", PORT_TYPE_SIGNAL, trigger = PROC_REF(request_pump_data))
 
 	input_pressure = add_output_port("Input Pressure", PORT_TYPE_NUMBER)
 	output_pressure = add_output_port("Output Pressure", PORT_TYPE_NUMBER)
@@ -237,7 +168,7 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/atmospherics/components/binary/pump))
 		connected_pump = shell
-		RegisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON, .proc/handle_pump_activation)
+		RegisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON, PROC_REF(handle_pump_activation))
 
 /obj/item/circuit_component/atmos_pump/unregister_usb_parent(atom/movable/shell)
 	UnregisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON)

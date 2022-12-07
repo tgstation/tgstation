@@ -1,0 +1,5 @@
+author: "celulamp"
+delete-after: True
+changes:
+  - rscadd: " Key can now hurt people by stabbing or throwing."
+  - code_imp: "changed the keys code to make it able to hurt ppl"

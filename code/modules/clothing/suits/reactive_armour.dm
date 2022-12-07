@@ -31,7 +31,7 @@
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
 	icon_state = "reactiveoff"
-	inhand_icon_state = "reactiveoff"
+	inhand_icon_state = null
 	blood_overlay_type = "armor"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/toggle)
@@ -50,19 +50,13 @@
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
 
-
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob, ITEM_SLOT_OCLOTHING)
 
 /obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
-	if(active)
-		icon_state = "reactive"
-		inhand_icon_state = "reactive"
-	else
-		icon_state = "reactiveoff"
-		inhand_icon_state = "reactiveoff"
+	icon_state = "reactive[active ? null : "off"]"
 
 /obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !active
@@ -199,7 +193,7 @@
 	owner.alpha = 0
 	in_stealth = TRUE
 	owner.visible_message(span_danger("[owner] is hit by [attack_text] in the chest!")) //We pretend to be hit, since blocking it would stop the message otherwise
-	addtimer(CALLBACK(src, .proc/end_stealth, owner), stealth_time)
+	addtimer(CALLBACK(src, PROC_REF(end_stealth), owner), stealth_time)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
@@ -377,13 +371,13 @@
 	if(!heads)
 		heads = typesof(/obj/item/bodypart/head)
 	if(!l_arms)
-		l_arms = typesof(/obj/item/bodypart/l_arm)
+		l_arms = typesof(/obj/item/bodypart/arm/left)
 	if(!r_arms)
-		r_arms = typesof(/obj/item/bodypart/r_arm)
+		r_arms = typesof(/obj/item/bodypart/arm/right)
 	if(!l_legs)
-		l_legs = typesof(/obj/item/bodypart/l_leg)
+		l_legs = typesof(/obj/item/bodypart/leg/left)
 	if(!r_legs)
-		r_legs = typesof(/obj/item/bodypart/r_leg)
+		r_legs = typesof(/obj/item/bodypart/leg/right)
 
 /obj/item/clothing/suit/armor/reactive/bioscrambling/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread

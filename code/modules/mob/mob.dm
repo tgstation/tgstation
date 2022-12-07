@@ -93,7 +93,7 @@
 	initialize_actionspeed()
 	update_movespeed(TRUE)
 	become_hearing_sensitive()
-	log_mob_tag("\[[tag]\] CREATED: [key_name(src)]")
+	log_mob_tag("CREATED: [key_name(src)] \[[type]\]")
 
 /**
  * Generate the tag for this mob
@@ -524,7 +524,7 @@
 	set name = "Examine"
 	set category = "IC"
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/run_examinate, examinify))
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
 /mob/proc/run_examinate(atom/examinify)
 
@@ -548,7 +548,7 @@
 		else
 			result = examinify.examine(src)
 			client.recent_examines[ref_to_atom] = world.time // set to when we last normal examine'd them
-			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
+			addtimer(CALLBACK(src, PROC_REF(clear_from_recent_examines), ref_to_atom), RECENT_EXAMINE_MAX_WINDOW)
 			handle_eye_contact(examinify)
 	else
 		result = examinify.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
@@ -615,7 +615,7 @@
 	/// our current intent, so we can go back to it after touching
 	var/previous_combat_mode = combat_mode
 	set_combat_mode(FALSE)
-	INVOKE_ASYNC(examined_thing, /atom/proc/attack_hand, src)
+	INVOKE_ASYNC(examined_thing, TYPE_PROC_REF(/atom, attack_hand), src)
 	set_combat_mode(previous_combat_mode)
 	return TRUE
 
@@ -654,11 +654,11 @@
 	// check to see if their face is blocked or, if not, a signal blocks it
 	if(examined_mob.is_face_visible() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("You make eye contact with [examined_mob].")
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, src, msg), 3) // so the examine signal has time to fire and this will print after
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 3) // so the examine signal has time to fire and this will print after
 
 	if(!imagined_eye_contact && is_face_visible() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 		var/msg = span_smallnotice("[src] makes eye contact with you.")
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, examined_mob, msg), 3)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 3)
 
 /**
  * Called by using Activate Held Object with an empty hand/limb
@@ -715,7 +715,7 @@
 	set category = "Object"
 	set src = usr
 
-	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, .proc/execute_mode))
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
 ///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
 /mob/proc/execute_mode()
@@ -972,7 +972,16 @@
 		return FALSE
 	return ISINRANGE(their_turf.x, our_turf.x - interaction_range, our_turf.x + interaction_range) && ISINRANGE(their_turf.y, our_turf.y - interaction_range, our_turf.y + interaction_range)
 
-///Can the mob use Topic to interact with machines
+/**
+ * Whether the mob can use Topic to interact with machines
+ *
+ * Args:
+ * be_close - Whether you need to be next to/on top of M
+ * no_dexterity - Whether you need to be an ADVANCEDTOOLUSER
+ * no_tk - If be_close is TRUE, this will block Telekinesis from bypassing the requirement
+ * need_hands - Whether you need hands to use this
+ * floor_okay - Whether mobility flags should be checked for MOBILITY_UI to use.
+ */
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
 	return
 
@@ -1054,7 +1063,7 @@
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
-	log_mob_tag("\[[tag]\] RENAMED: [key_name(src)]")
+	log_mob_tag("RENAMED: [key_name(src)]")
 
 	return TRUE
 
@@ -1081,8 +1090,8 @@
 					break
 				search_id = 0
 
-		else if( search_pda && istype(A, /obj/item/modular_computer/tablet/pda) )
-			var/obj/item/modular_computer/tablet/pda/PDA = A
+		else if( search_pda && istype(A, /obj/item/modular_computer/pda) )
+			var/obj/item/modular_computer/pda/PDA = A
 			if(PDA.saved_identification == oldname)
 				PDA.saved_identification = newname
 				PDA.UpdateDisplay()
@@ -1110,7 +1119,7 @@
 /mob/proc/sync_lighting_plane_alpha()
 	if(!hud_used)
 		return
-	for(var/atom/movable/screen/plane_master/rendering_plate/lighting/light_plane in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
+	for(var/atom/movable/screen/plane_master/light_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_LIGHTING))
 		light_plane.set_alpha(lighting_alpha)
 
 ///Update the mouse pointer of the attached client in this mob
@@ -1373,7 +1382,7 @@
 		UnregisterSignal(active_storage, COMSIG_PARENT_QDELETING)
 	active_storage = new_active_storage
 	if(active_storage)
-		RegisterSignal(active_storage, COMSIG_PARENT_QDELETING, .proc/active_storage_deleted)
+		RegisterSignal(active_storage, COMSIG_PARENT_QDELETING, PROC_REF(active_storage_deleted))
 
 /mob/proc/active_storage_deleted(datum/source)
 	SIGNAL_HANDLER

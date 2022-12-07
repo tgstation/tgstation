@@ -39,9 +39,10 @@
 	var/frequency_to_use
 
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if((shot.e_cost > 0) && (cell.maxcharge != INFINITY))
-		// What percentage of the full battery a shot will expend
-		var/shot_cost_percent = round(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100)
+	// What percentage of the full battery a shot will expend
+	var/shot_cost_percent = round(clamp(shot.e_cost / cell.maxcharge, 0, 1) * 100)
+	// Ignore this on oversized/infinite cells or ammo without cost
+	if(shot_cost_percent > 0)
 		// The total amount of shots the fully charged energy gun can fire before running out
 		var/max_shots = round(100/shot_cost_percent)
 		// How many shots left before the energy gun's current battery runs out of energy
@@ -77,11 +78,11 @@
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_appearance()
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
+	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_recharge))
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/energy/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_energy)
+	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_energy))
 
 /**
  *
@@ -253,24 +254,23 @@
 	// Sets the ratio to 0 if the gun doesn't have enough charge to fire, or if its power cell is removed.
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
-	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
+	if(istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
 		user.visible_message(span_suicide("[user] is putting the barrel of [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
-		sleep(25)
+		sleep(2.5 SECONDS)
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
 			playsound(loc, fire_sound, 50, TRUE, -1)
 			var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 			cell.use(shot.e_cost)
 			update_appearance()
-			return(FIRELOSS)
+			return FIRELOSS
 		else
 			user.visible_message(span_suicide("[user] panics and starts choking to death!"))
-			return(OXYLOSS)
+			return OXYLOSS
 	else
 		user.visible_message(span_suicide("[user] is pretending to melt [user.p_their()] face off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
 		playsound(src, dry_fire_sound, 30, TRUE)
-		return (OXYLOSS)
-
+		return OXYLOSS
 
 /obj/item/gun/energy/vv_edit_var(var_name, var_value)
 	switch(var_name)

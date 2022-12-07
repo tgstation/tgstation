@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 	icon_path = parent_atom.icon
 	parent_atom.icon = ""
 	add_smoothing()
-	RegisterSignal(parent, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_junction_change)
+	RegisterSignal(parent, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_junction_change))
 
 /datum/component/window_smoothing/proc/add_smoothing(new_junction)
 	var/atom/parent = src.parent
@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(window_appearances)
 		// We use the parent's pixel y as a part of this to ensure everything lines up proper when the parent is all shifted around
 		appearance_above = get_window_appearance(offset, icon_path, junction, "upper", FALSE, TRUE, pixel_y = parent.pixel_y, plane = FRILL_PLANE)
 		paired_turf.overlays += appearance_above
-		RegisterSignal(paired_turf, COMSIG_PARENT_QDELETING, .proc/tied_turf_deleted, override = TRUE) // Override because this could be called multiple times
+		RegisterSignal(paired_turf, COMSIG_PARENT_QDELETING, PROC_REF(tied_turf_deleted), override = TRUE) // Override because this could be called multiple times
 	else
 		UnregisterSignal(paired_turf, COMSIG_PARENT_QDELETING)
 

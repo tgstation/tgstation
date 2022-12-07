@@ -87,6 +87,23 @@
 	name = "lavaland baseturf editor"
 	baseturf = /turf/open/lava/smooth/lava_land_surface
 
+/obj/effect/baseturf_helper/reinforced_plating
+	name = "reinforced plating baseturf editor"
+	baseturf = /turf/open/floor/plating/reinforced
+	baseturf_to_replace = list(/turf/open/floor/plating,/turf/open/space,/turf/baseturf_bottom)
+
+//This applies the reinforced plating to the above Z level for every tile in the area where this is placed
+/obj/effect/baseturf_helper/reinforced_plating/ceiling
+	name = "reinforced ceiling plating baseturf editor"
+
+/obj/effect/baseturf_helper/reinforced_plating/ceiling/replace_baseturf(turf/thing)
+	var/turf/ceiling = get_step_multiz(thing, UP)
+	if(isnull(ceiling))
+		CRASH("baseturf helper is attempting to modify the Z level above but there is no Z level above above it.")
+	if(isspaceturf(ceiling) || istype(ceiling, /turf/open/openspace))
+		return
+	return ..(ceiling)
+
 
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'
@@ -134,7 +151,7 @@
 					qdel(src)
 					return
 				here.PlaceOnTop(/turf/closed/wall)
-				qdel(src)
+				qdel(airlock)
 				return
 			if(9 to 11)
 				airlock.lights = FALSE
@@ -548,7 +565,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/balloon_clusters = 2
 
 /obj/effect/mapping_helpers/ianbirthday/LateInitialize()
-	if(locate(/datum/holiday/ianbirthday) in SSevents.holidays)
+	if(check_holidays("Ian's Birthday"))
 		birthday()
 	qdel(src)
 
@@ -616,7 +633,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "iansnewyrshelper"
 
 /obj/effect/mapping_helpers/iannewyear/LateInitialize()
-	if(SSevents.holidays && SSevents.holidays[NEW_YEAR])
+	if(check_holidays(NEW_YEAR))
 		fireworks()
 	qdel(src)
 
@@ -630,7 +647,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			table += thing
 		else if(isopenturf(thing))
 			if(locate(/obj/structure/bed/dogbed/ian) in thing)
-				new /obj/item/clothing/head/festive(thing)
+				new /obj/item/clothing/head/costume/festive(thing)
 				var/obj/item/reagent_containers/cup/glass/bottle/champagne/iandrink = new(thing)
 				iandrink.name = "dog champagne"
 				iandrink.pixel_y += 8
@@ -728,7 +745,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/circuit_spawner/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/spawn_circuit)
+	INVOKE_ASYNC(src, PROC_REF(spawn_circuit))
 
 /obj/effect/mapping_helpers/circuit_spawner/proc/spawn_circuit()
 	var/list/errors = list()

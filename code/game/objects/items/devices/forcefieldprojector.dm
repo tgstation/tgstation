@@ -23,7 +23,7 @@
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(!check_allowed_items(target, 1))
+	if(!check_allowed_items(target, not_inside = TRUE))
 		return
 	if(istype(target, /obj/structure/projected_forcefield))
 		var/obj/structure/projected_forcefield/F = target

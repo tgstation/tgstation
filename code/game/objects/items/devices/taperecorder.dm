@@ -340,7 +340,6 @@
 /obj/item/taperecorder/empty
 	starting_tape_type = null
 
-
 /obj/item/tape
 	name = "tape"
 	desc = "A magnetic tape that can hold up to ten minutes of content on either side."
@@ -371,10 +370,6 @@
 	var/list/icons_available = list()
 	var/radial_icon_file = 'icons/hud/radial_tape.dmi'
 
-/obj/item/tape/fire_act(exposed_temperature, exposed_volume)
-	unspool()
-	..()
-
 /obj/item/tape/Initialize(mapload)
 	. = ..()
 	initial_icon_state = icon_state //random tapes will set this after choosing their icon
@@ -386,6 +381,15 @@
 
 	if(prob(50))
 		tapeflip()
+
+/obj/item/tape/examine(mob/user)
+	. = ..()
+	if(unspooled)
+		. += span_notice("It looks like the tape is unspooled. A screwdriver might fix this.")
+
+/obj/item/tape/fire_act(exposed_temperature, exposed_volume)
+	unspool()
+	..()
 
 /obj/item/tape/proc/update_available_icons()
 	icons_available = list()

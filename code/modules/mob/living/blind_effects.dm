@@ -21,13 +21,13 @@
 //did you know you can subtype /image and /mutable_appearance? // Stop telling them that they might actually do it
 /image/blind_image
 	icon = 'icons/effects/blind_effects.dmi'
-	layer = FOV_EFFECTS_LAYER
+	layer = BLIND_EFFECTS_LAYER
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM
-	plane = HIGH_GAME_PLANE
+	plane = FULLSCREEN_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /// Plays a visual effect representing a sound cue for people with vision obstructed by blindness
-/proc/play_blind_effect(atom/center, range, icon_state, dir = SOUTH, ignore_self = FALSE, angle = 0, list/override_list)
+/proc/play_blind_effect(atom/center, range, icon_state, dir = SOUTH, ignore_self = FALSE, angle = 0, time = 1.5 SECONDS, list/override_list)
 	var/turf/anchor_point = get_turf(center)
 	var/image/blind_image/blind_image
 	var/list/clients_shown
@@ -55,5 +55,5 @@
 		mob_client.images += blind_image
 
 	if(clients_shown)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/remove_images_from_clients, blind_image, clients_shown), 3 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_clients), blind_image, clients_shown), time)
 

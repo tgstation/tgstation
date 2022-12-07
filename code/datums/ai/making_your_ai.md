@@ -151,7 +151,7 @@ Example:
 
 ```dm
 /datum/ai_planning_subtree/item_ghost_resist/SetupSubtree(datum/ai_controller/controller)
-	RegisterSignal(controller.pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	RegisterSignal(controller.pawn, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	controller.blackboard[BB_LIKES_EQUIPPER] = FALSE
 	controller.blackboard[BB_ITEM_AGGRO_LIST] = list()
 
@@ -223,7 +223,7 @@ As before, let's take a look at a basic example of one:
 		finish_action(controller, TRUE)
 		return
 
-	controller.current_movement_target = living_target
+	controller.set_movement_target(living_target)
 
 /datum/ai_behavior/follow/finish_action(datum/ai_controller/controller, succeeded, follow_key, range_key)
 	. = ..()

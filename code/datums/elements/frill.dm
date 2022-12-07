@@ -18,8 +18,8 @@ GLOBAL_LIST_EMPTY(frill_objects)
  * Yes, this is ugly. The alternative is making two different elements for the same purpose.
  */
 /datum/element/frill
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	var/icon_path
 
 
@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(frill_objects)
 	var/atom/atom_target = target
 
 	on_junction_change(atom_target, atom_target.smoothing_junction)
-	RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_junction_change)
+	RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_junction_change))
 
 /datum/element/frill/Detach(turf/target)
 

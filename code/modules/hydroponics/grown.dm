@@ -14,7 +14,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
 	name = "fresh produce" // so recipe text doesn't say 'snack'
-	max_volume = 100
+	max_volume = PLANT_REAGENT_VOLUME
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	/// type path, gets converted to item on New(). It's safe to assume it's always a seed item.
@@ -74,30 +74,20 @@
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
 
+	if(seed.get_gene(/datum/plant_gene/trait/brewing))
+		ferment()
+
 /obj/item/food/grown/Destroy()
 	if(isatom(seed))
 		QDEL_NULL(seed)
 	return ..()
-
-/obj/item/food/grown/MakeEdible()
-	AddComponent(/datum/component/edible,\
-				initial_reagents = food_reagents,\
-				food_flags = food_flags,\
-				foodtypes = foodtypes,\
-				volume = max_volume,\
-				eat_time = eat_time,\
-				tastes = tastes,\
-				eatverbs = eatverbs,\
-				bite_consumption = bite_consumption,\
-				microwaved_type = microwaved_type,\
-				junkiness = junkiness)
 
 /obj/item/food/grown/proc/make_dryable()
 	AddElement(/datum/element/dryable, type)
 
 /obj/item/food/grown/MakeLeaveTrash()
 	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
+		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, TYPE_PROC_REF(/obj/item/food/grown/, generate_trash))
 	return
 
 /// Generates a piece of trash based on our plant item. Used by [/datum/element/food_trash].
@@ -114,6 +104,25 @@
 		to_chat(usr, span_warning("[src] needs to be dry before it can be ground up!"))
 		return
 	return TRUE
+
+/// Turns the nutriments and vitamins into the distill reagent or fruit wine
+/obj/item/food/grown/proc/ferment()
+	for(var/datum/reagent/reagent in reagents.reagent_list)
+		if(reagent.type != /datum/reagent/consumable/nutriment && reagent.type != /datum/reagent/consumable/nutriment/vitamin)
+			continue
+		if(distill_reagent)
+			reagents.add_reagent(distill_reagent, reagent.volume)
+		else
+			var/data = list()
+			data["names"] = list("[initial(name)]" = 1)
+			data["color"] = filling_color
+			data["boozepwr"] = wine_power
+			if(wine_flavor)
+				data["tastes"] = list(wine_flavor = 1)
+			else
+				data["tastes"] = list(tastes[1] = 1)
+			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data)
+		reagents.del_reagent(reagent.type)
 
 /obj/item/food/grown/on_grind()
 	. = ..()

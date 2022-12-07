@@ -1,4 +1,4 @@
-#define ALERT_DELAY 50 SECONDS
+#define ALERT_DELAY (50 SECONDS)
 
 /obj/machinery/newscaster
 	name = "newscaster"
@@ -488,7 +488,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return
 	user.balloon_alert_to_viewers("started welding...", "started repairing...")
 	audible_message(span_hear("You hear welding."))
-	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/needs_repair)))
+	if(!tool.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, PROC_REF(needs_repair))))
 		user.balloon_alert_to_viewers("stopped welding!", "interrupted the repair!")
 		return
 	user.balloon_alert_to_viewers("repaired [src]")
@@ -623,7 +623,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
 		update_appearance()
-		addtimer(CALLBACK(src, .proc/remove_alert), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	else if(!channel && update_alert)
 		say("Attention! Wanted issue distributed!")
@@ -792,7 +792,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
-	payment_target.transfer_money(current_user, active_request.value)
+	payment_target.transfer_money(current_user, active_request.value, "Bounty Request")
 	say("Paid out [active_request.value] credits.")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)

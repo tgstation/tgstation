@@ -16,13 +16,10 @@
 	var/visor_flags_cover = 0 //same as above, but for flags_cover
 	///What to toggle when toggled with weldingvisortoggle()
 	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_DARKNESSVIEW | VISOR_INVISVIEW
-	var/alt_desc = null
-	var/toggle_message = null
-	var/alt_toggle_message = null
-	var/toggle_cooldown = null
-	var/cooldown = 0
 
 	var/clothing_flags = NONE
+	///List of items that can be equipped in the suit storage slot while we're worn.
+	var/list/allowed
 
 	var/can_be_bloody = TRUE
 
@@ -53,6 +50,7 @@
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
 		LoadComponent(/datum/component/bloodysoles)
+	AddElement(/datum/element/attack_equip)
 	if(!icon_state)
 		item_flags |= ABSTRACT
 
@@ -84,18 +82,8 @@
 	var/datum/weakref/clothing
 
 /obj/item/food/clothing/MakeEdible()
-	AddComponent(/datum/component/edible,\
-		initial_reagents = food_reagents,\
-		food_flags = food_flags,\
-		foodtypes = foodtypes,\
-		volume = max_volume,\
-		eat_time = eat_time,\
-		tastes = tastes,\
-		eatverbs = eatverbs,\
-		bite_consumption = bite_consumption,\
-		microwaved_type = microwaved_type,\
-		junkiness = junkiness,\
-		after_eat = CALLBACK(src, .proc/after_eat))
+	. = ..()
+	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()
@@ -104,8 +92,8 @@
 	else
 		qdel(src)
 
-/obj/item/clothing/attack(mob/living/M, mob/living/user, params)
-	if(user.combat_mode || !ismoth(M) || ispickedupmob(src))
+/obj/item/clothing/attack(mob/living/target, mob/living/user, params)
+	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
 		return ..()
 	if(clothing_flags & INEDIBLE_CLOTHING)
 		return ..()
@@ -113,7 +101,7 @@
 		moth_snack = new
 		moth_snack.name = name
 		moth_snack.clothing = WEAKREF(src)
-	moth_snack.attack(M, user, params)
+	moth_snack.attack(target, user, params)
 
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(!istype(W, repairable_by))
@@ -201,7 +189,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.visible_message(span_danger("The [zone_name] on [C]'s [src.name] is [break_verb] away!"), span_userdanger("The [zone_name] on your [src.name] is [break_verb] away!"), vision_distance = COMBAT_MESSAGE_RANGE)
-		RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
+		RegisterSignal(C, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
 
 	zones_disabled++
 	body_parts_covered &= ~body_zone2cover_flags(def_zone)
@@ -247,7 +235,7 @@
 		return
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
-			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle, override = TRUE)
+			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
 		for(var/trait in clothing_traits)
 			ADD_CLOTHING_TRAIT(user, trait)
 		if (LAZYLEN(user_vars_to_edit))
@@ -309,7 +297,7 @@
 		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee)
 			readout += "\n<b>ARMOR (I-X)</b>"
 			if(armor.bio)
-				readout += "\nTOXIN [armor_to_protection_class(armor.bio)]"
+				readout += "\nBIOHAZARD [armor_to_protection_class(armor.bio)]"
 			if(armor.bomb)
 				readout += "\nEXPLOSIVE [armor_to_protection_class(armor.bomb)]"
 			if(armor.bullet)
@@ -363,6 +351,17 @@
 		else
 			to_chat(M, span_warning("[src] start[p_s()] to fall apart!"))
 
+// you just dont get the same feeling with handwashed clothes
+/obj/item/clothing/machine_wash()
+	. = ..()
+	var/fresh_mood = AddComponent( \
+		/datum/component/onwear_mood, \
+		saved_event_type = /datum/mood_event/fresh_laundry, \
+		examine_string = "[src] looks crisp and pristine.", \
+	)
+
+	QDEL_IN(fresh_mood, 2 MINUTES)
+
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	damaged_clothes = damaged_state
@@ -412,7 +411,7 @@ BLIND     // can't see anything
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
-	update_action_buttons()
+	update_item_action_buttons()
 	return TRUE
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
@@ -452,7 +451,7 @@ BLIND     // can't see anything
 		return ..()
 	if(damage_flag == BOMB)
 		//so the shred survives potential turf change from the explosion.
-		addtimer(CALLBACK(src, .proc/_spawn_shreds), 1)
+		addtimer(CALLBACK(src, PROC_REF(_spawn_shreds)), 1)
 		deconstruct(FALSE)
 	if(damage_flag == CONSUME) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
 		var/turf/current_position = get_turf(src)

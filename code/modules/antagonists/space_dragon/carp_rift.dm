@@ -9,7 +9,8 @@
 	name = "Summon Rift"
 	desc = "Summon a rift to bring forth a horde of space carp."
 	background_icon_state = "bg_default"
-	icon_icon = 'icons/mob/actions/actions_space_dragon.dmi'
+	overlay_icon_state = "bg_default_border"
+	button_icon = 'icons/mob/actions/actions_space_dragon.dmi'
 	button_icon_state = "carp_rift"
 
 /datum/action/innate/summon_rift/Activate()

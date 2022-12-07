@@ -14,7 +14,7 @@
 /datum/brain_trauma/mild/hallucinations/on_life(delta_time, times_fired)
 	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
 		return
-	if(HAS_TRAIT(owner, TRAIT_HALLUCINATION_SUPPRESSED))
+	if(HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
 		return
 
 	owner.adjust_hallucinations_up_to(10 SECONDS * delta_time, 100 SECONDS)
@@ -178,8 +178,8 @@
 			to_chat(owner, span_warning("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
 			owner.Immobilize(20)
 			owner.emote("cough")
-			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 6)
-			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 12)
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/, emote), "cough"), 6)
+			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/, emote), "cough"), 12)
 		owner.emote("cough")
 	..()
 

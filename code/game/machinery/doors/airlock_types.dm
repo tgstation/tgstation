@@ -92,7 +92,6 @@
 
 /obj/machinery/door/airlock/glass/incinerator
 	autoclose = FALSE
-	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
 	req_access = list(ACCESS_SYNDICATE)
 
@@ -135,7 +134,6 @@
 
 /obj/machinery/door/airlock/research/glass/incinerator
 	autoclose = FALSE
-	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
 
 /obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior
@@ -346,7 +344,6 @@
 
 /obj/machinery/door/airlock/public/glass/incinerator
 	autoclose = FALSE
-	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
 
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior

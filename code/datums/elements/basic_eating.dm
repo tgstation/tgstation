@@ -4,8 +4,8 @@
  * Small behavior for non-carbons to eat certain stuff they interact with
  */
 /datum/element/basic_eating
-	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	///Path of the reagent added
 	var/heal_amt
 	/// Types the animal can eat.
@@ -21,9 +21,9 @@
 	src.food_types = food_types
 
 	//this lets players eat
-	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, .proc/on_unarm_attack)
+	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarm_attack))
 	//this lets ai eat. yes, i'm serious
-	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/on_pre_attackingtarget)
+	RegisterSignal(target, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_pre_attackingtarget))
 
 /datum/element/basic_eating/Detach(datum/target)
 	UnregisterSignal(target, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))

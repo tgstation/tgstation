@@ -47,9 +47,6 @@
 	hidden = TRUE
 	dir = NORTH
 	port_direction = SOUTH
-	width = 5
-	height = 7
-	dwidth = 2
 
 /obj/docking_port/mobile/syndicate_fighter/fighter_one
 	name = "syndicate fighter one"
@@ -71,9 +68,6 @@
 	dir = NORTH
 	port_direction = SOUTH
 	preferred_direction = WEST
-	width = 14
-	dwidth = 6
-	height = 7
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter
 	name = "syndicate fighter navigation computer"
@@ -161,7 +155,7 @@
 	if(!team)
 		team = new()
 		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
-		if(nuke.r_code == "ADMIN")
+		if(nuke.r_code == NUKE_CODE_UNSET)
 			nuke.r_code = random_nukecode()
 		team.nuke = nuke
 		team.update_objectives()
@@ -172,6 +166,7 @@
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
 				spawner.create(our_candidate)
+				spawner.antag_team.players_spawned += (our_candidate.ckey)
 				candidates.Splice(1, 2)
 				notify_ghosts(
 					"The battlecruiser has an object of interest: [our_candidate]!",

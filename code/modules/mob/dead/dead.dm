@@ -12,7 +12,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
-	SET_PLANE_IMPLICIT(src, plane)
+	// Initial is non standard here, but ghosts move before they get here so it's needed. this is a cold path too so it's ok
+	SET_PLANE_IMPLICIT(src, initial(plane))
 	tag = "mob_[next_mob_id++]"
 	add_to_mob_list()
 
@@ -22,6 +23,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		add_verb(src, /mob/dead/proc/server_hop)
 	set_focus(src)
 	become_hearing_sensitive()
+	log_mob_tag("CREATED: [key_name(src)] \[[src.type]\]")
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/canUseStorage()
@@ -86,7 +88,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	new /atom/movable/screen/splash(null, C)
 
 	notransform = TRUE
-	sleep(29) //let the animation play
+	sleep(2.9 SECONDS) //let the animation play
 	notransform = FALSE
 
 	if(!C)
