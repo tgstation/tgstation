@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - bugfix: "fixed using the changeling tentacle arm via right mouse click holding people up instead of firing it. Now it will fire like normal"
