@@ -40,6 +40,11 @@
 	for(var/obj/item/reagent_containers/cup/glass/glass_subtypes as anything in subtypesof(/obj/item/reagent_containers/cup))
 		var/glass_icon = initial(glass_subtypes.icon)
 		var/glass_icon_state = initial(glass_subtypes.icon_state)
+		if(!glass_icon_state)
+			continue
+		if(!glass_icon)
+			Fail("[glass_subtypes] had an icon state ([glass_icon_state]) but no icon file.")
+			continue
 		if(icon_exists(glass_icon, glass_icon_state))
 			continue
 		Fail("[glass_subtypes] had an icon state ([glass_icon_state]) not present in its icon ([glass_icon]).")
