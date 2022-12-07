@@ -120,30 +120,30 @@ SUBSYSTEM_DEF(explosions)
 	var/y0 = epicenter.y
 	var/list/wipe_colours = list()
 	var/list/cached_exp_block = list()
-	for(var/turf/T in prepare_explosion_turfs(max_range, epicenter))
-		wipe_colours += T
-		var/our_x = T.x
-		var/our_y = T.y
+	for(var/turf/explode in prepare_explosion_turfs(max_range, epicenter))
+		wipe_colours += explode
+		var/our_x = explode.x
+		var/our_y = explode.y
 		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
 
 		if(newmode == "Yes")
-			if(T != epicenter)
-				var/our_block = cached_exp_block[get_step_towards(T, epicenter)]
+			if(explode != epicenter)
+				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
 				dist += our_block
-				cached_exp_block[T] = our_block + T.explosive_resistance
+				cached_exp_block[explode] = our_block + explode.explosive_resistance
 			else
-				cached_exp_block[T] = T.explosive_resistance
+				cached_exp_block[explode] = explode.explosive_resistance
 
 		dist = round(dist, 0.01)
 		if(dist < dev)
-			T.color = "red"
-			T.maptext = MAPTEXT("[dist]")
+			explode.color = "red"
+			explode.maptext = MAPTEXT("[dist]")
 		else if (dist < heavy)
-			T.color = "yellow"
-			T.maptext = MAPTEXT("[dist]")
+			explode.color = "yellow"
+			explode.maptext = MAPTEXT("[dist]")
 		else if (dist < light)
-			T.color = "blue"
-			T.maptext = MAPTEXT("[dist]")
+			explode.color = "blue"
+			explode.maptext = MAPTEXT("[dist]")
 		else
 			continue
 
@@ -390,10 +390,9 @@ SUBSYSTEM_DEF(explosions)
 
 	//lists are guaranteed to contain at least 1 turf at this point
 	//we presuppose that we'll be iterating away from the epicenter
-	for(var/TI in affected_turfs)
-		var/turf/T = TI
-		var/our_x = T.x
-		var/our_y = T.y
+	for(var/turf/explode as anything in affected_turfs)
+		var/our_x = explode.x
+		var/our_y = explode.y
 		var/dist = CHEAP_HYPOTENUSE(our_x, our_y, x0, y0)
 
 		// Using this pattern, block will flow out from blocking turfs, essentially caching the recursion
@@ -401,12 +400,12 @@ SUBSYSTEM_DEF(explosions)
 		// So we always sample from a "loop" closer
 		// It's kind of behaviorly unimpressive that that's a problem for the future
 		if(reactionary)
-			if(T != epicenter)
-				var/our_block = cached_exp_block[get_step_towards(T, epicenter)]
-				dist += our_block
-				cached_exp_block[T] = our_block + T.explosive_resistance
+			if(explode == epicenter)
+				cached_exp_block[explode] = explode.explosive_resistance
 			else
-				cached_exp_block[T] = T.explosive_resistance
+				var/our_block = cached_exp_block[get_step_towards(explode, epicenter)]
+				dist += our_block
+				cached_exp_block[explode] = our_block + explode.explosive_resistance
 
 
 		var/severity = EXPLODE_NONE
@@ -417,42 +416,41 @@ SUBSYSTEM_DEF(explosions)
 		else if(dist < light_impact_range)
 			severity = EXPLODE_LIGHT
 
-		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
+		if(explode == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/items = list()
-			for(var/atom/holder as anything in T)
+			for(var/atom/holder as anything in explode)
 				if (length(holder.contents) && !(holder.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += holder.get_all_contents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
 				if(isliving(holder))
 					items -= holder		//Stops mobs from taking double damage from explosions originating from them/their turf, such as from projectiles
-			for(var/atom/movable/movable_thing as anything in items)
-				switch(severity)
-					if(EXPLODE_DEVASTATE)
-						SSexplosions.high_mov_atom += movable_thing
-					if(EXPLODE_HEAVY)
-						SSexplosions.med_mov_atom += movable_thing
-					if(EXPLODE_LIGHT)
-						SSexplosions.low_mov_atom += movable_thing
+			switch(severity)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.high_mov_atom += items
+				if(EXPLODE_HEAVY)
+					SSexplosions.med_mov_atom += items
+				if(EXPLODE_LIGHT)
+					SSexplosions.low_mov_atom += items
 		switch(severity)
 			if(EXPLODE_DEVASTATE)
-				SSexplosions.highturf += T
+				SSexplosions.highturf += explode
 			if(EXPLODE_HEAVY)
-				SSexplosions.medturf += T
+				SSexplosions.medturf += explode
 			if(EXPLODE_LIGHT)
-				SSexplosions.lowturf += T
+				SSexplosions.lowturf += explode
 
-		if(prob(40) && dist < flame_range && !isspaceturf(T) && !T.density)
-			flameturf += T
+		if(prob(40) && dist < flame_range && !isspaceturf(explode) && !explode.density)
+			flameturf += explode
 
 		//--- THROW ITEMS AROUND ---
-		if (T.explosion_throw_details)
-			var/list/throwingturf = T.explosion_throw_details
+		if (explode.explosion_throw_details)
+			var/list/throwingturf = explode.explosion_throw_details
 			if (throwingturf[1] < max_range - dist)
 				throwingturf[1] = max_range - dist
-				throwingturf[2] = get_dir(epicenter,T)
+				throwingturf[2] = get_dir(epicenter, explode)
 				throwingturf[3] = max_range
 		else
-			T.explosion_throw_details = list(max_range - dist, get_dir(epicenter,T), max_range)
-			throwturf += T
+			explode.explosion_throw_details = list(max_range - dist, get_dir(epicenter, explode), max_range)
+			throwturf += explode
 
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
@@ -583,19 +581,25 @@ SUBSYSTEM_DEF(explosions)
 	var/our_y = epicenter.y
 	var/our_z = epicenter.z
 
+	var/max_x = world.maxx
+	var/max_y = world.maxy
 	for(var/i in 1 to range)
 		var/lowest_x = our_x - i
 		var/lowest_y = our_y - i
 		var/highest_x = our_x + i
 		var/highest_y = our_y + i
 		// top left to one before top right
-		outlist += block(locate(lowest_x, highest_y, our_z), locate(highest_x - 1, highest_y, our_z))
+		if(highest_y <= max_y)
+			outlist += block(locate(max(lowest_x, 1), highest_y, our_z), locate(min(highest_x - 1, max_x), highest_y, our_z))
 		// top right to one before bottom right
-		outlist += block(locate(highest_x, highest_y, our_z), locate(highest_x, lowest_y + 1, our_z))
+		if(highest_x <= max_x)
+			outlist += block(locate(highest_x, min(highest_y, max_y), our_z), locate(highest_x, max(lowest_y + 1, 1), our_z))
 		// bottom right to one before bottom left
-		outlist += block(locate(highest_x, lowest_y, our_z), locate(lowest_x + 1, lowest_y, our_z))
+		if(lowest_y >= 1)
+			outlist += block(locate(min(highest_x, max_x), lowest_y, our_z), locate(max(lowest_x + 1, 1), lowest_y, our_z))
 		// bottom left to one before top left
-		outlist += block(locate(lowest_x, lowest_y, our_z), locate(lowest_x, highest_y - 1, our_z))
+		if(lowest_x >= 1)
+			outlist += block(locate(lowest_x, max(lowest_y, 1), our_z), locate(lowest_x, min(highest_y - 1, max_y), our_z))
 
 	return outlist
 
@@ -686,15 +690,15 @@ SUBSYSTEM_DEF(explosions)
 		for (var/thing in throw_turf)
 			if (!thing)
 				continue
-			var/turf/T = thing
-			var/list/L = T.explosion_throw_details
-			T.explosion_throw_details = null
-			if (length(L) != 3)
+			var/turf/explode = thing
+			var/list/details = explode.explosion_throw_details
+			explode.explosion_throw_details = null
+			if (length(details) != 3)
 				continue
-			var/throw_range = L[1]
-			var/throw_dir = L[2]
-			var/max_range = L[3]
-			for(var/atom/movable/A in T)
+			var/throw_range = details[1]
+			var/throw_dir = details[2]
+			var/max_range = details[3]
+			for(var/atom/movable/A in explode)
 				if(QDELETED(A))
 					continue
 				if(!A.anchored && A.move_resist != INFINITY)
