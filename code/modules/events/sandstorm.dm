@@ -53,7 +53,7 @@
 		start_side = pick(GLOB.cardinals)
 
 	var/start_side_text = "unknown"
-	switch(start_side) //EOB mentioned the space maps (the only ones that can be hit by this event) using ship directions in the future. dir2text() would save lines but would acknowledge that we're using cardinals in space.
+	switch(start_side)
 		if(NORTH)
 			start_side_text = "fore"
 		if(SOUTH)
