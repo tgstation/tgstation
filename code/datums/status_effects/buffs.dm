@@ -460,7 +460,7 @@
 /datum/status_effect/nest_sustenance/tick(delta_time, times_fired)
 	. = ..()
 
-	if(owner.stat != DEAD) //If the victim has died due to complications in the nest
+	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
 		qdel(src)
 		return
 
