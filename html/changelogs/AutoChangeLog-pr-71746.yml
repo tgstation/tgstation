@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscdel: "Removed icon_state randomization (all but one states) from space turfs to shave a bit of time when initializing maps. This only affects those who have parallax disabled!"
+  - imageadd: "Prettied up the sole remaining icon state an itsy bit to compensate for it."
