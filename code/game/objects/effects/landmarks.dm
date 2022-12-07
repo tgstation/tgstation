@@ -450,8 +450,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/lazy_template_pivot
 	name = "lazy template pivot"
 	icon_state = "lazy_pivot" // todo: icons for all this shit
+	/// If this is true each load will increment an index keyed to the type and it will load [map_name]_[index]
+	var/uses_multiple_allocations = FALSE
 	var/key
-	var/map_path
+	var/map_dir = "_maps/templates/lazy_templates"
+	var/map_name
 	var/map_width
 	var/map_height
 
@@ -469,11 +472,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
  */
 /obj/effect/landmark/lazy_template_pivot/proc/lazy_load()
 	var/turf/my_turf = get_turf(src)
+	var/static/list/multiple_allocation_hash
 
-	if(!map_path || !fexists(map_path))
-		CRASH("lazy_template_pivot [type] has an invalid map_path: '[map_path]'")
+	var/load_path = "[map_dir]/[map_name].dmm"
+	if(uses_multiple_allocations)
+		var/times = LAZYACCESS(multiple_allocation_hash, type) || 0
+		times += 1
+		LAZYSET(multiple_allocation_hash, type, times)
+		load_path = "[map_dir]/[map_name]_[times].dmm"
 
-	var/datum/map_template/loading = new(path = map_path, cache = TRUE)
+	if(!load_path || !fexists(load_path))
+		CRASH("lazy_template_pivot [type] has an invalid map_path: '[load_path]'")
+
+	var/datum/map_template/loading = new(path = load_path, cache = TRUE)
 
 	// ensure that what we're loading isn't larger than whats expected
 	if(map_width != loading.width || map_height != loading.height)
@@ -485,23 +496,31 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/lazy_template_pivot/nukie_base
 	icon_state = "nukie"
 	key = LAZY_TEMPLATE_KEY_NUKIEBASE
-	map_path = "_maps/templates/lazy_templates/nukie_base.dmm"
+	map_name = "nukie_base"
 	map_width = 89
 	map_height = 100
 
 /obj/effect/landmark/lazy_template_pivot/wizard_dem
 	icon_state = "wizard_den"
 	key = LAZY_TEMPLATE_KEY_WIZARDDEN
-	map_path = "_maps/templates/lazy_templates/wizard_den.dmm"
+	map_name = "wizard_den"
 	map_width = 32
 	map_height = 44
 
 /obj/effect/landmark/lazy_template_pivot/ninja_holding_facility
 	icon_state = "ninja_holding"
 	key = LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY
-	map_path = "_maps/templates/lazy_templates/ninja_den.dmm"
+	map_name = "ninja_den"
 	map_width = 51
 	map_height = 35
+
+/obj/effect/landmark/lazy_template_pivot/abductor_ship
+	icon_state = "abductor"
+	key = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS
+	uses_multiple_allocations = TRUE
+	map_name = "abductor_ship"
+	map_width = 7
+	map_height = 7
 
 /// Marks the bottom left of the testing zone.
 /// In landmarks.dm and not unit_test.dm so it is always active in the mapping tools.

@@ -491,8 +491,8 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	if(!check_rights(R_SPAWN))
 		return
 
-	var/list/choices
-	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", LAZY_TEMPLATE_KEY_LIST_ALL)
+	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL
+	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", choices)
 	if(!choice)
 		return
 	choice = choices[choice]

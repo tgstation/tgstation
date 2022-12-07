@@ -1935,31 +1935,6 @@
 "km" = (
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/control)
-"ko" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien20"
-	},
-/area/centcom/abductor_ship)
-"kp" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien21"
-	},
-/area/centcom/abductor_ship)
-"kq" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien22"
-	},
-/area/centcom/abductor_ship)
-"kr" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien23"
-	},
-/area/centcom/abductor_ship)
-"ks" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien24"
-	},
-/area/centcom/abductor_ship)
 "kx" = (
 /obj/structure/filingcabinet/medical,
 /obj/effect/turf_decal/stripes/line{
@@ -2053,26 +2028,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"kK" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien16"
-	},
-/area/centcom/abductor_ship)
-"kL" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien17"
-	},
-/area/centcom/abductor_ship)
-"kP" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien18"
-	},
-/area/centcom/abductor_ship)
-"kQ" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien19"
-	},
-/area/centcom/abductor_ship)
 "kR" = (
 /obj/structure/sign/warning/secure_area,
 /turf/closed/indestructible/riveted,
@@ -2190,23 +2145,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"lg" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien14"
-	},
-/area/centcom/abductor_ship)
-"li" = (
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"lj" = (
-/obj/machinery/limbgrower/fullupgrade,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"lk" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien15"
-	},
-/area/centcom/abductor_ship)
 "ln" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/brown,
@@ -2286,52 +2224,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
-"lB" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien12"
-	},
-/area/centcom/abductor_ship)
-"lC" = (
-/obj/structure/table/abductor,
-/obj/item/hemostat/alien{
-	pixel_y = 16
-	},
-/obj/item/surgicaldrill/alien{
-	pixel_y = -7
-	},
-/obj/item/retractor/alien{
-	pixel_y = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"lD" = (
-/obj/machinery/computer/camera_advanced/abductor{
-	team_number = 1
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"lE" = (
-/obj/structure/table/optable/abductor,
-/obj/item/surgical_drapes{
-	pixel_y = -5
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"lG" = (
-/obj/structure/table/abductor,
-/obj/machinery/recharger{
-	pixel_x = 7
-	},
-/obj/item/paper/guides/antag/abductor{
-	pixel_x = -5
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"lH" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien13"
-	},
-/area/centcom/abductor_ship)
 "lJ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Shuttle Control Office"
@@ -2426,29 +2318,9 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"lX" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien10"
-	},
-/area/centcom/abductor_ship)
-"lY" = (
-/obj/item/scalpel/alien{
-	pixel_y = 7
-	},
-/obj/structure/table/abductor,
-/obj/item/cautery/alien{
-	pixel_y = 15
-	},
-/obj/item/circular_saw/alien{
-	pixel_y = -2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "lZ" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien11"
-	},
-/area/centcom/abductor_ship)
+/turf/cordon,
+/area/misc/cordon)
 "md" = (
 /obj/machinery/computer/shuttle/labor,
 /obj/effect/turf_decal/stripes/line{
@@ -2517,46 +2389,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"mr" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien6"
-	},
-/area/centcom/abductor_ship)
-"ms" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien7"
-	},
-/area/centcom/abductor_ship)
-"mt" = (
-/obj/machinery/abductor/gland_dispenser,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"mu" = (
-/obj/structure/table/abductor,
-/obj/item/toy/plush/abductor{
-	pixel_x = -7;
-	pixel_y = 14
-	},
-/obj/item/toy/plush/abductor/agent{
-	pixel_x = 9;
-	pixel_y = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"mv" = (
-/obj/structure/bed/abductor,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"mw" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien8"
-	},
-/area/centcom/abductor_ship)
-"mx" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien9"
-	},
-/area/centcom/abductor_ship)
 "mD" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/ferry)
@@ -2755,29 +2587,10 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"nb" = (
-/turf/closed/indestructible/abductor,
-/area/centcom/abductor_ship)
-"nc" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien2"
-	},
-/area/centcom/abductor_ship)
-"nd" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien3"
-	},
-/area/centcom/abductor_ship)
-"ne" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien4"
-	},
-/area/centcom/abductor_ship)
 "nf" = (
-/turf/closed/indestructible/abductor{
-	icon_state = "alien5"
-	},
-/area/centcom/abductor_ship)
+/obj/effect/landmark/lazy_template_pivot/abductor_ship,
+/turf/open/space/basic,
+/area/misc/lazy_pivot_allocation)
 "ni" = (
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/red/fourcorners,
@@ -3668,12 +3481,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supplypod)
-"qJ" = (
-/obj/machinery/abductor/console{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "qL" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security"
@@ -3730,12 +3537,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/courtroom)
-"rg" = (
-/obj/machinery/abductor/console{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "rk" = (
 /turf/open/floor/wood,
 /area/centcom/central_command_areas/courtroom)
@@ -3940,12 +3741,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/general,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"si" = (
-/obj/machinery/abductor/experiment{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "sj" = (
 /obj/docking_port/stationary{
 	dwidth = 1;
@@ -4026,12 +3821,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/ferry)
-"sw" = (
-/obj/machinery/computer/camera_advanced/abductor{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "sx" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -4361,12 +4150,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
-"tP" = (
-/obj/machinery/abductor/experiment{
-	team_number = 1
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "tQ" = (
 /obj/effect/landmark/start/new_player,
 /turf/closed/indestructible/start_area,
@@ -5234,12 +5017,6 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/control)
-"xO" = (
-/obj/machinery/computer/camera_advanced/abductor{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "xQ" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/light/directional/south,
@@ -5682,12 +5459,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/loading/two)
-"zR" = (
-/obj/machinery/abductor/experiment{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "zT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/light/floor,
@@ -5795,24 +5566,6 @@
 /obj/effect/turf_decal/siding/yellow,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
-"Au" = (
-/obj/machinery/abductor/experiment{
-	team_number = 3
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"Av" = (
-/obj/machinery/abductor/console{
-	team_number = 3
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"Aw" = (
-/obj/machinery/abductor/pad{
-	team_number = 3
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "AC" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -5938,24 +5691,12 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
-"Be" = (
-/obj/machinery/computer/camera_advanced/abductor{
-	team_number = 3
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "Bj" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/administration)
-"Bl" = (
-/obj/machinery/abductor/console{
-	team_number = 1
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "Bm" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/weldingtool/experimental,
@@ -6177,16 +5918,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
-"BQ" = (
-/obj/effect/landmark/abductor/scientist,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
-"BR" = (
-/obj/effect/landmark/abductor/agent{
-	team_number = 3
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "BT" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -6678,12 +6409,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/ferry)
-"Ge" = (
-/obj/machinery/abductor/pad{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "Gf" = (
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -6695,10 +6420,6 @@
 /obj/effect/landmark/lazy_template_pivot/nukie_base,
 /turf/open/space/basic,
 /area/misc/lazy_pivot_allocation)
-"Gk" = (
-/obj/effect/landmark/abductor/agent,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "Gs" = (
 /obj/machinery/power/smes/magical,
 /obj/effect/turf_decal/stripes/line,
@@ -6831,12 +6552,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/evacuation)
-"HP" = (
-/obj/effect/landmark/abductor/scientist{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "Ii" = (
 /obj/structure/bed{
 	dir = 4
@@ -7124,12 +6839,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
-"JC" = (
-/obj/machinery/abductor/pad{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "JD" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomehea";
@@ -7177,12 +6886,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
-"JS" = (
-/obj/machinery/abductor/pad{
-	team_number = 1
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "JV" = (
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -7764,12 +7467,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
-"Nz" = (
-/obj/effect/landmark/abductor/scientist{
-	team_number = 3
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "NC" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -7844,12 +7541,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/centcom/tdome/observation)
-"NT" = (
-/obj/effect/landmark/abductor/agent{
-	team_number = 2
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "NU" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom"
@@ -7870,12 +7561,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
-"NY" = (
-/obj/effect/landmark/abductor/agent{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "NZ" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -8696,12 +8381,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
-"RQ" = (
-/obj/structure/closet/abductor,
-/obj/item/storage/box/alienhandcuffs,
-/obj/item/reagent_containers/cup/beaker/synthflesh,
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "RR" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -8941,12 +8620,6 @@
 /obj/item/clothing/accessory/medal/gold,
 /turf/open/floor/iron/grimy,
 /area/centcom/tdome/observation)
-"Tm" = (
-/obj/effect/landmark/abductor/scientist{
-	team_number = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/centcom/abductor_ship)
 "Tn" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -10564,23 +10237,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
 aa
 aa
 aa
@@ -10821,23 +10494,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+nf
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+nf
+lZ
 LV
 LV
 LV
@@ -11004,11 +10677,6 @@ aa
 aa
 aa
 aa
-kK
-lg
-lB
-lX
-mr
 aa
 aa
 aa
@@ -11031,11 +10699,6 @@ aa
 aa
 aa
 aa
-kK
-lg
-lB
-lX
-mr
 aa
 aa
 aa
@@ -11061,11 +10724,6 @@ aa
 aa
 aa
 aa
-kK
-lg
-lB
-lX
-mr
 aa
 aa
 aa
@@ -11088,13 +10746,28 @@ aa
 aa
 aa
 aa
-kK
-lg
-lB
-lX
-mr
 aa
 aa
+aa
+aa
+aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 LW
@@ -11260,13 +10933,6 @@ aa
 aa
 aa
 aa
-ko
-kL
-sw
-lC
-lY
-ms
-nb
 aa
 aa
 aa
@@ -11287,13 +10953,6 @@ aa
 aa
 aa
 aa
-ko
-kL
-Be
-lC
-lY
-ms
-nb
 aa
 aa
 aa
@@ -11317,13 +10976,6 @@ aa
 aa
 aa
 aa
-ko
-kL
-xO
-lC
-lY
-ms
-nb
 aa
 aa
 aa
@@ -11344,14 +10996,35 @@ aa
 aa
 aa
 aa
-ko
-kL
-lD
-lC
-lY
-ms
-nb
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 zi
@@ -11517,13 +11190,6 @@ aa
 aa
 aa
 aa
-kp
-si
-li
-Tm
-li
-mt
-nc
 aa
 aa
 aa
@@ -11544,13 +11210,6 @@ aa
 aa
 aa
 aa
-kp
-Au
-li
-Nz
-li
-mt
-nc
 aa
 aa
 aa
@@ -11574,13 +11233,6 @@ aa
 aa
 aa
 aa
-kp
-zR
-li
-HP
-li
-mt
-nc
 aa
 aa
 aa
@@ -11601,14 +11253,35 @@ aa
 aa
 aa
 aa
-kp
-tP
-li
-BQ
-li
-mt
-nc
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 zi
@@ -11774,13 +11447,6 @@ aa
 aa
 aa
 aa
-kq
-qJ
-li
-lE
-li
-mu
-nd
 aa
 aa
 aa
@@ -11801,13 +11467,6 @@ aa
 aa
 aa
 aa
-kq
-Av
-li
-lE
-li
-mu
-nd
 aa
 aa
 aa
@@ -11831,13 +11490,6 @@ aa
 aa
 aa
 aa
-kq
-rg
-li
-lE
-li
-mu
-nd
 aa
 aa
 aa
@@ -11858,14 +11510,35 @@ aa
 aa
 aa
 aa
-kq
-Bl
-li
-lE
-li
-mu
-nd
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 zi
@@ -12031,13 +11704,6 @@ aa
 aa
 aa
 aa
-kr
-Ge
-li
-NY
-li
-mv
-ne
 aa
 aa
 aa
@@ -12058,13 +11724,6 @@ aa
 aa
 aa
 aa
-kr
-Aw
-li
-BR
-li
-mv
-ne
 aa
 aa
 aa
@@ -12088,13 +11747,6 @@ aa
 aa
 aa
 aa
-kr
-JC
-li
-NT
-li
-mv
-ne
 aa
 aa
 aa
@@ -12115,14 +11767,35 @@ aa
 aa
 aa
 aa
-kr
-JS
-li
-Gk
-li
-mv
-ne
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 ik
@@ -12288,13 +11961,6 @@ aa
 aa
 aa
 aa
-ks
-kP
-RQ
-lG
-lj
-mw
-nf
 aa
 aa
 aa
@@ -12315,13 +11981,6 @@ aa
 aa
 aa
 aa
-ks
-kP
-RQ
-lG
-lj
-mw
-nf
 aa
 aa
 aa
@@ -12345,13 +12004,6 @@ aa
 aa
 aa
 aa
-ks
-kP
-RQ
-lG
-lj
-mw
-nf
 aa
 aa
 aa
@@ -12372,14 +12024,35 @@ aa
 aa
 aa
 aa
-ks
-kP
-RQ
-lG
-lj
-mw
-nf
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 zi
@@ -12546,97 +12219,97 @@ aa
 aa
 aa
 aa
-kQ
-lk
-lH
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 lZ
-mx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-kQ
-lk
-lH
 lZ
-mx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-kQ
-lk
-lH
 lZ
-mx
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-kQ
-lk
-lH
 lZ
-mx
-aa
-aa
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
 LV
 LX
 zi
@@ -12877,23 +12550,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+nf
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+nf
+lZ
 LV
 LW
 zi
@@ -13134,23 +12807,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 ik
@@ -13391,23 +13064,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 zi
@@ -13648,23 +13321,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 zi
@@ -13905,23 +13578,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 zi
@@ -14162,23 +13835,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LW
 LW
@@ -14419,23 +14092,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+Rn
+lZ
 LV
 LV
 LV
@@ -14676,23 +14349,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
+lZ
 aa
 aa
 aa

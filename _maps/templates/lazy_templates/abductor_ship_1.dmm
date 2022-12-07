@@ -1,0 +1,294 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien10"
+	},
+/area/centcom/abductor_ship)
+"b" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien23"
+	},
+/area/centcom/abductor_ship)
+"c" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien5"
+	},
+/area/centcom/abductor_ship)
+"e" = (
+/obj/machinery/computer/camera_advanced/abductor{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"f" = (
+/obj/structure/table/abductor,
+/obj/machinery/recharger{
+	pixel_x = 7
+	},
+/obj/item/paper/guides/antag/abductor{
+	pixel_x = -5
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"g" = (
+/obj/item/scalpel/alien{
+	pixel_y = 7
+	},
+/obj/structure/table/abductor,
+/obj/item/cautery/alien{
+	pixel_y = 15
+	},
+/obj/item/circular_saw/alien{
+	pixel_y = -2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"h" = (
+/obj/machinery/limbgrower/fullupgrade,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"j" = (
+/obj/structure/table/abductor,
+/obj/item/toy/plush/abductor{
+	pixel_x = -7;
+	pixel_y = 14
+	},
+/obj/item/toy/plush/abductor/agent{
+	pixel_x = 9;
+	pixel_y = 2
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"l" = (
+/obj/machinery/abductor/experiment{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"m" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien15"
+	},
+/area/centcom/abductor_ship)
+"n" = (
+/obj/structure/closet/abductor,
+/obj/item/storage/box/alienhandcuffs,
+/obj/item/reagent_containers/cup/beaker/synthflesh,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"o" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien2"
+	},
+/area/centcom/abductor_ship)
+"r" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien18"
+	},
+/area/centcom/abductor_ship)
+"s" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien12"
+	},
+/area/centcom/abductor_ship)
+"u" = (
+/obj/structure/table/optable/abductor,
+/obj/item/surgical_drapes{
+	pixel_y = -5
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"v" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien8"
+	},
+/area/centcom/abductor_ship)
+"w" = (
+/turf/closed/indestructible/abductor,
+/area/centcom/abductor_ship)
+"y" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien6"
+	},
+/area/centcom/abductor_ship)
+"z" = (
+/turf/cordon,
+/area/misc/cordon)
+"A" = (
+/obj/machinery/abductor/console{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"C" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien19"
+	},
+/area/centcom/abductor_ship)
+"D" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien21"
+	},
+/area/centcom/abductor_ship)
+"E" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien3"
+	},
+/area/centcom/abductor_ship)
+"G" = (
+/obj/machinery/abductor/pad{
+	team_number = 1
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"H" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien9"
+	},
+/area/centcom/abductor_ship)
+"J" = (
+/obj/effect/landmark/abductor/scientist,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"K" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien22"
+	},
+/area/centcom/abductor_ship)
+"L" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien14"
+	},
+/area/centcom/abductor_ship)
+"M" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien13"
+	},
+/area/centcom/abductor_ship)
+"O" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien24"
+	},
+/area/centcom/abductor_ship)
+"P" = (
+/obj/structure/bed/abductor,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"Q" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien7"
+	},
+/area/centcom/abductor_ship)
+"R" = (
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"S" = (
+/obj/effect/landmark/abductor/agent,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"T" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien4"
+	},
+/area/centcom/abductor_ship)
+"U" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien17"
+	},
+/area/centcom/abductor_ship)
+"V" = (
+/obj/structure/table/abductor,
+/obj/item/hemostat/alien{
+	pixel_y = 16
+	},
+/obj/item/surgicaldrill/alien{
+	pixel_y = -7
+	},
+/obj/item/retractor/alien{
+	pixel_y = 4
+	},
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+"W" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien16"
+	},
+/area/centcom/abductor_ship)
+"X" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien20"
+	},
+/area/centcom/abductor_ship)
+"Y" = (
+/turf/closed/indestructible/abductor{
+	icon_state = "alien11"
+	},
+/area/centcom/abductor_ship)
+"Z" = (
+/obj/machinery/abductor/gland_dispenser,
+/turf/open/floor/plating/abductor,
+/area/centcom/abductor_ship)
+
+(1,1,1) = {"
+z
+W
+L
+s
+a
+y
+z
+"}
+(2,1,1) = {"
+X
+U
+e
+V
+g
+Q
+w
+"}
+(3,1,1) = {"
+D
+l
+R
+J
+R
+Z
+o
+"}
+(4,1,1) = {"
+K
+A
+R
+u
+R
+j
+E
+"}
+(5,1,1) = {"
+b
+G
+R
+S
+R
+P
+T
+"}
+(6,1,1) = {"
+O
+r
+n
+f
+h
+v
+c
+"}
+(7,1,1) = {"
+z
+C
+m
+M
+Y
+H
+z
+"}
