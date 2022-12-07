@@ -50,12 +50,12 @@
 	variation = pick(TREK_VARIATION_TOS, TREK_VARIATION_TNG, TREK_VARIATION_VOY, TREK_VARIATION_ENT)
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-/datum/station_trait/trek/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+/datum/station_trait/trek/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
 
-	if(!ishuman(living_mob)) //only humans wear stuff
+	if(!ishuman(spawned)) //only humans wear stuff
 		return
-	var/mob/living/carbon/human/crewmember = living_mob
+	var/mob/living/carbon/human/crewmember = spawned
 	var/list/department_to_jumpsuit = variation_to_dept[variation]
 	if(!department_to_jumpsuit)
 		return
@@ -66,7 +66,7 @@
 		departments += job.department_for_prefs
 	for(var/datum/job_department/department as anything in list() + job.departments_list)
 		for(var/departmental_bitflag in department_to_jumpsuit)
-			if(department.department_bitflags & text2num(departmental_bitflag))
+			if(initial(department.department_bitflags) & text2num(departmental_bitflag))
 				uniform = department_to_jumpsuit[departmental_bitflag]
 	if(!uniform)
 		return
