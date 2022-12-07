@@ -245,7 +245,7 @@ GLOBAL_LIST_INIT(meteorsE, list(/obj/effect/meteor/sand=45, /obj/effect/meteor/d
 //Sand
 /obj/effect/meteor/sand
 	name = "space sand"
-	icon_state = "dust" //maybe a new sprite?
+	icon_state = "dust"
 	hits = 2
 	hitpwr = EXPLODE_LIGHT
 	meteorsound = 'sound/items/dodgeball.ogg'
