@@ -41,20 +41,6 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	. = ..()
 	temperature_change_multiplier = min(temperature_change_multiplier, 1)
 
-/datum/hfr_fuel/plasma_oxy_fuel
-	id = "plasma_o2_fuel"
-	name = "Plasma + Oxygen fuel"
-	negative_temperature_multiplier = 2.5
-	positive_temperature_multiplier = 0.1
-	energy_concentration_multiplier = 10
-	fuel_consumption_multiplier = 3.3
-	gas_production_multiplier = 1.4
-	temperature_change_multiplier = 0.6
-	requirements = list(/datum/gas/plasma, /datum/gas/oxygen)
-	primary_products = list(/datum/gas/carbon_dioxide, /datum/gas/water_vapor)
-	secondary_products = list(/datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/freon, /datum/gas/nitrous_oxide, /datum/gas/pluoxium, /datum/gas/halon)
-	meltdown_flags = HYPERTORUS_FLAG_BASE_EXPLOSION | HYPERTORUS_FLAG_MINIMUM_SPREAD
-
 /datum/hfr_fuel/hydrogen_oxy_fuel
 	id = "h2_o2_fuel"
 	name = "Hydrogen + Oxygen fuel"
