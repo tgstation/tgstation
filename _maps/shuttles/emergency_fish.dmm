@@ -22,6 +22,7 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
+/obj/item/fishing_hook/shiny,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "az" = (
@@ -119,17 +120,14 @@
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "gd" = (
-/obj/item/fishing_hook/shiny,
-/obj/item/fishing_hook/shiny,
 /obj/item/fishing_hook/magnet,
-/obj/item/fishing_hook/magnet,
-/obj/item/fishing_hook/weighted,
 /obj/item/fishing_hook/weighted,
 /obj/effect/turf_decal/stripes,
 /obj/item/fishing_rod,
 /obj/structure/closet{
 	anchored = 1
 	},
+/obj/item/fishing_hook/rescue,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape)
 "gh" = (
@@ -378,10 +376,7 @@
 /area/shuttle/escape)
 "rj" = (
 /obj/docking_port/mobile/emergency{
-	name = "Angler's Choice emergency shuttle";
-	height = 13;
-	width = 27;
-	dwidth = 6
+	name = "Angler's Choice emergency shuttle"
 	},
 /obj/machinery/door/airlock/shuttle/glass,
 /obj/effect/turf_decal/tile/dark/fourcorners,
