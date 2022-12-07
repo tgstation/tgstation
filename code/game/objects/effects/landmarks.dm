@@ -454,11 +454,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	var/map_path
 
 /obj/effect/landmark/lazy_template_pivot/Initialize(mapload)
-	GLOB.lazy_template_pivots += src
+	LAZYADDASSOC(GLOB.lazy_template_pivots, key, src)
 	return ..()
 
 /obj/effect/landmark/lazy_template_pivot/Destroy(...)
-	GLOB.lazy_template_pivots -= src
+	LAZYREMOVEASSOC(GLOB.lazy_template_pivots, key, src)
 	return ..()
 
 /**
@@ -479,15 +479,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 		var/area/turf_area = get_area(turf)
 		if(turf_area.type != /area/misc/lazy_pivot_allocation)
 			CRASH("Attempted to load a lazy template pivot larger than the allocation for the pivot")
-
-	// change the area of the turfs to space
-	var/area/space_area = GLOB.areas_by_type[/area/space]
-	for(var/turf/turf as anything in affected)
-		var/area/turf_area = get_area(turf)
-		turf_area.turfs_to_uncontain += turf
-		space_area.contents += turf
-		space_area.contained_turfs += turf
-		turf.baseturfs = /turf/baseturf_bottom
 
 	if(!loading.load(my_turf))
 		stack_trace("Failed to lazy load!")
