@@ -40,6 +40,15 @@
 	if(can_hack_open)
 		. += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
 
+/obj/item/storage/secure/update_icon()
+	..()
+	if(!atom_storage)
+		return
+	if(atom_storage.locked)
+		icon_state = "[initial(icon_state)]_locked"
+	else
+		icon_state = "[initial(icon_state)]"
+
 /obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
 	if(can_hack_open && atom_storage.locked)
 		return ..()
@@ -117,22 +126,6 @@
 				attack_self(M)
 			return
 	return
-
-/obj/item/storage/secure/update_icon()
-	..()
-	if(!atom_storage)
-		return
-	if(atom_storage.locked)
-		icon_state = "[initial(icon_state)]_locked"
-	else
-		icon_state = "[initial(icon_state)][is_open ? "_open" : ""]"
-
-/obj/item/storage/secure/update_overlays()
-	. = ..()
-	if(!atom_storage || !has_door || !is_open)
-		return
-	var/mutable_appearance/door_overlay = mutable_appearance(icon, "[initial(icon_state)]_door")
-	. += door_overlay
 
 ///Secure Briefcase
 /obj/item/storage/secure/briefcase
@@ -223,10 +216,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 
 /obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()
-
 	lock_code = SSid_access.spare_id_safe_code
 	lock_set = TRUE
 	atom_storage.locked = TRUE
+	update_appearance()
 
 /obj/item/storage/secure/safe/caps_spare/PopulateContents()
 	new /obj/item/card/id/advanced/gold/captains_spare(src)
