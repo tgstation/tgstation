@@ -15,32 +15,32 @@
 	var/variation
 	var/static/list/variation_to_dept = list(
 		TREK_VARIATION_TOS = list(
-			DEPARTMENT_BITFLAG_ASSISTANT = /obj/item/clothing/under/trek/assistant,
-			DEPARTMENT_BITFLAG_SERVICE|DEPARTMENT_BITFLAG_CARGO = /obj/item/clothing/under/trek/srvcar,
-			DEPARTMENT_BITFLAG_MEDICAL|DEPARTMENT_BITFLAG_SCIENCE = /obj/item/clothing/under/trek/medsci,
-			DEPARTMENT_BITFLAG_ENGINEERING|DEPARTMENT_BITFLAG_SECURITY = /obj/item/clothing/under/trek/engsec,
-			DEPARTMENT_BITFLAG_COMMAND = /obj/item/clothing/under/trek/command,
+			"[DEPARTMENT_BITFLAG_ASSISTANT]" = /obj/item/clothing/under/trek/assistant,
+			"[DEPARTMENT_BITFLAG_SERVICE|DEPARTMENT_BITFLAG_CARGO]" = /obj/item/clothing/under/trek/srvcar,
+			"[DEPARTMENT_BITFLAG_MEDICAL|DEPARTMENT_BITFLAG_SCIENCE]" = /obj/item/clothing/under/trek/medsci,
+			"[DEPARTMENT_BITFLAG_ENGINEERING|DEPARTMENT_BITFLAG_SECURITY]" = /obj/item/clothing/under/trek/engsec,
+			"[DEPARTMENT_BITFLAG_COMMAND]" = /obj/item/clothing/under/trek/command,
 		),
 		TREK_VARIATION_TNG = list(
-			DEPARTMENT_BITFLAG_ASSISTANT = /obj/item/clothing/under/trek/assistant/next,
-			DEPARTMENT_BITFLAG_SERVICE|DEPARTMENT_BITFLAG_CARGO = /obj/item/clothing/under/trek/srvcar/next,
-			DEPARTMENT_BITFLAG_MEDICAL|DEPARTMENT_BITFLAG_SCIENCE = /obj/item/clothing/under/trek/medsci/next,
-			DEPARTMENT_BITFLAG_ENGINEERING|DEPARTMENT_BITFLAG_SECURITY = /obj/item/clothing/under/trek/engsec/next,
-			DEPARTMENT_BITFLAG_COMMAND = /obj/item/clothing/under/trek/command/next,
+			"[DEPARTMENT_BITFLAG_ASSISTANT]" = /obj/item/clothing/under/trek/assistant/next,
+			"[DEPARTMENT_BITFLAG_SERVICE|DEPARTMENT_BITFLAG_CARGO]" = /obj/item/clothing/under/trek/srvcar/next,
+			"[DEPARTMENT_BITFLAG_MEDICAL|DEPARTMENT_BITFLAG_SCIENCE]" = /obj/item/clothing/under/trek/medsci/next,
+			"[DEPARTMENT_BITFLAG_ENGINEERING|DEPARTMENT_BITFLAG_SECURITY]" = /obj/item/clothing/under/trek/engsec/next,
+			"[DEPARTMENT_BITFLAG_COMMAND]" = /obj/item/clothing/under/trek/command/next,
 		),
 		TREK_VARIATION_VOY = list(
-			DEPARTMENT_BITFLAG_ASSISTANT = /obj/item/clothing/under/trek/assistant/voy,
-			DEPARTMENT_BITFLAG_SERVICE|DEPARTMENT_BITFLAG_CARGO = /obj/item/clothing/under/trek/srvcar/voy,
-			DEPARTMENT_BITFLAG_MEDICAL|DEPARTMENT_BITFLAG_SCIENCE = /obj/item/clothing/under/trek/medsci/voy,
-			DEPARTMENT_BITFLAG_ENGINEERING|DEPARTMENT_BITFLAG_SECURITY = /obj/item/clothing/under/trek/engsec/voy,
-			DEPARTMENT_BITFLAG_COMMAND = /obj/item/clothing/under/trek/command/voy,
+			"[DEPARTMENT_BITFLAG_ASSISTANT]" = /obj/item/clothing/under/trek/assistant/voy,
+			"[DEPARTMENT_BITFLAG_SERVICE|DEPARTMENT_BITFLAG_CARGO]" = /obj/item/clothing/under/trek/srvcar/voy,
+			"[DEPARTMENT_BITFLAG_MEDICAL|DEPARTMENT_BITFLAG_SCIENCE]" = /obj/item/clothing/under/trek/medsci/voy,
+			"[DEPARTMENT_BITFLAG_ENGINEERING|DEPARTMENT_BITFLAG_SECURITY]" = /obj/item/clothing/under/trek/engsec/voy,
+			"[DEPARTMENT_BITFLAG_COMMAND]" = /obj/item/clothing/under/trek/command/voy,
 		),
 		TREK_VARIATION_ENT = list(
-			DEPARTMENT_BITFLAG_ASSISTANT = /obj/item/clothing/under/trek/assistant/ent,
-			DEPARTMENT_BITFLAG_SERVICE|DEPARTMENT_BITFLAG_CARGO = /obj/item/clothing/under/trek/srvcar/ent,
-			DEPARTMENT_BITFLAG_MEDICAL|DEPARTMENT_BITFLAG_SCIENCE = /obj/item/clothing/under/trek/medsci/ent,
-			DEPARTMENT_BITFLAG_ENGINEERING|DEPARTMENT_BITFLAG_SECURITY = /obj/item/clothing/under/trek/engsec/ent,
-			DEPARTMENT_BITFLAG_COMMAND = /obj/item/clothing/under/trek/command/ent,
+			"[DEPARTMENT_BITFLAG_ASSISTANT]" = /obj/item/clothing/under/trek/assistant/ent,
+			"[DEPARTMENT_BITFLAG_SERVICE|DEPARTMENT_BITFLAG_CARGO]" = /obj/item/clothing/under/trek/srvcar/ent,
+			"[DEPARTMENT_BITFLAG_MEDICAL|DEPARTMENT_BITFLAG_SCIENCE]" = /obj/item/clothing/under/trek/medsci/ent,
+			"[DEPARTMENT_BITFLAG_ENGINEERING|DEPARTMENT_BITFLAG_SECURITY]" = /obj/item/clothing/under/trek/engsec/ent,
+			"[DEPARTMENT_BITFLAG_COMMAND]" = /obj/item/clothing/under/trek/command/ent,
 		),
 	)
 
@@ -66,7 +66,7 @@
 		departments += job.department_for_prefs
 	for(var/datum/job_department/department as anything in list() + job.departments_list)
 		for(var/departmental_bitflag in department_to_jumpsuit)
-			if(department.department_bitflags & departmental_bitflag)
+			if(department.department_bitflags & text2num(departmental_bitflag))
 				uniform = department_to_jumpsuit[departmental_bitflag]
 	if(!uniform)
 		return
