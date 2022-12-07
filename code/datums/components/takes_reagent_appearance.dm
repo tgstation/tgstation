@@ -130,11 +130,11 @@
 		// style
 		item_parent.icon = style.icon
 		item_parent.icon_state = style.icon_state
-		on_icon_changed?.Invoke(style)
+		on_icon_changed?.InvokeAsync(style)
 		return COMSIG_ATOM_NO_UPDATE_ICON_STATE
 
 	// Reset gets invoked regardless, as further updates may "reset" the icon yet
-	on_icon_reset?.Invoke()
+	on_icon_reset?.InvokeAsync()
 	return NONE
 
 /**

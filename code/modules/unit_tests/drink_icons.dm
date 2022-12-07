@@ -15,7 +15,7 @@
 			if(!style_icon_state)
 				continue
 			if(!style_icon)
-				Fail("[style.type] glass style had an icon state ([style_icon_state]) but no icon file.")
+				TEST_FAIL("[style.type] glass style had an icon state ([style_icon_state]) but no icon file.")
 				continue
 			if(icon_exists(style_icon, style_icon_state))
 				continue
@@ -31,7 +31,7 @@
 			else
 				was_actually_in = "The icon may be located in another dmi or is missing."
 
-			Fail("[style.type] glass style had an icon state ([style_icon_state]) not present in its icon ([style_icon]). [was_actually_in]")
+			TEST_FAIL("[style.type] glass style had an icon state ([style_icon_state]) not present in its icon ([style_icon]). [was_actually_in]")
 
 /// Unit tests glass style datums are applied to drinking glasses
 /datum/unit_test/glass_style_functionality
@@ -68,8 +68,8 @@
 		if(!glass_icon_state)
 			continue
 		if(!glass_icon)
-			Fail("[glass_subtypes] had an icon state ([glass_icon_state]) but no icon file.")
+			TEST_FAIL("[glass_subtypes] had an icon state ([glass_icon_state]) but no icon file.")
 			continue
 		if(icon_exists(glass_icon, glass_icon_state))
 			continue
-		Fail("[glass_subtypes] had an icon state ([glass_icon_state]) not present in its icon ([glass_icon]).")
+		TEST_FAIL("[glass_subtypes] had an icon state ([glass_icon_state]) not present in its icon ([glass_icon]).")

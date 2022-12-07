@@ -102,8 +102,10 @@
 	// If we have no icon or fallback, well... Scream. Someone should fix it
 	if(!glass_visual_icon || !glass_visual_icon_state)
 		stack_trace("[reagent_to_order] has no icon sprite for restaurant code, please set a fallback icon for this reagent.")
+		glass_visual_icon = 'icons/obj/drinks/drinks.dmi'
+		glass_visual_icon_state = "glass_empty"
 
-	var/image/food_image = image(icon = 'icons/effects/effects.dmi' , icon_state = "thought_bubble")
+	var/image/food_image = image(icon = 'icons/effects/effects.dmi', icon_state = "thought_bubble")
 	food_image.add_overlay(mutable_appearance(glass_visual_icon, glass_visual_icon_state))
 
 	return food_image
