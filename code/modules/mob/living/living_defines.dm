@@ -56,8 +56,6 @@
 	VAR_PROTECTED/lying_angle = 0
 	/// Value of lying lying_angle before last change. TODO: Remove the need for this.
 	var/lying_prev = 0
-	///Directly affects how long a mob will hallucinate for
-	var/hallucination = 0
 	///Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/last_special = 0
 	var/timeofdeath = 0
@@ -189,7 +187,7 @@
 	///right hand icon for holding mobs
 	var/icon/held_rh = 'icons/mob/inhands/pets_held_rh.dmi'
 	///what it looks like when the mob is held on your head
-	var/icon/head_icon = 'icons/mob/clothing/head/pets_held.dmi'
+	var/icon/head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 	/// icon_state for holding mobs.
 	var/held_state = ""
 
@@ -209,3 +207,7 @@
 
 	/// Living mob's mood datum
 	var/datum/mood/mob_mood
+
+	// Multiple imaginary friends!
+	/// Contains the owner and all imaginary friend mobs if they exist, otherwise null
+	var/list/imaginary_group = null

@@ -19,3 +19,4 @@
 	name = "rose bouquet"
 	desc = "A bouquet of roses. A bundle of love."
 	icon_state = "rosebouquet"
+	inhand_icon_state = "rosebouquet"

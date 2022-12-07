@@ -71,7 +71,7 @@
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	ph = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/nicotine = 18) // 7.2 per 2 seconds
+	addiction_types = list(/datum/addiction/nicotine = 15) // 6 per 2 seconds
 
 	//Nicotine is used as a pesticide IRL.
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
@@ -446,6 +446,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
 	ph = 11
+	overdose_threshold = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/hallucinogens = 12)
 
@@ -502,6 +503,14 @@
 	game_plane_master_controller.remove_filter("rainbow")
 	game_plane_master_controller.remove_filter("psilocybin_wave")
 
+/datum/reagent/drug/mushroomhallucinogen/overdose_process(mob/living/psychonaut, delta_time, times_fired)
+	. = ..()
+	if(DT_PROB(10, delta_time))
+		psychonaut.emote(pick("twitch","drool","moan"))
+
+	if(DT_PROB(10, delta_time))
+		psychonaut.apply_status_effect(/datum/status_effect/tower_of_babel)
+
 /datum/reagent/drug/blastoff
 	name = "bLaStOoF"
 	description = "A drug for the hardcore party crowd said to enhance ones abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discoteque incident are seared into their brains."
@@ -523,8 +532,8 @@
 	. = ..()
 
 	dancer.add_mood_event("vibing", /datum/mood_event/high, name)
-	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), .proc/on_flip)
-	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), .proc/on_spin)
+	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), PROC_REF(on_flip))
+	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
 
 	if(!dancer.hud_used)
 		return
@@ -646,7 +655,7 @@
 	. = ..()
 	playsound(invisible_man, 'sound/chemistry/saturnx_fade.ogg', 40)
 	to_chat(invisible_man, span_nicegreen("You feel pins and needles all over your skin as your body suddenly becomes transparent!"))
-	addtimer(CALLBACK(src, .proc/turn_man_invisible, invisible_man), 10) //just a quick delay to synch up the sound.
+	addtimer(CALLBACK(src, PROC_REF(turn_man_invisible), invisible_man), 10) //just a quick delay to synch up the sound.
 	if(!invisible_man.hud_used)
 		return
 
@@ -777,3 +786,19 @@
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * delta_time)
 	if(DT_PROB(10, delta_time))
 		to_chat(kronkaine_fiend, span_danger(pick("You feel like your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
+
+///dirty kronkaine, aka gore. far worse overdose effects.
+/datum/reagent/drug/kronkaine/gore
+	name = "Gore"
+	description = "Dirty Kronkaine. You have to be pretty dumb to take this. Don't. Overdose."
+	color = "#ffbebe" // kronkaine but with some red
+	ph = 4
+	chemical_flags = NONE
+
+/datum/reagent/drug/kronkaine/gore/overdose_start(mob/living/gored)
+	gored.visible_message(
+		span_danger("[gored] explodes in a shower of gore!"),
+		span_userdanger("GORE! GORE! GORE! YOU'RE GORE! TOO MUCH GORE! YOU'RE GORE! GORE! IT'S OVER! GORE! GORE! YOU'RE GORE! TOO MUCH G-"),
+	)
+	new /obj/structure/bouncy_castle(gored.loc, gored)
+	gored.gib(TRUE, TRUE, TRUE) //no brain, no organs, no bodyparts

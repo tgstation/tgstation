@@ -37,13 +37,13 @@
 	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 	src.rotation_flags = rotation_flags
-	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
+	src.AfterRotation = AfterRotation || CALLBACK(src, PROC_REF(DefaultAfterRotation))
 
 /datum/component/simple_rotation/proc/AddSignals()
-	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
-	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
-	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(RotateLeft))
+	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, PROC_REF(RotateRight))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(ExamineMessage))
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context_from_item))
 
 /datum/component/simple_rotation/proc/AddVerbs()
 	var/obj/rotated_obj = parent
@@ -119,7 +119,7 @@
 	AfterRotation.Invoke(user, degrees)
 
 /datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
-	if(isliving(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(isliving(user) && user.canUseTopic(parent, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = !iscyborg(user)))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && isobserver(user) && CONFIG_GET(flag/ghost_interaction))
 		return TRUE

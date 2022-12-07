@@ -69,8 +69,9 @@
 /obj/structure/statue/petrified/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		if(petrified_mob)
+			petrified_mob.investigate_log("has been dusted by statue deconstruction.", INVESTIGATE_DEATHS)
 			petrified_mob.dust()
-	visible_message(span_danger("[src] shatters!."))
+	visible_message(span_danger("[src] shatters!"))
 	qdel(src)
 
 
@@ -87,7 +88,7 @@
 	S.add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	return TRUE
 
-/mob/living/simple_animal/pet/dog/corgi/petrify(statue_timer)
+/mob/living/basic/pet/dog/corgi/petrify(statue_timer)
 	if(!isturf(loc))
 		return FALSE
 	var/obj/structure/statue/petrified/S = new (loc, src, statue_timer)

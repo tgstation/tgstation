@@ -1,6 +1,6 @@
 /datum/action/cooldown/mob_cooldown/dash
 	name = "Dash"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Allows you to dash towards a position."
 	cooldown_time = 1.5 SECONDS
@@ -13,6 +13,7 @@
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	dash_to(target_atom)
 	StartCooldown()
+	return TRUE
 
 /datum/action/cooldown/mob_cooldown/dash/proc/dash_to(atom/dash_target)
 	var/list/accessable_turfs = list()

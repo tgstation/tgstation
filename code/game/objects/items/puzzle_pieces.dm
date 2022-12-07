@@ -102,12 +102,12 @@
 
 /obj/machinery/door/puzzle/light/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, .proc/check_mechanism)
+	RegisterSignal(SSdcs, COMSIG_GLOB_LIGHT_MECHANISM_COMPLETED, PROC_REF(check_mechanism))
 
 /obj/machinery/door/puzzle/light/proc/check_mechanism(datum/source, try_id)
 	SIGNAL_HANDLER
 
-	INVOKE_ASYNC(src, .proc/try_puzzle_open, try_id)
+	INVOKE_ASYNC(src, PROC_REF(try_puzzle_open), try_id)
 
 //*************************
 //***Box Pushing Puzzles***

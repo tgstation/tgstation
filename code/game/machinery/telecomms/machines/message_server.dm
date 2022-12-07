@@ -60,6 +60,7 @@
 	desc = "A strange relic, capable of recording data on extradimensional vertices. It lives inside the blackbox recorder for safe keeping."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "blackcube"
+	inhand_icon_state = "blackcube"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -181,8 +182,7 @@
 		return
 	for (var/obj/item/modular_computer/comp in data["targets"])
 		if(!QDELETED(comp))
-			var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
-			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+			for(var/datum/computer_file/program/messenger/app in comp.stored_files)
 				if(!QDELETED(app))
 					app.receive_message(src)
 

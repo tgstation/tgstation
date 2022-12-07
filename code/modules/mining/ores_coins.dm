@@ -11,7 +11,7 @@
 	name = "rock"
 	icon = 'icons/obj/ore.dmi'
 	icon_state = "ore"
-	inhand_icon_state = "ore"
+	inhand_icon_state = null
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
 	material_flags = MATERIAL_EFFECTS
@@ -73,7 +73,6 @@
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
-	inhand_icon_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
 	material_flags = NONE
@@ -87,7 +86,6 @@
 /obj/item/stack/ore/iron
 	name = "iron ore"
 	icon_state = "Iron ore"
-	inhand_icon_state = "Iron ore"
 	singular_name = "iron ore chunk"
 	points = 1
 	mats_per_unit = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT)
@@ -100,7 +98,6 @@
 /obj/item/stack/ore/glass
 	name = "sand pile"
 	icon_state = "Glass ore"
-	inhand_icon_state = "Glass ore"
 	singular_name = "sand pile"
 	points = 1
 	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
@@ -138,7 +135,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
 	icon_state = "volcanic_sand"
-	inhand_icon_state = "volcanic_sand"
 	singular_name = "volcanic ash pile"
 	mine_experience = 0
 	merge_type = /obj/item/stack/ore/glass/basalt
@@ -146,7 +142,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
-	inhand_icon_state = "Plasma ore"
 	singular_name = "plasma ore chunk"
 	points = 15
 	mats_per_unit = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
@@ -163,7 +158,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/silver
 	name = "silver ore"
 	icon_state = "Silver ore"
-	inhand_icon_state = "Silver ore"
 	singular_name = "silver ore chunk"
 	points = 16
 	mine_experience = 3
@@ -176,7 +170,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/gold
 	name = "gold ore"
 	icon_state = "Gold ore"
-	inhand_icon_state = "Gold ore"
 	singular_name = "gold ore chunk"
 	points = 18
 	mine_experience = 5
@@ -189,7 +182,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
-	inhand_icon_state = "Diamond ore"
 	singular_name = "diamond ore chunk"
 	points = 50
 	mats_per_unit = list(/datum/material/diamond=MINERAL_MATERIAL_AMOUNT)
@@ -201,7 +193,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
 	icon_state = "Bananium ore"
-	inhand_icon_state = "Bananium ore"
 	singular_name = "bananium ore chunk"
 	points = 60
 	mats_per_unit = list(/datum/material/bananium=MINERAL_MATERIAL_AMOUNT)
@@ -213,7 +204,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
-	inhand_icon_state = "Titanium ore"
 	singular_name = "titanium ore chunk"
 	points = 50
 	mats_per_unit = list(/datum/material/titanium=MINERAL_MATERIAL_AMOUNT)
@@ -227,7 +217,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "slag"
 	desc = "Completely useless."
 	icon_state = "slag"
-	inhand_icon_state = "slag"
 	singular_name = "slag chunk"
 	merge_type = /obj/item/stack/ore/slag
 
@@ -316,7 +305,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		else
 			user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
 			log_bomber(user, "has primed a", src, "for detonation", notify_admins)
-		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time, TIMER_STOPPABLE)
+		det_timer = addtimer(CALLBACK(src, PROC_REF(detonate), notify_admins), det_time, TIMER_STOPPABLE)
 
 /obj/item/gibtonite/proc/detonate(notify_admins)
 	if(primed)
@@ -383,15 +372,15 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if (!attack_self(user))
 		user.visible_message(span_suicide("[user] couldn't flip \the [src]!"))
 		return SHAME
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
+	addtimer(CALLBACK(src, PROC_REF(manual_suicide), user), 10)//10 = time takes for flip animation
 	return MANUAL_SUICIDE_NONLETHAL
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
 	var/index = sideslist.Find(coinflip)
-	if (index==2)//tails
+	if (index == 2)//tails
 		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] promptly falls over, dead!"))
 		user.adjustOxyLoss(200)
-		user.death(0)
+		user.death(FALSE)
 		user.set_suicide(TRUE)
 		user.suicide_log()
 	else
@@ -440,7 +429,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		icon_state = "coin_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \
@@ -509,7 +498,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		icon_state = "coin_[coinflip]"
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if(loc == oldloc && user && !user.incapacitated())
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \

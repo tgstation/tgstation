@@ -60,6 +60,12 @@
 
 		Fail("Hallucination image holder [image_holder] had an invalid / missing icon state for the icon [icon].")
 
+	// Test ice hallucination for if the ice cube icon state exists
+	var/datum/hallucination/ice/ice_hallucination = /datum/hallucination/ice
+	var/ice_hallucination_icon = initial(ice_hallucination.ice_icon)
+	var/ice_hallucination_icon_state = initial(ice_hallucination.ice_icon_state)
+	check_hallucination_icon(ice_hallucination, ice_hallucination_icon, ice_hallucination_icon_state)
+
 /datum/unit_test/hallucination_icons/proc/check_hallucination_icon(hallucination, icon, icon_state)
 	if(!icon)
 		Fail("Hallucination [hallucination] forgot to set its icon file.")

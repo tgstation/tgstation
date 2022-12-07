@@ -87,11 +87,11 @@
 
 /obj/machinery/chem_dispenser/Initialize(mapload)
 	. = ..()
-	dispensable_reagents = sort_list(dispensable_reagents, /proc/cmp_reagents_asc)
+	dispensable_reagents = sort_list(dispensable_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(emagged_reagents)
-		emagged_reagents = sort_list(emagged_reagents, /proc/cmp_reagents_asc)
+		emagged_reagents = sort_list(emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(upgrade_reagents)
-		upgrade_reagents = sort_list(upgrade_reagents, /proc/cmp_reagents_asc)
+		upgrade_reagents = sort_list(upgrade_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 	if(is_operational)
 		begin_processing()
 	update_appearance()
@@ -451,7 +451,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, no_tk = TRUE))
 		return
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

@@ -71,7 +71,7 @@
 	name = "security promotional overflow"
 	},
 /obj/item/clothing/under/rank/security/officer/spacepol,
-/obj/item/clothing/head/spacepolice,
+/obj/item/clothing/head/costume/spacepolice,
 /obj/item/poster/random_official,
 /obj/item/poster/random_official,
 /obj/item/toy/figure/secofficer,

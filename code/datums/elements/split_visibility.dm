@@ -37,8 +37,8 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	return vis
 
 /datum/element/split_visibility
-	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
-	id_arg_index = 2
+	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
 	var/icon_path
 
 /datum/element/split_visibility/Attach(datum/target, icon_path)
@@ -56,15 +56,15 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	src.icon_path = icon_path
 
 	if(ismovable(target))
-		RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_movable_junction_change)
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_move)
+		RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_movable_junction_change))
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 		var/turf/our_turf = get_turf(target_atom)
 		var/ref = REF(target)
 		ADD_TRAIT(our_turf, TRAIT_CONTAINS_SPLITVIS, ref)
 		add_split_vis_objects(our_turf, target_atom.smoothing_junction)
 	else
 		ADD_TRAIT(target, TRAIT_CONTAINS_SPLITVIS, src) // We use src here because this code is hot, and we assert that bespoke elements cannot self delete. Not a good pattern but fast
-		RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, .proc/on_turf_junction_change)
+		RegisterSignal(target, COMSIG_ATOM_SET_SMOOTHED_ICON_STATE, PROC_REF(on_turf_junction_change))
 		add_split_vis_objects(target_atom, target_atom.smoothing_junction)
 
 #define DIR_TO_PIXEL_Y(dir) ((dir & NORTH) ? 32 : (dir & SOUTH) ? -32 : 0)

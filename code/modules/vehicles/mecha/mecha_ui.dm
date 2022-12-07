@@ -240,7 +240,11 @@
 			if(is_ic_filtered(userinput) || is_soft_ic_filtered(userinput))
 				tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 				return
+			if(userinput == format_text(name)) //default mecha names may have improper span artefacts in their name, so we format the name
+				to_chat(usr, span_notice("You rename [name] to... well, [userinput]."))
+				return
 			name = userinput
+			chassis_camera.update_c_tag(src)
 		if("toggle_safety")
 			set_safety(usr)
 			return
@@ -288,7 +292,7 @@
 		if("toggle_speaker")
 			radio.set_listening(!radio.get_listening())
 		if("set_frequency")
-			radio.set_frequency(sanitize_frequency(params["new_frequency"], radio.freerange))
+			radio.set_frequency(sanitize_frequency(params["new_frequency"], radio.freerange, radio.syndie))
 		if("repair_int_damage")
 			ui.close() //if doing this you're likely want to watch for bad people so close the UI
 			try_repair_int_damage(usr, params["flag"])

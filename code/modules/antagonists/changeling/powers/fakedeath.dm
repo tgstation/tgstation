@@ -13,38 +13,40 @@
 /datum/action/changeling/fakedeath/sting_action(mob/living/user)
 	..()
 	if(revive_ready)
-		INVOKE_ASYNC(src, .proc/revive, user)
+		INVOKE_ASYNC(src, PROC_REF(revive), user)
 		revive_ready = FALSE
-		name = "Reviving Stasis"
-		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
-		button_icon_state = "fake_death"
-		UpdateButtons()
 		chemical_cost = 15
 		to_chat(user, span_notice("We have revived ourselves."))
+		build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 	else
 		to_chat(user, span_notice("We begin our stasis, preparing energy to arise once more."))
 		user.fakedeath("changeling") //play dead
-		addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(ready_to_regenerate), user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE
 
-/datum/action/changeling/fakedeath/proc/revive(mob/living/user)
-	if(!user || !istype(user))
+/datum/action/changeling/fakedeath/proc/revive(mob/living/carbon/user)
+	if(!istype(user))
 		return
+
 	user.cure_fakedeath("changeling")
-	user.revive(full_heal = TRUE, admin_revive = FALSE)
-	var/list/missing = user.get_missing_limbs()
-	missing -= BODY_ZONE_HEAD // headless changelings are funny
-	if(missing.len)
-		playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
-		user.visible_message("<span class='warning'>[user]'s missing limbs \
-			reform, making a loud, grotesque sound!</span>",
-			"<span class='userdanger'>Your limbs regrow, making a \
-			loud, crunchy sound and giving you great pain!</span>",
-			"<span class='hear'>You hear organic matter ripping \
-			and tearing!</span>")
-		user.emote("scream")
-		user.regenerate_limbs(list(BODY_ZONE_HEAD))
-	user.regenerate_organs()
+	// Heal all damage and some minor afflictions,
+	var/flags_to_heal = (HEAL_DAMAGE|HEAL_BODY|HEAL_STATUS|HEAL_CC_STATUS)
+	// but leave out limbs so we can do it specially
+	user.revive(flags_to_heal & ~HEAL_LIMBS)
+
+	var/static/list/dont_regenerate = list(BODY_ZONE_HEAD) // headless changelings are funny
+	if(!length(user.get_missing_limbs() - dont_regenerate))
+		return
+
+	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	user.visible_message(
+		span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
+		span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),
+		span_hear("You hear organic matter ripping and tearing!"),
+	)
+	user.emote("scream")
+	// Manually call this (outside of revive/fullheal) so we can pass our blacklist
+	user.regenerate_limbs(dont_regenerate)
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(!user?.mind)
@@ -55,10 +57,7 @@
 		return
 
 	to_chat(user, span_notice("We are ready to revive."))
-	name = "Revive"
-	desc = "We arise once more."
-	button_icon_state = "revive"
-	UpdateButtons()
+	build_all_button_icons(UPDATE_BUTTON_NAME|UPDATE_BUTTON_ICON)
 	chemical_cost = 0
 	revive_ready = TRUE
 
@@ -70,4 +69,17 @@
 		switch(tgui_alert(usr,"Are we sure we wish to fake our own death?", "Feign Death", list("Yes", "No")))
 			if("No")
 				return
+	return ..()
+
+/datum/action/changeling/fakedeath/update_button_name(atom/movable/screen/movable/action_button/button, force)
+	if(revive_ready)
+		name = "Revive"
+		desc = "We arise once more."
+	else
+		name = "Reviving Stasis"
+		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
+	return ..()
+
+/datum/action/changeling/fakedeath/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
+	button_icon_state = revive_ready ? "revive" : "fake_death"
 	return ..()

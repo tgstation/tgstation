@@ -34,11 +34,13 @@
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(exposed_carbon.get_blood_id() == /datum/reagent/blood && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
+		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && exposed_carbon.dna && exposed_carbon.dna.species && (DRINKSBLOOD in exposed_carbon.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
 				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
 				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+
+			exposed_carbon.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
 
 
 /datum/reagent/blood/on_new(list/data)
@@ -1004,8 +1006,7 @@
 	if(!(methods & (TOUCH|VAPOR|PATCH)))
 		return
 
-	for(var/s in exposed_carbon.surgeries)
-		var/datum/surgery/surgery = s
+	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
 		surgery.speed_modifier = max(0.2, surgery.speed_modifier)
 
 /datum/reagent/iron
@@ -1113,7 +1114,7 @@
 		to_chat(M, span_warning("You feel unstable..."))
 		M.set_jitter_if_lower(2 SECONDS)
 		current_cycle = 1
-		addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 30)
+		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob/living, bluespace_shuffle)), 30)
 	..()
 
 /mob/living/proc/bluespace_shuffle()
@@ -1989,7 +1990,7 @@
 	var/datum/callback/color_callback
 
 /datum/reagent/colorful_reagent/New()
-	color_callback = CALLBACK(src, .proc/UpdateColor)
+	color_callback = CALLBACK(src, PROC_REF(UpdateColor))
 	SSticker.OnRoundstart(color_callback)
 	return ..()
 
@@ -2024,7 +2025,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/hair_dye/New()
-	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateColor))
+	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(UpdateColor)))
 	return ..()
 
 /datum/reagent/hair_dye/proc/UpdateColor()
@@ -2051,7 +2052,7 @@
 
 /datum/reagent/barbers_aid/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=FALSE)
 	. = ..()
-	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob) || HAS_TRAIT(exposed_mob, TRAIT_BALD))
+	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob) || HAS_TRAIT(exposed_mob, TRAIT_BALD) || HAS_TRAIT(exposed_mob, TRAIT_SHAVED))
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
@@ -2073,7 +2074,7 @@
 
 /datum/reagent/concentrated_barbers_aid/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=FALSE)
 	. = ..()
-	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob) || HAS_TRAIT(exposed_mob, TRAIT_BALD))
+	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_mob) || HAS_TRAIT(exposed_mob, TRAIT_BALD) || HAS_TRAIT(exposed_mob, TRAIT_SHAVED))
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
@@ -2378,6 +2379,14 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
+/datum/reagent/bz_metabolites/on_mob_metabolize(mob/living/ling)
+	..()
+	ADD_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+
+/datum/reagent/bz_metabolites/on_mob_end_metabolize(mob/living/ling)
+	..()
+	REMOVE_TRAIT(ling, CHANGELING_HIVEMIND_MUTE, type)
+
 /datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
 	if(target.mind)
 		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -2450,6 +2459,7 @@
 	taste_description = "insides"
 	taste_mult = 4
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/yuck_cycle = 0 //! The `current_cycle` when puking starts.
 
 /datum/reagent/yuck/on_mob_add(mob/living/L)
@@ -2573,7 +2583,7 @@
 /datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
 	. = ..()
 	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
-	addtimer(CALLBACK(exposed_obj, .proc/_RemoveElement, list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
+	addtimer(CALLBACK(exposed_obj, PROC_REF(_RemoveElement), list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
 
 /datum/reagent/gravitum/on_mob_metabolize(mob/living/L)
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
@@ -2597,6 +2607,7 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~34 seconds
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	self_consuming = TRUE
 	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
 	var/significant = FALSE
@@ -2665,6 +2676,7 @@
 	description = "A solution that can be used to create pH paper booklets, or sprayed on things to colour them by their pH."
 	taste_description = "a strong chemical taste"
 	color = "#1f8016"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 //Colours things by their pH
 /datum/reagent/universal_indicator/expose_atom(atom/exposed_atom, reac_volume)
@@ -2799,3 +2811,39 @@
 		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
 		if(myseed)
 			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))
+
+// I made this food....with love.
+// Reagent added to food by chef's with a chef's kiss. Makes people happy.
+/datum/reagent/love
+	name = "Love"
+	description = "This food's been made... with love."
+	color = "#ff7edd"
+	taste_description = "love"
+	taste_mult = 10
+	overdose_threshold = 50 // too much love is a bad thing
+
+/datum/reagent/love/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	// A syringe is not grandma's cooking
+	if(methods & ~INGEST)
+		exposed_mob.reagents.del_reagent(type)
+
+/datum/reagent/love/on_mob_metabolize(mob/living/metabolizer)
+	. = ..()
+	metabolizer.add_mood_event(name, /datum/mood_event/love_reagent)
+
+/datum/reagent/love/on_mob_delete(mob/living/deleted_from)
+	. = ..()
+	// When we exit the system we'll leave the moodlet based on the amount we had
+	var/duration_of_moodlet = current_cycle * 20 SECONDS
+	deleted_from.clear_mood_event(name)
+	deleted_from.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)
+
+/datum/reagent/love/overdose_process(mob/living/metabolizer, delta_time, times_fired)
+	var/mob/living/carbon/carbon_metabolizer = metabolizer
+	if(!istype(carbon_metabolizer) || !carbon_metabolizer.can_heartattack() || carbon_metabolizer.undergoing_cardiac_arrest())
+		metabolizer.reagents.del_reagent(type)
+		return
+
+	if(DT_PROB(10, delta_time))
+		carbon_metabolizer.set_heartattack(TRUE)

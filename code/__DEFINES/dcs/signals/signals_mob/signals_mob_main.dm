@@ -46,7 +46,13 @@
 #define COMSIG_MOB_RESET_PERSPECTIVE "mob_reset_perspective"
 /// from base of /client/proc/set_eye() : (atom/old_eye, atom/new_eye)
 #define COMSIG_CLIENT_SET_EYE "client_set_eye"
+/// from base of /datum/view_data/proc/afterViewChange() : (view)
+#define COMSIG_VIEWDATA_UPDATE "viewdata_update"
 
+/// Sent from /proc/do_after if someone starts a do_after action bar.
+#define COMSIG_DO_AFTER_BEGAN "mob_do_after_began"
+/// Sent from /proc/do_after once a do_after action completes, whether via the bar filling or via interruption.
+#define COMSIG_DO_AFTER_ENDED "mob_do_after_ended"
 
 ///from mind/transfer_to. Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
@@ -95,13 +101,15 @@
 	#define COMPONENT_UPPERCASE_SPEECH (1<<0)
 	// used to access COMSIG_MOB_SAY argslist
 	#define SPEECH_MESSAGE 1
-	// #define SPEECH_BUBBLE_TYPE 2
+	#define SPEECH_BUBBLE_TYPE 2
 	#define SPEECH_SPANS 3
-	// #define SPEECH_SANITIZE 4
+	#define SPEECH_SANITIZE 4
 	#define SPEECH_LANGUAGE 5
-	/* #define SPEECH_IGNORE_SPAM 6
-	#define SPEECH_FORCED 7 */
-	#define SPEECH_RANGE 8
+	#define SPEECH_IGNORE_SPAM 6
+	#define SPEECH_FORCED 7
+	#define SPEECH_FILTERPROOF 8
+	#define SPEECH_RANGE 9
+	#define SPEECH_SAYMODE 10
 
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"

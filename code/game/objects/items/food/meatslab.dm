@@ -25,7 +25,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 ///////////////////////////////////// HUMAN MEATS //////////////////////////////////////////////////////
 
@@ -39,7 +39,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/human/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain/human, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain/human, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
@@ -207,7 +207,7 @@
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/killertomato, rand(70 SECONDS, 85 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/killertomato/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/killertomato, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/killertomato, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/meat/slab/bear
 	name = "bear meat"
@@ -218,7 +218,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/bear/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/bear, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/bear, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/meat/slab/bear/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/bear, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -237,7 +237,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/xeno/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/xeno, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/xeno, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/meat/slab/xeno/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/xeno, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -251,7 +251,7 @@
 	foodtypes = RAW | MEAT | TOXIC
 
 /obj/item/food/meat/slab/spider/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/spider, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/spider, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/meat/slab/spider/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/spider, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
@@ -312,7 +312,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/gondola/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/meat/slab/gondola/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/gondola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
@@ -326,7 +326,7 @@
 
 /obj/item/food/meat/slab/penguin/MakeProcessable()
 	. = ..()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/penguin, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/penguin, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/meat/slab/penguin/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/penguin, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
@@ -360,7 +360,7 @@
 	tastes = list("chicken" = 1)
 
 /obj/item/food/meat/slab/chicken/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 3 SECONDS, table_required = TRUE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
 
 /obj/item/food/meat/slab/chicken/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/chicken, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe? (no this is chicken)
@@ -391,11 +391,11 @@
 
 /obj/item/food/meat/steak/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
+	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(on_microwave_cooked))
 
-
-/obj/item/food/meat/steak/proc/OnMicrowaveCooked(datum/source, obj/item/source_item, cooking_efficiency = 1)
+/obj/item/food/meat/steak/proc/on_microwave_cooked(datum/source, atom/source_item, cooking_efficiency = 1)
 	SIGNAL_HANDLER
+
 	name = "[source_item.name] steak"
 
 /obj/item/food/meat/steak/plain
@@ -406,16 +406,18 @@
 	foodtypes = MEAT | GORE
 
 ///Make sure the steak has the correct name
-/obj/item/food/meat/steak/plain/human/OnMicrowaveCooked(datum/source, obj/item/source_item, cooking_efficiency = 1)
+/obj/item/food/meat/steak/plain/human/on_microwave_cooked(datum/source, atom/source_item, cooking_efficiency = 1)
 	. = ..()
-	if(istype(source_item, /obj/item/food/meat))
-		var/obj/item/food/meat/origin_meat = source_item
-		subjectname = origin_meat.subjectname
-		subjectjob = origin_meat.subjectjob
-		if(subjectname)
-			name = "[origin_meat.subjectname] meatsteak"
-		else if(subjectjob)
-			name = "[origin_meat.subjectjob] meatsteak"
+	if(!istype(source_item, /obj/item/food/meat))
+		return
+
+	var/obj/item/food/meat/origin_meat = source_item
+	subjectname = origin_meat.subjectname
+	subjectjob = origin_meat.subjectjob
+	if(subjectname)
+		name = "[origin_meat.subjectname] meatsteak"
+	else if(subjectjob)
+		name = "[origin_meat.subjectjob] meatsteak"
 
 
 /obj/item/food/meat/steak/killertomato
@@ -498,8 +500,8 @@
 /obj/item/food/meat/rawcutlet/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
-/obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
-	..()
+/obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
+	. = ..()
 	if(!istype(original_atom, /obj/item/food/meat/slab))
 		return
 	var/obj/item/food/meat/slab/original_slab = original_atom
@@ -602,14 +604,17 @@
 
 /obj/item/food/meat/cutlet/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
+	RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(on_microwave_cooked))
 
 ///This proc handles setting up the correct meat name for the cutlet, this should definitely be changed with the food rework.
-/obj/item/food/meat/cutlet/proc/OnMicrowaveCooked(datum/source, atom/source_item, cooking_efficiency)
+/obj/item/food/meat/cutlet/proc/on_microwave_cooked(datum/source, atom/source_item, cooking_efficiency)
 	SIGNAL_HANDLER
-	if(istype(source_item, /obj/item/food/meat/rawcutlet))
-		var/obj/item/food/meat/rawcutlet/original_cutlet = source_item
-		name = "[original_cutlet.meat_type] cutlet"
+
+	if(!istype(source_item, /obj/item/food/meat/rawcutlet))
+		return
+
+	var/obj/item/food/meat/rawcutlet/original_cutlet = source_item
+	name = "[original_cutlet.meat_type] cutlet"
 
 /obj/item/food/meat/cutlet/plain
 
@@ -617,14 +622,16 @@
 	tastes = list("tender meat" = 1)
 	foodtypes = MEAT | GORE
 
-/obj/item/food/meat/cutlet/plain/human/OnMicrowaveCooked(datum/source, atom/source_item, cooking_efficiency)
+/obj/item/food/meat/cutlet/plain/human/on_microwave_cooked(datum/source, atom/source_item, cooking_efficiency)
 	. = ..()
-	if(istype(source_item, /obj/item/food/meat))
-		var/obj/item/food/meat/origin_meat = source_item
-		if(subjectname)
-			name = "[origin_meat.subjectname] [initial(name)]"
-		else if(subjectjob)
-			name = "[origin_meat.subjectjob] [initial(name)]"
+	if(!istype(source_item, /obj/item/food/meat))
+		return
+
+	var/obj/item/food/meat/origin_meat = source_item
+	if(subjectname)
+		name = "[origin_meat.subjectname] [initial(name)]"
+	else if(subjectjob)
+		name = "[origin_meat.subjectjob] [initial(name)]"
 
 /obj/item/food/meat/cutlet/killertomato
 	name = "killer tomato cutlet"

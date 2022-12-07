@@ -47,7 +47,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	name = "AI Action"
 	desc = "You aren't entirely sure what this does, but it's very beepy and boopy."
 	background_icon_state = "bg_tech_blue"
-	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	overlay_icon_state = "bg_tech_blue_border"
+	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	/// The owner AI, so we don't have to typecast every time
 	var/mob/living/silicon/ai/owner_AI
 	/// If we have multiple uses of the same power
@@ -65,7 +66,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	else
 		owner_AI = owner
 
-/datum/action/innate/ai/IsAvailable()
+/datum/action/innate/ai/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(owner_AI && owner_AI.malf_cooldown > world.time)
 		return
@@ -169,7 +170,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	message_admins("[key_name_admin(owner)][ADMIN_FLW(owner)] has activated AI Doomsday.")
 	var/pass = prob(10) ? "******" : "hunter2"
 	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
@@ -182,41 +183,41 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	to_chat(owner, span_userdanger("!!! UNAUTHORIZED SELF-DESTRUCT ACCESS !!!"))
 	to_chat(owner, span_boldannounce("This is a class-3 security violation. This incident will be reported to Central Command."))
 	for(var/i in 1 to 3)
-		sleep(20)
+		sleep(2 SECONDS)
 		if(QDELETED(owner) || !isturf(owner_AI.loc))
 			active = FALSE
 			return
 		to_chat(owner, span_boldannounce("Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%"))
-	sleep(3)
+	sleep(0.3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' [pass]</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0, use_reverb = FALSE)
-	sleep(30)
+	sleep(3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Credentials accepted. Welcome, akjv9c88asdf12nb."))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
-	sleep(5)
+	sleep(0.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Arm self-destruct device? (Y/N)"))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
-	sleep(20)
+	sleep(2 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
-	sleep(15)
+	sleep(1.5 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Confirm arming of self-destruct device? (Y/N)"))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
-	sleep(10)
+	sleep(1 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
@@ -227,18 +228,18 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return
 	to_chat(owner, span_boldnotice("Please repeat password to confirm."))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
-	sleep(14)
+	sleep(1.4 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>[pass]</span>")
-	sleep(40)
+	sleep(4 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Credentials accepted. Transmitting arming signal..."))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
-	sleep(30)
+	sleep(3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
@@ -322,14 +323,14 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(!sec_left)
 		timing = FALSE
 		sound_to_playing_players('sound/machines/alarm.ogg')
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/play_cinematic, /datum/cinematic/malf, world, CALLBACK(src, .proc/trigger_doomsday)), 10 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(play_cinematic), /datum/cinematic/malf, world, CALLBACK(src, PROC_REF(trigger_doomsday))), 10 SECONDS)
 
 	else if(world.time >= next_announce)
 		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
 /obj/machinery/doomsday_device/proc/trigger_doomsday()
-	callback_on_everyone_on_z(SSmapping.levels_by_trait(ZTRAIT_STATION), CALLBACK(GLOBAL_PROC, /proc/bring_doomsday), src)
+	callback_on_everyone_on_z(SSmapping.levels_by_trait(ZTRAIT_STATION), CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(bring_doomsday)), src)
 	to_chat(world, span_bold("The AI cleansed the station of life with [src]!"))
 	SSticker.force_ending = TRUE
 
@@ -338,6 +339,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return FALSE
 
 	to_chat(victim, span_userdanger("The blast wave from [source] tears you atom from atom!"))
+	victim.investigate_log("has been dusted by a doomsday device.", INVESTIGATE_DEATHS)
 	victim.dust()
 	return TRUE
 
@@ -362,16 +364,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	for(var/obj/machinery/door/D in GLOB.airlocks)
 		if(!is_station_level(D.z))
 			continue
-		INVOKE_ASYNC(D, /obj/machinery/door.proc/hostile_lockdown, owner)
-		addtimer(CALLBACK(D, /obj/machinery/door.proc/disable_lockdown), 900)
+		INVOKE_ASYNC(D, TYPE_PROC_REF(/obj/machinery/door, hostile_lockdown), owner)
+		addtimer(CALLBACK(D, TYPE_PROC_REF(/obj/machinery/door, disable_lockdown)), 900)
 
-	var/obj/machinery/computer/communications/C = locate() in GLOB.machines
+	var/obj/machinery/computer/communications/C = locate() in GLOB.shuttle_caller_list
 	if(C)
 		C.post_status("alert", "lockdown")
 
 	minor_announce("Hostile runtime detected in door controllers. Isolation lockdown protocols are now in effect. Please remain calm.","Network Alert:", TRUE)
 	to_chat(owner, span_danger("Lockdown initiated. Network reset in 90 seconds."))
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/minor_announce,
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(minor_announce),
 		"Automatic system reboot complete. Have a secure day.",
 		"Network reset:"), 900)
 
@@ -414,10 +416,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
-		UpdateButtons()
+		build_all_button_icons()
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
-	addtimer(CALLBACK(src, .proc/animate_machine, caller, clicked_machine), 5 SECONDS) //kabeep!
+	addtimer(CALLBACK(src, PROC_REF(animate_machine), caller, clicked_machine), 5 SECONDS) //kabeep!
 	unset_ranged_ability(caller, span_danger("Sending override signal..."))
 	return TRUE
 
@@ -501,10 +503,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
-		UpdateButtons()
+		build_all_button_icons()
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
-	addtimer(CALLBACK(src, .proc/detonate_machine, caller, clicked_machine), 5 SECONDS) //kaboom!
+	addtimer(CALLBACK(src, PROC_REF(detonate_machine), caller, clicked_machine), 5 SECONDS) //kaboom!
 	unset_ranged_ability(caller, span_danger("Overcharging machine..."))
 	return TRUE
 
@@ -540,7 +542,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(QDELETED(src) || uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
 	desc = "[initial(desc)] It has [uses] use\s remaining."
-	UpdateButtons()
+	build_all_button_icons()
 
 /// HIGH IMPACT HONKING
 /datum/ai_module/destructive/megahonk
@@ -559,7 +561,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/honk/Activate()
 	to_chat(owner, span_clown("The intercom system plays your prepared file as commanded."))
-	for(var/obj/item/radio/intercom/found_intercom in GLOB.intercoms_list)
+	for(var/obj/item/radio/intercom/found_intercom as anything in GLOB.intercoms_list)
 		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
 			continue
 		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
@@ -641,7 +643,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		I.loc = T
 		client.images += I
 		I.icon_state = "[success ? "green" : "red"]Overlay" //greenOverlay and redOverlay for success and failure respectively
-		addtimer(CALLBACK(src, .proc/remove_transformer_image, client, I, T), 30)
+		addtimer(CALLBACK(src, PROC_REF(remove_transformer_image), client, I, T), 30)
 	if(!success)
 		to_chat(src, span_warning("[alert_msg]"))
 	return success
@@ -720,7 +722,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	for(var/obj/machinery/light/L in GLOB.machines)
 		if(is_station_level(L.z))
 			L.no_low_power = TRUE
-			INVOKE_ASYNC(L, /obj/machinery/light/.proc/update, FALSE)
+			INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
 		CHECK_TICK
 	to_chat(owner, span_notice("Emergency light connections severed."))
 	owner.playsound_local(owner, 'sound/effects/light_flicker.ogg', 50, FALSE)
@@ -749,10 +751,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
-	for(var/V in GLOB.cameranet.cameras)
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		if(!uses)
 			break
-		var/obj/machinery/camera/C = V
 		if(!C.status || C.view_range != initial(C.view_range))
 			C.toggle_cam(owner_AI, 0) //Reactivates the camera based on status. Badly named proc.
 			C.view_range = initial(C.view_range)
@@ -764,7 +765,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(QDELETED(src) || !uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
 	desc = "[initial(desc)] It has [uses] use\s remaining."
-	UpdateButtons()
+	build_all_button_icons()
 
 /// Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
 /datum/ai_module/upgrade/upgrade_cameras
@@ -781,8 +782,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	AI.update_sight()
 
 	var/upgraded_cameras = 0
-	for(var/V in GLOB.cameranet.cameras)
-		var/obj/machinery/camera/C = V
+	for(var/obj/machinery/camera/C as anything in GLOB.cameranet.cameras)
 		var/obj/structure/camera_assembly/assembly = C.assembly_ref?.resolve()
 		if(assembly)
 			var/upgraded = FALSE

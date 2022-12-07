@@ -12,7 +12,7 @@
 	see_in_dark = 15
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	obj_damage = 10
-	butcher_results = list(/obj/item/clothing/head/crown = 1,)
+	butcher_results = list(/obj/item/clothing/head/costume/crown = 1,)
 	response_help_continuous = "glares at"
 	response_help_simple = "glare at"
 	response_disarm_continuous = "skoffs at"
@@ -26,7 +26,7 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	unique_name = TRUE
-	faction = list(FACTION_RAT)
+	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES)
 	///Whether or not the regal rat is already opening an airlock
 	var/opening_airlock = FALSE
 	///The spell that the rat uses to generate miasma
@@ -94,27 +94,22 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
-	if(istype(the_target,/mob/living/simple_animal))
-		var/mob/living/A = the_target
-		if(isregalrat(the_target) && A.stat == CONSCIOUS)
-			return TRUE
-		if(israt(the_target) && A.stat == CONSCIOUS)
-			var/mob/living/simple_animal/hostile/rat/R = the_target
-			if(R.faction_check_mob(src, TRUE))
-				return FALSE
-			else
-				return TRUE
-		return ..()
+	if(isliving(the_target))
+		var/mob/living/living_target = the_target
+		return !living_target.faction_check_mob(src, exact_match = TRUE)
+
+	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/examine(mob/user)
 	. = ..()
-	if(istype(user,/mob/living/simple_animal/hostile/rat))
-		var/mob/living/simple_animal/hostile/rat/ratself = user
-		if(ratself.faction_check_mob(src, TRUE))
-			. += span_notice("This is your king. Long live their majesty!")
+
+	if(ismouse(user))
+		if(user.faction_check_mob(src, TRUE))
+			. += span_notice("This is your king. Long live [p_their()] majesty!")
 		else
-			. += span_warning("This is a false king! Strike them down!")
-	else if(user != src && istype(user,/mob/living/simple_animal/hostile/regalrat))
+			. += span_warning("This is a false king! Strike [p_them()] down!")
+
+	else if(user != src && isregalrat(user))
 		. += span_warning("Who is this foolish false king? This will not stand!")
 
 /mob/living/simple_animal/hostile/regalrat/handle_environment(datum/gas_mixture/environment)
@@ -126,6 +121,7 @@
 		heal_bodypart_damage(1)
 
 #define REGALRAT_INTERACTION "regalrat"
+
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
 	if (DOING_INTERACTION(src, REGALRAT_INTERACTION))
 		return
@@ -140,13 +136,18 @@
 		if (do_mob(src, target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, span_notice("You finish licking [target]."))
+			return
 	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
+		if(QDELETED(target))
+			return
 
 	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // check again in case we started interacting
 		return
 	return ..()
+
 #undef REGALRAT_INTERACTION
+
 /**
  * Conditionally "eat" cheese object and heal, if injured.
  *
@@ -195,7 +196,7 @@
 
 /mob/living/simple_animal/hostile/regalrat/controlled/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/get_player)
+	INVOKE_ASYNC(src, PROC_REF(get_player))
 	var/kingdom = pick("Plague","Miasma","Maintenance","Trash","Garbage","Rat","Vermin","Cheese")
 	var/title = pick("King","Lord","Prince","Emperor","Supreme","Overlord","Master","Shogun","Bojar","Tsar")
 	name = "[kingdom] [title]"
@@ -211,8 +212,9 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 6 SECONDS
 	melee_cooldown_time = 0 SECONDS
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
+	overlay_icon_state = "bg_clock_border"
 	button_icon_state = "coffer"
 
 /datum/action/cooldown/domain/proc/domain()
@@ -235,161 +237,124 @@
 	StartCooldown()
 
 /**
- *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
+ * This action checks all nearby mice, and converts them into hostile rats.
+ * If no mice are nearby, creates a new one.
  */
-
 /datum/action/cooldown/riot
 	name = "Raise Army"
 	desc = "Raise an army out of the hordes of mice and pests crawling around the maintenance shafts."
 	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
+	overlay_icon_state = "bg_clock_border"
 	cooldown_time = 8 SECONDS
 	melee_cooldown_time = 0 SECONDS
-
-/datum/action/cooldown/riot/proc/riot()
-	var/cap = CONFIG_GET(number/ratcap)
-	var/something_from_nothing = FALSE
-	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
-		var/mob/living/simple_animal/hostile/rat/new_rat = new(get_turf(M))
-		something_from_nothing = TRUE
-		if(M.mind && M.stat == CONSCIOUS)
-			M.mind.transfer_to(new_rat)
-		if(istype(owner,/mob/living/simple_animal/hostile/regalrat))
-			var/mob/living/simple_animal/hostile/regalrat/giantrat = owner
-			new_rat.faction = giantrat.faction
-		qdel(M)
-	if(!something_from_nothing)
-		if(LAZYLEN(SSmobs.cheeserats) >= cap)
-			to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
-			return
-		new /mob/living/simple_animal/mouse(owner.loc)
-		owner.visible_message(span_warning("[owner] commands a mouse to their side!"))
-	else
-		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
-	StartCooldown()
 
 /datum/action/cooldown/riot/Activate(atom/target)
 	StartCooldown(10 SECONDS)
 	riot()
 	StartCooldown()
 
-/mob/living/simple_animal/hostile/rat
-	name = "rat"
-	desc = "They're a nasty, ugly, evil, disease-ridden rodent with anger issues."
-	icon_state = "mouse_gray"
-	icon_living = "mouse_gray"
-	icon_dead = "mouse_gray_dead"
-	speak = list("Skree!","SKREEE!","Squeak?")
-	speak_emote = list("squeaks")
-	emote_hear = list("Hisses.")
-	emote_see = list("runs in a circle.", "stands on their hind legs.")
-	melee_damage_lower = 3
-	melee_damage_upper = 5
-	obj_damage = 5
-	speak_chance = 1
-	turns_per_move = 5
-	see_in_dark = 6
-	maxHealth = 15
-	health = 15
-	butcher_results = list(/obj/item/food/meat/slab/mouse = 1)
-	density = FALSE
-	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	faction = list(FACTION_RAT)
-
-/mob/living/simple_animal/hostile/rat/Initialize(mapload)
-	. = ..()
-	SSmobs.cheeserats += src
-
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-/mob/living/simple_animal/hostile/rat/Destroy()
-	SSmobs.cheeserats -= src
-	return ..()
-
-/mob/living/simple_animal/hostile/rat/death(gibbed)
-	if(!ckey)
-		..(TRUE)
-		if(!gibbed)
-			var/obj/item/food/deadmouse/mouse = new(loc)
-			mouse.icon_state = icon_dead
-			mouse.name = name
-		qdel(src)
-	else
-		SSmobs.cheeserats -= src // remove rats on death
-	return ..()
-
-/mob/living/simple_animal/hostile/rat/revive(full_heal = FALSE, admin_revive = FALSE)
+/datum/action/cooldown/riot/proc/riot()
 	var/cap = CONFIG_GET(number/ratcap)
-	if(!admin_revive && !ckey && LAZYLEN(SSmobs.cheeserats) >= cap)
-		visible_message(span_warning("[src] twitched but does not continue moving due to the overwhelming rodent population on the station!"))
-		return FALSE
-	. = ..()
-	if(.)
-		SSmobs.cheeserats += src
+	var/uplifted_mice = FALSE
+	var/uplifted_frog = FALSE
+	var/uplifted_roach = FALSE
+	var/list/converted_check_list = list(FACTION_RAT)
+	for(var/mob/living/simple_animal/hostile/retaliate/frog/nearby_frog in oview(owner, 5))
+		// No need to convert when not on the same team.
+		if(faction_check(nearby_frog.faction, converted_check_list))
+			continue
+		if(nearby_frog.name == "frog")
+			nearby_frog.name = "trash frog"
+			nearby_frog.icon_state += "_trash"
+			nearby_frog.icon_living += "_trash"
+			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
+		else if(nearby_frog.name == "rare frog")
+			nearby_frog.name = "rare trash frog"
+			nearby_frog.icon_state += "_trash"
+			nearby_frog.icon_living += "_trash"
+			nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
+		nearby_frog.desc += " ...Except this one lives in a trash bag."
+		nearby_frog.maxHealth += 10
+		nearby_frog.health += 10
+		nearby_frog.melee_damage_lower += 1
+		nearby_frog.melee_damage_upper += 5
+		nearby_frog.faction = owner.faction.Copy()
+		uplifted_frog = TRUE
+		break
 
-/mob/living/simple_animal/hostile/rat/examine(mob/user)
-	. = ..()
-	if(istype(user,/mob/living/simple_animal/hostile/rat))
-		var/mob/living/simple_animal/hostile/rat/ratself = user
-		if(ratself.faction_check_mob(src, TRUE))
-			. += span_notice("You both serve the same king.")
-		else
-			. += span_warning("This fool serves a different king!")
-	else if(istype(user,/mob/living/simple_animal/hostile/regalrat))
-		var/mob/living/simple_animal/hostile/regalrat/ratking = user
-		if(ratking.faction_check_mob(src, TRUE))
-			. += span_notice("This rat serves under you.")
-		else
-			. += span_warning("This peasant serves a different king! Strike them down!")
-
-/mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
-	if(istype(the_target,/mob/living/simple_animal))
-		var/mob/living/A = the_target
-		if(isregalrat(the_target) && A.stat == CONSCIOUS)
-			var/mob/living/simple_animal/hostile/regalrat/ratking = the_target
-			if(ratking.faction_check_mob(src, TRUE))
-				return FALSE
+	if(uplifted_frog)
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them trash frogs!"))
+	else
+		for(var/mob/living/basic/cockroach/nearby_roach in oview(owner, 5))
+			// No need to convert when not on the same team.
+			if(faction_check(nearby_roach.faction, converted_check_list))
+				continue
+			if(istype(nearby_roach, /mob/living/basic/cockroach/glockroach))
+				if(nearby_roach.name == "glockroach")
+					nearby_roach.name = "sewer glockroach"
+				nearby_roach.melee_damage_lower += 0.5
+				nearby_roach.melee_damage_upper += 2
+			else if(istype(nearby_roach, /mob/living/basic/cockroach/hauberoach))
+				if(nearby_roach.name == "hauberoach")
+					nearby_roach.name = "sewer hauberoach"
+				nearby_roach.melee_damage_lower += 0.5
+				nearby_roach.melee_damage_upper += 2
 			else
-				return TRUE
-		if(israt(the_target) && A.stat == CONSCIOUS)
-			var/mob/living/simple_animal/hostile/rat/R = the_target
-			if(R.faction_check_mob(src, TRUE))
-				return FALSE
-			else
-				return TRUE
-	return ..()
+				if(nearby_roach.name == "cockroach")
+					nearby_roach.name = "sewer cockroach"
+				nearby_roach.melee_damage_lower += 2
+				nearby_roach.melee_damage_upper += 4
+				nearby_roach.obj_damage += 5
+				nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
+			nearby_roach.desc += " ...Except this one looks very robust."
+			nearby_roach.icon_state += "_sewer"
+			nearby_roach.maxHealth += 1
+			nearby_roach.health += 1
+			nearby_roach.faction = owner.faction.Copy()
+			uplifted_roach = TRUE
+			break
 
-/mob/living/simple_animal/hostile/rat/handle_automated_action()
-	. = ..()
-	if(prob(40))
-		var/turf/open/floor/F = get_turf(src)
-		if(istype(F) && F.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
-			var/obj/structure/cable/C = locate() in F
-			if(C && prob(15))
-				if(C.avail())
-					visible_message(span_warning("[src] chews through the [C]. It's toast!"))
-					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
-					C.deconstruct()
-					death()
-			else if(C?.avail())
-				visible_message(span_warning("[src] chews through the [C]. It looks unharmed!"))
-				playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
-				C.deconstruct()
+	if(uplifted_roach)
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into sewer roaches!"))
+	else if(!uplifted_frog)
+		for(var/mob/living/basic/mouse/nearby_mouse in oview(owner, 5))
+			// This mouse is already rat controlled, let's not bother with it.
+			if(istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
+				continue
+			var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
 
-/mob/living/simple_animal/hostile/rat/AttackingTarget()
-	. = ..()
-	if(istype(target, /obj/item/food/cheese))
-		if (health >= maxHealth)
-			to_chat(src, span_warning("You feel fine, no need to eat anything!"))
-			return
-		to_chat(src, span_green("You eat \the [src], restoring some health."))
-		heal_bodypart_damage(maxHealth)
-		qdel(target)
+			// Change name
+			if(nearby_mouse.name == "mouse")
+				nearby_mouse.name = initial(rat_path.name)
+			// Buffs our combat stats to that of a rat
+			nearby_mouse.melee_damage_lower = initial(rat_path.melee_damage_lower)
+			nearby_mouse.melee_damage_upper = initial(rat_path.melee_damage_upper)
+			nearby_mouse.obj_damage = initial(rat_path.obj_damage)
+			nearby_mouse.maxHealth = initial(rat_path.maxHealth)
+			nearby_mouse.health = initial(rat_path.health)
+			// Replace our AI with a rat one
+			nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
+			// Give a hint in description too
+			nearby_mouse.desc += " ...Except this one looks corrupted and aggressive."
+			// Now we share factions!
+			nearby_mouse.faction = owner.faction.Copy()
+			uplifted_mice = TRUE
+			break
 
+		if(uplifted_mice)
+			owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
+
+		else if(LAZYLEN(SSmobs.cheeserats) < cap)
+			new /mob/living/basic/mouse(owner.loc)
+			owner.visible_message(span_warning("[owner] commands a rat to their side!"))
+
+		else
+			to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
+
+	StartCooldown()
 
 /**
  *Spittle; harmless reagent that is added by rat king, and makes you disgusted.

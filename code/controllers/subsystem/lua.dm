@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(lua)
 	name = "Lua Scripting"
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	wait = 0.1 SECONDS
+	flags = SS_OK_TO_FAIL_INIT
 
 	/// A list of all lua states
 	var/list/datum/lua_state/states = list()
@@ -131,4 +132,4 @@ SUBSYSTEM_DEF(lua)
 
 	// Update every lua editor TGUI open for each state that had a task awakened or resumed
 	for(var/datum/lua_state/state in affected_states)
-		INVOKE_ASYNC(state, /datum/lua_state.proc/update_editors)
+		INVOKE_ASYNC(state, TYPE_PROC_REF(/datum/lua_state, update_editors))

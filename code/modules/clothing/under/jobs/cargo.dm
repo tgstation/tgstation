@@ -25,8 +25,6 @@
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
-	alt_covers_chest = TRUE
-
 
 /obj/item/clothing/under/rank/cargo/tech/skirt
 	name = "cargo technician's jumpskirt"
@@ -42,7 +40,7 @@
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "shaft miner's jumpsuit"
 	icon_state = "miner"
-	inhand_icon_state = "miner"
+	inhand_icon_state = null
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 80, ACID = 0, WOUND = 10)
 	resistance_flags = NONE
 
@@ -50,4 +48,4 @@
 	desc = "A green uniform for operating in hazardous environments."
 	name = "shaft miner's jumpsuit"
 	icon_state = "explorer"
-	inhand_icon_state = "explorer"
+	inhand_icon_state = null

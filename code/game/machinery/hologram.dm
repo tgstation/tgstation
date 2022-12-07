@@ -127,7 +127,8 @@ Possible to do for anyone motivated enough:
 	// move any relevant holograms, basically non-AI, and rays with the pad
 	if(replay_holo)
 		replay_holo.abstract_move(loc)
-	for(var/obj/effect/overlay/holoray/ray as anything in holorays)
+	for(var/mob/living/user as anything in holorays)
+		var/obj/effect/overlay/holoray/ray = holorays[user]
 		ray.abstract_move(loc)
 	var/list/non_call_masters = masters?.Copy()
 	for(var/datum/holocall/holocall as anything in holo_calls)
@@ -786,7 +787,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		if(HOLORECORD_SOUND)
 			playsound(src,entry[2],50,TRUE)
 		if(HOLORECORD_DELAY)
-			addtimer(CALLBACK(src,.proc/replay_entry,entry_number+1),entry[2])
+			addtimer(CALLBACK(src, PROC_REF(replay_entry),entry_number+1),entry[2])
 			return
 		if(HOLORECORD_LANGUAGE)
 			var/datum/language_holder/holder = replay_holo.get_language_holder()

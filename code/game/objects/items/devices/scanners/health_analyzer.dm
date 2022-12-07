@@ -270,11 +270,11 @@
 				missing_organs += "brain"
 			if(!(NOBLOOD in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_HEART))
 				missing_organs += "heart"
-			if(!(TRAIT_NOBREATH in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
+			if(!(TRAIT_NOBREATH in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LUNGS))
 				missing_organs += "lungs"
-			if(!(TRAIT_NOMETABOLISM in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
+			if(!(TRAIT_NOMETABOLISM in the_dudes_species.inherent_traits) && !humantarget.getorganslot(ORGAN_SLOT_LIVER))
 				missing_organs += "liver"
-			if(!(TRAIT_NOHUNGER in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
+			if(!(NOSTOMACH in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_STOMACH))
 				missing_organs += "stomach"
 			if(!(NO_TONGUE in the_dudes_species.species_traits) && !humantarget.getorganslot(ORGAN_SLOT_TONGUE))
 				missing_organs += "tongue"
@@ -310,7 +310,7 @@
 			|| targetspecies.mutantliver != initial(targetspecies.mutantliver) \
 			|| targetspecies.mutantstomach != initial(targetspecies.mutantstomach) \
 			|| targetspecies.mutantappendix != initial(targetspecies.mutantappendix) \
-			|| targetspecies.flying_species != initial(targetspecies.flying_species)
+			|| istype(humantarget.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/external/wings/functional)
 
 		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span>\n"
 		render_list += "<span class='info ml-1'>Core temperature: [round(humantarget.coretemperature-T0C,0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
@@ -440,7 +440,7 @@
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src) || user.is_blind())
+	if(!user.canUseTopic(src, be_close = TRUE) || !user.can_read(src) || user.is_blind())
 		return
 
 	mode = !mode

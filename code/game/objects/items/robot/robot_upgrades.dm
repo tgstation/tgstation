@@ -473,7 +473,7 @@
 	defib_instance = D
 	name = defib_instance.name
 	defib_instance.moveToNullspace()
-	RegisterSignal(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), .proc/on_defib_instance_qdel_or_moved)
+	RegisterSignals(defib_instance, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED), PROC_REF(on_defib_instance_qdel_or_moved))
 
 /obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
 	SIGNAL_HANDLER
@@ -558,10 +558,10 @@
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
 		smoke.set_up(1, holder = robot, location = robot.loc)
 		smoke.start()
-		sleep(2)
+		sleep(0.2 SECONDS)
 		for(var/i in 1 to 4)
 			playsound(robot, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-			sleep(12)
+			sleep(1.2 SECONDS)
 		if(!prev_lockcharge)
 			robot.SetLockdown(FALSE)
 		robot.set_anchored(FALSE)
@@ -779,7 +779,7 @@
 	else
 		playsound(loc, 'sound/machines/ping.ogg', 75, TRUE)
 
-	borgo.revive(full_heal = FALSE, admin_revive = FALSE)
+	borgo.revive()
 	borgo.logevent("WARN -- System recovered from unexpected shutdown.")
 	borgo.logevent("System brought online.")
 	return ..()

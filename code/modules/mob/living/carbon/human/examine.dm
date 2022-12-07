@@ -6,15 +6,21 @@
 	var/t_him = p_them()
 	var/t_has = p_have()
 	var/t_is = p_are()
-	var/t_es = p_es()
 	var/obscure_name
+	var/obscure_examine
 
 	if(isliving(user))
 		var/mob/living/L = user
 		if(HAS_TRAIT(L, TRAIT_PROSOPAGNOSIA) || HAS_TRAIT(L, TRAIT_INVISIBLE_MAN))
 			obscure_name = TRUE
+		if(HAS_TRAIT(src, TRAIT_UNKNOWN))
+			obscure_name = TRUE
+			obscure_examine = TRUE
 
 	. = list("<span class='info'>This is <EM>[!obscure_name ? name : "Unknown"]</EM>!")
+
+	if(obscure_examine)
+		return list("<span class='warning'>You're struggling to make out any details...")
 
 	var/obscured = check_obscured_slots()
 
@@ -177,22 +183,23 @@
 			temp = 50
 		else
 			temp = getBruteLoss()
+		var/list/damage_desc = get_majority_bodypart_damage_desc()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor [dna.species.brute_damage_desc].\n"
+				msg += "[t_He] [t_has] minor [damage_desc[BRUTE]].\n"
 			else if(temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.brute_damage_desc]!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [damage_desc[BRUTE]]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe [dna.species.brute_damage_desc]!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [damage_desc[BRUTE]]!</B>\n"
 
 		temp = getFireLoss()
 		if(temp)
 			if(temp < 25)
-				msg += "[t_He] [t_has] minor [dna.species.burn_damage_desc].\n"
+				msg += "[t_He] [t_has] minor [damage_desc[BURN]].\n"
 			else if (temp < 50)
-				msg += "[t_He] [t_has] <b>moderate</b> [dna.species.burn_damage_desc]!\n"
+				msg += "[t_He] [t_has] <b>moderate</b> [damage_desc[BURN]]!\n"
 			else
-				msg += "<B>[t_He] [t_has] severe [dna.species.burn_damage_desc]!</B>\n"
+				msg += "<B>[t_He] [t_has] severe [damage_desc[BURN]]!</B>\n"
 
 		temp = getCloneLoss()
 		if(temp)
@@ -330,7 +337,7 @@
 		if(getorgan(/obj/item/organ/internal/brain))
 			if(ai_controller?.ai_status == AI_STATUS_ON)
 				if(!dna.species.ai_controlled_species)
-					msg += "[span_deadsay("[t_He] do[t_es]n't appear to be [t_him]self.")]\n"
+					msg += "[ai_controller.get_human_examine_text()]\n"
 			else if(!key)
 				msg += "[span_deadsay("[t_He] [t_is] totally catatonic. The stresses of life in deep-space must have been too much for [t_him]. Any recovery is unlikely.")]\n"
 			else if(!client)
@@ -351,7 +358,7 @@
 			msg += "[span_notice("<i>[t_He] [t_has] significantly disfiguring scarring, you can look again to take a closer look...</i>")]\n"
 		if(12 to INFINITY)
 			msg += "[span_notice("<b><i>[t_He] [t_is] just absolutely fucked up, you can look again to take a closer look...</i></b>")]\n"
-
+	msg += "</span>" // closes info class
 
 	if (length(msg))
 		. += span_warning("[msg.Join("")]")

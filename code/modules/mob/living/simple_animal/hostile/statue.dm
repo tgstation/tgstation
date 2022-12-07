@@ -115,12 +115,12 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animal/hostile/netherworld/statue/IsVocal() //we're a statue, of course we can't talk.
-	return FALSE
+/mob/living/simple_animal/hostile/netherworld/statue/can_speak(allow_mimes = FALSE)
+	return FALSE // We're a statue, of course we can't talk.
 
 // Cannot talk
 
-/mob/living/simple_animal/hostile/netherworld/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/mob/living/simple_animal/hostile/netherworld/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, message_range = 7, datum/saymode/saymode = null)
 	return
 
 // Turn to dust when gibbed

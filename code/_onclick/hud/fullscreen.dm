@@ -14,6 +14,8 @@
 		screen.update_for_view(client.view)
 		client.screen += screen
 
+	SET_PLANE_EXPLICIT(screen, PLANE_TO_TRUE(screen.plane), src)
+
 	return screen
 
 /mob/proc/clear_fullscreen(category, animated = 10)
@@ -25,7 +27,7 @@
 
 	if(animated)
 		animate(screen, alpha = 0, time = animated)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen_after_animate, screen), animated, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen_after_animate), screen), animated, TIMER_CLIENT_TIME)
 	else
 		if(client)
 			client.screen -= screen

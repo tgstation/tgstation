@@ -47,7 +47,7 @@
 	switch(action)
 		if("PRG_target_relay")
 			for(var/obj/machinery/ntnet_relay/R in SSnetworks.relays)
-				if("[R.uid]" == params["targid"])
+				if(R.uid == params["targid"])
 					target = R
 					break
 			return TRUE

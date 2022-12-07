@@ -9,6 +9,7 @@
 	supervisors = SUPERVISOR_CMO
 	selection_color = "#ffeef0"
 	exp_granted_type = EXP_TYPE_CREW
+	config_tag = "MEDICAL_DOCTOR"
 
 	outfit = /datum/outfit/job/doctor
 	plasmaman_outfit = /datum/outfit/plasmaman/medical
@@ -47,9 +48,9 @@
 	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/tablet/pda/medical
+	belt = /obj/item/modular_computer/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	head = /obj/item/clothing/head/surgerycap
+	head = /obj/item/clothing/head/utility/surgerycap
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 

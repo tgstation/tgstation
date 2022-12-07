@@ -105,7 +105,7 @@
 /datum/reagent/gunpowder/on_new(data)
 	. = ..()
 	if(holder?.my_atom)
-		RegisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT, .proc/on_ex_act)
+		RegisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT, PROC_REF(on_ex_act))
 
 /datum/reagent/gunpowder/Destroy()
 	if(holder?.my_atom)
@@ -340,10 +340,10 @@
 		shock_timer = 0 //immune to shocks
 		M.AdjustAllImmobility(-40  *REM * delta_time)
 		M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-		if(isluminescent(M))
+		if(is_species(M, /datum/species/jelly/luminescent))
 			var/mob/living/carbon/human/H = M
 			var/datum/species/jelly/luminescent/L = H.dna.species
-			L.extract_cooldown = max(L.extract_cooldown - (20 * REM * delta_time), 0)
+			L.extract_cooldown = max(L.extract_cooldown - (2 SECONDS * REM * delta_time), 0)
 	..()
 
 /datum/reagent/firefighting_foam

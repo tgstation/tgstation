@@ -21,10 +21,7 @@ GLOBAL_PROTECT(href_token)
 
 	var/spamcooldown = 0
 
-	var/admincaster_screen = 0 //TODO: remove all these 5 variables, they are completly unacceptable
-	var/datum/feed_message/admincaster_feed_message = new /datum/feed_message
-	var/datum/wanted_message/admincaster_wanted_message = new /datum/wanted_message
-	var/datum/feed_channel/admincaster_feed_channel = new /datum/feed_channel
+	///Randomly generated signature used for security records authorization name.
 	var/admin_signature
 
 	var/href_token
@@ -35,6 +32,7 @@ GLOBAL_PROTECT(href_token)
 	var/deadmined
 
 	var/datum/filter_editor/filteriffic
+	var/datum/particle_editor/particle_test
 	var/datum/colorblind_tester/color_test = new
 	var/datum/plane_master_debug/plane_debug
 
@@ -142,7 +140,8 @@ GLOBAL_PROTECT(href_token)
 
 		return
 	else if (blocked_by_2fa)
-		sync_lastadminrank(client.ckey, client.key)
+		//previously blocked by 2fa but has now verified, sync the lastadminrank column on the player table.
+		sync_lastadminrank(client.ckey, client.key, src)
 
 	blocked_by_2fa = FALSE
 

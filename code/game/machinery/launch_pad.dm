@@ -1,4 +1,4 @@
-#define BEAM_FADE_TIME 1 SECONDS
+#define BEAM_FADE_TIME (1 SECONDS)
 
 /obj/machinery/launchpad
 	name = "bluespace launchpad"
@@ -287,7 +287,7 @@
 /obj/machinery/launchpad/briefcase/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr)
-		if(!briefcase || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		if(!briefcase || !usr.canUseTopic(src, be_close = TRUE, no_dexterity = TRUE, no_tk = FALSE, need_hands = TRUE))
 			return
 		usr.visible_message(span_notice("[usr] starts closing [src]..."), span_notice("You start closing [src]..."))
 		if(do_after(usr, 30, target = usr))
@@ -512,9 +512,9 @@
 		return
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
-		INVOKE_ASYNC(attached_launchpad, /obj/machinery/launchpad.proc/doteleport, null, TRUE, parent.get_creator())
+		INVOKE_ASYNC(attached_launchpad, TYPE_PROC_REF(/obj/machinery/launchpad, doteleport), null, TRUE, parent.get_creator())
 		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
-		INVOKE_ASYNC(attached_launchpad, /obj/machinery/launchpad.proc/doteleport, null, FALSE, parent.get_creator())
+		INVOKE_ASYNC(attached_launchpad, TYPE_PROC_REF(/obj/machinery/launchpad, doteleport), null, FALSE, parent.get_creator())
 		retrieved.set_output(COMPONENT_SIGNAL)

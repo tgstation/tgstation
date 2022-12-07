@@ -9,7 +9,11 @@
 	attack_verb_simple = list("lick", "slobber", "slap", "french", "tongue")
 	var/list/languages_possible
 	var/list/languages_native //human mobs can speak with this languages without the accent (letters replaces)
-	var/say_mod = null
+	///changes the verbage of how you speak. (Permille -> says <-, "I just used a verb!")
+	///i hate to say it, but because of sign language, this may have to be a component. and we may have to do some insane shit like putting a component on a component
+	var/say_mod = "says"
+	///for temporary overrides of the above variable.
+	var/temp_say_mod = ""
 
 	/// Whether the owner of this tongue can taste anything. Being set to FALSE will mean no taste feedback will be provided.
 	var/sense_of_taste = TRUE
@@ -48,11 +52,9 @@
 
 /obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
 	..()
-	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
-		tongue_owner.dna.species.say_mod = say_mod
+	ADD_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
 	if (modifies_speech)
-		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
-	tongue_owner.UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
+		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
 	/* This could be slightly simpler, by making the removal of the
 	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
@@ -65,10 +67,9 @@
 
 /obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
 	. = ..()
-	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
-		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
+	REMOVE_TRAIT(tongue_owner, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_TONGUE)
+	temp_say_mod = ""
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
-	tongue_owner.RegisterSignal(tongue_owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
@@ -121,7 +122,7 @@
 /datum/action/item_action/organ_action/statue/New(Target)
 	. = ..()
 	statue = new
-	RegisterSignal(statue, COMSIG_PARENT_QDELETING, .proc/statue_destroyed)
+	RegisterSignal(statue, COMSIG_PARENT_QDELETING, PROC_REF(statue_destroyed))
 
 /datum/action/item_action/organ_action/statue/Destroy()
 	UnregisterSignal(statue, COMSIG_PARENT_QDELETING)
@@ -164,7 +165,7 @@
 		statue.forceMove(get_turf(becoming_statue))
 		becoming_statue.forceMove(statue)
 		statue.update_integrity(becoming_statue.health)
-		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, .proc/human_left_statue)
+		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, PROC_REF(human_left_statue))
 
 	//somehow they used an exploit/teleportation to leave statue, lets clean up
 /datum/action/item_action/organ_action/statue/proc/human_left_statue(atom/movable/mover, atom/oldloc, direction)
@@ -184,46 +185,6 @@
 			if(!dying_carbon.dropItemToGround(dropped))
 				qdel(dropped)
 	qdel(owner)
-
-/obj/item/organ/internal/tongue/fly
-	name = "proboscis"
-	desc = "A freakish looking meat tube that apparently can take in liquids."
-	icon = 'icons/obj/medical/organs/fly_organs.dmi'
-	say_mod = "buzzes"
-	taste_sensitivity = 25 // you eat vomit, this is a mercy
-	modifies_speech = TRUE
-	languages_native = list(/datum/language/buzzwords)
-	var/static/list/languages_possible_fly = typecacheof(list(
-		/datum/language/common,
-		/datum/language/draconic,
-		/datum/language/codespeak,
-		/datum/language/monkey,
-		/datum/language/narsie,
-		/datum/language/beachbum,
-		/datum/language/aphasia,
-		/datum/language/piratespeak,
-		/datum/language/moffic,
-		/datum/language/sylvan,
-		/datum/language/shadowtongue,
-		/datum/language/terrum,
-		/datum/language/nekomimetic,
-		/datum/language/buzzwords
-	))
-
-/obj/item/organ/internal/tongue/fly/modify_speech(datum/source, list/speech_args)
-	var/static/regex/fly_buzz = new("z+", "g")
-	var/static/regex/fly_buZZ = new("Z+", "g")
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message[1] != "*")
-		message = fly_buzz.Replace(message, "zzz")
-		message = fly_buZZ.Replace(message, "ZZZ")
-		message = replacetext(message, "s", "z")
-		message = replacetext(message, "S", "Z")
-	speech_args[SPEECH_MESSAGE] = message
-
-/obj/item/organ/internal/tongue/fly/Initialize(mapload)
-	. = ..()
-	languages_possible = languages_possible_fly
 
 /obj/item/organ/internal/tongue/abductor
 	name = "superlingual matrix"
@@ -361,6 +322,10 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	languages_possible = languages_possible_alien
 
 /obj/item/organ/internal/tongue/alien/modify_speech(datum/source, list/speech_args)
+	var/datum/saymode/xeno/hivemind = speech_args[SPEECH_SAYMODE]
+	if(hivemind)
+		return
+
 	playsound(owner, SFX_HISS, 25, TRUE, TRUE)
 
 /obj/item/organ/internal/tongue/bone
@@ -475,75 +440,45 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	. = ..()
 	languages_possible = languages_possible_ethereal
 
-//Sign Language Tongue - yep, that's how you speak sign language.
-/obj/item/organ/internal/tongue/tied
-	name = "tied tongue"
-	desc = "If only one had a sword so we may finally untie this knot."
-	say_mod = "signs"
-	icon_state = "tonguetied"
-	modifies_speech = TRUE
-	// The tonal indicator shown when we finish sending a message. If it's empty, none appears.
-	var/tonal_indicator = null
-	// The timerid for our tonal indicator
-	var/tonal_timerid
+/obj/item/organ/internal/tongue/cat
+	name = "felinid tongue"
+	desc = "A fleshy muscle mostly used for meowing."
+	say_mod = "meows"
 
-/obj/item/organ/internal/tongue/tied/Insert(mob/living/carbon/signer, special = FALSE, drop_if_replaced = TRUE)
-	. = ..()
-	signer.verb_ask = "signs"
-	signer.verb_exclaim = "signs"
-	signer.verb_whisper = "subtly signs"
-	signer.verb_sing = "rythmically signs"
-	signer.verb_yell = "emphatically signs"
-	signer.bubble_icon = "signlang"
-	ADD_TRAIT(signer, TRAIT_SIGN_LANG, ORGAN_TRAIT)
-	REMOVE_TRAIT(signer, TRAIT_MUTE, ORGAN_TRAIT)
+/obj/item/organ/internal/tongue/bananium
+	name = "bananium tongue"
+	desc = "A bananium geode mostly used for honking."
+	say_mod = "honks"
 
-/obj/item/organ/internal/tongue/tied/Remove(mob/living/carbon/speaker, special = FALSE)
-	..()
-	speaker.verb_ask = initial(speaker.verb_ask)
-	speaker.verb_exclaim = initial(speaker.verb_exclaim)
-	speaker.verb_whisper = initial(speaker.verb_whisper)
-	speaker.verb_sing = initial(speaker.verb_sing)
-	speaker.verb_yell = initial(speaker.verb_yell)
-	speaker.bubble_icon = initial(speaker.bubble_icon)
-	REMOVE_TRAIT(speaker, TRAIT_SIGN_LANG, ORGAN_TRAIT)
+	icon = 'icons/obj/weapons/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
+	icon_state = "gold_horn"
 
-/obj/item/organ/internal/tongue/tied/modify_speech(datum/source, list/speech_args)
-	// The message we send instead of our normal one
-	var/new_message
-	// The original message
-	var/message = speech_args[SPEECH_MESSAGE]
-	// Is there a !
-	var/exclamation_found = findtext(message, "!")
-	// Is there a ?
-	var/question_found = findtext(message, "?")
-	new_message = message
-	if(exclamation_found)
-		new_message = replacetext(new_message, "!", ".")
-	if(question_found)
-		new_message = replacetext(new_message, "?", ".")
-	speech_args[SPEECH_MESSAGE] = new_message
+/obj/item/organ/internal/tongue/jelly
+	name = "jelly tongue"
+	desc = "Ah... That's not the sound I expected it to make. Sounds like a Space Autumn Bird."
+	say_mod = "chirps"
 
-	// Cut our last overlay before we replace it
-	if(timeleft(tonal_timerid) > 0)
-		remove_tonal_indicator()
-		deltimer(tonal_timerid)
-	// Prioritize questions
-	if(question_found)
-		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang1", TYPING_LAYER)
-		owner.visible_message(span_notice("[owner] lowers [owner.p_their()] eyebrows."))
-	else if(exclamation_found)
-		tonal_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "signlang2", TYPING_LAYER)
-		owner.visible_message(span_notice("[owner] raises [owner.p_their()] eyebrows."))
-	// If either an exclamation or question are found
-	if(!isnull(tonal_indicator) && owner.client?.typing_indicators)
-		owner.add_overlay(tonal_indicator)
-		tonal_timerid = addtimer(CALLBACK(src, .proc/remove_tonal_indicator), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
-	else // If we're not gonna use it, just be sure we get rid of it
-		tonal_indicator = null
+/obj/item/organ/internal/tongue/monkey
+	name = "primitive tongue"
+	desc = "For aggressively chimpering. And consuming bananas."
+	say_mod = "chimpers"
 
-/obj/item/organ/internal/tongue/tied/proc/remove_tonal_indicator()
-	if(isnull(tonal_indicator))
-		return
-	owner.cut_overlay(tonal_indicator)
-	tonal_indicator = null
+/obj/item/organ/internal/tongue/moth
+	name = "moth tongue"
+	desc = "Moths don't have tongues. Someone get god on the phone, tell them I'm not happy."
+	say_mod = "flutters"
+
+/obj/item/organ/internal/tongue/zombie
+	name = "rotting tongue"
+	desc = "Makes you speak like you're at the dentist and you just absolutely refuse to spit because you forgot to mention you were allergic to space shellfish."
+	say_mod = "moans"
+
+/obj/item/organ/internal/tongue/mush
+	name = "mush-tongue-room"
+	desc = "You poof with this. Got it?"
+	say_mod = "poofs"
+
+	icon = 'icons/obj/hydroponics/seeds.dmi'
+	icon_state = "mycelium-angel"

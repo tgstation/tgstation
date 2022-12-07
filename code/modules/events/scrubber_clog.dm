@@ -34,7 +34,7 @@
 		kill()
 		CRASH("Unable to find suitable scrubber.")
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
 	spawned_mob = get_mob()
 	end_when = rand(300, 600)
@@ -64,7 +64,7 @@
 
 /datum/round_event/scrubber_clog/proc/get_mob()
 	var/static/list/mob_list = list(
-				/mob/living/simple_animal/mouse,
+				/mob/living/basic/mouse,
 				/mob/living/basic/cockroach,
 				/mob/living/simple_animal/butterfly,
 	)
@@ -85,7 +85,7 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
-/datum/round_event_control/scrubber_clog/canSpawnEvent(players_amt)
+/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt)
 	. = ..()
 	if(!.)
 		return
@@ -123,7 +123,7 @@
 		kill()
 		CRASH("Unable to find suitable scrubber.")
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, .proc/scrubber_move)
+	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
 
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs)
@@ -145,7 +145,7 @@
 
 /datum/round_event/scrubber_clog/major/get_mob()
 	var/static/list/mob_list = list(
-		/mob/living/simple_animal/hostile/rat,
+		/mob/living/basic/mouse/rat,
 		/mob/living/simple_animal/hostile/bee,
 		/mob/living/simple_animal/hostile/giant_spider,
 	)

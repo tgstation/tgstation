@@ -2,11 +2,33 @@
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
 	background_icon_state = "bg_alien"
-	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	overlay_icon_state = "bg_alien_border"
+	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "ninja_cloak"
 
 	spell_requirements = NONE
 	jaunt_type = /obj/effect/dummy/phased_mob/shadow
+
+/datum/action/cooldown/spell/jaunt/shadow_walk/Grant(mob/grant_to)
+	. = ..()
+	RegisterSignal(grant_to, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
+
+/datum/action/cooldown/spell/jaunt/shadow_walk/Remove(mob/remove_from)
+	. = ..()
+	UnregisterSignal(remove_from, COMSIG_MOVABLE_MOVED)
+
+/datum/action/cooldown/spell/jaunt/shadow_walk/can_cast_spell(feedback = TRUE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(is_jaunting(owner))
+		return TRUE
+	var/turf/cast_turf = get_turf(owner)
+	if(cast_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)
+		if(feedback)
+			to_chat(owner, span_warning("It isn't dark enough here!"))
+		return FALSE
+	return TRUE
 
 /datum/action/cooldown/spell/jaunt/shadow_walk/cast(mob/living/cast_on)
 	. = ..()
@@ -14,12 +36,7 @@
 		exit_jaunt(cast_on)
 		return
 
-	var/turf/cast_turf = get_turf(cast_on)
-	if(cast_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)
-		to_chat(cast_on, span_warning("It isn't dark enough here!"))
-		return
-
-	playsound(cast_turf, 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
+	playsound(get_turf(owner), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
 	cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
 	cast_on.SetAllImmobility(0)
 	cast_on.setStaminaLoss(0, FALSE)

@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - qol: "Whenever you open or close an atmospherics valve, you should now get a balloon alert notifying you of that exact action."
