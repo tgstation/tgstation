@@ -382,7 +382,7 @@
 /datum/action/toggle_buffer
 	name = "Activate Auto-Wash"
 	desc = "Trade speed and water for a clean floor."
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "activate_wash"
 	var/static/datum/callback/allow_buffer_activate
 	var/block_buffer_change	= FALSE
@@ -487,7 +487,7 @@
 	if(!wash_audio.is_active())
 		wash_audio.start()
 	clean()
-	UpdateButtons()
+	build_all_button_icons()
 
 /// Start the process of disabling the buffer. Plays some effects, waits a bit, then finishes
 /datum/action/toggle_buffer/proc/deactivate_wash()
@@ -517,7 +517,7 @@
 	var/mob/living/silicon/robot/robot_owner = owner
 	buffer_on = FALSE
 	robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-	UpdateButtons()
+	build_all_button_icons()
 
 /// Should we keep trying to activate our buffer, or did you fuck it up somehow
 /datum/action/toggle_buffer/proc/allow_buffer_activate()
@@ -554,14 +554,18 @@
 	// We use more water doing this then mopping
 	reagents.remove_any(2) //reaction() doesn't use up the reagents
 
-/datum/action/toggle_buffer/UpdateButtons(status_only = FALSE, force = FALSE)
+/datum/action/toggle_buffer/update_button_name(atom/movable/screen/movable/action_button/current_button, force)
 	if(buffer_on)
 		name = "De-Activate Auto-Wash"
-		button_icon_state = "deactivate_wash"
 	else
 		name = "Activate Auto-Wash"
-		button_icon_state = "activate_wash"
+	return ..()
 
+/datum/action/toggle_buffer/apply_button_icon(atom/movable/screen/movable/action_button/current_button, force)
+	if(buffer_on)
+		button_icon_state = "deactivate_wash"
+	else
+		button_icon_state = "activate_wash"
 	return ..()
 
 /obj/item/reagent_containers/spray/cyborg_drying

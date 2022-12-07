@@ -9459,18 +9459,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/science/lab)
-"dzp" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/item/reagent_containers/cup/glass/mug/britcup{
-	pixel_y = 2
-	},
-/turf/open/floor/iron,
-/area/station/science/research)
 "dzq" = (
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light/directional/north,
@@ -12037,6 +12025,21 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
+"esx" = (
+/obj/structure/closet/crate/necropolis{
+	desc = "Presumably placed here by top men.";
+	name = "\improper Ark of the Covenant"
+	},
+/obj/item/toy/clockwork_watch{
+	desc = "An ancient piece of machinery, made from an unknown metal by an unknown maker.";
+	name = "\improper Ancient Relic"
+	},
+/mob/living/basic/pet/dog/corgi{
+	desc = "Make sure you give him plenty of bellyrubs, or he'll melt your skin off.";
+	name = "\improper Keeper of the Ark"
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "esH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -13946,6 +13949,18 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
+"fgO" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/purple{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/station/science/research)
 "fgS" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
@@ -17384,12 +17399,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"gvl" = (
-/obj/machinery/status_display/evac/directional/north,
-/obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/ian,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/hop)
 "gvm" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood,
@@ -19077,16 +19086,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
-"hao" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/siding/wood{
-	dir = 9
-	},
-/mob/living/simple_animal/pet/dog/corgi/puppy/void{
-	dir = 4
-	},
-/turf/open/floor/grass,
-/area/station/science/research)
 "haq" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
@@ -26054,6 +26053,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/freezerchamber)
+"jqN" = (
+/obj/machinery/light_switch/directional/north,
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/mob/living/basic/pet/dog/corgi/puppy/slime,
+/turf/open/floor/grass,
+/area/station/science/research)
 "jqQ" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -30811,21 +30818,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
-"kXU" = (
-/obj/structure/closet/crate/necropolis{
-	desc = "Presumably placed here by top men.";
-	name = "\improper Ark of the Covenant"
-	},
-/obj/item/toy/clockwork_watch{
-	desc = "An ancient piece of machinery, made from an unknown metal by an unknown maker.";
-	name = "\improper Ancient Relic"
-	},
-/mob/living/simple_animal/pet/dog/corgi{
-	desc = "Make sure you give him plenty of bellyrubs, or he'll melt your skin off.";
-	name = "\improper Keeper of the Ark"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/port/aft)
 "kXY" = (
 /obj/effect/turf_decal/trimline/purple/line{
 	dir = 8
@@ -35617,6 +35609,18 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
+"mIh" = (
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = -6;
+	pixel_y = 11
+	},
+/obj/item/phone{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/turf/open/floor/iron,
+/area/station/cargo/drone_bay)
 "mIi" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=9.2-Escape-2";
@@ -39214,18 +39218,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"nUr" = (
-/obj/structure/table,
-/obj/item/reagent_containers/cup/glass/mug/britcup{
-	pixel_x = -6;
-	pixel_y = 11
-	},
-/obj/item/phone{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/turf/open/floor/iron,
-/area/station/cargo/drone_bay)
 "nUt" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating,
@@ -47435,14 +47427,6 @@
 "qPJ" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/medical)
-"qPS" = (
-/obj/machinery/light_switch/directional/north,
-/obj/effect/turf_decal/siding/wood{
-	dir = 5
-	},
-/mob/living/simple_animal/pet/dog/corgi/puppy/slime,
-/turf/open/floor/grass,
-/area/station/science/research)
 "qPT" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -50290,19 +50274,6 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"rOA" = (
-/obj/structure/cable,
-/obj/structure/bed/dogbed/mcgriff,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/machinery/firealarm/directional/west{
-	pixel_y = 26
-	},
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
-/obj/effect/turf_decal/trimline/dark_red/filled/line{
-	dir = 9
-	},
-/turf/open/floor/iron,
-/area/station/security/warden)
 "rOF" = (
 /turf/closed/wall,
 /area/station/medical/psychology)
@@ -55431,6 +55402,19 @@
 	},
 /turf/open/floor/holofloor/dark,
 /area/station/science/cytology)
+"tyv" = (
+/obj/structure/cable,
+/obj/structure/bed/dogbed/mcgriff,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 26
+	},
+/mob/living/basic/pet/dog/pug/mcgriff,
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/security/warden)
 "tyy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -55440,6 +55424,12 @@
 	},
 /turf/open/floor/iron/textured,
 /area/station/medical/medbay/central)
+"tyI" = (
+/obj/machinery/status_display/evac/directional/north,
+/obj/structure/bed/dogbed/ian,
+/mob/living/basic/pet/dog/corgi/ian,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/hop)
 "tyY" = (
 /turf/closed/wall,
 /area/station/command/heads_quarters/captain/private)
@@ -62562,6 +62552,16 @@
 	dir = 1
 	},
 /area/station/engineering/atmos)
+"vWC" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/mob/living/basic/pet/dog/corgi/puppy/void{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/station/science/research)
 "vWF" = (
 /obj/structure/cable,
 /obj/machinery/holopad,
@@ -84307,7 +84307,7 @@ ybm
 jUb
 wgl
 jUb
-kXU
+esx
 jUb
 qkm
 vmY
@@ -89376,7 +89376,7 @@ fru
 wrG
 uzb
 phP
-nUr
+mIh
 jXu
 tfR
 jXu
@@ -93781,7 +93781,7 @@ tUH
 vPW
 lDo
 pJR
-gvl
+tyI
 hip
 fJp
 wBu
@@ -95805,7 +95805,7 @@ aeq
 dfE
 fYJ
 ycM
-rOA
+tyv
 dsk
 ewC
 iAN
@@ -106155,12 +106155,12 @@ qXb
 mBK
 tUn
 wXF
-hao
+vWC
 gcV
 nNe
 nbS
 aHM
-dzp
+fgO
 oWk
 ddu
 wmi
@@ -106926,7 +106926,7 @@ jkV
 pRu
 pFN
 wXF
-qPS
+jqN
 wZg
 ojo
 kWB

@@ -749,18 +749,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
-"aoI" = (
-/obj/structure/table/wood,
-/obj/item/phone{
-	pixel_x = -5;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/mug/britcup{
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/turf/open/floor/carpet/red,
-/area/station/commons/vacant_room/office)
 "aoK" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck,
@@ -28184,13 +28172,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_half,
 /area/station/security/prison/work)
-"iFg" = (
-/obj/structure/bed/dogbed/mcgriff,
-/obj/item/food/beef_wellington_slice,
-/obj/structure/cable,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
-/turf/open/floor/iron/showroomfloor,
-/area/station/security/warden)
 "iFm" = (
 /obj/effect/decal/cleanable/glass,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -29078,6 +29059,18 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"iSi" = (
+/obj/structure/table/wood,
+/obj/item/phone{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/open/floor/carpet/red,
+/area/station/commons/vacant_room/office)
 "iSk" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -32683,13 +32676,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
-"jXB" = (
-/obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/ian{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/station/command/heads_quarters/hop)
 "jXD" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -58519,6 +58505,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/cmo)
+"saa" = (
+/obj/structure/bed/dogbed/mcgriff,
+/obj/item/food/beef_wellington_slice,
+/obj/structure/cable,
+/mob/living/basic/pet/dog/pug/mcgriff,
+/turf/open/floor/iron/showroomfloor,
+/area/station/security/warden)
 "sab" = (
 /turf/open/floor/iron/chapel{
 	dir = 4
@@ -72807,6 +72800,13 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/prison)
+"wuM" = (
+/obj/structure/bed/dogbed/ian,
+/mob/living/basic/pet/dog/corgi/ian{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/command/heads_quarters/hop)
 "wuV" = (
 /obj/effect/turf_decal/siding/yellow/corner,
 /obj/machinery/status_display/evac/directional/south,
@@ -224655,7 +224655,7 @@ nwT
 hkb
 aaT
 fFT
-aoI
+iSi
 bPw
 tKI
 lgr
@@ -236439,7 +236439,7 @@ cMA
 wkr
 eRO
 ven
-iFg
+saa
 kyy
 kTz
 lbk
@@ -236751,7 +236751,7 @@ cqQ
 jRC
 nvs
 edW
-jXB
+wuM
 cpm
 bHy
 ylU

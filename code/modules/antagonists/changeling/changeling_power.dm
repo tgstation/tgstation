@@ -5,7 +5,8 @@
 /datum/action/changeling
 	name = "Prototype Sting - Debug button, ahelp this"
 	background_icon_state = "bg_changeling"
-	icon_icon = 'icons/mob/actions/actions_changeling.dmi'
+	overlay_icon_state = "bg_changeling_border"
+	button_icon = 'icons/mob/actions/actions_changeling.dmi'
 	var/needs_button = TRUE//for passive abilities like hivemind that dont need a button
 	var/helptext = "" // Details
 	var/chemical_cost = 0 // negative chemical cost is for passive abilities (chemical glands)
