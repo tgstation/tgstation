@@ -125,7 +125,7 @@
 ///Secure Briefcase
 /obj/item/storage/secure/briefcase
 	name = "secure briefcase"
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/storage/case.dmi'
 	icon_state = "secure"
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
