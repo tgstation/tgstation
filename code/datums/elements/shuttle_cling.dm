@@ -3,6 +3,9 @@
 	var/hyperspace_type = /turf/open/space/transit
 	var/datum/move_loop/move/hyperloop
 
+	var/clinging_move_delay = 1 SECONDS
+	var/not_clinging_move_delay = 0.1 SECONDS
+
 /datum/component/shuttle_cling/Initialize(direction)
 	. = ..()
 
@@ -14,10 +17,7 @@
 	ADD_TRAIT(parent, TRAIT_HYPERSPACED, src)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_state))
-	hyperloop = SSmove_manager.move(moving = parent, direction = turn(direction, 180), delay = 0.3 SECONDS, subsystem = SShyperspace_drift, priority = MOVEMENT_HYPERSPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
-
-	if(!is_holding_on(parent))
-		launch_very_hard()
+	hyperloop = SSmove_manager.move(moving = parent, direction = turn(direction, 180), delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
 
 /datum/component/shuttle_cling/proc/check_state()
 	SIGNAL_HANDLER
@@ -26,7 +26,9 @@
 		qdel(src)
 
 	if(!is_holding_on(parent))
-		launch_very_hard(parent)
+		hyperloop.delay = not_clinging_move_delay
+	else
+		hyperloop.delay = clinging_move_delay
 
 /datum/component/shuttle_cling/proc/is_holding_on(atom/movable/clinger)
 	if(!isliving(clinger))
@@ -37,7 +39,7 @@
 			return TRUE
 		if(isobj(handlebar))
 			var/obj/object = handlebar
-			if(object.anchored)
+			if(object.anchored && object.density)
 				return TRUE
 	return FALSE
 

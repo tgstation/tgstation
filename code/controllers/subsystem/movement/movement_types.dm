@@ -99,8 +99,8 @@
 /datum/move_loop/process()
 	var/old_delay = delay //The signal can sometimes change delay
 
-	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
-		return
+//	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
+//		return
 
 	lifetime -= old_delay //This needs to be based on work over time, not just time passed
 
