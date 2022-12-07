@@ -1,20 +1,20 @@
+/// Global list of all glass style singletons created. See [/proc/create_glass_styles] for list format.
 GLOBAL_LIST_INIT(glass_style_singletons, create_glass_styles())
 
+/**
+ * Constructs a nested list of glass style singletons
+ *
+ * List format:
+ * * list(glasses = list(beer = style datum, vodka = style datum), shot glasses = list(vodka = different style datum))
+ *
+ * Where
+ * * "glasses" and "shotglasses" are item typepaths
+ * * "beer" and "vodka" are reagent typepaths
+ * * "style datum" is a glass style singleton datum
+ *
+ * Returns the list.
+ */
 /proc/create_glass_styles()
-	/*
-	 * List format:
-	 *
-	 * list(
-	 *   glasses = list(
-	 *     beer = style datum,
-	 *     rum = style datum,
-	 *     vodka = style datum,
-	 *   ),
-	 *   shot glasses = list(
-	 *     vodka = different style datum,
-	 *   ),
-	 * )
-	 */
 	var/list/final_list = list()
 	for(var/datum/glass_style/style as anything in typesof(/datum/glass_style))
 		if(!initial(style.required_drink_type) || !initial(style.required_container_type))

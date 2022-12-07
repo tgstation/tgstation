@@ -1,7 +1,19 @@
+/**
+ * ## "Takes reagent appearance" Component
+ *
+ * Bit of a mouthful, but when applied to an item that can hold reagents (primarily reagent containers),
+ * said item will take on the appearance based on the majority share reagent inside
+ *
+ * This is done by cross-referencing the glass style datums. See [/datum/glass_style] for more information about that.
+ */
 /datum/component/takes_reagent_appearance
+	/// Icon file when attached to the item
 	var/icon_pre_change
+	/// Icon state when attached to the item
 	var/icon_state_pre_change
+	/// Optional callback invoked when when the item's appearance is changed
 	var/datum/callback/on_icon_changed
+	/// Optional callback invoked when our item has its appearance reverted to default
 	var/datum/callback/on_icon_reset
 
 /datum/component/takes_reagent_appearance/Initialize(
