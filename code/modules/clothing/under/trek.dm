@@ -4,6 +4,8 @@
 	can_adjust = FALSE
 	icon = 'icons/obj/clothing/under/trek.dmi'
 	worn_icon = 'icons/mob/clothing/under/trek.dmi'
+	greyscale_config = /datum/greyscale_config/trek
+	greyscale_config_worn = /datum/greyscale_config/trek/worn
 
 /*
 *	The Original Series (Technically not THE original because these have a black undershirt while the very-original didn't but IDC)
@@ -13,8 +15,6 @@
 	desc = "An outdated uniform worn by command officers."
 	icon_state = "trek_tos_com" //Shirt has gold wrist-bands
 	inhand_icon_state = "y_suit"
-	greyscale_config = /datum/greyscale_config/trek
-	greyscale_config_worn = /datum/greyscale_config/trek/worn
 	greyscale_colors = "#fab342"
 
 /obj/item/clothing/under/trek/engsec
@@ -22,8 +22,6 @@
 	desc = "An outdated uniform worn by engineering/security officers."
 	icon_state = "trek_tos_sec" //Tucked-in shirt
 	inhand_icon_state = "r_suit"
-	greyscale_config = /datum/greyscale_config/trek
-	greyscale_config_worn = /datum/greyscale_config/trek/worn
 	greyscale_colors = "#B72B2F"
 
 /obj/item/clothing/under/trek/medsci
@@ -31,8 +29,6 @@
 	desc = "An outdated uniform worn by medical/science officers."
 	icon_state = "trek_tos"
 	inhand_icon_state = "b_suit"
-	greyscale_config = /datum/greyscale_config/trek
-	greyscale_config_worn = /datum/greyscale_config/trek/worn
 	greyscale_colors = "#5FA4CC"
 
 /obj/item/clothing/under/trek/srvcar
@@ -40,19 +36,14 @@
 	desc = "An outdated uniform worn by service and supply staff."
 	icon_state = "trek_tos"
 	inhand_icon_state = "g_suit"
-	greyscale_config = /datum/greyscale_config/trek
-	greyscale_config_worn = /datum/greyscale_config/trek/worn
 	greyscale_colors = "#9FED58"
 
 /obj/item/clothing/under/trek/assistant
-	name = "service uniform"
+	name = "assistant uniform"
 	desc = "An outdated uniform worn by ship assistants."
 	icon_state = "trek_tos"
 	inhand_icon_state = "gy_suit"
-	greyscale_config = /datum/greyscale_config/trek
-	greyscale_config_worn = /datum/greyscale_config/trek/worn
 	greyscale_colors = "#818181"
-
 
 /*
 *	The Next Generation

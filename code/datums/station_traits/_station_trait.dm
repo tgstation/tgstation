@@ -24,14 +24,14 @@
 	var/can_revert = TRUE
 
 /datum/station_trait/New()
-    ..()
+	. = ..()
 
-    RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
+	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
-    if(trait_processes)
-        START_PROCESSING(SSstation, src)
-    if(trait_to_give)
-        ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
+	if(trait_processes)
+		START_PROCESSING(SSstation, src)
+	if(trait_to_give)
+		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 
 /datum/station_trait/Destroy()
 	SSstation.station_traits -= src
