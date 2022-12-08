@@ -102,7 +102,7 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
             'MenuBar__MenuBarButton',
             'MenuBar__font',
             'MenuBar__hover',
-            className
+            className,
           ])}
           {...rest}
           onClick={disabled ? undefined : onClick}
@@ -113,8 +113,7 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
           <Menu
             width={openWidth}
             menuRef={this.menuRef}
-            onOutsideClick={onOutsideClick}
-          >
+            onOutsideClick={onOutsideClick}>
             {children}
           </Menu>
         )}
@@ -170,8 +169,7 @@ export const Dropdown = (props: MenuBarItemProps) => {
         if (openOnHover) {
           setOpenMenuBar(entry);
         }
-      }}
-    >
+      }}>
       {children}
     </MenuBarButton>
   );
@@ -187,8 +185,7 @@ const MenuItemToggle = (props) => {
         'MenuBar__MenuItemToggle',
         'MenuBar__hover',
       ])}
-      onClick={() => onClick(value)}
-    >
+      onClick={() => onClick(value)}>
       <div className="MenuBar__MenuItemToggle__check">
         {checked && <Icon size={1.3} name="check" />}
       </div>
@@ -202,13 +199,13 @@ Dropdown.MenuItemToggle = MenuItemToggle;
 const MenuItem = (props) => {
   const { value, displayText, onClick } = props;
   return (
-    <Box className={classes([
+    <Box
+      className={classes([
         'MenuBar__font',
         'MenuBar__MenuItem',
         'MenuBar__hover',
       ])}
-      onClick={() => onClick(value)}
-    >
+      onClick={() => onClick(value)}>
       {displayText}
     </Box>
   );
@@ -228,11 +225,7 @@ type MenuBarProps = {
 
 export const MenuBar = (props: MenuBarProps) => {
   const { children } = props;
-  return (
-    <Box className="MenuBar">
-      {children}
-    </Box>
-  );
-}
+  return <Box className="MenuBar">{children}</Box>;
+};
 
 MenuBar.Dropdown = Dropdown;
