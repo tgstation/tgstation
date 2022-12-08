@@ -93,8 +93,6 @@
 		return TRUE //there's at least one. we'll let the codergods handle the rest with prob() i guess.
 	return FALSE
 
-
-
 /datum/round_event/scrubber_overflow/start()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/vent as anything in scrubbers)
 		if(!vent.loc)
@@ -111,7 +109,7 @@
 		else
 			dispensed_reagent.add_reagent(pick(safer_chems), reagents_amount)
 
-		dispensed_reagent.create_foam(/datum/effect_system/fluid_spread/foam, reagents_amount)
+		dispensed_reagent.create_foam(/datum/effect_system/fluid_spread/foam/short, reagents_amount)
 
 		CHECK_TICK
 
