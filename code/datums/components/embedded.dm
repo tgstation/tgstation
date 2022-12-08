@@ -290,7 +290,7 @@
 	safeRemove(user)
 
 /// Called when an object is ripped out of someone's body by magic or other abnormal means
-/datum/component/embedded/proc/magic_pull(mob/living/casted, mob/living/caster, obj/marked_item)
+/datum/component/embedded/proc/magic_pull(datum/source, mob/living/caster, obj/marked_item)
 	SIGNAL_HANDLER
 
 	if(marked_item != weapon || src.limb != limb)
@@ -300,7 +300,7 @@
 
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage * 3, sharpness=SHARP_EDGED) //TRIPLE DAMAGE !!
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage * 1.5, sharpness=SHARP_EDGED) // Deals considerable exit wounds and flings the user to the caster
 		victim.adjustStaminaLoss(pain_stam_pct * damage)
 
 		for(var/atom/movable/target in view(6, get_turf(victim)))
@@ -309,6 +309,6 @@
 				victim.Paralyze(1 SECONDS)
 				playsound(get_turf(victim), 'sound/magic/castsummon.ogg', 50, TRUE)
 				victim.visible_message(span_alert("[victim] is sent flying towards [caster] as the [marked_item] tears out of them!"), span_alert("You are launched at [caster] as the [marked_item] tears from your body and towards their hand!"))
-		victim.visible_message(span_danger("[weapon] is violently torn from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] is violently torn from your [limb.plaintext_zone]!"))
+		victim.visible_message(span_danger("[marked_item] is violently torn from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] is violently torn from your [limb.plaintext_zone]!"))
 	else
-		victim.visible_message(span_danger("[weapon] vanishes from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] vanishes from [limb.plaintext_zone]!"))
+		victim.visible_message(span_danger("[marked_item] vanishes from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] vanishes from [limb.plaintext_zone]!"))
