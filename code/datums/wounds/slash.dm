@@ -322,3 +322,9 @@
 	desc = "Patient's skin has numerous small slashes and cuts, generating moderate blood loss."
 	examine_desc = "has a ton of small cuts"
 	occur_text = "is cut numerous times, leaving many small slashes."
+
+// Subtype for cleave (heretic spell)
+/datum/wound/slash/critical/cleave
+	name = "Burning Avulsion"
+	examine_desc = "is ruptured, spraying blood wildly"
+	clot_rate = 0.01

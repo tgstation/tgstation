@@ -113,7 +113,7 @@
 		return
 
 	var/list/all_contents = traitor_mob.get_all_contents()
-	var/obj/item/modular_computer/tablet/pda/PDA = locate() in all_contents
+	var/obj/item/modular_computer/pda/PDA = locate() in all_contents
 	var/obj/item/radio/R = locate() in all_contents
 	var/obj/item/pen/P
 

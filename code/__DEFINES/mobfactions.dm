@@ -3,3 +3,5 @@
 
 #define FACTION_CLOWN "Clowns"
 #define FACTION_RAT "Rats"
+// Maint creatures have mutual respect for eachother.
+#define FACTION_MAINT_CREATURES "Maint_Creatures"

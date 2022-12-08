@@ -109,7 +109,7 @@
 		return FALSE
 	var/datum/ai_controller/mod_ai = new /datum/ai_controller/mod(module.mod)
 	module.mod.ai_controller = mod_ai
-	mod_ai.current_movement_target = imp_in
+	mod_ai.set_movement_target(imp_in)
 	mod_ai.blackboard[BB_MOD_TARGET] = imp_in
 	mod_ai.blackboard[BB_MOD_IMPLANT] = src
 	module.mod.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
@@ -146,7 +146,8 @@
 	desc = "Recall a MODsuit anyplace, anytime."
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_mod"
-	icon_icon = 'icons/mob/actions/actions_mod.dmi'
+	overlay_icon_state = "bg_mod_border"
+	button_icon = 'icons/mob/actions/actions_mod.dmi'
 	button_icon_state = "recall"
 	/// The cooldown for the recall.
 	COOLDOWN_DECLARE(recall_cooldown)

@@ -27,6 +27,9 @@
 
 /obj/item/organ/internal/body_egg/alien_embryo/on_life(delta_time, times_fired)
 	. = ..()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
 	switch(stage)
 		if(3, 4)
 			if(DT_PROB(1, delta_time))
@@ -64,6 +67,9 @@
 		if(ishuman(owner))
 			var/mob/living/carbon/human/baby_momma = owner
 			slowdown = baby_momma.reagents.has_reagent(/datum/reagent/medicine/spaceacillin) ? 2 : 1 // spaceacillin doubles the time it takes to grow
+			if(owner.has_status_effect(/datum/status_effect/nest_sustenance))
+				slowdown *= 0.80 //egg gestates 20% faster if you're trapped in a nest
+
 		addtimer(CALLBACK(src, PROC_REF(advance_embryo_stage)), growth_time*slowdown)
 
 /obj/item/organ/internal/body_egg/alien_embryo/egg_process()
@@ -123,12 +129,13 @@
 
 	if(gib_on_success)
 		new_xeno.visible_message(span_danger("[new_xeno] bursts out of [owner] in a shower of gore!"), span_userdanger("You exit [owner], your previous host."), span_hear("You hear organic matter ripping and tearing!"))
+		owner.investigate_log("has been gibbed by an alien larva.", INVESTIGATE_DEATHS)
 		owner.gib(TRUE)
 	else
 		new_xeno.visible_message(span_danger("[new_xeno] wriggles out of [owner]!"), span_userdanger("You exit [owner], your previous host."))
+		owner.log_message("had an alien larva within them escape (without being gibbed).", LOG_ATTACK, log_globally = FALSE)
 		owner.adjustBruteLoss(40)
 		owner.cut_overlay(overlay)
-	owner.investigate_log("has been gibbed by an alien larva.", INVESTIGATE_DEATHS)
 	qdel(src)
 
 

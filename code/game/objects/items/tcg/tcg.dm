@@ -334,6 +334,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		"epic" = 9,
 		"rare" = 30,
 		"uncommon" = 60)
+	var/drop_all_cards = FALSE
 
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
@@ -363,7 +364,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
-	var/list/cards = buildCardListWithRarity(card_count, guaranteed_count)
+	var/list/cards
+	if(drop_all_cards)
+		cards = SStrading_card_game.cached_cards[series]["ALL"]
+	else
+		cards = buildCardListWithRarity(card_count, guaranteed_count)
+
 	for(var/template in cards)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), series, template)
