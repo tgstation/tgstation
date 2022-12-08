@@ -236,3 +236,38 @@
   - bugfix: Made digitigrade clothing render correctly on female characters.
   nevimer:
   - qol: the AI HUD now flex-scales and is reorganized.
+2022-12-08:
+  Ghommie:
+  - rscdel: Removed icon_state randomization (all but one states) from space turfs
+      to shave a bit of time when initializing maps. This only affects those who have
+      parallax disabled!
+  - imageadd: Prettied up the sole remaining icon state an itsy bit to compensate
+      for it.
+  Mothblocks:
+  - bugfix: Door remotes now open windoors again.
+  - qol: Door remotes now use balloon alerts for failures.
+  ReinaCoder:
+  - rscadd: The Syndicate uplink revolver has been changed from the default .357 to
+      the S-357. It has the same stats and price as the old version but with a new
+      sprite.
+  - qol: Adds a better explanation on the .357 uplink entry so players have an better
+      understanding of what they are buying.
+  Rhials:
+  - balance: Xenomorph nests will now sustain humans that are buckled to them, and
+      gestate xenomorph eggs slightly faster.
+  - balance: Xenomorph nests evolved healing capabilities in exchange for some of
+      their grip. They now take only one minute to escape from.
+  - bugfix: Earning the Mimic loot drop from an abandoned crate now properly spawns
+      the mimic.
+  SargesC:
+  - bugfix: Ashen heretic blade is now fire resistant
+  itseasytosee:
+  - code_imp: Stamina no longer affects individual limbs.
+  kawoppi:
+  - code_imp: turned axolotls into basic mobs, their idle movement may be slightly
+      different and they won't move while you're pulling them anymore
+  san7890:
+  - admin: Whenever you teleport an atom/mob using the Get function found in many
+      admin utilities, rest assured that it will actually log the destination location
+      of where you are teleporting that thing to- rather than the location they were
+      pre-teleportation.
