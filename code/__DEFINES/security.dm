@@ -12,7 +12,7 @@
 #define DETSCAN_CATEGORY_SETTINGS "Active Settings"
 
 /// defines the order categories are displayed, with the standard ones first, then misc, then finally the closing remarks.
-#define DETSCAN_DEFAULT_ORDER list(\
+#define DETSCAN_DEFAULT_ORDER(...) list(\
 	DETSCAN_CATEGORY_FINGERS, \
 	DETSCAN_CATEGORY_BLOOD, \
 	DETSCAN_CATEGORY_FIBER, \
