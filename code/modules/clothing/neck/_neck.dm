@@ -367,3 +367,9 @@
 /obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/coconut_bra
+	name = "coconut bra"
+	desc = "You've seen these in those cheesy Space Films with Space Hawaiians. The coconuts are fake, don't even think about biting them."
+	icon_state = "coconut_bra"
+	worn_icon_state = "coconut_bra"

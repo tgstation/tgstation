@@ -546,3 +546,9 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/grass_skirt
+	name = "grass skirt"
+	desc = "You're a real crowd killer! No, seriously."
+	icon_state = "grass_skirt"
+	worn_icon_state = "grass_skirt"
