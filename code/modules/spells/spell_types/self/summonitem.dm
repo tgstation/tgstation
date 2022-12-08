@@ -101,6 +101,7 @@
 				// your item happened to get placed there is a no-no
 				if(mark_loc.item_flags & ABSTRACT)
 					break
+				SEND_SIGNAL(mark_loc, COMSIG_MAGIC_RECALL, src, caster, item_to_retrieve)
 
 			// If its on someone, properly drop it
 			if(ismob(item_to_retrieve.loc))
@@ -114,6 +115,7 @@
 					item_to_retrieve = null
 					break
 
+				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, src, caster, item_to_retrieve)
 				holding_mark.dropItemToGround(item_to_retrieve)
 
 			else if(isobj(item_to_retrieve.loc))
@@ -129,8 +131,8 @@
 
 				// Otherwise bring the whole thing with us
 				item_to_retrieve = retrieved_item
+				SEND_SIGNAL(retrieved_item, COMSIG_MAGIC_RECALL, src, caster, item_to_retrieve)
 
-			SEND_SIGNAL(marked_item, COMSIG_MAGIC_RECALL, src, caster, item_to_retrieve)
 			infinite_recursion += 1
 
 	else
@@ -141,6 +143,7 @@
 				// If this code ever runs I will be happy
 				log_combat(caster, organ.owner, "magically removed [organ.name] from", addition = "COMBAT MODE: [uppertext(caster.combat_mode)]")
 				organ.Remove(organ.owner)
+				SEND_SIGNAL(marked_item, COMSIG_MAGIC_RECALL, src, caster, item_to_retrieve)
 
 	if(!item_to_retrieve)
 		return
