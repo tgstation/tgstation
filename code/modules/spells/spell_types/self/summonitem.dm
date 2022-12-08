@@ -114,7 +114,8 @@
 					item_to_retrieve = null
 					break
 
-				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, caster, item_to_retrieve)
+				var/nearby = locate(caster) in view(6, get_turf(holding_mark)) //Pass whether or not the caster is in view.
+				SEND_SIGNAL(holding_mark, COMSIG_MAGIC_RECALL, caster, item_to_retrieve, nearby)
 				holding_mark.dropItemToGround(item_to_retrieve)
 
 			else if(isobj(item_to_retrieve.loc))
