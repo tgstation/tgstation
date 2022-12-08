@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Ethereals cannot crystal revive back from genetic meltdown petrification."

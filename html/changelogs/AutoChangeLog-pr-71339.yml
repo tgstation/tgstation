@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Observers can now see what action buttons an observed mob has. No, you can't click them. And no it doesn't show EVERY action."
-  - refactor: "Refactored how action button icons are generated. Some actions will now use a colored border when active instead of just turning green. Cooldown text will also appear on the top layer of actions too. If you see any funky lookin' icons (namely their borders), let me know."
-  - refactor: "Bluespace Golem's teleport action is now a cooldown action."
-  - bugfix: "Construct actions go to the middle of the screen like expected."
