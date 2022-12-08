@@ -915,7 +915,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/rld/Initialize(mapload)
 	. = ..()
-	for(var/option as anything in original_options)
+	for(var/option in original_options)
 		display_options[option] = icon(original_options[option])
 
 /obj/item/construction/rld/attack_self(mob/user)
@@ -941,14 +941,13 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			if(new_choice == null)
 				return
 
-			var/icon/I
 			var/list/new_rgb = ReadRGB(new_choice)
-			for(var/option as anything in original_options)
+			for(var/option in original_options)
 				if(option == "Color Pick" || option == "Deconstruct" || option == "Silo Link")
 					continue
-				I = icon(original_options[option])
-				I.SetIntensity(new_rgb[1]/255, new_rgb[2]/255, new_rgb[3]/255) //apply new scale
-				display_options[option] = I
+				var/icon/icon = icon(original_options[option])
+				icon.SetIntensity(new_rgb[1]/255, new_rgb[2]/255, new_rgb[3]/255) //apply new scale
+				display_options[option] = icon
 
 			color_choice = new_choice
 		if("Deconstruct")
