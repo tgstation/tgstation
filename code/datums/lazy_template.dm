@@ -22,6 +22,7 @@
 		return
 
 	QDEL_LIST(reservations)
+	GLOB.lazy_templates -= key
 	return ..()
 
 /**
