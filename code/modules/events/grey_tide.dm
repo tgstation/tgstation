@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
-
 /datum/round_event_control/grey_tide
 	name = "Grey Tide"
 	typepath = /datum/round_event/grey_tide
@@ -18,7 +16,10 @@ GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
 /datum/round_event/grey_tide
 	announce_when = 50
 	end_when = 20
+	///The number of areas to be hit by the event.
 	var/severity = 1
+	///The area subtypes to be targeted by the event.
+	var/list/grey_tide_areas = list()
 
 /datum/round_event/grey_tide/setup()
 	announce_when = rand(50, 60)
@@ -34,15 +35,13 @@ GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
 	)
 
 	for(var/i in 1 to severity)
-		GLOB.grey_tide_areas += pick_n_take(potential_areas)
+		grey_tide_areas += pick_n_take(potential_areas)
 
 /datum/round_event/grey_tide/announce(fake)
 	priority_announce("Gr3y.T1d3 virus detected in [station_name()] secure locking encryption subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
 
-	GLOB.grey_tide_areas.Cut() //As announce always occurs last, we use it to clean up the list of areas to be affected
-
 /datum/round_event/grey_tide/start()
-	if(!length(GLOB.grey_tide_areas))
+	if(!length(grey_tide_areas))
 		stack_trace("Could not initiate grey-tide. No areas in the list!")
 		kill()
 
@@ -50,7 +49,7 @@ GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
 	if(!ISMULTIPLE(activeFor, 12))
 		return
 
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE_LIGHT)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE_LIGHT, grey_tide_areas)
 
 // Objects currently impacted by the greytide event:
 // /obj/machinery/door/airlock -- Signal bolts open the door
@@ -59,4 +58,4 @@ GLOBAL_LIST_EMPTY_TYPED(grey_tide_areas, /area)
 // /obj/machinery/power/apc -- Signal turns the lighting channel off
 
 /datum/round_event/grey_tide/end()
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_GREY_TIDE, grey_tide_areas)

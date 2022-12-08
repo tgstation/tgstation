@@ -263,13 +263,13 @@
 		else
 			. = FALSE
 
-/obj/machinery/status_display/door_timer/proc/grey_tide()
+/obj/machinery/status_display/door_timer/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
 
 	if(!is_station_level(z))
 		return
 
-	for(var/area_type in GLOB.grey_tide_areas)
+	for(var/area_type in grey_tide_areas)
 		if(!istype(get_area(src), area_type))
 			continue
 		timer_end(forced = TRUE)

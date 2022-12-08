@@ -631,10 +631,10 @@
 	tube?.burn()
 	return
 
-/obj/machinery/light/proc/grey_tide()
+/obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
 
-	for(var/area_type in GLOB.grey_tide_areas)
+	for(var/area_type in grey_tide_areas)
 		if(!istype(get_area(src), area_type))
 			continue
 		INVOKE_ASYNC(src, PROC_REF(flicker))

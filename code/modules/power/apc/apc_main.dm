@@ -618,13 +618,13 @@
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_total]) : [cell? cell.percent() : "N/C"] ([charging])"
 
-/obj/machinery/power/apc/proc/grey_tide()
+/obj/machinery/power/apc/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
 
 	if(!is_station_level(z))
 		return
 
-	for(var/area_type in GLOB.grey_tide_areas)
+	for(var/area_type in grey_tide_areas)
 		if(!istype(get_area(src), area_type))
 			continue
 		lighting = APC_CHANNEL_OFF //Escape (or sneak in) under the cover of darkness
