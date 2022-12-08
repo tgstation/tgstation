@@ -132,12 +132,13 @@
 			var/obj/item/card/id/user_id = A
 			for(var/region in DETSCAN_ACCESS_ORDER)
 				var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
-				if(length(access_in_region))
-					LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], "[region]:")
-					var/list/access_names = list()
-					for(var/x in access_in_region)
-						access_names += SSid_access.get_access_desc(x)
-					LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], english_list(access_names))
+				if(!length(access_in_region))
+					continue
+				LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], "[region]:")
+				var/list/access_names = list()
+				for(var/access_num in access_in_region)
+					access_names += SSid_access.get_access_desc(access_num)
+				LAZYADD(det_data[DETSCAN_CATEGORY_ACCESS], english_list(access_names))
 
 
 		for(var/bloodtype in blood)
