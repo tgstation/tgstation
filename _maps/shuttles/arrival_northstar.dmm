@@ -26,17 +26,14 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/arrival)
 "g" = (
-/obj/structure/closet/firecloset/full,
-/turf/open/floor/pod/dark,
-/area/shuttle/arrival)
-"j" = (
-/obj/effect/turf_decal/trimline/red/corner{
+/obj/machinery/power/shuttle_engine/propulsion/burst/right{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 1
-	},
-/turf/open/floor/pod,
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"j" = (
+/obj/structure/closet/firecloset/full,
+/turf/open/floor/pod/dark,
 /area/shuttle/arrival)
 "k" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -58,10 +55,10 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/arrival)
 "r" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
+/obj/effect/turf_decal/trimline/red/warning{
+	dir = 8
 	},
-/turf/open/floor/pod,
+/turf/open/floor/pod/dark,
 /area/shuttle/arrival)
 "s" = (
 /obj/effect/turf_decal/trimline/red/corner{
@@ -73,34 +70,34 @@
 /turf/closed/wall/mineral/titanium/survival,
 /area/shuttle/arrival)
 "u" = (
-/obj/machinery/power/shuttle_engine/propulsion/burst/right{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/shuttle/arrival)
-"v" = (
-/obj/structure/closet/wardrobe/mixed,
-/turf/open/floor/pod/dark,
-/area/shuttle/arrival)
-"w" = (
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 1
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/arrival)
-"y" = (
 /obj/effect/turf_decal/trimline/red/corner,
 /obj/effect/turf_decal/trimline/red/corner{
 	dir = 8
 	},
 /turf/open/floor/pod,
 /area/shuttle/arrival)
+"v" = (
+/obj/structure/closet/wardrobe/mixed,
+/turf/open/floor/pod/dark,
+/area/shuttle/arrival)
+"w" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"y" = (
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 8
+	},
+/turf/open/floor/pod/dark,
+/area/shuttle/arrival)
 "z" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/obj/machinery/light/cold/no_nightlight/directional/south,
+/obj/machinery/light/red/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/arrival)
 "A" = (
@@ -113,16 +110,22 @@
 /turf/open/floor/pod,
 /area/shuttle/arrival)
 "C" = (
-/obj/machinery/power/shuttle_engine/propulsion/burst/left{
+/obj/effect/turf_decal/trimline/red/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/turf/open/floor/pod,
 /area/shuttle/arrival)
 "D" = (
-/obj/effect/turf_decal/trimline/red/corner{
-	dir = 8
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/obj/docking_port/mobile/arrivals{
+	name = "northstar arrivals shuttle"
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "E" = (
 /obj/effect/turf_decal/trimline/red/warning{
@@ -132,37 +135,37 @@
 /area/shuttle/arrival)
 "F" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light/cold/no_nightlight/directional/north,
+/obj/machinery/light/red/directional/north,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/arrival)
 "H" = (
-/obj/effect/turf_decal/trimline/red/warning{
-	dir = 8
-	},
-/turf/open/floor/pod/dark,
-/area/shuttle/arrival)
-"J" = (
 /obj/machinery/power/shuttle_engine/propulsion{
 	dir = 4
 	},
-/obj/docking_port/mobile/arrivals{
-	name = "northstar arrivals shuttle"
-	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"L" = (
+"J" = (
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/trimline/red/warning{
 	dir = 1
 	},
-/obj/machinery/light/cold/no_nightlight/directional/south,
+/obj/machinery/light/red/directional/south,
 /turf/open/floor/pod/dark,
 /area/shuttle/arrival)
-"M" = (
-/obj/machinery/power/shuttle_engine/propulsion{
+"L" = (
+/obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"M" = (
+/obj/effect/turf_decal/trimline/red/corner{
+	dir = 1
+	},
+/turf/open/floor/pod/dark,
 /area/shuttle/arrival)
 "N" = (
 /obj/structure/chair/comfy/shuttle,
@@ -171,20 +174,6 @@
 "P" = (
 /obj/effect/turf_decal/trimline/red/warning,
 /turf/open/floor/pod,
-/area/shuttle/arrival)
-"Q" = (
-/obj/effect/spawner/structure/window/survival_pod,
-/obj/effect/spawner/structure/window/survival_pod,
-/turf/open/floor/plating,
-/area/shuttle/arrival)
-"R" = (
-/obj/machinery/power/shuttle_engine/heater{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "W" = (
 /obj/effect/turf_decal/trimline/red/corner,
@@ -237,41 +226,41 @@ Z
 "}
 (6,1,1) = {"
 t
-N
-P
-b
-n
+d
+u
+A
+C
 c
 "}
 (7,1,1) = {"
 t
-d
-y
-A
-j
-t
-"}
-(8,1,1) = {"
-t
 N
 P
 b
 n
-c
+Z
 "}
-(9,1,1) = {"
-t
-N
-P
-r
-n
-Q
-"}
-(10,1,1) = {"
+(8,1,1) = {"
 t
 F
 P
 b
+J
+t
+"}
+(9,1,1) = {"
+t
+j
+y
+r
+M
+t
+"}
+(10,1,1) = {"
+t
+L
+L
+L
 L
 t
 "}
@@ -281,21 +270,5 @@ g
 D
 H
 w
-t
-"}
-(12,1,1) = {"
-t
-R
-R
-R
-R
-t
-"}
-(13,1,1) = {"
-t
-u
-J
-M
-C
 t
 "}

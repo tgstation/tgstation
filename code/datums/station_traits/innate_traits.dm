@@ -10,7 +10,7 @@
 	trait_type = STATION_TRAIT_ABSTRACT
 	weight = 0
 	show_in_report = TRUE
-	report_message = "We've issued some spaceworthy outifts for the crew."
+	report_message = "We've issued some uniforms better suited to boldly go where no spaceman has gone before."
 	/// Variation of jumpsuit we're using.
 	var/variation
 	var/static/list/variation_to_dept = list(
