@@ -371,7 +371,7 @@ RLD
 		),
 
 		//3RD CATEGORY Airlock access,empty list cause airlock_electronics UI will be displayed  when this tab is selected
-	 	"Airlock Access" = list()
+		"Airlock Access" = list()
 	)
 
 	///english name for the design to check if it was selected or not
