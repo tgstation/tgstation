@@ -13,6 +13,13 @@
 	report_message = "We've issued some uniforms better suited to boldly go where no spaceman has gone before."
 	/// Variation of jumpsuit we're using.
 	var/variation
+	/// Roles which do not apply for this trait.
+	var/static/list/blacklisted_roles = list(
+		/datum/job/prisoner,
+		/datum/job/clown,
+		/datum/job/mime,
+	)
+	/// Associated list of variations to lists of departmental bitflags to uniforms.
 	var/static/list/variation_to_dept = list(
 		TREK_VARIATION_TOS = list(
 			"[DEPARTMENT_BITFLAG_ASSISTANT]" = /obj/item/clothing/under/trek/assistant,
@@ -55,14 +62,18 @@
 
 	if(!ishuman(spawned)) //only humans wear stuff
 		return
+	if(is_type_in_list(job, blacklisted_roles)) //clowns stay clownin
+		return
+	if(crewmember.dna.species.outfit_important_for_life) //sorry plasmamen
+		return
 	var/mob/living/carbon/human/crewmember = spawned
 	var/list/department_to_jumpsuit = variation_to_dept[variation]
 	if(!department_to_jumpsuit)
 		return
 	var/obj/item/clothing/uniform
 	var/list/departments = job.departments_list ? job.departments_list.Copy() : list()
-	if(is_assistant_job(job))
-		departments += /datum/job_department/assistant
+	if(job.department_for_prefs)
+		departments += job.department_for_prefs
 	var/loop_end = FALSE
 	for(var/datum/job_department/department as anything in departments)
 		for(var/departmental_bitflag in department_to_jumpsuit)
