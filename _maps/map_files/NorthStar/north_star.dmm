@@ -19377,8 +19377,7 @@
 /turf/open/floor/iron/checker,
 /area/station/service/bar/atrium)
 "fmN" = (
-/obj/structure/grille,
-/obj/structure/cable,
+/obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/pod/light,
 /area/station/maintenance/floor1/starboard)
 "fmO" = (
@@ -34146,7 +34145,7 @@
 /obj/docking_port/stationary{
 	dir = 2;
 	dwidth = 3;
-	height = 14;
+	height = 12;
 	name = "north star arrivals";
 	roundstart_template = /datum/map_template/shuttle/arrival/northstar;
 	shuttle_id = "arrival_stationary";
