@@ -28797,16 +28797,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/pod/dark,
 /area/station/maintenance/floor3/starboard)
-"hWa" = (
-/obj/docking_port/stationary{
-	dwidth = 5;
-	height = 7;
-	name = "Cargo Bay";
-	shuttle_id = "cargo_home";
-	width = 12
-	},
-/turf/open/floor/pod,
-/area/station/cargo/storage)
 "hWh" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
@@ -77483,6 +77473,17 @@
 /obj/effect/spawner/random/trash/bin,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
+"vrz" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 3;
+	height = 11;
+	name = "Cargo Bay";
+	shuttle_id = "cargo_home";
+	width = 6
+	},
+/turf/open/floor/pod,
+/area/station/cargo/storage)
 "vrA" = (
 /turf/closed/wall,
 /area/station/medical/morgue)
@@ -113967,7 +113968,7 @@ gHs
 dOs
 dOs
 dOs
-dOs
+vrz
 dOs
 dOs
 oCK
@@ -114997,7 +114998,7 @@ dOs
 dOs
 dOs
 dOs
-hWa
+dOs
 oCK
 wSg
 pxh
