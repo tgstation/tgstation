@@ -259,6 +259,26 @@ RLD
 #define RCD_HOLOGRAM_FADE_TIME (15 SECONDS)
 #define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
 
+///each define maps to a variable used for construction in the RCD
+#define CONSTRUCTION_MODE "construction_mode"
+#define WINDOW_TYPE "window_type"
+#define WINDOW_GLASS "window_glass"
+#define WINDOW_SIZE "window_size"
+#define COMPUTER_DIR "computer_dir"
+#define FURNISH_TYPE "furnish_type"
+#define FURNISH_COST "furnish_cost"
+#define FURNISH_DELAY "furnish_delay"
+#define AIRLOCK_TYPE "airlock_type"
+
+///flags to be sent to UI
+#define TITLE "title"
+#define ICON "icon"
+
+///flags for creating icons shared by an entire category
+#define CATEGORY_ICON_STATE  "category_icon_state"
+#define CATEGORY_ICON_SUFFIX "category_icon_suffix"
+#define TITLE_ICON "ICON=TITLE"
+
 /obj/item/construction/rcd
 	name = "rapid-construction-device (RCD)"
 	icon = 'icons/obj/tools.dmi'
@@ -279,28 +299,28 @@ RLD
 		"Construction" = list( //Stuff you use to make & decorate areas
 			//Walls & Windows
 			"Structures" = list(
-				list("construction_mode" = RCD_FLOORWALL, "icon" = "wallfloor", "title" = "Wall/Floor"),
-				list("construction_mode" = RCD_WINDOWGRILLE, "window_type" = /obj/structure/window, "window_glass" = RCD_WINDOW_NORMAL, "window_size" =  RCD_WINDOW_DIRECTIONAL, "icon" = "windowsize", "title" = "Directional Window"),
-				list("construction_mode" = RCD_WINDOWGRILLE, "window_type" = /obj/structure/window/reinforced, "window_glass" = RCD_WINDOW_REINFORCED, "window_size" =  RCD_WINDOW_DIRECTIONAL, "icon" = "windowtype", "title" = "Directional Reinforced Window"),
-				list("construction_mode" = RCD_WINDOWGRILLE, "window_type" = /obj/structure/window/fulltile, "window_glass" = RCD_WINDOW_NORMAL, "window_size" =  RCD_WINDOW_FULLTILE, "icon" = "window0", "title" = "Full Tile Window"),
-				list("construction_mode" = RCD_WINDOWGRILLE, "window_type" = /obj/structure/window/reinforced/fulltile, "window_glass" = RCD_WINDOW_REINFORCED, "window_size" =  RCD_WINDOW_FULLTILE, "icon" = "rwindow0", "title" = "Full Tile Reinforced Window"),
+				list(CONSTRUCTION_MODE = RCD_FLOORWALL, ICON = "wallfloor", TITLE = "Wall/Floor"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window, WINDOW_GLASS = RCD_WINDOW_NORMAL, WINDOW_SIZE =  RCD_WINDOW_DIRECTIONAL, ICON = "windowsize", TITLE = "Directional Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced, WINDOW_GLASS = RCD_WINDOW_REINFORCED, WINDOW_SIZE =  RCD_WINDOW_DIRECTIONAL, ICON = "windowtype", TITLE = "Directional Reinforced Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/fulltile, WINDOW_GLASS = RCD_WINDOW_NORMAL, WINDOW_SIZE =  RCD_WINDOW_FULLTILE, ICON = "window0", TITLE = "Full Tile Window"),
+				list(CONSTRUCTION_MODE = RCD_WINDOWGRILLE, WINDOW_TYPE = /obj/structure/window/reinforced/fulltile, WINDOW_GLASS = RCD_WINDOW_REINFORCED, WINDOW_SIZE =  RCD_WINDOW_FULLTILE, ICON = "rwindow0", TITLE = "Full Tile Reinforced Window"),
 			),
 
 			//Computers & Machine Frames
 			"Machines" = list(
-				list("construction_mode" = RCD_MACHINE, "icon" = "box_1", "title" = "Machine Frame"),
-				list("construction_mode" = RCD_COMPUTER, "computer_dir" = 1, "icon" = "cnorth", "title" = "Computer North"),
-				list("construction_mode" = RCD_COMPUTER, "computer_dir" = 2, "icon" = "csouth", "title" = "Computer South"),
-				list("construction_mode" = RCD_COMPUTER, "computer_dir" = 4, "icon" = "ceast", "title" = "Computer East"),
-				list("construction_mode" = RCD_COMPUTER, "computer_dir" = 8, "icon" = "cwest", "title" = "Computer West"),
+				list(CONSTRUCTION_MODE = RCD_MACHINE, ICON = "box_1", TITLE = "Machine Frame"),
+				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 1, ICON = "cnorth", TITLE = "Computer North"),
+				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 2, ICON = "csouth", TITLE = "Computer South"),
+				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 4, ICON = "ceast", TITLE = "Computer East"),
+				list(CONSTRUCTION_MODE = RCD_COMPUTER, COMPUTER_DIR = 8, ICON = "cwest", TITLE = "Computer West"),
 			),
 
 			//Interior Design[construction_mode = RCD_FURNISHING is implied]
 			"Furniture" = list(
-				list("furnish_type" = /obj/structure/chair, "furnish_cost" = 8, "furnish_delay" = 10, "icon" = "chair", "title" = "Chair"),
-				list("furnish_type" = /obj/structure/chair/stool, "furnish_cost" = 8, "furnish_delay" = 10, "icon" = "stool", "title" = "Stool"),
-				list("furnish_type" = /obj/structure/table, "furnish_cost" = 16, "furnish_delay" = 20, "icon" = "table", "title" = "Table"),
-				list("furnish_type" = /obj/structure/table/glass, "furnish_cost" = 16, "furnish_delay" = 20, "icon" = "glass_table", "title" = "Glass Table"),
+				list(FURNISH_TYPE = /obj/structure/chair, FURNISH_COST = 8, FURNISH_DELAY = 10, ICON = "chair", TITLE = "Chair"),
+				list(FURNISH_TYPE = /obj/structure/chair/stool, FURNISH_COST = 8, FURNISH_DELAY = 10, ICON = "stool", TITLE = "Stool"),
+				list(FURNISH_TYPE = /obj/structure/table, FURNISH_COST = 16, FURNISH_DELAY = 20, ICON = "table",TITLE = "Table"),
+				list(FURNISH_TYPE = /obj/structure/table/glass, FURNISH_COST = 16, FURNISH_DELAY = 20, ICON = "glass_table", TITLE = "Glass Table"),
 			),
 		),
 
@@ -308,50 +328,48 @@ RLD
 		"AirLocks" = list( //used to seal/close areas
 			//Window Doors[airlock_glass = TRUE is implied]
 			"Windoors" = list(
-				list("airlock_type" = /obj/machinery/door/window, "icon" = "windoor", "title" = "Windoor"),
-				list("airlock_type" = /obj/machinery/door/window/brigdoor, "icon" = "secure_windoor", "title" = "Secure Windoor"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/window, ICON = "windoor", TITLE = "Windoor"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/window/brigdoor, ICON = "secure_windoor", TITLE = "Secure Windoor"),
 			),
 
 			//Glass Airlocks[airlock_glass = TRUE is implied,do fill_closed overlay]
 			"Glass AirLocks" = list(
-				list("airlock_type" = /obj/machinery/door/airlock/glass, "title" = "Standard"),
-				list("airlock_type" = /obj/machinery/door/airlock/public/glass, "title" = "Public"),
-				list("airlock_type" = /obj/machinery/door/airlock/engineering/glass, "title" = "Engineering"),
-				list("airlock_type" = /obj/machinery/door/airlock/atmos/glass, "title" = "Atmospherics"),
-				list("airlock_type" = /obj/machinery/door/airlock/security/glass, "title" = "Security"),
-				list("airlock_type" = /obj/machinery/door/airlock/command/glass, "title" = "Command"),
-				list("airlock_type" = /obj/machinery/door/airlock/medical/glass, "title" = "Medical"),
-				list("airlock_type" = /obj/machinery/door/airlock/research/glass, "title" = "Research"),
-				list("airlock_type" = /obj/machinery/door/airlock/virology/glass, "title" = "Virology"),
-				list("airlock_type" = /obj/machinery/door/airlock/mining/glass, "title" = "Mining"),
-				list("airlock_type" = /obj/machinery/door/airlock/maintenance/glass, "title" = "Maintenance"),
-				list("airlock_type" = /obj/machinery/door/airlock/external/glass, "title" = "External"),
-				list("airlock_type" = /obj/machinery/door/airlock/maintenance/external/glass, "title" = "External Maintenance"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/glass, TITLE = "Standard", CATEGORY_ICON_STATE = TITLE_ICON, CATEGORY_ICON_SUFFIX = "Glass"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/public/glass, TITLE = "Public"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/engineering/glass, TITLE = "Engineering"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/atmos/glass, TITLE = "Atmospherics"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/security/glass, TITLE = "Security"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/command/glass, TITLE = "Command"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/medical/glass, TITLE = "Medical"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/research/glass, TITLE = "Research"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/virology/glass, TITLE = "Virology"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/mining/glass, TITLE = "Mining"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/maintenance/glass, TITLE = "Maintenance"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/external/glass, TITLE = "External"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/maintenance/external/glass, TITLE = "External Maintenance"),
 			),
 
 			//Solid Airlocks[airlock_glass = FALSE is implied,no fill_closed overlay]
 			"Solid AirLocks" = list(
-				list("airlock_type" = /obj/machinery/door/airlock, "title" = "Standard"),
-				list("airlock_type" = /obj/machinery/door/airlock/public, "title" = "Public"),
-				list("airlock_type" = /obj/machinery/door/airlock/engineering, "title" = "Engineering"),
-				list("airlock_type" = /obj/machinery/door/airlock/atmos, "title" = "Atmospherics"),
-				list("airlock_type" = /obj/machinery/door/airlock/security, "title" = "Security"),
-				list("airlock_type" = /obj/machinery/door/airlock/command, "title" = "Command"),
-				list("airlock_type" = /obj/machinery/door/airlock/medical, "title" = "Medical"),
-				list("airlock_type" = /obj/machinery/door/airlock/research, "title" = "Research"),
-				list("airlock_type" = /obj/machinery/door/airlock/freezer, "title" = "Freezer"),
-				list("airlock_type" = /obj/machinery/door/airlock/virology, "title" = "Virology"),
-				list("airlock_type" = /obj/machinery/door/airlock/mining, "title" = "Mining"),
-				list("airlock_type" = /obj/machinery/door/airlock/maintenance, "title" = "Maintenance"),
-				list("airlock_type" = /obj/machinery/door/airlock/external, "title" = "External"),
-				list("airlock_type" = /obj/machinery/door/airlock/maintenance/external, "title" = "External Maintenance"),
-				list("airlock_type" = /obj/machinery/door/airlock/hatch, "title" = "Airtight Hatch"),
-				list("airlock_type" = /obj/machinery/door/airlock/maintenance_hatch, "title" = "Maintenance Hatch"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock, TITLE = "Standard", CATEGORY_ICON_STATE = TITLE_ICON),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/public, TITLE = "Public"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/engineering, TITLE = "Engineering"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/atmos, TITLE = "Atmospherics"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/security, TITLE = "Security"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/command, TITLE = "Command"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/medical, TITLE = "Medical"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/research, TITLE = "Research"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/freezer, TITLE = "Freezer"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/virology, TITLE = "Virology"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/mining, TITLE = "Mining"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/maintenance, TITLE = "Maintenance"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/external, TITLE = "External"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/maintenance/external, TITLE = "External Maintenance"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/hatch, TITLE = "Airtight Hatch"),
+				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/maintenance_hatch, TITLE = "Maintenance Hatch"),
 			),
 		),
 	)
-
-	var/static/list/radial_menu = null
 
 	///english name for the design to check if it was selected or not
 	var/design_title = "Wall/Floor"
@@ -571,29 +589,42 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	data["selected_design"] = design_title
 	data["categories"] = list()
 
+	var/category_icon_state
+	var/category_icon_suffix
 	for(var/list/sub_category as anything in root_categories[root_category])
 		//skip category if upgrades were not installed for these
 		if(sub_category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
 			continue
 		if(sub_category == "Furniture" && !(upgrade & RCD_UPGRADE_FURNISHING))
 			continue
+		category_icon_state = ""
+		category_icon_suffix = ""
 
 		var/list/designs = list() //initialize all designs under this category
 		var/list/target_category =  root_categories[root_category][sub_category]
 		for(var/i in 1 to target_category.len)
 			var/list/design = target_category[i]
 
-			//get/infer icon_state based on category
-			var/icon
-			if(sub_category == "Solid AirLocks")
-				icon = "[design["title"]]"
-			else if(sub_category == "Glass AirLocks")
-				icon = "[design["title"]]-Glass"
-			else
-				icon = design["icon"]
-			icon = replacetext(icon," ","-") //css class names cannot have spaces in them
+			//check for special icon flags
+			if(design[CATEGORY_ICON_STATE] != null)
+				category_icon_state = design[CATEGORY_ICON_STATE]
+			if(design[CATEGORY_ICON_SUFFIX] != null)
+				category_icon_suffix = design[CATEGORY_ICON_SUFFIX]
 
-			designs += list(list("design_id" = i, "title" = design["title"], "icon" = icon))
+			//get icon or create it from pre defined flags
+			var/icon_state
+			if(design[ICON] != null)
+				icon_state = design[ICON]
+			else
+				icon_state = category_icon_state
+				if(icon_state == TITLE_ICON)
+					icon_state = design[TITLE]
+			icon_state = "[icon_state][category_icon_suffix]"
+
+			//sanitize them so you dont go insane when icon names contain spaces in them
+			icon_state = sanitize_css_class_name(icon_state)
+
+			designs += list(list("design_id" = i, TITLE = design[TITLE], ICON = icon_state))
 		data["categories"] += list(list("cat_name" = sub_category, "designs" = designs))
 
 	//merge airlock_electronics ui data with this
@@ -632,27 +663,27 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 			design_title = design["title"]
 
 			if(category_name == "Structures")
-				construction_mode = design["construction_mode"]
-				if(design["window_type"] != null)
-					window_type = design["window_type"]
-				if(design["window_glass"] != null)
-					window_glass = design["window_glass"]
-				if(design["window_size"] != null)
-					window_size = design["window_size"]
+				construction_mode = design[CONSTRUCTION_MODE]
+				if(design[WINDOW_TYPE] != null)
+					window_type = design[WINDOW_TYPE]
+				if(design[WINDOW_GLASS] != null)
+					window_glass = design[WINDOW_GLASS]
+				if(design[WINDOW_SIZE] != null)
+					window_size = design[WINDOW_SIZE]
 			else if(category_name == "Machines")
-				construction_mode = design["construction_mode"]
-				if(design["computer_dir"] != null)
-					computer_dir = design["computer_dir"]
+				construction_mode = design[CONSTRUCTION_MODE]
+				if(design[COMPUTER_DIR] != null)
+					computer_dir = design[COMPUTER_DIR]
 			else if(category_name == "Furniture")
 				construction_mode = RCD_FURNISHING
-				furnish_type = design["furnish_type"]
-				furnish_cost = design["furnish_cost"]
-				furnish_delay = design["furnish_delay"]
+				furnish_type = design[FURNISH_TYPE]
+				furnish_cost = design[FURNISH_COST]
+				furnish_delay = design[FURNISH_DELAY]
 
 			if(root_category == "AirLocks")
 				construction_mode = RCD_AIRLOCK
 				airlock_glass = (category_name != "Solid AirLocks")
-				airlock_type = design["airlock_type"]
+				airlock_type = design[AIRLOCK_TYPE]
 
 		else
 			params["rcd"] = TRUE
@@ -764,6 +795,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	matter = 500
 	canRturf = TRUE
 	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
+
+#undef GLOBAL_ICON_STATE
+#undef GLOBAL_ICON_SUFFIX
+#undef TITLE_ICON
 
 /obj/item/rcd_ammo
 	name = "RCD matter cartridge"
