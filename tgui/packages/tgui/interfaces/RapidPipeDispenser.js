@@ -40,7 +40,8 @@ const TOOLS = [
 
 export const ColorItem = (props, context) => {
   const { act, data } = useBackend(context);
-  const { selected_color, space } = data;
+  const { space } = props;
+  const { selected_color } = data;
   return (
     <LabeledList.Item label="Color">
       {space ? <Space /> : ''}

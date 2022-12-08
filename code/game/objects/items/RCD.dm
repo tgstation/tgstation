@@ -101,6 +101,7 @@ RLD
 /obj/item/construction/proc/insert_matter(obj/O, mob/user)
 	if(iscyborg(user))
 		return FALSE
+
 	var/loaded = FALSE
 	if(istype(O, /obj/item/rcd_ammo))
 		var/obj/item/rcd_ammo/R = O
@@ -558,7 +559,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/rcd/ui_data(mob/user)
 	var/list/data = ..(user)
 
-	data["space"] = TRUE
 	//main categories
 	data["selected_root"] = root_category
 	data["root_categories"] = list()
@@ -789,8 +789,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 
 // Ranged RCD
-
-
 /obj/item/construction/rcd/arcd
 	name = "advanced rapid-construction-device (ARCD)"
 	desc = "A prototype RCD with ranged capability and extended capacity. Reload with iron, plasteel, glass or compressed matter cartridges."
@@ -1152,7 +1150,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/plumbing/ui_data(mob/user)
 	var/list/data = ..(user)
 
-	data["space"] = TRUE
 	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
 	data["selected_color"] = current_color
 	data["layer_icon"] = "plumbing_layer[GLOB.plumbing_layers[current_layer]]"

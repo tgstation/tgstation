@@ -86,7 +86,7 @@ const StaticSection = (props, context) => {
     <Section>
       <MatterItem />
       {silo_upgraded ? <SiloItem /> : ''}
-      <ColorItem />
+      <ColorItem space />
     </Section>
   );
 };

@@ -54,9 +54,3 @@
 		//glass door no overlay
 		icon = icon(airlocks[airlock_name] , "closed" , SOUTH)
 		Insert(sprite_name = "[airlock_name]-Glass", I = icon)
-
-
-
-
-
-

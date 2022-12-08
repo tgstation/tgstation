@@ -7,7 +7,6 @@ import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
   matterLeft: number;
-  space: BooleanLike;
   silo_upgraded: BooleanLike;
   silo_enabled: BooleanLike;
   root_categories: string[];
@@ -29,17 +28,12 @@ type Design = {
   icon: string;
 };
 
-export const Space = (props, context) => {
-  return <span>&nbsp;</span>;
-};
-
 export const MatterItem = (props, context) => {
   const { data } = useBackend<Data>(context);
-  const { matterLeft, space } = data;
+  const { matterLeft } = data;
   return (
     <LabeledList.Item label="Units Left">
-      {space ? <Space /> : ''}
-      {matterLeft} Units
+      &nbsp;{matterLeft} Units
     </LabeledList.Item>
   );
 };
@@ -84,7 +78,7 @@ const InfoSection = (props, context) => {
   return (
     <Section>
       <LabeledList>
-        <MatterItem />
+        <MatterItem space />
         {silo_upgraded ? <SiloItem /> : ''}
         <CategoryItem />
       </LabeledList>

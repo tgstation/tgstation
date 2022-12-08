@@ -335,7 +335,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"categories" = list(),
 		"selected_color" = paint_color,
 		"mode" = mode,
-		"space" = FALSE
 	)
 
 	var/list/recipes
