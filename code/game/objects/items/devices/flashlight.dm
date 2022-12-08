@@ -349,6 +349,116 @@
 /obj/item/flashlight/flare/get_temperature()
 	return on * heat
 
+
+
+
+
+/obj/item/flashlight/flare/candle
+	name = "red candle"
+	desc = "In Greek myth, Prometheus stole fire from the Gods and gave it to \
+		humankind. The jewelry he kept for himself."
+	icon = 'icons/obj/candle.dmi'
+	icon_state = "candle1"
+	inhand_icon_state = null
+	w_class = WEIGHT_CLASS_TINY
+	light_color = LIGHT_COLOR_FIRE
+	light_range = 2
+	fuel = 2000
+	//var/lit = FALSE
+	//var/infinite = FALSE
+	//var/start_lit = FALSE
+
+/obj/item/flashlight/flare/candle/Initialize(mapload)
+	. = ..()
+	if(on)
+		update_brightness()
+
+/obj/item/flashlight/flare/candle/update_icon_state()
+	var/wax_level
+	switch(fuel)
+		if(1500 to 2000)
+			wax_level = 3
+		if(800 to 1500)
+			wax_level = 2
+		if(0 to 800)
+			wax_level = 1
+	icon_state = "candle[wax_level][on ? "_lit" : ""]"
+	return ..()
+
+/obj/item/flashlight/flare/candle/attackby(obj/item/fire_starter, mob/user, params)
+	var/msg = fire_starter.ignition_effect(src, user)
+	if(msg)
+		user.visible_message(msg)
+		//light(msg)
+		toggle_light(user)
+	else
+		return ..()
+
+/obj/item/flashlight/flare/candle/fire_act(exposed_temperature, exposed_volume)
+	if(!on)
+		toggle_light()
+	return ..()
+
+/obj/item/flashlight/flare/candle/attack_self(mob/user)
+	return
+
+/obj/item/flashlight/flare/candle/toggle_light(mob/user, message)
+
+// /obj/item/flashlight/flare/attack_self(mob/user)
+	if(fuel <= 0)
+		to_chat(user, span_warning("[src] is out of wax!"))
+		return
+	if(on)
+		to_chat(user, span_warning("[src] is already lit!"))
+		return
+
+	. = ..()
+	// All good, turn it on.
+	if(.)
+		// already have a message in attackby ?!?
+		// user.visible_message(span_notice("[user] lights \the [src]."), span_notice("You light \the [src]!"))
+		damtype = BURN
+		START_PROCESSING(SSobj, src)
+
+/obj/item/flashlight/flare/candle/proc/put_out_candle()
+	if(!lit)
+		return
+	lit = FALSE
+	update_appearance()
+	set_light(0)
+	return TRUE
+
+/obj/item/flashlight/flare/candle/extinguish()
+	put_out_candle()
+	return ..()
+
+/obj/item/flashlight/flare/candle/process(delta_time)
+	if(!lit)
+		return PROCESS_KILL
+	if(!infinite)
+		wax -= delta_time
+	if(wax <= 0)
+		new /obj/item/trash/candle(loc)
+		qdel(src)
+	update_appearance()
+	open_flame()
+
+/obj/item/flashlight/flare/candle/attack_self(mob/user)
+	if(put_out_candle())
+		user.visible_message(span_notice("[user] snuffs [src]."))
+
+/obj/item/flashlight/flare/candle/infinite
+	fuel = INFINITE
+	on = TRUE
+
+
+
+
+
+
+
+
+
 /obj/item/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
