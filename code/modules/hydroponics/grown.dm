@@ -110,8 +110,9 @@
 	for(var/datum/reagent/reagent in reagents.reagent_list)
 		if(reagent.type != /datum/reagent/consumable/nutriment && reagent.type != /datum/reagent/consumable/nutriment/vitamin)
 			continue
+		var/booze_purity = clamp(0, 1, seed.lifespan/200 + seed.endurance/200)
 		if(distill_reagent)
-			reagents.add_reagent(distill_reagent, reagent.volume)
+			reagents.add_reagent(distill_reagent, reagent.volume, added_purity = booze_purity)
 		else
 			var/data = list()
 			data["names"] = list("[initial(name)]" = 1)
@@ -121,7 +122,7 @@
 				data["tastes"] = list(wine_flavor = 1)
 			else
 				data["tastes"] = list(tastes[1] = 1)
-			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data)
+			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data, added_purity = booze_purity)
 		reagents.del_reagent(reagent.type)
 
 /obj/item/food/grown/on_grind()
