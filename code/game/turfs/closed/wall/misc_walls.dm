@@ -129,9 +129,13 @@
 /turf/closed/wall/space
 	name = "illusionist wall"
 	icon = 'icons/turf/space.dmi'
-	icon_state = "space"
+	icon_state = "0"
 	plane = PLANE_SPACE
 	turf_flags = NO_RUST
 	smoothing_flags = NONE
 	canSmoothWith = null
 	smoothing_groups = null
+
+/turf/closed/wall/space/Initialize(mapload)
+	. = ..()
+	icon_state = SPACE_ICON_STATE(x, y, z)

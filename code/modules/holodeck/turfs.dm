@@ -112,8 +112,11 @@
 /turf/open/floor/holofloor/space
 	name = "\proper space"
 	icon = 'icons/turf/space.dmi'
-	icon_state = "space"
-	plane = PLANE_SPACE
+	icon_state = "0"
+
+/turf/open/floor/holofloor/space/Initialize(mapload)
+	icon_state = SPACE_ICON_STATE(x, y, z) // so realistic
+	. = ..()
 
 /turf/open/floor/holofloor/hyperspace
 	name = "\proper hyperspace"
