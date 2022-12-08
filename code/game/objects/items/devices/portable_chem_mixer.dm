@@ -139,7 +139,7 @@
 		icon_state = "[initial(icon_state)]_full"
 		return ..()
 	if(!atom_storage.locked)
-		icon_state = "[initial(icon_state)]_open"
+		icon_state = initial(icon_state)
 		return ..()
 	icon_state = "[initial(icon_state)]_empty"
 	return ..()
