@@ -293,7 +293,7 @@ RLD
 	has_ammobar = TRUE
 	actions_types = list(/datum/action/item_action/rcd_scan)
 
-	//all stuff used by RCD for construction
+	///all stuff used by RCD for construction
 	var/static/list/root_categories = list(
 		//1ST ROOT CATEGORY
 		"Construction" = list( //Stuff you use to make & decorate areas
@@ -325,7 +325,7 @@ RLD
 		),
 
 		//2ND ROOT CATEGORY[construction_mode = RCD_AIRLOCK is implied,"icon=closed"]
-		"AirLocks" = list( //used to seal/close areas
+		"Airlocks" = list( //used to seal/close areas
 			//Window Doors[airlock_glass = TRUE is implied]
 			"Windoors" = list(
 				list(AIRLOCK_TYPE = /obj/machinery/door/window, ICON = "windoor", TITLE = "Windoor"),
@@ -369,6 +369,9 @@ RLD
 				list(AIRLOCK_TYPE = /obj/machinery/door/airlock/maintenance_hatch, TITLE = "Maintenance Hatch"),
 			),
 		),
+
+		//3RD CATEGORY Airlock access,empty list cause airlock_electronics UI will be displayed  when this tab is selected
+	 	"Airlock Access" = list()
 	)
 
 	///english name for the design to check if it was selected or not
@@ -582,7 +585,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	data["root_categories"] = list()
 	for(var/category in root_categories)
 		data["root_categories"] += category
-	data["root_categories"] += "AirLock Access"
 
 	//create the category list
 	data["selected_category"] = design_category
@@ -592,6 +594,10 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	var/category_icon_state
 	var/category_icon_suffix
 	for(var/list/sub_category as anything in root_categories[root_category])
+		var/list/target_category =  root_categories[root_category][sub_category]
+		if(target_category.len == 0)
+			continue
+
 		//skip category if upgrades were not installed for these
 		if(sub_category == "Machines" && !(upgrade & RCD_UPGRADE_FRAMES))
 			continue
@@ -601,7 +607,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		category_icon_suffix = ""
 
 		var/list/designs = list() //initialize all designs under this category
-		var/list/target_category =  root_categories[root_category][sub_category]
 		for(var/i in 1 to target_category.len)
 			var/list/design = target_category[i]
 
@@ -642,7 +647,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	switch(action)
 		if("root_category")
 			var/new_root = params["root_category"]
-			if(root_categories[new_root] != null || new_root == "AirLock Access") //is a valid category
+			if(root_categories[new_root] != null) //is a valid category
 				root_category = new_root
 
 		if("design")
@@ -680,7 +685,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				furnish_cost = design[FURNISH_COST]
 				furnish_delay = design[FURNISH_DELAY]
 
-			if(root_category == "AirLocks")
+			if(root_category == "Airlocks")
 				construction_mode = RCD_AIRLOCK
 				airlock_glass = (category_name != "Solid AirLocks")
 				airlock_type = design[AIRLOCK_TYPE]
@@ -796,8 +801,21 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	canRturf = TRUE
 	upgrade = RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_FURNISHING
 
-#undef GLOBAL_ICON_STATE
-#undef GLOBAL_ICON_SUFFIX
+#undef CONSTRUCTION_MODE
+#undef WINDOW_TYPE
+#undef WINDOW_GLASS
+#undef WINDOW_SIZE
+#undef COMPUTER_DIR
+#undef FURNISH_TYPE
+#undef FURNISH_COST
+#undef FURNISH_DELAY
+#undef AIRLOCK_TYPE
+
+#undef TITLE
+#undef ICON
+
+#undef CATEGORY_ICON_STATE
+#undef CATEGORY_ICON_SUFFIX
 #undef TITLE_ICON
 
 /obj/item/rcd_ammo

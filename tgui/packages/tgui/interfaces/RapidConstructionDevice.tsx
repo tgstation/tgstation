@@ -152,7 +152,7 @@ const ConfigureSection = (props, context) => {
 
   return (
     <Stack.Item grow>
-      {selected_root === 'AirLock Access' ? (
+      {selected_root === 'Airlock Access' ? (
         <AirLockMainSection />
       ) : (
         <DesignSection />
