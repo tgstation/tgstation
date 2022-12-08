@@ -48,7 +48,8 @@
 	cpu = new(src)
 
 /obj/machinery/modular_computer/Destroy()
-	QDEL_NULL(cpu)
+	if(!isnull(cpu))
+		QDEL_NULL(cpu)
 	return ..()
 
 /obj/machinery/modular_computer/update_appearance(updates)
