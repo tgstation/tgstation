@@ -13,6 +13,17 @@
 	var/map_width
 	var/map_height
 
+/datum/lazy_template/New()
+	reservations = list()
+	..()
+
+/datum/lazy_template/Destroy(force, ...)
+	if(!force)
+		return
+
+	QDEL_LIST(reservations)
+	return ..()
+
 /**
  * Does the grunt work of loading the template.
  */
