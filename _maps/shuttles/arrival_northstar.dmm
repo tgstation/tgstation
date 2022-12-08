@@ -156,7 +156,7 @@
 /obj/machinery/power/shuttle_engine/heater{
 	dir = 4
 	},
-/obj/structure/window/reinforced{
+/obj/structure/window/reinforced/survival_pod{
 	dir = 8
 	},
 /turf/open/floor/plating/airless,

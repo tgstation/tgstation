@@ -577,6 +577,13 @@
 	admin_notes = "Go big or go home."
 	credit_cost = CARGO_CRATE_VALUE * 15
 
+/datum/map_template/shuttle/emergency/northstar
+	suffix ="northstar"
+	name = "North Star Emergency Shuttle"
+	description = "A rugged shuttle meant for long-distance transit from the tips of the frontier to Central Command and back. \
+	moderately comfortable and large, but cramped."
+	credit_cost = CARGO_CRATE_VALUE * 14
+
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"
 	name = "CentCom Raven Cruiser"
@@ -772,6 +779,10 @@
 /datum/map_template/shuttle/arrival/northstar
 	suffix = "northstar"
 	name = "arrival shuttle (North Star)"
+
+/datum/map_template/shuttle/cargo/northstar
+	suffix = "northstar"
+	name = "cargo ferry (North Star)"
 
 // Custom ERT shuttles
 /datum/map_template/shuttle/ert/bounty

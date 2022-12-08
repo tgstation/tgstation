@@ -6,7 +6,7 @@
 #define TREK_VARIATION_ENT "ent"
 
 /datum/station_trait/trek
-	name = ""
+	name = "Exploratory Uniforms"
 	trait_type = STATION_TRAIT_ABSTRACT
 	weight = 0
 	show_in_report = TRUE
