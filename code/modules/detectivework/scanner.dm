@@ -145,7 +145,7 @@
 			"Type: <font color='red'>[blood[bloodtype]]</font> DNA (UE): <font color='red'>[bloodtype]</font>")
 
 		// sends it off to be modified by the items
-		SEND_SIGNAL(A, COMSIG_DET_SCANNED, user, det_data)
+		SEND_SIGNAL(A, COMSIG_DETECTIVE_SCANNED, user, det_data)
 
 		// We gathered everything. Create a fork and slowly display the results to the holder of the scanner.
 

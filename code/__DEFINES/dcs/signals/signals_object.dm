@@ -408,4 +408,4 @@
 #define COMSIG_POSTER_TRAP_SUCCEED "poster_trap_succeed"
 
 /// from /obj/item/detective_scanner/scan(): (mob/user, list/extra_data)
-#define COMSIG_DET_SCANNED "det_scanned"
+#define COMSIG_DETECTIVE_SCANNED "det_scanned"
