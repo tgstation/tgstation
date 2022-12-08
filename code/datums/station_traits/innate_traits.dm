@@ -61,25 +61,33 @@
 		return
 	var/obj/item/clothing/uniform
 	var/list/departments = job.departments_list ? job.departments_list.Copy() : list()
-	if(job.department_for_prefs)
-		departments += job.department_for_prefs
-	for(var/datum/job_department/department as anything in list() + job.departments_list)
+	if(is_assistant_job(job))
+		departments += /datum/job_department/assistant
+	var/loop_end = FALSE
+	for(var/datum/job_department/department as anything in departments)
 		for(var/departmental_bitflag in department_to_jumpsuit)
-			if(initial(department.department_bitflags) & text2num(departmental_bitflag))
-				uniform = department_to_jumpsuit[departmental_bitflag]
+			if(!(initial(department.department_bitflags) & text2num(departmental_bitflag)))
+				continue
+			uniform = department_to_jumpsuit[departmental_bitflag]
+			if(departmental_bitflag == "[DEPARTMENT_BITFLAG_COMMAND]")
+				loop_end = TRUE
+				break
+		if(loop_end)
+			break
 	if(!uniform)
 		return
 	uniform = new uniform()
 	var/laceups = new /obj/item/clothing/shoes/laceup()
 	var/old_shoes = crewmember.shoes
 	if(old_shoes)
+		crewmember.shoes = null
 		qdel(old_shoes)
-		crewmember.equip_to_slot_if_possible(laceups, ITEM_SLOT_FEET, disable_warning = TRUE)
+		crewmember.equip_to_slot_if_possible(laceups, ITEM_SLOT_FEET, disable_warning = TRUE, initial = TRUE)
 	var/old_uniform = crewmember.w_uniform
 	if(old_uniform)
 		crewmember.w_uniform = null //to prevent side effects like dropping items, this is a temporary removal
 		qdel(old_uniform)
-		crewmember.equip_to_slot_if_possible(uniform, ITEM_SLOT_ICLOTHING, disable_warning = TRUE)
+		crewmember.equip_to_slot_if_possible(uniform, ITEM_SLOT_ICLOTHING, disable_warning = TRUE, initial = TRUE)
 
 
 #undef TREK_VARIATION_TOS
