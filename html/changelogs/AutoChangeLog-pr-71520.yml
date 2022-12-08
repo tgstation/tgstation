@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes:
-  - bugfix: "queuing clicks should work correctly now"
