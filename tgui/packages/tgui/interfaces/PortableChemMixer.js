@@ -1,5 +1,4 @@
 import { sortBy } from 'common/collections';
-import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
