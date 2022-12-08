@@ -1099,3 +1099,6 @@
 			stack_trace("[name] is not sorted. value at [index] ([value]) is in the wrong place compared to the previous value of [last_value] (when compared to by [cmp])")
 
 		last_value = value
+
+/proc/coords2turf(list/coords)
+	return locate(coords[1], coords[2], coords[3])

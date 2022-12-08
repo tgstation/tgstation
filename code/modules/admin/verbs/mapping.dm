@@ -495,16 +495,16 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", choices)
 	if(!choice)
 		return
-	choice = choices[choice]
 
-	if(!length(GLOB.lazy_template_pivots[choice]))
-		to_chat(usr, span_warning("No pivot found with that key! This is probably an error."))
+	choice = choices[choice]
+	if(!choice)
+		to_chat(usr, span_warning("No template with that key found, report this!"))
 		return
 
-	if(LAZYACCESS(SSmapping.loaded_lazy_templates, choice))
-		to_chat(usr, span_nicegreen("That template has already been loaded!"))
-	else
-		message_admins("[key_name(usr)] has loaded the lazy template '[choice]'")
-		SSmapping.lazy_load_template(choice)
+	var/already_loaded = LAZYACCESS(SSmapping.loaded_lazy_templates, choice)
+	var/force_load = FALSE
+	if(already_loaded && (tgui_alert(usr, "Template already loaded.", "", list("Jump", "Load Again")) == "Load Again"))
+		force_load = TRUE
 
-	admin_follow(GLOB.lazy_template_pivots[choice][1])
+	var/datum/turf_reservation/reservation = SSmapping.lazy_load_template(choice, force = force_load)
+	admin_follow(coords2turf(reservation.bottom_left_coords))
