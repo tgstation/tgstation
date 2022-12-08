@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	var/obj/item/I = new contains_type(get_turf(M))
 	if (!QDELETED(I)) //might contain something like metal rods that might merge with a stack on the ground
 		M.visible_message(span_notice("[M] unwraps \the [src], finding \a [I] inside!"))
-		I.investigate_log("([I.type]) was found in a present by [key_name(M)].", INVESTIGATE_PRESENTS)
+		M.investigate_log("has unwrapped a present containing [I.type].", INVESTIGATE_PRESENTS)
 		M.put_in_hands(I)
 		I.add_fingerprint(M)
 	else

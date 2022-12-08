@@ -831,7 +831,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				if(elligible_organs.len)
 					var/obj/item/organ/O = pick(elligible_organs)
 					O.Remove(src)
-					visible_message(span_danger("[src] vomits up their [O.name]!"), span_danger("You vomit up your [O.name]")) //no "vomit up your heart"
+					visible_message(span_danger("[src] vomits up [p_their()] [O.name]!"), span_danger("You vomit up your [O.name]")) //no "vomit up your heart"
 					O.forceMove(drop_location())
 					if(prob(20))
 						O.animate_atom_living()

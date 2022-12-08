@@ -2,7 +2,14 @@
 	if(!message || !subject)
 		return
 	var/F = file("[GLOB.log_directory]/[subject].html")
-	WRITE_FILE(F, "[time_stamp()] [REF(src)] ([x],[y],[z]) || [src] [message]<br>")
+	var/message_prefix = "[time_stamp()] [REF(src)] ([x],[y],[z]) ||"
+	var/source = "[src]"
+
+	if(iscarbon(src))
+		var/mob/living/carbon/source_mob = src
+		source += " ([source_mob.ckey ? source_mob.ckey : "*no key*"])"
+
+	WRITE_FILE(F, "[message_prefix] [source] [message]<br>")
 
 /client/proc/investigate_show()
 	set name = "Investigate"
