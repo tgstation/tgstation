@@ -63,7 +63,7 @@
 	var/list/departments = job.departments_list ? job.departments_list.Copy() : list()
 	if(job.department_for_prefs)
 		departments += job.department_for_prefs
-	for(var/datum/job_department/department as anything in list() + job.departments_list)
+	for(var/datum/job_department/department as anything in departments)
 		for(var/departmental_bitflag in department_to_jumpsuit)
 			if(initial(department.department_bitflags) & text2num(departmental_bitflag))
 				uniform = department_to_jumpsuit[departmental_bitflag]
