@@ -111,7 +111,7 @@
 		if(reagent.type != /datum/reagent/consumable/nutriment && reagent.type != /datum/reagent/consumable/nutriment/vitamin)
 			continue
 		var/purity = clamp(seed.lifespan/200 + seed.endurance/200, 0, 1)
-		var/quality_min = DRINK_NICE
+		var/quality_min = 0
 		var/quality_max = DRINK_FANTASTIC
 		var/quality = round(LERP(quality_min, quality_max, purity))
 		if(distill_reagent)
