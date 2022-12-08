@@ -193,7 +193,7 @@
 
 
 // Short-lived foam
-/// A foam variant which dissapates quickly.
+/// A foam variant which dissipates quickly.
 /obj/effect/particle_effect/fluid/foam/short_life
 	lifetime = 1 SECONDS
 
