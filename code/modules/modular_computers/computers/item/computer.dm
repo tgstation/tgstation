@@ -628,7 +628,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
+	// NTNet is down and we are not connected via wired connection. No signal.
+	if(!SSmodular_computers.check_function(specific_action))
 		return NTNET_NO_SIGNAL
 
 	// computers are connected through ethernet

@@ -125,7 +125,7 @@
 			candidate.adjustToxLoss(-toxin_heal * delta_time, updating_health = FALSE, forced = TRUE)
 
 			candidate.adjustOxyLoss(-suffocation_heal * delta_time, updating_health = FALSE)
-			candidate.adjustStaminaLoss(-stamina_heal * delta_time, updating_health = FALSE)
+			candidate.adjustStaminaLoss(-stamina_heal * delta_time, updating_stamina = FALSE)
 			candidate.adjustCloneLoss(-clone_heal * delta_time, updating_health = FALSE)
 
 			for (var/organ in organ_healing)

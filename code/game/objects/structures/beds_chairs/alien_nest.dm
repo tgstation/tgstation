@@ -32,9 +32,9 @@
 					span_hear("You hear squelching..."))
 			else
 				M.visible_message(span_warning("[M.name] struggles to break free from the gelatinous resin!"),\
-					span_notice("You struggle to break free from the gelatinous resin... (Stay still for two minutes.)"),\
+					span_notice("You struggle to break free from the gelatinous resin... (Stay still for about a minute and a half.)"),\
 					span_hear("You hear squelching..."))
-				if(!do_after(M, 1200, target = src))
+				if(!do_after(M, 100 SECONDS, target = src))
 					if(M?.buckled)
 						to_chat(M, span_warning("You fail to unbuckle yourself!"))
 					return
@@ -43,6 +43,7 @@
 				M.visible_message(span_warning("[M.name] breaks free from the gelatinous resin!"),\
 					span_notice("You break free from the gelatinous resin!"),\
 					span_hear("You hear squelching..."))
+
 
 			unbuckle_mob(M)
 			add_fingerprint(user)
@@ -71,12 +72,18 @@
 	M.layer = BELOW_MOB_LAYER
 	add_overlay(nest_overlay)
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/victim = M
+		if(((victim.wear_mask && istype(victim.wear_mask, /obj/item/clothing/mask/facehugger)) || HAS_TRAIT(victim, TRAIT_XENO_HOST)) && victim.stat != DEAD) //If they're a host or have a facehugger currently infecting them. Must be alive.
+			victim.apply_status_effect(/datum/status_effect/nest_sustenance)
+
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_HANDS_BLOCKED, type)
 	M.pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
 	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
 	M.layer = initial(M.layer)
 	cut_overlay(nest_overlay)
+	M.remove_status_effect(/datum/status_effect/nest_sustenance)
 
 /obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
