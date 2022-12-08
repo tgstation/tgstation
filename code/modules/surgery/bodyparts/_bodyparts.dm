@@ -74,7 +74,7 @@
 	var/brute_dam = 0
 	///The current amount of burn damage the limb has
 	var/burn_dam = 0
-	///The maximum "physical" damage a bodypart can take. Set by children
+	///The maximum brute OR burn damage a bodypart can take. Once we hit this cap, no more damage of either type!
 	var/max_damage = 0
 
 	///Gradually increases while burning when at full damage, destroys the limb when at 100
