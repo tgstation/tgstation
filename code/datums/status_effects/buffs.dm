@@ -450,3 +450,28 @@
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
+
+/datum/status_effect/nest_sustenance
+	id = "nest_sustenance"
+	duration = -1
+	tick_interval = 0.4 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/nest_sustenance
+
+/datum/status_effect/nest_sustenance/tick(delta_time, times_fired)
+	. = ..()
+
+	if(owner.stat == DEAD) //If the victim has died due to complications in the nest
+		qdel(src)
+		return
+
+	owner.adjustBruteLoss(-2 * delta_time, updating_health = FALSE)
+	owner.adjustFireLoss(-2 * delta_time, updating_health = FALSE)
+	owner.adjustOxyLoss(-4 * delta_time, updating_health = FALSE)
+	owner.adjustStaminaLoss(-4 * delta_time, updating_stamina = FALSE)
+	owner.adjust_bodytemperature(BODYTEMP_NORMAL, 0, BODYTEMP_NORMAL) //Won't save you from the void of space, but it will stop you from freezing or suffocating in low pressure
+
+
+/atom/movable/screen/alert/status_effect/nest_sustenance
+	name = "Nest Vitalization"
+	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
+	icon_state = "nest_life"
