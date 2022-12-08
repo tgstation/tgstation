@@ -56742,8 +56742,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/right/directional/west{
-    req_access = list("atmospherics")
-    },
+	req_access = list("atmospherics")
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "nNR" = (
