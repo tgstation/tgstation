@@ -130,6 +130,7 @@
 				// Otherwise bring the whole thing with us
 				item_to_retrieve = retrieved_item
 
+			SEND_SIGNAL(marked_item, COMSIG_MAGIC_RECALL, src, caster, item_to_retrieve)
 			infinite_recursion += 1
 
 	else
@@ -143,6 +144,8 @@
 
 	if(!item_to_retrieve)
 		return
+
+	SEND_SIGNAL(marked_item, COMSIG_MAGIC_RECALL, src, caster, item_to_retrieve)
 
 	item_to_retrieve.loc?.visible_message(span_warning("[item_to_retrieve] suddenly disappears!"))
 

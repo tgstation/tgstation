@@ -118,6 +118,7 @@
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, PROC_REF(ripOut))
 	RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, PROC_REF(safeRemove))
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(checkTweeze))
+	RegisterSignal(parent, COMSIG_MAGIC_RECALL, PROC_REF(magic_pull))
 
 /datum/component/embedded/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY))
@@ -287,3 +288,27 @@
 	to_chat(user, span_notice("You successfully pluck [weapon] from [victim]'s [limb.plaintext_zone]."))
 	to_chat(victim, span_notice("[user] plucks [weapon] from your [limb.plaintext_zone]."))
 	safeRemove(user)
+
+/// Called when an object is ripped out of someone's body by magic or other abnormal means
+/datum/component/embedded/proc/magic_pull(mob/living/caster, obj/marked_item)
+	SIGNAL_HANDLER
+
+	if(marked_item != weapon || src.limb != limb)
+		return
+
+	var/mob/living/carbon/victim = parent
+
+	if(harmful)
+		var/damage = weapon.w_class * remove_pain_mult
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage * 3, sharpness=SHARP_EDGED) //TRIPLE DAMAGE !!
+		victim.adjustStaminaLoss(pain_stam_pct * damage)
+
+		for(var/atom/movable/target in view(6, get_turf(victim)))
+			if(target == caster)
+				victim.throw_at(caster, get_dist(victim, caster) - 1, 2, caster) //If the caster is close enough, yanks the victim to them.
+				victim.Paralyze(1 SECONDS)
+				playsound(get_turf(victim), 'sound/magic/castsummon.ogg', 50, TRUE)
+				victim.visible_message(span_alert("[victim] is sent flying towards [caster] as the [marked_item] tears out of them!"), span_alert("You are launched at [caster] as the [marked_item] tears from your body and towards their hand!"))
+		victim.visible_message(span_danger("[weapon] is violently torn from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] is violently torn from your [limb.plaintext_zone]!"))
+	else
+		victim.visible_message(span_danger("[weapon] vanishes from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] vanishes from [limb.plaintext_zone]!"))
