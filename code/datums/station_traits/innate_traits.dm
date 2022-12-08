@@ -63,10 +63,17 @@
 	var/list/departments = job.departments_list ? job.departments_list.Copy() : list()
 	if(is_assistant_job(job))
 		departments += /datum/job_department/assistant
+	var/loop_end = FALSE
 	for(var/datum/job_department/department as anything in departments)
 		for(var/departmental_bitflag in department_to_jumpsuit)
-			if(initial(department.department_bitflags) & text2num(departmental_bitflag))
-				uniform = department_to_jumpsuit[departmental_bitflag]
+			if(!(initial(department.department_bitflags) & text2num(departmental_bitflag)))
+				continue
+			uniform = department_to_jumpsuit[departmental_bitflag]
+			if(departmental_bitflag == "[DEPARTMENT_BITFLAG_COMMAND]")
+				loop_end = TRUE
+				break
+		if(loop_end)
+			break
 	if(!uniform)
 		return
 	uniform = new uniform()
