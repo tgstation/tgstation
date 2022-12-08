@@ -9816,8 +9816,9 @@
 	dir = 4
 	},
 /obj/item/toy/plush/moth{
-	desc = "Who would name their moth plushie Soup? They'd have to be insane!";
-	name = "Soup"
+	color = "#8e2e87";
+	desc = "A strange moth plushie named Edict, it's dyed purple.";
+	name = "Edict"
 	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
