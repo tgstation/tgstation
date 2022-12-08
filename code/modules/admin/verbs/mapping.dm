@@ -55,7 +55,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
 	/client/proc/check_for_obstructed_atmospherics,
-	/client/proc/force_load_lazy_template,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -484,27 +483,3 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 		var/datum/browser/popup = new(usr, "atmospherics_obstructions", "Atmospherics Obstructions", 900, 750)
 		popup.set_content(results.Join())
 		popup.open()
-
-/client/proc/force_load_lazy_template()
-	set name = "Force Load Lazy Template"
-	set category = "Mapping"
-	if(!check_rights(R_SPAWN))
-		return
-
-	var/list/choices = LAZY_TEMPLATE_KEY_LIST_ALL
-	var/choice = tgui_input_list(usr, "Key?", "Lazy Loader", choices)
-	if(!choice)
-		return
-
-	choice = choices[choice]
-	if(!choice)
-		to_chat(usr, span_warning("No template with that key found, report this!"))
-		return
-
-	var/already_loaded = LAZYACCESS(SSmapping.loaded_lazy_templates, choice)
-	var/force_load = FALSE
-	if(already_loaded && (tgui_alert(usr, "Template already loaded.", "", list("Jump", "Load Again")) == "Load Again"))
-		force_load = TRUE
-
-	var/datum/turf_reservation/reservation = SSmapping.lazy_load_template(choice, force = force_load)
-	admin_follow(coords2turf(reservation.bottom_left_coords))

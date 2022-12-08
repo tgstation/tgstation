@@ -15,7 +15,6 @@
 
 /**
  * Does the grunt work of loading the template.
- * Has a basic check to ensure that the loaded template isn't larger than the preallocated area.
  */
 /datum/lazy_template/proc/lazy_load()
 	RETURN_TYPE(/turf)
@@ -62,5 +61,4 @@
 
 /datum/lazy_template/abductor_ship
 	key = LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS
-	uses_multiple_allocations = TRUE
 	map_name = "abductor_ships"
