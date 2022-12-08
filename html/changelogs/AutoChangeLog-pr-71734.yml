@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "fixes shields that don't actually take damage from attacks (eg: adamantine shields) being unable to block said attacks."

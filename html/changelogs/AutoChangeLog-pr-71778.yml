@@ -1,4 +1,0 @@
-author: "kawoppi"
-delete-after: True
-changes:
-  - code_imp: "turned axolotls into basic mobs, their idle movement may be slightly different and they won't move while you're pulling them anymore"
