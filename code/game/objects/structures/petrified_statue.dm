@@ -74,7 +74,7 @@
 			if(iscarbon(petrified_mob))
 				var/mob/living/carbon/petrified_carbon = petrified_mob
 				var/obj/item/organ/internal/brain/carbon_brain = petrified_carbon.getorganslot(ORGAN_SLOT_BRAIN)
-				petrified_carbon.internal_organs.Remove(carbon_brain)
+				carbon_brain.Remove(petrified_carbon)
 				carbon_brain.forceMove(get_turf(src))
 				carbon_brain.name = "petrified [carbon_brain.name]"
 				carbon_brain.desc = "[carbon_brain.desc] This one seems a bit more... smooth than a normal brain. Probably'd still work."
