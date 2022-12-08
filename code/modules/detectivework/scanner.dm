@@ -130,7 +130,7 @@
 
 		if(istype(A, /obj/item/card/id))
 			var/obj/item/card/id/user_id = A
-			for(var/region in DETSCAN_ACCESS_ORDER)
+			for(var/region in DETSCAN_ACCESS_ORDER())
 				var/access_in_region = SSid_access.accesses_by_region[region] & user_id.GetAccess()
 				if(!length(access_in_region))
 					continue
@@ -153,7 +153,7 @@
 		var/found_something = FALSE
 		add_log("<B>[station_time_timestamp()][get_timestamp()] - [target_name]</B>", 0)
 
-		for(var/category in DETSCAN_DEFAULT_ORDER)
+		for(var/category in DETSCAN_DEFAULT_ORDER())
 			if(!LAZYLEN(det_data[category]))
 				continue  // no data found, move to next category
 			sleep(3 SECONDS)
