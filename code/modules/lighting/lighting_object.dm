@@ -29,12 +29,6 @@ GLOBAL_LIST_EMPTY(default_lighting_underlays_by_z)
 	affected_turf.lighting_object = src
 	affected_turf.luminosity = 0
 
-	// This path is really hot. this is faster
-	// Really this should be a global var or something, but lets not think about that yes?
-	if(CONFIG_GET(flag/starlight))
-		for(var/turf/open/space/space_tile in RANGE_TURFS(1, affected_turf))
-			space_tile.update_starlight()
-
 	needs_update = TRUE
 	SSlighting.objects_queue += src
 

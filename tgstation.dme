@@ -2997,7 +2997,6 @@
 #include "code\modules\error_handler\error_handler.dm"
 #include "code\modules\error_handler\error_viewer.dm"
 #include "code\modules\events\_event.dm"
-#include "code\modules\events\aurora_caelus.dm"
 #include "code\modules\events\brain_trauma.dm"
 #include "code\modules\events\brand_intelligence.dm"
 #include "code\modules\events\bureaucratic_error.dm"

@@ -35,7 +35,6 @@ new /datum/disease_ability/symptom/powerful/fire,
 new /datum/disease_ability/symptom/powerful/flesh_eating,
 new /datum/disease_ability/symptom/powerful/genetic_mutation,
 new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
-new /datum/disease_ability/symptom/powerful/heal/starlight,
 new /datum/disease_ability/symptom/powerful/heal/oxygen,
 new /datum/disease_ability/symptom/powerful/heal/chem,
 new /datum/disease_ability/symptom/powerful/heal/metabolism,
@@ -432,9 +431,6 @@ new /datum/disease_ability/symptom/powerful/youth
 	long_desc = "Cause victims to become eternally young. Provides boosts to all stats except transmissibility."
 
 /****HEALING SUBTYPE****/
-
-/datum/disease_ability/symptom/powerful/heal/starlight
-	symptoms = list(/datum/symptom/heal/starlight)
 
 /datum/disease_ability/symptom/powerful/heal/oxygen
 	symptoms = list(/datum/symptom/oxygen)
