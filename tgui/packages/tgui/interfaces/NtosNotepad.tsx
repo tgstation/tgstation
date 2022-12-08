@@ -9,7 +9,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Box, Section, TextArea, MenuBar, Divider } from '../components';
 import { Component, createRef, RefObject } from 'inferno';
 import { createLogger } from '../logging';
-import { Dialog, OpenAsDialog, SaveAsDialog, UnsavedChangesDialog } from '../components/Dialog';
+import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
 
 const logger = createLogger('NtosNotepad');
 
@@ -37,15 +37,12 @@ const PartiallyUnderlined = (props: PartiallyUnderlinedProps) => {
 enum Dialogs {
   NONE = 0,
   UNSAVED_CHANGES = 1,
-  SAVE_AS = 2,
-  OPEN = 3,
-  ABOUT = 4,
+  OPEN = 2,
+  ABOUT = 3,
 }
 
 type MenuBarProps = {
-  openDocument: () => void;
   save: () => void;
-  saveAsDialog: () => void;
   exit: () => void;
   newNote: () => void;
   cutSelected: () => void;
@@ -61,9 +58,7 @@ type MenuBarProps = {
 
 const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
   const {
-    openDocument,
     save,
-    saveAsDialog,
     exit,
     newNote,
     cutSelected,
@@ -90,14 +85,8 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
     setOpenOnHover(false);
     setOpenMenuBar(null);
     switch (value) {
-      case 'open':
-        openDocument();
-        break;
       case 'save':
         save();
-        break;
-      case 'saveAs':
-        saveAsDialog();
         break;
       case 'exit':
         exit();
@@ -153,9 +142,7 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
         {...itemProps}
       >
         <MenuBar.Dropdown.MenuItem {...getMenuItemProps('new', 'New')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('open', 'Open')} />
         <MenuBar.Dropdown.MenuItem {...getMenuItemProps('save', 'Save')} />
-        <MenuBar.Dropdown.MenuItem {...getMenuItemProps('saveAs', 'Save As...')} />
         <MenuBar.Dropdown.Separator key='firstSep' />
         <MenuBar.Dropdown.MenuItem {...getMenuItemProps('exit', 'Exit...')} />
       </MenuBar.Dropdown>
@@ -380,14 +367,13 @@ const AboutDialog = (props: AboutDialogProps) => {
 };
 
 type NoteData = {
-  files: string;
   note: string;
 };
 type RetryActionType = (retrying?: boolean) => void;
 
 export const NtosNotepad = (props, context) => {
   const { act, data, config } = useBackend<NoteData>(context);
-  const { note, files } = data;
+  const { note } = data;
   const [documentName, setDocumentName] = useLocalState<string>(
     context,
     'documentName',
@@ -396,9 +382,10 @@ export const NtosNotepad = (props, context) => {
   const [originalText, setOriginalText] = useLocalState<string>(
     context,
     'originalText',
-    '',
+    note,
   );
-  const [text, setText] = useLocalState<string>(context, 'text', '');
+  console.log(note);
+  const [text, setText] = useLocalState<string>(context, 'text', note);
   const [statuses, setStatuses] = useLocalState<Statuses>(context, 'statuses', {
     line: 0,
     column: 0,
@@ -426,13 +413,7 @@ export const NtosNotepad = (props, context) => {
   const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
   const handleSave = (newDocumentName: string = documentName) => {
     logger.log(`Saving the document as ${newDocumentName}`);
-    if (newDocumentName === DEFAULT_DOCUMENT_NAME) {
-      logger.log(`Document name is ${newDocumentName}. New name is required.`);
-      setActiveDialog(Dialogs.SAVE_AS);
-      return;
-    }
-
-    act('UpdateNote', { documentName: newDocumentName, contents: text });
+    act('UpdateNote', { newnote: text });
     setOriginalText(text);
     setDocumentName(newDocumentName);
     logger.log('Attempting to retry previous action');
@@ -460,16 +441,6 @@ export const NtosNotepad = (props, context) => {
     }
 
     return false;
-  };
-  const handleOpenDocument = (documentName: string, retrying = false) => {
-    if (ensureUnsavedChangesAreHandled(() => handleOpenDocument(documentName) , retrying)) {
-      return;
-    }
-    logger.log(`Opening a document`);
-    act('OpenNote', { documentName: documentName });
-    setDocumentName(documentName);
-    setOriginalText(note);
-    setText(note);
   };
   const exit = (retrying = false) => {
     if (ensureUnsavedChangesAreHandled(exit, retrying)) {
@@ -504,9 +475,7 @@ export const NtosNotepad = (props, context) => {
       <NtosWindow.Content>
         <Box className='NtosNotepad__layout'>
           <NtosNotepadMenuBar
-            openDocument={() => setActiveDialog(Dialogs.OPEN)}
             save={handleSave}
-            saveAsDialog={() => setActiveDialog(Dialogs.SAVE_AS)}
             exit={exit}
             newNote={newNote}
             cutSelected={() => document.execCommand('cut')}
@@ -534,33 +503,13 @@ export const NtosNotepad = (props, context) => {
       {activeDialog === Dialogs.UNSAVED_CHANGES && (
         <UnsavedChangesDialog
           documentName={documentName}
-          onSave={
-            documentName === DEFAULT_DOCUMENT_NAME
-              ? () => setActiveDialog(Dialogs.SAVE_AS)
-              : handleSave
-          }
+          onSave={handleSave}
           onClose={handleCloseDialog}
           onDiscard={noSave}
         />
       )}
-      {activeDialog === Dialogs.SAVE_AS && (
-        <SaveAsDialog
-          files={[]}
-          newDocumentNameNeeded={documentName === DEFAULT_DOCUMENT_NAME}
-          documentName={documentName === DEFAULT_DOCUMENT_NAME ? '*.txt' : documentName}
-          onSave={handleSave}
-          onClose={handleCloseDialog}
-        />
-      )}
       {activeDialog === Dialogs.ABOUT && (
         <AboutDialog close={handleCloseDialog} clientName={config.user.name} />
-      )}
-      {activeDialog === Dialogs.OPEN && (
-        <OpenAsDialog
-          files={[]}
-          onOpen={handleOpenDocument}
-          onClose={handleCloseDialog}
-        />
       )}
     </NtosWindow>
   );
