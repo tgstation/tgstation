@@ -502,7 +502,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 					//we only want to offset it if it's new and also behind
 					if(SS.next_fire > world.time || (SS in old_subsystems))
 						continue
-					SS.next_fire = world.time + world.tick_lag * rand(0, DS2TICKS(min(SS.wait, 2 SECONDS))
+					SS.next_fire = world.time + world.tick_lag * rand(0, DS2TICKS(min(SS.wait, 2 SECONDS)))
 
 			subsystems_to_check = current_runlevel_subsystems
 		else
