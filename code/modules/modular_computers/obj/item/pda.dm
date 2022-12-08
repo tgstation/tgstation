@@ -154,14 +154,14 @@
 
 /obj/item/modular_computer/pda/AltClick(mob/user)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	remove_pen(user)
 
 /obj/item/modular_computer/pda/CtrlClick(mob/user)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 
 	remove_pen(user)

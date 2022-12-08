@@ -352,13 +352,15 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
+	if(!can_interact(user))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user) & COMPONENT_CANCEL_CLICK_CTRL)
+		return FALSE
 	SEND_SIGNAL(user, COMSIG_MOB_CTRL_CLICKED, src)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
-	if(!can_interact(user))
-		return FALSE
+	return TRUE
 
 /mob/living/CtrlClick(mob/user)
 	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
@@ -415,10 +417,11 @@
 	if(!user.can_interact_with(src))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
-		return
+		return FALSE
 	var/turf/T = get_turf(src)
 	if(T && (isturf(loc) || isturf(src)) && user.TurfAdjacent(T) && !HAS_TRAIT(user, TRAIT_MOVE_VENTCRAWLING))
 		user.set_listed_turf(T)
+	return TRUE
 
 ///The base proc of when something is right clicked on when alt is held - generally use alt_click_secondary instead
 /atom/proc/alt_click_on_secondary(atom/A)
@@ -432,10 +435,10 @@
 	if(!user.can_interact_with(src))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
-		return
+		return FALSE
 	if(isobserver(user) && user.client && check_rights_for(user.client, R_DEBUG))
 		user.client.toggle_tag_datum(src)
-		return
+	return TRUE
 
 /// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
 /atom/proc/AltClickNoInteract(mob/user, atom/A)
@@ -461,8 +464,9 @@
 /atom/proc/CtrlShiftClick(mob/user)
 	if(!can_interact(user))
 		return FALSE
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
-	return
+	if(SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user) & COMPONENT_CANCEL_CLICK_CTRL_SHIFT)
+		return FALSE
+	return TRUE
 
 /*
 	Misc helpers
