@@ -340,10 +340,10 @@
 		shock_timer = 0 //immune to shocks
 		M.AdjustAllImmobility(-40  *REM * delta_time)
 		M.adjustStaminaLoss(-2 * REM * delta_time, 0)
-		if(isluminescent(M))
+		if(is_species(M, /datum/species/jelly/luminescent))
 			var/mob/living/carbon/human/H = M
 			var/datum/species/jelly/luminescent/L = H.dna.species
-			L.extract_cooldown = max(L.extract_cooldown - (20 * REM * delta_time), 0)
+			L.extract_cooldown = max(L.extract_cooldown - (2 SECONDS * REM * delta_time), 0)
 	..()
 
 /datum/reagent/firefighting_foam

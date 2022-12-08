@@ -748,11 +748,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	to_chat(drinker, span_notice("You feel [tough_text]!"))
 	drinker.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
 	drinker.health += 10
+	ADD_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/drinker)
 	to_chat(drinker, span_notice("You no longer feel [tough_text]."))
 	drinker.maxHealth -= 10
 	drinker.health = min(drinker.health - 10, drinker.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
+	REMOVE_TRAIT(drinker, TRAIT_FEARLESS, type)
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -1808,7 +1810,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
 	var/obj/item/organ/internal/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		drinker.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time, 2 * REM * delta_time)
+		drinker.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time)
+		drinker.adjustStaminaLoss(-2 * REM * delta_time)
 		. = TRUE
 	return ..()
 
@@ -2340,9 +2343,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
 	if(drinker?.mind?.has_antag_datum(/datum/antagonist/wizard))
-		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 1 * REM * delta_time)
+		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		drinker.adjustOxyLoss(-1 * REM * delta_time, 0)
 		drinker.adjustToxLoss(-1 * REM * delta_time, 0)
+		drinker.adjustStaminaLoss(-1  * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
@@ -2637,7 +2641,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(drinker.getBruteLoss() && DT_PROB(10, delta_time))
-		drinker.heal_bodypart_damage(1,0, 0)
+		drinker.heal_bodypart_damage(1,0)
 		. = TRUE
 
 /datum/reagent/consumable/ethanol/sea_breeze
