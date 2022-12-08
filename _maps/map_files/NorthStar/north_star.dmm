@@ -9815,7 +9815,10 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/moth{
+	desc = "Who would name their moth plushie Soup? They'd have to be insane!";
+	name = "Soup"
+	},
 /turf/open/floor/wood,
 /area/station/medical/psychology)
 "cyb" = (
