@@ -870,3 +870,17 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+
+/obj/item/rack_parts/attack_self_tk(mob/user)
+	if(building)
+		return
+	building = TRUE
+	to_chat(user, span_notice("You start constructing a rack..."))
+	if(do_after(user, 50, target = user, progress=TRUE))
+		var/obj/structure/rack/R = new /obj/structure/rack(src.loc)
+		user.visible_message("<span class='notice'>[user] assembles \a [R] using their mind.\
+			</span>", span_notice("You assemble \a [R]."))
+		R.add_hiddenprint(user)
+		qdel(src)
+	building = FALSE
+	return COMPONENT_CANCEL_ATTACK_CHAIN
