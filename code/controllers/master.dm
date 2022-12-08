@@ -408,7 +408,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		if ((SS.flags & (SS_TICKER|SS_BACKGROUND)) == SS_TICKER)
 			tickersubsystems += SS
 			// Timer subsystems aren't allowed to bunch up, so we offset them a bit
-			timer += world.tick_lag
+			timer += world.tick_lag * rand(0, 1)
 			SS.next_fire = timer
 			continue
 
