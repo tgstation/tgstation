@@ -362,7 +362,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "Ei" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "FQ" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
