@@ -200,7 +200,7 @@ RLD
 			silo_link = !silo_link
 			to_chat(usr, span_notice("You change [src]'s storage link state: [silo_link ? "ON" : "OFF"]."))
 		else
-			to_chat(usr, span_warning("\the [src] doesn't have remote storage connection."))
+			to_chat(usr, span_warning("[src] doesn't have remote storage connection."))
 		return TRUE
 	return FALSE
 
