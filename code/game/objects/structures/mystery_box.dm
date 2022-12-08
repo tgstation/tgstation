@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/energy/laser/captain,
 	/obj/item/gun/energy/laser/scatter,
 	/obj/item/gun/energy/temperature,
-	/obj/item/gun/ballistic/revolver/detective,
+	/obj/item/gun/ballistic/revolver/c38/detective,
 	/obj/item/gun/ballistic/revolver/mateba,
 	/obj/item/gun/ballistic/automatic/pistol/deagle/camo,
 	/obj/item/gun/ballistic/automatic/pistol/suppressed,
@@ -218,7 +218,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	uses_integrity = FALSE
 
 	/// The currently selected item. Constantly changes while choosing, determines what is spawned if the prize is claimed, and its current icon
-	var/selected_path = /obj/item/gun/ballistic/revolver/detective
+	var/selected_path = /obj/item/gun/ballistic/revolver/c38/detective
 	/// The box that spawned this
 	var/obj/structure/mystery_box/parent_box
 	/// Whether this prize is currently claimable

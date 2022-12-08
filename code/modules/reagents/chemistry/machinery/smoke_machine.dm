@@ -36,7 +36,7 @@
 
 /obj/machinery/smoke_machine/Initialize(mapload)
 	. = ..()
-	create_reagents(REAGENTS_BASE_VOLUME)
+	create_reagents(REAGENTS_BASE_VOLUME, INJECTABLE)
 	AddComponent(/datum/component/plumbing/simple_demand)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
@@ -57,7 +57,7 @@
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		new_volume += REAGENTS_BASE_VOLUME * B.rating
 	if(!reagents)
-		create_reagents(new_volume)
+		create_reagents(new_volume, INJECTABLE)
 	reagents.maximum_volume = new_volume
 	if(new_volume < reagents.total_volume)
 		reagents.expose(loc, TOUCH) // if someone manages to downgrade it without deconstructing

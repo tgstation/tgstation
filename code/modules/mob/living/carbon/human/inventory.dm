@@ -163,7 +163,7 @@
 			if(wear_suit.breakouttime) //when equipping a straightjacket
 				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 				stop_pulling() //can't pull if restrained
-				update_action_buttons_icon() //certain action buttons will no longer be usable.
+				update_mob_action_buttons() //certain action buttons will no longer be usable.
 			update_worn_oversuit()
 		if(ITEM_SLOT_ICLOTHING)
 			if(w_uniform)
@@ -214,7 +214,7 @@
 		if(wear_suit.breakouttime) //when unequipping a straightjacket
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 			drop_all_held_items() //suit is restraining
-			update_action_buttons_icon() //certain action buttons may be usable again.
+			update_mob_action_buttons() //certain action buttons may be usable again.
 		wear_suit = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			if(I.flags_inv & HIDEJUMPSUIT)

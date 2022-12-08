@@ -50,8 +50,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	var/hardware_flag = NONE
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_TABLET
 
-	///Whether the icon state should be bypassed entirely, used for PDAs.
-	var/bypass_state = FALSE
 	///The theme, used for the main menu and file browser apps.
 	var/device_theme = "ntos"
 
@@ -83,10 +81,12 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	// must have it's own DMI file. Icon states must be called exactly the same in all files, but may look differently
 	// If you create a program which is limited to Laptops and Consoles you don't have to add it's icon_state overlay for Tablets too, for example.
 
-	var/icon_state_unpowered = null // Icon state when the computer is turned off.
-	var/icon_state_powered = null // Icon state when the computer is turned on.
-	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
-	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
+	///If set, what the icon_state will be if the computer is unpowered.
+	var/icon_state_unpowered
+	///If set, what the icon_state will be if the computer is powered.
+	var/icon_state_powered
+	///Icon state overlay when the computer is turned on, but no program is loaded (programs override this).
+	var/icon_state_menu = "menu"
 
 	///The full name of the stored ID card's identity. These vars should probably be on the PDA.
 	var/saved_identification
@@ -204,6 +204,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")
 		inserted_pai = null
+		update_appearance(UPDATE_ICON)
 		return TRUE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs. //guess what
@@ -382,17 +383,15 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 	return . || NONE
 
 /obj/item/modular_computer/update_icon_state()
-	if(!bypass_state)
-		icon_state = enabled ? icon_state_powered : icon_state_unpowered
+	if(!icon_state_powered || !icon_state_unpowered) //no valid icon, don't update.
+		return ..()
+	icon_state = enabled ? icon_state_powered : icon_state_unpowered
 	return ..()
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
 	var/init_icon = initial(icon)
-
 	if(!init_icon)
-		return
-	if(!display_overlays)
 		return
 
 	if(enabled)
@@ -416,6 +415,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		inserted_pai = null
 	if(inserted_disk == gone)
 		inserted_disk = null
+		update_appearance(UPDATE_ICON)
 	return ..()
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -493,7 +493,6 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			active_program.ntnet_status = get_ntnet_status()
 
 	handle_power(delta_time) // Handles all computer power interaction
-	//check_update_ui_need()
 
 /**
  * Displays notification text alongside a soundbeep when requested to by a program.
@@ -629,7 +628,8 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status(specific_action = 0)
-	if(!SSnetworks.station_network || !SSnetworks.station_network.check_function(specific_action)) // NTNet is down and we are not connected via wired connection. No signal.
+	// NTNet is down and we are not connected via wired connection. No signal.
+	if(!SSmodular_computers.check_function(specific_action))
 		return NTNET_NO_SIGNAL
 
 	// computers are connected through ethernet
@@ -684,7 +684,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
-	update_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
+	update_item_action_buttons(force = TRUE) //force it because we added an overlay, not changed its icon
 	return TRUE
 
 /**
@@ -726,6 +726,7 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 		inserted_pai = attacking_item
 		balloon_alert(user, "inserted pai")
+		update_appearance(UPDATE_ICON)
 		return
 
 	if(istype(attacking_item, /obj/item/stock_parts/cell))

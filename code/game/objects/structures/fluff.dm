@@ -273,8 +273,8 @@
 	desc = "Great for trams, not so great for skating."
 	icon = 'icons/obj/tram_rails.dmi'
 	icon_state = "rail"
-	layer = ABOVE_OPEN_TURF_LAYER
-	plane = FLOOR_PLANE
+	layer = TRAM_RAIL_LAYER
+	plane = GAME_PLANE
 	deconstructible = TRUE
 
 /obj/structure/fluff/tram_rail/floor

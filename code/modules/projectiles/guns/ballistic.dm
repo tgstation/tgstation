@@ -327,7 +327,7 @@
 	update_appearance()
 
 /obj/item/gun/ballistic/can_shoot()
-	return chambered
+	return chambered?.loaded_projectile
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	. = ..()

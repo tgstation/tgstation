@@ -6,6 +6,8 @@
 // GOOD SCHOOLS (allowed by honorbound gods, some of these you can get on station)
 /// Holy school (chaplain magic)
 #define SCHOOL_HOLY "holy"
+/// Psychic school. Not true magic, but psychic spells only benefit themselves.
+#define SCHOOL_PSYCHIC "psychic"
 /// Mime... school? Mime magic. It counts
 #define SCHOOL_MIME "mime"
 /// Restoration school, which is mostly healing stuff
