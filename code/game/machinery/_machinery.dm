@@ -930,6 +930,13 @@
 	if(!machine_board)
 		return FALSE
 
+	/**
+	 * sorting is very important especially because we are breaking the loop on line 1006
+	 * if the rped first picked up a tier 3 part AND THEN a tier 4 part
+	 * tier 3 would be installed and the loop would break and check the next required component thus
+	 * completly ignoring the tier 4 component inside
+	 */
+	var/list/part_list = replacer_tool.get_sorted_parts()
 	for(var/datum/primary_part_base as anything in component_parts)
 		var/current_rating
 		var/required_type
@@ -952,7 +959,7 @@
 			// Not an error, happens with circuitboards.
 			continue
 
-		for(var/obj/item/secondary_part in replacer_tool.contents)
+		for(var/obj/item/secondary_part in part_list)
 			if(!istype(secondary_part, required_type))
 				continue
 			// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
@@ -1026,9 +1033,6 @@
 			part_count[component_name] = stack_part.amount
 		else
 			part_count[component_name] = 1
-
-	for (var/datum/stock_part/stock_part in component_parts)
-		part_count[stock_part.name()] += 1
 
 	var/list/printed_components = list()
 

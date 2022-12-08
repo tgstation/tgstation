@@ -247,17 +247,18 @@
 			if(istype(P, /obj/item/storage/part_replacer) && P.contents.len && get_req_components_amt())
 				var/obj/item/storage/part_replacer/replacer = P
 				var/list/added_components = list()
-				var/list/part_list = list()
-
-				//Assemble a list of current parts, then sort them by their rating!
-				for(var/obj/item/co in replacer)
-					part_list += co
-				//Sort the parts. This ensures that higher tier items are applied first.
-				part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
+				var/list/part_list = replacer.get_sorted_parts() //parts sorted in order of tier
 
 				for(var/path in req_components)
-					while(req_components[path] > 0 && (locate(path) in part_list))
-						var/obj/item/part = (locate(path) in part_list)
+					var/target_path
+					if(ispath(path, /datum/stock_part))
+						var/datum/stock_part/datum_part = path
+						target_path = initial(datum_part.physical_object_base_type)
+					else
+						target_path = path
+
+					var/obj/item/part
+					while(req_components[path] > 0 && (part = locate(target_path) in part_list))
 						part_list -= part
 						if(istype(part,/obj/item/stack))
 							var/obj/item/stack/S = part
