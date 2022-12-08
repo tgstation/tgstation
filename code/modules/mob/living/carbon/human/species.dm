@@ -428,11 +428,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			// organ.Insert will qdel any current organs in that slot, so we don't need to.
 			replacement.Insert(C, special=TRUE, drop_if_replaced=FALSE)
 
-/datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer, ignore_handcuff = FALSE)
+/datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
 	for(var/obj/item/equipped_item in wearer.get_all_worn_items())
 		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
-		if(wearer.handcuffed == equipped_item && ignore_handcuff)
-			continue
 		if(!equipped_item.mob_can_equip(wearer, equipped_item_slot, bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
 			wearer.dropItemToGround(equipped_item)
 
