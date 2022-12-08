@@ -31,7 +31,7 @@
 
 /obj/structure/chem_separator/Initialize(mapload)
 	. = ..()
-	create_reagents(300, TRANSPARENT)
+	create_reagents(300, TRANSPARENT | INJECTABLE)
 	condenser = new()
 	soundloop = new(src, boiling)
 

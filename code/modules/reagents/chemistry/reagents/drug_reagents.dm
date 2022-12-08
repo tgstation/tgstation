@@ -786,3 +786,19 @@
 	kronkaine_fiend.set_jitter_if_lower(20 SECONDS * REM * delta_time)
 	if(DT_PROB(10, delta_time))
 		to_chat(kronkaine_fiend, span_danger(pick("You feel like your heart is going to explode!", "Your ears are ringing!", "You sweat like a pig!", "You clench your jaw and grind your teeth.", "You feel prickles of pain in your chest.")))
+
+///dirty kronkaine, aka gore. far worse overdose effects.
+/datum/reagent/drug/kronkaine/gore
+	name = "Gore"
+	description = "Dirty Kronkaine. You have to be pretty dumb to take this. Don't. Overdose."
+	color = "#ffbebe" // kronkaine but with some red
+	ph = 4
+	chemical_flags = NONE
+
+/datum/reagent/drug/kronkaine/gore/overdose_start(mob/living/gored)
+	gored.visible_message(
+		span_danger("[gored] explodes in a shower of gore!"),
+		span_userdanger("GORE! GORE! GORE! YOU'RE GORE! TOO MUCH GORE! YOU'RE GORE! GORE! IT'S OVER! GORE! GORE! YOU'RE GORE! TOO MUCH G-"),
+	)
+	new /obj/structure/bouncy_castle(gored.loc, gored)
+	gored.gib(TRUE, TRUE, TRUE) //no brain, no organs, no bodyparts

@@ -916,7 +916,7 @@
 
 
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.take_bodypart_damage(0.5*REM*delta_time, 0, 0, 0)
+	M.take_bodypart_damage(0.5*REM*delta_time, 0)
 	. = TRUE
 	..()
 

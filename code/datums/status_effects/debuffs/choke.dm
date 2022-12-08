@@ -282,7 +282,8 @@
 	if(flaming)
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.receive_damage(0, 2 * delta_time, 2 * delta_time)
+			head.receive_damage(0, 2 * delta_time)
+		owner.adjustStaminaLoss(2 * delta_time)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)
 	var/old_x = delta_x
