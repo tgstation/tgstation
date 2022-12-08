@@ -24,10 +24,6 @@
 	var/panel_open = FALSE
 	/// Is this door hackable?
 	var/can_hack_open = TRUE
-	/// Do we want to apply a door overlay?
-	var/has_door = FALSE
-	/// If this door is open
-	var/is_open = FALSE
 
 /obj/item/storage/secure/Initialize(mapload)
 	. = ..()
@@ -171,7 +167,6 @@
 	w_class = WEIGHT_CLASS_GIGANTIC
 	anchored = TRUE
 	density = FALSE
-	has_door = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 
