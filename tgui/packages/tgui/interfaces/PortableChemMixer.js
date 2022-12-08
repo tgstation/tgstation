@@ -1,26 +1,39 @@
 import { sortBy } from 'common/collections';
 import { toTitleCase } from 'common/string';
-import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 export const PortableChemMixer = (props, context) => {
   const { act, data } = useBackend(context);
-  const recording = !!data.recordingRecipe;
+  const { recipeReagents = [] } = data;
+  const [hasCol, setHasCol] = useLocalState(context, 'has_col', false);
   const beakerTransferAmounts = data.beakerTransferAmounts || [];
-  const beakerContents =
-    (recording &&
-      Object.keys(data.recordingRecipe).map((id) => ({
-        id,
-        name: toTitleCase(id.replace(/_/, ' ')),
-        volume: data.recordingRecipe[id],
-      }))) ||
-    data.beakerContents ||
-    [];
+  const beakerContents = data.beakerContents || [];
   const chemicals = sortBy((chem) => chem.title)(data.chemicals);
   return (
-    <Window width={465} height={550}>
+    <Window width={565} height={650}>
       <Window.Content scrollable>
+        <Section
+          title="Status"
+          buttons={
+            <Button
+              icon="cog"
+              tooltip="Color code the reagents by pH"
+              tooltipPosition="bottom-start"
+              selected={hasCol}
+              onClick={() => setHasCol(!hasCol)}
+            />
+          }>
+          <LabeledList>
+            <LabeledList.Item label="Energy">
+              <ProgressBar
+                value={data.energy / data.maxEnergy}>
+                {data.energy + ' units'}
+              </ProgressBar>
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
         <Section
           title="Dispense"
           buttons={beakerTransferAmounts.map((amount) => (
@@ -36,17 +49,68 @@ export const PortableChemMixer = (props, context) => {
               }
             />
           ))}>
-          <Box>
+          <Box mr={-1}>
+            {data.battery.map((chemical) => (
+              <Button
+                key={chemical.id}
+                icon="tint"
+                width="129.5px"
+                lineHeight={1.75}
+                content={chemical.title}
+                tooltip={'pH: ' + chemical.pH}
+                backgroundColor={
+                  recipeReagents.includes(chemical.id)
+                    ? hasCol
+                      ? 'black'
+                      : 'green'
+                    : hasCol
+                      ? chemical.pHCol
+                      : 'default'
+                }
+                onClick={() =>
+                  act('battery', {
+                    reagent: chemical.id,
+                  })
+                }
+              />
+            ))}
+          </Box>
+        </Section>
+        <Section
+          title="Storage"
+          buttons={beakerTransferAmounts.map((amount) => (
+            <Button
+              key={amount}
+              icon="plus"
+              selected={amount === data.amount}
+              content={amount}
+              onClick={() =>
+                act('amount', {
+                  target: amount,
+                })
+              }
+            />
+          ))}>
+          <Box mr={-1}>
             {chemicals.map((chemical) => (
               <Button
                 key={chemical.id}
                 icon="tint"
-                fluid
+                width="259px"
                 lineHeight={1.75}
                 content={`(${chemical.volume}) ${chemical.title}`}
                 tooltip={'pH: ' + chemical.pH}
+                backgroundColor={
+                  recipeReagents.includes(chemical.id)
+                    ? hasCol
+                      ? 'black'
+                      : 'green'
+                    : hasCol
+                      ? chemical.pHCol
+                      : 'default'
+                }
                 onClick={() =>
-                  act('dispense', {
+                  act('storage', {
                     reagent: chemical.id,
                   })
                 }
@@ -60,7 +124,6 @@ export const PortableChemMixer = (props, context) => {
             <Button
               key={amount}
               icon="minus"
-              disabled={recording}
               content={amount}
               onClick={() => act('remove', { amount })}
             />
@@ -78,21 +141,17 @@ export const PortableChemMixer = (props, context) => {
                   />
                 )
               }>
-              {(recording && 'Virtual beaker') ||
-                (data.isBeakerLoaded && (
-                  <>
-                    <AnimatedNumber
-                      initial={0}
-                      value={data.beakerCurrentVolume}
-                    />
-                    /{data.beakerMaxVolume} units
-                  </>
+              {(data.isBeakerLoaded && (
+                <>
+                <AnimatedNumber initial={0} value={data.beakerCurrentVolume} />
+                / {data.beakerMaxVolume} units
+                </>
                 )) ||
-                'No beaker'}
+              'No beaker'}
             </LabeledList.Item>
             <LabeledList.Item label="Contents">
               <Box color="label">
-                {(!data.isBeakerLoaded && !recording && 'N/A') ||
+                {(!data.isBeakerLoaded && 'N/A') ||
                   (beakerContents.length === 0 && 'Nothing')}
               </Box>
               {beakerContents.map((chemical) => (
