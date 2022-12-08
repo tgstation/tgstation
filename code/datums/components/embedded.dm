@@ -290,7 +290,7 @@
 	safeRemove(user)
 
 /// Called when an object is ripped out of someone's body by magic or other abnormal means
-/datum/component/embedded/proc/magic_pull(mob/living/caster, obj/marked_item)
+/datum/component/embedded/proc/magic_pull(mob/living/casted, mob/living/caster, obj/marked_item)
 	SIGNAL_HANDLER
 
 	if(marked_item != weapon || src.limb != limb)
