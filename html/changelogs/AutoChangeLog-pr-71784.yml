@@ -1,0 +1,4 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - bugfix: "fixed mothroach inhands not properly fitting under your arm when facing sideways with the mothroach facing the camera"
