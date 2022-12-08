@@ -498,21 +498,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				current_runlevel_subsystems = runlevel_sorted_subsystems[cached_runlevel]
 
 				//now we'll go through all the subsystems we want to offset and give them a next_fire
-				var/time_offset = 1
-				var/keeptime_offset = 1
 				for(var/datum/controller/subsystem/SS as anything in current_runlevel_subsystems)
 					//we only want to offset it if it's new and also behind
 					if(SS.next_fire > world.time || (SS in old_subsystems))
 						continue
-
-					//we allow 1 keeptime subsystem a tick, and 4 non keeptime subsystems a tick
-					//we do this to ensure keep timing subsystems don't double up on themselves and the others don't clump up
-					if(SS.flags & SS_KEEP_TIMING)
-						SS.next_fire = world.time + world.tick_lag * keeptime_offset
-						keeptime_offset++
-					else
-						SS.next_fire = world.time + world.tick_lag * FLOOR(time_offset / 4, 1)
-						time_offset++
+					SS.next_fire = world.time + world.tick_lag * rand(0, DS2TICKS(min(SS.wait, 2 SECONDS))
 
 			subsystems_to_check = current_runlevel_subsystems
 		else
