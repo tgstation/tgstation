@@ -17,7 +17,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 	user.AttemptLateSpawn(input_contents)
 
-/datum/ui_close(mob/dead/new_player/user)
+/datum/latejoin_menu/ui_close(mob/dead/new_player/user)
 	. = ..()
 	if(istype(user))
 		user.jobs_menu_mounted = TRUE // Don't flood a user's chat if they open and close the UI.
@@ -44,14 +44,14 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	var/list/departments = list()
 	var/list/data = list(
 		"disable_jobs_for_non_observers" = SSlag_switch.measures[DISABLE_NON_OBSJOBS],
-		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time),
+		"round_duration" = DisplayTimeText(world.time - SSticker.round_start_time, round_seconds_to = 1),
 		"departments" = departments,
 	)
 	if(SSshuttle.emergency)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_ESCAPE)
 				data["shuttle_status"] = "The station has been evacuated."
-			if(SHUTTLE_CALL)
+			if(SHUTTLE_CALL || SHUTTLE_DOCKED)
 				if(!SSshuttle.canRecall())
 					data["shuttle_status"] = "The station is currently undergoing evacuation procedures."
 
@@ -161,6 +161,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE
 
+			owner.client?.uiclose("JobSelection") // Prevent the job selection window getting stuck open.
 			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
 			owner.AttemptLateSpawn(params["job"])
 			return TRUE
