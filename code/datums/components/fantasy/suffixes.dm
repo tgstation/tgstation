@@ -104,7 +104,6 @@
 			/datum/species = TRUE,
 			// Some types to remove them and their subtypes
 			/mob/living/carbon/human/species = FALSE,
-			/mob/living/simple_animal/hostile/syndicate/mecha_pilot = FALSE,
 			/mob/living/simple_animal/hostile/asteroid/elite = FALSE,
 			/mob/living/simple_animal/hostile/megafauna = FALSE,
 		))

@@ -17,6 +17,7 @@
 	sentience_type = SENTIENCE_HUMANOID
 	maxHealth = 100
 	health = 100
+	basic_mob_flags = DEL_ON_DEATH
 	speed = 1.1
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	melee_damage_lower = 10
@@ -25,19 +26,19 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
-	var/loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
-	var/atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	var/minimum_temperature = 250
+	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 7.5
+	unsuitable_cold_damage = 7.5
+	unsuitable_heat_damage = 7.5
 	faction = list(ROLE_SYNDICATE)
 	ai_controller = /datum/ai_controller/basic_controller/syndicate
+	
+	var/loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 
 /mob/living/basic/syndicate/Initialize(mapload)
 	. = ..()
 	if(LAZYLEN(loot))
 		AddElement(/datum/element/death_drops, loot)
-	AddElement(/datum/element/basic_body_temp_sensitive, min_body_temp = minimum_temperature ,cold_damage = 7.5, heat_damage = 7.5)
-	AddElement(/datum/element/atmos_requirements, atmos_requirements = atmos_requirements, unsuitable_atmos_damage = 7.5)
-	AddElement(/datum/element/delete_on_death)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_SHOE)
 
 /mob/living/basic/syndicate/space
@@ -47,8 +48,8 @@
 	maxHealth = 170
 	health = 170
 	loot = list(/obj/effect/gibspawner/human)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_temperature = 0
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/space/Initialize(mapload)
 	. = ..()
@@ -86,8 +87,8 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_temperature = 0
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/melee/space/Initialize(mapload)
 	. = ..()
@@ -123,8 +124,8 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_temperature = 0
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
 	projectile_deflect_chance = 50
 	var/obj/effect/light_emitter/red_energy_sword/sord
 
@@ -169,8 +170,8 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_temperature = 0
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/ranged/space/Initialize(mapload)
 	. = ..()
@@ -201,8 +202,8 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_temperature = 0
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/ranged/smg/space/Initialize(mapload)
 	. = ..()
@@ -228,8 +229,8 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minimum_temperature = 0
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0
 	speed = 1
 
 /mob/living/basic/syndicate/ranged/shotgun/space/Initialize(mapload)
@@ -254,6 +255,11 @@
 	pass_flags = PASSTABLE | PASSMOB
 	combat_mode = TRUE
 	mob_biotypes = MOB_ROBOTIC
+	basic_mob_flags = DEL_ON_DEATH
+	unsuitable_atmos_damage = 0
+	minimum_survivable_temperature = 0
+	maximum_survivable_temperature = 700
+	unsuitable_cold_damage = 0
 	health = 25
 	maxHealth = 25
 	melee_damage_lower = 15
@@ -278,5 +284,4 @@
 /mob/living/basic/viscerator/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/delete_on_death)
 	AddComponent(/datum/component/swarming)
