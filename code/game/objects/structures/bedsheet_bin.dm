@@ -54,14 +54,16 @@ LINEN BINS
 /obj/item/bedsheet/add_item_context(datum/source, list/context, mob/living/target)
 	if(isliving(target) && target.body_position == LYING_DOWN)
 		context[SCREENTIP_CONTEXT_LMB] = "Cover"
+		context[SCREENTIP_CONTEXT_RMB] = "Prepare Surgery"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
 
-/obj/item/bedsheet/attack(mob/living/target, mob/living/user)
+/obj/item/bedsheet/attack(mob/living/target, mob/living/user, params)
 	if(!user.CanReach(target))
 		return
-	if(user.combat_mode || target.body_position != LYING_DOWN)
+	var/list/modifiers = params2list(params)
+	if(target.body_position != LYING_DOWN || LAZYACCESS(modifiers, RIGHT_CLICK))
 		return ..()
 	if(!user.dropItemToGround(src))
 		return
