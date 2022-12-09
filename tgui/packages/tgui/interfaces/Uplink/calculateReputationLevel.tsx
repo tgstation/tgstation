@@ -54,7 +54,7 @@ export const ranks: Rank[] = [
     gradient: veryGoodGradient,
   },
   {
-    minutesLessThan: 120,
+    minutesLessThan: 110,
     title: 'Glorious',
     gradient: ultraGoodGradient,
   },
