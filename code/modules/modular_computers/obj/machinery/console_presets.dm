@@ -62,7 +62,7 @@
 
 /obj/machinery/modular_computer/console/preset/id/centcom/Initialize(mapload)
 	. = ..()
-	var/datum/computer_file/program/card_mod/card_mod_centcom = cpu.find_file_by_name("plexagonidwriter")
+	var/datum/computer_file/program/card_mod/card_mod_centcom = cpu.find_file_by_type(/datum/computer_file/program/card_mod)
 	card_mod_centcom.is_centcom = TRUE
 
 // ===== CIVILIAN CONSOLE =====
@@ -94,7 +94,7 @@
 
 /obj/machinery/modular_computer/console/preset/cargochat/Initialize(mapload)
 	. = ..()
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
+	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_type(/datum/computer_file/program/chatclient)
 	chatprogram.username = "[lowertext(console_department)]_department"
 	chatprogram.program_state = PROGRAM_STATE_ACTIVE
 	cpu.active_program = chatprogram
@@ -123,13 +123,13 @@
 
 /obj/machinery/modular_computer/console/preset/cargochat/cargo/LateInitialize()
 	. = ..()
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_name("ntnrc_client")
+	var/datum/computer_file/program/chatclient/chatprogram = cpu.find_file_by_type(/datum/computer_file/program/chatclient)
 	chatprogram.username = "cargo_requests_operator"
 
 	var/datum/ntnet_conversation/cargochat = chatprogram.create_new_channel("#cargobus", strong = TRUE)
 	for(var/obj/machinery/modular_computer/console/preset/cargochat/cargochat_console in GLOB.machines)
 		if(cargochat_console == src)
 			continue
-		var/datum/computer_file/program/chatclient/other_chatprograms = cargochat_console.cpu.find_file_by_name("ntnrc_client")
+		var/datum/computer_file/program/chatclient/other_chatprograms = cargochat_console.cpu.find_file_by_type(/datum/computer_file/program/chatclient)
 		other_chatprograms.active_channel = chatprogram.active_channel
 		cargochat.add_client(other_chatprograms, silent = TRUE)

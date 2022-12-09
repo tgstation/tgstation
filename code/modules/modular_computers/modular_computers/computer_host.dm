@@ -1,7 +1,7 @@
 /**
  * `/datum/modular_computer_host`, the brains and logic of NtOS
  *
- * Written similar to a component, except that you have to explicitly implement it in your `/obj`
+ * Written like a component, except that you have to explicitly implement it in your `/atom`
  * Woe be upon ye, for there lie only shitcode beyond this point.
  *
  * If you decide to implement this on your datum,

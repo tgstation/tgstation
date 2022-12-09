@@ -73,15 +73,14 @@
 /datum/modular_computer_host/silicon/cyborg/proc/get_robotact()
 	if(istype(robotact) && !QDELETED(robotact))
 		return robotact
-	robotact = find_file_by_name("robotact")
+	robotact = find_file_by_type(/datum/computer_file/program/robotact)
 	if(istype(robotact))
 		return robotact
 	stack_trace("Cyborg [physical] ( [physical.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
-	robotact = new(src)
+	robotact = new
 	if(store_file(robotact))
 		return robotact
-	qdel(robotact)
-	robotact = null
+	QDEL_NULL(robotact)
 	CRASH("Cyborg [physical]'s tablet hard drive rejected recieving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the flashlight button affect the borg rather than the tablet

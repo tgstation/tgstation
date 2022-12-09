@@ -109,3 +109,23 @@
 			if(file.filename == filename)
 				return file
 	return null
+
+/**
+ * find_file_by_type
+ *
+ * Will check all applications in a tablet for files and, if they have \
+ * the same file type, will return it.
+ * If a computer disk is passed instead, it will check the disk over the computer.
+ */
+/datum/modular_computer_host/proc/find_file_by_type(filetype, obj/item/computer_disk/target_disk)
+	if(!ispath(filetype))
+		return null
+	if(target_disk)
+		for(var/datum/computer_file/file as anything in target_disk.stored_files)
+			if(istype(file, filetype))
+				return file
+	else
+		for(var/datum/computer_file/file as anything in stored_files)
+			if(istype(file, filetype))
+				return file
+	return null
