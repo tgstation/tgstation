@@ -83,7 +83,7 @@
 
 /datum/uplink_item/bundles_tc/surplus/super
 	name = "Super Surplus Crate"
-	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
+	desc = "A dusty SUPER-SIZED crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 75 TC."
 	cost = 40
 	starting_crate_value = 75
