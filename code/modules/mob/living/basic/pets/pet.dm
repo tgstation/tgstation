@@ -17,21 +17,6 @@
 /mob/living/basic/pet/Initialize(mapload)
 	. = ..()
 
-	// String assoc list returns a cached list, so this is like a static list to pass into the element below.
-	var/static/list/habitable_atmos = list(
-		"min_oxy" = 5,
-		"max_oxy" = 0,
-		"min_plas" = 0,
-		"max_plas" = 1,
-		"min_co2" = 0,
-		"max_co2" = 5,
-		"min_n2" = 0,
-		"max_n2" = 0,
-	)
-
-	AddElement(/datum/element/atmos_requirements, atmos_requirements = habitable_atmos, unsuitable_atmos_damage = 1)
-	AddElement(/datum/element/basic_body_temp_sensitive)
-
 	/// Can set the collar var beforehand to start the pet with a collar.
 	if(collar)
 		collar = new(src)
