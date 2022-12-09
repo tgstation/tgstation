@@ -274,7 +274,7 @@
 	icon = 'icons/obj/tram_rails.dmi'
 	icon_state = "rail"
 	layer = TRAM_RAIL_LAYER
-	plane = GAME_PLANE
+	plane = FLOOR_PLANE
 	deconstructible = TRUE
 
 /obj/structure/fluff/tram_rail/floor
