@@ -84,6 +84,7 @@
 /datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/static/datum/supply_pack/misc/syndicate/cratefill = new()
 	cratefill.crate_value = starting_crate_value
+	cratefill.progression_maximum = handler.progression_points
 	var/obj/structure/closet/crate/surplus_crate = new()
 	cratefill.fill(surplus_crate)
 
@@ -93,10 +94,10 @@
 		"spawn" = surplus_crate,
 	))
 
-
 /datum/uplink_item/bundles_tc/surplus/super
 	name = "Super Surplus Crate"
 	desc = "A dusty SUPER-SIZED crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 75 TC."
 	cost = 40
+	progression_minimum = 30 MINUTES
 	starting_crate_value = 75
