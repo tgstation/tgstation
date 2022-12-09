@@ -35,7 +35,7 @@
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
-	icon = 'icons/obj/storage/box.dmi'
+	icon_state = "monkeycubebox"
 	illustration = null
 	/// Which type of cube are we spawning in this box?
 	var/cube_type = /obj/item/food/monkeycube
