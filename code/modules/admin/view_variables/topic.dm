@@ -82,10 +82,10 @@
 			var/newamt
 			switch(Text)
 				if("brute")
-					L.adjustBruteLoss(amount, required_status = FALSE)
+					L.adjustBruteLoss(amount)
 					newamt = L.getBruteLoss()
 				if("fire")
-					L.adjustFireLoss(amount, required_status = FALSE)
+					L.adjustFireLoss(amount)
 					newamt = L.getFireLoss()
 				if("toxin")
 					L.adjustToxLoss(amount)

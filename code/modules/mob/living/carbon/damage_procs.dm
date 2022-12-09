@@ -24,13 +24,13 @@
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage_amount, forced = forced, required_status = FALSE)
+				adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(BP)
 				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage_amount, forced = forced, required_status = FALSE)
+				adjustFireLoss(damage_amount, forced = forced)
 		if(TOX)
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
@@ -57,7 +57,7 @@
 		amount += BP.burn_dam
 	return amount
 
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status = BODYTYPE_ORGANIC)
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
@@ -73,7 +73,7 @@
 		return
 	adjustBruteLoss(diff, updating_health, forced, required_status)
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status = BODYTYPE_ORGANIC)
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
