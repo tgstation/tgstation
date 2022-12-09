@@ -1,6 +1,6 @@
 /turf/open/space
 	icon = 'icons/turf/space.dmi'
-	icon_state = "0"
+	icon_state = "space"
 	name = "\proper space"
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
@@ -45,7 +45,6 @@
  */
 /turf/open/space/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
-	icon_state = SPACE_ICON_STATE(x, y, z)
 	air = space_gas
 
 	if(flags_1 & INITIALIZED_1)
@@ -183,7 +182,7 @@
 
 /turf/open/space/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/space.dmi'
-	underlay_appearance.icon_state = SPACE_ICON_STATE(x, y, z)
+	underlay_appearance.icon_state = "space"
 	SET_PLANE(underlay_appearance, PLANE_SPACE, src)
 	return TRUE
 

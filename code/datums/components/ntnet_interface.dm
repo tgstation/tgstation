@@ -130,8 +130,6 @@
 /datum/component/ntnet_interface/proc/connect_port(port)
 	return registered_sockets[port]
 
-
-
 /datum/component/ntnet_interface/Destroy()
 	network.remove_interface(src, TRUE)
 	SSnetworks.interfaces_by_hardware_id.Remove(hardware_id)

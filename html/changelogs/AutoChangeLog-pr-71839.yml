@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - bugfix: "Fixed circuitboards sometimes giving no name on examine."
