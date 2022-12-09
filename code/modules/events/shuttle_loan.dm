@@ -6,6 +6,7 @@
 #define PIZZA_DELIVERY 6
 #define ITS_HIP_TO 7
 #define MY_GOD_JC 8
+#define PAPERS_PLEASE 9
 
 /datum/round_event_control/shuttle_loan
 	name = "Shuttle Loan"
@@ -24,6 +25,7 @@
 		PIZZA_DELIVERY,
 		RUSKY_PARTY,
 		SPIDER_GIFT,
+		PAPERS_PLEASE,
 	)
 	///The types of loan events already run (and to be excluded if the event triggers).
 	var/list/run_events = list()
@@ -52,6 +54,7 @@
 	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
+
 	for(var/datum/round_event_control/shuttle_loan/loan_event_control in SSevents.control) //We can't call control, because it hasn't been set yet
 		var/list/loan_list = list()
 		loan_list += loan_event_control.shuttle_loan_offers
@@ -92,6 +95,10 @@
 			priority_announce("Cargo: We have discovered an active Syndicate bomb near our VIP shuttle's fuel lines. If you feel up to the task, we will pay you for defusing it.", "CentCom Security Division")
 			thanks_msg = "Live explosive ordnance incoming via supply shuttle. Evacuating cargo bay is recommended."
 			bonus_points = 45000 //If you mess up, people die and the shuttle gets turned into swiss cheese
+		if(PAPERS_PLEASE)
+			priority_announce("Cargo: A neighboring station needs some help handling some paperwork. Could you help process it for us?", "CentCom Paperwork Division")
+			thanks_msg = "The cargo shuttle should return in five minutes. Payment will be rendered when the paperwork is processed and returned."
+			bonus_points = 0 //Payout is made when the stamped papers are returned
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
@@ -131,6 +138,9 @@
 		if(MY_GOD_JC)
 			SSshuttle.centcom_message += "Live explosive ordnance incoming. Exercise extreme caution."
 			loan_type = "Shuttle with a ticking bomb"
+		if(PAPERS_PLEASE)
+			SSshuttle.centcom_message += "Paperwork incoming."
+			loan_type = "Paperwork shipment"
 
 	log_game("Shuttle loan event firing with type '[loan_type]'.")
 
@@ -276,6 +286,9 @@
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb)
 				else
 					shuttle_spawns.Add(/obj/item/paper/fluff/cargo/bomb/allyourbase)
+
+			if(PAPERS_PLEASE)
+				shuttle_spawns += subtypesof(/obj/item/paperwork) - typesof(/obj/item/paperwork/photocopy) - typesof(/obj/item/paperwork/ancient)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
