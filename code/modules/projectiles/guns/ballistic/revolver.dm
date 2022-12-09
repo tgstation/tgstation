@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/revolver
 	name = "\improper .357 revolver"
-	desc = "A suspicious revolver. Uses .357 ammo."
+	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/gun/revolver/shot_alt.ogg'
@@ -96,11 +96,6 @@
 /obj/item/gun/ballistic/revolver/ignition_effect(atom/A, mob/user)
 	if(last_fire && last_fire + 15 SECONDS > world.time)
 		. = span_notice("[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.")
-
-/obj/item/gun/ballistic/revolver/syndicate
-	name = "\improper S-357"
-	desc = "A 7 round revolver chambered in .357. It has 'Scarborough Arms' engraved on it"
-	icon_state = "syndicate_revolver"
 
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
