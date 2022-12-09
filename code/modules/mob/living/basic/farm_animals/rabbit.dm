@@ -31,6 +31,8 @@
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	butcher_results = list(/obj/item/food/meat/slab = 1)
+	unsuitable_cold_damage = 0.5 // Cold damage is 0.5 here to account for low health on the rabbit.
+	unsuitable_heat_damage = 0.5 // Heat damage is 0.5 here to account for low health on the rabbit.
 	ai_controller = /datum/ai_controller/basic_controller/rabbit
 	/// passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
@@ -85,27 +87,10 @@
 	icon_dead = "space_rabbit_white_dead"
 	icon_prefix = "space_rabbit"
 	ai_controller = /datum/ai_controller/basic_controller/rabbit/easter/space
-	// Minimum Allowable Body Temp, zero because we are meant to survive in space and we have a fucking RABBIT SPACE MASK.
-	var/minimum_survivable_temperature = 0
-	// Maximum Allowable Body Temp, 1500 because we might overheat and die in said RABBIT SPACE MASK.
-	var/maximum_survivable_temperature = 1500
-
-/mob/living/basic/rabbit/easter/space/Initialize(mapload)
-	. = ..()
-	// string_assoc_list returns a cached list, which we then use as a static list to pass into the below AddElement
-	var/list/habitable_atmos = string_assoc_list(list(
-		"min_oxy" = 0,
-		"max_oxy" = 0,
-		"min_plas" = 0,
-		"max_plas" = 0,
-		"min_co2" = 0,
-		"max_co2" = 0,
-		"min_n2" = 0,
-		"max_n2" = 0,
-	))
-	AddElement(/datum/element/atmos_requirements, atmos_requirements = habitable_atmos, unsuitable_atmos_damage = 0)
-	// heat_damage is 0.5 here to account for low health on the rabbit.
-	AddElement(/datum/element/basic_body_temp_sensitive, min_body_temp = minimum_survivable_temperature, max_body_temp = maximum_survivable_temperature, cold_damage = 0, heat_damage = 0.5)
+	unsuitable_atmos_damage = 0 // Zero because we are meant to survive in space.
+	minimum_survivable_temperature = 0 // Minimum Allowable Body Temp, zero because we are meant to survive in space and we have a fucking RABBIT SPACE MASK.
+	maximum_survivable_temperature = 1500 // Maximum Allowable Body Temp, 1500 because we might overheat and die in said RABBIT SPACE MASK.
+	unsuitable_cold_damage = 0 // Zero because we are meant to survive in space.
 
 /datum/ai_controller/basic_controller/rabbit/easter/space
 	planning_subtrees = list(/datum/ai_planning_subtree/random_speech/rabbit/easter/space)

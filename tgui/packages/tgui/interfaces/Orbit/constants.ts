@@ -25,12 +25,6 @@ export const ANTAG2GROUP = {
   'Wizard Minion': 'Wizard Federation',
 } as const;
 
-export const JOB2ICON = {
-  'AI': 'eye',
-  'Cyborg': 'robot',
-  'Personal AI': 'mobile-alt',
-} as const;
-
 export enum THREAT {
   Low = 2,
   Medium = 5,
