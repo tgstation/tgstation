@@ -931,9 +931,9 @@
 		return FALSE
 
 	/**
-	 * sorting is very important especially because we are breaking the loop on line 1006
+	 * sorting is very important especially because we are breaking out required part is found in the inner for loop
 	 * if the rped first picked up a tier 3 part AND THEN a tier 4 part
-	 * tier 3 would be installed and the loop would break and check the next required component thus
+	 * tier 3 would be installed and the loop would break and check for the next required component thus
 	 * completly ignoring the tier 4 component inside
 	 */
 	var/list/part_list = replacer_tool.get_sorted_parts()
