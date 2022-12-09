@@ -1,0 +1,4 @@
+author: "kawoppi"
+delete-after: True
+changes:
+  - bugfix: "cows, pigs, rabbits, sheep, cockroaches, mothroaches and mice now take damage in hazardous atmospheres and temperatures"
