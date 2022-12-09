@@ -277,3 +277,19 @@
 		return
 	for(var/mob/busdriver as anything in return_drivers())
 		busdriver.client.give_award(/datum/award/achievement/misc/the_best_driver, busdriver)
+
+/obj/vehicle/sealed/car/clowncar/attack_tk(mob/user)
+	if(!iscarbon(user))
+		return
+	. = COMPONENT_CANCEL_ATTACK_CHAIN
+
+	var/mob/living/carbon/jedi = user
+	playsound(user, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
+	to_chat(user, "<font color='red' size='8'>HONK</font>")
+	to_chat(user, span_warning("\The [src] actively rejects your mind, and the honk energies surrounding it disrupt your telekinesis!"))
+	jedi.Unconscious(4 SECONDS)
+	jedi.Stun(10 SECONDS)
+	jedi.adjust_stutter(30 SECONDS)
+	jedi.set_jitter_if_lower(1000 SECONDS)
+	var/obj/item/organ/internal/ears/ears = jedi.getorganslot(ORGAN_SLOT_EARS)
+	ears?.adjustEarDamage(10, 15)
