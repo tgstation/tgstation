@@ -51,3 +51,51 @@
 	desc = "Twenty telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
 	item = /obj/item/stack/telecrystal/twenty
 	cost = 20
+
+/datum/uplink_item/bundles_tc/bundle_a
+	name = "Syndi-kit Tactical"
+	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
+			These items are collectively worth more than 20 telecrystals, but you do not know which specialization \
+			you will receive. May contain discontinued and/or exotic items."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/storage/box/syndicate/bundle_a
+	cost = 20
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/bundles_tc/bundle_b
+	name = "Syndi-kit Special"
+	desc = "Syndicate Bundles, also known as Syndi-Kits, are specialized groups of items that arrive in a plain box. \
+			In Syndi-kit Special, you will receive items used by famous syndicate agents of the past. Collectively worth more than 20 telecrystals, the syndicate loves a good throwback."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/storage/box/syndicate/bundle_b
+	cost = 20
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/bundles_tc/surplus
+	name = "Syndicate Surplus Crate"
+	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
+			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 30 TC."
+	progression_minimum = 30 MINUTES
+	item = /obj/structure/closet/crate // will be replaced in purchase()
+	cost = 20
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	var/starting_crate_value = 30
+
+/datum/uplink_item/bundles_tc/surplus/super
+	name = "Super Surplus Crate"
+	desc = "A dusty SUPER-SIZED from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
+			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 75 TC."
+	cost = 40
+	starting_crate_value = 75
+
+/datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	var/static/datum/supply_pack/misc/syndicate/cratefill = new()
+	cratefill.crate_value = starting_crate_value
+	var/obj/structure/closet/crate/surplus_crate = new()
+	cratefill.fill(surplus_crate)
+
+	podspawn(list(
+		"target" = get_turf(user),
+		"style" = STYLE_SYNDICATE,
+		"spawn" = surplus_crate,
+	))
