@@ -159,9 +159,10 @@
 	module.on_select()
 
 /datum/action/item_action/mod/pinned_module/apply_button_overlay(atom/movable/screen/movable/action_button/current_button, force)
-	. = ..()
+	current_button.cut_overlays()
 	if(override)
-		return
+		return ..()
+
 	var/obj/item/mod/control/mod = target
 	if(module == mod.selected_module)
 		current_button.add_overlay(image(icon = 'icons/hud/radial.dmi', icon_state = "module_selected", layer = FLOAT_LAYER-0.1))
@@ -171,6 +172,7 @@
 		var/image/cooldown_image = image(icon = 'icons/hud/radial.dmi', icon_state = "module_cooldown")
 		current_button.add_overlay(cooldown_image)
 		addtimer(CALLBACK(current_button, TYPE_PROC_REF(/image, cut_overlay), cooldown_image), COOLDOWN_TIMELEFT(module, cooldown_timer))
+	return ..()
 
 /datum/action/item_action/mod/pinned_module/proc/module_interacted_with(datum/source)
 	SIGNAL_HANDLER
