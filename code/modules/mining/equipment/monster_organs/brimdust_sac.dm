@@ -192,8 +192,7 @@
 /// Action used by the brimdust sac
 /datum/action/cooldown/monster_core_action/exhale_brimdust
 	name = "Exhale Brimdust"
-	desc = "Cough out a cloud of explosive brimdust to coat those nearby. \
-		This organ and the dust it produces are extremely flammable under atmospheric pressure."
+	desc = "Cough out a choking cloud of explosive brimdust to coat those nearby."
 	button_icon_state = "brim_sac_stable"
 	cooldown_time = 90 SECONDS
 
