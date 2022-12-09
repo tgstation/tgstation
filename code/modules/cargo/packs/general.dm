@@ -256,12 +256,15 @@
 /datum/supply_pack/misc/syndicate
 	name = "Assorted Syndicate Gear"
 	desc = "Contains a random assortment of syndicate gear."
-	special = TRUE ///Cannot be ordered via cargo
+	special = TRUE //Cannot be ordered via cargo
 	contains = list()
 	crate_name = "syndicate gear crate"
 	crate_type = /obj/structure/closet/crate
-	var/crate_value = 30 ///Total TC worth of contained uplink items
+	///Total TC worth of contained uplink items
+	var/crate_value = 30
 	var/uplink_flag = UPLINK_TRAITORS
+	///Prevents higher tier items from filling in the crate
+	var/progression_maximum = 40 MINUTES //forty minutes allows for the syndicate bomb but removes the elite modsuit from the syndie cargo pod event
 
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
 /datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
@@ -276,6 +279,8 @@
 		if(!uplink_item.surplus || prob(100 - uplink_item.surplus))
 			continue
 		if(crate_value < uplink_item.cost)
+			continue
+		if(progression_maximum < uplink_item.progression_minimum)
 			continue
 		crate_value -= uplink_item.cost
 		new uplink_item.item(C)
