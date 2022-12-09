@@ -1,0 +1,4 @@
+author: "Zonespace27"
+delete-after: True
+changes:
+  - balance: "Destroying a petrified human statue will now drop their brain."

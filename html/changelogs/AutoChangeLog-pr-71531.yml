@@ -1,0 +1,6 @@
+author: "RimiNosha"
+delete-after: True
+changes:
+  - qol: "The latejoin menu is now TGUI!"
+  - qol: "You'll also be able to see why you can't join a job, instead of it being invisible!"
+  - code_imp: "Department UI colors have changed slightly. This will only affect the latejoin and nations UIs."

@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes:
+  - bugfix: "Blobs will no longer attack jaunting and incorporeal mobs (eg revenants)"
