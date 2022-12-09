@@ -29,9 +29,9 @@
 	return GLOB.fun_state
 
 /datum/force_event/ui_static_data(mob/user)
-	var/static/list/cat2icons
-	if(!cat2icons)
-		cat2icons = list(
+	var/static/list/category_to_icons
+	if(!category_to_icons)
+		category_to_icons = list(
 			EVENT_CATEGORY_AI = "robot",
 			EVENT_CATEGORY_ANOMALIES = "cloud-bolt",
 			EVENT_CATEGORY_BUREAUCRATIC = "print",
@@ -58,7 +58,7 @@
 			categories_seen[event_control.category] = TRUE
 			UNTYPED_LIST_ADD(categories, list(
 				"name" = event_control.category,
-				"icon" = cat2icons[event_control.category],
+				"icon" = category_to_icons[event_control.category],
 			))
 		//add event, with one value matching up the category
 		UNTYPED_LIST_ADD(events, list(
