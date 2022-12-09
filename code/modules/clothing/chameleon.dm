@@ -2,7 +2,7 @@
 
 /datum/action/item_action/chameleon/drone/randomise
 	name = "Randomise Headgear"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "random"
 
 /datum/action/item_action/chameleon/drone/randomise/Trigger(trigger_flags)
@@ -22,7 +22,7 @@
 
 /datum/action/item_action/chameleon/drone/togglehatmask
 	name = "Toggle Headgear Mode"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon = 'icons/mob/actions/actions_silicon.dmi'
 
 /datum/action/item_action/chameleon/drone/togglehatmask/New()
 	..()
@@ -165,7 +165,7 @@
 
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
 	name = "Change [chameleon_name] Appearance"
-	UpdateButtons()
+	build_all_button_icons()
 
 	chameleon_blacklist |= typecacheof(target.type)
 	for(var/V in typesof(chameleon_type))
@@ -213,7 +213,7 @@
 		update_item(picked_item)
 		var/obj/item/thing = target
 		thing.update_slot_icon()
-	UpdateButtons()
+	build_all_button_icons()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
 	var/atom/atom_target = target
@@ -330,7 +330,7 @@
 
 /datum/action/item_action/chameleon/change/id_trim/initialize_disguises()
 	name = "Change [chameleon_name] Appearance"
-	UpdateButtons()
+	build_all_button_icons()
 
 	chameleon_blacklist |= typecacheof(target.type)
 	for(var/trim_path in typesof(chameleon_type))
@@ -355,13 +355,13 @@
 
 /datum/action/item_action/chameleon/change/tablet/update_item(obj/item/picked_item)
 	..()
-	var/obj/item/modular_computer/tablet/pda/agent_pda = target
+	var/obj/item/modular_computer/pda/agent_pda = target
 	if(istype(agent_pda))
 		agent_pda.update_appearance()
 
 /datum/action/item_action/chameleon/change/tablet/apply_job_data(datum/job/job_datum)
 	..()
-	var/obj/item/modular_computer/tablet/pda/agent_pda = target
+	var/obj/item/modular_computer/pda/agent_pda = target
 	if(istype(agent_pda) && istype(job_datum))
 		agent_pda.saved_job = job_datum.title
 
@@ -535,9 +535,9 @@
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.UpdateButtons()
+	togglehatmask_action.build_all_button_icons()
 	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.UpdateButtons()
+	randomise_action.build_all_button_icons()
 
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
@@ -590,9 +590,9 @@
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 	chameleon_action.random_look()
 	var/datum/action/item_action/chameleon/drone/togglehatmask/togglehatmask_action = new(src)
-	togglehatmask_action.UpdateButtons()
+	togglehatmask_action.build_all_button_icons()
 	var/datum/action/item_action/chameleon/drone/randomise/randomise_action = new(src)
-	randomise_action.UpdateButtons()
+	randomise_action.build_all_button_icons()
 
 /obj/item/clothing/mask/chameleon/drone/attack_self(mob/user)
 	to_chat(user, span_notice("[src] does not have a voice changer."))
@@ -706,26 +706,26 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/modular_computer/tablet/pda/chameleon
+/obj/item/modular_computer/pda/chameleon
 	name = "tablet"
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
 
-/obj/item/modular_computer/tablet/pda/chameleon/Initialize(mapload)
+/obj/item/modular_computer/pda/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/modular_computer/tablet/pda
+	chameleon_action.chameleon_type = /obj/item/modular_computer/pda
 	chameleon_action.chameleon_name = "tablet"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/modular_computer/tablet/pda/heads), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/modular_computer/pda/heads), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
-/obj/item/modular_computer/tablet/pda/chameleon/emp_act(severity)
+/obj/item/modular_computer/pda/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	chameleon_action.emp_randomise()
 
-/obj/item/modular_computer/tablet/pda/chameleon/broken/Initialize(mapload)
+/obj/item/modular_computer/pda/chameleon/broken/Initialize(mapload)
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 

@@ -50,10 +50,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 
-	///Examine text when the person has brute damage.
-	var/brute_damage_desc = DEFAULT_BRUTE_EXAMINE_TEXT
-	///Examine text when the person has burn damage.
-	var/burn_damage_desc = DEFAULT_BURN_EXAMINE_TEXT
 	///Examine text when the person has cellular damage.
 	var/cellular_damage_desc = DEFAULT_CLONE_EXAMINE_TEXT
 	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
@@ -78,10 +74,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/toxic_food = TOXIC
 	///flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.
 	var/no_equip_flags
-	/// Allows the species to equip items that normally require a jumpsuit without having one equipped. Used by golems.
-	var/nojumpsuit = FALSE
-	///Affects the speech message, for example: Motharula flutters, "My speech message is flutters!"
-	var/say_mod = "says"
 	///What languages this species can understand and say. Use a [language holder datum][/datum/language_holder] in this var.
 	var/species_language_holder = /datum/language_holder
 	/**
@@ -140,15 +132,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// A path to an outfit that is important for species life e.g. plasmaman outfit
 	var/datum/outfit/outfit_important_for_life
 
-	///Is this species a flying species? Used as an easy check for some things
-	var/flying_species = FALSE
-	///The actual flying ability given to flying species
-	var/datum/action/innate/flight/fly
 	//Dictates which wing icons are allowed for a given species. If count is >1 a radial menu is used to choose between all icons in list
-	var/list/wings_icons = list("Angel")
-	///Used to determine what description to give when using a potion of flight, if false it will describe them as growing new wings
-	var/has_innate_wings = FALSE
-
+	var/list/wing_types = list(/obj/item/organ/external/wings/functional/angel)
 	/// The natural temperature for a body
 	var/bodytemp_normal = BODYTEMP_NORMAL
 	/// Minimum amount of kelvin moved toward normal body temperature per tick.
@@ -241,7 +226,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 
 /datum/species/New()
-	wings_icons = string_list(wings_icons)
+	wing_types = string_list(wing_types)
 
 	if(!plural_form)
 		plural_form = "[name]\s"
@@ -509,10 +494,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(inherent_factions)
 		for(var/i in inherent_factions)
 			C.faction += i //Using +=/-= for this in case you also gain the faction from a different source.
-
-	if(flying_species && isnull(fly))
-		fly = new
-		fly.Grant(C)
 
 	C.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
 
@@ -884,7 +865,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_BELT)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 
-			if(!H.w_uniform && !nojumpsuit && (!O || IS_ORGANIC_LIMB(O)))
+			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -914,7 +895,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-			if(!H.w_uniform && !nojumpsuit && (!O || IS_ORGANIC_LIMB(O)))
+			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -927,7 +908,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
 
-			if(!H.w_uniform && !nojumpsuit && (!O || IS_ORGANIC_LIMB(O)))
+			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -940,7 +921,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
 
-			if(!H.w_uniform && !nojumpsuit && (!O || IS_ORGANIC_LIMB(O)))
+			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -960,7 +941,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!disable_warning)
 					to_chat(H, span_warning("The [I.name] is too big to attach!")) //should be src?
 				return FALSE
-			if( istype(I, /obj/item/modular_computer/tablet) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( istype(I, /obj/item/modular_computer/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_HANDCUFFED)
@@ -1380,11 +1361,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			H.adjustCloneLoss(damage_amount)
 		if(STAMINA)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.stamina_mod
-			if(BP)
-				if(BP.receive_damage(0, 0, damage_amount))
-					H.update_stamina()
-			else
-				H.adjustStaminaLoss(damage_amount)
+			H.adjustStaminaLoss(damage_amount)
 		if(BRAIN)
 			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
 			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
@@ -1745,39 +1722,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	former_tail_owner.clear_mood_event("tail_lost")
 	former_tail_owner.clear_mood_event("tail_balance_lost")
 	former_tail_owner.clear_mood_event("wrong_tail_regained")
-
-///////////////
-//FLIGHT SHIT//
-///////////////
-
-/datum/species/proc/GiveSpeciesFlight(mob/living/carbon/human/H)
-	if(flying_species) //species that already have flying traits should not work with this proc
-		return
-	flying_species = TRUE
-	var/wings_icon
-	if(wings_icons.len > 1)
-		if(!H.client)
-			wings_icon = pick(wings_icons)
-		else
-			var/list/wings = list()
-			for(var/W in wings_icons)
-				var/datum/sprite_accessory/S = GLOB.wings_list[W] //Gets the datum for every wing this species has, then prompts user with a radial menu
-				var/image/img = image(icon = 'icons/mob/species/wings.dmi', icon_state = "m_wingsopen_[S.icon_state]_BEHIND") //Process the HUD elements
-				img.transform *= 0.5
-				img.pixel_x = -32
-				if(wings[S.name])
-					stack_trace("Different wing types with repeated names. Please fix as this may cause issues.")
-				else
-					wings[S.name] = img
-			wings_icon = show_radial_menu(H, H, wings, tooltips = TRUE)
-			if(!wings_icon)
-				wings_icon = pick(wings_icons)
-	else
-		wings_icon = wings_icons[1]
-
-	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.physique)
-	wings.Insert(H)
-	handle_mutant_bodyparts(H)
 
 /**
  * The human species version of [/mob/living/carbon/proc/get_biological_state]. Depends on the HAS_FLESH and HAS_BONE species traits, having bones lets you have bone wounds, having flesh lets you have burn, slash, and piercing wounds

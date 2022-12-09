@@ -42,7 +42,7 @@
 		return
 
 	var/list/nice_list = list()
-	for(var/atom/component as anything in req_components)
+	for(var/component in req_components)
 		if(!ispath(component))
 			stack_trace("An item in [src]'s req_components list is not a path!")
 			continue
@@ -63,20 +63,24 @@
 		return
 
 	req_component_names = list()
-	for(var/atom/component_path as anything in req_components)
+	for(var/component_path in req_components)
 		if(!ispath(component_path))
 			continue
-
-		req_component_names[component_path] = initial(component_path.name)
 
 		if(ispath(component_path, /obj/item/stack))
 			var/obj/item/stack/stack_path = component_path
 			if(initial(stack_path.singular_name))
 				req_component_names[component_path] = initial(stack_path.singular_name)
-				continue
+			else
+				req_component_names[component_path] = initial(stack_path.name)
+		else if(ispath(component_path, /datum/stock_part))
+			var/datum/stock_part/stock_part = component_path
+			var/obj/item/physical_object_type = initial(stock_part.physical_object_type)
 
-		if(ispath(component_path, /obj/item/stock_parts))
+			req_component_names[component_path] = initial(physical_object_type.name)
+		else if(ispath(component_path, /obj/item/stock_parts))
 			var/obj/item/stock_parts/stock_part = component_path
+
 			if(!specific_parts && initial(stock_part.base_name))
 				req_component_names[component_path] = initial(stock_part.base_name)
 			else
@@ -182,8 +186,8 @@
 					to_chat(user, span_notice("You remove the circuit board."))
 				else
 					to_chat(user, span_notice("You remove the circuit board and other components."))
-					for(var/atom/movable/AM in components)
-						AM.forceMove(drop_location())
+					dump_contents()
+
 				desc = initial(desc)
 				req_components = null
 				components = null
@@ -228,9 +232,12 @@
 						new_machine.component_parts += circuit
 						new_machine.circuit = circuit
 
-						for(var/obj/new_part in src)
+						for (var/obj/new_part in src)
 							new_part.forceMove(new_machine)
-							new_machine.component_parts += new_part
+
+						new_machine.component_parts = components
+						components = null
+
 						new_machine.RefreshParts()
 
 						new_machine.on_construction()
@@ -281,33 +288,71 @@
 					replacer.play_rped_sound()
 				return
 
-			if(isitem(P) && get_req_components_amt())
-				for(var/I in req_components)
-					if(istype(P, I) && (req_components[I] > 0))
-						if(isstack(P))
-							var/obj/item/stack/S = P
-							var/used_amt = min(round(S.get_amount()), req_components[I])
+			for(var/stock_part_base in req_components)
+				var/stock_part_path
 
-							if(used_amt && S.use(used_amt))
-								var/obj/item/stack/NS = locate(S.merge_type) in components
+				if (ispath(stock_part_base, /obj/item))
+					stock_part_path = stock_part_base
+				else if (ispath(stock_part_base, /datum/stock_part))
+					var/datum/stock_part/stock_part_datum_type = stock_part_base
+					stock_part_path = initial(stock_part_datum_type.physical_object_type)
+				else
+					stack_trace("Bad stock part in req_components: [stock_part_base]")
+					continue
 
-								if(!NS)
-									NS = new S.merge_type(src, used_amt)
-									components += NS
-								else
-									NS.add(used_amt)
+				if (req_components[stock_part_path] == 0)
+					continue
 
-								req_components[I] -= used_amt
-								to_chat(user, span_notice("You add [P] to [src]."))
-							return
-						if(!user.transferItemToLoc(P, src))
-							break
+				if (!istype(P, stock_part_path))
+					continue
+
+				if(isstack(P))
+					var/obj/item/stack/S = P
+					var/used_amt = min(round(S.get_amount()), req_components[stock_part_path])
+
+					if(used_amt && S.use(used_amt))
+						var/obj/item/stack/NS = locate(S.merge_type) in components
+
+						if(!NS)
+							NS = new S.merge_type(src, used_amt)
+							components += NS
+						else
+							NS.add(used_amt)
+
+						req_components[stock_part_path] -= used_amt
 						to_chat(user, span_notice("You add [P] to [src]."))
-						components += P
-						req_components[I]--
-						return TRUE
-				to_chat(user, span_warning("You cannot add that to the machine!"))
-				return FALSE
+					return
+
+				// We might end up qdel'ing the part if it's a stock part datum.
+				// In practice, this doesn't have side effects to the name,
+				// but academically we should not be using an object after it's deleted.
+				var/part_name = "[P]"
+
+				if (ispath(stock_part_base, /datum/stock_part))
+					// We can't just reuse stock_part_path here or its singleton,
+					// or else putting in a tier 2 part will deconstruct to a tier 1 part.
+					var/stock_part_datum = GLOB.stock_part_datums_per_object[P.type]
+					if (isnull(stock_part_datum))
+						stack_trace("[P.type] does not have an associated stock part datum!")
+						continue
+
+					components += stock_part_datum
+
+					// We regenerate the stock parts on deconstruct.
+					// This technically means we lose unique qualities of the stock part, but
+					// it's worth it for how dramatically this simplifies the code.
+					// The only place I can see it affecting anything is like...RPG qualities. :P
+					qdel(P)
+				else if(user.transferItemToLoc(P, src))
+					components += P
+				else
+					break
+
+				to_chat(user, span_notice("You add [part_name] to [src]."))
+				req_components[stock_part_base]--
+				return TRUE
+			to_chat(user, span_warning("You cannot add that to the machine!"))
+			return FALSE
 	if(user.combat_mode)
 		return ..()
 
@@ -315,7 +360,18 @@
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(state >= 2)
 			new /obj/item/stack/cable_coil(loc , 5)
-		for(var/X in components)
-			var/obj/item/I = X
-			I.forceMove(loc)
+
+		dump_contents()
 	..()
+
+/obj/structure/frame/machine/dump_contents()
+	for (var/component in components)
+		if (ismovable(component))
+			var/atom/movable/atom_component = component
+			atom_component.forceMove(drop_location())
+		else if (istype(component, /datum/stock_part))
+			var/datum/stock_part/stock_part_datum = component
+			var/physical_object_type = initial(stock_part_datum.physical_object_type)
+			new physical_object_type(drop_location())
+		else
+			stack_trace("Invalid component [component] was found in constructable frame")

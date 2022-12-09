@@ -67,28 +67,7 @@
 		place.baseturfs = baseturfs_string_list(sanity, place)
 
 		for(var/obj/docking_port/mobile/port in place)
-			if(!isnull(port_x_offset))
-				switch(port.dir) // Yeah this looks a little ugly but mappers had to do this in their head before
-					if(NORTH)
-						port.width = width
-						port.height = height
-						port.dwidth = port_x_offset - 1
-						port.dheight = port_y_offset - 1
-					if(EAST)
-						port.width = height
-						port.height = width
-						port.dwidth = height - port_y_offset
-						port.dheight = port_x_offset - 1
-					if(SOUTH)
-						port.width = width
-						port.height = height
-						port.dwidth = width - port_x_offset
-						port.dheight = height - port_y_offset
-					if(WEST)
-						port.width = height
-						port.height = width
-						port.dwidth = port_y_offset - 1
-						port.dheight = width - port_x_offset
+			port.calculate_docking_port_information(src)
 			// initTemplateBounds explicitly ignores the shuttle's docking port, to ensure that it calculates the bounds of the shuttle correctly
 			// so we need to manually initialize it here
 			SSatoms.InitializeAtoms(list(port))
@@ -703,6 +682,10 @@
 /datum/map_template/shuttle/pirate/dutchman
 	suffix = "dutchman"
 	name = "pirate ship (Flying Dutchman)"
+
+/datum/map_template/shuttle/pirate/psykers
+	suffix = "psyker"
+	name = "pirate ship (Psyker-gang)"
 
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"

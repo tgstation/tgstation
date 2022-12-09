@@ -1,7 +1,6 @@
 /datum/species/android
 	name = "Android"
 	id = SPECIES_ANDROID
-	say_mod = "states"
 	species_traits = list(NOBLOOD, NO_DNA_COPY, NOTRANSSTING, NOSTOMACH)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -20,14 +19,12 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_TOXIMMUNE,
 	)
-	brute_damage_desc = ROBOTIC_BRUTE_EXAMINE_TEXT
-	burn_damage_desc = ROBOTIC_BURN_EXAMINE_TEXT
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
 	mutanttongue = /obj/item/organ/internal/tongue/robot
 	species_language_holder = /datum/language_holder/synthetic
-	wings_icons = list("Robotic")
+	wing_types = list(/obj/item/organ/external/wings/functional/robotic)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 	bodypart_overrides = list(

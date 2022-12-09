@@ -87,5 +87,10 @@
 
 /obj/structure/billboard/smoothies
 	name = "\improper Spinward Smoothies billboard"
-	desc = "A billboard advertising Spinward Smoothies. "
+	desc = "A billboard advertising Spinward Smoothies."
 	icon_state = "billboard_smoothies"
+
+/obj/structure/billboard/fortune_telling
+	name = "\improper Fortune Teller billboard"
+	desc = "A billboard advertising Fortune Telling. Apparently it's done by real psykers!"
+	icon_state = "billboard_fortune_tell"
