@@ -57,7 +57,7 @@
 		amount += BP.burn_dam
 	return amount
 
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status = FALSE)
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
@@ -73,7 +73,7 @@
 		return
 	adjustBruteLoss(diff, updating_health, forced, required_status)
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status = FALSE)
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
