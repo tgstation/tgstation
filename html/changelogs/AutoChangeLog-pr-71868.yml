@@ -1,0 +1,4 @@
+author: "RimiNosha"
+delete-after: True
+changes:
+  - bugfix: "Fixed some issues with the TGUI latejoin menu, and made the shuttle and round time display once more."
