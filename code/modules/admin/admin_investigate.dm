@@ -5,8 +5,8 @@
 	var/message_prefix = "[time_stamp()] [REF(src)] ([x],[y],[z]) ||"
 	var/source = "[src]"
 
-	if(iscarbon(src))
-		var/mob/living/carbon/source_mob = src
+	if(isliving(src))
+		var/mob/living/source_mob = src
 		source += " ([source_mob.ckey ? source_mob.ckey : "*no key*"])"
 
 	WRITE_FILE(F, "[message_prefix] [source] [message]<br>")
