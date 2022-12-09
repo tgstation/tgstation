@@ -85,6 +85,7 @@
 
 	var/completed = FALSE
 	var/list/power_lottery = list()
+	var/list/possible_powers
 
 	var/list/obj/structure/fillers = list()
 
@@ -107,6 +108,7 @@
 			animals_max = dna_vault_goal.animal_count
 			plants_max = dna_vault_goal.plant_count
 			dna_max = dna_vault_goal.human_count
+
 	return ..()
 
 /obj/machinery/dna_vault/Destroy()
@@ -126,11 +128,20 @@
 	var/datum/weakref/user_weakref = WEAKREF(user)
 	if((user_weakref in power_lottery) || isdead(user))
 		return
-	var/list/L = list()
-	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
-	L += pick_n_take(possible_powers)
-	L += pick_n_take(possible_powers)
-	power_lottery[user_weakref] = L
+	possible_powers = list(
+	/datum/mutation/human/breathless,
+	/datum/mutation/human/fast_runner,
+	/datum/mutation/human/tough_skin,
+	/datum/mutation/human/dexterous,
+	/datum/mutation/human/fire_immune,
+	/datum/mutation/human/stun_resistant,
+	/datum/mutation/human/plasma_adapter
+	)
+	var/list/gained_mutation = list()
+	gained_mutation += pick_n_take(possible_powers)
+	gained_mutation += pick_n_take(possible_powers)
+
+	power_lottery[user_weakref] = gained_mutation
 
 /obj/machinery/dna_vault/ui_data(mob/user) //TODO Make it % bars maybe
 	var/list/data = list()
@@ -145,11 +156,11 @@
 	data["choiceA"] = ""
 	data["choiceB"] = ""
 	if(user && completed)
-		var/list/L = power_lottery[WEAKREF(user)]
+		var/list/datum/mutation/human/L = power_lottery[WEAKREF(user)]
 		if(L?.len)
 			data["used"] = FALSE
-			data["choiceA"] = L[1]
-			data["choiceB"] = L[2]
+			data["choiceA"] = initial(L[1].name)
+			data["choiceB"] = initial(L[2].name)
 	return data
 
 /obj/machinery/dna_vault/ui_act(action, params)
@@ -177,12 +188,15 @@
 		if(Pdna_length)
 			uploaded += Pdna_length
 			plants += P.stored_dna_plants
+			P.stored_dna_plants.Cut()
 		if(Hdna_length)
 			uploaded += Hdna_length
 			dna += P.stored_dna_human
+			P.stored_dna_human.Cut()
 		if(Adna_length)
 			uploaded += Adna_length
 			animals += P.stored_dna_animal
+			P.stored_dna_animal.Cut()
 		check_goal()
 		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
 	else
@@ -192,36 +206,7 @@
 	var/datum/weakref/human_weakref = WEAKREF(H)
 	if(!(upgrade_type in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
-	var/datum/species/S = H.dna.species
-	switch(upgrade_type)
-		if(VAULT_TOXIN)
-			to_chat(H, span_notice("You feel resistant to airborne toxins."))
-			if(locate(/obj/item/organ/internal/lungs) in H.internal_organs)
-				var/obj/item/organ/internal/lungs/L = H.internal_organs_slot[ORGAN_SLOT_LUNGS]
-				L.plas_breath_dam_min = 0
-				L.plas_breath_dam_max = 0
-			ADD_TRAIT(H, TRAIT_VIRUSIMMUNE, DNA_VAULT_TRAIT)
-		if(VAULT_NOBREATH)
-			to_chat(H, span_notice("Your lungs feel great."))
-			ADD_TRAIT(H, TRAIT_NOBREATH, DNA_VAULT_TRAIT)
-		if(VAULT_FIREPROOF)
-			to_chat(H, span_notice("You feel fireproof."))
-			S.burnmod = 0.5
-			ADD_TRAIT(H, TRAIT_RESISTHEAT, DNA_VAULT_TRAIT)
-			ADD_TRAIT(H, TRAIT_NOFIRE, DNA_VAULT_TRAIT)
-		if(VAULT_STUNTIME)
-			to_chat(H, span_notice("Nothing can keep you down for long."))
-			S.stunmod = 0.5
-		if(VAULT_ARMOUR)
-			to_chat(H, span_notice("You feel tough."))
-			S.armor = 30
-			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, DNA_VAULT_TRAIT)
-		if(VAULT_SPEED)
-			to_chat(H, span_notice("Your legs feel faster."))
-			H.add_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
-		if(VAULT_QUICK)
-			to_chat(H, span_notice("Your arms move as fast as lightning."))
-			H.next_move_modifier = 0.5
+	H.dna.add_mutation(upgrade_type, MUT_OTHER, 0)
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
 	power_lottery[human_weakref] = list()
 	use_power(active_power_usage)
