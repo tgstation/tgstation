@@ -78,7 +78,7 @@
 /mob/living/silicon/pai/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	return take_holo_damage(amount)
 
-/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_health, forced = FALSE)
+/mob/living/silicon/pai/adjustStaminaLoss(amount, updating_stamina, forced = FALSE)
 	if(forced)
 		take_holo_damage(amount)
 	else

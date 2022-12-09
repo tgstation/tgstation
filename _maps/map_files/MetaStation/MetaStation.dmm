@@ -17387,7 +17387,7 @@
 "gvl" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/ian,
+/mob/living/basic/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "gvm" = (
@@ -19082,7 +19082,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/mob/living/simple_animal/pet/dog/corgi/puppy/void{
+/mob/living/basic/pet/dog/corgi/puppy/void{
 	dir = 4
 	},
 /turf/open/floor/grass,
@@ -30820,7 +30820,7 @@
 	desc = "An ancient piece of machinery, made from an unknown metal by an unknown maker.";
 	name = "\improper Ancient Relic"
 	},
-/mob/living/simple_animal/pet/dog/corgi{
+/mob/living/basic/pet/dog/corgi{
 	desc = "Make sure you give him plenty of bellyrubs, or he'll melt your skin off.";
 	name = "\improper Keeper of the Ark"
 	},
@@ -35866,7 +35866,7 @@
 	id = "teleshutter";
 	name = "Teleporter Shutter Control";
 	pixel_y = 5;
-	req_access = list("command")
+	req_access = list("teleporter")
 	},
 /turf/open/floor/iron,
 /area/station/command/teleporter)
@@ -47440,7 +47440,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/mob/living/simple_animal/pet/dog/corgi/puppy/slime,
+/mob/living/basic/pet/dog/corgi/puppy/slime,
 /turf/open/floor/grass,
 /area/station/science/research)
 "qPT" = (
@@ -50297,7 +50297,7 @@
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 26
 	},
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/mob/living/basic/pet/dog/pug/mcgriff,
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 9
 	},

@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Mining orders will no longer say they charged you credits."
-  - qol: "The cargo console now properly displays the amount of mining points used to purchase something."
-  - qol: "Mining orders no longer have manifest errors."

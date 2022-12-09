@@ -8,7 +8,7 @@
 /obj/item/clothing/suit/space/nasavoid
 	name = "NASA Voidsuit"
 	icon_state = "void"
-	inhand_icon_state = null
+	inhand_icon_state = "void_suit"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
@@ -20,7 +20,7 @@
 /obj/item/clothing/suit/space/nasavoid/old
 	name = "Engineering Voidsuit"
 	icon_state = "void"
-	inhand_icon_state = null
+	inhand_icon_state = "void_suit"
 	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making it difficult to move around in."
 	slowdown = 4
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)

@@ -6332,7 +6332,7 @@
 	name = "Teleporter Shutter Toggle";
 	pixel_x = -6;
 	pixel_y = 8;
-	req_access = list("command")
+	req_access = list("teleporter")
 	},
 /obj/machinery/button/door{
 	id = "evashutter";
@@ -29945,7 +29945,7 @@
 /obj/machinery/button/door/directional/east{
 	id = "teleshutter";
 	name = "Teleporter Shutter Toggle";
-	req_access = list("command")
+	req_access = list("teleporter")
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/teleporter)
@@ -41950,7 +41950,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/mob/living/simple_animal/pet/dog/corgi/ian{
+/mob/living/basic/pet/dog/corgi/ian{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -80528,7 +80528,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "teleshutter";
 	name = "Teleporter Shutter Toggle";
-	req_access = list("command")
+	req_access = list("teleporter")
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)

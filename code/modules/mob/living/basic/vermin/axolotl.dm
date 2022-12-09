@@ -1,4 +1,4 @@
-/mob/living/simple_animal/axolotl
+/mob/living/basic/axolotl
 	name = "axolotl"
 	desc = "Quite the colorful amphibian!"
 	icon_state = "axolotl"
@@ -9,24 +9,47 @@
 	attack_verb_continuous = "nibbles" //their teeth are just for gripping food, not used for self defense nor even chewing
 	attack_verb_simple = "nibble"
 	butcher_results = list(/obj/item/food/nugget = 1)
+	density = FALSE
+	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
+	mob_size = MOB_SIZE_TINY
+	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	gold_core_spawnable = FRIENDLY_SPAWN
+
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
-	density = FALSE
-	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	gold_core_spawnable = FRIENDLY_SPAWN
+
 	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
-	worn_slot_flags = ITEM_SLOT_HEAD
 	held_lh = 'icons/mob/inhands/animal_item_lefthand.dmi'
 	held_rh = 'icons/mob/inhands/animal_item_righthand.dmi'
+	worn_slot_flags = ITEM_SLOT_HEAD
 	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
 
-/mob/living/simple_animal/axolotl/Initialize(mapload)
+	ai_controller = /datum/ai_controller/basic_controller/axolotl
+
+/mob/living/basic/axolotl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+
+	var/list/habitable_atmos = string_assoc_list(list(
+		"min_oxy" = 5,
+		"max_oxy" = 0,
+		"min_plas" = 0,
+		"max_plas" = 1,
+		"min_co2" = 0,
+		"max_co2" = 5,
+		"min_n2" = 0,
+		"max_n2" = 0,
+	))
+
+	AddElement(/datum/element/atmos_requirements, habitable_atmos, unsuitable_atmos_damage = 1)
+	AddElement(/datum/element/basic_body_temp_sensitive)
+
+/datum/ai_controller/basic_controller/axolotl
+	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_movement = /datum/ai_movement/basic_avoidance
+	idle_behavior = /datum/idle_behavior/idle_random_walk

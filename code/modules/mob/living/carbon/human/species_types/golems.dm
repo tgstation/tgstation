@@ -300,7 +300,7 @@
 /datum/species/golem/alloy/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD)
 		return
-	H.heal_overall_damage(1 * delta_time, 1 * delta_time, 0, BODYTYPE_ORGANIC)
+	H.heal_overall_damage(1 * delta_time, 1 * delta_time, BODYTYPE_ORGANIC)
 	H.adjustToxLoss(-1 * delta_time)
 	H.adjustOxyLoss(-1 * delta_time)
 
@@ -344,7 +344,7 @@
 		if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL)
 			H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
+			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, BODYTYPE_ORGANIC)
 			H.adjustToxLoss(-0.5 * delta_time)
 			H.adjustOxyLoss(-0.5 * delta_time)
 
@@ -482,7 +482,7 @@
 	special_names = list("Crystal", "Polycrystal")
 	examine_limb_id = SPECIES_GOLEM
 
-	var/datum/action/innate/unstable_teleport/unstable_teleport
+	var/datum/action/cooldown/unstable_teleport/unstable_teleport
 	var/teleport_cooldown = 100
 	var/last_teleport = 0
 
@@ -530,43 +530,27 @@
 		unstable_teleport.Remove(C)
 	..()
 
-/datum/action/innate/unstable_teleport
+/datum/action/cooldown/unstable_teleport
 	name = "Unstable Teleport"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "jaunt"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-	var/cooldown = 150
-	var/last_teleport = 0
-	///Set to true upon action activation to prevent spamming teleport callbacks while the first is still occurring.
-	var/is_charging = FALSE
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
+	cooldown_time = 17.5 SECONDS
 
-/datum/action/innate/unstable_teleport/IsAvailable(feedback = FALSE)
-	. = ..()
-	if(!.)
-		return
-	if(world.time > last_teleport + cooldown && !is_charging)
-		return TRUE
-	return FALSE
-
-/datum/action/innate/unstable_teleport/Activate()
+/datum/action/cooldown/unstable_teleport/Activate()
 	var/mob/living/carbon/human/H = owner
 	H.visible_message(span_warning("[H] starts vibrating!"), span_danger("You start charging your bluespace core..."))
-	is_charging = TRUE
-	UpdateButtons() //action icon looks unavailable
 	playsound(get_turf(H), 'sound/weapons/flash.ogg', 25, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(teleport), H), 15)
+	addtimer(CALLBACK(src, PROC_REF(teleport), H), 1.5 SECONDS)
+	return TRUE
 
-/datum/action/innate/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
+/datum/action/cooldown/unstable_teleport/proc/teleport(mob/living/carbon/human/H)
 	H.visible_message(span_warning("[H] disappears in a shower of sparks!"), span_danger("You teleport!"))
 	var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(10, 0, src)
 	spark_system.attach(H)
 	spark_system.start()
 	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-	last_teleport = world.time
-	is_charging = FALSE
-	addtimer(CALLBACK(src, PROC_REF(UpdateButtons)), cooldown + 5) //action icon looks available again
-
 
 //honk
 /datum/species/golem/bananium
@@ -1230,7 +1214,7 @@
 	name = "Bone Chill"
 	desc = "Rattle your bones and strike fear into your enemies!"
 	check_flags = AB_CHECK_CONSCIOUS
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "bonechill"
 	var/cooldown = 600
 	var/last_use
