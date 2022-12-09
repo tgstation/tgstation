@@ -132,7 +132,8 @@
 		. += mutable_appearance(icon, "[icon_state]_o_container")
 
 	if(biomass > 0)
-		var/biomass_level = min(ROUND_UP(7 * biomass / max_visual_biomass), 7)
+		var/biomass_volume_sin = sin(min(biomass/max_visual_biomass, 1) * 90)
+		var/biomass_level = ROUND_UP(biomass_volume_sin * 7)
 		. += mutable_appearance(icon, "[icon_state]_o_biomass_[biomass_level]")
 		. += emissive_appearance(icon, "[icon_state]_o_biomass_[biomass_level]", src)
 
