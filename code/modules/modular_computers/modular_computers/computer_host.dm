@@ -133,7 +133,7 @@
 
 	START_PROCESSING(SSmodular_computers, src)
 
-/datum/modular_computer_host/Destroy(force, ...)
+/datum/modular_computer_host/Destroy()
 	wipe_program(forced = TRUE)
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
 		idle.kill_program(TRUE)
@@ -143,21 +143,18 @@
 	QDEL_LIST(stored_files)
 
 	var/droploc = physical.drop_location()
-	if(!force && droploc) // our internal stuff gets a chance to live
-		// refs get cleared in do_exited
+	// if we delete without our parent for some reason, kick all items out so they don't get stuck
+	if(!QDELETED(physical) && droploc)
 		internal_cell?.forceMove(droploc)
 		inserted_id?.forceMove(droploc)
 		inserted_disk?.forceMove(droploc)
 		inserted_pai?.forceMove(droploc)
-	else
-		if(istype(internal_cell))
-			QDEL_NULL(internal_cell)
-		if(istype(inserted_disk))
-			QDEL_NULL(inserted_disk)
-		if(istype(inserted_pai))
-			QDEL_NULL(inserted_pai)
-		if(istype(inserted_id))
-			QDEL_NULL(inserted_id)
+
+	// theoretically all of our internal stuff should get dumped when our parent gets deleted too
+	internal_cell = null
+	inserted_id = null
+	inserted_disk = null
+	inserted_pai = null
 
 	unregister_signals()
 
