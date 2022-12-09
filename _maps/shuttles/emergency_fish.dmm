@@ -534,8 +534,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/stasis,
 /obj/machinery/light/directional/south,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "CI" = (
@@ -594,7 +596,6 @@
 /turf/open/floor/wood/tile,
 /area/shuttle/escape)
 "FA" = (
-/obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -602,6 +603,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/stasis{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
