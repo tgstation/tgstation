@@ -33,7 +33,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_HANDCUFFED
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -358,6 +358,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 30 SECONDS
+	slot_flags = ITEM_SLOT_LEGCUFFED
 
 /**
  * # Bear trap
