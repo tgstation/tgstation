@@ -20,6 +20,10 @@
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 4
 
+	///Typepath of the cell this console should start with.
+	var/cell_type = null
+	///Typepath of the disk this console should start with.
+	var/disk_type = null
 
 	///Icon state when the computer is turned off.
 	var/icon_state_unpowered = null
@@ -45,7 +49,10 @@
 
 /obj/machinery/modular_computer/Initialize(mapload)
 	. = ..()
-	cpu = new(src)
+	if(mapload)
+		cpu = new(src, cell_type, disk_type)
+	else
+		cpu = new(src, null, null)
 
 /obj/machinery/modular_computer/Destroy()
 	if(!isnull(cpu))
@@ -77,11 +84,6 @@
 		. += "bsod"
 		. += "broken"
 	return .
-
-/// Eats the "source" arg because update_icon actually expects args now.
-/obj/machinery/modular_computer/proc/relay_icon_update(datum/source, updates, updated)
-	SIGNAL_HANDLER
-	return update_icon(updates)
 
 // Modular computers can have battery in them, we handle power in previous proc, so prevent this from messing it up for us.
 /obj/machinery/modular_computer/power_change()

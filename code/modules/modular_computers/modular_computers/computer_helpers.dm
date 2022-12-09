@@ -84,11 +84,12 @@
 /datum/modular_computer_host/proc/insert_card(obj/item/card/inserting_id, mob/user)
 	//all slots taken
 	if(inserted_id)
-		return
+		return FALSE
 
 	if(user)
 		if(!user.transferItemToLoc(inserting_id, physical))
-			return
+			return FALSE
+		user.balloon_alert(user, "inserted id")
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 	else
 		inserting_id.forceMove(physical)
@@ -100,7 +101,7 @@
 		var/mob/living/carbon/human/human_wearer = user
 		if(human_wearer.wear_id == physical)
 			human_wearer.sec_hud_set_ID()
-	return
+	return TRUE
 
 /**
  * Removes the ID card from the computer, and puts it in loc's hand if it's a mob

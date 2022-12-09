@@ -16,6 +16,10 @@
 	var/list/datum/computer_file/program/starting_programs = list()
 	/// Our modular computer
 	var/datum/modular_computer_host/item/cpu = /datum/modular_computer_host/item
+	///Typepath of the cell this item should start with,
+	var/cell_type = /obj/item/stock_parts/cell
+	///Typepath of the disk this item should start with.
+	var/disk_type = null
 
 	/// Icon state when the computer is turned off.
 	var/icon_state_unpowered = null
@@ -36,17 +40,11 @@
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
-
-	cpu = new cpu(src)
-
-	//set_light_color(cpu.comp_light_color)
-	//set_light_range(cpu.comp_light_luminosity)
-	//if(cpu.looping_sound)
-	//	cpu.soundloop = new(src, cpu.powered_on)
-	//cpu.UpdateDisplay()
-
+	if(mapload)
+		cpu = new cpu(src, cell_type, disk_type)
+	else
+		cpu = new cpu(src, null, null)
 	register_context()
-
 	add_item_action(/datum/action/item_action/toggle_computer_light)
 
 /obj/item/modular_computer/Destroy()

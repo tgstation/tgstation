@@ -131,16 +131,16 @@
 			return toggle_flashlight()
 
 		if("PC_light_color")
-			/*var/mob/user = usr
+			var/mob/user = usr
 			var/new_color
 			while(!new_color)
-				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
+				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",physical.light_color) as color|null
 				if(!new_color)
 					return
 				if(is_color_dark(new_color, 50) ) //Colors too dark are rejected
 					to_chat(user, span_warning("That color is too dark! Choose a lighter one."))
 					new_color = null
-			return set_flashlight_color(new_color)*/
+			return set_flashlight_color(new_color)
 
 		if("PC_Eject_Disk")
 			var/param = params["name"]
@@ -171,9 +171,8 @@
 		if("PC_Imprint_ID")
 			saved_identification = inserted_id.registered_name
 			saved_job = inserted_id.assignment
-			//UpdateDisplay()
 			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
-
+			return UI_UPDATE
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")

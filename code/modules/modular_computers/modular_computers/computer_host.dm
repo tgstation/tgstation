@@ -59,10 +59,10 @@
 	///Is our object broken?
 	var/nonfunctional
 
-	///Looping sound for when the computer is on.
-	var/datum/looping_sound/computer/soundloop
 	///Whether or not this modular computer uses the looping sound
 	var/looping_sound = FALSE
+	///Looping sound for when the computer is on.
+	var/datum/looping_sound/computer/soundloop
 
 	///If the computer has a flashlight/LED light built-in.
 	var/has_light = FALSE
@@ -115,10 +115,17 @@
 
 	atom_icon = physical.icon
 
-	if(disk_type)
+	if(ispath(disk_type, /obj/item/computer_disk))
 		inserted_disk = new disk_type(physical)
-	if(cell_type)
+	if(ispath(cell_type, /obj/item/stock_parts/cell))
 		internal_cell = new cell_type(physical)
+
+	if(has_light)
+		physical.set_light_range(comp_light_luminosity)
+		physical.set_light_color(comp_light_color)
+
+	if(looping_sound)
+		soundloop = new(physical, powered_on)
 
 	install_default_programs()
 

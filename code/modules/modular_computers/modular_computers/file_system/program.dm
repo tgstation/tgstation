@@ -80,7 +80,7 @@
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = NONE, loud = FALSE, mob/user)
 	if(!(hardware_flag & usage_flags))
 		if(loud && computer && user)
-			to_chat(user, span_danger("\The [computer] flashes a \"Hardware Error - Incompatible software\" warning."))
+			to_chat(user, span_danger("\The [physical] shows a \"Hardware Error - Incompatible software\" warning."))
 		return FALSE
 	return TRUE
 
@@ -125,7 +125,7 @@
 
 		if(!accesscard)
 			if(loud)
-				to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
+				to_chat(user, span_danger("\The [physical] shows an \"RFID Error - Unable to scan ID\" warning."))
 			return FALSE
 		access = accesscard.GetAccess()
 
@@ -134,7 +134,7 @@
 			return TRUE
 
 	if(loud)
-		to_chat(user, span_danger("\The [computer] flashes an \"Access Denied\" warning."))
+		to_chat(user, span_danger("\The [physical] shows an \"Access Denied\" warning."))
 	return FALSE
 
 /**
