@@ -211,7 +211,6 @@
 		return
 
 	if(!LAZYACCESS(params2list(params), CTRL_CLICK))
-		to_chat(new_player, span_notice("Opening late join menu! If it doesn't show, hold CTRL while clicking the join button!"))
 		GLOB.latejoin_menu.ui_interact(new_player)
 	else
 		to_chat(new_player, span_warning("Opening emergency fallback late join menu! If THIS doesn't show, ahelp immediately!"))

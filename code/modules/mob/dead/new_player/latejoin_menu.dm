@@ -17,11 +17,27 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 	user.AttemptLateSpawn(input_contents)
 
-/datum/latejoin_menu/ui_interact(mob/user, datum/tgui/ui)
+/datum/ui_close(mob/dead/new_player/user)
+	. = ..()
+	if(istype(user))
+		user.jobs_menu_mounted = TRUE // Don't flood a user's chat if they open and close the UI.
+
+/datum/latejoin_menu/ui_interact(mob/dead/new_player/user, datum/tgui/ui)
+	if(!istype(user))
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
+		// In case they reopen the GUI
+		user.jobs_menu_mounted = FALSE
+		addtimer(CALLBACK(src, PROC_REF(scream_at_player), user), 5 SECONDS)
+
 		ui = new(user, src, "JobSelection", "Latejoin Menu")
 		ui.open()
+
+/datum/latejoin_menu/proc/scream_at_player(mob/dead/new_player/player)
+	if(!player.jobs_menu_mounted)
+		to_chat(player, span_notice("If the late join menu isn't showing, hold CTRL while clicking the join button!"))
 
 /datum/latejoin_menu/ui_data(mob/user)
 	var/mob/dead/new_player/owner = user
@@ -113,6 +129,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 	var/mob/dead/new_player/owner = ui.user
 
 	switch(action)
+		if("ui_mounted_with_no_bluescreen")
+			owner.jobs_menu_mounted = TRUE
 		if("select_job")
 			if(params["job"] == "Random")
 				var/job = get_random_job(owner)

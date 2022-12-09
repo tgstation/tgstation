@@ -13,7 +13,8 @@
 	var/mob/living/new_character
 	///Used to make sure someone doesn't get spammed with messages if they're ineligible for roles.
 	var/ineligible_for_roles = FALSE
-
+	/// Used to track if the player's jobs menu sent a message saying it successfully mounted.
+	var/jobs_menu_mounted = FALSE
 
 
 /mob/dead/new_player/Initialize(mapload)

@@ -178,6 +178,10 @@ export const JobSelection = (props, context) => {
                 </Box>
               );
             })}
+            {
+              // Send a heartbeat back to DM to let it know the window is alive and well
+              act('ui_mounted_with_no_bluescreen')
+            }
           </Box>
         </StyleableSection>
       </Window.Content>
