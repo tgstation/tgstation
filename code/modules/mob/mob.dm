@@ -752,7 +752,7 @@
 		return
 
 	if (stat != DEAD)
-		to_chat(usr, span_boldnotice("You must be dead to use this!"))
+		to_chat(usr, span_boldwarning("You must be dead to use this!"))
 		return
 
 	usr.log_message("used the respawn button.", LOG_GAME)
