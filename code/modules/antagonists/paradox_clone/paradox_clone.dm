@@ -28,15 +28,9 @@
 
 	return clone_icon
 
-/datum/outfit/paradox_clone
-	name = "Paradox Clone (Preview only)"
-
-	uniform = /obj/item/clothing/under/rank/civilian/janitor
-	gloves = /obj/item/clothing/gloves/color/black
-	head = /obj/item/clothing/head/soft/purple
-
 /datum/antagonist/paradox_clone/on_gain()
 	forge_objectives()
+	clone_target()
 	return ..()
 
 /datum/antagonist/paradox_clone/Destroy()
@@ -80,6 +74,47 @@
 /datum/objective/assassinate/paradox_clone
 	name = "clone assassinate"
 
+/datum/antagonist/paradox_clone/proc/clone_target()
+	//cloning appearence/name/dna
+	var/datum/mind/target_mind = original_ref.resolve()
+	var/mob/living/carbon/human/target_human = target_mind.current
+	var/mob/living/carbon/human/clone_human = owner.current
+
+	clone_human.fully_replace_character_name(null, target_human.dna.real_name)
+	clone_human.name = target_human.name
+	target_human.dna.transfer_identity(clone_human, transfer_SE=1)
+	clone_human.age = target_human.age
+	clone_human.underwear = target_human.underwear
+	clone_human.undershirt = target_human.undershirt
+	clone_human.socks = target_human.socks
+	for(var/datum/quirk/target_quirk as anything in target_human.quirks)
+		clone_human.add_quirk(target_quirk.type)
+	clone_human.updateappearance(mutcolor_update=1)
+	clone_human.update_body()
+	clone_human.domutcheck()
+
+	//cloning clothing/ID/bag
+	clone_human.mind.assigned_role = target_human.mind.assigned_role
+
+	if(isplasmaman(target_human))
+		clone_human.equipOutfit(target_human.mind.assigned_role.plasmaman_outfit)
+		clone_human.internal = clone_human.get_item_for_held_index(1)
+	clone_human.equipOutfit(target_human.mind.assigned_role.outfit)
+
+	var/obj/item/clothing/under/sensor_clothes = clone_human.w_uniform
+	var/obj/item/modular_computer/pda/messenger = locate() in owner
+	if(messenger)
+		var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
+		if(message_app)
+			message_app.invisible = TRUE //clone doesnt show up on message lists
+	clone_human.backpack = target_human.backpack
+	if(sensor_clothes)
+		sensor_clothes.sensor_mode = SENSOR_OFF //dont want anyone noticing there's two now
+		clone_human.update_suit_sensors()
+
+	message_admins("[ADMIN_LOOKUPFLW(owner)] has been made into a Paradox Clone by the midround ruleset.")
+	clone_human.log_message("was spawned as a Paradox Clone of [key_name(target_human)] by the midround ruleset.", LOG_GAME)
+
 /datum/objective/assassinate/paradox_clone/update_explanation_text()
 	..()
 	if(target?.current)
@@ -114,3 +149,10 @@
 		report += "<span class='redtext big'>The [name] has failed!</span>"
 
 	return report.Join("<br>")
+
+/datum/outfit/paradox_clone
+	name = "Paradox Clone (Preview only)"
+
+	uniform = /obj/item/clothing/under/rank/civilian/janitor
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/soft/purple

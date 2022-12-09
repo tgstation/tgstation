@@ -861,8 +861,7 @@
 	weight = 4
 	cost = 3
 	repeatable = TRUE
-	///List of places the antag can spawn
-	var/list/possible_spawns = list()
+	var/list/possible_spawns = list() ///places the antag can spawn
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/execute()
 	for(var/turf/warp_point in GLOB.xeno_spawn)
@@ -883,45 +882,6 @@
 	player_mind.special_role = ROLE_PARADOX_CLONE
 	player_mind.add_antag_datum(/datum/antagonist/paradox_clone)
 
-	//cloning appearence/name/dna
-	var/datum/antagonist/paradox_clone/cloned = player_mind.has_antag_datum(/datum/antagonist/paradox_clone)
-	var/datum/mind/owner_mind = cloned.original_ref.resolve()
-	var/mob/living/carbon/human/human_cloned = owner_mind.current
-
-	clone.fully_replace_character_name(null, human_cloned.dna.real_name)
-	clone.name = human_cloned.name
-	human_cloned.dna.transfer_identity(clone, transfer_SE=1)
-	clone.age = human_cloned.age
-	clone.underwear = human_cloned.underwear
-	clone.undershirt = human_cloned.undershirt
-	clone.socks = human_cloned.socks
-	for(var/datum/quirk/target_quirk as anything in human_cloned.quirks)
-		clone.add_quirk(target_quirk.type)
-	clone.updateappearance(mutcolor_update=1)
-	clone.update_body()
-	clone.domutcheck()
-
-	//cloning clothing/ID/bag
-	clone.mind.assigned_role = human_cloned.mind.assigned_role
-
-	if(isplasmaman(human_cloned))
-		clone.equipOutfit(human_cloned.mind.assigned_role.plasmaman_outfit)
-		clone.internal = clone.get_item_for_held_index(1)
-	clone.equipOutfit(human_cloned.mind.assigned_role.outfit)
-
-	var/obj/item/clothing/under/sensor_clothes = clone.w_uniform
-	var/obj/item/modular_computer/pda/messenger = locate() in clone
-	if(messenger)
-		var/datum/computer_file/program/messenger/message_app = locate() in messenger.stored_files
-		if(message_app)
-			message_app.invisible = TRUE //clone doesnt show up on message lists
-	clone.backpack = human_cloned.backpack
-	if(sensor_clothes)
-		sensor_clothes.sensor_mode = SENSOR_OFF //dont want anyone noticing there's two now
-		clone.update_suit_sensors()
-
-	message_admins("[ADMIN_LOOKUPFLW(clone)] has been made into a Paradox Clone by the midround ruleset.")
-	clone.log_message("was spawned as a Paradox Clone of [key_name(human_cloned)] by the midround ruleset.", LOG_GAME)
 	playsound(clone, 'sound/weapons/zapbang.ogg', 30, TRUE)
 	new /obj/item/storage/toolbox/mechanical(clone.loc) //so they dont get stuck in maints
 	return clone
