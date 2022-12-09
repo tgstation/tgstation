@@ -219,8 +219,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 /obj/item/storage/part_replacer/proc/get_sorted_parts()
 	var/list/part_list = list()
 	//Assemble a list of current parts, then sort them by their rating!
-	for(var/obj/item/co in contents)
-		part_list += co
+	for(var/obj/item/component_part in contents)
+		part_list += component_part
 		//Sort the parts. This ensures that higher tier items are applied first.
 	part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
 	return part_list
