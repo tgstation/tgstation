@@ -131,7 +131,7 @@
 			ghostize()
 			stack_trace("Borg MMI lacked a brainmob")
 		mmi = null
-	if(!isnull(modularInterface))
+	if(istype(modularInterface))
 		QDEL_NULL(modularInterface)
 	if(connected_ai)
 		set_connected_ai(null)

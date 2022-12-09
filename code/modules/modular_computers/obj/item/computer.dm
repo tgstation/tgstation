@@ -50,7 +50,7 @@
 	add_item_action(/datum/action/item_action/toggle_computer_light)
 
 /obj/item/modular_computer/Destroy()
-	if(!isnull(cpu))
+	if(istype(cpu))
 		QDEL_NULL(cpu)
 	return ..()
 
