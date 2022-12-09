@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 				scrubber.filter_types = list(/datum/gas/carbon_dioxide)
 				scrubber.set_widenet(FALSE)
-				scrubber.set_scrubbing(TRUE)
+				scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 		if (AALARM_MODE_PANIC, AALARM_MODE_REPLACEMENT)
 			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 				vent.on = FALSE
