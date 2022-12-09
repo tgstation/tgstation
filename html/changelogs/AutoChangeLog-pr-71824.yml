@@ -1,4 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - bugfix: "biogenerator converts all plant nutriments into biomass, not just the first found one."
