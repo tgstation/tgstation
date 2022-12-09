@@ -93,7 +93,7 @@
 	player_mind.active = TRUE
 	//if you want to add a fugitive with a special leader in the future, make this switch with the backstory
 	var/mob/living/carbon/human/S = gear_fugitive(leader, landing_turf, backstory)
-	var/obj/item/choice_beacon/augments/A = new(S)
+	var/obj/item/choice_beacon/augments/A = new(landing_turf)
 	S.put_in_hands(A)
 	new /obj/item/autosurgeon(landing_turf)
 
