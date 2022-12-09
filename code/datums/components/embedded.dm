@@ -305,7 +305,7 @@
 
 		var/dist = get_dist(caster, victim) //Check if the caster is close enough to yank them in
 		if(dist < 7)
-			victim.throw_at(caster, get_dist(victim, caster) - 1, 2, caster)
+			victim.throw_at(caster, get_dist(victim, caster) - 1, 1, caster)
 			victim.Paralyze(1 SECONDS)
 			limb.force_wound_upwards(/datum/wound/pierce/moderate)
 			playsound(get_turf(victim), 'sound/magic/castsummon.ogg', 50, TRUE)
