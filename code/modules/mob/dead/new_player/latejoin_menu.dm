@@ -158,6 +158,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE
 
+			SStgui.close_user_uis(owner, src) // Bandaid fix cause ui_state doesn't react properly to spawning in.
 			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
 			owner.AttemptLateSpawn(params["job"])
 			return TRUE
