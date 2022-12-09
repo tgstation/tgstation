@@ -27,18 +27,23 @@
 	var/list/stored_dna_plants = list()
 	///List of all Human DNA scanned with this sampler.
 	var/list/stored_dna_human = list()
+	///weak ref to the dna vault
+	var/datum/weakref/dna_vault_ref
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag || !target)
 		return
+	if(ismachinery(target))
+		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
+	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
 
 	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/hydro_tray = target
 		if(!hydro_tray.myseed)
 			return
-		if(stored_dna_plants[hydro_tray.myseed.type])
-			to_chat(user, span_notice("Plant data already present in local storage."))
+		if(hydro_tray.myseed.type in our_vault.plants || hydro_tray.myseed.type in stored_dna_plants)
+			to_chat(user, span_notice("Plant data is either present in the vault or has already been scanned."))
 			return
 		if(hydro_tray.plant_status != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
@@ -52,8 +57,8 @@
 			if(istype(target, /mob/living/simple_animal/hostile/carp))
 				carp_dna_loaded = TRUE
 			var/mob/living/living_target = target
-			if(stored_dna_animal[living_target.type])
-				to_chat(user, span_alert("Animal data already present in local storage."))
+			if(living_target.type in our_vault.animals || living_target.type in stored_dna_animal)
+				to_chat(user, span_alert("Animal data is either present in the vault or has already been scanned."))
 				return
 			if(!(living_target.mob_biotypes & MOB_ORGANIC))
 				to_chat(user, span_alert("No compatible DNA detected."))
@@ -63,8 +68,8 @@
 
 	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(stored_dna_human[human_target.dna.unique_identity])
-			to_chat(user, span_notice("Humanoid data already present in local storage."))
+		if(human_target.dna.unique_identity in our_vault.dna || human_target.dna.unique_identity in stored_dna_human)
+			to_chat(user, span_notice("Humanoid data is either present in the vault or has already been scanned."))
 			return
 		if(!(human_target.mob_biotypes & MOB_ORGANIC))
 			to_chat(user, span_alert("No compatible DNA detected."))

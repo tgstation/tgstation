@@ -171,18 +171,18 @@
 	if(istype(I, /obj/item/dna_probe))
 		var/obj/item/dna_probe/P = I
 		var/uploaded = 0
-		for(var/plant in P.stored_dna_plants)
-			if(!plants[plant])
-				uploaded++
-				plants[plant] = 1
-		for(var/animal in P.stored_dna_animal)
-			if(!animals[animal])
-				uploaded++
-				animals[animal] = 1
-		for(var/ui in P.stored_dna_human)
-			if(!dna[ui])
-				uploaded++
-				dna[ui] = 1
+		var/Pdna_length = length(P.stored_dna_plants)
+		var/Hdna_length = length(P.stored_dna_human)
+		var/Adna_length = length(P.stored_dna_animal)
+		if(Pdna_length)
+			uploaded += Pdna_length
+			plants += P.stored_dna_plants
+		if(Hdna_length)
+			uploaded += Hdna_length
+			dna += P.stored_dna_human
+		if(Adna_length)
+			uploaded += Adna_length
+			animals += P.stored_dna_animal
 		check_goal()
 		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
 	else
