@@ -24,13 +24,13 @@
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage_amount, forced = forced)
+				adjustBruteLoss(damage_amount, forced = forced, required_status = FALSE)
 		if(BURN)
 			if(BP)
 				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage_amount, forced = forced)
+				adjustFireLoss(damage_amount, forced = forced, required_status = FALSE)
 		if(TOX)
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
@@ -57,37 +57,37 @@
 		amount += BP.burn_dam
 	return amount
 
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status = BODYTYPE_ORGANIC)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health, required_status)
 	else
-		heal_overall_damage(abs(amount), 0, required_status ? required_status : BODYTYPE_ORGANIC, updating_health)
+		heal_overall_damage(abs(amount), 0, required_status, updating_health)
 	return amount
 
-/mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	var/current = getBruteLoss()
 	var/diff = amount - current
 	if(!diff)
 		return
-	adjustBruteLoss(diff, updating_health, forced)
+	adjustBruteLoss(diff, updating_health, forced, required_status)
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status = BODYTYPE_ORGANIC)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else
-		heal_overall_damage(0, abs(amount), required_status ? required_status : BODYTYPE_ORGANIC, updating_health)
+		heal_overall_damage(0, abs(amount), required_status, updating_health)
 	return amount
 
-/mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	var/current = getFireLoss()
 	var/diff = amount - current
 	if(!diff)
 		return
-	adjustFireLoss(diff, updating_health, forced)
+	adjustFireLoss(diff, updating_health, forced, required_status)
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage

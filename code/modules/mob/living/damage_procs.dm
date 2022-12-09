@@ -173,7 +173,7 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/setBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/proc/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return
 	. = bruteloss
@@ -224,7 +224,7 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	fireloss = clamp((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
@@ -232,7 +232,7 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/setFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/proc/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return
 	. = fireloss
