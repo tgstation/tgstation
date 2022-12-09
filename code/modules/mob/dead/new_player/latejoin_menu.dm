@@ -51,7 +51,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_ESCAPE)
 				data["shuttle_status"] = "The station has been evacuated."
-			if(SHUTTLE_CALL || SHUTTLE_DOCKED)
+			if(SHUTTLE_CALL || SHUTTLE_DOCKED || SHUTTLE_IGNITING || SHUTTLE_ESCAPE)
 				if(!SSshuttle.canRecall())
 					data["shuttle_status"] = "The station is currently undergoing evacuation procedures."
 
