@@ -139,6 +139,7 @@ type Data = {
   categories: string[];
   material_occurences: Material[];
   foodtypes: string[];
+  nutriments: number;
 };
 
 export const PersonalCrafting = (props, context) => {
@@ -604,7 +605,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }, context) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box bold mb={0.5} style={{ 'text-transform': 'capitalize' }}>
+              <Box mb={0.5} bold style={{ 'text-transform': 'capitalize' }}>
                 {item.name}
               </Box>
               <Box style={{ 'text-transform': 'capitalize' }} color={'gray'}>
@@ -724,7 +725,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box bold mb={0.5} style={{ 'text-transform': 'capitalize' }}>
+              <Box mb={0.5} bold style={{ 'text-transform': 'capitalize' }}>
                 {item.name}
               </Box>
               {item.desc && <Box color={'gray'}>{item.desc}</Box>}
@@ -850,6 +851,12 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }, context) => {
                     })
                   }
                 />
+              )}
+              {item.nutriments > 0 && (
+                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
+                  Nutrition: {item.nutriments}
+                  <Divider />
+                </Box>
               )}
               {item.foodtypes?.length > 0 && (
                 <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>

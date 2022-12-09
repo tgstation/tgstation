@@ -488,14 +488,17 @@
 	var/atom/atom = recipe.result
 	data["result"] = atoms.Find(atom)
 
-	// Foodtypes
-	if(ispath(recipe.result, /obj/item/food))
+	if(ispath(recipe.type, /datum/crafting_recipe/food) && ispath(recipe.result, /obj/item/food))
+		// Foodtypes
 		var/obj/item/food/item = recipe.result
 		var/list/foodtypes = bitfield_to_list(initial(item.foodtypes), FOOD_FLAGS)
 		for(var/type in foodtypes)
 			if(!(type in data["foodtypes"]))
 				data["foodtypes"] += type
 		data["foodtypes"] = foodtypes
+		// Nutriments
+		var/datum/crafting_recipe/food/food_recipe = recipe
+		data["nutriments"] = food_recipe.total_nutriment_factor
 
 	// Category
 	data["category"] = recipe.category
