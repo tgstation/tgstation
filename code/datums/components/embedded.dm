@@ -290,7 +290,7 @@
 	safeRemove(user)
 
 /// Called when an object is ripped out of someone's body by magic or other abnormal means
-/datum/component/embedded/proc/magic_pull(datum/source, mob/living/caster, obj/marked_item, nearby)
+/datum/component/embedded/proc/magic_pull(datum/source, mob/living/caster, obj/marked_item)
 	SIGNAL_HANDLER
 
 	if(marked_item != weapon || src.limb != limb)
@@ -303,8 +303,9 @@
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage * 1.5, sharpness=SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
 		victim.adjustStaminaLoss(pain_stam_pct * damage)
 
-		if(nearby)
-			victim.throw_at(caster, get_dist(victim, caster) - 1, 2, caster) //If the caster is close enough, yanks the victim to them.
+		var/dist = get_dist(caster, victim) //Check if the caster is close enough to yank them in
+		if(dist < 7)
+			victim.throw_at(caster, get_dist(victim, caster) - 1, 2, caster)
 			victim.Paralyze(1 SECONDS)
 			limb.force_wound_upwards(/datum/wound/pierce/moderate)
 			playsound(get_turf(victim), 'sound/magic/castsummon.ogg', 50, TRUE)
