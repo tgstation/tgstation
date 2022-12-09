@@ -60,6 +60,7 @@
 	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
 	visible_message(span_danger("\The [src] beeps softly, indicating it is now active."), vision_distance = COMBAT_MESSAGE_RANGE)
 
+/// Can this mine trigger on the passed movable?
 /obj/effect/mine/proc/can_trigger(atom/movable/on_who)
 	if(triggered || !isturf(loc) || iseffect(on_who) || !armed)
 		return FALSE
@@ -70,7 +71,11 @@
 
 	if(!can_trigger(arrived))
 		return
+	// Flying = can't step on a mine
 	if(arrived.movement_type & FLYING)
+		return
+	// Someone already on it
+	if(foot_on_mine?.resolve())
 		return
 
 	foot_on_mine = WEAKREF(arrived)
@@ -82,6 +87,7 @@
 
 	if(!can_trigger(gone))
 		return
+	// Check that the guy who's on it is stepping off
 	if(foot_on_mine && !IS_WEAKREF_OF(gone, foot_on_mine))
 		return
 
