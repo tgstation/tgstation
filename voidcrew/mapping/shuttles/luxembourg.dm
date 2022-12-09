@@ -42,3 +42,46 @@
 			slots = 3,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/luxembourg
+	name = "Luxembourg-class Delivery Vessel"
+	area_type = /area/shuttle/voidcrew/luxembourg
+
+
+/// AREAS ///
+
+/// Command ///
+
+/area/shuttle/voidcrew/luxembourg/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/// Medbay ///
+
+/area/shuttle/voidcrew/luxembourg/medbay
+	name = "Medbay"
+	icon_state = "medbay"
+
+/// Cargo ///
+
+/area/shuttle/voidcrew/luxembourg/cargo
+	name = "Warehouse"
+	icon_state = "cargo_warehouse"
+
+/area/shuttle/voidcrew/luxembourg/cargo/mining
+	name = "Mining Bay"
+	icon_state = "mining"
+
+/// Engineering ///
+
+/area/shuttle/voidcrew/luxembourg/engineering
+	name = "Engineering"
+	icon_state = "engine"
+
+/// Dormitories ///
+
+/area/shuttle/voidcrew/luxembourg/dormitories
+	name = "Dormitories"
+	icon_state = "dorms"

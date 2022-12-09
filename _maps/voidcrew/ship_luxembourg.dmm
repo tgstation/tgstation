@@ -13,25 +13,25 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "ay" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "aF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "bj" = (
 /obj/structure/table,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "bL" = (
 /obj/machinery/holopad,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "bR" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -61,7 +61,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "cl" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/decal/cleanable/dirt,
@@ -69,7 +69,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "ct" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -78,10 +78,10 @@
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "cv" = (
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "cx" = (
 /obj/structure/table,
 /obj/machinery/light,
@@ -89,20 +89,20 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "cQ" = (
 /obj/structure/table,
 /obj/item/radio/intercom,
 /obj/item/toy/plush/moth,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "cV" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/machinery/vending/toyliberationstation,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "da" = (
 /obj/structure/closet/secure_closet/quartermaster,
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
@@ -117,7 +117,7 @@
 /obj/item/clothing/under/syndicate,
 /obj/item/storage/backpack/duffelbag/syndie,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "dc" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -145,7 +145,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "dh" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/toxin{
@@ -159,49 +159,54 @@
 	},
 /obj/effect/turf_decal/siding/blue,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "dj" = (
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "dw" = (
 /obj/machinery/suit_storage_unit/engine,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "dB" = (
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman,
 /obj/item/stack/sheet/mineral/plasma/five,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "dO" = (
 /obj/structure/table,
 /obj/item/areaeditor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
+"dU" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/luxembourg/medbay)
 "dY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "ey" = (
 /obj/machinery/chem_master,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "eC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "fb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "fg" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
@@ -210,7 +215,7 @@
 	},
 /obj/machinery/reagentgrinder,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "fh" = (
 /obj/structure/closet/crate/miningcar,
 /obj/item/mining_scanner,
@@ -229,7 +234,7 @@
 /obj/item/clothing/suit/hooded/explorer,
 /obj/item/clothing/suit/hooded/explorer,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "ft" = (
 /obj/effect/turf_decal/stripes,
 /obj/machinery/door/poddoor/shutters{
@@ -244,15 +249,23 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "fI" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "fU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/bridge)
+"ge" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/luxembourg/bridge)
 "gm" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
@@ -261,25 +274,25 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "go" = (
 /obj/structure/closet/secure_closet/chemical/heisenberg{
 	req_access = list(21,41)
 	},
 /obj/item/storage/box/bodybags,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "gw" = (
 /obj/structure/closet/crate/freezer/blood,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "gz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "gI" = (
 /obj/structure/table/glass,
 /obj/machinery/light{
@@ -287,7 +300,7 @@
 	},
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "gM" = (
 /obj/machinery/mineral/ore_redemption{
 	dir = 4
@@ -308,7 +321,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "gO" = (
 /obj/structure/bed,
 /obj/machinery/iv_drip,
@@ -318,24 +331,24 @@
 /obj/item/bedsheet/medical,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "hd" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "hg" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "hh" = (
 /obj/structure/table/optable,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "hs" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "ht" = (
 /obj/machinery/light{
 	dir = 8
@@ -345,91 +358,89 @@
 	},
 /obj/structure/chair/plastic,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "hx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "hE" = (
 /obj/structure/chair/plastic,
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "hV" = (
 /obj/machinery/computer/operating{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "ie" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "ig" = (
 /obj/structure/table,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "io" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "iv" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/autolathe,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "ix" = (
 /obj/structure/chair/plastic{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "iL" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/shaker,
 /obj/structure/window/reinforced/spawner,
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "iR" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "iV" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/obj/docking_port/mobile/voidcrew{
-	can_move_docking_ports = 1;
-	dir = 2;
-	launch_status = 0
-	},
 /obj/machinery/door/poddoor/shutters{
 	id = "externalshutters"
 	},
+/obj/docking_port/mobile/voidcrew/luxembourg{
+	dir = 2
+	},
 /turf/open/floor/plating,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "iW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "jb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "je" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "jf" = (
 /obj/structure/table,
 /obj/machinery/microwave,
@@ -437,24 +448,24 @@
 	pixel_x = -32
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "jg" = (
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "jn" = (
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "jB" = (
 /obj/machinery/door/airlock/engineering/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "jF" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/bottle/formaldehyde{
@@ -471,13 +482,13 @@
 /obj/item/reagent_containers/syringe,
 /obj/effect/turf_decal/siding/blue,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "jL" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "kb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -485,23 +496,23 @@
 /obj/structure/ore_box,
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "kl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "kX" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "lf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "lJ" = (
 /obj/machinery/light{
 	dir = 1
@@ -509,7 +520,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "mh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -517,7 +528,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "mX" = (
 /obj/machinery/light{
 	dir = 4
@@ -537,11 +548,11 @@
 	req_access = list(25,41)
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "na" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "nm" = (
 /obj/machinery/light{
 	dir = 4
@@ -556,12 +567,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "no" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "nx" = (
 /obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/card/id/advanced/black/syndicate_command,
@@ -572,12 +583,12 @@
 /obj/structure/closet/secure_closet/medical3,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "nJ" = (
 /obj/machinery/washing_machine,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "of" = (
 /obj/structure/chair/plastic,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -586,11 +597,11 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "oy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "oV" = (
 /obj/machinery/light{
 	dir = 4
@@ -600,12 +611,12 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "po" = (
 /obj/structure/table,
 /obj/structure/bedsheetbin/empty,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "pv" = (
 /obj/machinery/light{
 	dir = 4
@@ -615,7 +626,7 @@
 	pixel_y = 28
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "py" = (
 /obj/machinery/light{
 	dir = 8
@@ -631,26 +642,26 @@
 /obj/item/radio/headset/syndicate/alt,
 /obj/item/radio/headset/syndicate/alt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "pR" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "pV" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "qe" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/engine/air,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "qg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/window/reinforced/plasma/spawner/north,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "qP" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -658,10 +669,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "qR" = (
 /turf/open/floor/engine/air,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "rd" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/box/donkpockets/donkpocketberry,
@@ -688,32 +699,32 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "re" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "rV" = (
 /obj/structure/window/reinforced/plasma/spawner/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/monitored/air_output{
 	dir = 4
 	},
 /turf/open/floor/engine/air,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "se" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "sh" = (
 /obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "si" = (
 /obj/machinery/light{
 	dir = 1
@@ -723,29 +734,29 @@
 /obj/structure/closet/secure_closet/engineering_welding,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "sk" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/engine/plasma,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "sq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "sA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "sG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "tI" = (
 /obj/machinery/light{
 	dir = 4
@@ -762,7 +773,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "tN" = (
 /obj/item/card/id/advanced/black/syndicate_command,
 /obj/item/clothing/under/syndicate/skirt,
@@ -776,7 +787,7 @@
 	req_access = list(11,41)
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "tW" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -785,7 +796,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "ur" = (
 /obj/machinery/light,
 /obj/item/banner/cargo,
@@ -793,11 +804,11 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "uK" = (
 /obj/structure/window/reinforced/plasma/spawner/west,
 /turf/open/floor/engine/plasma,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "uO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -805,14 +816,14 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "vd" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "vm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -825,14 +836,14 @@
 	id = "cargodoors"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "vp" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "vx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "vF" = (
 /obj/structure/closet/crate/science,
 /obj/item/storage/box/rndboards{
@@ -879,33 +890,33 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "vU" = (
 /obj/machinery/light,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "wn" = (
 /obj/machinery/atmospherics/components/binary/volume_pump,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "wE" = (
 /obj/structure/window/reinforced/plasma/spawner/north,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "wN" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "externalshutters"
 	},
 /turf/open/floor/plating,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "wT" = (
 /obj/structure/window/reinforced/plasma/spawner/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/plasma_output{
 	dir = 8
 	},
 /turf/open/floor/engine/plasma,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "xj" = (
 /obj/machinery/door/window{
 	dir = 4
@@ -918,7 +929,7 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "xm" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
@@ -926,7 +937,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "xx" = (
 /obj/machinery/light,
 /obj/item/storage/belt/utility,
@@ -934,63 +945,63 @@
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "yl" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "yq" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "externalshutters"
 	},
 /turf/open/floor/plating,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "zj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "zu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "zL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "zO" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndiefuck"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "AE" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "AI" = (
 /obj/effect/turf_decal/siding/red{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Bd" = (
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Be" = (
 /obj/structure/chair/plastic,
 /obj/effect/decal/cleanable/vomit/old,
@@ -998,20 +1009,20 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Bo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "By" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/tile/brown{
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "BN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1019,7 +1030,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "Cj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1033,7 +1044,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "Ck" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass,
@@ -1041,7 +1052,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "Cu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1050,10 +1061,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "CP" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "Db" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
@@ -1061,7 +1072,7 @@
 /obj/item/storage/toolbox/syndicate,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "Dt" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -1071,7 +1082,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "DS" = (
 /obj/structure/closet/crate/trashcart,
 /obj/effect/spawner/random/maintenance/eight,
@@ -1087,33 +1098,33 @@
 	pixel_x = -26
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "Eo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Er" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "EO" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "EU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "EW" = (
 /turf/open/floor/engine/plasma,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "FG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "FH" = (
 /obj/machinery/button/door{
 	id = "syndiefuck";
@@ -1125,7 +1136,7 @@
 /obj/structure/fans/tiny,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "GM" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/rag,
@@ -1134,7 +1145,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "GU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1143,24 +1154,24 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "Hy" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "HF" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "externalshutters"
 	},
 /turf/open/floor/plating,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "HQ" = (
 /obj/structure/table,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "HS" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -1168,7 +1179,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "HX" = (
 /obj/structure/closet/secure_closet/personal{
 	name = "cargo tech's locker"
@@ -1187,7 +1198,7 @@
 /obj/item/hand_labeler,
 /obj/item/hand_labeler_refill,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "IN" = (
 /obj/structure/closet/secure_closet/personal{
 	name = "cargo tech's locker"
@@ -1210,24 +1221,24 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "Jw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "JQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "Ka" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "Kh" = (
 /obj/machinery/sleeper/syndie{
 	dir = 4
@@ -1236,7 +1247,7 @@
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "Ls" = (
 /obj/machinery/airalarm/directional/west,
 /obj/item/stack/sheet/cardboard/fifty,
@@ -1245,12 +1256,12 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "Lx" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "LI" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -1262,7 +1273,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "LP" = (
 /obj/machinery/suit_storage_unit{
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/blue;
@@ -1270,17 +1281,17 @@
 	},
 /obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "LQ" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "LU" = (
 /obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/engine/air,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "Mi" = (
 /obj/machinery/suit_storage_unit{
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/blue;
@@ -1292,12 +1303,12 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "Ml" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "MX" = (
 /obj/item/toy/sword,
 /obj/structure/closet/crate/wooden/toy,
@@ -1316,17 +1327,17 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "Nc" = (
 /obj/machinery/light,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Nr" = (
 /turf/template_noop,
 /area/template_noop)
 "Nu" = (
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "NG" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/drinkingglass{
@@ -1334,26 +1345,26 @@
 	pixel_y = -4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "NW" = (
 /obj/structure/mirror{
 	pixel_x = -24
 	},
 /obj/structure/sink/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/medical/treatment_center)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "Ox" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "OF" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "externalshutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "OW" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /obj/item/storage/box/donkpockets,
@@ -1372,7 +1383,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "OZ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
@@ -1382,30 +1393,30 @@
 	id = "cargodoors"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Po" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "Pr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "PR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Qq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "QF" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/iron/fifty,
@@ -1424,12 +1435,12 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "Rl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "Rx" = (
 /obj/machinery/mech_bay_recharge_port{
 	dir = 1
@@ -1437,7 +1448,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown/anticorner,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "Ry" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/box/donkpockets,
@@ -1468,7 +1479,7 @@
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "RG" = (
 /obj/machinery/ore_silo,
 /obj/effect/turf_decal/tile/brown{
@@ -1476,18 +1487,18 @@
 	},
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "RH" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
 /obj/structure/window/reinforced/plasma/spawner/north,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "RV" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Sa" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -1496,12 +1507,12 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "Tj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "TA" = (
 /obj/structure/closet{
 	name = "assistant's uniforms"
@@ -1517,10 +1528,10 @@
 /obj/item/clothing/head/hos/beret/syndicate,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "TW" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Ul" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -1528,14 +1539,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "Uv" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "externalshutters"
 	},
 /turf/open/floor/plating,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "Ux" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/button/door{
@@ -1544,7 +1555,15 @@
 	pixel_x = -24
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
+"Uz" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/engineering/glass,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/luxembourg/cargo)
 "UM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -1552,18 +1571,18 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "UO" = (
 /obj/machinery/atmospherics/pipe/layer_manifold,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "Vo" = (
 /obj/machinery/vending/boozeomat/all_access{
 	default_price = 0;
 	extra_price = 0
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "VF" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -1574,10 +1593,10 @@
 	dir = 6
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "VR" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "VZ" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -1590,39 +1609,39 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "Wj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/cargo/mining)
 "WC" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "Xe" = (
 /obj/item/banner/cargo/mundane,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/bridge)
 "Xk" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "XP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "Yv" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/luxembourg/medbay)
 "YB" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1649,7 +1668,7 @@
 	},
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "YD" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/storage/box/donkpockets/donkpocketteriyaki,
@@ -1678,7 +1697,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/luxembourg/cargo)
 "YF" = (
 /obj/machinery/vending/autodrobe/all_access{
 	default_price = 0;
@@ -1688,7 +1707,7 @@
 	pixel_x = -32
 	},
 /turf/open/floor/carpet/donk,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/luxembourg/dormitories)
 "ZH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1696,7 +1715,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plating,
-/area/station/engineering/main)
+/area/shuttle/voidcrew/luxembourg/engineering)
 "ZT" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/brown{
@@ -1709,7 +1728,7 @@
 	id = "cargodoors"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/luxembourg/bridge)
 
 (1,1,1) = {"
 Nr
@@ -1724,7 +1743,7 @@ zO
 zO
 zO
 FH
-Ka
+hs
 Nr
 Nr
 Nr
@@ -1753,7 +1772,7 @@ JQ
 JQ
 By
 ur
-Ka
+hs
 Uv
 Uv
 Ka
@@ -1761,7 +1780,7 @@ Nr
 Nr
 Nr
 Nr
-VR
+CP
 VR
 VR
 Nr
@@ -1790,7 +1809,7 @@ Uv
 Ka
 Nr
 CP
-VR
+CP
 qe
 VR
 VR
@@ -1819,7 +1838,7 @@ Xk
 Ka
 Uv
 Ka
-VR
+CP
 qR
 qR
 VR
@@ -1840,7 +1859,7 @@ kb
 Mi
 LI
 LP
-Ka
+hs
 vF
 FG
 aF
@@ -1848,7 +1867,7 @@ uO
 Ry
 rd
 YD
-vp
+Ka
 rV
 LU
 VR
@@ -1860,24 +1879,24 @@ Nr
 Nr
 Nr
 Nr
-hs
-hs
+fI
+fI
 ZT
 OZ
 vm
 gM
-hs
-hs
-hs
-Ka
-Ka
+fI
+fI
+fI
+fI
+fI
 nm
 re
 aF
 aF
 Jw
 aF
-Ck
+Uz
 tW
 Rl
 vU
@@ -1889,8 +1908,8 @@ Nr
 Nr
 Nr
 Nr
-Yv
-Yv
+fI
+fI
 Ux
 TW
 no
@@ -1900,13 +1919,13 @@ ig
 jf
 jn
 Vo
-Ka
+fI
 OW
 YB
 VF
 tI
 Rx
-vp
+Ka
 Hy
 sq
 vx
@@ -1918,7 +1937,7 @@ hd
 Nr
 yq
 yq
-Yv
+fI
 cV
 TW
 ay
@@ -1929,13 +1948,13 @@ HQ
 TW
 TW
 cx
+fI
 Ka
 Ka
 Ka
 Ka
 Ka
 Ka
-vp
 si
 Bo
 wn
@@ -1958,7 +1977,7 @@ GM
 PR
 TW
 vd
-vp
+fI
 da
 HX
 IN
@@ -2016,7 +2035,7 @@ fg
 NG
 iL
 xj
-vp
+fI
 kX
 dw
 mX
@@ -2034,7 +2053,7 @@ Er
 Nr
 yq
 yq
-Yv
+fI
 pv
 TW
 Qq
@@ -2045,13 +2064,13 @@ ix
 ix
 TW
 Nc
+fI
 EO
 EO
 EO
 EO
 EO
 EO
-vp
 Ul
 zj
 wn
@@ -2063,8 +2082,8 @@ Nr
 Nr
 Nr
 Nr
-Yv
-Yv
+fI
+fI
 iv
 TW
 Eo
@@ -2073,14 +2092,14 @@ oV
 io
 RV
 Xe
-EO
-EO
+fI
+fI
 TA
 py
 Ox
 nJ
 po
-vp
+EO
 lJ
 se
 Nu
@@ -2096,13 +2115,13 @@ fI
 fI
 fI
 fU
-BN
+ge
 fI
 fI
 fI
-EO
-EO
-EO
+fI
+fI
+fI
 YF
 Lx
 zL
@@ -2128,7 +2147,7 @@ cv
 dY
 gO
 Kh
-fI
+Yv
 ct
 Dt
 Sa
@@ -2138,7 +2157,7 @@ iW
 WC
 Ml
 xm
-vp
+EO
 uK
 wT
 VR
@@ -2150,7 +2169,7 @@ Nr
 Nr
 Nr
 Nr
-fI
+Yv
 jF
 cv
 oy
@@ -2167,7 +2186,7 @@ Ml
 EO
 OF
 EO
-VR
+ie
 EW
 EW
 VR
@@ -2179,14 +2198,14 @@ Nr
 Nr
 Nr
 Nr
-fI
-fI
+Yv
+Yv
 ey
 go
 eC
 cv
 cv
-fU
+dU
 dj
 WC
 Ml
@@ -2196,7 +2215,7 @@ OF
 EO
 Nr
 ie
-VR
+ie
 sk
 VR
 VR
@@ -2209,13 +2228,13 @@ Nr
 Nr
 Nr
 Nr
-fI
+Yv
 wN
 gw
 gI
 hh
 hV
-fI
+Yv
 Ml
 EO
 OF
@@ -2225,7 +2244,7 @@ Nr
 Nr
 Nr
 Nr
-VR
+ie
 VR
 VR
 Nr
@@ -2240,11 +2259,11 @@ Nr
 Nr
 Nr
 Nr
-fI
-fI
+Yv
+Yv
 wN
-fI
-fI
+Yv
+Yv
 EO
 EO
 Nr

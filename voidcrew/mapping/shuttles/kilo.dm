@@ -37,3 +37,46 @@
 			slots = 2,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/kilo
+	name = "Kilo-class Mining Ship"
+	area_type = /area/shuttle/voidcrew/kilo
+	port_direction = 8
+	preferred_direction = 4
+
+
+/// AREAS ///
+
+/// Command ///
+
+/area/shuttle/voidcrew/kilo/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/// Cargo ///
+
+/area/shuttle/voidcrew/kilo/cargo
+	name = "Cargo Bay"
+	icon_state = "cargo_bay"
+
+/area/shuttle/voidcrew/kilo/cargo/mining_dock
+	name = "Mining Dock"
+	icon_state = "mining"
+
+/// Engineering ///
+
+/area/shuttle/voidcrew/kilo/engineering
+	name = "Engineering"
+	icon_state = "engine"
+
+/// Service ///
+
+/area/shuttle/voidcrew/kilo/cafe
+	name = "Cafeteria"
+	icon_state = "cafeteria"
+
+/area/shuttle/voidcrew/kilo/dorms
+	name = "Dormitories"
+	icon_state = "dorms"

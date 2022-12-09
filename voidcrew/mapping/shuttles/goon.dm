@@ -37,3 +37,36 @@
 			slots = 3,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/goon // Brewing up something awful here
+	name = "Goon-class Repurposed Emergency Shuttle"
+	area_type = /area/shuttle/voidcrew/goon
+
+
+/// AREAS ///
+
+/// Command ///
+
+/area/shuttle/voidcrew/goon/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/// Engineering ///
+
+/area/shuttle/voidcrew/goon/engineering
+	name = "Engineering"
+	icon_state = "engine"
+
+/// Medbay ///
+
+/area/shuttle/voidcrew/goon/medbay
+	name = "Medbay"
+	icon_state = "medbay"
+
+/// Misc ///
+
+/area/shuttle/voidcrew/goon/commons
+	name = "Commons"
+	icon_state = "station"

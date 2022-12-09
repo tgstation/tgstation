@@ -1545,7 +1545,9 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/docking_port/mobile/voidcrew/osprey,
+/obj/docking_port/mobile/voidcrew/osprey{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/shuttle/voidcrew/osprey/hallway/port)
 "oE" = (

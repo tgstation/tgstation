@@ -17,3 +17,18 @@
 			slots = 3,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/pill
+	name = "Pill-class Torture Device"
+	area_type = /area/shuttle/voidcrew/pill
+	port_direction = 1
+	preferred_direction = 8
+
+
+/// AREAS ///
+
+/area/shuttle/voidcrew/pill
+	name = "The Pill"
+	icon_state = "station"

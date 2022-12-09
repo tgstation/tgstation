@@ -13,7 +13,9 @@
 /obj/machinery/door/poddoor{
 	id = "emergencybay_blastdoors"
 	},
-/obj/docking_port/mobile/voidcrew/box,
+/obj/docking_port/mobile/voidcrew/box{
+	dir = 2
+	},
 /turf/open/floor/engine,
 /area/shuttle/voidcrew/box/cargo)
 "ag" = (

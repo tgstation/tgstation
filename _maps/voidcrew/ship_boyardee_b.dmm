@@ -1,44 +1,34 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/obj/machinery/door/poddoor{
-	id = "windowlockdown"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/service/cafeteria)
 "as" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2,
 /turf/open/floor/plating/airless,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "ay" = (
 /obj/structure/chair/office{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "aB" = (
 /obj/machinery/computer/helm/viewscreen{
 	pixel_x = -30
 	},
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "bl" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/box,
 /obj/machinery/vending/wardrobe/bar_wardrobe,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
-"bq" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/service/bar/backroom)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "bM" = (
 /obj/machinery/door/airlock/hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/service/bar/backroom)
+/area/shuttle/voidcrew/bogardee_b/service/bar/backroom)
 "bN" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
@@ -46,17 +36,18 @@
 /obj/structure/window/reinforced/plasma/spawner/north,
 /obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "ce" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "ch" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "cl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -66,7 +57,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "cp" = (
 /obj/machinery/door/poddoor{
 	id = "cargoblastdoors"
@@ -74,7 +65,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "cq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -84,57 +75,65 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
+"cI" = (
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "cK" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/vending/autodrobe,
 /obj/machinery/airalarm/directional/east,
-/turf/open/space/basic,
-/area/station/commons)
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "cY" = (
 /obj/machinery/door/window/right/directional/east,
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "dl" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "dD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /obj/structure/table/wood/poker,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "dI" = (
 /obj/structure/urinal{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "dN" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "dQ" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "eg" = (
 /turf/open/floor/plating/airless,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
+"eF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/red,
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "eV" = (
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "eZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -144,10 +143,7 @@
 	req_one_access = list(25,1)
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo)
-"fb" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "fc" = (
 /obj/machinery/door/window/left/directional/south,
 /obj/effect/turf_decal/stripes{
@@ -158,17 +154,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/service/cafeteria)
-"fv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/vault{
-	req_one_access = list(25,1)
-	},
-/turf/open/floor/iron/dark,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "fC" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -176,29 +162,29 @@
 	dir = 10
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "fG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "fM" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "gc" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "gi" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "gQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "hs" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -206,16 +192,16 @@
 /obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "hw" = (
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/ore_silo,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "hB" = (
 /obj/structure/sink/kitchen/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "hG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -223,14 +209,14 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "ie" = (
 /obj/structure/chair,
 /obj/item/radio/intercom{
 	pixel_y = 20
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "iP" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -240,66 +226,59 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
+"iX" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "jb" = (
 /obj/machinery/door/airlock/medical/glass,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "jh" = (
 /obj/machinery/door/airlock/external,
-/obj/docking_port/mobile/voidcrew{
-	can_move_docking_ports = 1;
-	dir = 4;
-	dwidth = 5;
-	height = 29;
-	launch_status = 0;
-	name = "diner ship";
-	port_direction = 2;
-	width = 19
+/obj/docking_port/mobile/voidcrew/bogardee_b{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "ji" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/components/unary/vent_pump/layer4{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "jl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "jn" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "jq" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/cards/deck/syndicate,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "jv" = (
 /obj/effect/turf_decal/stripes,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "jx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "jK" = (
 /obj/structure/closet/crate/freezer/blood,
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "jL" = (
 /obj/structure/table/reinforced,
 /obj/machinery/vending/boozeomat/all_access{
@@ -312,7 +291,7 @@
 	},
 /obj/item/reagent_containers/cup/rag,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "jN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -320,18 +299,21 @@
 /obj/machinery/mineral/ore_redemption,
 /obj/effect/turf_decal/box,
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "kg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /obj/structure/table/wood/poker,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
+"km" = (
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "kw" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "kD" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/east,
@@ -340,11 +322,11 @@
 /obj/item/gun/energy/laser/retro,
 /obj/machinery/door/window/right/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "kH" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "le" = (
 /obj/item/food/canned/beans{
 	pixel_x = -5;
@@ -386,19 +368,21 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/service/bar/backroom)
+/area/shuttle/voidcrew/bogardee_b/service/bar/backroom)
 "lg" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "lm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "lp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -408,13 +392,13 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "ly" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "lD" = (
 /obj/structure/rack,
 /obj/item/storage/bag/ore,
@@ -438,7 +422,7 @@
 /obj/item/clothing/head/utility/hardhat/orange,
 /obj/item/clothing/head/utility/hardhat/orange,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "mb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -447,7 +431,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "me" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/power/smes/engineering{
@@ -455,7 +439,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "mg" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -463,11 +447,11 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "mk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "mr" = (
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -480,16 +464,16 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "mx" = (
 /turf/closed/wall,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "my" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "mz" = (
 /obj/machinery/computer/helm{
 	dir = 8
@@ -501,14 +485,14 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "mH" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/cable,
 /obj/effect/turf_decal/box,
 /obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "mP" = (
 /obj/machinery/defibrillator_mount/loaded{
 	pixel_x = -26
@@ -520,71 +504,71 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "na" = (
 /obj/structure/table/wood,
 /obj/item/stack/sheet/mineral/gold,
 /obj/item/stack/sheet/mineral/silver,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "ng" = (
 /obj/structure/table/reinforced,
 /obj/item/food/syndicake{
 	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "nF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "nN" = (
 /obj/machinery/computer/operating{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "og" = (
 /obj/structure/sink/directional/east,
 /obj/structure/mirror{
 	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "oi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/table/wood/poker,
 /obj/structure/cable,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "oj" = (
 /obj/machinery/jukebox,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "om" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "oO" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "pg" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "pl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "pt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -592,59 +576,59 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "pE" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "pK" = (
 /obj/machinery/holopad,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "pN" = (
 /obj/machinery/atmospherics/components/binary/valve/digital,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "pR" = (
 /obj/machinery/chem_master/condimaster,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "pU" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "qa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "qg" = (
 /obj/machinery/atmospherics/components/tank/plasma{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "qn" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "qB" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "qJ" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "qU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "rj" = (
 /obj/machinery/stasis,
 /obj/machinery/button/door{
@@ -658,53 +642,56 @@
 	pixel_y = 5
 	},
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "rr" = (
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "rv" = (
 /obj/machinery/reagentgrinder,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "rx" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "rB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/landmark/observer_start,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "rH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "sg" = (
 /obj/machinery/smartfridge/drinks,
 /turf/closed/wall,
-/area/station/service/bar/backroom)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
+"sn" = (
+/turf/open/floor/carpet/red,
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "sy" = (
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "tq" = (
 /obj/structure/bed,
 /obj/item/bedsheet/random,
 /obj/structure/curtain/bounty,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "tM" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/iron/dark,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "ud" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -712,16 +699,16 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "uB" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/drinkingglasses,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "uM" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "vb" = (
 /obj/effect/turf_decal/box,
 /obj/item/reagent_containers/condiment/enzyme,
@@ -743,7 +730,7 @@
 	pixel_y = -24
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "vf" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -756,7 +743,7 @@
 	anchored = 0
 	},
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "vh" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -768,7 +755,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "vj" = (
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light{
@@ -778,10 +765,7 @@
 /obj/item/bedsheet/random,
 /obj/structure/curtain/bounty,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
-"vv" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "vZ" = (
 /turf/template_noop,
 /area/template_noop)
@@ -790,7 +774,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "we" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 1;
@@ -798,7 +782,7 @@
 	},
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "wu" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/rack,
@@ -811,7 +795,7 @@
 /obj/item/holosign_creator/medical,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "wB" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -819,51 +803,52 @@
 	pixel_x = -11
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "wE" = (
 /obj/structure/table/optable,
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "wF" = (
 /obj/structure/table/reinforced,
 /obj/item/toy/nuke,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "xe" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/bar/backroom)
 "xh" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
 /obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "xO" = (
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "xS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/chair/stool/directional/west,
 /obj/structure/cable,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "xX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "yi" = (
 /turf/open/floor/plating/airless,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "yk" = (
 /obj/machinery/door/poddoor{
 	id = "cargoblastdoors"
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "yx" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
@@ -873,11 +858,11 @@
 /obj/structure/desk_bell,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "yJ" = (
 /mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "zw" = (
 /obj/structure/table/reinforced,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -887,30 +872,30 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "zD" = (
 /obj/structure/chair/stool,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "zE" = (
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "zP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/service/bar/backroom)
+/area/shuttle/voidcrew/bogardee_b/service/bar/backroom)
 "Ap" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "Aw" = (
 /obj/item/radio/intercom{
 	pixel_y = 20
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "Ax" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/layer2{
@@ -920,53 +905,53 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "AT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "Bd" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Bg" = (
 /obj/structure/chair/wood{
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "BF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "BN" = (
 /obj/machinery/door/poddoor{
 	id = "windowlockdown"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "BV" = (
 /obj/structure/chair/wood,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Co" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "Cs" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/biogenerator,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Cv" = (
 /obj/item/radio,
 /obj/item/radio,
@@ -981,13 +966,13 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "CI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer2{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "CV" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/cup/bucket,
@@ -995,33 +980,33 @@
 /obj/item/mop,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Df" = (
 /obj/structure/cable,
 /obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Dx" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "Dy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "DB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "DI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -1032,31 +1017,34 @@
 /obj/item/soap/syndie,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "DK" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
+"DN" = (
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "DO" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Eu" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/box,
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "EE" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/service/bar/backroom)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "ES" = (
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Fl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -1068,25 +1056,25 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "Fm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/autolathe,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "FA" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "FE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "FI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1097,29 +1085,36 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "FU" = (
 /obj/machinery/power/smes/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "FW" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "GG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
+"GR" = (
+/obj/machinery/door/poddoor{
+	id = "windowlockdown"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "GU" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "GV" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -1128,7 +1123,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "GZ" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -1137,7 +1132,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Hb" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -1148,14 +1143,14 @@
 /obj/item/radio/intercom,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "HD" = (
 /obj/machinery/power/terminal{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "HF" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -1165,45 +1160,42 @@
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "HQ" = (
 /obj/structure/table/wood,
 /obj/item/multitool,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "HY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/light/floor,
 /turf/open/floor/catwalk_floor,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "Ia" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "In" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
-"IE" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "IJ" = (
 /obj/machinery/door/airlock/external,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "IO" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Jh" = (
 /obj/machinery/light,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Jt" = (
 /obj/structure/closet/secure_closet/bar{
 	req_access = null
@@ -1228,7 +1220,7 @@
 /obj/item/storage/belt/bandolier,
 /obj/item/gun/ballistic/shotgun/automatic,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Jy" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/west,
@@ -1240,7 +1232,7 @@
 /obj/item/ammo_box/c38,
 /obj/machinery/door/window/right/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "JF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1248,16 +1240,16 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/carpet/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "JM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
-"Kh" = (
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
+"Kn" = (
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "Kq" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1265,7 +1257,7 @@
 /obj/structure/cable,
 /obj/machinery/recharger,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "KN" = (
 /obj/machinery/power/smes/engineering,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/hidden,
@@ -1273,54 +1265,54 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "KT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "Ld" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "LB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "Mj" = (
 /obj/structure/cable,
 /obj/item/radio/intercom{
 	pixel_x = 27
 	},
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Mp" = (
 /obj/machinery/door/poddoor{
 	id = "bridgelockdown"
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "MA" = (
 /obj/structure/table/reinforced,
 /obj/item/radio{
 	icon_state = "radio"
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "MI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/table/wood/poker,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "MY" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/condiment/saltshaker{
@@ -1329,7 +1321,7 @@
 	},
 /obj/item/reagent_containers/condiment/peppermill,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Nc" = (
 /obj/item/radio/intercom{
 	pixel_y = -28
@@ -1338,7 +1330,7 @@
 /obj/item/bedsheet/random,
 /obj/structure/curtain/bounty,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "Nk" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -1347,23 +1339,23 @@
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "NT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "Ob" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Oc" = (
 /obj/machinery/status_display/shuttle,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "Of" = (
 /obj/structure/toilet{
 	dir = 1
@@ -1373,16 +1365,23 @@
 	},
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
+"Or" = (
+/obj/machinery/door/poddoor{
+	id = "windowlockdown"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "OD" = (
 /turf/open/floor/iron/white,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "Pa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Pd" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/east,
@@ -1391,7 +1390,7 @@
 /obj/item/gun/energy/laser/scatter,
 /obj/item/gun/energy/taser,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "Pk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1399,13 +1398,13 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Po" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Pz" = (
 /obj/structure/tank_dispenser/oxygen,
 /obj/machinery/light,
@@ -1413,36 +1412,36 @@
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "PX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/plastitanium,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "Qn" = (
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "Qu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/binary/pump/on/layer4{
 	name = "Air to Distro"
 	},
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "QH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "QK" = (
 /obj/structure/urinal{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "QO" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green{
@@ -1454,7 +1453,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "QR" = (
 /obj/item/storage/toolbox/electrical,
 /obj/item/storage/toolbox/electrical,
@@ -1466,18 +1465,18 @@
 /obj/item/storage/toolbox/syndicate,
 /obj/item/storage/bag/plants/portaseeder,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Rf" = (
 /obj/machinery/status_display/shuttle,
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/station/service/bar/backroom)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "Rh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Rm" = (
 /obj/machinery/door/airlock/vault{
 	req_one_access = list(25,1)
@@ -1486,15 +1485,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "Rq" = (
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "Rx" = (
 /obj/machinery/status_display/shuttle,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "RH" = (
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
@@ -1503,25 +1502,22 @@
 /obj/machinery/door/window/left/directional/north,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/white,
-/area/station/medical)
-"Sa" = (
-/turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "Si" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Sj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "SA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "SB" = (
 /obj/machinery/firealarm/directional/north{
 	dir = 1
@@ -1530,7 +1526,7 @@
 	dir = 9
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "SJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -1538,16 +1534,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium,
-/area/station/ai_monitored/security/armory)
+/area/shuttle/voidcrew/bogardee_b/armory)
 "SQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/iron/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "SW" = (
 /obj/structure/sign/warning/chem_diamond,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Tc" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -1557,7 +1553,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Tl" = (
 /obj/machinery/door/airlock/hatch,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1565,10 +1561,10 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Tr" = (
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "TF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1577,26 +1573,26 @@
 /obj/item/storage/medkit/brute,
 /obj/item/storage/medkit/fire,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "TH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/stripes{
 	dir = 1
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "TL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "TN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Ua" = (
 /obj/structure/table/reinforced,
 /obj/machinery/requests_console{
@@ -1628,13 +1624,13 @@
 	pixel_y = -5
 	},
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Uq" = (
 /obj/machinery/power/shuttle_engine/ship/fueled/plasma{
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Ut" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -1644,7 +1640,11 @@
 	pixel_y = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
+"UC" = (
+/obj/machinery/status_display/shuttle,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "UU" = (
 /obj/item/food/canned/beans{
 	pixel_x = -5;
@@ -1683,24 +1683,21 @@
 /obj/item/food/rationpack,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/service/bar/backroom)
+/area/shuttle/voidcrew/bogardee_b/service/bar/backroom)
 "Vk" = (
 /obj/structure/table/reinforced,
 /obj/structure/desk_bell,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
-"Vl" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "Vm" = (
 /obj/machinery/vending/games,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "VA" = (
 /obj/machinery/newscaster/directional/south,
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "VO" = (
 /obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 2
@@ -1708,20 +1705,20 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Wt" = (
 /obj/structure/bed/dogbed/cayenne,
 /mob/living/simple_animal/hostile/carp/cayenne,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Wv" = (
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "WP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "WU" = (
 /obj/machinery/light{
 	dir = 8
@@ -1731,43 +1728,44 @@
 	},
 /obj/machinery/processor,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Xd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor{
 	id = "bclassmedbaywindows"
 	},
 /turf/open/floor/plating,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "Xg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/catwalk_floor,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "Xv" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/medical)
+/area/shuttle/voidcrew/bogardee_b/medbay)
 "XE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Yf" = (
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Yg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "Yj" = (
 /obj/machinery/status_display/shuttle,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/station/maintenance)
+/area/shuttle/voidcrew/bogardee_b/maintenance)
 "Ym" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -1779,13 +1777,13 @@
 	pixel_y = 24
 	},
 /turf/open/floor/pod/dark,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/bogardee_b/cargo)
 "Yn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "Yr" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/donkpockets,
@@ -1793,7 +1791,7 @@
 /obj/item/pizzabox,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/bogardee_b/service/kitchen)
 "Yx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1802,33 +1800,33 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/red,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "Zr" = (
 /obj/machinery/computer/bank_machine{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "Zz" = (
 /obj/machinery/cryopod{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/commons)
+/area/shuttle/voidcrew/bogardee_b/service/quarters)
 "ZE" = (
 /obj/structure/table/wood,
 /obj/item/stack/spacecash/c100,
 /obj/item/card/id/departmental_budget/car,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
 "ZF" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet/black,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 "ZH" = (
 /obj/machinery/door/airlock/external/glass,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/entrance)
 "ZI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1838,23 +1836,26 @@
 	pixel_y = -24
 	},
 /turf/open/floor/catwalk_floor,
-/area/station/cargo)
+/area/shuttle/voidcrew/bogardee_b/cargo/vault)
+"ZR" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/voidcrew/bogardee_b/service/restroom)
 "ZT" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/dark,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/bogardee_b/service/bar)
 
 (1,1,1) = {"
 vZ
 vZ
-Kh
-Kh
+cI
+cI
 gi
 jh
-Kh
-Kh
-Kh
-Kh
+cI
+cI
+cI
+cI
 vZ
 vZ
 vZ
@@ -1868,14 +1869,14 @@ vZ
 (2,1,1) = {"
 vZ
 vZ
-Kh
+cI
 dN
 CI
 ji
-uM
+jx
 pl
 we
-Kh
+ch
 Df
 Df
 Df
@@ -1889,7 +1890,7 @@ vZ
 (3,1,1) = {"
 vZ
 vZ
-Kh
+cI
 ie
 SA
 mk
@@ -1910,13 +1911,13 @@ eg
 (4,1,1) = {"
 vZ
 vZ
-Kh
-uM
+cI
+jx
 DK
 ZH
-Rx
-uM
-uM
+UC
+ZR
+ZR
 uM
 vf
 HD
@@ -1931,11 +1932,11 @@ eg
 (5,1,1) = {"
 vZ
 vZ
-aa
-Sa
-xX
-Tr
-uM
+GR
+DN
+eF
+sn
+ZR
 QK
 og
 uM
@@ -1951,12 +1952,12 @@ vZ
 "}
 (6,1,1) = {"
 vZ
-aa
-aa
+GR
+GR
 Vk
-xX
+eF
 KT
-uM
+ZR
 dI
 DI
 uM
@@ -1972,14 +1973,14 @@ vZ
 "}
 (7,1,1) = {"
 vZ
-aa
-Sa
+GR
+DN
 qJ
 TL
 Qn
-uM
+ZR
 lm
-uM
+ZR
 uM
 uM
 mH
@@ -1993,12 +1994,12 @@ vZ
 "}
 (8,1,1) = {"
 vZ
-Kh
+cI
 Aw
 In
 TL
 AT
-uM
+ZR
 Yg
 gc
 Of
@@ -2014,70 +2015,70 @@ vZ
 "}
 (9,1,1) = {"
 vZ
-Kh
+Bd
 cY
 mx
 hG
 pg
-uM
+iX
 ce
+iX
+iX
 uM
 uM
 uM
-fb
-fb
 SW
 Tl
-fb
+uM
 Yj
 ch
 vZ
 "}
 (10,1,1) = {"
 vZ
-Kh
+Bd
 Tr
 dQ
-jx
+xX
 Tr
 dQ
 xX
 aB
 Yf
 Yf
-Vl
+iX
 QO
 ay
 fG
 Zz
 Zz
-Bd
+Kn
 vZ
 "}
 (11,1,1) = {"
 vZ
-aa
+Or
 Tr
 Yx
 Yx
 lp
-jx
-jx
+xX
+xX
 xS
 xS
 VA
-Vl
+iX
 Ut
 Sj
 fG
 Dx
 Rq
-Bd
+Kn
 vZ
 "}
 (12,1,1) = {"
 vZ
-aa
+Or
 oO
 oi
 dD
@@ -2085,7 +2086,7 @@ IO
 Bg
 kg
 Bg
-jx
+xX
 Pa
 JF
 cl
@@ -2098,7 +2099,7 @@ vZ
 "}
 (13,1,1) = {"
 vZ
-aa
+Or
 oO
 MI
 Bg
@@ -2108,7 +2109,7 @@ IO
 Bg
 Ld
 pU
-Vl
+iX
 Cv
 kH
 cK
@@ -2119,7 +2120,7 @@ vZ
 "}
 (14,1,1) = {"
 vZ
-aa
+Or
 oO
 MI
 BF
@@ -2129,10 +2130,10 @@ IO
 Bg
 Tr
 Jh
-Vl
-Vl
-Vl
-Vl
+iX
+xe
+xe
+xe
 fG
 tq
 BN
@@ -2140,9 +2141,9 @@ vZ
 "}
 (15,1,1) = {"
 vZ
-aa
+Or
 Tr
-jx
+xX
 eV
 eV
 ZF
@@ -2151,19 +2152,19 @@ ZF
 pE
 pE
 oj
-bq
+xe
 UU
-bq
+xe
 fG
 tq
-Bd
+Kn
 vZ
 "}
 (16,1,1) = {"
 vZ
-aa
+Or
 Tr
-jx
+xX
 eV
 zD
 DO
@@ -2171,20 +2172,20 @@ jq
 lg
 MY
 uB
-uM
-bq
+iX
+xe
 le
-bq
+xe
 cq
 Nc
-Bd
+Kn
 vZ
 "}
 (17,1,1) = {"
 vZ
-Kh
+Bd
 dl
-jx
+xX
 ZT
 zD
 wF
@@ -2198,28 +2199,28 @@ zP
 bM
 fG
 vj
-Bd
+Kn
 vZ
 "}
 (18,1,1) = {"
 vZ
-fM
+Bd
 SQ
 Pk
-qB
-qB
+iX
+iX
 Rx
 rr
 zw
 xO
 jL
 Jt
-EE
+Bd
 Rf
 EE
-fv
-Bd
-Bd
+eZ
+EE
+EE
 vZ
 "}
 (19,1,1) = {"
@@ -2229,18 +2230,18 @@ SB
 mb
 fC
 lD
-xe
-xe
-xe
+iX
+iX
+iX
 Dy
-xe
-xe
-vv
+iX
+iX
+Bd
 Vm
 sy
 ZI
 sy
-Ap
+EE
 vZ
 "}
 (20,1,1) = {"
@@ -2249,19 +2250,19 @@ fM
 iP
 DB
 FW
-xe
-xe
+qB
+qB
 rv
 WU
 ES
 hB
 pR
-vv
-Ap
+EE
+EE
 Wv
 QH
 na
-Ap
+EE
 vZ
 "}
 (21,1,1) = {"
@@ -2270,7 +2271,7 @@ cp
 NT
 DB
 hs
-xe
+qB
 qn
 zE
 ES
@@ -2278,11 +2279,11 @@ wc
 ES
 ES
 Cs
-Ap
+EE
 sy
 QH
 HQ
-Ap
+EE
 vZ
 "}
 (22,1,1) = {"
@@ -2291,7 +2292,7 @@ yk
 TH
 DB
 Pz
-xe
+qB
 Yr
 ES
 Wt
@@ -2299,11 +2300,11 @@ yx
 yJ
 ES
 jn
-Ap
+EE
 WP
 HY
 ZE
-Ap
+EE
 vZ
 "}
 (23,1,1) = {"
@@ -2324,7 +2325,7 @@ eZ
 Xg
 Yn
 Zr
-Ap
+EE
 vZ
 "}
 (24,1,1) = {"
@@ -2341,11 +2342,11 @@ Ob
 MA
 ES
 vb
-Ap
+EE
 Fl
 GG
 hw
-Ap
+EE
 vZ
 "}
 (25,1,1) = {"
@@ -2383,11 +2384,11 @@ Po
 ES
 ES
 Eu
-IE
+Ap
 kw
 SJ
 kD
-IE
+Ap
 vZ
 "}
 (27,1,1) = {"
@@ -2397,18 +2398,18 @@ OD
 gQ
 RH
 GU
-vv
+km
 Ua
 vh
 vh
 vh
 Hb
-vv
-IE
+km
+Ap
 kw
 FE
 Pd
-IE
+Ap
 vZ
 "}
 (28,1,1) = {"
@@ -2425,11 +2426,11 @@ mz
 GV
 Mp
 Mp
-IE
+Ap
 rx
 ud
 Jy
-IE
+Ap
 vZ
 "}
 (29,1,1) = {"
@@ -2446,10 +2447,10 @@ Mp
 Mp
 Mp
 vZ
-IE
-IE
-IE
-IE
-IE
+Ap
+Ap
+Ap
+Ap
+Ap
 vZ
 "}

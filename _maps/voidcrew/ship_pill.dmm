@@ -8,7 +8,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/pill)
 "b" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers{
@@ -34,7 +34,7 @@
 	},
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/pill)
 "c" = (
 /obj/item/pickaxe/drill,
 /obj/item/pickaxe/drill,
@@ -79,17 +79,15 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/docking_port/mobile/voidcrew{
-	can_move_docking_ports = 1;
-	dir = 8;
-	launch_status = 0
-	},
 /obj/item/storage/toolbox/mechanical/old,
 /obj/item/storage/box/stockparts/basic,
 /obj/item/circuitboard/machine/autolathe,
 /obj/item/clothing/head/utility/welding,
+/obj/docking_port/mobile/voidcrew/pill{
+	dir = 2
+	},
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/pill)
 
 (1,1,1) = {"
 a

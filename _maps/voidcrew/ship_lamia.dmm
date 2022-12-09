@@ -8,21 +8,21 @@
 	id = "wizardship_bridge"
 	},
 /turf/open/floor/plating,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "ac" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "ad" = (
 /obj/machinery/computer/communications,
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "af" = (
 /obj/structure/chair/bronze{
 	dir = 1
 	},
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "ag" = (
 /obj/machinery/light{
 	dir = 4
@@ -34,16 +34,11 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "ai" = (
-/obj/structure/showcase{
-	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney.";
-	icon = 'icons/mob/mob.dmi';
-	icon_state = "nim";
-	name = "wizard of yendor showcase"
-	},
+/obj/structure/showcase/wizard,
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "aj" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -53,31 +48,28 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "am" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/kitchen)
 "an" = (
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "ao" = (
 /obj/structure/chair/wood/wings,
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "aq" = (
 /obj/structure/chair/wood/wings{
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "ar" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/figure/wizard,
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "as" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -88,7 +80,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "at" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -97,7 +89,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/archive)
 "au" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -107,16 +99,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/black,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/game_room)
 "av" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
-"ay" = (
-/turf/closed/wall/mineral/iron,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/game_room)
 "az" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -125,7 +114,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "aA" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -133,30 +122,30 @@
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "aB" = (
 /obj/machinery/vending/games,
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "aC" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck/tarot{
 	pixel_y = 4
 	},
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "aF" = (
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "aG" = (
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "aI" = (
 /obj/machinery/light,
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "aJ" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -164,31 +153,21 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/science)
-"aK" = (
-/obj/machinery/door/airlock{
-	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
-	name = "Bar"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/study)
 "aL" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/autolathe,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "aM" = (
 /obj/structure/chair/wood/wings,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /obj/item/soulstone/anybody,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "aO" = (
 /obj/machinery/light{
 	dir = 1
@@ -196,26 +175,26 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "aP" = (
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "aR" = (
 /obj/machinery/vending/coffee,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "aS" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "aT" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "aU" = (
 /obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -224,22 +203,17 @@
 	pixel_x = -5
 	},
 /turf/open/floor/engine/cult,
-/area/station/science)
-"aV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/random,
-/turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/study)
 "aW" = (
 /obj/machinery/chem_master/condimaster{
 	name = "HoochMaster 3000"
 	},
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "aY" = (
 /obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "aZ" = (
 /obj/structure/table,
 /obj/item/shovel{
@@ -247,24 +221,24 @@
 	name = "staff of sustenance"
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "ba" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_y = 7
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "bb" = (
 /obj/structure/frame/computer,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "bd" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "bf" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -274,7 +248,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/dorm)
 "bg" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
@@ -284,7 +258,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/storage/box/donkpockets/donkpocketpizza,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "bh" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -293,7 +267,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "bi" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -302,18 +276,18 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "bl" = (
 /obj/effect/decal/cleanable/blood/gibs/down,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "bm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/candle,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "bn" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -324,33 +298,33 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "bo" = (
 /obj/machinery/vending/boozeomat/all_access,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "bp" = (
 /obj/machinery/light,
 /obj/item/radio/intercom{
 	pixel_y = -31
 	},
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "bq" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "bs" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "bu" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "by" = (
 /turf/open/floor/carpet/royalblue,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "bA" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -360,7 +334,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/cargo)
 "bB" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -370,7 +344,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bC" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/medical,
@@ -381,14 +355,14 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/cargo)
 "bD" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/cargo)
 "bF" = (
 /obj/machinery/computer/cryopod{
 	pixel_y = 27
@@ -399,7 +373,7 @@
 	open_state = "bscanner_open"
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/dorm)
 "bG" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -407,13 +381,13 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bI" = (
 /obj/structure/sink/directional/south,
 /obj/item/razor{
@@ -428,7 +402,7 @@
 	pixel_y = 31
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bJ" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/light{
@@ -458,7 +432,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/cargo)
 "bK" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/engineering,
@@ -475,7 +449,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/cargo)
 "bL" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -485,7 +459,7 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/dorm)
 "bM" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -494,7 +468,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/dorm)
 "bN" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -504,7 +478,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bO" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -513,7 +487,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bP" = (
 /obj/effect/turf_decal/stripes,
 /obj/structure/closet/crate/science,
@@ -524,7 +498,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/structure/window/reinforced/survival_pod,
 /turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/cargo)
 "bQ" = (
 /obj/effect/turf_decal/stripes,
 /obj/structure/cable,
@@ -532,7 +506,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/window/survival_pod,
 /turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/cargo)
 "bR" = (
 /obj/item/bedsheet/wiz,
 /obj/structure/bed,
@@ -540,20 +514,20 @@
 /obj/item/toy/plush/slimeplushie,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/dorm)
 "bT" = (
 /obj/machinery/shower/directional/north,
 /obj/structure/curtain,
 /obj/item/soap/deluxe,
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bU" = (
 /obj/structure/toilet{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bV" = (
 /obj/structure/table/wood/fancy,
 /obj/item/skub{
@@ -561,34 +535,26 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "bW" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "bX" = (
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "bY" = (
 /obj/machinery/mineral/ore_redemption{
 	req_access = null
 	},
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
-"bZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile{
-	color = "#008000"
-	},
-/obj/structure/curtain/cloth/fancy,
-/turf/open/floor/plating,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "ca" = (
 /obj/machinery/power/smes,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "cb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -596,13 +562,13 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "cc" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "cd" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -610,7 +576,7 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "ce" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -620,27 +586,27 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/bronze,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "cf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "cg" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/mod/control/pre_equipped/enchanted,
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "ch" = (
 /obj/item/storage/toolbox/mechanical,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "cj" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 1;
@@ -649,7 +615,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "ck" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -658,42 +624,36 @@
 	},
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "cl" = (
 /obj/structure/cable,
 /obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
-"cr" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/engines)
 "cA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "cD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "dd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
-"dH" = (
-/turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/archive)
+"eb" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/cargo)
 "ee" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/iron,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "en" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -702,7 +662,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "eN" = (
 /obj/structure/chair/wood/wings{
 	dir = 8
@@ -711,13 +671,10 @@
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
-"fx" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/carpet/royalblue,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/game_room)
+"eZ" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/study)
 "gz" = (
 /mob/living/simple_animal/hostile/carp/ranged{
 	desc = "A wizard's favorite familiar, the Magicarp!";
@@ -729,13 +686,13 @@
 	name = "Melchom's bed"
 	},
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "gB" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "gL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/gun/magic/wand/nothing{
@@ -745,23 +702,23 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "hh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/green,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "hq" = (
 /obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/book/codex_gigas,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "if" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "io" = (
 /obj/structure/chair/bronze{
 	dir = 1
@@ -772,35 +729,30 @@
 	pixel_y = 25
 	},
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "iu" = (
 /obj/structure/sign/poster/contraband/shamblers_juice,
 /turf/closed/wall/mineral/iron,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/game_room)
 "iT" = (
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "je" = (
 /obj/effect/decal/cleanable/vomit/old,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
-"jA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/cafeteria)
-"jC" = (
-/turf/closed/wall/mineral/iron,
-/area/station/maintenance/aft)
-"jQ" = (
-/turf/closed/wall/mineral/iron,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/bar)
+"jF" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/lamia/kitchen)
 "kC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -813,18 +765,18 @@
 	pixel_x = 29
 	},
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "kN" = (
 /obj/machinery/light/broken{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "kO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "lq" = (
 /obj/structure/chair/wood/wings{
 	dir = 1
@@ -833,68 +785,79 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
+"lD" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/kitchen)
+"ma" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/lamia/study)
 "mr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/dorm)
 "mv" = (
 /obj/structure/sign/poster/official/high_class_martini,
 /turf/closed/wall/mineral/iron,
-/area/station/hallway/primary/starboard)
-"ni" = (
-/turf/closed/wall/mineral/iron,
-/area/station/hallway/primary/starboard)
-"nl" = (
-/turf/closed/wall/mineral/iron,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/game_room)
 "nC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "nQ" = (
 /obj/structure/table/wood/fancy/purple,
 /obj/item/clothing/head/collectable/wizard{
 	pixel_y = 3
 	},
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "oz" = (
 /mob/living/carbon/human/species/monkey/angry,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "oB" = (
 /obj/structure/frame/machine,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "oD" = (
 /obj/structure/sign/warning/vacuum/external,
 /turf/closed/wall/mineral/iron,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "oE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "pf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
+"pg" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/carpet/royalblue,
+/area/shuttle/voidcrew/lamia/dorm)
 "pj" = (
 /obj/structure/chair/bronze{
 	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "pn" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -904,43 +867,41 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/bar)
 "pR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "qJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "qN" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
 /obj/structure/curtain/cloth/fancy,
-/obj/docking_port/mobile/voidcrew{
-	dir = 4;
-	launch_status = 0;
-	port_direction = 8
+/obj/docking_port/mobile/voidcrew/lamia{
+	dir = 4
 	},
 /turf/open/floor/plating,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "qT" = (
 /obj/structure/sign/poster/official/no_erp,
 /turf/closed/wall/mineral/iron,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "qU" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "qY" = (
 /obj/item/food/dankpocket{
 	pixel_x = -1;
@@ -948,12 +909,12 @@
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "rg" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
 /obj/item/reagent_containers/condiment/enzyme,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "rh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small,
@@ -968,7 +929,7 @@
 	name = "The Grimoire of Rock Revelation"
 	},
 /turf/open/floor/wood,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "rp" = (
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/table/wood/fancy/royalblack,
@@ -976,29 +937,37 @@
 	pixel_y = -31
 	},
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "rH" = (
 /obj/structure/spider/stickyweb,
 /obj/item/relic,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
+"sa" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/lamia/bar)
 "sJ" = (
 /obj/structure/sign/poster/contraband/power,
 /turf/closed/wall/mineral/iron,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "sX" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
-"tv" = (
-/turf/closed/wall/mineral/iron,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/game_room)
+"to" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "ud" = (
 /obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
 /turf/closed/wall/mineral/iron,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "uh" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
@@ -1007,7 +976,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "ui" = (
 /obj/machinery/light{
 	dir = 1
@@ -1015,82 +984,89 @@
 /obj/machinery/jukebox,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
-"wj" = (
+/area/shuttle/voidcrew/lamia/bar)
+"vJ" = (
 /turf/closed/wall/mineral/iron,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/archive)
+"vV" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "wq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "wE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/candle,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "wT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "wX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "xc" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
+"xU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/lamia/bar)
 "zn" = (
 /obj/machinery/processor,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "zA" = (
 /obj/structure/sign/plaques/kiddie/library,
 /turf/closed/wall/mineral/iron,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/archive)
 "zN" = (
 /obj/machinery/light,
 /obj/machinery/computer/arcade,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "zT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/trash/candle,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine/cult,
-/area/station/science)
-"An" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/study)
 "Ar" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
+"Ba" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "Cc" = (
 /obj/item/reagent_containers/cup/glass/shaker{
 	pixel_x = -1
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "Cq" = (
 /obj/structure/sign/poster/official/fruit_bowl,
 /turf/closed/wall/mineral/iron,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "Cy" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/head/wizard/yellow,
@@ -1106,20 +1082,17 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
-"CF" = (
-/turf/closed/wall/mineral/iron,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/dorm)
 "CH" = (
 /obj/structure/sign/poster/random,
 /turf/closed/wall/mineral/iron,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "Db" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/power/terminal,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "DP" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
@@ -1127,19 +1100,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
+"DV" = (
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/lamia/bar)
 "Ee" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "Ek" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "El" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
@@ -1150,35 +1126,32 @@
 /obj/item/kirbyplants/random,
 /obj/item/book/granter/action/spell/smoke/lesser,
 /turf/open/floor/wood,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "Eu" = (
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "Ez" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "Fu" = (
 /obj/item/statuebust{
 	pixel_y = 12
 	},
 /obj/structure/table/wood/fancy/royalblack,
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "FQ" = (
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "Gf" = (
 /obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
-"Gh" = (
-/turf/closed/wall/mineral/iron,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "GA" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -1188,7 +1161,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/study)
 "GL" = (
 /obj/machinery/light{
 	dir = 1
@@ -1196,14 +1169,25 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/candy,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "GM" = (
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
+"GT" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile{
+	color = "#008000"
+	},
+/obj/structure/curtain/cloth/fancy,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/lamia/engines)
+"HD" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/engines)
 "HS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "HV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -1213,19 +1197,23 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
+"HX" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/archive)
 "Ia" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/engines)
 "Ix" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "IJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
@@ -1242,10 +1230,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/engine/cult,
-/area/station/science)
-"IN" = (
-/turf/closed/wall/mineral/iron,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/study)
 "Jo" = (
 /obj/item/trash/can,
 /obj/effect/decal/cleanable/dirt,
@@ -1253,17 +1238,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/hallway/primary/central)
-"JB" = (
-/obj/structure/sign/poster/random,
-/turf/closed/wall/mineral/iron,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "JP" = (
 /obj/item/storage/bag/tray,
 /obj/item/food/burger/spell,
 /obj/structure/table/wood/fancy/cyan,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/dorm)
 "JS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt,
@@ -1272,63 +1253,66 @@
 	pixel_y = -3
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "Ke" = (
 /obj/item/trash/popcorn,
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "Ki" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "Kj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/sink/directional/south,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
-"Kz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile{
-	color = "#008000"
-	},
-/obj/structure/curtain/cloth/fancy,
-/turf/open/floor/plating,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/kitchen)
+"Ku" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/lamia/kitchen)
+"Ky" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/cargo)
 "KS" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "KW" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "LZ" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall/mineral/iron,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/study)
 "Ma" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/gun/energy/e_gun/mini{
 	desc = "The small and submissive wand of wizards-in-training, firing bursts of raw magical energy to disable or kill foes. Comes with built-in nightlight!";
 	gunlight_state = "nothingwand";
-	icon = 'icons/obj/guns/magic.dmi';
+	icon = 'icons/obj/weapons/guns/magic.dmi';
 	icon_state = "nothingwand";
 	name = "acolyte's training wand of duality";
 	pixel_x = -2;
 	pixel_y = 2
 	},
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "Mb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "Me" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/cigbutt{
@@ -1339,7 +1323,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "Mn" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/areaeditor,
@@ -1353,43 +1337,50 @@
 	pixel_y = 11
 	},
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
+"My" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "MA" = (
 /obj/machinery/chem_dispenser/drinks/beer{
 	dir = 4
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
-"MX" = (
-/obj/structure/sign/poster/random,
-/turf/closed/wall/mineral/iron,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/bar)
+"MR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/lamia/archive)
 "Nm" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "No" = (
 /turf/template_noop,
-/area/space)
+/area/template_noop)
 "NF" = (
 /obj/machinery/chem_dispenser/drinks{
 	dir = 4
 	},
 /obj/structure/table/wood/fancy/purple,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "NN" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "Ot" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/bookcase/random/religion,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
 "OC" = (
 /obj/machinery/light{
 	dir = 8
@@ -1401,12 +1392,16 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
+"OD" = (
+/obj/structure/sign/poster/random,
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/kitchen)
 "OQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/libraryscanner,
 /turf/open/floor/wood,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "Pc" = (
 /obj/effect/turf_decal/stripes,
 /obj/structure/closet/crate,
@@ -1417,25 +1412,32 @@
 /obj/item/radio,
 /obj/structure/window/reinforced/survival_pod,
 /turf/open/floor/iron,
-/area/station/commons/storage/primary)
-"PT" = (
+/area/shuttle/voidcrew/lamia/cargo)
+"Py" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/kitchen)
+"Qh" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/bar)
+"Ql" = (
+/obj/machinery/bookbinder,
+/turf/open/floor/carpet/orange,
+/area/shuttle/voidcrew/lamia/archive)
+"QD" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/lamia/engines)
+"Rk" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
 	color = "#008000"
 	},
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating,
-/area/station/maintenance/aft)
-"Ql" = (
-/obj/machinery/bookbinder,
-/turf/open/floor/carpet/orange,
-/area/station/service/library)
-"QD" = (
-/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft)
+/area/shuttle/voidcrew/lamia/bar)
 "RD" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile{
@@ -1443,7 +1445,7 @@
 	},
 /obj/structure/curtain/cloth/fancy,
 /turf/open/floor/plating,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "Sc" = (
 /obj/machinery/door/airlock{
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi';
@@ -1454,27 +1456,33 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/kitchen)
 "So" = (
 /turf/closed/wall/mineral/iron,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/restroom)
 "Sq" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "St" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet/orange,
-/area/station/service/library)
+/area/shuttle/voidcrew/lamia/archive)
 "SC" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
+"SY" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/lamia/archive)
 "Tc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/vomit/old,
@@ -1482,38 +1490,41 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
-/area/station/commons/toilet)
+/area/shuttle/voidcrew/lamia/restroom)
 "Tn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/trash/semki,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
-"Tt" = (
-/turf/closed/wall/mineral/iron,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "TQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "TY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
+"Ur" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/dorm)
 "Uu" = (
 /obj/structure/sign/poster/official/ue_no,
 /turf/closed/wall/mineral/iron,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "Va" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/engine/cult,
-/area/station/science)
+/area/shuttle/voidcrew/lamia/study)
+"Vj" = (
+/turf/closed/wall/mineral/iron,
+/area/shuttle/voidcrew/lamia/bridge)
 "Vy" = (
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "VC" = (
 /obj/structure/closet/cabinet,
 /obj/item/gun/ballistic/shotgun/doublebarrel{
@@ -1531,7 +1542,7 @@
 /obj/item/etherealballdeployer,
 /obj/item/storage/belt/bandolier,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
+/area/shuttle/voidcrew/lamia/bar)
 "VP" = (
 /obj/item/storage/dice{
 	icon_state = "magicdicebag";
@@ -1542,7 +1553,7 @@
 	pixel_x = -8
 	},
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "VR" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
@@ -1550,11 +1561,10 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
-"We" = (
-/obj/structure/sign/poster/contraband/random,
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
+"VX" = (
 /turf/closed/wall/mineral/iron,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/game_room)
 "Wp" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/item/cigbutt/cigarbutt,
@@ -1563,57 +1573,52 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblack,
-/area/station/hallway/primary/starboard)
+/area/shuttle/voidcrew/lamia/game_room)
 "WE" = (
 /obj/item/bedsheet/wiz,
 /obj/structure/bed,
 /obj/structure/curtain/cloth/fancy,
 /obj/item/toy/plush/ratplush,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/dorm)
 "WV" = (
 /obj/machinery/door/window/right/directional/south{
 	dir = 8
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/purple,
-/area/station/service/cafeteria)
-"Xz" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/lamia/bar)
 "XG" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/fore)
 "XS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/royalblue,
-/area/station/hallway/primary/aft)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "YD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/royalblue,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/lamia/hallway/aft)
 "YF" = (
 /obj/machinery/holopad,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet/stellar,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/lamia/bridge)
 "Zj" = (
 /obj/machinery/suit_storage_unit/open,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/mod/control/pre_equipped/enchanted,
 /turf/open/floor/bronze,
-/area/station/cargo/miningoffice)
+/area/shuttle/voidcrew/lamia/cargo/mining_dock)
 "ZW" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate{
@@ -1630,7 +1635,7 @@
 	pixel_x = -9
 	},
 /turf/open/floor/iron,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/lamia/cargo)
 
 (1,1,1) = {"
 No
@@ -1643,13 +1648,13 @@ No
 No
 No
 No
-So
-So
-bZ
+eZ
+eZ
+ma
 qN
-bZ
-So
-IN
+ma
+eZ
+eZ
 No
 No
 No
@@ -1673,19 +1678,19 @@ No
 No
 No
 No
-nl
-nl
-nl
-So
+vJ
+vJ
+vJ
+eZ
 aL
 aT
 bb
 aT
 oB
-IN
-Kz
-Kz
-IN
+eZ
+RD
+RD
+vV
 No
 No
 No
@@ -1705,7 +1710,7 @@ No
 No
 No
 No
-nl
+vJ
 Cq
 qU
 if
@@ -1718,8 +1723,8 @@ DP
 GA
 pR
 gB
-MX
-IN
+CH
+vV
 No
 No
 No
@@ -1737,30 +1742,30 @@ No
 No
 No
 No
-nl
-JB
+vJ
+HX
 NN
 GM
 OQ
-So
+eZ
 bm
 uh
 TY
 IJ
 wE
-IN
+eZ
 KS
-fx
+YD
 KS
-IN
-wj
-wj
-wj
-jQ
+eb
+eb
+eb
+eb
+Ba
 oD
 cd
-jQ
-jQ
+Ba
+Ba
 No
 No
 "}
@@ -1769,11 +1774,11 @@ No
 No
 No
 No
-nl
-nl
+vJ
+vJ
 El
-Ez
-An
+MR
+SY
 rh
 sJ
 aM
@@ -1781,11 +1786,11 @@ aU
 Ot
 hq
 bn
-IN
+eZ
 Vy
 cD
 Vy
-IN
+eb
 bC
 bJ
 bP
@@ -1793,7 +1798,7 @@ bW
 Ar
 bX
 cg
-jQ
+Ba
 No
 No
 "}
@@ -1802,21 +1807,21 @@ No
 No
 No
 No
-nl
+vJ
 NN
 dd
-Ez
+MR
 St
 rp
-So
-So
-So
-So
-So
-So
-We
+eZ
+eZ
+eZ
+eZ
+eZ
+eZ
+LZ
 kN
-fx
+YD
 cD
 bA
 bD
@@ -1826,32 +1831,32 @@ pf
 pf
 pf
 Zj
-jQ
+Ba
 No
 No
 "}
 (7,1,1) = {"
 No
-Tt
-Tt
-Tt
-Tt
+Vj
+Vj
+Vj
+Vj
 iT
 Ke
-Ez
+MR
 Ql
 Fu
-Gh
+vJ
 VC
 aW
 MA
 NF
 bo
-IN
+Qh
 Vy
 cD
 KS
-wj
+eb
 ZW
 bK
 Pc
@@ -1859,41 +1864,41 @@ bY
 kC
 pf
 VR
-jQ
+Ba
 No
 No
 "}
 (8,1,1) = {"
-Tt
-Tt
+Vj
+Vj
 OC
 Mn
-Tt
-ay
+Vj
+vJ
 zA
 at
-ay
-ay
-Gh
+vJ
+vJ
+vJ
 aO
 aP
 oz
 HS
 bp
-IN
+Qh
 KS
-fx
+YD
 Tn
-tv
-tv
-LZ
-tv
-jC
-jC
+eb
+eb
+Ky
+eb
+HD
+HD
 ce
-jC
-jC
-jC
+HD
+HD
+HD
 No
 "}
 (9,1,1) = {"
@@ -1902,9 +1907,9 @@ Ma
 io
 Mb
 ab
-aV
+XG
 Ee
-Xz
+Ez
 az
 aF
 Uu
@@ -1913,15 +1918,15 @@ qY
 nQ
 Cc
 Eu
-IN
+Qh
 Ix
 Sq
 TQ
-tv
+Ur
 Cy
 bL
 bR
-jC
+HD
 ca
 cf
 en
@@ -1935,26 +1940,26 @@ ac
 pj
 YF
 aj
-am
+My
 hh
 hh
 hh
-am
-aK
-jA
+My
+pn
+xU
 aY
 aY
 aY
 FQ
-Kz
+Rk
 Vy
-fx
+YD
 cD
 bf
-YD
+pg
 mr
 WE
-PT
+GT
 cb
 Ia
 oE
@@ -1973,21 +1978,21 @@ qJ
 Jo
 aA
 aG
-Gh
+Qh
 SC
-cr
+sa
 je
-cr
-cr
+sa
+sa
 pn
 cD
 pR
 Vy
-tv
+Ur
 bF
 bM
 JP
-jC
+HD
 oE
 gL
 ch
@@ -1996,31 +2001,31 @@ ck
 cl
 "}
 (12,1,1) = {"
-Tt
-Tt
+Vj
+Vj
 ag
 ai
-Tt
-ay
-ay
+Vj
+VX
+VX
 au
-ay
-ay
+VX
+VX
 iu
 ui
 Me
-cr
+sa
 wT
 zN
-IN
+Qh
 KW
 XS
 Vy
-CF
-CF
+So
+So
 qT
-CF
-jC
+So
+HD
 cc
 Ia
 HV
@@ -2030,35 +2035,35 @@ QD
 "}
 (13,1,1) = {"
 No
-Tt
-Tt
-Tt
-Tt
+Vj
+Vj
+Vj
+Vj
 an
 aq
 Ek
 aB
 VP
-Gh
+VX
 aR
-dH
-cr
+DV
+sa
 JS
 bq
-IN
+Qh
 gz
 cD
 Vy
-CF
+So
 bG
 bN
 bT
-jC
-jC
-PT
-jC
-jC
-jC
+HD
+HD
+GT
+HD
+HD
+HD
 No
 "}
 (14,1,1) = {"
@@ -2066,27 +2071,27 @@ No
 No
 No
 No
-ni
+VX
 ao
 ar
 lq
 wX
 aI
-Gh
-Gh
-RD
+lD
+lD
+jF
 Sc
-RD
-Gh
-We
+jF
+lD
+Py
 GL
-fx
+YD
 cD
 bB
 bH
 Tc
 bU
-CF
+So
 No
 No
 No
@@ -2099,27 +2104,27 @@ No
 No
 No
 No
-ni
-ni
+VX
+VX
 as
 Wp
 aq
 an
-Gh
+lD
 aS
 cA
-jA
-dH
+Ku
+am
 zn
-IN
+lD
 Vy
 Vy
 KS
-IN
+So
 bI
 bO
 bV
-CF
+So
 No
 No
 No
@@ -2133,26 +2138,26 @@ No
 No
 No
 No
-ni
+VX
 mv
 ao
 aC
 av
-CH
-dH
+OD
+am
 aZ
 bg
 xc
 bs
-IN
+lD
 Vy
 by
 kO
-IN
-CF
+So
+So
 ud
-CF
-CF
+So
+So
 No
 No
 No
@@ -2167,21 +2172,21 @@ No
 No
 No
 No
-ni
-ni
+VX
+VX
 eN
 sX
-Gh
+lD
 Gf
 ba
 bh
 bl
 rg
-IN
+lD
 KS
-XG
-IN
-IN
+to
+vV
+vV
 No
 No
 No
@@ -2201,19 +2206,19 @@ No
 No
 No
 No
-ni
-ni
-ni
-Gh
+VX
+VX
+VX
+lD
 Kj
 Nm
 bi
 nC
 bu
-IN
-Kz
-Kz
-IN
+lD
+RD
+RD
+vV
 No
 No
 No
@@ -2237,13 +2242,13 @@ No
 No
 No
 No
-Gh
-Gh
-RD
-Gh
-RD
-Gh
-Gh
+lD
+lD
+jF
+lD
+jF
+lD
+lD
 No
 No
 No

@@ -31,8 +31,6 @@
 /obj/docking_port/mobile/voidcrew/box
 	name = "Box-Class Hospital Ship"
 	area_type = /area/shuttle/voidcrew/box
-	callTime = 25 SECONDS
-	dir = 2
 	port_direction = 8
 	preferred_direction = 4
 

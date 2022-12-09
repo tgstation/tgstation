@@ -37,3 +37,62 @@
 			slots = 2,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/midway
+	name = "Midway-class Atmospherics Mining Vessel"
+	area_type = /area/shuttle/voidcrew/midway
+	port_direction = 8
+	preferred_direction = 2
+
+
+/// AREAS ///
+
+/// Command ///
+
+/area/shuttle/voidcrew/midway/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/// Cargo ///
+
+/area/shuttle/voidcrew/midway/cargo
+	name = "Cargo Bay"
+	icon_state = "cargo_bay"
+
+/area/shuttle/voidcrew/midway/cargo/mining
+	name = "Mining Dock"
+	icon_state = "mining"
+
+/// Medbay ///
+
+/area/shuttle/voidcrew/midway/medbay
+	name = "Medbay"
+	icon_state = "medbay"
+
+/// Engineering ///
+
+/area/shuttle/voidcrew/midway/engineering
+	name = "Engineering"
+	icon_state = "engine"
+
+/area/shuttle/voidcrew/midway/engineering/storage
+	name = "Engineering Storage"
+	icon_state = "engine_storage"
+
+/area/shuttle/voidcrew/midway/atmospherics
+	name = "Atmospherics"
+	icon_state = "atmos"
+
+/// Service ///
+
+/area/shuttle/voidcrew/midway/dorms
+	name = "Dormitories"
+	icon_state = "dorms"
+
+/// Hallways ///
+
+/area/shuttle/voidcrew/midway/hallway
+	name = "Central Hallway"
+	icon_state = "hall"

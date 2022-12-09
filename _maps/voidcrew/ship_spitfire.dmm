@@ -2,7 +2,7 @@
 "aq" = (
 /obj/machinery/duct,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "aV" = (
 /obj/machinery/computer/operating,
 /obj/machinery/light{
@@ -16,17 +16,25 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
+"bD" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "bK" = (
 /obj/effect/turf_decal/syndicateemblem/top/right,
 /obj/structure/closet/secure_closet/chief_medical,
 /obj/item/areaeditor,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "ca" = (
 /obj/machinery/chem_dispenser,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
+"cf" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/spitfire/cargo_bay/production)
 "co" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
@@ -35,69 +43,56 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
-"cB" = (
-/turf/closed/wall/mineral/titanium,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/hallway)
 "cX" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
-"di" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "dj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "dw" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
-"dz" = (
-/obj/machinery/duct,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "dP" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "ej" = (
 /obj/effect/turf_decal/tile/blue/half,
 /obj/machinery/door/window/survival_pod{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "eL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/mineral/ore_redemption,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "fg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "fF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "gI" = (
 /obj/structure/window/reinforced/survival_pod,
 /obj/structure/table/glass,
@@ -111,7 +106,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "gL" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/toxin{
@@ -127,11 +122,11 @@
 /obj/machinery/door/window/survival_pod{
 	dir = 8
 	},
-/turf/open/space/basic,
-/area/station/medical/exam_room)
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/spitfire/medbay)
 "hs" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "hB" = (
 /obj/machinery/duct,
 /obj/machinery/door/airlock/hatch,
@@ -139,7 +134,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
+"ik" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/spitfire/medbay)
 "iD" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -147,34 +145,28 @@
 	},
 /obj/item/radio/intercom,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "iH" = (
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "iV" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/effect/turf_decal/syndicateemblem/middle/left,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
-"iY" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/bridge)
 "jh" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /obj/effect/turf_decal/syndicateemblem/bottom/left,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "jk" = (
 /obj/machinery/cryopod{
 	dir = 1
@@ -183,14 +175,14 @@
 	pixel_y = 26
 	},
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "jt" = (
 /obj/effect/turf_decal/box,
 /obj/machinery/plumbing/synthesizer{
 	reagent_id = /datum/reagent/carbon
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "jD" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -199,11 +191,11 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "ku" = (
 /obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "kE" = (
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 8
@@ -213,42 +205,42 @@
 	},
 /obj/structure/closet/secure_closet/medical1,
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "kT" = (
 /obj/machinery/chem_heater,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "kV" = (
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/medical3,
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "kZ" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "lw" = (
 /obj/effect/turf_decal/tile/blue/anticorner{
 	dir = 8
 	},
 /obj/structure/table/optable,
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "lA" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/machinery/light,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "lD" = (
 /obj/machinery/door/airlock/medical/glass,
 /obj/machinery/door/firedoor,
 /turf/open/floor/pod,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "lN" = (
 /mob/living/simple_animal/bot/secbot/grievous/toy{
 	name = "Protector of Doctors"
@@ -258,18 +250,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "lV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/syndicateemblem/bottom/middle,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
+"mu" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/spitfire/medbay)
 "mx" = (
 /obj/machinery/ore_silo,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/spitfire/cargo_bay/production)
 "mL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -277,30 +276,28 @@
 	},
 /obj/effect/turf_decal/syndicateemblem/bottom/right,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "mX" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/docking_port/mobile/voidcrew{
-	can_move_docking_ports = 1;
-	dir = 2;
-	launch_status = 0
-	},
 /obj/structure/grille,
+/obj/docking_port/mobile/voidcrew/spitfire{
+	dir = 2
+	},
 /turf/open/floor/plating,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "nu" = (
 /obj/machinery/duct,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "oi" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/spitfire/cargo_bay/production)
 "om" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
@@ -310,11 +307,11 @@
 	},
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "os" = (
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "oz" = (
 /obj/machinery/duct,
 /obj/structure/cable,
@@ -322,7 +319,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "oI" = (
 /obj/effect/turf_decal/tile/blue/half,
 /obj/machinery/duct,
@@ -331,7 +328,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/vending/drugs,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "oJ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -339,7 +336,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/spitfire/cargo_bay/production)
 "oP" = (
 /obj/effect/turf_decal/tile/brown/half,
 /obj/machinery/button/door{
@@ -349,24 +346,24 @@
 	},
 /obj/structure/ore_box,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "oU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "oV" = (
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "oW" = (
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "pv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "pR" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/belt/utility,
@@ -375,28 +372,27 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
-"pV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/bridge)
 "rj" = (
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "rA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
+"rJ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/spitfire/bridge)
 "rL" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/brown/anticorner,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "rN" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 4
@@ -404,21 +400,21 @@
 /obj/effect/spawner/random/maintenance/four,
 /obj/structure/closet/crate,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "rS" = (
 /obj/machinery/duct,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "rX" = (
 /obj/machinery/duct,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "sB" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 4
@@ -426,35 +422,30 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
-"sU" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "td" = (
 /obj/structure/table/wood,
 /obj/item/toy/plush/nukeplushie,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "tl" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/spitfire/cargo_bay/production)
 "tu" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "tG" = (
 /obj/machinery/duct,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "tU" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
@@ -462,64 +453,65 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "tZ" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/effect/turf_decal/syndicateemblem/middle/right,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
+"uc" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "ur" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "uu" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/structure/curtain/bounty,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
-"uD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "uF" = (
 /obj/machinery/autolathe,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/spitfire/cargo_bay/production)
 "uQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "vd" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "vC" = (
 /obj/item/construction/plumbing,
 /obj/item/stack/ducts/fifty,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "vG" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "vS" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "vY" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
@@ -529,30 +521,29 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
-"wr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/hallway)
+"wm" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "wQ" = (
 /obj/effect/turf_decal/box,
 /obj/structure/cable,
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "xc" = (
 /obj/machinery/plumbing/synthesizer{
 	reagent_id = /datum/reagent/hydrogen
 	},
 /obj/effect/turf_decal/box,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "xH" = (
 /obj/machinery/atmospherics/components/tank/air{
 	piping_layer = 4
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "yX" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/wrench/combat,
@@ -560,13 +551,16 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "zb" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
+"zP" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "An" = (
 /obj/machinery/stasis,
 /obj/structure/cable,
@@ -578,12 +572,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "Bu" = (
 /obj/effect/turf_decal/syndicateemblem/top/middle,
 /obj/machinery/computer/helm,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "By" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
@@ -595,18 +589,18 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "BH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "BI" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "BK" = (
 /obj/machinery/duct,
 /obj/machinery/vending/medical/syndicate_access,
@@ -614,17 +608,23 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
+"Ce" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/spitfire/medbay)
 "Cu" = (
 /obj/effect/turf_decal/tile/brown/half,
 /obj/machinery/light,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "CV" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "CW" = (
 /obj/machinery/door/poddoor{
 	id = "syndie3doors"
@@ -632,75 +632,72 @@
 /obj/effect/turf_decal/tile/brown/half,
 /obj/structure/fans/tiny,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Dc" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/bridge)
 "Dg" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "Dp" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/medbay)
 "Dq" = (
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "Dx" = (
 /obj/structure/cable,
 /obj/machinery/door/window/survival_pod,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
-"DN" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/area/shuttle/voidcrew/spitfire/hallway)
+"DZ" = (
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Ej" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "EA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "EY" = (
 /obj/machinery/duct,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "Fc" = (
 /obj/effect/turf_decal/tile/brown/half,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/ore_box,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Fd" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "FJ" = (
 /obj/structure/cable,
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "FQ" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
@@ -709,7 +706,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "Gh" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
@@ -717,7 +714,7 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "Gj" = (
 /turf/template_noop,
 /area/template_noop)
@@ -727,13 +724,18 @@
 	reagent_id = /datum/reagent/fuel
 	},
 /turf/open/floor/plating,
-/area/station/maintenance/port)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "Gn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
+"GF" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "Hp" = (
 /obj/structure/table/glass,
 /obj/item/vending_refill/medical,
@@ -745,7 +747,7 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "HY" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 4
@@ -756,7 +758,7 @@
 /obj/effect/spawner/random/maintenance/six,
 /obj/structure/closet/crate,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Ik" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/cup/bottle/formaldehyde{
@@ -776,18 +778,18 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "In" = (
 /obj/machinery/camera/directional/north,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "It" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
 /obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "IE" = (
 /obj/machinery/door/airlock/grunge,
 /obj/structure/cable,
@@ -795,10 +797,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/commons/storage/primary)
-"IH" = (
-/turf/closed/wall/mineral/titanium,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Jv" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
@@ -806,10 +805,10 @@
 /obj/structure/table/glass,
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "JH" = (
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "Kj" = (
 /obj/structure/closet/cabinet,
 /obj/item/clothing/under/syndicate/tacticool/skirt,
@@ -824,42 +823,48 @@
 /obj/item/clothing/under/syndicate/tacticool/skirt,
 /obj/item/clothing/under/syndicate/tacticool,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "Ks" = (
 /obj/machinery/door/window/survival_pod,
 /obj/effect/turf_decal/tile/yellow/half,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
+"Ku" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/spitfire/cargo_bay/production)
 "KL" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/brown/half,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "KM" = (
 /obj/structure/window/reinforced/survival_pod,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "Lm" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Lp" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
 /obj/structure/curtain/bounty,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "Lw" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/effect/turf_decal/syndicateemblem/middle/middle,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "LG" = (
 /obj/machinery/door/airlock/hatch,
 /obj/structure/cable,
@@ -867,7 +872,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "Mg" = (
 /obj/machinery/door/airlock/medical/glass,
 /obj/structure/cable,
@@ -875,11 +880,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "ME" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "MY" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -891,10 +896,7 @@
 	},
 /obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/plating,
-/area/station/maintenance/port)
-"Nq" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/maintenance)
 "NA" = (
 /obj/effect/turf_decal/tile/blue/half{
 	dir = 1
@@ -906,7 +908,7 @@
 /obj/structure/table/glass,
 /obj/item/storage/backpack/duffelbag/syndie/surgery,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "NJ" = (
 /obj/structure/mirror{
 	pixel_x = -24
@@ -916,52 +918,49 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
-"Oc" = (
-/turf/closed/wall/mineral/titanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/medbay)
 "Oh" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
 	id = "syndie3doors"
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Pn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "PZ" = (
 /obj/machinery/duct,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "Qn" = (
 /obj/machinery/door/airlock/medical/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "QH" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "Ru" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/tactical,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "RG" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
 /obj/machinery/suit_storage_unit/syndicate,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Sc" = (
 /obj/machinery/door/airlock/highsecurity,
 /obj/structure/cable,
@@ -969,7 +968,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/pod,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "St" = (
 /obj/machinery/duct,
 /obj/machinery/door/airlock/mining/glass,
@@ -978,66 +977,65 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
+"Su" = (
+/turf/closed/wall/mineral/titanium/interior,
+/area/shuttle/voidcrew/spitfire/bridge)
 "SE" = (
 /obj/structure/window/reinforced/survival_pod,
 /obj/machinery/power/shuttle_engine/ship/liquid/oil,
 /turf/open/floor/plating,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "SI" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
-"SR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "Tm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "Tu" = (
 /obj/structure/window/reinforced/survival_pod,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
-"Tw" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/station/commons/storage/primary)
+/area/shuttle/voidcrew/spitfire/hallway)
 "TH" = (
 /obj/machinery/vending/medical/syndicate_access,
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "TJ" = (
 /obj/effect/turf_decal/tile/brown/anticorner{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "TR" = (
 /obj/structure/table/reinforced,
 /obj/item/card/emag,
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/mineral/plastitanium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "TV" = (
 /obj/machinery/smartfridge/chemistry,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/yellow/anticorner,
 /obj/structure/window/reinforced/survival_pod,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
+"Ud" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "Ux" = (
 /obj/machinery/computer/crew,
 /obj/effect/turf_decal/syndicateemblem/top/left,
 /turf/open/floor/mineral/plastitanium/red,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/bridge)
 "UM" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/syndie,
@@ -1047,15 +1045,12 @@
 	dir = 4
 	},
 /turf/open/floor/carpet/neon/simple/red,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "Vr" = (
 /obj/structure/table/glass,
 /obj/item/storage/medkit/o2,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
-"Vu" = (
-/turf/closed/wall/mineral/titanium,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/medbay)
 "VG" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
@@ -1063,10 +1058,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "VU" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/spitfire/medbay)
 "Wl" = (
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
@@ -1076,10 +1071,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
-"WK" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Xc" = (
 /obj/machinery/computer/operating{
 	dir = 8
@@ -1088,13 +1080,13 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "Xd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
-/area/station/medical/surgery)
+/area/shuttle/voidcrew/spitfire/medbay/operating)
 "Xo" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1102,30 +1094,33 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "Xt" = (
 /obj/effect/turf_decal/tile/brown/half,
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "XI" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
+"XP" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Yo" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal/tile/brown/half{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Ys" = (
 /turf/closed/wall/mineral/titanium/interior,
-/area/station/commons/dorms)
+/area/shuttle/voidcrew/spitfire/cargo_bay)
 "Yz" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -1133,18 +1128,15 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "YN" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "YX" = (
 /turf/closed/wall/mineral/titanium,
-/area/station/commons/dorms)
-"YY" = (
-/turf/open/floor/iron/dark,
-/area/station/cargo/office)
+/area/shuttle/voidcrew/spitfire/dormitories)
 "Zn" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
@@ -1156,7 +1148,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
+/area/shuttle/voidcrew/spitfire/hallway)
 "Zq" = (
 /obj/structure/closet/secure_closet/chemical/heisenberg{
 	req_access = list(21)
@@ -1169,7 +1161,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 "Zw" = (
 /obj/machinery/door/airlock/medical/glass,
 /obj/machinery/duct,
@@ -1178,7 +1170,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
-/area/station/medical/exam_room)
+/area/shuttle/voidcrew/spitfire/medbay)
 
 (1,1,1) = {"
 Gj
@@ -1190,13 +1182,13 @@ Gj
 Gj
 Gj
 Gj
-IH
+XP
 om
 Oh
 Oh
 Oh
 CW
-Vu
+XP
 Gj
 Gj
 "}
@@ -1208,15 +1200,15 @@ Gj
 Gj
 Gj
 Gj
-IH
-IH
-IH
+cf
+cf
+XP
 Lm
-YY
-YY
-YY
+DZ
+DZ
+DZ
 oP
-Dp
+bD
 Gj
 Gj
 "}
@@ -1227,12 +1219,12 @@ Gj
 Gj
 Gj
 Gj
-IH
-IH
+cf
+cf
 uF
-Tw
+Ys
 VG
-YY
+DZ
 eL
 BH
 Fc
@@ -1246,17 +1238,17 @@ Gj
 Gj
 Gj
 Gj
-IH
-IH
+cf
+cf
 tl
-uQ
+Ku
 IE
-iY
-iY
+uQ
+uQ
 pv
 oU
 Xt
-Dp
+bD
 Gj
 Gj
 "}
@@ -1266,18 +1258,18 @@ Gj
 Gj
 Gj
 Gj
-IH
+cf
 mx
 oi
 oJ
-Tw
+Ys
 Yo
-iY
+uQ
 rA
-YY
+DZ
 Cu
-Vu
-Vu
+XP
+XP
 Gj
 "}
 (6,1,1) = {"
@@ -1285,16 +1277,16 @@ Gj
 Gj
 Gj
 Gj
-Dc
-IH
-Tw
-Tw
-Tw
-Tw
+zP
+zP
+wm
+wm
+wm
+Ys
 Wl
-iY
+uQ
 cX
-YY
+DZ
 zb
 dw
 SE
@@ -1304,15 +1296,15 @@ Gj
 Gj
 Gj
 Gj
-Dc
-Dc
+zP
+zP
 By
 kV
 kE
 tU
-di
+Ys
 RG
-dz
+rS
 aq
 aq
 aq
@@ -1324,14 +1316,14 @@ Gj
 Gj
 Gj
 Gj
-uD
+GF
 TH
 Dq
-wr
-pV
-pV
+Ud
+uc
+uc
 Mg
-iY
+uQ
 FJ
 sB
 HY
@@ -1342,36 +1334,36 @@ Gj
 "}
 (9,1,1) = {"
 Gj
-Oc
-Oc
-Oc
-VU
+Dc
+Dc
+Dc
+Su
 lw
 Xc
 An
 Xd
-di
+Ys
 TJ
-dz
-WK
-WK
-WK
-WK
-Vu
+rS
+Ys
+Ys
+Ys
+Ys
+XP
 Gj
 "}
 (10,1,1) = {"
-sU
-sU
+rJ
+rJ
 iD
 TR
-VU
-di
-di
-di
+Su
+wm
+wm
+wm
 Qn
-di
-WK
+Ys
+Ys
 St
 Ys
 jk
@@ -1381,11 +1373,11 @@ YX
 YX
 "}
 (11,1,1) = {"
-sU
+rJ
 Ux
 iV
 jh
-sU
+rJ
 yX
 vY
 Tu
@@ -1421,11 +1413,11 @@ Kj
 fF
 "}
 (13,1,1) = {"
-sU
+rJ
 bK
 tZ
 mL
-sU
+rJ
 It
 Zn
 KM
@@ -1441,19 +1433,19 @@ ku
 fF
 "}
 (14,1,1) = {"
-sU
-sU
+rJ
+rJ
 Ru
 pR
 VU
-Nq
-Nq
-Nq
+VU
+VU
+VU
 lD
-Nq
+VU
 Zw
-Nq
-Ys
+VU
+VU
 uu
 UM
 Lp
@@ -1462,16 +1454,16 @@ YX
 "}
 (15,1,1) = {"
 Gj
-Oc
-Oc
-Oc
+Dc
+Dc
+ik
 VU
 kT
 gI
 NJ
 oV
 Ej
-rS
+mu
 BK
 hs
 hs
@@ -1484,14 +1476,14 @@ Gj
 Gj
 Gj
 Gj
-SR
+Dp
 ca
 SI
 Ks
 SI
 oV
 oV
-DN
+Ce
 oI
 hs
 CV
@@ -1504,8 +1496,8 @@ Gj
 Gj
 Gj
 Gj
-cB
-cB
+ik
+ik
 iH
 TV
 BI
@@ -1525,8 +1517,8 @@ Gj
 Gj
 Gj
 Gj
-cB
-cB
+ik
+ik
 Zq
 Jv
 XI
@@ -1546,7 +1538,7 @@ Gj
 Gj
 Gj
 Gj
-SR
+Dp
 Vr
 ur
 oV
@@ -1566,8 +1558,8 @@ Gj
 Gj
 Gj
 Gj
-cB
-cB
+ik
+ik
 Hp
 vd
 vd
@@ -1587,8 +1579,8 @@ Gj
 Gj
 Gj
 Gj
-cB
-cB
+ik
+ik
 gL
 Ik
 NA
@@ -1608,9 +1600,9 @@ Gj
 Gj
 Gj
 Gj
-cB
-SR
-cB
+ik
+Dp
+ik
 aV
 YN
 hs
@@ -1630,9 +1622,9 @@ Gj
 Gj
 Gj
 Gj
-cB
-cB
-SR
+ik
+ik
+Dp
 Fd
 Fd
 Fd

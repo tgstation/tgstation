@@ -3,68 +3,68 @@
 /obj/structure/cable,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "am" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "aO" = (
 /obj/structure/tank_dispenser/plasma,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "dr" = (
-/obj/docking_port/mobile/voidcrew{
+/obj/effect/spawner/structure/window/reinforced,
+/obj/docking_port/mobile/voidcrew/honk{
 	dir = 2
 	},
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "dW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "fx" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "fL" = (
 /obj/item/areaeditor,
 /obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/wood,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "gc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
 	dir = 8
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "gN" = (
 /turf/closed/wall/mineral/bananium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "hf" = (
 /obj/machinery/vending/hydronutrients,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "hn" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/machinery/light,
 /obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "hv" = (
 /obj/machinery/computer/helm,
 /turf/open/floor/wood,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "hx" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "iN" = (
 /obj/machinery/light,
 /obj/item/stack/sheet/mineral/plasma/five,
@@ -72,44 +72,44 @@
 /obj/machinery/power/port_gen/pacman,
 /obj/structure/window/reinforced/plasma/spawner/west,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "kz" = (
 /obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/wood,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "lc" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "mc" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/wood,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "mU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "mV" = (
 /obj/structure/cable,
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "ns" = (
 /obj/machinery/door/airlock/bananium/glass,
 /obj/item/grown/bananapeel/bluespace{
 	alpha = 30
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "oo" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/food/grown/banana,
 /obj/item/food/grown/banana,
 /obj/item/food/grown/banana,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "rq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -119,7 +119,7 @@
 	},
 /obj/machinery/power/supermatter_crystal/shard,
 /turf/open/floor/glass/reinforced,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "rz" = (
 /obj/machinery/door/airlock/bananium/glass,
 /obj/item/grown/bananapeel/bluespace{
@@ -127,18 +127,18 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "rT" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "rY" = (
 /obj/structure/fans/tiny,
 /obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "sM" = (
 /obj/machinery/power/smes/engineering{
 	dir = 1
@@ -146,23 +146,23 @@
 /obj/structure/window/reinforced/plasma,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "ta" = (
 /obj/item/stack/tile/eighties/loaded{
 	amount = 50
 	},
 /turf/open/floor/plating,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "tc" = (
 /obj/machinery/conveyor/auto{
 	dir = 4
 	},
 /turf/open/floor/glass/reinforced,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "tX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /turf/closed/wall/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "vn" = (
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/royalblue,
@@ -171,21 +171,21 @@
 /obj/item/storage/box/donkpockets/donkpockethonk,
 /obj/item/storage/box/donkpockets/donkpockethonk,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "vo" = (
 /obj/machinery/atmospherics/components/tank/air,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "wp" = (
 /obj/structure/cable,
 /obj/machinery/power/emitter{
 	dir = 8
 	},
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "wr" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -195,11 +195,11 @@
 	alpha = 30
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "xf" = (
 /obj/structure/window/reinforced/plasma/spawner/east,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "xT" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -208,14 +208,14 @@
 	dir = 6
 	},
 /turf/open/floor/glass/reinforced,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "yr" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "yB" = (
 /obj/structure/chair/e_chair{
 	dir = 4
@@ -225,60 +225,60 @@
 	dir = 8
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "yE" = (
 /obj/structure/fans/tiny,
 /obj/structure/cable,
 /obj/structure/railing,
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "AS" = (
 /obj/machinery/airalarm/all_access{
 	dir = 1;
 	pixel_y = 26
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "AY" = (
 /obj/machinery/jukebox/disco{
 	anchored = 1
 	},
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "Bn" = (
 /obj/structure/cable,
 /obj/item/pipe_dispenser,
 /obj/structure/table/wood/fancy,
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "BK" = (
 /obj/structure/closet/crate,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Cz" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "CJ" = (
 /obj/structure/window/reinforced/plasma,
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Do" = (
 /obj/structure/window/reinforced/plasma,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Dt" = (
 /obj/machinery/conveyor/auto{
 	dir = 8
 	},
 /turf/open/floor/glass/reinforced,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "El" = (
 /mob/living/carbon/human/species/monkey,
 /obj/structure/cable,
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "En" = (
 /obj/structure/fans/tiny,
 /obj/structure/cable,
@@ -286,7 +286,7 @@
 	dir = 4
 	},
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "EC" = (
 /obj/structure/window{
 	dir = 4
@@ -299,31 +299,31 @@
 /obj/item/dnainjector/timed/h2m,
 /obj/item/dnainjector/timed/h2m,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "FK" = (
 /obj/machinery/autolathe,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Hg" = (
 /obj/structure/table/wood/fancy/royalblue,
 /obj/item/toy/crayon/spraycan/lubecan,
 /obj/item/toy/crayon/spraycan/lubecan,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Hr" = (
 /obj/machinery/biogenerator,
 /obj/item/reagent_containers/cup/beaker,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "HB" = (
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "HX" = (
 /obj/structure/fans/tiny,
 /obj/structure/railing{
@@ -333,7 +333,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "IO" = (
 /obj/structure/rack,
 /obj/item/mod/control/pre_equipped/cosmohonk,
@@ -350,18 +350,18 @@
 /obj/item/stack/sheet/mineral/bananium,
 /obj/item/stack/sheet/mineral/bananium,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "IT" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "IX" = (
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/royalblue,
 /obj/machinery/microwave,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Jl" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
@@ -370,14 +370,14 @@
 	dir = 5
 	},
 /turf/open/floor/glass/reinforced,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "Jq" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor/shutters{
 	id = "prisonint2"
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Jy" = (
 /obj/structure/cable,
 /obj/machinery/button/door{
@@ -391,24 +391,24 @@
 	pixel_y = 34
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "KF" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/toolbox/mechanical,
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "KM" = (
 /obj/machinery/cryopod{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "KZ" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "LJ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
@@ -417,7 +417,7 @@
 	dir = 9
 	},
 /turf/open/floor/glass/reinforced,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "LW" = (
 /obj/structure/window/reinforced/plasma,
 /obj/structure/disposalpipe/trunk{
@@ -427,19 +427,19 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Mg" = (
 /obj/structure/falsewall/bananium,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "MZ" = (
 /obj/structure/cable,
 /obj/machinery/power/shuttle_engine/ship/electric{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "Nj" = (
 /obj/structure/table/glass,
 /obj/item/storage/toolbox/mechanical,
@@ -453,16 +453,16 @@
 /obj/item/gun/ballistic/revolver/russian/soul,
 /obj/item/clothing/head/chaplain/clownmitre,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "NI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /turf/open/floor/plating,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Ow" = (
 /obj/machinery/computer/cryopod,
 /turf/closed/wall/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Po" = (
 /obj/machinery/hydroponics/constructable,
 /obj/item/seeds/banana{
@@ -472,22 +472,22 @@
 	yield = 9
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Pr" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/item/reagent_containers/cup/bucket,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Pt" = (
 /obj/structure/window/reinforced/plasma/spawner/west,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Pz" = (
 /obj/structure/cable,
 /obj/item/assembly/signaler,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "PU" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -495,7 +495,7 @@
 /obj/structure/cable,
 /obj/machinery/disposal/delivery_chute,
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "Qc" = (
 /obj/structure/fans/tiny,
 /obj/machinery/power/terminal,
@@ -504,13 +504,13 @@
 	dir = 4
 	},
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "Rx" = (
 /obj/effect/landmark/start/mime,
 /obj/item/clothing/mask/gas/mime,
 /obj/effect/decal/remains/human,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "RJ" = (
 /obj/structure/rack,
 /obj/item/mod/control/pre_equipped/cosmohonk,
@@ -527,20 +527,20 @@
 /obj/item/stack/sheet/mineral/bananium,
 /obj/item/stack/sheet/mineral/bananium,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "RK" = (
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "SM" = (
 /obj/machinery/seed_extractor,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "TK" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/station/command/bridge)
+/area/shuttle/voidcrew/honk/bridge)
 "TV" = (
 /obj/item/food/egg,
 /obj/item/food/egg,
@@ -667,37 +667,37 @@
 /obj/item/food/egg,
 /obj/item/food/egg,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Up" = (
 /obj/item/pet_carrier,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Ur" = (
 /obj/structure/window/reinforced/plasma,
 /obj/structure/disposalpipe/trunk,
 /obj/structure/cable,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Uv" = (
 /obj/vehicle/ridden/scooter/skateboard,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "UD" = (
 /turf/closed/wall/mineral/bananium,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "UT" = (
 /obj/structure/fans/tiny,
 /obj/structure/railing,
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "Vc" = (
 /obj/machinery/mineral/ore_redemption,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Vl" = (
 /obj/machinery/ore_silo,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "VT" = (
 /obj/structure/fans/tiny,
 /obj/machinery/door/poddoor{
@@ -711,16 +711,16 @@
 	alpha = 30
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Wc" = (
 /obj/structure/cable,
 /obj/structure/bed/dogbed,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Wl" = (
 /obj/machinery/atmospherics/components/unary/passive_vent,
 /turf/open/floor/plating,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Ww" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -733,16 +733,16 @@
 /obj/item/food/raw_sausage,
 /obj/item/food/raw_sausage,
 /turf/open/floor/light,
-/area/station/engineering/supermatter)
+/area/shuttle/voidcrew/honk/supermatter)
 "Xn" = (
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "XR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Yd" = (
 /mob/living/simple_animal/pet/penguin/emperor/shamebrero{
 	desc = "Weakest Clown Player.";
@@ -753,7 +753,7 @@
 	},
 /obj/item/fugu_gland,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "YY" = (
 /turf/template_noop,
 /area/template_noop)
@@ -761,18 +761,18 @@
 /obj/machinery/mecha_part_fabricator,
 /obj/machinery/light,
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Zr" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "Zw" = (
 /obj/machinery/door/poddoor{
 	id = "prisonext3"
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "ZI" = (
 /obj/structure/rack,
 /obj/item/mod/control/pre_equipped/cosmohonk,
@@ -789,10 +789,10 @@
 	dir = 1
 	},
 /turf/open/floor/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 "ZT" = (
 /turf/closed/wall/mineral/bananium,
-/area/station/commons)
+/area/shuttle/voidcrew/honk)
 
 (1,1,1) = {"
 YY

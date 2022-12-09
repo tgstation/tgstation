@@ -42,3 +42,46 @@
 			slots = 3,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/meta
+	name = "Meta-class Freighter"
+	area_type = /area/shuttle/voidcrew/meta
+	port_direction = 8
+	preferred_direction = 2
+
+
+/// AREAS ///
+
+/// Command ///
+
+/area/shuttle/voidcrew/meta/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/// Cargo ///
+
+/area/shuttle/voidcrew/meta/cargo
+	name = "Cargo Bay"
+	icon_state = "cargo_bay"
+
+/// Engineering ///
+
+/area/shuttle/voidcrew/meta/engineering
+	name = "Engineering"
+	icon_state = "engine"
+
+/// Service ///
+
+/area/shuttle/voidcrew/meta/dorms
+	name = "Dormitories"
+	icon_state = "dorms"
+
+/area/shuttle/voidcrew/meta/cafeteria
+	name = "Cafeteria"
+	icon_state = "cafeteria"
+
+/area/shuttle/voidcrew/meta/kitchen
+	name = "Kitchen"
+	icon_state = "kitchen"

@@ -37,3 +37,32 @@
 			slots = 2,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/pubby
+	name = "Pubby-class Light Carrier"
+	area_type = /area/shuttle/voidcrew/pubby
+	port_direction = 8
+	preferred_direction = 4
+
+
+/// AREAS ///
+
+/// Command ///
+
+/area/shuttle/voidcrew/pubby/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/// Cargo ///
+
+/area/shuttle/voidcrew/pubby/cargo
+	name = "Cargo Bay"
+	icon_state = "cargo_bay"
+
+/// Engineering ///
+
+/area/shuttle/voidcrew/pubby/engineering
+	name = "Engineering"
+	icon_state = "engine"

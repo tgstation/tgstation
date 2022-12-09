@@ -32,3 +32,65 @@
 			slots = 3,
 		),
 	)
+
+/// DOCKING PORT ///
+
+/obj/docking_port/mobile/voidcrew/high
+	name = "High-class Corporate Luxury Ship"
+	area_type = /area/shuttle/voidcrew/high
+	port_direction = 4
+
+
+/// AREAS ///
+
+/// Command ///
+
+/area/shuttle/voidcrew/high/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/area/shuttle/voidcrew/high/bridge/captain
+	name = "Captain's Office"
+	icon_state = "captain"
+
+/area/shuttle/voidcrew/high/bridge/boardroom
+	name = "Boardroom"
+	icon_state = "meeting"
+
+/area/shuttle/voidcrew/high/bridge/reception
+	name = "Reception"
+	icon_state = "station"
+
+/// Security ///
+
+/area/shuttle/voidcrew/high/security
+	name = "Security Checkpoint"
+	icon_state = "checkpoint"
+
+/// Engineering ///
+
+/area/shuttle/voidcrew/high/engineering
+	name = "Engineering"
+	icon_state = "engine"
+
+/// Cargo ///
+
+/area/shuttle/voidcrew/high/cargo_bay
+	name = "Cargo Bay"
+	icon_state = "cargo_warehouse"
+
+/// Service ///
+
+/area/shuttle/voidcrew/high/dorms
+	name = "Dormitories"
+	icon_state = "dorms"
+
+/// Hallway ///
+
+/area/shuttle/voidcrew/high/hallway
+	name = "Entrance Hall"
+	icon_state = "hall"
+
+/area/shuttle/voidcrew/high/hallway/main
+	name = "Main Hall"
+	icon_state = "centralhall"
