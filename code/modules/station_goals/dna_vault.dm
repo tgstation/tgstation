@@ -129,13 +129,13 @@
 	if((user_weakref in power_lottery) || isdead(user))
 		return
 	possible_powers = list(
-	/datum/mutation/human/breathless,
-	/datum/mutation/human/fast_runner,
-	/datum/mutation/human/tough_skin,
-	/datum/mutation/human/dexterous,
-	/datum/mutation/human/fire_immune,
-	/datum/mutation/human/stun_resistant,
-	/datum/mutation/human/plasma_adapter
+		/datum/mutation/human/breathless,
+		/datum/mutation/human/dextrous,
+		/datum/mutation/human/fast_runner,
+		/datum/mutation/human/fire_immune,
+		/datum/mutation/human/plasma_adapter,
+		/datum/mutation/human/stun_resistant,
+		/datum/mutation/human/tough_skin,
 	)
 	var/list/gained_mutation = list()
 	gained_mutation += pick_n_take(possible_powers)
@@ -207,6 +207,6 @@
 	if(!(upgrade_type in power_lottery[human_weakref])||(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
 	H.dna.add_mutation(upgrade_type, MUT_OTHER, 0)
-	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
+	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT)
 	power_lottery[human_weakref] = list()
 	use_power(active_power_usage)

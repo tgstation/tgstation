@@ -830,7 +830,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define NO_GRAVITY_TRAIT "no-gravity"
 #define LEAPING_TRAIT "leaping"
 #define LEAPER_BUBBLE_TRAIT "leaper-bubble"
-#define DNA_VAULT_TRAIT "dna_vault"
 /// sticky nodrop sounds like a bad soundcloud rapper's name
 #define STICKY_NODROP "sticky-nodrop"
 #define SKILLCHIP_TRAIT "skillchip"

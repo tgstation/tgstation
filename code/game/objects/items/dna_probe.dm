@@ -36,7 +36,7 @@
 		return
 	if(istype(target, /obj/machinery/dna_vault) && !dna_vault_ref)
 		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
-		balloon_alert(user, "vault linked!")
+		balloon_alert(user, "vault linked")
 	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
 
 	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
@@ -50,7 +50,7 @@
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return
 		stored_dna_plants[hydro_tray.myseed.type] = TRUE
-		balloon_alert(user, "data added!")
+		balloon_alert(user, "data added")
 
 	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
 		var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
@@ -65,7 +65,7 @@
 				to_chat(user, span_alert("No compatible DNA detected."))
 				return
 			stored_dna_animal[living_target.type] = TRUE
-			balloon_alert(user, "data added!")
+			balloon_alert(user, "data added")
 
 	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
@@ -76,7 +76,7 @@
 			to_chat(user, span_alert("No compatible DNA detected."))
 			return
 		stored_dna_human[human_target.dna.unique_identity] = TRUE
-		balloon_alert(user, "data added!")
+		balloon_alert(user, "data added")
 
 
 #define CARP_MIX_DNA_TIMER (15 SECONDS)

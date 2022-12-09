@@ -8,11 +8,11 @@
 
 /datum/mutation/human/breathless/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	ADD_TRAIT(acquirer, TRAIT_NOBREATH, DNA_VAULT_TRAIT)
+	ADD_TRAIT(acquirer, TRAIT_NOBREATH)
 
 /datum/mutation/human/breathless/on_losing(mob/living/carbon/human/owner)//this shouldnt happen under normal condition but just to be sure
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, DNA_VAULT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH)
 
 /datum/mutation/human/fast_runner
 	name = "Fast runner"
@@ -41,28 +41,28 @@
 /datum/mutation/human/tough_skin/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
 	acquirer.armor += 30
-	ADD_TRAIT(acquirer, TRAIT_PIERCEIMMUNE, DNA_VAULT_TRAIT)
+	ADD_TRAIT(acquirer, TRAIT_PIERCEIMMUNE)
 
 /datum/mutation/human/tough_skin/on_losing(mob/living/carbon/human/owner)
 	. = ..()
 	owner.armor -= 30
-	REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE, DNA_VAULT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE)
 
-/datum/mutation/human/dexterous
-	name = "Dexterous"
+/datum/mutation/human/dextrous
+	name = "dextrous"
 	desc = "A mutation within the nerve system that allows for more responsive and quicker action."
-	text_gain_indication = "Your limbs feel more dexterous and responsive."
-	text_lose_indication = "Your limbs feel less dexterous and responsive."
+	text_gain_indication = "Your limbs feel more dextrous and responsive."
+	text_lose_indication = "Your limbs feel less dextrous and responsive."
 	locked = TRUE
 	mutadone_proof = TRUE
 
-/datum/mutation/human/dexterous/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/human/dextrous/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	acquirer.next_move_modifier = 0.5
+	acquirer.next_move_modifier *= 0.5
 
-/datum/mutation/human/dexterous/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/human/dextrous/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.next_move_modifier = 1
+	owner.next_move_modifier /= 0.5
 
 /datum/mutation/human/fire_immune
 	name = "Fire immunity"
@@ -74,13 +74,15 @@
 
 /datum/mutation/human/fire_immune/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	ADD_TRAIT(acquirer, TRAIT_RESISTHEAT, DNA_VAULT_TRAIT)
-	ADD_TRAIT(acquirer, TRAIT_NOFIRE, DNA_VAULT_TRAIT)
+	acquirer.physiology.burn_mod *= 0.5
+	ADD_TRAIT(acquirer, TRAIT_RESISTHEAT)
+	ADD_TRAIT(acquirer, TRAIT_NOFIRE)
 
 /datum/mutation/human/fire_immune/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_RESISTHEAT, DNA_VAULT_TRAIT)
-	REMOVE_TRAIT( owner, TRAIT_NOFIRE, DNA_VAULT_TRAIT)
+	owner.physiology.burn_mod /= 0.5
+	REMOVE_TRAIT(owner, TRAIT_RESISTHEAT)
+	REMOVE_TRAIT( owner, TRAIT_NOFIRE)
 
 /datum/mutation/human/stun_resistant
 	name = "Stun resistant"
@@ -92,13 +94,11 @@
 
 /datum/mutation/human/stun_resistant/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	var/datum/species/mutant = acquirer.dna.species
-	mutant.stunmod = 0.5
+	acquirer.physiology.stun_mod *= 0.5
 
 /datum/mutation/human/stun_resistant/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	var/datum/species/mutant = owner.dna.species
-	mutant.stunmod = 1
+	owner.physiology.stun_mod /= 0.5
 
 /datum/mutation/human/plasma_adapter
 	name = "Plasma adaptation"
@@ -110,15 +110,17 @@
 
 /datum/mutation/human/plasma_adapter/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	if(/obj/item/organ/internal/lungs in acquirer.internal_organs)
-		var/obj/item/organ/internal/lungs/L = acquirer.internal_organs_slot[ORGAN_SLOT_LUNGS]
-		L.plas_breath_dam_min = 0
-		L.plas_breath_dam_max = 0
+	var/obj/item/organ/internal/lungs/improved_lungs = acquirer.getorganslot(ORGAN_SLOT_LUNGS)
+	ADD_TRAIT(owner, TRAIT_VIRUSIMMUNE)
+	if(improved_lungs)
+		improved_lungs.plas_breath_dam_min *= 0
+		improved_lungs.plas_breath_dam_max *= 0
 
 /datum/mutation/human/plasma_adapter/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	if(/obj/item/organ/internal/lungs in owner.internal_organs)
-		var/obj/item/organ/internal/lungs/L = owner.internal_organs_slot[ORGAN_SLOT_LUNGS]
-		L.plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
-		L.plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
+	var/obj/item/organ/internal/lungs/improved_lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
+	REMOVE_TRAIT(owner, TRAIT_VIRUSIMMUNE)
+	if(improved_lungs)
+		improved_lungs.plas_breath_dam_min = MIN_TOXIC_GAS_DAMAGE
+		improved_lungs.plas_breath_dam_max = MAX_TOXIC_GAS_DAMAGE
 
