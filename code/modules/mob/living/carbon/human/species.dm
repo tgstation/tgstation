@@ -448,7 +448,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
-	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), C)
+	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), C, TRUE)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
