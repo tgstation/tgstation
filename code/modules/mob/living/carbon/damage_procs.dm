@@ -61,7 +61,7 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		take_overall_damage(amount, 0, 0, updating_health, required_status)
+		take_overall_damage(amount, 0, updating_health, required_status)
 	else
 		heal_overall_damage(abs(amount), 0, required_status, updating_health)
 	return amount
@@ -77,7 +77,7 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		take_overall_damage(0, amount, 0, updating_health, required_status)
+		take_overall_damage(0, amount, updating_health, required_status)
 	else
 		heal_overall_damage(0, abs(amount), required_status, updating_health)
 	return amount
