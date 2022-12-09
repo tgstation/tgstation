@@ -23,10 +23,8 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		user.jobs_menu_mounted = TRUE // Don't flood a user's chat if they open and close the UI.
 
 /datum/latejoin_menu/ui_interact(mob/dead/new_player/user, datum/tgui/ui)
-	if(!istype(user))
-		return
-
 	ui = SStgui.try_update_ui(user, src, ui)
+
 	if(!ui)
 		// In case they reopen the GUI
 		user.jobs_menu_mounted = FALSE
@@ -51,7 +49,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 		switch(SSshuttle.emergency.mode)
 			if(SHUTTLE_ESCAPE)
 				data["shuttle_status"] = "The station has been evacuated."
-			if(SHUTTLE_CALL || SHUTTLE_DOCKED || SHUTTLE_IGNITING || SHUTTLE_ESCAPE)
+			if(SHUTTLE_CALL, SHUTTLE_DOCKED, SHUTTLE_IGNITING, SHUTTLE_ESCAPE)
 				if(!SSshuttle.canRecall())
 					data["shuttle_status"] = "The station is currently undergoing evacuation procedures."
 
@@ -158,7 +156,6 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 					tgui_alert(owner, "The server is full!", "Oh No!")
 					return TRUE
 
-			SStgui.close_user_uis(owner, src) // Bandaid fix cause ui_state doesn't react properly to spawning in.
 			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
 			owner.AttemptLateSpawn(params["job"])
 			return TRUE
