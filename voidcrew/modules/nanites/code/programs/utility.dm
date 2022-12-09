@@ -336,9 +336,10 @@
 
 /datum/action/innate/nanite_button
 	name = "Button"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "power_green"
+	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_CONSCIOUS
+	///The nanite program the button will trigger.
 	var/datum/nanite_program/dermal_button/program
 
 /datum/action/innate/nanite_button/New(datum/nanite_program/dermal_button/_program, _name, _icon, _color)
