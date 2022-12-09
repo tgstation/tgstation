@@ -25,6 +25,8 @@
 	var/sound_off = 'sound/weapons/magout.ogg'
 	/// Is the light turned on or off currently
 	var/on = FALSE
+	/// Can the light be toggled off after it's turned on
+	var/can_toggle = TRUE
 
 /obj/item/flashlight/Initialize(mapload)
 	. = ..()
@@ -55,6 +57,9 @@
 		update_light()
 
 /obj/item/flashlight/proc/toggle_light(mob/user)
+	if(!can_toggle && on)
+		return
+
 	on = !on
 	playsound(user, on ? sound_on : sound_off, 40, TRUE)
 	update_brightness(user)
@@ -429,7 +434,8 @@
 	return TRUE
 
 /obj/item/flashlight/flare/candle/extinguish()
-	put_out_candle()
+	turn_off()
+	//put_out_candle()
 	return ..()
 
 /obj/item/flashlight/flare/candle/process(delta_time)
@@ -444,7 +450,8 @@
 	open_flame()
 
 /obj/item/flashlight/flare/candle/attack_self(mob/user)
-	if(put_out_candle())
+	if(turn_off())
+	//if(put_out_candle())
 		user.visible_message(span_notice("[user] snuffs [src]."))
 
 /obj/item/flashlight/flare/candle/infinite
