@@ -1,8 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - balance: "The lights will now flicker more frequently before a Grey Tide event"
-  - balance: "The lights will now be shut off via the APC when the Grey Tide event opens up a department."
-  - code_imp: "Makes some miscellaneous code improvements to the Grey Tide event"
-  - code_imp: "Grey tide event runs much faster"
-  - code_imp: "Renames prison_break.dm to grey_tide.dm"

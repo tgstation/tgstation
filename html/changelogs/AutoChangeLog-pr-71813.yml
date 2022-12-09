@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes:
-  - bugfix: "The teleporter shutter doors on KiloStation and Meta now properly work off Teleporter access instead of Command access"

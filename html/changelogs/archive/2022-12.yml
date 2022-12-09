@@ -271,3 +271,45 @@
       admin utilities, rest assured that it will actually log the destination location
       of where you are teleporting that thing to- rather than the location they were
       pre-teleportation.
+2022-12-09:
+  Ghommie:
+  - bugfix: 'fixes shields that don''t actually take damage from attacks (eg: adamantine
+      shields) being unable to block said attacks.'
+  LT3:
+  - qol: Tram crossing signals are now colourblind friendly, adding visible symbols
+      to the state of the crossing signal.
+  - rscadd: Tram crossing signals now visually show when they're malfunctioning.
+  - bugfix: Emagged tram crossing signals will stay emagged after the tram malfunction
+      event.
+  MGOOOOOO:
+  - balance: Tweaks the minimal temperature threshold and optimal temperature for
+      Palladium synthate catalyst.
+  MTandi:
+  - bugfix: biogenerator converts all plant nutriments into biomass, not just the
+      first found one.
+  Mothblocks:
+  - rscdel: Blink and you'll miss it, the syndicate revolver has come back.
+  Pickle-Coding:
+  - balance: Nuclear particles will always irradiate you on hit.
+  RandomGamer123:
+  - bugfix: Fixes access for a windoor to atmospherics on Delta
+  Rhials:
+  - balance: The lights will now flicker more frequently before a Grey Tide event
+  - balance: The lights will now be shut off via the APC when the Grey Tide event
+      opens up a department.
+  - code_imp: Makes some miscellaneous code improvements to the Grey Tide event
+  - code_imp: Grey tide event runs much faster
+  - code_imp: Renames prison_break.dm to grey_tide.dm
+  - bugfix: Ethereals cannot crystal revive back from genetic meltdown petrification.
+  ShizCalev:
+  - bugfix: The teleporter shutter doors on KiloStation and Meta now properly work
+      off Teleporter access instead of Command access
+  Tastyfish:
+  - bugfix: The dog's attack command is somewhat more reliable.
+  dawsonkeyes:
+  - rscadd: Added entirely new icons for the Chrono MODsuit
+  kawoppi:
+  - bugfix: fixed mothroach inhands not properly fitting under your arm when facing
+      sideways with the mothroach facing the camera
+  tf-4:
+  - bugfix: Light replacers will no longer turn invisible.
