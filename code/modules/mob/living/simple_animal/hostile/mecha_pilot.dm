@@ -22,7 +22,36 @@
 	wanted_objects = list()
 	search_objects = 0
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
-
+	icon = 'icons/mob/simple/simple_human.dmi'
+	icon_state = "syndicate"
+	icon_living = "syndicate"
+	icon_dead = "syndicate_dead"
+	icon_gib = "syndicate_gib"
+	sentience_type = SENTIENCE_HUMANOID
+	speak_chance = 0
+	turns_per_move = 5
+	speed = 1
+	stat_attack = HARD_CRIT
+	robust_searching = 1
+	maxHealth = 100
+	health = 100
+	harm_intent_damage = 5
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	combat_mode = TRUE
+	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 7.5
+	faction = list(ROLE_SYNDICATE)
+	check_friendly_fire = 1
+	status_flags = CANPUSH
+	del_on_death = 1
+	dodging = TRUE
+	rapid_melee = 2
+	footstep_type = FOOTSTEP_MOB_SHOE
 	var/spawn_mecha_type = /obj/vehicle/sealed/mecha/combat/marauder/mauler/loaded
 	var/obj/vehicle/sealed/mecha/mecha //Ref to pilot's mecha instance
 	var/required_mecha_charge = 7500 //If the pilot doesn't have a mecha, what charge does a potential Grand Theft Mecha need? (Defaults to half a battery)
