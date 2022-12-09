@@ -46,7 +46,7 @@
 	var/mob/host_mob
 
 /datum/unit_test/translate_language/Run()
-	host_mob = allocate(/mob/living/carbon/human)
+	host_mob = allocate(/mob/living/carbon/human/consistent)
 	var/surfer_quote = "surfing in the USA"
 
 	host_mob.grant_language(/datum/language/beachbum, spoken=TRUE, understood=FALSE) // can speak but can't understand
@@ -98,8 +98,8 @@
 	handle_hearing_result += hearing_args
 
 /datum/unit_test/speech/Run()
-	speaker = allocate(/mob/living/carbon/human)
-	listener = allocate(/mob/living/carbon/human)
+	speaker = allocate(/mob/living/carbon/human/consistent)
+	listener = allocate(/mob/living/carbon/human/consistent)
 	// Hear() requires a client otherwise it will early return
 	var/datum/client_interface/mock_client = new()
 	listener.mock_client = mock_client
