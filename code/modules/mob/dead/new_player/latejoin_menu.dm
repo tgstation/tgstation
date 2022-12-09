@@ -24,7 +24,6 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 /datum/latejoin_menu/ui_interact(mob/dead/new_player/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
-
 	if(!ui)
 		// In case they reopen the GUI
 		user.jobs_menu_mounted = FALSE
@@ -112,8 +111,9 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 	return list("departments_static" = departments)
 
-/datum/latejoin_menu/ui_state(mob/user)
-	return GLOB.new_player_state
+// we can't use GLOB.new_player_state here since it also allows any admin to see the ui, which will cause runtimes
+/datum/latejoin_menu/ui_status(mob/user)
+	return isnewplayer(user) ? UI_INTERACTIVE : UI_CLOSE
 
 /datum/latejoin_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -158,6 +158,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 
 			// SAFETY: AttemptLateSpawn has it's own sanity checks. This is perfectly safe.
 			owner.AttemptLateSpawn(params["job"])
+
 			return TRUE
 
 		if("viewpoll")
