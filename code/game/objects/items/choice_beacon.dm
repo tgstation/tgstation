@@ -157,7 +157,7 @@
 		user = user,
 		anchor = src,
 		choices = armament_names_to_images,
-		custom_check = CALLBACK(src, .proc/can_use_beacon, user),
+		custom_check = CALLBACK(src, PROC_REF(can_use_beacon), user),
 		require_near = TRUE,
 	)
 	if(!can_use_beacon(user))
