@@ -247,6 +247,7 @@
 
 /obj/item/storage/toolbox/emergency/old/ancientbundle/PopulateContents()
 	new /obj/item/card/emag(src)
+	new /obj/item/card/emag/doorjack(src) //emag used to do both
 	new /obj/item/pen/sleepy(src)
 	new /obj/item/reagent_containers/pill/cyanide(src)
 	new /obj/item/chameleon(src) //its not the original cloaking device, but it will do.
