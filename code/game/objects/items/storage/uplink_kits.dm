@@ -124,6 +124,7 @@
 			new /obj/item/card/id/advanced/mining(src)
 			new /obj/item/stack/spacecash/c10000(src)
 			new /obj/item/toy/spinningtoy(src) //lol
+			new /obj/item/pipe_dispenser(src) //needed for engine stuff
 
 		if(KIT_SABOTAGE)
 			/obj/item/storage/backpack/duffelbag/syndie/sabotage
