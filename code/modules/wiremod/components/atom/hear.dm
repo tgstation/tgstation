@@ -39,7 +39,7 @@
 	SIGNAL_HANDLER
 	return Hear(arglist(arguments))
 
-/obj/item/circuit_component/hear/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods)
+/obj/item/circuit_component/hear/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods, message_range)
 	if(speaker == parent?.shell)
 		return
 
