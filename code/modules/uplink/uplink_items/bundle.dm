@@ -81,13 +81,6 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	var/starting_crate_value = 30
 
-/datum/uplink_item/bundles_tc/surplus/super
-	name = "Super Surplus Crate"
-	desc = "A dusty SUPER-SIZED crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
-			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 75 TC."
-	cost = 40
-	starting_crate_value = 75
-
 /datum/uplink_item/bundles_tc/surplus/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/static/datum/supply_pack/misc/syndicate/cratefill = new()
 	cratefill.crate_value = starting_crate_value
@@ -99,3 +92,11 @@
 		"style" = STYLE_SYNDICATE,
 		"spawn" = surplus_crate,
 	))
+
+
+/datum/uplink_item/bundles_tc/surplus/super
+	name = "Super Surplus Crate"
+	desc = "A dusty SUPER-SIZED crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
+			Rumored to contain a valuable assortment of items, but you never know. Contents are sorted to always be worth 75 TC."
+	cost = 40
+	starting_crate_value = 75
