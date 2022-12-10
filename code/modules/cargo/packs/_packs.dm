@@ -90,7 +90,8 @@
 	crate_name = "shaft mining delivery crate"
 	access = list(ACCESS_MINING)
 
-/datum/supply_pack/custom/New(purchaser, list/given_contents)
+/datum/supply_pack/custom/New(purchaser, cost, list/contains)
 	. = ..()
 	name = "[purchaser]'s Mining Order"
-	contains = given_contents
+	src.cost = cost
+	src.contains = contains

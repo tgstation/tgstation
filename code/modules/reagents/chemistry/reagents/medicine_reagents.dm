@@ -532,16 +532,16 @@
 	return TRUE
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(1 * normalise_creation_purity(), delta_time) && iscarbon(M))
+	if(DT_PROB(1 * (1 + (1-normalise_creation_purity())), delta_time) && iscarbon(M))
 		var/datum/disease/D = new /datum/disease/heart_failure
 		M.ForceContractDisease(D)
 		to_chat(M, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
 
-	if(DT_PROB(3.5 * normalise_creation_purity(), delta_time))
+	if(DT_PROB(3.5 * (1 + (1-normalise_creation_purity())), delta_time))
 		to_chat(M, span_notice("[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
 
-	if(DT_PROB(18 * normalise_creation_purity(), delta_time))
+	if(DT_PROB(18 * (1 + (1-normalise_creation_purity())), delta_time))
 		M.adjustToxLoss(1, 0)
 		M.losebreath++
 		. = TRUE
@@ -708,7 +708,7 @@
 	var/mob/living/owner = holder.my_atom
 	var/atom/movable/composer = holder.my_atom
 	if(message_mods[WHISPER_MODE])
-		message = composer.compose_message(owner, message_language, message, , spans, message_mods)
+		message = composer.compose_message(owner, message_language, message, null, spans, message_mods)
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	var/obj/item/organ/internal/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)

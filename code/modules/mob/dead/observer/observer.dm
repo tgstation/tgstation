@@ -883,6 +883,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set_sight(initial(sight))
 	if(target)
 		UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
+		hide_other_mob_action_buttons(target)
 		LAZYREMOVE(target.observers, src)
 
 /mob/dead/observer/verb/observe()

@@ -52,7 +52,6 @@
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_SIGN_LANG), PROC_REF(enable_sign_language))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_SIGN_LANG), PROC_REF(disable_sign_language))
 	linked_action.Grant(parent)
-	linked_action.UpdateButtons()
 
 /datum/component/sign_language/UnregisterFromParent()
 	disable_sign_language()
@@ -68,16 +67,20 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_parent = parent
-	carbon_parent.dna?.species.say_mod = "signs"
+	var/obj/item/organ/internal/tongue/tongue = carbon_parent.getorganslot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.temp_say_mod = "signs"
+	//this speech relies on hands, which we have our own way of garbling speech when they're occupied, so we can have this always on
+	ADD_TRAIT(carbon_parent, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_HANDS)
 	carbon_parent.verb_ask = "signs"
 	carbon_parent.verb_exclaim = "signs"
 	carbon_parent.verb_whisper = "subtly signs"
 	carbon_parent.verb_sing = "rythmically signs"
 	carbon_parent.verb_yell = "emphatically signs"
 	carbon_parent.bubble_icon = "signlang"
+	RegisterSignal(carbon_parent, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_added_organ))
 	RegisterSignal(carbon_parent, COMSIG_LIVING_TRY_SPEECH, PROC_REF(on_try_speech))
 	RegisterSignal(carbon_parent, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(on_treat_living_message))
-	RegisterSignal(carbon_parent, COMSIG_MOVABLE_TREAT_MESSAGE, PROC_REF(on_treat_message))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_USING_RADIO, PROC_REF(on_using_radio))
 	RegisterSignal(carbon_parent, COMSIG_MOVABLE_SAY_QUOTE, PROC_REF(on_say_quote))
 	RegisterSignal(carbon_parent, COMSIG_MOB_SAY, PROC_REF(on_say))
@@ -90,7 +93,10 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/carbon_parent = parent
-	carbon_parent.dna?.species.say_mod = initial(carbon_parent.dna.species.say_mod)
+	var/obj/item/organ/internal/tongue/tongue = carbon_parent.getorganslot(ORGAN_SLOT_TONGUE)
+	if(tongue)
+		tongue.temp_say_mod = ""
+	REMOVE_TRAIT(carbon_parent, TRAIT_SPEAKS_CLEARLY, SPEAKING_FROM_HANDS)
 	carbon_parent.verb_ask = initial(carbon_parent.verb_ask)
 	carbon_parent.verb_exclaim = initial(carbon_parent.verb_exclaim)
 	carbon_parent.verb_whisper = initial(carbon_parent.verb_whisper)
@@ -98,14 +104,24 @@
 	carbon_parent.verb_yell = initial(carbon_parent.verb_yell)
 	carbon_parent.bubble_icon = initial(carbon_parent.bubble_icon)
 	UnregisterSignal(carbon_parent, list(
+		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_LIVING_TRY_SPEECH,
 		COMSIG_LIVING_TREAT_MESSAGE,
-		COMSIG_MOVABLE_TREAT_MESSAGE,
 		COMSIG_MOVABLE_USING_RADIO,
 		COMSIG_MOVABLE_SAY_QUOTE,
 		COMSIG_MOB_SAY
 	))
 	return TRUE
+
+///Signal proc for [COMSIG_CARBON_GAIN_ORGAN]
+///Applies the new say mod to any tongues that have appeared!
+/datum/component/sign_language/proc/on_added_organ(mob/living/source, obj/item/organ/new_organ)
+	SIGNAL_HANDLER
+
+	if(!istype(new_organ, /obj/item/organ/internal/tongue))
+		return
+	var/obj/item/organ/internal/tongue/new_tongue = new_organ
+	new_tongue.temp_say_mod = "signs"
 
 /// Signal proc for [COMSIG_LIVING_TRY_SPEECH]
 /// Sign languagers can always speak regardless of they're mute (as long as they're not mimes)
@@ -195,14 +211,6 @@
 
 	message_args[MOVABLE_SAY_QUOTE_MESSAGE] = sanitize_message(message_args[MOVABLE_SAY_QUOTE_MESSAGE])
 
-/// Signal proc for [COMSIG_MOVABLE_TREAT_MESSAGE]
-/// Removes exclamation/question marks only if /atom/movable/proc/say_quote() isn't going to run.
-/datum/component/sign_language/proc/on_treat_message(atom/movable/source, list/message_args)
-	SIGNAL_HANDLER
-
-	if (message_args[MOVABLE_TREAT_MESSAGE_NOQUOTE])
-		message_args[MOVABLE_TREAT_MESSAGE_MESSAGE] = sanitize_message(message_args[MOVABLE_TREAT_MESSAGE_MESSAGE])
-
 /// Signal proc for [COMSIG_MOVABLE_USING_RADIO]
 /// Disallows us from speaking on comms if we don't have the special trait.
 /datum/component/sign_language/proc/on_using_radio(atom/movable/source, obj/item/radio/radio)
@@ -238,6 +246,10 @@
 		tonal_timerid = addtimer(CALLBACK(src, PROC_REF(remove_tonal_indicator)), 2.5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	else // If we're not gonna use it, just be sure we get rid of it
 		tonal_indicator = null
+
+	// remove the ! and ? symbols from message at the end
+	message = sanitize_message(message)
+	speech_args[SPEECH_MESSAGE] = message
 
 /// Removes the tonal indicator overlay completely
 /datum/component/sign_language/proc/remove_tonal_indicator()

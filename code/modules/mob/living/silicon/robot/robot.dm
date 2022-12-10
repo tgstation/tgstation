@@ -93,7 +93,7 @@
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)
-		modularInterface = new /obj/item/modular_computer/tablet/integrated/cyborg/syndicate(src)
+		modularInterface = new /obj/item/modular_computer/pda/silicon/cyborg/syndicate(src)
 		modularInterface.saved_identification = real_name
 		modularInterface.saved_job = "Cyborg"
 	return ..()
@@ -109,8 +109,6 @@
 	if(istype(model, /obj/item/robot_model/syndicate) || emagged)
 		modularInterface.device_theme = "syndicate"
 		modularInterface.icon_state = "tablet-silicon-syndicate"
-		modularInterface.icon_state_powered = "tablet-silicon-syndicate"
-		modularInterface.icon_state_unpowered = "tablet-silicon-syndicate"
 	else
 		modularInterface.device_theme = "ntos"
 		modularInterface.icon_state = "tablet-silicon"
@@ -886,7 +884,7 @@
 /datum/action/innate/undeployment
 	name = "Disconnect from shell"
 	desc = "Stop controlling your shell and resume normal core operations."
-	icon_icon = 'icons/mob/actions/actions_AI.dmi'
+	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 
 /datum/action/innate/undeployment/Trigger(trigger_flags)
@@ -974,7 +972,7 @@
 	if(cell)
 		cell.charge = min(cell.charge + amount, cell.maxcharge)
 	if(repairs)
-		heal_bodypart_damage(repairs, repairs - 1)
+		heal_bodypart_damage(repairs, repairs)
 
 /mob/living/silicon/robot/proc/set_connected_ai(new_ai)
 	if(connected_ai == new_ai)

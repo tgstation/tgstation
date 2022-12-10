@@ -14,10 +14,12 @@
 	var/order_id = 0
 	var/errors = 0
 
-/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost)
+/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost, manifest_can_fail = TRUE)
 	. = ..()
 	order_id = id
 	order_cost = cost
+	if(!manifest_can_fail)
+		return
 
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_NAME
@@ -49,6 +51,8 @@
 	var/datum/supply_pack/pack
 	var/datum/bank_account/paying_account
 	var/obj/item/coupon/applied_coupon
+	///Boolean on whether the manifest can fail or not.
+	var/manifest_can_fail = TRUE
 
 /datum/supply_order/New(
 	datum/supply_pack/pack,
@@ -59,7 +63,8 @@
 	paying_account,
 	department_destination,
 	coupon,
-	charge_on_purchase,
+	charge_on_purchase = TRUE,
+	manifest_can_fail = TRUE,
 )
 	id = SSshuttle.order_number++
 	src.pack = pack
@@ -71,6 +76,7 @@
 	src.department_destination = department_destination
 	src.applied_coupon = coupon
 	src.charge_on_purchase = charge_on_purchase
+	src.manifest_can_fail = manifest_can_fail
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition_paper = new(T)
@@ -93,7 +99,7 @@
 	return requisition_paper
 
 /datum/supply_order/proc/generateManifest(obj/container, owner, packname, cost) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest_paper = new(null, id, cost)
+	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest_paper = new(null, id, cost, manifest_can_fail)
 
 	var/station_name = (manifest_paper.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
