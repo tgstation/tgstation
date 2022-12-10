@@ -13478,7 +13478,7 @@
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
 	name = "Dumbwaiter Control Panel";
-	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen")
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
@@ -32343,7 +32343,7 @@
 /area/station/engineering/supermatter)
 "lEl" = (
 /obj/effect/turf_decal/bot,
-/obj/machinery/ticket_machine/directional/north,
+/obj/structure/sign/clock/directional/north,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "lEp" = (
@@ -55806,7 +55806,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
 	},
-/obj/machinery/bluespace_vendor/directional/north,
+/obj/machinery/ticket_machine/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/left)
 "uab" = (
@@ -56741,7 +56741,7 @@
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
 	name = "Dumbwaiter Control Panel";
-	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen")
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
