@@ -8,6 +8,7 @@ on:
     branches:
     - master
     - 'project/**'
+
 jobs:
   run_linters:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -83,6 +84,37 @@ jobs:
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
 
+  test_windows:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    name: Windows Build
+    runs-on: windows-latest
+    concurrency:
+      group: test_windows-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v3
+      - name: Restore Yarn cache
+        uses: actions/cache@v3
+        with:
+          path: tgui/.yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Compile
+        run: pwsh tools/ci/build.ps1
+        env:
+          DM_EXE: "C:\\byond\\bin\\dm.exe"
+      - name: Create artifact
+        run: |
+          md deploy
+          bash tools/deploy.sh ./deploy
+      - name: Deploy artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: deploy
+          path: deploy
+
   find_all_maps:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Find Maps to Test
@@ -93,6 +125,7 @@ jobs:
     concurrency:
       group: find_all_maps-${{ github.ref }}
       cancel-in-progress: true
+    needs: [run_linters, compile_all_maps, test_windows]
     steps:
       - uses: actions/checkout@v3
       - name: Find Maps
@@ -171,34 +204,3 @@ jobs:
         with:
           name: bad-screenshots
           path: artifacts/screenshot_comparisons
-
-  test_windows:
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    name: Windows Build
-    runs-on: windows-latest
-    concurrency:
-      group: test_windows-${{ github.ref }}
-      cancel-in-progress: true
-    steps:
-      - uses: actions/checkout@v3
-      - name: Restore Yarn cache
-        uses: actions/cache@v3
-        with:
-          path: tgui/.yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('tgui/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Compile
-        run: pwsh tools/ci/build.ps1
-        env:
-          DM_EXE: "C:\\byond\\bin\\dm.exe"
-      - name: Create artifact
-        run: |
-          md deploy
-          bash tools/deploy.sh ./deploy
-      - name: Deploy artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: deploy
-          path: deploy
