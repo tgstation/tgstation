@@ -51,11 +51,11 @@ export const PrimaryObjectiveMenu = (
       <Section>
         <Stack vertical fill scrollable>
           {primary_objectives.map((prim_obj, index) => (
-            <Stack.Item>
+            <Stack.Item key={index}>
               <ObjectiveElement
                 key={prim_obj.id}
-                name={prim_obj["task_name"]}
-                description={prim_obj["task_text"]}
+                name={prim_obj['task_name']}
+                description={prim_obj['task_text']}
                 reputation={{
                   minutesLessThan: 0,
                   title: 'none',
