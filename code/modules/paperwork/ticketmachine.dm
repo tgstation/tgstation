@@ -151,29 +151,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /obj/machinery/ticket_machine/update_icon_state()
 	switch(ticket_number) //Gives you an idea of how many tickets are left
-		if(0 to 49)
-			icon_state = "[base_icon_state]_100"
-		if(50 to 99)
-			icon_state = "[base_icon_state]_50"
+		if(0 to 99)
+			icon_state = "[base_icon_state]"
 		if(100)
-			icon_state = "[base_icon_state]_0"
+			icon_state = "[base_icon_state]_empty"
 	return ..()
 
 /obj/machinery/ticket_machine/proc/handle_maptext()
 	switch(current_number) //This is here to handle maptext offsets so that the numbers align.
 		if(0 to 9)
-			maptext_x = 13
+			maptext_x = 9
 		if(10 to 99)
-			maptext_x = 10
+			maptext_x = 6
 		if(100)
-			maptext_x = 8
+			maptext_x = 4
 	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
 /obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!(ticket_number >= max_number))
-			to_chat(user, span_notice("[src] refuses [I]! There [max_number-ticket_number==1 ? "is" : "are"] still [max_number-ticket_number] ticket\s left!"))
+			to_chat(user, span_notice("[src] refuses [I]! There [max_number - ticket_number == 1 ? "is" : "are"] still [max_number - ticket_number] ticket\s left!"))
 			return
 		to_chat(user, span_notice("You start to refill [src]'s ticket holder (doing this will reset its ticket count!)."))
 		if(do_after(user, 30, target = src))

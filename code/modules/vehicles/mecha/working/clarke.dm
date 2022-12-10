@@ -86,10 +86,10 @@
 		return
 	var/mob/living/living_owner = owner
 	button_icon_state = "mech_search_ruins_cooldown"
-	UpdateButtons()
+	build_all_button_icons()
 	COOLDOWN_START(src, search_cooldown, SEARCH_COOLDOWN)
 	addtimer(VARSET_CALLBACK(src, button_icon_state, "mech_search_ruins"), SEARCH_COOLDOWN)
-	addtimer(CALLBACK(src, PROC_REF(UpdateButtons)), SEARCH_COOLDOWN)
+	addtimer(CALLBACK(src, PROC_REF(build_all_button_icons)), SEARCH_COOLDOWN)
 	var/obj/pinpointed_ruin
 	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		if(ruin_landmark.z != chassis.z)

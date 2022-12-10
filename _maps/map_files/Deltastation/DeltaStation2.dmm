@@ -48819,7 +48819,7 @@
 "lNN" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /obj/structure/bed/dogbed/mcgriff,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/mob/living/basic/pet/dog/pug/mcgriff,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "lNR" = (
@@ -55213,7 +55213,7 @@
 "nuY" = (
 /obj/structure/bed/dogbed/ian,
 /obj/machinery/airalarm/directional/east,
-/mob/living/simple_animal/pet/dog/corgi/ian,
+/mob/living/basic/pet/dog/corgi/ian,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "nvo" = (
@@ -56741,7 +56741,9 @@
 "nNK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/right/directional/west,
+/obj/machinery/door/window/right/directional/west{
+	req_access = list("atmospherics")
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "nNR" = (
