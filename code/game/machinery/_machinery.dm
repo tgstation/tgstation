@@ -767,12 +767,13 @@
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
-	for(var/obj/item/part in component_parts)
-		part.forceMove(loc)
-
-	for (var/datum/stock_part/stock_part in component_parts)
-		var/part_type = stock_part.physical_object_type
-		new part_type(loc)
+	for(var/datum/part in component_parts)
+		if(istype(part, /datum/stock_part))
+			var/datum/stock_part/datum_part = part
+			new datum_part.physical_object_type(loc)
+		else
+			var/obj/item/obj_part = part
+			obj_part.forceMove(loc)
 
 	LAZYCLEARLIST(component_parts)
 	return ..()
@@ -929,7 +930,13 @@
 		to_chat(user, display_parts(user))
 	if(!machine_board)
 		return FALSE
-
+	/**
+	 * sorting is very important especially because we are breaking out when required part is found in the inner for loop
+	 * if the rped first picked up a tier 3 part AND THEN a tier 4 part
+	 * tier 3 would be installed and the loop would break and check for the next required component thus
+	 * completly ignoring the tier 4 component inside
+	 */
+	var/list/part_list = replacer_tool.get_sorted_parts()
 	for(var/datum/primary_part_base as anything in component_parts)
 		var/current_rating
 		var/required_type
@@ -952,7 +959,7 @@
 			// Not an error, happens with circuitboards.
 			continue
 
-		for(var/obj/item/secondary_part in replacer_tool.contents)
+		for(var/obj/item/secondary_part in part_list)
 			if(!istype(secondary_part, required_type))
 				continue
 			// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
@@ -982,6 +989,7 @@
 						else
 							component_parts += secondary_part
 							secondary_part.forceMove(src)
+							part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents & forceMove wont remove it from th list
 
 				component_parts -= primary_part_base
 
@@ -1026,9 +1034,6 @@
 			part_count[component_name] = stack_part.amount
 		else
 			part_count[component_name] = 1
-
-	for (var/datum/stock_part/stock_part in component_parts)
-		part_count[stock_part.name()] += 1
 
 	var/list/printed_components = list()
 
