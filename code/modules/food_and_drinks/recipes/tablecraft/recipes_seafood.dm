@@ -62,7 +62,7 @@
 	name ="Vegetarian sushi roll"
 	reqs = list(
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/grown/potato = 1
 	)
@@ -73,7 +73,7 @@
 	name ="Spicy filet sushi roll"
 	reqs = list(
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1
@@ -85,7 +85,7 @@
 	name ="Nigiri sushi"
 	reqs = list(
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/fishmeat = 1,
 		/datum/reagent/consumable/soysauce = 2
 	)
@@ -95,8 +95,9 @@
 /datum/crafting_recipe/food/meat_poke
 	name ="Meat poke"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/meat/cutlet = 3,
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/tofu = 1,
@@ -109,8 +110,9 @@
 /datum/crafting_recipe/food/fish_poke
 	name ="Fish poke"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/seaweedsheet = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/grown/cabbage = 1,
 		/obj/item/food/tofu = 1,

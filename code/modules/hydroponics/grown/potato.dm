@@ -28,6 +28,9 @@
 	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
 
+/obj/item/food/grown/potato/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/baked_potato, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+
 /obj/item/food/grown/potato/wedges
 	name = "potato wedges"
 	desc = "Slices of neatly cut potato."

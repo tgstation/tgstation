@@ -43,10 +43,11 @@
 /datum/crafting_recipe/food/squeaking_stir_fry
 	name = "Skeklitmischtpoppl (Squeaking stir fry)"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/cheese/cheese_curds = 1,
 		/obj/item/food/tofu = 1,
 		/obj/item/food/grown/chili = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/obj/item/food/grown/carrot = 1,
 		/obj/item/food/onion_slice = 1
 	)
@@ -100,7 +101,7 @@
 /datum/crafting_recipe/food/raw_baked_rice
 	name = "Big baked rice"
 	reqs = list(
-		/obj/item/food/salad/boiledrice = 2,
+		/obj/item/food/boiledrice = 2,
 		/obj/item/food/soup/vegetable = 1,
 		/obj/item/food/grown/potato = 2,
 		/obj/item/food/grown/chili = 1,
@@ -267,7 +268,8 @@
 /datum/crafting_recipe/food/rice_porridge
 	name = "Rice porridge"
 	reqs = list(
-		/obj/item/food/salad/ricebowl = 1,
+		/obj/item/reagent_containers/cup/bowl = 1,
+		/obj/item/food/boiledrice = 1,
 		/datum/reagent/water = 10,
 		/datum/reagent/consumable/salt = 2
 	)

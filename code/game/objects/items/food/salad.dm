@@ -59,21 +59,21 @@
 	tastes = list("sourness" = 1, "leaves" = 1)
 	foodtypes = FRUIT | ORANGES
 
-/obj/item/food/salad/ricebowl
-	name = "ricebowl"
-	desc = "A bowl of raw rice."
-	icon_state = "ricebowl"
+/obj/item/food/uncooked_rice
+	name = "uncooked rice"
+	desc = "A clump of raw rice."
+	icon_state = "uncooked_rice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN | RAW
 
-/obj/item/food/salad/ricebowl/make_microwavable()
-	AddElement(/datum/element/microwavable, /obj/item/food/salad/boiledrice)
+/obj/item/food/uncooked_rice/make_microwavable()
+	AddElement(/datum/element/microwavable, /obj/item/food/boiledrice)
 
-/obj/item/food/salad/boiledrice
+/obj/item/food/boiledrice
 	name = "boiled rice"
-	desc = "A warm bowl of rice."
-	icon_state = "boiledrice"
+	desc = "A steaming cup of boiled rice. A bit bland by itself, but the basis for something delicious..."
+	icon_state = "cooked_rice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN | BREAKFAST

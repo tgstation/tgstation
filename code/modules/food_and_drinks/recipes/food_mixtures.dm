@@ -173,17 +173,15 @@
 	results = list(/datum/reagent/consumable/pancakebatter = 15)
 	required_reagents = list(/datum/reagent/consumable/eggyolk = 6, /datum/reagent/consumable/eggwhite = 12, /datum/reagent/consumable/milk = 10, /datum/reagent/consumable/flour = 5)
 
-/datum/chemical_reaction/food/ricebowl
+/datum/chemical_reaction/food/uncooked_rice
 	required_reagents = list(/datum/reagent/consumable/rice = 10, /datum/reagent/water = 10)
-	required_container = /obj/item/reagent_containers/cup/bowl
 	mix_message = "The rice absorbs the water."
 	reaction_flags = REACTION_INSTANT
 
-/datum/chemical_reaction/food/ricebowl/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+/datum/chemical_reaction/food/uncooked_rice/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	new /obj/item/food/salad/ricebowl(location)
-	if(holder?.my_atom)
-		qdel(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		new /obj/item/food/uncooked_rice(location)
 
 /datum/chemical_reaction/food/nutriconversion
 	results = list(/datum/reagent/consumable/nutriment/peptides = 0.5)
@@ -279,3 +277,9 @@
 /datum/chemical_reaction/food/quality_oil
 	results = list(/datum/reagent/consumable/quality_oil = 2)
 	required_reagents = list(/datum/reagent/consumable/olivepaste = 4, /datum/reagent/water = 1)
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/vinegar
+	results = list(/datum/reagent/consumable/vinegar = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
+	reaction_flags = REACTION_INSTANT

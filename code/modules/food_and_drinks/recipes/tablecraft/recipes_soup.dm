@@ -266,7 +266,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/meat/crab = 1,
-		/obj/item/food/salad/boiledrice = 1
+		/obj/item/food/boiledrice = 1
 	)
 	result = /obj/item/food/soup/bisque
 	subcategory = CAT_SOUP
@@ -309,12 +309,13 @@
 /datum/crafting_recipe/food/indian_curry
 	name = "Indian Chicken Curry"
 	reqs = list(
+		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/meat/slab/chicken = 1,
 		/obj/item/food/grown/onion = 2,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/garlic = 1,
 		/obj/item/food/butter = 1,
-		/obj/item/food/salad/boiledrice = 1,
+		/obj/item/food/boiledrice = 1,
 		/datum/reagent/consumable/cream = 5
 	)
 	result = /obj/item/food/soup/indian_curry
@@ -355,4 +356,29 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/soup/cullen_skink
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/chicken_noodle_soup
+	name = "Chicken Noodle Soup"
+	reqs = list(
+		/obj/item/food/meat/slab/chicken = 1,
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/grown/carrot = 1,
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/cup/bowl = 1,
+	)
+	result = /obj/item/food/soup/chicken_noodle_soup
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/corn_chowder
+	name = "Corn Chowder"
+	reqs = list(
+		/obj/item/food/grown/corn = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/meat/bacon = 1,
+		/datum/reagent/consumable/cream = 5,
+		/obj/item/reagent_containers/cup/bowl = 1,
+	)
+	result = /obj/item/food/soup/corn_chowder
 	subcategory = CAT_SOUP
