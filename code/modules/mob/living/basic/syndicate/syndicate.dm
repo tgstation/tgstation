@@ -86,7 +86,7 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/melee/space/Initialize(mapload)
@@ -123,7 +123,7 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	projectile_deflect_chance = 50
 	var/obj/effect/light_emitter/red_energy_sword/sord
@@ -169,7 +169,7 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/ranged/space/Initialize(mapload)
@@ -201,7 +201,7 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 
 /mob/living/basic/syndicate/ranged/smg/space/Initialize(mapload)
@@ -228,7 +228,7 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	speed = 1
 
