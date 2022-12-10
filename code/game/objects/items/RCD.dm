@@ -1188,7 +1188,6 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 /obj/item/construction/plumbing/ui_static_data(mob/user)
 	return list("paint_colors" = GLOB.pipe_paint_colors)
 
-
 ///find which category this design belongs to
 /obj/item/construction/plumbing/proc/get_category(obj/machinery/recipe)
 	if(ispath(recipe, /obj/machinery/plumbing))
@@ -1200,7 +1199,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 		return "Storage"
 
 /obj/item/construction/plumbing/ui_data(mob/user)
-	var/list/data = ..(user)
+	var/list/data = ..()
 
 	data["piping_layer"] = name_to_number[current_layer] //maps layer name to layer number's 1,2,3,4,5
 	data["selected_color"] = current_color

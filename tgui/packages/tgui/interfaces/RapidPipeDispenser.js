@@ -4,7 +4,6 @@ import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ColorBox, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { Space } from './RapidConstructionDevice.tsx';
 
 const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'];
 
@@ -44,7 +43,7 @@ export const ColorItem = (props, context) => {
   const { selected_color } = data;
   return (
     <LabeledList.Item label="Color">
-      {space ? <Space /> : ''}
+      {space ? <span>&nbsp;</span> : ''}
       <Box inline width="64px" color={data.paint_colors[selected_color]}>
         {capitalizeAll(selected_color)}
       </Box>
