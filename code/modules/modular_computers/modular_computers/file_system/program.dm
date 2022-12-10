@@ -15,7 +15,7 @@
 	var/extended_desc = "N/A"
 	/// Category in the NTDownloader.
 	var/category = PROGRAM_CATEGORY_MISC
-	/// Flag for checking if this program has been emagged. Set by run_emag, can be restored manually.
+	/// Flag for checking if this program has been emagged. Can be changed to FALSE manually.
 	var/emagged = FALSE
 	/// Program-specific screen icon state
 	var/program_icon_state = null

@@ -1,5 +1,44 @@
 /datum/modular_computer_host/silicon
 	hardware_flag = PROGRAM_SILICON
+	///Base icon state to show on our button
+	var/device_icon_state = "tablet-silicon"
+	var/silicon_tablet_icon = 'obj/item/modular_pda.dmi'
+	///Initial
+	///Reference to our ui button for appearance updates
+	var/atom/movable/screen/button
+
+/datum/modular_computer_host/silicon/New(atom/holder)
+	. = ..(cell_type = null, disk_type = null) // we do not want an internal cell or a disk
+	init_interface_button()
+	register_silicon_signals()
+
+/datum/modular_computer_host/silicon/proc/register_silicon_signals()
+	RegisterSignal(button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(do_button_overlay_update))
+	RegisterSignal(physical, COMSIG_LIVING_DEATH, PROC_REF(do_integrity_failure))
+
+/datum/modular_computer_host/silicon/ui_state(mob/user)
+	return GLOB.reverse_contained_state
+
+// We don't inherit any of the signals because silicons work differently from everything else
+/datum/modular_computer_host/silicon/register_signals(atom/source, list/overlays)
+	return
+
+/**
+ * This proc is important for our silicon button to update. This gets our interface button reference
+ * set before we register signals on it.
+ */
+/datum/modular_computer_host/silicon/proc/init_interface_button()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("init_interface_button proc not overridden in [type]")
+
+/datum/modular_computer_host/silicon/relay_appearance_update(updates = ALL)
+	button.update_appearance(updates)
+
+/datum/modular_computer_host/silicon/proc/do_button_overlay_update(atom/source, list/overlays)
+	SIGNAL_HANDLER
+	overlays += mutable_appearance(silicon_tablet_icon, device_icon)
+	if(powered_on)
+		overlays += mutable_appearance(silicon_tablet_icon, )
 
 //Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
 /datum/modular_computer_host/silicon/check_power_override()
@@ -15,13 +54,6 @@
 /datum/modular_computer_host/silicon/proc/silicon_push_notification(message, sender)
 	to_chat(physical, span_notice("Received push notification from [!isnull(sender) ? sender : "NtOS"]: \"[message]\""))
 
-/datum/modular_computer_host/silicon/ui_state(mob/user)
-	return GLOB.reverse_contained_state
-
-// We don't inherit any of the signals because silicons work differently from everything else
-/datum/modular_computer_host/silicon/register_signals()
-	return
-
 /datum/modular_computer_host/silicon/cyborg
 	valid_on = /mob/living/silicon/robot
 	hardware_flag = PROGRAM_CYBORG
@@ -30,11 +62,8 @@
 	var/datum/computer_file/program/robotact/robotact
 	///IC log that borgs can view in their personal management app
 	var/list/borglog = list()
-	///Our action icon, used for appearance and ui open hooks
-	var/atom/movable/screen/robot/modpc/button
 
-/datum/modular_computer_host/silicon/cyborg/New(datum/holder, cell_type, disk_type)
-	. = ..()
+/datum/modular_computer_host/silicon/cyborg/init_interface_button()
 	var/mob/living/silicon/robot/cyborg = physical
 	button = cyborg.interfaceButton
 
@@ -110,3 +139,7 @@
 /datum/modular_computer_host/silicon/ai
 	valid_on = /mob/living/silicon/ai
 	hardware_flag = PROGRAM_AI
+
+/datum/modular_computer_host/silicon/ai/init_interface_button()
+	var/mob/living/silicon/ai/ai = physical
+	button = ai.interfaceButton

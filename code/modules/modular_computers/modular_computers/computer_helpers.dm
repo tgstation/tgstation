@@ -89,7 +89,7 @@
 	if(user)
 		if(!user.transferItemToLoc(inserting_id, physical))
 			return FALSE
-		user.balloon_alert(user, "inserted id")
+		physical.balloon_alert(user, "inserted ID")
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 	else
 		inserting_id.forceMove(physical)
@@ -113,7 +113,7 @@
 		if(!issilicon(user) && in_range(physical, user))
 			user.put_in_hands(inserted_id)
 		physical.balloon_alert(user, "removed ID")
-		to_chat(user, span_notice("You remove the card from the card slot."))
+		to_chat(user, span_notice("You remove \the [inserted_id] from the card slot."))
 	else
 		inserted_id.forceMove(physical.drop_location())
 
