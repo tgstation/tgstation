@@ -272,19 +272,19 @@
 
 /obj/machinery/coffeemaker/proc/try_brew()
 	if(!cartridge)
-		balloon_alert("no coffee cartidge inserted!")
+		balloon_alert(usr, "no coffee cartidge inserted!")
 		return FALSE
 	if(cartridge.charges < 1)
-		balloon_alert("coffee cartidge empty!")
+		balloon_alert(usr, "coffee cartidge empty!")
 		return FALSE
 	if(!coffeepot)
-		balloon_alert("no coffeepot inside!")
+		balloon_alert(usr, "no coffeepot inside!")
 		return FALSE
 	if(machine_stat & (NOPOWER|BROKEN))
-		balloon_alert("machine unpowered!")
+		balloon_alert(usr, "machine unpowered!")
 		return FALSE
 	if(coffeepot.reagents.total_volume >= coffeepot.reagents.maximum_volume)
-		balloon_alert("the coffeepot is already full!")
+		balloon_alert(usr, "the coffeepot is already full!")
 		return FALSE
 	return TRUE
 
@@ -711,7 +711,7 @@
 
 /obj/machinery/coffeemaker/impressa/take_cup(mob/user)
 	if(!coffee_cups) //shouldn't happen, but we all know how stuff manages to break
-		balloon_alert("no cups left!")
+		balloon_alert(user, "no cups left!")
 		return
 	balloon_alert_to_viewers("took cup")
 	var/obj/item/reagent_containers/cup/glass/coffee/no_lid/new_cup = new(get_turf(src))

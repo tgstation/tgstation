@@ -28188,7 +28188,7 @@
 /obj/structure/bed/dogbed/mcgriff,
 /obj/item/food/beef_wellington_slice,
 /obj/structure/cable,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
+/mob/living/basic/pet/dog/pug/mcgriff,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/warden)
 "iFm" = (
@@ -32685,7 +32685,7 @@
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "jXB" = (
 /obj/structure/bed/dogbed/ian,
-/mob/living/simple_animal/pet/dog/corgi/ian{
+/mob/living/basic/pet/dog/corgi/ian{
 	dir = 8
 	},
 /turf/open/floor/iron,

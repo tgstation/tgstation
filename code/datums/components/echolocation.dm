@@ -13,6 +13,8 @@
 	var/images_are_static = TRUE
 	/// With mobs that have this echo group in their echolocation receiver trait, we share echo images.
 	var/echo_group = null
+	/// This trait blocks us from receiving echolocation.
+	var/blocking_trait
 	/// Ref of the client color we give to the echolocator.
 	var/client_color
 	/// Associative list of world.time when created to a list of the images.
@@ -30,7 +32,7 @@
 	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 
-/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, echo_group, echo_icon, color_path)
+/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon, color_path)
 	. = ..()
 	var/mob/living/echolocator = parent
 	if(!istype(echolocator))
@@ -38,7 +40,7 @@
 	if(!danger_turfs)
 		danger_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/chasm, /turf/open/lava))
 	if(!allowed_paths)
-		allowed_paths = typecacheof(list(/turf/closed, /obj, /mob/living)) + danger_turfs
+		allowed_paths = typecacheof(list(/turf/closed, /obj, /mob/living)) + danger_turfs - typecacheof(/obj/effect/decal)
 	if(!isnull(echo_range))
 		src.echo_range = echo_range
 	if(!isnull(cooldown_time))
@@ -51,11 +53,12 @@
 		src.fade_out_time = fade_out_time
 	if(!isnull(images_are_static))
 		src.images_are_static = images_are_static
-	if(!isnull(echo_group))
-		src.echo_group = echo_group
-	if(!isnull(color_path))
+	if(!isnull(blocking_trait))
+		src.blocking_trait = blocking_trait
+	if(ispath(color_path))
 		client_color = echolocator.add_client_colour(color_path)
-	ADD_TRAIT(echolocator, TRAIT_ECHOLOCATION_RECEIVER, echo_group || REF(src))
+	src.echo_group = echo_group || REF(src)
+	ADD_TRAIT(echolocator, TRAIT_ECHOLOCATION_RECEIVER, echo_group)
 	echolocator.become_blind(ECHOLOCATION_TRAIT)
 	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo, echo_icon)
 	START_PROCESSING(SSfastprocess, src)
@@ -64,7 +67,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	var/mob/living/echolocator = parent
 	QDEL_NULL(client_color)
-	REMOVE_TRAIT(echolocator, TRAIT_ECHOLOCATION_RECEIVER, echo_group || REF(src))
+	REMOVE_TRAIT(echolocator, TRAIT_ECHOLOCATION_RECEIVER, echo_group)
 	echolocator.cure_blind(ECHOLOCATION_TRAIT)
 	echolocator.clear_fullscreen("echo")
 	for(var/timeframe in images)
@@ -83,9 +86,9 @@
 	COOLDOWN_START(src, cooldown_last, cooldown_time)
 	var/mob/living/echolocator = parent
 	var/list/filtered = list()
-	var/list/seen = dview(echo_range, echolocator.loc)
+	var/list/seen = dview(echo_range, echolocator.loc, invis_flags = echolocator.see_invisible)
 	for(var/atom/seen_atom as anything in seen)
-		if(seen_atom.invisibility > echolocator.see_invisible || !seen_atom.alpha)
+		if(!seen_atom.alpha)
 			continue
 		if(allowed_paths[seen_atom.type])
 			filtered += seen_atom
@@ -95,11 +98,13 @@
 	images[current_time] = list()
 	receivers[current_time] = list()
 	for(var/mob/living/viewer in filtered)
+		if(blocking_trait && HAS_TRAIT(viewer, blocking_trait))
+			continue
 		if(HAS_TRAIT_FROM(viewer, TRAIT_ECHOLOCATION_RECEIVER, echo_group))
 			receivers[current_time] += viewer
 	for(var/atom/filtered_atom as anything in filtered)
 		show_image(saved_appearances["[filtered_atom.icon]-[filtered_atom.icon_state]"] || generate_appearance(filtered_atom), filtered_atom, current_time)
-	addtimer(CALLBACK(src, .proc/fade_images, current_time), image_expiry_time)
+	addtimer(CALLBACK(src, PROC_REF(fade_images), current_time), image_expiry_time)
 
 /datum/component/echolocation/proc/show_image(image/input_appearance, atom/input, current_time)
 	var/image/final_image = image(input_appearance)
@@ -144,7 +149,7 @@
 /datum/component/echolocation/proc/fade_images(from_when)
 	for(var/image_echo in images[from_when])
 		animate(image_echo, alpha = 0, time = fade_out_time)
-	addtimer(CALLBACK(src, .proc/delete_images, from_when), fade_out_time)
+	addtimer(CALLBACK(src, PROC_REF(delete_images), from_when), fade_out_time)
 
 /datum/component/echolocation/proc/delete_images(from_when)
 	for(var/mob/living/echolocate_receiver as anything in receivers[from_when])
