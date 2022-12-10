@@ -772,7 +772,8 @@
 			var/datum/stock_part/datum_part = part
 			new datum_part.physical_object_type(loc)
 		else
-			part.forceMove(loc)
+			var/obj/item/obj_part = part
+			obj_part.forceMove(loc)
 
 	LAZYCLEARLIST(component_parts)
 	return ..()
