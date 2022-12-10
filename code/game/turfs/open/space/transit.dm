@@ -6,6 +6,13 @@
 	flags_1 = NOJAUNT //This line goes out to every wizard that ever managed to escape the den. I'm sorry.
 	explosion_block = INFINITY
 
+/turf/open/space/transit/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+	for(var/atom/movable/movable in src)
+		throw_atom(movable)
+
 /turf/open/space/transit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
 	underlay_appearance.icon_state = "speedspace_ns_[get_transit_state(asking_turf)]"
@@ -22,8 +29,8 @@
 /turf/open/space/transit/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 
-	if(!HAS_TRAIT(arrived, TRAIT_HYPERSPACED))
-		arrived.AddComponent(/datum/component/shuttle_cling, dir)
+	if(!HAS_TRAIT(arrived, TRAIT_HYPERSPACED) && !HAS_TRAIT(arrived, TRAIT_FREE_HYPERSPACE_MOVEMENT))
+		arrived.AddComponent(/datum/component/shuttle_cling, turn(dir, 180), old_loc)
 
 /turf/open/space/transit/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -71,13 +78,6 @@
 
 /turf/open/space/transit/CanBuildHere()
 	return SSshuttle.is_in_shuttle_bounds(src)
-
-
-/turf/open/space/transit/Initialize(mapload)
-	. = ..()
-	update_appearance()
-	for(var/atom/movable/AM in src)
-		throw_atom(AM)
 
 /turf/open/space/transit/south
 	dir = SOUTH

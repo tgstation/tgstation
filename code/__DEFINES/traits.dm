@@ -319,6 +319,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPACEWALK "spacewalk"
 /// Sanity trait to keep track of when we're in hyperspace and add the appropriate element if we werent
 #define TRAIT_HYPERSPACED "hyperspaced"
+
+#define TRAIT_FREE_HYPERSPACE_MOVEMENT "free_hyperspace_movement"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"
 #define TRAIT_GIANT "giant"
