@@ -746,13 +746,13 @@
 
 	if (CONFIG_GET(flag/norespawn))
 		if (!check_rights_for(usr.client, R_ADMIN))
-			to_chat(usr, span_boldwarning("Respawning is not enabled!"))
+			to_chat(usr, span_boldnotice("Respawning is not enabled!"))
 			return
 		else if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
 			return
 
 	if (stat != DEAD)
-		to_chat(usr, span_boldwarning("You must be dead to use this!"))
+		to_chat(usr, span_boldnotice("You must be dead to use this!"))
 		return
 
 	usr.log_message("used the respawn button.", LOG_GAME)
