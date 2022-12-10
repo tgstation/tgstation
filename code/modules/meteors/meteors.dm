@@ -26,6 +26,8 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
 						  /obj/effect/meteor/cluster=20, /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
 
+GLOBAL_LIST_INIT(meteros_gaseous, list(/obj/effect/meteor/gaseous = 1))
+
 ///////////////////////////////
 //Meteor spawning global procs
 ///////////////////////////////
@@ -510,5 +512,45 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 	. = ..()
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////
+
+/obj/effect/meteor/gaseous
+	name = "gas filled meteor"
+	dropamt = 1
+	threat = 10
+	hits = 10
+
+/obj/effect/meteor/gaseous/meteor_effect()
+	. = ..()
+
+	var/static/list/gases_to_spawn = list(
+		/datum/gas/nitrogen,
+		/datum/gas/oxygen,
+		/datum/gas/carbon_dioxide,
+		/datum/gas/plasma,
+		/datum/gas/nitrous_oxide,
+		/datum/gas/healium,
+		/datum/gas/freon,
+		/datum/gas/tritium,
+		/datum/gas/miasma,
+		/datum/gas/hydrogen,
+		/datum/gas/water_vapor,
+		/datum/gas/hypernoblium
+		)
+
+	var/list/picked_gases = list()
+	for(var/_ in 1 to rand(1, 3))
+		picked_gases += pick(gases_to_spawn)
+
+	var/datum/gas_mixture/mix_to_spawn = new
+	for(var/id in picked_gases)
+		mix_to_spawn.add_gas(id)
+		mix_to_spawn.gases[id][MOLES] = rand(3000, 7000)
+
+	mix_to_spawn.temperature = rand(20, 500)
+
+	var/turf/open/our_turf = get_turf(src)
+
+	our_turf.assume_air(mix_to_spawn)
+
 #undef DEFAULT_METEOR_LIFETIME
 #undef MAP_EDGE_PAD

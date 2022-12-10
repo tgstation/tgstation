@@ -44,6 +44,8 @@
 			wave_type = GLOB.meteorsC
 		if("halloween")
 			wave_type = GLOB.meteorsSPOOKY
+		if("gaseous")
+			wave_type = GLOB.meteros_gaseous
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()
@@ -91,3 +93,18 @@
 
 /datum/round_event/meteor_wave/meaty/announce(fake)
 	priority_announce("Meaty ores have been detected on collision course with the station.", "Oh crap, get the mop.", ANNOUNCER_METEORS)
+
+/datum/round_event_control/meteor_wave/gaseous
+	name = "Meteor Wave: Gaseous"
+	typepath =  /datum/round_event/meteor_wave/gaseous
+	weight = 5
+	min_players = 20
+	max_occurrences = 3
+	earliest_start = 10 MINUTES
+	description = "A wave of meteors filled with various gases"
+
+/datum/round_event/meteor_wave/gaseous
+	wave_name = "gaseous"
+
+/datum/round_event/meteor_wave/gaseous/announce(fake)
+	priority_announce("Gas filled chunk of rocks detected on collision course with the station.", "Save your breath.", ANNOUNCER_METEORS)
