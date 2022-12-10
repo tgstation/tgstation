@@ -53,7 +53,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/turf/open/floor/plating/airless,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "ey" = (
 /obj/structure/table,
@@ -87,7 +87,7 @@
 	req_access = null
 	},
 /obj/structure/marker_beacon/violet,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "gG" = (
 /obj/machinery/light/small/directional/west,
@@ -99,10 +99,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/cyborg_mothership)
 "hs" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/machinery/computer/operating{
 	dir = 8
 	},
@@ -174,7 +170,7 @@
 	id = "Recycler";
 	name = "Recycler"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "kz" = (
 /turf/closed/wall/mineral/titanium,
@@ -401,7 +397,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "mothership_main"
 	},
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "tW" = (
 /obj/machinery/conveyor{
@@ -431,10 +427,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/cyborg_mothership)
 "wk" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/table/optable,
 /obj/effect/turf_decal/bot,
 /obj/effect/mob_spawn/corpse/human/assistant,
@@ -521,7 +513,7 @@
 "zn" = (
 /obj/machinery/power/shuttle_engine/propulsion,
 /obj/structure/spacevine,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "zF" = (
 /obj/machinery/conveyor/inverted{
@@ -578,7 +570,7 @@
 	req_access = null
 	},
 /obj/structure/marker_beacon/violet,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "Dv" = (
 /obj/structure/cable,
@@ -754,10 +746,6 @@
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/cyborg_mothership)
 "Oq" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/effect/turf_decal/bot,
@@ -786,7 +774,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating/airless,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "Pf" = (
 /obj/structure/window/reinforced,
@@ -801,10 +789,6 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/cyborg_mothership)
 "PP" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
 /obj/item/clothing/gloves/color/latex,
@@ -864,7 +848,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating/airless,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "Ty" = (
 /obj/structure/lattice,
@@ -903,7 +887,7 @@
 /area/shuttle/cyborg_mothership)
 "Vb" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "VC" = (
 /obj/structure/cable,
@@ -933,7 +917,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/camera/directional/north,
 /obj/machinery/ore_silo,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "WO" = (
 /obj/structure/rack,
@@ -950,7 +934,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/shuttle/cyborg_mothership)
 "Yl" = (
 /obj/machinery/conveyor/inverted{
