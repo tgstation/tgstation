@@ -708,7 +708,7 @@
 	var/mob/living/owner = holder.my_atom
 	var/atom/movable/composer = holder.my_atom
 	if(message_mods[WHISPER_MODE])
-		message = composer.compose_message(owner, message_language, message, , spans, message_mods)
+		message = composer.compose_message(owner, message_language, message, null, spans, message_mods)
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	var/obj/item/organ/internal/ears/ears = owner.getorganslot(ORGAN_SLOT_EARS)

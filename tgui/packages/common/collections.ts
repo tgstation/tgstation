@@ -301,6 +301,27 @@ export const binaryInsertWith =
     return copy;
   };
 
+/**
+ * This method takes a collection of items and a number, returning a collection
+ * of collections, where the maximum amount of items in each is that second arg
+ */
+export const paginate = <T>(collection: T[], maxPerPage: number): T[][] => {
+  const pages: T[][] = [];
+  let page: T[] = [];
+  let itemsToAdd = maxPerPage;
+
+  for (const item of collection) {
+    page.push(item);
+    itemsToAdd--;
+    if (!itemsToAdd) {
+      itemsToAdd = maxPerPage;
+      pages.push(page);
+      page = [];
+    }
+  }
+  return pages;
+};
+
 const isObject = (obj: unknown) => typeof obj === 'object' && obj !== null;
 
 // Does a deep merge of two objects. DO NOT FEED CIRCULAR OBJECTS!!

@@ -313,3 +313,79 @@
       sideways with the mothroach facing the camera
   tf-4:
   - bugfix: Light replacers will no longer turn invisible.
+2022-12-10:
+  Fikou:
+  - bugfix: fixes beam glow in the dark effects
+  - bugfix: kinesis now doesnt pull the item to the centre of the screen when first
+      used
+  - bugfix: physical beams (like vines or meat hook chain) no longer glow in the dark
+  Ghilker:
+  - balance: space heaters also affect the adjacent tiles other than the one they
+      are on
+  GoldenAlpharex:
+  - bugfix: There shouldn't be clickable names in Adminwho that don't do anything
+      anymore.
+  Jacquerel:
+  - rscadd: Basic mobs have the capability of being upset that you kicked and punched
+      them.
+  - rscadd: Pigs destined for slaughter will now ineffectually attempt to resist their
+      fate, at least until they lose sight of you.
+  - balance: Bar bots are better at noticing that you're trying to kill them.
+  Kryson, Viro, Tattle:
+  - imageadd: posters are now 24px tall
+  - imageadd: new sprites for nanomeds, emergency safes, and ticket machines (by Kryson)!
+  LT3:
+  - bugfix: Improved tram door logic so they don't inadvertently open during departure.
+  - rscdel: Removed the message bubble when you open the tram doors while it's travelling.
+  MTandi:
+  - bugfix: Fried egg reagents halved to meet the raw egg reagent amount
+  - qol: Binoculars can be worn on neck now
+  Melbert:
+  - qol: The chaplain's armament beacon now displays a radial instead of a text list,
+      showing previews of what all the armor sets look like
+  - qol: (Almost) all choice beacons now use a pod to send their item, instead of
+      just magicking it under your feet
+  - code_imp: Cleaned up some choice beacon code.
+  Mothblocks:
+  - bugfix: Fixed circuitboards sometimes giving no name on examine.
+  NamelessFairy:
+  - bugfix: The golem trigger guard scalping situation has improved and golems can
+      now once again purchase trigger guards at market rate.
+  RimiNosha:
+  - qol: The latejoin menu is now TGUI!
+  - qol: You'll also be able to see why you can't join a job, instead of it being
+      invisible!
+  - code_imp: Department UI colors have changed slightly. This will only affect the
+      latejoin and nations UIs.
+  - bugfix: Fixed some issues with the TGUI latejoin menu, and made the shuttle and
+      round time display once more.
+  ShizCalev:
+  - bugfix: Blobs will no longer attack jaunting and incorporeal mobs (eg revenants)
+  SpaceSmithers:
+  - rscadd: More options are now available when creating and editing signs.
+  TheBoondock:
+  - bugfix: fixed changeling transform allowing escape from handcuffs
+  Zonespace27:
+  - balance: Destroying a petrified human statue will now drop their brain.
+  etherware-novice:
+  - balance: jaws of life can pry windoors
+  kawoppi:
+  - bugfix: cows, pigs, rabbits, sheep, cockroaches, mothroaches and mice now take
+      damage in hazardous atmospheres and temperatures
+  lizardqueenlexi:
+  - code_imp: Switched a single proc ref to the proper format.
+  necromanceranne:
+  - rscadd: Replaces a less interesting abductee objective with THE PROMETHEAN HORROR.
+      The Flesh is Weak, the New Flesh is Not So Weak.
+  timothymtorres:
+  - bugfix: Fix hypnosis, mind echo trauma, phobia trauma, hypnotic trigger trauma,
+      split personality brainwashing trauma, codeword hearing, and impure inacusiate
+      reagent all bypassing language and hearing checks.  If you try to give commands
+      to a victim in a language they don't understand, they will no longer magically
+      understand the words.
+  - bugfix: Fix sign language having accent modifications
+  - refactor: Refactored saycode to be more robust, readable, and have more unit tests.
+  tralezab:
+  - refactor: Refactored and overhauled the ForceEvent UI
+  vincentiusvin:
+  - bugfix: fixed sm base ray needing damage to resize

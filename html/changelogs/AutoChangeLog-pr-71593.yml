@@ -1,6 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Basic mobs have the capability of being upset that you kicked and punched them."
-  - rscadd: "Pigs destined for slaughter will now ineffectually attempt to resist their fate, at least until they lose sight of you."
-  - balance: "Bar bots are better at noticing that you're trying to kill them."
