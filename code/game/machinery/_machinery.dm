@@ -767,7 +767,7 @@
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
-	for(var/obj/item/part in component_parts)
+	for(var/datum/part in component_parts)
 		if(istype(part, /datum/stock_part))
 			var/datum/stock_part/datum_part = part
 			new datum_part.physical_object_type(loc)
