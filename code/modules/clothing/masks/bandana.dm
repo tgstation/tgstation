@@ -112,7 +112,6 @@
 	desc = "A fine white bandana with nanotech lining."
 	greyscale_colors = "#DCDCDC"
 	flags_1 = NONE
-	icon_preview = 'icons/obj/previews.dmi'
 	icon_state_preview = "bandana_cloth"
 
 /obj/item/clothing/mask/bandana/durathread
