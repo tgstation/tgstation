@@ -497,7 +497,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
 				scrubber.on = TRUE
 				scrubber.filter_types = list(/datum/gas/carbon_dioxide)
-				scrubber.set_scrubbing(TRUE)
+				scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 				scrubber.set_widenet(FALSE)
 		if (AALARM_MODE_CONTAMINATED)
 			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
@@ -528,7 +528,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 					/datum/gas/antinoblium,
 					/datum/gas/halon,
 				)
-				scrubber.set_scrubbing(TRUE)
+				scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 				scrubber.set_widenet(TRUE)
 		if (AALARM_MODE_VENTING)
 			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
@@ -540,7 +540,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
 				scrubber.on = TRUE
 				scrubber.set_widenet(FALSE)
-				scrubber.set_scrubbing(FALSE)
+				scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 		if (AALARM_MODE_REFILL)
 			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 				vent.on = TRUE
@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 
 				scrubber.filter_types = list(/datum/gas/carbon_dioxide)
 				scrubber.set_widenet(FALSE)
-				scrubber.set_scrubbing(FALSE)
+				scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
 		if (AALARM_MODE_PANIC, AALARM_MODE_REPLACEMENT)
 			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 				vent.on = FALSE
@@ -562,7 +562,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
 				scrubber.on = TRUE
 				scrubber.set_widenet(TRUE)
-				scrubber.set_scrubbing(FALSE)
+				scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 		if (AALARM_MODE_SIPHON)
 			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 				vent.on = FALSE
@@ -571,7 +571,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
 				scrubber.on = TRUE
 				scrubber.set_widenet(FALSE)
-				scrubber.set_scrubbing(FALSE)
+				scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
 		if (AALARM_MODE_OFF)
 			for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in my_area.air_vents)
 				vent.on = FALSE
