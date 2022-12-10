@@ -775,7 +775,6 @@
 	icon_state = "med_secure";
 	name = "student's locker"
 	},
-/obj/item/radio/headset/syndicate/alt,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/gloves/color/latex/nitrile,
 /obj/item/clothing/suit/hooded/wintercoat/medical,
@@ -797,7 +796,6 @@
 	icon_state = "med_secure";
 	name = "student's locker"
 	},
-/obj/item/radio/headset/syndicate/alt,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/gloves/color/latex/nitrile,
 /obj/item/clothing/suit/hooded/wintercoat/medical,
@@ -899,7 +897,6 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 9
 	},
-/obj/item/radio/headset/syndicate/alt,
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/glasses/meson,
@@ -986,7 +983,6 @@
 	icon_state = "med";
 	name = "paramedic's locker"
 	},
-/obj/item/radio/headset/syndicate/alt,
 /obj/item/storage/belt/medical/paramedic,
 /obj/item/clothing/under/syndicate/tacticool,
 /obj/item/clothing/glasses/meson,
@@ -1456,7 +1452,6 @@
 	icon_state = "cmo";
 	name = "professor's locker"
 	},
-/obj/item/radio/headset/syndicate/alt/leader,
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
 /obj/item/clothing/head/hos/beret/syndicate,
 /obj/item/storage/medkit/tactical,

@@ -9,7 +9,6 @@
 	suit_store = /obj/item/gun/ballistic/revolver/mateba
 	head = /obj/item/clothing/head/hos/beret/syndicate
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
-	ears = /obj/item/radio/headset/syndicate/alt/leader
 
 	l_pocket = /obj/item/melee/energy/sword/saber/red
 	r_pocket = /obj/item/melee/baton/telescopic
@@ -22,7 +21,6 @@
 
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/jackboots
-	ears = /obj/item/radio/headset/syndicate/alt/leader
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
 
@@ -31,7 +29,6 @@
 
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/jackboots
-	ears = /obj/item/radio/headset/syndicate/alt/leader
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 
@@ -40,7 +37,6 @@
 
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/jackboots
-	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 
@@ -51,7 +47,6 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/jackboots
 	glasses = /obj/item/clothing/glasses/science
-	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 
@@ -63,7 +58,6 @@
 	suit = /obj/item/clothing/suit/hazardvest
 	shoes = /obj/item/clothing/shoes/jackboots
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/captain_id
 
@@ -73,7 +67,6 @@
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/hazardvest
 	head = /obj/item/clothing/head/utility/hardhat
-	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 
@@ -82,7 +75,6 @@
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/hazardvest
 	head = /obj/item/clothing/head/utility/hardhat
-	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 
@@ -93,7 +85,6 @@
 	uniform = /obj/item/clothing/under/syndicate
 	accessory = /obj/item/clothing/accessory/armband/cargo
 	head = /obj/item/clothing/head/utility/hardhat/orange
-	ears = /obj/item/radio/headset/syndicate/alt
 
 	id = /obj/item/card/id/advanced/black/syndicate_command/crew_id
 
@@ -107,7 +98,6 @@
 	back = /obj/item/storage/backpack/duffelbag/syndie
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	suit_store = /obj/item/gun/ballistic/automatic/pistol
-	ears = /obj/item/radio/headset/syndicate
 
 	l_pocket = /obj/item/ammo_box/magazine/m10mm
 	r_pocket = /obj/item/knife/combat/survival
