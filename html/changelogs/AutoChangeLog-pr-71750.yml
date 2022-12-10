@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes:
-  - refactor: "Refactored and overhauled the ForceEvent UI"

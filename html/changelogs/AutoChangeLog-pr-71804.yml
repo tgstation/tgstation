@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes:
-  - bugfix: "There shouldn't be clickable names in Adminwho that don't do anything anymore."

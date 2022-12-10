@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - bugfix: "fixed changeling transform allowing escape from handcuffs"

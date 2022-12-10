@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "The chaplain's armament beacon now displays a radial instead of a text list, showing previews of what all the armor sets look like"
-  - qol: "(Almost) all choice beacons now use a pod to send their item, instead of just magicking it under your feet"
-  - code_imp: "Cleaned up some choice beacon code."

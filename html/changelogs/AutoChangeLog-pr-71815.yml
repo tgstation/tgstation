@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Improved tram door logic so they don't inadvertently open during departure."
-  - rscdel: "Removed the message bubble when you open the tram doors while it's travelling."

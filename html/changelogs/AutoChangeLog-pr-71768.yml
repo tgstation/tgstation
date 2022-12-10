@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "fixes beam glow in the dark effects"
-  - bugfix: "kinesis now doesnt pull the item to the centre of the screen when first used"
-  - bugfix: "physical beams (like vines or meat hook chain) no longer glow in the dark"
