@@ -45,7 +45,7 @@
 
 /obj/projectile/hook/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "chain")
+		chain = firer.Beam(src, icon_state = "chain", emissive = FALSE)
 	..()
 	//TODO: root the firer until the chain returns
 

@@ -248,9 +248,14 @@ multiple modular subtrees with behaviors
 		CRASH("Behavior [behavior_type] not found.")
 	var/list/arguments = args.Copy()
 	arguments[1] = src
+
+	if(LAZYACCESS(current_behaviors, behavior)) ///It's still in the plan, don't add it again to current_behaviors but do keep it in the planned behavior list so its not cancelled
+		LAZYADDASSOC(planned_behaviors, behavior, TRUE)
+		return
+
 	if(!behavior.setup(arglist(arguments)))
 		return
-	LAZYADD(current_behaviors, behavior)
+	LAZYADDASSOC(current_behaviors, behavior, TRUE)
 	LAZYADDASSOC(planned_behaviors, behavior, TRUE)
 	arguments.Cut(1, 2)
 	if(length(arguments))
