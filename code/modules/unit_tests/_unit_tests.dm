@@ -107,6 +107,7 @@
 #include "emoting.dm"
 #include "focus_only_tests.dm"
 #include "food_edibility_check.dm"
+#include "food_icons.dm"
 #include "gas_transfer.dm"
 #include "get_turf_pixel.dm"
 #include "greyscale_config.dm"

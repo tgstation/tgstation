@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes:
+  - bugfix: "fixe all art decal giving you bad art moodlet on examine"

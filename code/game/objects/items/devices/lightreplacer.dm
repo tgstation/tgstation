@@ -34,7 +34,7 @@
 	desc = "A device to automatically replace lights. Refill with broken or working light bulbs, or sheets of glass."
 
 	icon = 'icons/obj/janitor.dmi'
-	icon_state = "lightreplacer0"
+	icon_state = "lightreplacer"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "light_replacer"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -147,7 +147,7 @@
 	to_chat(user, status_string())
 
 /obj/item/lightreplacer/update_icon_state()
-	icon_state = "[initial(icon_state)][(obj_flags & EMAGGED ? 1 : 0)]"
+	icon_state = "[initial(icon_state)][(obj_flags & EMAGGED ? "-emagged" : "")]"
 	return ..()
 
 /obj/item/lightreplacer/proc/status_string()
@@ -256,7 +256,7 @@
 /obj/item/lightreplacer/blue
 	name = "bluespace light replacer"
 	desc = "A modified light replacer that zaps lights into place. Refill with broken or working lightbulbs, or sheets of glass."
-	icon_state = "lightreplacer_blue0"
+	icon_state = "lightreplacer_blue"
 	bluespace_toggle = TRUE
 
 /obj/item/lightreplacer/blue/emag_act()

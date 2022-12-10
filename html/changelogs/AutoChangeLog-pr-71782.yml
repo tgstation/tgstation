@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - admin: "You can now select which type of shuttle loan offer will by made when triggering the shuttle loan event."
