@@ -13478,7 +13478,7 @@
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
 	name = "Dumbwaiter Control Panel";
-	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen")
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /turf/open/floor/iron/white,
 /area/station/service/kitchen)
@@ -36649,16 +36649,10 @@
 "new" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner,
-/obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/item/reagent_containers/dropper,
-/obj/item/reagent_containers/syringe,
-/obj/item/reagent_containers/cup/beaker/large{
-	pixel_x = 6;
-	pixel_y = 4
-	},
+/obj/machinery/chem_master,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "ney" = (
@@ -42923,7 +42917,6 @@
 /turf/open/openspace,
 /area/station/hallway/primary/tram/right)
 "pvc" = (
-/obj/machinery/chem_master,
 /obj/machinery/button/door/directional/east{
 	id = "pharmacy_shutters_2";
 	name = "Pharmacy Privacy Shutters Toggle";
@@ -42932,6 +42925,13 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
 	},
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/beaker/large{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "pvn" = (
@@ -56741,7 +56741,7 @@
 	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
 	linked_elevator_id = "dumbwaiter_lift";
 	name = "Dumbwaiter Control Panel";
-	preset_destination_names = list("2" = "Hydroponics", "3" = "Kitchen")
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
