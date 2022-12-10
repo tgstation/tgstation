@@ -1,6 +1,6 @@
 ///This experiment type will turn up TRUE if at least one of the stock parts in the scanned machine is of the required_tier.
 ///Pretend to upgrade security's techfab but in reality apply only one better matter bin!
-
+///Note that a stock part in a machine can either be an object, or a datum.
 /datum/experiment/scanning/points/machinery_tiered_scan
 	name = "Upgraded Machinery Scanning Experiment"
 	description = "Base experiment for scanning machinery with upgraded parts"
@@ -18,11 +18,11 @@
 		return FALSE
 
 	var/obj/machinery/machine = target
-	//this checks for stock parts as objects inside the machine, will be obsolete when stock parts become datumised; please remove this then
+	//check for the required tier in the machine's stock parts as items
 	for(var/obj/item/stock_parts/stock_part in machine.component_parts)
 		if(stock_part.rating >= required_tier) //>= for backwards research cases when you want the discount done after you did the node
 			return TRUE
-
+	//check for the required tier in the machine's stock parts as datums
 	for(var/datum/stock_part/datum_stock_part in machine.component_parts)
 		if(datum_stock_part.tier >= required_tier)
 			return TRUE
@@ -46,11 +46,11 @@
 		return FALSE
 
 	var/obj/machinery/machine = target
-	//this checks for stock parts as objects inside the machine, will be obsolete when stock parts become datumised; please remove this then
+	//check for the required stock part as an item in the machine
 	for(var/obj/stock_part in machine.component_parts)
 		if(istype(stock_part, required_stock_part))
 			return TRUE
-
+	//check for the required stock part as a datum in the machine
 	for(var/datum/stock_part/datum_stock_part in machine.component_parts)
 		if(istype(datum_stock_part.physical_object_reference, required_stock_part))
 			return TRUE
