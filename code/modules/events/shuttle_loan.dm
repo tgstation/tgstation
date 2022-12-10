@@ -75,7 +75,6 @@
 		loan_event_control.run_events += dispatch_type //Regardless of admin selection, we add the event being run to the run_events list
 
 /datum/round_event/shuttle_loan/announce(fake)
-	SSshuttle.shuttle_loan = src
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
 			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","CentCom Counterintelligence")
@@ -107,6 +106,7 @@
 		else
 			log_game("Shuttle Loan event could not find [dispatch_type] event to offer.")
 			kill()
+	SSshuttle.shuttle_loan = src
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
