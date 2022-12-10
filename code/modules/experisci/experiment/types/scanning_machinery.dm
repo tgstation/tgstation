@@ -18,8 +18,13 @@
 		return FALSE
 
 	var/obj/machinery/machine = target
+	//this checks for stock parts as objects inside the machine, will be obsolete when stock parts become datumised; please remove this then
 	for(var/obj/item/stock_parts/stock_part in machine.component_parts)
 		if(stock_part.rating >= required_tier) //>= for backwards research cases when you want the discount done after you did the node
+			return TRUE
+
+	for(var/datum/stock_part/datum_stock_part in machine.component_parts)
+		if(datum_stock_part.tier >= required_tier)
 			return TRUE
 	return FALSE
 
@@ -41,7 +46,12 @@
 		return FALSE
 
 	var/obj/machinery/machine = target
+	//this checks for stock parts as objects inside the machine, will be obsolete when stock parts become datumised; please remove this then
 	for(var/obj/stock_part in machine.component_parts)
 		if(istype(stock_part, required_stock_part))
+			return TRUE
+
+	for(var/datum/stock_part/datum_stock_part in machine.component_parts)
+		if(istype(datum_stock_part.physical_object_reference, required_stock_part))
 			return TRUE
 	return FALSE
