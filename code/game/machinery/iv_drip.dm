@@ -110,7 +110,7 @@
 			return TRUE
 
 /// Sets the transfer rate to the provided value
-/obj/machinery/iv_drip/proc/set_transfer_rate(var/new_rate)
+/obj/machinery/iv_drip/proc/set_transfer_rate(new_rate)
 	if(!use_internal_storage && !reagent_container)
 		return
 	if(!attached)

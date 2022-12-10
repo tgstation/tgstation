@@ -184,7 +184,14 @@
 	GLOB.machines.Remove(src)
 	end_processing()
 	dump_inventory_contents()
-	QDEL_LIST(component_parts)
+
+	if (!isnull(component_parts))
+		// Don't delete the stock part singletons
+		for (var/atom/atom_part in component_parts)
+			qdel(atom_part)
+
+		component_parts.Cut()
+
 	QDEL_NULL(circuit)
 	unset_static_power()
 	return ..()
@@ -725,6 +732,10 @@
 	if(!component_parts || !component_parts.len)
 		return
 	var/parts_energy_rating = 0
+
+	for(var/datum/stock_part/part in component_parts)
+		parts_energy_rating += part.energy_rating()
+
 	for(var/obj/item/stock_parts/part in component_parts)
 		parts_energy_rating += part.energy_rating
 
@@ -755,8 +766,14 @@
 	if(!LAZYLEN(component_parts))
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
+
 	for(var/obj/item/part in component_parts)
 		part.forceMove(loc)
+
+	for (var/datum/stock_part/stock_part in component_parts)
+		var/part_type = stock_part.physical_object_type
+		new part_type(loc)
+
 	LAZYCLEARLIST(component_parts)
 	return ..()
 
@@ -897,7 +914,7 @@
 	if((flags_1 & NODECONSTRUCT_1) && !replacer_tool.works_from_distance)
 		return FALSE
 
-	var/shouldplaysound = 0
+	var/shouldplaysound = FALSE
 	if(!component_parts)
 		return FALSE
 
@@ -908,19 +925,35 @@
 		return FALSE
 
 	var/obj/item/circuitboard/machine/machine_board = locate(/obj/item/circuitboard/machine) in component_parts
-	var/required_type
 	if(replacer_tool.works_from_distance)
 		to_chat(user, display_parts(user))
 	if(!machine_board)
 		return FALSE
 
-	for(var/obj/item/primary_part as anything in component_parts)
-		for(var/design_type in machine_board.req_components)
-			if(ispath(primary_part.type, design_type))
+	for(var/datum/primary_part_base as anything in component_parts)
+		var/current_rating
+		var/required_type
+
+		if (istype(primary_part_base, /datum/stock_part))
+			var/datum/stock_part/primary_stock_part = primary_part_base
+			current_rating = primary_stock_part.tier
+			required_type = primary_stock_part.physical_object_base_type
+		else
+			var/obj/item/primary_stock_part_item = primary_part_base
+			current_rating = primary_stock_part_item.get_part_rating()
+
+			for(var/design_type in machine_board.req_components)
+				if(!ispath(primary_stock_part_item.type, design_type))
+					continue
+
 				required_type = design_type
-				break
+
+		if (isnull(required_type))
+			// Not an error, happens with circuitboards.
+			continue
+
 		for(var/obj/item/secondary_part in replacer_tool.contents)
-			if(!istype(secondary_part, required_type) || !istype(primary_part, required_type))
+			if(!istype(secondary_part, required_type))
 				continue
 			// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
 			if(istype(secondary_part, /obj/item/stock_parts/cell) && replacer_tool.works_from_distance)
@@ -929,9 +962,9 @@
 				if(checked_cell.rigged || checked_cell.corrupted)
 					checked_cell.charge = checked_cell.maxcharge
 					checked_cell.explode()
-			if(secondary_part.get_part_rating() > primary_part.get_part_rating())
+			if(secondary_part.get_part_rating() > current_rating)
 				if(istype(secondary_part,/obj/item/stack)) //conveniently this will mean primary_part is also a stack and I will kill the first person to prove me wrong
-					var/obj/item/stack/primary_stack = primary_part
+					var/obj/item/stack/primary_stack = primary_part_base
 					var/obj/item/stack/secondary_stack = secondary_part
 					var/used_amt = primary_stack.get_amount()
 					if(!secondary_stack.use(used_amt))
@@ -940,12 +973,29 @@
 					component_parts += secondary_inserted
 				else
 					if(replacer_tool.atom_storage.attempt_remove(secondary_part, src))
-						component_parts += secondary_part
-						secondary_part.forceMove(src)
-				replacer_tool.atom_storage.attempt_insert(primary_part, user, TRUE)
-				component_parts -= primary_part
-				to_chat(user, span_notice("[capitalize(primary_part.name)] replaced with [secondary_part.name]."))
-				shouldplaysound = 1 //Only play the sound when parts are actually replaced!
+						if (istype(primary_part_base, /datum/stock_part))
+							var/stock_part_datum = GLOB.stock_part_datums_per_object[secondary_part.type]
+							if (isnull(stock_part_datum))
+								CRASH("[secondary_part] ([secondary_part.type]) did not have a stock part datum (was trying to find [primary_part_base])")
+							component_parts += stock_part_datum
+							qdel(secondary_part)
+						else
+							component_parts += secondary_part
+							secondary_part.forceMove(src)
+
+				component_parts -= primary_part_base
+
+				var/obj/physical_part
+				if (istype(primary_part_base, /datum/stock_part))
+					var/datum/stock_part/stock_part_datum = primary_part_base
+					var/physical_object_type = stock_part_datum.physical_object_type
+					physical_part = new physical_object_type
+				else
+					physical_part = primary_part_base
+
+				replacer_tool.atom_storage.attempt_insert(physical_part, user, TRUE)
+				to_chat(user, span_notice("[capitalize(physical_part.name)] replaced with [secondary_part.name]."))
+				shouldplaysound = TRUE //Only play the sound when parts are actually replaced!
 				break
 
 	RefreshParts()
@@ -956,31 +1006,59 @@
 
 /obj/machinery/proc/display_parts(mob/user)
 	var/list/part_count = list()
-	for(var/obj/item/component_part in component_parts)
-		if(part_count[component_part.name])
-			part_count[component_part.name]++
+
+	for(var/component_part in component_parts)
+		var/component_name
+
+		if (istype(component_part, /datum/stock_part))
+			var/datum/stock_part/stock_part = component_part
+			component_name = initial(stock_part.physical_object_type.name)
+		else
+			var/atom/stock_part = component_part
+			component_name = stock_part.name
+
+		if(part_count[component_name])
+			part_count[component_name]++
 			continue
 
 		if(isstack(component_part))
 			var/obj/item/stack/stack_part = component_part
-			part_count[component_part.name] = stack_part.amount
+			part_count[component_name] = stack_part.amount
 		else
-			part_count[component_part.name] = 1
+			part_count[component_name] = 1
+
+	for (var/datum/stock_part/stock_part in component_parts)
+		part_count[stock_part.name()] += 1
 
 	var/list/printed_components = list()
 
 	var/text = span_notice("It contains the following parts:")
-	for(var/obj/item/component_part as anything in component_parts)
-		if(printed_components[component_part.name])
+	for(var/component_part_base in component_parts)
+		var/atom/component_part
+		var/component_name
+
+		if (istype(component_part_base, /datum/stock_part))
+			var/datum/stock_part/stock_part = component_part_base
+			component_part = stock_part.physical_object_reference
+			component_name = initial(stock_part.physical_object_type.name)
+		else
+			component_part = component_part_base
+			component_name = component_part.name
+
+		if (!istype(component_part))
+			stack_trace("[component_part_base] is not an /atom or a /datum/stock_part (or did not make one)")
+			continue
+
+		if(printed_components[component_name])
 			continue //already printed so skip
-		
-		var/part_name = component_part.name
+
+		var/part_name = component_name
 		if (isstack(component_part))
 			var/obj/item/stack/stack_part = component_part
 			part_name = stack_part.singular_name
-		
-		text += span_notice("[icon2html(component_part, user)] [part_count[component_part.name]] [part_name]\s.")
-		printed_components[component_part.name] = TRUE
+
+		text += span_notice("[icon2html(component_part, user)] [part_count[component_name]] [part_name]\s.")
+		printed_components[component_name] = TRUE
 
 	return text
 

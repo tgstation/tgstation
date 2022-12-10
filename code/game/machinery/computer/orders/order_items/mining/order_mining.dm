@@ -2,8 +2,8 @@
 	category_index = CATEGORY_MINING
 
 /datum/orderable_item/mining/marker_beacon
-	item_path = /obj/item/stack/marker_beacon
-	cost_per_order = 10
+	item_path = /obj/item/stack/marker_beacon/ten
+	cost_per_order = 100
 
 /datum/orderable_item/mining/skeleton_key
 	item_path = /obj/item/skeleton_key

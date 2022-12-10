@@ -260,6 +260,7 @@
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
+	can_hold_up = FALSE
 
 /obj/item/gun/magic/tentacle/Initialize(mapload, silent)
 	. = ..()
@@ -321,7 +322,7 @@
 
 /obj/projectile/tentacle/fire(setAngle)
 	if(firer)
-		chain = firer.Beam(src, icon_state = "tentacle")
+		chain = firer.Beam(src, icon_state = "tentacle", emissive = FALSE)
 	..()
 
 /obj/projectile/tentacle/proc/reset_throw(mob/living/carbon/human/H)

@@ -279,6 +279,7 @@ All ShuttleMove procs go here
 	// the station as it is loaded in.
 	if (oldT && !is_reserved_level(oldT.z))
 		unlocked = TRUE
+		update_appearance()
 
 /************************************Mob move procs************************************/
 
