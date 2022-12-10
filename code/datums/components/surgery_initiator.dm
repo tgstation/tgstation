@@ -19,9 +19,10 @@
 
 /datum/component/surgery_initiator/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(initiate_surgery_moment))
+	RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, PROC_REF(add_item_context))
 
 /datum/component/surgery_initiator/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET)
 	unregister_signals()
 
 /datum/component/surgery_initiator/proc/unregister_signals()
@@ -334,3 +335,20 @@
 		return FALSE
 
 	return !get_location_accessible(target, user.zone_selected)
+
+/**
+ * Adds context sensitivy directly to the surgery initator file for screentips
+ * Arguments:
+ * * source - the surgery drapes, cloak, or bedsheet calling surgery initator
+ * * context - Preparing Surgery, the component has a lot of ballon alerts to deal with most contexts
+ * * target - the living target mob you are doing surgery on
+ * * user - refers to user who will see the screentip when the drapes are on a living target
+ */
+/datum/component/surgery_initiator/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user,)
+	SIGNAL_HANDLER
+
+	if(!isliving(target))
+		return
+
+	context[SCREENTIP_CONTEXT_LMB] = "Prepare Surgery"
+	return CONTEXTUAL_SCREENTIP_SET
