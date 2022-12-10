@@ -159,6 +159,9 @@
 				icon_state = "box_2"
 				state = 3
 				components = list()
+				//add circuit board as the first component to the list of components
+				//required for part_replacer to locate it while exchanging parts so it does not early return in /obj/machinery/proc/exchange_parts
+				components += circuit
 				req_components = board.req_components.Copy()
 				update_namelist(board.specific_parts)
 				return
@@ -222,25 +225,20 @@
 							old_part.moveToNullspace()
 							qdel(old_part)
 
-						// Set anchor state and move the frame's parts over to the new machine.
-						// Then refresh parts and call on_construction().
-
+						// Set anchor state
 						new_machine.set_anchored(anchored)
-						new_machine.component_parts = list()
 
-						circuit.forceMove(new_machine)
-						new_machine.component_parts += circuit
+						// Assign the circuit & parts & move them all at once into the machine
+						// no need to seperatly move circuit board as its already part of the components list
 						new_machine.circuit = circuit
-
-						for (var/obj/new_part in src)
+						new_machine.component_parts = components
+						for (var/obj/new_part in components)
 							new_part.forceMove(new_machine)
 
-						new_machine.component_parts = components
-						components = null
-
+						//Inform machine that its finished & cleanup
 						new_machine.RefreshParts()
-
 						new_machine.on_construction()
+						components = null
 					qdel(src)
 				return
 

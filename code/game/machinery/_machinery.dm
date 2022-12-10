@@ -768,11 +768,11 @@
 	spawn_frame(disassembled)
 
 	for(var/obj/item/part in component_parts)
-		part.forceMove(loc)
-
-	for (var/datum/stock_part/stock_part in component_parts)
-		var/part_type = stock_part.physical_object_type
-		new part_type(loc)
+		if(istype(part, /datum/stock_part))
+			var/datum/stock_part/datum_part = part
+			new datum_part.physical_object_type(loc)
+		else
+			part.forceMove(loc)
 
 	LAZYCLEARLIST(component_parts)
 	return ..()
@@ -929,7 +929,6 @@
 		to_chat(user, display_parts(user))
 	if(!machine_board)
 		return FALSE
-
 	/**
 	 * sorting is very important especially because we are breaking out when required part is found in the inner for loop
 	 * if the rped first picked up a tier 3 part AND THEN a tier 4 part
@@ -989,6 +988,7 @@
 						else
 							component_parts += secondary_part
 							secondary_part.forceMove(src)
+							part_list -= secondary_part //have to manually remove cause we are no longer refering replacer_tool.contents & forceMove wont remove it from th list
 
 				component_parts -= primary_part_base
 
