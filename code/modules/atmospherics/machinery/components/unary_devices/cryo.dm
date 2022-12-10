@@ -462,11 +462,11 @@
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_static_data()
-	. = list (
-		"defaultReleasePressure" = CRYO_DEFAULT_RELEASE_PRESSURE,
-		"minReleasePressure" = CRYO_MIN_RELEASE_PRESSURE,
-		"maxReleasePressure" = CRYO_MAX_RELEASE_PRESSURE,
-	)
+	var/list/data = list()
+	data["defaultReleasePressure"] = CRYO_DEFAULT_RELEASE_PRESSURE,
+	data["minReleasePressure"] = CRYO_MIN_RELEASE_PRESSURE,
+	data["maxReleasePressure"] = CRYO_MAX_RELEASE_PRESSURE,
+	return data
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
 	var/list/data = list()
