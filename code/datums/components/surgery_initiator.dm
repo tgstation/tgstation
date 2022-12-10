@@ -348,7 +348,7 @@
 	SIGNAL_HANDLER
 
 	if(!isliving(target))
-		return
+		return NONE
 
 	context[SCREENTIP_CONTEXT_LMB] = "Prepare Surgery"
 	return CONTEXTUAL_SCREENTIP_SET
