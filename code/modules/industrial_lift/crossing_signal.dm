@@ -1,6 +1,7 @@
 #define XING_STATE_GREEN 0
 #define XING_STATE_AMBER 1
 #define XING_STATE_RED 2
+#define XING_STATE_MALF 3
 #define XING_SIGNAL_DIRECTION_WEST "west-"
 #define XING_SIGNAL_DIRECTION_EAST "east-"
 
@@ -42,6 +43,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/red_distance_threshold = 33
 	/// If the signal is facing east or west
 	var/signal_direction
+	/// Are we malfunctioning?
+	var/malfunctioning = FALSE
 
 /obj/machinery/crossing_signal/Initialize(mapload)
 	. = ..()
@@ -68,9 +71,21 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	if(obj_flags & EMAGGED)
 		return
 	balloon_alert(user, "disabled motion sensors")
-	if(signal_state != XING_STATE_GREEN)
-		set_signal_state(XING_STATE_GREEN)
+	if(signal_state != XING_STATE_MALF)
+		set_signal_state(XING_STATE_MALF)
 	obj_flags |= EMAGGED
+
+/obj/machinery/crossing_signal/proc/start_malfunction()
+	if(signal_state != XING_STATE_MALF)
+		malfunctioning = TRUE
+		set_signal_state(XING_STATE_MALF)
+
+/obj/machinery/crossing_signal/proc/end_malfunction()
+	if(obj_flags & EMAGGED)
+		return
+
+	malfunctioning = FALSE
+	process()
 
 /**
  * Finds the tram, just like the tram computer
@@ -103,8 +118,11 @@ GLOBAL_LIST_EMPTY(tram_signals)
  * Returns whether we are still processing.
  */
 /obj/machinery/crossing_signal/proc/update_operating()
-	//emagged crossing signals dont update
+	// Emagged crossing signals don't update
 	if(obj_flags & EMAGGED)
+		return
+	// Malfunctioning signals don't update
+	if(malfunctioning)
 		return
 	// Immediately process for snappy feedback
 	var/should_process = process() != PROCESS_KILL
@@ -119,8 +137,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	// Check for stopped states.
 	if(!tram || !is_operational)
 		// Tram missing, or we lost power.
-		// Tram missing is always safe (green)
-		set_signal_state(XING_STATE_GREEN, force = !is_operational)
+		// Tram missing throw the error message (blue)
+		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
 	use_power(active_power_usage)
@@ -128,7 +146,7 @@ GLOBAL_LIST_EMPTY(tram_signals)
 	var/obj/structure/industrial_lift/tram/tram_part = tram.return_closest_platform_to(src)
 
 	if(QDELETED(tram_part))
-		set_signal_state(XING_STATE_GREEN, force = !is_operational)
+		set_signal_state(XING_STATE_MALF, force = !is_operational)
 		return PROCESS_KILL
 
 	// Everything will be based on position and travel direction
@@ -199,6 +217,8 @@ GLOBAL_LIST_EMPTY(tram_signals)
 
 	var/new_color
 	switch(signal_state)
+		if(XING_STATE_MALF)
+			new_color = COLOR_BRIGHT_BLUE
 		if(XING_STATE_GREEN)
 			new_color = COLOR_VIBRANT_LIME
 		if(XING_STATE_AMBER)
@@ -250,3 +270,4 @@ GLOBAL_LIST_EMPTY(tram_signals)
 #undef XING_STATE_GREEN
 #undef XING_STATE_AMBER
 #undef XING_STATE_RED
+#undef XING_STATE_MALF
