@@ -35,7 +35,6 @@
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/L = the_target
-		var/faction_check = living_mob.faction_check_mob(L, exact_match = check_factions_exactly)
 		if(faction_check(living_mob, L)  || (L.stat > stat_attack))
 			return FALSE
 		return TRUE
