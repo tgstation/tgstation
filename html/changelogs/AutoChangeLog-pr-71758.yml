@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Landmines, rather than triggering when you step onto them, will now trigger when you step off of them."

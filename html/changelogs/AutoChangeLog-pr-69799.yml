@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix hypnosis, mind echo trauma, phobia trauma, hypnotic trigger trauma, split personality brainwashing trauma, codeword hearing, and impure inacusiate reagent all bypassing language and hearing checks.  If you try to give commands to a victim in a language they don't understand, they will no longer magically understand the words."
-  - bugfix: "Fix sign language having accent modifications"
-  - refactor: "Refactored saycode to be more robust, readable, and have more unit tests."

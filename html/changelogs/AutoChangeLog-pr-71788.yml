@@ -1,5 +1,0 @@
-author: "Kryson, Viro, Tattle"
-delete-after: True
-changes:
-  - imageadd: "posters are now 24px tall"
-  - imageadd: "new sprites for nanomeds, emergency safes, and ticket machines (by Kryson)!"

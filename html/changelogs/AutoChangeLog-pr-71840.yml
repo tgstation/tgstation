@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "RPED part display information"
+  - bugfix: "RPED incorrectly exchanging parts with the wrong tier for datum stock parts"
+  - bugfix: "RPED unable to install datum stock parts in incomplete machine frames"
+  - bugfix: "RPED unable to exchange parts for newly constructed machines"
