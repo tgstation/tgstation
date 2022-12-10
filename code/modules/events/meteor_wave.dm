@@ -45,7 +45,7 @@
 		if("halloween")
 			wave_type = GLOB.meteorsSPOOKY
 		if("gaseous")
-			wave_type = GLOB.meteros_gaseous
+			wave_type = GLOB.meteors_gaseous
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()

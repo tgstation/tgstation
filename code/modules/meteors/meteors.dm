@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(meteorsD, list(/obj/effect/meteor/medium=15, /obj/effect/meteor
 						  /obj/effect/meteor/banana=25, /obj/effect/meteor/meaty=10, /obj/effect/meteor/meaty/xeno=8, /obj/effect/meteor/emp = 30, \
 						  /obj/effect/meteor/cluster=20, /obj/effect/meteor/tunguska=1)) //for stray meteor event (bigger numbers for a bit finer weighting)
 
-GLOBAL_LIST_INIT(meteros_gaseous, list(/obj/effect/meteor/gaseous = 1))
+GLOBAL_LIST_INIT(meteors_gaseous, list(/obj/effect/meteor/gaseous = 1))
 
 ///////////////////////////////
 //Meteor spawning global procs
