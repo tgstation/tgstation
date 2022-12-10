@@ -48,7 +48,7 @@
 		return
 	var/mult = 1
 	if(source.uses_integrity)
-		mult = art_piece.get_integrity() / art_piece.max_integrity
+		mult = source.get_integrity() / source.max_integrity
 	apply_moodlet(source, user, impressiveness * mult)
 
 /datum/element/art/rev
