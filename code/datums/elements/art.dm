@@ -46,7 +46,7 @@
 	to_chat(user, span_notice("You start appraising [source]..."))
 	if(!do_after(user, 2 SECONDS, target = source))
 		return
-	var/mult
+	var/mult = 1
 	if(isobj(source))
 		var/obj/art_piece = source
 		mult = art_piece.get_integrity() / art_piece.max_integrity
