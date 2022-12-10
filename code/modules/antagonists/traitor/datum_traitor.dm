@@ -28,9 +28,6 @@
 	/// The uplink handler that this traitor belongs to.
 	var/datum/uplink_handler/uplink_handler
 
-	/// Name of a completed final objective; the existance of a non-null string here guarantees greentext, and is displayed in the round summary.
-	var/final_objective = ""
-
 	var/uplink_sale_count = 3
 
 /datum/antagonist/traitor/New(give_objectives = TRUE)
@@ -50,7 +47,7 @@
 			uplink.uplink_handler = uplink_handler
 		else
 			uplink_handler = uplink.uplink_handler
-		uplink_handler.traitor_datum = src
+		uplink_handler.primary_objectives = objectives
 		uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
@@ -245,8 +242,8 @@
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
 				traitor_won = FALSE
 			count++
-		if(final_objective)
-			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[final_objective]\" was completed!")]"
+		if(uplink_handler.final_objective)
+			objectives_text += "<br>[span_greentext("[traitor_won ? "Additionally" : "However"], the final objective \"[uplink_handler.final_objective]\" was completed!")]"
 			traitor_won = TRUE
 
 	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"

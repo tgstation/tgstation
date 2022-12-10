@@ -6,8 +6,6 @@
 /datum/uplink_handler
 	/// The owner of this uplink handler.
 	var/datum/mind/owner
-	/// The antag datum that we are linked to.
-	var/datum/antagonist/traitor/traitor_datum
 	/// The amount of telecrystals contained in this traitor has
 	var/telecrystals = 0
 	/// The current uplink flag of this uplink
@@ -38,6 +36,10 @@
 	var/list/completed_objectives = list()
 	/// All objectives assigned by type to handle any duplicates
 	var/list/potential_duplicate_objectives = list()
+	/// Text of the final objective, once assigned. Used for uplink data and traitor greentext. Empty string means not yet reached.
+	var/final_objective = ""
+	/// Objectives that must be completed for traitor greentext. Set by the traitor datum.
+	var/list/primary_objectives
 	/// The role that this uplink handler is associated to.
 	var/assigned_role
 	/// The species this uplink handler is associated to.
