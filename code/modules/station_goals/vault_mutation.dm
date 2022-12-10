@@ -15,7 +15,7 @@
 	REMOVE_TRAIT(owner, TRAIT_NOBREATH, GENETIC_MUTATION)
 
 /datum/mutation/human/Fast_Runner
-	name = "Fast runner"
+	name = "Fast Runner"
 	desc = "A mution within the leg muscles that allows it to operate at 20% more than the usual capacity."
 	text_gain_indication = "Your legs feel faster and stronger."
 	text_lose_indication = "Your legs feel weaker and slower."
@@ -31,7 +31,7 @@
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/dna_vault_speedup)
 
 /datum/mutation/human/Tough_Skin
-	name = "Tough skin"
+	name = "Tough Skin"
 	desc = "A mutation within the epidermis that makes it more resistant to tear."
 	text_gain_indication = "Your skin feels tougher."
 	text_lose_indication = "Your skin feels weaker."
@@ -65,7 +65,7 @@
 	owner.next_move_modifier /= 0.5
 
 /datum/mutation/human/Fire_Immune
-	name = "Fire immunity"
+	name = "Fire Immunity"
 	desc = "A mutation within the body that allows it to become unflammable and withstand higher temperature."
 	text_gain_indication = "Your body feels like it can withstand fire."
 	text_lose_indication = "Your body feels vulnerable to fire again."
@@ -85,7 +85,7 @@
 	REMOVE_TRAIT( owner, TRAIT_NOFIRE, GENETIC_MUTATION)
 
 /datum/mutation/human/Stun_Resistant
-	name = "Stun resistant"
+	name = "Stun Resistant"
 	desc = "A mutation within the nervouse system that allows it to recover from being knocked down."
 	text_gain_indication = "You feel like you can recover from a fall easier."
 	text_lose_indication = "You feel like recovering from a fall is a challenge again."
@@ -101,7 +101,7 @@
 	owner.physiology.stun_mod /= 0.5
 
 /datum/mutation/human/Plasma_Adapter
-	name = "Plasma adaptation"
+	name = "Plasma Adaptation"
 	desc = "A mutation in the lungs that provides it immunity to plasma's toxic nature."
 	text_gain_indication = "Your lungs feel resistant to airborne contaminant."
 	text_lose_indication = "Your lungs feel vulnerable to airborne contaminant again."
