@@ -60,6 +60,11 @@
 	excited = TRUE
 
 	var/atom/target = holding || get_turf(src)
+	if(!holding)
+		var/turf/target_turf = target
+		for(var/turf/adjacent_turf in target_turf.get_atmos_adjacent_turfs())
+			scrub(adjacent_turf.return_air())
+			return ..()
 	scrub(target.return_air())
 	return ..()
 
