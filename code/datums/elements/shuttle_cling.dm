@@ -50,7 +50,7 @@
 	SIGNAL_HANDLER
 
 	if(!is_on_hyperspace(parent))
-		QDEL_NULL(src)
+		qdel(src)
 		return
 
 	hyperloop.blocked = FALSE
@@ -102,7 +102,7 @@
 
 /datum/component/shuttle_cling/Destroy(force, silent)
 	REMOVE_TRAIT(parent, TRAIT_HYPERSPACED, src)
-	qdel(hyperloop)
+	QDEL_NULL(hyperloop)
 
 	return ..()
 
