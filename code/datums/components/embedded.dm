@@ -293,7 +293,7 @@
 /datum/component/embedded/proc/magic_pull(datum/source, mob/living/caster, obj/marked_item)
 	SIGNAL_HANDLER
 
-	if(marked_item != weapon || src.limb != limb)
+	if(marked_item != weapon)
 		return
 
 	var/mob/living/carbon/victim = parent
