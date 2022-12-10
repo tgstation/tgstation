@@ -1,3 +1,13 @@
+///Instead of a high move force we just get launched away dramatically because we're that hopeless
+#define SUPER_NOT_HOLDING_ON 0
+///We're not holdin on and will get thrown off
+#define NOT_HOLDING_ON 1
+///We're holding on, but will be pulled slowly
+#define CLINGING 2
+///We're holding on really well and aren't suffering from any pull
+#define ALL_GOOD 3
+
+///Component
 /datum/component/shuttle_cling
 	///The direction we push stuff towards
 	var/direction
@@ -22,34 +32,57 @@
 
 	ADD_TRAIT(parent, TRAIT_HYPERSPACED, src)
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_state))
+	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNBUCKLED, COMSIG_ATOM_NO_LONGER_PULLED), PROC_REF(check_state))
+
 	hyperloop = SSmove_manager.move(moving = parent, direction = direction, delay = not_clinging_move_delay, subsystem = SShyperspace_drift, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_START_FAST)
 
+	if(is_holding_on(parent) >= CLINGING)
+		hyperloop.blocked = TRUE //otherwise we'll get moved 1 tile before we can correct ourselves, which isnt super bad but just looks jank
+
+
 ///Check if we're in hyperspace and our state in hyperspace
-/datum/component/shuttle_cling/proc/check_state(atom/movable/movee, atom/old_loc, dir, forced, list/old_locs)
+/datum/component/shuttle_cling/proc/check_state()
 	SIGNAL_HANDLER
 
 	if(!is_on_hyperspace(parent))
 		qdel(src)
 
-	if(!is_holding_on(parent))
-		hyperloop.delay = not_clinging_move_delay
-	else
-		hyperloop.delay = clinging_move_delay
+	hyperloop.blocked = FALSE
+
+	switch(is_holding_on(parent))
+		if(SUPER_NOT_HOLDING_ON)
+			launch_very_hard(parent)
+		if(NOT_HOLDING_ON)
+			hyperloop.delay = not_clinging_move_delay
+		if(CLINGING)
+			hyperloop.delay = clinging_move_delay
+		if(ALL_GOOD)
+			hyperloop.blocked = TRUE
 
 ///Check if we're "holding on" to the shuttle
-/datum/component/shuttle_cling/proc/is_holding_on(atom/movable/clinger)
-	if(!isliving(clinger))
-		return FALSE
+/datum/component/shuttle_cling/proc/is_holding_on(atom/movable/movee)
+	if(movee.pulledby)
+		return ALL_GOOD
+	if(!isliving(movee))
+		return SUPER_NOT_HOLDING_ON
 
-	for(var/atom/handlebar in range(clinger, 1))
+	var/mob/living/living = movee
+
+	//Check if we can interact with stuff (checks for alive, arms, stun, etc)
+	if(!living.canUseTopic(living, TRUE, FALSE, TRUE, TRUE))
+		return NOT_HOLDING_ON
+
+	if(living.buckled)
+		return ALL_GOOD
+
+	for(var/atom/handlebar in range(living, 1))
 		if(isclosedturf(handlebar))
-			return TRUE
+			return CLINGING
 		if(isobj(handlebar))
 			var/obj/object = handlebar
 			if(object.anchored && object.density)
-				return TRUE
-	return FALSE
+				return CLINGING
+	return NOT_HOLDING_ON
 
 ///Are we on a hyperspace tile? There's some special bullshit with lattices so we just wrap this check
 /datum/component/shuttle_cling/proc/is_on_hyperspace(atom/movable/clinger)
@@ -57,8 +90,17 @@
 		return TRUE
 	return FALSE
 
+///Launch the atom very hard, away from hyperspace
+/datum/component/shuttle_cling/proc/launch_very_hard(atom/movable/byebye)
+	byebye.safe_throw_at(get_edge_target_turf(byebye, direction), 200, 1, spin = TRUE, force = MOVE_FORCE_EXTREMELY_STRONG)
+
 /datum/component/shuttle_cling/Destroy(force, silent)
 	REMOVE_TRAIT(parent, TRAIT_HYPERSPACED, src)
 	qdel(hyperloop)
 
 	return ..()
+
+#undef SUPER_NOT_HOLDING_ON
+#undef NOT_HOLDING_ON
+#undef CLINGING
+#undef ALL_GOOD

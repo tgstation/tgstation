@@ -69,6 +69,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT)
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	add_cell_sample()
 	if(ai_controller)

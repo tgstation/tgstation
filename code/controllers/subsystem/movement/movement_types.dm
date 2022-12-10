@@ -25,6 +25,8 @@
 	var/timer = 0
 	///Is this loop running or not
 	var/running = FALSE
+	///Disables movement without messing with the timer system
+	var/blocked = FALSE
 
 /datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	src.owner = owner
@@ -99,13 +101,16 @@
 /datum/move_loop/process()
 	var/old_delay = delay //The signal can sometimes change delay
 
-//	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
-//		return
+	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
+		return
 
 	lifetime -= old_delay //This needs to be based on work over time, not just time passed
 
 	if(lifetime < 0) //Otherwise lag would make things look really weird
 		qdel(src)
+		return
+
+	if(blocked)
 		return
 
 	var/visual_delay = controller.visual_delay
