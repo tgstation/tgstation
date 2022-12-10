@@ -1,3 +1,5 @@
+
+//Below defines are for the is_holding_on proc to see how well they're holding on and respond accordingly
 ///Instead of a high move force we just get launched away dramatically because we're that hopeless
 #define SUPER_NOT_HOLDING_ON 0
 ///We're not holdin on and will get thrown off
@@ -7,7 +9,10 @@
 ///We're holding on really well and aren't suffering from any pull
 #define ALL_GOOD 3
 
-///Component
+///Gets added to all movables that enter hyperspace and are supposed to suffer from "hyperspace drift"
+///This lets people fly around shuttles during transit using jetpacks, or cling to the side if they got a spacesuit
+///Dumping into deepspace is handled by the hyperspace turf, not the component.
+///Not giving something this component while on hyperspace is safe, it just means free movement like carps
 /datum/component/shuttle_cling
 	///The direction we push stuff towards
 	var/direction
@@ -45,7 +50,8 @@
 	SIGNAL_HANDLER
 
 	if(!is_on_hyperspace(parent))
-		qdel(src)
+		QDEL_NULL(src)
+		return
 
 	hyperloop.blocked = FALSE
 
@@ -69,7 +75,7 @@
 	var/mob/living/living = movee
 
 	//Check if we can interact with stuff (checks for alive, arms, stun, etc)
-	if(!living.canUseTopic(living, TRUE, FALSE, TRUE, TRUE))
+	if(!living.canUseTopic(living, be_close = TRUE, no_dexterity = FALSE, no_tk = TRUE, need_hands = TRUE))
 		return NOT_HOLDING_ON
 
 	if(living.buckled)
