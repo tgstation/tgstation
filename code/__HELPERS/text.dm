@@ -1053,7 +1053,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 
 // Returns new list that joins the first arg, while coloring each section by the associated span, repeating the last span if running out
-/proc/join_color_list(var/list/joined_list, var/list/span_list)
+/proc/join_color_list(list/joined_list, list/span_list)
 	var/return_merged = ""
 	for(var/i in 1 to length(joined_list))
 		var/active_span = span_list[i] || span_list[length(span_list)]
