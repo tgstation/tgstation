@@ -14,7 +14,7 @@
 	fakeable = FALSE
 
 /datum/round_event/space_dust/start()
-	spawn_meteors(1, GLOB.meteorsC)
+	spawn_meteors(1, GLOB.meteors_dust)
 
 /datum/round_event_control/space_dust/major_dust
 	name = "Space Dust: Major"
@@ -45,4 +45,4 @@
 
 /datum/round_event/space_dust/major_dust/tick()
 	if(ISMULTIPLE(activeFor, 3))
-		spawn_meteors(5, GLOB.meteorsC)
+		spawn_meteors(5, GLOB.meteors_dust)

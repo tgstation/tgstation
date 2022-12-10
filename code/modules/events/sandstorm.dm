@@ -63,14 +63,14 @@
 		if(WEST)
 			start_side_text = "port"
 		else
-			log_game("Sandstorm event given [start_side] as unrecognized direction. Cancelling event...")
+			stack_trace("Sandstorm event given [start_side] as unrecognized direction. Cancelling event...")
 			kill()
 
 	priority_announce("A large wave of space dust is approaching from the [start_side_text] side of the station. \
 		Impact is expected in the next two minutes. All employees are encouranged to assist in repairs and damage mitigation if possible.", "Collision Emergency Alert")
 
 /datum/round_event/sandstorm/tick()
-	spawn_meteors(15, GLOB.meteorsE, start_side)
+	spawn_meteors(15, GLOB.meteors_sandstorm, start_side)
 
 
 /**
@@ -97,4 +97,4 @@
 	fakeable = FALSE
 
 /datum/round_event/sandstorm_classic/tick()
-	spawn_meteors(10, GLOB.meteorsC)
+	spawn_meteors(10, GLOB.meteors_dust)
