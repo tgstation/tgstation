@@ -364,8 +364,8 @@
 	name = "durathread beret"
 	desc = "A beret made from durathread, its resilient fibers provide some protection to the wearer."
 	icon_state = "beret_badge"
-	icon_preview = 'icons/obj/clothing/head/beret.dmi'
-	icon_state_preview = "beret_flat"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "beret_durathread"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#C5D4F3#ECF1F8"
