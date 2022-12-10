@@ -1,6 +1,5 @@
 // Recipes that provide crafting instructions and don't yield any result
 
-
 // Crafting recipes
 
 /datum/crafting_recipe/shiv
@@ -39,6 +38,8 @@
 
 /datum/crafting_recipe/food/reaction/New()
 	..()
+	if(!reaction)
+		return
 	var/datum/chemical_reaction/chemical_reaction = new reaction // This could use GLOB.chemical_reactions_list if it was initialized by now
 	reqs = chemical_reaction.required_reagents
 	chem_catalysts = chemical_reaction.required_catalysts

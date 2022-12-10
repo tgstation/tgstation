@@ -4,8 +4,10 @@
 /obj/vehicle/ridden/lavaboat
 	name = "lava boat"
 	desc = "A boat used for traversing lava."
-	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
+	icon_state = "goliath_boat"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "boat"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
 	key_type = /obj/item/oar
@@ -44,8 +46,8 @@
 /obj/vehicle/ridden/lavaboat/plasma
 	name = "plasma boat"
 	desc = "A boat used for traversing the streams of plasma without turning into an icecube."
-	icon_state = "goliath_boat"
 	icon = 'icons/obj/lavaland/dragonboat.dmi'
+	icon_state = "goliath_boat"
 	resistance_flags = FREEZE_PROOF
 	can_buckle = TRUE
 

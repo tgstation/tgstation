@@ -1428,7 +1428,7 @@
 /datum/crafting_recipe/pipe
 	name = "Smart pipe fitting"
 	tool_behaviors = list(TOOL_WRENCH)
-	result = /obj/item/pipe/quaternary
+	result = /obj/item/pipe/quaternary/pipe
 	reqs = list(/obj/item/stack/sheet/iron = 1)
 	time = 0.5 SECONDS
 	category = CAT_ATMOSPHERIC
@@ -1444,7 +1444,7 @@
 /datum/crafting_recipe/layer_adapter
 	name = "Layer manifold fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/binary
+	result = /obj/item/pipe/binary/layer_adapter
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 1)
@@ -1465,7 +1465,7 @@
 /datum/crafting_recipe/color_adapter
 	name = "Color adapter fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/binary
+	result = /obj/item/pipe/binary/color_adapter
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 1)
@@ -1486,7 +1486,7 @@
 /datum/crafting_recipe/he_pipe
 	name = "H/E pipe fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/quaternary
+	result = /obj/item/pipe/quaternary/he_pipe
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 1)
@@ -1507,7 +1507,7 @@
 /datum/crafting_recipe/he_junction
 	name = "H/E junction fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/directional
+	result = /obj/item/pipe/directional/he_junction
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 1)
@@ -1528,7 +1528,7 @@
 /datum/crafting_recipe/pressure_pump
 	name = "Pressure pump fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/binary
+	result = /obj/item/pipe/binary/pressure_pump
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 5,
@@ -1550,7 +1550,7 @@
 /datum/crafting_recipe/manual_valve
 	name = "Manual valve fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/binary
+	result = /obj/item/pipe/binary/manual_valve
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 1)
@@ -1571,7 +1571,7 @@
 /datum/crafting_recipe/vent
 	name = "Vent pump fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/directional
+	result = /obj/item/pipe/directional/vent
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 5,
@@ -1593,7 +1593,7 @@
 /datum/crafting_recipe/scrubber
 	name = "Scrubber fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/directional
+	result = /obj/item/pipe/directional/scrubber
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 5,
@@ -1615,7 +1615,7 @@
 /datum/crafting_recipe/filter
 	name = "Filter fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/trinary/flippable
+	result = /obj/item/pipe/trinary/flippable/filter
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 5,
@@ -1637,7 +1637,7 @@
 /datum/crafting_recipe/mixer
 	name = "Mixer fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/trinary/flippable
+	result = /obj/item/pipe/trinary/flippable/mixer
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 5,
@@ -1659,7 +1659,7 @@
 /datum/crafting_recipe/connector
 	name = "Portable connector fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/directional
+	result = /obj/item/pipe/directional/connector
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 1)
@@ -1680,7 +1680,7 @@
 /datum/crafting_recipe/passive_vent
 	name = "Passive vent fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/directional
+	result = /obj/item/pipe/directional/passive_vent
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 1)
@@ -1701,7 +1701,7 @@
 /datum/crafting_recipe/injector
 	name = "Outlet injector fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/directional
+	result = /obj/item/pipe/directional/injector
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/iron = 1,
@@ -1723,7 +1723,7 @@
 /datum/crafting_recipe/he_exchanger
 	name = "Heat exchanger fitting"
 	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
-	result = /obj/item/pipe/directional
+	result = /obj/item/pipe/directional/he_exchanger
 	reqs = list(
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/plasteel = 1)

@@ -31,8 +31,30 @@ Buildable meters
 
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
+/obj/item/pipe/directional/he_junction
+	icon_state = "junction"
+/obj/item/pipe/directional/vent
+	icon_state = "uvent"
+/obj/item/pipe/directional/scrubber
+	icon_state = "scrubber"
+/obj/item/pipe/directional/connector
+	icon_state = "connector"
+/obj/item/pipe/directional/passive_vent
+	icon_state = "pvent"
+/obj/item/pipe/directional/injector
+	icon_state = "injector"
+/obj/item/pipe/directional/he_exchanger
+	icon_state = "heunary"
 /obj/item/pipe/binary
 	RPD_type = PIPE_STRAIGHT
+/obj/item/pipe/binary/layer_adapter
+	icon_state = "manifoldlayer"
+/obj/item/pipe/binary/color_adapter
+	icon_state = "adapter_center"
+/obj/item/pipe/binary/pressure_pump
+	icon_state = "pump"
+/obj/item/pipe/binary/manual_valve
+	icon_state = "mvalve"
 /obj/item/pipe/binary/bendable
 	RPD_type = PIPE_BENDABLE
 /obj/item/pipe/trinary
@@ -40,8 +62,16 @@ Buildable meters
 /obj/item/pipe/trinary/flippable
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
+/obj/item/pipe/trinary/flippable/filter
+	icon_state = "filter"
+/obj/item/pipe/trinary/flippable/mixer
+	icon_state = "mixer"
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_ONEDIR
+/obj/item/pipe/quaternary/pipe
+	icon_state = "manifold4w"
+/obj/item/pipe/quaternary/he_pipe
+	icon_state = "he_manifold4w"
 
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	if(make_from)
