@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Romerol now successfully converts zombies into the living dead, rather than the uglier but still dead dead."

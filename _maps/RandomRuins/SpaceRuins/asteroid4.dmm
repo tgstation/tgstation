@@ -54,9 +54,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/storage/pod{
-	pixel_x = -26
-	},
+/obj/item/storage/pod/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/space/has_grav)
 "o" = (

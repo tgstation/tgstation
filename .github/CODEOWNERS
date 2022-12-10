@@ -21,6 +21,7 @@
 /code/modules/mapping/ @Cyberboss
 
 # Dragomagol/Tattle
+
 /code/__HELPERS/logging/ @dragomagol
 
 # Fikou
@@ -110,6 +111,11 @@
 /code/modules/forensics/ @SuperNovaa41
 /code/datums/mood.dm @SuperNovaa41
 
+# Time-Green
+
+/code/modules/plumbing/ @Time-Green
+/code/modules/surgery/organs/external/ @Time-Green
+
 # tralezab
 /code/__DEFINES/basic_mobs.dm @tralezab
 /code/datums/ai @tralezab
@@ -164,11 +170,6 @@
 /code/__DEFINES/reactions.dm @Pickle-Coding
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
-
-# Time-Green
-
-/code/modules/plumbing/ @Time-Green
-/code/modules/surgery/organs/external/ @Time-Green
 
 # MULTIPLE OWNERS
 
