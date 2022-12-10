@@ -106,6 +106,7 @@
 		else
 			log_game("Shuttle Loan event could not find [dispatch_type] event to offer.")
 			kill()
+			return
 	SSshuttle.shuttle_loan = src
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
