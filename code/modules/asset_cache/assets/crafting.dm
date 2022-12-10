@@ -18,12 +18,12 @@
 
 ///Adds the atom icon to the spritesheet with given ID
 /datum/asset/spritesheet/crafting/proc/add_atom_icon(atom, id)
-	var/atom/item = initial(atom)
+	var/obj/obj = initial(atom)
 	if(ispath(atom, /datum/reagent))
 		var/datum/reagent/reagent = atom
-		item = initial(reagent.default_container)
-	var/icon_file = initial(item.icon)
-	var/icon_state = initial(item.icon_state)
+		obj = initial(reagent.default_container)
+	var/icon_file = initial(obj.icon_preview) || initial(obj.icon)
+	var/icon_state = initial(obj.icon_state_preview) || initial(obj.icon_state)
 	#ifdef UNIT_TESTS
 	if(!(icon_state in icon_states(icon_file)))
 		stack_trace("Atom [atom] with icon '[icon_file]' missing state '[icon_state]'")

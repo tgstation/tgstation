@@ -25,6 +25,8 @@
 	desc = "A large structure used to remove the heads of traitors and treasonists."
 	icon = 'icons/obj/guillotine.dmi'
 	icon_state = "guillotine_raised"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "guilliotine"
 	can_buckle = TRUE
 	anchored = TRUE
 	density = TRUE

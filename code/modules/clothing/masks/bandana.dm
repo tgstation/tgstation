@@ -12,6 +12,7 @@
 	name = "bandana"
 	desc = "A fine bandana with nanotech lining."
 	icon_state = "bandana"
+	icon_state_preview = "bandana_cloth"
 	inhand_icon_state = "greyscale_bandana"
 	worn_icon_state = "bandana_worn"
 	greyscale_config = /datum/greyscale_config/bandana

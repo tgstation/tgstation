@@ -8,7 +8,7 @@
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
 	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "firebot"
+	icon_state = "firebot1"
 	density = FALSE
 	anchored = FALSE
 	health = 25

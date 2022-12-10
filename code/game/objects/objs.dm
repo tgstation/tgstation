@@ -7,6 +7,10 @@
 	/// Extra examine line to describe controls, such as right-clicking, left-clicking, etc.
 	var/desc_controls
 
+	/// Icon to use as a 32x32 preview in crafting menus and such
+	var/icon_preview
+	var/icon_state_preview
+
 	var/damtype = BRUTE
 	var/force = 0
 
