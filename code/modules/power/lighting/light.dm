@@ -654,3 +654,32 @@
 	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
+
+/obj/machinery/light/alarm
+	name = "alarm light"
+	icon = 'icons/obj/lighting.dmi'
+	desc = "A light signalling if there is a Red Code on the station."
+	base_state = "alarm_light"
+	icon_state = "alarm_light"
+	brightness = 6
+	bulb_colour = "#e61313"
+	nightshift_allowed = FALSE
+	no_low_power = TRUE
+	light_type = /obj/item/light/bulb
+	fitting = "bulb"
+
+/obj/machinery/light/alarm/Initialize(mapload)
+	. = ..()
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(emergency))
+
+/obj/machinery/light/attackby(obj/item/tool, mob/living/user, params)
+	. = ..()
+	on = FALSE
+
+/obj/machinery/light/alarm/set_on(turn_on)
+    on = (turn_on && status == LIGHT_OK && SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+    update()
+
+/obj/machinery/light/alarm/proc/emergency()
+    SIGNAL_HANDLER
+    set_on(TRUE)
