@@ -68,6 +68,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Compile Maps
     runs-on: ubuntu-20.04
+    needs: run_linters
     concurrency:
       group: compile_all_maps-${{ github.ref }}
       cancel-in-progress: true
@@ -88,6 +89,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
     name: Windows Build
     runs-on: windows-latest
+    needs: run_linters
     concurrency:
       group: test_windows-${{ github.ref }}
       cancel-in-progress: true
@@ -125,7 +127,7 @@ jobs:
     concurrency:
       group: find_all_maps-${{ github.ref }}
       cancel-in-progress: true
-    needs: [run_linters, compile_all_maps, test_windows]
+    needs: run_linters
     steps:
       - uses: actions/checkout@v3
       - name: Find Maps
