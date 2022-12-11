@@ -4,10 +4,10 @@
 /datum/asset/spritesheet/vending/create_spritesheets()
 	// initialising the list of items we need
 	var/target_items = list()
-	for(var/obj/machinery/vending/V as() in typesof(/obj/machinery/vending))
+	for(var/obj/machinery/vending/V as anything in typesof(/obj/machinery/vending))
 		V = new V() // It seems `initial(list var)` has nothing. need to make a type.
-		for(var/O in list(V.products, V.premium, V.contraband))
-			target_items |= O
+		for(var/each in list(V.products, V.premium, V.contraband))
+			target_items |= each
 		qdel(V)
 
 	// building icons for each item
