@@ -82,15 +82,6 @@
 	tastes = list("caramel" = 2, "popcorn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 
-/obj/item/food/loadedbakedpotato
-	name = "loaded baked potato"
-	desc = "Totally baked."
-	icon_state = "loadedbakedpotato"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
-	tastes = list("potato" = 1)
-	foodtypes = VEGETABLES | DAIRY
-	w_class = WEIGHT_CLASS_SMALL
-
 /obj/item/food/fries
 	name = "space fries"
 	desc = "AKA: French Fries, Freedom Fries, etc."

@@ -49,16 +49,6 @@
 	result = /obj/item/food/chocoorange
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/loadedbakedpotato
-	name = "Loaded baked potato"
-	time = 40
-	reqs = list(
-		/obj/item/food/grown/potato = 1,
-		/obj/item/food/cheese/wedge = 1
-	)
-	result = /obj/item/food/loadedbakedpotato
-	subcategory = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/cheesyfries
 	name = "Cheesy fries"
 	reqs = list(
