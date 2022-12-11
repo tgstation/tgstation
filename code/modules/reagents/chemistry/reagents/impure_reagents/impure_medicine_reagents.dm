@@ -37,13 +37,13 @@
 	var/pick = pick("brute", "burn", "tox", "oxy")
 	switch(pick)
 		if("brute")
-			owner.adjustBruteLoss(-0.5)
+			owner.adjustBruteLoss(-0.5, required_bodytype = affected_bodytype)
 		if("burn")
-			owner.adjustFireLoss(-0.5)
+			owner.adjustFireLoss(-0.5, required_bodytype = affected_bodytype)
 		if("tox")
-			owner.adjustToxLoss(-0.5)
+			owner.adjustToxLoss(-0.5, required_biotype = affected_biotype)
 		if("oxy")
-			owner.adjustOxyLoss(-0.5)
+			owner.adjustOxyLoss(-0.5, required_biotype = affected_biotype)
 	..()
 
 // C2 medications
@@ -297,7 +297,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/overdose_process(mob/living/carbon/owner, delta_time, times_fired)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
+	owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 2 * REM * delta_time, required_organtype = affected_organtype) //Makes it so you can't abuse it with pyroxadone very easily (liver dies from 25u unless it's fully upgraded)
 	var/heating = 10 * creation_purity * REM * delta_time * TEMPERATURE_DAMAGE_COEFFICIENT
 	owner.adjust_bodytemperature(heating) //hot hot
 	if(ishuman(owner))
@@ -440,7 +440,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	time_until_next_poison -= delta_time * (1 SECONDS)
 	if (time_until_next_poison <= 0)
 		time_until_next_poison = poison_interval
-		owner.adjustToxLoss(creation_purity * 1)
+		owner.adjustToxLoss(creation_purity * 1, required_biotype = affected_biotype)
 
 	..()
 
@@ -491,9 +491,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Heals toxins if it's the only thing present - kinda the oposite of multiver! Maybe that's why it's inverse!
 /datum/reagent/inverse/healing/monover/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	if(length(owner.reagents.reagent_list) > 1)
-		owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time) //Hey! It's everyone's favourite drawback from multiver!
+		owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5 * delta_time, required_organtype = affected_organtype) //Hey! It's everyone's favourite drawback from multiver!
 		return ..()
-	owner.adjustToxLoss(-2 * REM * creation_purity * delta_time, 0)
+	owner.adjustToxLoss(-2 * REM * creation_purity * delta_time, 0, required_biotype = affected_biotype)
 	..()
 	return TRUE
 
@@ -546,8 +546,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	for(var/datum/wound/iter_wound as anything in owner.all_wounds)
 		iter_wound.adjust_blood_flow(1-creation_purity)
-	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time)
-	owner.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time)
+	owner.adjustBruteLoss(5 * (1-creation_purity) * delta_time, required_bodytype = affected_bodytype)
+	owner.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * delta_time, required_organtype = affected_organtype)
 	if(owner.health < HEALTH_THRESHOLD_CRIT)
 		owner.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(owner.health < HEALTH_THRESHOLD_FULLCRIT)
