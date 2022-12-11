@@ -282,5 +282,4 @@
 /datum/chemical_reaction/food/vinegar
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 1, /datum/reagent/water = 1, /datum/reagent/consumable/sugar = 1)
-	required_catalysts = list(/datum/reagent/consumable/enzyme = 1)
 	reaction_flags = REACTION_INSTANT
