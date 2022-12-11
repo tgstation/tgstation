@@ -83,14 +83,16 @@
 	if(!chem)
 		return
 	create_reagents(max_water, AMOUNT_VISIBLE)
-	if(starting_water)
-		reagents.add_reagent(chem, max_water)
+	reagents.add_reagent(chem, max_water)
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
 	if(tank_holder_icon_state)
 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
-	refill()
+	if(starting_water)
+		refill()
+	else if(chem)
+		create_reagents(max_water, AMOUNT_VISIBLE)
 
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
