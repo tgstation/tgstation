@@ -324,6 +324,7 @@
 /**
  * Build the inventory of the vending machine from it's product and record lists
  *
+ * This rebuilds both /datum/data/vending_products lists for premium and standard products based on their most relevant pricing values.
  * Arguments:
  * * productlist - the list of products that need to be converted
  * * recordlist - the list containing /datum/data/vending_product datums
