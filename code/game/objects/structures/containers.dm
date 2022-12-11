@@ -23,6 +23,7 @@
 	name = "\improper DeForest Medical Corp. shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from DeForest, and so is probably carrying medical supplies."
 	icon_state = "deforest"
+
 /obj/structure/shipping_container/kahraman
 	name = "\improper Kahraman Heavy Industry shipping container"
 	desc = "A standard-measure shipping container for bulk transport of goods. This one is from Kahraman, and is reinforced for carrying ore."
