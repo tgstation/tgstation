@@ -117,67 +117,6 @@
 		qdel(filler)
 	return ..()
 
-/obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		roll_powers(user)
-		ui = new(user, src, "DnaVault", name)
-		ui.open()
-
-/obj/machinery/dna_vault/proc/roll_powers(mob/user)
-	var/datum/weakref/user_weakref = WEAKREF(user)
-	if((user_weakref in power_lottery) || isdead(user))
-		return
-	possible_powers = list(
-		/datum/mutation/human/Breathless,
-		/datum/mutation/human/Dextrous,
-		/datum/mutation/human/Fast_Runner,
-		/datum/mutation/human/Fire_Immune,
-		/datum/mutation/human/Plasma_Adapter,
-		/datum/mutation/human/Stun_Resistant,
-		/datum/mutation/human/Tough_Skin,
-	)
-	var/list/gained_mutation = list()
-	gained_mutation += pick_n_take(possible_powers)
-	gained_mutation += pick_n_take(possible_powers)
-
-	power_lottery[user_weakref] = gained_mutation
-
-/obj/machinery/dna_vault/ui_data(mob/user) //TODO Make it % bars maybe
-	var/list/data = list()
-	data["plants"] = plants.len
-	data["plants_max"] = plants_max
-	data["animals"] = animals.len
-	data["animals_max"] = animals_max
-	data["dna"] = dna.len
-	data["dna_max"] = dna_max
-	data["completed"] = completed
-	data["used"] = TRUE
-	data["choiceA"] = ""
-	data["choiceB"] = ""
-	if(user && completed)
-		var/list/datum/mutation/human/L = power_lottery[WEAKREF(user)]
-		if(L?.len)
-			data["used"] = FALSE
-			data["choiceA"] = initial(L[1].name)
-			data["choiceB"] = initial(L[2].name)
-	return data
-
-/obj/machinery/dna_vault/ui_act(action, params)
-	. = ..()
-	if(.)
-		return
-
-	switch(action)
-		if("gene")
-			upgrade(usr,params["choice"])
-			. = TRUE
-
-/obj/machinery/dna_vault/proc/check_goal()
-	if(plants.len >= plants_max && animals.len >= animals_max && dna.len >= dna_max)
-		completed = TRUE
-
-
 /obj/machinery/dna_vault/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/dna_probe))
 		var/obj/item/dna_probe/P = I
@@ -201,6 +140,68 @@
 		to_chat(user, span_notice("[uploaded] new datapoints uploaded."))
 	else
 		return ..()
+
+/obj/machinery/dna_vault/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		roll_powers(user)
+		ui = new(user, src, "DnaVault", name)
+		ui.open()
+
+/obj/machinery/dna_vault/proc/roll_powers(mob/user)
+	var/datum/weakref/user_weakref = WEAKREF(user)
+	if((user_weakref in power_lottery) || isdead(user))
+		return
+	possible_powers = list(
+		/datum/mutation/human/Breathless,
+		/datum/mutation/human/Dextrous,
+		/datum/mutation/human/Quick,
+		/datum/mutation/human/Nonflammable,
+		/datum/mutation/human/Plasmocile,
+		/datum/mutation/human/Sturdy,
+		/datum/mutation/human/Tough,
+	)
+	var/list/gained_mutation = list()
+	gained_mutation += pick_n_take(possible_powers)
+	gained_mutation += pick_n_take(possible_powers)
+
+	power_lottery[user_weakref] = gained_mutation
+
+/obj/machinery/dna_vault/ui_data(mob/user) //TODO Make it % bars maybe
+	var/list/data = list()
+	data["plants"] = plants.len
+	data["plants_max"] = plants_max
+	data["animals"] = animals.len
+	data["animals_max"] = animals_max
+	data["dna"] = dna.len
+	data["dna_max"] = dna_max
+	data["completed"] = completed
+	data["used"] = TRUE
+	data["choiceA"] = ""
+	data["choiceB"] = ""
+	if(user && completed)
+		var/list/Mutant = power_lottery[WEAKREF(user)]
+		if(length(Mutant))
+			var/datum/mutation/human/mutation1 = Mutant[1]
+			var/datum/mutation/human/mutation2 = Mutant[2]
+			data["used"] = FALSE
+			data["choiceA"] = initial(mutation1.name)
+			data["choiceB"] = initial(mutation2.name)
+	return data
+
+/obj/machinery/dna_vault/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("gene")
+			upgrade(usr,text2path("/datum/mutation/human/[params["choice"]]"))
+			. = TRUE
+
+/obj/machinery/dna_vault/proc/check_goal()
+	if(plants.len >= plants_max && animals.len >= animals_max && dna.len >= dna_max)
+		completed = TRUE
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
 	var/datum/weakref/human_weakref = WEAKREF(H)
