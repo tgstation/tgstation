@@ -205,13 +205,13 @@
 	prev.icon_state = "armsy_end"
 	prev.icon_living = "armsy_end"
 
-/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced, required_status)
 	if(back)
 		return back.adjustBruteLoss(amount, updating_health, forced)
 
 	return ..()
 
-/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced, required_status)
 	if(back)
 		return back.adjustFireLoss(amount, updating_health, forced)
 
