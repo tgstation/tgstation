@@ -742,7 +742,7 @@
 		. = TRUE
 	if(DT_PROB(10, delta_time))
 		M.losebreath += 4
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM, 150, affected_biotype)
 		M.adjustToxLoss(3*REM, 0, required_biotype = affected_biotype)
 		M.adjustStaminaLoss(10*REM, 0, required_biotype = affected_biotype)
 		M.blur_eyes(5)
