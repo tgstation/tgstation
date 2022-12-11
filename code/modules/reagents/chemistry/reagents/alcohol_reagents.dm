@@ -1199,6 +1199,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A blue-space beverage."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/singulo/on_mob_metabolize(mob/living/drinker)
+	ADD_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
+	ADD_TRAIT(drinker, TRAIT_NEGATES_GRAVITY, type)
+
+/datum/reagent/consumable/ethanol/singulo/on_mob_end_metabolize(mob/living/drinker)
+	REMOVE_TRAIT(drinker, TRAIT_MADNESS_IMMUNE, type)
+	REMOVE_TRAIT(drinker, TRAIT_NEGATES_GRAVITY, type)
+
 /datum/reagent/consumable/ethanol/sbiten
 	name = "Sbiten"
 	description = "A spicy Vodka! Might be a little hot for the little guys!"
