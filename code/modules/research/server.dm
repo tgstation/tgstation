@@ -33,6 +33,76 @@
 	stored_research.techweb_servers |= src
 	name += " [num2hex(rand(1,65535), -1)]" //gives us a random four-digit hex number as part of the name. Y'know, for fluff.
 
+///calculate efficiency of server based on scanning modules installed
+/obj/machinery/rnd/server/proc/calculate_efficiency()
+	var/rating = 0
+
+	///only one scanning module so rating will always be rating of that component
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		//tier 4 module will give us 4 times the efficiency
+		rating += scanning_module.tier
+
+	//get temp of the turf server is located in
+	var/atom/local_turf = get_turf(src)
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
+
+	//higher tier parts require more cooling and have lower temp requirments
+	var/scale = rating
+	if(scale == 1) //tier 1 parts starts at the range 60 to 80k
+		scale = 0
+	var/minTemp = 60-(scale*10)
+	var/maxTemp = 80-(scale*10)
+	scale = (enviroment.temperature - minTemp)/(maxTemp - minTemp)
+
+	var/efficiency=0.0
+	if(scale > 1.0)  ///temp is above recommended conditions hence efficiency decreases
+		efficiency = 1.0-(scale-1.0)
+		if(efficiency < 0.0)
+			efficiency = 0.0
+	else
+		if(scale < 0.0)
+			scale = 0.0
+		efficiency = 1.5 + ((1.0-1.5)*scale)  ///efficiency can become 1.5 times its original value if temps are really cool
+
+	if(rating > 1) //higher tier parts are not perfectly efficient so scale it down a bit
+		rating *= 0.6
+	return rating * efficiency
+
+///server produces heats if its running to mimic real world operational server
+/obj/machinery/rnd/server/proc/heat_turf()
+	var/atom/local_turf = get_turf(src)
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
+
+	//we dont want to heat the air till it becomes an oven. Server becomes 0% efficient way before this temp anyway so we can stop here
+	if(enviroment.temperature >= 120)
+		return
+
+	var/rating = 0
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		rating += scanning_module.tier
+	if(rating > 1)
+		rating *= 0.6
+
+	enviroment.temperature += rating * 0.035 //heat the air ever so slightly based on its tier
+	air_update_turf(FALSE, FALSE)
+
+/obj/machinery/rnd/server/proc/efficienct_percentage()
+	if(!working)
+		return "N/A"
+
+	var/rating = 0
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		rating += scanning_module.tier
+	if(rating > 1)
+		rating *= 0.6
+
+	var/max_obtainable = rating * 1.5
+	var/efficiency = calculate_efficiency()
+	var/percent = (efficiency/max_obtainable)*100
+	var/result = truncate(num2text(percent),3)
+
+	return "[result]%"
+
 /obj/machinery/rnd/server/Destroy()
 	if(stored_research)
 		stored_research.techweb_servers -= src
@@ -144,17 +214,19 @@
 	var/list/dat = list()
 
 	dat += "<b>Connected Servers:</b>"
-	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Status</b></td><td style='width:25%'><b>Control</b></td>"
-	for(var/obj/machinery/rnd/server/server as anything in SSresearch.servers)
+	dat += "<table style='width:100%'><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Status</b></td><td style='width:25%'><b>Efficiency</b></td><td style='width:25%'><b>Control</b></td>"
+	for(var/obj/machinery/rnd/server/server in SSresearch.servers)
 		if(server.stored_research != stored_research) //not on our servers
 			continue
 		var/server_info = ""
 
 		var/status_text = server.get_status_text()
 		var/disable_text = server.research_disabled ? "<font color=red>Disabled</font>" : "<font color=lightgreen>Online</font>"
+		var/efficiency= server.efficienct_percentage()
 
 		server_info += "<tr><td style='width:25%'>[server.name]</td>"
 		server_info += "<td style='width:25%'>[status_text]</td>"
+		server_info += "<td style='width:25%'>[efficiency]</td>"
 		server_info += "<td style='width:25%'><a href='?src=[REF(src)];toggle=[REF(server)]'>([disable_text])</a></td><br>"
 
 		dat += server_info
@@ -207,6 +279,24 @@
 	SSresearch.master_servers += src
 
 	add_overlay("RD-server-objective-stripes")
+
+///master does not generate points
+/obj/machinery/rnd/server/master/calculate_efficiency()
+	return 0
+
+/obj/machinery/rnd/server/master/efficienct_percentage()
+	return "N/A"
+
+/obj/machinery/rnd/server/master/heat_turf()
+	var/atom/local_turf = get_turf(src)
+	var/datum/gas_mixture/enviroment = local_turf.return_air()
+
+	//we dont want to heat the air till it becomes an oven. Server becomes 0% efficient way before temp anyway so we can stop here
+	if(enviroment.temperature >= 120)
+		return
+
+	enviroment.temperature += 0.02 //heat the air ever so slightly
+	air_update_turf(FALSE, FALSE)
 
 /obj/machinery/rnd/server/master/Destroy()
 	if (source_code_hdd && (deconstruction_state == HDD_OVERLOADED))
