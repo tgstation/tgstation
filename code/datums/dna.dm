@@ -453,6 +453,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /////////////////////////// DNA MOB-PROCS //////////////////////
 
 /mob/proc/set_species(datum/species/mrace, icon_update = 1)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /mob/living/brain/set_species(datum/species/mrace, icon_update = 1)
