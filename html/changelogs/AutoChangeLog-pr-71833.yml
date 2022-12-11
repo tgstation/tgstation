@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - admin: "investigate logs include ckey of source (if applicable)"

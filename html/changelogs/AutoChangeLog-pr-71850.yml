@@ -1,4 +1,0 @@
-author: "Tattle"
-delete-after: True
-changes:
-  - balance: "the foam used in the scrubber overflow has a lifetime of 1s instead of 8s"

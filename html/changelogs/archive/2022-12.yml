@@ -389,3 +389,46 @@
   - refactor: Refactored and overhauled the ForceEvent UI
   vincentiusvin:
   - bugfix: fixed sm base ray needing damage to resize
+2022-12-11:
+  EvilDragonfiend:
+  - code_imp: quirk dm files are renamed 'positive_quirks.dm', 'negative_quirks.,dm',
+      and 'neutral_quirks.dm'
+  Jacquerel:
+  - balance: Rush Gland and Brimdust Sac can be used more frequently when implanted.
+  - balance: An implanted Brimdust Sac will stack the buff on you automatically while
+      on lavaland. Triggering the buff on the station will make you walk slower for
+      a short duration.
+  - balance: Implanted Bimrdust Sacs no longer set you on fire, nor do they explode
+      if you catch fire.
+  - bugfix: Romerol now successfully converts zombies into the living dead, rather
+      than the uglier but still dead dead.
+  LT3:
+  - qol: Coupons can now be stored in wallets, freeing up inventory space.
+  Melbert:
+  - rscadd: Landmines, rather than triggering when you step onto them, will now trigger
+      when you step off of them.
+  Rhials:
+  - admin: You can now select which type of shuttle loan offer will by made when triggering
+      the shuttle loan event.
+  Salex08:
+  - bugfix: wearing earmuffs or being deaf while being asleep will increase the healing
+      threshold like its supposed to be
+  SyncIt21:
+  - bugfix: RPED part display information
+  - bugfix: RPED incorrectly exchanging parts with the wrong tier for datum stock
+      parts
+  - bugfix: RPED unable to install datum stock parts in incomplete machine frames
+  - bugfix: RPED unable to exchange parts for newly constructed machines
+  Tattle:
+  - balance: the foam used in the scrubber overflow has a lifetime of 1s instead of
+      8s
+  - admin: investigate logs include ckey of source (if applicable)
+  TheBoondock:
+  - bugfix: fixed a setting air alarm to refill mode would set scrubber to siphon,
+      thus defeating the purpose of refilling. Now it will set to scrub mode instead.
+  - bugfix: fixe all art decal giving you bad art moodlet on examine
+  lizardqueenlexi:
+  - bugfix: Made the table in Kilostation's QM office reachable.
+  zxaber:
+  - balance: Traitors now have two kill and an escape objective for Greentext purposes,
+      though completing a Final Objective will Greentext too.
