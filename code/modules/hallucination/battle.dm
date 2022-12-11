@@ -48,7 +48,7 @@
 
 	// Or, if we do have shots left, keep it going.
 	else if(shots_left >= 0)
-		shots_left++
+		shots_left--
 		addtimer(CALLBACK(src, PROC_REF(fire_loop), source, shots_left, hits), rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6))
 
 	// Otherwise, if we have no shots left, stop the hallucination.
