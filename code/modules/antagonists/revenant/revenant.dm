@@ -20,7 +20,7 @@
 	maxHealth = INFINITY
 	plane = GHOST_PLANE
 	healable = FALSE
-	sight = SEE_SELF | SEE_BLACKNESS
+	sight = SEE_SELF
 	throwforce = 0
 
 	see_in_dark = NIGHTVISION_FOV_RANGE
