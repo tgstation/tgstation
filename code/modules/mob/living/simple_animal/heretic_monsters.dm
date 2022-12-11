@@ -53,7 +53,7 @@
 	melee_damage_upper = 10
 	maxHealth = 65
 	health = 65
-	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS|SEE_BLACKNESS
+	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
 	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/arm/left, /obj/item/organ/internal/eyes)
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/long,
@@ -205,13 +205,13 @@
 	prev.icon_state = "armsy_end"
 	prev.icon_living = "armsy_end"
 
-/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced, required_status)
 	if(back)
 		return back.adjustBruteLoss(amount, updating_health, forced)
 
 	return ..()
 
-/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced, required_status)
 	if(back)
 		return back.adjustFireLoss(amount, updating_health, forced)
 
@@ -356,7 +356,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS|SEE_BLACKNESS
+	sight = SEE_TURFS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/aoe/rust_conversion/small,
 		/datum/action/cooldown/spell/basic_projectile/rust_wave/short,
@@ -396,7 +396,7 @@
 	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_TURFS|SEE_BLACKNESS
+	sight = SEE_TURFS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,
 		/datum/action/cooldown/spell/pointed/cleave,
@@ -414,7 +414,7 @@
 	health = 150
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	sight = SEE_MOBS|SEE_BLACKNESS
+	sight = SEE_MOBS
 	actions_to_add = list(
 		/datum/action/cooldown/spell/shapeshift/eldritch,
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash,

@@ -1,0 +1,6 @@
+author: "etherware-novice"
+delete-after: True
+changes:
+  - rscadd: "forensics scanner can read id access"
+  - balance: "forensics scanner can detect transforming items"
+  - code_imp: "forensics scanner was rewritten, items can add their own data to the log"

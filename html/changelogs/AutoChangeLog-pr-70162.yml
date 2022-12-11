@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - refactor: "The logic of how we well, render things has changed. Make an issue report if anything looks funky, particularly layers. PLEASE USE YOUR EYES"

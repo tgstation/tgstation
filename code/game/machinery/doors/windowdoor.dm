@@ -355,8 +355,8 @@
 		return turn(dir,180) & unres_sides
 	return ..()
 
-/obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user)
-	if(!hasPower())
+/obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user, forced = FALSE)
+	if(!hasPower() || forced)
 		if(density)
 			open(2)
 		else

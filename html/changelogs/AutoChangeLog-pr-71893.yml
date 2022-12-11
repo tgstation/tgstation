@@ -1,0 +1,4 @@
+author: "Tattle"
+delete-after: True
+changes:
+  - bugfix: "lockboxes' and wrapped crates' invisibility spell has worn off"
