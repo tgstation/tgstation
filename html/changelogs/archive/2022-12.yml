@@ -271,3 +271,164 @@
       admin utilities, rest assured that it will actually log the destination location
       of where you are teleporting that thing to- rather than the location they were
       pre-teleportation.
+2022-12-09:
+  Ghommie:
+  - bugfix: 'fixes shields that don''t actually take damage from attacks (eg: adamantine
+      shields) being unable to block said attacks.'
+  LT3:
+  - qol: Tram crossing signals are now colourblind friendly, adding visible symbols
+      to the state of the crossing signal.
+  - rscadd: Tram crossing signals now visually show when they're malfunctioning.
+  - bugfix: Emagged tram crossing signals will stay emagged after the tram malfunction
+      event.
+  MGOOOOOO:
+  - balance: Tweaks the minimal temperature threshold and optimal temperature for
+      Palladium synthate catalyst.
+  MTandi:
+  - bugfix: biogenerator converts all plant nutriments into biomass, not just the
+      first found one.
+  Mothblocks:
+  - rscdel: Blink and you'll miss it, the syndicate revolver has come back.
+  Pickle-Coding:
+  - balance: Nuclear particles will always irradiate you on hit.
+  RandomGamer123:
+  - bugfix: Fixes access for a windoor to atmospherics on Delta
+  Rhials:
+  - balance: The lights will now flicker more frequently before a Grey Tide event
+  - balance: The lights will now be shut off via the APC when the Grey Tide event
+      opens up a department.
+  - code_imp: Makes some miscellaneous code improvements to the Grey Tide event
+  - code_imp: Grey tide event runs much faster
+  - code_imp: Renames prison_break.dm to grey_tide.dm
+  - bugfix: Ethereals cannot crystal revive back from genetic meltdown petrification.
+  ShizCalev:
+  - bugfix: The teleporter shutter doors on KiloStation and Meta now properly work
+      off Teleporter access instead of Command access
+  Tastyfish:
+  - bugfix: The dog's attack command is somewhat more reliable.
+  dawsonkeyes:
+  - rscadd: Added entirely new icons for the Chrono MODsuit
+  kawoppi:
+  - bugfix: fixed mothroach inhands not properly fitting under your arm when facing
+      sideways with the mothroach facing the camera
+  tf-4:
+  - bugfix: Light replacers will no longer turn invisible.
+2022-12-10:
+  Fikou:
+  - bugfix: fixes beam glow in the dark effects
+  - bugfix: kinesis now doesnt pull the item to the centre of the screen when first
+      used
+  - bugfix: physical beams (like vines or meat hook chain) no longer glow in the dark
+  Ghilker:
+  - balance: space heaters also affect the adjacent tiles other than the one they
+      are on
+  GoldenAlpharex:
+  - bugfix: There shouldn't be clickable names in Adminwho that don't do anything
+      anymore.
+  Jacquerel:
+  - rscadd: Basic mobs have the capability of being upset that you kicked and punched
+      them.
+  - rscadd: Pigs destined for slaughter will now ineffectually attempt to resist their
+      fate, at least until they lose sight of you.
+  - balance: Bar bots are better at noticing that you're trying to kill them.
+  Kryson, Viro, Tattle:
+  - imageadd: posters are now 24px tall
+  - imageadd: new sprites for nanomeds, emergency safes, and ticket machines (by Kryson)!
+  LT3:
+  - bugfix: Improved tram door logic so they don't inadvertently open during departure.
+  - rscdel: Removed the message bubble when you open the tram doors while it's travelling.
+  MTandi:
+  - bugfix: Fried egg reagents halved to meet the raw egg reagent amount
+  - qol: Binoculars can be worn on neck now
+  Melbert:
+  - qol: The chaplain's armament beacon now displays a radial instead of a text list,
+      showing previews of what all the armor sets look like
+  - qol: (Almost) all choice beacons now use a pod to send their item, instead of
+      just magicking it under your feet
+  - code_imp: Cleaned up some choice beacon code.
+  Mothblocks:
+  - bugfix: Fixed circuitboards sometimes giving no name on examine.
+  NamelessFairy:
+  - bugfix: The golem trigger guard scalping situation has improved and golems can
+      now once again purchase trigger guards at market rate.
+  RimiNosha:
+  - qol: The latejoin menu is now TGUI!
+  - qol: You'll also be able to see why you can't join a job, instead of it being
+      invisible!
+  - code_imp: Department UI colors have changed slightly. This will only affect the
+      latejoin and nations UIs.
+  - bugfix: Fixed some issues with the TGUI latejoin menu, and made the shuttle and
+      round time display once more.
+  ShizCalev:
+  - bugfix: Blobs will no longer attack jaunting and incorporeal mobs (eg revenants)
+  SpaceSmithers:
+  - rscadd: More options are now available when creating and editing signs.
+  TheBoondock:
+  - bugfix: fixed changeling transform allowing escape from handcuffs
+  Zonespace27:
+  - balance: Destroying a petrified human statue will now drop their brain.
+  etherware-novice:
+  - balance: jaws of life can pry windoors
+  kawoppi:
+  - bugfix: cows, pigs, rabbits, sheep, cockroaches, mothroaches and mice now take
+      damage in hazardous atmospheres and temperatures
+  lizardqueenlexi:
+  - code_imp: Switched a single proc ref to the proper format.
+  necromanceranne:
+  - rscadd: Replaces a less interesting abductee objective with THE PROMETHEAN HORROR.
+      The Flesh is Weak, the New Flesh is Not So Weak.
+  timothymtorres:
+  - bugfix: Fix hypnosis, mind echo trauma, phobia trauma, hypnotic trigger trauma,
+      split personality brainwashing trauma, codeword hearing, and impure inacusiate
+      reagent all bypassing language and hearing checks.  If you try to give commands
+      to a victim in a language they don't understand, they will no longer magically
+      understand the words.
+  - bugfix: Fix sign language having accent modifications
+  - refactor: Refactored saycode to be more robust, readable, and have more unit tests.
+  tralezab:
+  - refactor: Refactored and overhauled the ForceEvent UI
+  vincentiusvin:
+  - bugfix: fixed sm base ray needing damage to resize
+2022-12-11:
+  EvilDragonfiend:
+  - code_imp: quirk dm files are renamed 'positive_quirks.dm', 'negative_quirks.,dm',
+      and 'neutral_quirks.dm'
+  Jacquerel:
+  - balance: Rush Gland and Brimdust Sac can be used more frequently when implanted.
+  - balance: An implanted Brimdust Sac will stack the buff on you automatically while
+      on lavaland. Triggering the buff on the station will make you walk slower for
+      a short duration.
+  - balance: Implanted Bimrdust Sacs no longer set you on fire, nor do they explode
+      if you catch fire.
+  - bugfix: Romerol now successfully converts zombies into the living dead, rather
+      than the uglier but still dead dead.
+  LT3:
+  - qol: Coupons can now be stored in wallets, freeing up inventory space.
+  Melbert:
+  - rscadd: Landmines, rather than triggering when you step onto them, will now trigger
+      when you step off of them.
+  Rhials:
+  - admin: You can now select which type of shuttle loan offer will by made when triggering
+      the shuttle loan event.
+  Salex08:
+  - bugfix: wearing earmuffs or being deaf while being asleep will increase the healing
+      threshold like its supposed to be
+  SyncIt21:
+  - bugfix: RPED part display information
+  - bugfix: RPED incorrectly exchanging parts with the wrong tier for datum stock
+      parts
+  - bugfix: RPED unable to install datum stock parts in incomplete machine frames
+  - bugfix: RPED unable to exchange parts for newly constructed machines
+  Tattle:
+  - balance: the foam used in the scrubber overflow has a lifetime of 1s instead of
+      8s
+  - admin: investigate logs include ckey of source (if applicable)
+  TheBoondock:
+  - bugfix: fixed a setting air alarm to refill mode would set scrubber to siphon,
+      thus defeating the purpose of refilling. Now it will set to scrub mode instead.
+  - bugfix: fixe all art decal giving you bad art moodlet on examine
+  lizardqueenlexi:
+  - bugfix: Made the table in Kilostation's QM office reachable.
+  zxaber:
+  - balance: Traitors now have two kill and an escape objective for Greentext purposes,
+      though completing a Final Objective will Greentext too.

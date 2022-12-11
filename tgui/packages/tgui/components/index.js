@@ -37,6 +37,7 @@ export { RestrictedInput } from './RestrictedInput';
 export { RoundGauge } from './RoundGauge';
 export { Section } from './Section';
 export { Slider } from './Slider';
+export { StyleableSection } from './StyleableSection';
 export { Stack } from './Stack';
 export { Table } from './Table';
 export { Tabs } from './Tabs';

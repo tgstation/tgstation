@@ -37,7 +37,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 91-100: Dangerously toxic - swift death
 */
 
-/datum/reagent/consumable/ethanol/New()
+/datum/reagent/consumable/ethanol/New(list/data)
+	if(LAZYLEN(data))
+		if(data["quality"])
+			quality = data["quality"]
+			name = "Natural " + name
+		if(data["boozepwr"])
+			boozepwr = data["boozepwr"]
 	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
 	return ..()
 

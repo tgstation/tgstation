@@ -35866,7 +35866,7 @@
 	id = "teleshutter";
 	name = "Teleporter Shutter Control";
 	pixel_y = 5;
-	req_access = list("command")
+	req_access = list("teleporter")
 	},
 /turf/open/floor/iron,
 /area/station/command/teleporter)

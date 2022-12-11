@@ -1,0 +1,4 @@
+author: "TheBoondock"
+delete-after: True
+changes:
+  - bugfix: "fixed a building a rack with telekinesis results in it being built at your feet. Now it will be built at where the rack part is"

@@ -55,27 +55,35 @@
 	/// For limbs that don't really exist, eg chainsaws
 	var/is_pseudopart = FALSE
 
-	///If disabled, limb is as good as missing.
+	// Limb disabling variables
+	///Controls if the limb is disabled. TRUE means it is disabled (similar to being removed, but still present for the sake of targeted interactions).
 	var/bodypart_disabled = FALSE
-	///Multiplied by max_damage it returns the threshold which defines a limb being disabled or not. From 0 to 1. 0 means no disable thru damage
-	var/disable_threshold = 0
-	///Controls whether bodypart_disabled makes sense or not for this limb.
-	var/can_be_disabled = FALSE
-	///Multiplier of the limb's damage that gets applied to the mob
+	///Handles limb disabling by damage. If 0 (0%), a limb can't be disabled via damage. If 1 (100%), it is disabled at max limb damage. Anything between is the percentage of damage against maximum limb damage needed to disable the limb.
+	var/disabling_threshold_percentage = 0
+	///Whether it is possible for the limb to be disabled whatsoever. TRUE means that it is possible.
+	var/can_be_disabled = FALSE //Defaults to FALSE, as only human limbs can be disabled, and only the appendages.
+
+	// Damage state variables
+
+	///A mutiplication of the burn and brute damage that the limb's stored damage contributes to its attached mob's overall wellbeing.
 	var/body_damage_coeff = 1
+	///Used in determining overlays for limb damage states. As the mob receives more burn/brute damage, their limbs update to reflect.
 	var/brutestate = 0
 	var/burnstate = 0
 	///The current amount of brute damage the limb has
 	var/brute_dam = 0
 	///The current amount of burn damage the limb has
 	var/burn_dam = 0
-	///The maximum "physical" damage a bodypart can take. Set by children
+	///The maximum brute OR burn damage a bodypart can take. Once we hit this cap, no more damage of either type!
 	var/max_damage = 0
+
 	///Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
-	///Subtracted to brute damage taken
+
+	// Damage reduction variables for damage handled on the limb level. Handled after worn armor.
+	///Amount subtracted from brute damage inflicted on the limb.
 	var/brute_reduction = 0
-	///Subtracted to burn damage taken
+	///Amount subtracted from burn damage inflicted on the limb.
 	var/burn_reduction = 0
 
 	//Coloring and proper item icon update
@@ -86,8 +94,8 @@
 	///An "override" color that can be applied to ANY limb, greyscale or not.
 	var/variable_color = ""
 
-	///whether it can be dismembered with a weapon.
-	var/dismemberable = 1
+	///whether the limb can be mutilated, including dismemberment for appendages and heads, and disembowelment for chests. TRUE means it can be subjected to these effects.
+	var/dismemberable = TRUE
 
 	var/px_x = 0
 	var/px_y = 0
@@ -112,6 +120,7 @@
 	var/brute_damage_desc = DEFAULT_BRUTE_EXAMINE_TEXT
 	var/burn_damage_desc = DEFAULT_BURN_EXAMINE_TEXT
 
+	// Wounds related variables
 	/// The wounds currently afflicting this body part
 	var/list/wounds
 
@@ -545,7 +554,7 @@
 	var/total_damage = brute_dam + burn_dam
 
 	// this block of checks is for limbs that can be disabled, but not through pure damage (AKA limbs that suffer wounds, human/monkey parts and such)
-	if(!disable_threshold)
+	if(!disabling_threshold_percentage)
 		if(total_damage < max_damage)
 			last_maxed = FALSE
 		else
@@ -556,7 +565,7 @@
 		return
 
 	// we're now dealing solely with limbs that can be disabled through pure damage, AKA robot parts
-	if(total_damage >= max_damage * disable_threshold)
+	if(total_damage >= max_damage * disabling_threshold_percentage)
 		if(!last_maxed)
 			if(owner.stat < UNCONSCIOUS)
 				INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "scream")

@@ -216,6 +216,15 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
+/obj/item/storage/part_replacer/proc/get_sorted_parts()
+	var/list/part_list = list()
+	//Assemble a list of current parts, then sort them by their rating!
+	for(var/obj/item/component_part in contents)
+		part_list += component_part
+		//Sort the parts. This ensures that higher tier items are applied first.
+	part_list = sortTim(part_list, GLOBAL_PROC_REF(cmp_rped_sort))
+	return part_list
+
 /proc/cmp_rped_sort(obj/item/A, obj/item/B)
 	/**
 	 * stacks components like cable,glass,plasteel are not component parts hence their get_part_rating() method is undefined and would return undefined values causing errors

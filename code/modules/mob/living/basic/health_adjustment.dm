@@ -18,13 +18,13 @@
 	//if(AIStatus == AI_IDLE)
 	//	toggle_ai(AI_ON)
 
-/mob/living/basic/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(forced)
 		. = adjust_health(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[BRUTE])
 		. = adjust_health(amount * damage_coeff[BRUTE] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
-/mob/living/basic/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(forced)
 		. = adjust_health(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 	else if(damage_coeff[BURN])

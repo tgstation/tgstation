@@ -199,7 +199,6 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	button_icon_state = "hivelord_core_2"
-	text_cooldown = FALSE //Looks really bad when you have minutes long cooldowns
 
 /datum/action/cooldown/monster_core_action/Activate(trigger_flags)
 	. = ..()

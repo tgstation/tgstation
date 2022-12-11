@@ -58,14 +58,21 @@
 	. = ..()
 	if(resistance_flags & ON_FIRE)
 		. += span_warning("It's on fire!")
-	var/healthpercent = atom_integrity/max_integrity * 100
-	switch(healthpercent)
+	. += generate_integrity_message()
+
+/// Returns a readable string of the vehicle's health for examining. Overridden by subtypes who want to be more verbose with their health messages.
+/obj/vehicle/proc/generate_integrity_message()
+	var/examine_text = ""
+	var/integrity = atom_integrity/max_integrity * 100
+	switch(integrity)
 		if(50 to 99)
-			. += "It looks slightly damaged."
+			examine_text = "It looks slightly damaged."
 		if(25 to 50)
-			. += "It appears heavily damaged."
+			examine_text = "It appears heavily damaged."
 		if(0 to 25)
-			. += span_warning("It's falling apart!")
+			examine_text = span_warning("It's falling apart!")
+
+	return examine_text
 
 /obj/vehicle/proc/is_key(obj/item/I)
 	return istype(I, key_type)
