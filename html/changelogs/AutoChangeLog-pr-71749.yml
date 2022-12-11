@@ -1,0 +1,4 @@
+author: "Autisem"
+delete-after: True
+changes:
+  - bugfix: "Teleporters work properly now with circuits"
