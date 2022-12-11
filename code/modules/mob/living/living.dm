@@ -827,8 +827,10 @@
  * If you ever think "hey I'm adding something and want it to be reverted on full heal",
  * consider handling it via signal instead of implementing it in this proc
  */
-/mob/living/proc/fully_heal(heal_flags = HEAL_ALL)
+/mob/living/proc/fully_heal(heal_flags = HEAL_ALL, required_biotype)
 	SHOULD_CALL_PARENT(TRUE)
+	if(required_biotype && !(mob_biotypes & required_biotype))
+		return
 
 	if(heal_flags & HEAL_TOX)
 		setToxLoss(0, FALSE, TRUE)

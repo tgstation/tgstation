@@ -878,7 +878,9 @@
 
 	return ..()
 
-/mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
+/mob/living/carbon/fully_heal(heal_flags = HEAL_ALL, required_biotype)
+	if(required_biotype && !(mob_biotypes & required_biotype))
+		return ..()
 
 	// Should be handled via signal on embedded, or via heal on bodypart
 	// Otherwise I don't care to give it a separate flag
