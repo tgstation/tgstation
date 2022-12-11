@@ -187,7 +187,7 @@
 
 /obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
-	icon_state = "eyepatch_flipped"
+	icon_state = icon_state == "eyepatch_flipped" ? "eyepatch" : "eyepatch_flipped"
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/monocle
@@ -515,7 +515,7 @@
 
 /obj/item/clothing/glasses/thermal/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
-	icon_state = "eyepatch_flipped"
+	icon_state = icon_state == "eyepatch_flipped" ? "eyepatch" : "eyepatch_flipped"
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/cold

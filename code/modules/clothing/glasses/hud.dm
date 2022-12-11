@@ -155,7 +155,7 @@
 
 /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch/attack_self(mob/user, modifiers)
 	. = ..()
-	icon_state = "hudpatch_flipped"
+	icon_state = icon_state == "hudpatch_flipped" ? "hudpatch" : "hudpatch_flipped"
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/security/sunglasses
