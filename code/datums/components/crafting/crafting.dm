@@ -513,6 +513,10 @@
 		if(recipe.result_amount > 1)
 			data["name"] = "[data["name"]] [recipe.result_amount]u"
 		data["desc"] = initial(reagent.description)
+	else if(ispath(recipe.result, /obj/item/pipe))
+		var/obj/item/pipe/pipe_obj = recipe.result
+		var/obj/pipe_real = initial(pipe_obj.pipe_type)
+		data["desc"] = initial(pipe_real.desc)
 	else
 		if(ispath(recipe.result, /obj/item/stack) && recipe.result_amount > 1)
 			data["name"] = "[data["name"]] [recipe.result_amount]x"
