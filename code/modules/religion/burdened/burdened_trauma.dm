@@ -55,8 +55,7 @@
 		return
 	//adjust burden
 	burden_level = increase ? burden_level + 1 : burden_level - 1
-	if(burden_level < 0) //basically a clamp with a stack on it, because this shouldn't be happening
-		stack_trace("somehow, burden trauma is removing more burden than it's adding.")
+	if(burden_level < 0)
 		burden_level = 0
 	//send a message and handle rewards
 	switch(burden_level)
@@ -143,12 +142,32 @@
 	if(special) //aheals
 		return
 
-	if(istype(old_organ, /obj/item/organ/internal/eyes))
+	/// only organs that are slotted in these count. because there's a lot of useless organs to cheese with.
+	var/list/slots_youd_actually_miss = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_TONGUE,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_STOMACH,
+	)
+	var/list/bad_traits = list(
+		TRAIT_NOHUNGER = ORGAN_SLOT_STOMACH,
+		TRAIT_NOBREATH = ORGAN_SLOT_LUNGS,
+		TRAIT_NOMETABOLISM = ORGAN_SLOT_LIVER,
+	)
+	for(var/bad_trait in bad_traits)
+		if(HAS_TRAIT(burdened, bad_trait))
+			slots_youd_actually_miss -= bad_traits[bad_trait]
+
+	if(!(old_organ.slot in slots_youd_actually_miss))
+		return
+	else if(istype(old_organ, /obj/item/organ/internal/eyes))
 		var/obj/item/organ/internal/eyes/old_eyes = old_organ
 		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
 			update_burden(TRUE)
-		return
-	else if(istype(old_organ, /obj/item/organ/internal/appendix))
 		return
 
 	update_burden(increase = TRUE)//lost organ
