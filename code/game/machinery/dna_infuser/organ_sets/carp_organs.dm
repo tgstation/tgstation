@@ -13,11 +13,11 @@
 
 /datum/status_effect/organ_set_bonus/carp/enable_bonus()
 	. = ..()
-	ADD_TRAIT(src, TRAIT_SPACEWALK, REF(src))
+	ADD_TRAIT(owner, TRAIT_SPACEWALK, REF(src))
 
 /datum/status_effect/organ_set_bonus/carp/disable_bonus()
 	. = ..()
-	REMOVE_TRAIT(src, TRAIT_SPACEWALK, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_SPACEWALK, REF(src))
 
 ///Carp lungs! You can breathe in space! Oh... you can't breathe on the station, you need low oxygen environments.
 /obj/item/organ/internal/lungs/carp
