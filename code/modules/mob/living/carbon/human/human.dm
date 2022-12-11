@@ -11,7 +11,7 @@
 	setup_human_dna()
 
 	create_carbon_reagents()
-	set_species(dna.species.type || /datum/species/human)
+	set_species(dna.species.type)
 
 	prepare_huds() //Prevents a nasty runtime on human init
 
@@ -1000,7 +1000,8 @@
 
 /mob/living/carbon/human/species/create_dna()
 	dna = new /datum/dna(src)
-	dna.species = new race
+	if (!isnull(race))
+		dna.species = new race
 
 /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load)
 	. = ..()
