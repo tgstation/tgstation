@@ -58,15 +58,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "r" = (
-/obj/docking_port/stationary{
-	dir = 2;
-	dwidth = 11;
-	height = 30;
-	shuttle_id = "cyborg_mothership";
-	name = "Cyborg Mothership";
-	roundstart_template = /datum/map_template/shuttle/ruin/cyborg_mothership;
-	width = 23
-	},
+/obj/docking_port/stationary/cyborg_mothership,
 /turf/template_noop,
 /area/space)
 "s" = (
