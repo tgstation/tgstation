@@ -38,7 +38,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 */
 
 /datum/reagent/consumable/ethanol/New(list/data)
-	if(data)
+	if(LAZYLEN(data))
 		if(data["quality"])
 			quality = data["quality"]
 			name = "Natural " + name
