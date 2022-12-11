@@ -203,6 +203,9 @@
 	return FALSE
 
 /mob/living/carbon/proc/create_carbon_reagents()
+	if (!isnull(reagents))
+		return
+
 	create_reagents(1000, REAGENT_HOLDER_ALIVE)
 
 /mob/living/carbon/Topic(href, href_list)
