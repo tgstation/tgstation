@@ -183,6 +183,12 @@
 	desc = "Yarr."
 	icon_state = "eyepatch"
 	inhand_icon_state = null
+	actions_types = list(/datum/action/item_action/toggle)
+
+/obj/item/clothing/glasses/eyepatch/attack_self(mob/user, modifiers)
+	. = ..()
+	icon_state = "eyepatch_flipped"
+	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/monocle
 	name = "monocle"
@@ -415,7 +421,7 @@
 /obj/item/clothing/glasses/blindfold/white/update_icon(updates=ALL, mob/living/carbon/human/user)
 	. = ..()
 	if(ishuman(user) && !colored_before)
-		add_atom_colour(user.eye_color_left, FIXED_COLOUR_PRIORITY) // I want this to be an average of the colors of both eyes, but that can be done later
+		add_atom_colour(BlendRGB(user.eye_color_left, user.eye_color_right, 0.5), FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
 /obj/item/clothing/glasses/blindfold/white/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
