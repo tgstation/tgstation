@@ -70,6 +70,8 @@
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
+	icon_preview = 'icons/obj/previews.dmi'
+	icon_state_preview = "prisonshoes"
 	greyscale_colors = "#d15b1b#ffffff"
 	greyscale_config = /datum/greyscale_config/sneakers_orange
 	greyscale_config_worn = /datum/greyscale_config/sneakers_orange_worn

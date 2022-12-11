@@ -16,6 +16,7 @@ Buildable meters
 	throwforce = 7
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
+	icon_state_preview = "manifold4w"
 	inhand_icon_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
 	///Piping layer that we are going to be on
@@ -32,29 +33,29 @@ Buildable meters
 /obj/item/pipe/directional
 	RPD_type = PIPE_UNARY
 /obj/item/pipe/directional/he_junction
-	icon_state = "junction"
+	icon_state_preview = "junction"
 /obj/item/pipe/directional/vent
-	icon_state = "uvent"
+	icon_state_preview = "uvent"
 /obj/item/pipe/directional/scrubber
-	icon_state = "scrubber"
+	icon_state_preview = "scrubber"
 /obj/item/pipe/directional/connector
-	icon_state = "connector"
+	icon_state_preview = "connector"
 /obj/item/pipe/directional/passive_vent
-	icon_state = "pvent"
+	icon_state_preview = "pvent"
 /obj/item/pipe/directional/injector
-	icon_state = "injector"
+	icon_state_preview = "injector"
 /obj/item/pipe/directional/he_exchanger
-	icon_state = "heunary"
+	icon_state_preview = "heunary"
 /obj/item/pipe/binary
 	RPD_type = PIPE_STRAIGHT
 /obj/item/pipe/binary/layer_adapter
-	icon_state = "manifoldlayer"
+	icon_state_preview = "manifoldlayer"
 /obj/item/pipe/binary/color_adapter
-	icon_state = "adapter_center"
+	icon_state_preview = "adapter_center"
 /obj/item/pipe/binary/pressure_pump
-	icon_state = "pump"
+	icon_state_preview = "pump"
 /obj/item/pipe/binary/manual_valve
-	icon_state = "mvalve"
+	icon_state_preview = "mvalve"
 /obj/item/pipe/binary/bendable
 	RPD_type = PIPE_BENDABLE
 /obj/item/pipe/trinary
@@ -63,15 +64,15 @@ Buildable meters
 	RPD_type = PIPE_TRIN_M
 	var/flipped = FALSE
 /obj/item/pipe/trinary/flippable/filter
-	icon_state = "filter"
+	icon_state_preview = "filter"
 /obj/item/pipe/trinary/flippable/mixer
-	icon_state = "mixer"
+	icon_state_preview = "mixer"
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_ONEDIR
 /obj/item/pipe/quaternary/pipe
-	icon_state = "manifold4w"
+	icon_state_preview = "manifold4w"
 /obj/item/pipe/quaternary/he_pipe
-	icon_state = "he_manifold4w"
+	icon_state_preview = "he_manifold4w"
 
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	if(make_from)
