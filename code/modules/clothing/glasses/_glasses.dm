@@ -511,6 +511,12 @@
 	desc = "An eyepatch with built-in thermal optics."
 	icon_state = "eyepatch"
 	inhand_icon_state = null
+	actions_types = list(/datum/action/item_action/toggle)
+
+/obj/item/clothing/glasses/thermal/eyepatch/attack_self(mob/user, modifiers)
+	. = ..()
+	icon_state = "eyepatch_flipped"
+	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/cold
 	name = "cold goggles"
