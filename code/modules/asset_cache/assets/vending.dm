@@ -8,7 +8,7 @@
 		vendor = new vendor() // It seems `initial(list var)` has nothing. need to make a type.
 		for(var/each in list(vendor.products, vendor.premium, vendor.contraband))
 			target_items |= each
-		qdel(V)
+		qdel(vendor)
 
 	// building icons for each item
 	for (var/k in target_items)
