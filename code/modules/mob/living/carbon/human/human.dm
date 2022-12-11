@@ -10,6 +10,7 @@
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
 
+	create_carbon_reagents()
 	set_species(dna.species.type || /datum/species/human)
 
 	prepare_huds() //Prevents a nasty runtime on human init
