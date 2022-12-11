@@ -79,7 +79,7 @@
 	id = "extinguisher"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 90)
-	build_path = /obj/item/extinguisher
+	build_path = /obj/item/extinguisher/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ATMOSPHERICS
@@ -91,7 +91,7 @@
 	id = "pocketfireextinguisher"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
-	build_path = /obj/item/extinguisher/mini
+	build_path = /obj/item/extinguisher/mini/empty
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ATMOSPHERICS

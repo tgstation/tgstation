@@ -39,7 +39,7 @@
 	var/status = TRUE
 	/// The max amount of fuel the welder can hold
 	var/max_fuel = 20
-	/// Do we start with fuel?
+	/// Does the welder start with fuel.
 	var/starting_fuel = TRUE
 	/// Whether or not we're changing the icon based on fuel left.
 	var/change_icons = TRUE

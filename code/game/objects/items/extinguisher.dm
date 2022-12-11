@@ -18,7 +18,10 @@
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
+	/// The max amount of water this extinguisher can hold.
 	var/max_water = 50
+	/// Does the welder extinguisher start with water.
+	var/starting_water = TRUE
 	var/last_use = 1
 	var/chem = /datum/reagent/water
 	var/safety = TRUE
@@ -30,6 +33,9 @@
 	var/cooling_power = 2 //Sets the cooling_temperature of the water reagent datum inside of the extinguisher when it is refilled
 	/// Icon state when inside a tank holder
 	var/tank_holder_icon_state = "holder_extinguisher"
+
+/obj/item/extinguisher/empty
+	starting_water = FALSE
 
 /obj/item/extinguisher/mini
 	name = "pocket fire extinguisher"
@@ -46,6 +52,9 @@
 	max_water = 30
 	sprite_name = "miniFE"
 	dog_fashion = null
+
+/obj/item/extinguisher/mini/empty
+	starting_water = FALSE
 
 /obj/item/extinguisher/crafted
 	name = "Improvised cooling spray"
@@ -74,7 +83,8 @@
 	if(!chem)
 		return
 	create_reagents(max_water, AMOUNT_VISIBLE)
-	reagents.add_reagent(chem, max_water)
+	if(starting_water)
+		reagents.add_reagent(chem, max_water)
 
 /obj/item/extinguisher/Initialize(mapload)
 	. = ..()
