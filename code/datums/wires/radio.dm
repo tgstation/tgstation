@@ -30,6 +30,7 @@
 			R.set_anon(!R.anonymize)
 
 /datum/wires/radio/on_cut(wire, mend)
+	var/obj/item/radio/R = holder
 	if(wire == WIRE_ANON)
 		R.set_anon(!mend)
 
@@ -38,5 +39,5 @@
 	var/list/status = list()
 	status += "The broadcast light is [R.get_broadcasting() ? "on" : "off"]."
 	status += "The listening light is [R.get_listening() ? "on" : "off"]."
-	status += "The voice recognition chip is [anonymize ? "slightly buzzing" : "silent"]."
+	status += "The voice recognition chip is [R.anonymize ? "slightly buzzing" : "silent"]."
 	return status
