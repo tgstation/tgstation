@@ -691,8 +691,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 				airlock_type = design[AIRLOCK_TYPE]
 
 		else
-			params["rcd"] = TRUE
-			airlock_electronics.ui_act(action, params)
+			airlock_electronics.do_action(action, params)
 
 	return TRUE
 

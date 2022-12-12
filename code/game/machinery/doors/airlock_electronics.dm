@@ -52,12 +52,8 @@
 	data["shell"] = shell
 	return data
 
-/obj/item/electronics/airlock/ui_act(action, params)
-	if(!params["rcd"]) //if this wasen't call by the rcd then do these checks else skip them
-		. = ..()
-		if(.)
-			return
-
+///shared by rcd & airlock electronics
+/obj/item/electronics/airlock/proc/do_action(action, params)
 	switch(action)
 		if("clear_all")
 			accesses = list()
@@ -103,6 +99,12 @@
 			var/new_cycle_id = trim(params["passedCycleId"], 30)
 			passed_cycle_id = new_cycle_id
 			. = TRUE
+
+/obj/item/electronics/airlock/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	return do_action(action, params)
 
 /obj/item/electronics/airlock/ui_host()
 	if(holder)
