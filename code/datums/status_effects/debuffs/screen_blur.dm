@@ -17,14 +17,16 @@
 	if(owner.mob_biotypes & (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC))
 		return FALSE
 
-	// If we get applied to a mob without a client, apply the blur when they log in
-	RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/update_blur)
+	// Refresh the blur when a client jumps into the mob, in case we get put on a clientless mob with no hud
+	RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(update_blur))
 	// Apply initial blur
 	update_blur()
 	return TRUE
 
 /datum/status_effect/eye_blur/on_remove()
-	UnregisterSignal(owner, list(COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOB_LOGIN))
+	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
+	if(!owner.hud_used)
+		return
 
 	var/atom/movable/plane_master_controller/game_plane_master_controller = owner.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("eye_blur")

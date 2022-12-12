@@ -15,7 +15,7 @@
 	if(issilicon(owner))
 		return FALSE
 
-	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/on_face_clean)
+	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(on_face_clean))
 	return TRUE
 
 /datum/status_effect/drowsiness/on_remove()
