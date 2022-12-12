@@ -534,8 +534,8 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 		/datum/gas/miasma,
 		/datum/gas/hydrogen,
 		/datum/gas/water_vapor,
-		/datum/gas/hypernoblium
-		)
+		/datum/gas/hypernoblium,
+	)
 
 	var/list/picked_gases = list()
 	for(var/_ in 1 to rand(1, 3))
