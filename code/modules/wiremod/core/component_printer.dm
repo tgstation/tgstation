@@ -106,11 +106,11 @@
 	if (materials.on_hold())
 		return
 
-	var/efficiency_coeff=calculate_efficiency()
-	if (!materials.mat_container?.has_materials(design.materials,efficiency_coeff))
+	var/efficiency_coeff = calculate_efficiency()
+	if (!materials.mat_container?.has_materials(design.materials, efficiency_coeff))
 		return
 
-	materials.mat_container.use_materials(design.materials,efficiency_coeff)
+	materials.mat_container.use_materials(design.materials, efficiency_coeff)
 	materials.silo_log(src, "printed", -1, design.name, design.materials)
 	return new design.build_path(drop_location())
 
@@ -133,14 +133,14 @@
 				say("Mineral access is on hold, please contact the quartermaster.")
 				return TRUE
 
-			var/efficiency_coeff=calculate_efficiency()
+			var/efficiency_coeff = calculate_efficiency()
 
-			if (!materials.mat_container?.has_materials(design.materials,efficiency_coeff))
+			if (!materials.mat_container?.has_materials(design.materials, efficiency_coeff))
 				say("Not enough materials.")
 				return TRUE
 
 			balloon_alert_to_viewers("printed [design.name]")
-			materials.mat_container?.use_materials(design.materials,efficiency_coeff)
+			materials.mat_container?.use_materials(design.materials, efficiency_coeff)
 			materials.silo_log(src, "printed", -1, design.name, design.materials)
 			var/atom/printed_design = new design.build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
@@ -168,7 +168,7 @@
 
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
-	var/efficiency_coeff=calculate_efficiency()
+	var/efficiency_coeff = calculate_efficiency()
 
 	// for (var/datum/design/component/component_design_type as anything in subtypesof(/datum/design/component))
 	for (var/researched_design_id in techweb.researched_designs)
@@ -181,7 +181,7 @@
 		designs[researched_design_id] = list(
 			"name" = design.name,
 			"desc" = design.desc,
-			"cost" = get_material_cost_data(design.materials,efficiency_coeff),
+			"cost" = get_material_cost_data(design.materials, efficiency_coeff),
 			"id" = researched_design_id,
 			"categories" = design.category,
 			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
@@ -210,11 +210,11 @@
 		return TRUE
 	return default_deconstruction_screwdriver(user, "fab-o", "fab-idle", tool)
 
-/obj/machinery/component_printer/proc/get_material_cost_data(list/materials,efficiency_coeff)
+/obj/machinery/component_printer/proc/get_material_cost_data(list/materials, efficiency_coeff)
 	var/list/data = list()
 
 	for (var/datum/material/material_type as anything in materials)
-		data[initial(material_type.name)] = materials[material_type]*efficiency_coeff
+		data[initial(material_type.name)] = materials[material_type] * efficiency_coeff
 
 	return data
 
@@ -385,14 +385,14 @@
 				say("Mineral access is on hold, please contact the quartermaster.")
 				return TRUE
 
-			var/efficiency_coeff=calculate_efficiency()
+			var/efficiency_coeff = calculate_efficiency()
 
-			if (!materials.mat_container?.has_materials(design["materials"],efficiency_coeff))
+			if (!materials.mat_container?.has_materials(design["materials"], efficiency_coeff))
 				say("Not enough materials.")
 				return TRUE
 
 			balloon_alert_to_viewers("printed [design["name"]]")
-			materials.mat_container?.use_materials(design["materials"],efficiency_coeff)
+			materials.mat_container?.use_materials(design["materials"], efficiency_coeff)
 			materials.silo_log(src, "printed", -1, design["name"], design["materials"])
 			print_module(design)
 		if ("remove_mat")
@@ -495,13 +495,13 @@
 
 	var/index = 1
 
-	var/efficiency_coeff=calculate_efficiency()
+	var/efficiency_coeff = calculate_efficiency()
 
 	for (var/list/design as anything in scanned_designs)
 		designs["[index]"] = list(
 			"name" = design["name"],
 			"desc" = design["desc"],
-			"cost" = get_material_cost_data(design["materials"],efficiency_coeff),
+			"cost" = get_material_cost_data(design["materials"], efficiency_coeff),
 			"id" = "[index]",
 			"icon" = "integrated_circuit",
 			"categories" = list("/Saved Circuits"),
@@ -522,11 +522,11 @@
 		return TRUE
 	return default_deconstruction_screwdriver(user, "module-fab-o", "module-fab-idle", tool)
 
-/obj/machinery/module_duplicator/proc/get_material_cost_data(list/materials,efficiency_coeff)
+/obj/machinery/module_duplicator/proc/get_material_cost_data(list/materials, efficiency_coeff)
 	var/list/data = list()
 
 	for (var/datum/material/material_type as anything in materials)
-		data[initial(material_type.name)] = materials[material_type]*efficiency_coeff
+		data[initial(material_type.name)] = materials[material_type] * efficiency_coeff
 
 	return data
 
