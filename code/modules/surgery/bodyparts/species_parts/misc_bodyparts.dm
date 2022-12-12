@@ -161,34 +161,34 @@
 
 ///ZOMBIE
 /obj/item/bodypart/head/zombie
-	name = "putrefied head"
+	name = "putrid head"
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/chest/zombie
-	name = "putrefied chest"
+	name = "putrid chest"
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/left/zombie
-	name = "putrefied left arm"
+	name = "putrid left arm"
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/right/zombie
-	name = "putrefied right arm"
+	name = "putrid right arm"
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/left/zombie
-	name = "putrefied left leg"
+	name = "putrid left leg"
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/right/zombie
-	name = "putrefied right leg"
+	name = "putrid right leg"
 	limb_id = SPECIES_ZOMBIE
 	should_draw_greyscale = FALSE
 
