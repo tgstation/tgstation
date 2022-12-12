@@ -283,13 +283,13 @@
 
 /datum/status_effect/red_herring/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
-	to_chat(owner, span_notice("You feel fast!"))
+	animate(owner, alpha = 5, time = 1.5 SECONDS)
+	to_chat(owner, span_notice("The red herring cloaks you!"))
 
 /datum/status_effect/red_herring/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
-	to_chat(owner, span_notice("You slow down."))
+	animate(owner, alpha = initial(owner.alpha), time = 1.5 SECONDS)
+	to_chat(owner, span_warning("You are revealed by leaving the red herring's radius!"))
 
 /atom/movable/screen/alert/status_effect/red_herring
 	name = "Red Herring Cloaking"
