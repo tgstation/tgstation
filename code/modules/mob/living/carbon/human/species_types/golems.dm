@@ -15,7 +15,7 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 	)
-	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL
+	inherent_biotypes = MOB_HUMANOID | MOB_MINERAL
 	mutant_organs = list(/obj/item/organ/internal/adamantine_resonator)
 	speedmod = 2
 	payday_modifier = 0.75
@@ -224,10 +224,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/plasteel,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/plasteel,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/plasteel,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/plasteel,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/plasteel,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/plasteel,
 	)
 
 /datum/species/golem/plasteel/negates_gravity(mob/living/carbon/human/H)
@@ -375,10 +375,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/uranium,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/uranium,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/uranium,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/uranium,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/uranium,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/uranium,
 	)
 
 /datum/species/golem/uranium/proc/radiation_emission(mob/living/carbon/human/H)
@@ -579,10 +579,10 @@
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/golem/bananium,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/golem/bananium,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/bananium,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/golem/bananium,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/golem/bananium,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/bananium,
 	)
 
 	/// Cooldown for producing honks

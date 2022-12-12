@@ -316,38 +316,3 @@
 
 /obj/item/bodypart/head/GetVoice()
 	return "The head of [real_name]"
-
-/obj/item/bodypart/head/monkey
-	icon = 'icons/mob/species/monkey/bodyparts.dmi'
-	icon_state = "default_monkey_head"
-	limb_id = SPECIES_MONKEY
-	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
-	should_draw_greyscale = FALSE
-	dmg_overlay_type = SPECIES_MONKEY
-	is_dimorphic = FALSE
-
-/obj/item/bodypart/head/alien
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_state = "alien_head"
-	limb_id = BODYPART_ID_ALIEN
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-	px_x = 0
-	px_y = 0
-	dismemberable = FALSE
-	max_damage = 500
-	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ALIEN | BODYTYPE_ORGANIC
-
-/obj/item/bodypart/head/larva
-	icon = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_static = 'icons/mob/species/alien/bodyparts.dmi'
-	icon_state = "larva_head"
-	limb_id = BODYPART_ID_LARVA
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-	px_x = 0
-	px_y = 0
-	dismemberable = FALSE
-	max_damage = 50
-	bodytype = BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_ORGANIC

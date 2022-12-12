@@ -126,7 +126,6 @@ Lizard subspecies: ASHWALKERS
 	mutantlungs = /obj/item/organ/internal/lungs/ashwalker
 	mutantbrain = /obj/item/organ/internal/brain/primitive
 	inherent_traits = list(
-		//TRAIT_LITERATE,
 		TRAIT_VIRUSIMMUNE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash

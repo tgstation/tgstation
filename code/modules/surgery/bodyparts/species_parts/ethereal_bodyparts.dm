@@ -1,4 +1,5 @@
 /obj/item/bodypart/head/ethereal
+	name = "ethereal head"
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
@@ -15,6 +16,7 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/chest/ethereal
+	name = "ethereal chest"
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	is_dimorphic = FALSE
@@ -28,6 +30,7 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/arm/left/ethereal
+	name = "ethereal left arm"
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
@@ -44,6 +47,7 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/arm/right/ethereal
+	name = "ethereal right arm"
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
@@ -61,6 +65,7 @@
 
 
 /obj/item/bodypart/leg/left/ethereal
+	name = "ethereal left leg"
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null
@@ -76,6 +81,7 @@
 		species_color = eth_holder.current_color
 
 /obj/item/bodypart/leg/right/ethereal
+	name = "ethereal right leg"
 	icon_greyscale = 'icons/mob/species/ethereal/bodyparts.dmi'
 	limb_id = SPECIES_ETHEREAL
 	dmg_overlay_type = null

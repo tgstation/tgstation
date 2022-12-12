@@ -1,14 +1,18 @@
+/// NORMAL LIZARDS
 /obj/item/bodypart/head/lizard
+	name = "lizard head"
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = FALSE
 
 /obj/item/bodypart/chest/lizard
+	name = "lizard chest"
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	is_dimorphic = TRUE
 
 /obj/item/bodypart/arm/left/lizard
+	name = "lizard left arm"
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	unarmed_attack_verb = "slash"
@@ -17,6 +21,7 @@
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/arm/right/lizard
+	name = "lizard right arm"
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	unarmed_attack_verb = "slash"
@@ -24,21 +29,30 @@
 	unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
-/obj/item/bodypart/arm/left/lizard/ashwalker
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-
-/obj/item/bodypart/arm/right/lizard/ashwalker
-	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
-
 /obj/item/bodypart/leg/left/lizard
+	name = "lizard left leg"
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 
 /obj/item/bodypart/leg/right/lizard
+	name = "lizard right leg"
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 
+/// ASHWALKERS (FUCKING WHY?)
+/obj/item/bodypart/arm/left/lizard/ashwalker
+	name = "ashwalker left arm"
+	limb_id = SPECIES_LIZARD_ASH
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/obj/item/bodypart/arm/right/lizard/ashwalker
+	name = "ashwalker right arm"
+	limb_id = SPECIES_LIZARD_ASH
+	bodypart_traits = list(TRAIT_CHUNKYFINGERS)
+
+/// DIGITIGRADE GARBAGE
 /obj/item/bodypart/leg/left/digitigrade
+	name = "digitigrade left leg"
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
@@ -60,11 +74,11 @@
 
 		if((uniform_compatible && suit_compatible && shoes_compatible) || (suit_compatible && shoes_compatible && human_owner.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
 			limb_id = BODYPART_ID_DIGITIGRADE
-
 		else
 			limb_id = SPECIES_LIZARD
 
 /obj/item/bodypart/leg/right/digitigrade
+	name = "digitigrade right leg"
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	limb_id = BODYPART_ID_DIGITIGRADE
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
@@ -86,6 +100,5 @@
 
 		if((uniform_compatible && suit_compatible && shoes_compatible) || (suit_compatible && shoes_compatible && human_owner.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
 			limb_id = BODYPART_ID_DIGITIGRADE
-
 		else
 			limb_id = SPECIES_LIZARD

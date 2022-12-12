@@ -1,4 +1,5 @@
 /obj/item/bodypart/head/moth
+	name = "moth head"
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "moth_head"
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -7,6 +8,7 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/chest/moth
+	name = "moth chest"
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "moth_chest_m"
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -15,6 +17,7 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/arm/left/moth
+	name = "moth left arm"
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "moth_l_arm"
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -26,6 +29,7 @@
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/arm/right/moth
+	name = "moth right arm"
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "moth_r_arm"
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -37,6 +41,7 @@
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
 
 /obj/item/bodypart/leg/left/moth
+	name = "moth left leg"
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "moth_l_leg"
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
@@ -44,6 +49,7 @@
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/leg/right/moth
+	name = "moth right leg"
 	icon = 'icons/mob/species/moth/bodyparts.dmi'
 	icon_state = "moth_r_leg"
 	icon_static = 'icons/mob/species/moth/bodyparts.dmi'
