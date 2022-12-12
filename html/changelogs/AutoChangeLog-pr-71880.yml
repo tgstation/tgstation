@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - qol: "Changed the reputation cap of 'Legendary' on the UI to be at 1400 reputation. This is the point at which you unlock Final Objectives. This is purely a visual change."

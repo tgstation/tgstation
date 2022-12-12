@@ -1,0 +1,4 @@
+author: "SkeletalElite"
+delete-after: True
+changes:
+  - bugfix: "Forced speech from brain damage will no longer trigger the world filter"
