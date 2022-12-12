@@ -17293,10 +17293,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
-"efQ" = (
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space/nearstation)
 "egd" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -22731,12 +22727,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/service)
-"fvx" = (
-/obj/structure/bed/dogbed/ian,
-/obj/machinery/airalarm/directional/east,
-/mob/living/basic/pet/dog/corgi/ian,
-/turf/open/floor/wood,
-/area/station/command/heads_quarters/hop)
 "fvC" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/turf_decal/delivery,
@@ -30151,6 +30141,30 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/department/security)
+"hml" = (
+/obj/item/paper_bin{
+	pixel_x = -7
+	},
+/obj/item/pen{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/cup/glass/mug/britcup{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/window{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/cargo/drone_bay)
 "hmr" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -38118,12 +38132,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
-"jlr" = (
-/obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/structure/bed/dogbed/mcgriff,
-/mob/living/basic/pet/dog/pug/mcgriff,
-/turf/open/floor/iron,
-/area/station/security/warden)
 "jlv" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Virology - Hallway";
@@ -48804,6 +48812,12 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/carpet/blue,
 /area/station/commons/vacant_room/office)
+"lNN" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/structure/bed/dogbed/mcgriff,
+/mob/living/basic/pet/dog/pug/mcgriff,
+/turf/open/floor/iron,
+/area/station/security/warden)
 "lNR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -55192,6 +55206,12 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit)
+"nuY" = (
+/obj/structure/bed/dogbed/ian,
+/obj/machinery/airalarm/directional/east,
+/mob/living/basic/pet/dog/corgi/ian,
+/turf/open/floor/wood,
+/area/station/command/heads_quarters/hop)
 "nvo" = (
 /obj/structure/railing{
 	dir = 4
@@ -56714,12 +56734,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
-"nNK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/right/directional/west,
-/turf/open/floor/iron,
-/area/station/engineering/atmos/storage/gas)
 "nNR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -64835,30 +64849,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
-"pPT" = (
-/obj/item/paper_bin{
-	pixel_x = -7
-	},
-/obj/item/pen{
-	pixel_x = -7
-	},
-/obj/item/reagent_containers/cup/glass/mug/britcup{
-	pixel_x = 6;
-	pixel_y = -4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/window{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/effect/turf_decal/tile/brown/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/cargo/drone_bay)
 "pPZ" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/sign/calendar/directional/south,
@@ -86890,6 +86880,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
+"viU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/right/directional/west{
+	req_access = list("atmospherics")
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos/storage/gas)
 "viX" = (
 /obj/item/wrench,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -127143,7 +127141,7 @@ qYo
 haF
 aaa
 xLZ
-nNK
+viU
 xLZ
 xLZ
 xLZ
@@ -136421,7 +136419,7 @@ lZx
 wqG
 lbt
 iVT
-fvx
+nuY
 njs
 cqt
 wPk
@@ -139716,7 +139714,7 @@ xeH
 qAV
 xYZ
 vGf
-pPT
+hml
 cAw
 sJd
 khn
@@ -152092,7 +152090,7 @@ rIa
 rIa
 rIa
 rSc
-jlr
+lNN
 lra
 cgZ
 qiM
@@ -154191,7 +154189,7 @@ aaa
 aad
 aaa
 aaa
-efQ
+xTK
 vVc
 aaa
 aaa
@@ -154448,7 +154446,7 @@ aaa
 aad
 aaa
 aaa
-efQ
+xTK
 vVc
 aaa
 aaa
@@ -158309,7 +158307,7 @@ mUL
 uUW
 qYo
 qYo
-efQ
+xTK
 aaa
 aaa
 aaa
@@ -159307,7 +159305,7 @@ aaa
 aaa
 aaa
 aaa
-efQ
+xTK
 qYo
 mfC
 bdz
@@ -159316,7 +159314,7 @@ iad
 cit
 mfC
 qYo
-efQ
+xTK
 aaa
 aaa
 aaa

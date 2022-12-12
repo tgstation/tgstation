@@ -39,7 +39,13 @@
 	 */
 	var/boozepwr = 65
 
-/datum/reagent/consumable/ethanol/New()
+/datum/reagent/consumable/ethanol/New(list/data)
+	if(LAZYLEN(data))
+		if(data["quality"])
+			quality = data["quality"]
+			name = "Natural " + name
+		if(data["boozepwr"])
+			boozepwr = data["boozepwr"]
 	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
 	return ..()
 

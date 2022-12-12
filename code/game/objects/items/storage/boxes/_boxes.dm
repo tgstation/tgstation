@@ -2,6 +2,7 @@
 /obj/item/storage/box
 	name = "box"
 	desc = "It's just an ordinary box."
+	icon = 'icons/obj/storage/box.dmi'
 	icon_state = "box"
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
