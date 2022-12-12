@@ -7,7 +7,6 @@
 	thermal_conductivity = 0.025
 	heat_capacity = 1000
 	max_temperature = INFINITY
-	resistance_flags = INDESTRUCTIBLE
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
