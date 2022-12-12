@@ -298,18 +298,18 @@
 
 	var/mob/living/carbon/victim = parent
 
-	if(harmful)
-		var/damage = weapon.w_class * remove_pain_mult
-		limb.receive_damage(brute=(1-pain_stam_pct) * damage * 1.5, sharpness=SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
-		victim.adjustStaminaLoss(pain_stam_pct * damage)
-
-		var/dist = get_dist(caster, victim) //Check if the caster is close enough to yank them in
-		if(dist < 7)
-			victim.throw_at(caster, get_dist(victim, caster) - 1, 1, caster)
-			victim.Paralyze(1 SECONDS)
-			limb.force_wound_upwards(/datum/wound/pierce/moderate)
-			playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg', 50, TRUE)
-			victim.visible_message(span_alert("[victim] is sent flying towards [caster] as the [marked_item] tears out of them!"), span_alert("You are launched at [caster] as the [marked_item] tears from your body and towards their hand!"))
-		victim.visible_message(span_danger("[marked_item] is violently torn from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] is violently torn from your [limb.plaintext_zone]!"))
-	else
+	if(!harmful)
 		victim.visible_message(span_danger("[marked_item] vanishes from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] vanishes from [limb.plaintext_zone]!"))
+		return
+	var/damage = weapon.w_class * remove_pain_mult
+	limb.receive_damage(brute=(1-pain_stam_pct) * damage * 1.5, sharpness=SHARP_EDGED) // Performs exit wounds and flings the user to the caster if nearby
+	limb.force_wound_upwards(/datum/wound/pierce/moderate)
+	victim.adjustStaminaLoss(pain_stam_pct * damage)
+	playsound(get_turf(victim), 'sound/effects/wounds/blood2.ogg', 50, TRUE)
+
+	var/dist = get_dist(caster, victim) //Check if the caster is close enough to yank them in
+	if(dist < 7)
+		victim.throw_at(caster, get_dist(victim, caster) - 1, 1, caster)
+		victim.Paralyze(1 SECONDS)
+		victim.visible_message(span_alert("[victim] is sent flying towards [caster] as the [marked_item] tears out of them!"), span_alert("You are launched at [caster] as the [marked_item] tears from your body and towards their hand!"))
+	victim.visible_message(span_danger("[marked_item] is violently torn from [victim.name]'s [limb.plaintext_zone]!"), span_userdanger("[weapon] is violently torn from your [limb.plaintext_zone]!"))
