@@ -195,7 +195,7 @@
 	speak_emote = list("squeaks")
 	ai_controller = null
 	gold_core_spawnable = NO_SPAWN
-	faction = list("neutral")
+	faction = list(FACTION_NEUTRAL)
 	health = 200
 	icon_dead = "magicarp_dead"
 	icon_gib = "magicarp_gib"

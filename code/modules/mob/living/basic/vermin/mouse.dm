@@ -234,6 +234,7 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	gold_core_spawnable = NO_SPAWN
+	faction = list(FACTION_RAT, FACTION_MAINT_CREATURES, FACTION_NEUTRAL)
 
 /mob/living/basic/mouse/brown/tom/Initialize(mapload)
 	. = ..()

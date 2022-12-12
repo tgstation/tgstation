@@ -2,7 +2,7 @@
 	icon_state = "monkey" //for mapping
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
-	faction = list("neutral", "monkey")
+	faction = list(FACTION_NEUTRAL, "monkey")
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned=FALSE, mob/spawner)
 	if (cubespawned)
