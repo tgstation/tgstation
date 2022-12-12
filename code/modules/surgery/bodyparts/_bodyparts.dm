@@ -630,6 +630,7 @@
 
 	refresh_bleed_rate()
 	return old_owner
+
 /obj/item/bodypart/proc/on_removal()
 	for(var/trait in bodypart_traits)
 		REMOVE_TRAIT(owner, trait, bodypart_trait_source)

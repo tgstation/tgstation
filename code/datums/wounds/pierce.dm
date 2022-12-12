@@ -45,11 +45,6 @@
 	return ..()
 
 /datum/wound/pierce/wound_injury(datum/wound/old_wound = null, attack_direction = null)
-	//ok so this is ultra stupid, but we need to update examine and shit in case the owner is not a bleedy bleedy boy
-	//also it's ok to not typecheck, humans are the only ones that deal with wounds
-	var/mob/living/carbon/human/human_victim = victim
-	no_bleeding = !(NOBLOOD in human_victim.dna.species.species_traits)
-
 	set_blood_flow(initial_flow)
 	if(!no_bleeding && attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
 		victim.spray_blood(attack_direction, severity)
