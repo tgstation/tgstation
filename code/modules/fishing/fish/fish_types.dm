@@ -203,37 +203,6 @@
 	for(var/fish_type in subtypesof(/obj/item/fish))
 		new fish_type(src)
 
-/obj/item/fish/donkfish
-	name = "donk co. company patent donkfish"
-	desc = "A lab-grown donkfish. Its invention was an accident for the most part, as it was intended to be consumed in donk pockets. Unfortunately, it tastes horrible, so it has now become a pseudo-mascot."
-	icon_state = "donkfish"
-	random_case_rarity = FISH_RARITY_VERY_RARE
-	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
-	stable_population = 4
-	fillet_type = /obj/item/food/fishmeat/donkfish
-
-/obj/item/fish/emulsijack
-	name = "toxic emulsijack"
-	desc = "Ah, the terrifying emulsijack. Created in a laboratory, this slimey, scaleless fish emits an invisible toxin that emulsifies other fish for it to feed on. Its only real use is for completely ruining a tank."
-	icon_state = "emulsijack"
-	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
-	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
-	stable_population = 3
-
-/obj/item/fish/emulsijack/process(delta_time)
-	var/emulsified = FALSE
-	var/obj/structure/aquarium/aquarium = loc
-	if(istype(aquarium))
-		for(var/obj/item/fish/victim in aquarium)
-			if(istype(victim, /obj/item/fish/emulsijack))
-				continue //no team killing
-			victim.adjust_health((victim.health - 3) * delta_time) //the victim may heal a bit but this will quickly kill
-			emulsified = TRUE
-	if(emulsified)
-		adjust_health((health + 3) * delta_time)
-		last_feeding = world.time //emulsijack feeds on the emulsion!
-	..()
-
 /obj/item/fish/ratfish
 	name = "ratfish"
 	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
@@ -255,3 +224,74 @@
 	. = ..()
 	//stable pop reflects the config for how many mice migrate. powerful...
 	stable_population = CONFIG_GET(number/mice_roundstart)
+
+/obj/item/fish/red_herring
+	name = "red herring"
+	desc = "A rare, anomalous fish that cloaks nearby creatures when in distress."
+	icon_state = "red_herring"
+	random_case_rarity = FISH_RARITY_VERY_RARE
+	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
+	average_size = 100
+	average_weight = 1500
+
+	fish_ai_type = FISH_AI_SLOW
+	/// lazylist of weakrefs referring to everyone who is cloaked.
+	var/list/weak_cloaked
+	/// range of turfs that will cloak mobs, when flopping.
+	var/cloak_range = 3
+
+/obj/item/fish/red_herring/stop_flopping()
+	. = ..()
+	clear_cloaked()
+
+/obj/item/fish/red_herring/process(delta_time)
+	. = ..()
+	if(!flopping)
+		return
+	LAZYINITLIST(weak_cloaked)
+	//grab who we have right now
+	var/list/cloaked = recursive_list_resolve(weak_cloaked)
+	//remove those who aren't cloaked anymore
+	for(var/mob/living/old_cloaked as anything in cloaked)
+		if(get_dist(src, old_cloaked) > cloak_range)
+			var/datum/status_effect/red_herring/cloaking_effect = old_cloaked.has_status_effect(/datum/status_effect/red_herring)
+			if(cloaking_effect)
+				qdel(cloaking_effect)
+			cloaked.Remove(old_cloaked)
+	//add those who should be cloaked
+	for(var/mob/living/new_cloaked in range(src, cloak_range))
+		cloaked |= new_cloaked
+		new_cloaked.apply_status_effect(/datum/status_effect/red_herring)
+	//save weakref of the changes
+	weak_cloaked = weakrefify_list(cloaked)
+
+/obj/item/fish/red_herring/proc/clear_cloaked()
+	if(!weak_cloaked)
+		return
+	//grab who we have right now
+	var/list/cloaked = recursive_list_resolve(weak_cloaked)
+	//remove those who aren't cloaked anymore
+	for(var/mob/living/old_cloaked as anything in cloaked)
+		var/datum/status_effect/red_herring/cloaking_effect = old_cloaked.has_status_effect(/datum/status_effect/red_herring)
+		if(cloaking_effect)
+			qdel(cloaking_effect)
+	cloaked = null
+
+/datum/status_effect/red_herring
+	id = "Red Herring"
+	alert_type = /atom/movable/screen/alert/status_effect/red_herring
+
+/datum/status_effect/red_herring/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	to_chat(owner, span_notice("You feel fast!"))
+
+/datum/status_effect/red_herring/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
+	to_chat(owner, span_notice("You slow down."))
+
+/atom/movable/screen/alert/status_effect/red_herring
+	name = "Red Herring Cloaking"
+	desc = "Being near the red herring while it is panicking is cloaking you!"
+	icon_state = "red_herring"

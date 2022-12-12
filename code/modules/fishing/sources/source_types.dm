@@ -21,6 +21,14 @@
 	)
 	catalog_description = "Fish dimension (Fishing portal generator)"
 
+/datum/fish_source/hackedportal
+	fish_table = list(
+		FISHING_DUD = 5,
+		/obj/item/fish/emulsijack = 10,
+		/obj/item/fish/donkfish = 10,
+		/obj/item/fish/deathrattle = 10,
+	)
+
 /datum/fish_source/chasm
 	catalog_description = "Chasm depths"
 	background = "fishing_background_lavaland"

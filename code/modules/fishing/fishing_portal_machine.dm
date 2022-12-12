@@ -1,6 +1,6 @@
 /obj/machinery/fishing_portal_generator
 	name = "fish-porter 3000"
-	desc = "fishing anywhere, anytime, anyway what was i talking about"
+	desc = "Fishing for those who can't be bothered to find a body of water with fish in it in space."
 
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "portal_off"
@@ -14,10 +14,26 @@
 	var/fishing_source = /datum/fish_source/portal
 	var/datum/component/fishing_spot/active
 
+/obj/machinery/fishing_portal_generator/examine(mob/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += span_warning("\"Death to Nanotrasen, anywhere, anytime!\"")
+	else
+		. += span_notice("\"Fish anywhere, anytime!\"")
+
 /obj/machinery/fishing_portal_generator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/fishing_portal_generator/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return
+	obj_flags |= EMAGGED
+	to_chat(user, span_notice("[src] clicks softly, as the portal's destination is rerouted."))
+	fishing_source = /datum/fish_source/hackedportal
+	if(active)
+		deactivate()
 
 /obj/machinery/fishing_portal_generator/interact(mob/user, special_state)
 	. = ..()
@@ -29,7 +45,10 @@
 /obj/machinery/fishing_portal_generator/update_icon(updates)
 	. = ..()
 	if(active)
-		icon_state = "portal_on"
+		if(obj_flags & EMAGGED)
+			icon_state = "portal_on_hacked"
+		else
+			icon_state = "portal_on"
 	else
 		icon_state = "portal_off"
 
